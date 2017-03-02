@@ -1,0 +1,15 @@
+Package: bcbioSinglecell
+Title: utility functions for processing bcbio-nextgen singlecell results
+Version: 0.0.1
+Authors@R: person("Rory", "Kirchner",
+                  email = "roryk@alum.mit.edu", role = c("aut", "cre"))
+Description: utility functions for processing bcbio-nextgen singlecell results
+Depends: R (>= 3.3.2)
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports:
+  readr,
+  Matrix,
+  tools,
+  R.utils
