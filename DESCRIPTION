@@ -13,3 +13,4 @@ Imports:
   Matrix,
   tools,
   R.utils
+RoxygenNote: 6.0.1

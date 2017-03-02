@@ -1,11 +1,12 @@
 ##' Load a gzipped MatrixMart file, setting the row and column names.
 ##'
-##' @param gzfile
+##' @param gzfile gzipped MatrixMart file to load
 ##' @return a sparse matrix of counts
 ##' @importFrom Matrix readMM
 ##' @importFrom tools file_path_sans_ext
 ##' @importFrom readr read_lines
 ##' @author Rory Kirchner
+##' @export
 load_sparsecounts = function(gzfile) {
   stem = file_path_sans_ext(gzfile)
   rowfile = paste0(stem, ".rownames")
@@ -26,6 +27,7 @@ load_sparsecounts = function(gzfile) {
 ##' @importFrom R.utils gzip
 ##' @importFrom readr write_lines
 ##' @author Rory Kirchner
+##' @export
 write_sparsecounts = function(sparse, gzfile) {
   if(file.exists(gzfile)) {
     return(gzfile)
