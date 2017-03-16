@@ -43,3 +43,39 @@ write_sparsecounts = function(sparse, gzfile) {
   write_lines(cols, colfile)
   return(gzfile)
 }
+
+##' Convert a transcript matrix to a gene symbol matrix
+##'
+##' @param matrix a matrix of counts
+##' @param fromto a dataframe where "from" is the original id and "to" is the id to convert to
+##' @param strip strip transcript versions from the matrix before aggregating
+##' @return a matrix of counts aggregated by summing the "to" ids
+##' @import dplyr
+##' @importFrom Matrix.utils aggregate.Matrix
+##' @author Rory Kirchner
+##' @export
+tx2symbol = function(matrix, fromto, strip=FALSE) {
+  if(strip) {
+    matrix = strip_transcript_versions(matrix)
+  }
+  lookup = data.frame(from=rownames(matrix)) %>%
+    left_join(fromto, by="from")
+  rownames(matrix) = lookup$to
+  matrix = matrix[!is.na(rownames(matrix)),]
+  matrix = aggregate.Matrix(matrix, row.names(matrix), fun='sum')
+  return(matrix)
+}
+
+##' Strip transcript versions off of the rownames of a dataframe or matrix
+##'
+##' @param matrix a matrix or dataframe
+##' @return a matrix or dataframe with the transcript versions stripped off
+##' @importFrom tools file_path_sans_ext
+##' @author Rory Kirchner
+##' @export
+strip_transcript_versions = function(matrix) {
+  transcripts = rownames(matrix)
+  transcripts = file_path_sans_ext(transcripts)
+  rownames(matrix) = transcripts
+  return(matrix)
+}
