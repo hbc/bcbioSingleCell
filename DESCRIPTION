@@ -1,16 +1,28 @@
 Package: bcbioSinglecell
 Title: utility functions for processing bcbio-nextgen singlecell results
 Version: 0.0.1
-Authors@R: person("Rory", "Kirchner",
-                  email = "roryk@alum.mit.edu", role = c("aut", "cre"))
+Authors@R: c(
+    person("Rory", "Kirchner",
+           email = "roryk@alum.mit.edu",
+           role = c("aut", "cre")),
+    person("Michael", "Steinbaugh",
+           email = "mike@steinbaugh.com",
+           role = "aut"))
 Description: utility functions for processing bcbio-nextgen singlecell results
 Depends: R (>= 3.3.2)
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-  readr,
-  Matrix,
-  tools,
-  R.utils
+    biomaRt,
+    dplyr,
+    ggplot2,
+    magrittr,
+    Matrix,
+    Matrix.utils,
+    readr,
+    scales,
+    tools,
+    R.utils
 RoxygenNote: 6.0.1
+biocViews: GeneExpression, RNASeq
