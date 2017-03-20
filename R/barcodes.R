@@ -15,6 +15,7 @@ read_barcode_file = function(filename) {
 ##' @param sample title for plot
 ##' @import ggplot2
 ##' @import scales
+##' @importFrom graphics hist
 ##' @return a ggplot2 plot object
 ##' @author Rory Kirchner
 ##' @export
@@ -29,6 +30,7 @@ barcode_plot = function(filename, sample) {
     theme_bw() +
     ggtitle(sample) +
     scale_x_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+                  # no visible binding for global variable ‘.x’
                   labels = scales::trans_format("log10", scales::math_format(10^.x))) +
     xlab("number of reads assigned to a cell") +
     ylab("proportion of cells")
