@@ -19,7 +19,7 @@ total_counts_plot <- function(metrics) {
         ) +
         ggplot2::facet_wrap(~sample) +
         ggplot2::geom_histogram() +
-        ggplot2::ggtitle("total RNA read counts") +
+        ggplot2::ggtitle("total RNA read counts histogram") +
         ggplot2::scale_x_log10() +
         ggplot2::scale_y_log10() +
         ggplot2::theme(
@@ -41,7 +41,7 @@ total_counts_plot <- function(metrics) {
                                     stats::median),
             ggplot2::aes_(label = ~round(total_counts))
         ) +
-        ggplot2::ggtitle("total RNA read counts") +
+        ggplot2::ggtitle("total RNA read counts boxplot") +
         ggplot2::scale_y_log10() +
         ggplot2::theme(legend.position = "none") +
         ggplot2::ylab("counts per cell")

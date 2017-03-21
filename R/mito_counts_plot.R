@@ -22,7 +22,7 @@ mito_counts_plot <- function(metrics) {
                           fill = ~sample)) +
         ggplot2::facet_wrap(~sample) +
         ggplot2::geom_histogram() +
-        ggplot2::ggtitle("% mitochondrial gene abundance") +
+        ggplot2::ggtitle("mitochondrial gene abundance histogram") +
         ggplot2::scale_y_sqrt() +
         ggplot2::theme(legend.position = "none") +
         ggplot2::xlab("% mitochondrial")
@@ -34,7 +34,7 @@ mito_counts_plot <- function(metrics) {
                           color = ~sample)
         ) +
         ggplot2::facet_wrap(~sample) +
-        ggplot2::ggtitle("mitochondrial gene abundance") +
+        ggplot2::ggtitle("mitochondrial gene abundance scatterplot") +
         ggplot2::geom_point() +
         ggplot2::theme(
             axis.text.x = ggplot2::element_text(angle = 90,

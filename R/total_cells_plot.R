@@ -25,6 +25,6 @@ total_cells_plot <- function(metrics) {
         ) +
         ggplot2::ggtitle("total number of cells") +
         ggplot2::theme(legend.position = "none") +
-        ggplot2::ylab("cell count (w/ barcode cutoff)")
+        ggplot2::ylab("cell count (w/ barcode depth cutoff)")
     print(plot)
 }

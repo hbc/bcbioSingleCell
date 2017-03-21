@@ -19,7 +19,7 @@ genes_detected_plot <- function(metrics) {
         ) +
         ggplot2::facet_wrap(~sample) +
         ggplot2::geom_histogram() +
-        ggplot2::ggtitle("genes detected") +
+        ggplot2::ggtitle("genes detected histogram") +
         ggplot2::theme(
             axis.text.x = ggplot2::element_text(angle = 90,
                                                 hjust = 1),
@@ -39,7 +39,7 @@ genes_detected_plot <- function(metrics) {
                                     stats::median),
             ggplot2::aes_(label = ~round(genes_detected))
         ) +
-        ggtitle("genes detected") +
+        ggtitle("genes detected boxplot") +
         theme(legend.position = "none") +
         ylab("genes per cell")
 
