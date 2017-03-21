@@ -3,7 +3,7 @@
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #' @keywords plot qc
-
+#'
 #' @import dplyr
 #' @import ggplot2
 #' @importFrom stats aggregate median
@@ -46,3 +46,8 @@ genes_detected_plot <- function(metrics) {
     print(histogram)
     print(boxplot)
 }
+
+
+#' @rdname genes_detected_plot
+#' @export
+genes_detected_plots <- genes_detected_plot

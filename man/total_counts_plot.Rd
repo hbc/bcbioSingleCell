@@ -2,9 +2,12 @@
 % Please edit documentation in R/total_counts_plot.R
 \name{total_counts_plot}
 \alias{total_counts_plot}
+\alias{total_counts_plots}
 \title{Total counts plots}
 \usage{
 total_counts_plot(metrics)
+
+total_counts_plots(metrics)
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}

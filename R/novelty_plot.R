@@ -45,3 +45,8 @@ novelty_plot <- function(metrics) {
     print(histogram)
     print(boxplot)
 }
+
+
+#' @rdname novelty_plot
+#' @export
+novelty_plots <- novelty_plot

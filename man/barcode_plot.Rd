@@ -4,7 +4,7 @@
 \alias{barcode_plot}
 \title{Plot a barcode histogram for a given sample}
 \usage{
-barcode_plot(filename, sample)
+barcode_plot(filename, sample = NULL)
 }
 \arguments{
 \item{filename}{path to a barcode histogram file}

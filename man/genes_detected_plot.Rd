@@ -2,9 +2,12 @@
 % Please edit documentation in R/genes_detected_plot.R
 \name{genes_detected_plot}
 \alias{genes_detected_plot}
+\alias{genes_detected_plots}
 \title{Genes detected plot}
 \usage{
 genes_detected_plot(metrics)
+
+genes_detected_plots(metrics)
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}

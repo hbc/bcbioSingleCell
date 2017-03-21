@@ -2,9 +2,12 @@
 % Please edit documentation in R/novelty_plot.R
 \name{novelty_plot}
 \alias{novelty_plot}
+\alias{novelty_plots}
 \title{Novelty plot}
 \usage{
 novelty_plot(metrics)
+
+novelty_plots(metrics)
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}

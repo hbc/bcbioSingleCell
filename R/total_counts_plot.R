@@ -49,3 +49,8 @@ total_counts_plot <- function(metrics) {
     print(histogram)
     print(boxplot)
 }
+
+
+#' @rdname total_counts_plot
+#' @export
+total_counts_plots <- total_counts_plot
