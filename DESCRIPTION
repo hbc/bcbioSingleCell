@@ -18,6 +18,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
+    basejump,
     biomaRt,
     dplyr,
     ggplot2,
@@ -30,4 +31,6 @@ Imports:
     stats,
     tidyr,
     tools
+Remotes:
+    steinbaugh/basejump
 RoxygenNote: 6.0.1

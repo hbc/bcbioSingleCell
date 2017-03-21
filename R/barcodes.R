@@ -21,7 +21,12 @@ read_barcode_file <- function(filename) {
 ##' @importFrom graphics hist
 ##' @author Rory Kirchner
 ##' @export
-barcode_plot <- function(filename, sample) {
+barcode_plot <- function(filename, sample = NULL) {
+    # Get the sample name from the filename by default
+    if (is.null(sample)) {
+        sample <- gsub("-barcodes\\.tsv$", "", basename(filename))
+    }
+
     bcs <- read_barcode_file(filename)
     bcs_hist <- graphics::hist(log10(bcs$count),
                                plot = FALSE, n = 50)
