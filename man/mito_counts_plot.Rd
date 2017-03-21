@@ -2,9 +2,12 @@
 % Please edit documentation in R/mito_counts_plot.R
 \name{mito_counts_plot}
 \alias{mito_counts_plot}
+\alias{mito_counts_plots}
 \title{Total counts vs. genes detected plot}
 \usage{
 mito_counts_plot(metrics)
+
+mito_counts_plots(metrics)
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}

@@ -48,3 +48,8 @@ mito_counts_plot <- function(metrics) {
     print(histogram)
     print(scatterplot)
 }
+
+
+#' @rdname mito_counts_plot
+#' @export
+mito_counts_plots <- mito_counts_plot
