@@ -19,7 +19,6 @@ read_barcode_file <- function(filename) {
 ##' @import ggplot2
 ##' @import scales
 ##' @importFrom graphics hist
-##' @return a ggplot2 plot object
 ##' @author Rory Kirchner
 ##' @export
 barcode_plot <- function(filename, sample) {
@@ -32,7 +31,7 @@ barcode_plot <- function(filename, sample) {
 
     y <- fLog * (10^xLog) / sum(fLog * (10^xLog))
 
-    ggplot2::qplot(10^xLog, y) +
+    p <- ggplot2::qplot(10^xLog, y) +
         ggplot2::geom_point() +
         ggplot2::geom_line() +
         ggplot2::ggtitle(sample) +
@@ -41,6 +40,7 @@ barcode_plot <- function(filename, sample) {
             labels = scales::trans_format("log10", scales::math_format(~10^.x))
         ) +
         ggplot2::xlab("number of reads assigned to a cell") +
-        ggplot2::ylab("proportion of cells") %>%
-        print
+        ggplot2::ylab("proportion of cells")
+
+    print(p)
 }

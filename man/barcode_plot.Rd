@@ -11,9 +11,6 @@ barcode_plot(filename, sample)
 
 \item{sample}{title for plot}
 }
-\value{
-a ggplot2 plot object
-}
 \description{
 Plot a barcode histogram for a given sample
 }
