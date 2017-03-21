@@ -3,9 +3,10 @@
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #' @keywords bcbio qc
-#' 
+#'
 #' @import dplyr
 #' @import tidyr
+#' @importFrom basejump setRownames
 #' @importFrom stats setNames
 #'
 #' @param counts `bcbio-nextgen` scRNA-seq counts sparse matrix
@@ -46,7 +47,8 @@ barcode_metrics <- function(counts, annotations, metadata) {
         )) %>%
         dplyr::arrange_(.dots = "identifier") %>%
         dplyr::left_join(metadata[, c("sample_barcode", "sample")],
-                         by = "sample_barcode")
+                         by = "sample_barcode") %>%
+        basejump::setRownames(., "identifier")
 
     return(metrics)
 }

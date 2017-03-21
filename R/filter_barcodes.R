@@ -7,6 +7,7 @@
 #' @keywords barcode qc
 #'
 #' @import dplyr
+#' @importFrom basejump setRownames
 #'
 #' @param metrics Barcode metrics data frame
 #' @param min_genes Minimum number of genes detected
@@ -30,7 +31,8 @@ filter_barcodes <- function(metrics,
             # Names need to be distinct, right?
             ~percent_mito < get("percent_mito", envir = environment()),
             ~log_detected_per_count > novelty
-        ))
+        )) %>%
+        basejump::setRownames(., "identifier")
 
     if (isTRUE(plot)) {
         genes_detected_plot(filtered)
