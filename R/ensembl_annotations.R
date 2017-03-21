@@ -3,6 +3,7 @@
 #' This function also defines broad classes, which are used in quality control
 #' analysis
 #'
+#' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #' @keywords metadata
 #'

@@ -1,6 +1,7 @@
 Package: bcbioSinglecell
-Title: utility functions for processing bcbio-nextgen singlecell results
-Version: 0.0.1
+Title: Single-Cell RNA-Seq Utilities
+Version: 0.0.2
+Date: 2017-03-21
 Authors@R: c(
     person("Rory", "Kirchner",
            email = "roryk@alum.mit.edu",
@@ -8,7 +9,10 @@ Authors@R: c(
     person("Michael", "Steinbaugh",
            email = "mike@steinbaugh.com",
            role = "aut"))
-Description: utility functions for processing bcbio-nextgen singlecell results
+Description: Functions for processing bcbio-nextgen singlecell results.
+URL: https://bcbio-nextgen.readthedocs.io, https://github.com/roryk/bcbioSinglecell
+BugReports: https://github.com/roryk/bcbioSinglecell/issues
+biocViews: GeneExpression, RNASeq
 Depends: R (>= 3.3.2)
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -20,9 +24,10 @@ Imports:
     magrittr,
     Matrix,
     Matrix.utils,
+    R.utils,
     readr,
     scales,
-    tools,
-    R.utils
+    stats,
+    tidyr,
+    tools
 RoxygenNote: 6.0.1
-biocViews: GeneExpression, RNASeq

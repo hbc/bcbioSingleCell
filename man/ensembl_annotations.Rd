@@ -22,6 +22,8 @@ ensembl_annotations("mmusculus")
 }
 }
 \author{
+Rory Kirchner
+
 Michael Steinbaugh
 }
 \keyword{metadata}

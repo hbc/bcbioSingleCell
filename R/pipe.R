@@ -1,3 +1,5 @@
+utils::globalVariables(".")
+
 #' Pipe operator
 #'
 #' @name %>%
