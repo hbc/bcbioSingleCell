@@ -55,7 +55,7 @@ write_sparsecounts <- function(sparse, gzfile) {
 ##' @author Rory Kirchner
 ##' @export
 tx2symbol <- function(matrix, fromto, strip = FALSE) {
-    if(strip) {
+    if (strip) {
         matrix <- strip_transcript_versions(matrix)
     }
     lookup <- data.frame(from = rownames(matrix)) %>%
