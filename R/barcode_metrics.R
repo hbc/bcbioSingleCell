@@ -16,7 +16,6 @@
 #' @export
 barcode_metrics <- function(counts, annotations, metadata) {
     coding <- annotations %>%
-        # dplyr::filter(broad_class == "coding") %>%
         dplyr::filter_(.dots = quote(broad_class == "coding")) %>%
         .$ensembl_transcript_id %>% unique %>% sort
     mito <- annotations %>%
