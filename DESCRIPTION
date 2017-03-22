@@ -30,7 +30,8 @@ Imports:
     scales,
     stats,
     tidyr,
-    tools
+    tools,
+    utils
 Remotes:
     steinbaugh/basejump
 RoxygenNote: 6.0.1

@@ -1,3 +1,4 @@
+#' @importFrom utils globalVariables
 utils::globalVariables(".")
 
 #' Pipe operator
