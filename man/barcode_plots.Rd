@@ -7,7 +7,7 @@
 barcode_plots(project = NULL)
 }
 \arguments{
-\item{`bcbio-nextgen`}{project list}
+\item{\code{bcbio-nextgen}}{project list}
 }
 \description{
 Plot all scRNA-Seq sample barcodes

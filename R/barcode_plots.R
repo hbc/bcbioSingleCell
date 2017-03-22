@@ -4,7 +4,7 @@
 #'
 #' @importFrom basejump bcbioProject
 #'
-#' @param `bcbio-nextgen` project list
+#' @param \code{bcbio-nextgen} project list
 #'
 #' @export
 barcode_plots <- function(project = NULL) {
