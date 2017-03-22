@@ -5,7 +5,6 @@
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
-#' @keywords metadata
 #'
 #' @import dplyr
 #' @importFrom biomaRt getBM useMart

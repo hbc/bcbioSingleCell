@@ -17,5 +17,3 @@ Rory Kirchner
 
 Michael Steinbaugh
 }
-\keyword{plot}
-\keyword{qc}

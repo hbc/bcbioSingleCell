@@ -24,5 +24,3 @@ Rory Kirchner
 
 Michael Steinbaugh
 }
-\keyword{bcbio}
-\keyword{qc}

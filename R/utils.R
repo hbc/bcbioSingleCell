@@ -4,9 +4,10 @@
 ##' @param column column to make into the rownames
 ##' @return dataframe
 ##' @importFrom readr read_csv
+##' @keywords internal
 ##' @author Rory Kirchner
 load_csv_with_rownames <- function(filename, column) {
-    dat <- read_csv(filename, progress=FALSE) %>%
+    dat <- read_csv(filename, progress = FALSE) %>%
         as.data.frame()
     rownames(dat) <- dat[, column]
     dat[, column] <- NULL

@@ -20,3 +20,4 @@ Load a CSV file with readr, setting a given column as the rownames
 \author{
 Rory Kirchner
 }
+\keyword{internal}

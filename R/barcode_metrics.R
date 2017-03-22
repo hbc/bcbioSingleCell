@@ -2,7 +2,6 @@
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
-#' @keywords bcbio qc
 #'
 #' @import dplyr
 #' @import tidyr

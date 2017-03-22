@@ -1,10 +1,9 @@
 #' Plot all scRNA-Seq sample barcodes
 #'
 #' @author Michael Steinbaugh
-#' @keywords bcbio plot qc
 #'
 #' @importFrom basejump bcbioProject
-
+#'
 #' @param `bcbio-nextgen` project list
 #'
 #' @export

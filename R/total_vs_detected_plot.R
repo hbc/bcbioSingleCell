@@ -2,8 +2,7 @@
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
-#' @keywords plot qc
-
+#'
 #' @import ggplot2
 #'
 #' @param metrics Barcode metrics data frame

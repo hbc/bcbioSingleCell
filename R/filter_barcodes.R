@@ -4,7 +4,6 @@
 #' cellular barcodes.
 #'
 #' @author Michael Steinbaugh
-#' @keywords barcode qc
 #'
 #' @import dplyr
 #' @importFrom basejump setRownames

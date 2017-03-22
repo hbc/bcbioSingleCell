@@ -2,7 +2,6 @@
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
-#' @keywords plot qc
 #'
 #' @import dplyr
 #' @import ggplot2

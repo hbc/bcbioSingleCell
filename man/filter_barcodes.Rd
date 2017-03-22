@@ -30,5 +30,3 @@ cellular barcodes.
 \author{
 Michael Steinbaugh
 }
-\keyword{barcode}
-\keyword{qc}

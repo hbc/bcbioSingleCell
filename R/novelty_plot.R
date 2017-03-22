@@ -4,7 +4,6 @@
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
-#' @keywords plot qc
 #'
 #' @import ggplot2
 #' @importFrom stats aggregate median

@@ -15,6 +15,3 @@ Plot all scRNA-Seq sample barcodes
 \author{
 Michael Steinbaugh
 }
-\keyword{bcbio}
-\keyword{plot}
-\keyword{qc}

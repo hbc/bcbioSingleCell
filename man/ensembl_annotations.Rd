@@ -26,4 +26,3 @@ Rory Kirchner
 
 Michael Steinbaugh
 }
-\keyword{metadata}
