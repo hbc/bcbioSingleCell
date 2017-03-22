@@ -2,5 +2,3 @@ language: R
 cache: packages
 sudo: false
 r: bioc-release
-before_install:
-  Rscript -e 'update.packages(ask = FALSE)'
