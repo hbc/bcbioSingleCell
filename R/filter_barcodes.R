@@ -34,8 +34,9 @@ filter_barcodes <- function(metrics,
         basejump::setRownames(., "identifier")
 
     if (isTRUE(plot)) {
-        genes_detected_plot(filtered)
-        total_vs_detected_plot(filtered)
+        plot_total_cells(filtered)
+        plot_genes_detected(filtered)
+        plot_total_vs_detected(filtered)
     }
 
     return(filtered)
