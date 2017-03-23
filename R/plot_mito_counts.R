@@ -10,7 +10,7 @@
 #' @param metrics Barcode metrics data frame
 #'
 #' @export
-mito_counts_plot <- function(metrics) {
+plot_mito_counts <- function(metrics) {
     histogram <- metrics %>%
         dplyr::mutate_(.dots = stats::setNames(
             list(~percent_mito * 100),
@@ -47,8 +47,3 @@ mito_counts_plot <- function(metrics) {
     print(histogram)
     print(scatterplot)
 }
-
-
-#' @rdname mito_counts_plot
-#' @export
-mito_counts_plots <- mito_counts_plot

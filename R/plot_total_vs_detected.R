@@ -8,7 +8,7 @@
 #' @param metrics Barcode metrics data frame
 #'
 #' @export
-total_vs_detected_plot <- function(metrics) {
+plot_total_vs_detected <- function(metrics) {
     plot <- metrics %>%
         ggplot2::ggplot(
             ggplot2::aes_(x = ~total_counts,

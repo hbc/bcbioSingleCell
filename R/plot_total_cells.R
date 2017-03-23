@@ -9,7 +9,7 @@
 #' @param metrics Barcode metrics data frame
 #'
 #' @export
-total_cells_plot <- function(metrics) {
+plot_total_cells <- function(metrics) {
     plot <- metrics %>%
         dplyr::group_by_(.dots = "sample") %>%
         dplyr::summarize_(total_cells = ~n()) %>%

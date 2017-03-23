@@ -10,7 +10,7 @@
 #' @param metrics Barcode metrics data frame
 #'
 #' @export
-genes_detected_plot <- function(metrics) {
+plot_genes_detected <- function(metrics) {
     histogram <- metrics %>%
         ggplot2::ggplot(
             ggplot2::aes_(x = ~genes_detected,
@@ -45,8 +45,3 @@ genes_detected_plot <- function(metrics) {
     print(histogram)
     print(boxplot)
 }
-
-
-#' @rdname genes_detected_plot
-#' @export
-genes_detected_plots <- genes_detected_plot
