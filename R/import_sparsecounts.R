@@ -10,6 +10,7 @@
 #' @importFrom Matrix readMM
 #'
 #' @param bcbio bcbio run object
+#' @param print Whether to print \code{Dimnames}
 #'
 #' @return Sparse counts matrix
 #' @export
@@ -18,7 +19,7 @@
 #' \dontrun{
 #' import_sparsecounts(bcbio)
 #' }
-import_sparsecounts <- function(bcbio) {
+import_sparsecounts <- function(bcbio, print = TRUE) {
     matfile <- file.path(bcbio$project_dir, "tagcounts.mtx")
     if (!file.exists(matfile)) {
         stop("Count matrix could not be found.")
@@ -35,6 +36,11 @@ import_sparsecounts <- function(bcbio) {
     sparse <- Matrix::readMM(matfile)
     rownames(sparse) <- readr::read_lines(rowfile)
     colnames(sparse) <- readr::read_lines(colfile)
+
+    if (isTRUE(print)) {
+        print(counts@Dimnames[[1]][1:3])
+        print(counts@Dimnames[[2]][1:3])
+    }
 
     return(sparse)
 }
