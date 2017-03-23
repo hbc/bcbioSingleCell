@@ -21,15 +21,16 @@
 ensembl_annotations <- function(organism) {
     mart <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL",
                              paste(organism, "gene_ensembl", sep = "_"))
-
+    # attributes <- biomaRt::listAttributes(mart)
     df <- biomaRt::getBM(mart = mart,
                          attributes = c("ensembl_transcript_id",
                                         "ensembl_gene_id",
+                                        # Use instead of `mgi_symbol`
                                         "external_gene_name",
                                         "gene_biotype",
                                         "chromosome_name")) %>%
-        dplyr::arrange_(.dots = "ensembl_transcript_id")
-    rownames(df) <- df[[1]]
+        dplyr::arrange_(.dots = "ensembl_transcript_id") %>%
+        set_rownames("ensembl_transcript_id")
 
     # Broad class definitions
     coding <- c("protein_coding")
