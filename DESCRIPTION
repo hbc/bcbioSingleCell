@@ -19,6 +19,7 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     basejump,
+    bcbioRnaseq,
     biomaRt,
     dplyr,
     ggplot2,
@@ -33,5 +34,6 @@ Imports:
     tools,
     utils
 Remotes:
+    roryk/bcbioRnaseq,
     steinbaugh/basejump
 RoxygenNote: 6.0.1
