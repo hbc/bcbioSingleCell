@@ -21,7 +21,6 @@
 ensembl_annotations <- function(organism) {
     mart <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL",
                              paste(organism, "gene_ensembl", sep = "_"))
-    # mart_attributes <- biomaRt::listAttributes(mart)
 
     df <- biomaRt::getBM(mart = mart,
                          attributes = c("ensembl_transcript_id",
