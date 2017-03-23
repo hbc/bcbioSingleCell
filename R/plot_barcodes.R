@@ -2,21 +2,16 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump bcbioProject
-#'
-#' @param \code{bcbio-nextgen} project list
+#' @param bcbio bcbio run object
 #'
 #' @export
-barcode_plots <- function(project = NULL) {
-    if (is.null(project)) {
-        project <- basejump::bcbioProject("indrop_rnaseq")
-    }
-    files <- list.files(project$finalDir,
+plot_barcodes <- function(bcbio) {
+    files <- list.files(bcbio$final_dir,
                         pattern = "*-barcodes.tsv",
                         recursive = TRUE,
                         include.dirs = TRUE,
                         full.names = TRUE)
     lapply(seq_along(files), function(a) {
-        barcode_plot(files[a])
+        plot_barcode(files[a])
     }) %>% invisible
 }
