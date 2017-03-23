@@ -5,8 +5,6 @@
 #'
 #' @import dplyr
 #' @import tidyr
-#' @importFrom basejump setRownames
-#' @importFrom stats setNames
 #'
 #' @param counts `bcbio-nextgen` scRNA-seq counts sparse matrix
 #' @param annotations Ensembl annotations data frame
@@ -37,7 +35,7 @@ barcode_metrics <- function(counts, annotations, metadata) {
                          c("sample_barcode", "cellular_barcode"),
                          sep = ":",
                          remove = FALSE) %>%
-        dplyr::mutate_(.dots = stats::setNames(
+        dplyr::mutate_(.dots = set_names(
             list(quote(log(genes_detected) / log(total_counts)),
                  quote(mito_counts / total_counts)),
             c("log_detected_per_count",
@@ -46,7 +44,7 @@ barcode_metrics <- function(counts, annotations, metadata) {
         dplyr::arrange_(.dots = "identifier") %>%
         dplyr::left_join(metadata[, c("sample_barcode", "sample")],
                          by = "sample_barcode") %>%
-        basejump::setRownames(., "identifier")
+        set_rownames("identifier")
 
     return(metrics)
 }
