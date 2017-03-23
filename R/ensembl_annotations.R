@@ -25,9 +25,7 @@ ensembl_annotations <- function(organism) {
     df <- biomaRt::getBM(mart = mart,
                          attributes = c("ensembl_transcript_id",
                                         "ensembl_gene_id",
-                                        "external_transcript_name",
                                         "external_gene_name",
-                                        "transcript_biotype",
                                         "gene_biotype",
                                         "chromosome_name")) %>%
         dplyr::arrange_(.dots = "ensembl_transcript_id")
