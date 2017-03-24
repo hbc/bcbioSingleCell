@@ -4,20 +4,12 @@
 \alias{import_sparsecounts}
 \title{Import scRNA-Seq count data}
 \usage{
-import_sparsecounts(bcbio, annotations, tx2gene = TRUE,
-  strip_versions = FALSE, print = FALSE)
+import_sparsecounts(bcbio, annotations)
 }
 \arguments{
 \item{bcbio}{bcbio run object}
 
 \item{annotations}{Ensembl annotations data frame}
-
-\item{tx2gene}{Convert transcript-level counts to gene-level}
-
-\item{strip_versions}{Strip transcript versions from the matrix
-before aggregating. Only applies to transcript-level output.}
-
-\item{print}{Whether to print \code{Dimnames}}
 }
 \value{
 Sparse counts matrix

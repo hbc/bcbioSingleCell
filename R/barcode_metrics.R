@@ -9,25 +9,20 @@
 #' @param counts `bcbio-nextgen` scRNA-seq counts sparse matrix
 #' @param annotations Ensembl annotations data frame
 #' @param metadata Sample metadata data frame
-#' @param tx2gene Convert transcript-level annotations to gene-level
 #'
 #' @return Data frame
 #' @export
 barcode_metrics <- function(counts,
                             annotations,
-                            metadata,
-                            tx2gene = TRUE) {
-    if (isTRUE(tx2gene)) {
-        annotations$ensembl_transcript_id <- NULL
-        annotations <- dplyr::distinct(annotations)
-    }
-
+                            metadata) {
     coding <- annotations %>%
         dplyr::filter_(.dots = quote(broad_class == "coding")) %>%
-        .[[1]] %>% unique %>% sort
+        .$gene_name %>%
+        unique %>% sort
     mito <- annotations %>%
         dplyr::filter_(.dots = quote(broad_class == "mito")) %>%
-        .[[1]] %>% unique %>% sort
+        .$gene_name %>%
+        unique %>% sort
 
     # `rmarkdown::render()` doesn't handle `dgTMatrix` objects properly.
     # `colSums(counts)` fails here unless we coerce `counts` to a matrix first.
