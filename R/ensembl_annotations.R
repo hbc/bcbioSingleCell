@@ -6,10 +6,13 @@
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
+#' @keywords internal
+#'
 #' @import dplyr
 #' @importFrom biomaRt getBM useMart
 #'
 #' @param organism Organism identifier
+#' @param gene_name Ensembl gene name identifier
 #'
 #' @return Data frame
 #' @export
@@ -18,17 +21,21 @@
 #' \dontrun{
 #' ensembl_annotations("mmusculus")
 #' }
-ensembl_annotations <- function(organism) {
-    mart <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL",
-                             paste(organism, "gene_ensembl", sep = "_"))
+ensembl_annotations <- function(
+    organism,
+    gene_name = "external_gene_name") {
+    mart <- biomaRt::useMart(
+        "ENSEMBL_MART_ENSEMBL",
+        paste(organism, "gene_ensembl", sep = "_")
+    )
     # attributes <- biomaRt::listAttributes(mart)
-    df <- biomaRt::getBM(mart = mart,
-                         attributes = c("ensembl_transcript_id",
-                                        "ensembl_gene_id",
-                                        # Use instead of `mgi_symbol`
-                                        "external_gene_name",
-                                        "gene_biotype",
-                                        "chromosome_name")) %>%
+    df <- biomaRt::getBM(
+        mart = mart,
+        attributes = c("ensembl_transcript_id",
+                       gene_name,
+                       "gene_biotype",
+                       "chromosome_name")
+    ) %>%
         dplyr::arrange_(.dots = "ensembl_transcript_id") %>%
         set_rownames("ensembl_transcript_id")
 

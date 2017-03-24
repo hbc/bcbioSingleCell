@@ -19,10 +19,7 @@ barcode_metrics <- function(counts,
                             tx2gene = TRUE) {
     if (isTRUE(tx2gene)) {
         annotations$ensembl_transcript_id <- NULL
-        annotations <- annotations %>%
-            dplyr::arrange_(.dots = "ensembl_gene_id") %>%
-            dplyr::distinct(.) %>%
-            set_rownames("ensembl_gene_id")
+        annotations <- dplyr::distinct(annotations)
     }
 
     coding <- annotations %>%
@@ -34,7 +31,7 @@ barcode_metrics <- function(counts,
 
     # `rmarkdown::render()` doesn't handle `dgTMatrix` objects properly.
     # `colSums(counts)` fails here unless we coerce `counts` to a matrix first.
-    # counts <- as.matrix(counts)
+    counts <- as.matrix(counts)
 
     metrics <- data.frame(
         identifier = colnames(counts),

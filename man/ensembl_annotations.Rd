@@ -4,10 +4,12 @@
 \alias{ensembl_annotations}
 \title{Get transcript annotations from Ensembl}
 \usage{
-ensembl_annotations(organism)
+ensembl_annotations(organism, gene_name = "external_gene_name")
 }
 \arguments{
 \item{organism}{Organism identifier}
+
+\item{gene_name}{Ensembl gene name identifier}
 }
 \value{
 Data frame
@@ -26,3 +28,4 @@ Rory Kirchner
 
 Michael Steinbaugh
 }
+\keyword{internal}
