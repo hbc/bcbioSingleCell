@@ -9,10 +9,22 @@
 #' @param counts `bcbio-nextgen` scRNA-seq counts sparse matrix
 #' @param annotations Ensembl annotations data frame
 #' @param metadata Sample metadata data frame
+#' @param tx2gene Convert transcript-level annotations to gene-level
 #'
 #' @return Data frame
 #' @export
-barcode_metrics <- function(counts, annotations, metadata) {
+barcode_metrics <- function(counts,
+                            annotations,
+                            metadata,
+                            tx2gene = TRUE) {
+    if (isTRUE(tx2gene)) {
+        annotations$ensembl_transcript_id <- NULL
+        annotations <- annotations %>%
+            dplyr::arrange_(.dots = "ensembl_gene_id") %>%
+            dplyr::distinct(.) %>%
+            set_rownames("ensembl_gene_id")
+    }
+
     coding <- annotations %>%
         dplyr::filter_(.dots = quote(broad_class == "coding")) %>%
         .$ensembl_transcript_id %>% unique %>% sort
