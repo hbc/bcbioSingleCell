@@ -27,21 +27,21 @@ barcode_metrics <- function(counts,
 
     coding <- annotations %>%
         dplyr::filter_(.dots = quote(broad_class == "coding")) %>%
-        .$ensembl_transcript_id %>% unique %>% sort
+        .[[1]] %>% unique %>% sort
     mito <- annotations %>%
         dplyr::filter_(.dots = quote(broad_class == "mito")) %>%
-        .$ensembl_transcript_id %>% unique %>% sort
+        .[[1]] %>% unique %>% sort
 
     # `rmarkdown::render()` doesn't handle `dgTMatrix` objects properly.
     # `colSums(counts)` fails here unless we coerce `counts` to a matrix first.
-    counts_matrix <- as.matrix(counts)
+    # counts <- as.matrix(counts)
 
     metrics <- data.frame(
-        identifier = colnames(counts_matrix),
-        total_counts = colSums(counts_matrix),
-        genes_detected = colSums(counts_matrix > 0),
-        coding_counts = colSums(counts_matrix[rownames(counts_matrix) %in% coding, ]),
-        mito_counts = colSums(counts_matrix[rownames(counts_matrix) %in% mito, ])
+        identifier = colnames(counts),
+        total_counts = colSums(counts),
+        genes_detected = colSums(counts > 0),
+        coding_counts = colSums(counts[rownames(counts) %in% coding, ]),
+        mito_counts = colSums(counts[rownames(counts) %in% mito, ])
     ) %>%
         tidyr::separate_("identifier",
                          c("sample_barcode", "cellular_barcode"),
