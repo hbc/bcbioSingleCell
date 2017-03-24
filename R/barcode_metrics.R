@@ -17,12 +17,10 @@ barcode_metrics <- function(counts,
                             metadata) {
     coding <- annotations %>%
         dplyr::filter_(.dots = quote(broad_class == "coding")) %>%
-        .$gene_name %>%
-        unique %>% sort
+        .$gene_name %>% unique %>% sort
     mito <- annotations %>%
         dplyr::filter_(.dots = quote(broad_class == "mito")) %>%
-        .$gene_name %>%
-        unique %>% sort
+        .$gene_name %>% unique %>% sort
 
     # `rmarkdown::render()` doesn't handle `dgTMatrix` objects properly.
     # `colSums(counts)` fails here unless we coerce `counts` to a matrix first.
