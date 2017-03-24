@@ -4,7 +4,7 @@
 \alias{barcode_metrics}
 \title{Generate barcode metrics summary}
 \usage{
-barcode_metrics(counts, annotations, metadata)
+barcode_metrics(counts, annotations, metadata, tx2gene = TRUE)
 }
 \arguments{
 \item{counts}{`bcbio-nextgen` scRNA-seq counts sparse matrix}
@@ -12,6 +12,8 @@ barcode_metrics(counts, annotations, metadata)
 \item{annotations}{Ensembl annotations data frame}
 
 \item{metadata}{Sample metadata data frame}
+
+\item{tx2gene}{Convert transcript-level annotations to gene-level}
 }
 \value{
 Data frame
