@@ -6,7 +6,6 @@
 #' @author Michael Steinbaugh
 #'
 #' @import dplyr
-#' @importFrom basejump setRownames
 #'
 #' @param metrics Barcode metrics data frame
 #' @param min_genes Minimum number of genes detected
@@ -18,25 +17,27 @@
 #' @return Filtered metrics data frame
 #' @export
 filter_barcodes <- function(metrics,
-                            min_genes = 500,
+                            min_genes = 200,
                             max_genes = 5000,
                             percent_mito = 0.2,
-                            novelty = 0.8,
+                            novelty = 0,
                             plot = TRUE) {
     filtered <- metrics %>%
         dplyr::filter_(.dots = list(
             ~genes_detected > min_genes,
             ~genes_detected < max_genes,
-            # Names need to be distinct, right?
             ~percent_mito < get("percent_mito", envir = environment()),
             ~log_detected_per_count > novelty
         )) %>%
-        basejump::setRownames(., "identifier")
+        set_rownames("identifier")
 
     if (isTRUE(plot)) {
         plot_total_cells(filtered)
+        plot_total_counts(filtered)
         plot_genes_detected(filtered)
         plot_total_vs_detected(filtered)
+        plot_mito_counts(filtered)
+        plot_novelty(filtered)
     }
 
     return(filtered)
