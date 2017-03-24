@@ -66,5 +66,8 @@ ensembl_annotations <- function(
                          df$gene_biotype %in% coding ~ "coding",
                          TRUE ~ "other")
 
+    df$chromosome_name <- NULL
+    df[["gene_name"]] <- df[[gene_name]]
+
     return(df)
 }

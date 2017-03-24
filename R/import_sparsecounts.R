@@ -53,9 +53,7 @@ import_sparsecounts <- function(
 
     # Convert transcript-level counts to gene-level
     if (isTRUE(tx2gene)) {
-        annotations$ensembl_transcript_id <- NULL
-        annotations <- dplyr::distinct(annotations)
-        rownames(sparse) <- annotations[rownames(sparse), 1]
+        rownames(sparse) <- annotations[rownames(sparse), "gene_name"]
     }
 
     # Remove rows that don't match to a gene identifier
