@@ -4,7 +4,7 @@
 \alias{filter_barcodes}
 \title{Filter cellular barcodes}
 \usage{
-filter_barcodes(metrics, min_genes = 500, max_genes = 5000,
+filter_barcodes(metrics, min_genes = 200, max_genes = 5000,
   percent_mito = 0.2, novelty = 0, plot = TRUE)
 }
 \arguments{
