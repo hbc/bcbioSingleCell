@@ -39,7 +39,8 @@ plot_novelty <- function(metrics) {
             aes_(label = ~round(log_detected_per_count, digits = 2))
         ) +
         ggplot2::theme(legend.position = "none") +
-        ggplot2::ylab("log genes detected per count")
+        ggplot2::ylab("log genes detected per count") +
+        ggplot2::expand_limits(y = 0)
 
     print(histogram)
     print(boxplot)
