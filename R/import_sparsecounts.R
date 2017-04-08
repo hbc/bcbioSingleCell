@@ -8,6 +8,7 @@
 #' @import dplyr
 #' @import readr
 #' @importFrom Matrix readMM
+#' @importFrom stringr str_replace
 #' @importFrom Matrix.utils aggregate.Matrix
 #'
 #' @param bcbio bcbio run object
@@ -35,6 +36,9 @@ import_sparsecounts <- function(bcbio, annotations) {
     }
     sparse <- Matrix::readMM(matfile)
     rownames(sparse) <- readr::read_lines(rowfile)
+    # strip out ensembl transcript version numbers
+    rownames(sparse) <- stringr::str_replace(rownames(sparse), "\\.\\d+", "")
+
     colnames(sparse) <- readr::read_lines(colfile)
 
     # Convert transcript-level counts to gene-level
@@ -49,6 +53,5 @@ import_sparsecounts <- function(bcbio, annotations) {
         row.names(sparse),
         fun = "sum"
     )
-
     return(sparse)
 }
