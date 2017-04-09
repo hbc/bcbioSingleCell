@@ -4,7 +4,7 @@
 \alias{barcode_metrics}
 \title{Generate barcode metrics summary}
 \usage{
-barcode_metrics(counts, annotations, metadata)
+barcode_metrics(counts, annotations, metadata = NULL)
 }
 \arguments{
 \item{counts}{`bcbio-nextgen` scRNA-seq counts sparse matrix}

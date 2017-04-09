@@ -14,7 +14,7 @@
 #' @export
 barcode_metrics <- function(counts,
                             annotations,
-                            metadata) {
+                            metadata=NULL) {
     coding <- annotations %>%
         dplyr::filter_(.dots = quote(broad_class == "coding")) %>%
         .$gene_name %>% unique %>% sort
@@ -42,11 +42,14 @@ barcode_metrics <- function(counts,
                  quote(mito_counts / total_counts)),
             c("log_detected_per_count",
               "percent_mito")
-        )) %>%
-        dplyr::arrange_(.dots = "identifier") %>%
+            ))
+    if(!is.null(metadata)) {
+      metrics <- metrics %>%
         dplyr::left_join(metadata[, c("sample_barcode", "sample")],
-                         by = "sample_barcode") %>%
-        set_rownames("identifier")
+                         by = "sample_barcode")
+    }
+    metrics <- metrics <- dplyr::arrange_(.dots = "identifier") %>%
+      set_rownames("identifier")
 
     return(metrics)
 }
