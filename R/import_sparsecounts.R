@@ -7,7 +7,7 @@
 #'
 #' @import dplyr
 #' @import readr
-#' @importFrom Matrix readMM
+#' @import Matrix
 #' @importFrom stringr str_replace
 #' @importFrom Matrix.utils aggregate.Matrix
 #'
@@ -53,5 +53,5 @@ import_sparsecounts <- function(bcbio, annotations) {
         row.names(sparse),
         fun = "sum"
     )
-    return(sparse)
+    return(as(sparse, "dgCMatrix"))
 }
