@@ -1,4 +1,4 @@
-#' Novelty plot
+#' Novelty histogram
 #'
 #' log detected per count
 #'
@@ -9,9 +9,9 @@
 #' @importFrom stats aggregate median
 #'
 #' @param metrics Barcode metrics data frame
-#'
+#' @return ggplot2 object
 #' @export
-plot_novelty <- function(metrics) {
+plot_novelty_histogram <- function(metrics) {
     histogram <- metrics %>%
         ggplot2::ggplot(
             ggplot2::aes_(x = ~log_detected_per_count,
@@ -23,7 +23,23 @@ plot_novelty <- function(metrics) {
         ggplot2::scale_y_sqrt() +
         ggplot2::theme(legend.position = "none") +
         ggplot2::xlab("log genes detected per count")
+    return(histogram)
+}
 
+#' Novelty boxplot
+#'
+#' log detected per count
+#'
+#' @author Rory Kirchner
+#' @author Michael Steinbaugh
+#'
+#' @import ggplot2
+#' @importFrom stats aggregate median
+#'
+#' @param metrics Barcode metrics data frame
+#' @return ggplot2 object
+#' @export
+plot_novelty_boxplot <- function(metrics) {
     boxplot <- metrics %>%
         ggplot2::ggplot(
             ggplot2::aes_(x = ~sample,
@@ -41,7 +57,5 @@ plot_novelty <- function(metrics) {
         ggplot2::theme(legend.position = "none") +
         ggplot2::ylab("log genes detected per count") +
         ggplot2::expand_limits(y = 0)
-
-    print(histogram)
-    print(boxplot)
+    return(boxplot)
 }
