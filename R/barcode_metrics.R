@@ -48,7 +48,8 @@ barcode_metrics <- function(counts,
         dplyr::left_join(metadata[, c("sample_barcode", "sample")],
                          by = "sample_barcode")
     }
-    metrics <- metrics <- dplyr::arrange_(.dots = "identifier") %>%
+    metrics <- metrics %>%
+      dplyr::arrange_(.dots = "identifier") %>%
       set_rownames("identifier")
 
     return(metrics)
