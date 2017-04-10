@@ -4,10 +4,15 @@
 \alias{plot_total_vs_detected}
 \title{Total counts vs. genes detected plot}
 \usage{
-plot_total_vs_detected(metrics)
+plot_total_vs_detected(metrics, colorby = "sample")
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}
+
+\item{colorby}{column to color the points by}
+}
+\value{
+ggplot2 object
 }
 \description{
 Total counts vs. genes detected plot

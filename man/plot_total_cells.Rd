@@ -9,6 +9,9 @@ plot_total_cells(metrics)
 \arguments{
 \item{metrics}{Barcode metrics data frame}
 }
+\value{
+ggplot2 object
+}
 \description{
 Total cells plot
 }

@@ -38,8 +38,9 @@ plot_genes_detected_boxplot <- function(metrics) {
 #' @import dplyr
 #' @import ggplot2
 #' @importFrom stats aggregate median
-#' @param metrics
+#' @param metrics barcode metrics data frame
 #' @return ggplot2 object
+#' @export
 plot_genes_detected_histogram <- function(metrics) {
     histogram <- metrics %>%
         ggplot2::ggplot(
