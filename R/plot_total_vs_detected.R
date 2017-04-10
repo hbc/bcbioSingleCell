@@ -6,13 +6,15 @@
 #' @import ggplot2
 #'
 #' @param metrics Barcode metrics data frame
-#'
+#' @param colorby column to color the points by
+#' @return ggplot2 object
 #' @export
-plot_total_vs_detected <- function(metrics) {
+plot_total_vs_detected <- function(metrics, colorby="sample") {
     plot <- metrics %>%
         ggplot2::ggplot(
             ggplot2::aes_(x = ~total_counts,
-                          y = ~genes_detected)) +
+                          y = ~genes_detected,
+                          color = as.name(colorby))) +
         ggplot2::facet_wrap(~sample) +
         ggplot2::geom_point() +
         ggplot2::geom_smooth(method = "loess") +
@@ -25,5 +27,5 @@ plot_total_vs_detected <- function(metrics) {
         ) +
         ggplot2::xlab("counts per cell") +
         ggplot2::ylab("genes per cell")
-    print(plot)
+    return(plot)
 }
