@@ -1,4 +1,4 @@
-#' Total counts vs. genes detected plot
+#' Mitochondrial count histogram
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
@@ -8,9 +8,9 @@
 #' @importFrom stats setNames
 #'
 #' @param metrics Barcode metrics data frame
-#'
+#' @return ggplot2 object
 #' @export
-plot_mito_counts <- function(metrics) {
+plot_mito_counts_histogram <- function(metrics) {
     histogram <- metrics %>%
         dplyr::mutate_(.dots = stats::setNames(
             list(~percent_mito * 100),
@@ -25,7 +25,22 @@ plot_mito_counts <- function(metrics) {
         ggplot2::scale_y_sqrt() +
         ggplot2::theme(legend.position = "none") +
         ggplot2::xlab("% mitochondrial")
+    return(histogram)
+}
 
+#' Mitochondrial count scatterplot
+#'
+#' @author Rory Kirchner
+#' @author Michael Steinbaugh
+#'
+#' @import dplyr
+#' @import ggplot2
+#' @importFrom stats setNames
+#'
+#' @param metrics Barcode metrics data frame
+#' @return ggplot2 object
+#' @export
+plot_mito_counts_boxplot <- function(metrics) {
     scatterplot <- metrics %>%
         ggplot2::ggplot(
             ggplot2::aes_(x = ~coding_counts,
@@ -43,7 +58,5 @@ plot_mito_counts <- function(metrics) {
         ggplot2::xlab("counts in mitochondrial genes") +
         ggplot2::xlim(0, 50000) +
         ggplot2::ylab("counts in coding genes")
-
-    print(histogram)
-    print(scatterplot)
+    return(scatterplot)
 }
