@@ -56,15 +56,15 @@ ensembl_annotations <- function(
               "snRNA",
               "sRNA")
     df$broad_class <-
-        dplyr::case_when(grepl("mito", df$chromosome_name) ~ "mito",
-                         grepl("pseudo", df$gene_biotype) ~ "pseudo",
-                         grepl("TR_", df$gene_biotype) ~ "TCR",
-                         grepl("IG_", df$gene_biotype) ~ "IG",
-                         df$gene_biotype %in% srna ~ "small",
-                         df$gene_biotype %in% decaying ~ "decaying",
-                         df$gene_biotype %in% noncoding ~ "noncoding",
-                         df$gene_biotype %in% coding ~ "coding",
-                         TRUE ~ "other")
+      dplyr::case_when(tolower(df$chromosome_name) == "mt" ~ "mito",
+                       grepl("pseudo", df$gene_biotype) ~ "pseudo",
+                       grepl("TR_", df$gene_biotype) ~ "TCR",
+                       grepl("IG_", df$gene_biotype) ~ "IG",
+                       df$gene_biotype %in% srna ~ "small",
+                       df$gene_biotype %in% decaying ~ "decaying",
+                       df$gene_biotype %in% noncoding ~ "noncoding",
+                       df$gene_biotype %in% coding ~ "coding",
+                       TRUE ~ "other")
 
     df[["gene_name"]] <- df[[gene_name]]
     df[[gene_name]] <- NULL
