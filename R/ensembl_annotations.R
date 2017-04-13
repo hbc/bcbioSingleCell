@@ -62,7 +62,6 @@ ensembl_annotations <- function(run) {
                   df$gene_biotype %in% noncoding ~ "noncoding",
                   df$gene_biotype %in% coding ~ "coding",
                   TRUE ~ "other")
-    df$chromosome_name <- NULL
 
     return(df)
 }
