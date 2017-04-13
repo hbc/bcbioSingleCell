@@ -1,14 +1,20 @@
-##' Plot a barcode histogram for a given sample
-##'
-##' @param filename path to a barcode histogram file
-##' @param sample title for plot
-##' @import ggplot2
-##' @importFrom graphics hist
-##' @importFrom scales math_format trans_breaks trans_format
-##' @keywords internal
-##' @author Rory Kirchner
-##' @author Michael Steinbaugh
-##' @export
+#' Plot sample barcodes
+#'
+#' @rdname plot_barcode
+#'
+#' @author Rory Kirchner
+#' @author Michael Steinbaugh
+
+
+
+#' @rdname plot_barcode
+#' @description Plot a barcode histogram for a given sample
+#' @keywords internal
+#'
+#' @param filename path to a barcode histogram file
+#' @param sample title for plot
+#'
+#' @export
 plot_barcode <- function(filename, sample = NULL) {
     # Get the sample name from the filename by default
     if (is.null(sample)) {
@@ -16,24 +22,43 @@ plot_barcode <- function(filename, sample = NULL) {
     }
 
     bcs <- read_barcode_file(filename)
-    bcs_hist <- graphics::hist(log10(bcs$count),
-                               plot = FALSE, n = 50)
+    bcs_hist <- hist(log10(bcs$count), plot = FALSE, n = 50)
 
     fLog <- bcs_hist$count
     xLog <- bcs_hist$mids
 
     y <- fLog * (10^xLog) / sum(fLog * (10^xLog))
 
-    p <- ggplot2::qplot(10^xLog, y) +
-        ggplot2::geom_point() +
-        ggplot2::geom_line() +
-        ggplot2::ggtitle(sample) +
-        ggplot2::scale_x_log10(
-            breaks = scales::trans_breaks("log10", function(x) 10^x),
-            labels = scales::trans_format("log10", scales::math_format(~10^.x))
+    plot <- qplot(10^xLog, y) +
+        geom_point() +
+        geom_line() +
+        ggtitle(sample) +
+        scale_x_log10(
+            breaks = trans_breaks("log10", function(x) 10^x),
+            labels = trans_format("log10", math_format(~10^.x))
         ) +
-        ggplot2::xlab("number of reads assigned to a cell") +
-        ggplot2::ylab("proportion of cells")
+        xlab("number of reads assigned to a cell") +
+        ylab("proportion of cells")
 
-    print(p)
+    return(plot)
+}
+
+
+
+#' @rdname plot_barcode
+#' @description Plot all single cell sample barcodes
+#'
+#' @param run \code{bcbio-nextgen} run
+#'
+#' @export
+plot_barcodes <- function(run) {
+    files <- list.files(
+        run$final_dir,
+        pattern = "*-barcodes.tsv",
+        recursive = TRUE,
+        include.dirs = TRUE,
+        full.names = TRUE)
+    lapply(seq_along(files), function(a) {
+        show(plot_barcode(files[a]))
+    }) %>% invisible
 }
