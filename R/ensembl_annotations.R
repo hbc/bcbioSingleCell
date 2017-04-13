@@ -27,7 +27,7 @@ ensembl_annotations <- function(run) {
     df <- getBM(
         mart = ensembl,
         attributes = c("ensembl_transcript_id",
-                       gene_name,
+                       "external_gene_name",
                        "gene_biotype",
                        "chromosome_name")
     ) %>%
