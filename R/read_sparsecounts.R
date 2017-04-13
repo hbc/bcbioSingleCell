@@ -5,38 +5,37 @@
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @param bcbio bcbio run object
-#' @param annotations Ensembl annotations data frame
+#' @param run \code{bcbio-nextgen} run
 #'
 #' @return Sparse counts matrix
 #' @export
-#'
-#' @examples
-#' \dontrun{
-#' import_sparsecounts(bcbio)
-#' }
-import_sparsecounts <- function(bcbio, annotations) {
-    matfile <- file.path(bcbio$project_dir, "tagcounts.mtx")
+read_sparsecounts <- function(run) {
+    # Sparse matrix
+    matfile <- file.path(run$project_dir, "tagcounts.mtx")
     if (!file.exists(matfile)) {
-        stop("Count matrix could not be found.")
-    }
-    rowfile <- file.path(bcbio$project_dir, "tagcounts.mtx.rownames")
-    if (!file.exists(rowfile)) {
-        stop("Row names file could not be found.")
-    }
-    colfile <- file.path(bcbio$project_dir, "tagcounts.mtx.colnames")
-    if (!file.exists(colfile)) {
-        stop("Column names file could not be found.")
+        stop("count matrix could not be found")
     }
     sparse <- readMM(matfile)
+    # class(sparse)[1] == "dgTMatrix"
+
+    # Rownames
+    rowfile <- file.path(run$project_dir, "tagcounts.mtx.rownames")
+    if (!file.exists(rowfile)) {
+        stop("rownames file could not be found")
+    }
     rownames(sparse) <- read_lines(rowfile)
-    # strip out ensembl transcript version numbers
+    # Strip out transcript version numbers
     rownames(sparse) <- str_replace(rownames(sparse), "\\.\\d+", "")
-
-    colnames(sparse) <- read_lines(colfile)
-
     # Convert transcript-level counts to gene-level
+    annotations <- ensembl_annotations(run)
     rownames(sparse) <- annotations[rownames(sparse), "external_gene_name"]
+
+    # Colnames
+    colfile <- file.path(run$project_dir, "tagcounts.mtx.colnames")
+    if (!file.exists(colfile)) {
+        stop("colnames file could not be found")
+    }
+    colnames(sparse) <- read_lines(colfile)
 
     # Remove rows that don't match a gene name
     sparse <- sparse[!is.na(rownames(sparse)), ]
@@ -45,7 +44,8 @@ import_sparsecounts <- function(bcbio, annotations) {
     sparse <- aggregate.Matrix(
         sparse,
         row.names(sparse),
-        fun = "sum"
-    )
+        fun = "sum")
+    # class(sparse)[1] == "dgCMatrix"
+
     return(as(sparse, "dgCMatrix"))
 }
