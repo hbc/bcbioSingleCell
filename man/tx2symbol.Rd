@@ -9,7 +9,8 @@ tx2symbol(matrix, fromto, strip = FALSE)
 \arguments{
 \item{matrix}{a matrix of counts}
 
-\item{fromto}{a dataframe where "from" is the original id and "to" is the id to convert to}
+\item{fromto}{a dataframe where "from" is the original id and "to" is the id
+to convert to}
 
 \item{strip}{strip transcript versions from the matrix before aggregating}
 }

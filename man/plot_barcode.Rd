@@ -2,17 +2,24 @@
 % Please edit documentation in R/plot_barcode.R
 \name{plot_barcode}
 \alias{plot_barcode}
-\title{Plot a barcode histogram for a given sample}
+\alias{plot_barcodes}
+\title{Plot sample barcodes}
 \usage{
 plot_barcode(filename, sample = NULL)
+
+plot_barcodes(run)
 }
 \arguments{
 \item{filename}{path to a barcode histogram file}
 
 \item{sample}{title for plot}
+
+\item{run}{\code{bcbio-nextgen} run}
 }
 \description{
 Plot a barcode histogram for a given sample
+
+Plot all single cell sample barcodes
 }
 \author{
 Rory Kirchner

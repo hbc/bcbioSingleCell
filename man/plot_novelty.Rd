@@ -2,9 +2,15 @@
 % Please edit documentation in R/plot_novelty.R
 \name{plot_novelty_histogram}
 \alias{plot_novelty_histogram}
-\title{Novelty histogram}
+\alias{plot_novelty_boxplot}
+\alias{plot_novelty}
+\title{Novelty plots (log detected per count)}
 \usage{
 plot_novelty_histogram(metrics)
+
+plot_novelty_boxplot(metrics)
+
+plot_novelty(metrics)
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}
@@ -13,7 +19,11 @@ plot_novelty_histogram(metrics)
 ggplot2 object
 }
 \description{
-log detected per count
+Histogram
+
+Boxplot
+
+Show both plots
 }
 \author{
 Rory Kirchner

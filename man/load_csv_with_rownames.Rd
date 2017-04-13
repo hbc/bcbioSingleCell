@@ -12,7 +12,7 @@ load_csv_with_rownames(filename, column)
 \item{column}{column to make into the rownames}
 }
 \value{
-dataframe
+Data frame
 }
 \description{
 Load a CSV file with readr, setting a given column as the rownames

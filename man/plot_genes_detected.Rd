@@ -2,9 +2,15 @@
 % Please edit documentation in R/plot_genes_detected.R
 \name{plot_genes_detected_boxplot}
 \alias{plot_genes_detected_boxplot}
-\title{Genes detected boxplot}
+\alias{plot_genes_detected_histogram}
+\alias{plot_genes_detected}
+\title{Genes detected plots}
 \usage{
 plot_genes_detected_boxplot(metrics)
+
+plot_genes_detected_histogram(metrics)
+
+plot_genes_detected(metrics)
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}
@@ -13,7 +19,11 @@ plot_genes_detected_boxplot(metrics)
 ggplot2 object
 }
 \description{
-Genes detected boxplot
+Boxplot
+
+Histogram
+
+Show both plots
 }
 \author{
 Rory Kirchner

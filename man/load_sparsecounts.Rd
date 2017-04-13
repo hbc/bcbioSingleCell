@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_sparsecounts.R
 \name{load_sparsecounts}
 \alias{load_sparsecounts}
-\title{Load a gzipped MatrixMart file, setting the row and column names.}
+\title{Load a gzipped MatrixMart file, setting the row and column names}
 \usage{
 load_sparsecounts(gzfile)
 }
@@ -13,7 +13,7 @@ load_sparsecounts(gzfile)
 a sparse matrix of counts
 }
 \description{
-Load a gzipped MatrixMart file, setting the row and column names.
+Load a gzipped MatrixMart file, setting the row and column names
 }
 \author{
 Rory Kirchner
