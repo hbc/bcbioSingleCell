@@ -9,7 +9,7 @@
 read_sample_barcodes_metadata <- function(
     file = file.path("meta", "sample_barcodes.xlsx")) {
     if (file.exists(file)) {
-        if (grepl(".\\xlsx", file)) {
+        if (grepl("\\.xlsx$", file)) {
             df <- read_excel(file)
         } else {
             df <- read_csv(file)
