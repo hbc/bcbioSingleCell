@@ -6,27 +6,26 @@
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @keywords internal
-#'
-#' @param organism Organism identifier
-#' @param gene_name Ensembl gene name identifier
+#' @param run \code{bcbio-nextgen} run
 #'
 #' @return Data frame
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' ensembl_annotations("mmusculus")
+#' ensembl_annotations(run)
 #' }
-ensembl_annotations <- function(
-    organism,
-    gene_name = "external_gene_name") {
-    mart <- useMart(
-        "ENSEMBL_MART_ENSEMBL",
-        paste(organism, "gene_ensembl", sep = "_")
-    )
+ensembl_annotations <- function(run) {
+    check_run(run)
+
+    # version = "87"
+    ensembl <- useEnsembl(
+        biomart = "ensembl",
+        dataset = paste(run$organism, "gene_ensembl", sep = "_"),
+        host = "dec2016.archive.ensembl.org")
+
     df <- getBM(
-        mart = mart,
+        mart = ensembl,
         attributes = c("ensembl_transcript_id",
                        gene_name,
                        "gene_biotype",
@@ -52,8 +51,9 @@ ensembl_annotations <- function(
               "snRNA",
               "sRNA")
     df$broad_class <-
-        # Need to add matching fix for Drosophila genome
         case_when(tolower(df$chromosome_name) == "mt" ~ "mito",
+                  # Fix to match Drosophila genome (non-standard)
+                  grepl("mito", df$chromosome_name) ~ "mito",
                   grepl("pseudo", df$gene_biotype) ~ "pseudo",
                   grepl("TR_", df$gene_biotype) ~ "TCR",
                   grepl("IG_", df$gene_biotype) ~ "IG",
