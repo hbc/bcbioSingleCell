@@ -16,11 +16,6 @@ Data frame
 This function also defines broad classes, which are used in quality control
 analysis
 }
-\examples{
-\dontrun{
-ensembl_annotations(run)
-}
-}
 \author{
 Rory Kirchner
 
