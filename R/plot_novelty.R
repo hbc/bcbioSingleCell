@@ -1,61 +1,66 @@
-#' Novelty histogram
+#' Novelty plots (log detected per count)
 #'
-#' log detected per count
+#' @rdname plot_novelty
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @import ggplot2
-#' @importFrom stats aggregate median
-#'
 #' @param metrics Barcode metrics data frame
+#'
 #' @return ggplot2 object
+
+
+
+#' @rdname plot_novelty
+#' @description Histogram
 #' @export
 plot_novelty_histogram <- function(metrics) {
     histogram <- metrics %>%
-        ggplot2::ggplot(
-            ggplot2::aes_(x = ~log_detected_per_count,
-                          fill = ~sample)
+        ggplot(
+            aes_(x = ~log_detected_per_count,
+                 fill = ~sample)
         ) +
-        ggplot2::facet_wrap(~sample) +
-        ggplot2::geom_histogram() +
-        ggplot2::ggtitle("novelty histogram") +
-        ggplot2::scale_y_sqrt() +
-        ggplot2::theme(legend.position = "none") +
-        ggplot2::xlab("log genes detected per count")
+        facet_wrap(~sample) +
+        geom_histogram() +
+        ggtitle("novelty histogram") +
+        scale_y_sqrt() +
+        theme(legend.position = "none") +
+        xlab("log genes detected per count")
     return(histogram)
 }
 
-#' Novelty boxplot
-#'
-#' log detected per count
-#'
-#' @author Rory Kirchner
-#' @author Michael Steinbaugh
-#'
-#' @import ggplot2
-#' @importFrom stats aggregate median
-#'
-#' @param metrics Barcode metrics data frame
-#' @return ggplot2 object
+
+
+#' @rdname plot_novelty
+#' @description Boxplot
 #' @export
 plot_novelty_boxplot <- function(metrics) {
     boxplot <- metrics %>%
-        ggplot2::ggplot(
-            ggplot2::aes_(x = ~sample,
-                          y = ~log_detected_per_count,
-                          fill = ~sample)
+        ggplot(
+            aes_(x = ~sample,
+                 y = ~log_detected_per_count,
+                 fill = ~sample)
         ) +
-        ggplot2::geom_boxplot() +
-        ggplot2::ggtitle("novelty boxplot") +
-        ggplot2::geom_label(
-            data = stats::aggregate(log_detected_per_count ~ sample,
-                                    metrics,
-                                    stats::median),
+        geom_boxplot() +
+        ggtitle("novelty boxplot") +
+        geom_label(
+            data = aggregate(log_detected_per_count ~ sample,
+                             metrics,
+                             median),
             aes_(label = ~round(log_detected_per_count, digits = 2))
         ) +
-        ggplot2::theme(legend.position = "none") +
-        ggplot2::ylab("log genes detected per count") +
-        ggplot2::expand_limits(y = 0)
+        theme(legend.position = "none") +
+        ylab("log genes detected per count") +
+        expand_limits(y = 0)
     return(boxplot)
+}
+
+
+
+#' @rdname plot_novelty
+#' @description Show both plots
+#' @export
+plot_novelty <- function(metrics) {
+    show(plot_novelty_histogram(metrics))
+    show(plot_novelty_boxplot(metrics))
 }

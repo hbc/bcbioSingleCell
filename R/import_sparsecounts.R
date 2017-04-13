@@ -5,12 +5,6 @@
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @import dplyr
-#' @import readr
-#' @import Matrix
-#' @importFrom stringr str_replace
-#' @importFrom Matrix.utils aggregate.Matrix
-#'
 #' @param bcbio bcbio run object
 #' @param annotations Ensembl annotations data frame
 #'
@@ -34,12 +28,12 @@ import_sparsecounts <- function(bcbio, annotations) {
     if (!file.exists(colfile)) {
         stop("Column names file could not be found.")
     }
-    sparse <- Matrix::readMM(matfile)
-    rownames(sparse) <- readr::read_lines(rowfile)
+    sparse <- readMM(matfile)
+    rownames(sparse) <- read_lines(rowfile)
     # strip out ensembl transcript version numbers
-    rownames(sparse) <- stringr::str_replace(rownames(sparse), "\\.\\d+", "")
+    rownames(sparse) <- str_replace(rownames(sparse), "\\.\\d+", "")
 
-    colnames(sparse) <- readr::read_lines(colfile)
+    colnames(sparse) <- read_lines(colfile)
 
     # Convert transcript-level counts to gene-level
     rownames(sparse) <- annotations[rownames(sparse), "gene_name"]
@@ -48,7 +42,7 @@ import_sparsecounts <- function(bcbio, annotations) {
     sparse <- sparse[!is.na(rownames(sparse)), ]
 
     # Aggregate the counts by rowname
-    sparse <- Matrix.utils::aggregate.Matrix(
+    sparse <- aggregate.Matrix(
         sparse,
         row.names(sparse),
         fun = "sum"

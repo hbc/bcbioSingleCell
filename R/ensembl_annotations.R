@@ -8,9 +8,6 @@
 #'
 #' @keywords internal
 #'
-#' @import dplyr
-#' @importFrom biomaRt getBM useMart
-#'
 #' @param organism Organism identifier
 #' @param gene_name Ensembl gene name identifier
 #'
@@ -24,20 +21,19 @@
 ensembl_annotations <- function(
     organism,
     gene_name = "external_gene_name") {
-    mart <- biomaRt::useMart(
+    mart <- useMart(
         "ENSEMBL_MART_ENSEMBL",
         paste(organism, "gene_ensembl", sep = "_")
     )
-    # attributes <- biomaRt::listAttributes(mart)
-    df <- biomaRt::getBM(
+    df <- getBM(
         mart = mart,
         attributes = c("ensembl_transcript_id",
                        gene_name,
                        "gene_biotype",
                        "chromosome_name")
     ) %>%
-        dplyr::arrange_(.dots = "ensembl_transcript_id") %>%
-        set_rownames("ensembl_transcript_id")
+        arrange_(.dots = "ensembl_transcript_id") %>%
+        set_rownames(.$ensembl_transcript_id)
 
     # Broad class definitions
     coding <- c("protein_coding")
@@ -56,15 +52,16 @@ ensembl_annotations <- function(
               "snRNA",
               "sRNA")
     df$broad_class <-
-      dplyr::case_when(tolower(df$chromosome_name) == "mt" ~ "mito",
-                       grepl("pseudo", df$gene_biotype) ~ "pseudo",
-                       grepl("TR_", df$gene_biotype) ~ "TCR",
-                       grepl("IG_", df$gene_biotype) ~ "IG",
-                       df$gene_biotype %in% srna ~ "small",
-                       df$gene_biotype %in% decaying ~ "decaying",
-                       df$gene_biotype %in% noncoding ~ "noncoding",
-                       df$gene_biotype %in% coding ~ "coding",
-                       TRUE ~ "other")
+        # Need to add matching fix for Drosophila genome
+        case_when(tolower(df$chromosome_name) == "mt" ~ "mito",
+                  grepl("pseudo", df$gene_biotype) ~ "pseudo",
+                  grepl("TR_", df$gene_biotype) ~ "TCR",
+                  grepl("IG_", df$gene_biotype) ~ "IG",
+                  df$gene_biotype %in% srna ~ "small",
+                  df$gene_biotype %in% decaying ~ "decaying",
+                  df$gene_biotype %in% noncoding ~ "noncoding",
+                  df$gene_biotype %in% coding ~ "coding",
+                  TRUE ~ "other")
 
     df[["gene_name"]] <- df[[gene_name]]
     df[[gene_name]] <- NULL

@@ -1,62 +1,69 @@
-#' Mitochondrial count histogram
+#' Mitochondrial count plots
+#'
+#' @rdname plot_mito_counts
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @import dplyr
-#' @import ggplot2
-#' @importFrom stats setNames
-#'
 #' @param metrics Barcode metrics data frame
+#'
 #' @return ggplot2 object
+
+
+
+#' @rdname plot_mito_counts
+#' @description Histogram
 #' @export
 plot_mito_counts_histogram <- function(metrics) {
     histogram <- metrics %>%
-        dplyr::mutate_(.dots = stats::setNames(
+        mutate_(.dots = set_names(
             list(~percent_mito * 100),
             "percent_mito"
         )) %>%
-        ggplot2::ggplot(
-            ggplot2::aes_(x = ~percent_mito,
-                          fill = ~sample)) +
-        ggplot2::facet_wrap(~sample) +
-        ggplot2::geom_histogram() +
-        ggplot2::ggtitle("mitochondrial gene abundance histogram") +
-        ggplot2::scale_y_sqrt() +
-        ggplot2::theme(legend.position = "none") +
-        ggplot2::xlab("% mitochondrial")
+        ggplot(
+            aes_(x = ~percent_mito,
+                 fill = ~sample)) +
+        facet_wrap(~sample) +
+        geom_histogram() +
+        ggtitle("mitochondrial gene abundance histogram") +
+        scale_y_sqrt() +
+        theme(legend.position = "none") +
+        xlab("% mitochondrial")
     return(histogram)
 }
 
-#' Mitochondrial count scatterplot
-#'
-#' @author Rory Kirchner
-#' @author Michael Steinbaugh
-#'
-#' @import dplyr
-#' @import ggplot2
-#' @importFrom stats setNames
-#'
-#' @param metrics Barcode metrics data frame
-#' @return ggplot2 object
+
+
+#' @rdname plot_mito_counts
+#' @description Boxplot
 #' @export
 plot_mito_counts_boxplot <- function(metrics) {
     scatterplot <- metrics %>%
-        ggplot2::ggplot(
-            ggplot2::aes_(x = ~coding_counts,
-                          y = ~mito_counts,
-                          color = ~sample)
+        ggplot(
+            aes_(x = ~coding_counts,
+                 y = ~mito_counts,
+                 color = ~sample)
         ) +
-        ggplot2::facet_wrap(~sample) +
-        ggplot2::ggtitle("mitochondrial gene abundance scatterplot") +
-        ggplot2::geom_point() +
-        ggplot2::theme(
-            axis.text.x = ggplot2::element_text(angle = 90,
-                                                hjust = 1),
+        facet_wrap(~sample) +
+        ggtitle("mitochondrial gene abundance scatterplot") +
+        geom_point() +
+        theme(
+            axis.text.x = element_text(angle = 90,
+                                       hjust = 1),
             legend.position = "none"
         ) +
-        ggplot2::xlab("counts in mitochondrial genes") +
-        ggplot2::xlim(0, 50000) +
-        ggplot2::ylab("counts in coding genes")
+        xlab("counts in mitochondrial genes") +
+        xlim(0, 50000) +
+        ylab("counts in coding genes")
     return(scatterplot)
+}
+
+
+
+#' @rdname plot_mito_counts
+#' @description Show both plots
+#' @export
+plot_mito_counts <- function(metrics) {
+    show(plot_mito_counts_histogram(metrics))
+    show(plot_mito_counts_boxplot(metrics))
 }

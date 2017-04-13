@@ -5,8 +5,6 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @import dplyr
-#'
 #' @param metrics Barcode metrics data frame
 #' @param min_genes Minimum number of genes detected
 #' @param max_genes Maximum number of genes detected
@@ -16,28 +14,38 @@
 #'
 #' @return Filtered metrics data frame
 #' @export
-filter_barcodes <- function(metrics,
-                            min_genes = 200,
-                            max_genes = 5000,
-                            percent_mito = 0.2,
-                            novelty = 0,
-                            plot = TRUE) {
+filter_barcodes <- function(
+    metrics,
+    min_genes = 200,
+    max_genes = 5000,
+    percent_mito = 0.2,
+    novelty = 0,
+    plot = TRUE) {
     filtered <- metrics %>%
-        dplyr::filter_(.dots = list(
+        filter_(.dots = list(
             ~genes_detected > min_genes,
             ~genes_detected < max_genes,
             ~percent_mito < get("percent_mito", envir = environment()),
             ~log_detected_per_count > novelty
         )) %>%
-        set_rownames("identifier")
+        set_rownames(.$identifier)
 
     if (isTRUE(plot)) {
-        plot_total_cells(filtered)
-        plot_total_counts(filtered)
-        plot_genes_detected(filtered)
-        plot_total_vs_detected(filtered)
-        plot_mito_counts(filtered)
-        plot_novelty(filtered)
+        show(plot_total_cells(filtered))
+
+        show(plot_total_counts_histogram(filtered))
+        show(plot_total_counts_boxplot(filtered))
+
+        show(plot_genes_detected_histogram(filtered))
+        show(plot_genes_detected_boxplot(filtered))
+
+        show(plot_total_vs_detected(filtered))
+
+        show(plot_mito_counts_histogram(filtered))
+        show(plot_mito_counts_boxplot(filtered))
+
+        show(plot_novelty_histogram(filtered))
+        show(plot_novelty_boxplot(filtered))
     }
 
     return(filtered)
