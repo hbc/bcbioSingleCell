@@ -4,14 +4,14 @@
 \alias{barcode_metrics}
 \title{Generate barcode metrics summary}
 \usage{
-barcode_metrics(counts, annotations, metadata = NULL)
+barcode_metrics(run, sparsecounts, metadata = NULL)
 }
 \arguments{
-\item{counts}{`bcbio-nextgen` scRNA-seq counts sparse matrix}
+\item{run}{\code{bcbio-nextgen} run}
 
-\item{annotations}{Ensembl annotations data frame}
+\item{sparsecounts}{Sparse counts matrix}
 
-\item{metadata}{Sample metadata data frame}
+\item{metadata}{Sample barcodes metadata}
 }
 \value{
 Data frame

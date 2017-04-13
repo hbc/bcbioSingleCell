@@ -2,15 +2,22 @@
 % Please edit documentation in R/integrity_checks.R
 \name{check_run}
 \alias{check_run}
+\alias{check_sparse}
 \title{Perform object integrity checks}
 \usage{
 check_run(run)
+
+check_sparse(sparsecounts)
 }
 \arguments{
 \item{run}{\code{bcbio-nextgen} run}
+
+\item{sparsecounts}{Sparse counts matrix}
 }
 \description{
 Check \code{bcbio-nextgen} run
+
+Check sparse counts matrix
 }
 \author{
 Michael Steinbaugh

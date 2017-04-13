@@ -18,3 +18,4 @@ Strip transcript versions off of the rownames of a dataframe or matrix
 \author{
 Rory Kirchner
 }
+\keyword{internal}

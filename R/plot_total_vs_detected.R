@@ -8,7 +8,7 @@
 #'
 #' @return ggplot2 object
 #' @export
-plot_total_vs_detected <- function(metrics, colorby="sample") {
+plot_total_vs_detected <- function(metrics, colorby = "sample") {
     plot <- metrics %>%
         ggplot(
             aes_(x = ~total_counts,
