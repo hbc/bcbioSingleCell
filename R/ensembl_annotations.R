@@ -10,11 +10,6 @@
 #'
 #' @return Data frame
 #' @export
-#'
-#' @examples
-#' \dontrun{
-#' ensembl_annotations(run)
-#' }
 ensembl_annotations <- function(run) {
     check_run(run)
 
