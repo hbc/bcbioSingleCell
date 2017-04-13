@@ -9,7 +9,7 @@ NULL
 
 
 # Metadata ====
-#' @importFrom biomaRt getBM useMart
+#' @importFrom biomaRt getBM useEnsembl
 NULL
 
 
