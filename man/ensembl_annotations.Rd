@@ -4,12 +4,10 @@
 \alias{ensembl_annotations}
 \title{Get transcript annotations from Ensembl}
 \usage{
-ensembl_annotations(organism, gene_name = "external_gene_name")
+ensembl_annotations(run)
 }
 \arguments{
-\item{organism}{Organism identifier}
-
-\item{gene_name}{Ensembl gene name identifier}
+\item{run}{\code{bcbio-nextgen} run}
 }
 \value{
 Data frame
@@ -20,7 +18,7 @@ analysis
 }
 \examples{
 \dontrun{
-ensembl_annotations("mmusculus")
+ensembl_annotations(run)
 }
 }
 \author{
@@ -28,4 +26,3 @@ Rory Kirchner
 
 Michael Steinbaugh
 }
-\keyword{internal}
