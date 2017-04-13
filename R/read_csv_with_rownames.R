@@ -1,4 +1,4 @@
-#' Load a CSV file with readr, setting a given column as the rownames
+#' Read a CSV file with readr, setting a given column as the rownames
 #'
 #' @author Rory Kirchner
 #'
@@ -9,7 +9,7 @@
 #'
 #' @return Data frame
 #' @export
-load_csv_with_rownames <- function(filename, column) {
+read_csv_with_rownames <- function(filename, column) {
     dat <- read_csv(filename, progress = FALSE) %>%
         as.data.frame
     rownames(dat) <- dat[, column]
