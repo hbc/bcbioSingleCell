@@ -1,4 +1,6 @@
 # General ====
+#' @importFrom biomaRt getBM useEnsembl
+#' @importFrom knitr asis_output kable opts_knit
 #' @importFrom methods as show
 #' @importFrom R.utils gzip
 #' @importFrom stats aggregate median
@@ -8,16 +10,15 @@ NULL
 
 
 
-# Metadata ====
-#' @importFrom biomaRt getBM useEnsembl
-NULL
-
-
-
 # Matrices ====
 #' @importFrom Matrix readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix
 NULL
+
+
+
+# Strings ====
+#' @importFrom seqRFLP revComp
 
 
 
@@ -34,6 +35,7 @@ NULL
 #' @import ggplot2
 #' @import magrittr
 #' @import readr
+#' @import readxl
 #' @import stringr
 #' @importFrom tidyr separate_
 NULL
