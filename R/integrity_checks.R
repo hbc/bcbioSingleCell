@@ -32,3 +32,15 @@ check_run <- function(run) {
         stop("could not access project_dir")
     }
 }
+
+
+
+#' @rdname integrity_checks
+#' @description Check sparse counts matrix
+#' @param sparsecounts Sparse counts matrix
+#' @export
+check_sparse <- function(sparsecounts) {
+    if (class(sparsecounts)[1] != "dgCMatrix") {
+        stop("sparse counts must be dgCMatrix")
+    }
+}
