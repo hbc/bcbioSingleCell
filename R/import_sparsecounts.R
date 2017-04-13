@@ -36,7 +36,7 @@ import_sparsecounts <- function(bcbio, annotations) {
     colnames(sparse) <- read_lines(colfile)
 
     # Convert transcript-level counts to gene-level
-    rownames(sparse) <- annotations[rownames(sparse), "gene_name"]
+    rownames(sparse) <- annotations[rownames(sparse), "external_gene_name"]
 
     # Remove rows that don't match a gene name
     sparse <- sparse[!is.na(rownames(sparse)), ]

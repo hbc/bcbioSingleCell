@@ -15,10 +15,10 @@ barcode_metrics <- function(
     metadata = NULL) {
     coding <- annotations %>%
         filter_(.dots = quote(broad_class == "coding")) %>%
-        .$gene_name %>% unique %>% sort
+        .$external_gene_name %>% unique %>% sort
     mito <- annotations %>%
         filter_(.dots = quote(broad_class == "mito")) %>%
-        .$gene_name %>% unique %>% sort
+        .$external_gene_name %>% unique %>% sort
 
     metrics <- data.frame(
         identifier = colnames(counts),
