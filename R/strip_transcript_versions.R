@@ -2,6 +2,8 @@
 #'
 #' @author Rory Kirchner
 #'
+#' @keywords internal
+#'
 #' @param matrix a matrix or dataframe
 #'
 #' @return a matrix or dataframe with the transcript versions stripped off
