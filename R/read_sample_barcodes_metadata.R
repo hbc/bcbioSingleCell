@@ -15,7 +15,7 @@ read_sample_barcodes_metadata <- function(
             df <- read_csv(file)
         }
         # Reverse complement matches
-        df$reverse_complement <- sapply(df$sequence, reverse_complement)
+        df$reverse_complement <- sapply(df$sequence, revcomp)
         # Unique identifier for each barcode
         df$sample_barcode <- paste(df$samplename,
                                    df$reverse_complement,
