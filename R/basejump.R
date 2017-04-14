@@ -8,22 +8,56 @@
 
 
 
-#' @keywords internal
-kables <- function(list, captions = NULL) {
-    output <- opts_knit$get("rmarkdown.pandoc.to")
-    if (!is.null(output)) {
-        tables <- lapply(seq_along(list), function(a) {
-            kable(list[a], caption = captions[a])
-        })
-        return(asis_output(tables))
-    } else {
-        return(list)
-    }
+# export =======================================================================
+
+## snake_case variations ----
+
+#' @rdname basejump
+#' @description Set names in snake_case
+#' @export
+set_names_snake <- function(data) {
+    set_names(data, make_names_snake(colnames(data)))
+}
+
+#' @rdname basejump
+#' @description Set names in dot notation
+#' @export
+set_names_dot <- function(data) {
+    set_names(data, make_names(colnames(data)))
 }
 
 
 
-#' @keywords internal
+# internal =====================================================================
+
+## DNA utilities ----
+
+comp <- function(dna) {
+    dna <- toupper(dna)
+    comp <- dna %>%
+        # AT base pair swap
+        gsub("A", "A1", .) %>%
+        gsub("T", "A", .) %>%
+        gsub("A1", "T", .) %>%
+        # GC base pair swap
+        gsub("G", "G1", .) %>%
+        gsub("C", "G", .) %>%
+        gsub("G1", "C", .)
+    return(comp)
+}
+
+revcomp <- function(dna) {
+    dna <- toupper(dna)
+    comp <- comp(dna)
+    revcomp <- strsplit(comp, "")[[1]] %>%
+        .[order(seq_along(.), decreasing = TRUE)] %>%
+        paste(., sep = "", collapse = "")
+    return(revcomp)
+}
+
+
+## Name handling ----
+
 make_names <- function(character) {
     character %>%
         as.character %>%
@@ -47,9 +81,6 @@ make_names <- function(character) {
         tolower
 }
 
-
-
-#' @keywords internal
 make_names_snake <- function(character) {
     character %>%
         make_names %>%
@@ -57,19 +88,16 @@ make_names_snake <- function(character) {
 }
 
 
+## Reporting ----
 
-#' @rdname basejump
-#' @description Set names in dot notation
-#' @export
-set_names_dot <- function(data) {
-    set_names(data, make_names(colnames(data)))
-}
-
-
-
-#' @rdname basejump
-#' @description Set names in snake_case
-#' @export
-set_names_snake <- function(data) {
-    set_names(data, make_names_snake(colnames(data)))
+kables <- function(list, captions = NULL) {
+    output <- opts_knit$get("rmarkdown.pandoc.to")
+    if (!is.null(output)) {
+        tables <- lapply(seq_along(list), function(a) {
+            kable(list[a], caption = captions[a])
+        })
+        return(asis_output(tables))
+    } else {
+        return(list)
+    }
 }
