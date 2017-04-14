@@ -5,3 +5,8 @@ globalVariables(".")
 #' @usage NULL
 #' @export
 magrittr::`%>%`
+
+#' @keywords internal
+#' @usage NULL
+#' @export
+knitr::kable
