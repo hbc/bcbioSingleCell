@@ -9,7 +9,7 @@ Authors@R: c(
     person("Michael", "Steinbaugh",
            email = "mike@steinbaugh.com",
            role = "aut"))
-Description: Functions for processing bcbio-nextgen singlecell results.
+Description: Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
 biocViews: GeneExpression, RNASeq, SingleCell
 URL:
     https://bcbio-nextgen.readthedocs.io,
