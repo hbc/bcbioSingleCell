@@ -10,7 +10,7 @@
 
 # export =======================================================================
 
-## snake_case variations ----
+## set_names ----
 
 #' @rdname basejump
 #' @description Set names in snake_case
@@ -30,7 +30,7 @@ set_names_dot <- function(data) {
 
 # internal =====================================================================
 
-## DNA utilities ----
+## dna ----
 
 comp <- function(dna) {
     dna <- toupper(dna)
@@ -56,7 +56,7 @@ revcomp <- function(dna) {
 }
 
 
-## Name handling ----
+## make_names ----
 
 make_names <- function(character) {
     character %>%
@@ -88,7 +88,7 @@ make_names_snake <- function(character) {
 }
 
 
-## Reporting ----
+## knit ----
 
 kables <- function(list, captions = NULL) {
     output <- opts_knit$get("rmarkdown.pandoc.to")
