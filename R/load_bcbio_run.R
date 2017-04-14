@@ -107,11 +107,9 @@ load_bcbio_run <- function(
 
     check_run(run)
 
-    # Only create new project structure when loading a remote run
-    if (isTRUE(remote)) {
-        create_new_project()
-        save(run, file = "data/run.rda")
-    }
+    # Create directory stucture following data mangement group recommendations
+    create_new_project()
+    save(run, file = "data/run.rda")
 
     return(run)
 }
