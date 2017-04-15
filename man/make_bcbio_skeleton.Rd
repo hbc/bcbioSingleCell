@@ -8,6 +8,8 @@ make_bcbio_skeleton(basedir = getwd(), organism = "hsapiens")
 }
 \arguments{
 \item{basedir}{base directory in which to create skeleton bcbio structure}
+
+\item{organism}{organism to use}
 }
 \value{
 a bcbio run object

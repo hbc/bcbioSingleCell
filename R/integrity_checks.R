@@ -44,6 +44,7 @@ check_sparse <- function(sparsecounts) {
 ##' create a skeleton bcbio project
 ##'
 ##' @param basedir base directory in which to create skeleton bcbio structure
+##' @param organism organism to use
 ##' @return a bcbio run object
 ##' @author Rory Kirchner
 ##' @author Michael Steinbaugh
