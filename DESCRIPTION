@@ -31,6 +31,7 @@ Imports:
     R.utils,
     readr,
     readxl,
+    seqRFLP,
     scales,
     stats,
     stringr,
