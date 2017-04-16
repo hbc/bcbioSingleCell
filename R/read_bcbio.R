@@ -59,7 +59,8 @@ read_bcbio_sparsecounts <- function(run) {
 
     # Convert transcript-level counts to gene-level
     annotations <- ensembl_annotations(run)
-    geneids <- annotations[rownames(sparse), "external_gene_name"]
+    indexes <- match(rownames(sparse), rownames(annotations))
+    geneids <- annotations[indexes, "external_gene_name"]
     sparse <- combine_features(sparse, geneids)
     return(sparse)
 }

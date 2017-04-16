@@ -6,8 +6,9 @@
 ##' @param featureids new feature ids for the collapsed features
 ##' @return sparse matrix
 ##' @author Rory Kirchner
+##' @export
 combine_features <- function(sparse, featureids) {
   rownames(sparse) <- featureids
   sparse <- sparse[!is.na(rownames(sparse)), ]
-  return(aggregate.Matrix(sparse, cellids, fun="sum"))
+  return(aggregate.Matrix(sparse, featureids, fun="sum"))
 }
