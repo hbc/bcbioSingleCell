@@ -2,20 +2,20 @@
 % Please edit documentation in R/combine_technical_replicates.R
 \name{combine_technical_replicates}
 \alias{combine_technical_replicates}
-\title{combine technical replicates}
+\title{combine cellular technical replicates in a sparse matrix}
 \usage{
-combine_technical_replicates(counts, cellids)
+combine_technical_replicates(sparse, cellids)
 }
 \arguments{
-\item{counts}{a sparse matrix of counts}
+\item{sparse}{a sparse matrix of counts}
 
-\item{cellids}{new cellular ids of the collapsed cells}
+\item{cellids}{new cellular ids of the collapsed cells, one for each cell}
 }
 \value{
 sparse matrix with technical replicates combined
 }
 \description{
-combine technical replicates
+combine cellular technical replicates in a sparse matrix
 }
 \author{
 Rory Kirchner

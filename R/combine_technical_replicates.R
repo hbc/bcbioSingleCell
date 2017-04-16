@@ -1,13 +1,13 @@
 
-##' combine technical replicates
+##' combine cellular technical replicates in a sparse matrix
 ##'
-##' @param counts a sparse matrix of counts
-##' @param cellids new cellular ids of the collapsed cells
+##' @param sparse a sparse matrix of counts
+##' @param cellids new cellular ids of the collapsed cells, one for each cell
 ##' @return sparse matrix with technical replicates combined
 ##' @author Rory Kirchner
 ##' @export
-combine_technical_replicates = function(counts, cellids) {
-  tcounts = t(counts)
-  rownames(tcounts) = cellids
-  return(t(aggregate.Matrix(tcounts, cellids, fun="sum")))
+combine_technical_replicates <- function(sparse, cellids) {
+  tsparse <- t(sparse)
+  rownames(tsparse) <- cellids
+  return(t(aggregate.Matrix(tsparse, cellids, fun="sum")))
 }
