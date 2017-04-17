@@ -32,20 +32,11 @@ filter_barcodes <- function(
 
     if (isTRUE(plot)) {
         show(plot_total_cells(filtered))
-
-        show(plot_total_counts_histogram(filtered))
-        show(plot_total_counts_boxplot(filtered))
-
-        show(plot_genes_detected_histogram(filtered))
-        show(plot_genes_detected_boxplot(filtered))
-
+        plot_total_counts(filtered)
+        plot_genes_detected(filtered)
         show(plot_total_vs_detected(filtered))
-
-        show(plot_mito_counts_histogram(filtered))
-        show(plot_mito_counts_boxplot(filtered))
-
-        show(plot_novelty_histogram(filtered))
-        show(plot_novelty_boxplot(filtered))
+        plot_mito_counts(filtered)
+        plot_novelty(filtered)
     }
 
     return(filtered)
