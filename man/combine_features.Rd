@@ -2,20 +2,20 @@
 % Please edit documentation in R/combine_features.R
 \name{combine_features}
 \alias{combine_features}
-\title{combine features of a sparse matrix}
+\title{Combine features of a sparse matrix}
 \usage{
 combine_features(sparse, featureids)
 }
 \arguments{
-\item{sparse}{a sparse matrix of counts}
+\item{sparse}{A sparse matrix of counts}
 
-\item{featureids}{new feature ids for the collapsed features}
+\item{featureids}{New feature ids for the collapsed features}
 }
 \value{
-sparse matrix
+Sparse matrix
 }
 \description{
-this collapsed features with the same feature id by summing them
+This collapsed features with the same feature id by summing them
 }
 \author{
 Rory Kirchner
