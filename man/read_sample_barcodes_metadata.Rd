@@ -4,8 +4,7 @@
 \alias{read_sample_barcodes_metadata}
 \title{Read sample barcodes metadata}
 \usage{
-read_sample_barcodes_metadata(file = file.path("meta",
-  "sample_barcodes.xlsx"))
+read_sample_barcodes_metadata(file)
 }
 \arguments{
 \item{file}{Sample barcodes metadata file}
