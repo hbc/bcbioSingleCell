@@ -4,7 +4,7 @@
 #' @importFrom methods as show
 #' @importFrom R.utils gzip
 #' @importFrom stats aggregate median
-#' @importFrom tools file_path_sans_ext
+#' @importFrom tools file_ext file_path_sans_ext
 #' @importFrom utils globalVariables sessionInfo
 NULL
 

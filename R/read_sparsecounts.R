@@ -8,21 +8,21 @@
 #' @return a sparse matrix of counts
 #' @export
 read_sparsecounts <- function(matfile) {
-    if(!file.exists(matfile)) {
+    if (!file.exists(matfile)) {
         stop("count matrix could not be found")
     }
-    if(tools::file_ext(matfile) == "gz") {
-      stem <- file_path_sans_ext(matfile)
+    if (file_ext(matfile) == "gz") {
+        stem <- file_path_sans_ext(matfile)
     }
     else {
-      stem <- matfile
+        stem <- matfile
     }
     rowfile <- paste0(stem, ".rownames")
     colfile <- paste0(stem, ".colnames")
-    if(!file.exists(rowfile)) {
+    if (!file.exists(rowfile)) {
         stop("rownames file could not be found")
     }
-    if(!file.exists(colfile)) {
+    if (!file.exists(colfile)) {
         stop("rownames file could not be found")
     }
     counts <- readMM(matfile)

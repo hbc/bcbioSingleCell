@@ -15,7 +15,7 @@
 #'
 #' @return Metadata data frame
 #' @export
-read_metadata <- function(
+read_bcbio_metadata <- function(
     run,
     save = FALSE) {
     check_run(run)
