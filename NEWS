@@ -1,3 +1,5 @@
+0.0.4   Prepare package for tidyverse dependency updates.
+        Updated HPC server detection.
 0.0.3   NAMESPACE consolidation and function cleanup.
 0.0.2   Added quality control plotting functions.
         Converted all functions to standard evaluation.

@@ -17,11 +17,6 @@ NULL
 
 
 
-# Strings ====
-#' @importFrom seqRFLP revComp
-
-
-
 # Visualization ====
 #' @importFrom graphics hist
 #' @importFrom scales math_format trans_breaks trans_format

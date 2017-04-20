@@ -1,7 +1,7 @@
 Package: bcbioSinglecell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.3
-Date: 2017-04-12
+Version: 0.0.4
+Date: 2017-04-20
 Authors@R: c(
     person("Rory", "Kirchner",
            email = "roryk@alum.mit.edu",
@@ -9,8 +9,13 @@ Authors@R: c(
     person("Michael", "Steinbaugh",
            email = "mike@steinbaugh.com",
            role = "aut"))
-Description: Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
-biocViews: GeneExpression, RNASeq, SingleCell
+Description: Functions for analysis of bcbio-nextgen single-cell RNA-seq data.
+biocViews:
+    GeneExpression,
+    QualityControl,
+    RNASeq,
+    SingleCell,
+    Visualization
 URL:
     https://bcbio-nextgen.readthedocs.io,
     https://github.com/roryk/bcbioSinglecell
@@ -19,23 +24,26 @@ Depends: R (>= 3.3.1)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
-    biomaRt,
-    dplyr,
-    ggplot2,
+    biomaRt (>= 2.30.0),
+    dplyr (>= 0.5.0.9000),
+    ggplot2 (>= 2.2.1),
     graphics,
-    knitr,
-    magrittr,
-    Matrix,
-    Matrix.utils,
+    knitr (>= 1.15.1),
+    magrittr (>= 1.5),
+    Matrix (>= 1.2),
+    Matrix.utils (>= 0.9.5),
     methods,
     R.utils,
-    readr,
-    readxl,
-    seqRFLP,
+    readr (>= 1.1.0),
+    readxl (>= 1.0.0),
+    rlang (>= 0.0.0.9000),
     scales,
     stats,
-    stringr,
-    tidyr,
+    stringr (>= 1.2.0),
+    tidyr (>= 0.6.1),
     tools,
     utils
+Remotes:
+    hadley/rlang,
+    tidyverse/dplyr
 RoxygenNote: 6.0.1
