@@ -28,7 +28,7 @@ barcode_metrics <- function(
 
     # Calculate colSums
     metrics <- tibble(
-        identifier = colnames(sparsecounts),
+        unique = colnames(sparsecounts),
         total_counts = Matrix::colSums(sparsecounts),
         genes_detected = Matrix::colSums(sparsecounts > 0),
         coding_counts = Matrix::colSums(
@@ -36,7 +36,7 @@ barcode_metrics <- function(
         mito_counts = Matrix::colSums(
             sparsecounts[rownames(sparsecounts) %in% mito, ])) %>%
         # Unique identifier
-        separate_("identifier",
+        separate_("unique",
                   c("sample_barcode", "cellular_barcode"),
                   sep = ":",
                   remove = FALSE) %>%
@@ -50,6 +50,6 @@ barcode_metrics <- function(
         metrics <- left_join(metrics, metadata, by = "sample_barcode")
     }
 
-    metrics <- metrics[order(metrics$identifier), ]
+    metrics <- metrics[order(metrics$unique), ]
     return(metrics)
 }
