@@ -10,8 +10,8 @@
 #' @return Sparse matrix
 #' @export
 combine_features <- function(sparse, featureids) {
-  rownames(sparse) <- featureids
-  sparse <- sparse[!is.na(rownames(sparse)), ]
-  combine <- aggregate.Matrix(sparse, rownames(sparse), fun = "sum")
-  return(combine)
+    rownames(sparse) <- featureids
+    sparse <- sparse[!is.na(rownames(sparse)), ]
+    combine <- aggregate.Matrix(sparse, rownames(sparse), fun = "sum")
+    return(combine)
 }
