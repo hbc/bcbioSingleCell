@@ -17,23 +17,22 @@ ensembl_annotations <- function(run) {
         biomart = "ensembl",
         dataset = paste(run$organism, "gene_ensembl", sep = "_"))
 
-    df <- getBM(
+    meta <- getBM(
         mart = ensembl,
-        attributes = c("ensembl_transcript_id",
+        attributes = c("ensembl_gene_id",
+                       "ensembl_transcript_id",
                        "external_gene_name",
                        "gene_biotype",
                        "chromosome_name")
     ) %>%
-        arrange_(.dots = "ensembl_transcript_id") %>%
-        set_rownames(.$ensembl_transcript_id)
+        as_tibble %>%
+        group_by(!!sym("ensembl_gene_id")) %>%
+        arrange(!!sym("ensembl_transcript_id"), .by_group = TRUE)
 
     # Broad class definitions
     coding <- c("protein_coding")
-    decaying <- c("non_stop_decay",
-                  "nonsense_mediated_decay")
-    noncoding <- c("known_ncrna",
-                   "lincRNA",
-                   "non_coding")
+    decaying <- c("non_stop_decay", "nonsense_mediated_decay")
+    noncoding <- c("known_ncrna", "lincRNA", "non_coding")
     srna <- c("miRNA",
               "misc_RNA",
               "ribozyme",
@@ -43,18 +42,18 @@ ensembl_annotations <- function(run) {
               "snoRNA",
               "snRNA",
               "sRNA")
-    df$broad_class <-
-        case_when(tolower(df$chromosome_name) == "mt" ~ "mito",
+    meta$broad_class <-
+        case_when(tolower(meta$chromosome_name) == "mt" ~ "mito",
                   # Fix to match Drosophila genome (non-standard)
-                  grepl("mito", df$chromosome_name) ~ "mito",
-                  grepl("pseudo", df$gene_biotype) ~ "pseudo",
-                  grepl("TR_", df$gene_biotype) ~ "TCR",
-                  grepl("IG_", df$gene_biotype) ~ "IG",
-                  df$gene_biotype %in% srna ~ "small",
-                  df$gene_biotype %in% decaying ~ "decaying",
-                  df$gene_biotype %in% noncoding ~ "noncoding",
-                  df$gene_biotype %in% coding ~ "coding",
+                  grepl("mito", meta$chromosome_name) ~ "mito",
+                  grepl("pseudo", meta$gene_biotype) ~ "pseudo",
+                  grepl("TR_", meta$gene_biotype) ~ "TCR",
+                  grepl("IG_", meta$gene_biotype) ~ "IG",
+                  meta$gene_biotype %in% srna ~ "small",
+                  meta$gene_biotype %in% decaying ~ "decaying",
+                  meta$gene_biotype %in% noncoding ~ "noncoding",
+                  meta$gene_biotype %in% coding ~ "coding",
                   TRUE ~ "other")
 
-    return(df)
+    return(meta)
 }
