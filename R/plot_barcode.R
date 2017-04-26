@@ -11,17 +11,17 @@
 #' @description Plot a barcode histogram for a given sample
 #' @keywords internal
 #'
-#' @param filename path to a barcode histogram file
+#' @param file_name path to a barcode histogram file
 #' @param sample title for plot
 #'
 #' @export
-plot_barcode <- function(filename, sample = NULL) {
-    # Get the sample name from the filename by default
+plot_barcode <- function(file_name, sample = NULL) {
+    # Get the sample name from the file name by default
     if (is.null(sample)) {
-        sample <- gsub("-barcodes\\.tsv$", "", basename(filename))
+        sample <- gsub("-barcodes\\.tsv$", "", basename(file_name))
     }
 
-    bcs <- read_barcode_file(filename)
+    bcs <- read_barcode_file(file_name)
     bcs_hist <- hist(log10(bcs$count), plot = FALSE, n = 50)
 
     fLog <- bcs_hist$count
