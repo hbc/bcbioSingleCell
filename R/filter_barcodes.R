@@ -21,15 +21,11 @@ filter_barcodes <- function(
     percent_mito = 0.2,
     novelty = 0,
     plot = TRUE) {
-    # Use base R method for now. Switch to dplyr/tidyeval in future update.
-    # http://dplyr.tidyverse.org/articles/programming.html
     filtered <- metrics %>%
         .[.$genes_detected > min_genes, ] %>%
         .[.$genes_detected < max_genes, ] %>%
         .[.$percent_mito < percent_mito, ] %>%
-        .[.$log_detected_per_count > novelty, ] %>%
-        set_rownames(.$identifier)
-
+        .[.$log10_detected_per_count > novelty, ]
     if (isTRUE(plot)) {
         show(plot_total_cells(filtered))
         plot_total_counts(filtered)
@@ -38,6 +34,5 @@ filter_barcodes <- function(
         plot_mito_counts(filtered)
         plot_novelty(filtered)
     }
-
     return(filtered)
 }
