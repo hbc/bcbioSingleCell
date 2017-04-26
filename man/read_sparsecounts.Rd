@@ -4,10 +4,10 @@
 \alias{read_sparsecounts}
 \title{Read a MatrixMart file, setting the row and column names}
 \usage{
-read_sparsecounts(matfile)
+read_sparsecounts(mat_file)
 }
 \arguments{
-\item{matfile}{MatrixMart file to read}
+\item{mat_file}{MatrixMart file to read}
 }
 \value{
 a sparse matrix of counts

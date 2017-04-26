@@ -2,7 +2,7 @@
 % Please edit documentation in R/combine_technical_replicates.R
 \name{combine_technical_replicates}
 \alias{combine_technical_replicates}
-\title{combine cellular technical replicates in a sparse matrix}
+\title{Combine cellular technical replicates in a sparse matrix}
 \usage{
 combine_technical_replicates(sparse, cellids)
 }
@@ -15,7 +15,7 @@ combine_technical_replicates(sparse, cellids)
 sparse matrix with technical replicates combined
 }
 \description{
-combine cellular technical replicates in a sparse matrix
+Combine cellular technical replicates in a sparse matrix
 }
 \author{
 Rory Kirchner

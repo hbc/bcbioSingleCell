@@ -2,12 +2,14 @@
 % Please edit documentation in R/read_bcbio.R
 \name{read_bcbio_sparsecounts}
 \alias{read_bcbio_sparsecounts}
-\title{Import scRNA-Seq count data}
+\title{Import single-cell RNA-seq count data}
 \usage{
-read_bcbio_sparsecounts(run)
+read_bcbio_sparsecounts(run, strip_version = TRUE)
 }
 \arguments{
 \item{run}{\code{bcbio-nextgen} run}
+
+\item{strip_version}{Strip transcript version from identifier}
 }
 \value{
 Sparse counts matrix

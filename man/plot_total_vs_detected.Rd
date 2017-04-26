@@ -4,7 +4,7 @@
 \alias{plot_total_vs_detected}
 \title{Total counts vs. genes detected plot}
 \usage{
-plot_total_vs_detected(metrics, colorby = "sample")
+plot_total_vs_detected(metrics, colorby = "sample_name")
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}

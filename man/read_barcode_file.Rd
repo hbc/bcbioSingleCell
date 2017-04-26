@@ -4,10 +4,10 @@
 \alias{read_barcode_file}
 \title{Load a barcode histogram file generated from bcbio-nextgen}
 \usage{
-read_barcode_file(filename)
+read_barcode_file(file_name)
 }
 \arguments{
-\item{filename}{path to a barcode histogram file}
+\item{file_name}{path to a barcode histogram file}
 }
 \value{
 dataframe of reads per barcode

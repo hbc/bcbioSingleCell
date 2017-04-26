@@ -2,20 +2,21 @@
 % Please edit documentation in R/strip_transcript_versions.R
 \name{strip_transcript_versions}
 \alias{strip_transcript_versions}
-\title{Strip transcript versions off of the rownames of a dataframe or matrix}
+\title{Strip transcript versions}
 \usage{
-strip_transcript_versions(matrix)
+strip_transcript_versions(sparsecounts)
 }
 \arguments{
-\item{matrix}{a matrix or dataframe}
+\item{sparsecounts}{Sparse counts matrix}
 }
 \value{
-a matrix or dataframe with the transcript versions stripped off
+Sparse counts matrix with the transcript versions stripped
 }
 \description{
-Strip transcript versions off of the rownames of a dataframe or matrix
+Strip transcript versions
 }
 \author{
 Rory Kirchner
+
+Michael Steinbaugh
 }
-\keyword{internal}
