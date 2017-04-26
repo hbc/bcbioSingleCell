@@ -1,4 +1,23 @@
-# General ====
+#' \code{bcbioSinglecell} package
+#'
+#' Utility functions for analysis of \code{bcbio-nextgen} single-cell RNA-seq
+#' data.
+#'
+#' See the README on \href{https://github.com/roryk/bcbioSinglecell}{GitHub}.
+#'
+#' @docType package
+#' @name bcbioSinglecell
+NULL
+
+
+
+# Globals ====
+globalVariables(".")
+
+
+
+# Imports ====
+# General ----
 #' @importFrom biomaRt getBM useEnsembl
 #' @importFrom knitr asis_output kable opts_knit
 #' @importFrom methods as show
@@ -8,29 +27,36 @@
 #' @importFrom utils globalVariables sessionInfo
 NULL
 
-
-
-# Matrices ====
+# Sparse matrices ----
 #' @importFrom Matrix readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix
 NULL
 
-
-
-# Visualization ====
+# Visualization ----
 #' @importFrom graphics hist
 #' @importFrom scales math_format trans_breaks trans_format
 NULL
 
-
-
-# tidyverse ====
+# tidyverse ----
 # http://tidyverse.org/
 #' @import dplyr
 #' @import ggplot2
-#' @import magrittr
 #' @import readr
+#' @import rlang
 #' @import readxl
 #' @import stringr
+#' @importFrom magrittr %>% set_rownames
+#' @importFrom tibble as_tibble glimpse tibble
 #' @importFrom tidyr separate_
 NULL
+
+
+
+# Re-exports ====
+#' @usage NULL
+#' @export
+magrittr::`%>%`
+
+#' @usage NULL
+#' @export
+tibble::glimpse
