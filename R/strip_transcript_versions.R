@@ -1,16 +1,21 @@
-#' Strip transcript versions off of the rownames of a dataframe or matrix
+#' Strip transcript versions
 #'
 #' @author Rory Kirchner
+#' @author Michael Steinbaugh
 #'
-#' @keywords internal
+#' @param sparsecounts Sparse counts matrix
 #'
-#' @param matrix a matrix or dataframe
-#'
-#' @return a matrix or dataframe with the transcript versions stripped off
+#' @return Sparse counts matrix with the transcript versions stripped
 #' @export
-strip_transcript_versions <- function(matrix) {
-    transcripts <- rownames(matrix)
-    transcripts <- file_path_sans_ext(transcripts)
-    rownames(matrix) <- transcripts
-    return(matrix)
+strip_transcript_versions <- function(sparsecounts) {
+    check_sparse(sparsecounts)
+    transcripts <- rownames(sparsecounts)
+    # Tight pattern matching against Ensembl stable transcript IDs
+    # http://www.ensembl.org/info/genome/stable_ids/index.html
+    pattern <- "^(ENS[A-Z]{3}T\\d{11})\\.\\d+$"
+    if (any(str_detect(transcripts, pattern))) {
+        transcripts <- str_replace(transcripts, pattern, "\\1")
+    }
+    rownames(sparsecounts) <- transcripts
+    return(sparsecounts)
 }
