@@ -17,7 +17,7 @@ globalVariables(".")
 
 
 # Imports ====
-# General ----
+## General ----
 #' @importFrom biomaRt getBM useEnsembl
 #' @importFrom knitr asis_output kable opts_knit
 #' @importFrom methods as show
@@ -27,18 +27,18 @@ globalVariables(".")
 #' @importFrom utils globalVariables sessionInfo
 NULL
 
-# Sparse matrices ----
+## Sparse matrices ----
 #' @importFrom Matrix readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix
 NULL
 
-# Visualization ----
+## Visualization ----
 #' @importFrom graphics hist
 #' @importFrom scales math_format trans_breaks trans_format
 NULL
 
-# tidyverse ----
-# http://tidyverse.org/
+## tidyverse ----
+## http://tidyverse.org/
 #' @import dplyr
 #' @import ggplot2
 #' @import readr
