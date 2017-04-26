@@ -17,13 +17,13 @@
 plot_genes_detected_boxplot <- function(metrics) {
     boxplot <- metrics %>%
         ggplot(
-            aes_(x = ~sample,
+            aes_(x = ~sample_name,
                  y = ~genes_detected,
-                 fill = ~sample)
+                 fill = ~sample_name)
         ) +
         geom_boxplot() +
         geom_label(
-            data = aggregate(genes_detected ~ sample,
+            data = aggregate(genes_detected ~ sample_name,
                              metrics,
                              median),
             aes_(label = ~round(genes_detected))
@@ -43,9 +43,9 @@ plot_genes_detected_histogram <- function(metrics) {
     histogram <- metrics %>%
         ggplot(
             aes_(x = ~genes_detected,
-                 fill = ~sample)
+                 fill = ~sample_name)
         ) +
-        facet_wrap(~sample) +
+        facet_wrap(~sample_name) +
         geom_histogram() +
         ggtitle("genes detected histogram") +
         theme(
