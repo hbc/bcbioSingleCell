@@ -40,28 +40,3 @@ check_sparse <- function(sparsecounts) {
         stop("sparse counts must be dgCMatrix")
     }
 }
-
-##' create a skeleton bcbio project
-##'
-##' @param basedir base directory in which to create skeleton bcbio structure
-##' @param organism organism to use
-##' @return a bcbio run object
-##' @author Rory Kirchner
-##' @author Michael Steinbaugh
-##' @export
-make_bcbio_skeleton <- function(basedir=getwd(), organism="hsapiens") {
-  parent_dir = file.path(basedir, "skeleton")
-  run <- list(parent_dir = file.path(parent_dir),
-              run_dir = file.path(parent_dir),
-              config_dir = file.path(parent_dir, "config"),
-              final_dir = file.path(parent_dir, "final"),
-              project_dir = file.path(parent_dir, "final"),
-              sample_dirs = c(NA),
-              organism = organism,
-              intgroup = NA)
-  dir.create(run$parent_dir, showWarnings = FALSE)
-  dir.create(run$config_dir, showWarnings = FALSE)
-  dir.create(run$final_dir, showWarnings = FALSE)
-  dir.create(run$project_dir, showWarnings = FALSE)
-  return(run)
-}
