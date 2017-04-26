@@ -8,13 +8,13 @@
 #'
 #' @return ggplot2 object
 #' @export
-plot_total_vs_detected <- function(metrics, colorby = "sample") {
+plot_total_vs_detected <- function(metrics, colorby = "sample_name") {
     plot <- metrics %>%
         ggplot(
             aes_(x = ~total_counts,
                  y = ~genes_detected,
                  color = as.name(colorby))) +
-        facet_wrap(~sample) +
+        facet_wrap(~sample_name) +
         geom_point() +
         geom_smooth(method = "loess") +
         ggtitle("total counts vs. genes detected") +

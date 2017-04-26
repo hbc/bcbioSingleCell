@@ -9,12 +9,12 @@
 #' @export
 plot_total_cells <- function(metrics) {
     plot <- metrics %>%
-        group_by_(.dots = "sample") %>%
+        group_by_(.dots = "sample_name") %>%
         summarize_(total_cells = ~n()) %>%
         ggplot(
-            aes_(x = ~sample,
+            aes_(x = ~sample_name,
                  y = ~total_cells,
-                 fill = ~sample)
+                 fill = ~sample_name)
         ) +
         geom_bar(stat = "identity") +
         geom_text(vjust = -0.5,

@@ -18,9 +18,9 @@ plot_total_counts_histogram <- function(metrics) {
     histogram <- metrics %>%
         ggplot(
             aes_(x = ~total_counts,
-                 fill = ~sample)
+                 fill = ~sample_name)
         ) +
-        facet_wrap(~sample) +
+        facet_wrap(~sample_name) +
         geom_histogram() +
         ggtitle("total RNA read counts histogram") +
         scale_x_log10() +
@@ -41,13 +41,13 @@ plot_total_counts_histogram <- function(metrics) {
 plot_total_counts_boxplot <- function(metrics) {
     boxplot <- metrics %>%
         ggplot(
-            aes_(x = ~sample,
+            aes_(x = ~sample_name,
                  y = ~total_counts,
-                 fill = ~sample)
+                 fill = ~sample_name)
         ) +
         geom_boxplot() +
         geom_label(
-            data = aggregate(total_counts ~ sample,
+            data = aggregate(total_counts ~ sample_name,
                              metrics,
                              median),
             aes_(label = ~round(total_counts))

@@ -4,12 +4,12 @@
 #'
 #' @keywords internal
 #'
-#' @param filename path to a barcode histogram file
+#' @param file_name path to a barcode histogram file
 #'
 #' @return dataframe of reads per barcode
 #' @export
-read_barcode_file <- function(filename) {
-    read_tsv(filename,
+read_barcode_file <- function(file_name) {
+    read_tsv(file_name,
              col_names = c("barcode", "count"),
              progress = FALSE)
 }

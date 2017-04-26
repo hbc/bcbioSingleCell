@@ -22,8 +22,8 @@ plot_mito_counts_histogram <- function(metrics) {
         )) %>%
         ggplot(
             aes_(x = ~percent_mito,
-                 fill = ~sample)) +
-        facet_wrap(~sample) +
+                 fill = ~sample_name)) +
+        facet_wrap(~sample_name) +
         geom_histogram() +
         ggtitle("mitochondrial gene abundance histogram") +
         scale_y_sqrt() +
@@ -42,9 +42,9 @@ plot_mito_counts_boxplot <- function(metrics) {
         ggplot(
             aes_(x = ~coding_counts,
                  y = ~mito_counts,
-                 color = ~sample)
+                 color = ~sample_name)
         ) +
-        facet_wrap(~sample) +
+        facet_wrap(~sample_name) +
         ggtitle("mitochondrial gene abundance scatterplot") +
         geom_point() +
         theme(

@@ -3,30 +3,30 @@
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @param matfile MatrixMart file to read
+#' @param mat_file MatrixMart file to read
 #'
 #' @return a sparse matrix of counts
 #' @export
-read_sparsecounts <- function(matfile) {
-    if (!file.exists(matfile)) {
+read_sparsecounts <- function(mat_file) {
+    if (!file.exists(mat_file)) {
         stop("count matrix could not be found")
     }
-    if (file_ext(matfile) == "gz") {
-        stem <- file_path_sans_ext(matfile)
+    if (file_ext(mat_file) == "gz") {
+        stem <- file_path_sans_ext(mat_file)
     }
     else {
-        stem <- matfile
+        stem <- mat_file
     }
-    rowfile <- paste0(stem, ".rownames")
-    colfile <- paste0(stem, ".colnames")
-    if (!file.exists(rowfile)) {
+    row_file <- paste0(stem, ".rownames")
+    col_file <- paste0(stem, ".colnames")
+    if (!file.exists(row_file)) {
         stop("rownames file could not be found")
     }
-    if (!file.exists(colfile)) {
+    if (!file.exists(col_file)) {
         stop("rownames file could not be found")
     }
-    counts <- readMM(matfile)
-    rownames(counts) <- read_lines(rowfile)
-    colnames(counts) <- read_lines(colfile)
+    counts <- readMM(mat_file)
+    rownames(counts) <- read_lines(row_file)
+    colnames(counts) <- read_lines(col_file)
     return(as(counts, "dgCMatrix"))
 }
