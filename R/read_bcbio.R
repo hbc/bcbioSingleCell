@@ -38,7 +38,7 @@ read_bcbio_metadata <- function(
 
 
 
-#' Import scRNA-Seq count data
+#' Import single-cell RNA-seq count data
 #'
 #' Import transcript-level count data from a bcbio run into a sparse matrix
 #'
@@ -46,21 +46,23 @@ read_bcbio_metadata <- function(
 #' @author Michael Steinbaugh
 #'
 #' @param run \code{bcbio-nextgen} run
+#' @param strip_version Strip transcript version from identifier
 #'
 #' @return Sparse counts matrix
 #' @export
-read_bcbio_sparsecounts <- function(run) {
-    # Sparse matrix
-    matfile <- file.path(run$project_dir, "tagcounts.mtx")
-    sparse <- read_sparsecounts(matfile)
-
-    # Strip out transcript version numbers
-    rownames(sparse) <- str_replace(rownames(sparse), "\\.\\d+", "")
-
+read_bcbio_sparsecounts <- function(run, strip_version = TRUE) {
+    input <- file.path(run$project_dir, "tagcounts.mtx") %>% read_sparsecounts
+    if (isTRUE(strip_version)) {
+        input <- strip_transcript_versions(input)
+    }
     # Convert transcript-level counts to gene-level
     annotations <- ensembl_annotations(run)
-    indexes <- match(rownames(sparse), rownames(annotations))
-    geneids <- annotations[indexes, "external_gene_name"]
-    sparse <- combine_features(sparse, geneids)
-    return(sparse)
+    # Avoid setting rownames on data frames (tidy principle)
+    indexes <- match(rownames(input), annotations$ensembl_transcript_id)
+    # collect(select(annotations, external_gene_name))[[1]]
+    gene_names <- annotations %>%
+        as.data.frame %>%
+        .[indexes, "external_gene_name"]
+    sparsecounts <- combine_features(input, gene_names)
+    return(sparsecounts)
 }
