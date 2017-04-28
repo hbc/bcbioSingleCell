@@ -42,12 +42,12 @@ NULL
 #' @import dplyr
 #' @import ggplot2
 #' @import readr
-#' @import rlang
 #' @import readxl
 #' @import stringr
-#' @importFrom magrittr %>% set_rownames
+#' @importFrom magrittr %>% set_names set_rownames
+#' @importFrom rlang !! .data sym
 #' @importFrom tibble as_tibble glimpse tibble
-#' @importFrom tidyr separate_
+#' @importFrom tidyr expand_ separate_
 NULL
 
 

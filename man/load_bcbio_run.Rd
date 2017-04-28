@@ -4,24 +4,22 @@
 \alias{load_bcbio_run}
 \title{Load bcbio run}
 \usage{
-load_bcbio_run(template, organism, intgroup = NULL, parent_dir = getwd(),
-  config_dir = NULL, final_dir = NULL)
+load_bcbio_run(final_dir = "final", intgroup = "description", organism,
+  metadata)
 }
 \arguments{
-\item{template}{Template name (YAML filename, without the extension)
-originally called by \code{bcbio_nextgen.py}}
+\item{final_dir}{Path to final output directory. This path is set when
+running \code{bcbio_nextgen -w template}.}
 
-\item{organism}{Organism (e.g. \code{hsapiens})}
+\item{intgroup}{Character vector of interesting groups. First entry is used
+for plot colors during quality control (QC) analysis. Entire vector is used
+for PCA and heatmap QC functions.}
 
-\item{intgroup}{Interesting groups. Defaults to \code{description} if not
-set. First entry is used for plot colors during quality control analysis.
-Entire vector is used for PCA and heatmap QC functions.}
+\item{organism}{Organism name, following Ensembl/Biomart conventions. Must be
+lowercase and one word (e.g. hsapiens). This will be detected automatically
+for common reference genomes.}
 
-\item{parent_dir}{Parent directory containing the run folder}
-
-\item{config_dir}{Set the config output directory, if non-standard}
-
-\item{final_dir}{Set the final output directory, if non-standard}
+\item{metadata}{Optional custom metadata file to import}
 }
 \value{
 \code{bcbio-nextgen} run object
