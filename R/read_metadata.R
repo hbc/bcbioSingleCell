@@ -6,26 +6,26 @@
 #'
 #' @return Data frame
 #' @export
-read_sample_barcodes_metadata <- function(file) {
+read_metadata <- function(file) {
     if (!file.exists(file)) {
         stop("File not found")
     }
 
     if (grepl("\\.xlsx$", file)) {
-        df <- read_excel(file)
+        metadata <- read_excel(file)
     } else {
-        df <- read_csv(file)
+        metadata <- read_csv(file)
     }
 
     # Subset samples
-    df <- df %>%
+    metadata <- metadata %>%
         .[!is.na(.$file_name), ] %>%
         .[!is.na(.$sample_name), ]
     # Reverse complement matches
-    df$reverse_complement <- sapply(df$sequence, revcomp)
+    metadata$reverse_complement <- sapply(metadata$sequence, revcomp)
     # Sample barcode identifier
-    df$sample_barcode <- paste(df$file_name,
-                               df$reverse_complement,
-                               sep = "-")
-    return(df)
+    metadata$sample_barcode <- paste(metadata$file_name,
+                                     metadata$reverse_complement,
+                                     sep = "-")
+    return(metadata)
 }
