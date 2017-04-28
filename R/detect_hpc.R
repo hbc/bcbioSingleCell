@@ -1,11 +1,11 @@
-#' Detect if R is running on Orchestra HPC cluster
+#' Detect if R is running on an HPC cluster
 #'
 #' Utility function to enable CPU intensive tasks
 #'
 #' @author Michael Steinbaugh
 #'
 #' @export
-detect_orchestra <- function() {
+detect_hpc <- function() {
     if (Sys.info()[["login"]] == "root" &
         Sys.info()[["sysname"]] == "Linux" &
         any(
@@ -15,7 +15,7 @@ detect_orchestra <- function() {
             grepl("\\.orchestra$", Sys.getenv("LSB_HOSTS")),
             grepl("@MED\\.HARVARD\\.EDU$", Sys.getenv("USER_PRINCIPAL_NAME"))
         )) {
-        return(TRUE)
+        return("orchestra")
     } else {
         return(FALSE)
     }
