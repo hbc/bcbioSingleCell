@@ -19,14 +19,13 @@
 #' @export
 load_bcbio_run <- function(
     final_dir = "final",
-    intgroup = "description",
+    intgroup = "sample_name",
     organism,
     metadata) {
     if (!length(dir(final_dir))) {
         stop("final directory failed to load")
     }
     final_dir <- normalizePath(final_dir)
-    message(paste(dir(final_dir), collapse = "\n"))
 
     # project_dir
     pattern <- ".*/(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
@@ -36,6 +35,8 @@ load_bcbio_run <- function(
     project_dir <- match[1]
     run_date <- match[2]
     template <- match[3]
+
+    message(paste(dir(final_dir), collapse = "\n"))
 
     # Sample directories
     sample_dirs <- dir(final_dir, full.names = TRUE)
