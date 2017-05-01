@@ -4,7 +4,7 @@
 \alias{load_bcbio_run}
 \title{Load bcbio run}
 \usage{
-load_bcbio_run(final_dir = "final", intgroup = "description", organism,
+load_bcbio_run(final_dir = "final", intgroup = "sample_name", organism,
   metadata)
 }
 \arguments{
