@@ -19,14 +19,14 @@ This is an [R][] package.
 
 ### [Bioconductor][] method
 
-```{r}
+```r
 source("https://bioconductor.org/biocLite.R")
 biocLite("roryk/bcbioSinglecell")
 ```
 
 ### [devtools][] method
 
-```{r}
+```r
 install.packages("devtools")
 devtools::install_github("roryk/bcbioSinglecell")
 ```
