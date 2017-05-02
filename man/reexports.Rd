@@ -11,6 +11,8 @@
 \alias{reexports}
 \alias{glimpse}
 \alias{reexports}
+\alias{group_by}
+\alias{reexports}
 \alias{left_join}
 \alias{reexports}
 \alias{mutate}
@@ -21,6 +23,8 @@
 \alias{reexports}
 \alias{select}
 \alias{reexports}
+\alias{top_n}
+\alias{reexports}
 \alias{write_csv}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -29,7 +33,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{select}}}
+  \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{top_n}}}
 
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 

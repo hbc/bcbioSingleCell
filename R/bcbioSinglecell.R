@@ -79,6 +79,10 @@ tibble::glimpse
 
 #' @usage NULL
 #' @export
+dplyr::group_by
+
+#' @usage NULL
+#' @export
 dplyr::left_join
 
 #' @usage NULL
@@ -96,6 +100,10 @@ tibble::remove_rownames
 #' @usage NULL
 #' @export
 dplyr::select
+
+#' @usage NULL
+#' @export
+dplyr::top_n
 
 #' @usage NULL
 #' @export
