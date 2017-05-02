@@ -5,7 +5,13 @@
 \alias{reexports}
 \alias{\%>\%}
 \alias{reexports}
+\alias{arrange}
+\alias{reexports}
 \alias{glimpse}
+\alias{reexports}
+\alias{mutate}
+\alias{reexports}
+\alias{select}
 \alias{reexports}
 \alias{write_csv}
 \title{Objects exported from other packages}
@@ -15,6 +21,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{select}}}
+
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 
   \item{readr}{\code{\link[readr]{write_csv}}}

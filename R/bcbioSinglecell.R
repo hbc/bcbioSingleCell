@@ -62,7 +62,19 @@ magrittr::`%>%`
 
 #' @usage NULL
 #' @export
+dplyr::arrange
+
+#' @usage NULL
+#' @export
 tibble::glimpse
+
+#' @usage NULL
+#' @export
+dplyr::mutate
+
+#' @usage NULL
+#' @export
+dplyr::select
 
 #' @usage NULL
 #' @export
