@@ -61,7 +61,7 @@ plot_barcodes <- function(run) {
     metadata <- run$metadata[sample_barcodes,
                              c("sample_barcode", "sample_name")]
     names(file_names) <- paste(metadata$sample_name,
-                               names(file_names),
+                               metadata$sample_barcode,
                                sep = " : ")
     # Order the file names by sample name
     file_names <- file_names[order(names(file_names))]
