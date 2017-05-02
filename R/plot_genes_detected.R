@@ -21,6 +21,9 @@ plot_genes_detected_boxplot <- function(metrics) {
                  y = ~genes_detected,
                  fill = ~sample_name)
         ) +
+        labs(title = "genes detected boxplot",
+             x = "sample name",
+             y = "genes per cell") +
         geom_boxplot() +
         geom_label(
             data = aggregate(genes_detected ~ sample_name,
@@ -28,12 +31,10 @@ plot_genes_detected_boxplot <- function(metrics) {
                              median),
             aes_(label = ~round(genes_detected))
         ) +
-        ggtitle("genes detected boxplot") +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
-        ) +
-        ylab("genes per cell")
+        )
     return(boxplot)
 }
 
@@ -48,13 +49,14 @@ plot_genes_detected_histogram <- function(metrics) {
             aes_(x = ~genes_detected,
                  fill = ~sample_name)
         ) +
+        labs(title = "genes detected histogram",
+             x = "genes per cell") +
         facet_wrap(~sample_name) +
         geom_histogram() +
-        ggtitle("genes detected histogram") +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
-            legend.position = "none") +
-        xlab("genes per cell")
+            legend.position = "none"
+        )
     return(histogram)
 }
 

@@ -20,12 +20,12 @@ plot_novelty_histogram <- function(metrics) {
             aes_(x = ~log10_detected_per_count,
                  fill = ~sample_name)
         ) +
+        labs(title = "novelty histogram",
+             x = "log10 genes detected per count")
         facet_wrap(~sample_name) +
         geom_histogram() +
-        ggtitle("novelty histogram") +
         scale_y_sqrt() +
-        theme(legend.position = "none") +
-        xlab("log genes detected per count")
+        theme(legend.position = "none")
     return(histogram)
 }
 
@@ -41,17 +41,18 @@ plot_novelty_boxplot <- function(metrics) {
                  y = ~log10_detected_per_count,
                  fill = ~sample_name)
         ) +
+        labs(title = "novelty boxplot",
+             x = "sample name",
+             y = "log10 genes detected per count") +
         geom_boxplot() +
-        ggtitle("novelty boxplot") +
         geom_label(
             data = aggregate(log10_detected_per_count ~ sample_name,
                              metrics,
                              median),
             aes_(label = ~round(log10_detected_per_count, digits = 2))
         ) +
-        theme(legend.position = "none") +
-        ylab("log genes detected per count") +
-        expand_limits(y = 0)
+        expand_limits(y = 0) +
+        theme(legend.position = "none")
     return(boxplot)
 }
 

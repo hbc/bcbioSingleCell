@@ -13,16 +13,19 @@ plot_total_vs_detected <- function(metrics, colorby = "sample_name") {
         ggplot(
             aes_(x = ~total_counts,
                  y = ~genes_detected,
-                 color = as.name(colorby))) +
+                 color = as.name(colorby))
+        ) +
+        labs(title = "total counts vs. genes detected",
+             x = "counts per cell",
+             y = "genes per cell") +
         facet_wrap(~sample_name) +
         geom_point() +
         geom_smooth(method = "loess") +
-        ggtitle("total counts vs. genes detected") +
         scale_x_log10() +
         scale_y_log10() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1),
-              legend.position = "none") +
-        xlab("counts per cell") +
-        ylab("genes per cell")
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
     return(plot)
 }

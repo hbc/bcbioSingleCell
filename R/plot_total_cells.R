@@ -16,15 +16,16 @@ plot_total_cells <- function(metrics) {
                  y = ~total_cells,
                  fill = ~sample_name)
         ) +
+        labs(title = "total number of cells",
+             x = "sample name",
+             y = "cell count (barcode cutoff applied)") +
         geom_bar(stat = "identity") +
         geom_text(vjust = -0.5,
                   aes_(label = ~total_cells)
         ) +
-        ggtitle("total number of cells") +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
-        ) +
-        ylab("cell count (w/ barcode depth cutoff)")
+        )
     return(plot)
 }
