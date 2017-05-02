@@ -56,11 +56,11 @@ read_bcbio_sparsecounts <- function(run, strip_version = TRUE) {
         input <- strip_transcript_versions(input)
     }
     # Convert transcript-level counts to gene-level
-    annotations <- ensembl_annotations(run)
+    ensembl <- run$ensembl
     # Avoid setting rownames on data frames (tidy principle)
-    indexes <- match(rownames(input), annotations$ensembl_transcript_id)
-    # collect(select(annotations, external_gene_name))[[1]]
-    gene_names <- annotations %>%
+    indexes <- match(rownames(input), ensembl$ensembl_transcript_id)
+    # collect(select(ensembl, external_gene_name))[[1]]
+    gene_names <- ensembl %>%
         as.data.frame %>%
         .[indexes, "external_gene_name"]
     sparsecounts <- combine_features(input, gene_names)

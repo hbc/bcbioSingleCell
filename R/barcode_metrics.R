@@ -17,12 +17,12 @@ barcode_metrics <- function(
     check_sparse(sparsecounts)
 
     # Ensembl annotations with broad class definitions
-    annotations <- ensembl_annotations(run)
+    ensembl <- run$ensembl
 
-    coding <- annotations %>%
+    coding <- ensembl %>%
         .[.$broad_class == "coding", ] %>%
         .$external_gene_name %>% unique %>% sort
-    mito <- annotations %>%
+    mito <- ensembl %>%
         .[.$broad_class == "mito", ] %>%
         .$external_gene_name %>% unique %>% sort
 

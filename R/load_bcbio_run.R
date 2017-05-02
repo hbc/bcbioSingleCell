@@ -79,6 +79,10 @@ load_bcbio_run <- function(
         programs = programs,
         session_info = sessionInfo())
 
+    # Save Ensembl annotations for all genes
+    run$ensembl <- ensembl_annotations(run)
+    run$ensembl_version <- listMarts() %>% .[1, 2]
+
     check_run(run)
     return(run)
 }

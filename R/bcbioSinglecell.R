@@ -18,7 +18,7 @@ globalVariables(".")
 
 # Imports ====
 ## General ----
-#' @importFrom biomaRt getBM useEnsembl
+#' @importFrom biomaRt getBM listMarts useEnsembl
 #' @importFrom knitr asis_output kable opts_knit
 #' @importFrom methods as show
 #' @importFrom R.utils gzip
