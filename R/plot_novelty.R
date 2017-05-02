@@ -24,7 +24,7 @@ plot_novelty_histogram <- function(metrics) {
              x = "log10 genes detected per count") +
         facet_wrap(~sample_name) +
         geom_histogram() +
-        geom_vline(color = warn_color, xintercept = 0.6) +
+        geom_vline(color = warn_color, xintercept = 0.625) +
         scale_y_sqrt() +
         xlim(0, 1) +
         theme(
@@ -50,7 +50,7 @@ plot_novelty_boxplot <- function(metrics) {
              x = "sample name",
              y = "log10 genes detected per count") +
         geom_boxplot() +
-        geom_hline(color = warn_color, yintercept = 0.6) +
+        geom_hline(color = warn_color, yintercept = 0.625) +
         geom_label(
             data = aggregate(log10_detected_per_count ~ sample_name,
                              metrics,
