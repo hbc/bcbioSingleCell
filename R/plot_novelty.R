@@ -55,7 +55,9 @@ plot_novelty_boxplot <- function(metrics) {
             data = aggregate(log10_detected_per_count ~ sample_name,
                              metrics,
                              median),
-            aes_(label = ~round(log10_detected_per_count, digits = 2))
+            aes_(label = ~round(log10_detected_per_count, digits = 2)),
+            alpha = 0.75,
+            label.padding = unit(0.1, "lines")
         ) +
         expand_limits(y = 0) +
         theme(

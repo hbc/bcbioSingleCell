@@ -30,7 +30,9 @@ plot_genes_detected_boxplot <- function(metrics) {
             data = aggregate(genes_detected ~ sample_name,
                              metrics,
                              median),
-            aes_(label = ~round(genes_detected))
+            aes_(label = ~round(genes_detected)),
+            alpha = 0.75,
+            label.padding = unit(0.1, "lines")
         ) +
         expand_limits(y = 0) +
         theme(

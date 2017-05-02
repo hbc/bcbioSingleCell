@@ -53,7 +53,9 @@ plot_total_counts_boxplot <- function(metrics) {
             data = aggregate(total_counts ~ sample_name,
                              metrics,
                              median),
-            aes_(label = ~round(total_counts))
+            aes_(label = ~round(total_counts)),
+            alpha = 0.75,
+            label.padding = unit(0.1, "lines")
         ) +
         scale_y_log10() +
         expand_limits(y = 1) +
