@@ -24,16 +24,18 @@ barcode_metrics <- function(
         .[.$broad_class == "mito", ] %>%
         .$external_gene_name %>% unique %>% sort
 
-    # Calculate colSums
     metrics <- tibble(
+        # Unique: `file_name` + `sample_barcode` + `cellular_barcode`
         unique = colnames(sparsecounts),
+        # Calculate colSums
         total_counts = Matrix::colSums(sparsecounts),
         genes_detected = Matrix::colSums(sparsecounts > 0),
         coding_counts = Matrix::colSums(
             sparsecounts[rownames(sparsecounts) %in% coding, ]),
         mito_counts = Matrix::colSums(
-            sparsecounts[rownames(sparsecounts) %in% mito, ])) %>%
-        # Unique identifier
+            sparsecounts[rownames(sparsecounts) %in% mito, ])
+    ) %>%
+        # Separate the barcodes, later used to join metadata
         separate_("unique",
                   c("sample_barcode", "cellular_barcode"),
                   sep = ":",
@@ -41,13 +43,12 @@ barcode_metrics <- function(
         # Summary statistics
         mutate(log10_detected_per_count = log10(.data$genes_detected) /
                    log10(.data$total_counts),
-               percent_mito = .data$mito_counts / .data$total_counts)
+               percent_mito = .data$mito_counts / .data$total_counts) %>%
+        # Join the sample names
+        left_join(metadata[, c("sample_barcode", "sample_name")],
+                  by = "sample_barcode") %>%
+        # .[order(.$unique), ]
+        arrange(!!sym("unique"))
 
-    # Join metadata, if present
-    if (!is.null(metadata)) {
-        metrics <- left_join(metrics, metadata, by = "sample_barcode")
-    }
-
-    metrics <- metrics[order(metrics$unique), ]
     return(metrics)
 }
