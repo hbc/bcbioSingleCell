@@ -61,7 +61,7 @@ read_metadata <- function(
         metadata$description, metadata$reverse_complement, sep = "-")
 
     # Convert to data frame and set rownames
-    metadata <- metadata %>% as.data.frame %>% set_rownames(.$sample_name)
+    metadata <- metadata %>% as.data.frame %>% set_rownames(.$sample_barcode)
 
     return(metadata)
 }
