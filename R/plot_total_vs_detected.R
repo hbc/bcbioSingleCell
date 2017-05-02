@@ -20,7 +20,8 @@ plot_total_vs_detected <- function(metrics, colorby = "sample_name") {
         ggtitle("total counts vs. genes detected") +
         scale_x_log10() +
         scale_y_log10() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+        theme(axis.text.x = element_text(angle = 90, hjust = 1),
+              legend.position = "none") +
         xlab("counts per cell") +
         ylab("genes per cell")
     return(plot)

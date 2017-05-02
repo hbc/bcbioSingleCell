@@ -54,7 +54,10 @@ plot_total_counts_boxplot <- function(metrics) {
         ) +
         ggtitle("total RNA read counts boxplot") +
         scale_y_log10() +
-        theme(legend.position = "none") +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        ) +
         ylab("counts per cell")
     return(boxplot)
 }

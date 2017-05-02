@@ -10,8 +10,6 @@ barcode_metrics(run, sparsecounts)
 \item{run}{\code{bcbio-nextgen} run}
 
 \item{sparsecounts}{Sparse counts matrix}
-
-\item{metadata}{Sample barcodes metadata}
 }
 \value{
 Data frame

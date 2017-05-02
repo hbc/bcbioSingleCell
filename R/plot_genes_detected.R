@@ -29,7 +29,10 @@ plot_genes_detected_boxplot <- function(metrics) {
             aes_(label = ~round(genes_detected))
         ) +
         ggtitle("genes detected boxplot") +
-        theme(legend.position = "none") +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        ) +
         ylab("genes per cell")
     return(boxplot)
 }

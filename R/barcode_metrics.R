@@ -5,7 +5,6 @@
 #'
 #' @param run \code{bcbio-nextgen} run
 #' @param sparsecounts Sparse counts matrix
-#' @param metadata Sample barcodes metadata
 #'
 #' @return Data frame
 #' @export

@@ -3,12 +3,15 @@
 \name{plot_mito_counts_histogram}
 \alias{plot_mito_counts_histogram}
 \alias{plot_mito_counts_boxplot}
+\alias{plot_mito_counts_scatterplot}
 \alias{plot_mito_counts}
 \title{Mitochondrial count plots}
 \usage{
 plot_mito_counts_histogram(metrics)
 
 plot_mito_counts_boxplot(metrics)
+
+plot_mito_counts_scatterplot(metrics)
 
 plot_mito_counts(metrics)
 }
@@ -22,6 +25,8 @@ ggplot2 object
 Histogram
 
 Boxplot
+
+Scatterplot
 
 Show both plots
 }

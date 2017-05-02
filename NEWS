@@ -1,3 +1,6 @@
+0.0.5   Improvements to run object based on code in bcbioRnaseq.
+        Better handling in plots for datasets with many samples.
+        Label quality control cutoffs on the plots.
 0.0.4   Prepare package for tidyverse dependency updates.
         Updated HPC server detection.
 0.0.3   NAMESPACE consolidation and function cleanup.

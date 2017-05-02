@@ -21,7 +21,10 @@ plot_total_cells <- function(metrics) {
                   aes_(label = ~total_cells)
         ) +
         ggtitle("total number of cells") +
-        theme(legend.position = "none") +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        ) +
         ylab("cell count (w/ barcode depth cutoff)")
     return(plot)
 }
