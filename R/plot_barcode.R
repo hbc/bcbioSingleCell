@@ -11,14 +11,14 @@
 #' @description Plot a barcode histogram for a given sample
 #' @keywords internal
 #'
-#' @param file_name path to a barcode histogram file
-#' @param sample title for plot
+#' @param file_name Barcode histogram file
+#' @param sample_name Sample name (title for plot)
 #'
 #' @export
-plot_barcode <- function(file_name, sample = NULL) {
+plot_barcode <- function(file_name, sample_name = NULL) {
     # Get the sample name from the file name by default
-    if (is.null(sample)) {
-        sample <- gsub("-barcodes\\.tsv$", "", basename(file_name))
+    if (is.null(sample_name)) {
+        sample_name <- gsub("-barcodes\\.tsv$", "", basename(file_name))
     }
 
     bcs <- read_barcode_file(file_name)
@@ -32,7 +32,7 @@ plot_barcode <- function(file_name, sample = NULL) {
     plot <- qplot(10^xLog, y) +
         geom_point() +
         geom_line() +
-        ggtitle(sample) +
+        ggtitle(sample_name) +
         scale_x_log10(
             breaks = trans_breaks("log10", function(x) 10^x),
             labels = trans_format("log10", math_format(~10^.x))
@@ -52,13 +52,19 @@ plot_barcode <- function(file_name, sample = NULL) {
 #'
 #' @export
 plot_barcodes <- function(run) {
-    files <- list.files(
-        run$final_dir,
-        pattern = "*-barcodes.tsv",
-        recursive = TRUE,
-        include.dirs = TRUE,
-        full.names = TRUE)
-    lapply(seq_along(files), function(a) {
-        show(plot_barcode(files[a]))
+    sample_barcodes <- names(run$sample_dirs)
+    file_names <- file.path(
+        run$sample_dirs, paste0(sample_barcodes, "-barcodes.tsv"))
+    if (!all(file.exists(file_names))) {
+        stop("Could not locate barcode TSV files")
+    }
+    metadata <- run$metadata[sample_barcodes,
+                             c("sample_barcode", "sample_name")]
+    names(file_names) <- metadata$sample_name
+    # Order the file names by sample name
+    file_names <- file_names[order(names(file_names))]
+    # Iterate over the files and show barcode plots
+    lapply(seq_along(file_names), function(a) {
+        show(plot_barcode(file_names[a], names(file_names)[a]))
     }) %>% invisible
 }
