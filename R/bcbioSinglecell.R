@@ -79,6 +79,10 @@ dplyr::mutate
 
 #' @usage NULL
 #' @export
+readxl::read_excel
+
+#' @usage NULL
+#' @export
 tibble::remove_rownames
 
 #' @usage NULL

@@ -11,6 +11,8 @@
 \alias{reexports}
 \alias{mutate}
 \alias{reexports}
+\alias{read_excel}
+\alias{reexports}
 \alias{remove_rownames}
 \alias{reexports}
 \alias{select}
@@ -28,6 +30,8 @@ below to see their documentation.
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 
   \item{readr}{\code{\link[readr]{write_csv}}}
+
+  \item{readxl}{\code{\link[readxl]{read_excel}}}
 
   \item{tibble}{\code{\link[tibble]{glimpse}}, \code{\link[tibble]{remove_rownames}}}
 }}
