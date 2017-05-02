@@ -7,6 +7,8 @@
 \alias{reexports}
 \alias{arrange}
 \alias{reexports}
+\alias{filter}
+\alias{reexports}
 \alias{glimpse}
 \alias{reexports}
 \alias{left_join}
@@ -27,7 +29,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{select}}}
+  \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{select}}}
 
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 

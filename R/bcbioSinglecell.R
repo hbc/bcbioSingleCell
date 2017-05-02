@@ -71,6 +71,10 @@ dplyr::arrange
 
 #' @usage NULL
 #' @export
+dplyr::filter
+
+#' @usage NULL
+#' @export
 tibble::glimpse
 
 #' @usage NULL
