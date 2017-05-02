@@ -182,3 +182,10 @@ get_objs_from_dots <- function(.dots) {
     }
     return(objs)
 }
+
+
+
+# https://github.com/steinbaugh/basejump/blob/dev/R/isString.R
+isString <- function(object) {
+    is.character(object) & length(object) == 1
+}
