@@ -13,9 +13,14 @@ NULL
 
 # Globals ====
 globalVariables(".")
+bins <- 100
 fail_color <- "red"
 pass_color <- "green"
 warn_color <- "orange"
+min_genes <- 500
+max_genes <- 5000
+novelty <- 0.75
+pct_mito <- 25
 
 
 
@@ -49,7 +54,7 @@ NULL
 #' @import stringr
 #' @importFrom magrittr %>% set_names set_rownames
 #' @importFrom rlang !! .data sym
-#' @importFrom tibble as_tibble glimpse tibble
+#' @importFrom tibble as_tibble glimpse remove_rownames tibble
 #' @importFrom tidyr expand_ separate_
 NULL
 
@@ -71,6 +76,10 @@ tibble::glimpse
 #' @usage NULL
 #' @export
 dplyr::mutate
+
+#' @usage NULL
+#' @export
+tibble::remove_rownames
 
 #' @usage NULL
 #' @export

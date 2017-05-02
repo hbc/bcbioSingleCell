@@ -11,6 +11,8 @@
 \alias{reexports}
 \alias{mutate}
 \alias{reexports}
+\alias{remove_rownames}
+\alias{reexports}
 \alias{select}
 \alias{reexports}
 \alias{write_csv}
@@ -27,6 +29,6 @@ below to see their documentation.
 
   \item{readr}{\code{\link[readr]{write_csv}}}
 
-  \item{tibble}{\code{\link[tibble]{glimpse}}}
+  \item{tibble}{\code{\link[tibble]{glimpse}}, \code{\link[tibble]{remove_rownames}}}
 }}
 

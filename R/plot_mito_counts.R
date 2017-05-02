@@ -24,8 +24,8 @@ plot_mito_counts_histogram <- function(metrics) {
         labs(title = "mitochondrial gene abundance histogram",
              x = "% mitochondrial") +
         facet_wrap(~sample_name) +
-        geom_histogram() +
-        geom_vline(color = warn_color, xintercept = 25) +
+        geom_histogram(bins = bins) +
+        geom_vline(color = warn_color, xintercept = pct_mito) +
         xlim(0, 100) +
         scale_y_sqrt() +
         theme(
@@ -52,7 +52,7 @@ plot_mito_counts_boxplot <- function(metrics) {
              x = "sample name",
              y = "% mitochondrial") +
         geom_boxplot() +
-        geom_hline(color = warn_color, yintercept = 25) +
+        geom_hline(color = warn_color, yintercept = pct_mito) +
         geom_label(
             data = aggregate(percent_mito ~ sample_name,
                              metrics,

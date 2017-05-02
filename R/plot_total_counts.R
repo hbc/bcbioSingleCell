@@ -23,9 +23,9 @@ plot_total_counts_histogram <- function(metrics) {
         labs(title = "total RNA read counts histogram",
              x = "counts per cell") +
         facet_wrap(~sample_name) +
-        geom_histogram() +
-        scale_x_log10() +
-        scale_y_log10() +
+        geom_histogram(bins = bins) +
+        expand_limits(x = 0) +
+        scale_y_sqrt() +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
@@ -56,6 +56,7 @@ plot_total_counts_boxplot <- function(metrics) {
             aes_(label = ~round(total_counts))
         ) +
         scale_y_log10() +
+        expand_limits(y = 1) +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"

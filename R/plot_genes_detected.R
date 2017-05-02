@@ -25,13 +25,14 @@ plot_genes_detected_boxplot <- function(metrics) {
              x = "sample name",
              y = "genes per cell") +
         geom_boxplot() +
-        geom_hline(color = warn_color, yintercept = 500) +
+        geom_hline(color = warn_color, yintercept = min_genes) +
         geom_label(
             data = aggregate(genes_detected ~ sample_name,
                              metrics,
                              median),
             aes_(label = ~round(genes_detected))
         ) +
+        expand_limits(y = 0) +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
@@ -53,8 +54,9 @@ plot_genes_detected_histogram <- function(metrics) {
         labs(title = "genes detected histogram",
              x = "genes per cell") +
         facet_wrap(~sample_name) +
-        geom_histogram() +
-        geom_vline(color = warn_color, xintercept = 500) +
+        geom_histogram(bins = bins) +
+        geom_vline(color = warn_color, xintercept = min_genes) +
+        expand_limits(x = 0) +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"

@@ -23,6 +23,7 @@ plot_total_vs_detected <- function(metrics, colorby = "sample_name") {
         geom_smooth(method = "loess") +
         scale_x_log10() +
         scale_y_log10() +
+        # expand_limits(x = 1, y = 1) +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
