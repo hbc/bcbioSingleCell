@@ -16,7 +16,7 @@
 read_metadata <- function(
     file,
     pattern = NULL,
-    pattern_col = "description",
+    pattern_col = "sample_name",
     lanes = NULL) {
     if (!file.exists(file)) {
         stop("File not found")
@@ -61,7 +61,7 @@ read_metadata <- function(
         metadata$description, metadata$reverse_complement, sep = "-")
 
     # Convert to data frame and set rownames
-    metadata <- metadata %>% as.data.frame %>% set_rownames(.$description)
+    metadata <- metadata %>% as.data.frame %>% set_rownames(.$sample_name)
 
     return(metadata)
 }
