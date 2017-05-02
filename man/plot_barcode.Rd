@@ -5,14 +5,14 @@
 \alias{plot_barcodes}
 \title{Plot sample barcodes}
 \usage{
-plot_barcode(file_name, sample = NULL)
+plot_barcode(file_name, sample_name = NULL)
 
 plot_barcodes(run)
 }
 \arguments{
-\item{file_name}{path to a barcode histogram file}
+\item{file_name}{Barcode histogram file}
 
-\item{sample}{title for plot}
+\item{sample_name}{Sample name (title for plot)}
 
 \item{run}{\code{bcbio-nextgen} run}
 }
