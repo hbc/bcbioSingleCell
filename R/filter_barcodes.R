@@ -16,10 +16,10 @@
 #' @export
 filter_barcodes <- function(
     metrics,
-    min_genes = 200,
+    min_genes = 500,
     max_genes = 5000,
     percent_mito = 0.2,
-    novelty = 0.75,
+    novelty = 0.6,
     plot = TRUE) {
     filtered <- metrics %>%
         .[.$genes_detected > min_genes, ] %>%

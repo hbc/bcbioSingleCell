@@ -25,6 +25,7 @@ plot_genes_detected_boxplot <- function(metrics) {
              x = "sample name",
              y = "genes per cell") +
         geom_boxplot() +
+        geom_hline(color = warn_color, yintercept = 500) +
         geom_label(
             data = aggregate(genes_detected ~ sample_name,
                              metrics,
@@ -53,6 +54,7 @@ plot_genes_detected_histogram <- function(metrics) {
              x = "genes per cell") +
         facet_wrap(~sample_name) +
         geom_histogram() +
+        geom_vline(color = warn_color, xintercept = 500) +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
