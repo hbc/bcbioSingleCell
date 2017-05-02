@@ -47,7 +47,9 @@ barcode_metrics <- function(
         left_join(metadata[, c("sample_barcode", "sample_name")],
                   by = "sample_barcode") %>%
         # .[order(.$unique), ]
-        arrange(!!sym("unique"))
+        arrange(!!sym("unique")) %>%
+        as.data.frame %>%
+        set_rownames(.$unique)
 
     return(metrics)
 }
