@@ -9,25 +9,16 @@
 #' @export
 check_run <- function(run) {
     if (!is.list(run)) {
-        stop("bcbio run object not found")
-    }
-    if (!file.exists(run$parent_dir)) {
-        stop("could not access parent_dir")
-    }
-    if (!file.exists(run$run_dir)) {
-        stop("could not access run_dir")
-    }
-    if (!file.exists(run$config_dir)) {
-        stop("could not access config_dir")
+        stop("Run object is not a list")
     }
     if (!file.exists(run$final_dir)) {
-        stop("could not access final_dir")
+        stop("Could not access final_dir")
     }
     if (!length(run$sample_dirs)) {
-        stop("no sample directories in run")
+        stop("No sample directories in run")
     }
-    if (!file.exists(run$project_dir)) {
-        stop("could not access project_dir")
+    if (!length(dir(run$project_dir))) {
+        stop("Could not access project_dir")
     }
 }
 
