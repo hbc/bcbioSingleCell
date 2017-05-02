@@ -75,6 +75,10 @@ tibble::glimpse
 
 #' @usage NULL
 #' @export
+dplyr::left_join
+
+#' @usage NULL
+#' @export
 dplyr::mutate
 
 #' @usage NULL

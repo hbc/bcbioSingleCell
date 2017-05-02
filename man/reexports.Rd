@@ -9,6 +9,8 @@
 \alias{reexports}
 \alias{glimpse}
 \alias{reexports}
+\alias{left_join}
+\alias{reexports}
 \alias{mutate}
 \alias{reexports}
 \alias{read_excel}
@@ -25,7 +27,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{select}}}
+  \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{select}}}
 
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 
