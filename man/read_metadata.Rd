@@ -4,7 +4,7 @@
 \alias{read_metadata}
 \title{Read metadata}
 \usage{
-read_metadata(file, pattern = NULL, pattern_col = "description",
+read_metadata(file, pattern = NULL, pattern_col = "sample_name",
   lanes = NULL)
 }
 \arguments{
