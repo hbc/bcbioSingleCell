@@ -60,3 +60,7 @@ magrittr::`%>%`
 #' @usage NULL
 #' @export
 tibble::glimpse
+
+#' @usage NULL
+#' @export
+readr::write_csv

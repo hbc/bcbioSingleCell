@@ -4,7 +4,7 @@
 \alias{barcode_metrics}
 \title{Generate barcode metrics summary}
 \usage{
-barcode_metrics(run, sparsecounts, metadata = NULL)
+barcode_metrics(run, sparsecounts)
 }
 \arguments{
 \item{run}{\code{bcbio-nextgen} run}

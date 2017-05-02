@@ -11,13 +11,11 @@
 #' @export
 barcode_metrics <- function(
     run,
-    sparsecounts,
-    metadata = NULL) {
+    sparsecounts) {
     check_run(run)
     check_sparse(sparsecounts)
-
-    # Ensembl annotations with broad class definitions
     ensembl <- run$ensembl
+    metadata <- run$metadata
 
     coding <- ensembl %>%
         .[.$broad_class == "coding", ] %>%
