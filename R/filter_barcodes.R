@@ -19,7 +19,7 @@ filter_barcodes <- function(
     min_genes = 500,
     max_genes = 5000,
     percent_mito = 0.25,
-    novelty = 0.625,
+    novelty = 0.75,
     plot = TRUE) {
     filtered <- metrics %>%
         .[.$genes_detected > min_genes, ] %>%
