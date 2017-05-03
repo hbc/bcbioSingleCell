@@ -7,6 +7,8 @@
 \alias{reexports}
 \alias{arrange}
 \alias{reexports}
+\alias{colSums}
+\alias{reexports}
 \alias{filter}
 \alias{reexports}
 \alias{glimpse}
@@ -36,6 +38,8 @@ below to see their documentation.
   \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{top_n}}}
 
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
+
+  \item{Matrix}{\code{\link[Matrix]{colSums}}}
 
   \item{readr}{\code{\link[readr]{write_csv}}}
 

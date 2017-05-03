@@ -71,6 +71,10 @@ dplyr::arrange
 
 #' @usage NULL
 #' @export
+Matrix::colSums
+
+#' @usage NULL
+#' @export
 dplyr::filter
 
 #' @usage NULL
