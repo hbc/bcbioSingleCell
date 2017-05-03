@@ -6,18 +6,13 @@
 #' @author Rory Kirchner
 #'
 #' @param run \code{bcbio-nextgen}
-#' @param save Save data
 
 
 
-#' Import single-cell RNA-seq count data
+#' @rdname read_bcbio
+#' @description Import transcript-level count data from a bcbio run into a
+#'   sparse matrix
 #'
-#' Import transcript-level count data from a bcbio run into a sparse matrix
-#'
-#' @author Rory Kirchner
-#' @author Michael Steinbaugh
-#'
-#' @param run \code{bcbio-nextgen} run
 #' @param strip_version Strip transcript version from identifier
 #'
 #' @return Sparse counts matrix

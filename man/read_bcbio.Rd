@@ -10,26 +10,16 @@ read_bcbio_sparsecounts(run, strip_version = TRUE)
 \item{run}{\code{bcbio-nextgen}}
 
 \item{strip_version}{Strip transcript version from identifier}
-
-\item{save}{Save data
-Import single-cell RNA-seq count data
-
-Import transcript-level count data from a bcbio run into a sparse matrix}
-
-\item{run}{\code{bcbio-nextgen} run}
 }
 \value{
 Sparse counts matrix
 }
 \description{
-Read data from bcbio-nextgen run
+Import transcript-level count data from a bcbio run into a
+  sparse matrix
 }
 \author{
 Michael Steinbaugh
 
 Rory Kirchner
-
-Rory Kirchner
-
-Michael Steinbaugh
 }
