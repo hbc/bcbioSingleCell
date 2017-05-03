@@ -18,8 +18,8 @@ biocViews:
     Visualization
 URL:
     https://bcbio-nextgen.readthedocs.io,
-    https://github.com/roryk/bcbioSinglecell
-BugReports: https://github.com/roryk/bcbioSinglecell/issues
+    https://github.com/hbc/bcbioSinglecell
+BugReports: https://github.com/hbc/bcbioSinglecell/issues
 Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8

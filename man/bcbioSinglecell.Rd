@@ -10,5 +10,5 @@ Utility functions for analysis of \code{bcbio-nextgen} single-cell RNA-seq
 data.
 }
 \details{
-See the README on \href{https://github.com/roryk/bcbioSinglecell}{GitHub}.
+See the README on \href{https://github.com/hbc/bcbioSinglecell}{GitHub}.
 }
