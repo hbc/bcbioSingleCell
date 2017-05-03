@@ -27,11 +27,11 @@ barcode_metrics <- function(
         # Unique: `file_name` + `sample_barcode` + `cellular_barcode`
         unique = colnames(sparsecounts),
         # Calculate colSums
-        total_counts = Matrix::colSums(sparsecounts),
-        genes_detected = Matrix::colSums(sparsecounts > 0),
-        coding_counts = Matrix::colSums(
+        total_counts = colSums(sparsecounts),
+        genes_detected = colSums(sparsecounts > 0),
+        coding_counts = colSums(
             sparsecounts[rownames(sparsecounts) %in% coding, ]),
-        mito_counts = Matrix::colSums(
+        mito_counts = colSums(
             sparsecounts[rownames(sparsecounts) %in% mito, ])
     ) %>%
         # Separate the barcodes, later used to join metadata

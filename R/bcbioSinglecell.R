@@ -36,7 +36,7 @@ pct_mito <- 25
 NULL
 
 ## Sparse matrices ----
-#' @importFrom Matrix readMM writeMM
+#' @importFrom Matrix colSums readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix
 NULL
 
