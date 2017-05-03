@@ -57,7 +57,7 @@ plot_mito_counts_boxplot <- function(metrics) {
             data = aggregate(percent_mito ~ sample_name,
                              metrics,
                              median),
-            aes_(label = ~round(percent_mito, digits = 2)),
+            aes_(label = ~round(percent_mito, digits = 1)),
             alpha = 0.75,
             label.padding = unit(0.1, "lines")
         ) +
