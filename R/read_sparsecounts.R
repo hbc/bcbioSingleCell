@@ -9,7 +9,7 @@
 #' @export
 read_sparsecounts <- function(mat_file) {
     if (!file.exists(mat_file)) {
-        stop("count matrix could not be found")
+        stop("Count matrix could not be found")
     }
     if (file_ext(mat_file) == "gz") {
         stem <- file_path_sans_ext(mat_file)
@@ -20,10 +20,10 @@ read_sparsecounts <- function(mat_file) {
     row_file <- paste0(stem, ".rownames")
     col_file <- paste0(stem, ".colnames")
     if (!file.exists(row_file)) {
-        stop("rownames file could not be found")
+        stop("Row names file could not be found")
     }
     if (!file.exists(col_file)) {
-        stop("rownames file could not be found")
+        stop("Row names file could not be found")
     }
     counts <- readMM(mat_file)
     rownames(counts) <- read_lines(row_file)
