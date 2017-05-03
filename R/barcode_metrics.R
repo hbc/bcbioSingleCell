@@ -23,6 +23,7 @@ barcode_metrics <- function(
         .[.$broad_class == "mito", ] %>%
         .$external_gene_name %>% unique %>% sort
 
+    # Matrix::colSums
     metrics <- tibble(
         # Unique: `file_name` + `sample_barcode` + `cellular_barcode`
         unique = colnames(sparsecounts),
