@@ -91,7 +91,7 @@ load_run <- function(
         message("Reading counts into sparse matrix...")
         run$sparse <- read_bcbio_sparsecounts(run)
         message("Reading barcode metrics...")
-        run$metrics <- read_bcbio_metrics(run, run$sparse)
+        run$metrics <- barcode_metrics(run, run$sparse)
     }
 
     check_run(run)
