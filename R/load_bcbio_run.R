@@ -1,11 +1,11 @@
-#' Load bcbio run
+#' Load bcbio-nextgen run
 #'
 #' We recommend loading the \code{bcbio-nextgen} run as a remote connection over
-#' \code{sshfs}. This requires setting \code{parent_dir} in the function.
+#' \code{sshfs}.
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param final_dir Path to final output directory. This path is set when
+#' @param upload_dir Path to final upload directory. This path is set when
 #'   running \code{bcbio_nextgen -w template}.
 #' @param intgroup Character vector of interesting groups. First entry is used
 #'   for plot colors during quality control (QC) analysis. Entire vector is used
@@ -14,32 +14,35 @@
 #'   lowercase and one word (e.g. hsapiens). This will be detected automatically
 #'   for common reference genomes.
 #' @param metadata Optional custom metadata file to import
+#' @param read_counts Automatically read in the count data using
+#'   \code{read_bcbio_sparsecounts()}
 #'
 #' @return \code{bcbio-nextgen} run object
 #' @export
-load_bcbio_run <- function(
-    final_dir = "final",
+load_run <- function(
+    upload_dir = "final",
     intgroup = "sample_name",
     organism,
-    metadata) {
-    if (!length(dir(final_dir))) {
+    metadata,
+    read_counts = TRUE) {
+    if (!length(dir(upload_dir))) {
         stop("final directory failed to load")
     }
-    final_dir <- normalizePath(final_dir)
+    upload_dir <- normalizePath(upload_dir)
 
     # project_dir
     pattern <- ".*/(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
-    match <- dir(final_dir, full.names = TRUE) %>%
+    match <- dir(upload_dir, full.names = TRUE) %>%
         str_subset(pattern) %>%
         str_match(pattern)
     project_dir <- match[1]
     run_date <- match[2]
     template <- match[3]
 
-    message(paste(dir(final_dir), collapse = "\n"))
+    message(paste(dir(upload_dir), collapse = "\n"))
 
     # Sample directories
-    sample_dirs <- dir(final_dir, full.names = TRUE)
+    sample_dirs <- dir(upload_dir, full.names = TRUE)
     names(sample_dirs) <- basename(sample_dirs)
     # Remove the nested `project_dir`
     sample_dirs <- sample_dirs[!grepl(basename(project_dir),
@@ -64,7 +67,7 @@ load_bcbio_run <- function(
         read_delim(",", col_names = c("program", "version"))
 
     run <- list(
-        final_dir = final_dir,
+        upload_dir = upload_dir,
         project_dir = project_dir,
         run_date = as.Date(run_date),
         today_date = Sys.Date(),
@@ -82,6 +85,11 @@ load_bcbio_run <- function(
     # Save Ensembl annotations for all genes
     run$ensembl <- ensembl_annotations(run)
     run$ensembl_version <- listMarts() %>% .[1, 2]
+
+    # Read counts into a sparse matrix
+    if (isTRUE(read_counts)) {
+        run$sparse <- read_bcbio_sparsecounts(run)
+    }
 
     check_run(run)
     return(run)
