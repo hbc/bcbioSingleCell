@@ -208,6 +208,10 @@ sessionInfo()
 
 # References
 
+```{r}
+references()
+```
+
 
 
 [bcbio-nextgen]: https://bcbio-nextgen.readthedocs.io
