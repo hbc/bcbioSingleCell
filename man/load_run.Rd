@@ -4,25 +4,26 @@
 \alias{load_run}
 \title{Load bcbio-nextgen run}
 \usage{
-load_run(upload_dir = "final", intgroup = "sample_name", organism, metadata,
+load_run(upload_dir = "final", metadata_file = file.path("meta",
+  "indrop_rnaseq.xlsx"), organism, intgroup = "sample_name",
   read_counts = TRUE)
 }
 \arguments{
 \item{upload_dir}{Path to final upload directory. This path is set when
 running \code{bcbio_nextgen -w template}.}
 
-\item{intgroup}{Character vector of interesting groups. First entry is used
-for plot colors during quality control (QC) analysis. Entire vector is used
-for PCA and heatmap QC functions.}
-
 \item{organism}{Organism name, following Ensembl/Biomart conventions. Must be
 lowercase and one word (e.g. hsapiens). This will be detected automatically
 for common reference genomes.}
 
-\item{metadata}{Optional custom metadata file to import}
+\item{intgroup}{Character vector of interesting groups. First entry is used
+for plot colors during quality control (QC) analysis. Entire vector is used
+for PCA and heatmap QC functions.}
 
 \item{read_counts}{Automatically read in the count data using
 \code{read_bcbio_counts()}}
+
+\item{metadata}{Sample barcode metadata file}
 }
 \value{
 \code{bcbio-nextgen} run object

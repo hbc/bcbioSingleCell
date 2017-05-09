@@ -7,13 +7,13 @@
 #'
 #' @param upload_dir Path to final upload directory. This path is set when
 #'   running \code{bcbio_nextgen -w template}.
-#' @param intgroup Character vector of interesting groups. First entry is used
-#'   for plot colors during quality control (QC) analysis. Entire vector is used
-#'   for PCA and heatmap QC functions.
+#' @param metadata Sample barcode metadata file
 #' @param organism Organism name, following Ensembl/Biomart conventions. Must be
 #'   lowercase and one word (e.g. hsapiens). This will be detected automatically
 #'   for common reference genomes.
-#' @param metadata Optional custom metadata file to import
+#' @param intgroup Character vector of interesting groups. First entry is used
+#'   for plot colors during quality control (QC) analysis. Entire vector is used
+#'   for PCA and heatmap QC functions.
 #' @param read_counts Automatically read in the count data using
 #'   \code{read_bcbio_counts()}
 #'
@@ -21,27 +21,38 @@
 #' @export
 load_run <- function(
     upload_dir = "final",
-    intgroup = "sample_name",
+    metadata_file = file.path("meta", "indrop_rnaseq.xlsx"),
     organism,
-    metadata,
+    intgroup = "sample_name",
     read_counts = TRUE) {
+    # Check connection to upload_dir
     if (!length(dir(upload_dir))) {
-        stop("final directory failed to load")
+        stop("Final upload directory failed to load")
     }
     upload_dir <- normalizePath(upload_dir)
 
-    # project_dir
-    pattern <- ".*/(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
-    match <- dir(upload_dir, full.names = TRUE) %>%
-        str_subset(pattern) %>%
-        str_match(pattern)
-    project_dir <- match[1]
+    # Find most recent nested project_dir (normally only 1)
+    pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
+    project_dir <- dir(upload_dir,
+                       pattern = pattern,
+                       full.names = FALSE,
+                       recursive = FALSE) %>%
+        sort %>% rev %>% .[[1]]
+    if (!length(project_dir)) {
+        stop("Project directory not found")
+    }
+    message(project_dir)
+    match <- str_match(project_dir, pattern)
     run_date <- match[2]
     template <- match[3]
+    project_dir <- file.path(upload_dir, project_dir)
 
-    message(paste(dir(upload_dir), collapse = "\n"))
+    # Program versions
+    message("Reading program versions...")
+    programs <- file.path(project_dir, "programs.txt") %>%
+        read_delim(",", col_names = c("program", "version"))
 
-    # Sample directories
+    # Obtain list of all sample folders
     sample_dirs <- dir(upload_dir, full.names = TRUE)
     names(sample_dirs) <- basename(sample_dirs)
     # Remove the nested `project_dir`
@@ -57,20 +68,16 @@ load_run <- function(
         lanes <- NULL
     }
 
-    # Custom metadata
-    if (!is.null(metadata)) {
-        metadata <- read_metadata(metadata, lanes = lanes)
-    }
-
-    # Program versions
-    programs <- file.path(project_dir, "programs.txt") %>%
-        read_delim(",", col_names = c("program", "version"))
+    metadata <- read_metadata(metadata_file, lanes = lanes)
+    sample_dirs <- sample_dirs[metadata$sample_barcode]
+    names(sample_dirs) %>% toString %>% message
 
     run <- list(
         upload_dir = upload_dir,
         project_dir = project_dir,
         run_date = as.Date(run_date),
         today_date = Sys.Date(),
+        template = template,
         wd = getwd(),
         hpc = detect_hpc(),
         template = template,
@@ -91,7 +98,7 @@ load_run <- function(
         message("Reading counts into sparse matrix...")
         run$counts <- read_bcbio_counts(run)
         message("Reading barcode metrics...")
-        run$metrics <- barcode_metrics(run, run$sparse)
+        run$metrics <- barcode_metrics(run, run$counts)
     }
 
     check_run(run)
