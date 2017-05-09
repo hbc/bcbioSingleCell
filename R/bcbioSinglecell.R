@@ -29,7 +29,7 @@ pct_mito <- 25
 #' @importFrom biomaRt getBM listMarts useEnsembl
 #' @importFrom knitr asis_output kable opts_knit
 #' @importFrom methods as show
-#' @importFrom R.utils gzip
+#' @importFrom R.utils gunzip gzip
 #' @importFrom stats aggregate median
 #' @importFrom tools file_ext file_path_sans_ext
 #' @importFrom utils globalVariables sessionInfo

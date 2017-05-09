@@ -22,7 +22,7 @@ for common reference genomes.}
 \item{metadata}{Optional custom metadata file to import}
 
 \item{read_counts}{Automatically read in the count data using
-\code{read_bcbio_sparsecounts()}}
+\code{read_bcbio_counts()}}
 }
 \value{
 \code{bcbio-nextgen} run object

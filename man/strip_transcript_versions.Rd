@@ -4,10 +4,10 @@
 \alias{strip_transcript_versions}
 \title{Strip transcript versions}
 \usage{
-strip_transcript_versions(sparsecounts)
+strip_transcript_versions(counts)
 }
 \arguments{
-\item{sparsecounts}{Sparse counts matrix}
+\item{counts}{Sparse counts matrix}
 }
 \value{
 Sparse counts matrix with the transcript versions stripped

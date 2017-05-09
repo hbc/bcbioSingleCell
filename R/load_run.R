@@ -15,7 +15,7 @@
 #'   for common reference genomes.
 #' @param metadata Optional custom metadata file to import
 #' @param read_counts Automatically read in the count data using
-#'   \code{read_bcbio_sparsecounts()}
+#'   \code{read_bcbio_counts()}
 #'
 #' @return \code{bcbio-nextgen} run object
 #' @export
@@ -89,7 +89,7 @@ load_run <- function(
     # Read counts into a sparse matrix
     if (isTRUE(read_counts)) {
         message("Reading counts into sparse matrix...")
-        run$sparse <- read_bcbio_sparsecounts(run)
+        run$sparse <- read_bcbio_counts(run)
         message("Reading barcode metrics...")
         run$metrics <- barcode_metrics(run, run$sparse)
     }
