@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @param metrics Barcode metrics data frame
+#' @param percent_mito Recommended mitochondrial percentage cutoff value
 #'
 #' @return ggplot2 object
 
