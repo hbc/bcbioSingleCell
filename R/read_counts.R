@@ -7,9 +7,8 @@
 #' @keywords internal
 #'
 #' @param matrix_file MatrixMart file to read
-#' @param strip_tx_version Strip Ensembl transcript version numbers
 #'
-#' @return a sparse matrix of counts
+#' @return Sparse counts matrix
 #' @export
 read_counts <- function(matrix_file) {
     # Detect gzip file

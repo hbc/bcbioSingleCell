@@ -8,11 +8,9 @@ read_counts(matrix_file)
 }
 \arguments{
 \item{matrix_file}{MatrixMart file to read}
-
-\item{strip_tx_version}{Strip Ensembl transcript version numbers}
 }
 \value{
-a sparse matrix of counts
+Sparse counts matrix
 }
 \description{
 Note that for a bcbio run, this function will return transcript-level counts
