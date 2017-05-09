@@ -1,0 +1,228 @@
+---
+title: "Quality Control"
+date: "`r BiocStyle::doc_date()`"
+bibliography: bcbioSinglecell.bib
+output:
+  html_document:
+    toc: true
+    code_folding: hide
+    df_print: kable
+    highlight: pygments
+    number_sections: false
+    toc: true
+---
+
+```{r setup, include=FALSE}
+# bcbioSinglecell ====
+library(bcbioSinglecell)
+if (file.exists("data/run.rda")) {
+    data(run)
+} else {
+    create_new_project()
+    run <- load_run(
+        upload_dir = "data/indrop_rnaseq",
+        organism = "mmusculus",
+        metadata = "meta/indrop_rnaseq.xlsx")
+    save_data(run)
+}
+
+# knitr ====
+library(knitr)
+opts_chunk$set(
+    audodep = TRUE,
+    cache = TRUE,
+    cache.lazy = FALSE,
+    error = FALSE,
+    fig.align = "center",
+    fig.height = 7,
+    fig.keep = "all",
+    fig.path = "figures/",
+    fig.width = 7,
+    message = FALSE,
+    tidy = TRUE,
+    warning = FALSE)
+
+# ggplot2 ====
+library(ggplot2)
+theme_set(theme_light(base_size = 14))
+
+# Workflow ====
+library(Seurat)
+```
+
+
+
+# Overview
+
+- Primary Investigator: 
+- Researcher: 
+- Experiment: 
+
+```{r metadata_table}
+metadata_table(run)
+```
+
+
+
+* * *
+
+
+
+# FASTQ generation
+
+## inDrop protocol
+
+- `v1`: Original design
+    - `_R1`: metadata read
+    - `_R2`: biological read
+- `v2`: Inversion of `v1`
+- `v3`: Summer 2016 redesign, requiring manual demultiplexing
+    - `_R1`: biological read
+    - `_R2`: first half of the gel barcode
+    - `_R3`: library index
+    - `_R4`: second half of the gel barcode, the UMI, and a fraction of the polyA tail
+
+This study used the [inDrop][] `v3` design.
+
+
+## Demultiplexing
+
+We demultiplexed the raw BCL run files into FASTQ format using [bcl2fastq][]. This step generates files with the following suffixes:
+
+- `_R1`: 61 bp read 1, transcript
+- `_R2`: 8 bp index read 1 (i7), single cell barcode
+- `_R3`: 8 bp index read 2 (i5), library index
+- `_R4`: 14 bp read 2, barcode and unique molecular identifiers (UMIs)
+
+We ran this on [Orchestra][] with the following settings:
+
+```{bash bcl2fastq, echo=TRUE, eval=FALSE}
+module load seq/bcl2fastq/2.17.1.14
+bcl2fastq --use-bases-mask y*,y*,y*,y* \
+          --mask-short-adapter-reads 0 \
+          --minimum-trimmed-read-length 0
+```
+
+
+
+# Count alignment
+
+We aligned the counts using the latest transcriptome FASTA from [Ensembl][] and obtained additional annotations with [biomaRt][].
+
+
+
+# Quality control metrics
+
+## Barcode plots
+
+These are counts of how many reads are assigned to a given cellular barcode. The purpose of these histograms is that we should see one single large peak that represents cells that were encapsulated. If we see a strong shoulder, or a bimodal distribution of the cells, that can indicate a couple problems. It might be that there is free floating RNA, which happens when cells are dying. It could also be that there are a set of cells that failed for some reason. Finally, it could also be that there are biologically different types of cells, and one type is much smaller than the other. If this is the case we would expect to see less RNA being sequenced from the smaller cells.
+
+```{r plot_barcodes}
+plot_barcodes(run)
+```
+
+
+## Total number of cells
+
+```{r plot_total_cells}
+plot_total_cells(run$metrics)
+```
+
+
+## Total RNA read counts
+
+```{r plot_total_counts}
+plot_total_counts(run$metrics)
+```
+
+
+## Genes detected
+
+Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of ~2,000-2,500 is normal for [inDrop][] analysis.
+
+```{r plot_genes_detected}
+plot_genes_detected(run$metrics)
+```
+
+
+## Total vs. detected
+
+If we graph out the total number of counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
+
+```{r plot_total_vs_detected}
+plot_total_vs_detected(run$metrics)
+```
+
+
+## Mitochondrial counts
+
+We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
+
+```{r plot_mito_counts}
+plot_mito_counts(run$metrics)
+```
+
+
+## Novelty
+
+Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
+
+```{r plot_novelty}
+plot_novelty(run$metrics)
+```
+
+
+
+# Summary
+
+We recommend proceeding with minimal filtering:
+
+- `> 100` genes detected per cell (abnormally low)
+- `< 5000` genes detected per cell (abnormally high)
+- `< 25%` mitochondrial transcripts
+- `> 0.75` novelty score
+
+```{r suggested_filtering}
+suggested_filtering <- filter_barcodes(
+    run$metrics,
+    min_genes = 500,
+    max_genes = 5000,
+    percent_mito = 0.25,
+    novelty = 0.75)
+save_data(suggested_filtering)
+```
+
+
+
+* * *
+
+
+
+# Methods
+
+```{r sessionInfo}
+sessionInfo()
+```
+
+
+
+# References
+
+```{r}
+references()
+```
+
+
+
+[bcbio-nextgen]: https://bcbio-nextgen.readthedocs.io
+[bcl2fastq]: https://support.illumina.com/downloads/bcl2fastq-conversion-software-v217.html
+[biomaRt]: https://bioconductor.org/packages/release/bioc/html/biomaRt.html
+[Ensembl]: http://useast.ensembl.org/Drosophila_melanogaster/Info/Index
+[inDrop]: http://1cell-bio.com
+[Matrix]: https://cran.r-project.org/web/packages/Matrix/index.html
+[Orchestra]: https://wiki.med.harvard.edu/Orchestra
+[R]: https://www.r-project.org
+[rapmap]: https://github.com/COMBINE-lab/RapMap
+[scRNA-Seq]: http://bcbio-nextgen.readthedocs.io/en/latest/contents/configuration.html#single-cell-rna-sequencing
+[Seurat]: http://satijalab.org/seurat
+[umis]: https://github.com/vals/umis

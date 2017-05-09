@@ -35,6 +35,10 @@ pct_mito <- 25
 #' @importFrom utils globalVariables sessionInfo
 NULL
 
+## Single-cell ----
+## @import scater
+## Namespace collisons with dplyr: arrange, filter, mutate, rename
+
 ## Sparse matrices ----
 #' @importFrom Matrix colSums readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix

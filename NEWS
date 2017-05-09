@@ -1,3 +1,7 @@
+0.0.6   Modify `load_run()` function for improved consistency with bcbioRnaseq
+        package.
+        Initial incorporation of scater package into workflow.
+        Initial commit of RMarkdown template skeletons.
 0.0.5   Improvements to run object based on code in bcbioRnaseq.
         Better handling in plots for datasets with many samples.
         Label quality control cutoffs on the plots.
