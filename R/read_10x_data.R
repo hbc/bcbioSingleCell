@@ -8,7 +8,7 @@
 #'
 #' @return Sparse counts matrix (dgTMatrix)
 #' @export
-read_10x_counts <- function(data_dir) {
+read_10x_data <- function(data_dir) {
     barcodes_file <- file.path(data_dir, "barcodes.tsv")
     genes_file <- file.path(data_dir, "genes.tsv")
     matrix_file <- file.path(data_dir, "matrix.mtx")
@@ -20,26 +20,27 @@ read_10x_counts <- function(data_dir) {
         stop("Gene names file missing")
     }
     if (!file.exists(matrix_file)) {
-        stop("MatrixMart counts matrix file missing")
+        stop("MatrixMart counts file missing")
     }
 
     # Read MatrixMart expression counts matrix
-    sparsecounts <- readMM(matrix_file)
+    counts <- readMM(matrix_file)
 
     # Assign barcodes to colnames
-    sparse_cols <- readLines(barcodes_file)
+    barcodes <- readLines(barcodes_file)
     # Check for `-1` suffix in barcode names, indicative of 10X data
     pattern <- "\\-1$"
-    if (all(grepl(pattern, sparse_cols))) {
-        sparse_cols <- gsub(pattern, "", sparse_cols)
+    if (all(grepl(pattern, barcodes))) {
+        barcodes <- gsub(pattern, "", barcodes)
     }
-    colnames(sparsecounts) <- sparse_cols
+    colnames(counts) <- barcodes
 
     # Assign gene names (symbols) to rownames
-    sparse_rows <- read_tsv(genes_file,
-                            col_names = c("ensembl_gene_id",
-                                          "external_gene_name"))
-    rownames(sparsecounts) <- make.unique(sparse_rows$external_gene_name)
+    genes <- read_tsv(genes_file,
+                      col_names = c("ensembl_gene_id",
+                                    "external_gene_name"))
+    rownames(counts) <- make.unique(genes$external_gene_name)
 
-    return(sparsecounts)
+    # Coerce dgTMatrix to dgCMatrix
+    return(as(counts, "dgCMatrix"))
 }
