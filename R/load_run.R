@@ -7,7 +7,7 @@
 #'
 #' @param upload_dir Path to final upload directory. This path is set when
 #'   running \code{bcbio_nextgen -w template}.
-#' @param metadata Sample barcode metadata file
+#' @param metadata_file Sample barcode metadata file
 #' @param organism Organism name, following Ensembl/Biomart conventions. Must be
 #'   lowercase and one word (e.g. hsapiens). This will be detected automatically
 #'   for common reference genomes.
