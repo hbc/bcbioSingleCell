@@ -1,13 +1,23 @@
 #' Read a MatrixMart file, setting the row and column names
 #'
+#' Note that for a bcbio run, this function will return transcript-level counts
+#'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
+#' @keywords internal
 #'
 #' @param matrix_file MatrixMart file to read
+#' @param strip_tx_version Strip Ensembl transcript version numbers
 #'
 #' @return a sparse matrix of counts
 #' @export
 read_counts <- function(matrix_file) {
+    # Detect gzip file
+    pattern <- "\\.gz$"
+    if (str_detect(matrix_file, pattern)) {
+        matrix_file <- gunzip(matrix_file)
+    }
+
     row_file <- paste0(matrix_file, ".rownames")
     col_file <- paste0(matrix_file, ".colnames")
 
