@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @param metrics Barcode metrics data frame
+#' @param novelty Recommended novelty cutoff value
 #'
 #' @return ggplot2 object
 
@@ -14,7 +15,9 @@
 #' @rdname plot_novelty
 #' @description Histogram
 #' @export
-plot_novelty_histogram <- function(metrics) {
+plot_novelty_histogram <- function(
+    metrics,
+    novelty = get("novelty", envir = parent.frame())) {
     histogram <- metrics %>%
         ggplot(
             aes_(x = ~log10_detected_per_count,
@@ -39,7 +42,9 @@ plot_novelty_histogram <- function(metrics) {
 #' @rdname plot_novelty
 #' @description Boxplot
 #' @export
-plot_novelty_boxplot <- function(metrics) {
+plot_novelty_boxplot <- function(
+    metrics,
+    novelty = get("novelty", envir = parent.frame())) {
     boxplot <- metrics %>%
         ggplot(
             aes_(x = ~sample_name,
@@ -71,8 +76,11 @@ plot_novelty_boxplot <- function(metrics) {
 
 #' @rdname plot_novelty
 #' @description Show both plots
+#'
+#' @param ... Passthrough parameters
+#'
 #' @export
-plot_novelty <- function(metrics) {
-    show(plot_novelty_histogram(metrics))
-    show(plot_novelty_boxplot(metrics))
+plot_novelty <- function(...) {
+    show(plot_novelty_histogram(...))
+    show(plot_novelty_boxplot(...))
 }

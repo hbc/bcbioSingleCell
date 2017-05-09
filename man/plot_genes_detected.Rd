@@ -6,14 +6,22 @@
 \alias{plot_genes_detected}
 \title{Genes detected plots}
 \usage{
-plot_genes_detected_boxplot(metrics)
+plot_genes_detected_boxplot(metrics, min_genes = get("min_genes", envir =
+  parent.frame()), max_genes = get("max_genes", envir = parent.frame()))
 
-plot_genes_detected_histogram(metrics)
+plot_genes_detected_histogram(metrics, min_genes = get("min_genes", envir =
+  parent.frame()), max_genes = get("max_genes", envir = parent.frame()))
 
-plot_genes_detected(metrics)
+plot_genes_detected(...)
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}
+
+\item{min_genes}{Recommended minimum gene count cutoff}
+
+\item{max_genes}{Recommended maximum gene count cutoff}
+
+\item{...}{Passthrough parameters}
 }
 \value{
 ggplot2 object

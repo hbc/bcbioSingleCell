@@ -7,13 +7,15 @@
 \alias{plot_mito_counts}
 \title{Mitochondrial count plots}
 \usage{
-plot_mito_counts_histogram(metrics)
+plot_mito_counts_histogram(metrics, percent_mito = get("percent_mito", envir =
+  parent.frame()))
 
-plot_mito_counts_boxplot(metrics)
+plot_mito_counts_boxplot(metrics, percent_mito = get("percent_mito", envir =
+  parent.frame()))
 
-plot_mito_counts_scatterplot(metrics)
+plot_mito_counts_scatterplot(metrics, percent_mito = NULL)
 
-plot_mito_counts(metrics)
+plot_mito_counts(...)
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}

@@ -10,10 +10,12 @@ plot_total_counts_histogram(metrics)
 
 plot_total_counts_boxplot(metrics)
 
-plot_total_counts(metrics)
+plot_total_counts(...)
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}
+
+\item{...}{Passthrough parameters}
 }
 \value{
 ggplot2 object

@@ -6,6 +6,8 @@
 #' @author Michael Steinbaugh
 #'
 #' @param metrics Barcode metrics data frame
+#' @param min_genes Recommended minimum gene count cutoff
+#' @param max_genes Recommended maximum gene count cutoff
 #'
 #' @return ggplot2 object
 
@@ -14,7 +16,10 @@
 #' @rdname plot_genes_detected
 #' @description Boxplot
 #' @export
-plot_genes_detected_boxplot <- function(metrics) {
+plot_genes_detected_boxplot <- function(
+    metrics,
+    min_genes = get("min_genes", envir = parent.frame()),
+    max_genes = get("max_genes", envir = parent.frame())) {
     boxplot <- metrics %>%
         ggplot(
             aes_(x = ~sample_name,
@@ -25,7 +30,10 @@ plot_genes_detected_boxplot <- function(metrics) {
              x = "sample name",
              y = "genes per cell") +
         geom_boxplot() +
-        geom_hline(color = warn_color, yintercept = min_genes) +
+        geom_hline(color = warn_color,
+                   yintercept = min_genes) +
+        geom_hline(color = warn_color,
+                   yintercept = max_genes) +
         geom_label(
             data = aggregate(genes_detected ~ sample_name,
                              metrics,
@@ -47,7 +55,10 @@ plot_genes_detected_boxplot <- function(metrics) {
 #' @rdname plot_genes_detected
 #' @description Histogram
 #' @export
-plot_genes_detected_histogram <- function(metrics) {
+plot_genes_detected_histogram <- function(
+    metrics,
+    min_genes = get("min_genes", envir = parent.frame()),
+    max_genes = get("max_genes", envir = parent.frame())) {
     histogram <- metrics %>%
         ggplot(
             aes_(x = ~genes_detected,
@@ -57,7 +68,10 @@ plot_genes_detected_histogram <- function(metrics) {
              x = "genes per cell") +
         facet_wrap(~sample_name) +
         geom_histogram(bins = bins) +
-        geom_vline(color = warn_color, xintercept = min_genes) +
+        geom_vline(color = warn_color,
+                   xintercept = min_genes) +
+        geom_vline(color = warn_color,
+                   xintercept = max_genes) +
         expand_limits(x = 0) +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
@@ -70,8 +84,11 @@ plot_genes_detected_histogram <- function(metrics) {
 
 #' @rdname plot_genes_detected
 #' @description Show both plots
+#'
+#' @param ... Passthrough parameters
+#'
 #' @export
-plot_genes_detected <- function(metrics) {
-    show(plot_genes_detected_histogram(metrics))
-    show(plot_genes_detected_boxplot(metrics))
+plot_genes_detected <- function(...) {
+    show(plot_genes_detected_histogram(...))
+    show(plot_genes_detected_boxplot(...))
 }

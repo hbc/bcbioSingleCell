@@ -6,14 +6,20 @@
 \alias{plot_novelty}
 \title{Novelty plots (log detected per count)}
 \usage{
-plot_novelty_histogram(metrics)
+plot_novelty_histogram(metrics, novelty = get("novelty", envir =
+  parent.frame()))
 
-plot_novelty_boxplot(metrics)
+plot_novelty_boxplot(metrics, novelty = get("novelty", envir =
+  parent.frame()))
 
-plot_novelty(metrics)
+plot_novelty(...)
 }
 \arguments{
 \item{metrics}{Barcode metrics data frame}
+
+\item{novelty}{Recommended novelty cutoff value}
+
+\item{...}{Passthrough parameters}
 }
 \value{
 ggplot2 object

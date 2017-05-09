@@ -70,8 +70,11 @@ plot_total_counts_boxplot <- function(metrics) {
 
 #' @rdname plot_total_counts
 #' @description Show both plots
+#'
+#' @param ... Passthrough parameters
+#'
 #' @export
-plot_total_counts <- function(metrics) {
-    show(plot_total_counts_histogram(metrics))
-    show(plot_total_counts_boxplot(metrics))
+plot_total_counts <- function(...) {
+    show(plot_total_counts_histogram(...))
+    show(plot_total_counts_boxplot(...))
 }

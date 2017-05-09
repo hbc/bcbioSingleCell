@@ -12,6 +12,8 @@ load_run(upload_dir = "final", metadata_file = file.path("meta",
 \item{upload_dir}{Path to final upload directory. This path is set when
 running \code{bcbio_nextgen -w template}.}
 
+\item{metadata_file}{Sample barcode metadata file}
+
 \item{organism}{Organism name, following Ensembl/Biomart conventions. Must be
 lowercase and one word (e.g. hsapiens). This will be detected automatically
 for common reference genomes.}
@@ -22,8 +24,6 @@ for PCA and heatmap QC functions.}
 
 \item{read_counts}{Automatically read in the count data using
 \code{read_bcbio_counts()}}
-
-\item{metadata}{Sample barcode metadata file}
 }
 \value{
 \code{bcbio-nextgen} run object

@@ -14,7 +14,9 @@
 #' @rdname plot_mito_counts
 #' @description Histogram
 #' @export
-plot_mito_counts_histogram <- function(metrics) {
+plot_mito_counts_histogram <- function(
+    metrics,
+    percent_mito = get("percent_mito", envir = parent.frame())) {
     metrics <- mutate(metrics, percent_mito = .data$percent_mito * 100)
     histogram <- metrics %>%
         ggplot(
@@ -25,7 +27,8 @@ plot_mito_counts_histogram <- function(metrics) {
              x = "% mitochondrial") +
         facet_wrap(~sample_name) +
         geom_histogram(bins = bins) +
-        geom_vline(color = warn_color, xintercept = pct_mito) +
+        geom_vline(color = warn_color,
+                   xintercept = percent_mito) +
         xlim(0, 100) +
         scale_y_sqrt() +
         theme(
@@ -40,7 +43,9 @@ plot_mito_counts_histogram <- function(metrics) {
 #' @rdname plot_mito_counts
 #' @description Boxplot
 #' @export
-plot_mito_counts_boxplot <- function(metrics) {
+plot_mito_counts_boxplot <- function(
+    metrics,
+    percent_mito = get("percent_mito", envir = parent.frame())) {
     metrics <- mutate(metrics, percent_mito = .data$percent_mito * 100)
     boxplot <- metrics %>%
         ggplot(
@@ -52,7 +57,8 @@ plot_mito_counts_boxplot <- function(metrics) {
              x = "sample name",
              y = "% mitochondrial") +
         geom_boxplot() +
-        geom_hline(color = warn_color, yintercept = pct_mito) +
+        geom_hline(color = warn_color,
+                   yintercept = percent_mito) +
         geom_label(
             data = aggregate(percent_mito ~ sample_name,
                              metrics,
@@ -74,7 +80,7 @@ plot_mito_counts_boxplot <- function(metrics) {
 #' @rdname plot_mito_counts
 #' @description Scatterplot
 #' @export
-plot_mito_counts_scatterplot <- function(metrics) {
+plot_mito_counts_scatterplot <- function(metrics, percent_mito = NULL) {
     scatterplot <- metrics %>%
         ggplot(
             aes_(x = ~coding_counts,
@@ -98,8 +104,8 @@ plot_mito_counts_scatterplot <- function(metrics) {
 #' @rdname plot_mito_counts
 #' @description Show both plots
 #' @export
-plot_mito_counts <- function(metrics) {
-    show(plot_mito_counts_histogram(metrics))
-    show(plot_mito_counts_boxplot(metrics))
-    show(plot_mito_counts_scatterplot(metrics))
+plot_mito_counts <- function(...) {
+    show(plot_mito_counts_histogram(...))
+    show(plot_mito_counts_boxplot(...))
+    show(plot_mito_counts_scatterplot(...))
 }
