@@ -8,7 +8,7 @@
 #'
 #' @return Sparse counts matrix (dgTMatrix)
 #' @export
-read_10x_data <- function(data_dir) {
+read_10x_counts <- function(data_dir) {
     barcodes_file <- file.path(data_dir, "barcodes.tsv")
     genes_file <- file.path(data_dir, "genes.tsv")
     matrix_file <- file.path(data_dir, "matrix.mtx")
