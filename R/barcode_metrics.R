@@ -23,11 +23,10 @@ barcode_metrics <- function(
         .[.$broad_class == "mito", ] %>%
         .$external_gene_name %>% unique %>% sort
 
-    # Matrix::colSums
     metrics <- tibble(
         # Unique: `file_name` + `sample_barcode` + `cellular_barcode`
         unique = colnames(sparsecounts),
-        # Calculate colSums
+        # Matrix::colSums()
         total_counts = colSums(sparsecounts),
         genes_detected = colSums(sparsecounts > 0),
         coding_counts = colSums(
@@ -47,8 +46,12 @@ barcode_metrics <- function(
         # Join the sample names
         left_join(metadata[, c("sample_barcode", "sample_name")],
                   by = "sample_barcode") %>%
-        # .[order(.$unique), ]
-        arrange(!!sym("unique")) %>%
+        # Arrange by unique identifier
+        # arrange(!!sym("unique")) %>%
+        .[order(.$unique), ] %>%
+        # Filter barcodes that don't match samples of interest
+        # filter(!is.na(.data$sample_name)) %>%
+        .[!is.na(.$sample_name), ] %>%
         as.data.frame %>%
         set_rownames(.$unique)
 
