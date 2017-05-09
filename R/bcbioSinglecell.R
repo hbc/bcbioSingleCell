@@ -17,10 +17,6 @@ bins <- 100
 fail_color <- "red"
 pass_color <- "green"
 warn_color <- "orange"
-min_genes <- 500
-max_genes <- 5000
-novelty <- 0.75
-pct_mito <- 25
 
 
 
