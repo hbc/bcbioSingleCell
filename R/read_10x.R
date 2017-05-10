@@ -1,4 +1,4 @@
-#' Read 10x Genomics counts data
+#' Read 10x Genomics Cell Ranger output
 #'
 #' Generate a sparse matrix from barcodes.tsv, genes.tsv, and matrix.mtx files
 #'

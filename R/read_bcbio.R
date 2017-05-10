@@ -1,4 +1,4 @@
-#' Read data from bcbio-nextgen run
+#' Read bcbio-nextgen run output
 #'
 #' @rdname read_bcbio
 #'
@@ -30,6 +30,6 @@ read_bcbio_counts <- function(run, strip_version = TRUE) {
     gene_names <- ensembl %>%
         as.data.frame %>%
         .[indexes, "external_gene_name"]
-    counts <- combine_features(counts, gene_names)
+    counts <- aggregate_sparse_features(counts, gene_names)
     return(counts)
 }
