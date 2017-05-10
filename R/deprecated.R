@@ -1,3 +1,11 @@
+combine_features <- function() {
+    .Deprecated("aggregate_sparse_features")
+}
+
+combine_technical_replicates <- function() {
+    .Deprecated("aggregate_sparse_replicates")
+}
+
 create_local_project <- function() {
     .Deprecated("create_new_project")
 }
