@@ -5,7 +5,7 @@
 #' @author Michael Steinbaugh
 #' @author Rory Kirchner
 #'
-#' @param run \code{bcbio-nextgen}
+#' @param run bcbio-nextgen
 
 
 

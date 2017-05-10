@@ -26,10 +26,10 @@ for PCA and heatmap QC functions.}
 \code{read_bcbio_counts()}}
 }
 \value{
-\code{bcbio-nextgen} run object
+bcbio-nextgen run object
 }
 \description{
-We recommend loading the \code{bcbio-nextgen} run as a remote connection over
+We recommend loading the bcbio-nextgen run as a remote connection over
 \code{sshfs}.
 }
 \author{

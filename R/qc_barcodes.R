@@ -48,7 +48,7 @@ plot_barcode <- function(file_name, sample_name = NULL) {
 #' @rdname qc_barcodes
 #' @description Plot all single cell sample barcodes
 #'
-#' @param run \code{bcbio-nextgen} run
+#' @param run bcbio-nextgen run
 #'
 #' @export
 plot_barcodes <- function(run) {

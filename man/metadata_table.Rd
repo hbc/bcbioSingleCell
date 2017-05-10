@@ -7,7 +7,7 @@
 metadata_table(run)
 }
 \arguments{
-\item{run}{\code{bcbio-nextgen} run}
+\item{run}{bcbio-nextgen run}
 }
 \value{
 kable

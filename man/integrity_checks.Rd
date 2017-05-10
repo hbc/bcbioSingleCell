@@ -10,12 +10,12 @@ check_run(run)
 check_sparse(sparse)
 }
 \arguments{
-\item{run}{\code{bcbio-nextgen} run}
+\item{run}{bcbio-nextgen run}
 
 \item{sparse}{Sparse counts matrix}
 }
 \description{
-Check \code{bcbio-nextgen} run
+Check bcbio-nextgen run
 
 Check sparse counts matrix
 }

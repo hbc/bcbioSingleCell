@@ -7,7 +7,7 @@
 ensembl_annotations(run)
 }
 \arguments{
-\item{run}{\code{bcbio-nextgen} run}
+\item{run}{bcbio-nextgen run}
 }
 \value{
 Data frame

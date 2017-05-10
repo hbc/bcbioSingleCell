@@ -1,6 +1,6 @@
 #' Load bcbio-nextgen run
 #'
-#' We recommend loading the \code{bcbio-nextgen} run as a remote connection over
+#' We recommend loading the bcbio-nextgen run as a remote connection over
 #' \code{sshfs}.
 #'
 #' @author Michael Steinbaugh
@@ -17,7 +17,7 @@
 #' @param read_counts Automatically read in the count data using
 #'   \code{read_bcbio_counts()}
 #'
-#' @return \code{bcbio-nextgen} run object
+#' @return bcbio-nextgen run object
 #' @export
 load_run <- function(
     upload_dir = "final",

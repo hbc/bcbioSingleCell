@@ -14,7 +14,7 @@ plot_barcodes(run)
 
 \item{sample_name}{Sample name (title for plot)}
 
-\item{run}{\code{bcbio-nextgen} run}
+\item{run}{bcbio-nextgen run}
 }
 \description{
 Plot a barcode histogram for a given sample

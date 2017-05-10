@@ -7,7 +7,7 @@
 barcode_metrics(run, counts)
 }
 \arguments{
-\item{run}{\code{bcbio-nextgen} run}
+\item{run}{bcbio-nextgen run}
 
 \item{counts}{Sparse counts matrix}
 }

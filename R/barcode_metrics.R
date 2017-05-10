@@ -3,7 +3,7 @@
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @param run \code{bcbio-nextgen} run
+#' @param run bcbio-nextgen run
 #' @param counts Sparse counts matrix
 #'
 #' @return Data frame

@@ -7,8 +7,8 @@
 
 #' @rdname integrity_checks
 #' @keywords internal
-#' @description Check \code{bcbio-nextgen} run
-#' @param run \code{bcbio-nextgen} run
+#' @description Check bcbio-nextgen run
+#' @param run bcbio-nextgen run
 #' @export
 check_run <- function(run) {
     if (!is.list(run)) {

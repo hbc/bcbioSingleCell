@@ -7,7 +7,7 @@
 read_bcbio_counts(run, strip_version = TRUE)
 }
 \arguments{
-\item{run}{\code{bcbio-nextgen}}
+\item{run}{bcbio-nextgen}
 
 \item{strip_version}{Strip transcript version from identifier}
 }
