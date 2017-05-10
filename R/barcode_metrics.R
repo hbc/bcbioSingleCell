@@ -4,15 +4,15 @@
 #' @author Michael Steinbaugh
 #'
 #' @param run \code{bcbio-nextgen} run
-#' @param sparsecounts Sparse counts matrix
+#' @param counts Sparse counts matrix
 #'
 #' @return Data frame
 #' @export
 barcode_metrics <- function(
     run,
-    sparsecounts) {
+    counts) {
     check_run(run)
-    check_sparse(sparsecounts)
+    check_sparse(counts)
     ensembl <- run$ensembl
     metadata <- run$metadata
 
@@ -25,14 +25,14 @@ barcode_metrics <- function(
 
     metrics <- tibble(
         # Unique: `file_name` + `sample_barcode` + `cellular_barcode`
-        unique = colnames(sparsecounts),
+        unique = colnames(counts),
         # Matrix::colSums()
-        total_counts = colSums(sparsecounts),
-        genes_detected = colSums(sparsecounts > 0),
+        total_counts = colSums(counts),
+        genes_detected = colSums(counts > 0),
         coding_counts = colSums(
-            sparsecounts[rownames(sparsecounts) %in% coding, ]),
+            counts[rownames(counts) %in% coding, ]),
         mito_counts = colSums(
-            sparsecounts[rownames(sparsecounts) %in% mito, ])
+            counts[rownames(counts) %in% mito, ])
     ) %>%
         # Separate the barcodes, later used to join metadata
         separate_("unique",

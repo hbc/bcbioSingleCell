@@ -4,10 +4,21 @@
 \alias{create_bcbio_skeleton}
 \title{Create a skeleton bcbio project}
 \usage{
-create_bcbio_skeleton(base_dir = getwd(), organism)
+create_bcbio_skeleton(base_dir = getwd(), run_dir = "skeleton",
+  config_dir = "config", upload_dir = "final", project_dir = NULL,
+  sample_dirs = NULL, organism, intgroup = "sample_name")
 }
 \arguments{
 \item{base_dir}{Base directory in which to create skeleton bcbio structure}
+
+\item{config_dir}{Configuration directory}
+
+\item{upload_dir}{Upload directory}
+
+\item{project_dir}{Project directory (YYYY-MM-DD_template), nested inside
+upload directory}
+
+\item{sample_dirs}{Sample directories, nested inside upload directory}
 
 \item{organism}{Organism to use}
 }
@@ -22,3 +33,4 @@ Rory Kirchner
 
 Michael Steinbaugh
 }
+\keyword{internal}

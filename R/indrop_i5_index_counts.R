@@ -1,5 +1,6 @@
 #' Read inDrop i5 index counts
 #'
+#' @keywords internal
 #' @author Michael Steinbaugh
 #'
 #' @param log_file Log file produced by \href{https://github.com/steinbaugh/seqcloud/blob/dev/bash/indrop_i5_index_counts.sh}{indrop_i5_index_counts.sh} bash script

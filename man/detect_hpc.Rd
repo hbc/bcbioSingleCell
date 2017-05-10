@@ -12,3 +12,4 @@ Utility function to enable CPU intensive tasks
 \author{
 Michael Steinbaugh
 }
+\keyword{internal}

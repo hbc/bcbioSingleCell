@@ -23,3 +23,4 @@ Convert a transcript matrix to a gene symbol matrix
 \author{
 Rory Kirchner
 }
+\keyword{internal}

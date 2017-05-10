@@ -7,8 +7,9 @@
 create_new_project()
 }
 \description{
-Create new project directory structure
+Generate the necessary directories for an RMarkdown report in RStudio
 }
 \author{
 Michael Steinbaugh
 }
+\keyword{internal}

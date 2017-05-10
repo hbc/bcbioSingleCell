@@ -2,9 +2,9 @@
 #'
 #' Note that for a bcbio run, this function will return transcript-level counts
 #'
+#' @keywords internal
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @param matrix_file MatrixMart file to read
 #'

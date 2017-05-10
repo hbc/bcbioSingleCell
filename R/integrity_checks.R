@@ -6,6 +6,7 @@
 
 
 #' @rdname integrity_checks
+#' @keywords internal
 #' @description Check \code{bcbio-nextgen} run
 #' @param run \code{bcbio-nextgen} run
 #' @export
@@ -27,11 +28,12 @@ check_run <- function(run) {
 
 
 #' @rdname integrity_checks
+#' @keywords internal
 #' @description Check sparse counts matrix
-#' @param sparsecounts Sparse counts matrix
+#' @param sparse Sparse counts matrix
 #' @export
-check_sparse <- function(sparsecounts) {
-    if (class(sparsecounts)[1] != "dgCMatrix") {
+check_sparse <- function(sparse) {
+    if (class(sparse)[1] != "dgCMatrix") {
         stop("sparse counts must be dgCMatrix")
     }
 }

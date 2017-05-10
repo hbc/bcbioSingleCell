@@ -1,5 +1,6 @@
 #' Convert a transcript matrix to a gene symbol matrix
 #'
+#' @keywords internal
 #' @author Rory Kirchner
 #'
 #' @param matrix a matrix of counts

@@ -1,8 +1,7 @@
 #' Read a CSV file with readr, setting a given column as the rownames
 #'
-#' @author Rory Kirchner
-#'
 #' @keywords internal
+#' @author Rory Kirchner
 #'
 #' @param filename CSV to read
 #' @param column column to make into the rownames

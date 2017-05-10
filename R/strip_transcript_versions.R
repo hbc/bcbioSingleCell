@@ -1,5 +1,6 @@
 #' Strip transcript versions
 #'
+#' @keywords internal
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
