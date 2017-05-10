@@ -1,4 +1,4 @@
-#' \code{bcbioSinglecell} package
+#' bcbioSinglecell
 #'
 #' Utility functions for analysis of \code{bcbio-nextgen} single-cell RNA-seq
 #' data.
