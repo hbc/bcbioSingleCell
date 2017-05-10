@@ -21,6 +21,8 @@ plot_mito_counts(...)
 \item{metrics}{Barcode metrics data frame}
 
 \item{percent_mito}{Recommended mitochondrial percentage cutoff value}
+
+\item{...}{Passthrough parameters}
 }
 \value{
 ggplot2 object

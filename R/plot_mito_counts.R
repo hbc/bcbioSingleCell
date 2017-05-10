@@ -104,6 +104,9 @@ plot_mito_counts_scatterplot <- function(metrics, percent_mito = NULL) {
 
 #' @rdname plot_mito_counts
 #' @description Show both plots
+#'
+#' @param ... Passthrough parameters
+#'
 #' @export
 plot_mito_counts <- function(...) {
     show(plot_mito_counts_histogram(...))
