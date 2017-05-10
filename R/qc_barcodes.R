@@ -1,13 +1,13 @@
-#' Plot sample barcodes
+#' Barcode quality control plots
 #'
-#' @rdname plot_barcode
+#' @rdname qc_barcodes
 #'
-#' @author Rory Kirchner
 #' @author Michael Steinbaugh
+#' @author Rory Kirchner
 
 
 
-#' @rdname plot_barcode
+#' @rdname qc_barcodes
 #' @description Plot a barcode histogram for a given sample
 #' @keywords internal
 #'
@@ -45,7 +45,7 @@ plot_barcode <- function(file_name, sample_name = NULL) {
 
 
 
-#' @rdname plot_barcode
+#' @rdname qc_barcodes
 #' @description Plot all single cell sample barcodes
 #'
 #' @param run \code{bcbio-nextgen} run
