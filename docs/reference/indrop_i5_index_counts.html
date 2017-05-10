@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mitochondrial count plots — plot_mito_counts_histogram • bcbioSinglecell</title>
+<title>Read inDrop i5 index counts — indrop_i5_index_counts • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -73,46 +73,28 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mitochondrial count plots</h1>
+    <h1>Read inDrop i5 index counts</h1>
     </div>
 
     
-    <p>Histogram</p>
-<p>Boxplot</p>
-<p>Scatterplot</p>
-<p>Show both plots</p>
+    <p>Read inDrop i5 index counts</p>
     
 
-    <pre class="usage"><span class='fu'>plot_mito_counts_histogram</span>(<span class='no'>metrics</span>, <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"percent_mito"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
-  <span class='fu'>parent.frame</span>()))
-
-<span class='fu'>plot_mito_counts_boxplot</span>(<span class='no'>metrics</span>, <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"percent_mito"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
-  <span class='fu'>parent.frame</span>()))
-
-<span class='fu'>plot_mito_counts_scatterplot</span>(<span class='no'>metrics</span>, <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>plot_mito_counts</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>indrop_i5_index_counts</span>(<span class='kw'>log_file</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"logs"</span>,
+  <span class='st'>"indrop_i5_index_counts.log"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>metrics</th>
-      <td><p>Barcode metrics data frame</p></td>
-    </tr>
-    <tr>
-      <th>percent_mito</th>
-      <td><p>Recommended mitochondrial percentage cutoff value</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Passthrough parameters</p></td>
+      <th>log_file</th>
+      <td><p>Log file produced by <a href = 'https://github.com/steinbaugh/seqcloud/blob/dev/bash/indrop_i5_index_counts.sh'>indrop_i5_index_counts.sh</a> bash script</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>ggplot2 object</p>
+    <p>i5 index (barcode) counts tibble</p>
     
 
   </div>
@@ -126,8 +108,6 @@
 
     <h2>Author</h2>
     
-Rory Kirchner
-
 Michael Steinbaugh
 
   </div>

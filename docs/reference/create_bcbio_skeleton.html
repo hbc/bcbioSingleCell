@@ -80,7 +80,9 @@
     <p>Create a skeleton bcbio project</p>
     
 
-    <pre class="usage"><span class='fu'>create_bcbio_skeleton</span>(<span class='kw'>base_dir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='no'>organism</span>)</pre>
+    <pre class="usage"><span class='fu'>create_bcbio_skeleton</span>(<span class='kw'>base_dir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>run_dir</span> <span class='kw'>=</span> <span class='st'>"skeleton"</span>,
+  <span class='kw'>config_dir</span> <span class='kw'>=</span> <span class='st'>"config"</span>, <span class='kw'>upload_dir</span> <span class='kw'>=</span> <span class='st'>"final"</span>, <span class='kw'>project_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sample_dirs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>organism</span>, <span class='kw'>intgroup</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -88,6 +90,23 @@
     <tr>
       <th>base_dir</th>
       <td><p>Base directory in which to create skeleton bcbio structure</p></td>
+    </tr>
+    <tr>
+      <th>config_dir</th>
+      <td><p>Configuration directory</p></td>
+    </tr>
+    <tr>
+      <th>upload_dir</th>
+      <td><p>Upload directory</p></td>
+    </tr>
+    <tr>
+      <th>project_dir</th>
+      <td><p>Project directory (YYYY-MM-DD_template), nested inside
+upload directory</p></td>
+    </tr>
+    <tr>
+      <th>sample_dirs</th>
+      <td><p>Sample directories, nested inside upload directory</p></td>
     </tr>
     <tr>
       <th>organism</th>
