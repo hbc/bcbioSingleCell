@@ -2,6 +2,8 @@
 #'
 #' Generate a sparse matrix from barcodes.tsv, genes.tsv, and matrix.mtx files
 #'
+#' @rdname read_10x
+#'
 #' @author Michael Steinbaugh
 #'
 #' @param data_dir Data directory cont
