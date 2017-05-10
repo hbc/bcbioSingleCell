@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_bcbio.R
 \name{read_bcbio_counts}
 \alias{read_bcbio_counts}
-\title{Read data from bcbio-nextgen run}
+\title{Read bcbio-nextgen run output}
 \usage{
 read_bcbio_counts(run, strip_version = TRUE)
 }

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Total cells plot — plot_total_cells • bcbioSinglecell</title>
+<title>Barcode quality control plots — plot_barcode • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -73,27 +73,34 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Total cells plot</h1>
+    <h1>Barcode quality control plots</h1>
     </div>
 
     
-    <p>Total cells plot</p>
+    <p>Plot a barcode histogram for a given sample</p>
+<p>Plot all single cell sample barcodes</p>
     
 
-    <pre class="usage"><span class='fu'>plot_total_cells</span>(<span class='no'>metrics</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_barcode</span>(<span class='no'>file_name</span>, <span class='kw'>sample_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>plot_barcodes</span>(<span class='no'>run</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>metrics</th>
-      <td><p>Barcode metrics data frame</p></td>
+      <th>file_name</th>
+      <td><p>Barcode histogram file</p></td>
+    </tr>
+    <tr>
+      <th>sample_name</th>
+      <td><p>Sample name (title for plot)</p></td>
+    </tr>
+    <tr>
+      <th>run</th>
+      <td><p><code>bcbio-nextgen</code> run</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>ggplot2 object</p>
     
 
   </div>
@@ -101,15 +108,13 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
     <h2>Author</h2>
     
-Rory Kirchner
-
 Michael Steinbaugh
+
+Rory Kirchner
 
   </div>
 </div>

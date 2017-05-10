@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mitochondrial count plots — plot_mito_counts_histogram • bcbioSinglecell</title>
+<title>Quality control plots — plot_total_cells • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -73,17 +73,42 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mitochondrial count plots</h1>
+    <h1>Quality control plots</h1>
     </div>
 
     
-    <p>Histogram</p>
-<p>Boxplot</p>
-<p>Scatterplot</p>
-<p>Show both plots</p>
+    <p>Total cells barplot</p>
+<p>Total counts histogram</p>
+<p>Total counts boxplot</p>
+<p>Genes detected boxplot</p>
+<p>Genes detected histogram</p>
+<p>Total counts vs. genes detected plot</p>
+<p>Mitochondrial abundance histogram</p>
+<p>Mitochondrial abundance boxplot</p>
+<p>Mitochondrial abundance scatterplot</p>
+<p>Novelty histogram (log10 genes detected per count)</p>
+<p>Novelty boxplot (log10 genes detected per count)</p>
+<p>Plot total counts (RMarkdown chunk wrapper)</p>
+<p>Plot genes detected (RMarkdown chunk wrapper)</p>
+<p>Plot mitochondrial counts (RMarkdown chunk wrapper)</p>
+<p>Plot novelty (RMarkdown chunk wrapper)</p>
     
 
-    <pre class="usage"><span class='fu'>plot_mito_counts_histogram</span>(<span class='no'>metrics</span>, <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"percent_mito"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
+    <pre class="usage"><span class='fu'>plot_total_cells</span>(<span class='no'>metrics</span>)
+
+<span class='fu'>plot_total_counts_histogram</span>(<span class='no'>metrics</span>)
+
+<span class='fu'>plot_total_counts_boxplot</span>(<span class='no'>metrics</span>)
+
+<span class='fu'>plot_genes_detected_boxplot</span>(<span class='no'>metrics</span>, <span class='kw'>min_genes</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"min_genes"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
+  <span class='fu'>parent.frame</span>()), <span class='kw'>max_genes</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"max_genes"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()))
+
+<span class='fu'>plot_genes_detected_histogram</span>(<span class='no'>metrics</span>, <span class='kw'>min_genes</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"min_genes"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
+  <span class='fu'>parent.frame</span>()), <span class='kw'>max_genes</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"max_genes"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()))
+
+<span class='fu'>plot_total_vs_detected</span>(<span class='no'>metrics</span>, <span class='kw'>colorby</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>)
+
+<span class='fu'>plot_mito_counts_histogram</span>(<span class='no'>metrics</span>, <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"percent_mito"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
   <span class='fu'>parent.frame</span>()))
 
 <span class='fu'>plot_mito_counts_boxplot</span>(<span class='no'>metrics</span>, <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"percent_mito"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
@@ -91,7 +116,19 @@
 
 <span class='fu'>plot_mito_counts_scatterplot</span>(<span class='no'>metrics</span>, <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>plot_mito_counts</span>(<span class='no'>...</span>)</pre>
+<span class='fu'>plot_novelty_histogram</span>(<span class='no'>metrics</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"novelty"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
+  <span class='fu'>parent.frame</span>()))
+
+<span class='fu'>plot_novelty_boxplot</span>(<span class='no'>metrics</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"novelty"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
+  <span class='fu'>parent.frame</span>()))
+
+<span class='fu'>plot_total_counts</span>(<span class='no'>...</span>)
+
+<span class='fu'>plot_genes_detected</span>(<span class='no'>...</span>)
+
+<span class='fu'>plot_mito_counts</span>(<span class='no'>...</span>)
+
+<span class='fu'>plot_novelty</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -101,8 +138,24 @@
       <td><p>Barcode metrics data frame</p></td>
     </tr>
     <tr>
+      <th>min_genes</th>
+      <td><p>Recommended minimum gene count cutoff</p></td>
+    </tr>
+    <tr>
+      <th>max_genes</th>
+      <td><p>Recommended maximum gene count cutoff</p></td>
+    </tr>
+    <tr>
+      <th>colorby</th>
+      <td><p>column to color the points by</p></td>
+    </tr>
+    <tr>
       <th>percent_mito</th>
       <td><p>Recommended mitochondrial percentage cutoff value</p></td>
+    </tr>
+    <tr>
+      <th>novelty</th>
+      <td><p>Recommended novelty cutoff value</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -126,9 +179,9 @@
 
     <h2>Author</h2>
     
-Rory Kirchner
-
 Michael Steinbaugh
+
+Rory Kirchner
 
   </div>
 </div>

@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_10x.R
 \name{read_10x_counts}
 \alias{read_10x_counts}
-\title{Read 10x Genomics counts data}
+\title{Read 10x Genomics Cell Ranger output}
 \usage{
 read_10x_counts(data_dir)
 }

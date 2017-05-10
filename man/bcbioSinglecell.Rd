@@ -6,9 +6,8 @@
 \alias{bcbioSinglecell-package}
 \title{bcbioSinglecell}
 \description{
-Utility functions for analysis of \code{bcbio-nextgen} single-cell RNA-seq
-data.
-}
-\details{
-See the README on \href{https://github.com/hbc/bcbioSinglecell}{GitHub}.
+Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
+Consult the
+\href{http://bioinformatics.sph.harvard.edu/bcbioSinglecell}{package website}
+for more information.
 }
