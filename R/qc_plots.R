@@ -1,0 +1,393 @@
+#' Quality control plots
+#'
+#' @rdname qc_plots
+#'
+#' @author Michael Steinbaugh
+#' @author Rory Kirchner
+#'
+#' @param metrics Barcode metrics data frame
+#'
+#' @param min_genes Recommended minimum gene count cutoff
+#' @param max_genes Recommended maximum gene count cutoff
+#' @param percent_mito Recommended mitochondrial percentage cutoff value
+#' @param novelty Recommended novelty cutoff value
+#'
+#' @param ... Passthrough parameters
+#'
+#' @return ggplot2 object
+
+
+
+# Total cells ====
+
+#' @rdname qc_plots
+#' @description Total cells barplot
+#' @export
+plot_total_cells <- function(metrics) {
+    plot <- metrics %>%
+        group_by_(.dots = "sample_name") %>%
+        summarize_(total_cells = ~n()) %>%
+        ggplot(
+            aes_(x = ~sample_name,
+                 y = ~total_cells,
+                 fill = ~sample_name)
+        ) +
+        labs(title = "total number of cells",
+             x = "sample name",
+             y = "cell count (barcode cutoff applied)") +
+        geom_bar(stat = "identity") +
+        geom_text(vjust = -0.5,
+                  aes_(label = ~total_cells)
+        ) +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(plot)
+}
+
+
+
+# Total counts ====
+
+#' @rdname qc_plots
+#' @description Total counts histogram
+#' @export
+plot_total_counts_histogram <- function(metrics) {
+    histogram <- metrics %>%
+        ggplot(
+            aes_(x = ~total_counts,
+                 fill = ~sample_name)
+        ) +
+        labs(title = "total RNA read counts histogram",
+             x = "counts per cell") +
+        facet_wrap(~sample_name) +
+        geom_histogram(bins = bins) +
+        expand_limits(x = 0) +
+        scale_y_sqrt() +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(histogram)
+}
+
+#' @rdname qc_plots
+#' @description Total counts boxplot
+#' @export
+plot_total_counts_boxplot <- function(metrics) {
+    boxplot <- metrics %>%
+        ggplot(
+            aes_(x = ~sample_name,
+                 y = ~total_counts,
+                 fill = ~sample_name)
+        ) +
+        labs(title = "total RNA read counts boxplot",
+             x = "sample name",
+             y = "counts per cell") +
+        geom_boxplot() +
+        geom_label(
+            data = aggregate(total_counts ~ sample_name,
+                             metrics,
+                             median),
+            aes_(label = ~round(total_counts)),
+            alpha = 0.75,
+            label.padding = unit(0.1, "lines")
+        ) +
+        scale_y_log10() +
+        expand_limits(y = 1) +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(boxplot)
+}
+
+
+
+# Genes detected ====
+
+#' @rdname qc_plots
+#' @description Genes detected boxplot
+#' @export
+plot_genes_detected_boxplot <- function(
+    metrics,
+    min_genes = get("min_genes", envir = parent.frame()),
+    max_genes = get("max_genes", envir = parent.frame())) {
+    boxplot <- metrics %>%
+        ggplot(
+            aes_(x = ~sample_name,
+                 y = ~genes_detected,
+                 fill = ~sample_name)
+        ) +
+        labs(title = "genes detected boxplot",
+             x = "sample name",
+             y = "genes per cell") +
+        geom_boxplot() +
+        geom_hline(color = warn_color,
+                   yintercept = min_genes) +
+        geom_hline(color = warn_color,
+                   yintercept = max_genes) +
+        geom_label(
+            data = aggregate(genes_detected ~ sample_name,
+                             metrics,
+                             median),
+            aes_(label = ~round(genes_detected)),
+            alpha = 0.75,
+            label.padding = unit(0.1, "lines")
+        ) +
+        expand_limits(y = 0) +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(boxplot)
+}
+
+#' @rdname qc_plots
+#' @description Genes detected histogram
+#' @export
+plot_genes_detected_histogram <- function(
+    metrics,
+    min_genes = get("min_genes", envir = parent.frame()),
+    max_genes = get("max_genes", envir = parent.frame())) {
+    histogram <- metrics %>%
+        ggplot(
+            aes_(x = ~genes_detected,
+                 fill = ~sample_name)
+        ) +
+        labs(title = "genes detected histogram",
+             x = "genes per cell") +
+        facet_wrap(~sample_name) +
+        geom_histogram(bins = bins) +
+        geom_vline(color = warn_color,
+                   xintercept = min_genes) +
+        geom_vline(color = warn_color,
+                   xintercept = max_genes) +
+        expand_limits(x = 0) +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(histogram)
+}
+
+
+
+# Total vs. detected ====
+
+#' @rdname qc_plots
+#' @description Total counts vs. genes detected plot
+#'
+#' @param colorby column to color the points by
+#'
+#' @export
+plot_total_vs_detected <- function(metrics, colorby = "sample_name") {
+    plot <- metrics %>%
+        ggplot(
+            aes_(x = ~total_counts,
+                 y = ~genes_detected,
+                 color = as.name(colorby))
+        ) +
+        labs(title = "total counts vs. genes detected",
+             x = "counts per cell",
+             y = "genes per cell") +
+        facet_wrap(~sample_name) +
+        geom_point() +
+        geom_smooth(method = "loess") +
+        scale_x_log10() +
+        scale_y_log10() +
+        # expand_limits(x = 1, y = 1) +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(plot)
+}
+
+
+
+# Mitochondrial abundance ====
+
+#' @rdname qc_plots
+#' @description Mitochondrial abundance histogram
+#' @export
+plot_mito_counts_histogram <- function(
+    metrics,
+    percent_mito = get("percent_mito", envir = parent.frame())) {
+    metrics <- mutate(metrics, percent_mito = .data$percent_mito * 100)
+    histogram <- metrics %>%
+        ggplot(
+            aes_(x = ~percent_mito,
+                 fill = ~sample_name)
+        ) +
+        labs(title = "mitochondrial gene abundance histogram",
+             x = "% mitochondrial") +
+        facet_wrap(~sample_name) +
+        geom_histogram(bins = bins) +
+        geom_vline(color = warn_color,
+                   xintercept = percent_mito) +
+        xlim(0, 100) +
+        scale_y_sqrt() +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(histogram)
+}
+
+#' @rdname qc_plots
+#' @description Mitochondrial abundance boxplot
+#' @export
+plot_mito_counts_boxplot <- function(
+    metrics,
+    percent_mito = get("percent_mito", envir = parent.frame())) {
+    metrics <- mutate(metrics, percent_mito = .data$percent_mito * 100)
+    boxplot <- metrics %>%
+        ggplot(
+            aes_(x = ~sample_name,
+                 y = ~percent_mito,
+                 fill = ~sample_name)
+        ) +
+        labs(title = "",
+             x = "sample name",
+             y = "% mitochondrial") +
+        geom_boxplot() +
+        geom_hline(color = warn_color,
+                   yintercept = percent_mito) +
+        geom_label(
+            data = aggregate(percent_mito ~ sample_name,
+                             metrics,
+                             median),
+            aes_(label = ~round(percent_mito, digits = 1)),
+            alpha = 0.75,
+            label.padding = unit(0.1, "lines")
+        ) +
+        expand_limits(y = 0) +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(boxplot)
+}
+
+#' @rdname qc_plots
+#' @description Mitochondrial abundance scatterplot
+#' @export
+plot_mito_counts_scatterplot <- function(metrics, percent_mito = NULL) {
+    scatterplot <- metrics %>%
+        ggplot(
+            aes_(x = ~coding_counts,
+                 y = ~mito_counts,
+                 color = ~sample_name)
+        ) +
+        labs(title = "mitochondrial gene abundance scatterplot",
+             x = "counts in mitochondrial genes",
+             y = "counts in coding genes") +
+        facet_wrap(~sample_name) +
+        geom_point() +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(scatterplot)
+}
+
+
+
+# Novelty ====
+
+#' @rdname qc_plots
+#' @description Novelty histogram (log10 genes detected per count)
+#' @export
+plot_novelty_histogram <- function(
+    metrics,
+    novelty = get("novelty", envir = parent.frame())) {
+    histogram <- metrics %>%
+        ggplot(
+            aes_(x = ~log10_detected_per_count,
+                 fill = ~sample_name)
+        ) +
+        labs(title = "novelty histogram",
+             x = "log10 genes detected per count") +
+        facet_wrap(~sample_name) +
+        geom_histogram(bins = bins) +
+        geom_vline(color = warn_color, xintercept = novelty) +
+        xlim(0, 1) +
+        scale_y_sqrt() +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(histogram)
+}
+
+#' @rdname qc_plots
+#' @description Novelty boxplot (log10 genes detected per count)
+#' @export
+plot_novelty_boxplot <- function(
+    metrics,
+    novelty = get("novelty", envir = parent.frame())) {
+    boxplot <- metrics %>%
+        ggplot(
+            aes_(x = ~sample_name,
+                 y = ~log10_detected_per_count,
+                 fill = ~sample_name)
+        ) +
+        labs(title = "novelty boxplot",
+             x = "sample name",
+             y = "log10 genes detected per count") +
+        geom_boxplot() +
+        geom_hline(color = warn_color, yintercept = novelty) +
+        geom_label(
+            data = aggregate(log10_detected_per_count ~ sample_name,
+                             metrics,
+                             median),
+            aes_(label = ~round(log10_detected_per_count, digits = 2)),
+            alpha = 0.75,
+            label.padding = unit(0.1, "lines")
+        ) +
+        expand_limits(y = 0) +
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1),
+            legend.position = "none"
+        )
+    return(boxplot)
+}
+
+
+
+# RMarkdown/knit chunk wrappers ====
+
+#' @rdname qc_plots
+#' @description Plot total counts (RMarkdown chunk wrapper)
+#' @export
+plot_total_counts <- function(...) {
+    show(plot_total_counts_histogram(...))
+    show(plot_total_counts_boxplot(...))
+}
+
+#' @rdname qc_plots
+#' @description Plot genes detected (RMarkdown chunk wrapper)
+#' @export
+plot_genes_detected <- function(...) {
+    show(plot_genes_detected_histogram(...))
+    show(plot_genes_detected_boxplot(...))
+}
+
+#' @rdname qc_plots
+#' @description Plot mitochondrial counts (RMarkdown chunk wrapper)
+#' @export
+plot_mito_counts <- function(...) {
+    show(plot_mito_counts_histogram(...))
+    show(plot_mito_counts_boxplot(...))
+    show(plot_mito_counts_scatterplot(...))
+}
+
+#' @rdname qc_plots
+#' @description Plot novelty (RMarkdown chunk wrapper)
+#' @export
+plot_novelty <- function(...) {
+    show(plot_novelty_histogram(...))
+    show(plot_novelty_boxplot(...))
+}
