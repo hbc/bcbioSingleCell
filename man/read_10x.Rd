@@ -10,7 +10,7 @@ read_10x_counts(data_dir)
 \item{data_dir}{Data directory cont}
 }
 \value{
-Sparse counts matrix (dgTMatrix)
+Sparse counts matrix (dgCMatrix)
 }
 \description{
 Generate a sparse matrix from barcodes.tsv, genes.tsv, and matrix.mtx files

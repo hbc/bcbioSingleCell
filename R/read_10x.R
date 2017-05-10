@@ -8,7 +8,7 @@
 #'
 #' @param data_dir Data directory cont
 #'
-#' @return Sparse counts matrix (dgTMatrix)
+#' @return Sparse counts matrix (dgCMatrix)
 #' @export
 read_10x_counts <- function(data_dir) {
     barcodes_file <- file.path(data_dir, "barcodes.tsv")
