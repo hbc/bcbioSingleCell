@@ -20,20 +20,6 @@ read_metadata <- function(
         stop("File not found")
     }
 
-    # Check for format, based on metadata input name
-    if (str_detect(file, "indrop")) {
-        type <- "indrop"
-    } else if (str_detect(file, "dropseq")) {
-        type <- "dropseq"
-    } else if (str_detect(file, "seqwell")) {
-        type <- "seqwell"
-    } else if (str_detect(file, "chromium|tenx|10x")) {
-        type <- "10x"
-    } else {
-        stop("Unknown platform, please rename metadata file")
-    }
-    message(paste(type, "format detected"))
-
     # Load XLSX or CSV dynamically
     if (grepl("\\.xlsx$", file)) {
         metadata <- read_excel(file)
@@ -48,14 +34,6 @@ read_metadata <- function(
         set_names_snake %>%
         .[!is.na(.$description), ] %>%
         .[order(.$description), ]
-
-    # Join platform-specific metadata
-    if (type == "indrop") {
-        i5_counts <- indrop_i5_index_counts()
-        if (!is.null(i5_counts)) {
-            metadata <- left_join(metadata, i5_counts)
-        }
-    }
 
     # Lane split, if desired
     if (is.numeric(lanes)) {
@@ -80,6 +58,32 @@ read_metadata <- function(
     # Sample barcode identifier
     metadata$sample_barcode <- paste(
         metadata$description, metadata$reverse_complement, sep = "-")
+
+    # Check for platform-specific metadata, based on file name. We can
+    # improve this step in the future using a YAML-based method instead.
+    if (str_detect(file, "indrop")) {
+        type <- "inDrop"
+    } else if (str_detect(file, "dropseq")) {
+        type <- "Drop-seq"
+    } else if (str_detect(file, "seqwell")) {
+        type <- "Seq-Well"
+    } else if (str_detect(file, "chromium|tenx|10x")) {
+        type <- "10x Chromium"
+    } else {
+        stop("Unknown platform, please rename metadata file")
+    }
+    message(paste(type, "metadata detected"))
+
+    # Join platform-specific metadata
+    if (type == "inDrop") {
+        i5_counts <- indrop_i5_index_counts()
+        if (!is.null(i5_counts)) {
+            message("inDrop i5 index counts log detected")
+            metadata <- left_join(metadata,
+                                  i5_counts,
+                                  by = "reverse_complement")
+        }
+    }
 
     # Convert to data frame and set rownames
     metadata <- metadata %>% as.data.frame %>% set_rownames(.$sample_barcode)
