@@ -45,7 +45,7 @@ plot_barcode <- function(file_name, sample_name = NULL) {
 
 
 #' @rdname qc_plots_barcodes
-#' @description Plot all single cell sample barcodes (RMarkdown chunk wrapper)
+#' @description Plot all sample barcodes (RMarkdown chunk wrapper)
 #'
 #' @param run bcbio-nextgen run
 #'

@@ -19,7 +19,7 @@ plot_barcodes(run)
 \description{
 Plot an individual barcode histogram per sample file
 
-Plot all single cell sample barcodes (RMarkdown chunk wrapper)
+Plot all sample barcodes (RMarkdown chunk wrapper)
 }
 \author{
 Michael Steinbaugh
