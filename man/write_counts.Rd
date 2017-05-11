@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_counts.R
 \name{write_counts}
 \alias{write_counts}
-\title{Write MatrixMart .mtx, .colnames, and .rownames files}
+\title{Write MatrixMart sparse matrix and supporting files to disk}
 \usage{
 write_counts(counts, gzip = FALSE)
 }
@@ -15,7 +15,8 @@ write_counts(counts, gzip = FALSE)
 Path to matrix file
 }
 \description{
-Write MatrixMart .mtx, .colnames, and .rownames files
+Outputs matrix (.mtx), sample barcodes (.colnames), and gene names
+(.rownames) as separate files
 }
 \author{
 Rory Kirchner

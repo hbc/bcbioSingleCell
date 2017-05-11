@@ -1,4 +1,5 @@
-#' Read bcbio-nextgen run output
+#' Read \href{https://github.com/chapmanb/bcbio-nextgen}{bcbio-nextgen} run
+#' output
 #'
 #' @rdname read_bcbio
 #'

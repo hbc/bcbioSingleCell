@@ -15,7 +15,7 @@ load_csv_with_rownames <- function() {
 }
 
 load_sparsecounts <- function() {
-    .Deprecated("read_sparsecounts_gz")
+    .Deprecated("read_counts")
 }
 
 make_bcbio_skeleton <- function() {

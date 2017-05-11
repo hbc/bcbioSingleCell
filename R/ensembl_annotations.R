@@ -1,4 +1,5 @@
-#' Get transcript annotations from Ensembl
+#' Get transcript-to-gene annotations from
+#' \href{http://www.ensembl.org/}{Ensembl}
 #'
 #' This function also defines broad classes, which are used in quality control
 #' analysis

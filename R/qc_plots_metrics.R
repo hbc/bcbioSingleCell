@@ -1,6 +1,6 @@
-#' Quality control plots
+#' Cell metrics quality control plots
 #'
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #'
 #' @author Michael Steinbaugh
 #' @author Rory Kirchner
@@ -20,7 +20,7 @@
 
 # Total cells ====
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Total cells barplot
 #' @export
 plot_total_cells <- function(metrics) {
@@ -50,7 +50,7 @@ plot_total_cells <- function(metrics) {
 
 # Total counts ====
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Total counts histogram
 #' @export
 plot_total_counts_histogram <- function(metrics) {
@@ -72,7 +72,7 @@ plot_total_counts_histogram <- function(metrics) {
     return(histogram)
 }
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Total counts boxplot
 #' @export
 plot_total_counts_boxplot <- function(metrics) {
@@ -107,7 +107,7 @@ plot_total_counts_boxplot <- function(metrics) {
 
 # Genes detected ====
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Genes detected boxplot
 #' @export
 plot_genes_detected_boxplot <- function(
@@ -144,7 +144,7 @@ plot_genes_detected_boxplot <- function(
     return(boxplot)
 }
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Genes detected histogram
 #' @export
 plot_genes_detected_histogram <- function(
@@ -176,7 +176,7 @@ plot_genes_detected_histogram <- function(
 
 # Total vs. detected ====
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Total counts vs. genes detected plot
 #'
 #' @param colorby column to color the points by
@@ -209,7 +209,7 @@ plot_total_vs_detected <- function(metrics, colorby = "sample_name") {
 
 # Mitochondrial abundance ====
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Mitochondrial abundance histogram
 #' @export
 plot_mito_counts_histogram <- function(
@@ -236,7 +236,7 @@ plot_mito_counts_histogram <- function(
     return(histogram)
 }
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Mitochondrial abundance boxplot
 #' @export
 plot_mito_counts_boxplot <- function(
@@ -271,7 +271,7 @@ plot_mito_counts_boxplot <- function(
     return(boxplot)
 }
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Mitochondrial abundance scatterplot
 #' @export
 plot_mito_counts_scatterplot <- function(metrics, percent_mito = NULL) {
@@ -297,7 +297,7 @@ plot_mito_counts_scatterplot <- function(metrics, percent_mito = NULL) {
 
 # Novelty ====
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Novelty histogram (log10 genes detected per count)
 #' @export
 plot_novelty_histogram <- function(
@@ -322,7 +322,7 @@ plot_novelty_histogram <- function(
     return(histogram)
 }
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Novelty boxplot (log10 genes detected per count)
 #' @export
 plot_novelty_boxplot <- function(
@@ -359,7 +359,7 @@ plot_novelty_boxplot <- function(
 
 # RMarkdown/knit chunk wrappers ====
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Plot total counts (RMarkdown chunk wrapper)
 #' @export
 plot_total_counts <- function(...) {
@@ -367,7 +367,7 @@ plot_total_counts <- function(...) {
     show(plot_total_counts_boxplot(...))
 }
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Plot genes detected (RMarkdown chunk wrapper)
 #' @export
 plot_genes_detected <- function(...) {
@@ -375,7 +375,7 @@ plot_genes_detected <- function(...) {
     show(plot_genes_detected_boxplot(...))
 }
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Plot mitochondrial counts (RMarkdown chunk wrapper)
 #' @export
 plot_mito_counts <- function(...) {
@@ -384,7 +384,7 @@ plot_mito_counts <- function(...) {
     show(plot_mito_counts_scatterplot(...))
 }
 
-#' @rdname qc_plots
+#' @rdname qc_plots_metrics
 #' @description Plot novelty (RMarkdown chunk wrapper)
 #' @export
 plot_novelty <- function(...) {

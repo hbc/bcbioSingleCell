@@ -1,15 +1,14 @@
-#' Barcode quality control plots
+#' Sample barcode distribution quality control plots
 #'
-#' @rdname qc_barcodes
+#' @rdname qc_plots_barcodes
 #'
 #' @author Michael Steinbaugh
 #' @author Rory Kirchner
 
 
 
-#' @rdname qc_barcodes
-#' @description Plot a barcode histogram for a given sample
-#' @keywords internal
+#' @rdname qc_plots_barcodes
+#' @description Plot an individual barcode histogram per sample file
 #'
 #' @param file_name Barcode histogram file
 #' @param sample_name Sample name (title for plot)
@@ -45,8 +44,8 @@ plot_barcode <- function(file_name, sample_name = NULL) {
 
 
 
-#' @rdname qc_barcodes
-#' @description Plot all single cell sample barcodes
+#' @rdname qc_plots_barcodes
+#' @description Plot all single cell sample barcodes (RMarkdown chunk wrapper)
 #'
 #' @param run bcbio-nextgen run
 #'

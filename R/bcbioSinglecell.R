@@ -1,12 +1,14 @@
 #' bcbioSinglecell
 #'
 #' Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
+#'
 #' Consult the
 #' \href{http://bioinformatics.sph.harvard.edu/bcbioSinglecell}{package website}
 #' for more information.
 #'
 #' @docType package
 #' @name bcbioSinglecell
+#' @keywords internal
 NULL
 
 

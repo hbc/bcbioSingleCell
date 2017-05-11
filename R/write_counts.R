@@ -1,4 +1,7 @@
-#' Write MatrixMart .mtx, .colnames, and .rownames files
+#' Write MatrixMart sparse matrix and supporting files to disk
+#'
+#' Outputs matrix (.mtx), sample barcodes (.colnames), and gene names
+#' (.rownames) as separate files
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh

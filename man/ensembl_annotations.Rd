@@ -2,7 +2,8 @@
 % Please edit documentation in R/ensembl_annotations.R
 \name{ensembl_annotations}
 \alias{ensembl_annotations}
-\title{Get transcript annotations from Ensembl}
+\title{Get transcript-to-gene annotations from
+\href{http://www.ensembl.org/}{Ensembl}}
 \usage{
 ensembl_annotations(run)
 }

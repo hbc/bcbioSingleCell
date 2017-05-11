@@ -1,6 +1,7 @@
-#' Read 10x Genomics Cell Ranger output
+#' Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} run
+#' output
 #'
-#' Generate a sparse matrix from barcodes.tsv, genes.tsv, and matrix.mtx files
+#' Read into sparse matrix from barcodes.tsv, genes.tsv, and matrix.mtx files
 #'
 #' @rdname read_10x
 #'

@@ -2,7 +2,8 @@
 % Please edit documentation in R/read_10x.R
 \name{read_10x_counts}
 \alias{read_10x_counts}
-\title{Read 10x Genomics Cell Ranger output}
+\title{Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} run
+output}
 \usage{
 read_10x_counts(data_dir)
 }
@@ -13,7 +14,7 @@ read_10x_counts(data_dir)
 Sparse counts matrix (dgCMatrix)
 }
 \description{
-Generate a sparse matrix from barcodes.tsv, genes.tsv, and matrix.mtx files
+Read into sparse matrix from barcodes.tsv, genes.tsv, and matrix.mtx files
 }
 \author{
 Michael Steinbaugh

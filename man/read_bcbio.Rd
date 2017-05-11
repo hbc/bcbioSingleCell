@@ -2,7 +2,8 @@
 % Please edit documentation in R/read_bcbio.R
 \name{read_bcbio_counts}
 \alias{read_bcbio_counts}
-\title{Read bcbio-nextgen run output}
+\title{Read \href{https://github.com/chapmanb/bcbio-nextgen}{bcbio-nextgen} run
+output}
 \usage{
 read_bcbio_counts(run, strip_version = TRUE)
 }

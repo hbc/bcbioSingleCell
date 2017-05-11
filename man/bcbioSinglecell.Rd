@@ -7,7 +7,10 @@
 \title{bcbioSinglecell}
 \description{
 Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
+}
+\details{
 Consult the
 \href{http://bioinformatics.sph.harvard.edu/bcbioSinglecell}{package website}
 for more information.
 }
+\keyword{internal}
