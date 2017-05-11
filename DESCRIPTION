@@ -5,10 +5,14 @@ Date: 2017-05-10
 Authors@R: c(
     person("Rory", "Kirchner",
            email = "roryk@alum.mit.edu",
-           role = c("aut", "cre")),
-    person("Michael", "Steinbaugh",
+           role = "aut"),
+    person("Michael J.", "Steinbaugh",
            email = "mike@steinbaugh.com",
-           role = "aut"))
+           role = c("aut", "cre")),
+    person("Harvard Chan Bioinformatics Core",
+           email = "bioinformatics@hsph.harvard.edu",
+           role = c("cph", "fnd"))
+    )
 Description: Functions for analysis of bcbio-nextgen single-cell RNA-seq data.
 biocViews:
     GeneExpression,
