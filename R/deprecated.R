@@ -10,6 +10,10 @@ create_local_project <- function() {
     .Deprecated("create_new_project")
 }
 
+filter_barcodes <- function() {
+    .Deprecated("filter_cellular_barcodes")
+}
+
 load_csv_with_rownames <- function() {
     .Deprecated("read_csv_with_rownames")
 }
