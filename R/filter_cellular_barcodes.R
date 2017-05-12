@@ -22,7 +22,8 @@ filter_cellular_barcodes <- function(
     novelty = 0.75,
     plot = TRUE) {
     check_run(run)
-    filtered_run$metrics <- run$metrics %>%
+    filtered_run <- run
+    filtered_run$metrics <- filtered_run$metrics %>%
         .[.$genes_detected > min_genes, ] %>%
         .[.$genes_detected < max_genes, ] %>%
         .[.$percent_mito < percent_mito, ] %>%
@@ -35,7 +36,7 @@ filter_cellular_barcodes <- function(
         plot_mito_counts(filtered_run)
         plot_novelty(filtered_run)
     }
-    run$filtered <- TRUE
+    filtered_run$filtered <- TRUE
     return(filtered_run)
 }
 
