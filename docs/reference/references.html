@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert a transcript matrix to a gene symbol matrix. — tx2symbol • bcbioSinglecell</title>
+<title>Download BibTex references. — references • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -73,36 +73,24 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert a transcript matrix to a gene symbol matrix.</h1>
+    <h1>Download BibTex references.</h1>
     </div>
 
     
-    <p>Convert a transcript matrix to a gene symbol matrix.</p>
+    <p>If file isn't present, download latest version from the
+<a href = 'http://bioinformatics.sph.harvard.edu'>HBC website</a>.</p>
     
 
-    <pre class="usage"><span class='fu'>tx2symbol</span>(<span class='no'>matrix</span>, <span class='no'>fromto</span>, <span class='kw'>strip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>references</span>(<span class='kw'>bibtex_file</span> <span class='kw'>=</span> <span class='st'>"bcbioSinglecell.bib"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>matrix</th>
-      <td><p>Counts matrix.</p></td>
-    </tr>
-    <tr>
-      <th>fromto</th>
-      <td><p>Data frame where "from" is the original id and "to" is the id
-to convert to.</p></td>
-    </tr>
-    <tr>
-      <th>strip</th>
-      <td><p>Strip transcript versions from the matrix before aggregating.</p></td>
+      <th>bibtex_file</th>
+      <td><p>BibTex library file.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Matrix of counts aggregated by summing the "to" ids.</p>
     
 
   </div>
@@ -110,13 +98,11 @@ to convert to.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
     <h2>Author</h2>
     
-Rory Kirchner
+Michael Steinbaugh
 
   </div>
 </div>
