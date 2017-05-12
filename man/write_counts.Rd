@@ -2,21 +2,21 @@
 % Please edit documentation in R/write_counts.R
 \name{write_counts}
 \alias{write_counts}
-\title{Write MatrixMart sparse matrix and supporting files to disk}
+\title{Write MatrixMart sparse matrix and supporting files to disk.}
 \usage{
 write_counts(counts, gzip = FALSE)
 }
 \arguments{
-\item{counts}{Sparse counts matrix}
+\item{counts}{Sparse counts matrix.}
 
-\item{gzip}{Compress matrix file with gzip}
+\item{gzip}{Compress matrix file with gzip.}
 }
 \value{
-Path to matrix file
+Path to matrix file.
 }
 \description{
 Outputs matrix (.mtx), sample barcodes (.colnames), and gene names
-(.rownames) as separate files
+(.rownames) as separate files.
 }
 \author{
 Rory Kirchner

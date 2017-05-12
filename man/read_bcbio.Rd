@@ -3,21 +3,21 @@
 \name{read_bcbio_counts}
 \alias{read_bcbio_counts}
 \title{Read \href{https://github.com/chapmanb/bcbio-nextgen}{bcbio-nextgen} run
-output}
+output.}
 \usage{
 read_bcbio_counts(run, strip_version = TRUE)
 }
 \arguments{
-\item{run}{bcbio-nextgen}
+\item{run}{bcbio-nextgen.}
 
-\item{strip_version}{Strip transcript version from identifier}
+\item{strip_version}{Strip transcript version from identifier.}
 }
 \value{
-Sparse counts matrix
+Sparse counts matrix.
 }
 \description{
 Import transcript-level count data from a bcbio run into a
-  sparse matrix
+  sparse matrix.
 }
 \author{
 Michael Steinbaugh

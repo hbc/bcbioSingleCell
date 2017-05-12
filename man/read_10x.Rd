@@ -3,18 +3,19 @@
 \name{read_10x_counts}
 \alias{read_10x_counts}
 \title{Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} run
-output}
+output.}
 \usage{
 read_10x_counts(data_dir)
 }
 \arguments{
-\item{data_dir}{Data directory cont}
+\item{data_dir}{Data directory}
 }
 \value{
-Sparse counts matrix (dgCMatrix)
+Sparse counts matrix (dgCMatrix).
 }
 \description{
-Read into sparse matrix from barcodes.tsv, genes.tsv, and matrix.mtx files
+Read into sparse matrix from barcodes.tsv, genes.tsv, and
+  matrix.mtx files.
 }
 \author{
 Michael Steinbaugh

@@ -2,12 +2,12 @@
 % Please edit documentation in R/internal_create_new_project.R
 \name{create_new_project}
 \alias{create_new_project}
-\title{Create new project directory structure}
+\title{Create new project directory structure.}
 \usage{
 create_new_project()
 }
 \description{
-Generate the necessary directories for an RMarkdown report in RStudio
+Generate the necessary directories for an RMarkdown report in RStudio.
 }
 \author{
 Michael Steinbaugh

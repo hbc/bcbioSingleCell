@@ -1,6 +1,6 @@
-#' Detect if R is running on an HPC cluster
+#' Detect if R is running on an HPC cluster.
 #'
-#' Utility function to enable CPU intensive tasks
+#' Utility function to enable CPU intensive tasks.
 #'
 #' @keywords internal
 #' @author Michael Steinbaugh

@@ -4,7 +4,7 @@
 \name{bcbioSinglecell}
 \alias{bcbioSinglecell}
 \alias{bcbioSinglecell-package}
-\title{bcbioSinglecell}
+\title{bcbioSinglecell.}
 \description{
 Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
 }

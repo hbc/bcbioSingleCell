@@ -2,20 +2,20 @@
 % Please edit documentation in R/internal_read_csv_with_rownames.R
 \name{read_csv_with_rownames}
 \alias{read_csv_with_rownames}
-\title{Read a CSV file with readr, setting a given column as the rownames}
+\title{Read a CSV file with readr, setting a given column as the rownames.}
 \usage{
 read_csv_with_rownames(filename, column)
 }
 \arguments{
-\item{filename}{CSV to read}
+\item{filename}{CSV to read.}
 
-\item{column}{column to make into the rownames}
+\item{column}{Column to make into the rownames.}
 }
 \value{
-Data frame
+Data frame.
 }
 \description{
-Read a CSV file with readr, setting a given column as the rownames
+Read a CSV file with readr, setting a given column as the rownames.
 }
 \author{
 Rory Kirchner

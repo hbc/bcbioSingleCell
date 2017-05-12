@@ -1,15 +1,15 @@
-#' Read metadata
+#' Read metadata.
 #'
 #' @keywords internal
 #' @author Michael Steinbaugh
 #'
 #' @param file Metadata file. CSV and XLSX formats are supported.
-#' @param pattern Apply grep pattern matching to samples
-#' @param pattern_col Column in data frame used for pattern subsetting
+#' @param pattern Apply grep pattern matching to samples.
+#' @param pattern_col Column in data frame used for pattern subsetting.
 #' @param lanes Number of lanes used to split the samples into technical
 #'   replicates (\code{_LXXX}) suffix.
 #'
-#' @return Metadata data frame
+#' @return Metadata data frame.
 #' @export
 read_metadata <- function(
     file,

@@ -1,12 +1,12 @@
-#' Generate barcode metrics summary
+#' Generate barcode metrics summary.
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @param run bcbio-nextgen run
-#' @param counts Sparse counts matrix
+#' @param run bcbio-nextgen run.
+#' @param counts Sparse counts matrix.
 #'
-#' @return Data frame
+#' @return Data frame.
 #' @export
 barcode_metrics <- function(
     run,

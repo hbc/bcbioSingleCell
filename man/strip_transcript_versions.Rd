@@ -2,18 +2,18 @@
 % Please edit documentation in R/internal_strip_transcript_versions.R
 \name{strip_transcript_versions}
 \alias{strip_transcript_versions}
-\title{Strip transcript versions}
+\title{Strip transcript versions.}
 \usage{
 strip_transcript_versions(counts)
 }
 \arguments{
-\item{counts}{Sparse counts matrix}
+\item{counts}{Sparse counts matrix.}
 }
 \value{
-Sparse counts matrix with the transcript versions stripped
+Sparse counts matrix with the transcript versions stripped.
 }
 \description{
-Strip transcript versions
+Strip transcript versions.
 }
 \author{
 Rory Kirchner

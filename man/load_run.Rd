@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_run.R
 \name{load_run}
 \alias{load_run}
-\title{Load bcbio-nextgen run}
+\title{Load bcbio-nextgen run.}
 \usage{
 load_run(upload_dir = "final", metadata_file = file.path("meta",
   "indrop_rnaseq.xlsx"), organism, intgroup = "sample_name",
@@ -12,7 +12,7 @@ load_run(upload_dir = "final", metadata_file = file.path("meta",
 \item{upload_dir}{Path to final upload directory. This path is set when
 running \code{bcbio_nextgen -w template}.}
 
-\item{metadata_file}{Sample barcode metadata file}
+\item{metadata_file}{Sample barcode metadata file.}
 
 \item{organism}{Organism name, following Ensembl/Biomart conventions. Must be
 lowercase and one word (e.g. hsapiens). This will be detected automatically
@@ -23,10 +23,10 @@ for plot colors during quality control (QC) analysis. Entire vector is used
 for PCA and heatmap QC functions.}
 
 \item{read_counts}{Automatically read in the count data using
-\code{read_bcbio_counts()}}
+\code{\link{read_bcbio_counts}}.}
 }
 \value{
-bcbio-nextgen run object
+bcbio-nextgen run object.
 }
 \description{
 We recommend loading the bcbio-nextgen run as a remote connection over

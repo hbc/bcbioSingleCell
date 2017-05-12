@@ -3,26 +3,26 @@
 \name{aggregate_sparse_features}
 \alias{aggregate_sparse_features}
 \alias{aggregate_sparse_replicates}
-\title{Aggregate sparse matrix operations}
+\title{Aggregate sparse matrix operations.}
 \usage{
 aggregate_sparse_features(sparse, featureids)
 
 aggregate_sparse_replicates(sparse, cellids)
 }
 \arguments{
-\item{sparse}{Sparse counts matrix}
+\item{sparse}{Sparse counts matrix.}
 
-\item{featureids}{New feature IDs for the collapsed features}
+\item{featureids}{New feature IDs for the collapsed features.}
 
-\item{cellids}{New cellular ids of the collapsed cells, one for each cell}
+\item{cellids}{New cellular ids of the collapsed cells, one for each cell.}
 }
 \value{
-Modified sparse matrix
+Modified sparse matrix.
 }
 \description{
-Collapse features with the same feature id by summing them
+Collapse features with the same feature id by summing them.
 
-Pool cellular technical replicate counts
+Pool cellular technical replicate counts.
 }
 \author{
 Rory Kirchner

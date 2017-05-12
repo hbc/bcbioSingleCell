@@ -16,7 +16,7 @@
 \alias{plot_genes_detected}
 \alias{plot_mito_counts}
 \alias{plot_novelty}
-\title{Cell metrics quality control plots}
+\title{Cell metrics quality control plots.}
 \usage{
 plot_total_cells(run)
 
@@ -53,53 +53,53 @@ plot_mito_counts(...)
 plot_novelty(...)
 }
 \arguments{
-\item{run}{bcbio-nextgen scRNA-seq run}
+\item{run}{bcbio-nextgen scRNA-seq run.}
 
-\item{min_genes}{Recommended minimum gene count cutoff}
+\item{min_genes}{Recommended minimum gene count cutoff.}
 
-\item{max_genes}{Recommended maximum gene count cutoff}
+\item{max_genes}{Recommended maximum gene count cutoff.}
 
-\item{colorby}{column to color the points by}
+\item{colorby}{Column to color the points by.}
 
-\item{percent_mito}{Recommended mitochondrial percentage cutoff value}
+\item{percent_mito}{Recommended mitochondrial percentage cutoff value.}
 
-\item{novelty}{Recommended novelty cutoff value}
+\item{novelty}{Recommended novelty cutoff value.}
 
-\item{...}{Passthrough parameters}
+\item{...}{Passthrough parameters.}
 }
 \value{
-ggplot2 object
+ggplot2 object.
 }
 \description{
-Total cells barplot
+Total cells barplot.
 
-Total counts histogram
+Total counts histogram.
 
-Total counts boxplot
+Total counts boxplot.
 
-Genes detected boxplot
+Genes detected boxplot.
 
-Genes detected histogram
+Genes detected histogram.
 
-Total counts vs. genes detected plot
+Total counts vs. genes detected plot.
 
-Mitochondrial abundance histogram
+Mitochondrial abundance histogram.
 
-Mitochondrial abundance boxplot
+Mitochondrial abundance boxplot.
 
-Mitochondrial abundance scatterplot
+Mitochondrial abundance scatterplot.
 
-Novelty histogram (log10 genes detected per count)
+Novelty histogram (log10 genes detected per count).
 
-Novelty boxplot (log10 genes detected per count)
+Novelty boxplot (log10 genes detected per count).
 
-Plot total counts (RMarkdown chunk wrapper)
+Plot total counts (RMarkdown chunk wrapper).
 
-Plot genes detected (RMarkdown chunk wrapper)
+Plot genes detected (RMarkdown chunk wrapper).
 
-Plot mitochondrial counts (RMarkdown chunk wrapper)
+Plot mitochondrial counts (RMarkdown chunk wrapper).
 
-Plot novelty (RMarkdown chunk wrapper)
+Plot novelty (RMarkdown chunk wrapper).
 }
 \author{
 Michael Steinbaugh

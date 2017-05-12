@@ -2,7 +2,7 @@
 % Please edit documentation in R/internal_read_metadata.R
 \name{read_metadata}
 \alias{read_metadata}
-\title{Read metadata}
+\title{Read metadata.}
 \usage{
 read_metadata(file, pattern = NULL, pattern_col = "sample_name",
   lanes = NULL)
@@ -10,18 +10,18 @@ read_metadata(file, pattern = NULL, pattern_col = "sample_name",
 \arguments{
 \item{file}{Metadata file. CSV and XLSX formats are supported.}
 
-\item{pattern}{Apply grep pattern matching to samples}
+\item{pattern}{Apply grep pattern matching to samples.}
 
-\item{pattern_col}{Column in data frame used for pattern subsetting}
+\item{pattern_col}{Column in data frame used for pattern subsetting.}
 
 \item{lanes}{Number of lanes used to split the samples into technical
 replicates (\code{_LXXX}) suffix.}
 }
 \value{
-Metadata data frame
+Metadata data frame.
 }
 \description{
-Read metadata
+Read metadata.
 }
 \author{
 Michael Steinbaugh

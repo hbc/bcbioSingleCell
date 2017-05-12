@@ -1,15 +1,15 @@
-#' Write MatrixMart sparse matrix and supporting files to disk
+#' Write MatrixMart sparse matrix and supporting files to disk.
 #'
 #' Outputs matrix (.mtx), sample barcodes (.colnames), and gene names
-#' (.rownames) as separate files
+#' (.rownames) as separate files.
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @param counts Sparse counts matrix
-#' @param gzip Compress matrix file with gzip
+#' @param counts Sparse counts matrix.
+#' @param gzip Compress matrix file with gzip.
 #'
-#' @return Path to matrix file
+#' @return Path to matrix file.
 #' @export
 write_counts <- function(counts, gzip = FALSE) {
     # Write MatrixMart .mtx file

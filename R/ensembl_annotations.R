@@ -1,15 +1,15 @@
 #' Get transcript-to-gene annotations from
-#' \href{http://www.ensembl.org/}{Ensembl}
+#' \href{http://www.ensembl.org/}{Ensembl}.
 #'
 #' This function also defines broad classes, which are used in quality control
-#' analysis
+#' analysis.
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @param run bcbio-nextgen run
+#' @param run bcbio-nextgen run.
 #'
-#' @return Data frame
+#' @return Data frame.
 #' @export
 ensembl_annotations <- function(run) {
     check_run(run)

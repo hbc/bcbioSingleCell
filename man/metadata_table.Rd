@@ -2,18 +2,18 @@
 % Please edit documentation in R/metadata_table.R
 \name{metadata_table}
 \alias{metadata_table}
-\title{Metadata table for knit report}
+\title{Metadata table for knit report.}
 \usage{
 metadata_table(run)
 }
 \arguments{
-\item{run}{bcbio-nextgen run}
+\item{run}{bcbio-nextgen run.}
 }
 \value{
-kable
+\code{\link[knitr]{kable}}.
 }
 \description{
-Metadata table for knit report
+Metadata table for knit report.
 }
 \author{
 Michael Steinbaugh

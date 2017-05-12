@@ -1,10 +1,10 @@
-#' Metadata table for knit report
+#' Metadata table for knit report.
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param run bcbio-nextgen run
+#' @param run bcbio-nextgen run.
 #'
-#' @return kable
+#' @return \code{\link[knitr]{kable}}.
 #' @export
 metadata_table <- function(run) {
     run$metadata %>%

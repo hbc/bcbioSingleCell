@@ -2,20 +2,20 @@
 % Please edit documentation in R/barcode_metrics.R
 \name{barcode_metrics}
 \alias{barcode_metrics}
-\title{Generate barcode metrics summary}
+\title{Generate barcode metrics summary.}
 \usage{
 barcode_metrics(run, counts)
 }
 \arguments{
-\item{run}{bcbio-nextgen run}
+\item{run}{bcbio-nextgen run.}
 
-\item{counts}{Sparse counts matrix}
+\item{counts}{Sparse counts matrix.}
 }
 \value{
-Data frame
+Data frame.
 }
 \description{
-Generate barcode metrics summary
+Generate barcode metrics summary.
 }
 \author{
 Rory Kirchner

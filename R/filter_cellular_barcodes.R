@@ -42,28 +42,28 @@ filter_cellular_barcodes <- function(
 
 # Globals used for QC plot labels ====
 #' @rdname filter_cellular_barcodes
-#' @description Default minimum gene count cutoff (500)
+#' @description Default minimum gene count cutoff (500).
 #' @export
 #' @examples
 #' min_genes
 min_genes <- 500
 
 #' @rdname filter_cellular_barcodes
-#' @description Default maximum gene count cutoff (5000)
+#' @description Default maximum gene count cutoff (5000).
 #' @export
 #' @examples
 #' max_genes
 max_genes <- 5000
 
 #' @rdname filter_cellular_barcodes
-#' @description Default minimum novelty score (0.75)
+#' @description Default minimum novelty score (0.75).
 #' @export
 #' @examples
 #' novelty
 novelty <- 0.75
 
 #' @rdname filter_cellular_barcodes
-#' @description Default maximum mitochondrial percent abundance (25)
+#' @description Default maximum mitochondrial percent abundance (25).
 #' @export
 #' @examples
 #' percent_mito

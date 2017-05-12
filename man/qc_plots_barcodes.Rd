@@ -3,23 +3,23 @@
 \name{plot_barcode}
 \alias{plot_barcode}
 \alias{plot_barcodes}
-\title{Sample barcode distribution quality control plots}
+\title{Sample barcode distribution quality control plots.}
 \usage{
 plot_barcode(file_name, sample_name = NULL)
 
 plot_barcodes(run)
 }
 \arguments{
-\item{file_name}{Barcode histogram file}
+\item{file_name}{Barcode histogram file.}
 
-\item{sample_name}{Sample name (title for plot)}
+\item{sample_name}{Sample name (title for plot).}
 
-\item{run}{bcbio-nextgen run}
+\item{run}{bcbio-nextgen run.}
 }
 \description{
-Plot an individual barcode histogram per sample file
+Plot an individual barcode histogram per sample file.
 
-Plot all sample barcodes (RMarkdown chunk wrapper)
+Plot all sample barcodes (RMarkdown chunk wrapper).
 }
 \author{
 Michael Steinbaugh

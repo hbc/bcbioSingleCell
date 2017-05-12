@@ -1,15 +1,17 @@
 #' Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} run
-#' output
-#'
-#' Read into sparse matrix from barcodes.tsv, genes.tsv, and matrix.mtx files
+#' output.
 #'
 #' @rdname read_10x
-#'
 #' @author Michael Steinbaugh
 #'
-#' @param data_dir Data directory cont
-#'
-#' @return Sparse counts matrix (dgCMatrix)
+#' @param data_dir Data directory
+
+
+
+#' @rdname read_10x
+#' @description Read into sparse matrix from barcodes.tsv, genes.tsv, and
+#'   matrix.mtx files.
+#' @return Sparse counts matrix (dgCMatrix).
 #' @export
 read_10x_counts <- function(data_dir) {
     barcodes_file <- file.path(data_dir, "barcodes.tsv")

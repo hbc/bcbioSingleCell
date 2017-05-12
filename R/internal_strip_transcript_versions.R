@@ -1,12 +1,12 @@
-#' Strip transcript versions
+#' Strip transcript versions.
 #'
 #' @keywords internal
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @param counts Sparse counts matrix
+#' @param counts Sparse counts matrix.
 #'
-#' @return Sparse counts matrix with the transcript versions stripped
+#' @return Sparse counts matrix with the transcript versions stripped.
 #' @export
 strip_transcript_versions <- function(counts) {
     check_sparse(counts)

@@ -3,19 +3,19 @@
 \name{ensembl_annotations}
 \alias{ensembl_annotations}
 \title{Get transcript-to-gene annotations from
-\href{http://www.ensembl.org/}{Ensembl}}
+\href{http://www.ensembl.org/}{Ensembl}.}
 \usage{
 ensembl_annotations(run)
 }
 \arguments{
-\item{run}{bcbio-nextgen run}
+\item{run}{bcbio-nextgen run.}
 }
 \value{
-Data frame
+Data frame.
 }
 \description{
 This function also defines broad classes, which are used in quality control
-analysis
+analysis.
 }
 \author{
 Rory Kirchner

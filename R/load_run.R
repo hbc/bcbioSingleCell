@@ -1,4 +1,4 @@
-#' Load bcbio-nextgen run
+#' Load bcbio-nextgen run.
 #'
 #' We recommend loading the bcbio-nextgen run as a remote connection over
 #' \code{sshfs}.
@@ -7,7 +7,7 @@
 #'
 #' @param upload_dir Path to final upload directory. This path is set when
 #'   running \code{bcbio_nextgen -w template}.
-#' @param metadata_file Sample barcode metadata file
+#' @param metadata_file Sample barcode metadata file.
 #' @param organism Organism name, following Ensembl/Biomart conventions. Must be
 #'   lowercase and one word (e.g. hsapiens). This will be detected automatically
 #'   for common reference genomes.
@@ -15,9 +15,9 @@
 #'   for plot colors during quality control (QC) analysis. Entire vector is used
 #'   for PCA and heatmap QC functions.
 #' @param read_counts Automatically read in the count data using
-#'   \code{read_bcbio_counts()}
+#'   \code{\link{read_bcbio_counts}}.
 #'
-#' @return bcbio-nextgen run object
+#' @return bcbio-nextgen run object.
 #' @export
 load_run <- function(
     upload_dir = "final",

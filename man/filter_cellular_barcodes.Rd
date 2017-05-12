@@ -41,13 +41,13 @@ Filtered metrics data frame.
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.
 
-Default minimum gene count cutoff (500)
+Default minimum gene count cutoff (500).
 
-Default maximum gene count cutoff (5000)
+Default maximum gene count cutoff (5000).
 
-Default minimum novelty score (0.75)
+Default minimum novelty score (0.75).
 
-Default maximum mitochondrial percent abundance (25)
+Default maximum mitochondrial percent abundance (25).
 }
 \examples{
 min_genes

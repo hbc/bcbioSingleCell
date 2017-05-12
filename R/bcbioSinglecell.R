@@ -1,4 +1,4 @@
-#' bcbioSinglecell
+#' bcbioSinglecell.
 #'
 #' Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
 #'

@@ -2,12 +2,12 @@
 % Please edit documentation in R/internal_detect_hpc.R
 \name{detect_hpc}
 \alias{detect_hpc}
-\title{Detect if R is running on an HPC cluster}
+\title{Detect if R is running on an HPC cluster.}
 \usage{
 detect_hpc()
 }
 \description{
-Utility function to enable CPU intensive tasks
+Utility function to enable CPU intensive tasks.
 }
 \author{
 Michael Steinbaugh

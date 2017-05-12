@@ -2,18 +2,18 @@
 % Please edit documentation in R/internal_read_barcode_file.R
 \name{read_barcode_file}
 \alias{read_barcode_file}
-\title{Load a barcode histogram file generated from bcbio-nextgen}
+\title{Load a barcode histogram file generated from bcbio-nextgen.}
 \usage{
 read_barcode_file(file_name)
 }
 \arguments{
-\item{file_name}{path to a barcode histogram file}
+\item{file_name}{path to a barcode histogram file.}
 }
 \value{
-dataframe of reads per barcode
+Data frame of reads per barcode.
 }
 \description{
-Load a barcode histogram file generated from bcbio-nextgen
+Load a barcode histogram file generated from bcbio-nextgen.
 }
 \author{
 Rory Kirchner

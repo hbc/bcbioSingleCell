@@ -2,23 +2,23 @@
 % Please edit documentation in R/internal_tx2symbol.R
 \name{tx2symbol}
 \alias{tx2symbol}
-\title{Convert a transcript matrix to a gene symbol matrix}
+\title{Convert a transcript matrix to a gene symbol matrix.}
 \usage{
 tx2symbol(matrix, fromto, strip = FALSE)
 }
 \arguments{
-\item{matrix}{a matrix of counts}
+\item{matrix}{Counts matrix.}
 
-\item{fromto}{a dataframe where "from" is the original id and "to" is the id
-to convert to}
+\item{fromto}{Data frame where "from" is the original id and "to" is the id
+to convert to.}
 
-\item{strip}{strip transcript versions from the matrix before aggregating}
+\item{strip}{Strip transcript versions from the matrix before aggregating.}
 }
 \value{
-a matrix of counts aggregated by summing the "to" ids
+Matrix of counts aggregated by summing the "to" ids.
 }
 \description{
-Convert a transcript matrix to a gene symbol matrix
+Convert a transcript matrix to a gene symbol matrix.
 }
 \author{
 Rory Kirchner

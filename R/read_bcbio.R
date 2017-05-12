@@ -1,22 +1,22 @@
 #' Read \href{https://github.com/chapmanb/bcbio-nextgen}{bcbio-nextgen} run
-#' output
+#' output.
 #'
 #' @rdname read_bcbio
 #'
 #' @author Michael Steinbaugh
 #' @author Rory Kirchner
 #'
-#' @param run bcbio-nextgen
+#' @param run bcbio-nextgen.
 
 
 
 #' @rdname read_bcbio
 #' @description Import transcript-level count data from a bcbio run into a
-#'   sparse matrix
+#'   sparse matrix.
 #'
-#' @param strip_version Strip transcript version from identifier
+#' @param strip_version Strip transcript version from identifier.
 #'
-#' @return Sparse counts matrix
+#' @return Sparse counts matrix.
 #' @export
 read_bcbio_counts <- function(run, strip_version = TRUE) {
     counts <- file.path(run$project_dir, "tagcounts.mtx") %>% read_counts

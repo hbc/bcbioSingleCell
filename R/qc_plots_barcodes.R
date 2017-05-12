@@ -1,4 +1,4 @@
-#' Sample barcode distribution quality control plots
+#' Sample barcode distribution quality control plots.
 #'
 #' @rdname qc_plots_barcodes
 #'
@@ -8,10 +8,10 @@
 
 
 #' @rdname qc_plots_barcodes
-#' @description Plot an individual barcode histogram per sample file
+#' @description Plot an individual barcode histogram per sample file.
 #'
-#' @param file_name Barcode histogram file
-#' @param sample_name Sample name (title for plot)
+#' @param file_name Barcode histogram file.
+#' @param sample_name Sample name (title for plot).
 #'
 #' @export
 plot_barcode <- function(file_name, sample_name = NULL) {
@@ -45,9 +45,9 @@ plot_barcode <- function(file_name, sample_name = NULL) {
 
 
 #' @rdname qc_plots_barcodes
-#' @description Plot all sample barcodes (RMarkdown chunk wrapper)
+#' @description Plot all sample barcodes (RMarkdown chunk wrapper).
 #'
-#' @param run bcbio-nextgen run
+#' @param run bcbio-nextgen run.
 #'
 #' @export
 plot_barcodes <- function(run) {

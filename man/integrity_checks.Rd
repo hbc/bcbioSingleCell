@@ -3,21 +3,21 @@
 \name{check_run}
 \alias{check_run}
 \alias{check_sparse}
-\title{Perform object integrity checks}
+\title{Perform object integrity checks.}
 \usage{
 check_run(run)
 
 check_sparse(sparse)
 }
 \arguments{
-\item{run}{bcbio-nextgen run}
+\item{run}{bcbio-nextgen run.}
 
-\item{sparse}{Sparse counts matrix}
+\item{sparse}{Sparse counts matrix.}
 }
 \description{
-Check bcbio-nextgen run
+Check bcbio-nextgen run.
 
-Check sparse counts matrix
+Check sparse counts matrix.
 }
 \author{
 Michael Steinbaugh

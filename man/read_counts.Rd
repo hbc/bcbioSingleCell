@@ -2,18 +2,18 @@
 % Please edit documentation in R/internal_read_counts.R
 \name{read_counts}
 \alias{read_counts}
-\title{Read a MatrixMart file, setting the row and column names}
+\title{Read a MatrixMart file, setting the row and column names.}
 \usage{
 read_counts(matrix_file)
 }
 \arguments{
-\item{matrix_file}{MatrixMart file to read}
+\item{matrix_file}{MatrixMart file to read.}
 }
 \value{
-Sparse counts matrix
+Sparse counts matrix.
 }
 \description{
-Note that for a bcbio run, this function will return transcript-level counts
+Note that for a bcbio run, this function will return transcript-level counts.
 }
 \author{
 Rory Kirchner
