@@ -18,33 +18,31 @@
 \alias{plot_novelty}
 \title{Cell metrics quality control plots}
 \usage{
-plot_total_cells(metrics)
+plot_total_cells(run)
 
-plot_total_counts_histogram(metrics)
+plot_total_counts_histogram(run)
 
-plot_total_counts_boxplot(metrics)
+plot_total_counts_boxplot(run)
 
-plot_genes_detected_boxplot(metrics, min_genes = get("min_genes", envir =
+plot_genes_detected_boxplot(run, min_genes = get("min_genes", envir =
   parent.frame()), max_genes = get("max_genes", envir = parent.frame()))
 
-plot_genes_detected_histogram(metrics, min_genes = get("min_genes", envir =
+plot_genes_detected_histogram(run, min_genes = get("min_genes", envir =
   parent.frame()), max_genes = get("max_genes", envir = parent.frame()))
 
-plot_total_vs_detected(metrics, colorby = "sample_name")
+plot_total_vs_detected(run, colorby = "sample_name")
 
-plot_mito_counts_histogram(metrics, percent_mito = get("percent_mito", envir =
+plot_mito_counts_histogram(run, percent_mito = get("percent_mito", envir =
   parent.frame()))
 
-plot_mito_counts_boxplot(metrics, percent_mito = get("percent_mito", envir =
+plot_mito_counts_boxplot(run, percent_mito = get("percent_mito", envir =
   parent.frame()))
 
-plot_mito_counts_scatterplot(metrics, percent_mito = NULL)
+plot_mito_counts_scatterplot(run, percent_mito = NULL)
 
-plot_novelty_histogram(metrics, novelty = get("novelty", envir =
-  parent.frame()))
+plot_novelty_histogram(run, novelty = get("novelty", envir = parent.frame()))
 
-plot_novelty_boxplot(metrics, novelty = get("novelty", envir =
-  parent.frame()))
+plot_novelty_boxplot(run, novelty = get("novelty", envir = parent.frame()))
 
 plot_total_counts(...)
 
@@ -55,7 +53,7 @@ plot_mito_counts(...)
 plot_novelty(...)
 }
 \arguments{
-\item{metrics}{Barcode metrics data frame}
+\item{run}{bcbio-nextgen scRNA-seq run}
 
 \item{min_genes}{Recommended minimum gene count cutoff}
 

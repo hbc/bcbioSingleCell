@@ -5,7 +5,7 @@
 #' @author Michael Steinbaugh
 #' @author Rory Kirchner
 #'
-#' @param metrics Barcode metrics data frame
+#' @param run bcbio-nextgen scRNA-seq run
 #'
 #' @param min_genes Recommended minimum gene count cutoff
 #' @param max_genes Recommended maximum gene count cutoff
@@ -23,8 +23,9 @@
 #' @rdname qc_plots_metrics
 #' @description Total cells barplot
 #' @export
-plot_total_cells <- function(metrics) {
-    plot <- metrics %>%
+plot_total_cells <- function(run) {
+    check_run(run)
+    plot <- run$metrics %>%
         group_by_(.dots = "sample_name") %>%
         summarize_(total_cells = ~n()) %>%
         ggplot(
@@ -53,8 +54,9 @@ plot_total_cells <- function(metrics) {
 #' @rdname qc_plots_metrics
 #' @description Total counts histogram
 #' @export
-plot_total_counts_histogram <- function(metrics) {
-    histogram <- metrics %>%
+plot_total_counts_histogram <- function(run) {
+    check_run(run)
+    histogram <- run$metrics %>%
         ggplot(
             aes_(x = ~total_counts,
                  fill = ~sample_name)
@@ -75,8 +77,9 @@ plot_total_counts_histogram <- function(metrics) {
 #' @rdname qc_plots_metrics
 #' @description Total counts boxplot
 #' @export
-plot_total_counts_boxplot <- function(metrics) {
-    boxplot <- metrics %>%
+plot_total_counts_boxplot <- function(run) {
+    check_run(run)
+    boxplot <- run$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~total_counts,
@@ -111,10 +114,11 @@ plot_total_counts_boxplot <- function(metrics) {
 #' @description Genes detected boxplot
 #' @export
 plot_genes_detected_boxplot <- function(
-    metrics,
+    run,
     min_genes = get("min_genes", envir = parent.frame()),
     max_genes = get("max_genes", envir = parent.frame())) {
-    boxplot <- metrics %>%
+    check_run(run)
+    boxplot <- run$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~genes_detected,
@@ -148,10 +152,11 @@ plot_genes_detected_boxplot <- function(
 #' @description Genes detected histogram
 #' @export
 plot_genes_detected_histogram <- function(
-    metrics,
+    run,
     min_genes = get("min_genes", envir = parent.frame()),
     max_genes = get("max_genes", envir = parent.frame())) {
-    histogram <- metrics %>%
+    check_run(run)
+    histogram <- run$metrics %>%
         ggplot(
             aes_(x = ~genes_detected,
                  fill = ~sample_name)
@@ -182,8 +187,9 @@ plot_genes_detected_histogram <- function(
 #' @param colorby column to color the points by
 #'
 #' @export
-plot_total_vs_detected <- function(metrics, colorby = "sample_name") {
-    plot <- metrics %>%
+plot_total_vs_detected <- function(run, colorby = "sample_name") {
+    check_run(run)
+    plot <- run$metrics %>%
         ggplot(
             aes_(x = ~total_counts,
                  y = ~genes_detected,
@@ -213,10 +219,11 @@ plot_total_vs_detected <- function(metrics, colorby = "sample_name") {
 #' @description Mitochondrial abundance histogram
 #' @export
 plot_mito_counts_histogram <- function(
-    metrics,
+    run,
     percent_mito = get("percent_mito", envir = parent.frame())) {
-    metrics <- mutate(metrics, percent_mito = .data$percent_mito * 100)
-    histogram <- metrics %>%
+    check_run(run)
+    histogram <- run$metrics %>%
+        mutate(percent_mito = .data$percent_mito * 100)
         ggplot(
             aes_(x = ~percent_mito,
                  fill = ~sample_name)
@@ -240,10 +247,11 @@ plot_mito_counts_histogram <- function(
 #' @description Mitochondrial abundance boxplot
 #' @export
 plot_mito_counts_boxplot <- function(
-    metrics,
+    run,
     percent_mito = get("percent_mito", envir = parent.frame())) {
-    metrics <- mutate(metrics, percent_mito = .data$percent_mito * 100)
-    boxplot <- metrics %>%
+    check_run(run)
+    boxplot <- run$metrics %>%
+        mutate(percent_mito = .data$percent_mito * 100)
         ggplot(
             aes_(x = ~sample_name,
                  y = ~percent_mito,
@@ -274,8 +282,9 @@ plot_mito_counts_boxplot <- function(
 #' @rdname qc_plots_metrics
 #' @description Mitochondrial abundance scatterplot
 #' @export
-plot_mito_counts_scatterplot <- function(metrics, percent_mito = NULL) {
-    scatterplot <- metrics %>%
+plot_mito_counts_scatterplot <- function(run, percent_mito = NULL) {
+    check_run(run)
+    scatterplot <- run$metrics %>%
         ggplot(
             aes_(x = ~coding_counts,
                  y = ~mito_counts,
@@ -301,9 +310,10 @@ plot_mito_counts_scatterplot <- function(metrics, percent_mito = NULL) {
 #' @description Novelty histogram (log10 genes detected per count)
 #' @export
 plot_novelty_histogram <- function(
-    metrics,
+    run,
     novelty = get("novelty", envir = parent.frame())) {
-    histogram <- metrics %>%
+    check_run(run)
+    histogram <- run$metrics %>%
         ggplot(
             aes_(x = ~log10_detected_per_count,
                  fill = ~sample_name)
@@ -326,9 +336,10 @@ plot_novelty_histogram <- function(
 #' @description Novelty boxplot (log10 genes detected per count)
 #' @export
 plot_novelty_boxplot <- function(
-    metrics,
+    run,
     novelty = get("novelty", envir = parent.frame())) {
-    boxplot <- metrics %>%
+    check_run(run)
+    boxplot <- run$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~log10_detected_per_count,
