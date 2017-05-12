@@ -12,7 +12,7 @@
 #' @param novelty Minimum novelty score.
 #' @param plot Print relevant plots.
 #'
-#' @return Filtered metrics data frame.
+#' @return Filtered bcbio run object
 #' @export
 filter_cellular_barcodes <- function(
     run,
@@ -22,20 +22,21 @@ filter_cellular_barcodes <- function(
     novelty = 0.75,
     plot = TRUE) {
     check_run(run)
-    filtered <- run$metrics %>%
+    filtered_run$metrics <- run$metrics %>%
         .[.$genes_detected > min_genes, ] %>%
         .[.$genes_detected < max_genes, ] %>%
         .[.$percent_mito < percent_mito, ] %>%
         .[.$log10_detected_per_count > novelty, ]
     if (isTRUE(plot)) {
-        show(plot_total_cells(filtered))
-        plot_total_counts(filtered)
-        plot_genes_detected(filtered)
-        show(plot_total_vs_detected(filtered))
-        plot_mito_counts(filtered)
-        plot_novelty(filtered)
+        show(plot_total_cells(filtered_run))
+        plot_total_counts(filtered_run)
+        plot_genes_detected(filtered_run)
+        show(plot_total_vs_detected(filtered_run))
+        plot_mito_counts(filtered_run)
+        plot_novelty(filtered_run)
     }
-    return(filtered)
+    run$filtered <- TRUE
+    return(filtered_run)
 }
 
 
