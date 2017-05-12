@@ -26,7 +26,8 @@ filter_cellular_barcodes <- function(
     filtered_run$metrics <- filtered_run$metrics %>%
         .[.$genes_detected > min_genes, ] %>%
         .[.$genes_detected < max_genes, ] %>%
-        .[.$percent_mito < percent_mito, ] %>%
+        # Convert percentage input parameter back to decimal
+        .[.$percent_mito < percent_mito / 100, ] %>%
         .[.$log10_detected_per_count > novelty, ]
     if (isTRUE(plot)) {
         show(plot_total_cells(filtered_run))

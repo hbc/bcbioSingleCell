@@ -35,7 +35,7 @@ percent_mito
 \item{plot}{Print relevant plots.}
 }
 \value{
-Filtered metrics data frame.
+Filtered bcbio run object
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
