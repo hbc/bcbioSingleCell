@@ -14,13 +14,13 @@ check_run <- function(run) {
     if (!is.list(run)) {
         stop("Run object is not a list")
     }
-    if (!file.exists(run$upload_dir)) {
+    if (!dir.exists(run$upload_dir)) {
         stop("Could not access upload dir")
     }
-    if (!length(dir(run$project_dir))) {
+    if (!dir.exists(run$project_dir)) {
         stop("Could not access project_dir")
     }
-    if (!length(run$sample_dirs)) {
+    if (!all(dir.exists(run$sample_dirs))) {
         stop("No sample directories in run")
     }
 }
