@@ -1,0 +1,18 @@
+#' Download BibTex references.
+#'
+#' If file isn't present, download latest version from the
+#' \href{http://bioinformatics.sph.harvard.edu}{HBC website}.
+#'
+#' @author Michael Steinbaugh
+#'
+#' @param bibtex_file BibTex library file.
+#'
+#' @export
+references <- function(bibtex_file = "bcbioSinglecell.bib") {
+    if (!file.exists(bibtex_file)) {
+        download.file(file.path("http://bioinformatics.sph.harvard.edu",
+                                "bcbioSinglecell",
+                                bibtex_file),
+                      bibtex_file)
+    }
+}
