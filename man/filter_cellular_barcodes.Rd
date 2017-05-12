@@ -7,10 +7,10 @@
 \alias{max_genes}
 \alias{novelty}
 \alias{percent_mito}
-\title{Filter cellular barcodes}
+\title{Filter cellular barcodes.}
 \format{An object of class \code{numeric} of length 1.}
 \usage{
-filter_cellular_barcodes(metrics, min_genes = 500, max_genes = 5000,
+filter_cellular_barcodes(run, min_genes = 500, max_genes = 5000,
   percent_mito = 25, novelty = 0.75, plot = TRUE)
 
 min_genes
@@ -22,20 +22,20 @@ novelty
 percent_mito
 }
 \arguments{
-\item{metrics}{Barcode metrics data frame}
+\item{run}{bcbio-nextgen scRNA-seq run.}
 
-\item{min_genes}{Minimum number of genes detected}
+\item{min_genes}{Minimum number of genes detected.}
 
-\item{max_genes}{Maximum number of genes detected}
+\item{max_genes}{Maximum number of genes detected.}
 
-\item{percent_mito}{Maximum mitochondrial pct abundance (\code{0-1} scale)}
+\item{percent_mito}{Maximum mitochondrial pct abundance (\code{0-1} scale).}
 
-\item{novelty}{Minimum novelty score}
+\item{novelty}{Minimum novelty score.}
 
-\item{plot}{Print relevant plots}
+\item{plot}{Print relevant plots.}
 }
 \value{
-Filtered metrics data frame
+Filtered metrics data frame.
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
