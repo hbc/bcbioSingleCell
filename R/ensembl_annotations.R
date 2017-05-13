@@ -4,16 +4,14 @@
 #' This function also defines broad classes, which are used in quality control
 #' analysis.
 #'
+#' @keywords internal
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
 #' @param run bcbio-nextgen run.
 #'
 #' @return Data frame.
-#' @export
 ensembl_annotations <- function(run) {
-    check_run(run)
-
     ensembl <- useEnsembl(
         biomart = "ensembl",
         dataset = paste(run$organism, "gene_ensembl", sep = "_"))

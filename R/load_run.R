@@ -22,22 +22,31 @@ load_run <- function(
     metadata_file = file.path("meta", "indrop_rnaseq.xlsx"),
     organism,
     intgroup = "sample_name") {
-    # Check connection to upload_dir
+    # Switch to `bcbioScDataSet` S4 class
+    run <- list()
+
+    # upload_dir
     if (!dir.exists(upload_dir)) {
         stop("Upload directory missing")
     }
-    upload_dir <- normalizePath(upload_dir)
+    run$upload_dir <- normalizePath(upload_dir)
 
-    # Check metadata_file
+    # metadata_file
     if (!file.exists(metadata_file)) {
         stop("Metadata file missing")
     }
-    metadata_file <- normalizePath(metadata_file)
+    run$metadata_file <- normalizePath(metadata_file)
+
+    # organism
+    run$organism <- organism
+
+    # intgroup
+    run$intgroup <- intgroup
 
     # Find most recent nested project_dir (normally only 1)
-    pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
-    project_dir <- dir(upload_dir,
-                       pattern = pattern,
+    project_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
+    project_dir <- dir(run$upload_dir,
+                       pattern = project_pattern,
                        full.names = FALSE,
                        recursive = FALSE) %>%
         sort %>% rev %>% .[[1]]
@@ -45,56 +54,37 @@ load_run <- function(
         stop("Failed to match project directory")
     }
     message(project_dir)
-    match <- str_match(project_dir, pattern)
-    run_date <- match[2]
-    template <- match[3]
-    project_dir <- file.path(upload_dir, project_dir)
-    if (!dir.exists(project_dir)) {
-        stop("Project directory missing")
-    }
+    run$project_dir <- file.path(run$upload_dir, project_dir)
 
-    # Get all sample folders. We will subset this vector using the metadata
-    # data frame later.
-    sample_dirs <- dir(upload_dir, full.names = TRUE) %>%
+    # sample_dirs. Subset later using metadata data frame.
+    sample_dirs <- dir(run$upload_dir, full.names = TRUE) %>%
         set_names(basename(.)) %>%
         # Remove the nested `project_dir`
-        .[!grepl(basename(project_dir), names(.))]
+        .[!grepl(basename(run$project_dir), names(.))]
     message(paste(length(sample_dirs), "samples detected in run"))
 
     # Detect number of sample lanes
     lane_pattern <- "_L(\\d{3})"
     if (any(str_detect(sample_dirs, lane_pattern))) {
-        message("Lane split technical replicates detected")
         lanes <- str_match(names(sample_dirs), lane_pattern) %>%
             .[, 2] %>% unique %>% length
+        message(paste(lanes, "lane replicates per sample detected"))
     } else {
         lanes <- NULL
     }
+    run$lanes <- lanes
 
-    # Set up the run list skeleton. Switch this to an S4 class once we finish
-    # updating the bcbioRnaseq package. `bcbioSCDataSet`.
-    run <- list(
-        upload_dir = upload_dir,
-        project_dir = project_dir,
-        sample_dirs = sample_dirs,
-        metadata_file = metadata_file,
-        organism = organism,
-        intgroup = intgroup,
-        lanes = lanes,
-        today_date = Sys.Date(),
-        run_date = as.Date(run_date),
-        template = template,
-        wd = getwd(),
-        hpc = detect_hpc(),
-        session_info = sessionInfo()
-    )
-
+    # Metadata data frame, with sample_barcode rownames
     run$metadata <- read_metadata(run)
-    # Subset sample dirs by matching sample barcodes in metadata
-    run$sample_dirs <- run$sample_dirs[run$metadata$sample_barcode]
-    if (length(run$sample_dirs)) {
-        message(paste(length(sample_dirs), "samples matched by metadata"))
+
+    # Check that metadata matches the sample_dirs
+    if (!all(run$metadata$sample_barcode %in% names(sample_dirs))) {
+        stop("Sample name mismatch between directories and metadata")
     }
+
+    # Subset sample dirs by matching sample barcodes in metadata
+    run$sample_dirs <- sample_dirs[run$metadata$sample_barcode]
+    message(paste(length(run$sample_dirs), "samples matched by metadata"))
 
     # Save Ensembl annotations for all genes
     run$ensembl <- ensembl_annotations(run)
@@ -112,6 +102,17 @@ load_run <- function(
     # Generate barcode metrics
     message("Calculating barcode metrics...")
     run$metrics <- barcode_metrics(run)
+
+    # Get run date and template from project_dir
+    match <- str_match(project_dir, pattern)
+    run$date <- c(bcbio = as.Date(match[2]),
+                  R = Sys.Date())
+    run$template <- match[3]
+
+    # Final slots
+    run$wd <- getwd()
+    run$hpc <- detect_hpc()
+    run$session <- sessionInfo()
 
     check_run(run)
     return(run)
