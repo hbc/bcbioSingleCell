@@ -92,8 +92,7 @@ load_run <- function(
 
     # Program versions
     message("Reading program versions...")
-    run$programs <- file.path(project_dir, "programs.txt") %>%
-        read_delim(",", col_names = c("program", "version"))
+    run$programs <- read_bcbio_programs(run)
 
     # Read counts into a sparse matrix
     message("Reading counts into sparse matrix...")
