@@ -56,6 +56,12 @@ load_run <- function(
     message(project_dir)
     run$project_dir <- file.path(run$upload_dir, project_dir)
 
+    # Get run date and template from project_dir
+    match <- str_match(project_dir, project_pattern)
+    run$date <- c(bcbio = as.Date(match[2]),
+                  R = Sys.Date())
+    run$template <- match[3]
+
     # sample_dirs. Subset later using metadata data frame.
     sample_dirs <- dir(run$upload_dir, full.names = TRUE) %>%
         set_names(basename(.)) %>%
@@ -101,12 +107,6 @@ load_run <- function(
     # Generate barcode metrics
     message("Calculating barcode metrics...")
     run$metrics <- barcode_metrics(run)
-
-    # Get run date and template from project_dir
-    match <- str_match(project_dir, pattern)
-    run$date <- c(bcbio = as.Date(match[2]),
-                  R = Sys.Date())
-    run$template <- match[3]
 
     # Final slots
     run$wd <- getwd()
