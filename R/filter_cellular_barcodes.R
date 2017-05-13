@@ -17,10 +17,10 @@
 #' @export
 filter_cellular_barcodes <- function(
     run,
-    min_genes = 500,
-    max_genes = 5000,
-    mito_ratio = 0.25,
-    novelty = 0.75,
+    min_genes = get("min_genes", envir = parent.frame()),
+    max_genes = get("max_genes", envir = parent.frame()),
+    mito_ratio = get("mito_ratio", envir = parent.frame()),
+    novelty = get("novelty", envir = parent.frame()),
     plot = TRUE) {
     check_run(run)
     filtered_run <- run
@@ -45,28 +45,28 @@ filter_cellular_barcodes <- function(
 
 # Globals used for QC plot labels ====
 #' @rdname filter_cellular_barcodes
-#' @description Default minimum gene count cutoff (500).
+#' @description Default minimum gene count cutoff.
 #' @export
 #' @examples
 #' min_genes
 min_genes <- 500
 
 #' @rdname filter_cellular_barcodes
-#' @description Default maximum gene count cutoff (5000).
+#' @description Default maximum gene count cutoff.
 #' @export
 #' @examples
 #' max_genes
 max_genes <- 5000
 
 #' @rdname filter_cellular_barcodes
-#' @description Default maximum relative mitochondrial abundance (0.25).
+#' @description Default maximum relative mitochondrial abundance.
 #' @export
 #' @examples
 #' mito_ratio
 mito_ratio <- 0.25
 
 #' @rdname filter_cellular_barcodes
-#' @description Default minimum novelty score (0.75).
+#' @description Default minimum novelty score.
 #' @export
 #' @examples
 #' novelty

@@ -10,8 +10,10 @@
 \title{Filter cellular barcodes.}
 \format{An object of class \code{numeric} of length 1.}
 \usage{
-filter_cellular_barcodes(run, min_genes = 500, max_genes = 5000,
-  mito_ratio = 0.25, novelty = 0.75, plot = TRUE)
+filter_cellular_barcodes(run, min_genes = get("min_genes", envir =
+  parent.frame()), max_genes = get("max_genes", envir = parent.frame()),
+  mito_ratio = get("mito_ratio", envir = parent.frame()),
+  novelty = get("novelty", envir = parent.frame()), plot = TRUE)
 
 min_genes
 
@@ -42,13 +44,13 @@ Filtered bcbio run object.
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.
 
-Default minimum gene count cutoff (500).
+Default minimum gene count cutoff.
 
-Default maximum gene count cutoff (5000).
+Default maximum gene count cutoff.
 
-Default maximum relative mitochondrial abundance (0.25).
+Default maximum relative mitochondrial abundance.
 
-Default minimum novelty score (0.75).
+Default minimum novelty score.
 }
 \examples{
 min_genes

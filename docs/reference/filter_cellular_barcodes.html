@@ -79,14 +79,16 @@
     
     <p>Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.</p>
-<p>Default minimum gene count cutoff (500).</p>
-<p>Default maximum gene count cutoff (5000).</p>
-<p>Default maximum relative mitochondrial abundance (0.25).</p>
-<p>Default minimum novelty score (0.75).</p>
+<p>Default minimum gene count cutoff.</p>
+<p>Default maximum gene count cutoff.</p>
+<p>Default maximum relative mitochondrial abundance.</p>
+<p>Default minimum novelty score.</p>
     
 
-    <pre class="usage"><span class='fu'>filter_cellular_barcodes</span>(<span class='no'>run</span>, <span class='kw'>min_genes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>max_genes</span> <span class='kw'>=</span> <span class='fl'>5000</span>,
-  <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='fl'>0.25</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>filter_cellular_barcodes</span>(<span class='no'>run</span>, <span class='kw'>min_genes</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"min_genes"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
+  <span class='fu'>parent.frame</span>()), <span class='kw'>max_genes</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"max_genes"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()),
+  <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"mito_ratio"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()),
+  <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"novelty"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>min_genes</span>
 
