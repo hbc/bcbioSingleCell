@@ -14,8 +14,6 @@
 #' @param intgroup Character vector of interesting groups. First entry is used
 #'   for plot colors during quality control (QC) analysis. Entire vector is used
 #'   for PCA and heatmap QC functions.
-#' @param read_counts Automatically read in the count data using
-#'   \code{\link{read_bcbio_counts}}.
 #'
 #' @return bcbio-nextgen run object.
 #' @export
@@ -23,13 +21,18 @@ load_run <- function(
     upload_dir = "final",
     metadata_file = file.path("meta", "indrop_rnaseq.xlsx"),
     organism,
-    intgroup = "sample_name",
-    read_counts = TRUE) {
+    intgroup = "sample_name") {
     # Check connection to upload_dir
-    if (!length(dir(upload_dir))) {
-        stop("Final upload directory failed to load")
+    if (!dir.exists(upload_dir)) {
+        stop("Upload directory missing")
     }
     upload_dir <- normalizePath(upload_dir)
+
+    # Check metadata_file
+    if (!file.exists(metadata_file)) {
+        stop("Metadata file missing")
+    }
+    metadata_file <- normalizePath(metadata_file)
 
     # Find most recent nested project_dir (normally only 1)
     pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
@@ -39,67 +42,76 @@ load_run <- function(
                        recursive = FALSE) %>%
         sort %>% rev %>% .[[1]]
     if (!length(project_dir)) {
-        stop("Project directory not found")
+        stop("Failed to match project directory")
     }
     message(project_dir)
     match <- str_match(project_dir, pattern)
     run_date <- match[2]
     template <- match[3]
     project_dir <- file.path(upload_dir, project_dir)
+    if (!dir.exists(project_dir)) {
+        stop("Project directory missing")
+    }
 
-    # Program versions
-    message("Reading program versions...")
-    programs <- file.path(project_dir, "programs.txt") %>%
-        read_delim(",", col_names = c("program", "version"))
-
-    # Obtain list of all sample folders
-    sample_dirs <- dir(upload_dir, full.names = TRUE)
-    names(sample_dirs) <- basename(sample_dirs)
-    # Remove the nested `project_dir`
-    sample_dirs <- sample_dirs[!grepl(basename(project_dir),
-                                      names(sample_dirs))]
+    # Get all sample folders. We will subset this vector using the metadata
+    # data frame later.
+    sample_dirs <- dir(upload_dir, full.names = TRUE) %>%
+        set_names(basename(.)) %>%
+        # Remove the nested `project_dir`
+        .[!grepl(basename(project_dir), names(.))]
+    message(paste(length(sample_dirs), "samples detected in run"))
 
     # Detect number of sample lanes
     lane_pattern <- "_L(\\d{3})"
     if (any(str_detect(sample_dirs, lane_pattern))) {
+        message("Lane split technical replicates detected")
         lanes <- str_match(names(sample_dirs), lane_pattern) %>%
             .[, 2] %>% unique %>% length
     } else {
         lanes <- NULL
     }
 
-    metadata <- read_metadata(metadata_file, lanes = lanes)
-    sample_dirs <- sample_dirs[metadata$sample_barcode]
-    names(sample_dirs) %>% toString %>% message
-
+    # Set up the run list skeleton. Switch this to an S4 class once we finish
+    # updating the bcbioRnaseq package. `bcbioSCDataSet`.
     run <- list(
         upload_dir = upload_dir,
         project_dir = project_dir,
-        run_date = as.Date(run_date),
+        sample_dirs = sample_dirs,
+        metadata_file = metadata_file,
+        organism = organism,
+        intgroup = intgroup,
+        lanes = lanes,
         today_date = Sys.Date(),
+        run_date = as.Date(run_date),
         template = template,
         wd = getwd(),
         hpc = detect_hpc(),
-        template = template,
-        sample_dirs = sample_dirs,
-        organism = organism,
-        intgroup = intgroup,
-        metadata = metadata,
-        lanes = lanes,
-        programs = programs,
-        session_info = sessionInfo())
+        session_info = sessionInfo()
+    )
+
+    run$metadata <- read_metadata(run)
+    # Subset sample dirs by matching sample barcodes in metadata
+    run$sample_dirs <- run$sample_dirs[metadata$sample_barcode]
+    if (length(run$sample_dirs)) {
+        message(paste(length(sample_dirs), "samples matched by metadata"))
+    }
 
     # Save Ensembl annotations for all genes
     run$ensembl <- ensembl_annotations(run)
     run$ensembl_version <- listMarts() %>% .[1, 2]
 
+    # Program versions
+    message("Reading program versions...")
+    run$programs <- file.path(project_dir, "programs.txt") %>%
+        read_delim(",", col_names = c("program", "version"))
+
     # Read counts into a sparse matrix
-    if (isTRUE(read_counts)) {
-        message("Reading counts into sparse matrix...")
-        run$counts <- read_bcbio_counts(run)
-        message("Reading barcode metrics...")
-        run$metrics <- barcode_metrics(run, run$counts)
-    }
+    message("Reading counts into sparse matrix...")
+    run$counts <- read_bcbio_counts(run)
+
+    # Generate barcode metrics
+    message("Calculating barcode metrics...")
+    run$metrics <- barcode_metrics(run, run$counts)
 
     check_run(run)
     return(run)
