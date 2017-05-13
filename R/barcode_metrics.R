@@ -4,15 +4,12 @@
 #' @author Michael Steinbaugh
 #'
 #' @param run bcbio-nextgen run.
-#' @param counts Sparse counts matrix.
 #'
 #' @return Data frame.
 #' @export
-barcode_metrics <- function(
-    run,
-    counts) {
+barcode_metrics <- function(run) {
     check_run(run)
-    check_sparse(counts)
+    counts <- run$counts
     ensembl <- run$ensembl
     metadata <- run$metadata
 
