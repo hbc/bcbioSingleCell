@@ -5,37 +5,38 @@
 \alias{filter_cellular_barcodes}
 \alias{min_genes}
 \alias{max_genes}
+\alias{mito_ratio}
 \alias{novelty}
-\alias{percent_mito}
 \title{Filter cellular barcodes.}
 \format{An object of class \code{numeric} of length 1.}
 \usage{
 filter_cellular_barcodes(run, min_genes = 500, max_genes = 5000,
-  percent_mito = 25, novelty = 0.75, plot = TRUE)
+  mito_ratio = 0.25, novelty = 0.75, plot = TRUE)
 
 min_genes
 
 max_genes
 
-novelty
+mito_ratio
 
-percent_mito
+novelty
 }
 \arguments{
-\item{run}{bcbio-nextgen scRNA-seq run.}
+\item{run}{bcbio-nextgen run.}
 
 \item{min_genes}{Minimum number of genes detected.}
 
 \item{max_genes}{Maximum number of genes detected.}
 
-\item{percent_mito}{Maximum mitochondrial pct abundance (\code{0-1} scale).}
+\item{mito_ratio}{Maximum relative mitochondrial abundance (\code{0-1}
+scale).}
 
 \item{novelty}{Minimum novelty score.}
 
 \item{plot}{Print relevant plots.}
 }
 \value{
-Filtered bcbio run object
+Filtered bcbio run object.
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
@@ -45,15 +46,15 @@ Default minimum gene count cutoff (500).
 
 Default maximum gene count cutoff (5000).
 
-Default minimum novelty score (0.75).
+Default maximum relative mitochondrial abundance (0.25).
 
-Default maximum mitochondrial percent abundance (25).
+Default minimum novelty score (0.75).
 }
 \examples{
 min_genes
 max_genes
+mito_ratio
 novelty
-percent_mito
 }
 \author{
 Michael Steinbaugh

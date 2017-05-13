@@ -81,27 +81,27 @@
 cellular barcodes.</p>
 <p>Default minimum gene count cutoff (500).</p>
 <p>Default maximum gene count cutoff (5000).</p>
+<p>Default maximum relative mitochondrial abundance (0.25).</p>
 <p>Default minimum novelty score (0.75).</p>
-<p>Default maximum mitochondrial percent abundance (25).</p>
     
 
     <pre class="usage"><span class='fu'>filter_cellular_barcodes</span>(<span class='no'>run</span>, <span class='kw'>min_genes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>max_genes</span> <span class='kw'>=</span> <span class='fl'>5000</span>,
-  <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='fl'>25</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='fl'>0.25</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>min_genes</span>
 
 <span class='no'>max_genes</span>
 
-<span class='no'>novelty</span>
+<span class='no'>mito_ratio</span>
 
-<span class='no'>percent_mito</span></pre>
+<span class='no'>novelty</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>run</th>
-      <td><p>bcbio-nextgen scRNA-seq run.</p></td>
+      <td><p>bcbio-nextgen run.</p></td>
     </tr>
     <tr>
       <th>min_genes</th>
@@ -112,8 +112,9 @@ cellular barcodes.</p>
       <td><p>Maximum number of genes detected.</p></td>
     </tr>
     <tr>
-      <th>percent_mito</th>
-      <td><p>Maximum mitochondrial pct abundance (<code>0-1</code> scale).</p></td>
+      <th>mito_ratio</th>
+      <td><p>Maximum relative mitochondrial abundance (<code>0-1</code>
+scale).</p></td>
     </tr>
     <tr>
       <th>novelty</th>
@@ -131,11 +132,11 @@ cellular barcodes.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Filtered metrics data frame.</p>
+    <p>Filtered bcbio run object.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>min_genes</span></div><div class='output co'>#&gt; [1] 500</div><div class='input'><span class='no'>max_genes</span></div><div class='output co'>#&gt; [1] 5000</div><div class='input'><span class='no'>novelty</span></div><div class='output co'>#&gt; [1] 0.75</div><div class='input'><span class='no'>percent_mito</span></div><div class='output co'>#&gt; [1] 25</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>min_genes</span></div><div class='output co'>#&gt; [1] 500</div><div class='input'><span class='no'>max_genes</span></div><div class='output co'>#&gt; [1] 5000</div><div class='input'><span class='no'>mito_ratio</span></div><div class='output co'>#&gt; [1] 0.25</div><div class='input'><span class='no'>novelty</span></div><div class='output co'>#&gt; [1] 0.75</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

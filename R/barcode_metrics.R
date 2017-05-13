@@ -5,7 +5,7 @@
 #'
 #' @param run bcbio-nextgen run.
 #'
-#' @return Data frame.
+#' @return Tibble grouped by sample name.
 #' @export
 barcode_metrics <- function(run) {
     check_run(run)
@@ -37,20 +37,18 @@ barcode_metrics <- function(run) {
                   sep = ":",
                   remove = FALSE) %>%
         # Summary statistics
-        mutate(log10_detected_per_count = log10(.data$genes_detected) /
+        mutate(unique = NULL,
+               log10_detected_per_count = log10(.data$genes_detected) /
                    log10(.data$total_counts),
-               percent_mito = .data$mito_counts / .data$total_counts) %>%
-        # Join the sample names
+               mito_ratio = .data$mito_counts / .data$total_counts) %>%
         left_join(metadata[, c("sample_barcode", "sample_name")],
                   by = "sample_barcode") %>%
-        # Arrange by unique identifier
-        # arrange(!!sym("unique")) %>%
-        .[order(.$unique), ] %>%
-        # Filter barcodes that don't match samples of interest
+        # Place sample name first
+        select(.data$sample_name, everything()) %>%
+        # Filter barcodes that don't match samples
         # filter(!is.na(.data$sample_name)) %>%
-        .[!is.na(.$sample_name), ] %>%
-        as.data.frame %>%
-        set_rownames(.$unique)
+        group_by(!!sym("sample_name")) %>%
+        arrange(!!sym("sample_name"), .by_group = TRUE)
 
     return(metrics)
 }

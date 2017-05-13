@@ -80,15 +80,14 @@
     <p>Read metadata.</p>
     
 
-    <pre class="usage"><span class='fu'>read_metadata</span>(<span class='no'>file</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pattern_col</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>,
-  <span class='kw'>lanes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>read_metadata</span>(<span class='no'>run</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pattern_col</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>Metadata file. CSV and XLSX formats are supported.</p></td>
+      <th>run</th>
+      <td><p>bcbio-nextgen run.</p></td>
     </tr>
     <tr>
       <th>pattern</th>
@@ -97,11 +96,6 @@
     <tr>
       <th>pattern_col</th>
       <td><p>Column in data frame used for pattern subsetting.</p></td>
-    </tr>
-    <tr>
-      <th>lanes</th>
-      <td><p>Number of lanes used to split the samples into technical
-replicates (<code>_LXXX</code>) suffix.</p></td>
     </tr>
     </table>
     

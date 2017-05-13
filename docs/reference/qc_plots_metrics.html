@@ -108,13 +108,12 @@
 
 <span class='fu'>plot_total_vs_detected</span>(<span class='no'>run</span>, <span class='kw'>colorby</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>)
 
-<span class='fu'>plot_mito_counts_histogram</span>(<span class='no'>run</span>, <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"percent_mito"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
+<span class='fu'>plot_mito_histogram</span>(<span class='no'>run</span>, <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"mito_ratio"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
   <span class='fu'>parent.frame</span>()))
 
-<span class='fu'>plot_mito_counts_boxplot</span>(<span class='no'>run</span>, <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"percent_mito"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
-  <span class='fu'>parent.frame</span>()))
+<span class='fu'>plot_mito_boxplot</span>(<span class='no'>run</span>, <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"mito_ratio"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()))
 
-<span class='fu'>plot_mito_counts_scatterplot</span>(<span class='no'>run</span>, <span class='kw'>percent_mito</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>plot_mito_scatterplot</span>(<span class='no'>run</span>, <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>plot_novelty_histogram</span>(<span class='no'>run</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"novelty"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()))
 
@@ -124,7 +123,7 @@
 
 <span class='fu'>plot_genes_detected</span>(<span class='no'>...</span>)
 
-<span class='fu'>plot_mito_counts</span>(<span class='no'>...</span>)
+<span class='fu'>plot_mito</span>(<span class='no'>...</span>)
 
 <span class='fu'>plot_novelty</span>(<span class='no'>...</span>)</pre>
     
@@ -148,8 +147,9 @@
       <td><p>Column to color the points by.</p></td>
     </tr>
     <tr>
-      <th>percent_mito</th>
-      <td><p>Recommended mitochondrial percentage cutoff value.</p></td>
+      <th>mito_ratio</th>
+      <td><p>Recommended maximum relative mitochondrial abundance cutoff
+value.</p></td>
     </tr>
     <tr>
       <th>novelty</th>

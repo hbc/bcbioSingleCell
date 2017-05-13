@@ -25,3 +25,19 @@ load_sparsecounts <- function() {
 make_bcbio_skeleton <- function() {
     .Deprecated("create_bcbio_skeleton")
 }
+
+plot_mito_counts <- function() {
+    .Deprecated("plot_mito")
+}
+
+plot_mito_counts_boxplot <- function() {
+    .Deprecated("plot_mito_boxplot")
+}
+
+plot_mito_counts_histogram <- function() {
+    .Deprecated("plot_mito_histogram")
+}
+
+plot_mito_counts_scatterplot <- function() {
+    .Deprecated("plot_mito_scatterplot")
+}

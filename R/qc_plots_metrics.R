@@ -9,7 +9,8 @@
 #'
 #' @param min_genes Recommended minimum gene count cutoff.
 #' @param max_genes Recommended maximum gene count cutoff.
-#' @param percent_mito Recommended mitochondrial percentage cutoff value.
+#' @param mito_ratio Recommended maximum relative mitochondrial abundance cutoff
+#'   value.
 #' @param novelty Recommended novelty cutoff value.
 #'
 #' @param ... Passthrough parameters.
@@ -224,24 +225,23 @@ plot_total_vs_detected <- function(run, colorby = "sample_name") {
 #' @rdname qc_plots_metrics
 #' @description Mitochondrial abundance histogram.
 #' @export
-plot_mito_counts_histogram <- function(
+plot_mito_histogram <- function(
     run,
-    percent_mito = get("percent_mito", envir = parent.frame())) {
+    mito_ratio = get("mito_ratio", envir = parent.frame())) {
     check_run(run)
-    metrics <- run$metrics %>%
-        mutate(percent_mito = .data$percent_mito * 100)
+    metrics <- run$metrics
     histogram <- metrics %>%
         ggplot(
-            aes_(x = ~percent_mito,
+            aes_(x = ~mito_ratio,
                  fill = ~sample_name)
         ) +
         labs(title = "mitochondrial gene abundance histogram",
-             x = "% mitochondrial") +
+             x = "relative mitochondrial abundance") +
         facet_wrap(~sample_name) +
         geom_histogram(bins = bins) +
         geom_vline(color = warn_color,
-                   xintercept = percent_mito) +
-        xlim(0, 100) +
+                   xintercept = mito_ratio) +
+        xlim(0, 1) +
         scale_y_sqrt() +
         theme(
             axis.text.x = element_text(angle = 90, hjust = 1),
@@ -253,29 +253,28 @@ plot_mito_counts_histogram <- function(
 #' @rdname qc_plots_metrics
 #' @description Mitochondrial abundance boxplot.
 #' @export
-plot_mito_counts_boxplot <- function(
+plot_mito_boxplot <- function(
     run,
-    percent_mito = get("percent_mito", envir = parent.frame())) {
+    mito_ratio = get("mito_ratio", envir = parent.frame())) {
     check_run(run)
-    metrics <- run$metrics %>%
-        mutate(percent_mito = .data$percent_mito * 100)
+    metrics <- run$metrics
     boxplot <- metrics %>%
         ggplot(
             aes_(x = ~sample_name,
-                 y = ~percent_mito,
+                 y = ~mito_ratio,
                  fill = ~sample_name)
         ) +
         labs(title = "",
              x = "sample name",
-             y = "% mitochondrial") +
+             y = "relative mitochondrial abundance") +
         geom_boxplot() +
         geom_hline(color = warn_color,
-                   yintercept = percent_mito) +
+                   yintercept = mito_ratio) +
         geom_label(
-            data = aggregate(percent_mito ~ sample_name,
+            data = aggregate(mito_ratio ~ sample_name,
                              metrics,
                              median),
-            aes_(label = ~round(percent_mito, digits = 1)),
+            aes_(label = ~round(mito_ratio, digits = 2)),
             alpha = 0.75,
             label.padding = unit(0.1, "lines")
         ) +
@@ -290,10 +289,9 @@ plot_mito_counts_boxplot <- function(
 #' @rdname qc_plots_metrics
 #' @description Mitochondrial abundance scatterplot.
 #' @export
-plot_mito_counts_scatterplot <- function(run, percent_mito = NULL) {
+plot_mito_scatterplot <- function(run, mito_ratio = NULL) {
     check_run(run)
-    metrics <- run$metrics %>%
-        mutate(percent_mito = .data$percent_mito * 100)
+    metrics <- run$metrics
     scatterplot <- metrics %>%
         ggplot(
             aes_(x = ~coding_counts,
@@ -401,10 +399,10 @@ plot_genes_detected <- function(...) {
 #' @rdname qc_plots_metrics
 #' @description Plot mitochondrial counts (RMarkdown chunk wrapper).
 #' @export
-plot_mito_counts <- function(...) {
-    show(plot_mito_counts_histogram(...))
-    show(plot_mito_counts_boxplot(...))
-    show(plot_mito_counts_scatterplot(...))
+plot_mito <- function(...) {
+    show(plot_mito_histogram(...))
+    show(plot_mito_boxplot(...))
+    show(plot_mito_scatterplot(...))
 }
 
 #' @rdname qc_plots_metrics

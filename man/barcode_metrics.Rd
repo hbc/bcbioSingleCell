@@ -10,7 +10,7 @@ barcode_metrics(run)
 \item{run}{bcbio-nextgen run.}
 }
 \value{
-Data frame.
+Tibble grouped by sample name.
 }
 \description{
 Generate barcode metrics summary.

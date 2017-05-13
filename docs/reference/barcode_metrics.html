@@ -80,7 +80,7 @@
     <p>Generate barcode metrics summary.</p>
     
 
-    <pre class="usage"><span class='fu'>barcode_metrics</span>(<span class='no'>run</span>, <span class='no'>counts</span>)</pre>
+    <pre class="usage"><span class='fu'>barcode_metrics</span>(<span class='no'>run</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -89,15 +89,11 @@
       <th>run</th>
       <td><p>bcbio-nextgen run.</p></td>
     </tr>
-    <tr>
-      <th>counts</th>
-      <td><p>Sparse counts matrix.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Data frame.</p>
+    <p>Tibble grouped by sample name.</p>
     
 
   </div>

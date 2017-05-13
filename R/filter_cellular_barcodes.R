@@ -5,20 +5,21 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param run bcbio-nextgen scRNA-seq run.
+#' @param run bcbio-nextgen run.
 #' @param min_genes Minimum number of genes detected.
 #' @param max_genes Maximum number of genes detected.
-#' @param percent_mito Maximum mitochondrial pct abundance (\code{0-1} scale).
+#' @param mito_ratio Maximum relative mitochondrial abundance (\code{0-1}
+#'   scale).
 #' @param novelty Minimum novelty score.
 #' @param plot Print relevant plots.
 #'
-#' @return Filtered bcbio run object
+#' @return Filtered bcbio run object.
 #' @export
 filter_cellular_barcodes <- function(
     run,
     min_genes = 500,
     max_genes = 5000,
-    percent_mito = 25,
+    mito_ratio = 0.25,
     novelty = 0.75,
     plot = TRUE) {
     check_run(run)
@@ -26,15 +27,14 @@ filter_cellular_barcodes <- function(
     filtered_run$metrics <- filtered_run$metrics %>%
         .[.$genes_detected > min_genes, ] %>%
         .[.$genes_detected < max_genes, ] %>%
-        # Convert percentage input parameter back to decimal
-        .[.$percent_mito < percent_mito / 100, ] %>%
+        .[.$mito_ratio < mito_ratio, ] %>%
         .[.$log10_detected_per_count > novelty, ]
     if (isTRUE(plot)) {
         show(plot_total_cells(filtered_run))
         plot_total_counts(filtered_run)
         plot_genes_detected(filtered_run)
         show(plot_total_vs_detected(filtered_run))
-        plot_mito_counts(filtered_run)
+        plot_mito(filtered_run)
         plot_novelty(filtered_run)
     }
     filtered_run$filtered <- TRUE
@@ -59,15 +59,15 @@ min_genes <- 500
 max_genes <- 5000
 
 #' @rdname filter_cellular_barcodes
+#' @description Default maximum relative mitochondrial abundance (0.25).
+#' @export
+#' @examples
+#' mito_ratio
+mito_ratio <- 0.25
+
+#' @rdname filter_cellular_barcodes
 #' @description Default minimum novelty score (0.75).
 #' @export
 #' @examples
 #' novelty
 novelty <- 0.75
-
-#' @rdname filter_cellular_barcodes
-#' @description Default maximum mitochondrial percent abundance (25).
-#' @export
-#' @examples
-#' percent_mito
-percent_mito <- 25

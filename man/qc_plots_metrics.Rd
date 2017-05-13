@@ -7,14 +7,14 @@
 \alias{plot_genes_detected_boxplot}
 \alias{plot_genes_detected_histogram}
 \alias{plot_total_vs_detected}
-\alias{plot_mito_counts_histogram}
-\alias{plot_mito_counts_boxplot}
-\alias{plot_mito_counts_scatterplot}
+\alias{plot_mito_histogram}
+\alias{plot_mito_boxplot}
+\alias{plot_mito_scatterplot}
 \alias{plot_novelty_histogram}
 \alias{plot_novelty_boxplot}
 \alias{plot_total_counts}
 \alias{plot_genes_detected}
-\alias{plot_mito_counts}
+\alias{plot_mito}
 \alias{plot_novelty}
 \title{Cell metrics quality control plots.}
 \usage{
@@ -32,13 +32,12 @@ plot_genes_detected_histogram(run, min_genes = get("min_genes", envir =
 
 plot_total_vs_detected(run, colorby = "sample_name")
 
-plot_mito_counts_histogram(run, percent_mito = get("percent_mito", envir =
+plot_mito_histogram(run, mito_ratio = get("mito_ratio", envir =
   parent.frame()))
 
-plot_mito_counts_boxplot(run, percent_mito = get("percent_mito", envir =
-  parent.frame()))
+plot_mito_boxplot(run, mito_ratio = get("mito_ratio", envir = parent.frame()))
 
-plot_mito_counts_scatterplot(run, percent_mito = NULL)
+plot_mito_scatterplot(run, mito_ratio = NULL)
 
 plot_novelty_histogram(run, novelty = get("novelty", envir = parent.frame()))
 
@@ -48,7 +47,7 @@ plot_total_counts(...)
 
 plot_genes_detected(...)
 
-plot_mito_counts(...)
+plot_mito(...)
 
 plot_novelty(...)
 }
@@ -61,7 +60,8 @@ plot_novelty(...)
 
 \item{colorby}{Column to color the points by.}
 
-\item{percent_mito}{Recommended mitochondrial percentage cutoff value.}
+\item{mito_ratio}{Recommended maximum relative mitochondrial abundance cutoff
+value.}
 
 \item{novelty}{Recommended novelty cutoff value.}
 
