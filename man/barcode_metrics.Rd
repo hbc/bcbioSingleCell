@@ -4,12 +4,10 @@
 \alias{barcode_metrics}
 \title{Generate barcode metrics summary.}
 \usage{
-barcode_metrics(run, counts)
+barcode_metrics(run)
 }
 \arguments{
 \item{run}{bcbio-nextgen run.}
-
-\item{counts}{Sparse counts matrix.}
 }
 \value{
 Data frame.

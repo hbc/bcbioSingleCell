@@ -5,8 +5,7 @@
 \title{Load bcbio-nextgen run.}
 \usage{
 load_run(upload_dir = "final", metadata_file = file.path("meta",
-  "indrop_rnaseq.xlsx"), organism, intgroup = "sample_name",
-  read_counts = TRUE)
+  "indrop_rnaseq.xlsx"), organism, intgroup = "sample_name")
 }
 \arguments{
 \item{upload_dir}{Path to final upload directory. This path is set when
@@ -21,9 +20,6 @@ for common reference genomes.}
 \item{intgroup}{Character vector of interesting groups. First entry is used
 for plot colors during quality control (QC) analysis. Entire vector is used
 for PCA and heatmap QC functions.}
-
-\item{read_counts}{Automatically read in the count data using
-\code{\link{read_bcbio_counts}}.}
 }
 \value{
 bcbio-nextgen run object.
