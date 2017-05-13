@@ -30,7 +30,7 @@ warn_color <- "orange"
 #' @importFrom R.utils gunzip gzip
 #' @importFrom stats aggregate median
 #' @importFrom tools file_ext file_path_sans_ext
-#' @importFrom utils globalVariables sessionInfo
+#' @importFrom utils download.file globalVariables sessionInfo
 NULL
 
 ## Single-cell ----

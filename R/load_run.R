@@ -91,7 +91,7 @@ load_run <- function(
 
     run$metadata <- read_metadata(run)
     # Subset sample dirs by matching sample barcodes in metadata
-    run$sample_dirs <- run$sample_dirs[metadata$sample_barcode]
+    run$sample_dirs <- run$sample_dirs[run$metadata$sample_barcode]
     if (length(run$sample_dirs)) {
         message(paste(length(sample_dirs), "samples matched by metadata"))
     }
@@ -111,7 +111,7 @@ load_run <- function(
 
     # Generate barcode metrics
     message("Calculating barcode metrics...")
-    run$metrics <- barcode_metrics(run, run$counts)
+    run$metrics <- barcode_metrics(run)
 
     check_run(run)
     return(run)
