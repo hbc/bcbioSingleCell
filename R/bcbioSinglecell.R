@@ -7,6 +7,8 @@
 #' @importFrom Matrix readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom scales math_format trans_breaks trans_format
+#' @importFrom stats aggregate cor density median
+#' @importFrom utils head
 "_PACKAGE"
 
 globalVariables(basejump::globals,
