@@ -10,6 +10,7 @@
 barcode_metrics <- function(run) {
     import_tidy_verbs()
     check_run(run)
+    colSums <- matrix::colSums
     counts <- run$counts
     ensembl <- run$ensembl
     metadata <- run$metadata

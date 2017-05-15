@@ -4,7 +4,7 @@
 #'
 #' @import basejump
 #' @import ggplot2
-#' @importFrom Matrix readMM writeMM
+#' @importFrom Matrix colSums readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom scales math_format trans_breaks trans_format
 #' @importFrom stats aggregate cor density median
