@@ -1,7 +1,7 @@
 Package: bcbioSinglecell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.7
-Date: 2017-05-10
+Version: 0.0.8
+Date: 2017-05-14
 Authors@R: c(
     person("Rory", "Kirchner",
            email = "roryk@alum.mit.edu",
@@ -21,36 +21,23 @@ biocViews:
     SingleCell,
     Visualization
 URL:
-    http://bioinformatics.sph.harvard.edu/bcbioSinglecell,
+    http://bioinformatics.sph.harvard.edu/bcbioSinglecell/,
     https://github.com/hbc/bcbioSinglecell
 BugReports: https://github.com/hbc/bcbioSinglecell/issues
 Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
-    biomaRt (>= 2.30.0),
-    dplyr (>= 0.5.0.9000),
+    basejump (>= 0.0.10),
     ggplot2 (>= 2.2.1),
-    graphics,
-    knitr (>= 1.15.1),
-    magrittr (>= 1.5),
     Matrix (>= 1.2),
     Matrix.utils (>= 0.9.5),
-    methods,
-    R.utils,
-    readr (>= 1.1.0),
-    readxl (>= 1.0.0),
-    rlang (>= 0.0.0.9000),
-    scales,
-    scater,
-    stats,
-    stringr (>= 1.2.0),
-    tibble (>= 1.3.0),
-    tidyr (>= 0.6.1),
-    tools,
-    utils
+    scales (>= 0.4.1)
 Remotes:
-    hadley/rlang,
-    satijalab/seurat,
-    tidyverse/dplyr
-RoxygenNote: 6.0.1
+    steinbaugh/basejump
+Roxygen: list(markdown = TRUE,
+              roclets = c("collate",
+                          "namespace",
+                          "rd",
+                          "pkgapi::api_roclet"))
+RoxygenNote: 6.0.1.9000

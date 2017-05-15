@@ -8,22 +8,24 @@
 #' @return Tibble grouped by sample name.
 #' @export
 barcode_metrics <- function(run) {
+    import_tidy_verbs()
     check_run(run)
     counts <- run$counts
     ensembl <- run$ensembl
     metadata <- run$metadata
 
     coding <- ensembl %>%
-        .[.$broad_class == "coding", ] %>%
-        .$external_gene_name %>% unique %>% sort
+        filter(.data$broad_class == "coding") %>%
+        select(.data$external_gene_name) %>%
+        .[[1]] %>% unique %>% sort
     mito <- ensembl %>%
-        .[.$broad_class == "mito", ] %>%
-        .$external_gene_name %>% unique %>% sort
+        filter(.data$broad_class == "mito") %>%
+        select(.data$external_gene_name) %>%
+        .[[1]] %>% unique %>% sort
 
     metrics <- tibble(
         # Unique: `file_name` + `sample_barcode` + `cellular_barcode`
         unique = colnames(counts),
-        # Matrix::colSums()
         total_counts = colSums(counts),
         genes_detected = colSums(counts > 0),
         coding_counts = colSums(
@@ -45,8 +47,8 @@ barcode_metrics <- function(run) {
                   by = "sample_barcode") %>%
         # Place sample name first
         select(.data$sample_name, everything()) %>%
-        # Filter barcodes that don't match samples
-        # filter(!is.na(.data$sample_name)) %>%
+        # Filter barcodes matching samples
+        filter(!is.na(.data$sample_name)) %>%
         group_by(!!sym("sample_name")) %>%
         arrange(!!sym("sample_name"), .by_group = TRUE)
 

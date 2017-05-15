@@ -28,8 +28,8 @@ plot_total_cells <- function(run) {
     check_run(run)
     metrics <- run$metrics
     barplot <- metrics %>%
-        group_by_(.dots = "sample_name") %>%
-        summarize_(total_cells = ~n()) %>%
+        group_by(!!sym("sample_name")) %>%
+        summarise(total_cells = ~n()) %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~total_cells,

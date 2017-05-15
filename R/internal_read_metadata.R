@@ -12,7 +12,7 @@ read_metadata <- function(
     run,
     pattern = NULL,
     pattern_col = "sample_name") {
-    # Don't use `check_run(run)` here because the metadata will be missing
+    import_tidy_verbs()
     file <- run$metadata_file
     lanes <- run$lanes
 
@@ -47,10 +47,7 @@ read_metadata <- function(
 
     metadata <- metadata %>%
         set_names_snake %>%
-        # Keep rows with a description
-        .[!is.na(.$description), ]
-        # Order by description
-        # .[order(.$description), ]
+        filter(!is.na(.data$description))
 
     # Lane split, if desired
     if (is.numeric(lanes)) {
@@ -83,9 +80,8 @@ read_metadata <- function(
             i5_counts <- indrop_i5_index_counts()
             if (!is.null(i5_counts)) {
                 message("inDrop i5 index counts log detected")
-                metadata <- left_join(metadata,
-                                      i5_counts,
-                                      by = "reverse_complement")
+                metadata <- left_join(
+                    metadata, i5_counts, by = "reverse_complement")
             }
         }
     }

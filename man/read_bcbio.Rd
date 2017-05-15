@@ -17,7 +17,7 @@ Sparse counts matrix.
 }
 \description{
 Import transcript-level count data from a bcbio run into a
-  sparse matrix.
+sparse matrix.
 }
 \author{
 Michael Steinbaugh

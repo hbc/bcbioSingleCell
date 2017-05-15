@@ -15,7 +15,7 @@ Sparse counts matrix (dgCMatrix).
 }
 \description{
 Read into sparse matrix from barcodes.tsv, genes.tsv, and
-  matrix.mtx files.
+matrix.mtx files.
 }
 \author{
 Michael Steinbaugh
