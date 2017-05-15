@@ -1,5 +1,7 @@
 #' Cell metrics quality control plots.
 #'
+#' Novelty score means log10 genes detected per count.
+#'
 #' @rdname qc_plots_metrics
 #'
 #' @author Michael Steinbaugh
@@ -19,15 +21,12 @@
 
 
 
-# Total cells ====
-
+## Total cells ====
 #' @rdname qc_plots_metrics
-#' @description Total cells barplot.
 #' @export
 plot_total_cells <- function(run) {
     check_run(run)
-    metrics <- run$metrics
-    barplot <- metrics %>%
+    run$metrics %>%
         group_by(!!sym("sample_name")) %>%
         summarise(total_cells = ~n()) %>%
         ggplot(
@@ -46,20 +45,16 @@ plot_total_cells <- function(run) {
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(barplot)
 }
 
 
 
-# Total counts ====
-
+## Total counts ====
 #' @rdname qc_plots_metrics
-#' @description Total counts histogram.
 #' @export
 plot_total_counts_histogram <- function(run) {
     check_run(run)
-    metrics <- run$metrics
-    histogram <- metrics %>%
+    run$metrics %>%
         ggplot(
             aes_(x = ~total_counts,
                  fill = ~sample_name)
@@ -74,16 +69,13 @@ plot_total_counts_histogram <- function(run) {
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(histogram)
 }
 
 #' @rdname qc_plots_metrics
-#' @description Total counts boxplot.
 #' @export
 plot_total_counts_boxplot <- function(run) {
     check_run(run)
-    metrics <- run$metrics
-    boxplot <- metrics %>%
+    run$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~total_counts,
@@ -95,7 +87,7 @@ plot_total_counts_boxplot <- function(run) {
         geom_boxplot() +
         geom_label(
             data = aggregate(total_counts ~ sample_name,
-                             metrics,
+                             run$metrics,
                              median),
             aes_(label = ~round(total_counts)),
             alpha = 0.75,
@@ -107,23 +99,19 @@ plot_total_counts_boxplot <- function(run) {
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(boxplot)
 }
 
 
 
-# Genes detected ====
-
+## Genes detected ====
 #' @rdname qc_plots_metrics
-#' @description Genes detected boxplot.
 #' @export
 plot_genes_detected_boxplot <- function(
     run,
     min_genes = get("min_genes", envir = parent.frame()),
     max_genes = get("max_genes", envir = parent.frame())) {
     check_run(run)
-    metrics <- run$metrics
-    boxplot <- metrics %>%
+    run$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~genes_detected,
@@ -139,7 +127,7 @@ plot_genes_detected_boxplot <- function(
                    yintercept = max_genes) +
         geom_label(
             data = aggregate(genes_detected ~ sample_name,
-                             metrics,
+                             run$metrics,
                              median),
             aes_(label = ~round(genes_detected)),
             alpha = 0.75,
@@ -150,19 +138,16 @@ plot_genes_detected_boxplot <- function(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(boxplot)
 }
 
 #' @rdname qc_plots_metrics
-#' @description Genes detected histogram.
 #' @export
 plot_genes_detected_histogram <- function(
     run,
     min_genes = get("min_genes", envir = parent.frame()),
     max_genes = get("max_genes", envir = parent.frame())) {
     check_run(run)
-    metrics <- run$metrics
-    histogram <- metrics %>%
+    run$metrics %>%
         ggplot(
             aes_(x = ~genes_detected,
                  fill = ~sample_name)
@@ -180,7 +165,6 @@ plot_genes_detected_histogram <- function(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(histogram)
 }
 
 
@@ -188,15 +172,11 @@ plot_genes_detected_histogram <- function(
 # Total vs. detected ====
 
 #' @rdname qc_plots_metrics
-#' @description Total counts vs. genes detected plot.
-#'
 #' @param colorby Column to color the points by.
-#'
 #' @export
 plot_total_vs_detected <- function(run, colorby = "sample_name") {
     check_run(run)
-    metrics <- run$metrics
-    plot <- metrics %>%
+    run$metrics %>%
         ggplot(
             aes_(x = ~total_counts,
                  y = ~genes_detected,
@@ -215,22 +195,18 @@ plot_total_vs_detected <- function(run, colorby = "sample_name") {
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(plot)
 }
 
 
 
-# Mitochondrial abundance ====
-
+## Mitochondrial abundance ====
 #' @rdname qc_plots_metrics
-#' @description Mitochondrial abundance histogram.
 #' @export
 plot_mito_histogram <- function(
     run,
     mito_ratio = get("mito_ratio", envir = parent.frame())) {
     check_run(run)
-    metrics <- run$metrics
-    histogram <- metrics %>%
+    run$metrics %>%
         ggplot(
             aes_(x = ~mito_ratio,
                  fill = ~sample_name)
@@ -247,18 +223,15 @@ plot_mito_histogram <- function(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(histogram)
 }
 
 #' @rdname qc_plots_metrics
-#' @description Mitochondrial abundance boxplot.
 #' @export
 plot_mito_boxplot <- function(
     run,
     mito_ratio = get("mito_ratio", envir = parent.frame())) {
     check_run(run)
-    metrics <- run$metrics
-    boxplot <- metrics %>%
+    run$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~mito_ratio,
@@ -272,7 +245,7 @@ plot_mito_boxplot <- function(
                    yintercept = mito_ratio) +
         geom_label(
             data = aggregate(mito_ratio ~ sample_name,
-                             metrics,
+                             run$metrics,
                              median),
             aes_(label = ~round(mito_ratio, digits = 2)),
             alpha = 0.75,
@@ -283,16 +256,13 @@ plot_mito_boxplot <- function(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(boxplot)
 }
 
 #' @rdname qc_plots_metrics
-#' @description Mitochondrial abundance scatterplot.
 #' @export
 plot_mito_scatterplot <- function(run, mito_ratio = NULL) {
     check_run(run)
-    metrics <- run$metrics
-    scatterplot <- metrics %>%
+    run$metrics %>%
         ggplot(
             aes_(x = ~coding_counts,
                  y = ~mito_counts,
@@ -307,22 +277,18 @@ plot_mito_scatterplot <- function(run, mito_ratio = NULL) {
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(scatterplot)
 }
 
 
 
-# Novelty ====
-
+## Novelty ====
 #' @rdname qc_plots_metrics
-#' @description Novelty histogram (log10 genes detected per count).
 #' @export
 plot_novelty_histogram <- function(
     run,
     novelty = get("novelty", envir = parent.frame())) {
     check_run(run)
-    metrics <- run$metrics
-    histogram <- metrics %>%
+    run$metrics %>%
         ggplot(
             aes_(x = ~log10_detected_per_count,
                  fill = ~sample_name)
@@ -338,18 +304,15 @@ plot_novelty_histogram <- function(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(histogram)
 }
 
 #' @rdname qc_plots_metrics
-#' @description Novelty boxplot (log10 genes detected per count).
 #' @export
 plot_novelty_boxplot <- function(
     run,
     novelty = get("novelty", envir = parent.frame())) {
     check_run(run)
-    metrics <- run$metrics
-    boxplot <- metrics %>%
+    run$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~log10_detected_per_count,
@@ -362,7 +325,7 @@ plot_novelty_boxplot <- function(
         geom_hline(color = warn_color, yintercept = novelty) +
         geom_label(
             data = aggregate(log10_detected_per_count ~ sample_name,
-                             metrics,
+                             run$metrics,
                              median),
             aes_(label = ~round(log10_detected_per_count, digits = 2)),
             alpha = 0.75,
@@ -373,15 +336,12 @@ plot_novelty_boxplot <- function(
             axis.text.x = element_text(angle = 90, hjust = 1),
             legend.position = "none"
         )
-    return(boxplot)
 }
 
 
 
-# RMarkdown/knit chunk wrappers ====
-
+## RMarkdown/knit chunk wrappers ====
 #' @rdname qc_plots_metrics
-#' @description Plot total counts (RMarkdown chunk wrapper).
 #' @export
 plot_total_counts <- function(...) {
     show(plot_total_counts_histogram(...))
@@ -389,7 +349,6 @@ plot_total_counts <- function(...) {
 }
 
 #' @rdname qc_plots_metrics
-#' @description Plot genes detected (RMarkdown chunk wrapper).
 #' @export
 plot_genes_detected <- function(...) {
     show(plot_genes_detected_histogram(...))
@@ -397,7 +356,6 @@ plot_genes_detected <- function(...) {
 }
 
 #' @rdname qc_plots_metrics
-#' @description Plot mitochondrial counts (RMarkdown chunk wrapper).
 #' @export
 plot_mito <- function(...) {
     show(plot_mito_histogram(...))
@@ -406,7 +364,6 @@ plot_mito <- function(...) {
 }
 
 #' @rdname qc_plots_metrics
-#' @description Plot novelty (RMarkdown chunk wrapper).
 #' @export
 plot_novelty <- function(...) {
     show(plot_novelty_histogram(...))

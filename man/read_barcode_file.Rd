@@ -2,7 +2,7 @@
 % Please edit documentation in R/internal_read_barcode_file.R
 \name{read_barcode_file}
 \alias{read_barcode_file}
-\title{Load a barcode histogram file generated from bcbio-nextgen.}
+\title{Load a barcode histogram file}
 \usage{
 read_barcode_file(file_name)
 }
@@ -13,7 +13,7 @@ read_barcode_file(file_name)
 Data frame of reads per barcode.
 }
 \description{
-Load a barcode histogram file generated from bcbio-nextgen.
+Load a barcode histogram file
 }
 \author{
 Rory Kirchner

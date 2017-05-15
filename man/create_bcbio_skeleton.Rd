@@ -2,7 +2,7 @@
 % Please edit documentation in R/internal_create_bcbio_skeleton.R
 \name{create_bcbio_skeleton}
 \alias{create_bcbio_skeleton}
-\title{Create a skeleton bcbio project.}
+\title{Create a skeleton bcbio project}
 \usage{
 create_bcbio_skeleton(base_dir = getwd(), run_dir = "skeleton",
   config_dir = "config", upload_dir = "final", project_dir = NULL,
@@ -26,7 +26,7 @@ upload directory.}
 bcbio run skeleton.
 }
 \description{
-Create a skeleton bcbio project.
+Create a skeleton bcbio project
 }
 \author{
 Rory Kirchner

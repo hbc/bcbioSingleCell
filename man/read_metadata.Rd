@@ -2,7 +2,7 @@
 % Please edit documentation in R/internal_read_metadata.R
 \name{read_metadata}
 \alias{read_metadata}
-\title{Read metadata.}
+\title{Read metadata}
 \usage{
 read_metadata(run, pattern = NULL, pattern_col = "sample_name")
 }
@@ -17,7 +17,7 @@ read_metadata(run, pattern = NULL, pattern_col = "sample_name")
 Metadata data frame.
 }
 \description{
-Read metadata.
+Read metadata
 }
 \author{
 Michael Steinbaugh

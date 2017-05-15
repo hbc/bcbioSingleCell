@@ -1,4 +1,4 @@
-#' Generate barcode metrics summary.
+#' Generate barcode metrics summary
 #'
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
@@ -8,9 +8,10 @@
 #' @return Tibble grouped by sample name.
 #' @export
 barcode_metrics <- function(run) {
-    import_tidy_verbs()
     check_run(run)
-    colSums <- matrix::colSums
+    import_tidy_verbs()
+    colSums <- Matrix::colSums
+
     counts <- run$counts
     ensembl <- run$ensembl
     metadata <- run$metadata
@@ -24,7 +25,7 @@ barcode_metrics <- function(run) {
         select(.data$external_gene_name) %>%
         .[[1]] %>% unique %>% sort
 
-    metrics <- tibble(
+    tibble(
         # Unique: `file_name` + `sample_barcode` + `cellular_barcode`
         unique = colnames(counts),
         total_counts = colSums(counts),
@@ -52,6 +53,4 @@ barcode_metrics <- function(run) {
         filter(!is.na(.data$sample_name)) %>%
         group_by(!!sym("sample_name")) %>%
         arrange(!!sym("sample_name"), .by_group = TRUE)
-
-    return(metrics)
 }

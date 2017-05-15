@@ -7,7 +7,7 @@
 \alias{max_genes}
 \alias{mito_ratio}
 \alias{novelty}
-\title{Filter cellular barcodes.}
+\title{Filter cellular barcodes}
 \format{An object of class \code{numeric} of length 1.}
 \usage{
 filter_cellular_barcodes(run, min_genes = get("min_genes", envir =

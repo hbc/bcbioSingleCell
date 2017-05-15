@@ -1,4 +1,4 @@
-#' Load a barcode histogram file generated from bcbio-nextgen.
+#' Load a barcode histogram file
 #'
 #' @keywords internal
 #' @author Rory Kirchner

@@ -2,13 +2,12 @@
 % Please edit documentation in R/read_bcbio.R
 \name{read_bcbio_counts}
 \alias{read_bcbio_counts}
-\title{Read \href{https://github.com/chapmanb/bcbio-nextgen}{bcbio-nextgen} run
-output.}
+\title{Read \href{https://github.com/chapmanb/bcbio-nextgen}{bcbio-nextgen} output}
 \usage{
 read_bcbio_counts(run, strip_version = TRUE)
 }
 \arguments{
-\item{run}{bcbio-nextgen.}
+\item{run}{bcbio-nextgen run.}
 
 \item{strip_version}{Strip transcript version from identifier.}
 }

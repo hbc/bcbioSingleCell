@@ -2,7 +2,7 @@
 % Please edit documentation in R/references.R
 \name{references}
 \alias{references}
-\title{Download BibTex references.}
+\title{Download BibTex references}
 \usage{
 references(bibtex_file = "bcbioSinglecell.bib")
 }

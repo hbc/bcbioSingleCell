@@ -2,8 +2,7 @@
 % Please edit documentation in R/ensembl_annotations.R
 \name{ensembl_annotations}
 \alias{ensembl_annotations}
-\title{Get transcript-to-gene annotations from
-\href{http://www.ensembl.org/}{Ensembl}.}
+\title{Ensembl annotations}
 \usage{
 ensembl_annotations(run)
 }
@@ -14,12 +13,12 @@ ensembl_annotations(run)
 Data frame.
 }
 \description{
-This function also defines broad classes, which are used in quality control
-analysis.
+Download transcript-to-gene annotations from
+\href{http://www.ensembl.org/}{Ensembl}. This function also defines broad classes,
+which are used in quality control analysis.
 }
 \author{
 Rory Kirchner
 
 Michael Steinbaugh
 }
-\keyword{internal}

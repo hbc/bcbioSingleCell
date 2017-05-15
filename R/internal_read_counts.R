@@ -1,4 +1,4 @@
-#' Read a MatrixMart file, setting the row and column names.
+#' Read a MatrixMart file, setting the row and column names
 #'
 #' Note that for a bcbio run, this function will return transcript-level counts.
 #'
@@ -35,5 +35,5 @@ read_counts <- function(matrix_file) {
     colnames(counts) <- read_lines(col_file)
 
     # Coerce dgTMatrix to dgCMatrix
-    return(as(counts, "dgCMatrix"))
+    as(counts, "dgCMatrix")
 }

@@ -1,4 +1,4 @@
-#' Perform object integrity checks.
+#' Perform object integrity checks
 #'
 #' @rdname integrity_checks
 #' @author Michael Steinbaugh
@@ -13,15 +13,6 @@
 check_run <- function(run) {
     if (!is.list(run)) {
         stop("Run object is not a list")
-    }
-    if (!dir.exists(run$upload_dir)) {
-        stop("Could not access upload dir")
-    }
-    if (!dir.exists(run$project_dir)) {
-        stop("Could not access project_dir")
-    }
-    if (!all(dir.exists(run$sample_dirs))) {
-        stop("No sample directories in run")
     }
 }
 

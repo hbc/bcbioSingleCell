@@ -1,4 +1,4 @@
-#' Strip transcript versions.
+#' Strip transcript versions
 #'
 #' @keywords internal
 #' @author Rory Kirchner
@@ -18,5 +18,5 @@ strip_transcript_versions <- function(counts) {
         transcripts <- str_replace(transcripts, pattern, "\\1")
     }
     rownames(counts) <- transcripts
-    return(counts)
+    counts
 }

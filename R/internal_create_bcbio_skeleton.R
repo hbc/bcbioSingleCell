@@ -1,4 +1,4 @@
-#' Create a skeleton bcbio project.
+#' Create a skeleton bcbio project
 #'
 #' @keywords internal
 #' @author Rory Kirchner
@@ -59,12 +59,11 @@ create_bcbio_skeleton <- function(
         dir.create(sample_dirs, recursive = TRUE, showWarnings = FALSE)
     }
 
-    run <- list(run_dir = run_dir,
-                config_dir = config_dir,
-                upload_dir = upload_dir,
-                project_dir = project_dir,
-                sample_dirs = sample_dirs,
-                organism = organism,
-                intgroup = intgroup)
-    return(run)
+    list(run_dir = run_dir,
+         config_dir = config_dir,
+         upload_dir = upload_dir,
+         project_dir = project_dir,
+         sample_dirs = sample_dirs,
+         organism = organism,
+         intgroup = intgroup)
 }

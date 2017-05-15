@@ -71,35 +71,7 @@ value.}
 ggplot2 object.
 }
 \description{
-Total cells barplot.
-
-Total counts histogram.
-
-Total counts boxplot.
-
-Genes detected boxplot.
-
-Genes detected histogram.
-
-Total counts vs. genes detected plot.
-
-Mitochondrial abundance histogram.
-
-Mitochondrial abundance boxplot.
-
-Mitochondrial abundance scatterplot.
-
-Novelty histogram (log10 genes detected per count).
-
-Novelty boxplot (log10 genes detected per count).
-
-Plot total counts (RMarkdown chunk wrapper).
-
-Plot genes detected (RMarkdown chunk wrapper).
-
-Plot mitochondrial counts (RMarkdown chunk wrapper).
-
-Plot novelty (RMarkdown chunk wrapper).
+Novelty score means log10 genes detected per count.
 }
 \author{
 Michael Steinbaugh

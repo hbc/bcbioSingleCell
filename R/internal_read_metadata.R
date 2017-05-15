@@ -1,4 +1,4 @@
-#' Read metadata.
+#' Read metadata
 #'
 #' @keywords internal
 #' @author Michael Steinbaugh
@@ -87,9 +87,7 @@ read_metadata <- function(
     }
 
     # Convert to data frame and set rownames
-    metadata <- metadata %>%
+    metadata %>%
         as.data.frame %>%
         set_rownames(.$sample_barcode)
-
-    return(metadata)
 }

@@ -1,4 +1,4 @@
-#' Sample barcode distribution quality control plots.
+#' Sample barcode distribution quality control plots
 #'
 #' @rdname qc_plots_barcodes
 #'
@@ -8,11 +8,8 @@
 
 
 #' @rdname qc_plots_barcodes
-#' @description Plot an individual barcode histogram per sample file.
-#'
 #' @param file_name Barcode histogram file.
 #' @param sample_name Sample name (title for plot).
-#'
 #' @export
 plot_barcode <- function(file_name, sample_name = NULL) {
     # Get the sample name from the file name by default
@@ -28,7 +25,7 @@ plot_barcode <- function(file_name, sample_name = NULL) {
 
     y <- fLog * (10^xLog) / sum(fLog * (10^xLog))
 
-    plot <- qplot(10^xLog, y) +
+    qplot(10^xLog, y) +
         geom_point() +
         geom_line() +
         ggtitle(sample_name) +
@@ -38,17 +35,12 @@ plot_barcode <- function(file_name, sample_name = NULL) {
         ) +
         xlab("number of reads assigned to a cell") +
         ylab("proportion of cells")
-
-    return(plot)
 }
 
 
 
 #' @rdname qc_plots_barcodes
-#' @description Plot all sample barcodes (RMarkdown chunk wrapper).
-#'
 #' @param run bcbio-nextgen run.
-#'
 #' @export
 plot_barcodes <- function(run) {
     sample_barcodes <- names(run$sample_dirs)

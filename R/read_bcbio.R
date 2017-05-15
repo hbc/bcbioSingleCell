@@ -1,21 +1,18 @@
-#' Read \href{https://github.com/chapmanb/bcbio-nextgen}{bcbio-nextgen} run
-#' output.
+#' Read [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen) output
 #'
 #' @rdname read_bcbio
 #'
 #' @author Michael Steinbaugh
 #' @author Rory Kirchner
 #'
-#' @param run bcbio-nextgen.
+#' @param run bcbio-nextgen run.
 
 
 
 #' @rdname read_bcbio
 #' @description Import transcript-level count data from a bcbio run into a
 #'   sparse matrix.
-#'
 #' @param strip_version Strip transcript version from identifier.
-#'
 #' @return Sparse counts matrix.
 #' @export
 read_bcbio_counts <- function(run, strip_version = TRUE) {
@@ -31,6 +28,5 @@ read_bcbio_counts <- function(run, strip_version = TRUE) {
     gene_names <- ensembl %>%
         as.data.frame %>%
         .[indexes, "external_gene_name"]
-    counts <- aggregate_sparse_features(counts, gene_names)
-    return(counts)
+    aggregate_sparse_features(counts, gene_names)
 }

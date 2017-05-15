@@ -3,7 +3,7 @@
 \name{check_run}
 \alias{check_run}
 \alias{check_sparse}
-\title{Perform object integrity checks.}
+\title{Perform object integrity checks}
 \usage{
 check_run(run)
 

@@ -1,4 +1,4 @@
-#' Download BibTex references.
+#' Download BibTex references
 #'
 #' If file isn't present, download latest version from the
 #' \href{http://bioinformatics.sph.harvard.edu}{HBC website}.

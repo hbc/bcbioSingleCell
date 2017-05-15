@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_run.R
 \name{load_run}
 \alias{load_run}
-\title{Load bcbio-nextgen run.}
+\title{Load bcbio-nextgen run}
 \usage{
 load_run(upload_dir = "final", metadata_file = file.path("meta",
   "indrop_rnaseq.xlsx"), organism, intgroup = "sample_name")

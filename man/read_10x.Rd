@@ -2,8 +2,7 @@
 % Please edit documentation in R/read_10x.R
 \name{read_10x_counts}
 \alias{read_10x_counts}
-\title{Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} run
-output.}
+\title{Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} output}
 \usage{
 read_10x_counts(data_dir)
 }

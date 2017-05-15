@@ -3,7 +3,7 @@
 \name{aggregate_sparse_features}
 \alias{aggregate_sparse_features}
 \alias{aggregate_sparse_replicates}
-\title{Aggregate sparse matrix operations.}
+\title{Aggregate sparse matrix operations}
 \usage{
 aggregate_sparse_features(sparse, featureids)
 
@@ -26,4 +26,6 @@ Pool cellular technical replicate counts.
 }
 \author{
 Rory Kirchner
+
+Michael Steinbaugh
 }

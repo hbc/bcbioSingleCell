@@ -1,5 +1,4 @@
-#' Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} run
-#' output.
+#' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) output
 #'
 #' @rdname read_10x
 #' @author Michael Steinbaugh
@@ -47,5 +46,5 @@ read_10x_counts <- function(data_dir) {
     rownames(counts) <- make.unique(genes$external_gene_name)
 
     # Coerce dgTMatrix to dgCMatrix
-    return(as(counts, "dgCMatrix"))
+    as(counts, "dgCMatrix")
 }

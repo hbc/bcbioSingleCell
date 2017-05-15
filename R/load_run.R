@@ -1,4 +1,4 @@
-#' Load bcbio-nextgen run.
+#' Load bcbio-nextgen run
 #'
 #' We recommend loading the bcbio-nextgen run as a remote connection over
 #' \code{sshfs}.
@@ -67,6 +67,9 @@ load_run <- function(
         set_names(basename(.)) %>%
         # Remove the nested `project_dir`
         .[!grepl(basename(run$project_dir), names(.))]
+    if (!length(sample_dirs)) {
+        stop("No sample directories in run")
+    }
     message(paste(length(sample_dirs), "samples detected in run"))
 
     # Detect number of sample lanes
@@ -114,5 +117,5 @@ load_run <- function(
     run$session <- sessionInfo()
 
     check_run(run)
-    return(run)
+    run
 }

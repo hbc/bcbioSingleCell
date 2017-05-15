@@ -1,4 +1,4 @@
-#' Convert a transcript matrix to a gene symbol matrix.
+#' Convert a transcript matrix to a gene symbol matrix
 #'
 #' @keywords internal
 #' @author Rory Kirchner
@@ -18,8 +18,5 @@ tx2symbol <- function(matrix, fromto, strip = FALSE) {
         left_join(fromto, by = "from")
     rownames(matrix) <- lookup$to
     matrix <- matrix[!is.na(rownames(matrix)), ]
-    matrix <- aggregate.Matrix(matrix,
-                               row.names(matrix),
-                               fun = "sum")
-    return(matrix)
+    aggregate.Matrix(matrix, row.names(matrix), fun = "sum")
 }

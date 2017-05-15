@@ -1,7 +1,8 @@
-#' Aggregate sparse matrix operations.
+#' Aggregate sparse matrix operations
 #'
 #' @rdname aggregate_sparse
 #' @author Rory Kirchner
+#' @author Michael Steinbaugh
 #'
 #' @param sparse Sparse counts matrix.
 #'
@@ -16,8 +17,7 @@
 aggregate_sparse_features <- function(sparse, featureids) {
     rownames(sparse) <- featureids
     sparse <- sparse[!is.na(rownames(sparse)), ]
-    combine <- aggregate.Matrix(sparse, rownames(sparse), fun = "sum")
-    return(combine)
+    aggregate.Matrix(sparse, rownames(sparse), fun = "sum")
 }
 
 
@@ -29,5 +29,5 @@ aggregate_sparse_features <- function(sparse, featureids) {
 aggregate_sparse_replicates <- function(sparse, cellids) {
     tsparse <- t(sparse)
     rownames(tsparse) <- cellids
-    return(t(aggregate.Matrix(tsparse, cellids, fun = "sum")))
+    aggregate.Matrix(tsparse, cellids, fun = "sum") %>% t
 }

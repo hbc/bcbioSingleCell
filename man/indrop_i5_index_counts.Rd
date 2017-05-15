@@ -2,19 +2,21 @@
 % Please edit documentation in R/internal_indrop_i5_index_counts.R
 \name{indrop_i5_index_counts}
 \alias{indrop_i5_index_counts}
-\title{Read inDrop i5 index counts.}
+\title{Read inDrop i5 index counts}
 \usage{
 indrop_i5_index_counts(log_file = file.path("logs",
   "indrop_i5_index_counts.log"))
 }
 \arguments{
-\item{log_file}{Log file produced by \href{https://github.com/steinbaugh/seqcloud/blob/dev/bash/indrop_i5_index_counts.sh}{indrop_i5_index_counts.sh} bash script.}
+\item{log_file}{Log file produced by
+\href{https://github.com/steinbaugh/seqcloud/blob/dev/bash/indrop_i5_index_counts.sh}{indrop_i5_index_counts.sh}
+bash script.}
 }
 \value{
 i5 index (barcode) counts tibble.
 }
 \description{
-Read inDrop i5 index counts.
+Read inDrop i5 index counts
 }
 \author{
 Michael Steinbaugh
