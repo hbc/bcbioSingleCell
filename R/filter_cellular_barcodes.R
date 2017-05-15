@@ -1,4 +1,4 @@
-#' Filter cellular barcodes.
+#' Filter cellular barcodes
 #'
 #' Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 #' cellular barcodes.
@@ -23,22 +23,22 @@ filter_cellular_barcodes <- function(
     novelty = get("novelty", envir = parent.frame()),
     plot = TRUE) {
     check_run(run)
-    filtered_run <- run
-    filtered_run$metrics <- filtered_run$metrics %>%
-        .[.$genes_detected > min_genes, ] %>%
-        .[.$genes_detected < max_genes, ] %>%
-        .[.$mito_ratio < mito_ratio, ] %>%
-        .[.$log10_detected_per_count > novelty, ]
+    import_tidy_verbs()
+    run$metrics <- run$metrics %>%
+        filter(.data$genes_detected > min_genes,
+               .data$genes_detected < max_genes,
+               .data$mito_ratio < mito_ratio,
+               .data$log10_detected_per_count > novelty)
+    run$filtered <- TRUE
     if (isTRUE(plot)) {
-        show(plot_total_cells(filtered_run))
-        plot_total_counts(filtered_run)
-        plot_genes_detected(filtered_run)
-        show(plot_total_vs_detected(filtered_run))
-        plot_mito(filtered_run)
-        plot_novelty(filtered_run)
+        show(plot_total_cells(run))
+        plot_total_counts(run)
+        plot_genes_detected(run)
+        show(plot_total_vs_detected(run))
+        plot_mito(run)
+        plot_novelty(run)
     }
-    filtered_run$filtered <- TRUE
-    return(filtered_run)
+    run
 }
 
 
