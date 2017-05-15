@@ -13,9 +13,12 @@ barcode_metrics <- function(run) {
     colSums <- Matrix::colSums
 
     counts <- run$counts
-    ensembl <- run$ensembl
     metadata <- run$metadata
 
+    ensembl <- run$ensembl %>%
+        ungroup %>%
+        mutate(ensembl_transcript_id = NULL) %>%
+        distinct
     coding <- ensembl %>%
         filter(.data$broad_class == "coding") %>%
         select(.data$external_gene_name) %>%
