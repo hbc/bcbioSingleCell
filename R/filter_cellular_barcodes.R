@@ -23,19 +23,20 @@ filter_cellular_barcodes <- function(
     novelty = get("novelty", envir = parent.frame()),
     plot = TRUE) {
     check_run(run)
+    import_tidy_verbs()
     run$metrics <- run$metrics %>%
-        .[.$genes_detected > min_genes, ] %>%
-        .[.$genes_detected < max_genes, ] %>%
-        .[.$mito_ratio < mito_ratio, ] %>%
-        .[.$log10_detected_per_count > novelty, ]
+        filter(.data$genes_detected > !!min_genes,
+               .data$genes_detected < !!max_genes,
+               .data$mito_ratio < !!mito_ratio,
+               .data$log10_detected_per_count > !!novelty)
     run$filtered <- TRUE
     if (isTRUE(plot)) {
         show(plot_total_cells(run))
         plot_total_counts(run)
-        plot_genes_detected(run)
+        plot_genes_detected(run, min_genes = min_genes, max_genes = max_genes)
         show(plot_total_vs_detected(run))
-        plot_mito(run)
-        plot_novelty(run)
+        plot_mito(run, mito_ratio = mito_ratio)
+        plot_novelty(run, novelty = novelty)
     }
     run
 }
