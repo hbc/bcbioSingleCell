@@ -1,5 +1,6 @@
 0.0.8   Rename mitochondrial plot functions.
         Present mitochondrial abundance as ratio instead of percentage.
+        Simplify NAMESPACE by offloading dependencies to basejump.
 0.0.7   Initial support for loading of 10x Genomics Cell Ranger output.
         Add detection of droplet method based on the metadata file.
         Draft support for import of inDrop i5 index barcode counts.
