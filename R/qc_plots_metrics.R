@@ -28,9 +28,7 @@ plot_total_cells <- function(run) {
     check_run(run)
     run$metrics %>%
         group_by(!!sym("sample_name")) %>%
-        summarise(total_cells = n())
-
-    %>%
+        summarise(total_cells = n()) %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~total_cells,
