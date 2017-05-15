@@ -25,10 +25,10 @@ filter_cellular_barcodes <- function(
     check_run(run)
     import_tidy_verbs()
     run$metrics <- run$metrics %>%
-        filter(.data$genes_detected > min_genes,
-               .data$genes_detected < max_genes,
-               .data$mito_ratio < mito_ratio,
-               .data$log10_detected_per_count > novelty)
+        filter(.data$genes_detected > !!min_genes,
+               .data$genes_detected < !!max_genes,
+               .data$mito_ratio < !!mito_ratio,
+               .data$log10_detected_per_count > !!novelty)
     run$filtered <- TRUE
     if (isTRUE(plot)) {
         show(plot_total_cells(run))
