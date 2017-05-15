@@ -117,5 +117,6 @@ load_run <- function(
     run$session <- sessionInfo()
 
     check_run(run)
+    create_project_dirs()
     run
 }
