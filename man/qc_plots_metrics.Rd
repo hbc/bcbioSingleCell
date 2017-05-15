@@ -16,7 +16,7 @@
 \alias{plot_genes_detected}
 \alias{plot_mito}
 \alias{plot_novelty}
-\title{Cell metrics quality control plots.}
+\title{Cell metrics quality control plots}
 \usage{
 plot_total_cells(run)
 

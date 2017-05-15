@@ -1,4 +1,4 @@
-#' Cell metrics quality control plots.
+#' Cell metrics quality control plots
 #'
 #' Novelty score means log10 genes detected per count.
 #'
