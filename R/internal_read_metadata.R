@@ -46,7 +46,7 @@ read_metadata <- function(
     names(metadata)[1] <- "file_name"
 
     metadata <- metadata %>%
-        set_names_snake %>%
+        snake %>%
         filter(!is.na(.data$description))
 
     # Lane split, if desired
