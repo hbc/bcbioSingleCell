@@ -3,6 +3,7 @@
 #' If file isn't present, download latest version from the
 #' \href{http://bioinformatics.sph.harvard.edu}{HBC website}.
 #'
+#' @keywords internal
 #' @author Michael Steinbaugh
 #'
 #' @param bibtex_file BibTex library file.

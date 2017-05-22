@@ -4,6 +4,7 @@
 #' [Ensembl](http://www.ensembl.org/). This function also defines broad classes,
 #' which are used in quality control analysis.
 #'
+#' @keywords internal
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
