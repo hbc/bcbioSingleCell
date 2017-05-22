@@ -34,6 +34,13 @@ read_counts <- function(matrix_file) {
     rownames(counts) <- read_lines(row_file)
     colnames(counts) <- read_lines(col_file)
 
+    # [fix] Correct malformed celluar barcodes.
+    # Need to update on the bcbio-nextgen platform side.
+    if (any(str_detect(colnames(counts), "\\:[ACGT]{16}$"))) {
+        colnames(counts) <- colnames(counts) %>%
+            str_replace("\\:([ACGT]{8})([ACGT]{8})$", "\\:\\1-\\2")
+    }
+
     # Coerce dgTMatrix to dgCMatrix
     as(counts, "dgCMatrix")
 }
