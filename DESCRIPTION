@@ -1,7 +1,7 @@
 Package: bcbioSinglecell
 Title: Single-Cell RNA-Seq Utilities
 Version: 0.0.8
-Date: 2017-05-14
+Date: 2017-05-23
 Authors@R: c(
     person("Rory", "Kirchner",
            email = "roryk@alum.mit.edu",
@@ -28,7 +28,7 @@ Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
-    basejump (>= 0.0.11),
+    basejump (>= 0.0.12),
     ggplot2 (>= 2.2.1),
     Matrix (>= 1.2),
     Matrix.utils (>= 0.9.5),
