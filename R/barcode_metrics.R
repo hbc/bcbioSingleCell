@@ -3,13 +3,14 @@
 #' @author Rory Kirchner
 #' @author Michael Steinbaugh
 #'
-#' @param run bcbio-nextgen run.
+#' @param run [bcbioSCDataSet].
 #'
 #' @return Tibble grouped by sample name.
 #' @export
 barcode_metrics <- function(run) {
     check_run(run)
     import_tidy_verbs()
+    # NAMESPACE collison with S4Vectors
     colSums <- Matrix::colSums
 
     counts <- run$counts
