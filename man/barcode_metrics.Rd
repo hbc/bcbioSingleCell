@@ -7,7 +7,7 @@
 barcode_metrics(run)
 }
 \arguments{
-\item{run}{bcbio-nextgen run.}
+\item{run}{\link{bcbioSCDataSet}.}
 }
 \value{
 Tibble grouped by sample name.

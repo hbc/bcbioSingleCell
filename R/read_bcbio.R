@@ -24,7 +24,6 @@ read_bcbio_counts <- function(run, strip_version = TRUE) {
     ensembl <- run$ensembl
     # Avoid setting rownames on data frames (tidy principle)
     indexes <- match(rownames(counts), ensembl$ensembl_transcript_id)
-    # collect(select(ensembl, external_gene_name))[[1]]
     gene_names <- ensembl %>%
         as.data.frame %>%
         .[indexes, "external_gene_name"]

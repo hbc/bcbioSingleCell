@@ -12,7 +12,6 @@
 #'
 #' @return Data frame.
 ensembl_annotations <- function(run) {
-    import_tidy_verbs()
     # Broad class definitions
     coding <- c("protein_coding")
     decaying <- c("non_stop_decay", "nonsense_mediated_decay")

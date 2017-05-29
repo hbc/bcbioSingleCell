@@ -12,7 +12,6 @@ read_metadata <- function(
     run,
     pattern = NULL,
     pattern_col = "sample_name") {
-    import_tidy_verbs()
     file <- run$metadata_file
     lanes <- run$lanes
 

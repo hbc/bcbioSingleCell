@@ -1,3 +1,4 @@
+0.0.9   Compatibility update for basejump S4 NAMESPACE changes.
 0.0.8   Rename mitochondrial plot functions.
         Present mitochondrial abundance as ratio instead of percentage.
         Simplify NAMESPACE by offloading dependencies to basejump.

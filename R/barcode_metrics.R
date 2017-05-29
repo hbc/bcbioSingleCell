@@ -9,8 +9,6 @@
 #' @export
 barcode_metrics <- function(run) {
     check_run(run)
-    import_tidy_verbs()
-    # NAMESPACE collison with S4Vectors
     colSums <- Matrix::colSums
 
     counts <- run$counts
@@ -22,11 +20,11 @@ barcode_metrics <- function(run) {
         distinct
     coding <- ensembl %>%
         filter(.data$broad_class == "coding") %>%
-        select(.data$external_gene_name) %>%
+        tidy_select(.data$external_gene_name) %>%
         .[[1]] %>% unique %>% sort
     mito <- ensembl %>%
         filter(.data$broad_class == "mito") %>%
-        select(.data$external_gene_name) %>%
+        tidy_select(.data$external_gene_name) %>%
         .[[1]] %>% unique %>% sort
 
     tibble(
@@ -51,8 +49,8 @@ barcode_metrics <- function(run) {
                mito_ratio = .data$mito_counts / .data$total_counts) %>%
         left_join(metadata[, c("sample_barcode", "sample_name")],
                   by = "sample_barcode") %>%
-        # Place sample name first
-        select(.data$sample_name, everything()) %>%
+        # Select sample name first
+        tidy_select(.data$sample_name, everything()) %>%
         # Filter barcodes matching samples
         filter(!is.na(.data$sample_name)) %>%
         group_by(!!sym("sample_name")) %>%

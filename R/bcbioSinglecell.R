@@ -2,22 +2,19 @@
 #'
 #' Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
 #'
+#' @keywords internal
+#'
 #' @import basejump
-#' @import Biobase
 #' @import ggplot2
-#' @import SummarizedExperiment
-#' @import S4Vectors
+#' @import methods
 #' @importClassesFrom scater SCESet
 #' @importFrom Matrix readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix
-#' @importFrom methods as show
 #' @importFrom scales math_format trans_breaks trans_format
 #' @importFrom stats density median
 "_PACKAGE"
 
-globalVariables(basejump::globals,
-                asNamespace("bcbioSinglecell"),
-                add = TRUE)
+globalVariables(basejump::globals, asNamespace("bcbioSinglecell"), add = TRUE)
 
 bins <- 100
 fail_color <- "red"

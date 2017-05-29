@@ -1,7 +1,7 @@
 Package: bcbioSinglecell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.8
-Date: 2017-05-23
+Version: 0.0.9
+Date: 2017-05-29
 Authors@R: c(
     person("Rory", "Kirchner",
            email = "roryk@alum.mit.edu",
@@ -28,16 +28,13 @@ Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
-    basejump (>= 0.0.12),
-    Biobase (>= 2.36.2),
+    basejump (>= 0.0.13),
     ggplot2 (>= 2.2.1),
     Matrix (>= 1.2),
     Matrix.utils (>= 0.9.5),
     methods,
     scales (>= 0.4.1),
-    scater (>= 1.4.0),
-    SummarizedExperiment,
-    S4Vectors (>= 0.14.0)
+    scater (>= 1.4.0)
 Remotes:
     steinbaugh/basejump
 Roxygen: list(markdown = TRUE,

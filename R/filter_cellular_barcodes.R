@@ -5,15 +5,14 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param run bcbio-nextgen run.
+#' @param run [bcbioSCDataSet].
 #' @param min_genes Minimum number of genes detected.
 #' @param max_genes Maximum number of genes detected.
-#' @param mito_ratio Maximum relative mitochondrial abundance (\code{0-1}
-#'   scale).
+#' @param mito_ratio Maximum relative mitochondrial abundance (`0-1` scale).
 #' @param novelty Minimum novelty score.
 #' @param plot Print relevant plots.
 #'
-#' @return Filtered bcbio run object.
+#' @return Filtered [bcbioSCDataSet].
 #' @export
 filter_cellular_barcodes <- function(
     run,
@@ -23,7 +22,6 @@ filter_cellular_barcodes <- function(
     novelty = get("novelty", envir = parent.frame()),
     plot = TRUE) {
     check_run(run)
-    import_tidy_verbs()
     run$metrics <- run$metrics %>%
         filter(.data$genes_detected > !!min_genes,
                .data$genes_detected < !!max_genes,

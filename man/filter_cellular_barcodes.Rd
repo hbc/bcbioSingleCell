@@ -24,21 +24,20 @@ mito_ratio
 novelty
 }
 \arguments{
-\item{run}{bcbio-nextgen run.}
+\item{run}{\link{bcbioSCDataSet}.}
 
 \item{min_genes}{Minimum number of genes detected.}
 
 \item{max_genes}{Maximum number of genes detected.}
 
-\item{mito_ratio}{Maximum relative mitochondrial abundance (\code{0-1}
-scale).}
+\item{mito_ratio}{Maximum relative mitochondrial abundance (\code{0-1} scale).}
 
 \item{novelty}{Minimum novelty score.}
 
 \item{plot}{Print relevant plots.}
 }
 \value{
-Filtered bcbio run object.
+Filtered \link{bcbioSCDataSet}.
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
