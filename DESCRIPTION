@@ -29,12 +29,15 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
     basejump (>= 0.0.13),
+    Biobase,
     ggplot2 (>= 2.2.1),
-    Matrix (>= 1.2),
-    Matrix.utils (>= 0.9.5),
+    Matrix,
+    Matrix.utils,
     methods,
-    scales (>= 0.4.1),
-    scater (>= 1.4.0)
+    scales,
+    scater (>= 1.4.0),
+    SummarizedExperiment,
+    S4Vectors
 Remotes:
     steinbaugh/basejump
 Roxygen: list(markdown = TRUE,

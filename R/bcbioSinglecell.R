@@ -5,8 +5,11 @@
 #' @keywords internal
 #'
 #' @import basejump
+#' @import Biobase
 #' @import ggplot2
 #' @import methods
+#' @import SummarizedExperiment
+#' @import S4Vectors
 #' @importClassesFrom scater SCESet
 #' @importFrom Matrix readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix

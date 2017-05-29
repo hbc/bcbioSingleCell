@@ -7,7 +7,6 @@
 #' @return \code{\link[knitr]{kable}}.
 #' @export
 metadata_table <- function(run) {
-    import_tidy_verbs()
     run$metadata %>%
         as_tibble %>%
         remove_rownames %>%
