@@ -53,6 +53,6 @@ barcode_metrics <- function(run) {
         tidy_select(.data$sample_name, everything()) %>%
         # Filter barcodes matching samples
         filter(!is.na(.data$sample_name)) %>%
-        group_by(!!sym("sample_name")) %>%
-        arrange(!!sym("sample_name"), .by_group = TRUE)
+        group_by(!!!syms(c("sample_name",  "sample_barcode"))) %>%
+        arrange(desc(!!sym("total_counts")), .by_group = TRUE)
 }
