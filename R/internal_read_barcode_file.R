@@ -2,13 +2,18 @@
 #'
 #' @keywords internal
 #' @author Rory Kirchner
+#' @author Michael Steinbaugh
 #'
-#' @param file_name path to a barcode histogram file.
+#' @param file_name Barcode histogram TSV file.
 #'
-#' @return Data frame of reads per barcode.
+#' @return Named numeric vector.
 #' @export
 read_barcode_file <- function(file_name) {
-    read_tsv(file_name,
-             col_names = c("barcode", "count"),
-             progress = FALSE)
+    df <- read_tsv(file_name,
+                   col_names = c("cellular_barcode", "reads"),
+                   progress = FALSE)
+    df$reads %>%
+        as.numeric %>%
+        set_names(df$cellular_barcode) %>%
+        sort(decreasing = TRUE)
 }
