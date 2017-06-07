@@ -1,70 +1,16 @@
 ---
-title: "Quality Control"
+title: "Quality control"
 date: "`r BiocStyle::doc_date()`"
 bibliography: bcbioSinglecell.bib
-output:
-  html_document:
-    toc: true
-    code_folding: hide
-    df_print: kable
-    highlight: pygments
-    number_sections: false
-    toc: true
 ---
 
 ```{r setup, include=FALSE}
-# bcbioSinglecell ====
-library(bcbioSinglecell)
-if (file.exists("data/run.rda")) {
-    data(run)
-} else {
-    create_new_project()
-    run <- load_run(
-        upload_dir = "data/indrop_rnaseq",
-        organism = "mmusculus",
-        metadata = "meta/indrop_rnaseq.xlsx")
-    save_data(run)
-}
-
-# knitr ====
-library(knitr)
-opts_chunk$set(
-    audodep = TRUE,
-    cache = TRUE,
-    cache.lazy = FALSE,
-    error = FALSE,
-    fig.align = "center",
-    fig.height = 7,
-    fig.keep = "all",
-    fig.path = "figures/",
-    fig.width = 7,
-    message = FALSE,
-    tidy = TRUE,
-    warning = FALSE)
-
-# ggplot2 ====
-library(ggplot2)
-theme_set(theme_light(base_size = 14))
-
-# Workflow ====
-library(Seurat)
+library(bcbioRnaseq)
+setup(upload_dir = "final")
 ```
 
-
-
-# Overview
-
-- Primary Investigator: 
-- Researcher: 
-- Experiment: 
-
-```{r metadata_table}
-metadata_table(run)
+```{r header, child="header.Rmd"}
 ```
-
-
-
-* * *
 
 
 
@@ -122,26 +68,26 @@ plot_barcodes(run)
 ```
 
 
-## Total number of cells
+## Cell counts
 
-```{r plot_total_cells}
-plot_total_cells(run$metrics)
+```{r plot_cell_counts}
+plot_cell_counts(run)
 ```
 
 
-## Total RNA read counts
+## Read counts
 
 ```{r plot_total_counts}
-plot_total_counts(run$metrics)
+plot_total_counts(run)
 ```
 
 
 ## Genes detected
 
-Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of ~2,000-2,500 is normal for [inDrop][] analysis.
+Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `2000`-`5000` is normal for [inDrop][] analysis.
 
 ```{r plot_genes_detected}
-plot_genes_detected(run$metrics)
+plot_genes_detected(run)
 ```
 
 
@@ -149,17 +95,17 @@ plot_genes_detected(run$metrics)
 
 If we graph out the total number of counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
 
-```{r plot_total_vs_detected}
-plot_total_vs_detected(run$metrics)
+```{r plot_reads_vs_genes}
+plot_reads_vs_genes(run)
 ```
 
 
-## Mitochondrial counts
+## Mitochondrial counts ratio
 
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
 
-```{r plot_mito_counts}
-plot_mito_counts(run$metrics)
+```{r plot_mito_ratio}
+plot_mito_ratio(run)
 ```
 
 
@@ -168,61 +114,19 @@ plot_mito_counts(run$metrics)
 Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
 
 ```{r plot_novelty}
-plot_novelty(run$metrics)
+plot_novelty(run)
 ```
 
 
 
 # Summary
 
-We recommend proceeding with minimal filtering:
-
-- `> 100` genes detected per cell (abnormally low)
-- `< 5000` genes detected per cell (abnormally high)
-- `< 25%` mitochondrial transcripts
-- `> 0.75` novelty score
-
-```{r suggested_filtering}
-suggested_filtering <- filter_barcodes(
-    run$metrics,
-    min_genes = 500,
-    max_genes = 5000,
-    percent_mito = 0.25,
-    novelty = 0.75)
-save_data(suggested_filtering)
+```{r filtered_run}
+filtered_run <- filter_cellular_barcodes(run)
+save_data(filtered_run)
 ```
 
 
 
-* * *
-
-
-
-# Methods
-
-```{r sessionInfo}
-sessionInfo()
+```{r footer, child="footer.Rmd"}
 ```
-
-
-
-# References
-
-```{r}
-references()
-```
-
-
-
-[bcbio-nextgen]: https://bcbio-nextgen.readthedocs.io
-[bcl2fastq]: https://support.illumina.com/downloads/bcl2fastq-conversion-software-v217.html
-[biomaRt]: https://bioconductor.org/packages/release/bioc/html/biomaRt.html
-[Ensembl]: http://useast.ensembl.org/Drosophila_melanogaster/Info/Index
-[inDrop]: http://1cell-bio.com
-[Matrix]: https://cran.r-project.org/web/packages/Matrix/index.html
-[Orchestra]: https://wiki.med.harvard.edu/Orchestra
-[R]: https://www.r-project.org
-[rapmap]: https://github.com/COMBINE-lab/RapMap
-[scRNA-Seq]: http://bcbio-nextgen.readthedocs.io/en/latest/contents/configuration.html#single-cell-rna-sequencing
-[Seurat]: http://satijalab.org/seurat
-[umis]: https://github.com/vals/umis

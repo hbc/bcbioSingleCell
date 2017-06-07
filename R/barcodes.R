@@ -123,31 +123,30 @@ filter_cellular_barcodes <- function(
 # generate multiple types of plots more easily, such as the new violin plot
 # method.
 plot_cb_histogram <- function(run) {
-    barcodes <- run$barcodes
     pbmclapply(seq_along(barcodes), function(a) {
-        metadata <- run$metadata[sample_barcodes,
-                                 c("sample_barcode", "sample_name")]
-        plot <- function(file_name, sample_name) {
-            bcs <- barcodes[a] %>%
-                as.data.frame %>%
-                rownames_to_column %>%
-                set_colnames(c("cellular_barcode", "reads")) %>%
-                mutate(log10_reads = log10(.data$reads))
-            bcs_hist <- hist(bcs$log10_reads, plot = FALSE, n = 50)
-            fLog <- bcs_hist$count
-            xLog <- bcs_hist$mids
-            y <- fLog * (10^xLog) / sum(fLog * (10^xLog))
-            qplot(10^xLog, y) +
-                geom_point() +
-                geom_line() +
-                ggtitle(sample_name) +
-                scale_x_log10(
-                    breaks = trans_breaks("log10", function(x) 10^x),
-                    labels = trans_format("log10", math_format(~10^.x))) +
-                xlab("number of reads assigned to a cell") +
-                ylab("proportion of cells")
-        }
-        show(plot(barcodes[a]))
+        barcodes <- run$barcodes[a]
+        sample_name <- run$metadata[names(barcodes), "sample_name"]
+        title <- paste(sample_name, names(barcodes), sep = " : ")
+
+        bcs <- barcodes[a] %>%
+            as.data.frame %>%
+            rownames_to_column %>%
+            set_colnames(c("cellular_barcode", "reads")) %>%
+            mutate(log10_reads = log10(.data$reads))
+        bcs_hist <- hist(bcs$log10_reads, plot = FALSE, n = 50)
+        fLog <- bcs_hist$count
+        xLog <- bcs_hist$mids
+        y <- fLog * (10^xLog) / sum(fLog * (10^xLog))
+
+        qplot(10^xLog, y) +
+            geom_point() +
+            geom_line() +
+            ggtitle(title) +
+            scale_x_log10(
+                breaks = trans_breaks("log10", function(x) 10^x),
+                labels = trans_format("log10", math_format(~10^.x))) +
+            xlab("number of reads assigned to a cell") +
+            ylab("proportion of cells")
     }) %>% invisible
 }
 
