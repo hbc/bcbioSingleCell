@@ -1,3 +1,28 @@
+#' Check object integrity
+#'
+#' @rdname integrity
+#' @keywords internal
+#' @param run [bcbioSCDataSet].
+#' @export
+check_run <- function(run) {
+    if (!is.list(run)) {
+        stop("Run object is not a list")
+    }
+}
+
+
+
+#' @rdname integrity
+#' @param sparse Sparse counts matrix.
+#' @export
+check_sparse <- function(sparse) {
+    if (class(sparse)[1] != "dgCMatrix") {
+        stop("sparse counts must be dgCMatrix")
+    }
+}
+
+
+
 #' Create a skeleton bcbio project
 #'
 #' @keywords internal

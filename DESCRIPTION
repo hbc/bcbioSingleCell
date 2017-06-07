@@ -35,9 +35,7 @@ Imports:
     Matrix.utils,
     methods,
     scales,
-    scater (>= 1.4.0),
-    SummarizedExperiment,
-    S4Vectors
+    scater (>= 1.4.0)
 Remotes:
     steinbaugh/basejump
 Roxygen: list(markdown = TRUE,

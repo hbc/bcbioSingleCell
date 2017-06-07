@@ -8,13 +8,12 @@
 #' @import Biobase
 #' @import ggplot2
 #' @import methods
-#' @import SummarizedExperiment
-#' @import S4Vectors
 #' @importClassesFrom scater SCESet
-#' @importFrom Matrix readMM writeMM
+#' @importFrom Matrix colSums readMM rowSums writeMM
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom scales math_format trans_breaks trans_format
-#' @importFrom stats density median
+#' @importFrom stats aggregate median
+#' @importFrom utils methods
 "_PACKAGE"
 
 globalVariables(basejump::globals, asNamespace("bcbioSinglecell"), add = TRUE)

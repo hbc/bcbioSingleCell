@@ -57,7 +57,7 @@ plot_cell_counts <- function(run) {
 
 
 # Read counts ====
-plot_read_counts_boxplot <- function(run, min, type) {
+plot_read_counts_boxplot <- function(run, min, type = "total") {
     if (!type %in% c("coding", "total")) {
         stop("Invalid counts column prefix")
     }
@@ -113,11 +113,9 @@ plot_read_counts_histogram <- function(run, min, type) {
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_read_counts <- function(run, total_min = 1000, coding_min = 1000) {
-    show(plot_read_counts_boxplot(run, total_min, type = "total"))
-    show(plot_read_counts_boxplot(run, coding_min, type = "coding"))
-    show(plot_read_counts_histogram(run, total_min, type = "total"))
-    show(plot_read_counts_histogram(run, coding_min, type = "coding"))
+plot_read_counts <- function(run, min = 1000) {
+    show(plot_read_counts_boxplot(run, min))
+    show(plot_read_counts_histogram(run, min))
     # [fix] add coding / total ratio plot?
 }
 

@@ -29,23 +29,23 @@ make_bcbio_skeleton <- function(...) {
 }
 
 plot_mito_counts <- function(...) {
-    .Deprecated("plot_mito")
-    plot_mito(...)
+    .Deprecated("plot_mito_ratio")
+    plot_mito_ratio(...)
 }
 
 plot_mito_counts_boxplot <- function(...) {
-    .Deprecated("plot_mito_boxplot")
-    plot_mito_boxplot(...)
+    .Deprecated("plot_mito_ratio_boxplot")
+    plot_mito_ratio_boxplot(...)
 }
 
 plot_mito_counts_histogram <- function(...) {
-    .Deprecated("plot_mito_histogram")
-    plot_mito_histogram(...)
+    .Deprecated("plot_mito_ratio_histogram")
+    plot_mito_ratio_histogram(...)
 }
 
 plot_mito_counts_scatterplot <- function(...) {
-    .Deprecated("plot_mito_scatterplot")
-    plot_mito_scatterplot(...)
+    .Deprecated("plot_mito_ratio_scatterplot")
+    plot_mito_ratio_scatterplot(...)
 }
 
 plot_total_cells <- function(...) {
@@ -56,4 +56,9 @@ plot_total_cells <- function(...) {
 plot_total_vs_detected <- function(...) {
     .Deprecated("plot_reads_vs_genes")
     plot_reads_vs_genes(...)
+}
+
+read_10x_counts <- function(...) {
+    .Deprecated("read_10x")
+    read_10x(...)
 }
