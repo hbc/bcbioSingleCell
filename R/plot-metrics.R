@@ -17,7 +17,7 @@
 
 # Cell counts ====
 plot_cell_counts_barplot <- function(run) {
-    if (run$lanes) {
+    if (!is.null(run$lanes)) {
         plot <- run$metrics %>%
             left_join(run$metadata,
                       by = c("sample_name", "sample_barcode")) %>%
@@ -88,7 +88,7 @@ plot_read_counts_boxplot <- function(run, min, type = "total") {
             legend.position = "none")
 }
 
-plot_read_counts_histogram <- function(run, min, type) {
+plot_read_counts_histogram <- function(run, min, type = "total") {
     if (!type %in% c("coding", "total")) {
         stop("Invalid counts column prefix")
     }
@@ -225,7 +225,7 @@ plot_mito_ratio_boxplot <- function(run, max) {
         ) +
         labs(title = "mitochondrial abundance boxplot",
              x = "sample",
-             y = "mito / total counts") +
+             y = "relative mitochondrial abundance") +
         geom_boxplot() +
         geom_hline(color = warn_color, yintercept = max) +
         geom_label(
@@ -248,7 +248,7 @@ plot_mito_ratio_histogram <- function(run, max) {
             aes_(x = ~mito_ratio,
                  fill = ~sample_name)) +
         labs(title = "mitochondrial abundance histogram",
-             x = "mito / total counts") +
+             x = "relative mitochondrial abundance") +
         facet_wrap(~sample_name) +
         geom_histogram(bins = bins) +
         geom_vline(color = warn_color, xintercept = max) +

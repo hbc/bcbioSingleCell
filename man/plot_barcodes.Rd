@@ -9,9 +9,6 @@ plot_barcodes(run)
 \arguments{
 \item{run}{\link{bcbioSCDataSet}.}
 }
-\value{
-\code{\link[=show]{show()}} \link{ggplot}.
-}
 \description{
 Plot cellular barcode distributions per sample
 }

@@ -30,6 +30,7 @@ read_csv_with_rownames(filename, column)
 strip_transcript_versions(sparse)
 top_barcodes(run, n = 2)
 tx2symbol(matrix, fromto, strip = FALSE)
+unlist_barcodes(run)
 write_counts(counts, gzip = FALSE)
 
 ## Exported data

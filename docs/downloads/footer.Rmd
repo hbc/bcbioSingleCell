@@ -1,0 +1,26 @@
+* * *
+
+
+
+# Methods
+
+```{r sessionInfo}
+sessionInfo()
+```
+
+
+
+# References
+
+[bcbio-nextgen]: https://bcbio-nextgen.readthedocs.io
+[bcl2fastq]: https://support.illumina.com/downloads/bcl2fastq-conversion-software-v217.html
+[biomaRt]: https://bioconductor.org/packages/release/bioc/html/biomaRt.html
+[Ensembl]: http://useast.ensembl.org/Drosophila_melanogaster/Info/Index
+[inDrop]: http://1cell-bio.com
+[Matrix]: https://cran.r-project.org/web/packages/Matrix/index.html
+[Orchestra]: https://wiki.med.harvard.edu/Orchestra
+[R]: https://www.r-project.org
+[rapmap]: https://github.com/COMBINE-lab/RapMap
+[scRNA-Seq]: http://bcbio-nextgen.readthedocs.io/en/latest/contents/configuration.html#single-cell-rna-sequencing
+[Seurat]: http://satijalab.org/seurat
+[umis]: https://github.com/vals/umis

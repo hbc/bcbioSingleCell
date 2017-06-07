@@ -1,3 +1,4 @@
+# [fix] rename to `metrics()` generic after S4 transition
 #' Generate barcode metrics summary
 #'
 #' @keywords internal
@@ -62,6 +63,7 @@ barcode_metrics <- function(run) {
 
 
 
+# [fix] Rename to `filter()` generic after S4 transition
 #' Filter cellular barcodes
 #'
 #' Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
@@ -88,6 +90,9 @@ filter_cellular_barcodes <- function(
     novelty = 0.8,
     show = TRUE) {
     name <- deparse(substitute(run))
+    message(paste(ncol(run$counts), "cellular barcodes detected"))
+
+    # Subset metrics
     run$metrics <- run$metrics %>%
         filter(.data$total_counts > !!reads,
                # [fix] include option to filter by `coding_counts`?
@@ -95,7 +100,28 @@ filter_cellular_barcodes <- function(
                .data$genes_detected < !!max_genes,
                .data$mito_ratio < !!mito_ratio,
                .data$log10_detected_per_count > !!novelty)
-    run$filtered <- TRUE
+
+    # Subset counts
+    keep <- paste(run$metrics$sample_barcode,
+                  run$metrics$cellular_barcode,
+                  sep = ":") %>% sort
+    message(paste("Keeping", length(keep), "barcodes"))
+    if (!length(keep)) {
+        return(NULL)
+    }
+    run$counts <- run$counts[, keep]
+
+    # Save filtering parameters
+    run$filter <- list(
+        reads = reads,
+        min_genes = min_genes,
+        max_genes = max_genes,
+        mito_ratio = mito_ratio,
+        novelty = novelty)
+
+    # Run object cleanup
+    run$barcodes <- NULL
+
     if (isTRUE(show)) {
         writeLines(c(
             paste(name, "filtering parameters:"),
@@ -112,6 +138,7 @@ filter_cellular_barcodes <- function(
         plot_mito_ratio(run, max = mito_ratio)
         plot_novelty(run, min = novelty)
     }
+
     run
 }
 
@@ -123,12 +150,13 @@ filter_cellular_barcodes <- function(
 # generate multiple types of plots more easily, such as the new violin plot
 # method.
 plot_cb_histogram <- function(run) {
+    barcodes <- run$barcodes
+    message("Generating barcode histograms...")
     pbmclapply(seq_along(barcodes), function(a) {
-        barcodes <- run$barcodes[a]
-        sample_name <- run$metadata[names(barcodes), "sample_name"]
-        title <- paste(sample_name, names(barcodes), sep = " : ")
-
-        bcs <- barcodes[a] %>%
+        name <- names(run$barcodes[a])
+        sample_name <- run$metadata[name, "sample_name"]
+        title <- paste(sample_name, name, sep = " : ")
+        bcs <- run$barcodes[a] %>%
             as.data.frame %>%
             rownames_to_column %>%
             set_colnames(c("cellular_barcode", "reads")) %>%
@@ -137,7 +165,6 @@ plot_cb_histogram <- function(run) {
         fLog <- bcs_hist$count
         xLog <- bcs_hist$mids
         y <- fLog * (10^xLog) / sum(fLog * (10^xLog))
-
         qplot(10^xLog, y) +
             geom_point() +
             geom_line() +
@@ -176,12 +203,11 @@ plot_cb_violin <- function(run) {
 #' @author Michael Steinbaugh
 #'
 #' @param run [bcbioSCDataSet].
-#'
-#' @return [show()] [ggplot].
+
 #' @export
 plot_barcodes <- function(run) {
-    show(plot_cb_histogram)
-    show(plot_cb_violin)
+    plot_cb_violin(run) %>% show
+    plot_cb_histogram(run) %>% show
 }
 
 

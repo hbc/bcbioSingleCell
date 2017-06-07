@@ -1,0 +1,4 @@
+name: Seurat Clustering
+description: >
+  Template for single-cell RNA-seq clustering with the Seurat package.
+create_dir: false

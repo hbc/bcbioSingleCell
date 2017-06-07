@@ -1,0 +1,223 @@
+---
+title: "Seurat clustering"
+date: "`r BiocStyle::doc_date()`"
+author: "Michael J. Steinbaugh"
+bibliography: bcbioSinglecell.bib
+---
+
+```{r setup, include=FALSE}
+library(Seurat)
+library(bcbioSinglecell)
+data(filtered_run)
+
+# Setup
+meta.data <- filtered_run$metrics %>% dotNotation
+raw.data <- filtered_run$counts
+
+# Cutoffs
+max.genes <- filtered_run$filter$max_genes
+min.genes <- filtered_run$filter$min_genes
+percent.mito <- filtered_run$filter$mito_ratio
+```
+
+```{r header, child="header.Rmd"}
+```
+
+All features in [Seurat][] have been configured to work with both regular and sparse matrices. We prefer to use sparse matrices from the [Matrix][] package, as they result in significant memory and speed savings.
+
+
+
+# Cell and gene filtering
+
+While `Setup` imposes a basic minimum gene-cutoff, you may want to filter out cells at this stage based on technical or biological parameters. [Seurat][] allows you to easily explore QC metrics and filter cells based on any user-defined criteria. `nGene` and `nUMI` are automatically calculated for every object by [Seurat][]. For non-UMI data, `nUMI` represents the sum of the non-normalized values within a cell.
+
+Let's filter out cells that have unique gene counts below or above average. Note that `accept.high` and `accept.low` can be used to define a "gate", and can filter cells not only based on `nGene` but on anything in the object.
+
+Initialize a new [Seurat][] object with non-normalized count data. 
+
+We recommend the following general filter criteria:
+
+- `log normalize`, first scaling each cell to a total of `1e4` molecules (*default*) [@Macosko:2015ht].
+- Keep `genes` expressed in `>= 3 cells` (*default*).
+- Keep `cells` with `>= 100 genes`.
+- Keep `cells` with `<= 5000 genes`.
+- Keep `cells` with `<= 25% mitochondrial percentage`.
+
+```{r seurat}
+seurat <- new("seurat", raw.data = raw.data) %>%
+    Setup(project = "seurat", meta.data = meta.data, min.genes = min.genes) %>%
+    SubsetData(subset.name = "nGene", accept.high = max.genes) %>%
+    SubsetData(subset.name = "percent.mito", accept.high = percent.mito)
+print(seurat)
+```
+
+```{r VlnPlot}
+VlnPlot(seurat, c("nGene", "nUMI", "percent.mito"), nCol = 3)
+```
+
+`GenePlot()` is typically used to visualize gene-gene relationships, but can be used for anything calculated by the object (e.g. `seurat@data.info` columns).
+
+```{r GenePlot}
+par(mfrow = c(1, 2))
+GenePlot(seurat, "nUMI", "percent.mito")
+GenePlot(seurat, "nUMI", "nGene")
+```
+
+
+
+# Regress out unwanted sources of variation
+
+Your single cell experiment likely contains "uninteresting" sources of variation. This could include not only technical noise, but batch effects, or even biological sources of variation (e.g. cell cycle stage). Regressing these signals out of the analysis can improve downstream dimensionality reduction and clustering [@Buettner:2015hp]. [Seurat][] implements a basic version of this by constructing linear models to predict gene expression based on user-defined variables. [Seurat][] stores the z-scored residuals of these models in the `scale.data` slot, and they are used for dimensionality reduction and clustering.
+
+It is typically recommended to regress out cell-cell variation in gene expression driven by batch, the number of detected molecules, and mitochondrial gene expression. For cycling cells, we can also learn a "cell-cycle" score [@Macosko:2015ht] and regress this out as well.
+
+Here, let's regress effects on gene expression that are due to the number of genes detected (`nGene`), the total counts in the cell (`nUMI`), and the percent mitochondrial content (`percent.mito`).
+
+```{r RegressOut}
+seurat <- RegressOut(
+    seurat,
+    latent.vars = c("nGene", "nUMI", "percent.mito"))
+```
+
+
+
+# Detection of variable genes across the single cells
+
+[Seurat][] calculates highly variable genes and focuses on these for downstream analysis. `MeanVarPlot()`, which works by calculating the average expression and dispersion for each gene, placing these genes into bins, and then calculating a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression [@Macosko:2015ht].
+
+```{r MeanVarPlot, fig.height=11, fig.width=11}
+seurat <- MeanVarPlot(seurat)
+```
+
+
+
+# Linear dimensional reduction
+
+Run PCA on the scaled data. By default, the genes in `seurat@var.genes` are used as input, but can be defined using `pc.genes`. We have typically found that running dimensionality reduction on genes with high-dispersion can improve performance. However, with UMI data - particularly after using `RegressOut()`, we often see that PCA returns similar (albeit slower) results when run on much larger subsets of genes, including the whole transcriptome.
+
+```{r PCA}
+seurat <- PCA(seurat, do.print = FALSE)
+```
+
+`ProjectPCA()` scores each gene in the dataset (including genes not included in the PCA) based on their correlation with the calculated components. Though we don't use this further here, it can be used to identify markers that are strongly correlated with cellular heterogeneity, but may not have passed through variable gene selection.
+
+```{r ProjectPCA}
+seurat <- ProjectPCA(seurat, do.print = FALSE)
+```
+
+[Seurat][] provides several useful ways of visualizing both cells and genes that define the PCA. First let's print the top genes per component using `PrintPCA()`.
+
+```{r PrintPCA}
+PrintPCA(seurat)
+```
+
+We can visualize these genes graphically using `VizPCA()`.
+
+```{r VizPCA}
+VizPCA(seurat, pcs.use = 1:4)
+```
+
+In particular, `PCHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and genes are ordered according to their PCA scores. Setting `cells.use` to a number plots the "extreme" cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated gene sets.
+
+```{r PCHeatmap}
+# Plot top 30 genes in top 100 cells for PC1
+PCHeatmap(seurat,
+          cells.use = 100,
+          do.balanced = TRUE,
+          label.columns = FALSE)
+
+# Top plot 30 genes in top 500 cells for PC1-12
+PCHeatmap(seurat,
+          cells.use = 500,
+          do.balanced = TRUE,
+          pc.use = 1:12)
+```
+
+
+
+# Determine statistically significant principal components
+
+```{r num.pc}
+num.pc <- 30  # default
+```
+
+To overcome the extensive technical noise in any single gene for scRNA-seq data, [Seurat][] clusters cells based on their PCA scores, with each PC essentially representing a 'metagene' that combines information across a correlated gene set. Determining how many PCs to include downstream is therefore an important step.
+
+[Seurat][] implements a resampling test inspired by the `jackStraw` procedure [@Macosko:2015ht]. We randomly permute a subset of the data (1% by default) and rerun PCA, constructing a "null distribution" of gene scores, and repeat this procedure. We identify "significant" PCs as those who have a strong enrichment of low p-value genes.
+
+The `JackStrawPlot()` function provides a visualization tool for comparing the distribution of p-values for each PC with a uniform distribution (dashed line). "Significant" PCs will show a strong enrichment of genes with low p-values (solid curve above the dashed line). Running this process takes a long time for big datasets. More approximate techniques such as those implemented in `PCElbowPlot()` are much faster.
+
+```{r JackStraw, eval=hpc}
+# Run this only in HPC environment, CPU intensive
+seurat <- JackStraw(
+    seurat,
+    num.pc = num.pc,
+    do.print = FALSE)
+JackStrawPlot(seurat, PCs = 1:num.pc)
+```
+
+```{r PCElbowPlot}
+PCElbowPlot(seurat, num.pc = num.pc) +
+    ggtitle("pc elbow plot") +
+    geom_line() +
+    geom_vline(alpha = 0.5,
+               color = "green",
+               size = 2,
+               xintercept = 10)
+```
+
+
+
+# Find clusters and visualize
+
+Here we will use the selected PCs to find clusters of cells via heirarchical clustering, then run t-Distributed Stochastic Neighbor Embedding (t-SNE) analysis [@vanderMaaten:2008tm].
+
+```{r FindClusters}
+pc.use <- 10
+seurat <- FindClusters(
+    seurat,
+    pc.use = 1:pc.use,
+    print.output = FALSE,
+    save.SNN = TRUE)
+```
+
+```{r tSNE}
+seurat <- RunTSNE(
+    seurat,
+    dims.use = 1:pc.use,
+    # Run Barnes-hut fast mode locally in RStudio
+    do.fast = !isTRUE(hpc))
+TSNEPlot(seurat, do.label = TRUE)
+TSNEPlot(seurat, do.label = TRUE, group.by = "sample.name")
+```
+
+Note that t-SNE is not PCA! The measurement of distance in a t-SNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's re-apply PCA.
+
+```{r PCAPlot}
+PCAPlot(seurat)
+PCAPlot(seurat, group.by = "sample.name")
+```
+
+
+# Cluster quality control
+
+Let's look at the variance in the number of genes detected (`nGene`) and the percentage of mitochondrial gene expression (`percent.mito`), to see if any abberant cells are clustering.
+
+```{r qc}
+FeaturePlot(seurat, "nGene", cols.use = c("grey","green"))
+FeaturePlot(seurat, "percent.mito", cols.use = c("grey","red"))
+```
+
+
+
+# Save the [Seurat][] analysis
+
+```{r save}
+# How to obtain barcodes by cluster
+# seurat@ident
+slotNames(seurat)
+save_data(seurat)
+```
+
+```{r footer, child="footer.Rmd"}
+```
