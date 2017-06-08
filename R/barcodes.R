@@ -9,7 +9,7 @@
 #'
 #' @return Tibble grouped by sample name.
 #' @export
-barcode_metrics <- function(run) {
+metrics <- function(run) {
     # Check for [Matrix::colSums()]
     if (!"colSums,dgCMatrix-method" %in% methods(colSums)) {
         stop("Wrong `colSums()` loaded in NAMESPACE")
@@ -62,10 +62,10 @@ barcode_metrics <- function(run) {
                     everything()) %>%
         group_by(!!!syms(c("sample_name",  "sample_barcode"))) %>%
         arrange(desc(!!sym("total_counts")), .by_group = TRUE) %>%
+        ungroup %>%
         mutate(rowname = paste(.data$sample_barcode,
                                .data$cellular_barcode,
                                sep = ":")) %>%
-        ungroup %>%
         as.data.frame %>%
         column_to_rownames
 }
@@ -102,34 +102,38 @@ filter_cellular_barcodes <- function(
     message(paste(ncol(run$counts), "cellular barcodes detected"))
 
     # Subset metrics
-    run$metrics <- run$metrics %>%
+    metrics <- run$metrics %>%
+        rownames_to_column %>%
         filter(.data$total_counts > !!reads,
                # [fix] include option to filter by `coding_counts`?
                .data$genes_detected > !!min_genes,
                .data$genes_detected < !!max_genes,
                .data$mito_ratio < !!mito_ratio,
-               .data$log10_detected_per_count > !!novelty)
+               .data$log10_detected_per_count > !!novelty) %>%
+        column_to_rownames
 
     # Subset counts
-    keep <- paste(run$metrics$sample_barcode,
-                  run$metrics$cellular_barcode,
-                  sep = ":") %>% sort
-    message(paste("Keeping", length(keep), "barcodes"))
-    if (!length(keep)) {
-        return(NULL)
+    if (!nrow(metrics)) {
+        stop("Barcode filtering too stringent -- no cells kept")
     }
-    run$counts <- run$counts[, keep]
+    message(paste(nrow(metrics), "cellular barcodes passed filtering"))
+
+    # Note that barcode identifiers are columns in the count matrix
+    counts <- run$counts[, rownames(metrics)]
+
+    # Set up the filtered run object
+    filtered_run <- run
+    filtered_run$barcodes <- NULL
+    filtered_run$metrics <- metrics
+    filtered_run$counts <- counts
 
     # Save filtering parameters
-    run$filter <- list(
+    filtered_run$filter <- list(
         reads = reads,
         min_genes = min_genes,
         max_genes = max_genes,
         mito_ratio = mito_ratio,
         novelty = novelty)
-
-    # Run object cleanup
-    run$barcodes <- NULL
 
     if (isTRUE(show)) {
         writeLines(c(
@@ -140,15 +144,15 @@ filter_cellular_barcodes <- function(
             paste0("- `< ", max_genes, "` genes per cell"),
             paste0("- `< ", mito_ratio, "` mitochondrial abundance ratio"),
             paste0("- `> ", novelty, "` novelty score")))
-        plot_cell_counts(run)
-        plot_read_counts(run, min = reads)
-        plot_genes_detected(run, min = min_genes, max = max_genes)
-        plot_reads_vs_genes(run) %>% show
-        plot_mito_ratio(run, max = mito_ratio)
-        plot_novelty(run, min = novelty)
+        plot_cell_counts(filtered_run)
+        plot_read_counts(filtered_run, min = reads)
+        plot_genes_detected(filtered_run, min = min_genes, max = max_genes)
+        plot_reads_vs_genes(filtered_run) %>% show
+        plot_mito_ratio(filtered_run, max = mito_ratio)
+        plot_novelty(filtered_run, min = novelty)
     }
 
-    run
+    filtered_run
 }
 
 
