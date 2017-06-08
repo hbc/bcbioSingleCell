@@ -53,12 +53,21 @@ barcode_metrics <- function(run) {
                mito_ratio = .data$mito_counts / .data$total_counts) %>%
         left_join(metadata[, c("sample_barcode", "sample_name")],
                   by = "sample_barcode") %>%
-        # Select sample name first
-        tidy_select(.data$sample_name, everything()) %>%
         # Filter barcodes matching samples
         filter(!is.na(.data$sample_name)) %>%
+        # Select sample name first
+        tidy_select(.data$sample_name,
+                    .data$sample_barcode,
+                    .data$cellular_barcode,
+                    everything()) %>%
         group_by(!!!syms(c("sample_name",  "sample_barcode"))) %>%
-        arrange(desc(!!sym("total_counts")), .by_group = TRUE)
+        arrange(desc(!!sym("total_counts")), .by_group = TRUE) %>%
+        mutate(rowname = paste(.data$sample_barcode,
+                               .data$cellular_barcode,
+                               sep = ":")) %>%
+        ungroup %>%
+        as.data.frame %>%
+        column_to_rownames
 }
 
 
