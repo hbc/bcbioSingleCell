@@ -4,7 +4,7 @@
 
 aggregate_sparse_features(sparse, featureids)
 aggregate_sparse_replicates(sparse, cellids)
-barcode_metrics(run)
+barcode_metrics(...)
 check_run(run)
 check_sparse(sparse)
 combine_features(...)
@@ -19,6 +19,7 @@ load_run(upload_dir = "final", metadata_file = file.path("meta", "indrop_rnaseq.
 load_sparsecounts(...)
 make_bcbio_skeleton(...)
 metadata_table(run)
+metrics(run)
 plot_barcodes(run)
 plot_cell_counts(run)
 plot_genes_detected(run, min = 500, max = NULL)

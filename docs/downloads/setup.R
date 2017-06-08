@@ -7,7 +7,7 @@ if (file.exists("data/run.rda")) {
     run <- load_run(
         upload_dir = "data/indrop_rnaseq",
         organism = "mmusculus",
-        metadata = "meta/indrop_rnaseq.xlsx")
+        metadata_file = "meta/indrop_rnaseq.xlsx")
     save_data(run)
 }
 
@@ -17,11 +17,10 @@ opts_chunk$set(
     audodep = TRUE,
     cache = TRUE,
     cache.lazy = FALSE,
+    dev = c("png", "pdf", "svg"),
     error = FALSE,
-    fig.align = "center",
     fig.height = 7,
-    fig.keep = "all",
-    fig.path = "figures/",
+    fig.retina = 2,
     fig.width = 7,
     message = FALSE,
     tidy = TRUE,

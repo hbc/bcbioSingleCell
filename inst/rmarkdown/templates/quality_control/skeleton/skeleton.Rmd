@@ -1,10 +1,11 @@
 ---
 title: "Quality control"
 date: "`r BiocStyle::doc_date()`"
+author: ""
 bibliography: bcbioSinglecell.bib
 ---
 
-```{r setup, include=FALSE}
+```{r setup, message=FALSE}
 library(bcbioRnaseq)
 setup(upload_dir = "final")
 ```

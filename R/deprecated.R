@@ -9,6 +9,15 @@
 
 #' @rdname deprecated
 #' @export
+barcode_metrics <- function(...) {
+    .Deprecated("metrics")
+    metrics(...)
+}
+
+
+
+#' @rdname deprecated
+#' @export
 combine_features <- function(...) {
     .Deprecated("aggregate_sparse_features")
     aggregate_sparse_features(...)

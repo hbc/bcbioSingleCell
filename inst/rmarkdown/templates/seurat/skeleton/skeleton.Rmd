@@ -1,11 +1,11 @@
 ---
 title: "Seurat clustering"
 date: "`r BiocStyle::doc_date()`"
-author: "Michael J. Steinbaugh"
+author: ""
 bibliography: bcbioSinglecell.bib
 ---
 
-```{r setup, include=FALSE}
+```{r setup, message=FALSE}
 library(Seurat)
 library(bcbioSinglecell)
 data(filtered_run)

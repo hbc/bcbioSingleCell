@@ -113,7 +113,7 @@ load_run <- function(
 
     # Generate barcode metrics
     message("Calculating barcode metrics...")
-    run$metrics <- barcode_metrics(run)
+    run$metrics <- metrics(run)
 
     # Final slots
     run$wd <- getwd()
