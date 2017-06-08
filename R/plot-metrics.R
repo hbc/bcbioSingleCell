@@ -57,6 +57,7 @@ plot_cell_counts <- function(run) {
 
 
 # Read counts ====
+# [fix] take out "total" in plot title
 plot_read_counts_boxplot <- function(run, min, type = "total") {
     if (!type %in% c("coding", "total")) {
         stop("Invalid counts column prefix")
