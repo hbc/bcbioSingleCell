@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output — read_bcbio_barcodes • bcbioSinglecell</title>
+<title>Top barcodes — top_barcodes • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -73,20 +73,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output</h1>
+    <h1>Top barcodes</h1>
     </div>
 
     
-    <p>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output</p>
-<p>Import transcript-level count data from a bcbio run into a
-sparse matrix.</p>
+    <p>Top barcodes</p>
     
 
-    <pre class="usage"><span class='fu'>read_bcbio_barcodes</span>(<span class='no'>run</span>)
-
-<span class='fu'>read_bcbio_counts</span>(<span class='no'>run</span>, <span class='kw'>strip_version</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>read_bcbio_programs</span>(<span class='no'>run</span>)</pre>
+    <pre class="usage"><span class='fu'>top_barcodes</span>(<span class='no'>run</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -96,14 +90,10 @@ sparse matrix.</p>
       <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
     </tr>
     <tr>
-      <th>strip_version</th>
-      <td><p>Strip transcript version from identifier.</p></td>
+      <th>n</th>
+      <td><p>Number of barcodes to return per sample.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Sparse counts matrix.</p>
     
 
   </div>
@@ -111,15 +101,7 @@ sparse matrix.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
-
-    <h2>Author</h2>
-    
-Michael Steinbaugh
-
-Rory Kirchner
+                </ul>
 
   </div>
 </div>

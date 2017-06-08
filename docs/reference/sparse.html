@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output — read_bcbio_barcodes • bcbioSinglecell</title>
+<title>Sparse matrix operations — aggregate_sparse_features • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -73,37 +73,42 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output</h1>
+    <h1>Sparse matrix operations</h1>
     </div>
 
     
-    <p>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output</p>
-<p>Import transcript-level count data from a bcbio run into a
-sparse matrix.</p>
+    <p>Collapse features with the same feature id by summing them.</p>
+<p>Pool cellular technical replicate counts.</p>
+<p>Strip transcript versions</p>
     
 
-    <pre class="usage"><span class='fu'>read_bcbio_barcodes</span>(<span class='no'>run</span>)
+    <pre class="usage"><span class='fu'>aggregate_sparse_features</span>(<span class='no'>sparse</span>, <span class='no'>featureids</span>)
 
-<span class='fu'>read_bcbio_counts</span>(<span class='no'>run</span>, <span class='kw'>strip_version</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>aggregate_sparse_replicates</span>(<span class='no'>sparse</span>, <span class='no'>cellids</span>)
 
-<span class='fu'>read_bcbio_programs</span>(<span class='no'>run</span>)</pre>
+<span class='fu'>strip_transcript_versions</span>(<span class='no'>sparse</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>run</th>
-      <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
+      <th>sparse</th>
+      <td><p>Sparse counts matrix.</p></td>
     </tr>
     <tr>
-      <th>strip_version</th>
-      <td><p>Strip transcript version from identifier.</p></td>
+      <th>featureids</th>
+      <td><p>New feature IDs for the collapsed features.</p></td>
+    </tr>
+    <tr>
+      <th>cellids</th>
+      <td><p>New cellular ids of the collapsed cells, one for each cell.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Sparse counts matrix.</p>
+    <p>Modified sparse matrix.</p>
+<p>Sparse counts matrix with the transcript versions stripped.</p>
     
 
   </div>
@@ -117,9 +122,9 @@ sparse matrix.</p>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
-
 Rory Kirchner
+
+Michael Steinbaugh
 
   </div>
 </div>

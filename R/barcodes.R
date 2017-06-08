@@ -12,7 +12,7 @@
 barcode_metrics <- function(run) {
     # Check for [Matrix::colSums()]
     if (!"colSums,dgCMatrix-method" %in% methods(colSums)) {
-        stop("Invalid colSums function loaded")
+        stop("Wrong `colSums()` loaded in NAMESPACE")
     }
 
     counts <- run$counts

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cell metrics quality control plots — plot_total_cells • bcbioSinglecell</title>
+<title>Cell metrics quality control plots — plot_cell_counts_barplot • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,76 +80,44 @@
     <p>Novelty score means log10 genes detected per count.</p>
     
 
-    <pre class="usage"><span class='fu'>plot_total_cells</span>(<span class='no'>run</span>)
+    <pre class="usage"><span class='fu'>plot_cell_counts_barplot</span>(<span class='no'>run</span>)
 
-<span class='fu'>plot_total_counts_histogram</span>(<span class='no'>run</span>)
+<span class='fu'>plot_cell_counts</span>(<span class='no'>run</span>)
 
-<span class='fu'>plot_total_counts_boxplot</span>(<span class='no'>run</span>)
+<span class='fu'>plot_read_counts</span>(<span class='no'>run</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>1000</span>)
 
-<span class='fu'>plot_genes_detected_boxplot</span>(<span class='no'>run</span>, <span class='kw'>min_genes</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"min_genes"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
-  <span class='fu'>parent.frame</span>()), <span class='kw'>max_genes</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"max_genes"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()))
+<span class='fu'>plot_genes_detected</span>(<span class='no'>run</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>plot_genes_detected_histogram</span>(<span class='no'>run</span>, <span class='kw'>min_genes</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"min_genes"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
-  <span class='fu'>parent.frame</span>()), <span class='kw'>max_genes</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"max_genes"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()))
+<span class='fu'>plot_reads_vs_genes</span>(<span class='no'>run</span>, <span class='kw'>intgroup</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>plot_total_vs_detected</span>(<span class='no'>run</span>, <span class='kw'>colorby</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>)
+<span class='fu'>plot_mito_ratio</span>(<span class='no'>run</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
 
-<span class='fu'>plot_mito_histogram</span>(<span class='no'>run</span>, <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"mito_ratio"</span>, <span class='kw'>envir</span> <span class='kw'>=</span>
-  <span class='fu'>parent.frame</span>()))
-
-<span class='fu'>plot_mito_boxplot</span>(<span class='no'>run</span>, <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"mito_ratio"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()))
-
-<span class='fu'>plot_mito_scatterplot</span>(<span class='no'>run</span>, <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>plot_novelty_histogram</span>(<span class='no'>run</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"novelty"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()))
-
-<span class='fu'>plot_novelty_boxplot</span>(<span class='no'>run</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fu'>get</span>(<span class='st'>"novelty"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>()))
-
-<span class='fu'>plot_total_counts</span>(<span class='no'>...</span>)
-
-<span class='fu'>plot_genes_detected</span>(<span class='no'>...</span>)
-
-<span class='fu'>plot_mito</span>(<span class='no'>...</span>)
-
-<span class='fu'>plot_novelty</span>(<span class='no'>...</span>)</pre>
+<span class='fu'>plot_novelty</span>(<span class='no'>run</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>run</th>
-      <td><p>bcbio-nextgen scRNA-seq run.</p></td>
+      <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
     </tr>
     <tr>
-      <th>min_genes</th>
-      <td><p>Recommended minimum gene count cutoff.</p></td>
+      <th>min</th>
+      <td><p>Recommended minimum value cutoff.</p></td>
     </tr>
     <tr>
-      <th>max_genes</th>
-      <td><p>Recommended maximum gene count cutoff.</p></td>
+      <th>max</th>
+      <td><p>Recommended maximum value cutoff.</p></td>
     </tr>
     <tr>
-      <th>colorby</th>
-      <td><p>Column to color the points by.</p></td>
-    </tr>
-    <tr>
-      <th>mito_ratio</th>
-      <td><p>Recommended maximum relative mitochondrial abundance cutoff
-value.</p></td>
-    </tr>
-    <tr>
-      <th>novelty</th>
-      <td><p>Recommended novelty cutoff value.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Passthrough parameters.</p></td>
+      <th>intgroup</th>
+      <td><p>Interesting group used to define colors.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>ggplot2 object.</p>
+    <p>ggplot.</p>
     
 
   </div>

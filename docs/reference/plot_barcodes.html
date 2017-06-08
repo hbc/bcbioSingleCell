@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output — read_bcbio_barcodes • bcbioSinglecell</title>
+<title>Plot cellular barcode distributions per sample — plot_barcodes • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -73,20 +73,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output</h1>
+    <h1>Plot cellular barcode distributions per sample</h1>
     </div>
 
     
-    <p>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output</p>
-<p>Import transcript-level count data from a bcbio run into a
-sparse matrix.</p>
+    <p>Plot cellular barcode distributions per sample</p>
     
 
-    <pre class="usage"><span class='fu'>read_bcbio_barcodes</span>(<span class='no'>run</span>)
-
-<span class='fu'>read_bcbio_counts</span>(<span class='no'>run</span>, <span class='kw'>strip_version</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>read_bcbio_programs</span>(<span class='no'>run</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_barcodes</span>(<span class='no'>run</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -95,15 +89,13 @@ sparse matrix.</p>
       <th>run</th>
       <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
     </tr>
-    <tr>
-      <th>strip_version</th>
-      <td><p>Strip transcript version from identifier.</p></td>
-    </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Sparse counts matrix.</p>
+    <p>A violin plot is a compact display of a continuous distribution. It
+is a blend of <code>geom_boxplot()</code> and <code>geom_density()</code>: a violin plot is a
+mirrored density plot displayed in the same way as a boxplot.</p>
     
 
   </div>
@@ -112,14 +104,14 @@ sparse matrix.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
           </ul>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
-
 Rory Kirchner
+
+Michael Steinbaugh
 
   </div>
 </div>
