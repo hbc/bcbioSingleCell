@@ -10,6 +10,12 @@ basejump::doc_date
 basejump::dot_notation
 
 #' @export
+basejump::group_by
+
+#' @export
+basejump::top_n
+
+#' @export
 basejump::save_data
 
 

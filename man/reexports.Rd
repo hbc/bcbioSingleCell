@@ -9,6 +9,10 @@
 \alias{reexports}
 \alias{dot_notation}
 \alias{reexports}
+\alias{group_by}
+\alias{reexports}
+\alias{top_n}
+\alias{reexports}
 \alias{save_data}
 \alias{reexports}
 \alias{colSums}
@@ -21,7 +25,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{doc_date}}, \code{\link[basejump]{dot_notation}}, \code{\link[basejump]{save_data}}}
+  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{doc_date}}, \code{\link[basejump]{dot_notation}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{save_data}}}
 
   \item{Matrix}{\code{\link[Matrix]{colSums}}, \code{\link[Matrix]{rowSums}}}
 }}
