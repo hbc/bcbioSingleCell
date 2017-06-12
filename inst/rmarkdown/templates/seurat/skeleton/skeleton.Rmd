@@ -166,7 +166,7 @@ PCElbowPlot(seurat, num.pc = num.pc) +
     geom_vline(alpha = 0.5,
                color = "green",
                size = 2,
-               xintercept = 10)
+               xintercept = pc.use)
 ```
 
 
