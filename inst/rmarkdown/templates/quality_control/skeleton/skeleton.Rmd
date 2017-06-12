@@ -7,8 +7,8 @@ bibliography: bcbioSinglecell.bib
 ---
 
 ```{r setup, message=FALSE}
-library(bcbioRnaseq)
-downloads()
+# Download dependency files, including setup.R with [bcbioRnaseq::downloads()].
+# Be sure to edit `setup.R` manually before attempting [knit()].
 source("setup.R")
 ```
 
