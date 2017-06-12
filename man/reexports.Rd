@@ -3,6 +3,8 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{dot_notation}
+\alias{reexports}
 \alias{colSums}
 \alias{reexports}
 \alias{rowSums}
@@ -13,6 +15,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{basejump}{\code{\link[basejump]{dot_notation}}}
+
   \item{Matrix}{\code{\link[Matrix]{colSums}}, \code{\link[Matrix]{rowSums}}}
 }}
 
