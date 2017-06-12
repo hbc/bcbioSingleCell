@@ -7,7 +7,8 @@ bibliography: bcbioSinglecell.bib
 
 ```{r setup, message=FALSE}
 library(bcbioRnaseq)
-setup(upload_dir = "final")
+downloads()
+source("setup.R")
 ```
 
 ```{r header, child="header.Rmd"}

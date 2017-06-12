@@ -8,10 +8,12 @@ bibliography: bcbioSinglecell.bib
 ```{r setup, message=FALSE}
 library(Seurat)
 library(bcbioSinglecell)
+source("setup.R")
 data(filtered_run)
 
 # Setup
-meta.data <- filtered_run$metrics %>% dotNotation
+# Seurat uses dot.notation instead of snake_case
+meta.data <- dot_notation(filtered_run$metrics, rownames = FALSE)
 raw.data <- filtered_run$counts
 
 # Cutoffs
