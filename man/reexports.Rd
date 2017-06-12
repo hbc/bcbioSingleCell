@@ -3,7 +3,13 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{\%>\%}
+\alias{reexports}
+\alias{doc_date}
+\alias{reexports}
 \alias{dot_notation}
+\alias{reexports}
+\alias{save_data}
 \alias{reexports}
 \alias{colSums}
 \alias{reexports}
@@ -15,7 +21,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{basejump}{\code{\link[basejump]{dot_notation}}}
+  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{doc_date}}, \code{\link[basejump]{dot_notation}}, \code{\link[basejump]{save_data}}}
 
   \item{Matrix}{\code{\link[Matrix]{colSums}}, \code{\link[Matrix]{rowSums}}}
 }}

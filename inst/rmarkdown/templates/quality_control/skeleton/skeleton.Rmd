@@ -1,7 +1,8 @@
 ---
 title: "Quality control"
-date: "`r BiocStyle::doc_date()`"
 author: ""
+date: "`r doc_date()`"
+template_date: "2017-06-12"
 bibliography: bcbioSinglecell.bib
 ---
 

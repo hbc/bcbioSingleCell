@@ -1,7 +1,8 @@
 ---
 title: "Seurat clustering"
-date: "`r BiocStyle::doc_date()`"
 author: ""
+date: "`r doc_date()`"
+template_date: "2017-06-12"
 bibliography: bcbioSinglecell.bib
 ---
 
@@ -19,7 +20,11 @@ raw.data <- filtered_run$counts
 # Cutoffs
 max.genes <- filtered_run$filter$max_genes
 min.genes <- filtered_run$filter$min_genes
-percent.mito <- filtered_run$filter$mito_ratio
+mito.ratio <- filtered_run$filter$mito_ratio
+
+hpc <- filtered_run$hpc
+num.pc <- 40
+pc.use <- 10
 ```
 
 ```{r header, child="header.Rmd"}
@@ -49,19 +54,19 @@ We recommend the following general filter criteria:
 seurat <- new("seurat", raw.data = raw.data) %>%
     Setup(project = "seurat", meta.data = meta.data, min.genes = min.genes) %>%
     SubsetData(subset.name = "nGene", accept.high = max.genes) %>%
-    SubsetData(subset.name = "percent.mito", accept.high = percent.mito)
+    SubsetData(subset.name = "mito.ratio", accept.high = mito.ratio)
 print(seurat)
 ```
 
 ```{r VlnPlot}
-VlnPlot(seurat, c("nGene", "nUMI", "percent.mito"), nCol = 3)
+VlnPlot(seurat, c("nGene", "nUMI", "mito.ratio"), nCol = 3)
 ```
 
 `GenePlot()` is typically used to visualize gene-gene relationships, but can be used for anything calculated by the object (e.g. `seurat@data.info` columns).
 
 ```{r GenePlot}
 par(mfrow = c(1, 2))
-GenePlot(seurat, "nUMI", "percent.mito")
+GenePlot(seurat, "nUMI", "mito.ratio")
 GenePlot(seurat, "nUMI", "nGene")
 ```
 
@@ -73,12 +78,12 @@ Your single cell experiment likely contains "uninteresting" sources of variation
 
 It is typically recommended to regress out cell-cell variation in gene expression driven by batch, the number of detected molecules, and mitochondrial gene expression. For cycling cells, we can also learn a "cell-cycle" score [@Macosko:2015ht] and regress this out as well.
 
-Here, let's regress effects on gene expression that are due to the number of genes detected (`nGene`), the total counts in the cell (`nUMI`), and the percent mitochondrial content (`percent.mito`).
+Here, let's regress effects on gene expression that are due to the number of genes detected (`nGene`), the total counts in the cell (`nUMI`), and the percent mitochondrial content (`mito.ratio`).
 
 ```{r RegressOut}
 seurat <- RegressOut(
     seurat,
-    latent.vars = c("nGene", "nUMI", "percent.mito"))
+    latent.vars = c("nGene", "nUMI", "mito.ratio"))
 ```
 
 
@@ -139,10 +144,6 @@ PCHeatmap(seurat,
 
 # Determine statistically significant principal components
 
-```{r num.pc}
-num.pc <- 30  # default
-```
-
 To overcome the extensive technical noise in any single gene for scRNA-seq data, [Seurat][] clusters cells based on their PCA scores, with each PC essentially representing a 'metagene' that combines information across a correlated gene set. Determining how many PCs to include downstream is therefore an important step.
 
 [Seurat][] implements a resampling test inspired by the `jackStraw` procedure [@Macosko:2015ht]. We randomly permute a subset of the data (1% by default) and rerun PCA, constructing a "null distribution" of gene scores, and repeat this procedure. We identify "significant" PCs as those who have a strong enrichment of low p-value genes.
@@ -175,7 +176,6 @@ PCElbowPlot(seurat, num.pc = num.pc) +
 Here we will use the selected PCs to find clusters of cells via heirarchical clustering, then run t-Distributed Stochastic Neighbor Embedding (t-SNE) analysis [@vanderMaaten:2008tm].
 
 ```{r FindClusters}
-pc.use <- 10
 seurat <- FindClusters(
     seurat,
     pc.use = 1:pc.use,
@@ -187,7 +187,6 @@ seurat <- FindClusters(
 seurat <- RunTSNE(
     seurat,
     dims.use = 1:pc.use,
-    # Run Barnes-hut fast mode locally in RStudio
     do.fast = !isTRUE(hpc))
 TSNEPlot(seurat, do.label = TRUE)
 TSNEPlot(seurat, do.label = TRUE, group.by = "sample.name")
@@ -203,11 +202,11 @@ PCAPlot(seurat, group.by = "sample.name")
 
 # Cluster quality control
 
-Let's look at the variance in the number of genes detected (`nGene`) and the percentage of mitochondrial gene expression (`percent.mito`), to see if any abberant cells are clustering.
+Let's look at the variance in the number of genes detected (`nGene`) and the percentage of mitochondrial gene expression (`mito.ratio`), to see if any abberant cells are clustering.
 
 ```{r qc}
 FeaturePlot(seurat, "nGene", cols.use = c("grey","green"))
-FeaturePlot(seurat, "percent.mito", cols.use = c("grey","red"))
+FeaturePlot(seurat, "mito.ratio", cols.use = c("grey","red"))
 ```
 
 

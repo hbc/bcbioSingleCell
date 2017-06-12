@@ -1,3 +1,4 @@
+0.0.10  Update RMarkdown templates.
 0.0.9   Compatibility update for basejump S4 NAMESPACE changes.
         Improve plots for quality control and filtering.
 0.0.8   Rename mitochondrial plot functions.
