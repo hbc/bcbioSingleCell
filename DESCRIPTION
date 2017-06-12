@@ -28,7 +28,7 @@ Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
-    basejump (>= 0.0.13),
+    basejump (>= 0.0.14),
     Biobase,
     ggplot2 (>= 2.2.1),
     Matrix,
