@@ -6,9 +6,9 @@
 \alias{bcbioSCDataSet}
 \title{Class that contains bcbio run information}
 \description{
-\code{bcbioSCDataSet} is a subclass of \link{SCESet} designed to store a single-cell
-RNA-seq analysis. This class contains experiment metadata, raw counts,
-normalilzed counts, and summary statistics for each sample analyzed.
+\code{bcbioSCDataSet} is a subclass of \link{SummarizedExperiment} designed to store a
+single-cell RNA-seq analysis. This class contains experiment metadata, raw
+counts, normalilzed counts, and summary statistics for each sample analyzed.
 }
 \details{
 Methods for this objects ...
