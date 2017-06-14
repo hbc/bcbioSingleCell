@@ -9,10 +9,11 @@
 #' @import ggplot2
 #' @import methods
 #' @import SummarizedExperiment
-#' @importFrom Matrix colSums readMM rowSums writeMM
+#' @import S4Vectors
+#' @importFrom Matrix readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom scales math_format trans_breaks trans_format
-#' @importFrom stats aggregate median
+#' @importFrom stats median
 #' @importFrom utils methods
 "_PACKAGE"
 
