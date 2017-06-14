@@ -17,13 +17,3 @@ basejump::top_n
 
 #' @export
 basejump::save_data
-
-
-
-# Matrix ====
-# Re-export, as to not confuse with base or BiocGeneric variants
-#' @export
-Matrix::colSums
-
-#' @export
-Matrix::rowSums
