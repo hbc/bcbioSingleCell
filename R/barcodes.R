@@ -10,9 +10,9 @@
 #' @return Tibble grouped by sample name.
 #' @export
 metrics <- function(run) {
-    # Check for [Matrix::colSums()]
+    # Check for [Matrix::colSums()] methods support
     if (!"colSums,dgCMatrix-method" %in% methods(colSums)) {
-        stop("Wrong `colSums()` loaded in NAMESPACE")
+        stop("dgCMatrix not supported in `colSums()`")
     }
 
     counts <- run$counts
@@ -32,14 +32,14 @@ metrics <- function(run) {
         tidy_select(.data$external_gene_name) %>%
         .[[1]] %>% unique %>% sort
 
-    tibble(
+    data.frame(
         # Unique: `file_name` + `sample_barcode` + `cellular_barcode`
         unique = colnames(counts),
-        total_counts = colSums(counts),
-        genes_detected = colSums(counts > 0),
-        coding_counts = colSums(
+        total_counts = Matrix::colSums(counts),
+        genes_detected = Matrix::colSums(counts > 0),
+        coding_counts = Matrix::colSums(
             counts[rownames(counts) %in% coding, ]),
-        mito_counts = colSums(
+        mito_counts = Matrix::colSums(
             counts[rownames(counts) %in% mito, ])) %>%
         # Separate the barcodes, later used to join metadata
         separate_("unique",
@@ -53,8 +53,6 @@ metrics <- function(run) {
                mito_ratio = .data$mito_counts / .data$total_counts) %>%
         left_join(metadata[, c("sample_barcode", "sample_name")],
                   by = "sample_barcode") %>%
-        # Filter barcodes matching samples
-        filter(!is.na(.data$sample_name)) %>%
         # Select sample name first
         tidy_select(.data$sample_name,
                     .data$sample_barcode,
@@ -67,7 +65,8 @@ metrics <- function(run) {
                                .data$cellular_barcode,
                                sep = ":")) %>%
         as.data.frame %>%
-        column_to_rownames
+        column_to_rownames %>%
+        DataFrame
 }
 
 
