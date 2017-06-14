@@ -14,10 +14,6 @@
 \alias{top_n}
 \alias{reexports}
 \alias{save_data}
-\alias{reexports}
-\alias{colSums}
-\alias{reexports}
-\alias{rowSums}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -26,7 +22,5 @@ below to see their documentation.
 
 \describe{
   \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{doc_date}}, \code{\link[basejump]{dot_notation}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{save_data}}}
-
-  \item{Matrix}{\code{\link[Matrix]{colSums}}, \code{\link[Matrix]{rowSums}}}
 }}
 

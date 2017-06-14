@@ -1,8 +1,8 @@
 ---
 title: "Seurat clustering"
 author: ""
-date: "`r doc_date()`"
-template_date: "2017-06-12"
+date: "`r Sys.Date()`"
+template_date: "2017-06-13"
 bibliography: bcbioSinglecell.bib
 ---
 
