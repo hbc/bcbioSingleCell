@@ -1,7 +1,6 @@
-language: R
+language: r
 cache: packages
 sudo: false
-r: bioc-devel
-
-r_github_packages: tidyverse/dplyr
-warnings_are_errors: false
+r:
+  - bioc-release
+  - bioc-devel
