@@ -9,6 +9,7 @@
 read_barcode_file <- function(file_name) {
     df <- read_tsv(file_name,
                    col_names = c("cellular_barcode", "reads"),
+                   col_types = cols(),
                    progress = FALSE)
     df$reads %>%
         as.numeric %>%
@@ -71,7 +72,9 @@ read_bcbio_counts <- function(run, strip_version = TRUE) {
 #' @export
 read_bcbio_programs <- function(run) {
     file.path(run$project_dir, "programs.txt") %>%
-        read_delim(",", col_names = c("program", "version"))
+        read_delim(",",
+                   col_names = c("program", "version"),
+                   col_types = cols())
 }
 
 
@@ -136,7 +139,7 @@ read_counts <- function(matrix_file) {
 #' @return Data frame.
 #' @export
 read_csv_with_rownames <- function(filename, column) {
-    dat <- read_csv(filename, progress = FALSE) %>%
+    dat <- read_csv(filename, col_types = cols(), progress = FALSE) %>%
         as.data.frame
     rownames(dat) <- dat[, column]
     dat[, column] <- NULL
