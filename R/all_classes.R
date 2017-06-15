@@ -78,7 +78,9 @@ load_run <- function(
         assays = SimpleList(counts = counts),
         colData = colData,
         metadata = run)
+
     # Print the object size (for testing)
     object.size(se) %>% print(units = "auto")
-    .bcbioRnaDataSet(se, run)
+
+    .bcbioSCDataSet(se, run)
 }

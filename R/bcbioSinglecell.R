@@ -10,11 +10,11 @@
 #' @import methods
 #' @import SummarizedExperiment
 #' @import S4Vectors
-#' @importFrom Matrix readMM writeMM
+#' @importFrom Matrix cBind readMM writeMM
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom scales math_format trans_breaks trans_format
 #' @importFrom stats median
-#' @importFrom utils methods
+#' @importFrom utils methods object.size
 "_PACKAGE"
 
 globalVariables(".")
