@@ -8,6 +8,7 @@
 #' @param aggregate Aggregate samples into single sparse matrix.
 #'
 #' @return Sparse counts matrix (`dgCMatrix`).
+#' @export
 read_10x <- function(data_dir, aggregate = TRUE) {
     # Recurse through specific data directory and identify sample subdirectories
     # by the presence of a `matrix.mtx` counts file.
