@@ -22,7 +22,7 @@ read_10x <- function(data_dir, aggregate = TRUE) {
         set_names(basename(.))
     message(paste(length(sample_dirs), "samples detected"))
     message("Reading 10X Chromium samples...")
-    lst <- pbmclapply(seq_along(sample_dirs), function(a) {
+    lst <- pblapply(seq_along(sample_dirs), function(a) {
         name <- names(sample_dirs)[a]
         sample_dir <- sample_dirs[a]
         barcodes_file <- file.path(sample_dir, "barcodes.tsv")
