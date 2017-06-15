@@ -55,7 +55,8 @@ read_10x <- function(data_dir, aggregate = TRUE) {
         # Assign gene names (symbols) to rownames
         genes <- read_tsv(genes_file,
                           col_names = c("ensembl_gene_id",
-                                        "external_gene_name"))
+                                        "external_gene_name"),
+                          col_types = cols())
         rownames(counts) <- make.unique(genes$external_gene_name)
 
         # Coerce dgTMatrix to dgCMatrix (sparse)
