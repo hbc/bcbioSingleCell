@@ -186,7 +186,7 @@ seurat <- FindClusters(
 seurat <- RunTSNE(
     seurat,
     dims.use = 1:pc.use,
-    # Barnes-hut implementation is way faster
+    # Barnes-hut implementation (fast mode) is recommended
     do.fast = TRUE)
 TSNEPlot(seurat, do.label = TRUE)
 TSNEPlot(seurat, do.label = TRUE, group.by = "sample.name")
