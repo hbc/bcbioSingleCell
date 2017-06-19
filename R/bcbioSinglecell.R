@@ -4,6 +4,7 @@
 #'
 #' @keywords internal
 #'
+#' @import annotables
 #' @import basejump
 #' @import Biobase
 #' @import ggplot2
@@ -20,6 +21,7 @@
 globalVariables(".")
 
 bins <- 100
+
 fail_color <- "red"
 pass_color <- "green"
 warn_color <- "orange"
