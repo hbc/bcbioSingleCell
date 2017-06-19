@@ -176,6 +176,7 @@ Here we will use the selected PCs to find clusters of cells via heirarchical clu
 pc.use <- 10
 seurat <- FindClusters(
     seurat,
+    do.sparse = TRUE,  # required for large datasets
     pc.use = 1:pc.use,
     print.output = FALSE,
     save.SNN = TRUE)
