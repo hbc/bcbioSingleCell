@@ -16,7 +16,7 @@
 
 
 # Cell counts ====
-plot_cell_counts_barplot <- function(run) {
+.plot_cell_counts_barplot <- function(run) {
     if (!is.null(run$lanes)) {
         plot <- run$metrics %>%
             left_join(run$metadata,
@@ -44,21 +44,21 @@ plot_cell_counts_barplot <- function(run) {
         geom_bar(stat = "identity") +
         geom_text(vjust = -0.5, aes_(label = ~cells)) +
         theme(
-            axis.text.x = element_text(angle = 90, hjust = 1),
+            axis.text.x = element_text(angle = 90L, hjust = 1L),
             legend.position = "none")
 }
 
 #' @rdname qc_plots_metrics
 #' @export
 plot_cell_counts <- function(run) {
-    show(plot_cell_counts_barplot(run))
+    show(.plot_cell_counts_barplot(run))
 }
 
 
 
 # Read counts ====
-# [fix] take out "total" in plot title
-plot_read_counts_boxplot <- function(run, min, type = "total") {
+# [TODO] Take out "total" in plot title
+.plot_read_counts_boxplot <- function(run, min, type = "total") {
     if (!type %in% c("coding", "total")) {
         stop("Invalid counts column prefix")
     }
@@ -83,13 +83,13 @@ plot_read_counts_boxplot <- function(run, min, type = "total") {
             alpha = 0.75,
             label.padding = unit(0.1, "lines")) +
         scale_y_log10() +
-        expand_limits(y = 1) +
+        expand_limits(y = 1L) +
         theme(
-            axis.text.x = element_text(angle = 90, hjust = 1),
+            axis.text.x = element_text(angle = 90L, hjust = 1L),
             legend.position = "none")
 }
 
-plot_read_counts_histogram <- function(run, min, type = "total") {
+.plot_read_counts_histogram <- function(run, min, type = "total") {
     if (!type %in% c("coding", "total")) {
         stop("Invalid counts column prefix")
     }
@@ -114,16 +114,16 @@ plot_read_counts_histogram <- function(run, min, type = "total") {
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_read_counts <- function(run, min = 1000) {
-    show(plot_read_counts_boxplot(run, min))
-    show(plot_read_counts_histogram(run, min))
-    # [fix] add coding / total ratio plot?
+plot_read_counts <- function(run, min = 1000L) {
+    show(.plot_read_counts_boxplot(run, min))
+    show(.plot_read_counts_histogram(run, min))
+    # [TODO] Add coding / total ratio plot?
 }
 
 
 
 # Genes detected ====
-plot_genes_detected_boxplot <- function(run, min, max) {
+.plot_genes_detected_boxplot <- function(run, min, max) {
     plot <- run$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
@@ -154,7 +154,7 @@ plot_genes_detected_boxplot <- function(run, min, max) {
     plot
 }
 
-plot_genes_detected_histogram <- function(run, min, max) {
+.plot_genes_detected_histogram <- function(run, min, max) {
     plot <- run$metrics %>%
         ggplot(
             aes_(x = ~genes_detected,
@@ -180,8 +180,8 @@ plot_genes_detected_histogram <- function(run, min, max) {
 #' @rdname qc_plots_metrics
 #' @export
 plot_genes_detected <- function(run, min = 500, max = NULL) {
-    show(plot_genes_detected_boxplot(run, min, max))
-    show(plot_genes_detected_histogram(run, min, max))
+    show(.plot_genes_detected_boxplot(run, min, max))
+    show(.plot_genes_detected_histogram(run, min, max))
 }
 
 
@@ -217,7 +217,7 @@ plot_reads_vs_genes <- function(run, intgroup = NULL) {
 
 
 # Mitochondrial abundance ====
-plot_mito_ratio_boxplot <- function(run, max) {
+.plot_mito_ratio_boxplot <- function(run, max) {
     run$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
@@ -243,7 +243,7 @@ plot_mito_ratio_boxplot <- function(run, max) {
             legend.position = "none")
 }
 
-plot_mito_ratio_histogram <- function(run, max) {
+.plot_mito_ratio_histogram <- function(run, max) {
     run$metrics %>%
         ggplot(
             aes_(x = ~mito_ratio,
@@ -260,7 +260,7 @@ plot_mito_ratio_histogram <- function(run, max) {
             legend.position = "none")
 }
 
-plot_mito_ratio_scatterplot <- function(run) {
+.plot_mito_ratio_scatterplot <- function(run) {
     run$metrics %>%
         ggplot(
             aes_(x = ~coding_counts,
@@ -279,15 +279,15 @@ plot_mito_ratio_scatterplot <- function(run) {
 #' @rdname qc_plots_metrics
 #' @export
 plot_mito_ratio <- function(run, max = 0.2) {
-    show(plot_mito_ratio_boxplot(run, max))
-    show(plot_mito_ratio_histogram(run, max))
-    show(plot_mito_ratio_scatterplot(run))
+    show(.plot_mito_ratio_boxplot(run, max))
+    show(.plot_mito_ratio_histogram(run, max))
+    show(.plot_mito_ratio_scatterplot(run))
 }
 
 
 
 # Novelty ====
-plot_novelty_boxplot <- function(run, min) {
+.plot_novelty_boxplot <- function(run, min) {
     run$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
@@ -302,16 +302,16 @@ plot_novelty_boxplot <- function(run, min) {
             data = aggregate(log10_detected_per_count ~ sample_name,
                              run$metrics,
                              median),
-            aes_(label = ~round(log10_detected_per_count, digits = 2)),
+            aes_(label = ~round(log10_detected_per_count, digits = 2L)),
             alpha = 0.75,
             label.padding = unit(0.1, "lines")) +
         expand_limits(y = 0) +
         theme(
-            axis.text.x = element_text(angle = 90, hjust = 1),
+            axis.text.x = element_text(angle = 90L, hjust = 1L),
             legend.position = "none")
 }
 
-plot_novelty_histogram <- function(run, min) {
+.plot_novelty_histogram <- function(run, min) {
     run$metrics %>%
         ggplot(
             aes_(x = ~log10_detected_per_count,
@@ -321,16 +321,16 @@ plot_novelty_histogram <- function(run, min) {
         facet_wrap(~sample_name) +
         geom_histogram(bins = bins) +
         geom_vline(color = warn_color, xintercept = min) +
-        xlim(0, 1) +
+        xlim(0L, 1L) +
         scale_y_sqrt() +
         theme(
-            axis.text.x = element_text(angle = 90, hjust = 1),
+            axis.text.x = element_text(angle = 90L, hjust = 1L),
             legend.position = "none")
 }
 
 #' @rdname qc_plots_metrics
 #' @export
 plot_novelty <- function(run, min = 0.8) {
-    show(plot_novelty_boxplot(run, min))
-    show(plot_novelty_histogram(run, min))
+    show(.plot_novelty_boxplot(run, min))
+    show(.plot_novelty_histogram(run, min))
 }

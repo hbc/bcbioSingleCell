@@ -2,18 +2,20 @@
 #'
 #' Read into sparse matrix from barcodes.tsv, genes.tsv, and matrix.mtx files.
 #'
+#' @rdname tenx
+#' @keywords internal
+#'
 #' @author Michael Steinbaugh
 #'
-#' @param data_dir Data directory.
+#' @param upload_dir Final upload directory.
 #' @param aggregate Aggregate samples into single sparse matrix.
 #'
 #' @return Sparse counts matrix (`dgCMatrix`).
-#' @export
-read_10x <- function(data_dir, aggregate = TRUE) {
+.tenx <- function(upload_dir, aggregate = TRUE) {
     # Recurse through specific data directory and identify sample subdirectories
     # by the presence of a `matrix.mtx` counts file.
     sample_dirs <- list.files(
-        data_dir,
+        upload_dir,
         full.names = TRUE,
         pattern = "matrix.mtx",
         recursive = TRUE) %>%
@@ -63,12 +65,12 @@ read_10x <- function(data_dir, aggregate = TRUE) {
         as(counts, "dgCMatrix")
     }) %>% set_names(names(sample_dirs))
 
-    # Aggregate the counts, if desired (default)
     if (isTRUE(aggregate)) {
+        # Aggregate the counts, if desired
         message("Aggregating samples to a single sparse matrix...")
         do.call(cBind, lst)
     } else {
-        # Otherwise, return as a list
+        # Otherwise, return a per-sample list
         lst
     }
 }
