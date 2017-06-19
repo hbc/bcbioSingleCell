@@ -1,4 +1,5 @@
 ^.*\.Rproj$
+^\.lintr$
 ^\.Rprofile$
 ^\.Rproj\.user$
 ^\.travis\.yml$
