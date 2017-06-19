@@ -22,7 +22,6 @@ max.genes <- filtered_run$filter$max_genes
 min.genes <- filtered_run$filter$min_genes
 mito.ratio <- filtered_run$filter$mito_ratio
 
-hpc <- filtered_run$hpc
 num.pc <- 40
 pc.use <- 10
 ```
@@ -150,7 +149,7 @@ To overcome the extensive technical noise in any single gene for scRNA-seq data,
 
 The `JackStrawPlot()` function provides a visualization tool for comparing the distribution of p-values for each PC with a uniform distribution (dashed line). "Significant" PCs will show a strong enrichment of genes with low p-values (solid curve above the dashed line). Running this process takes a long time for big datasets. More approximate techniques such as those implemented in `PCElbowPlot()` are much faster.
 
-```{r JackStraw, eval=hpc}
+```{r JackStraw, eval=isTRUE(detect_hpc))}
 # Run this only in HPC environment, CPU intensive
 seurat <- JackStraw(
     seurat,
@@ -178,6 +177,7 @@ Here we will use the selected PCs to find clusters of cells via heirarchical clu
 ```{r FindClusters}
 seurat <- FindClusters(
     seurat,
+    do.sparse = TRUE,  # required for large datasets
     pc.use = 1:pc.use,
     print.output = FALSE,
     save.SNN = TRUE)
@@ -187,7 +187,8 @@ seurat <- FindClusters(
 seurat <- RunTSNE(
     seurat,
     dims.use = 1:pc.use,
-    do.fast = !isTRUE(hpc))
+    # Barnes-hut implementation (fast mode) is recommended
+    do.fast = TRUE)
 TSNEPlot(seurat, do.label = TRUE)
 TSNEPlot(seurat, do.label = TRUE, group.by = "sample.name")
 ```
@@ -213,10 +214,7 @@ FeaturePlot(seurat, "mito.ratio", cols.use = c("grey","red"))
 
 # Save the [Seurat][] analysis
 
-```{r save}
-# How to obtain barcodes by cluster
-# seurat@ident
-slotNames(seurat)
+```{r save_data}
 save_data(seurat)
 ```
 
