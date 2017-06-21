@@ -232,6 +232,8 @@ top_barcodes <- function(run, n = 2) {
 unlist_barcodes <- function(run) {
     barcodes <- run$barcodes
     message("Converting nested barcodes to data frame...")
+    sample_metadata = run$metadata[, c("sample_id", "sample_name")] %>%
+      unique()
     pbmclapply(seq_along(barcodes), function(a) {
         barcodes[a] %>%
             as.data.frame %>%
@@ -240,8 +242,7 @@ unlist_barcodes <- function(run) {
             arrange(!!!syms(c("reads", "cellular_barcode"))) %>%
             mutate(log10_reads = log10(.data$reads),
                    cell_id = paste(names(barcodes[a]), names(barcodes[[a]]), sep=":"),
-                   sample_barcode = names(barcodes[a]))
+                   sample_id = names(barcodes[a]))
     }) %>% bind_rows %>%
-        left_join(run$metadata[, c("sample_barcode", "sample_name", "cell_id")],
-                  by = "cell_id")
+      left_join(sample_metadata, by="sample_id")
 }
