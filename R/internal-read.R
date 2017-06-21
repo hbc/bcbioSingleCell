@@ -1,12 +1,9 @@
-#' Read sample cellular barcode summary file
-#'
-#' @keywords internal
-#' @author Rory Kirchner
-#'
-#' @param file_name File name.
-#'
-#' @export
-read_barcode_file <- function(file_name) {
+# Read sample cellular barcode summary file
+#
+# @author Rory Kirchner
+#
+# @param file_name File name.
+.barcode_file <- function(file_name) {
     df <- read_tsv(file_name,
                    col_names = c("cellular_barcode", "reads"),
                    col_types = cols(),
@@ -19,17 +16,13 @@ read_barcode_file <- function(file_name) {
 
 
 
-#' Read [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen) output
-#'
-#' @rdname read_bcbio
-#'
-#' @author Michael Steinbaugh
-#' @author Rory Kirchner
-#'
-#' @param run [bcbioSCDataSet].
-#'
-#' @export
-read_bcbio_barcodes <- function(run) {
+# Read [bcbio-nextgen](https://github.com/chapmanb/bcbio-nextgen) output
+#
+# @author Michael Steinbaugh
+# @author Rory Kirchner
+#
+# @param run [bcbioSCDataSet].
+.barcodes <- function(run) {
     files <- run$sample_dirs %>%
         file.path(., paste(basename(.), "barcodes.tsv", sep = "-")) %>%
         set_names(names(run$sample_dirs))
@@ -38,20 +31,21 @@ read_bcbio_barcodes <- function(run) {
         return(NULL)
     }
     message("Reading barcode distributions...")
-    list <- pbmclapply(seq_along(files), function(a) {
+    pbmclapply(seq_along(files), function(a) {
         read_barcode_file(files[a])
     }) %>% set_names(names(files))
 }
 
 
 
-#' @rdname read_bcbio
-#' @description Import transcript-level count data from a bcbio run into a
-#'   sparse matrix.
-#' @param strip_version Strip transcript version from identifier.
-#' @return Sparse counts matrix.
-#' @export
-read_bcbio_counts <- function(run, strip_version = TRUE) {
+# Import transcript-level count data from a bcbio run into a sparse matrix
+#
+# @author Michael Steinbaugh
+#
+# @param strip_version Strip transcript version from identifier.
+#
+# @return Sparse counts matrix.
+.counts <- function(run, strip_version = TRUE) {
     counts <- file.path(run$project_dir, "tagcounts.mtx") %>% read_counts
     if (isTRUE(strip_version)) {
         counts <- strip_transcript_versions(counts)
@@ -68,30 +62,17 @@ read_bcbio_counts <- function(run, strip_version = TRUE) {
 
 
 
-#' @rdname read_bcbio
-#' @export
-read_bcbio_programs <- function(run) {
-    file.path(run$project_dir, "programs.txt") %>%
-        read_delim(",",
-                   col_names = c("program", "version"),
-                   col_types = cols())
-}
-
-
-
-#' Read a MatrixMart file, setting the row and column names
-#'
-#' Note that for a bcbio run, this function will return transcript-level counts.
-#'
-#' @keywords internal
-#' @author Rory Kirchner
-#' @author Michael Steinbaugh
-#'
-#' @param matrix_file MatrixMart file to read.
-#'
-#' @return Sparse counts matrix.
-#' @export
-read_counts <- function(matrix_file) {
+# Read a MatrixMart file, setting the row and column names
+#
+# Note that for a bcbio run, this function will return transcript-level counts.
+#
+# @author Rory Kirchner
+# @author Michael Steinbaugh
+#
+# @param matrix_file MatrixMart file to read.
+#
+# @return Sparse counts matrix.
+.counts2 <- function(matrix_file) {
     # Detect gzip file
     pattern <- "\\.gz$"
     if (str_detect(matrix_file, pattern)) {
@@ -128,17 +109,24 @@ read_counts <- function(matrix_file) {
 
 
 
-#' Read a CSV file with readr, setting a given column as the rownames
-#'
-#' @keywords internal
-#' @author Rory Kirchner
-#'
-#' @param filename CSV to read.
-#' @param column Column to make into the rownames.
-#'
-#' @return Data frame.
-#' @export
-read_csv_with_rownames <- function(filename, column) {
+.program_versions <- function(project_dir) {
+    file.path(project_dir, "programs.txt") %>%
+        read_delim(",",
+                   col_names = c("program", "version"),
+                   col_types = "cc")
+}
+
+
+
+# Read a CSV file with readr, setting a given column as the rownames
+#
+# @author Rory Kirchner
+#
+# @param filename CSV to read.
+# @param column Column to make into the rownames.
+#
+# @return Data frame.
+.csv_with_rownames <- function(filename, column) {
     dat <- read_csv(filename, col_types = cols(), progress = FALSE) %>%
         as.data.frame
     rownames(dat) <- dat[, column]
@@ -148,17 +136,16 @@ read_csv_with_rownames <- function(filename, column) {
 
 
 
-#' Read metadata
-#'
-#' @keywords internal
-#' @author Michael Steinbaugh
-#'
-#' @param run bcbio-nextgen run.
-#' @param pattern Apply grep pattern matching to samples.
-#' @param pattern_col Column in data frame used for pattern subsetting.
-#'
-#' @return Metadata data frame.
-read_metadata <- function(
+# Read metadata
+#
+# @author Michael Steinbaugh
+#
+# @param run bcbio-nextgen run.
+# @param pattern Apply grep pattern matching to samples.
+# @param pattern_col Column in data frame used for pattern subsetting.
+#
+# @return Metadata data frame.
+.metadata <- function(
     run,
     pattern = NULL,
     pattern_col = "sample_name") {

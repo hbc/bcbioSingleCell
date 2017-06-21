@@ -12,10 +12,9 @@
 #' @param ... Matrix count data.
 #'
 #' @return Matrix/Object containing count data.
+NULL
 
-#' @rdname bcbio
-#' @export
-setGeneric("bcbio", function(object, ...) standardGeneric("bcbio"))
+
 
 #' @rdname bcbio
 #' @export
@@ -24,18 +23,12 @@ bcbio.bcbioSCDataSet <- function(object, type = "counts") {
         return(assays(object)[["counts"]])
     if (type %in% names(slot(object, "callers")))
         return(slot(object, "callers")[[type]])
-    message(type, " not found.")
+    message(type, " not found")
 }
 
 #' @rdname bcbio
 #' @export
-setMethod("bcbio",
-          signature(object = "bcbioSCDataSet"),
-          bcbio.bcbioSCDataSet)
-
-#' @rdname bcbio
-#' @export
-setGeneric("bcbio<-", function(object, ..., value) standardGeneric("bcbio<-"))
+setMethod("bcbio", signature(object = "bcbioSCDataSet"), bcbio.bcbioSCDataSet)
 
 #' @rdname bcbio
 #' @exportMethod "bcbio<-"

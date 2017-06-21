@@ -1,3 +1,4 @@
+0.0.11  Add testthat, lintr, and covr support for code coverage.
 0.0.10  Update RMarkdown templates.
 0.0.9   Compatibility update for basejump S4 NAMESPACE changes.
         Improve plots for quality control and filtering.
