@@ -7,7 +7,8 @@
 #'
 #' @param upload_dir Path to final upload directory. This path is set when
 #'   running \code{bcbio_nextgen -w template}.
-#' @param metadata_file Sample barcode metadata file.
+#' @param sample_metadata_file Sample metadata file.
+#' @param well_metadata_file Well metadata file.
 #' @param organism Organism name, following Ensembl/Biomart conventions. Must be
 #'   lowercase and one word (e.g. hsapiens). This will be detected automatically
 #'   for common reference genomes.
@@ -19,7 +20,8 @@
 #' @export
 load_run <- function(
     upload_dir = "final",
-    metadata_file = file.path("meta", "indrop_rnaseq.xlsx"),
+    sample_metadata_file = NULL,
+    well_metadata_file = NULL,
     organism,
     intgroup = "sample_name") {
     # Switch to `bcbioScDataSet` S4 class
@@ -31,11 +33,27 @@ load_run <- function(
     }
     run$upload_dir <- normalizePath(upload_dir)
 
-    # metadata_file
-    if (!file.exists(metadata_file)) {
-        stop("Metadata file missing")
+    # set sample data file if available
+    run$sample_metadata_file <- sample_metadata_file
+    if(!is.null(run$sample_metadata_file)) {
+      if(!file.exists(run$sample_metadata_file)) {
+        stop("Sample metadata file is specified, but missing.")
+      }
+      else {
+        run$sample_metadata_file = normalizePath(run$sample_metadata_file)
+      }
     }
-    run$metadata_file <- normalizePath(metadata_file)
+
+    # set well data file if available
+    run$well_metadata_file <- well_metadata_file
+    if(!is.null(run$well_metadata_file)) {
+      if(!file.exists(run$well_metadata_file)) {
+        stop("Well metadata file is specified, but missing.")
+      }
+      else {
+        run$sample_metadata_file = normalizePath(run$sample_metadata_file)
+      }
+    }
 
     # organism
     run$organism <- organism
@@ -71,29 +89,7 @@ load_run <- function(
         stop("No sample directories in run")
     }
     message(paste(length(sample_dirs), "samples detected in run"))
-
-    # Detect number of sample lanes
-    lane_pattern <- "_L(\\d{3})"
-    if (any(str_detect(sample_dirs, lane_pattern))) {
-        lanes <- str_match(names(sample_dirs), lane_pattern) %>%
-            .[, 2] %>% unique %>% length
-        message(paste(lanes, "lane replicates per sample detected"))
-    } else {
-        lanes <- NULL
-    }
-    run$lanes <- lanes
-
-    # Metadata data frame, with sample_barcode rownames
-    run$metadata <- read_metadata(run)
-
-    # Check that metadata matches the sample_dirs
-    if (!all(run$metadata$sample_barcode %in% names(sample_dirs))) {
-        stop("Sample name mismatch between directories and metadata")
-    }
-
-    # Subset sample dirs by matching sample barcodes in metadata
-    run$sample_dirs <- sample_dirs[run$metadata$sample_barcode]
-    message(paste(length(run$sample_dirs), "samples matched by metadata"))
+    run$sample_dirs = sample_dirs
 
     # Save Ensembl annotations for all genes
     run$ensembl <- ensembl_annotations(run)
@@ -106,6 +102,9 @@ load_run <- function(
     # Read counts into a sparse matrix
     message("Reading counts into sparse matrix...")
     run$counts <- read_bcbio_counts(run)
+
+    # Reading metadata about samples and wells
+    run$metadata <- read_metadata(run)
 
     # Read cellular barcode distributions
     message("Reading cellular barcode distributions...")

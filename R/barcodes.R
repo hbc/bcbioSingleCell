@@ -34,25 +34,19 @@ barcode_metrics <- function(run) {
 
     tibble(
         # Unique: `file_name` + `sample_barcode` + `cellular_barcode`
-        unique = colnames(counts),
+        cell_id = colnames(counts),
         total_counts = colSums(counts),
         genes_detected = colSums(counts > 0),
         coding_counts = colSums(
             counts[rownames(counts) %in% coding, ]),
         mito_counts = colSums(
             counts[rownames(counts) %in% mito, ])) %>%
-        # Separate the barcodes, later used to join metadata
-        separate_("unique",
-                  c("sample_barcode", "cellular_barcode"),
-                  sep = ":",
-                  remove = FALSE) %>%
         # Summary statistics
-        mutate(unique = NULL,
-               log10_detected_per_count = log10(.data$genes_detected) /
+        mutate(log10_detected_per_count = log10(.data$genes_detected) /
                    log10(.data$total_counts),
                mito_ratio = .data$mito_counts / .data$total_counts) %>%
-        left_join(metadata[, c("sample_barcode", "sample_name")],
-                  by = "sample_barcode") %>%
+        left_join(metadata[, c("cell_id", "sample_barcode", "sample_name")],
+                  by = "cell_id") %>%
         # Select sample name first
         tidy_select(.data$sample_name, everything()) %>%
         # Filter barcodes matching samples
@@ -245,8 +239,9 @@ unlist_barcodes <- function(run) {
             set_names(c("cellular_barcode", "reads")) %>%
             arrange(!!!syms(c("reads", "cellular_barcode"))) %>%
             mutate(log10_reads = log10(.data$reads),
+                   cell_id = paste(names(barcodes[a]), names(barcodes[[a]]), sep=":"),
                    sample_barcode = names(barcodes[a]))
     }) %>% bind_rows %>%
-        left_join(run$metadata[, c("sample_barcode", "sample_name")],
-                  by = "sample_barcode")
+        left_join(run$metadata[, c("sample_barcode", "sample_name", "cell_id")],
+                  by = "cell_id")
 }

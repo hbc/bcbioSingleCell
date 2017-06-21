@@ -142,8 +142,30 @@ read_csv_with_rownames <- function(filename, column) {
     dat[, column] <- NULL
     dat
 }
-
-
+##' read by extension
+##'
+##' Can read in XLSX/CSV/TSV files using the appropriate reader
+##' @keywords internal
+##' @param filename A filename to read in
+##'
+##' @return data frame of the file
+##' @author Rory Kirchner
+read_by_extension <- function(filename) {
+    ext = tools::file_ext(filename)
+    if (ext == "xlsx") {
+        message("Reading XLSX file...")
+        metadata <- read_excel(filename)
+    } else if (ext == "csv") {
+        message("Reading CSV file...")
+        metadata <- read_csv(filename)
+    } else if (ext == "tsv") {
+        message("Reading TSV file...")
+        metadata <- read_tsv(filename)
+    }
+    else {
+        stop("Unsupported file type")
+    }
+}
 
 #' Read metadata
 #'
@@ -151,94 +173,38 @@ read_csv_with_rownames <- function(filename, column) {
 #' @author Michael Steinbaugh
 #'
 #' @param run bcbio-nextgen run.
-#' @param pattern Apply grep pattern matching to samples.
-#' @param pattern_col Column in data frame used for pattern subsetting.
 #'
 #' @return Metadata data frame.
-read_metadata <- function(
-    run,
-    pattern = NULL,
-    pattern_col = "sample_name") {
-    file <- run$metadata_file
-    lanes <- run$lanes
+read_metadata <- function(run) {
+    sample_metadata_file <- run$sample_metadata_file
+    well_metadata_file <- run$well_metadata_file
+    cells <- colnames(run$counts)
+    samples <- stringr::str_split_fixed(cells, ":", 2)[,1]
+    wells <- stringr::str_split_fixed(cells, ":", 2)[,2]
+    metadata <- data.frame(sample_id=samples, well_id=wells, cell_id=cells)
+    default_sampledata <- stringr::str_split_fixed(samples, "-", 2)
 
-    # Load XLSX or CSV dynamically
-    if (grepl("\\.xlsx$", file)) {
-        message("Reading metadata XLSX file...")
-        metadata <- read_excel(file)
-    } else if (grepl("\\.csv$", file)) {
-        message("Reading metadata CSV file...")
-        metadata <- read_csv(file)
-    } else {
-        stop("Unsupported metadata file type")
+    if(!is.null(sample_metadata_file)) {
+      metadata <- metadata %>%
+        left_join(read_by_extension(sample_metadata_file) %>%
+                mutate(sample_id=as.factor(sample_id)), by="sample_id")
     }
-
-    # Check for platform-specific metadata, based on file name. We can
-    # improve this step in the future using a YAML-based method instead.
-    if (str_detect(file, "indrop")) {
-        type <- "inDrop"
-    } else if (str_detect(file, "dropseq")) {
-        type <- "Drop-seq"
-    } else if (str_detect(file, "seqwell")) {
-        type <- "Seq-Well"
-    } else if (str_detect(file, "chromium|tenx|10x")) {
-        type <- "10x Chromium"
-    } else {
-        stop("Unknown platform, please rename metadata file")
+    if(!is.null(well_metadata_file)) {
+      metadata <- metadata %>%
+        left_join(read_by_extension(well_metadata_file) %>%
+                mutate(sample_id=as.factor(sample_id)), by="well_id")
     }
-    message(paste(type, "metadata detected"))
-
-    # First column must be the FASTQ file name
-    names(metadata)[1] <- "file_name"
-
-    metadata <- metadata %>%
-        snake %>%
-        filter(!is.na(.data$description))
-
-    # Lane split, if desired
-    if (is.numeric(lanes)) {
-        lane <- paste0("L", str_pad(1:lanes, 3, pad = "0"))
-        metadata <- metadata %>%
-            group_by(!!sym("file_name")) %>%
-            expand_(~lane) %>%
-            left_join(metadata, by = "file_name") %>%
-            ungroup %>%
-            mutate(file_name = paste(.data$file_name, .data$lane, sep = "_"),
-                   description = .data$file_name)
+    if(!"sample_name" %in% colnames(metadata)) {
+      metadata$sample_name <- samples
     }
-
-    # Subset by pattern, if desired
-    if (!is.null(pattern)) {
-        metadata <- metadata[str_detect(metadata[[pattern_col]], pattern), ]
+    if(!"sample_barcode" %in% colnames(metadata)) {
+      metadata$sample_barcode <- default_sampledata[,2]
     }
-
-    # Reverse complement matches
-    metadata$reverse_complement <- sapply(metadata$sequence, revcomp)
-
-    # Sample barcode identifier
-    metadata$sample_barcode <- paste(
-        metadata$description, metadata$reverse_complement, sep = "-")
-
-    # Join platform-specific metadata
-    if (type == "inDrop") {
-        # Join i5 index counts only on non-lanesplit samples
-        if (is.null(lanes)) {
-            i5_counts <- indrop_i5_index_counts()
-            if (!is.null(i5_counts)) {
-                message("inDrop i5 index counts log detected")
-                metadata <- left_join(
-                    metadata, i5_counts, by = "reverse_complement")
-            }
-        }
-    }
-
     # Convert to data frame and set rownames
     metadata %>%
         as.data.frame %>%
-        set_rownames(.$sample_barcode)
+        set_rownames(.$cell_id)
 }
-
-
 
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) output
 #'
