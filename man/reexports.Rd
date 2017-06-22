@@ -5,9 +5,7 @@
 \alias{reexports}
 \alias{\%>\%}
 \alias{reexports}
-\alias{doc_date}
-\alias{reexports}
-\alias{dot_notation}
+\alias{dotted}
 \alias{reexports}
 \alias{group_by}
 \alias{reexports}
@@ -21,6 +19,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{doc_date}}, \code{\link[basejump]{dot_notation}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{save_data}}}
+  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{save_data}}}
 }}
 
