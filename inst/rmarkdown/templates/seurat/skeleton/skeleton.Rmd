@@ -172,7 +172,7 @@ PCElbowPlot(seurat, num.pc = num.pc) +
 
 # Find clusters and visualize
 
-Here we will use the selected PCs to find clusters of cells via heirarchical clustering, then run t-Distributed Stochastic Neighbor Embedding (t-SNE) analysis [@vanderMaaten:2008tm].
+Here we will use the selected PCs to find clusters of cells via heirarchical clustering, then run t-Distributed Stochastic Neighbor Embedding (t-SNE) analysis [@tSNE].
 
 ```{r FindClusters}
 seurat <- FindClusters(
