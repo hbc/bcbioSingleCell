@@ -8,8 +8,8 @@
 #'
 #' @param upload_dir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
-#' @param metadata_file Sample barcode metadata file.
-#' @param organism Organism name, following Ensembl/Biomart conventions. Must be
+#' @param metadata_file (**Required**). Sample barcode metadata file.
+#' @param organism Organism name, following Ensembl conventions. Must be
 #'   lowercase and one word (e.g. hsapiens). This will be detected automatically
 #'   for common reference genomes.
 #' @param interesting_groups Character vector of interesting groups. First entry is used
@@ -20,53 +20,50 @@
 #' @export
 load_run <- function(
     upload_dir = "final",
-    # [fix] External metadata file is required until YAML support added
+    # FIXME External metadata file is required until YAML support added
     metadata_file,
-    organism,
+    # FIXME Can use versions file to detect genome, instead of YAML
+    organism = NULL,
     interesting_groups = "sample_name") {
 
     # upload_dir
     if (!dir.exists(upload_dir)) {
         stop("Upload directory missing")
     }
-    run$upload_dir <- normalizePath(upload_dir)
+    upload_dir <- normalizePath(upload_dir)
 
     # metadata_file
     if (!file.exists(metadata_file)) {
         stop("Metadata file missing")
     }
-    run$metadata_file <- normalizePath(metadata_file)
-
-    # organism
-    run$organism <- organism
-
-    # intgroup
-    run$intgroup <- intgroup
+    metadata_file <- normalizePath(metadata_file)
 
     # Find most recent nested project_dir (normally only 1)
     project_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
-    project_dir <- dir(run$upload_dir,
+    project_dir <- dir(upload_dir,
                        pattern = project_pattern,
                        full.names = FALSE,
                        recursive = FALSE) %>%
-        sort %>% rev %>% .[[1]]
+        sort %>%
+        rev %>%
+        .[[1L]]
     if (!length(project_dir)) {
         stop("Failed to match project directory")
     }
     message(project_dir)
-    run$project_dir <- file.path(run$upload_dir, project_dir)
+    project_dir <- file.path(upload_dir, project_dir)
 
     # Get run date and template from project_dir
     match <- str_match(project_dir, project_pattern)
-    run$date <- c(bcbio = as.Date(match[2]),
+    date <- c(bcbio = as.Date(match[[2L]]),
                   R = Sys.Date())
-    run$template <- match[3]
+    template <- match[[3L]]
 
     # sample_dirs. Subset later using metadata data frame.
-    sample_dirs <- dir(run$upload_dir, full.names = TRUE) %>%
+    sample_dirs <- dir(upload_dir, full.names = TRUE) %>%
         set_names(basename(.)) %>%
         # Remove the nested `project_dir`
-        .[!grepl(basename(run$project_dir), names(.))]
+        .[!grepl(basename(project_dir), names(.))]
     if (!length(sample_dirs)) {
         stop("No sample directories in run")
     }
@@ -76,62 +73,64 @@ load_run <- function(
     lane_pattern <- "_L(\\d{3})"
     if (any(str_detect(sample_dirs, lane_pattern))) {
         lanes <- str_match(names(sample_dirs), lane_pattern) %>%
-            .[, 2] %>% unique %>% length
+            .[, 2L] %>% unique %>% length
         message(paste(lanes, "lane replicates per sample detected"))
     } else {
         lanes <- NULL
     }
-    run$lanes <- lanes
+    lanes <- lanes
 
     # Metadata data frame, with sample_barcode rownames
-    run$metadata <- read_metadata(run)
+    custom_metadata <- .custom_metadata(metadata_file)
 
     # Check that metadata matches the sample_dirs
-    if (!all(run$metadata$sample_barcode %in% names(sample_dirs))) {
+    if (!all(metadata$sample_barcode %in% names(sample_dirs))) {
         stop("Sample name mismatch between directories and metadata")
     }
 
     # Subset sample dirs by matching sample barcodes in metadata
-    run$sample_dirs <- sample_dirs[run$metadata$sample_barcode]
-    message(paste(length(run$sample_dirs), "samples matched by metadata"))
-
-    # Save Ensembl annotations for all genes
-    run$ensembl <- ensembl_annotations(run)
-    run$ensembl_version <- listMarts() %>% .[1, 2]
+    sample_dirs <- sample_dirs[metadata$sample_barcode]
+    message(paste(length(sample_dirs), "samples matched by metadata"))
 
     # Program versions
-    message("Reading program versions...")
-    run$programs <- read_bcbio_programs(run)
+    programs <- .programs(project_dir)
 
     # Read counts into a sparse matrix
     message("Reading counts into sparse matrix...")
-    run$sparse <- read_bcbio_counts(run)
+    sparse_counts <- .sparse_counts(project_dir)
 
     # Read cellular barcode distributions
     message("Reading cellular barcode distributions...")
-    run$barcodes <- read_bcbio_barcodes(run)
+    barcodes <- .barcodes(sample_dirs)
 
     # Generate barcode metrics
     message("Calculating barcode metrics...")
-    run$metrics <- metrics(run)
+    metrics <- .metrics(sparse_counts)
 
-    # Final slots
-    run$wd <- getwd()
-    run$hpc <- detect_hpc()
-    run$session <- sessionInfo()
+    # col_data
+    col_data <- custom_metadata[colnames(counts), ]
+    identical(colnames(sparse_counts), rownames(colData))
 
-    # Use the metrics for colData
-    counts <- run$sparse
-    colData <- run$metrics[colnames(counts), ]
-    identical(colnames(run$sparse), rownames(colData))
+    # row_data
+    # FIXME use annotables...follow the bcbioRnaseq code
 
-    run$counts <- NULL
-    run$sparse <- NULL
+    counts <- NULL
+    sparse <- NULL
 
-    se <- SummarizedExperiment(
-        assays = SimpleList(counts = counts),
-        colData = colData,
-        metadata = run)
+    # Metadata ====
+    metadata <- SimpleList(
+        wd = getwd(),
+        hpc = detect_hpc(),
+        session_info = sessionInfo())
 
-    .bcbioSCDataSet(se, run)
+    # Package into SummarizedExperiment ====
+    se <- .summarized_experiment(
+        counts,
+        col_data = col_data,
+        row_data = row_data,
+        metadata = metadata)
+
+    bcb <- new("bcbioRnaDataSet", se)
+    bcbio(bcb, "metrics") <- metrics
+    bcb
 }
