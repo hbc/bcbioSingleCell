@@ -37,8 +37,17 @@ combine_technical_replicates <- function(...) {
 #' @rdname deprecated
 #' @export
 filter_barcodes <- function(...) {
-    .Deprecated("filter_cellular_barcodes")
-    filter_cellular_barcodes(...)
+    .Deprecated("filter")
+    filter(...)
+}
+
+
+
+#' @rdname deprecated
+#' @export
+filter_cellular_barcodes <- function(...) {
+    .Deprecated("filter")
+    filter(...)
 }
 
 

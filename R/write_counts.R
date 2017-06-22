@@ -11,7 +11,7 @@
 #'
 #' @return Path to matrix file.
 #' @export
-write_counts <- function(counts, gzip = FALSE) {
+write_counts <- function(counts, gzip = TRUE) {
     # Write MatrixMart .mtx file
     matrix_file <- paste0(deparse(substitute(counts)), ".mtx")
     writeMM(counts, matrix_file)
