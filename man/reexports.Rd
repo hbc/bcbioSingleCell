@@ -5,6 +5,8 @@
 \alias{reexports}
 \alias{\%>\%}
 \alias{reexports}
+\alias{detect_hpc}
+\alias{reexports}
 \alias{dotted}
 \alias{reexports}
 \alias{group_by}
@@ -19,6 +21,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{save_data}}}
+  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{detect_hpc}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{save_data}}}
 }}
 
