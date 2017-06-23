@@ -3,11 +3,10 @@
 basejump::`%>%`
 
 #' @export
-basejump::doc_date
+basejump::detect_hpc
 
-# This is used to format names according to Seurat conventions
 #' @export
-basejump::dot_notation
+basejump::dotted
 
 #' @export
 basejump::group_by

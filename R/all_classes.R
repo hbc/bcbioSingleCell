@@ -9,7 +9,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @export
-bcbioSCDataSet <- setClass(
+bcbioSCDataSet <- setClass(  # nolint
     "bcbioSCDataSet",
     contains = "SummarizedExperiment",
     representation = representation(callers = "SimpleList"))

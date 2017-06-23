@@ -4,20 +4,20 @@
 \alias{load_run}
 \title{Load bcbio-nextgen run}
 \usage{
-load_run(upload_dir = "final", metadata_file, organism,
-  intgroup = "sample_name")
+load_run(upload_dir = "final", metadata_file, organism = NULL,
+  interesting_groups = "sample_name")
 }
 \arguments{
 \item{upload_dir}{Path to final upload directory. This path is set when
 running \code{bcbio_nextgen -w template}.}
 
-\item{metadata_file}{Sample barcode metadata file.}
+\item{metadata_file}{(\strong{Required}). Sample barcode metadata file.}
 
-\item{organism}{Organism name, following Ensembl/Biomart conventions. Must be
+\item{organism}{Organism name, following Ensembl conventions. Must be
 lowercase and one word (e.g. hsapiens). This will be detected automatically
 for common reference genomes.}
 
-\item{intgroup}{Character vector of interesting groups. First entry is used
+\item{interesting_groups}{Character vector of interesting groups. First entry is used
 for plot colors during quality control (QC) analysis. Entire vector is used
 for PCA and heatmap QC functions.}
 }

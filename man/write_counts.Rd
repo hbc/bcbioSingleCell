@@ -4,7 +4,7 @@
 \alias{write_counts}
 \title{Write MatrixMart sparse matrix and supporting files to disk}
 \usage{
-write_counts(counts, gzip = FALSE)
+write_counts(counts, gzip = TRUE)
 }
 \arguments{
 \item{counts}{Sparse counts matrix.}

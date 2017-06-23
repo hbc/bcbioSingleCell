@@ -4,6 +4,7 @@ author: ""
 date: "`r Sys.Date()`"
 template_date: "2017-06-13"
 bibliography: bcbioSinglecell.bib
+output: html_notebook
 ---
 
 ```{r setup, message=FALSE}
@@ -43,7 +44,7 @@ Initialize a new [Seurat][] object with non-normalized count data.
 
 We recommend the following general filter criteria:
 
-- `log normalize`, first scaling each cell to a total of `1e4` molecules (*default*) [@Macosko:2015ht].
+- `log normalize`, first scaling each cell to a total of `1e4` molecules (*default*) [@Drop-seq].
 - Keep `genes` expressed in `>= 3 cells` (*default*).
 - Keep `cells` with `>= 100 genes`.
 - Keep `cells` with `<= 5000 genes`.
@@ -75,7 +76,7 @@ GenePlot(seurat, "nUMI", "nGene")
 
 Your single cell experiment likely contains "uninteresting" sources of variation. This could include not only technical noise, but batch effects, or even biological sources of variation (e.g. cell cycle stage). Regressing these signals out of the analysis can improve downstream dimensionality reduction and clustering [@Buettner:2015hp]. [Seurat][] implements a basic version of this by constructing linear models to predict gene expression based on user-defined variables. [Seurat][] stores the z-scored residuals of these models in the `scale.data` slot, and they are used for dimensionality reduction and clustering.
 
-It is typically recommended to regress out cell-cell variation in gene expression driven by batch, the number of detected molecules, and mitochondrial gene expression. For cycling cells, we can also learn a "cell-cycle" score [@Macosko:2015ht] and regress this out as well.
+It is typically recommended to regress out cell-cell variation in gene expression driven by batch, the number of detected molecules, and mitochondrial gene expression. For cycling cells, we can also learn a "cell-cycle" score [@Drop-seq] and regress this out as well.
 
 Here, let's regress effects on gene expression that are due to the number of genes detected (`nGene`), the total counts in the cell (`nUMI`), and the percent mitochondrial content (`mito.ratio`).
 
@@ -89,7 +90,7 @@ seurat <- RegressOut(
 
 # Detection of variable genes across the single cells
 
-[Seurat][] calculates highly variable genes and focuses on these for downstream analysis. `MeanVarPlot()`, which works by calculating the average expression and dispersion for each gene, placing these genes into bins, and then calculating a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression [@Macosko:2015ht].
+[Seurat][] calculates highly variable genes and focuses on these for downstream analysis. `MeanVarPlot()`, which works by calculating the average expression and dispersion for each gene, placing these genes into bins, and then calculating a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression [@Drop-seq].
 
 ```{r MeanVarPlot, fig.height=11, fig.width=11}
 seurat <- MeanVarPlot(seurat)
@@ -145,11 +146,11 @@ PCHeatmap(seurat,
 
 To overcome the extensive technical noise in any single gene for scRNA-seq data, [Seurat][] clusters cells based on their PCA scores, with each PC essentially representing a 'metagene' that combines information across a correlated gene set. Determining how many PCs to include downstream is therefore an important step.
 
-[Seurat][] implements a resampling test inspired by the `jackStraw` procedure [@Macosko:2015ht]. We randomly permute a subset of the data (1% by default) and rerun PCA, constructing a "null distribution" of gene scores, and repeat this procedure. We identify "significant" PCs as those who have a strong enrichment of low p-value genes.
+[Seurat][] implements a resampling test inspired by the `jackStraw` procedure [@Drop-seq]. We randomly permute a subset of the data (1% by default) and rerun PCA, constructing a "null distribution" of gene scores, and repeat this procedure. We identify "significant" PCs as those who have a strong enrichment of low p-value genes.
 
 The `JackStrawPlot()` function provides a visualization tool for comparing the distribution of p-values for each PC with a uniform distribution (dashed line). "Significant" PCs will show a strong enrichment of genes with low p-values (solid curve above the dashed line). Running this process takes a long time for big datasets. More approximate techniques such as those implemented in `PCElbowPlot()` are much faster.
 
-```{r JackStraw, eval=isTRUE(detect_hpc))}
+```{r JackStraw, eval=detect_hpc()}
 # Run this only in HPC environment, CPU intensive
 seurat <- JackStraw(
     seurat,
@@ -172,7 +173,7 @@ PCElbowPlot(seurat, num.pc = num.pc) +
 
 # Find clusters and visualize
 
-Here we will use the selected PCs to find clusters of cells via heirarchical clustering, then run t-Distributed Stochastic Neighbor Embedding (t-SNE) analysis [@vanderMaaten:2008tm].
+Here we will use the selected PCs to find clusters of cells via heirarchical clustering, then run t-Distributed Stochastic Neighbor Embedding (t-SNE) analysis [@tSNE].
 
 ```{r FindClusters}
 seurat <- FindClusters(
@@ -199,6 +200,7 @@ Note that t-SNE is not PCA! The measurement of distance in a t-SNE plot is diffi
 PCAPlot(seurat)
 PCAPlot(seurat, group.by = "sample.name")
 ```
+
 
 
 # Cluster quality control

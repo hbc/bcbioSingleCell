@@ -5,6 +5,7 @@
 \alias{combine_features}
 \alias{combine_technical_replicates}
 \alias{filter_barcodes}
+\alias{filter_cellular_barcodes}
 \alias{load_csv_with_rownames}
 \alias{load_sparsecounts}
 \alias{make_bcbio_skeleton}
@@ -25,6 +26,8 @@ combine_features(...)
 combine_technical_replicates(...)
 
 filter_barcodes(...)
+
+filter_cellular_barcodes(...)
 
 load_csv_with_rownames(...)
 
