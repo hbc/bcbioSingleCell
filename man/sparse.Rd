@@ -3,15 +3,15 @@
 %   R/methods-aggregate_replicates.R
 \name{.strip_transcript_versions}
 \alias{.strip_transcript_versions}
-\alias{.aggregate_sparse_features}
-\alias{.aggregate_sparse_replicates}
-\title{Sparse matrix operations}
+\alias{.aggregate_features}
+\alias{.aggregate_replicates}
+\title{Sparse matrix aggregation operations}
 \usage{
 .strip_transcript_versions(sparse)
 
-.aggregate_sparse_features(sparse, featureids)
+.aggregate_features(sparse, featureids)
 
-.aggregate_sparse_replicates(sparse, cellids)
+.aggregate_replicates(sparse, cellids)
 }
 \arguments{
 \item{sparse}{Sparse counts matrix.}
@@ -23,7 +23,7 @@
 \value{
 Sparse counts matrix with the transcript versions stripped.
 
-Modified sparse matrix.
+\link{"dgCMatrix-class"}.
 }
 \description{
 Strip transcript versions
@@ -33,7 +33,5 @@ Collapse features with the same feature id by summing them.
 Pool cellular technical replicate counts.
 }
 \author{
-Rory Kirchner
-
-Michael Steinbaugh
+Rory Kirchner, Michael Steinbaugh
 }

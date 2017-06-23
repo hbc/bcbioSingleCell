@@ -7,9 +7,9 @@
 \title{bcbioSCDataSet}
 \description{
 \code{bcbioSCDataSet} is a subclass of \link{SummarizedExperiment} designed to store a
-single-cell RNA-seq analysis. This class contains sparse counts saved as
-\code{dgCMatrix}, sample barcodes, other metadata, and summary statistics for each
-sample analyzed.
+single-cell RNA-seq analysis. This class contains read counts save as a
+sparse matrix (\code{dgCMatrix}), sample barcodes, run metadata, and barcode
+summary statistics for each sample analyzed.
 }
 \author{
 Michael Steinbaugh

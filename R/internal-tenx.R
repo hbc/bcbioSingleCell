@@ -65,6 +65,7 @@
         as(counts, "dgCMatrix")
     }) %>% set_names(names(sample_dirs))
 
+    # TODO Offload this step to a more general internal aggregation function?
     if (isTRUE(aggregate)) {
         # Aggregate the counts, if desired
         message("Aggregating samples to a single sparse matrix...")

@@ -12,9 +12,9 @@
 #' @param organism Organism name, following Ensembl conventions. Must be
 #'   lowercase and one word (e.g. hsapiens). This will be detected automatically
 #'   for common reference genomes.
-#' @param interesting_groups Character vector of interesting groups. First entry is used
-#'   for plot colors during quality control (QC) analysis. Entire vector is used
-#'   for PCA and heatmap QC functions.
+#' @param interesting_groups Character vector of interesting groups. First entry
+#'   is used for plot colors during quality control (QC) analysis. Entire vector
+#'   is used for PCA and heatmap QC functions.
 #'
 #' @return [bcbioSCDataSet].
 #' @export
@@ -26,44 +26,54 @@ load_run <- function(
     organism = NULL,
     interesting_groups = "sample_name") {
 
-    # upload_dir
+    # Upload directory
     if (!dir.exists(upload_dir)) {
         stop("Upload directory missing")
     }
     upload_dir <- normalizePath(upload_dir)
+    pipeline <- .detect_pipeline(upload_dir)
 
-    # metadata_file
-    if (!file.exists(metadata_file)) {
-        stop("Metadata file missing")
-    }
-    metadata_file <- normalizePath(metadata_file)
+    # Sample directories
+    # Locate nested matrix.mtx files to define sample directories. A similar
+    # code approach is used in [.detect_pipeline()].
+    sample_dirs <- list.files(
+        upload_dir, pattern = "*.mtx$",
+        full.names = TRUE, recursive = TRUE) %>%
+        normalizePath %>%
+        dirname %>%
+        set_names(basename(.))
 
-    # Find most recent nested project_dir (normally only 1)
-    project_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
-    project_dir <- dir(upload_dir,
-                       pattern = project_pattern,
-                       full.names = FALSE,
-                       recursive = FALSE) %>%
-        sort %>%
-        rev %>%
-        .[[1L]]
-    if (!length(project_dir)) {
-        stop("Failed to match project directory")
-    }
-    message(project_dir)
-    project_dir <- file.path(upload_dir, project_dir)
-
-    # Get run date and template from project_dir
-    match <- str_match(project_dir, project_pattern)
-    date <- c(bcbio = as.Date(match[[2L]]),
+    # bcbio-nextgen ====
+    if (pipeline == "bcbio") {
+        # Find most recent nested project_dir (normally only 1)
+        project_dir_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
+        project_dir <- dir(upload_dir,
+                           pattern = project_dir_pattern,
+                           full.names = FALSE,
+                           recursive = FALSE)
+        if (length(project_dir) != 1) {
+            stop("Uncertain about project directory location")
+        }
+        message(project_dir)
+        match <- str_match(project_dir, project_dir_pattern)
+        date <- c(bcbio = as.Date(match[[2L]]),
                   R = Sys.Date())
-    template <- match[[3L]]
+        template <- match[[3L]]
+        project_dir <- file.path(upload_dir, project_dir)
 
-    # sample_dirs. Subset later using metadata data frame.
-    sample_dirs <- dir(upload_dir, full.names = TRUE) %>%
-        set_names(basename(.)) %>%
-        # Remove the nested `project_dir`
-        .[!grepl(basename(project_dir), names(.))]
+        # Remove the nested `project_dir` from sample directories
+        sample_dirs <- sample_dirs %>%
+            .[!grepl(basename(project_dir), names(.))]
+    }
+
+    # 10X Chromium CellRanger ====
+    if (pipeline == "cellranger") {
+        if (!length(matrices)) {
+            stop("No count matrices detected")
+        }
+        parent_dirs <- dirname(matrices)
+    }
+
     if (!length(sample_dirs)) {
         stop("No sample directories in run")
     }
@@ -76,20 +86,20 @@ load_run <- function(
             .[, 2L] %>% unique %>% length
         message(paste(lanes, "lane replicates per sample detected"))
     } else {
-        lanes <- NULL
+        lanes <- 1L
     }
-    lanes <- lanes
 
     # Metadata data frame, with sample_barcode rownames
+    # FIXME Make sure custom metadata stops if missing
     custom_metadata <- .custom_metadata(metadata_file)
 
-    # Check that metadata matches the sample_dirs
-    if (!all(metadata$sample_barcode %in% names(sample_dirs))) {
+    # Check that sample directories match the metadata
+    if (!all(names(sample_dirs) %in% metadata[["sample_barcode"]])) {
         stop("Sample name mismatch between directories and metadata")
     }
 
     # Subset sample dirs by matching sample barcodes in metadata
-    sample_dirs <- sample_dirs[metadata$sample_barcode]
+    sample_dirs <- sample_dirs[metadata[["sample_barcode"]]]
     message(paste(length(sample_dirs), "samples matched by metadata"))
 
     # Program versions

@@ -17,9 +17,9 @@ running \code{bcbio_nextgen -w template}.}
 lowercase and one word (e.g. hsapiens). This will be detected automatically
 for common reference genomes.}
 
-\item{interesting_groups}{Character vector of interesting groups. First entry is used
-for plot colors during quality control (QC) analysis. Entire vector is used
-for PCA and heatmap QC functions.}
+\item{interesting_groups}{Character vector of interesting groups. First entry
+is used for plot colors during quality control (QC) analysis. Entire vector
+is used for PCA and heatmap QC functions.}
 }
 \value{
 \link{bcbioSCDataSet}.
