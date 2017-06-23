@@ -35,7 +35,8 @@ read_bcbio_barcodes <- function(run) {
     if (!all(file.exists(files))) {
         warning("Barcode TSV file missing")
         return(NULL)
-    }
+
+}
     message("Reading barcode distributions...")
     list <- pbmclapply(seq_along(files), function(a) {
         read_barcode_file(files[a])
@@ -191,8 +192,7 @@ read_metadata <- function(run) {
     }
     if(!is.null(well_metadata_file)) {
       metadata <- metadata %>%
-        left_join(read_by_extension(well_metadata_file) %>%
-                mutate(sample_id=as.factor(sample_id)), by="well_id")
+        left_join(read_by_extension(well_metadata_file), by="well_id")
     }
     if(!"sample_name" %in% colnames(metadata)) {
       metadata$sample_name <- samples
