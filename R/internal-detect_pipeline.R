@@ -7,7 +7,7 @@
 #'
 #' @param upload_dir Final upload directory.
 #'
-#' @return logical.
+#' @return Pipeline string. Stops on detection failure.
 .detect_pipeline <- function(upload_dir) {
     matrices <- list.files(
         upload_dir, pattern = "*.mtx$",
@@ -24,9 +24,9 @@
         # dependency files
         if (all(file.exists(paste0(matrices, ".colnames"))) &
             all(file.exists(paste0(matrices, ".rownames")))) {
-            "bcbio"
+            platform <- "bcbio"
         } else {
-            NULL
+            platform <- NULL
         }
     } else if (all(str_detect(names(matrices), "^matrix\\.mtx$"))) {
         # 10X Chromium CellRanger ====
@@ -34,11 +34,15 @@
         # files
         if (all(file.exists(file.path(parent_dirs, "barcodes.tsv"))) &
             all(file.exists(file.path(parent_dirs, "genes.tsv")))) {
-            "cellranger"
+            platform <- "cellranger"
         } else {
-            NULL
+            platform <- NULL
         }
     } else {
-        NULL
+        platform <- NULL
     }
+    if (is.null(platform)) {
+        stop("Platform detection failed")
+    }
+    platform
 }
