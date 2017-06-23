@@ -8,7 +8,8 @@
 #'
 #' This function supports automatic handling of compressed matrix files.
 #'
-#' @note bcbio-nextgen outputs read counts at transcript level.
+#' @note bcbio-nextgen outputs counts at transcript level. 10X Chromium
+#'   CellRanger outputs counts at gene level.
 #'
 #' @rdname sparse_counts
 #' @keywords internal
@@ -16,11 +17,14 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @param matrix_file MatrixMart file to read.
+#' @param pipeline Pipeline used to generate the MatrixMarket file. Defaults to
+#'   bcbio-nextgen (`bcbio`). Also supports 10X Chromium CellRanger
+#'   (`cellranger`).
 #'
 #' @return Sparse counts matrix.
 #'
 #' @seealso `help("dgCMatrix-class")`
-.sparse_counts <- function(matrix_file) {
+.sparse_counts <- function(matrix_file, pipeline = "bcbio") {
     name <- deparse(substitute(matrix_file))
 
     if (!file.exists(matrix_file)) {
@@ -39,42 +43,32 @@
         # matrix_file <- gunzip(matrix_file)
     }
 
-    # Check for pipeline by support file structure
     parent_dir <- dirname(matrix_file)
-    if (all(file.exists(paste0(matrix_file, ".colnames")) &
-            file.exists(paste0(matrix_file, ".rownames")))) {
-        pipeline <- "bcbio-nextgen"
-        # Transcript-level counts
+
+    if (pipeline == "bcbio") {
         count_level <- "transcript"
         col_file <- paste0(matrix_file, ".colnames")  # barcodes
         row_file <- paste0(matrix_file, ".rownames")  # transcripts
-    } else if (all(file.exists(file.path(parent_dir, "barcodes.tsv")) &
-                   file.exists(file.path(parent_dir, "genes.tsv")))) {
-        # 10X Chromium CellRanger
-        pipeline <- "cellranger"
-        # Gene-level counts
+    } else if (pipeline == "cellranger") {
         count_level <- "gene"
-        col_file <- "barcodes.tsv"
-        row_file <- "genes.tsv"
+        col_file <- file.path(parent_dir, "barcodes.tsv")
+        row_file <- file.path(parent_dir, "genes.tsv")
     } else {
-        stop("Automatic pipeline detection failed")
+        stop("Unknown pipeline")
     }
 
-    message(paste(
-        "Reading",
-        name,
-        paste0(count_level, "-level"),
-        "counts from",
-        pipeline))
+    message(paste("Reading", name,
+                  paste0(count_level, "-level"),
+                  "counts from", pipeline))
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
-    # names are gene/transcript identifiers (depending on platform).
+    # names are gene/transcript identifiers (depending on pipeline).
     counts <- readMM(matrix_file)
     rownames(counts) <- read_lines(row_file)
     colnames(counts) <- read_lines(col_file)
 
     # Count matrix sanitization
-    if (pipeline == "bcbio-nextgen") {
+    if (pipeline == "bcbio") {
         # inDrop v3 barcode sanitization. If cellular barcode filtering is
         # `auto`, the identifiers are output as `[ACGT]{16}` instead of
         # `[ACGT]{8}-[ACGT]{8}`. Check for this and correct, for consistent
