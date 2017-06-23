@@ -3,6 +3,9 @@
 basejump::`%>%`
 
 #' @export
+basejump::detect_hpc
+
+#' @export
 basejump::dotted
 
 #' @export
