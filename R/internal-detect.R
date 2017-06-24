@@ -24,9 +24,9 @@
         # dependency files
         if (all(file.exists(paste0(matrices, ".colnames"))) &
             all(file.exists(paste0(matrices, ".rownames")))) {
-            platform <- "bcbio"
+            pipeline <- "bcbio"
         } else {
-            platform <- NULL
+            pipeline <- NULL
         }
     } else if (all(str_detect(names(matrices), "^matrix\\.mtx$"))) {
         # 10X Chromium CellRanger ====
@@ -34,15 +34,15 @@
         # files
         if (all(file.exists(file.path(parent_dirs, "barcodes.tsv"))) &
             all(file.exists(file.path(parent_dirs, "genes.tsv")))) {
-            platform <- "cellranger"
+            pipeline <- "cellranger"
         } else {
-            platform <- NULL
+            pipeline <- NULL
         }
     } else {
-        platform <- NULL
+        pipeline <- NULL
     }
-    if (is.null(platform)) {
-        stop("Platform detection failed")
+    if (is.null(pipeline)) {
+        stop("Pipeline detection failed")
     }
-    platform
+    pipeline
 }
