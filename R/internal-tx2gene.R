@@ -1,15 +1,11 @@
-#' @rdname sparse
-#' @description Strip transcript versions
-#' @return Sparse counts matrix with the transcript versions stripped.
-.strip_transcript_versions <- function(sparse) {
-    check_sparse(sparse)
-    transcripts <- rownames(sparse)
-    # Tight pattern matching against Ensembl stable transcript IDs
-    # http://www.ensembl.org/info/genome/stable_ids/index.html
-    pattern <- "^(ENS[A-Z]{3}T\\d{11})\\.\\d+$"
-    if (any(str_detect(transcripts, pattern))) {
-        transcripts <- str_replace(transcripts, pattern, "\\1")
-    }
-    rownames(sparse) <- transcripts
-    sparse
+#' Read transcript to gene (tx2gene) annotation file
+#'
+#' @rdname tx2gene
+#' @keywords internal
+#'
+#' @author Michael Steinbaugh
+#'
+#' @param genome_build Genome build.
+.tx2gene <- function(genome_build) {
+    .annotable(genome_build, format = "tx2gene")
 }
