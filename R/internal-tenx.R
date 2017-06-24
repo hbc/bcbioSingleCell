@@ -11,7 +11,7 @@
 #' @param aggregate Aggregate samples into single sparse matrix.
 #'
 #' @return Sparse counts matrix (`dgCMatrix`).
-.tenx <- function(upload_dir, aggregate = TRUE) {
+.cellranger <- function(upload_dir, aggregate = TRUE) {
     # Recurse through specific data directory and identify sample subdirectories
     # by the presence of a `matrix.mtx` counts file.
     sample_dirs <- list.files(
