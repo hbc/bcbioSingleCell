@@ -2,9 +2,15 @@
 % Please edit documentation in R/internal-sparse_counts.R
 \name{.sparse_counts}
 \alias{.sparse_counts}
+\alias{.sparse_counts_tx2gene}
+\alias{.strip_transcript_versions}
 \title{Read MatrixMarket file}
 \usage{
 .sparse_counts(matrix_file, pipeline = "bcbio")
+
+.sparse_counts_tx2gene(tx_sparse_counts, genome_build)
+
+.strip_transcript_versions(sparse_counts)
 }
 \arguments{
 \item{matrix_file}{MatrixMart file to read.}
@@ -15,12 +21,16 @@ bcbio-nextgen (\code{bcbio}). Also supports 10X Chromium CellRanger
 }
 \value{
 Sparse counts matrix.
+
+Sparse counts matrix with the transcript versions stripped.
 }
 \description{
 Load single-cell RNA-seq counts saved as a \href{https://people.sc.fsu.edu/~jburkardt/data/mm/mm.html}{MatrixMarketfile} into a sparse
 counts matrix (\code{dgCMatrix}). Transcript (\link{rownames}) and molecular barcodes
 (\link{colnames}) identifiers are set from the corresponding dependency files
 automatically.
+
+Strip transcript versions.
 }
 \details{
 This function supports automatic handling of compressed matrix files.

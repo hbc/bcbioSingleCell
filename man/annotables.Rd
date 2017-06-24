@@ -2,12 +2,9 @@
 % Please edit documentation in R/internal-annotables.R
 \name{.annotable}
 \alias{.annotable}
-\alias{.broad_class}
 \title{\href{http://www.ensembl.org/}{Ensembl} annotations from \link{annotables}}
 \usage{
 .annotable(genome_build, format = "gene")
-
-.broad_class(annotable)
 }
 \arguments{
 \item{genome_build}{Genome build. Consult the \link{annotables} documentation

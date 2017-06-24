@@ -10,14 +10,16 @@
 \usage{
 metrics(object, ...)
 
-.metrics(run)
+.metrics(sparse_counts, annotable)
 
 \S4method{metrics}{bcbioSCDataSet}(object)
 }
 \arguments{
 \item{object}{\link{bcbioSCDataSet}.}
 
-\item{run}{\link{bcbioSCDataSet}.}
+\item{sparse_counts}{Sparse counts matrix.}
+
+\item{annotable}{Annotable.}
 }
 \value{
 Tibble grouped by sample name.

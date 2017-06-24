@@ -4,12 +4,12 @@
 \alias{.summarized_experiment}
 \title{Package scRNA-Seq counts into \link{SummarizedExperiment}}
 \usage{
-.summarized_experiment(tximport, col_data, row_data, metadata = NULL)
+.summarized_experiment(sparse_counts, col_data, row_data, metadata = NULL)
 }
 \arguments{
-\item{tximport}{\link{tximport} list.}
+\item{sparse_counts}{Gene-level sparse counts matrix.}
 
-\item{col_data}{Sample metadata.}
+\item{col_data}{Cellular barcode metrics.}
 
 \item{row_data}{\href{http://www.ensembl.org/}{Ensembl} gene annotations.}
 

@@ -4,7 +4,7 @@
 \alias{load_run}
 \title{Load bcbio-nextgen run}
 \usage{
-load_run(upload_dir = "final", metadata_file, organism = NULL,
+load_run(upload_dir = "final", metadata_file,
   interesting_groups = "sample_name")
 }
 \arguments{
@@ -12,10 +12,6 @@ load_run(upload_dir = "final", metadata_file, organism = NULL,
 running \code{bcbio_nextgen -w template}.}
 
 \item{metadata_file}{(\strong{Required}). Sample barcode metadata file.}
-
-\item{organism}{Organism name, following Ensembl conventions. Must be
-lowercase and one word (e.g. hsapiens). This will be detected automatically
-for common reference genomes.}
 
 \item{interesting_groups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
