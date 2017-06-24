@@ -6,10 +6,10 @@
 #' @author Michael Steinbaugh
 #'
 #' @param sparse_counts Sparse counts matrix.
-#' @param genome_build Genome build.
+#' @param annotable Annotable.
 #'
 #' @return Tibble grouped by sample name.
-.metrics <- function(sparse_counts, genome_build) {
+.metrics <- function(sparse_counts, annotable) {
     message("Calculating barcode metrics")
 
     # Check for [Matrix::colSums()] methods support
@@ -18,7 +18,7 @@
     }
 
     # Pull coding and mitochondrial genes from annotable
-    annotable <- .annotable(genome_build) %>% as.data.frame
+    annotable <- as.data.frame(annotable)
     coding_genes <- annotable %>%
         filter(.data[["broad_class"]] == "coding") %>%
         pull("ensgene")
