@@ -47,21 +47,13 @@
             arrange(!!sym("enstxp"))
     }
 
-    annotable %>%
-        DataFrame %>%
-        set_rownames(.[[1L]])
-}
-
-
-
-#' @rdname annotables
-.broad_class <- function(annotable) {
     # Broad class definitions, based on biotype
     coding <- c("protein_coding")
     decaying <- c("non_stop_decay", "nonsense_mediated_decay")
     noncoding <- c("known_ncrna", "lincRNA", "non_coding")
     srna <- c("miRNA", "misc_RNA", "ribozyme", "rRNA", "scaRNA", "scRNA",
               "snoRNA", "snRNA", "sRNA")
+
     annotable %>%
         as.data.frame %>%
         mutate(broad_class = case_when(
@@ -76,5 +68,6 @@
             .data[["biotype"]] %in% noncoding ~ "noncoding",
             .data[["biotype"]] %in% coding ~ "coding",
             TRUE ~ "other")) %>%
-        .[, c("ensgene", "broad_class")]
+        set_rownames(.[["ensgene"]]) %>%
+        DataFrame
 }
