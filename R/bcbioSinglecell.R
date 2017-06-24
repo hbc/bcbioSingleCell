@@ -22,3 +22,5 @@ bins <- 100
 fail_color <- "red"
 pass_color <- "green"
 warn_color <- "orange"
+
+project_dir_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"

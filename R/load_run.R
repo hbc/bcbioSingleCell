@@ -29,7 +29,6 @@ load_run <- function(
 
 
     # Project directory ====
-    project_dir_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
     project_dir <- dir(upload_dir,
                        pattern = project_dir_pattern,
                        full.names = FALSE,
@@ -45,10 +44,7 @@ load_run <- function(
 
 
     # Sample directories ====
-    sample_dirs <- .sample_dirs(upload_dir) %>%
-        # Remove the nested `project_dir` from sample directories
-        .[!grepl(basename(project_dir), names(.))]
-    message(paste(length(sample_dirs), "samples detected"))
+    sample_dirs <- .sample_dirs(upload_dir)
 
 
     # Data versions and programs ====
