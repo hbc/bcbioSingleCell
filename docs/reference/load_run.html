@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
@@ -77,12 +84,11 @@
     </div>
 
     
-    <p>We recommend loading the bcbio-nextgen run as a remote connection over
-<code>sshfs</code>.</p>
+    <p>Load bcbio-nextgen run</p>
     
 
-    <pre class="usage"><span class='fu'>load_run</span>(<span class='kw'>upload_dir</span> <span class='kw'>=</span> <span class='st'>"final"</span>, <span class='kw'>metadata_file</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"meta"</span>,
-  <span class='st'>"indrop_rnaseq.xlsx"</span>), <span class='no'>organism</span>, <span class='kw'>intgroup</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>)</pre>
+    <pre class="usage"><span class='fu'>load_run</span>(<span class='kw'>upload_dir</span> <span class='kw'>=</span> <span class='st'>"final"</span>, <span class='no'>metadata_file</span>,
+  <span class='kw'>interesting_groups</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -94,25 +100,25 @@ running <code>bcbio_nextgen -w template</code>.</p></td>
     </tr>
     <tr>
       <th>metadata_file</th>
-      <td><p>Sample barcode metadata file.</p></td>
+      <td><p>(<strong>Required</strong>). Sample barcode metadata file.</p></td>
     </tr>
     <tr>
-      <th>organism</th>
-      <td><p>Organism name, following Ensembl/Biomart conventions. Must be
-lowercase and one word (e.g. hsapiens). This will be detected automatically
-for common reference genomes.</p></td>
-    </tr>
-    <tr>
-      <th>intgroup</th>
-      <td><p>Character vector of interesting groups. First entry is used
-for plot colors during quality control (QC) analysis. Entire vector is used
-for PCA and heatmap QC functions.</p></td>
+      <th>interesting_groups</th>
+      <td><p>Character vector of interesting groups. First entry
+is used for plot colors during quality control (QC) analysis. Entire vector
+is used for PCA and heatmap QC functions.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>bcbio-nextgen run object.</p>
+    <p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>When working in RStudio, we recommend connecting to the bcbio-nextgen
+run directory as a remote connection over
+<a href='https://github.com/osxfuse/osxfuse/wiki/SSHFS'>sshfs</a>.</p>
     
 
   </div>
@@ -122,6 +128,8 @@ for PCA and heatmap QC functions.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
           </ul>
 
     <h2>Author</h2>

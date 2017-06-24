@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
@@ -75,7 +82,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.0.9</small>
+        <small>version&nbsp;0.0.11</small>
       </h1>
     </div>
 
@@ -97,15 +104,63 @@
         <tr>
           <!--  -->
           <td>
+            <p><code><a href="aggregate_replicates.html">aggregate_replicates</a></code> </p>
+          </td>
+          <td><p>Aggregate replicates</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="bcbio.html">bcbio</a></code> <code><a href="bcbio.html">bcbio<-</a></code> </p>
+          </td>
+          <td><p>Accessors for the sparse count matrix of a <a href='reference/bcbioSCDataSet.html'>bcbioSCDataSet</a> object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p></p>
+          </td>
+          <td><p>bcbioSCDataSet</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p></p>
+          </td>
+          <td><p>bcbioSinglecell</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="counts.html">.bcbio_counts</a></code> </p>
+          </td>
+          <td><p>Import transcript-level count data from a bcbio run into a sparse matrix</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="detect_pipeline.html">.detect_pipeline</a></code> </p>
+          </td>
+          <td><p>Detect scRNA-seq analysis pipeline</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="downloads.html">downloads</a></code> </p>
           </td>
           <td><p>File downloads</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="filter_cellular_barcodes.html">filter_cellular_barcodes</a></code> </p>
+            <p><code><a href="filter.html">filter</a></code> </p>
           </td>
           <td><p>Filter cellular barcodes</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ieg.html">.ieg</a></code> </p>
+          </td>
+          <td><p>Immediate early genes</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="isr.html">.isr</a></code> </p>
+          </td>
+          <td><p>Integrated stress response</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -127,27 +182,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="qc_plots_metrics.html">plot_cell_counts_barplot</a></code> <code><a href="qc_plots_metrics.html">plot_cell_counts</a></code> <code><a href="qc_plots_metrics.html">plot_read_counts</a></code> <code><a href="qc_plots_metrics.html">plot_genes_detected</a></code> <code><a href="qc_plots_metrics.html">plot_reads_vs_genes</a></code> <code><a href="qc_plots_metrics.html">plot_mito_ratio</a></code> <code><a href="qc_plots_metrics.html">plot_novelty</a></code> </p>
+            <p><code><a href="qc_plots_metrics.html">.plot_cell_counts_barplot</a></code> <code><a href="qc_plots_metrics.html">plot_cell_counts</a></code> <code><a href="qc_plots_metrics.html">plot_read_counts</a></code> <code><a href="qc_plots_metrics.html">plot_genes_detected</a></code> <code><a href="qc_plots_metrics.html">plot_reads_vs_genes</a></code> <code><a href="qc_plots_metrics.html">plot_mito_ratio</a></code> <code><a href="qc_plots_metrics.html">plot_novelty</a></code> </p>
           </td>
           <td><p>Cell metrics quality control plots</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="read_10x.html">read_10x</a></code> </p>
+            <p><code><a href="sparse.html">.aggregate_features</a></code> <code><a href="sparse.html">.aggregate_replicates</a></code> </p>
           </td>
-          <td><p>Read <a href = 'https://www.10xgenomics.com/software/'>10x Genomics Chromium</a> output</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="read_bcbio.html">read_bcbio_barcodes</a></code> <code><a href="read_bcbio.html">read_bcbio_counts</a></code> <code><a href="read_bcbio.html">read_bcbio_programs</a></code> </p>
-          </td>
-          <td><p>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="sparse.html">aggregate_sparse_features</a></code> <code><a href="sparse.html">aggregate_sparse_replicates</a></code> <code><a href="sparse.html">strip_transcript_versions</a></code> </p>
-          </td>
-          <td><p>Sparse matrix operations</p></td>
+          <td><p>Sparse matrix aggregation operations</p></td>
         </tr><tr>
           <!--  -->
           <td>

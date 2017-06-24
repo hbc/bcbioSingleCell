@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>bcbioSCDataSet — bcbioSCDataSet-class • bcbioSinglecell</title>
+<title>Generate barcode metrics summary — metrics • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,26 +80,58 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>bcbioSCDataSet</h1>
+    <h1>Generate barcode metrics summary</h1>
     </div>
 
     
-    <p><code>bcbioSCDataSet</code> is a subclass of SummarizedExperiment designed to store a
-single-cell RNA-seq analysis. This class contains read counts save as a
-sparse matrix (<code>dgCMatrix</code>), sample barcodes, run metadata, and barcode
-summary statistics for each sample analyzed.</p>
+    <p>Generate barcode metrics summary</p>
+<p>Sample barcode metrics</p>
     
 
-        
+    <pre class="usage"><span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='fu'>.metrics</span>(<span class='no'>sparse_counts</span>, <span class='no'>annotable</span>)
+
+<span class='co'># S4 method for bcbioSCDataSet</span>
+<span class='fu'>metrics</span>(<span class='no'>object</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
+    </tr>
+    <tr>
+      <th>sparse_counts</th>
+      <td><p>Sparse counts matrix.</p></td>
+    </tr>
+    <tr>
+      <th>annotable</th>
+      <td><p>Annotable.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Tibble grouped by sample name.
+
+data.frame.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
     <h2>Author</h2>
     
+Rory Kirchner
+
 Michael Steinbaugh
 
   </div>

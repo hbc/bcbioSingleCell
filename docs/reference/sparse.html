@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sparse matrix operations — aggregate_sparse_features • bcbioSinglecell</title>
+<title>Sparse matrix aggregation operations — .aggregate_features • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
@@ -73,20 +80,17 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sparse matrix operations</h1>
+    <h1>Sparse matrix aggregation operations</h1>
     </div>
 
     
     <p>Collapse features with the same feature id by summing them.</p>
 <p>Pool cellular technical replicate counts.</p>
-<p>Strip transcript versions</p>
     
 
-    <pre class="usage"><span class='fu'>aggregate_sparse_features</span>(<span class='no'>sparse</span>, <span class='no'>featureids</span>)
+    <pre class="usage"><span class='fu'>.aggregate_features</span>(<span class='no'>sparse</span>, <span class='no'>featureids</span>)
 
-<span class='fu'>aggregate_sparse_replicates</span>(<span class='no'>sparse</span>, <span class='no'>cellids</span>)
-
-<span class='fu'>strip_transcript_versions</span>(<span class='no'>sparse</span>)</pre>
+<span class='fu'>.aggregate_replicates</span>(<span class='no'>sparse</span>, <span class='no'>cellids</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -107,8 +111,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Modified sparse matrix.</p>
-<p>Sparse counts matrix with the transcript versions stripped.</p>
+    <p>"dgCMatrix-class".</p>
     
 
   </div>
@@ -122,9 +125,7 @@
 
     <h2>Author</h2>
     
-Rory Kirchner
-
-Michael Steinbaugh
+Rory Kirchner, Michael Steinbaugh
 
   </div>
 </div>

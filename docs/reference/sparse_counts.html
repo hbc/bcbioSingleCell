@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>bcbioSCDataSet — bcbioSCDataSet-class • bcbioSinglecell</title>
+<title>Read MatrixMarket file — .sparse_counts • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,27 +80,75 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>bcbioSCDataSet</h1>
+    <h1>Read MatrixMarket file</h1>
     </div>
 
     
-    <p><code>bcbioSCDataSet</code> is a subclass of SummarizedExperiment designed to store a
-single-cell RNA-seq analysis. This class contains read counts save as a
-sparse matrix (<code>dgCMatrix</code>), sample barcodes, run metadata, and barcode
-summary statistics for each sample analyzed.</p>
+    <p>Load single-cell RNA-seq counts saved as a <a href='https://people.sc.fsu.edu/~jburkardt/data/mm/mm.html'>MatrixMarketfile</a> into a sparse
+counts matrix (<code>dgCMatrix</code>). Transcript (rownames) and molecular barcodes
+(colnames) identifiers are set from the corresponding dependency files
+automatically.</p>
+<p>Strip transcript versions.</p>
     
 
-        
+    <pre class="usage"><span class='fu'>.sparse_counts</span>(<span class='no'>matrix_file</span>, <span class='kw'>pipeline</span> <span class='kw'>=</span> <span class='st'>"bcbio"</span>)
+
+<span class='fu'>.sparse_counts_tx2gene</span>(<span class='no'>tx_sparse_counts</span>, <span class='no'>genome_build</span>)
+
+<span class='fu'>.strip_transcript_versions</span>(<span class='no'>sparse_counts</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>matrix_file</th>
+      <td><p>MatrixMart file to read.</p></td>
+    </tr>
+    <tr>
+      <th>pipeline</th>
+      <td><p>Pipeline used to generate the MatrixMarket file. Defaults to
+bcbio-nextgen (<code>bcbio</code>). Also supports 10X Chromium CellRanger
+(<code>cellranger</code>).</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Sparse counts matrix.</p>
+<p>Sparse counts matrix with the transcript versions stripped.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function supports automatic handling of compressed matrix files.</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>bcbio-nextgen outputs counts at transcript level. 10X Chromium
+CellRanger outputs counts at gene level.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code>help("dgCMatrix-class")</code></p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#note">Note</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Michael Steinbaugh, Rory Kirchner
 
   </div>
 </div>
