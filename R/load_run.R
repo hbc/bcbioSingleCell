@@ -9,9 +9,6 @@
 #' @param upload_dir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
 #' @param metadata_file (**Required**). Sample barcode metadata file.
-#' @param organism Organism name, following Ensembl conventions. Must be
-#'   lowercase and one word (e.g. hsapiens). This will be detected automatically
-#'   for common reference genomes.
 #' @param interesting_groups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
@@ -20,127 +17,122 @@
 #' @export
 load_run <- function(
     upload_dir = "final",
-    # FIXME External metadata file is required until YAML support added
     metadata_file,
-    # FIXME Can use versions file to detect genome, instead of YAML
-    organism = NULL,
     interesting_groups = "sample_name") {
 
-    # Upload directory
+
+    # Upload directory ====
     if (!dir.exists(upload_dir)) {
         stop("Upload directory missing")
     }
     upload_dir <- normalizePath(upload_dir)
-    pipeline <- .detect_pipeline(upload_dir)
 
-    # Sample directories
-    # Locate nested matrix.mtx files to define sample directories. A similar
-    # code approach is used in [.detect_pipeline()].
-    sample_dirs <- list.files(
-        upload_dir, pattern = "*.mtx$",
-        full.names = TRUE, recursive = TRUE) %>%
-        normalizePath %>%
-        dirname %>%
-        set_names(basename(.))
 
-    # bcbio-nextgen ====
-    if (pipeline == "bcbio") {
-        # Find most recent nested project_dir (normally only 1)
-        project_dir_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
-        project_dir <- dir(upload_dir,
-                           pattern = project_dir_pattern,
-                           full.names = FALSE,
-                           recursive = FALSE)
-        if (length(project_dir) != 1) {
-            stop("Uncertain about project directory location")
-        }
-        message(project_dir)
-        match <- str_match(project_dir, project_dir_pattern)
-        date <- c(bcbio = as.Date(match[[2L]]),
-                  R = Sys.Date())
-        template <- match[[3L]]
-        project_dir <- file.path(upload_dir, project_dir)
+    # Project directory ====
+    project_dir_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
+    project_dir <- dir(upload_dir,
+                       pattern = project_dir_pattern,
+                       full.names = FALSE,
+                       recursive = FALSE)
+    if (length(project_dir) != 1) {
+        stop("Uncertain about project directory location")
+    }
+    message(project_dir)
+    match <- str_match(project_dir, project_dir_pattern)
+    run_date <- match[[2L]] %>% as.Date
+    template <- match[[3L]]
+    project_dir <- file.path(upload_dir, project_dir)
 
+
+    # Sample directories ====
+    sample_dirs <- .sample_dirs(upload_dir) %>%
         # Remove the nested `project_dir` from sample directories
-        sample_dirs <- sample_dirs %>%
-            .[!grepl(basename(project_dir), names(.))]
+        .[!grepl(basename(project_dir), names(.))]
+    message(paste(length(sample_dirs), "samples detected"))
+
+
+    # Data versions and programs ====
+    data_versions <- .data_versions(project_dir)
+    programs <- .programs(project_dir)
+    genome_build <- data_versions %>%
+        as.data.frame %>%
+        filter(.data[["resource"]] == "transcripts") %>%
+        pull("genome")
+
+
+    # Log files ====
+    message("Reading log files")
+    bcbio_nextgen <- read_lines(
+        file.path(project_dir, "bcbio-nextgen.log"))
+    bcbio_nextgen_commands <- read_lines(
+        file.path(project_dir, "bcbio-nextgen-commands.log"))
+
+
+    # Molecular barcode (UMI) type ====
+    message("Detecting UMI type")
+    if (any(str_detect(bcbio_nextgen_commands,
+                       "work/umis/harvard-indrop-v3.json"))) {
+        umi_type <- "indrop_v3"
     }
 
-    # 10X Chromium CellRanger ====
-    if (pipeline == "cellranger") {
-        if (!length(matrices)) {
-            stop("No count matrices detected")
-        }
-        parent_dirs <- dirname(matrices)
-    }
 
-    if (!length(sample_dirs)) {
-        stop("No sample directories in run")
+    # Sample metadata ====
+    # Map the sample names to the UMIs
+    if (umi_type == "indrop_v3") {
+        sample_metadata <- .indrop_metadata(metadata_file, sample_dirs)
     }
-    message(paste(length(sample_dirs), "samples detected in run"))
-
-    # Detect number of sample lanes
-    lane_pattern <- "_L(\\d{3})"
-    if (any(str_detect(sample_dirs, lane_pattern))) {
-        lanes <- str_match(names(sample_dirs), lane_pattern) %>%
-            .[, 2L] %>% unique %>% length
-        message(paste(lanes, "lane replicates per sample detected"))
-    } else {
-        lanes <- 1L
-    }
-
-    # Metadata data frame, with sample_barcode rownames
-    # FIXME Make sure custom metadata stops if missing
-    custom_metadata <- .custom_metadata(metadata_file)
 
     # Check that sample directories match the metadata
-    if (!all(names(sample_dirs) %in% metadata[["sample_barcode"]])) {
+    if (!all(names(sample_dirs) %in% sample_metadata[["sample_barcode"]])) {
         stop("Sample name mismatch between directories and metadata")
     }
 
-    # Subset sample dirs by matching sample barcodes in metadata
-    sample_dirs <- sample_dirs[metadata[["sample_barcode"]]]
-    message(paste(length(sample_dirs), "samples matched by metadata"))
 
-    # Program versions
-    programs <- .programs(project_dir)
+    # Sparse counts ====
+    # The pipeline outputs transcript-level counts. Let's store these inside the
+    # bcbioSCDataSet but outside of the SummarizedExperiment, where we will
+    # instead slot the gene-level counts.
+    tx_sparse_counts <- .sparse_counts(file.path(project_dir, "tagcounts.mtx"))
+    sparse_counts <- .sparse_counts_tx2gene(tx_sparse_counts, genome_build)
 
-    # Read counts into a sparse matrix
-    message("Reading counts into sparse matrix...")
-    sparse_counts <- .sparse_counts(project_dir)
 
-    # Read cellular barcode distributions
-    message("Reading cellular barcode distributions...")
-    barcodes <- .barcodes(sample_dirs)
+    # Cellular barcodes ====
+    cellular_barcodes <- .cellular_barcodes(sample_dirs)
 
-    # Generate barcode metrics
-    message("Calculating barcode metrics...")
-    metrics <- .metrics(sparse_counts)
 
-    # col_data
-    col_data <- custom_metadata[colnames(counts), ]
-    identical(colnames(sparse_counts), rownames(colData))
+    # Row data ====
+    annotable <- .annotable(genome_build)
 
-    # row_data
-    # FIXME use annotables...follow the bcbioRnaseq code
 
-    counts <- NULL
-    sparse <- NULL
+    # Column data ====
+    metrics <- .metrics(sparse_counts, annotable)
+
 
     # Metadata ====
     metadata <- SimpleList(
+        upload_dir = upload_dir,
+        project_dir = project_dir,
+        sample_dirs = sample_dirs,
+        sample_metadata = sample_metadata,
+        data_versions = data_versions,
+        programs = programs,
+        bcbio_nextgen = bcbio_nextgen,
+        bcbio_nextgen_commands = bcbio_nextgen_commands,
+        run_date = run_date,
+        load_date = Sys.Date(),
         wd = getwd(),
         hpc = detect_hpc(),
         session_info = sessionInfo())
 
+
     # Package into SummarizedExperiment ====
     se <- .summarized_experiment(
-        counts,
-        col_data = col_data,
-        row_data = row_data,
+        sparse_counts,
+        col_data = metrics,
+        row_data = annotable,
         metadata = metadata)
-
-    bcb <- new("bcbioRnaDataSet", se)
-    bcbio(bcb, "metrics") <- metrics
+    bcb <- new("bcbioSCDataSet", se)
+    bcbio(bcb, "tx_sparse_counts") <- tx_sparse_counts
+    bcbio(bcb, "cellular_barcodes") <- cellular_barcodes
     bcb
 }
