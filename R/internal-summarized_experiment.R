@@ -10,26 +10,18 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param tximport [tximport] list.
-#' @param col_data Sample metadata.
+#' @param sparse_counts Gene-level sparse counts matrix.
+#' @param col_data Cellular barcode metrics.
 #' @param row_data [Ensembl](http://www.ensembl.org/) gene annotations.
 #' @param metadata Custom metadata.
 #'
 #' @return [SummarizedExperiment].
 .summarized_experiment <- function(
-    tximport,
+    sparse_counts,
     col_data,
     row_data,
     metadata = NULL) {
     message("Packaging SummarizedExperiment")
-
-    # tximport ====
-    counts <- tximport[["counts"]]
-    # TODO Add check for `lengthScaledTPM`, otherwise return NULL?
-    tpm <- tximport[["abundance"]]
-
-    # TMM normalization (edgeR) ====
-    tmm <- .tmm(counts)
 
     # Metadata ====
     # Coerce to [SimpleList], if necessary
@@ -37,23 +29,21 @@
         metadata <- as(metadata, "SimpleList")
     }
 
-    # col_data ====
-    col_data <- colData[colnames(counts), ]
-    rownames(col_data) <- colnames(counts)
 
-    row_data <- rowData[rownames(counts), ]
-    rownames(row_data) <- rownames(counts)
+    # colData ====
+    col_data <- col_data[colnames(sparse_counts), ]
+    rownames(col_data) <- colnames(sparse_counts)
 
-    if (!identical(rownames(counts), rownames(row_data))) {
-        stop("Gene identifier mismatch")
-    }
+
+    # rowData ====
+    row_data <- row_data[rownames(sparse_counts), ]
+    rownames(row_data) <- rownames(sparse_counts)
+
 
     # Return [SummarizedExperiment] ====
     SummarizedExperiment(
         assays = SimpleList(
-            counts = counts,  # raw counts first
-            tpm = tpm,
-            tmm = tmm),
+            sparse_counts = sparse_counts),
         colData = col_data,
         rowData = row_data,
         metadata = metadata)
