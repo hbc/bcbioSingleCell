@@ -25,8 +25,6 @@
 #'
 #' @seealso `help("dgCMatrix-class")`
 .sparse_counts <- function(matrix_file, pipeline = "bcbio") {
-    name <- deparse(substitute(matrix_file))
-
     if (!file.exists(matrix_file)) {
         stop("Count matrix file missing")
     }
@@ -57,7 +55,7 @@
         stop("Unknown pipeline")
     }
 
-    message(paste("Reading", name,
+    message(paste("Reading MatrixMarket",
                   paste0(count_level, "-level"),
                   "counts from", pipeline))
 
@@ -88,4 +86,36 @@
 
     # Return as dgCMatrix for improved memory overhead
     as(counts, "dgCMatrix")
+}
+
+
+
+#' @rdname sparse_counts
+.sparse_counts_tx2gene <- function(tx_sparse_counts, genome_build) {
+    tx_sparse_counts <- .strip_transcript_versions(tx_sparse_counts)
+    tx2gene <- .tx2gene(genome_build) %>% .[rownames(tx_sparse_counts), ]
+    if (any(is.na(tx2gene$enstxp))) stop("Unmapped transcripts present")
+    message("Converting transcript-level counts to gene-level")
+    tx_sparse_counts %>%
+        set_rownames(tx2gene[["ensgene"]]) %>%
+        aggregate.Matrix(rownames(.), fun = "sum")
+}
+
+
+
+#' @rdname sparse_counts
+#' @description Strip transcript versions.
+#' @return Sparse counts matrix with the transcript versions stripped.
+.strip_transcript_versions <- function(sparse_counts) {
+    transcripts <- rownames(sparse_counts)
+    # Tight pattern matching against Ensembl stable transcript IDs
+    # http://www.ensembl.org/info/genome/stable_ids/index.html
+    enstxp_pattern <- "^(ENS[A-Z]{3}T\\d{11})\\.\\d+$"
+    if (any(str_detect(transcripts, enstxp_pattern))) {
+        transcripts <- str_replace(transcripts, enstxp_pattern, "\\1")
+        rownames(sparse_counts) <- transcripts
+        sparse_counts
+    } else {
+        sparse_counts
+    }
 }
