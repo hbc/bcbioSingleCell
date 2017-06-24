@@ -23,7 +23,7 @@
     }
     meta <- mutate(
         meta,
-        revcomp = vapply(.data[["sequence"]], revcomp, "character"))
+        revcomp = vapply(.data[["sequence"]], revcomp, character(1L)))
 
     # Map sample names to inDrop barcode indexes (revcomp)
     if ("file_name" %in% colnames(meta)) {
