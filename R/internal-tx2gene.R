@@ -1,3 +1,4 @@
+# TODO Add S4 method
 #' Read transcript to gene (tx2gene) annotation file
 #'
 #' @rdname tx2gene
