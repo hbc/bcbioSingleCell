@@ -116,6 +116,7 @@ load_run <- function(
         bcbio_nextgen_commands = bcbio_nextgen_commands,
         run_date = run_date,
         load_date = Sys.Date(),
+        umi_type = umi_type,
         wd = getwd(),
         hpc = detect_hpc(),
         session_info = sessionInfo())

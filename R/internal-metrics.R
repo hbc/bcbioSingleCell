@@ -35,6 +35,8 @@
             sparse_counts[rownames(sparse_counts) %in% coding_genes, ]),
         mito_counts = Matrix::colSums(
             sparse_counts[rownames(sparse_counts) %in% mito_genes, ])) %>%
+        # Filter zero count barcodes
+        filter(.data[["total_counts"]] > 0) %>%
         mutate(log10_detected_per_count =
                    log10(.data[["genes_detected"]]) /
                    log10(.data[["total_counts"]]),

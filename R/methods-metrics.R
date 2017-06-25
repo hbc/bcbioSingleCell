@@ -7,6 +7,5 @@
 #' @return [data.frame].
 #' @export
 setMethod("metrics", "bcbioSCDataSet", function(object) {
-    bcbio(object)[["metrics"]] %>%
-        as.data.frame
+    colData(object) %>% as.data.frame
 })

@@ -6,13 +6,12 @@
 #' @author Michael Steinbaugh
 #'
 #' @param upload_dir Upload directory.
-#' @param mtx_mode Locate nested MatrixMarket (`.mtx`) files to define sample
-#'   directories.
+#' @param nested_file Match sample directories by the presence of a nested file.
 #'
 #' @return Named character vector containing sample directory paths. Function
 #'   will [stop] if no sample directories are found.
-.sample_dirs <- function(upload_dir, mtx_mode = FALSE) {
-    if (isTRUE(mtx_mode)) {
+.sample_dirs <- function(upload_dir, nested_file = NULL) {
+    if (!is.null(nested_file)) {
         sample_dirs <- list.files(
             upload_dir, pattern = "*.mtx$",
             full.names = TRUE, recursive = TRUE) %>%

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Detect sample directories — .sample_dirs • bcbioSinglecell</title>
+<title>Load Cell Ranger output — load_cellranger • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,32 +80,38 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Detect sample directories</h1>
+    <h1>Load Cell Ranger output</h1>
     </div>
 
     
-    <p>Detect sample directories</p>
+    <p>Read <a href='https://www.10xgenomics.com/software/'>10x Genomics Chromium</a> cell
+counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.mtx</code> files.</p>
     
 
-    <pre class="usage"><span class='fu'>.sample_dirs</span>(<span class='no'>upload_dir</span>, <span class='kw'>nested_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>load_cellranger</span>(<span class='no'>upload_dir</span>, <span class='no'>metadata_file</span>, <span class='no'>interesting_groups</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>upload_dir</th>
-      <td><p>Upload directory.</p></td>
+      <td><p>Path to final upload directory.</p></td>
     </tr>
     <tr>
-      <th>nested_file</th>
-      <td><p>Match sample directories by the presence of a nested file.</p></td>
+      <th>metadata_file</th>
+      <td><p>(<strong>Required</strong>). Sample barcode metadata file.</p></td>
+    </tr>
+    <tr>
+      <th>interesting_groups</th>
+      <td><p>Character vector of interesting groups. First entry
+is used for plot colors during quality control (QC) analysis. Entire vector
+is used for PCA and heatmap QC functions.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Named character vector containing sample directory paths. Function
-will stop if no sample directories are found.</p>
+    <p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p>
     
 
   </div>

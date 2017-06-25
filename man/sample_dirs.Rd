@@ -4,13 +4,12 @@
 \alias{.sample_dirs}
 \title{Detect sample directories}
 \usage{
-.sample_dirs(upload_dir, mtx_mode = FALSE)
+.sample_dirs(upload_dir, nested_file = NULL)
 }
 \arguments{
 \item{upload_dir}{Upload directory.}
 
-\item{mtx_mode}{Locate nested MatrixMarket (\code{.mtx}) files to define sample
-directories.}
+\item{nested_file}{Match sample directories by the presence of a nested file.}
 }
 \value{
 Named character vector containing sample directory paths. Function

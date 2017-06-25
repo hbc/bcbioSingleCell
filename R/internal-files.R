@@ -62,13 +62,13 @@
 
     # Set row names, if desired
     if (!is.null(column_to_rownames)) {
-        rownames(data) <- data[[column_to_rownames]]
-        data[[column_to_rownames]] <- NULL
+        data <- column_to_rownames(data, var = column_to_rownames)
     }
 
     # Finally, strip all NA columns and rows, then set as S4 DataFrame
     data %>%
         remove_na %>%
+        snake(rownames = FALSE) %>%
         DataFrame
 }
 
