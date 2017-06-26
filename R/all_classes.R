@@ -14,3 +14,19 @@ bcbioSCDataSet <- setClass(  # nolint
     contains = "SummarizedExperiment",
     representation = representation(callers = "SimpleList"))
 setValidity("bcbioSCDataSet", function(object) TRUE)
+
+
+
+#' bcbioSCSubset
+#'
+#' `bcbioSCSubset` is a subclass of [ExpressionSet].
+#'
+#' @rdname bcbioSCSubset
+#' @author Michael Steinbaugh
+#'
+#' @export
+bcbioSCSubset <- setClass(
+    "bcbioSCSubset",
+    contains = "ExpressionSet",
+    representation = representation(callers = "SimpleList"))
+setValidity("bcbioSCSubset", function(object) TRUE)
