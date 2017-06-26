@@ -14,6 +14,16 @@
 \alias{top_n}
 \alias{reexports}
 \alias{save_data}
+\alias{reexports}
+\alias{assay}
+\alias{reexports}
+\alias{assays}
+\alias{reexports}
+\alias{colData}
+\alias{reexports}
+\alias{rowData}
+\alias{reexports}
+\alias{metadata}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -22,5 +32,9 @@ below to see their documentation.
 
 \describe{
   \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{detect_hpc}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{save_data}}}
+
+  \item{S4Vectors}{\code{\link[S4Vectors]{metadata}}}
+
+  \item{SummarizedExperiment}{\code{\link[SummarizedExperiment]{assay}}, \code{\link[SummarizedExperiment]{assays}}, \code{\link[SummarizedExperiment]{colData}}, \code{\link[SummarizedExperiment]{rowData}}}
 }}
 

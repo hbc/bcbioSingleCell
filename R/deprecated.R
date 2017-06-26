@@ -18,24 +18,6 @@ barcode_metrics <- function(...) {
 
 #' @rdname deprecated
 #' @export
-combine_features <- function(...) {
-    .Deprecated("aggregate_sparse_features")
-    aggregate_sparse_features(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
-combine_technical_replicates <- function(...) {
-    .Deprecated("aggregate_sparse_replicates")
-    aggregate_sparse_replicates(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
 filter_barcodes <- function(...) {
     .Deprecated("filter")
     filter(...)
@@ -54,63 +36,9 @@ filter_cellular_barcodes <- function(...) {
 
 #' @rdname deprecated
 #' @export
-load_csv_with_rownames <- function(...) {
-    .Deprecated("read_csv_with_rownames")
-    read_csv_with_rownames(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
-load_sparsecounts <- function(...) {
-    .Deprecated("read_counts")
-    read_counts(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
-make_bcbio_skeleton <- function(...) {
-    .Deprecated("create_bcbio_skeleton")
-    create_bcbio_skeleton(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
 plot_mito_counts <- function(...) {
     .Deprecated("plot_mito_ratio")
     plot_mito_ratio(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
-plot_mito_counts_boxplot <- function(...) {
-    .Deprecated("plot_mito_ratio_boxplot")
-    plot_mito_ratio_boxplot(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
-plot_mito_counts_histogram <- function(...) {
-    .Deprecated("plot_mito_ratio_histogram")
-    plot_mito_ratio_histogram(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
-plot_mito_counts_scatterplot <- function(...) {
-    .Deprecated("plot_mito_ratio_scatterplot")
-    plot_mito_ratio_scatterplot(...)
 }
 
 
@@ -138,13 +66,4 @@ plot_total_counts <- function(...) {
 plot_total_vs_detected <- function(...) {
     .Deprecated("plot_reads_vs_genes")
     plot_reads_vs_genes(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
-read_10x_counts <- function(...) {
-    .Deprecated("read_10x")
-    read_10x(...)
 }

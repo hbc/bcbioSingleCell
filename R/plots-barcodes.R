@@ -33,7 +33,7 @@
 
 .plot_cb_violin <- function(bcb) {
     title <- deparse(substitute(bcb))
-    barcodes <- unlist_barcodes(bcb)
+    barcodes <- .unlist_barcodes(bcb)
     message("Generating violin plot...")
     ggplot(barcodes,
            aes_(x = ~sample_name,

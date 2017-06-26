@@ -1,11 +1,11 @@
 #' Sparse matrix aggregation operations
 #'
-#' @rdname sparse
+#' @rdname aggregate
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @param sparse Sparse counts matrix.
 #'
-#' @return ["dgCMatrix-class"].
+#' @return Aggregated sparse matrix.
 #'
 #' @description Collapse features with the same feature id by summing them.
 #' @param featureids New feature IDs for the collapsed features.
@@ -17,7 +17,7 @@
 
 
 
-#' @rdname sparse
+#' @rdname aggregate
 #' @description Pool cellular technical replicate counts.
 #' @param cellids New cellular ids of the collapsed cells, one for each cell.
 .aggregate_replicates <- function(sparse, cellids) {

@@ -16,3 +16,24 @@ basejump::top_n
 
 #' @export
 basejump::save_data
+
+
+
+# SummarizedExperiment ====
+#' @export
+SummarizedExperiment::assay
+
+#' @export
+SummarizedExperiment::assays
+
+#' @export
+SummarizedExperiment::colData
+
+#' @export
+SummarizedExperiment::rowData
+
+
+
+# S4Vectors ====
+#' @export
+S4Vectors::metadata

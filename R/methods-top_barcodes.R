@@ -4,6 +4,7 @@
 #'
 #' @param object [bcbioSCDataSet].
 #' @param n Number of barcodes to return per sample.
+#' @param ... Additional parameters.
 #'
 #' @return [data.frame].
 #' @export

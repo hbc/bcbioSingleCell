@@ -26,7 +26,7 @@ setMethod("filter", "bcbioSCDataSet", function(
     mito_ratio = 0.2,
     novelty = 0.8,
     show = TRUE) {
-    name <- deparse(substitute(run))
+    name <- deparse(substitute(object))
 
     # Cellular barcode count
     counts(object) %>%
@@ -55,15 +55,15 @@ setMethod("filter", "bcbioSCDataSet", function(
     # Note that barcode identifiers are columns in the count matrix
     counts <- counts(object)[, rownames(metrics)]
 
-    # Set up the filtered run object
+    # Set up the filtered object
     # FIXME Have to reset the slots using replace methods
-    filtered_run <- run
-    filtered_run[["barcodes"]] <- NULL
-    filtered_run[["metrics"]] <- metrics
-    filtered_run[["counts"]] <- counts
+    filtered <- object
+    filtered[["barcodes"]] <- NULL
+    filtered[["metrics"]] <- metrics
+    filtered[["counts"]] <- counts
 
     # Save filtering parameters
-    filtered_run[["filter"]] <- list(
+    filtered[["filter"]] <- list(
         reads = reads,
         min_genes = min_genes,
         max_genes = max_genes,
@@ -78,13 +78,13 @@ setMethod("filter", "bcbioSCDataSet", function(
             paste0("- `< ", max_genes, "` genes per cell"),
             paste0("- `< ", mito_ratio, "` mitochondrial abundance ratio"),
             paste0("- `> ", novelty, "` novelty score")))
-        plot_cell_counts(filtered_run)
-        plot_read_counts(filtered_run, min = reads)
-        plot_genes_detected(filtered_run, min = min_genes, max = max_genes)
-        plot_reads_vs_genes(filtered_run) %>% show
-        plot_mito_ratio(filtered_run, max = mito_ratio)
-        plot_novelty(filtered_run, min = novelty)
+        plot_cell_counts(filtered)
+        plot_read_counts(filtered, min = reads)
+        plot_genes_detected(filtered, min = min_genes, max = max_genes)
+        plot_reads_vs_genes(filtered) %>% show
+        plot_mito_ratio(filtered, max = mito_ratio)
+        plot_novelty(filtered, min = novelty)
     }
 
-    filtered_run
+    filtered
 })

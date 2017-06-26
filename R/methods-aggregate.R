@@ -1,9 +1,14 @@
-#' Aggregate replicates
+#' Aggregate technical replicates
 #'
 #' @rdname aggregate_replicates
-#' @export
 #'
-#' @return New [bcbioSCDataSet].
+#' @author Michael Steinbaugh
+#'
+#' @param object Object.
+#' @param ... Additional parameters.
+#'
+#' @return [bcbioSCDataSet].
+#' @export
 setMethod("aggregate_replicates", "bcbioSCDataSet", function(object) {
     stop("Draft function")
 })

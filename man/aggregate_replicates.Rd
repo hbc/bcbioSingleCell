@@ -4,15 +4,23 @@
 \name{aggregate_replicates}
 \alias{aggregate_replicates}
 \alias{aggregate_replicates,bcbioSCDataSet-method}
-\title{Aggregate replicates}
+\title{Aggregate technical replicates}
 \usage{
 aggregate_replicates(object, ...)
 
 \S4method{aggregate_replicates}{bcbioSCDataSet}(object)
 }
+\arguments{
+\item{object}{Object.}
+
+\item{...}{Additional parameters.}
+}
 \value{
-New \link{bcbioSCDataSet}.
+\link{bcbioSCDataSet}.
 }
 \description{
-Aggregate replicates
+Aggregate technical replicates
+}
+\author{
+Michael Steinbaugh
 }

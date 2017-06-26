@@ -13,6 +13,8 @@ top_barcodes(object, ...)
 \arguments{
 \item{object}{\link{bcbioSCDataSet}.}
 
+\item{...}{Additional parameters.}
+
 \item{n}{Number of barcodes to return per sample.}
 }
 \value{

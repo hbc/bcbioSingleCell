@@ -17,7 +17,7 @@
 \item{cellids}{New cellular ids of the collapsed cells, one for each cell.}
 }
 \value{
-\link{"dgCMatrix-class"}.
+Aggregated sparse matrix.
 }
 \description{
 Collapse features with the same feature id by summing them.

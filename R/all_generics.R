@@ -22,6 +22,18 @@ setGeneric("metadata_table", function(object, ...) {
 #' @export
 setGeneric("metrics", function(object, ...) standardGeneric("metrics"))
 
+#' @rdname sample_metadata
+#' @export
+setGeneric("sample_metadata", function(object) {
+    standardGeneric("sample_metadata")
+})
+
+#' @rdname select_samples
+#' @export
+setGeneric("select_samples", function(object, ...) {
+    standardGeneric("select_samples")
+})
+
 #' @rdname top_barcodes
 #' @export
 setGeneric("top_barcodes", function(object, ...) {

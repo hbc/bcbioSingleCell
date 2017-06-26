@@ -107,6 +107,8 @@ load_cellranger <- function(
     metadata <- SimpleList(
         upload_dir = upload_dir,
         sample_dirs = sample_dirs,
+        interesting_groups = interesting_groups,
+        metadata_file = metadata_file,
         sample_metadata = sample_metadata,
         load_date = Sys.Date(),
         umi_type = umi_type,

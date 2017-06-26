@@ -2,54 +2,27 @@
 % Please edit documentation in R/deprecated.R
 \name{barcode_metrics}
 \alias{barcode_metrics}
-\alias{combine_features}
-\alias{combine_technical_replicates}
 \alias{filter_barcodes}
 \alias{filter_cellular_barcodes}
-\alias{load_csv_with_rownames}
-\alias{load_sparsecounts}
-\alias{make_bcbio_skeleton}
 \alias{plot_mito_counts}
-\alias{plot_mito_counts_boxplot}
-\alias{plot_mito_counts_histogram}
-\alias{plot_mito_counts_scatterplot}
 \alias{plot_total_cells}
 \alias{plot_total_counts}
 \alias{plot_total_vs_detected}
-\alias{read_10x_counts}
 \title{Deprecated functions}
 \usage{
 barcode_metrics(...)
-
-combine_features(...)
-
-combine_technical_replicates(...)
 
 filter_barcodes(...)
 
 filter_cellular_barcodes(...)
 
-load_csv_with_rownames(...)
-
-load_sparsecounts(...)
-
-make_bcbio_skeleton(...)
-
 plot_mito_counts(...)
-
-plot_mito_counts_boxplot(...)
-
-plot_mito_counts_histogram(...)
-
-plot_mito_counts_scatterplot(...)
 
 plot_total_cells(...)
 
 plot_total_counts(...)
 
 plot_total_vs_detected(...)
-
-read_10x_counts(...)
 }
 \arguments{
 \item{...}{Passthrough parameters}

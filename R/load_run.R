@@ -109,6 +109,8 @@ load_run <- function(
         upload_dir = upload_dir,
         project_dir = project_dir,
         sample_dirs = sample_dirs,
+        interesting_groups = interesting_groups,
+        metadata_file = metadata_file,
         sample_metadata = sample_metadata,
         data_versions = data_versions,
         programs = programs,

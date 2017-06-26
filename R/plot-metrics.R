@@ -7,7 +7,7 @@
 #' @author Michael Steinbaugh
 #' @author Rory Kirchner
 #'
-#' @param run [bcbioSCDataSet].
+#' @param bcb [bcbioSCDataSet].
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #'
@@ -16,10 +16,10 @@
 
 
 # Cell counts ====
-.plot_cell_counts_barplot <- function(run) {
-    if (!is.null(run$lanes)) {
-        plot <- run$metrics %>%
-            left_join(run$metadata,
+.plot_cell_counts_barplot <- function(bcb) {
+    if (!is.null(bcb$lanes)) {
+        plot <- metrics(bcb) %>%
+            left_join(bcb$metadata,
                       by = c("sample_name", "sample_barcode")) %>%
             group_by(!!!syms(c("sample_name", "lane"))) %>%
             summarise(cells = n()) %>%
@@ -29,7 +29,7 @@
                      fill = ~sample_name)) +
             facet_wrap(~sample_name)
     } else {
-        plot <- run$metrics %>%
+        plot <- bcb$metrics %>%
             group_by(!!sym("sample_name")) %>%
             summarise(cells = n()) %>%
             ggplot(
@@ -50,20 +50,20 @@
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_cell_counts <- function(run) {
-    show(.plot_cell_counts_barplot(run))
+plot_cell_counts <- function(bcb) {
+    show(.plot_cell_counts_barplot(bcb))
 }
 
 
 
 # Read counts ====
 # [TODO] Take out "total" in plot title
-.plot_read_counts_boxplot <- function(run, min, type = "total") {
+.plot_read_counts_boxplot <- function(bcb, min, type = "total") {
     if (!type %in% c("coding", "total")) {
         stop("Invalid counts column prefix")
     }
     name <- paste(type, "read counts")
-    metrics <- run$metrics %>%
+    metrics <- bcb$metrics %>%
         rename(counts = !!sym(paste(type, "counts", sep = "_")))
     metrics %>%
         ggplot(
@@ -89,12 +89,12 @@ plot_cell_counts <- function(run) {
             legend.position = "none")
 }
 
-.plot_read_counts_histogram <- function(run, min, type = "total") {
+.plot_read_counts_histogram <- function(bcb, min, type = "total") {
     if (!type %in% c("coding", "total")) {
         stop("Invalid counts column prefix")
     }
     name <- paste(type, "read counts")
-    metrics <- run$metrics %>%
+    metrics <- bcb$metrics %>%
         rename(counts = !!sym(paste(type, "counts", sep = "_")))
     metrics %>%
         ggplot(
@@ -114,17 +114,17 @@ plot_cell_counts <- function(run) {
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_read_counts <- function(run, min = 1000L) {
-    show(.plot_read_counts_boxplot(run, min))
-    show(.plot_read_counts_histogram(run, min))
+plot_read_counts <- function(bcb, min = 1000L) {
+    show(.plot_read_counts_boxplot(bcb, min))
+    show(.plot_read_counts_histogram(bcb, min))
     # [TODO] Add coding / total ratio plot?
 }
 
 
 
 # Genes detected ====
-.plot_genes_detected_boxplot <- function(run, min, max) {
-    plot <- run$metrics %>%
+.plot_genes_detected_boxplot <- function(bcb, min, max) {
+    plot <- bcb$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~genes_detected,
@@ -136,7 +136,7 @@ plot_read_counts <- function(run, min = 1000L) {
         geom_hline(color = warn_color, yintercept = min) +
         geom_label(
             data = aggregate(genes_detected ~ sample_name,
-                             run$metrics,
+                             bcb$metrics,
                              median),
             aes_(label = ~round(genes_detected)),
             alpha = 0.75,
@@ -154,8 +154,8 @@ plot_read_counts <- function(run, min = 1000L) {
     plot
 }
 
-.plot_genes_detected_histogram <- function(run, min, max) {
-    plot <- run$metrics %>%
+.plot_genes_detected_histogram <- function(bcb, min, max) {
+    plot <- bcb$metrics %>%
         ggplot(
             aes_(x = ~genes_detected,
                  fill = ~sample_name)) +
@@ -179,9 +179,9 @@ plot_read_counts <- function(run, min = 1000L) {
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_genes_detected <- function(run, min = 500, max = NULL) {
-    show(.plot_genes_detected_boxplot(run, min, max))
-    show(.plot_genes_detected_histogram(run, min, max))
+plot_genes_detected <- function(bcb, min = 500, max = NULL) {
+    show(.plot_genes_detected_boxplot(bcb, min, max))
+    show(.plot_genes_detected_histogram(bcb, min, max))
 }
 
 
@@ -190,11 +190,11 @@ plot_genes_detected <- function(run, min = 500, max = NULL) {
 #' @rdname qc_plots_metrics
 #' @param intgroup Interesting group used to define colors.
 #' @export
-plot_reads_vs_genes <- function(run, intgroup = NULL) {
+plot_reads_vs_genes <- function(bcb, intgroup = NULL) {
     if (is.null(intgroup)) {
-        intgroup <- run$intgroup[1]
+        intgroup <- bcb$intgroup[1]
     }
-    run$metrics %>%
+    bcb$metrics %>%
         ggplot(
             aes_(x = ~total_counts,
                  y = ~genes_detected,
@@ -217,8 +217,8 @@ plot_reads_vs_genes <- function(run, intgroup = NULL) {
 
 
 # Mitochondrial abundance ====
-.plot_mito_ratio_boxplot <- function(run, max) {
-    run$metrics %>%
+.plot_mito_ratio_boxplot <- function(bcb, max) {
+    bcb$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~mito_ratio,
@@ -231,7 +231,7 @@ plot_reads_vs_genes <- function(run, intgroup = NULL) {
         geom_hline(color = warn_color, yintercept = max) +
         geom_label(
             data = aggregate(mito_ratio ~ sample_name,
-                             run$metrics,
+                             bcb$metrics,
                              median),
             aes_(label = ~round(mito_ratio, digits = 2)),
             alpha = 0.75,
@@ -243,8 +243,8 @@ plot_reads_vs_genes <- function(run, intgroup = NULL) {
             legend.position = "none")
 }
 
-.plot_mito_ratio_histogram <- function(run, max) {
-    run$metrics %>%
+.plot_mito_ratio_histogram <- function(bcb, max) {
+    bcb$metrics %>%
         ggplot(
             aes_(x = ~mito_ratio,
                  fill = ~sample_name)) +
@@ -260,8 +260,8 @@ plot_reads_vs_genes <- function(run, intgroup = NULL) {
             legend.position = "none")
 }
 
-.plot_mito_ratio_scatterplot <- function(run) {
-    run$metrics %>%
+.plot_mito_ratio_scatterplot <- function(bcb) {
+    bcb$metrics %>%
         ggplot(
             aes_(x = ~coding_counts,
                  y = ~mito_counts,
@@ -278,17 +278,17 @@ plot_reads_vs_genes <- function(run, intgroup = NULL) {
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_mito_ratio <- function(run, max = 0.2) {
-    show(.plot_mito_ratio_boxplot(run, max))
-    show(.plot_mito_ratio_histogram(run, max))
-    show(.plot_mito_ratio_scatterplot(run))
+plot_mito_ratio <- function(bcb, max = 0.2) {
+    show(.plot_mito_ratio_boxplot(bcb, max))
+    show(.plot_mito_ratio_histogram(bcb, max))
+    show(.plot_mito_ratio_scatterplot(bcb))
 }
 
 
 
 # Novelty ====
-.plot_novelty_boxplot <- function(run, min) {
-    run$metrics %>%
+.plot_novelty_boxplot <- function(bcb, min) {
+    bcb$metrics %>%
         ggplot(
             aes_(x = ~sample_name,
                  y = ~log10_detected_per_count,
@@ -300,7 +300,7 @@ plot_mito_ratio <- function(run, max = 0.2) {
         geom_hline(color = warn_color, yintercept = min) +
         geom_label(
             data = aggregate(log10_detected_per_count ~ sample_name,
-                             run$metrics,
+                             bcb$metrics,
                              median),
             aes_(label = ~round(log10_detected_per_count, digits = 2L)),
             alpha = 0.75,
@@ -311,8 +311,8 @@ plot_mito_ratio <- function(run, max = 0.2) {
             legend.position = "none")
 }
 
-.plot_novelty_histogram <- function(run, min) {
-    run$metrics %>%
+.plot_novelty_histogram <- function(bcb, min) {
+    bcb$metrics %>%
         ggplot(
             aes_(x = ~log10_detected_per_count,
                  fill = ~sample_name)) +
@@ -330,7 +330,7 @@ plot_mito_ratio <- function(run, max = 0.2) {
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_novelty <- function(run, min = 0.8) {
-    show(.plot_novelty_boxplot(run, min))
-    show(.plot_novelty_histogram(run, min))
+plot_novelty <- function(bcb, min = 0.8) {
+    show(.plot_novelty_boxplot(bcb, min))
+    show(.plot_novelty_histogram(bcb, min))
 }

@@ -10,22 +10,22 @@
 \alias{plot_novelty}
 \title{Cell metrics quality control plots}
 \usage{
-.plot_cell_counts_barplot(run)
+.plot_cell_counts_barplot(bcb)
 
-plot_cell_counts(run)
+plot_cell_counts(bcb)
 
-plot_read_counts(run, min = 1000L)
+plot_read_counts(bcb, min = 1000L)
 
-plot_genes_detected(run, min = 500, max = NULL)
+plot_genes_detected(bcb, min = 500, max = NULL)
 
-plot_reads_vs_genes(run, intgroup = NULL)
+plot_reads_vs_genes(bcb, intgroup = NULL)
 
-plot_mito_ratio(run, max = 0.2)
+plot_mito_ratio(bcb, max = 0.2)
 
-plot_novelty(run, min = 0.8)
+plot_novelty(bcb, min = 0.8)
 }
 \arguments{
-\item{run}{\link{bcbioSCDataSet}.}
+\item{bcb}{\link{bcbioSCDataSet}.}
 
 \item{min}{Recommended minimum value cutoff.}
 
