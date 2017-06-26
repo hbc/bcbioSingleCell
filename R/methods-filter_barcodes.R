@@ -88,11 +88,6 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
     # bcbioSCDataSet ====
     bcb <- new("bcbioSCDataSet", se)
 
-    message(paste(
-        "bcbioSCDataSet:",
-        format(object.size(bcb), units = "auto")
-    ))
-
     # Show summary statistics and plots, if desired
     if (isTRUE(show)) {
         writeLines(c(
@@ -104,7 +99,7 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
         plot_cell_counts(bcb)
         plot_umis_per_cell(bcb, min = umis)
         plot_genes_detected(bcb, min = genes)
-        plot_reads_vs_genes(bcb)
+        plot_umis_vs_genes(bcb)
         plot_mito_ratio(bcb, max = mito_ratio)
         plot_novelty(bcb, min = novelty)
     }
