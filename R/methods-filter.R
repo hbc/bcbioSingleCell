@@ -109,8 +109,9 @@ setMethod("filter", "bcbioSCDataSet", function(
             paste0("- `> ", novelty, "` novelty score")))
         plot_cell_counts(bcb)
         plot_read_counts(bcb, min = reads)
+        # FIXME non-numeric argument to binary operator?
         plot_genes_detected(bcb, min = min_genes, max = max_genes)
-        plot_reads_vs_genes(bcb) %>% show
+        plot_reads_vs_genes(bcb)
         plot_mito_ratio(bcb, max = mito_ratio)
         plot_novelty(bcb, min = novelty)
     }

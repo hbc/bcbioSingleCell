@@ -18,7 +18,7 @@ plot_read_counts(bcb, min = 1000L)
 
 plot_genes_detected(bcb, min = 500, max = NULL)
 
-plot_reads_vs_genes(bcb, interesting_groups = NULL)
+plot_reads_vs_genes(bcb)
 
 plot_mito_ratio(bcb, max = 0.2)
 
@@ -30,8 +30,6 @@ plot_novelty(bcb, min = 0.8)
 \item{min}{Recommended minimum value cutoff.}
 
 \item{max}{Recommended maximum value cutoff.}
-
-\item{interesting_groups}{Interesting group used to define colors.}
 }
 \value{
 \link{ggplot}.
