@@ -6,7 +6,7 @@
 \title{Filter cellular barcodes}
 \usage{
 \S4method{filter}{bcbioSCDataSet}(object, reads = 1000, min_genes = 500,
-  max_genes = 5000, mito_ratio = 0.2, novelty = 0.8, show = TRUE)
+  max_genes = 5000, mito_ratio = 0.1, novelty = 0.8, show = TRUE)
 }
 \arguments{
 \item{object}{\link{bcbioSCDataSet}.}
@@ -24,7 +24,7 @@
 \item{show}{Show summary statistics and plots.}
 }
 \value{
-New \link{bcbioSCDataSet}.
+\link{bcbioSCSubset}.
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to

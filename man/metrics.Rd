@@ -6,6 +6,7 @@
 \alias{metrics}
 \alias{.metrics}
 \alias{metrics,bcbioSCDataSet-method}
+\alias{metrics,bcbioSCSubset-method}
 \title{Generate barcode metrics summary}
 \usage{
 metrics(object, ...)
@@ -13,6 +14,8 @@ metrics(object, ...)
 .metrics(sparse_counts, annotable)
 
 \S4method{metrics}{bcbioSCDataSet}(object)
+
+\S4method{metrics}{bcbioSCSubset}(object)
 }
 \arguments{
 \item{object}{\link{bcbioSCDataSet}.}

@@ -6,6 +6,7 @@
 \alias{bcbio<-}
 \alias{bcbio,bcbioSCDataSet-method}
 \alias{bcbio<-,bcbioSCDataSet-method}
+\alias{bcbio<-,bcbioSCSubset-method}
 \title{Accessors for the sparse count matrix of a \link{bcbioSCDataSet} object}
 \usage{
 bcbio(object, ...)
@@ -15,6 +16,8 @@ bcbio(object, ...) <- value
 \S4method{bcbio}{bcbioSCDataSet}(object, type = "counts")
 
 \S4method{bcbio}{bcbioSCDataSet}(object, type = "counts") <- value
+
+\S4method{bcbio}{bcbioSCSubset}(object, type) <- value
 }
 \arguments{
 \item{object}{\link{bcbioSCDataSet} object.}
