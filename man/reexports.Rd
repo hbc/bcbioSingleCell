@@ -15,8 +15,6 @@
 \alias{reexports}
 \alias{save_data}
 \alias{reexports}
-\alias{counts}
-\alias{reexports}
 \alias{design}
 \alias{reexports}
 \alias{assay}
@@ -39,7 +37,7 @@ below to see their documentation.
 \describe{
   \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{detect_hpc}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{save_data}}}
 
-  \item{BiocGenerics}{\code{\link[BiocGenerics]{counts}}, \code{\link[BiocGenerics]{design}}}
+  \item{BiocGenerics}{\code{\link[BiocGenerics]{design}}}
 
   \item{S4Vectors}{\code{\link[S4Vectors]{DataFrame}}, \code{\link[S4Vectors]{metadata}}}
 
