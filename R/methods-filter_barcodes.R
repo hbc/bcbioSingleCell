@@ -41,7 +41,7 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
         filter(.data[["umi_counts"]] >= !!umis,
                .data[["genes_detected"]] >= !!genes,
                .data[["mito_ratio"]] <= !!mito_ratio,
-               .data[["log10_detected_per_count"]] >= !!novelty) %>%
+               .data[["log10_genes_per_umi"]] >= !!novelty) %>%
         column_to_rownames
 
     # Subset counts
