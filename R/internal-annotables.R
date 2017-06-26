@@ -47,27 +47,35 @@
             arrange(!!sym("enstxp"))
     }
 
-    # Broad class definitions, based on biotype
-    coding <- c("protein_coding")
-    decaying <- c("non_stop_decay", "nonsense_mediated_decay")
-    noncoding <- c("known_ncrna", "lincRNA", "non_coding")
-    srna <- c("miRNA", "misc_RNA", "ribozyme", "rRNA", "scaRNA", "scRNA",
-              "snoRNA", "snRNA", "sRNA")
-
+    # Define broad class and return
     annotable %>%
         as.data.frame %>%
         mutate(broad_class = case_when(
-            tolower(.data[["chr"]]) == "mt" ~ "mito",
-            # Fix to match Drosophila genome (non-standard)
-            grepl("mito", .data[["chr"]]) ~ "mito",
-            grepl("pseudo", .data[["biotype"]]) ~ "pseudo",
-            grepl("TR_", .data[["biotype"]]) ~ "TCR",
-            grepl("IG_", .data[["biotype"]]) ~ "IG",
-            .data[["biotype"]] %in% srna ~ "small",
-            .data[["biotype"]] %in% decaying ~ "decaying",
-            .data[["biotype"]] %in% noncoding ~ "noncoding",
-            .data[["biotype"]] %in% coding ~ "coding",
+            # Chromosome
+            str_detect(tolower(.data[["chr"]]), "mito|mt") ~ "mito",
+            # Biotype
+            .data[["biotype"]] == "protein_coding" ~ "coding",
+            .data[["biotype"]] %in%
+                c("known_ncrna",
+                  "lincRNA",
+                  "non_coding") ~ "noncoding",
+            str_detect(.data[["biotype"]], "pseudo") ~ "pseudo",
+            .data[["biotype"]] %in%
+                c("miRNA",
+                  "misc_RNA",
+                  "ribozyme",
+                  "rRNA",
+                  "scaRNA",
+                  "scRNA",
+                  "snoRNA",
+                  "snRNA",
+                  "sRNA") ~ "small",
+            .data[["biotype"]] %in%
+                c("non_stop_decay",
+                  "nonsense_mediated_decay") ~ "decaying",
+            str_detect(.data[["biotype"]], "IG_") ~ "ig",
+            str_detect(.data[["biotype"]], "TR_") ~ "tcr",
             TRUE ~ "other")) %>%
         set_rownames(.[["ensgene"]]) %>%
-        DataFrame
+        as("DataFrame")
 }
