@@ -27,16 +27,15 @@ setMethod("filter", "bcbioSCDataSet", function(
     novelty = 0.8,
     show = TRUE) {
     name <- deparse(substitute(object))
+    sparse_counts <- assay(object)
 
     # Cellular barcode count
-    counts(object) %>%
-        ncol %>%
-        paste("cellular barcodes detected") %>%
+    ncol(sparse_counts) %>%
+        paste("cellular barcodes in dataset") %>%
         message
 
     # Subset metrics
     metrics <- metrics(object) %>%
-        as.data.frame %>%
         rownames_to_column %>%
         filter(.data[["total_counts"]] > !!reads,
                # FIXME Include option to filter by `coding_counts`?
@@ -53,22 +52,20 @@ setMethod("filter", "bcbioSCDataSet", function(
     message(paste(nrow(metrics), "cellular barcodes passed filtering"))
 
     # Note that barcode identifiers are columns in the count matrix
-    counts <- counts(object)[, rownames(metrics)]
+    sparse_counts <- sparse_counts[, rownames(metrics)]
 
     # Set up the filtered object
-    # FIXME Have to reset the slots using replace methods
-    filtered <- object
-    filtered[["barcodes"]] <- NULL
-    filtered[["metrics"]] <- metrics
-    filtered[["counts"]] <- counts
-
-    # Save filtering parameters
-    filtered[["filter"]] <- list(
-        reads = reads,
-        min_genes = min_genes,
-        max_genes = max_genes,
-        mito_ratio = mito_ratio,
-        novelty = novelty)
+    # FIXME Output as S4 instead of list...
+    filtered <- list(
+        sparse_counts = sparse_counts,
+        metrics = metrics,
+        metadata = list(
+            reads = reads,
+            min_genes = min_genes,
+            max_genes = max_genes,
+            mito_ratio = mito_ratio,
+            novelty = novelty
+        ))
 
     if (isTRUE(show)) {
         writeLines(c(
