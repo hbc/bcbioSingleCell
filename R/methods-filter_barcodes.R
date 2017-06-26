@@ -98,12 +98,12 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
         writeLines(c(
             paste(name, "filtering parameters:"),
             paste0("- `>= ", umis, "` UMI counts per cell"),
-            paste0("- `>= ", min_genes, "` genes per cell"),
+            paste0("- `>= ", genes, "` genes per cell"),
             paste0("- `<= ", mito_ratio, "` mitochondrial abundance ratio"),
             paste0("- `>= ", novelty, "` novelty score")))
         plot_cell_counts(bcb)
-        plot_read_counts(bcb, min = reads)
-        plot_genes_detected(bcb, min = min_genes)
+        plot_umis_per_cell(bcb, min = umis)
+        plot_genes_detected(bcb, min = genes)
         plot_reads_vs_genes(bcb)
         plot_mito_ratio(bcb, max = mito_ratio)
         plot_novelty(bcb, min = novelty)
