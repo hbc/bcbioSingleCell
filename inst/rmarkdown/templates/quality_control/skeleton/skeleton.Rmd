@@ -80,8 +80,8 @@ plot_cell_counts(bcb)
 
 ## UMI counts per cell
 
-```{r plot_umi_counts}
-plot_umi_counts(bcb)
+```{r plot_umis_per_cell}
+plot_umis_per_cell(bcb)
 ```
 
 

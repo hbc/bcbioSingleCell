@@ -45,7 +45,7 @@ plot_cell_counts <- function(bcb) {
 
 
 # Read counts ====
-.plot_umi_counts_boxplot <- function(bcb, min) {
+.plot_umis_per_cell_boxplot <- function(bcb, min) {
     metrics <- metrics(bcb)
     interesting_group <- interesting_groups(bcb)[[1L]]
 
@@ -63,7 +63,7 @@ plot_cell_counts <- function(bcb) {
              fill = as.name(interesting_group))) +
         labs(title = "umi counts boxplot",
              x = "sample",
-             y = name) +
+             y = "umis per cell") +
         geom_boxplot() +
         geom_label(
             data = median_umis,
@@ -77,10 +77,9 @@ plot_cell_counts <- function(bcb) {
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
 
-.plot_umi_counts_histogram <- function(bcb, min) {
+.plot_umis_per_cell_histogram <- function(bcb, min) {
     metrics <- metrics(bcb)
     interesting_group <- interesting_groups(bcb)[[1L]]
-
     ggplot(
         metrics,
         aes_(x = ~umi_counts,
@@ -97,9 +96,9 @@ plot_cell_counts <- function(bcb) {
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_umi_counts <- function(bcb, min = 1000L) {
-    show(.plot_umi_counts_boxplot(bcb, min))
-    show(.plot_umi_counts_histogram(bcb, min))
+plot_umis_per_cell <- function(bcb, min = 1000L) {
+    show(.plot_umis_per_cell_boxplot(bcb, min))
+    show(.plot_umis_per_cell_histogram(bcb, min))
 }
 
 
