@@ -16,7 +16,7 @@ plot_cell_counts(bcb)
 
 plot_read_counts(bcb, min = 1000L)
 
-plot_genes_detected(bcb, min = 500, max = NULL)
+plot_genes_detected(bcb, min = 500L, max = NULL)
 
 plot_reads_vs_genes(bcb)
 

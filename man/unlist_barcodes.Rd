@@ -4,10 +4,10 @@
 \alias{.unlist_barcodes}
 \title{Unlist cellular barcodes}
 \usage{
-.unlist_barcodes(run)
+.unlist_barcodes(bcb)
 }
 \arguments{
-\item{run}{\link{bcbioSCDataSet}.}
+\item{bcb}{\link{bcbioSCDataSet}.}
 }
 \description{
 Convert named list of cellular barcodes per sample to a data frame.

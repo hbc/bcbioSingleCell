@@ -8,8 +8,8 @@
 \usage{
 filter_barcodes(object, ...)
 
-\S4method{filter_barcodes}{bcbioSCDataSet}(object, reads = 1000,
-  min_genes = 500, max_genes = 10000, mito_ratio = 0.1, novelty = 0.8,
+\S4method{filter_barcodes}{bcbioSCDataSet}(object, reads = 1000L,
+  min_genes = 500L, max_genes = 10000L, mito_ratio = 0.1, novelty = 0.8,
   show = TRUE)
 }
 \arguments{

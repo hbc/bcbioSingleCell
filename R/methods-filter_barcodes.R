@@ -33,9 +33,7 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
     sparse_counts <- counts(object)
 
     # Cellular barcode count
-    ncol(sparse_counts) %>%
-        paste("cellular barcodes in dataset") %>%
-        message
+    ncol(sparse_counts) %>% paste("cellular barcodes in dataset") %>% message
 
     # Subset metrics
     metrics <- metrics(object) %>%
@@ -65,13 +63,13 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
     # colData ====
     col_data <- colData(object) %>%
         .[rownames(metrics), ] %>%
-        DataFrame
+        as("DataFrame")
 
     # rowData ====
     row_data <- rowData(object) %>%
         as.data.frame %>%
         set_rownames(names(object)) %>%
-        DataFrame
+        as("DataFrame")
 
     # Metadata ====
     meta <- metadata(object)

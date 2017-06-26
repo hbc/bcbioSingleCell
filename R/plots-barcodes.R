@@ -24,12 +24,12 @@
             y = y) +
             geom_point() +
             geom_line() +
-            ggtitle(title) +
             scale_x_log10(
                 breaks = trans_breaks("log10", function(x) 10L ^ x),
                 labels = trans_format("log10", math_format(~10L ^ .x))) +
-            xlab("number of reads assigned to a cell") +
-            ylab("proportion of cells")
+            labs(title = title,
+                 x = "number of reads assigned to a cell",
+                 y = "proportion of cells")
     }) %>% invisible
 }
 
@@ -65,4 +65,3 @@ plot_barcodes <- function(bcb) {
     show(.plot_cb_violin(bcb))
     show(.plot_cb_histogram(bcb))
 }
-w

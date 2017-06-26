@@ -8,7 +8,7 @@
 \usage{
 top_barcodes(object, ...)
 
-\S4method{top_barcodes}{bcbioSCDataSet}(object, n = 2)
+\S4method{top_barcodes}{bcbioSCDataSet}(object, n = 2L)
 }
 \arguments{
 \item{object}{\link{bcbioSCDataSet}.}
