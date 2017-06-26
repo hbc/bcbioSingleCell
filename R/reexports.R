@@ -19,6 +19,15 @@ basejump::save_data
 
 
 
+# BiocGenerics ====
+#' @export
+BiocGenerics::counts
+
+#' @export
+BiocGenerics::design
+
+
+
 # SummarizedExperiment ====
 #' @export
 SummarizedExperiment::assay
@@ -35,5 +44,8 @@ SummarizedExperiment::rowData
 
 
 # S4Vectors ====
+#' @export
+S4Vectors::DataFrame
+
 #' @export
 S4Vectors::metadata

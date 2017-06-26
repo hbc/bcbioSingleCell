@@ -5,7 +5,7 @@
 #' Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 #' cellular barcodes.
 #'
-#' @rdname filter
+#' @rdname filter_barcodes
 #' @author Michael Steinbaugh
 #'
 #' @param object [bcbioSCDataSet].
@@ -16,18 +16,19 @@
 #' @param novelty Minimum novelty score.
 #' @param show Show summary statistics and plots.
 #'
-#' @return [bcbioSCSubset].
+#' @return Filtered [bcbioSCDataSet], with low quality cellular barcodes that
+#'   don't pass quality control cutoffs removed.
 #' @export
-setMethod("filter", "bcbioSCDataSet", function(
+setMethod("filter_barcodes", "bcbioSCDataSet", function(
     object,
     reads = 1000,
     min_genes = 500,
-    max_genes = 5000,
+    max_genes = 10000,
     mito_ratio = 0.1,
     novelty = 0.8,
     show = TRUE) {
     name <- deparse(substitute(object))
-    sparse_counts <- assay(object)
+    sparse_counts <- counts(object)
 
     # Cellular barcode count
     ncol(sparse_counts) %>%
@@ -38,7 +39,6 @@ setMethod("filter", "bcbioSCDataSet", function(
     metrics <- metrics(object) %>%
         rownames_to_column %>%
         filter(.data[["total_counts"]] > !!reads,
-               # FIXME Include option to filter by `coding_counts`?
                .data[["genes_detected"]] > !!min_genes,
                .data[["genes_detected"]] < !!max_genes,
                .data[["mito_ratio"]] < !!mito_ratio,
@@ -51,54 +51,51 @@ setMethod("filter", "bcbioSCDataSet", function(
     }
     message(paste(nrow(metrics), "cellular barcodes passed filtering"))
 
-    # ExpressionSet ====
-    message("Packaging into ExpressionSet")
     # Sparse
+    sparse_size_original <- object.size(sparse_counts) %>%
+        format(units = "auto")
     sparse_counts <- sparse_counts[, rownames(metrics)]
-    sparse_size <- object.size(sparse_counts) %>% format(units = "auto")
-    # Dense (currently required for assayData)
-    dense_counts <- as.matrix(sparse_counts)
-    dense_size <- object.size(dense_counts) %>% format(units = "auto")
-    paste("Converting sparse to dense matrix:",
-          sparse_size, "->", dense_size) %>%
-        message
-    pheno_data <- colData(object) %>%
-        as.data.frame %>%
+    sparse_size_filtered <- object.size(sparse_counts) %>%
+        format(units = "auto")
+    message(paste("Sparse matrix size shrunk from",
+                  sparse_size_original, "to", sparse_size_filtered))
+
+    # colData ====
+    col_data <- colData(object) %>%
         .[rownames(metrics), ] %>%
-        as("AnnotatedDataFrame")
-    feature_data <- rowData(object) %>%
+        DataFrame
+
+    # rowData ====
+    row_data <- rowData(object) %>%
         as.data.frame %>%
         set_rownames(names(object)) %>%
-        as("AnnotatedDataFrame")
-    es <- ExpressionSet(
-        assayData = dense_counts,
-        phenoData = pheno_data,
-        featureData = feature_data)
-    bcb <- as(es, "bcbioSCSubset")
+        DataFrame
 
-    # Unload counts from memory
-    rm(sparse_counts, dense_counts)
-
-    # Add additional slots
-    filtering_criteria <- SimpleList(
+    # Metadata ====
+    meta <- metadata(object)
+    meta[["filtering_criteria"]] <- SimpleList(
         reads = reads,
         min_genes = min_genes,
         max_genes = max_genes,
         mito_ratio = mito_ratio,
         novelty = novelty)
-    sample_metadata <- sample_metadata(object)
-    interesting_groups <- metadata(object)[["interesting_groups"]]
 
-    bcbio(bcb, "sample_metadata") <- sample_metadata
-    bcbio(bcb, "interesting_groups") <- interesting_groups
-    bcbio(bcb, "filtering_criteria") <- filtering_criteria
+    # SummarizedExperiment ====
+    se <- .summarized_experiment(
+        sparse_counts = sparse_counts,
+        col_data = col_data,
+        row_data = row_data,
+        metadata = meta)
+
+    # bcbioSCDataSet ====
+    bcb <- new("bcbioSCDataSet", se)
 
     message(paste(
-        "bcbioSCSubset:",
+        "bcbioSCDataSet:",
         format(object.size(bcb), units = "auto")
     ))
 
-
+    # Show summary statistics and plots, if desired
     if (isTRUE(show)) {
         writeLines(c(
             paste(name, "filtering parameters:"),
@@ -109,7 +106,6 @@ setMethod("filter", "bcbioSCDataSet", function(
             paste0("- `> ", novelty, "` novelty score")))
         plot_cell_counts(bcb)
         plot_read_counts(bcb, min = reads)
-        # FIXME non-numeric argument to binary operator?
         plot_genes_detected(bcb, min = min_genes, max = max_genes)
         plot_reads_vs_genes(bcb)
         plot_mito_ratio(bcb, max = mito_ratio)

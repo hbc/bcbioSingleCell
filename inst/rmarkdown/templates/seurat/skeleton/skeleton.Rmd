@@ -10,17 +10,18 @@ bibliography: bcbioSinglecell.bib
 library(Seurat)
 library(bcbioSinglecell)
 source("setup.R")
-data(filtered)
+data(bcb_filtered)
 
 # Setup
 # Seurat uses dot.notation instead of snake_case
-meta.data <- dot_notation(filtered$metrics, rownames = FALSE)
-raw.data <- filtered$counts
+meta.data <- metrics(bcb_filtered) %>% dotted(rownames = FALSE)
+raw.data <- counts(bcb_filtered)
 
 # Cutoffs
-max.genes <- filtered$filter$max_genes
-min.genes <- filtered$filter$min_genes
-mito.ratio <- filtered$filter$mito_ratio
+# FIXME Need to update to S4 slots
+max.genes <- bcb_filtered$filter$max_genes
+min.genes <- bcb_filtered$filter$min_genes
+mito.ratio <- bcb_filtered$filter$mito_ratio
 
 num.pc <- 40
 pc.use <- 10

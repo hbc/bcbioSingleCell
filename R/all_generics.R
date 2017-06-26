@@ -18,6 +18,14 @@ setGeneric("bcbio<-", function(object, ..., value) standardGeneric("bcbio<-"))
 
 
 
+#' @rdname filter_barcodes
+#' @export
+setGeneric("filter_barcodes", function(object, ...) {
+    standardGeneric("filter_barcodes")
+})
+
+
+
 #' @rdname metadata_table
 #' @export
 setGeneric("metadata_table", function(object, ...) {
