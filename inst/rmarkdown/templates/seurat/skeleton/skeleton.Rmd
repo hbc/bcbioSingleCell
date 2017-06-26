@@ -4,24 +4,23 @@ author: ""
 date: "`r Sys.Date()`"
 template_date: "2017-06-13"
 bibliography: bcbioSinglecell.bib
-output: html_notebook
 ---
 
 ```{r setup, message=FALSE}
 library(Seurat)
 library(bcbioSinglecell)
 source("setup.R")
-data(filtered_run)
+data(filtered)
 
 # Setup
 # Seurat uses dot.notation instead of snake_case
-meta.data <- dot_notation(filtered_run$metrics, rownames = FALSE)
-raw.data <- filtered_run$counts
+meta.data <- dot_notation(filtered$metrics, rownames = FALSE)
+raw.data <- filtered$counts
 
 # Cutoffs
-max.genes <- filtered_run$filter$max_genes
-min.genes <- filtered_run$filter$min_genes
-mito.ratio <- filtered_run$filter$mito_ratio
+max.genes <- filtered$filter$max_genes
+min.genes <- filtered$filter$min_genes
+mito.ratio <- filtered$filter$mito_ratio
 
 num.pc <- 40
 pc.use <- 10

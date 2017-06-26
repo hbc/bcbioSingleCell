@@ -1,15 +1,6 @@
-# bcbioSinglecell ====
-library(bcbioSinglecell)
-if (file.exists("data/run.rda")) {
-    data(run)
-} else {
-    create_new_project()
-    run <- load_run(
-        upload_dir = "data/indrop_rnaseq",
-        organism = "mmusculus",
-        metadata_file = "meta/indrop_rnaseq.xlsx")
-    save_data(run)
-}
+# ggplot2 ====
+library(ggplot2)
+theme_set(theme_light(base_size = 14))
 
 # knitr ====
 library(knitr)
@@ -26,6 +17,14 @@ opts_chunk$set(
     tidy = TRUE,
     warning = FALSE)
 
-# ggplot2 ====
-library(ggplot2)
-theme_set(theme_light(base_size = 14))
+# bcbioSinglecell ====
+library(bcbioSinglecell)
+if (file.exists("data/bcb.rda")) {
+    data(bcb)
+} else {
+    run <- load_run(
+        upload_dir = file.path("data", "indrop_rnaseq"),
+        metadata_file = file.path("meta", "indrop_rnaseq.xlsx"),
+        interesting_groups = "genotype")
+    save_data(bcb, compress = FALSE)
+}

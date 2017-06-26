@@ -67,21 +67,21 @@ We aligned the counts using the latest transcriptome FASTA from [Ensembl][] and 
 These are counts of how many reads are assigned to a given cellular barcode. The purpose of these histograms is that we should see one single large peak that represents cells that were encapsulated. If we see a strong shoulder, or a bimodal distribution of the cells, that can indicate a couple problems. It might be that there is free floating RNA, which happens when cells are dying. It could also be that there are a set of cells that failed for some reason. Finally, it could also be that there are biologically different types of cells, and one type is much smaller than the other. If this is the case we would expect to see less RNA being sequenced from the smaller cells.
 
 ```{r plot_barcodes}
-plot_barcodes(run)
+plot_barcodes(bcb)
 ```
 
 
 ## Cell counts
 
 ```{r plot_cell_counts}
-plot_cell_counts(run)
+plot_cell_counts(bcb)
 ```
 
 
 ## Read counts
 
 ```{r plot_total_counts}
-plot_total_counts(run)
+plot_total_counts(bcb)
 ```
 
 
@@ -90,7 +90,7 @@ plot_total_counts(run)
 Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `2000`-`5000` is normal for [inDrop][] analysis.
 
 ```{r plot_genes_detected}
-plot_genes_detected(run)
+plot_genes_detected(bcb)
 ```
 
 
@@ -99,7 +99,7 @@ plot_genes_detected(run)
 If we graph out the total number of counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
 
 ```{r plot_reads_vs_genes}
-plot_reads_vs_genes(run)
+plot_reads_vs_genes(bcb)
 ```
 
 
@@ -108,7 +108,7 @@ plot_reads_vs_genes(run)
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
 
 ```{r plot_mito_ratio}
-plot_mito_ratio(run)
+plot_mito_ratio(bcb)
 ```
 
 
@@ -117,16 +117,16 @@ plot_mito_ratio(run)
 Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
 
 ```{r plot_novelty}
-plot_novelty(run)
+plot_novelty(bcb)
 ```
 
 
 
 # Summary
 
-```{r filtered_run}
-filtered_run <- filter_cellular_barcodes(run)
-save_data(filtered_run)
+```{r filtered}
+filtered <- filter(run)
+save_data(filtered, compress = FALSE)
 ```
 
 

@@ -11,10 +11,11 @@
 #' @return [kable].
 #' @export
 setMethod("metadata_table", "bcbioSCDataSet", function(object, ...) {
-    colData(object) %>%
+    object %>%
+        sample_metadata %>%
         as_tibble %>%
         remove_rownames %>%
         snake %>%
         mutate(file_name = NULL) %>%
-        kable(caption = "Sample metadata")
+        kable(caption = "Sample metadata", ...)
 })
