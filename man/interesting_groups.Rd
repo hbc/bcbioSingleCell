@@ -4,14 +4,11 @@
 \name{interesting_groups}
 \alias{interesting_groups}
 \alias{interesting_groups,bcbioSCDataSet-method}
-\alias{interesting_groups,bcbioSCSubset-method}
 \title{Interesting groups}
 \usage{
 interesting_groups(object)
 
 \S4method{interesting_groups}{bcbioSCDataSet}(object)
-
-\S4method{interesting_groups}{bcbioSCSubset}(object)
 }
 \arguments{
 \item{object}{Object.}

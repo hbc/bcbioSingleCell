@@ -20,8 +20,6 @@ setMethod("bcbio", "bcbioSCDataSet", function(object, type = "counts") {
     }
 })
 
-
-
 #' @rdname bcbio
 #' @export
 setMethod(
@@ -34,17 +32,5 @@ setMethod(
         } else {
             slot(object, "callers")[[type]] <- value
         }
-        object
-    })
-
-
-
-#' @rdname bcbio
-#' @export
-setMethod(
-    "bcbio<-",
-    signature(object = "bcbioSCSubset", value = "ANY"),
-    function(object, type, value) {
-        slot(object, "callers")[[type]] <- value
         object
     })

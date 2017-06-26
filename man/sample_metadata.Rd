@@ -4,14 +4,11 @@
 \name{sample_metadata}
 \alias{sample_metadata}
 \alias{sample_metadata,bcbioSCDataSet-method}
-\alias{sample_metadata,bcbioSCSubset-method}
 \title{Sample metadata}
 \usage{
 sample_metadata(object)
 
 \S4method{sample_metadata}{bcbioSCDataSet}(object)
-
-\S4method{sample_metadata}{bcbioSCSubset}(object)
 }
 \arguments{
 \item{object}{Object.}
