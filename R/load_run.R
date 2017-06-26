@@ -33,7 +33,7 @@ load_run <- function(
                        pattern = project_dir_pattern,
                        full.names = FALSE,
                        recursive = FALSE)
-    if (length(project_dir) != 1) {
+    if (length(project_dir) != 1L) {
         stop("Uncertain about project directory location")
     }
     message(project_dir)
@@ -114,6 +114,7 @@ load_run <- function(
         interesting_groups = interesting_groups,
         metadata_file = metadata_file,
         sample_metadata = sample_metadata,
+        template = template,
         data_versions = data_versions,
         programs = programs,
         bcbio_nextgen = bcbio_nextgen,

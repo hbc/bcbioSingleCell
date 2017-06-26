@@ -8,7 +8,7 @@
 #'
 #' @return [data.frame].
 #' @export
-setMethod("top_barcodes", "bcbioSCDataSet", function(object, n = 2) {
+setMethod("top_barcodes", "bcbioSCDataSet", function(object, n = 2L) {
     metrics(object) %>%
         as_tibble %>%
         # FIXME Need to set as grouped tibble?

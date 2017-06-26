@@ -27,16 +27,15 @@
         pull("ensgene")
 
     data.frame(
-        # Rowname: `file_name` + `sample_barcode` + `cellular_barcode`
         rowname = colnames(sparse_counts),
         total_counts = Matrix::colSums(sparse_counts),
-        genes_detected = Matrix::colSums(sparse_counts > 0),
+        genes_detected = Matrix::colSums(sparse_counts > 0L),
         coding_counts = Matrix::colSums(
             sparse_counts[rownames(sparse_counts) %in% coding_genes, ]),
         mito_counts = Matrix::colSums(
             sparse_counts[rownames(sparse_counts) %in% mito_genes, ])) %>%
         # Filter zero count barcodes
-        filter(.data[["total_counts"]] > 0) %>%
+        filter(.data[["total_counts"]] > 0L) %>%
         mutate(log10_detected_per_count =
                    log10(.data[["genes_detected"]]) /
                    log10(.data[["total_counts"]]),

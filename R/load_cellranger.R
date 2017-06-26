@@ -65,11 +65,11 @@ load_cellranger <- function(
 
         # Genes ====
         # Assign gene names (symbols) to rownames
-        genes <- read_tsv(
+        gene2symbol <- read_tsv(
             file.path(sample_dir, genes_file),
             col_names = c("ensgene", "symbol"),
             col_types = "cc")
-        rownames(counts) <- genes[["ensgene"]]
+        rownames(counts) <- gene2symbol[["ensgene"]]
 
         # Return dgTMatrix
         counts
@@ -111,6 +111,7 @@ load_cellranger <- function(
         interesting_groups = interesting_groups,
         metadata_file = metadata_file,
         sample_metadata = sample_metadata,
+        gene2symbol = as(gene2symbol, "DataFrame"),
         load_date = Sys.Date(),
         umi_type = umi_type,
         wd = getwd(),

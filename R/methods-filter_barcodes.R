@@ -23,9 +23,9 @@
 #' @export
 setMethod("filter_barcodes", "bcbioSCDataSet", function(
     object,
-    reads = 1000,
-    min_genes = 500,
-    max_genes = 10000,
+    reads = 1000L,
+    min_genes = 500L,
+    max_genes = 10000L,
     mito_ratio = 0.1,
     novelty = 0.8,
     show = TRUE) {

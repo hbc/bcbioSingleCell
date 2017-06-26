@@ -181,7 +181,7 @@ plot_read_counts <- function(bcb, min = 1000L) {
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_genes_detected <- function(bcb, min = 500, max = NULL) {
+plot_genes_detected <- function(bcb, min = 500L, max = NULL) {
     show(.plot_genes_detected_boxplot(bcb, min, max))
     show(.plot_genes_detected_histogram(bcb, min, max))
 }

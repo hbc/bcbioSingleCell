@@ -4,28 +4,30 @@
 # generate multiple types of plots more easily, such as the new violin plot
 # method.
 .plot_cb_histogram <- function(bcb) {
-    barcodes <- bcb$barcodes
-    message("Generating barcode histograms...")
+    barcodes <- bcbio(bcb, "cellular_barcodes")
+    message("Generating barcode histograms")
     pbmclapply(seq_along(barcodes), function(a) {
-        name <- names(bcb$barcodes[a])
-        sample_name <- bcb$metadata[name, "sample_name"]
+        name <- names(bcb[["barcodes"]][[a]])
+        sample_name <- bcb[["metadata"]][name, "sample_name"]
         title <- paste(sample_name, name, sep = " : ")
-        bcs <- bcb$barcodes[a] %>%
+        bcs <- barcodes[[a]] %>%
             as.data.frame %>%
             rownames_to_column %>%
             set_colnames(c("cellular_barcode", "reads")) %>%
-            mutate(log10_reads = log10(.data$reads))
-        bcs_hist <- hist(bcs$log10_reads, plot = FALSE, n = 50)
-        fLog <- bcs_hist$count
-        xLog <- bcs_hist$mids
-        y <- fLog * (10^xLog) / sum(fLog * (10^xLog))
-        qplot(10^xLog, y) +
+            mutate(log10_reads = log10(.data[["reads"]]))
+        bcs_hist <- hist(bcs[["log10_reads"]], plot = FALSE, n = 50L)
+        f_log <- bcs_hist[["count"]]
+        x_log <- bcs_hist[["mids"]]
+        y <- f_log * (10L ^ x_log) / sum(f_log * (10L ^ x_log))
+        ggplot(
+            x = 10L ^ x_log,
+            y = y) +
             geom_point() +
             geom_line() +
             ggtitle(title) +
             scale_x_log10(
-                breaks = trans_breaks("log10", function(x) 10^x),
-                labels = trans_format("log10", math_format(~10^.x))) +
+                breaks = trans_breaks("log10", function(x) 10L ^ x),
+                labels = trans_format("log10", math_format(~10L ^ .x))) +
             xlab("number of reads assigned to a cell") +
             ylab("proportion of cells")
     }) %>% invisible
@@ -60,6 +62,7 @@
 
 #' @export
 plot_barcodes <- function(bcb) {
-    .plot_cb_violin(bcb) %>% show
-    .plot_cb_histogram(bcb) %>% show
+    show(.plot_cb_violin(bcb))
+    show(.plot_cb_histogram(bcb))
 }
+w
