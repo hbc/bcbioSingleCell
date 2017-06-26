@@ -11,4 +11,5 @@
 #' @return [bcbioSCDataSet].
 #' @export
 setMethod("select_samples", "bcbioSCDataSet", function(object, samples) {
+    assay(object) %>% .[, samples]
 })
