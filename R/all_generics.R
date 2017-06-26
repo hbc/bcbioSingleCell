@@ -18,6 +18,11 @@ setGeneric("bcbio<-", function(object, ..., value) standardGeneric("bcbio<-"))
 
 
 
+#' @rdname counts
+counts <- BiocGenerics::counts
+
+
+
 #' @rdname filter_barcodes
 #' @export
 setGeneric("filter_barcodes", function(object, ...) {

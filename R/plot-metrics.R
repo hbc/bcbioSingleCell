@@ -59,7 +59,7 @@ plot_cell_counts <- function(bcb) {
     ggplot(
         metrics,
         aes_(x = ~sample_name,
-             y = ~counts,
+             y = ~umi_counts,
              fill = as.name(interesting_group))) +
         labs(title = "umi counts boxplot",
              x = "sample",
@@ -85,7 +85,7 @@ plot_cell_counts <- function(bcb) {
         aes_(x = ~umi_counts,
              fill = as.name(interesting_group))) +
         labs(title = "umi counts histogram",
-             x = name) +
+             x = "umis per cell") +
         facet_wrap(~sample_name) +
         geom_histogram(bins = bins) +
         geom_vline(color = warn_color, xintercept = min) +

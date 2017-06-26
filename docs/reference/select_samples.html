@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prepare inDrop metadata — .indrop_metadata • bcbioSinglecell</title>
+<title>Select samples — select_samples • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,32 +80,38 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prepare inDrop metadata</h1>
+    <h1>Select samples</h1>
     </div>
 
     
-    <p>Appends reverse complement sequences by matching against the <code>sequence</code>
-column.</p>
+    <p>Select samples</p>
     
 
-    <pre class="usage"><span class='fu'>.indrop_metadata</span>(<span class='no'>file</span>, <span class='no'>sample_dirs</span>)</pre>
+    <pre class="usage"><span class='fu'>select_samples</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for bcbioSCDataSet</span>
+<span class='fu'>select_samples</span>(<span class='no'>object</span>, <span class='no'>samples</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>sample_dirs</th>
-      <td><p>Named character vector of sample directory paths.</p></td>
+      <th>object</th>
+      <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>metadata</th>
-      <td><p>Metadata data frame.</p></td>
+      <th>...</th>
+      <td><p>Additional parameters.</p></td>
+    </tr>
+    <tr>
+      <th>samples</th>
+      <td><p>Character vector of desired samples.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='http://www.rdocumentation.org/packages/S4Vectors/topics/DataFrame-class'>DataFrame</a>.</p>
+    <p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p>
     
 
   </div>
@@ -116,10 +122,6 @@ column.</p>
       
       <li><a href="#value">Value</a></li>
           </ul>
-
-    <h2>Author</h2>
-    
-Michael Steinbaugh
 
   </div>
 </div>
