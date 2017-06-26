@@ -291,28 +291,27 @@ plot_mito_ratio <- function(bcb, max = 0.2) {
     meta <- sample_metadata(bcb) %>%
         .[, c("sample_name", interesting_group)]
     median_novelty <-
-        aggregate(log10_detected_per_count ~ sample_name, metrics, median) %>%
+        aggregate(log10_genes_per_umi ~ sample_name, metrics, median) %>%
         left_join(meta, by = "sample_name") %>%
-        mutate(log10_detected_per_count =
-                   round(.data[["log10_detected_per_count"]], digits = 3L))
+        mutate(log10_genes_per_umi =
+                   round(.data[["log10_genes_per_umi"]], digits = 3L))
 
     ggplot(
         metrics,
         aes_(x = ~sample_name,
-             y = ~log10_detected_per_count,
+             y = ~log10_genes_per_umi,
              fill = as.name(interesting_group))) +
         labs(title = "novelty boxplot",
              x = "sample",
-             y = "log10 genes detected per count") +
+             y = "log10 genes per umi (novelty score)") +
         geom_boxplot() +
         geom_hline(color = warn_color, yintercept = min) +
         geom_label(
             data = median_novelty,
-            aes_(label = ~log10_detected_per_count),
+            aes_(label = ~log10_genes_per_umi),
             alpha = 0.75,
             label.padding = unit(0.1, "lines"),
             show.legend = FALSE) +
-        # expand_limits(y = 0L) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
 
@@ -321,10 +320,10 @@ plot_mito_ratio <- function(bcb, max = 0.2) {
     interesting_group <- interesting_groups(bcb)[[1L]]
     ggplot(
         metrics,
-        aes_(x = ~log10_detected_per_count,
+        aes_(x = ~log10_genes_per_umi,
              fill = as.name(interesting_group))) +
         labs(title = "novelty histogram",
-             x = "log10 genes detected per count") +
+             x = "log10 genes per umi (novelty score)") +
         facet_wrap(~sample_name) +
         geom_histogram(bins = bins) +
         geom_vline(color = warn_color, xintercept = min) +

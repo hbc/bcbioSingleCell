@@ -36,7 +36,7 @@
             sparse_counts[rownames(sparse_counts) %in% coding_genes, ]),
         mito_counts = Matrix::colSums(
             sparse_counts[rownames(sparse_counts) %in% mito_genes, ])) %>%
-        mutate(log10_detected_per_count =
+        mutate(log10_genes_per_umi =
                    log10(.data[["genes_detected"]]) /
                    log10(.data[["umi_counts"]]),
                mito_ratio =
@@ -45,7 +45,7 @@
         # Pre-filter low quality barcodes
         filter(.data[["umi_counts"]] >= 1000L,
                .data[["genes_detected"]] > 0L,
-               !is.na(.data[["log10_detected_per_count"]])) %>%
+               !is.na(.data[["log10_genes_per_umi"]])) %>%
         column_to_rownames %>%
         as.matrix
 
