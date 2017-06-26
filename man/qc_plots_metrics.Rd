@@ -3,7 +3,7 @@
 \name{.plot_cell_counts_barplot}
 \alias{.plot_cell_counts_barplot}
 \alias{plot_cell_counts}
-\alias{plot_read_counts}
+\alias{plot_umi_counts}
 \alias{plot_genes_detected}
 \alias{plot_umis_vs_genes}
 \alias{plot_mito_ratio}
@@ -14,7 +14,7 @@
 
 plot_cell_counts(bcb)
 
-plot_read_counts(bcb, min = 1000L)
+plot_umi_counts(bcb, min = 1000L)
 
 plot_genes_detected(bcb, min = 500L, max = NULL)
 

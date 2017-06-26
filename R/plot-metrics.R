@@ -45,34 +45,29 @@ plot_cell_counts <- function(bcb) {
 
 
 # Read counts ====
-.plot_read_counts_boxplot <- function(bcb, min, type = "umi") {
-    if (!type %in% c("coding", "umi")) {
-        stop("Invalid counts column prefix")
-    }
-    name <- paste(type, "counts")
-    metrics <- metrics(bcb) %>%
-        rename(counts = !!sym(paste(type, "counts", sep = "_")))
+.plot_umi_counts_boxplot <- function(bcb, min) {
+    metrics <- metrics(bcb)
     interesting_group <- interesting_groups(bcb)[[1L]]
 
     # Add interesting group to count aggregation data frame, for coloring
     meta <- sample_metadata(bcb) %>%
         .[, c("sample_name", interesting_group)]
-    median_counts <- aggregate(counts ~ sample_name, metrics, median) %>%
+    median_umis <- aggregate(umi_counts ~ sample_name, metrics, median) %>%
         left_join(meta, by = "sample_name") %>%
-        mutate(counts = round(.data[["counts"]]))
+        mutate(umi_counts = round(.data[["umi_counts"]]))
 
     ggplot(
         metrics,
         aes_(x = ~sample_name,
              y = ~counts,
              fill = as.name(interesting_group))) +
-        labs(title = paste(name, "boxplot"),
+        labs(title = "umi counts boxplot",
              x = "sample",
              y = name) +
         geom_boxplot() +
         geom_label(
-            data = median_counts,
-            aes_(label = ~counts),
+            data = median_umis,
+            aes_(label = ~umi_counts),
             alpha = 0.75,
             label.padding = unit(0.1, "lines"),
             show.legend = FALSE) +
@@ -82,20 +77,15 @@ plot_cell_counts <- function(bcb) {
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
 
-.plot_read_counts_histogram <- function(bcb, min, type = "umi") {
-    if (!type %in% c("coding", "umi")) {
-        stop("Invalid counts column prefix")
-    }
-    name <- paste(type, "counts")
-    metrics <- metrics(bcb) %>%
-        rename(counts = !!sym(paste(type, "counts", sep = "_")))
+.plot_umi_counts_histogram <- function(bcb, min) {
+    metrics <- metrics(bcb)
     interesting_group <- interesting_groups(bcb)[[1L]]
 
     ggplot(
         metrics,
-        aes_(x = ~counts,
+        aes_(x = ~umi_counts,
              fill = as.name(interesting_group))) +
-        labs(title = paste(name, "histogram"),
+        labs(title = "umi counts histogram",
              x = name) +
         facet_wrap(~sample_name) +
         geom_histogram(bins = bins) +
@@ -107,9 +97,9 @@ plot_cell_counts <- function(bcb) {
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_read_counts <- function(bcb, min = 1000L) {
-    show(.plot_read_counts_boxplot(bcb, min))
-    show(.plot_read_counts_histogram(bcb, min))
+plot_umi_counts <- function(bcb, min = 1000L) {
+    show(.plot_umi_counts_boxplot(bcb, min))
+    show(.plot_umi_counts_histogram(bcb, min))
 }
 
 
