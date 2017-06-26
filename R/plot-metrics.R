@@ -186,7 +186,7 @@ plot_reads_vs_genes <- function(bcb, interesting_groups = NULL) {
         aes_(x = ~total_counts,
              y = ~genes_detected,
              # FIXME use [quo()] instead?
-             color = as.name(intgroup))) +
+             color = as.name(interesting_groups))) +
         labs(title = "total counts vs. genes detected",
              x = "counts per cell",
              y = "genes per cell") +
