@@ -9,6 +9,8 @@
 #' @author Michael Steinbaugh
 #'
 #' @param object [bcbioSCDataSet].
+#' @param ... Additional parameters.
+#'
 #' @param reads Minimum number of total read counts per cell.
 #' @param min_genes Minimum number of genes detected.
 #' @param max_genes Maximum number of genes detected.

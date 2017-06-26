@@ -18,24 +18,6 @@ barcode_metrics <- function(...) {
 
 #' @rdname deprecated
 #' @export
-filter_barcodes <- function(...) {
-    .Deprecated("filter")
-    filter(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
-filter_cellular_barcodes <- function(...) {
-    .Deprecated("filter")
-    filter(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
 plot_mito_counts <- function(...) {
     .Deprecated("plot_mito_ratio")
     plot_mito_ratio(...)

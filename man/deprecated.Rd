@@ -2,8 +2,6 @@
 % Please edit documentation in R/deprecated.R
 \name{barcode_metrics}
 \alias{barcode_metrics}
-\alias{filter_barcodes}
-\alias{filter_cellular_barcodes}
 \alias{plot_mito_counts}
 \alias{plot_total_cells}
 \alias{plot_total_counts}
@@ -11,10 +9,6 @@
 \title{Deprecated functions}
 \usage{
 barcode_metrics(...)
-
-filter_barcodes(...)
-
-filter_cellular_barcodes(...)
 
 plot_mito_counts(...)
 

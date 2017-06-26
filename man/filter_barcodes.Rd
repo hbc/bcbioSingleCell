@@ -6,14 +6,16 @@
 \alias{filter_barcodes,bcbioSCDataSet-method}
 \title{Filter cellular barcodes}
 \usage{
-filter_barcodes(...)
+filter_barcodes(object, ...)
 
 \S4method{filter_barcodes}{bcbioSCDataSet}(object, reads = 1000,
-  min_genes = 500, max_genes = 5000, mito_ratio = 0.1, novelty = 0.8,
+  min_genes = 500, max_genes = 10000, mito_ratio = 0.1, novelty = 0.8,
   show = TRUE)
 }
 \arguments{
 \item{object}{\link{bcbioSCDataSet}.}
+
+\item{...}{Additional parameters.}
 
 \item{reads}{Minimum number of total read counts per cell.}
 

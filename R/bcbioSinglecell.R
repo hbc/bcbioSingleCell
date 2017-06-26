@@ -17,7 +17,7 @@
 
 globalVariables(".")
 
-bins <- 100
+bins <- 100L
 
 fail_color <- "red"
 pass_color <- "green"

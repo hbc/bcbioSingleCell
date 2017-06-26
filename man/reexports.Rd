@@ -27,6 +27,8 @@
 \alias{reexports}
 \alias{rowData}
 \alias{reexports}
+\alias{DataFrame}
+\alias{reexports}
 \alias{metadata}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -39,7 +41,7 @@ below to see their documentation.
 
   \item{BiocGenerics}{\code{\link[BiocGenerics]{counts}}, \code{\link[BiocGenerics]{design}}}
 
-  \item{S4Vectors}{\code{\link[S4Vectors]{metadata}}}
+  \item{S4Vectors}{\code{\link[S4Vectors]{DataFrame}}, \code{\link[S4Vectors]{metadata}}}
 
   \item{SummarizedExperiment}{\code{\link[SummarizedExperiment]{assay}}, \code{\link[SummarizedExperiment]{assays}}, \code{\link[SummarizedExperiment]{colData}}, \code{\link[SummarizedExperiment]{rowData}}}
 }}
