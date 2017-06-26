@@ -10,5 +10,5 @@
 #' @return Sparse counts (`dgCMatrix`).
 #' @export
 setMethod("counts", "bcbioSCDataSet", function(object) {
-    assays(object)[["sparse_counts"]]
+    assay(object)
 })
