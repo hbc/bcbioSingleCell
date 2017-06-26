@@ -48,5 +48,7 @@
                !is.na(.data[["log10_detected_per_count"]])) %>%
         column_to_rownames %>%
         as.matrix
+
     message(paste(nrow(metrics), "cellular barcodes passed pre-filtering"))
+    metrics
 }

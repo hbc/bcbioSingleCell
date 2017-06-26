@@ -22,21 +22,27 @@
         metadata <- as(metadata, "SimpleList")
     }
 
-
-    # colData ====
     # Pre-filter the sparse counts matrix, based on barcode metrics (colData).
     # Very low stringency, requires detailed follow-up quality control analysis.
-    # At this point, we're just removing zero count barcodes.
+    # At this point, we're just removing cellular barcodes with very low
+    # read counts or gene detection.
     sparse_counts <- sparse_counts[, rownames(col_data)]
-    identical(colnames(sparse_counts), rownames(col_data))
+    if (!identical(colnames(sparse_counts), rownames(col_data))) {
+        stop("colData mismatch")
+    }
 
 
     # rowData ====
+    # Subset the annotable by the genes present in the counts matrix
     row_data <- row_data[rownames(sparse_counts), ] %>%
         set_rownames(rownames(sparse_counts))
+    if (!identical(rownames(sparse_counts), rownames(row_data))) {
+        stop("rowData mismatch")
+    }
+
     # Check for retired Ensembl identifiers, which can happen when a more recent
-    # annotable build is used than the genome build. This can happen when
-    # importing 10X Cell Ranger counts.
+    # annotable build is used than the genome build. If present, store these
+    # identifiers in the metadata.
     if (any(is.na(row_data[["ensgene"]]))) {
         warning("Ensembl identifier degradation detected")
         metadata[["retired_ensgene"]] <- row_data %>%

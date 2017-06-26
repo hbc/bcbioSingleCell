@@ -83,10 +83,10 @@ load_cellranger <- function(
     # for human and mouse samples. Improve this method in the future.
     id <- rownames(sparse_counts)[[1L]]
     if (str_detect(id, "^ENSG")) {
-        # H. sapiens hg38
+        # H. sapiens
         genome_build <- "grch38"
     } else if (str_detect(id, "^ENSMUSG")) {
-        # M. musculus mm10
+        # M. musculus
         genome_build <- "grcm38"
         # FIXME Seems like there's a genome build mismatch between Cell Ranger
         # and annotables. For example, `ENSMUSG00000109048`.
