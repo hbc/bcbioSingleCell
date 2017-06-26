@@ -17,7 +17,7 @@
 
 # Cell counts ====
 .plot_cell_counts_barplot <- function(bcb) {
-    if (!is.null(bcb$lanes)) {
+    if (!is.null(metadata(bcb)[["lanes"]])) {
         plot <- metrics(bcb) %>%
             left_join(bcb$metadata,
                       by = c("sample_name", "sample_barcode")) %>%
