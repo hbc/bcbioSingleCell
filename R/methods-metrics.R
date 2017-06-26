@@ -10,7 +10,7 @@ setMethod("metrics", "bcbioSCDataSet", function(object) {
     interesting_groups <- metadata(object)[["interesting_groups"]]
     metadata <- sample_metadata(object) %>%
         .[, unique(c("sample_name", interesting_groups))]
-    metrics <- colData(object) %>%
+    colData(object) %>%
         as.data.frame %>%
         rownames_to_column %>%
         mutate(separate = .data[["rowname"]]) %>%
