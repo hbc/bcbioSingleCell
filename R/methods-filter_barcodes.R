@@ -12,7 +12,7 @@
 #' @param ... Additional parameters.
 #'
 #' @param umis Minimum number of UMI disambiguated counts per cell.
-#' @param min_genes Minimum number of genes detected.
+#' @param genes Minimum number of genes detected.
 #' @param mito_ratio Maximum relative mitochondrial abundance (`0-1` scale).
 #' @param novelty Minimum novelty score.
 #' @param show Show summary statistics and plots.
@@ -23,7 +23,7 @@
 setMethod("filter_barcodes", "bcbioSCDataSet", function(
     object,
     umis = 1000L,
-    min_genes = 1000L,
+    genes = 1000L,
     mito_ratio = 0.05,
     novelty = 0.8,
     show = TRUE) {
@@ -39,7 +39,7 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
     metrics <- metrics(object) %>%
         rownames_to_column %>%
         filter(.data[["umi_counts"]] >= !!umis,
-               .data[["genes_detected"]] >= !!min_genes,
+               .data[["genes_detected"]] >= !!genes,
                .data[["mito_ratio"]] <= !!mito_ratio,
                .data[["log10_detected_per_count"]] >= !!novelty) %>%
         column_to_rownames
@@ -73,8 +73,8 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
     # Metadata ====
     meta <- metadata(object)
     meta[["filtering_criteria"]] <- SimpleList(
-        reads = reads,
-        min_genes = min_genes,
+        umis = umis,
+        genes = genes,
         mito_ratio = mito_ratio,
         novelty = novelty)
 
