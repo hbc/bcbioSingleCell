@@ -11,6 +11,8 @@
 #' @return Tibble grouped by sample name.
 .metrics <- function(sparse_counts, annotable) {
     message("Calculating barcode metrics")
+    cb_input <- ncol(sparse_counts)
+    message(paste(cb_input, "cellular barcodes detected"))
 
     # Check for [Matrix::colSums()] methods support
     if (!"colSums,dgCMatrix-method" %in% methods(colSums)) {
@@ -26,7 +28,7 @@
         filter(.data[["broad_class"]] == "mito") %>%
         pull("ensgene")
 
-    data.frame(
+    metrics <- data.frame(
         rowname = colnames(sparse_counts),
         total_counts = Matrix::colSums(sparse_counts),
         genes_detected = Matrix::colSums(sparse_counts > 0L),
@@ -40,10 +42,11 @@
                mito_ratio =
                    .data[["mito_counts"]] /
                    .data[["total_counts"]]) %>%
-        # Filter barcodes with zero counts
-        filter(!is.na(.data[["log10_detected_per_count"]]),
-               .data[["total_counts"]] > 0L,
-               .data[["genes_detected"]] > 0L)
+        # Pre-filter low quality barcodes
+        filter(.data[["total_counts"]] >= 1000L,
+               .data[["genes_detected"]] > 0L,
+               !is.na(.data[["log10_detected_per_count"]])) %>%
         column_to_rownames %>%
         as.matrix
+    message(paste(nrow(metrics), "cellular barcodes passed pre-filtering"))
 }

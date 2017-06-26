@@ -40,11 +40,11 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
     # Subset metrics
     metrics <- metrics(object) %>%
         rownames_to_column %>%
-        filter(.data[["total_counts"]] > !!reads,
-               .data[["genes_detected"]] > !!min_genes,
-               .data[["genes_detected"]] < !!max_genes,
-               .data[["mito_ratio"]] < !!mito_ratio,
-               .data[["log10_detected_per_count"]] > !!novelty) %>%
+        filter(.data[["total_counts"]] >= !!reads,
+               .data[["genes_detected"]] >= !!min_genes,
+               .data[["genes_detected"]] <= !!max_genes,
+               .data[["mito_ratio"]] <= !!mito_ratio,
+               .data[["log10_detected_per_count"]] >= !!novelty) %>%
         column_to_rownames
 
     # Subset counts
@@ -101,11 +101,11 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
     if (isTRUE(show)) {
         writeLines(c(
             paste(name, "filtering parameters:"),
-            paste0("- `> ", reads, "` total read counts per cell"),
-            paste0("- `> ", min_genes, "` genes per cell"),
-            paste0("- `< ", max_genes, "` genes per cell"),
-            paste0("- `< ", mito_ratio, "` mitochondrial abundance ratio"),
-            paste0("- `> ", novelty, "` novelty score")))
+            paste0("- `>= ", reads, "` reads per cell"),
+            paste0("- `>= ", min_genes, "` genes per cell"),
+            paste0("- `<= ", max_genes, "` genes per cell"),
+            paste0("- `<= ", mito_ratio, "` mitochondrial abundance ratio"),
+            paste0("- `>= ", novelty, "` novelty score")))
         plot_cell_counts(bcb)
         plot_read_counts(bcb, min = reads)
         plot_genes_detected(bcb, min = min_genes, max = max_genes)
