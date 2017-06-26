@@ -73,6 +73,8 @@ load_run <- function(
 
 
     # Sample metadata ====
+    metadata_file <- normalizePath(metadata_file)
+
     # Map the sample names to the UMIs
     if (umi_type == "indrop_v3") {
         sample_metadata <- .indrop_metadata(metadata_file, sample_dirs)

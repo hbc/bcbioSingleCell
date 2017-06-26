@@ -11,5 +11,11 @@
 #' @return [bcbioSCDataSet].
 #' @export
 setMethod("select_samples", "bcbioSCDataSet", function(object, samples) {
-    assay(object) %>% .[, samples]
+    samples <- c("6189_sample", "6191_sample")
+    pattern <- paste0(
+        "^(",
+        paste(samples, collapse = "|"),
+        ")")
+    assay(object) %>%
+        .[, str_detect(colnames(sparse_counts), pattern)]
 })

@@ -25,6 +25,7 @@ load_cellranger <- function(
     matrix_file <- "matrix.mtx"
 
     # Sample metadata
+    metadata_file <- normalizePath(metadata_file)
     sample_metadata <- .read_file(metadata_file)
 
     # Find sample directories by nested MatrixMarket file
