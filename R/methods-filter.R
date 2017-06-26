@@ -16,7 +16,7 @@
 #' @param novelty Minimum novelty score.
 #' @param show Show summary statistics and plots.
 #'
-#' @return New [bcbioSCDataSet].
+#' @return [bcbioSCSubset].
 #' @export
 setMethod("filter", "bcbioSCDataSet", function(
     object,
@@ -51,28 +51,53 @@ setMethod("filter", "bcbioSCDataSet", function(
     }
     message(paste(nrow(metrics), "cellular barcodes passed filtering"))
 
-    # Reslot the object with filtered counts
+    # ExpressionSet ====
+    message("Packaging into ExpressionSet")
+    # Sparse
     sparse_counts <- sparse_counts[, rownames(metrics)]
-    col_data <- colData(object)[rownames(metrics), ]
-    row_data <- rowData(object) %>%
-        set_rownames(names(object))
+    sparse_size <- object.size(sparse_counts) %>% format(units = "auto")
+    # Dense (currently required for assayData)
+    dense_counts <- as.matrix(sparse_counts)
+    dense_size <- object.size(dense_counts) %>% format(units = "auto")
+    paste("Converting sparse to dense matrix:",
+          sparse_size, "->", dense_size) %>%
+        message
+    pheno_data <- colData(object) %>%
+        as.data.frame %>%
+        .[rownames(metrics), ] %>%
+        as("AnnotatedDataFrame")
+    feature_data <- rowData(object) %>%
+        as.data.frame %>%
+        set_rownames(names(object)) %>%
+        as("AnnotatedDataFrame")
+    es <- ExpressionSet(
+        assayData = dense_counts,
+        phenoData = pheno_data,
+        featureData = feature_data)
+    bcb <- as(es, "bcbioSCSubset")
 
-    metadata <- metadata(object)
-    metadata[["filtering_parameters"]] <-
-        SimpleList(
-            reads = reads,
-            min_genes = min_genes,
-            max_genes = max_genes,
-            mito_ratio = mito_ratio,
-            novelty = novelty)
+    # Unload counts from memory
+    rm(sparse_counts, dense_counts)
 
-    se <- .summarized_experiment(
-        sparse_counts,
-        col_data = col_data,
-        row_data = row_data,
-        metadata = metadata)
+    # Add additional slots
+    filtering_criteria <- SimpleList(
+        reads = reads,
+        min_genes = min_genes,
+        max_genes = max_genes,
+        mito_ratio = mito_ratio,
+        novelty = novelty)
+    sample_metadata <- sample_metadata(object)
+    interesting_groups <- metadata(object)[["interesting_groups"]]
 
-    filtered <- new("bcbioSCDataSet", se)
+    bcbio(bcb, "sample_metadata") <- sample_metadata
+    bcbio(bcb, "interesting_groups") <- interesting_groups
+    bcbio(bcb, "filtering_criteria") <- filtering_criteria
+
+    message(paste(
+        "bcbioSCSubset:",
+        format(object.size(bcb), units = "auto")
+    ))
+
 
     if (isTRUE(show)) {
         writeLines(c(
@@ -82,13 +107,13 @@ setMethod("filter", "bcbioSCDataSet", function(
             paste0("- `< ", max_genes, "` genes per cell"),
             paste0("- `< ", mito_ratio, "` mitochondrial abundance ratio"),
             paste0("- `> ", novelty, "` novelty score")))
-        plot_cell_counts(filtered)
-        plot_read_counts(filtered, min = reads)
-        plot_genes_detected(filtered, min = min_genes, max = max_genes)
-        plot_reads_vs_genes(filtered) %>% show
-        plot_mito_ratio(filtered, max = mito_ratio)
-        plot_novelty(filtered, min = novelty)
+        plot_cell_counts(bcb)
+        plot_read_counts(bcb, min = reads)
+        plot_genes_detected(bcb, min = min_genes, max = max_genes)
+        plot_reads_vs_genes(bcb) %>% show
+        plot_mito_ratio(bcb, max = mito_ratio)
+        plot_novelty(bcb, min = novelty)
     }
 
-    filtered
+    bcb
 })
