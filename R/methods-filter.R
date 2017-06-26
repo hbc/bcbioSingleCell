@@ -23,7 +23,7 @@ setMethod("filter", "bcbioSCDataSet", function(
     reads = 1000,
     min_genes = 500,
     max_genes = 5000,
-    mito_ratio = 0.2,
+    mito_ratio = 0.1,
     novelty = 0.8,
     show = TRUE) {
     name <- deparse(substitute(object))
@@ -51,21 +51,28 @@ setMethod("filter", "bcbioSCDataSet", function(
     }
     message(paste(nrow(metrics), "cellular barcodes passed filtering"))
 
-    # Note that barcode identifiers are columns in the count matrix
+    # Reslot the object with filtered counts
     sparse_counts <- sparse_counts[, rownames(metrics)]
+    col_data <- colData(object)[rownames(metrics), ]
+    row_data <- rowData(object) %>%
+        set_rownames(names(object))
 
-    # Set up the filtered object
-    # FIXME Output as S4 instead of list...
-    filtered <- list(
-        sparse_counts = sparse_counts,
-        metrics = metrics,
-        metadata = list(
+    metadata <- metadata(object)
+    metadata[["filtering_parameters"]] <-
+        SimpleList(
             reads = reads,
             min_genes = min_genes,
             max_genes = max_genes,
             mito_ratio = mito_ratio,
-            novelty = novelty
-        ))
+            novelty = novelty)
+
+    se <- .summarized_experiment(
+        sparse_counts,
+        col_data = col_data,
+        row_data = row_data,
+        metadata = metadata)
+
+    filtered <- new("bcbioSCDataSet", se)
 
     if (isTRUE(show)) {
         writeLines(c(
