@@ -40,7 +40,8 @@ load_cellranger <- function(
     if (!all(file.exists(file.path(sample_dirs, matrix_file)))) {
         stop("MatrixMarket file missing")
     }
-    message(paste(length(sample_dirs), "samples detected"))
+
+    # Load the Cell Ranger samples
     message("Reading 10X Cell Ranger data into sparse matrix")
     count_matrices <- pblapply(seq_along(sample_dirs), function(a) {
         sample_dir <- sample_dirs[a]
