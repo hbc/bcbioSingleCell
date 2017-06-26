@@ -34,9 +34,17 @@
     # rowData ====
     row_data <- row_data[rownames(sparse_counts), ] %>%
         set_rownames(rownames(sparse_counts))
-    identical(rownames(sparse_counts), colnames(row_data))
+    # Check for retired Ensembl identifiers, which can happen when a more recent
+    # annotable build is used than the genome build. This can happen when
+    # importing 10X Cell Ranger counts.
     if (any(is.na(row_data[["ensgene"]]))) {
-        warning("Ensembl build mismatch between counts and annotable")
+        warning("Ensembl identifier degradation detected")
+        metadata[["retired_ensgene"]] <- row_data %>%
+            as.data.frame %>%
+            rownames_to_column %>%
+            filter(is.na(.data[["ensgene"]])) %>%
+            pull("rowname") %>%
+            sort
     }
 
 

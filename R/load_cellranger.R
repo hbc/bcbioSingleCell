@@ -24,10 +24,6 @@ load_cellranger <- function(
     genes_file <- "genes.tsv"
     matrix_file <- "matrix.mtx"
 
-    # Sample metadata
-    metadata_file <- normalizePath(metadata_file)
-    sample_metadata <- .read_file(metadata_file)
-
     # Find sample directories by nested MatrixMarket file
     sample_dirs <- .sample_dirs(upload_dir, nested_file = matrix_file)
 
@@ -42,8 +38,12 @@ load_cellranger <- function(
         stop("MatrixMarket file missing")
     }
 
+    # Sample metadata
+    metadata_file <- normalizePath(metadata_file)
+    sample_metadata <- .read_file(metadata_file)
+
     # Load the Cell Ranger samples
-    message("Reading 10X Cell Ranger data into sparse matrix")
+    message("Reading 10X Cell Ranger counts")
     count_matrices <- pblapply(seq_along(sample_dirs), function(a) {
         sample_dir <- sample_dirs[a]
 
@@ -65,17 +65,17 @@ load_cellranger <- function(
 
         # Genes ====
         # Assign gene names (symbols) to rownames
-        gene2symbol <- read_tsv(
+        genes <- read_tsv(
             file.path(sample_dir, genes_file),
             col_names = c("ensgene", "symbol"),
             col_types = "cc")
-        rownames(counts) <- gene2symbol[["ensgene"]]
+        rownames(counts) <- genes[["ensgene"]]
 
         # Return dgTMatrix
         counts
     }
     ) %>% set_names(names(sample_dirs))
-    message("Combining samples into single count matrix")
+    message("Combining counts into a single sparse matrix")
     sparse_counts <- do.call(cBind, count_matrices) %>% as("dgCMatrix")
     rm(count_matrices)
 
@@ -111,7 +111,6 @@ load_cellranger <- function(
         interesting_groups = interesting_groups,
         metadata_file = metadata_file,
         sample_metadata = sample_metadata,
-        gene2symbol = as(gene2symbol, "DataFrame"),
         load_date = Sys.Date(),
         umi_type = umi_type,
         wd = getwd(),
