@@ -125,7 +125,7 @@ plot_novelty(bcb)
 # Summary
 
 ```{r filtered}
-filtered <- filter(run)
+filtered <- filter(bcb)
 save_data(filtered, compress = FALSE)
 ```
 
