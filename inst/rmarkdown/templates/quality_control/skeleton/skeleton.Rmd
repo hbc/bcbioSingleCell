@@ -78,10 +78,10 @@ plot_cell_counts(bcb)
 ```
 
 
-## Read counts
+## UMI counts per cell
 
-```{r plot_total_counts}
-plot_total_counts(bcb)
+```{r plot_umi_counts}
+plot_umi_counts(bcb)
 ```
 
 
@@ -94,12 +94,12 @@ plot_genes_detected(bcb)
 ```
 
 
-## Total vs. detected
+## UMIs vs. detected genes
 
-If we graph out the total number of counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
+If we graph out the total number of UMI counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
 
 ```{r plot_reads_vs_genes}
-plot_reads_vs_genes(bcb)
+plot_umis_vs_genes(bcb)
 ```
 
 

@@ -4,7 +4,6 @@
 \alias{barcode_metrics}
 \alias{plot_mito_counts}
 \alias{plot_total_cells}
-\alias{plot_total_counts}
 \alias{plot_total_vs_detected}
 \title{Deprecated functions}
 \usage{
@@ -13,8 +12,6 @@ barcode_metrics(...)
 plot_mito_counts(...)
 
 plot_total_cells(...)
-
-plot_total_counts(...)
 
 plot_total_vs_detected(...)
 }

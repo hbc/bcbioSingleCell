@@ -5,7 +5,7 @@
 \alias{plot_cell_counts}
 \alias{plot_read_counts}
 \alias{plot_genes_detected}
-\alias{plot_reads_vs_genes}
+\alias{plot_umis_vs_genes}
 \alias{plot_mito_ratio}
 \alias{plot_novelty}
 \title{Cell metrics quality control plots}
@@ -18,7 +18,7 @@ plot_read_counts(bcb, min = 1000L)
 
 plot_genes_detected(bcb, min = 500L, max = NULL)
 
-plot_reads_vs_genes(bcb)
+plot_umis_vs_genes(bcb)
 
 plot_mito_ratio(bcb, max = 0.2)
 

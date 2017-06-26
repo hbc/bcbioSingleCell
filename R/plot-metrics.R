@@ -45,12 +45,11 @@ plot_cell_counts <- function(bcb) {
 
 
 # Read counts ====
-# TODO Take out "total" in plot title
-.plot_read_counts_boxplot <- function(bcb, min, type = "total") {
-    if (!type %in% c("coding", "total")) {
+.plot_read_counts_boxplot <- function(bcb, min, type = "umi") {
+    if (!type %in% c("coding", "umi")) {
         stop("Invalid counts column prefix")
     }
-    name <- paste(type, "read counts")
+    name <- paste(type, "counts")
     metrics <- metrics(bcb) %>%
         rename(counts = !!sym(paste(type, "counts", sep = "_")))
     interesting_group <- interesting_groups(bcb)[[1L]]
@@ -83,11 +82,11 @@ plot_cell_counts <- function(bcb) {
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
 
-.plot_read_counts_histogram <- function(bcb, min, type = "total") {
-    if (!type %in% c("coding", "total")) {
+.plot_read_counts_histogram <- function(bcb, min, type = "umi") {
+    if (!type %in% c("coding", "umi")) {
         stop("Invalid counts column prefix")
     }
-    name <- paste(type, "read counts") %>% str_replace("^total ", "")
+    name <- paste(type, "counts")
     metrics <- metrics(bcb) %>%
         rename(counts = !!sym(paste(type, "counts", sep = "_")))
     interesting_group <- interesting_groups(bcb)[[1L]]
@@ -111,7 +110,6 @@ plot_cell_counts <- function(bcb) {
 plot_read_counts <- function(bcb, min = 1000L) {
     show(.plot_read_counts_boxplot(bcb, min))
     show(.plot_read_counts_histogram(bcb, min))
-    # TODO Add coding / total ratio plot
 }
 
 
@@ -189,16 +187,16 @@ plot_genes_detected <- function(bcb, min = 500L, max = NULL) {
 
 
 # Read counts vs. detected genes ====
-.plot_reads_vs_genes <- function(bcb) {
+.plot_umis_vs_genes <- function(bcb) {
     metrics <- metrics(bcb)
     interesting_group <- interesting_groups(bcb)[[1L]]
     ggplot(
         metrics,
-        aes_(x = ~total_counts,
+        aes_(x = ~umi_counts,
              y = ~genes_detected,
              color = as.name(interesting_group))) +
-        labs(title = "reads vs. genes detected",
-             x = "reads per cell",
+        labs(title = "umis vs. genes detected",
+             x = "umis per cell",
              y = "genes per cell") +
         facet_wrap(~sample_name) +
         geom_point() +
@@ -213,8 +211,8 @@ plot_genes_detected <- function(bcb, min = 500L, max = NULL) {
 
 #' @rdname qc_plots_metrics
 #' @export
-plot_reads_vs_genes <- function(bcb) {
-    show(.plot_reads_vs_genes(bcb))
+plot_umis_vs_genes <- function(bcb) {
+    show(.plot_umis_vs_genes(bcb))
 }
 
 
@@ -265,7 +263,6 @@ plot_reads_vs_genes <- function(bcb) {
         facet_wrap(~sample_name) +
         geom_histogram(bins = bins) +
         geom_vline(color = warn_color, xintercept = max) +
-        # xlim(0L, 1L) +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
@@ -342,7 +339,6 @@ plot_mito_ratio <- function(bcb, max = 0.2) {
         facet_wrap(~sample_name) +
         geom_histogram(bins = bins) +
         geom_vline(color = warn_color, xintercept = min) +
-        # xlim(0L, 1L) +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }

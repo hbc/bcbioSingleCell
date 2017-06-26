@@ -8,20 +8,17 @@
 \usage{
 filter_barcodes(object, ...)
 
-\S4method{filter_barcodes}{bcbioSCDataSet}(object, reads = 1000L,
-  min_genes = 500L, max_genes = 10000L, mito_ratio = 0.1, novelty = 0.8,
-  show = TRUE)
+\S4method{filter_barcodes}{bcbioSCDataSet}(object, umis = 1000L,
+  min_genes = 1000L, mito_ratio = 0.05, novelty = 0.8, show = TRUE)
 }
 \arguments{
 \item{object}{\link{bcbioSCDataSet}.}
 
 \item{...}{Additional parameters.}
 
-\item{reads}{Minimum number of total read counts per cell.}
+\item{umis}{Minimum number of UMI disambiguated counts per cell.}
 
 \item{min_genes}{Minimum number of genes detected.}
-
-\item{max_genes}{Maximum number of genes detected.}
 
 \item{mito_ratio}{Maximum relative mitochondrial abundance (\code{0-1} scale).}
 

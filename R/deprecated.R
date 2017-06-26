@@ -36,16 +36,7 @@ plot_total_cells <- function(...) {
 
 #' @rdname deprecated
 #' @export
-plot_total_counts <- function(...) {
-    .Deprecated("plot_read_counts")
-    plot_read_counts(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
 plot_total_vs_detected <- function(...) {
-    .Deprecated("plot_reads_vs_genes")
-    plot_reads_vs_genes(...)
+    .Deprecated("plot_umis_vs_genes")
+    plot_umis_vs_genes(...)
 }
