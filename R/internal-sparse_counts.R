@@ -36,12 +36,10 @@
         matrix_file <- file.path(sample_dir, paste0(sample_name, ".mtx"))
         col_file <- paste0(matrix_file, ".colnames")  # barcodes
         row_file <- paste0(matrix_file, ".rownames")  # transcripts
-        count_level <- "transcript"
     } else if (pipeline == "cellranger") {
         matrix_file <- file.path(sample_dir, "matrix.mtx")
         col_file <- file.path(sample_dir, "barcodes.tsv")
         row_file <- file.path(sample_dir, "genes.tsv")
-        count_level <- "gene"
     } else {
         stop("Unsupported pipeline")
     }
@@ -113,8 +111,6 @@
     if (any(str_detect(transcripts, enstxp_pattern))) {
         transcripts <- str_replace(transcripts, enstxp_pattern, "\\1")
         rownames(sparse_counts) <- transcripts
-        sparse_counts
-    } else {
-        sparse_counts
     }
+    sparse_counts
 }

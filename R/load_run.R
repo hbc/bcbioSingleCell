@@ -86,9 +86,7 @@ load_run <- function(
     }
     well_metadata <- .read_file(well_metadata_file)
     # FIXME Need a working example from Rory
-    # https://github.com/hbc/bcbioSinglecell/commit/047badd5d3e0d3f9951ea5f1596350a732cacd1c#diff-2803e4fd2fc73d8fdaf60acf3954e0ba
-    # Ensure `sample_id` is factor
-    # mutate(sample_id=as.factor(sample_id)), by="well_id")
+    # Ensure `sample_id` is factor, by = "well_id"
 
 
     # Prepare samples based on metadata ====
