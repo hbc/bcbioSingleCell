@@ -50,7 +50,7 @@ setGeneric("metrics", function(object, ...) standardGeneric("metrics"))
 
 #' @rdname sample_metadata
 #' @export
-setGeneric("sample_metadata", function(object) {
+setGeneric("sample_metadata", function(object, ...) {
     standardGeneric("sample_metadata")
 })
 

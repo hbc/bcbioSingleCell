@@ -3,12 +3,13 @@
 #' @rdname metrics
 #'
 #' @param object [bcbioSCDataSet].
+#' @param unique_names Unique sample names.
 #'
 #' @return [data.frame].
 #' @export
-setMethod("metrics", "bcbioSCDataSet", function(object) {
+setMethod("metrics", "bcbioSCDataSet", function(object, unique_names = FALSE) {
     interesting_groups <- interesting_groups(object)
-    meta <- sample_metadata(object) %>%
+    meta <- sample_metadata(object, unique_names = unique_names) %>%
         tidy_select(unique(c("file_name",
                              "sample_id",
                              "sample_name",
