@@ -18,8 +18,7 @@ setMethod("metrics", "bcbioSCDataSet", function(object) {
         separate_(col = "separate",
                   into = c("sample_id", "cellular_barcode"),
                   sep = ":") %>%
+        mutate(cellular_barcode = NULL) %>%
         left_join(meta, by = "sample_id") %>%
-        mutate(cellular_barcode = NULL,
-               sample_id = NULL) %>%
         column_to_rownames
 })

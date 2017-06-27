@@ -29,9 +29,8 @@
     if ("file_name" %in% colnames(meta)) {
         # Sample barcode is structured as `file_name-revcomp`.
         meta <- meta %>%
-            mutate(sample_barcode = paste(.data[["file_name"]],
-                                          .data[["revcomp"]],
-                                          sep = "-"))
+            mutate(sample_id = paste(
+                .data[["file_name"]], .data[["revcomp"]], sep = "-"))
     } else {
         # If file names aren't specified in the metadata, we assume the inDrop
         # indexes used are unique. Therefore, we can perform a full join against
@@ -39,7 +38,7 @@
         samples <- names(sample_dirs) %>%
             str_match("(.*)-([ACGT]+)$") %>%
             as.data.frame %>%
-            set_colnames(c("sample_barcode", "file_name", "revcomp")) %>%
+            set_colnames(c("sample_id", "file_name", "revcomp")) %>%
             filter(.data[["revcomp"]] %in% meta[["revcomp"]])
         meta <- full_join(meta, samples, by = "revcomp")
     }
@@ -49,9 +48,9 @@
                  "index",
                  "sequence",
                  "revcomp",
-                 "sample_barcode",
+                 "sample_id",
                  "sample_name"),
                everything()) %>%
-        arrange(!!sym("sample_barcode")) %>%
-        set_rownames(.[["sample_barcode"]])
+        arrange(!!sym("sample_id")) %>%
+        set_rownames(.[["sample_id"]])
 }

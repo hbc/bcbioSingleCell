@@ -91,25 +91,25 @@ load_run <- function(
 
     # Prepare samples based on metadata ====
     # Check for sample directory match based on metadata
-    if (!all(sample_metadata[["sample_barcode"]] %in% names(sample_dirs))) {
+    if (!all(sample_metadata[["sample_id"]] %in% names(sample_dirs))) {
         stop("Sample directory names don't match the metadata file")
     }
 
     # Check to see if a subset of samples is requested via the metadata file.
     # This matches by the reverse complement sequence of the index barcode.
-    if (!identical(sample_metadata[["sample_barcode"]], names(sample_dirs)) &
-        length(sample_metadata[["sample_barcode"]]) < length(sample_dirs)) {
+    if (!identical(sample_metadata[["sample_id"]], names(sample_dirs)) &
+        length(sample_metadata[["sample_id"]]) < length(sample_dirs)) {
         message("Loading a subset of samples, defined by the metadata file")
         all_samples <- FALSE
         sample_dirs <- sample_dirs %>%
-            .[names(sample_dirs) %in% sample_metadata[["sample_barcode"]]]
+            .[names(sample_dirs) %in% sample_metadata[["sample_id"]]]
         message(paste(length(sample_dirs), "samples matched by metadata"))
     } else {
         all_samples <- TRUE
     }
 
     # Finally, check that sample directories match the metadata
-    if (!identical(sample_metadata[["sample_barcode"]], names(sample_dirs))) {
+    if (!identical(sample_metadata[["sample_id"]], names(sample_dirs))) {
         stop("Sample name mismatch between directories and metadata")
     }
 
