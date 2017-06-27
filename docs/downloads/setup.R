@@ -1,7 +1,3 @@
-# ggplot2 ====
-library(ggplot2)
-theme_set(theme_light(base_size = 14))
-
 # knitr ====
 library(knitr)
 opts_chunk$set(
@@ -16,6 +12,10 @@ opts_chunk$set(
     message = FALSE,
     tidy = TRUE,
     warning = FALSE)
+
+# ggplot2 ====
+library(ggplot2)
+theme_set(theme_light(base_size = 14))
 
 # bcbioSinglecell ====
 library(bcbioSinglecell)
