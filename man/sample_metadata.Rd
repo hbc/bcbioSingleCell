@@ -8,17 +8,21 @@
 \alias{sample_metadata,bcbioSCDataSet-method}
 \title{Sample metadata}
 \usage{
-sample_metadata(object)
+sample_metadata(object, ...)
 
 .sample_metadata(file, sample_dirs)
 
-\S4method{sample_metadata}{bcbioSCDataSet}(object)
+\S4method{sample_metadata}{bcbioSCDataSet}(object, unique_names = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
+\item{...}{Additional parameters.}
+
 \item{sample_dirs}{(\emph{Optional}). Named character vector of sample directory
 paths.}
+
+\item{unique_names}{Unique sample names.}
 
 \item{metadata}{Metadata data frame.}
 }
