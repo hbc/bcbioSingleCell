@@ -4,14 +4,16 @@
 \alias{load_run}
 \title{Load bcbio-nextgen run}
 \usage{
-load_run(upload_dir = "final", metadata_file,
-  interesting_groups = "sample_name")
+load_run(upload_dir = "final", sample_metadata_file,
+  well_metadata_file = NULL, interesting_groups = "sample_name")
 }
 \arguments{
 \item{upload_dir}{Path to final upload directory. This path is set when
 running \code{bcbio_nextgen -w template}.}
 
-\item{metadata_file}{(\strong{Required}). Sample barcode metadata file.}
+\item{sample_metadata_file}{(\strong{Required}). Sample barcode metadata file.}
+
+\item{well_metadata_file}{(\emph{Optional}). Well identifier metadata file.}
 
 \item{interesting_groups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
@@ -29,5 +31,5 @@ run directory as a remote connection over
 \href{https://github.com/osxfuse/osxfuse/wiki/SSHFS}{sshfs}.
 }
 \author{
-Michael Steinbaugh
+Michael Steinbaugh, Rory Kirchner
 }

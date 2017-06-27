@@ -6,7 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @param upload_dir Path to final upload directory.
-#' @param metadata_file (**Required**). Sample barcode metadata file.
+#' @param sample_metadata_file (**Required**). Sample barcode metadata file.
 #' @param interesting_groups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
@@ -15,7 +15,7 @@
 #' @export
 load_cellranger <- function(
     upload_dir,
-    metadata_file,
+    sample_metadata_file,
     interesting_groups) {
     umi_type <- "chromium"
 
@@ -39,8 +39,8 @@ load_cellranger <- function(
     }
 
     # Sample metadata
-    metadata_file <- normalizePath(metadata_file)
-    sample_metadata <- .read_file(metadata_file)
+    sample_metadata_file <- normalizePath(sample_metadata_file)
+    sample_metadata <- .read_file(sample_metadata_file)
 
     # Load the Cell Ranger samples
     message("Reading 10X Cell Ranger counts")
@@ -109,7 +109,7 @@ load_cellranger <- function(
         upload_dir = upload_dir,
         sample_dirs = sample_dirs,
         interesting_groups = interesting_groups,
-        metadata_file = metadata_file,
+        sample_metadata_file = sample_metadata_file,
         sample_metadata = sample_metadata,
         load_date = Sys.Date(),
         umi_type = umi_type,

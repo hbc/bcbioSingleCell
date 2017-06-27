@@ -4,12 +4,12 @@
 \alias{load_cellranger}
 \title{Load Cell Ranger output}
 \usage{
-load_cellranger(upload_dir, metadata_file, interesting_groups)
+load_cellranger(upload_dir, sample_metadata_file, interesting_groups)
 }
 \arguments{
 \item{upload_dir}{Path to final upload directory.}
 
-\item{metadata_file}{(\strong{Required}). Sample barcode metadata file.}
+\item{sample_metadata_file}{(\strong{Required}). Sample barcode metadata file.}
 
 \item{interesting_groups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector

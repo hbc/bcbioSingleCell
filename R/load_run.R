@@ -4,11 +4,12 @@
 #'   run directory as a remote connection over
 #'   [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
 #'
-#' @author Michael Steinbaugh
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @param upload_dir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
-#' @param metadata_file (**Required**). Sample barcode metadata file.
+#' @param sample_metadata_file (**Required**). Sample barcode metadata file.
+#' @param well_metadata_file (*Optional*). Well identifier metadata file.
 #' @param interesting_groups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
@@ -17,7 +18,8 @@
 #' @export
 load_run <- function(
     upload_dir = "final",
-    metadata_file,
+    sample_metadata_file,
+    well_metadata_file = NULL,
     interesting_groups = "sample_name") {
 
 
@@ -73,17 +75,26 @@ load_run <- function(
 
 
     # Sample metadata ====
-    metadata_file <- normalizePath(metadata_file)
+    sample_metadata_file <- normalizePath(sample_metadata_file)
 
     # Map the sample names to the UMIs
     if (umi_type == "indrop_v3") {
-        sample_metadata <- .indrop_metadata(metadata_file, sample_dirs)
+        sample_metadata <- .indrop_metadata(sample_metadata_file, sample_dirs)
     }
 
     # Check that sample directories match the metadata
     if (!all(names(sample_dirs) %in% sample_metadata[["sample_barcode"]])) {
         stop("Sample name mismatch between directories and metadata")
     }
+
+
+    # Well metadata ====
+    well_metadata_file <- normalizePath(well_metadata_file)
+    well_metadata <- .read_file(well_metadata_file)
+    # FIXME Need a working example from Rory
+    # https://github.com/hbc/bcbioSinglecell/commit/047badd5d3e0d3f9951ea5f1596350a732cacd1c#diff-2803e4fd2fc73d8fdaf60acf3954e0ba
+    # Ensure `sample_id` is factor
+    # mutate(sample_id=as.factor(sample_id)), by="well_id")
 
 
     # Sparse counts ====
@@ -112,8 +123,10 @@ load_run <- function(
         project_dir = project_dir,
         sample_dirs = sample_dirs,
         interesting_groups = interesting_groups,
-        metadata_file = metadata_file,
+        sample_metadata_file = sample_metadata_file,
         sample_metadata = sample_metadata,
+        well_metadata_file = well_metadata_file,
+        well_metdata = well_metadata,
         template = template,
         data_versions = data_versions,
         programs = programs,
