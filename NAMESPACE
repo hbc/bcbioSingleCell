@@ -2,7 +2,6 @@
 
 export("%>%")
 export("bcbio<-")
-export(DataFrame)
 export(aggregate_replicates)
 export(assay)
 export(assays)

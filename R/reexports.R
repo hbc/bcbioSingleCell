@@ -46,7 +46,4 @@ SummarizedExperiment::rowData
 
 # S4Vectors ====
 #' @export
-S4Vectors::DataFrame
-
-#' @export
 S4Vectors::metadata
