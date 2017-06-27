@@ -22,7 +22,7 @@ library(bcbioSinglecell)
 if (file.exists("data/bcb.rda")) {
     data(bcb)
 } else {
-    run <- load_run(
+    bcb <- load_run(
         upload_dir = file.path("data", "indrop_rnaseq"),
         metadata_file = file.path("meta", "indrop_rnaseq.xlsx"),
         interesting_groups = "genotype")
