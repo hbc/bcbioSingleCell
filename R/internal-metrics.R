@@ -43,7 +43,7 @@
                    .data[["mito_counts"]] /
                    .data[["umi_counts"]]) %>%
         # Pre-filter low quality barcodes
-        filter(.data[["umi_counts"]] >= 1000L,
+        filter(.data[["umi_counts"]] >= 500L,
                .data[["genes_detected"]] > 0L,
                .data[["coding_counts"]] > 0L,
                !is.na(.data[["log10_genes_per_umi"]])) %>%
