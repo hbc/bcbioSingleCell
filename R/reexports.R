@@ -22,7 +22,7 @@ basejump::save_data
 # BiocGenerics ====
 #' @rdname counts
 #' @export
-BiocGenerics::counts
+BiocGenerics::counts -> counts
 
 #' @export
 BiocGenerics::design

@@ -3,11 +3,12 @@
 \docType{methods}
 \name{counts,bcbioSCDataSet-method}
 \alias{counts,bcbioSCDataSet-method}
-\alias{reexports}
 \alias{counts}
 \title{Counts accessor}
 \usage{
 \S4method{counts}{bcbioSCDataSet}(object)
+
+counts(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -23,12 +24,3 @@ Counts accessor
 \author{
 Michael Steinbaugh
 }
-\keyword{internal}
-\description{
-These objects are imported from other packages. Follow the links
-below to see their documentation.
-
-\describe{
-  \item{BiocGenerics}{\code{\link[BiocGenerics]{counts}}}
-}}
-
