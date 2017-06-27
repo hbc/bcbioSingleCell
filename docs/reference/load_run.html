@@ -87,8 +87,8 @@
     <p>Load bcbio-nextgen run</p>
     
 
-    <pre class="usage"><span class='fu'>load_run</span>(<span class='kw'>upload_dir</span> <span class='kw'>=</span> <span class='st'>"final"</span>, <span class='no'>metadata_file</span>,
-  <span class='kw'>interesting_groups</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>)</pre>
+    <pre class="usage"><span class='fu'>load_run</span>(<span class='kw'>upload_dir</span> <span class='kw'>=</span> <span class='st'>"final"</span>, <span class='no'>sample_metadata_file</span>,
+  <span class='kw'>well_metadata_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interesting_groups</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -99,8 +99,12 @@
 running <code>bcbio_nextgen -w template</code>.</p></td>
     </tr>
     <tr>
-      <th>metadata_file</th>
+      <th>sample_metadata_file</th>
       <td><p>(<strong>Required</strong>). Sample barcode metadata file.</p></td>
+    </tr>
+    <tr>
+      <th>well_metadata_file</th>
+      <td><p>(<em>Optional</em>). Well identifier metadata file.</p></td>
     </tr>
     <tr>
       <th>interesting_groups</th>
@@ -134,7 +138,7 @@ run directory as a remote connection over
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Michael Steinbaugh, Rory Kirchner
 
   </div>
 </div>
