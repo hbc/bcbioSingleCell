@@ -24,7 +24,7 @@ if (file.exists("data/bcb.rda")) {
 } else {
     bcb <- load_run(
         upload_dir = file.path("data", "indrop_rnaseq"),
-        metadata_file = file.path("meta", "indrop_rnaseq.xlsx"),
+        sample_metadata_file = file.path("meta", "indrop_rnaseq.xlsx"),
         interesting_groups = "genotype")
     save_data(bcb, compress = FALSE)
 }
