@@ -68,8 +68,7 @@
     # Finally, strip all NA columns and rows, then set as S4 DataFrame
     data %>%
         remove_na %>%
-        snake(rownames = FALSE) %>%
-        DataFrame
+        snake(rownames = FALSE)
 }
 
 

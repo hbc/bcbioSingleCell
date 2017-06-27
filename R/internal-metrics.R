@@ -45,6 +45,7 @@
         # Pre-filter low quality barcodes
         filter(.data[["umi_counts"]] >= 1000L,
                .data[["genes_detected"]] > 0L,
+               .data[["coding_counts"]] > 0L,
                !is.na(.data[["log10_genes_per_umi"]])) %>%
         column_to_rownames %>%
         as.matrix

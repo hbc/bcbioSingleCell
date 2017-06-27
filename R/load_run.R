@@ -45,8 +45,12 @@ load_run <- function(
     project_dir <- file.path(upload_dir, project_dir)
 
 
-    # Sample directories ====
-    sample_dirs <- .sample_dirs(upload_dir)
+    # Log files ====
+    message("Reading log files")
+    bcbio_nextgen <- read_lines(
+        file.path(project_dir, "bcbio-nextgen.log"))
+    bcbio_nextgen_commands <- read_lines(
+        file.path(project_dir, "bcbio-nextgen-commands.log"))
 
 
     # Data versions and programs ====
@@ -58,38 +62,28 @@ load_run <- function(
         pull("genome")
 
 
-    # Log files ====
-    message("Reading log files")
-    bcbio_nextgen <- read_lines(
-        file.path(project_dir, "bcbio-nextgen.log"))
-    bcbio_nextgen_commands <- read_lines(
-        file.path(project_dir, "bcbio-nextgen-commands.log"))
-
-
     # Molecular barcode (UMI) type ====
     message("Detecting UMI type")
     if (any(str_detect(bcbio_nextgen_commands,
                        "work/umis/harvard-indrop-v3.json"))) {
         umi_type <- "indrop_v3"
     }
+    message(umi_type)
+
+
+    # Sample directories ====
+    sample_dirs <- .sample_dirs(upload_dir)
 
 
     # Sample metadata ====
     sample_metadata_file <- normalizePath(sample_metadata_file)
-
-    # Map the sample names to the UMIs
-    if (umi_type == "indrop_v3") {
-        sample_metadata <- .indrop_metadata(sample_metadata_file, sample_dirs)
-    }
-
-    # Check that sample directories match the metadata
-    if (!all(names(sample_dirs) %in% sample_metadata[["sample_barcode"]])) {
-        stop("Sample name mismatch between directories and metadata")
-    }
+    sample_metadata <- .sample_metadata(sample_metadata_file, sample_dirs)
 
 
     # Well metadata ====
-    well_metadata_file <- normalizePath(well_metadata_file)
+    if (!is.null(well_metadata_file)) {
+        well_metadata_file <- normalizePath(well_metadata_file)
+    }
     well_metadata <- .read_file(well_metadata_file)
     # FIXME Need a working example from Rory
     # https://github.com/hbc/bcbioSinglecell/commit/047badd5d3e0d3f9951ea5f1596350a732cacd1c#diff-2803e4fd2fc73d8fdaf60acf3954e0ba
@@ -97,11 +91,42 @@ load_run <- function(
     # mutate(sample_id=as.factor(sample_id)), by="well_id")
 
 
+    # Prepare samples based on metadata ====
+    # Check for sample directory match based on metadata
+    if (!all(sample_metadata[["sample_barcode"]] %in% names(sample_dirs))) {
+        stop("Sample directory names don't match the metadata file")
+    }
+
+    # Check to see if a subset of samples is requested via the metadata file.
+    # This matches by the reverse complement sequence of the index barcode.
+    if (!identical(sample_metadata[["sample_barcode"]], names(sample_dirs)) &
+        length(sample_metadata[["sample_barcode"]]) < length(sample_dirs)) {
+        message("Loading a subset of samples, defined by the metadata file")
+        all_samples <- FALSE
+        sample_dirs <- sample_dirs %>%
+            .[names(sample_dirs) %in% sample_metadata[["sample_barcode"]]]
+        message(paste(length(sample_dirs), "samples matched by metadata"))
+    } else {
+        all_samples <- TRUE
+    }
+
+    # Finally, check that sample directories match the metadata
+    if (!identical(sample_metadata[["sample_barcode"]], names(sample_dirs))) {
+        stop("Sample name mismatch between directories and metadata")
+    }
+
+
     # Sparse counts ====
     # The pipeline outputs transcript-level counts. Let's store these inside the
     # bcbioSCDataSet but outside of the SummarizedExperiment, where we will
     # instead slot the gene-level counts.
-    tx_sparse_counts <- .sparse_counts(file.path(project_dir, "tagcounts.mtx"))
+    tx_sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
+        .sparse_counts(sample_dirs[a])
+    }
+    ) %>% set_names(names(sample_dirs))
+    message("Combining counts into a single sparse matrix")
+    tx_sparse_counts <- do.call(cBind, tx_sparse_list)
+    rm(tx_sparse_list)
     sparse_counts <- .sparse_counts_tx2gene(tx_sparse_counts, genome_build)
 
 
@@ -114,7 +139,14 @@ load_run <- function(
 
 
     # Column data ====
-    metrics <- .metrics(sparse_counts, annotable)
+    metrics <- .metrics(sparse_counts, annotable) %>%
+        as.data.frame %>%
+        rownames_to_column %>%
+        left_join(.bind_cellular_barcodes(cellular_barcodes),
+                  by = "rowname") %>%
+        tidy_select("reads", everything()) %>%
+        column_to_rownames %>%
+        as.matrix
 
 
     # Metadata ====
@@ -135,6 +167,7 @@ load_run <- function(
         run_date = run_date,
         load_date = Sys.Date(),
         umi_type = umi_type,
+        all_samples = all_samples,
         wd = getwd(),
         hpc = detect_hpc(),
         session_info = sessionInfo())

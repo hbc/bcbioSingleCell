@@ -44,40 +44,13 @@ load_cellranger <- function(
 
     # Load the Cell Ranger samples
     message("Reading 10X Cell Ranger counts")
-    count_matrices <- pblapply(seq_along(sample_dirs), function(a) {
-        sample_dir <- sample_dirs[a]
-
-        # Counts ====
-        # Read MatrixMart expression counts matrix
-        counts <- file.path(sample_dir, matrix_file) %>% readMM
-
-        # Barcodes ====
-        # Assign barcodes to colnames
-        barcodes <- file.path(sample_dir, barcodes_file) %>% read_lines
-        # Check for `-1` suffix in barcode names, indicative of 10X data
-        pattern <- "\\-1$"
-        if (all(grepl(pattern, barcodes))) {
-            barcodes <- str_replace(barcodes, pattern, "")
-        }
-        # Append the sample name to the barcodes. This will be used after
-        # list is generated to [cBind()] all counts to a single sparse matrix.
-        colnames(counts) <- paste(names(sample_dir), barcodes, sep = "-")
-
-        # Genes ====
-        # Assign gene names (symbols) to rownames
-        genes <- read_tsv(
-            file.path(sample_dir, genes_file),
-            col_names = c("ensgene", "symbol"),
-            col_types = "cc")
-        rownames(counts) <- genes[["ensgene"]]
-
-        # Return dgTMatrix
-        counts
+    sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
+        .sparse_counts(sample_dirs[a])
     }
     ) %>% set_names(names(sample_dirs))
     message("Combining counts into a single sparse matrix")
-    sparse_counts <- do.call(cBind, count_matrices) %>% as("dgCMatrix")
-    rm(count_matrices)
+    sparse_counts <- do.call(cBind, sparse_list)
+    rm(sparse_list)
 
     # Assign genome build based on the Ensembl identifiers. Currently works
     # for human and mouse samples. Improve this method in the future.

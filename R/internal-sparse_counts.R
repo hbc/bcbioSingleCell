@@ -16,7 +16,8 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @param matrix_file MatrixMart file to read.
+#' @param sample_dir Named character vector of sample directory containing the
+#'   MatrixMart file.
 #' @param pipeline Pipeline used to generate the MatrixMarket file. Defaults to
 #'   bcbio-nextgen (`bcbio`). Also supports 10X Chromium CellRanger
 #'   (`cellranger`).
@@ -24,68 +25,66 @@
 #' @return Sparse counts matrix.
 #'
 #' @seealso `help("dgCMatrix-class")`
-.sparse_counts <- function(matrix_file, pipeline = "bcbio") {
-    if (!file.exists(matrix_file)) {
-        stop("Count matrix file missing")
+.sparse_counts <- function(
+    sample_dir,
+    pipeline = "bcbio") {
+    sample_name <- names(sample_dir)
+    if (is.null(sample_name)) {
+        stop("Sample directory must be passed in as a named character vector")
     }
-
-    # Detect a compressed MatrixMarket file
-    if (str_detect(matrix_file, "\\.(bz2|gz|xz)$")) {
-        # TODO Automatic compressed file handling
-        stop("Compressed matrix handling will be added in a future update")
-        # New draft method: pipe a connection to readMM
-        # gzfile, bzfile, xzfile
-        # gzcon, open(con, "r")
-
-        # Old method: decompress on disk
-        # gunzip
-    }
-
-    parent_dir <- dirname(matrix_file)
-
     if (pipeline == "bcbio") {
-        count_level <- "transcript"
+        matrix_file <- file.path(sample_dir, paste0(sample_name, ".mtx"))
         col_file <- paste0(matrix_file, ".colnames")  # barcodes
         row_file <- paste0(matrix_file, ".rownames")  # transcripts
+        count_level <- "transcript"
     } else if (pipeline == "cellranger") {
+        matrix_file <- file.path(sample_dir, "matrix.mtx")
+        col_file <- file.path(sample_dir, "barcodes.tsv")
+        row_file <- file.path(sample_dir, "genes.tsv")
         count_level <- "gene"
-        col_file <- file.path(parent_dir, "barcodes.tsv")
-        row_file <- file.path(parent_dir, "genes.tsv")
     } else {
-        stop("Unknown pipeline")
+        stop("Unsupported pipeline")
     }
 
-    message(paste("Reading MatrixMarket",
-                  paste0(count_level, "-level"),
-                  "counts from", pipeline))
+    # Display informative sample loading message
+    message(paste("Reading", basename(matrix_file)))
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
     # names are gene/transcript identifiers (depending on pipeline).
-    counts <- readMM(matrix_file)
-    rownames(counts) <- read_lines(row_file)
-    colnames(counts) <- read_lines(col_file)
-
-    # Count matrix sanitization
+    sparse_counts <- readMM(matrix_file)
+    colnames(sparse_counts) <- read_lines(col_file)
     if (pipeline == "bcbio") {
-        # inDrop v3 barcode sanitization. If cellular barcode filtering is
-        # `auto`, the identifiers are output as `[ACGT]{16}` instead of
-        # `[ACGT]{8}-[ACGT]{8}`. Check for this and correct, for consistent
-        # barcode names. This should be fixed on the bcbio-nextgen pipline side
-        # in a future update.
-        if (any(str_detect(colnames(counts), "\\:[ACGT]{16}$"))) {
-            colnames(counts) <- colnames(counts) %>%
-                str_replace("\\:([ACGT]{8})([ACGT]{8})$", "\\:\\1-\\2")
-        }
+        rownames(sparse_counts) <- read_lines(row_file)
     } else if (pipeline == "cellranger") {
-        # CellRanger outputs unnecessary trailing `-1` to barcodes.
-        pattern <- "\\-1$"
-        if (all(grepl(pattern, colnames(counts)))) {
-            colnames(counts) <- str_replace(colnames(counts), pattern, "")
-        }
+        gene2symbol <- read_tsv(row_file,
+                                col_names = c("ensgene", "symbol"),
+                                col_types = "cc")
+        rownames(sparse_counts) <- gene2symbol[["ensgene"]]
     }
 
-    # Return as dgCMatrix for improved memory overhead
-    as(counts, "dgCMatrix")
+
+    # Cellular barcode sanitization =====
+    # CellRanger outputs unnecessary trailing `-1`.
+    if (pipeline == "cellranger" &
+        all(str_detect(colnames(sparse_counts), "\\-1$"))) {
+        colnames(sparse_counts) <-
+            str_replace(colnames(sparse_counts), "\\-1$", "")
+    }
+
+    # Reformat to `[ACGT]{8}-[ACGT]{8}` instead of `[ACGT]{16}`
+    if (all(str_detect(colnames(sparse_counts), "^[ACGT]{16}$"))) {
+        colnames(sparse_counts) <- colnames(sparse_counts) %>%
+            str_replace("^([ACGT]{8})([ACGT]{8})$", "\\1-\\2")
+    }
+
+    # Add sample name
+    if (all(str_detect(colnames(sparse_counts), "^[ACGT]{8}"))) {
+        colnames(sparse_counts) <- colnames(sparse_counts) %>%
+            paste(sample_name, ., sep = ":")  # FIXME Don't use colon here?
+    }
+
+    # Return as dgCMatrix, for improved memory overhead
+    as(sparse_counts, "dgCMatrix")
 }
 
 

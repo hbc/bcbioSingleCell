@@ -1,25 +1,36 @@
-#' Read sample cellular barcode summary file
-#'
-#' @rdname barcodes
-#' @keywords internal
-#'
-#' @author Michael Steinbaugh
-#'
-#' @param file_name File name.
-#' @param sample_dirs Sample directories.
-.read_cellular_barcode_file <- function(file_name) {
-    .read_file(file_name) %>%
-        set_names(c("cellular_barcode", "reads"))
-}
-
-
-
-#' Cellular barcode distributions
+#' Cellular barcode operations
 #'
 #' @rdname cellular_barcodes
 #' @keywords internal
 #'
 #' @author Michael Steinbaugh
+#'
+#' @param file Cellular barcode TSV file.
+#' @param sample_dirs Sample directories.
+.read_cellular_barcode_file <- function(file) {
+    .read_file(file, col_names = c("cellular_barcode", "reads"), col_types = "ci")
+}
+
+
+
+#' @rdname cellular_barcodes
+.bind_cellular_barcodes <- function(list) {
+    lapply(seq_along(list), function(a) {
+        sample_name <- names(list)[[a]]
+        list[[a]] %>%
+            mutate(rowname =
+                       paste(sample_name,
+                             .data[["cellular_barcode"]],
+                             sep = ":"),
+                   cellular_barcode = NULL)
+    }
+    ) %>%
+        bind_rows
+}
+
+
+
+#' @rdname cellular_barcodes
 .cellular_barcodes <- function(sample_dirs) {
     files <- sample_dirs %>%
         file.path(paste(basename(.), "barcodes.tsv", sep = "-")) %>%
@@ -28,7 +39,8 @@
         stop("Cellular barcode file missing")
     }
     message("Reading cellular barcode distributions")
-    pbmclapply(seq_along(files), function(a) {
+    pblapply(seq_along(files), function(a) {
         .read_cellular_barcode_file(files[a])
-    }) %>% set_names(names(files))
+    }
+    ) %>% set_names(names(sample_dirs))
 }

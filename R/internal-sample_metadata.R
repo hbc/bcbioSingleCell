@@ -1,22 +1,22 @@
-# FIXME Rory applied some updates to the MASTER branch...merge here
-#' Prepare inDrop metadata
+#' Sample metadata
 #'
 #' Appends reverse complement sequences by matching against the `sequence`
 #' column.
 #'
-#' @rdname indrop_metadata
+#' @rdname sample_metadata
 #' @keywords internal
 #'
 #' @author Michael Steinbaugh
 #'
 #' @param metadata Metadata data frame.
-#' @param sample_dirs Named character vector of sample directory paths.
+#' @param sample_dirs (*Optional*). Named character vector of sample directory
+#'   paths.
 #'
 #' @return [DataFrame].
-.indrop_metadata <- function(file, sample_dirs) {
+.sample_metadata <- function(file, sample_dirs) {
     # Read the metadata file
     meta <- .read_file(file) %>% as.data.frame
-    required_cols <- c("sample_name", "index", "sequence")
+    required_cols <- c("index", "sequence", "sample_name")
     if (!all(required_cols %in% colnames(meta))) {
         stop(paste("Metadata file missing required columns:",
                    toString(required_cols)))
@@ -37,9 +37,10 @@
         # indexes used are unique. Therefore, we can perform a full join against
         # the revcomp sequences present in the sample directories.
         samples <- names(sample_dirs) %>%
-            str_match("(.*)-([ACGT]{8})$") %>%
+            str_match("(.*)-([ACGT]+)$") %>%
             as.data.frame %>%
-            set_colnames(c("sample_barcode", "file_name", "revcomp"))
+            set_colnames(c("sample_barcode", "file_name", "revcomp")) %>%
+            filter(.data[["revcomp"]] %in% meta[["revcomp"]])
         meta <- full_join(meta, samples, by = "revcomp")
     }
 
@@ -52,6 +53,5 @@
                  "sample_name"),
                everything()) %>%
         arrange(!!sym("sample_barcode")) %>%
-        set_rownames(.[["sample_barcode"]]) %>%
-        DataFrame
+        set_rownames(.[["sample_barcode"]])
 }

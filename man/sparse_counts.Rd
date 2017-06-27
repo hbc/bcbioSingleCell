@@ -6,14 +6,15 @@
 \alias{.strip_transcript_versions}
 \title{Read MatrixMarket file}
 \usage{
-.sparse_counts(matrix_file, pipeline = "bcbio")
+.sparse_counts(sample_dir, pipeline = "bcbio")
 
 .sparse_counts_tx2gene(tx_sparse_counts, genome_build)
 
 .strip_transcript_versions(sparse_counts)
 }
 \arguments{
-\item{matrix_file}{MatrixMart file to read.}
+\item{sample_dir}{Named character vector of sample directory containing the
+MatrixMart file.}
 
 \item{pipeline}{Pipeline used to generate the MatrixMarket file. Defaults to
 bcbio-nextgen (\code{bcbio}). Also supports 10X Chromium CellRanger
