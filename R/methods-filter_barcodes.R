@@ -60,10 +60,7 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
         as("DataFrame")
 
     # rowData ====
-    row_data <- rowData(object) %>%
-        as.data.frame %>%
-        set_rownames(names(object)) %>%
-        as("DataFrame")
+    row_data <- .row_data(object)
 
     # Metadata ====
     metadata <- SimpleList(
