@@ -17,15 +17,14 @@
     row_data,
     metadata = NULL) {
     message("Packaging SummarizedExperiment")
-    # Coerce metadata to [SimpleList], if necessary
-    if (!is.null(metadata) & class(metadata) != "SimpleList") {
-        metadata <- as(metadata, "SimpleList")
-    }
-
-    # Pre-filter the sparse counts matrix, based on barcode metrics (colData).
-    # Very low stringency, requires detailed follow-up quality control analysis.
-    # At this point, we're just removing cellular barcodes with very low
-    # read counts or gene detection.
+    # Assays ====
+    # Subset the cellular barcodes in contained in the count matrices by
+    # colData. When packaging a bcbioSCDataSet, very low stringency subsetting
+    # of the raw data is applied, based on the cellular barcode summary metrics,
+    # to save disk space. This is very helpful when loading unfiltered counts,
+    # such as a raw dataset from 10X Cell Ranger. By default, the bcbio-nextgen
+    # pipeline applies cellular barcode filtering server-side, so this step
+    # should have little to no effect.
     sparse_counts <- sparse_counts[, rownames(col_data)]
     if (!identical(colnames(sparse_counts), rownames(col_data))) {
         stop("colData mismatch")
@@ -54,6 +53,19 @@
     }
 
 
+    # Metadata ====
+    # Coerce metadata to [SimpleList], if necessary
+    if (!is.null(metadata) & class(metadata) != "SimpleList") {
+        metadata <- as(metadata, "SimpleList")
+    }
+
+    # Update automatic metadata slots
+    metadata[["load_date"]] <- Sys.Date()
+    metadata[["wd"]] <- getwd()
+    metadata[["hpc"]] <- detect_hpc()
+    metadata[["session_info"]] <- sessionInfo()
+
+
     # Return [SummarizedExperiment] ====
     SummarizedExperiment(
         assays = SimpleList(
@@ -61,4 +73,11 @@
         colData = col_data,
         rowData = row_data,
         metadata = metadata)
+}
+
+
+
+.row_data <- function(object) {
+    rowData(object) %>%
+        set_rownames(rownames(object))
 }
