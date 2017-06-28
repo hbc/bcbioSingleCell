@@ -26,7 +26,7 @@
 paths.}
 }
 \value{
-\link{DataFrame}.
+\link{tibble}.
 
 \link{data.frame}.
 }

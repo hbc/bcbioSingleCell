@@ -4,12 +4,14 @@
 \alias{.calculate_metrics}
 \title{Calculate cellular barcode metrics summary}
 \usage{
-.calculate_metrics(sparse_counts, annotable)
+.calculate_metrics(sparse_counts, annotable, filter = TRUE)
 }
 \arguments{
 \item{sparse_counts}{Sparse counts matrix.}
 
 \item{annotable}{Annotable.}
+
+\item{filter}{Whether to apply pre-filtering to the cellular barcodes.}
 }
 \value{
 \link{matrix}.

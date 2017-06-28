@@ -17,7 +17,14 @@
 
 \item{sample_dirs}{Sample directories.}
 
-\item{list}{Cellular barcodes list}
+\item{list}{Cellular barcodes list.}
+}
+\value{
+\link{tibble}.
+
+\link{list}.
+
+\link{tibble}.
 }
 \description{
 Cellular barcode operations

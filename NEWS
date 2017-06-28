@@ -1,3 +1,4 @@
+0.0.13  Integrate bcbio-nextgen and cellranger workflows into [load_run()].
 0.0.12  Initial support for S4 object creation using SummarizedExperiment.
 0.0.11  Add testthat, lintr, and covr support for code coverage.
 0.0.10  Update RMarkdown templates.

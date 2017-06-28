@@ -15,7 +15,7 @@
 #'   for a list of currently supported genomes.
 #' @param format Desired table format, either `gene` or `tx2gene`.
 #'
-#' @return Modified annotable with unique rows.
+#' @return [data.frame] with unique rows per gene/transcript.
 .annotable <- function(genome_build, format = "gene") {
     if (!is.character(genome_build)) {
         stop("Genome build must be a character vector")
@@ -37,8 +37,7 @@
     message(paste("Using", genome_build, format, "annotable"))
 
     if (format == "gene") {
-        get(genome_build, envir = envir) %>%
-            as.data.frame %>%
+        annotable <- get(genome_build, envir = envir) %>%
             mutate(entrez = NULL) %>%
             distinct %>%
             mutate(broad_class = case_when(
@@ -67,14 +66,12 @@
                       "nonsense_mediated_decay") ~ "decaying",
                 str_detect(.data[["biotype"]], "IG_") ~ "ig",
                 str_detect(.data[["biotype"]], "TR_") ~ "tcr",
-                TRUE ~ "other")) %>%
-            arrange(!!sym("ensgene")) %>%
-            set_rownames(.[["ensgene"]])
+                TRUE ~ "other"))
     } else if (format == "tx2gene") {
-        paste(genome_build, "tx2gene", sep = "_") %>%
-            get(envir = envir) %>%
-            as.data.frame %>%
-            arrange(!!sym("enstxp")) %>%
-            set_rownames(.[["enstxp"]])
+        annotable <- paste(genome_build, "tx2gene", sep = "_") %>%
+            get(envir = envir)
     }
+    annotable %>%
+        as.data.frame %>%
+        set_rownames(.[[1L]])
 }

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sparse matrix aggregation operations — .aggregate_features • bcbioSinglecell</title>
+<title>Aggregation methods — aggregate_replicates,bcbioSCDataSet-method • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,21 +80,29 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sparse matrix aggregation operations</h1>
+    <h1>Aggregation methods</h1>
     </div>
 
     
-    <p>Collapse features with the same feature id by summing them.</p>
+    <p>Aggregation methods</p>
+<p>Collapse features with the same feature id by summing them.</p>
 <p>Pool cellular technical replicate counts.</p>
     
 
-    <pre class="usage"><span class='fu'>.aggregate_features</span>(<span class='no'>sparse</span>, <span class='no'>featureids</span>)
+    <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
+<span class='fu'><a href='generics.html'>aggregate_replicates</a></span>(<span class='no'>object</span>)
+
+<span class='fu'>.aggregate_features</span>(<span class='no'>sparse</span>, <span class='no'>featureids</span>)
 
 <span class='fu'>.aggregate_replicates</span>(<span class='no'>sparse</span>, <span class='no'>cellids</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
+    </tr>
     <tr>
       <th>sparse</th>
       <td><p>Sparse counts matrix.</p></td>
@@ -111,7 +119,9 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Aggregated sparse matrix.</p>
+    <p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p>
+<p>Aggregated sparse matrix.</p>
+<p>Aggregated sparse matrix.</p>
     
 
   </div>

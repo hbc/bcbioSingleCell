@@ -5,7 +5,9 @@
 \title{Load bcbio-nextgen run}
 \usage{
 load_run(upload_dir = "final", sample_metadata_file,
-  well_metadata_file = NULL, interesting_groups = "sample_name")
+  well_metadata_file = NULL, interesting_groups = "sample_name",
+  experiment_name = NULL, principal_investigator = NULL,
+  researcher = NULL, email = NULL, pipeline = "bcbio")
 }
 \arguments{
 \item{upload_dir}{Path to final upload directory. This path is set when
@@ -18,12 +20,30 @@ running \code{bcbio_nextgen -w template}.}
 \item{interesting_groups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
+
+\item{experiment_name}{Experiment name.}
+
+\item{principal_investigator}{Principal investigator.}
+
+\item{researcher}{Researcher who performed the experiment.}
+
+\item{email}{Email for follow-up correspondence.}
+
+\item{pipeline}{Analysis pipeline used to generate the counts. Currently
+supports bcbio-nextgen (\code{bcbio}; default) and 10X Genomics Cell Ranger
+(\code{cellranger}).}
 }
 \value{
 \link{bcbioSCDataSet}.
 }
 \description{
 Load bcbio-nextgen run
+}
+\details{
+\itemize{
+\item \strong{cellranger}: Read \href{https://www.10xgenomics.com/software/}{10x GenomicsChromium} cell counts from
+\code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
+}
 }
 \note{
 When working in RStudio, we recommend connecting to the bcbio-nextgen

@@ -35,28 +35,11 @@
     # Subset the annotable by the genes present in the counts matrix
     row_data <- row_data[rownames(sparse_counts), ] %>%
         set_rownames(rownames(sparse_counts))
-    if (!identical(rownames(sparse_counts), rownames(row_data))) {
-        stop("rowData mismatch")
-    }
-
-    # Check for retired Ensembl identifiers, which can happen when a more recent
-    # annotable build is used than the genome build. If present, store these
-    # identifiers in the metadata.
-    if (any(is.na(row_data[["ensgene"]]))) {
-        warning("Ensembl identifier degradation detected")
-        metadata[["retired_ensgene"]] <- row_data %>%
-            as.data.frame %>%
-            rownames_to_column %>%
-            filter(is.na(.data[["ensgene"]])) %>%
-            pull("rowname") %>%
-            sort
-    }
 
 
     # Metadata ====
-    # Coerce metadata to [SimpleList], if necessary
-    if (!is.null(metadata) & class(metadata) != "SimpleList") {
-        metadata <- as(metadata, "SimpleList")
+    if (!is.null(metadata)) {
+        metadata <- SimpleList()
     }
 
     # Update automatic metadata slots
@@ -65,19 +48,36 @@
     metadata[["hpc"]] <- detect_hpc()
     metadata[["session_info"]] <- sessionInfo()
 
+    # Check for retired Ensembl identifiers, which can happen when a more recent
+    # annotable build is used than the genome build. If present, store these
+    # identifiers in the metadata.
+    if (any(is.na(row_data[["ensgene"]]))) {
+        warning("Ensembl identifier degradation detected")
+        metadata[["retired_ensgene"]] <- row_data %>%
+            as_tibble %>%
+            filter(is.na(.data[["ensgene"]])) %>%
+            pull("rowname") %>%
+            sort
+    }
 
-    # Return [SummarizedExperiment] ====
+
+    # Return ====
+    if (!identical(colnames(sparse_counts), rownames(col_data))) {
+        stop("colData mismatch")
+    }
+    if (!identical(rownames(sparse_counts), rownames(row_data))) {
+        stop("rowData mismatch")
+    }
     SummarizedExperiment(
         assays = SimpleList(
             sparse_counts = sparse_counts),
-        colData = col_data,
-        rowData = row_data,
-        metadata = metadata)
+        colData = as(col_data, "DataFrame"),
+        rowData = as(row_data, "DataFrame"),
+        metadata = as(metadata, "SimpleList"))
 }
 
 
 
 .row_data <- function(object) {
-    rowData(object) %>%
-        set_rownames(rownames(object))
+    rowData(object) %>% set_rownames(rownames(object))
 }

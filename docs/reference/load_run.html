@@ -88,7 +88,9 @@
     
 
     <pre class="usage"><span class='fu'>load_run</span>(<span class='kw'>upload_dir</span> <span class='kw'>=</span> <span class='st'>"final"</span>, <span class='no'>sample_metadata_file</span>,
-  <span class='kw'>well_metadata_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interesting_groups</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>)</pre>
+  <span class='kw'>well_metadata_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interesting_groups</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>,
+  <span class='kw'>experiment_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>principal_investigator</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>researcher</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>email</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pipeline</span> <span class='kw'>=</span> <span class='st'>"bcbio"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -112,11 +114,40 @@ running <code>bcbio_nextgen -w template</code>.</p></td>
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.</p></td>
     </tr>
+    <tr>
+      <th>experiment_name</th>
+      <td><p>Experiment name.</p></td>
+    </tr>
+    <tr>
+      <th>principal_investigator</th>
+      <td><p>Principal investigator.</p></td>
+    </tr>
+    <tr>
+      <th>researcher</th>
+      <td><p>Researcher who performed the experiment.</p></td>
+    </tr>
+    <tr>
+      <th>email</th>
+      <td><p>Email for follow-up correspondence.</p></td>
+    </tr>
+    <tr>
+      <th>pipeline</th>
+      <td><p>Analysis pipeline used to generate the counts. Currently
+supports bcbio-nextgen (<code>bcbio</code>; default) and 10X Genomics Cell Ranger
+(<code>cellranger</code>).</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <ul>
+<li><p><strong>cellranger</strong>: Read <a href='https://www.10xgenomics.com/software/'>10x GenomicsChromium</a> cell counts from
+<code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.mtx</code> files.</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -132,6 +163,8 @@ run directory as a remote connection over
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#note">Note</a></li>
           </ul>
