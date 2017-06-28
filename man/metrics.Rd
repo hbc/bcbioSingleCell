@@ -12,7 +12,7 @@ metrics(object, ...)
 
 .metrics(sparse_counts, annotable)
 
-\S4method{metrics}{bcbioSCDataSet}(object)
+\S4method{metrics}{bcbioSCDataSet}(object, unique_names = FALSE)
 }
 \arguments{
 \item{object}{\link{bcbioSCDataSet}.}
@@ -20,6 +20,8 @@ metrics(object, ...)
 \item{sparse_counts}{Sparse counts matrix.}
 
 \item{annotable}{Annotable.}
+
+\item{unique_names}{Unique sample names.}
 }
 \value{
 Tibble grouped by sample name.

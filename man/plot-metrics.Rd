@@ -16,7 +16,7 @@ plot_cell_counts(bcb)
 
 plot_umis_per_cell(bcb, min = 1000L)
 
-plot_genes_detected(bcb, min = 500L, max = NULL)
+plot_genes_detected(bcb, min = 500L)
 
 plot_umis_vs_genes(bcb)
 
