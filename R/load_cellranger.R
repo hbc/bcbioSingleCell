@@ -73,7 +73,7 @@ load_cellranger <- function(
 
 
     # Column data ====
-    metrics <- .metrics(sparse_counts, annotable)
+    metrics <- .calculate_metrics(sparse_counts, annotable)
 
 
     # Metadata ====

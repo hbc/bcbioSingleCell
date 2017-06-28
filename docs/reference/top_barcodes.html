@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Top barcodes — top_barcodes • bcbioSinglecell</title>
+<title>Top barcodes — .top_barcodes • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -87,10 +87,11 @@
     <p>Top barcodes</p>
     
 
-    <pre class="usage"><span class='fu'>top_barcodes</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
+<span class='fu'><a href='generics.html'>top_barcodes</a></span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
 
-<span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>top_barcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
+<span class='co'># S4 method for SummarizedExperiment</span>
+<span class='fu'><a href='generics.html'>top_barcodes</a></span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -100,10 +101,6 @@
       <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Additional parameters.</p></td>
-    </tr>
-    <tr>
       <th>n</th>
       <td><p>Number of barcodes to return per sample.</p></td>
     </tr>
@@ -111,7 +108,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data.frame.</p>
+    <p>tibble.</p>
     
 
   </div>

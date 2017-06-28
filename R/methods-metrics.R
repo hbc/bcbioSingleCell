@@ -6,8 +6,12 @@
 #' @param unique_names Unique sample names.
 #'
 #' @return [data.frame].
-#' @export
-setMethod("metrics", "bcbioSCDataSet", function(object, unique_names = FALSE) {
+
+
+
+#' @rdname metrics
+#' @usage NULL
+.metrics <- function(object, unique_names = FALSE) {
     interesting_groups <- interesting_groups(object)
     meta <- sample_metadata(object, unique_names = unique_names) %>%
         tidy_select(unique(c("file_name",
@@ -24,4 +28,14 @@ setMethod("metrics", "bcbioSCDataSet", function(object, unique_names = FALSE) {
         mutate(cellular_barcode = NULL)
     left_join(meta, metrics, by = "sample_id") %>%
         column_to_rownames
-})
+}
+
+
+
+#' @rdname metrics
+#' @export
+setMethod("metrics", "bcbioSCDataSet", .metrics)
+
+#' @rdname metrics
+#' @export
+setMethod("metrics", "SummarizedExperiment", .metrics)

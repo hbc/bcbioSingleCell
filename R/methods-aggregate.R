@@ -4,11 +4,10 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param object Object.
-#' @param ... Additional parameters.
+#' @param object [bcbioSCDataSet].
 #'
 #' @return [bcbioSCDataSet].
 #' @export
 setMethod("aggregate_replicates", "bcbioSCDataSet", function(object) {
-    stop("Draft function")
+    stop("Draft function to be added in a future update")
 })

@@ -4,11 +4,30 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param object Object.
-#' @param ... Additional parameters.
+#' @param object [bcbioSCDataSet].
+#' @param format Matrix format.
 #'
-#' @return Sparse counts (`dgCMatrix`).
+#' @return Counts matrix.
+
+
+
+#' @rdname counts
+#' @usage NULL
+.counts <- function(object, format = "dgCMatrix") {
+    supported_formats <- c("dgCMatrix", "dgTMatrix", "matrix")
+    if (!format %in% supported_formats) {
+        stop(paste("Supported formats", toString(supported_formats)))
+    }
+    message(format)
+    assay(object) %>% as(format)
+}
+
+
+
+#' @rdname counts
 #' @export
-setMethod("counts", "bcbioSCDataSet", function(object) {
-    assay(object)
-})
+setMethod("counts", "bcbioSCDataSet", .counts)
+
+#' @rdname counts
+#' @export
+setMethod("counts", "SummarizedExperiment", .counts)

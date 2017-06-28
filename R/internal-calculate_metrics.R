@@ -1,15 +1,17 @@
-#' Generate barcode metrics summary
+#' Calculate cellular barcode metrics summary
 #'
-#' @rdname metrics
+#' This should only be performed during the initial run loading.
+#'
+#' @rdname calculate_metrics
 #' @keywords internal
-#' @author Rory Kirchner
-#' @author Michael Steinbaugh
+#'
+#' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @param sparse_counts Sparse counts matrix.
 #' @param annotable Annotable.
 #'
-#' @return Tibble grouped by sample name.
-.metrics <- function(sparse_counts, annotable) {
+#' @return [matrix].
+.calculate_metrics <- function(sparse_counts, annotable) {
     message("Calculating barcode metrics")
     cb_input <- ncol(sparse_counts)
     message(paste(cb_input, "cellular barcodes detected"))

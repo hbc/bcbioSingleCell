@@ -1,12 +1,11 @@
-#' Accessors for the sparse count matrix of a [bcbioSCDataSet] object
+#' [bcbioSCDataSet] object accessors
 #'
 #' @rdname bcbio
 #' @docType methods
 #'
-#' @param object [bcbioSCDataSet] object.
-#' @param value An integer matrix or other object.
+#' @param object [bcbioSCDataSet].
 #' @param type Type of count data to retrieve.
-#' @param ... Matrix count data.
+#' @param value An integer matrix or other object.
 #'
 #' @return Matrix/Object containing count data.
 #' @export

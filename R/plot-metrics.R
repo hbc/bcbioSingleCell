@@ -7,7 +7,7 @@
 #' @author Michael Steinbaugh
 #' @author Rory Kirchner
 #'
-#' @param bcb [bcbioSCDataSet].
+#' @param object [bcbioSCDataSet].
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #'
@@ -16,13 +16,13 @@
 
 
 # Cell counts ====
-.plot_cell_counts_barplot <- function(bcb) {
-    metrics <- metrics(bcb)
+.plot_cell_counts_barplot <- function(object) {
+    metrics <- metrics(object)
     cell_counts <- metrics %>%
         group_by(!!sym("sample_id")) %>%
         summarise(cells = n()) %>%
-        left_join(sample_metadata(bcb), by = "sample_id")
-    interesting_group <- interesting_groups(bcb)[[1L]]
+        left_join(sample_metadata(object), by = "sample_id")
+    interesting_group <- interesting_groups(object)[[1L]]
     ggplot(
         cell_counts,
         aes_(x = ~sample_name,
@@ -39,19 +39,19 @@
 
 #' @rdname plot-metrics
 #' @export
-plot_cell_counts <- function(bcb) {
-    show(.plot_cell_counts_barplot(bcb))
+plot_cell_counts <- function(object) {
+    show(.plot_cell_counts_barplot(object))
 }
 
 
 
 # Read counts ====
-.plot_umis_per_cell_boxplot <- function(bcb, min) {
-    metrics <- metrics(bcb)
+.plot_umis_per_cell_boxplot <- function(object, min) {
+    metrics <- metrics(object)
     median_umis <- aggregate(umi_counts ~ sample_id, metrics, median) %>%
-        left_join(sample_metadata(bcb), by = "sample_id") %>%
+        left_join(sample_metadata(object), by = "sample_id") %>%
         mutate(umi_counts = round(.data[["umi_counts"]]))
-    interesting_group <- interesting_groups(bcb)[[1L]]
+    interesting_group <- interesting_groups(object)[[1L]]
     ggplot(
         metrics,
         aes_(x = ~sample_name,
@@ -75,8 +75,8 @@ plot_cell_counts <- function(bcb) {
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
 
-.plot_umis_per_cell_histogram <- function(bcb, min) {
-    metrics <- metrics(bcb)
+.plot_umis_per_cell_histogram <- function(object, min) {
+    metrics <- metrics(object)
     ggplot(
         metrics,
         aes_(x = ~umi_counts,
@@ -96,19 +96,19 @@ plot_cell_counts <- function(bcb) {
 
 #' @rdname plot-metrics
 #' @export
-plot_umis_per_cell <- function(bcb, min = 1000L) {
-    show(.plot_umis_per_cell_boxplot(bcb, min))
-    show(.plot_umis_per_cell_histogram(bcb, min))
+plot_umis_per_cell <- function(object, min = 1000L) {
+    show(.plot_umis_per_cell_boxplot(object, min))
+    show(.plot_umis_per_cell_histogram(object, min))
 }
 
 
 
 # Genes detected ====
-.plot_genes_detected_boxplot <- function(bcb, min) {
-    metrics <- metrics(bcb)
+.plot_genes_detected_boxplot <- function(object, min) {
+    metrics <- metrics(object)
     median_genes <- aggregate(genes_detected ~ sample_id, metrics, median) %>%
-        left_join(sample_metadata(bcb), by = "sample_id")
-    interesting_group <- interesting_groups(bcb)[[1L]]
+        left_join(sample_metadata(object), by = "sample_id")
+    interesting_group <- interesting_groups(object)[[1L]]
     ggplot(
         metrics,
         aes_(x = ~sample_name,
@@ -121,7 +121,7 @@ plot_umis_per_cell <- function(bcb, min = 1000L) {
         geom_boxplot() +
         geom_hline(alpha = 0.5,
                    color = warn_color,
-                   size = 2,
+                   size = 2L,
                    yintercept = min) +
         geom_label(data = median_genes,
                    aes_(label = ~round(genes_detected)),
@@ -132,8 +132,8 @@ plot_umis_per_cell <- function(bcb, min = 1000L) {
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
 
-.plot_genes_detected_histogram <- function(bcb, min) {
-    metrics <- metrics(bcb)
+.plot_genes_detected_histogram <- function(object, min) {
+    metrics <- metrics(object)
     ggplot(
         metrics,
         aes_(x = ~genes_detected,
@@ -153,16 +153,16 @@ plot_umis_per_cell <- function(bcb, min = 1000L) {
 
 #' @rdname plot-metrics
 #' @export
-plot_genes_detected <- function(bcb, min = 500L) {
-    show(.plot_genes_detected_boxplot(bcb, min))
-    show(.plot_genes_detected_histogram(bcb, min))
+plot_genes_detected <- function(object, min = 500L) {
+    show(.plot_genes_detected_boxplot(object, min))
+    show(.plot_genes_detected_histogram(object, min))
 }
 
 
 
 # Read counts vs. detected genes ====
-.plot_umis_vs_genes <- function(bcb) {
-    metrics <- metrics(bcb)
+.plot_umis_vs_genes <- function(object) {
+    metrics <- metrics(object)
     ggplot(
         metrics,
         aes_(x = ~umi_counts,
@@ -180,19 +180,19 @@ plot_genes_detected <- function(bcb, min = 500L) {
 
 #' @rdname plot-metrics
 #' @export
-plot_umis_vs_genes <- function(bcb) {
-    show(.plot_umis_vs_genes(bcb))
+plot_umis_vs_genes <- function(object) {
+    show(.plot_umis_vs_genes(object))
 }
 
 
 
 # Mitochondrial abundance ====
-.plot_mito_ratio_boxplot <- function(bcb, max) {
-    metrics <- metrics(bcb)
+.plot_mito_ratio_boxplot <- function(object, max) {
+    metrics <- metrics(object)
     median_mito_ratio <-
         aggregate(mito_ratio ~ sample_id, metrics, median) %>%
-        left_join(sample_metadata(bcb), by = "sample_id")
-    interesting_group <- interesting_groups(bcb)[[1L]]
+        left_join(sample_metadata(object), by = "sample_id")
+    interesting_group <- interesting_groups(object)[[1L]]
     ggplot(
         metrics,
         aes_(x = ~sample_name,
@@ -216,8 +216,8 @@ plot_umis_vs_genes <- function(bcb) {
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
 
-.plot_mito_ratio_histogram <- function(bcb, max) {
-    metrics <- metrics(bcb)
+.plot_mito_ratio_histogram <- function(object, max) {
+    metrics <- metrics(object)
     ggplot(
         metrics,
         aes_(x = ~mito_ratio,
@@ -235,8 +235,8 @@ plot_umis_vs_genes <- function(bcb) {
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
 
-.plot_mito_ratio_scatterplot <- function(bcb) {
-    metrics <- metrics(bcb)
+.plot_mito_ratio_scatterplot <- function(object) {
+    metrics <- metrics(object)
     ggplot(
         metrics,
         aes_(x = ~coding_counts,
@@ -254,21 +254,21 @@ plot_umis_vs_genes <- function(bcb) {
 
 #' @rdname plot-metrics
 #' @export
-plot_mito_ratio <- function(bcb, max = 0.1) {
-    show(.plot_mito_ratio_boxplot(bcb, max))
-    show(.plot_mito_ratio_histogram(bcb, max))
-    show(.plot_mito_ratio_scatterplot(bcb))
+plot_mito_ratio <- function(object, max = 0.1) {
+    show(.plot_mito_ratio_boxplot(object, max))
+    show(.plot_mito_ratio_histogram(object, max))
+    show(.plot_mito_ratio_scatterplot(object))
 }
 
 
 
 # Novelty ====
-.plot_novelty_boxplot <- function(bcb, min) {
-    metrics <- metrics(bcb)
+.plot_novelty_boxplot <- function(object, min) {
+    metrics <- metrics(object)
     median_novelty <-
         aggregate(log10_genes_per_umi ~ sample_id, metrics, median) %>%
-        left_join(sample_metadata(bcb), by = "sample_id")
-    interesting_group <- interesting_groups(bcb)[[1L]]
+        left_join(sample_metadata(object), by = "sample_id")
+    interesting_group <- interesting_groups(object)[[1L]]
     ggplot(
         metrics,
         aes_(x = ~sample_name,
@@ -292,8 +292,8 @@ plot_mito_ratio <- function(bcb, max = 0.1) {
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
 
-.plot_novelty_histogram <- function(bcb, min) {
-    metrics <- metrics(bcb)
+.plot_novelty_histogram <- function(object, min) {
+    metrics <- metrics(object)
     ggplot(
         metrics,
         aes_(x = ~log10_genes_per_umi,
@@ -313,7 +313,7 @@ plot_mito_ratio <- function(bcb, max = 0.1) {
 
 #' @rdname plot-metrics
 #' @export
-plot_novelty <- function(bcb, min = 0.8) {
-    show(.plot_novelty_boxplot(bcb, min))
-    show(.plot_novelty_histogram(bcb, min))
+plot_novelty <- function(object, min = 0.8) {
+    show(.plot_novelty_boxplot(object, min))
+    show(.plot_novelty_histogram(object, min))
 }

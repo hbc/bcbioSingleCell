@@ -1,5 +1,3 @@
-# TODO Arrange plots into a grid?
-
 #' Filter cellular barcodes
 #'
 #' Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
@@ -9,15 +7,13 @@
 #' @author Michael Steinbaugh
 #'
 #' @param object [bcbioSCDataSet].
-#' @param ... Additional parameters.
-#'
 #' @param umis Minimum number of UMI disambiguated counts per cell.
 #' @param genes Minimum number of genes detected.
 #' @param mito_ratio Maximum relative mitochondrial abundance (`0-1` scale).
 #' @param novelty Minimum novelty score.
-#' @param show Show summary statistics and plots.
+#' @param show_report Show summary statistics report and plots.
 #'
-#' @return Filtered [bcbioSCDataSet], with low quality cellular barcodes that
+#' @return [bcbioSCDataSet], with low quality cellular barcodes that
 #'   don't pass quality control cutoffs removed.
 #' @export
 setMethod("filter_barcodes", "bcbioSCDataSet", function(
@@ -26,8 +22,7 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
     genes = 500L,
     mito_ratio = 0.1,
     novelty = 0.8,
-    show = TRUE) {
-    name <- deparse(substitute(object))
+    show_report = TRUE) {
     sparse_counts <- counts(object)
 
     # Cellular barcode count
@@ -71,38 +66,42 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
         as("DataFrame")
 
     # Metadata ====
-    meta <- metadata(object)
-    meta[["filtering_criteria"]] <- SimpleList(
-        umis = umis,
-        genes = genes,
-        mito_ratio = mito_ratio,
-        novelty = novelty)
+    metadata <- SimpleList(
+        source = deparse(substitute(object)),
+        sample_metadata = metadata(object)[["sample_metadata"]],
+        interesting_groups = metadata(object)[["interesting_groups"]],
+        filtering_criteria = c(
+            umis = umis,
+            genes = genes,
+            mito_ratio = mito_ratio,
+            novelty = novelty),
+        date = Sys.Date(),
+        wd = getwd(),
+        hpc = detect_hpc(),
+        session_info = sessionInfo())
 
     # SummarizedExperiment ====
-    se <- .summarized_experiment(
+    object <- .summarized_experiment(
         sparse_counts = sparse_counts,
         col_data = col_data,
         row_data = row_data,
-        metadata = meta)
+        metadata = metadata)
 
-    # bcbioSCDataSet ====
-    bcb <- new("bcbioSCDataSet", se)
-
-    # Show summary statistics and plots, if desired
-    if (isTRUE(show)) {
+    # Show summary statistics report and plots, if desired
+    if (isTRUE(show_report)) {
         writeLines(c(
             "Filtering parameters:",
             paste0("- `>= ", umis, "` UMI counts per cell"),
             paste0("- `>= ", genes, "` genes per cell"),
             paste0("- `<= ", mito_ratio, "` mitochondrial abundance ratio"),
             paste0("- `>= ", novelty, "` novelty score")))
-        plot_cell_counts(bcb)
-        plot_umis_per_cell(bcb, min = umis)
-        plot_genes_detected(bcb, min = genes)
-        plot_umis_vs_genes(bcb)
-        plot_mito_ratio(bcb, max = mito_ratio)
-        plot_novelty(bcb, min = novelty)
+        plot_cell_counts(object)
+        plot_umis_per_cell(object, min = umis)
+        plot_genes_detected(object, min = genes)
+        plot_umis_vs_genes(object)
+        plot_mito_ratio(object, max = mito_ratio)
+        plot_novelty(object, min = novelty)
     }
 
-    bcb
+    object
 })

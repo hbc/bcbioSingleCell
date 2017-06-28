@@ -12,7 +12,7 @@
                   sep = ":") %>%
         mutate(cellular_barcode = NULL,
                log10_reads = log10(.data[["reads"]])) %>%
-        filter(.data[["log10_reads"]] > 0) %>%
+        filter(.data[["log10_reads"]] > 0L) %>%
         left_join(sample_metadata(bcb), by = "sample_id")
 }
 
@@ -46,7 +46,7 @@
         labs(title = "cellular barcode histogram",
              x = "log10 reads per cell") +
         facet_wrap(~file_name) +
-        geom_histogram(bins = 200) +
+        geom_histogram(bins = 200L) +
         scale_y_sqrt()
 }
 

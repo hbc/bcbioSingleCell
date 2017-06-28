@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate barcode metrics summary — metrics • bcbioSinglecell</title>
+<title>Sample barcode metrics — .metrics • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,20 +80,18 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate barcode metrics summary</h1>
+    <h1>Sample barcode metrics</h1>
     </div>
 
     
-    <p>Generate barcode metrics summary</p>
-<p>Sample barcode metrics</p>
+    <p>Sample barcode metrics</p>
     
 
-    <pre class="usage"><span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
+<span class='fu'><a href='generics.html'>metrics</a></span>(<span class='no'>object</span>, <span class='kw'>unique_names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>.metrics</span>(<span class='no'>sparse_counts</span>, <span class='no'>annotable</span>)
-
-<span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>unique_names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='co'># S4 method for SummarizedExperiment</span>
+<span class='fu'><a href='generics.html'>metrics</a></span>(<span class='no'>object</span>, <span class='kw'>unique_names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -103,14 +101,6 @@
       <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
     </tr>
     <tr>
-      <th>sparse_counts</th>
-      <td><p>Sparse counts matrix.</p></td>
-    </tr>
-    <tr>
-      <th>annotable</th>
-      <td><p>Annotable.</p></td>
-    </tr>
-    <tr>
       <th>unique_names</th>
       <td><p>Unique sample names.</p></td>
     </tr>
@@ -118,9 +108,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Tibble grouped by sample name.
-
-data.frame.</p>
+    <p>data.frame.</p>
     
 
   </div>
@@ -131,12 +119,6 @@ data.frame.</p>
       
       <li><a href="#value">Value</a></li>
           </ul>
-
-    <h2>Author</h2>
-    
-Rory Kirchner
-
-Michael Steinbaugh
 
   </div>
 </div>

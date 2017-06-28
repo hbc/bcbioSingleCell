@@ -136,7 +136,7 @@ load_run <- function(
 
 
     # Column data ====
-    metrics <- .metrics(sparse_counts, annotable) %>%
+    metrics <- .calculate_metrics(sparse_counts, annotable) %>%
         as.data.frame %>%
         rownames_to_column %>%
         left_join(.bind_cellular_barcodes(cellular_barcodes),

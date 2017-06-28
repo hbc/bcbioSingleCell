@@ -4,13 +4,16 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param object Object.
-#' @param ... Additional parameters.
+#' @param object [bcbioSCDataSet].
 #' @param unique_names Unique sample names.
 #'
-#' @export
-setMethod("sample_metadata", "bcbioSCDataSet", function(
-    object, unique_names = FALSE) {
+#' @return [data.frame].
+
+
+
+#' @rdname sample_metadata
+#' @usage NULL
+.sample_metadata <- function(object, unique_names = FALSE) {
     meta <- metadata(object)[["sample_metadata"]] %>% as.data.frame
     if (isTRUE(unique_names)) {
         # Ensure unique sample names
@@ -27,4 +30,16 @@ setMethod("sample_metadata", "bcbioSCDataSet", function(
         }
     }
     meta
-})
+}
+
+
+
+#' @rdname sample_metadata
+#' @export
+setMethod("sample_metadata", "bcbioSCDataSet", .sample_metadata)
+
+
+
+#' @rdname sample_metadata
+#' @export
+setMethod("sample_metadata", "SummarizedExperiment", .sample_metadata)

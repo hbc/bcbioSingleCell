@@ -5,12 +5,16 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param object Object.
-#' @param ... Additional parameters.
+#' @param object [bcbioSCDataSet].
+#' @param ... Passthrough parameters to [knitr::kable()].
 #'
 #' @return [kable].
-#' @export
-setMethod("metadata_table", "bcbioSCDataSet", function(object, ...) {
+
+
+
+#' @rdname metadata_table
+#' @usage NULL
+.metadata_table <- function(object, ...) {
     object %>%
         sample_metadata %>%
         as_tibble %>%
@@ -18,4 +22,14 @@ setMethod("metadata_table", "bcbioSCDataSet", function(object, ...) {
         snake %>%
         mutate(file_name = NULL) %>%
         kable(caption = "Sample metadata", ...)
-})
+}
+
+
+
+#' @rdname metadata_table
+#' @export
+setMethod("metadata_table", "bcbioSCDataSet", .metadata_table)
+
+#' @rdname metadata_table
+#' @export
+setMethod("metadata_table", "SummarizedExperiment", .metadata_table)
