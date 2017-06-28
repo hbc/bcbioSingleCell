@@ -49,14 +49,14 @@
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
     # names are gene/transcript identifiers (depending on pipeline).
-    sparse_counts <- readMM(matrix_file)
-    colnames(sparse_counts) <- read_lines(col_file)
+    sparse_counts <- .read_file(matrix_file)
+    colnames(sparse_counts) <- .read_file(col_file)
     if (pipeline == "bcbio") {
-        rownames(sparse_counts) <- read_lines(row_file)
+        rownames(sparse_counts) <- .read_file(row_file)
     } else if (pipeline == "cellranger") {
-        gene2symbol <- read_tsv(row_file,
-                                col_names = c("ensgene", "symbol"),
-                                col_types = "cc")
+        gene2symbol <- .read_file(row_file,
+                                  col_names = c("ensgene", "symbol"),
+                                  col_types = "cc")
         rownames(sparse_counts) <- gene2symbol[["ensgene"]]
     }
 
