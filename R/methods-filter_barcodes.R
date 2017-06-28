@@ -91,7 +91,7 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
     # Show summary statistics and plots, if desired
     if (isTRUE(show)) {
         writeLines(c(
-            paste(name, "filtering parameters:"),
+            "Filtering parameters:",
             paste0("- `>= ", umis, "` UMI counts per cell"),
             paste0("- `>= ", genes, "` genes per cell"),
             paste0("- `<= ", mito_ratio, "` mitochondrial abundance ratio"),
