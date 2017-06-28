@@ -24,7 +24,7 @@ setMethod("filter_barcodes", "bcbioSCDataSet", function(
     object,
     umis = 1000L,
     genes = 1000L,
-    mito_ratio = 0.05,
+    mito_ratio = 0.1,
     novelty = 0.8,
     show = TRUE) {
     name <- deparse(substitute(object))

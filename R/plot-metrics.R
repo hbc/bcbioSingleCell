@@ -237,23 +237,24 @@ plot_umis_vs_genes <- function(bcb) {
 
 .plot_mito_ratio_scatterplot <- function(bcb) {
     metrics <- metrics(bcb)
-    interesting_group <- interesting_groups(bcb)[[1L]]
     ggplot(
         metrics,
         aes_(x = ~coding_counts,
              y = ~mito_counts,
-             color = as.name(interesting_group))) +
+             color = ~sample_name)) +
         labs(title = "mitochondrial abundance scatterplot",
              x = "mitochondrial counts",
              y = "coding counts") +
-        facet_wrap(~sample_id) +
-        geom_point() +
+        facet_wrap(~file_name) +
+        geom_point(size = 1L) +
+        scale_x_sqrt() +
+        scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 }
 
 #' @rdname plot-metrics
 #' @export
-plot_mito_ratio <- function(bcb, max = 0.2) {
+plot_mito_ratio <- function(bcb, max = 0.1) {
     show(.plot_mito_ratio_boxplot(bcb, max))
     show(.plot_mito_ratio_histogram(bcb, max))
     show(.plot_mito_ratio_scatterplot(bcb))

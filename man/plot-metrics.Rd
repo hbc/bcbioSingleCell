@@ -20,7 +20,7 @@ plot_genes_detected(bcb, min = 500L)
 
 plot_umis_vs_genes(bcb)
 
-plot_mito_ratio(bcb, max = 0.2)
+plot_mito_ratio(bcb, max = 0.1)
 
 plot_novelty(bcb, min = 0.8)
 }

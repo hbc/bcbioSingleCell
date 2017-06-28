@@ -9,7 +9,7 @@
 filter_barcodes(object, ...)
 
 \S4method{filter_barcodes}{bcbioSCDataSet}(object, umis = 1000L,
-  genes = 1000L, mito_ratio = 0.05, novelty = 0.8, show = TRUE)
+  genes = 1000L, mito_ratio = 0.1, novelty = 0.8, show = TRUE)
 }
 \arguments{
 \item{object}{\link{bcbioSCDataSet}.}
