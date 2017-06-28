@@ -1,9 +1,9 @@
-#' Sample metadata
+#' Prepare sample metadata from file
 #'
 #' Appends reverse complement sequences by matching against the `sequence`
 #' column.
 #'
-#' @rdname sample_metadata
+#' @rdname sample_metadata_file
 #' @keywords internal
 #'
 #' @author Michael Steinbaugh
@@ -13,7 +13,7 @@
 #'   paths.
 #'
 #' @return [tibble].
-.sample_metadata <- function(file, sample_dirs) {
+.sample_metadata_file <- function(file, sample_dirs) {
     # Read the metadata file
     metadata <- .read_file(file)
     required_cols <- c("index", "sequence", "sample_name")
@@ -47,11 +47,11 @@
 
     metadata %>%
         tidy_select(c("file_name",
-                 "index",
-                 "sequence",
-                 "revcomp",
-                 "sample_id",
-                 "sample_name"),
-               everything()) %>%
+                      "index",
+                      "sequence",
+                      "revcomp",
+                      "sample_id",
+                      "sample_name"),
+                    everything()) %>%
         arrange(!!sym("sample_id"))
 }

@@ -32,6 +32,7 @@
     if (is.null(sample_name)) {
         stop("Sample directory must be passed in as a named character vector")
     }
+    message(sample_name)
     if (pipeline == "bcbio") {
         matrix_file <- file.path(sample_dir, paste0(sample_name, ".mtx"))
         col_file <- paste0(matrix_file, ".colnames")  # barcodes
@@ -43,9 +44,6 @@
     } else {
         stop("Unsupported pipeline")
     }
-
-    # Display informative sample loading message
-    message(paste("Reading", basename(matrix_file)))
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
     # names are gene/transcript identifiers (depending on pipeline).
@@ -78,7 +76,7 @@
     # Add sample name
     if (all(str_detect(colnames(sparse_counts), "^[ACGT]{8}"))) {
         colnames(sparse_counts) <- colnames(sparse_counts) %>%
-            paste(sample_name, ., sep = ":")  # FIXME Don't use colon here?
+            paste(sample_name, ., sep = ":")
     }
 
     # Return as dgCMatrix, for improved memory overhead

@@ -13,8 +13,8 @@
 #'
 #' @param upload_dir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
-#' @param sample_metadata_file (**Required**). Sample barcode metadata file.
-#' @param well_metadata_file (*Optional*). Well identifier metadata file.
+#' @param sample_metadata_file **Required**. Sample barcode metadata file.
+#' @param well_metadata_file *Optional*. Well identifier metadata file.
 #' @param interesting_groups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
@@ -62,7 +62,7 @@ load_run <- function(
 
     # Sample metadata ====
     sample_metadata_file <- normalizePath(sample_metadata_file)
-    sample_metadata <- .sample_metadata(sample_metadata_file, sample_dirs)
+    sample_metadata <- .sample_metadata_file(sample_metadata_file, sample_dirs)
 
 
     # Pipeline-specific support prior to count loading ====
@@ -155,7 +155,7 @@ load_run <- function(
         # will instead slot the gene-level counts.
         message("Reading bcbio-nextgen transcript-level counts")
         tx_sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
-            .sparse_counts(sample_dirs[a])
+            .sparse_counts(sample_dirs[a], pipeline = pipeline)
         }
         ) %>% set_names(names(sample_dirs))
         message("Combining counts into a single sparse matrix")
@@ -165,7 +165,7 @@ load_run <- function(
     } else if (pipeline == "cellranger") {
         message("Reading 10X Cell Ranger gene-level counts")
         sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
-            .sparse_counts(sample_dirs[a])
+            .sparse_counts(sample_dirs[a], pipeline = pipeline)
         }
         ) %>% set_names(names(sample_dirs))
         message("Combining counts into a single sparse matrix")
