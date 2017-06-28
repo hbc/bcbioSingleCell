@@ -193,11 +193,16 @@ load_run <- function(
     metrics <- .calculate_metrics(sparse_counts, annotable)
     if (pipeline == "bcbio") {
         # Add reads per cellular barcode to bcbio-nextgen metrics
+        cb_df <- .bind_cellular_barcodes(cellular_barcodes)
+        message(paste(nrow(cb_df), "unfiltered cellular barcodes"))
+        cb_df <- cb_df %>%
+            filter(.data[["cellular_barcode"]] %in% rownames(metrics))
+        message(paste(nrow(cb_df), "filtered cellular barcodes"))
         metrics <- metrics %>%
             as.data.frame %>%
             rownames_to_column %>%
-            left_join(.bind_cellular_barcodes(cellular_barcodes),
-                      by = "rowname") %>%
+            left_join(cb_df,
+                      by = c("rowname" = "cellular_barcode")) %>%
             tidy_select("reads", everything()) %>%
             column_to_rownames %>%
             as.matrix
