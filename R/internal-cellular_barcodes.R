@@ -14,6 +14,23 @@
 
 
 #' @rdname cellular_barcodes
+.cellular_barcodes <- function(sample_dirs) {
+    files <- sample_dirs %>%
+        file.path(paste(basename(.), "barcodes.tsv", sep = "-")) %>%
+        set_names(names(sample_dirs))
+    if (!all(file.exists(files))) {
+        stop("Cellular barcode file missing")
+    }
+    message("Reading cellular barcode distributions")
+    pblapply(seq_along(files), function(a) {
+        .read_cellular_barcode_file(files[a])
+    }
+    ) %>% set_names(names(sample_dirs))
+}
+
+
+
+#' @rdname cellular_barcodes
 #' @param list Cellular barcodes list
 .bind_cellular_barcodes <- function(list) {
     lapply(seq_along(list), function(a) {
@@ -27,21 +44,4 @@
     }
     ) %>%
         bind_rows
-}
-
-
-
-#' @rdname cellular_barcodes
-.cellular_barcodes <- function(sample_dirs) {
-    files <- sample_dirs %>%
-        file.path(paste(basename(.), "barcodes.tsv", sep = "-")) %>%
-        set_names(names(sample_dirs))
-    if (!all(file.exists(files))) {
-        stop("Cellular barcode file missing")
-    }
-    message("Reading cellular barcode distributions")
-    pblapply(seq_along(files), function(a) {
-        .read_cellular_barcode_file(files[a])
-    }
-    ) %>% set_names(names(sample_dirs))
 }

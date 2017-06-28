@@ -2,22 +2,22 @@
 % Please edit documentation in R/internal-cellular_barcodes.R
 \name{.read_cellular_barcode_file}
 \alias{.read_cellular_barcode_file}
-\alias{.bind_cellular_barcodes}
 \alias{.cellular_barcodes}
+\alias{.bind_cellular_barcodes}
 \title{Cellular barcode operations}
 \usage{
 .read_cellular_barcode_file(file)
 
-.bind_cellular_barcodes(list)
-
 .cellular_barcodes(sample_dirs)
+
+.bind_cellular_barcodes(list)
 }
 \arguments{
 \item{file}{Cellular barcode TSV file.}
 
-\item{list}{Cellular barcodes list}
-
 \item{sample_dirs}{Sample directories.}
+
+\item{list}{Cellular barcodes list}
 }
 \description{
 Cellular barcode operations
