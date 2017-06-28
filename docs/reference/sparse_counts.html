@@ -91,7 +91,7 @@ automatically.</p>
 <p>Strip transcript versions.</p>
     
 
-    <pre class="usage"><span class='fu'>.sparse_counts</span>(<span class='no'>matrix_file</span>, <span class='kw'>pipeline</span> <span class='kw'>=</span> <span class='st'>"bcbio"</span>)
+    <pre class="usage"><span class='fu'>.sparse_counts</span>(<span class='no'>sample_dir</span>, <span class='kw'>pipeline</span> <span class='kw'>=</span> <span class='st'>"bcbio"</span>)
 
 <span class='fu'>.sparse_counts_tx2gene</span>(<span class='no'>tx_sparse_counts</span>, <span class='no'>genome_build</span>)
 
@@ -101,8 +101,9 @@ automatically.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>matrix_file</th>
-      <td><p>MatrixMart file to read.</p></td>
+      <th>sample_dir</th>
+      <td><p>Named character vector of sample directory containing the
+MatrixMart file.</p></td>
     </tr>
     <tr>
       <th>pipeline</th>

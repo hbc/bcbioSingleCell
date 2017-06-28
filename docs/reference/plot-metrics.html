@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sample metadata — sample_metadata • bcbioSinglecell</title>
+<title>Cell metrics quality control plots — .plot_cell_counts_barplot • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,51 +80,47 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sample metadata</h1>
+    <h1>Cell metrics quality control plots</h1>
     </div>
 
     
-    <p>Appends reverse complement sequences by matching against the <code>sequence</code>
-column.</p>
-<p>Sample metadata</p>
+    <p>Novelty score means log10 genes detected per count.</p>
     
 
-    <pre class="usage"><span class='fu'>sample_metadata</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>.plot_cell_counts_barplot</span>(<span class='no'>bcb</span>)
 
-<span class='fu'>.sample_metadata</span>(<span class='no'>file</span>, <span class='no'>sample_dirs</span>)
+<span class='fu'>plot_cell_counts</span>(<span class='no'>bcb</span>)
 
-<span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>sample_metadata</span>(<span class='no'>object</span>, <span class='kw'>unique_names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>plot_umis_per_cell</span>(<span class='no'>bcb</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>1000L</span>)
+
+<span class='fu'>plot_genes_detected</span>(<span class='no'>bcb</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>500L</span>)
+
+<span class='fu'>plot_umis_vs_genes</span>(<span class='no'>bcb</span>)
+
+<span class='fu'>plot_mito_ratio</span>(<span class='no'>bcb</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
+
+<span class='fu'>plot_novelty</span>(<span class='no'>bcb</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
+      <th>bcb</th>
+      <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Additional parameters.</p></td>
+      <th>min</th>
+      <td><p>Recommended minimum value cutoff.</p></td>
     </tr>
     <tr>
-      <th>sample_dirs</th>
-      <td><p>(<em>Optional</em>). Named character vector of sample directory
-paths.</p></td>
-    </tr>
-    <tr>
-      <th>unique_names</th>
-      <td><p>Unique sample names.</p></td>
-    </tr>
-    <tr>
-      <th>metadata</th>
-      <td><p>Metadata data frame.</p></td>
+      <th>max</th>
+      <td><p>Recommended maximum value cutoff.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>DataFrame.</p>
+    <p>ggplot.</p>
     
 
   </div>
@@ -140,7 +136,7 @@ paths.</p></td>
     
 Michael Steinbaugh
 
-Michael Steinbaugh
+Rory Kirchner
 
   </div>
 </div>

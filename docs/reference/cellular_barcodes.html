@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cellular barcode distributions — .cellular_barcodes • bcbioSinglecell</title>
+<title>Cellular barcode operations — .read_cellular_barcode_file • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,20 +80,38 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cellular barcode distributions</h1>
+    <h1>Cellular barcode operations</h1>
     </div>
 
     
-    <p>Cellular barcode distributions</p>
+    <p>Cellular barcode operations</p>
     
 
-    <pre class="usage"><span class='fu'>.cellular_barcodes</span>(<span class='no'>sample_dirs</span>)</pre>
-        
+    <pre class="usage"><span class='fu'>.read_cellular_barcode_file</span>(<span class='no'>file</span>)
+
+<span class='fu'>.bind_cellular_barcodes</span>(<span class='no'>list</span>)
+
+<span class='fu'>.cellular_barcodes</span>(<span class='no'>sample_dirs</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>file</th>
+      <td><p>Cellular barcode TSV file.</p></td>
+    </tr>
+    <tr>
+      <th>sample_dirs</th>
+      <td><p>Sample directories.</p></td>
+    </tr>
+    </table>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
                 </ul>
 
     <h2>Author</h2>
