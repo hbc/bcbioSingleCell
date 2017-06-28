@@ -12,38 +12,39 @@
 #' @param sample_dirs (*Optional*). Named character vector of sample directory
 #'   paths.
 #'
-#' @return [DataFrame].
+#' @return [tibble].
 .sample_metadata <- function(file, sample_dirs) {
     # Read the metadata file
-    meta <- .read_file(file) %>% as.data.frame
+    metadata <- .read_file(file)
     required_cols <- c("index", "sequence", "sample_name")
-    if (!all(required_cols %in% colnames(meta))) {
+    if (!all(required_cols %in% colnames(metadata))) {
         stop(paste("Metadata file missing required columns:",
                    toString(required_cols)))
     }
-    meta <- mutate(
-        meta,
+    metadata <- mutate(
+        metadata,
         revcomp = vapply(.data[["sequence"]], revcomp, character(1L)))
 
     # Map sample names to inDrop barcode indexes (revcomp)
-    if ("file_name" %in% colnames(meta)) {
+    if ("file_name" %in% colnames(metadata)) {
         # Sample barcode is structured as `file_name-revcomp`.
-        meta <- meta %>%
+        metadata <- metadata %>%
             mutate(sample_id = paste(
                 .data[["file_name"]], .data[["revcomp"]], sep = "-"))
     } else {
         # If file names aren't specified in the metadata, we assume the inDrop
         # indexes used are unique. Therefore, we can perform a full join against
         # the revcomp sequences present in the sample directories.
-        samples <- names(sample_dirs) %>%
+        sample_matches <- names(sample_dirs) %>%
             str_match("(.*)-([ACGT]+)$") %>%
-            as.data.frame %>%
+            as_tibble %>%
             set_colnames(c("sample_id", "file_name", "revcomp")) %>%
-            filter(.data[["revcomp"]] %in% meta[["revcomp"]])
-        meta <- full_join(meta, samples, by = "revcomp")
+            filter(.data[["revcomp"]] %in% metadata[["revcomp"]])
+        metadata <- suppressWarnings(
+            full_join(metadata, sample_matches, by = "revcomp"))
     }
 
-    meta %>%
+    metadata %>%
         tidy_select(c("file_name",
                  "index",
                  "sequence",
@@ -51,6 +52,5 @@
                  "sample_id",
                  "sample_name"),
                everything()) %>%
-        arrange(!!sym("sample_id")) %>%
-        set_rownames(.[["sample_id"]])
+        arrange(!!sym("sample_id"))
 }
