@@ -35,11 +35,12 @@
         # If file names aren't specified in the metadata, we assume the inDrop
         # indexes used are unique. Therefore, we can perform a full join against
         # the revcomp sequences present in the sample directories.
+        revcomp_matches <- pull(metadata, "revcomp")
         sample_matches <- names(sample_dirs) %>%
             str_match("(.*)-([ACGT]+)$") %>%
             as_tibble %>%
             set_colnames(c("sample_id", "file_name", "revcomp")) %>%
-            filter(.data[["revcomp"]] %in% metadata[["revcomp"]])
+            filter(.data[["revcomp"]] %in% syms(revcomp_matches))
         metadata <- suppressWarnings(
             full_join(metadata, sample_matches, by = "revcomp"))
     }
