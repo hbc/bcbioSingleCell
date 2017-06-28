@@ -1,6 +1,8 @@
 #' Read file
 #'
-#' Supports automatic loading of `.csv`, `.tsv`, `.xlsx`, and `.counts` files.
+#' Supports automatic loading of standard `.csv`, `.mtx`, `.tsv`, and `.xlsx`
+#' files. Also supports bcbio-nextgen pipeline-specific `.counts`, `.colnames`,
+#' and `.rownames` files.
 #'
 #' @rdname read_file
 #' @keywords internal
@@ -8,15 +10,15 @@
 #' @author Michael Steinbaugh
 #'
 #' @param file File path.
-#' @param column_to_rownames Column identifier to use for row names.
 #' @param ... Additional parameters.
 #'
-#' @return [DataFrame].
+#' @return Generally as a [tibble], or a sparse matrix for `.mtx` files.
 #'
 #' @seealso
-#' - [readr](http://readr.tidyverse.org)
-#' - [readxl](http://readxl.tidyverse.org)
-.read_file <- function(file, column_to_rownames = NULL, ...) {
+#' - [readr](http://readr.tidyverse.org).
+#' - [readxl](http://readxl.tidyverse.org).
+#' - [readMM()]: Read a MatrixMarket file.
+.read_file <- function(file, ...) {
     if (is.null(file)) {
         return(NULL)
     }
@@ -43,29 +45,28 @@
     # File import, based on extension
     if (ext == "csv") {
         data <- read_csv(file_path, ...)
+    } else if (ext == "mtx") {
+        data <- readMM(file_path, ...)
     } else if (ext == "tsv") {
         data <- read_tsv(file_path, ...)
     } else if (ext == "txt") {
         data <- read_delim(file_path, ...)
     } else if (ext == "xlsx") {
         data <- read_excel(file_path, ...)
+    } else if (ext %in% c("colnames", "rownames")) {
+        data <- read_lines(file_path, ...)
     } else if (ext == "counts") {
-        data <- read_tsv(file_path, ...) %>% as.matrix
+        data <- read_tsv(file_path, ...)
     } else {
         stop("Unsupported file type")
     }
 
-    # Coerce tibble to data frame, to allow for rownames
-    if (is_tibble(data)) {
-        data <- as.data.frame(data)
+    # Coerce data frame to tibble, if necessary
+    if (is.data.frame(data) & !is_tibble(data)) {
+        data <- as_tibble(data)
     }
 
-    # Set row names, if desired
-    if (!is.null(column_to_rownames)) {
-        data <- column_to_rownames(data, var = column_to_rownames)
-    }
-
-    # Finally, strip all NA columns and rows, then set as S4 DataFrame
+    # Finally, strip all NA columns and rows, and sanitize column names
     data %>%
         remove_na %>%
         snake(rownames = FALSE)
