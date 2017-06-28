@@ -44,19 +44,19 @@
 
     # File import, based on extension
     if (ext == "csv") {
-        data <- read_csv(file_path, ...)
+        data <- read_csv(file_path, progress = FALSE, ...)
     } else if (ext == "mtx") {
         data <- readMM(file_path, ...)
     } else if (ext == "tsv") {
-        data <- read_tsv(file_path, ...)
+        data <- read_tsv(file_path, progress = FALSE, ...)
     } else if (ext == "txt") {
-        data <- read_delim(file_path, ...)
+        data <- read_delim(file_path, progress = FALSE, ...)
     } else if (ext == "xlsx") {
         data <- read_excel(file_path, ...)
     } else if (ext %in% c("colnames", "rownames")) {
         data <- read_lines(file_path, ...)
     } else if (ext == "counts") {
-        data <- read_tsv(file_path, ...)
+        data <- read_tsv(file_path, progress = FALSE, ...)
     } else {
         stop("Unsupported file type")
     }

@@ -38,12 +38,12 @@
 
 
     # Metadata ====
-    if (!is.null(metadata)) {
+    if (is.null(metadata)) {
         metadata <- SimpleList()
     }
 
     # Update automatic metadata slots
-    metadata[["load_date"]] <- Sys.Date()
+    metadata[["date"]] <- Sys.Date()
     metadata[["wd"]] <- getwd()
     metadata[["hpc"]] <- detect_hpc()
     metadata[["session_info"]] <- sessionInfo()

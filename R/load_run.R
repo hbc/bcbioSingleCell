@@ -64,13 +64,32 @@ load_run <- function(
     sample_metadata_file <- normalizePath(sample_metadata_file)
     sample_metadata <- .sample_metadata_file(sample_metadata_file, sample_dirs)
 
+    # Check for sample directory match based on metadata
+    if (!all(sample_metadata[["sample_id"]] %in% names(sample_dirs))) {
+        stop("Sample directory names don't match the metadata file")
+    }
+
+    # Check to see if a subset of samples is requested via the metadata file.
+    # This matches by the reverse complement sequence of the index barcode.
+    if (!identical(sample_metadata[["sample_id"]], names(sample_dirs)) &
+        length(sample_metadata[["sample_id"]]) < length(sample_dirs)) {
+        message("Loading a subset of samples, defined by the metadata file")
+        all_samples <- FALSE
+        sample_dirs <- sample_dirs %>%
+            .[names(sample_dirs) %in% sample_metadata[["sample_id"]]]
+        message(paste(length(sample_dirs), "samples matched by metadata"))
+    } else {
+        all_samples <- TRUE
+    }
+
+    # Finally, check that sample directories match the metadata
+    if (!identical(sample_metadata[["sample_id"]], names(sample_dirs))) {
+        stop("Sample name mismatch between directories and metadata")
+    }
+
 
     # Pipeline-specific support prior to count loading ====
     if (pipeline == "bcbio") {
-        # Cellular barcodes ====
-        cellular_barcodes <- .cellular_barcodes(sample_dirs)
-
-
         # Project directory ====
         project_dir <- dir(upload_dir,
                            pattern = project_dir_pattern,
@@ -110,6 +129,10 @@ load_run <- function(
         }
 
 
+        # Cellular barcodes ====
+        cellular_barcodes <- .cellular_barcodes(sample_dirs)
+
+
         # Well metadata ====
         if (!is.null(well_metadata_file)) {
             well_metadata_file <- normalizePath(well_metadata_file)
@@ -121,31 +144,6 @@ load_run <- function(
         umi_type <- "chromium"
     }
     message(paste("UMI type:", umi_type))
-
-
-    # Prepare samples based on metadata ====
-    # Check for sample directory match based on metadata
-    if (!all(sample_metadata[["sample_id"]] %in% names(sample_dirs))) {
-        stop("Sample directory names don't match the metadata file")
-    }
-
-    # Check to see if a subset of samples is requested via the metadata file.
-    # This matches by the reverse complement sequence of the index barcode.
-    if (!identical(sample_metadata[["sample_id"]], names(sample_dirs)) &
-        length(sample_metadata[["sample_id"]]) < length(sample_dirs)) {
-        message("Loading a subset of samples, defined by the metadata file")
-        all_samples <- FALSE
-        sample_dirs <- sample_dirs %>%
-            .[names(sample_dirs) %in% sample_metadata[["sample_id"]]]
-        message(paste(length(sample_dirs), "samples matched by metadata"))
-    } else {
-        all_samples <- TRUE
-    }
-
-    # Finally, check that sample directories match the metadata
-    if (!identical(sample_metadata[["sample_id"]], names(sample_dirs))) {
-        stop("Sample name mismatch between directories and metadata")
-    }
 
 
     # Read counts into sparse matrix ====

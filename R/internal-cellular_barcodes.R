@@ -45,13 +45,11 @@
     lapply(seq_along(list), function(a) {
         sample_name <- names(list)[[a]]
         list[[a]] %>%
-            mutate(rowname =
+            mutate(cellular_barcode =
                        paste(sample_name,
                              .data[["cellular_barcode"]],
-                             sep = ":"),
-                   cellular_barcode = NULL)
+                             sep = ":"))
     }
     ) %>%
-        bind_rows %>%
-        as_tibble
+        bind_rows
 }

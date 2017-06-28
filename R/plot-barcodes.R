@@ -1,19 +1,26 @@
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_df <- function(bcb) {
-    cellular_barcodes <- bcbio(bcb, "cellular_barcodes")
+.plot_cb_df <- function(object) {
+    message("Reformatting cellular barcodes for ggplot")
+    cellular_barcodes <- bcbio(object, "cellular_barcodes")
     if (is.null(cellular_barcodes)) {
         return(NULL)
     }
+    interesting_group <- interesting_groups(object)[[1L]]
+    sample_metadata <- sample_metadata(object) %>%
+        tidy_select(unique(c("file_name",
+                             "sample_id",
+                             "sample_name",
+                             interesting_group)))
     cellular_barcodes %>%
         .bind_cellular_barcodes %>%
-        separate_(col = "rowname",
+        separate_(col = "cellular_barcode",
                   into = c("sample_id", "cellular_barcode"),
                   sep = ":") %>%
-        mutate(cellular_barcode = NULL,
-               log10_reads = log10(.data[["reads"]])) %>%
+        mutate(log10_reads = log10(.data[["reads"]]),
+               reads = NULL) %>%
         filter(.data[["log10_reads"]] > 0L) %>%
-        left_join(sample_metadata(bcb), by = "sample_id")
+        left_join(sample_metadata, by = "sample_id")
 }
 
 
@@ -54,8 +61,8 @@
 
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_histogram2 <- function(bcb) {
-    cellular_barcodes <- bcbio(bcb, "cellular_barcodes")
+.plot_cb_histogram2 <- function(object) {
+    cellular_barcodes <- bcbio(object, "cellular_barcodes")
     list <- lapply(seq_along(cellular_barcodes), function(a) {
         bcs <- cellular_barcodes[[a]] %>%
             mutate(log10_reads = log10(.data[["reads"]]))
@@ -72,7 +79,7 @@
     ) %>%
         set_names(names(cellular_barcodes))
     bind_rows(list) %>%
-        left_join(sample_metadata(bcb), by = "sample_id") %>%
+        left_join(sample_metadata(object), by = "sample_id") %>%
         ggplot(
             aes_(x = ~x,
                  y = ~y,
@@ -94,15 +101,15 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @param bcb [bcbioSCDataSet].
+#' @param object [bcbioSCDataSet].
 
 #' @export
-plot_cellular_barcodes <- function(bcb) {
-    plot_cb_df <- .plot_cb_df(bcb)
+plot_cellular_barcodes <- function(object) {
+    plot_cb_df <- .plot_cb_df(object)
     if (is.null(plot_cb_df)) {
         return(NULL)
     }
     show(.plot_cb_violin(plot_cb_df))
     show(.plot_cb_histogram(plot_cb_df))
-    show(.plot_cb_histogram2(bcb))
+    show(.plot_cb_histogram2(object))
 }
