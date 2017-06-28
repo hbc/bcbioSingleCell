@@ -11,16 +11,26 @@ source("setup.R")
 library(Seurat)
 data(filtered)
 
-# Setup
-# Seurat uses dot.notation instead of snake_case
-meta.data <- metrics(bcb_filtered) %>% dotted(rownames = FALSE)
-raw.data <- counts(bcb_filtered)
+# Filtering criteria
+min.umis <- metadata(filtered) %>%
+    .[["filtering_criteria"]] %>%
+    .[["umis"]]
+min.genes <- metadata(filtered) %>%
+    .[["filtering_criteria"]] %>%
+    .[["genes"]]
+max.mito.ratio <- metadata(filtered) %>%
+    .[["filtering_criteria"]] %>%
+    .[["mito_ratio"]]
 
-# Cutoffs
-min.umis <- metadata(filtered)[["filtering_criteria"]][["umis"]]
-min.genes <- metadata(filtered)[["filtering_criteria"]][["genes"]]
-max.mito.ratio <- metadata(filtered)[["filtering_criteria"]][["mito_ratio"]]
+# Source data
+project <- "XXX"
+data <- select_samples(
+    filtered,
+    sample_name = project,
+    file_name = NULL)
+rm(filtered)
 
+# Principal components
 num.pc <- 40
 pc.use <- 10
 ```
@@ -173,7 +183,7 @@ Here we will use the selected PCs to find clusters of cells via heirarchical clu
 ```{r FindClusters}
 seurat <- FindClusters(
     seurat,
-    do.sparse = TRUE,  # required for large datasets
+    do.sparse = TRUE,
     pc.use = 1:pc.use,
     print.output = FALSE,
     save.SNN = TRUE)
@@ -209,10 +219,11 @@ FeaturePlot(seurat, "mito.ratio", cols.use = c("grey","red"))
 
 
 
-# Save the [Seurat][] analysis
-
 ```{r save_data}
-save_data(seurat)
+assign(project, seurat)
+save(list = project,
+     file = file.path("data", paste0(project, ".rda")),
+     compress = FALSE)
 ```
 
 ```{r footer, child="footer.Rmd"}

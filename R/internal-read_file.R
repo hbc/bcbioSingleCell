@@ -68,8 +68,9 @@
 
     # Return
     if (is_tibble(data)) {
-        # Finally, strip all NA columns and rows, and sanitize column names
-        data %>% remove_na %>% snake(rownames = FALSE)
+        data %>%
+            remove_na %>%
+            snake(rownames = FALSE)
     } else {
         data
     }
