@@ -88,10 +88,12 @@
     
 
     <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'><a href='generics.html'>counts</a></span>(<span class='no'>object</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)
+<span class='fu'><a href='generics.html'>counts</a></span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)
 
 <span class='co'># S4 method for SummarizedExperiment</span>
-<span class='fu'><a href='generics.html'>counts</a></span>(<span class='no'>object</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)</pre>
+<span class='fu'><a href='generics.html'>counts</a></span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -101,8 +103,14 @@
       <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
     </tr>
     <tr>
+      <th>gene2symbol</th>
+      <td><p>Convert Ensembl gene identifiers (rownames) to gene
+symbols. Recommended for passing counts to Seurat.</p></td>
+    </tr>
+    <tr>
       <th>format</th>
-      <td><p>Matrix format.</p></td>
+      <td><p>Return counts as sparse matrix (<strong>recommended</strong>; <code>dgCMatrix</code>,
+<code>dgTMatrix</code>) or dense matrix (<code>matrix</code>).</p></td>
     </tr>
     </table>
     

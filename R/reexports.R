@@ -12,6 +12,9 @@ basejump::dotted
 basejump::group_by
 
 #' @export
+basejump::pct
+
+#' @export
 basejump::top_n
 
 #' @export

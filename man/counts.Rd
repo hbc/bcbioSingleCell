@@ -7,14 +7,20 @@
 \alias{counts,SummarizedExperiment-method}
 \title{Counts accessor}
 \usage{
-\S4method{counts}{bcbioSCDataSet}(object, format = "dgCMatrix")
+\S4method{counts}{bcbioSCDataSet}(object, gene2symbol = FALSE,
+  format = "dgCMatrix")
 
-\S4method{counts}{SummarizedExperiment}(object, format = "dgCMatrix")
+\S4method{counts}{SummarizedExperiment}(object, gene2symbol = FALSE,
+  format = "dgCMatrix")
 }
 \arguments{
 \item{object}{\link{bcbioSCDataSet}.}
 
-\item{format}{Matrix format.}
+\item{gene2symbol}{Convert Ensembl gene identifiers (rownames) to gene
+symbols. Recommended for passing counts to Seurat.}
+
+\item{format}{Return counts as sparse matrix (\strong{recommended}; \code{dgCMatrix},
+\code{dgTMatrix}) or dense matrix (\code{matrix}).}
 }
 \value{
 Counts matrix.

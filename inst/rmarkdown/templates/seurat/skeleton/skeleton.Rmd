@@ -7,10 +7,9 @@ bibliography: bcbioSinglecell.bib
 ---
 
 ```{r setup, message=FALSE}
-library(Seurat)
-library(bcbioSinglecell)
 source("setup.R")
-data(bcb_filtered)
+library(Seurat)
+data(filtered)
 
 # Setup
 # Seurat uses dot.notation instead of snake_case
@@ -18,10 +17,9 @@ meta.data <- metrics(bcb_filtered) %>% dotted(rownames = FALSE)
 raw.data <- counts(bcb_filtered)
 
 # Cutoffs
-# FIXME Need to update to S4 slots
-max.genes <- bcb_filtered$filter$max_genes
-min.genes <- bcb_filtered$filter$min_genes
-mito.ratio <- bcb_filtered$filter$mito_ratio
+min.umis <- metadata(filtered)[["filtering_criteria"]][["umis"]]
+min.genes <- metadata(filtered)[["filtering_criteria"]][["genes"]]
+max.mito.ratio <- metadata(filtered)[["filtering_criteria"]][["mito_ratio"]]
 
 num.pc <- 40
 pc.use <- 10
@@ -42,13 +40,12 @@ Let's filter out cells that have unique gene counts below or above average. Note
 
 Initialize a new [Seurat][] object with non-normalized count data. 
 
-We recommend the following general filter criteria:
+We recommend the following filter criteria:
 
-- `log normalize`, first scaling each cell to a total of `1e4` molecules (*default*) [@Drop-seq].
-- Keep `genes` expressed in `>= 3 cells` (*default*).
-- Keep `cells` with `>= 100 genes`.
-- Keep `cells` with `<= 5000 genes`.
-- Keep `cells` with `<= 25% mitochondrial percentage`.
+- Log normalize, first scaling each cell to a total of `1e4` molecules (*default*) [@Drop-seq].
+- Keep `genes` expressed in >= `3` cells (*default*).
+- Keep `cells` with >= `r min.genes` genes.
+- Keep `cells` with <= `r pct(max.mito.ratio)` mitochondrial percentage`.
 
 ```{r seurat}
 seurat <- new("seurat", raw.data = raw.data) %>%
@@ -81,9 +78,7 @@ It is typically recommended to regress out cell-cell variation in gene expressio
 Here, let's regress effects on gene expression that are due to the number of genes detected (`nGene`), the total counts in the cell (`nUMI`), and the percent mitochondrial content (`mito.ratio`).
 
 ```{r RegressOut}
-seurat <- RegressOut(
-    seurat,
-    latent.vars = c("nGene", "nUMI", "mito.ratio"))
+seurat <- RegressOut(seurat, latent.vars = c("nGene", "nUMI", "mito.ratio"))
 ```
 
 

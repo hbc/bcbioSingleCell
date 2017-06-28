@@ -1,3 +1,15 @@
+# bcbioSinglecell ====
+library(bcbioSinglecell)
+if (file.exists("data/bcb.rda")) {
+    data(bcb)
+} else {
+    bcb <- load_run(
+        upload_dir = file.path("data", "singlecell"),
+        sample_metadata_file = file.path("meta", "sample_barcodes.xlsx"),
+        interesting_groups = "genotype")
+    save_data(bcb, compress = FALSE)
+}
+
 # knitr ====
 library(knitr)
 opts_chunk$set(
@@ -16,15 +28,3 @@ opts_chunk$set(
 # ggplot2 ====
 library(ggplot2)
 theme_set(theme_light(base_size = 14))
-
-# bcbioSinglecell ====
-library(bcbioSinglecell)
-if (file.exists("data/bcb.rda")) {
-    data(bcb)
-} else {
-    bcb <- load_run(
-        upload_dir = file.path("data", "indrop_rnaseq"),
-        sample_metadata_file = file.path("meta", "sample_barcodes.xlsx"),
-        interesting_groups = "genotype")
-    save_data(bcb, compress = FALSE)
-}

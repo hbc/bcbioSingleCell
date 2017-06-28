@@ -217,6 +217,7 @@ load_run <- function(
         interesting_groups = interesting_groups,
         sample_metadata_file = sample_metadata_file,
         sample_metadata = sample_metadata,
+        genome_build = genome_build,
         run_date = run_date,
         umi_type = umi_type,
         all_samples = all_samples,
