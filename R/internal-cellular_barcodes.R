@@ -14,6 +14,7 @@
 
 
 #' @rdname cellular_barcodes
+#' @param list Cellular barcodes list
 .bind_cellular_barcodes <- function(list) {
     lapply(seq_along(list), function(a) {
         sample_name <- names(list)[[a]]

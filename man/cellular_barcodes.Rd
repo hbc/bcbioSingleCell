@@ -15,6 +15,8 @@
 \arguments{
 \item{file}{Cellular barcode TSV file.}
 
+\item{list}{Cellular barcodes list}
+
 \item{sample_dirs}{Sample directories.}
 }
 \description{
