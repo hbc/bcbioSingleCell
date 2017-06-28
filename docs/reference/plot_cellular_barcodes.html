@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cellular barcode operations — .read_cellular_barcode_file • bcbioSinglecell</title>
+<title>Plot cellular barcode distributions per sample — plot_cellular_barcodes • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,35 +80,29 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cellular barcode operations</h1>
+    <h1>Plot cellular barcode distributions per sample</h1>
     </div>
 
     
-    <p>Cellular barcode operations</p>
+    <p>Plot cellular barcode distributions per sample</p>
     
 
-    <pre class="usage"><span class='fu'>.read_cellular_barcode_file</span>(<span class='no'>file</span>)
-
-<span class='fu'>.bind_cellular_barcodes</span>(<span class='no'>list</span>)
-
-<span class='fu'>.cellular_barcodes</span>(<span class='no'>sample_dirs</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_cellular_barcodes</span>(<span class='no'>bcb</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>Cellular barcode TSV file.</p></td>
-    </tr>
-    <tr>
-      <th>list</th>
-      <td><p>Cellular barcodes list</p></td>
-    </tr>
-    <tr>
-      <th>sample_dirs</th>
-      <td><p>Sample directories.</p></td>
+      <th>bcb</th>
+      <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>A violin plot is a compact display of a continuous distribution. It
+is a blend of <code>geom_boxplot()</code> and <code>geom_density()</code>: a violin plot is a
+mirrored density plot displayed in the same way as a boxplot.</p>
     
 
   </div>
@@ -116,11 +110,13 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Michael Steinbaugh, Rory Kirchner
 
   </div>
 </div>
