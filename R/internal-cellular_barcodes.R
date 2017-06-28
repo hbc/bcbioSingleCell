@@ -7,13 +7,22 @@
 #'
 #' @param file Cellular barcode TSV file.
 #' @param sample_dirs Sample directories.
+#' @param list Cellular barcodes list.
+
+
+
+#' @rdname cellular_barcodes
+#' @return [tibble].
 .read_cellular_barcode_file <- function(file) {
-    .read_file(file, col_names = c("cellular_barcode", "reads"), col_types = "ci")
+    .read_file(file,
+               col_names = c("cellular_barcode", "reads"),
+               col_types = "ci")
 }
 
 
 
 #' @rdname cellular_barcodes
+#' @return [list].
 .cellular_barcodes <- function(sample_dirs) {
     files <- sample_dirs %>%
         file.path(paste(basename(.), "barcodes.tsv", sep = "-")) %>%
@@ -31,7 +40,7 @@
 
 
 #' @rdname cellular_barcodes
-#' @param list Cellular barcodes list
+#' @return [tibble].
 .bind_cellular_barcodes <- function(list) {
     lapply(seq_along(list), function(a) {
         sample_name <- names(list)[[a]]
@@ -43,5 +52,6 @@
                    cellular_barcode = NULL)
     }
     ) %>%
-        bind_rows
+        bind_rows %>%
+        as_tibble
 }
