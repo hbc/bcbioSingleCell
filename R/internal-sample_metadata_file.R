@@ -23,7 +23,7 @@
     if (pipeline == "bcbio-nextgen") {
         required_cols <- c("index", "sequence", "sample_name")
     } else if (pipeline == "cellranger") {
-        required_cols <- c("sample_id")
+        required_cols <- "sample_id"
     } else {
         stop("Unsupported pipeline")
     }
