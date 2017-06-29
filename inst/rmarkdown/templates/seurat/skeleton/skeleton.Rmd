@@ -52,10 +52,10 @@ Initialize a new [Seurat][] object with non-normalized count data.
 
 We recommend the following filter criteria:
 
-- Log normalize, first scaling each cell to a total of `1e4` molecules (*default*) [@Drop-seq].
-- Keep `genes` expressed in >= `3` cells (*default*).
-- Keep `cells` with >= `r min.genes` genes.
-- Keep `cells` with <= `r pct(max.mito.ratio)` mitochondrial percentage`.
+- Log normalize, first scaling each cell to a total of 1e4 molecules (*default*) [@Drop-seq].
+- Keep genes expressed in >= 3 cells (*default*).
+- Keep cells with >= `r min.genes` genes.
+- Keep cells with <= `r pct(max.mito.ratio)` mitochondrial percentage.
 
 ```{r seurat}
 seurat <- new("seurat", raw.data = raw.data) %>%
