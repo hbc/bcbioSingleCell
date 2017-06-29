@@ -1,125 +1,233 @@
 #' Load bcbio-nextgen run
 #'
-#' We recommend loading the bcbio-nextgen run as a remote connection over
-#' \code{sshfs}.
+#' @details
+#' - **cellranger**: Read [10x Genomics
+#'   Chromium](https://www.10xgenomics.com/software/) cell counts from
+#'   `barcodes.tsv`, `genes.tsv`, and `matrix.mtx` files.
 #'
-#' @author Michael Steinbaugh
+#' @note When working in RStudio, we recommend connecting to the bcbio-nextgen
+#'   run directory as a remote connection over
+#'   [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
+#'
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @param upload_dir Path to final upload directory. This path is set when
-#'   running \code{bcbio_nextgen -w template}.
-#' @param sample_metadata_file Sample metadata file.
-#' @param well_metadata_file Well metadata file.
-#' @param organism Organism name, following Ensembl/Biomart conventions. Must be
-#'   lowercase and one word (e.g. hsapiens). This will be detected automatically
-#'   for common reference genomes.
-#' @param intgroup Character vector of interesting groups. First entry is used
-#'   for plot colors during quality control (QC) analysis. Entire vector is used
-#'   for PCA and heatmap QC functions.
+#'   running `bcbio_nextgen -w template`.
+#' @param sample_metadata_file **Required**. Sample barcode metadata file.
+#' @param well_metadata_file *Optional*. Well identifier metadata file.
+#' @param interesting_groups Character vector of interesting groups. First entry
+#'   is used for plot colors during quality control (QC) analysis. Entire vector
+#'   is used for PCA and heatmap QC functions.
+#' @param experiment_name Experiment name.
+#' @param principal_investigator Principal investigator.
+#' @param researcher Researcher who performed the experiment.
+#' @param email Email for follow-up correspondence.
 #'
-#' @return bcbio-nextgen run object.
+#' @return [bcbioSCDataSet].
 #' @export
 load_run <- function(
     upload_dir = "final",
-    sample_metadata_file = NULL,
+    sample_metadata_file,
     well_metadata_file = NULL,
-    organism,
-    intgroup = "sample_name") {
-    # Switch to `bcbioScDataSet` S4 class
-    run <- list()
-
-    # upload_dir
+    interesting_groups = "sample_name",
+    experiment_name = NULL,
+    principal_investigator = NULL,
+    researcher = NULL,
+    email = NULL) {
     if (!dir.exists(upload_dir)) {
         stop("Upload directory missing")
     }
-    run$upload_dir <- normalizePath(upload_dir)
 
-    # set sample data file if available
-    run$sample_metadata_file <- sample_metadata_file
-    if(!is.null(run$sample_metadata_file)) {
-      if(!file.exists(run$sample_metadata_file)) {
-        stop("Sample metadata file is specified, but missing.")
-      }
-      else {
-        run$sample_metadata_file = normalizePath(run$sample_metadata_file)
-      }
+    # Initial run setup ====
+    upload_dir <- normalizePath(upload_dir)
+    sample_dirs <- .sample_dirs(upload_dir)
+    pipeline <- .detect_pipeline(sample_dirs)
+
+
+    # Sample metadata ====
+    sample_metadata_file <- normalizePath(sample_metadata_file)
+    sample_metadata <- .sample_metadata_file(
+        sample_metadata_file, sample_dirs, pipeline)
+
+    # Check to see if a subset of samples is requested via the metadata file.
+    # This matches by the reverse complement sequence of the index barcode.
+    if (length(sample_metadata[["sample_id"]]) < length(sample_dirs)) {
+        message("Loading a subset of samples, defined by the metadata file")
+        all_samples <- FALSE
+        sample_dirs <- sample_dirs %>%
+            .[basename(sample_dirs) %in% sample_metadata[["sample_id"]]]
+        message(paste(length(sample_dirs), "samples matched by metadata"))
+    } else {
+        all_samples <- TRUE
     }
 
-    # set well data file if available
-    run$well_metadata_file <- well_metadata_file
-    if(!is.null(run$well_metadata_file)) {
-      if(!file.exists(run$well_metadata_file)) {
-        stop("Well metadata file is specified, but missing.")
-      }
-      else {
-        run$sample_metadata_file = normalizePath(run$sample_metadata_file)
-      }
+    # Finally, re-check that sample directories match the metadata
+    if (!identical(sample_metadata[["sample_id"]], basename(sample_dirs))) {
+        stop("Sample name mismatch between directories and metadata")
     }
 
-    # organism
-    run$organism <- organism
 
-    # intgroup
-    run$intgroup <- intgroup
+    # Pipeline-specific support prior to count loading ====
+    if (pipeline == "bcbio-nextgen") {
+        # Project directory ====
+        project_dir <- dir(upload_dir,
+                           pattern = project_dir_pattern,
+                           full.names = FALSE,
+                           recursive = FALSE)
+        if (length(project_dir) != 1L) {
+            stop("Uncertain about project directory location")
+        }
+        message(project_dir)
+        match <- str_match(project_dir, project_dir_pattern)
+        run_date <- match[[2L]] %>% as.Date
+        template <- match[[3L]]
+        project_dir <- file.path(upload_dir, project_dir)
 
-    # Find most recent nested project_dir (normally only 1)
-    project_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
-    project_dir <- dir(run$upload_dir,
-                       pattern = project_pattern,
-                       full.names = FALSE,
-                       recursive = FALSE) %>%
-        sort %>% rev %>% .[[1]]
-    if (!length(project_dir)) {
-        stop("Failed to match project directory")
+
+        # Data versions and programs ====
+        data_versions <- .data_versions(project_dir)
+        programs <- .programs(project_dir)
+        genome_build <- data_versions %>%
+            as.data.frame %>%
+            filter(.data[["resource"]] == "transcripts") %>%
+            pull("genome")
+
+
+        # Log files ====
+        message("Reading log files")
+        bcbio_nextgen <- read_lines(
+            file.path(project_dir, "bcbio-nextgen.log"))
+        bcbio_nextgen_commands <- read_lines(
+            file.path(project_dir, "bcbio-nextgen-commands.log"))
+
+
+        # Molecular barcode (UMI) type ====
+        if (any(str_detect(bcbio_nextgen_commands,
+                           "work/umis/harvard-indrop-v3.json"))) {
+            umi_type <- "harvard-indrop-v3"
+        }
+
+
+        # Cellular barcodes ====
+        cellular_barcodes <- .cellular_barcodes(sample_dirs)
+
+
+        # Well metadata ====
+        if (!is.null(well_metadata_file)) {
+            well_metadata_file <- normalizePath(well_metadata_file)
+        }
+        well_metadata <- .read_file(well_metadata_file)
+        # FIXME Need a working example from Rory
+        # Ensure `sample_id` is factor, by = "well_id"
+    } else if (pipeline == "cellranger") {
+        umi_type <- "chromium"
     }
-    message(project_dir)
-    run$project_dir <- file.path(run$upload_dir, project_dir)
+    message(paste("UMI type:", umi_type))
 
-    # Get run date and template from project_dir
-    match <- str_match(project_dir, project_pattern)
-    run$date <- c(bcbio = as.Date(match[2]),
-                  R = Sys.Date())
-    run$template <- match[3]
 
-    # sample_dirs. Subset later using metadata data frame.
-    sample_dirs <- dir(run$upload_dir, full.names = TRUE) %>%
-        set_names(basename(.)) %>%
-        # Remove the nested `project_dir`
-        .[!grepl(basename(run$project_dir), names(.))]
-    if (!length(sample_dirs)) {
-        stop("No sample directories in run")
+    # Read counts into sparse matrix ====
+    if (pipeline == "bcbio-nextgen") {
+        # bcbio-nextgen outputs at transcript-level. Let's store these inside
+        # the bcbioSCDataSet but outside of the SummarizedExperiment, where we
+        # will instead slot the gene-level counts.
+        message("Reading bcbio-nextgen transcript-level counts")
+        tx_sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
+            .sparse_counts(sample_dirs[a], pipeline = pipeline)
+        }
+        ) %>% set_names(basename(sample_dirs))
+        message("Combining counts into a single sparse matrix")
+        tx_sparse_counts <- do.call(cBind, tx_sparse_list)
+        rm(tx_sparse_list)
+        sparse_counts <- .sparse_counts_tx2gene(tx_sparse_counts, genome_build)
+    } else if (pipeline == "cellranger") {
+        message("Reading 10X Cell Ranger gene-level counts")
+        sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
+            .sparse_counts(sample_dirs[a], pipeline = pipeline)
+        }
+        ) %>% set_names(basename(sample_dirs))
+        message("Combining counts into a single sparse matrix")
+        sparse_counts <- do.call(cBind, sparse_list)
+        rm(sparse_list)
+
+        # Detect genome build based on the Ensembl identifiers. Currently works
+        # for human and mouse samples.
+        id <- rownames(sparse_counts)[[1L]]
+        if (str_detect(id, "^ENSG")) {
+            # H. sapiens
+            genome_build <- "hg38"
+        } else if (str_detect(id, "^ENSMUSG")) {
+            # M. musculus
+            genome_build <- "mm10"
+        } else {
+            stop("Unsupported genome")
+        }
     }
-    message(paste(length(sample_dirs), "samples detected in run"))
-    run$sample_dirs = sample_dirs
 
-    # Save Ensembl annotations for all genes
-    run$ensembl <- ensembl_annotations(run)
-    run$ensembl_version <- listMarts() %>% .[1, 2]
 
-    # Program versions
-    message("Reading program versions...")
-    run$programs <- read_bcbio_programs(run)
+    # Row data ====
+    annotable <- .annotable(genome_build)
 
-    # Read counts into a sparse matrix
-    message("Reading counts into sparse matrix...")
-    run$counts <- read_bcbio_counts(run)
 
-    # Reading metadata about samples and wells
-    run$metadata <- read_metadata(run)
+    # Column data ====
+    metrics <- .calculate_metrics(sparse_counts, annotable)
+    if (pipeline == "bcbio-nextgen") {
+        # Add reads per cellular barcode to bcbio-nextgen metrics
+        cb_df <- .bind_cellular_barcodes(cellular_barcodes)
+        message(paste(nrow(cb_df), "unfiltered cellular barcodes"))
+        cb_df <- cb_df %>%
+            filter(.data[["cellular_barcode"]] %in% rownames(metrics))
+        message(paste(nrow(cb_df), "filtered cellular barcodes"))
+        metrics <- metrics %>%
+            as.data.frame %>%
+            rownames_to_column %>%
+            left_join(cb_df,
+                      by = c("rowname" = "cellular_barcode")) %>%
+            tidy_select("reads", everything()) %>%
+            column_to_rownames %>%
+            as.matrix
+    }
 
-    # Read cellular barcode distributions
-    message("Reading cellular barcode distributions...")
-    run$barcodes <- read_bcbio_barcodes(run)
 
-    # Generate barcode metrics
-    message("Calculating barcode metrics...")
-    run$metrics <- barcode_metrics(run)
+    # Metadata ====
+    metadata <- SimpleList(
+        pipeline = pipeline,
+        upload_dir = upload_dir,
+        sample_dirs = sample_dirs,
+        interesting_groups = interesting_groups,
+        sample_metadata_file = sample_metadata_file,
+        sample_metadata = sample_metadata,
+        genome_build = genome_build,
+        umi_type = umi_type,
+        all_samples = all_samples,
+        experiment_name = experiment_name,
+        principal_investigator = principal_investigator,
+        researcher = researcher,
+        email = email)
+    if (pipeline == "bcbio-nextgen") {
+        bcbio_metadata <- SimpleList(
+            project_dir = project_dir,
+            well_metadata_file = well_metadata_file,
+            well_metadata = well_metadata,
+            template = template,
+            run_date = run_date,
+            data_versions = data_versions,
+            programs = programs,
+            bcbio_nextgen = bcbio_nextgen,
+            bcbio_nextgen_commands = bcbio_nextgen_commands)
+        metadata <- c(metadata, bcbio_metadata)
+    }
 
-    # Final slots
-    run$wd <- getwd()
-    run$hpc <- detect_hpc()
-    run$session <- sessionInfo()
 
-    check_run(run)
-    create_project_dirs()
-    run
+    # Return [bcbioSCDataSet] ====
+    se <- .summarized_experiment(
+        sparse_counts,
+        col_data = metrics,
+        row_data = annotable,
+        metadata = metadata)
+    bcb <- new("bcbioSCDataSet", se)
+    if (pipeline == "bcbio-nextgen") {
+        bcbio(bcb, "tx_sparse_counts") <- tx_sparse_counts
+        bcbio(bcb, "cellular_barcodes") <- cellular_barcodes
+    }
+    bcb
 }

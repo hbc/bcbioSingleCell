@@ -4,30 +4,48 @@
 \alias{load_run}
 \title{Load bcbio-nextgen run}
 \usage{
-load_run(upload_dir = "final", metadata_file = file.path("meta",
-  "indrop_rnaseq.xlsx"), organism, intgroup = "sample_name")
+load_run(upload_dir = "final", sample_metadata_file,
+  well_metadata_file = NULL, interesting_groups = "sample_name",
+  experiment_name = NULL, principal_investigator = NULL,
+  researcher = NULL, email = NULL)
 }
 \arguments{
 \item{upload_dir}{Path to final upload directory. This path is set when
 running \code{bcbio_nextgen -w template}.}
 
-\item{metadata_file}{Sample barcode metadata file.}
+\item{sample_metadata_file}{\strong{Required}. Sample barcode metadata file.}
 
-\item{organism}{Organism name, following Ensembl/Biomart conventions. Must be
-lowercase and one word (e.g. hsapiens). This will be detected automatically
-for common reference genomes.}
+\item{well_metadata_file}{\emph{Optional}. Well identifier metadata file.}
 
-\item{intgroup}{Character vector of interesting groups. First entry is used
-for plot colors during quality control (QC) analysis. Entire vector is used
-for PCA and heatmap QC functions.}
+\item{interesting_groups}{Character vector of interesting groups. First entry
+is used for plot colors during quality control (QC) analysis. Entire vector
+is used for PCA and heatmap QC functions.}
+
+\item{experiment_name}{Experiment name.}
+
+\item{principal_investigator}{Principal investigator.}
+
+\item{researcher}{Researcher who performed the experiment.}
+
+\item{email}{Email for follow-up correspondence.}
 }
 \value{
-bcbio-nextgen run object.
+\link{bcbioSCDataSet}.
 }
 \description{
-We recommend loading the bcbio-nextgen run as a remote connection over
-\code{sshfs}.
+Load bcbio-nextgen run
+}
+\details{
+\itemize{
+\item \strong{cellranger}: Read \href{https://www.10xgenomics.com/software/}{10x GenomicsChromium} cell counts from
+\code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
+}
+}
+\note{
+When working in RStudio, we recommend connecting to the bcbio-nextgen
+run directory as a remote connection over
+\href{https://github.com/osxfuse/osxfuse/wiki/SSHFS}{sshfs}.
 }
 \author{
-Michael Steinbaugh
+Michael Steinbaugh, Rory Kirchner
 }

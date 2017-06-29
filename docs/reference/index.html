@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
@@ -75,7 +82,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.0.9</small>
+        <small>version&nbsp;0.0.13</small>
       </h1>
     </div>
 
@@ -97,21 +104,27 @@
         <tr>
           <!--  -->
           <td>
-            <p><code><a href="aggregate_sparse.html">aggregate_sparse_features</a></code> <code><a href="aggregate_sparse.html">aggregate_sparse_replicates</a></code> </p>
+            <p><code><a href="bcbio.html">bcbio</a></code> <code><a href="bcbio.html">bcbio<-</a></code> </p>
           </td>
-          <td><p>Aggregate sparse matrix operations</p></td>
+          <td><p>bcbioSCDataSet object accessors</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="barcode_metrics.html">barcode_metrics</a></code> </p>
+            <p></p>
           </td>
-          <td><p>Generate barcode metrics summary</p></td>
+          <td><p>bcbioSCDataSet</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="bcbioSinglecell-package.html">bcbioSinglecell-package</a></code> </p>
+            <p></p>
           </td>
           <td><p>bcbioSinglecell</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="counts.html">counts</a></code> </p>
+          </td>
+          <td><p>Counts accessor</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -121,9 +134,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="filter_cellular_barcodes.html">filter_cellular_barcodes</a></code> </p>
+            <p><code><a href="filter_barcodes.html">filter_barcodes</a></code> </p>
           </td>
           <td><p>Filter cellular barcodes</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="interesting_groups.html">interesting_groups</a></code> </p>
+          </td>
+          <td><p>Interesting groups</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -135,37 +154,49 @@
           <td>
             <p><code><a href="metadata_table.html">metadata_table</a></code> </p>
           </td>
-          <td><p>Metadata table for knit report.</p></td>
+          <td><p>Metadata table for knit report</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="qc_plots_barcodes.html">plot_barcode</a></code> <code><a href="qc_plots_barcodes.html">plot_barcodes</a></code> </p>
+            <p><code><a href="metrics.html">metrics</a></code> </p>
           </td>
-          <td><p>Sample barcode distribution quality control plots</p></td>
+          <td><p>Sample barcode metrics</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="qc_plots_metrics.html">plot_total_cells</a></code> <code><a href="qc_plots_metrics.html">plot_total_counts_histogram</a></code> <code><a href="qc_plots_metrics.html">plot_total_counts_boxplot</a></code> <code><a href="qc_plots_metrics.html">plot_genes_detected_boxplot</a></code> <code><a href="qc_plots_metrics.html">plot_genes_detected_histogram</a></code> <code><a href="qc_plots_metrics.html">plot_total_vs_detected</a></code> <code><a href="qc_plots_metrics.html">plot_mito_histogram</a></code> <code><a href="qc_plots_metrics.html">plot_mito_boxplot</a></code> <code><a href="qc_plots_metrics.html">plot_mito_scatterplot</a></code> <code><a href="qc_plots_metrics.html">plot_novelty_histogram</a></code> <code><a href="qc_plots_metrics.html">plot_novelty_boxplot</a></code> <code><a href="qc_plots_metrics.html">plot_total_counts</a></code> <code><a href="qc_plots_metrics.html">plot_genes_detected</a></code> <code><a href="qc_plots_metrics.html">plot_mito</a></code> <code><a href="qc_plots_metrics.html">plot_novelty</a></code> </p>
+            <p><code><a href="plot_cellular_barcodes.html">plot_cellular_barcodes</a></code> </p>
+          </td>
+          <td><p>Plot cellular barcode distributions per sample</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plot-metrics.html">plot_cell_counts</a></code> <code><a href="plot-metrics.html">plot_umis_per_cell</a></code> <code><a href="plot-metrics.html">plot_genes_detected</a></code> <code><a href="plot-metrics.html">plot_umis_vs_genes</a></code> <code><a href="plot-metrics.html">plot_mito_ratio</a></code> <code><a href="plot-metrics.html">plot_novelty</a></code> </p>
           </td>
           <td><p>Cell metrics quality control plots</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="read_10x.html">read_10x_counts</a></code> </p>
+            <p><code><a href="sample_metadata.html">sample_metadata</a></code> </p>
           </td>
-          <td><p>Read <a href = 'https://www.10xgenomics.com/software/'>10x Genomics Chromium</a> output</p></td>
+          <td><p>Sample metadata</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="read_bcbio.html">read_bcbio_counts</a></code> </p>
+            <p><code><a href="select_samples.html">select_samples</a></code> </p>
           </td>
-          <td><p>Read <a href = 'https://github.com/chapmanb/bcbio-nextgen'>bcbio-nextgen</a> output</p></td>
+          <td><p>Select samples</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="top_barcodes.html">top_barcodes</a></code> </p>
+          </td>
+          <td><p>Top barcodes</p></td>
         </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="write_counts.html">write_counts</a></code> </p>
           </td>
-          <td><p>Write MatrixMart sparse matrix and supporting files to disk</p></td>
+          <td><p>Write MatrixMart sparse matrix and supporting files</p></td>
         </tr>
       </tbody>
       </table>

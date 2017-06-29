@@ -1,14 +1,8 @@
-[bcbio-nextgen]: https://bcbio-nextgen.readthedocs.io
-[Bioconductor]: https://bioconductor.org
-[devtools]: https://cran.r-project.org/package=devtools
-[R]: https://www.r-project.org
-
-
-
 # bcbioSinglecell
 
 [![Build Status](https://travis-ci.org/hbc/bcbioSinglecell.svg?branch=master)](https://travis-ci.org/hbc/bcbioSinglecell)
 [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
+[![codecov](https://codecov.io/gh/hbc/bcbioSinglecell/branch/master/graph/badge.svg)](https://codecov.io/gh/hbc/bcbioSinglecell)
 
 Utility functions for analysis of [bcbio-nextgen][] single-cell RNA-seq data.
 
@@ -30,3 +24,16 @@ biocLite("hbc/bcbioSinglecell")
 install.packages("devtools")
 devtools::install_github("hbc/bcbioSinglecell")
 ```
+
+
+## Contribute
+
+- For major changes, create a new branch and a pull request that will be revised.
+- For small changes, commit directly to the `master` branch.
+- For fixes in a specific release version, commit to the release branch.
+
+
+[bcbio-nextgen]: https://bcbio-nextgen.readthedocs.io
+[Bioconductor]: https://bioconductor.org
+[devtools]: https://cran.r-project.org/package=devtools
+[R]: https://www.r-project.org

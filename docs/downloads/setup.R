@@ -1,14 +1,13 @@
 # bcbioSinglecell ====
 library(bcbioSinglecell)
-if (file.exists("data/run.rda")) {
-    data(run)
+if (file.exists("data/bcb.rda")) {
+    data(bcb)
 } else {
-    create_new_project()
-    run <- load_run(
-        upload_dir = "data/indrop_rnaseq",
-        organism = "mmusculus",
-        metadata = "meta/indrop_rnaseq.xlsx")
-    save_data(run)
+    bcb <- load_run(
+        upload_dir = file.path("data", "singlecell"),
+        sample_metadata_file = file.path("meta", "sample_barcodes.xlsx"),
+        interesting_groups = "genotype")
+    save_data(bcb, compress = FALSE)
 }
 
 # knitr ====
@@ -17,11 +16,10 @@ opts_chunk$set(
     audodep = TRUE,
     cache = TRUE,
     cache.lazy = FALSE,
+    dev = c("png", "pdf", "svg"),
     error = FALSE,
-    fig.align = "center",
     fig.height = 7,
-    fig.keep = "all",
-    fig.path = "figures/",
+    fig.retina = 2,
     fig.width = 7,
     message = FALSE,
     tidy = TRUE,

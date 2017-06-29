@@ -1,16 +1,15 @@
-#' Class that contains bcbio run information
+#' bcbioSCDataSet
 #'
-#' `bcbioSCDataSet` is a subclass of [SCESet] designed to store a single-cell
-#' RNA-seq analysis. This class contains experiment metadata, raw counts,
-#' normalilzed counts, and summary statistics for each sample analyzed.
+#' `bcbioSCDataSet` is a subclass of [SummarizedExperiment] designed to store a
+#' single-cell RNA-seq analysis. This class contains read counts save as a
+#' sparse matrix (`dgCMatrix`), sample barcodes, run metadata, and barcode
+#' summary statistics for each sample analyzed.
 #'
-#' Methods for this objects ...
+#' @author Michael Steinbaugh
 #'
-#' `metadata` contains ...
-#'
-#' @rdname bcbioSCDataSet
-#' @keywords internal
-#' @aliases bcbioSCDataSet-class
 #' @export
-bcbioSCDataSet <- setClass("bcbioSCDataSet", contains = "SCESet")
+bcbioSCDataSet <- setClass(  # nolint
+    "bcbioSCDataSet",
+    contains = "SummarizedExperiment",
+    representation = representation(callers = "SimpleList"))
 setValidity("bcbioSCDataSet", function(object) TRUE)

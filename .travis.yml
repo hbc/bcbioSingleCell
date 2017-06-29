@@ -4,4 +4,8 @@ sudo: false
 r:
   - bioc-release
   - bioc-devel
-warnings_are_errors: false
+r_github_packages:
+  - jimhester/covr,
+  - jimhester/lintr
+after_success:
+  - Rscript -e 'covr::codecov()'
