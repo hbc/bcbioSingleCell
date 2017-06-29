@@ -1,11 +1,11 @@
-#' Metadata table for knit report.
+#' Metadata table for knit report
 #'
 #' @rdname metadata_table
 #' @docType methods
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param object [bcbioSCDataSet].
+#' @param object Primary object.
 #' @param ... Passthrough parameters to [knitr::kable()].
 #'
 #' @return [kable].

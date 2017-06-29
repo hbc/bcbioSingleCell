@@ -5,7 +5,6 @@
 #' sparse matrix (`dgCMatrix`), sample barcodes, run metadata, and barcode
 #' summary statistics for each sample analyzed.
 #'
-#' @rdname bcbioSCDataSet
 #' @author Michael Steinbaugh
 #'
 #' @export

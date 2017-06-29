@@ -6,7 +6,7 @@
 #' @rdname filter_barcodes
 #' @author Michael Steinbaugh
 #'
-#' @param object [bcbioSCDataSet].
+#' @param object Primary object.
 #' @param umis Minimum number of UMI disambiguated counts per cell.
 #' @param genes Minimum number of genes detected.
 #' @param mito_ratio Maximum relative mitochondrial abundance (`0-1` scale).

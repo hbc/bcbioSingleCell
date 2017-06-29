@@ -33,7 +33,7 @@
         stop("Sample directory must be passed in as a named character vector")
     }
     message(sample_name)
-    if (pipeline == "bcbio") {
+    if (pipeline == "bcbio-nextgen") {
         matrix_file <- file.path(sample_dir, paste0(sample_name, ".mtx"))
         col_file <- paste0(matrix_file, ".colnames")  # barcodes
         row_file <- paste0(matrix_file, ".rownames")  # transcripts
@@ -48,14 +48,21 @@
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
     # names are gene/transcript identifiers (depending on pipeline).
     sparse_counts <- .read_file(matrix_file)
-    colnames(sparse_counts) <- .read_file(col_file)
-    if (pipeline == "bcbio") {
+    if (pipeline == "bcbio-nextgen") {
+        colnames(sparse_counts) <- .read_file(col_file)
         rownames(sparse_counts) <- .read_file(row_file)
     } else if (pipeline == "cellranger") {
-        gene2symbol <- .read_file(row_file,
-                                  col_names = c("ensgene", "symbol"),
-                                  col_types = "cc")
-        rownames(sparse_counts) <- gene2symbol[["ensgene"]]
+        # Named `barcodes.tsv` but not actually tab delimited
+        colnames(sparse_counts) <-
+            .read_file(col_file,
+                       col_names = "cellular_barcode",
+                       col_types = "c") %>%
+            pull("cellular_barcode")
+        rownames(sparse_counts) <-
+            .read_file(row_file,
+                       col_names = c("ensgene", "symbol"),
+                       col_types = "cc") %>%
+            pull("ensgene")
     }
 
 

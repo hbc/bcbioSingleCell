@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filter cellular barcodes — filter_barcodes,bcbioSCDataSet-method • bcbioSinglecell</title>
+<title>Filter cellular barcodes — filter_barcodes • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -89,7 +89,7 @@ cellular barcodes.</p>
     
 
     <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'><a href='generics.html'>filter_barcodes</a></span>(<span class='no'>object</span>, <span class='kw'>umis</span> <span class='kw'>=</span> <span class='fl'>1000L</span>,
+<span class='fu'>filter_barcodes</span>(<span class='no'>object</span>, <span class='kw'>umis</span> <span class='kw'>=</span> <span class='fl'>1000L</span>,
   <span class='kw'>genes</span> <span class='kw'>=</span> <span class='fl'>500L</span>, <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>show_report</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -97,7 +97,7 @@ cellular barcodes.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
+      <td><p>Primary object.</p></td>
     </tr>
     <tr>
       <th>umis</th>
@@ -123,7 +123,7 @@ cellular barcodes.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>, with low quality cellular barcodes that
+    <p><a href='bcbioSCDataSet-class.html'>bcbioSCDataSet</a>, with low quality cellular barcodes that
 don't pass quality control cutoffs removed.</p>
     
 

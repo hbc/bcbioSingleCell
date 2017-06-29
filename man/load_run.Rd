@@ -7,7 +7,7 @@
 load_run(upload_dir = "final", sample_metadata_file,
   well_metadata_file = NULL, interesting_groups = "sample_name",
   experiment_name = NULL, principal_investigator = NULL,
-  researcher = NULL, email = NULL, pipeline = "bcbio")
+  researcher = NULL, email = NULL)
 }
 \arguments{
 \item{upload_dir}{Path to final upload directory. This path is set when
@@ -28,10 +28,6 @@ is used for PCA and heatmap QC functions.}
 \item{researcher}{Researcher who performed the experiment.}
 
 \item{email}{Email for follow-up correspondence.}
-
-\item{pipeline}{Analysis pipeline used to generate the counts. Currently
-supports bcbio-nextgen (\code{bcbio}; default) and 10X Genomics Cell Ranger
-(\code{cellranger}).}
 }
 \value{
 \link{bcbioSCDataSet}.

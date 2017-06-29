@@ -4,17 +4,18 @@
 \alias{.detect_pipeline}
 \title{Detect scRNA-seq analysis pipeline}
 \usage{
-.detect_pipeline(upload_dir)
+.detect_pipeline(sample_dirs)
 }
 \arguments{
-\item{upload_dir}{Final upload directory.}
+\item{sample_dirs}{Sample directories.}
 }
 \value{
 Pipeline string. Stops on detection failure.
 }
 \description{
-Currently supports bcbio-nextgen and 10X Chromium.
+Currently supports bcbio-nextgen and 10X Genomics Cell Ranger.
 }
 \author{
 Michael Steinbaugh
 }
+\keyword{internal}

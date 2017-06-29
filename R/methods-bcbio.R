@@ -1,9 +1,9 @@
-#' [bcbioSCDataSet] object accessors
+#' bcbioSCDataSet object accessors
 #'
 #' @rdname bcbio
 #' @docType methods
 #'
-#' @param object [bcbioSCDataSet].
+#' @param object Primary object.
 #' @param type Type of count data to retrieve.
 #' @param value An integer matrix or other object.
 #'

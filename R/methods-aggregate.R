@@ -1,10 +1,11 @@
 #' Aggregation methods
 #'
-#' @rdname aggregate
+#' @rdname aggregate_replicates
+#' @keywords internal
 #'
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @param object [bcbioSCDataSet].
+#' @param object Primary object.
 #'
 #' @return [bcbioSCDataSet].
 #' @export
@@ -16,7 +17,8 @@ setMethod("aggregate_replicates", "bcbioSCDataSet", function(object) {
 
 #' Collapse features with the same feature id by summing them.
 #'
-#' @rdname aggregate
+#' @rdname aggregate_replicates
+#' @usage NULL
 #'
 #' @param sparse Sparse counts matrix.
 #' @param featureids New feature IDs for the collapsed features.
@@ -32,7 +34,8 @@ setMethod("aggregate_replicates", "bcbioSCDataSet", function(object) {
 
 #' Pool cellular technical replicate counts.
 #'
-#' @rdname aggregate
+#' @rdname aggregate_replicates
+#' @usage NULL
 #'
 #' @param cellids New cellular ids of the collapsed cells, one for each cell.
 #'

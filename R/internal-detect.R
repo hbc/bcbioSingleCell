@@ -1,39 +1,37 @@
 #' Detect scRNA-seq analysis pipeline
 #'
-#' Currently supports bcbio-nextgen and 10X Chromium.
+#' Currently supports bcbio-nextgen and 10X Genomics Cell Ranger.
 #'
 #' @rdname detect_pipeline
+#' @keywords internal
+#'
 #' @author Michael Steinbaugh
 #'
-#' @param upload_dir Final upload directory.
+#' @param sample_dirs Sample directories.
 #'
 #' @return Pipeline string. Stops on detection failure.
-.detect_pipeline <- function(upload_dir) {
-    matrices <- list.files(
-        upload_dir, pattern = "*.mtx$",
-        full.names = TRUE, recursive = TRUE) %>%
-        normalizePath %>%
-        set_names(basename(.))
-    if (!length(matrices)) {
-        stop("No count matrices detected")
-    }
-    parent_dirs <- dirname(matrices)
-    if (any(str_detect(names(matrices), "^tagcounts\\.mtx$"))) {
+.detect_pipeline <- function(sample_dirs) {
+    bcbio_matrix <-
+        file.path(sample_dirs,
+                  str_c(basename(sample_dirs), ".mtx"))
+    cellranger_matrix <-
+        file.path(sample_dirs, "matrix.mtx")
+    if (all(file.exists(bcbio_matrix))) {
         # bcbio-nextgen ====
         # Check for barcode (`.colnames`) and transcript (`.rownames`)
         # dependency files
-        if (all(file.exists(paste0(matrices, ".colnames"))) &
-            all(file.exists(paste0(matrices, ".rownames")))) {
-            pipeline <- "bcbio"
+        if (all(file.exists(str_c(bcbio_matrix, ".colnames"))) &
+            all(file.exists(str_c(bcbio_matrix, ".rownames")))) {
+            pipeline <- "bcbio-nextgen"
         } else {
             pipeline <- NULL
         }
-    } else if (all(str_detect(names(matrices), "^matrix\\.mtx$"))) {
+    } else if (all(file.exists(cellranger_matrix))) {
         # 10X Chromium CellRanger ====
         # Check for barcode (`barcodes.tsv`) and gene (`genes.tsv`) dependency
         # files
-        if (all(file.exists(file.path(parent_dirs, "barcodes.tsv"))) &
-            all(file.exists(file.path(parent_dirs, "genes.tsv")))) {
+        if (all(file.exists(file.path(sample_dirs, "barcodes.tsv"))) &
+            all(file.exists(file.path(sample_dirs, "genes.tsv")))) {
             pipeline <- "cellranger"
         } else {
             pipeline <- NULL

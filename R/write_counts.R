@@ -1,4 +1,4 @@
-#' Write MatrixMart sparse matrix and supporting files to disk
+#' Write MatrixMart sparse matrix and supporting files
 #'
 #' Outputs matrix (.mtx), sample barcodes (.colnames), and gene names
 #' (.rownames) as separate files.

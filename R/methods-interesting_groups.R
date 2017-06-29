@@ -2,7 +2,7 @@
 #'
 #' @rdname interesting_groups
 #'
-#' @param object [bcbioSCDataSet].
+#' @param object Primary object.
 #'
 #' @return Character vector.
 

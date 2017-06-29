@@ -4,10 +4,9 @@
 #'
 #' @rdname plot-metrics
 #'
-#' @author Michael Steinbaugh
-#' @author Rory Kirchner
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @param object [bcbioSCDataSet].
+#' @param object Primary object.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #'
@@ -16,6 +15,8 @@
 
 
 # Cell counts ====
+#' @rdname plot-metrics
+#' @usage NULL
 .plot_cell_counts_barplot <- function(object) {
     metrics <- metrics(object)
     cell_counts <- metrics %>%

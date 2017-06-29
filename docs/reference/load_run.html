@@ -90,7 +90,7 @@
     <pre class="usage"><span class='fu'>load_run</span>(<span class='kw'>upload_dir</span> <span class='kw'>=</span> <span class='st'>"final"</span>, <span class='no'>sample_metadata_file</span>,
   <span class='kw'>well_metadata_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interesting_groups</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>,
   <span class='kw'>experiment_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>principal_investigator</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>researcher</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>email</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pipeline</span> <span class='kw'>=</span> <span class='st'>"bcbio"</span>)</pre>
+  <span class='kw'>researcher</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>email</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -130,17 +130,11 @@ is used for PCA and heatmap QC functions.</p></td>
       <th>email</th>
       <td><p>Email for follow-up correspondence.</p></td>
     </tr>
-    <tr>
-      <th>pipeline</th>
-      <td><p>Analysis pipeline used to generate the counts. Currently
-supports bcbio-nextgen (<code>bcbio</code>; default) and 10X Genomics Cell Ranger
-(<code>cellranger</code>).</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p>
+    <p><a href='bcbioSCDataSet-class.html'>bcbioSCDataSet</a>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

@@ -26,7 +26,7 @@
 .cellular_barcodes <- function(sample_dirs) {
     files <- sample_dirs %>%
         file.path(paste(basename(.), "barcodes.tsv", sep = "-")) %>%
-        set_names(names(sample_dirs))
+        set_names(basename(sample_dirs))
     if (!all(file.exists(files))) {
         stop("Cellular barcode file missing")
     }
@@ -34,7 +34,7 @@
     pblapply(seq_along(files), function(a) {
         .read_cellular_barcode_file(files[a])
     }
-    ) %>% set_names(names(sample_dirs))
+    ) %>% set_names(basename(sample_dirs))
 }
 
 

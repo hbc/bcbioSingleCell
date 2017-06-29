@@ -4,7 +4,7 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param object [bcbioSCDataSet].
+#' @param object Primary object.
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.
 #' @param format Return counts as sparse matrix (**recommended**; `dgCMatrix`,

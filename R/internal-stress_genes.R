@@ -1,13 +1,22 @@
-#' Immediate early genes
+#' Stress genes
 #'
-#' @rdname ieg
+#' @rdname stress_genes
+#' @keywords internal
+#'
+#' @author Michael Steinbaugh
+
+
+
+#' @rdname stress_genes
+#' @description Immediate early genes
+#' @usage NULL
 .ieg <- function() {
 }
 
 
 
-#' Integrated stress response
-#'
-#' @rdname isr
+#' @rdname stress_genes
+#' @description Integrated stress response
+#' @usage NULL
 .isr <- function() {
 }

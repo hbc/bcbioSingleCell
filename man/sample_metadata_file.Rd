@@ -4,13 +4,14 @@
 \alias{.sample_metadata_file}
 \title{Prepare sample metadata from file}
 \usage{
-.sample_metadata_file(file, sample_dirs)
+.sample_metadata_file(sample_metadata_file, sample_dirs, pipeline)
 }
 \arguments{
-\item{sample_dirs}{(\emph{Optional}). Named character vector of sample directory
-paths.}
+\item{sample_metadata_file}{Sample metadata file.}
 
-\item{metadata}{Metadata data frame.}
+\item{sample_dirs}{Sample directory paths.}
+
+\item{pipeline}{Pipeline used to process the samples.}
 }
 \value{
 \link{tibble}.

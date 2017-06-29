@@ -1,14 +1,5 @@
-#' S4 generics
-#'
-#' @rdname generics
-#'
-#' @param object Object.
-#' @param value Value to assign.
-#' @param ... Additional parameters.
-
-
-
-#' @rdname generics
+#' @rdname aggregate_replicates
+#' @usage NULL
 #' @export
 setGeneric("aggregate_replicates", function(object, ...) {
     standardGeneric("aggregate_replicates")
@@ -16,19 +7,22 @@ setGeneric("aggregate_replicates", function(object, ...) {
 
 
 
-#' @rdname generics
+#' @rdname bcbio
+#' @usage NULL
 #' @export
 setGeneric("bcbio", function(object, ...) standardGeneric("bcbio"))
 
 
 
-#' @rdname generics
+#' @rdname bcbio
+#' @usage NULL
 #' @export
 setGeneric("bcbio<-", function(object, ..., value) standardGeneric("bcbio<-"))
 
 
 
-#' @rdname generics
+#' @rdname filter_barcodes
+#' @usage NULL
 #' @export
 setGeneric("filter_barcodes", function(object, ...) {
     standardGeneric("filter_barcodes")
@@ -36,7 +30,8 @@ setGeneric("filter_barcodes", function(object, ...) {
 
 
 
-#' @rdname generics
+#' @rdname metadata_table
+#' @usage NULL
 #' @export
 setGeneric("metadata_table", function(object, ...) {
     standardGeneric("metadata_table")
@@ -44,7 +39,8 @@ setGeneric("metadata_table", function(object, ...) {
 
 
 
-#' @rdname generics
+#' @rdname interesting_groups
+#' @usage NULL
 #' @export
 setGeneric("interesting_groups", function(object) {
     standardGeneric("interesting_groups")
@@ -52,13 +48,15 @@ setGeneric("interesting_groups", function(object) {
 
 
 
-#' @rdname generics
+#' @rdname metrics
+#' @usage NULL
 #' @export
 setGeneric("metrics", function(object, ...) standardGeneric("metrics"))
 
 
 
-#' @rdname generics
+#' @rdname sample_metadata
+#' @usage NULL
 #' @export
 setGeneric("sample_metadata", function(object, ...) {
     standardGeneric("sample_metadata")
@@ -66,7 +64,8 @@ setGeneric("sample_metadata", function(object, ...) {
 
 
 
-#' @rdname generics
+#' @rdname select_samples
+#' @usage NULL
 #' @export
 setGeneric("select_samples", function(object, ...) {
     standardGeneric("select_samples")
@@ -74,7 +73,8 @@ setGeneric("select_samples", function(object, ...) {
 
 
 
-#' @rdname generics
+#' @rdname top_barcodes
+#' @usage NULL
 #' @export
 setGeneric("top_barcodes", function(object, ...) {
     standardGeneric("top_barcodes")

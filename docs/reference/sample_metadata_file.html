@@ -88,25 +88,28 @@
 column.</p>
     
 
-    <pre class="usage"><span class='fu'>.sample_metadata_file</span>(<span class='no'>file</span>, <span class='no'>sample_dirs</span>)</pre>
+    <pre class="usage"><span class='fu'>.sample_metadata_file</span>(<span class='no'>sample_metadata_file</span>, <span class='no'>sample_dirs</span>, <span class='no'>pipeline</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>sample_dirs</th>
-      <td><p>(<em>Optional</em>). Named character vector of sample directory
-paths.</p></td>
+      <th>sample_metadata_file</th>
+      <td><p>Sample metadata file.</p></td>
     </tr>
     <tr>
-      <th>metadata</th>
-      <td><p>Metadata data frame.</p></td>
+      <th>sample_dirs</th>
+      <td><p>Sample directory paths.</p></td>
+    </tr>
+    <tr>
+      <th>pipeline</th>
+      <td><p>Pipeline used to process the samples.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>tibble.</p>
+    <p><a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a>.</p>
     
 
   </div>

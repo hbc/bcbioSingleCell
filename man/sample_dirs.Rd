@@ -4,12 +4,13 @@
 \alias{.sample_dirs}
 \title{Detect sample directories}
 \usage{
-.sample_dirs(upload_dir, nested_file = NULL)
+.sample_dirs(upload_dir, pattern = "*\\\\.mtx$")
 }
 \arguments{
 \item{upload_dir}{Upload directory.}
 
-\item{nested_file}{Match sample directories by the presence of a nested file.}
+\item{pattern}{Match sample directories by the presence of a nested file
+pattern.}
 }
 \value{
 Named character vector containing sample directory paths. Function

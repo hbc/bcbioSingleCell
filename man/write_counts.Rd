@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_counts.R
 \name{write_counts}
 \alias{write_counts}
-\title{Write MatrixMart sparse matrix and supporting files to disk}
+\title{Write MatrixMart sparse matrix and supporting files}
 \usage{
 write_counts(counts, gzip = TRUE)
 }

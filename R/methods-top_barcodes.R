@@ -2,7 +2,7 @@
 #'
 #' @rdname top_barcodes
 #'
-#' @param object [bcbioSCDataSet].
+#' @param object Primary object.
 #' @param n Number of barcodes to return per sample.
 #'
 #' @return [tibble].

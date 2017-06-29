@@ -6,14 +6,15 @@
 #' @author Michael Steinbaugh
 #'
 #' @param upload_dir Upload directory.
-#' @param nested_file Match sample directories by the presence of a nested file.
+#' @param pattern Match sample directories by the presence of a nested file
+#'   pattern.
 #'
 #' @return Named character vector containing sample directory paths. Function
 #'   will [stop] if no sample directories are found.
-.sample_dirs <- function(upload_dir, nested_file = NULL) {
-    if (!is.null(nested_file)) {
+.sample_dirs <- function(upload_dir, pattern = "*\\.mtx$") {
+    if (!is.null(pattern)) {
         sample_dirs <- list.files(
-            upload_dir, pattern = "*.mtx$",
+            upload_dir, pattern = pattern,
             full.names = TRUE, recursive = TRUE) %>%
             dirname
     } else {
@@ -25,7 +26,7 @@
         set_names(basename(.))
 
     # Remove the nested `project_dir` from a bcbio run
-    if (any(str_detect(names(sample_dirs), project_dir_pattern))) {
+    if (any(str_detect(basename(sample_dirs), project_dir_pattern))) {
         sample_dirs <- sample_dirs %>%
             .[!str_detect(names(.), project_dir_pattern)]
     }

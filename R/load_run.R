@@ -22,9 +22,6 @@
 #' @param principal_investigator Principal investigator.
 #' @param researcher Researcher who performed the experiment.
 #' @param email Email for follow-up correspondence.
-#' @param pipeline Analysis pipeline used to generate the counts. Currently
-#'   supports bcbio-nextgen (`bcbio`; default) and 10X Genomics Cell Ranger
-#'   (`cellranger`).
 #'
 #' @return [bcbioSCDataSet].
 #' @export
@@ -36,60 +33,42 @@ load_run <- function(
     experiment_name = NULL,
     principal_investigator = NULL,
     researcher = NULL,
-    email = NULL,
-    pipeline = "bcbio") {
-    supported_pipelines <- c("bcbio", "cellranger")
-    if (!pipeline %in% supported_pipelines) {
-        stop(paste("Supported pipelines:", toString(supported_pipelines)))
-    }
-
-
-    # Upload directory ====
+    email = NULL) {
     if (!dir.exists(upload_dir)) {
         stop("Upload directory missing")
     }
+
+    # Initial run setup ====
     upload_dir <- normalizePath(upload_dir)
-
-
-    # Sample directories ====
-    if (pipeline == "bcbio") {
-        sample_dirs <- .sample_dirs(upload_dir)
-    } else if (pipeline == "cellranger") {
-        # Find sample directories by nested MatrixMarket file
-        sample_dirs <- .sample_dirs(upload_dir, nested_file = "matrix.mtx")
-    }
+    sample_dirs <- .sample_dirs(upload_dir)
+    pipeline <- .detect_pipeline(sample_dirs)
 
 
     # Sample metadata ====
     sample_metadata_file <- normalizePath(sample_metadata_file)
-    sample_metadata <- .sample_metadata_file(sample_metadata_file, sample_dirs)
-
-    # Check for sample directory match based on metadata
-    if (!all(sample_metadata[["sample_id"]] %in% names(sample_dirs))) {
-        stop("Sample directory names don't match the metadata file")
-    }
+    sample_metadata <- .sample_metadata_file(
+        sample_metadata_file, sample_dirs, pipeline)
 
     # Check to see if a subset of samples is requested via the metadata file.
     # This matches by the reverse complement sequence of the index barcode.
-    if (!identical(sample_metadata[["sample_id"]], names(sample_dirs)) &
-        length(sample_metadata[["sample_id"]]) < length(sample_dirs)) {
+    if (length(sample_metadata[["sample_id"]]) < length(sample_dirs)) {
         message("Loading a subset of samples, defined by the metadata file")
         all_samples <- FALSE
         sample_dirs <- sample_dirs %>%
-            .[names(sample_dirs) %in% sample_metadata[["sample_id"]]]
+            .[basename(sample_dirs) %in% sample_metadata[["sample_id"]]]
         message(paste(length(sample_dirs), "samples matched by metadata"))
     } else {
         all_samples <- TRUE
     }
 
-    # Finally, check that sample directories match the metadata
-    if (!identical(sample_metadata[["sample_id"]], names(sample_dirs))) {
+    # Finally, re-check that sample directories match the metadata
+    if (!identical(sample_metadata[["sample_id"]], basename(sample_dirs))) {
         stop("Sample name mismatch between directories and metadata")
     }
 
 
     # Pipeline-specific support prior to count loading ====
-    if (pipeline == "bcbio") {
+    if (pipeline == "bcbio-nextgen") {
         # Project directory ====
         project_dir <- dir(upload_dir,
                            pattern = project_dir_pattern,
@@ -147,7 +126,7 @@ load_run <- function(
 
 
     # Read counts into sparse matrix ====
-    if (pipeline == "bcbio") {
+    if (pipeline == "bcbio-nextgen") {
         # bcbio-nextgen outputs at transcript-level. Let's store these inside
         # the bcbioSCDataSet but outside of the SummarizedExperiment, where we
         # will instead slot the gene-level counts.
@@ -155,7 +134,7 @@ load_run <- function(
         tx_sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
             .sparse_counts(sample_dirs[a], pipeline = pipeline)
         }
-        ) %>% set_names(names(sample_dirs))
+        ) %>% set_names(basename(sample_dirs))
         message("Combining counts into a single sparse matrix")
         tx_sparse_counts <- do.call(cBind, tx_sparse_list)
         rm(tx_sparse_list)
@@ -165,7 +144,7 @@ load_run <- function(
         sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
             .sparse_counts(sample_dirs[a], pipeline = pipeline)
         }
-        ) %>% set_names(names(sample_dirs))
+        ) %>% set_names(basename(sample_dirs))
         message("Combining counts into a single sparse matrix")
         sparse_counts <- do.call(cBind, sparse_list)
         rm(sparse_list)
@@ -191,7 +170,7 @@ load_run <- function(
 
     # Column data ====
     metrics <- .calculate_metrics(sparse_counts, annotable)
-    if (pipeline == "bcbio") {
+    if (pipeline == "bcbio-nextgen") {
         # Add reads per cellular barcode to bcbio-nextgen metrics
         cb_df <- .bind_cellular_barcodes(cellular_barcodes)
         message(paste(nrow(cb_df), "unfiltered cellular barcodes"))
@@ -218,19 +197,19 @@ load_run <- function(
         sample_metadata_file = sample_metadata_file,
         sample_metadata = sample_metadata,
         genome_build = genome_build,
-        run_date = run_date,
         umi_type = umi_type,
         all_samples = all_samples,
         experiment_name = experiment_name,
         principal_investigator = principal_investigator,
         researcher = researcher,
         email = email)
-    if (pipeline == "bcbio") {
+    if (pipeline == "bcbio-nextgen") {
         bcbio_metadata <- SimpleList(
             project_dir = project_dir,
             well_metadata_file = well_metadata_file,
             well_metadata = well_metadata,
             template = template,
+            run_date = run_date,
             data_versions = data_versions,
             programs = programs,
             bcbio_nextgen = bcbio_nextgen,
@@ -246,7 +225,7 @@ load_run <- function(
         row_data = annotable,
         metadata = metadata)
     bcb <- new("bcbioSCDataSet", se)
-    if (pipeline == "bcbio") {
+    if (pipeline == "bcbio-nextgen") {
         bcbio(bcb, "tx_sparse_counts") <- tx_sparse_counts
         bcbio(bcb, "cellular_barcodes") <- cellular_barcodes
     }

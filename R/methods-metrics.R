@@ -2,7 +2,7 @@
 #'
 #' @rdname metrics
 #'
-#' @param object [bcbioSCDataSet].
+#' @param object Primary object.
 #' @param unique_names Unique sample names.
 #'
 #' @return [data.frame].

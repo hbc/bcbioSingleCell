@@ -2,10 +2,14 @@
 % Please edit documentation in R/internal-stress_genes.R
 \name{.ieg}
 \alias{.ieg}
-\title{Immediate early genes}
-\usage{
-.ieg()
-}
+\alias{.isr}
+\title{Stress genes}
 \description{
 Immediate early genes
+
+Integrated stress response
 }
+\author{
+Michael Steinbaugh
+}
+\keyword{internal}
