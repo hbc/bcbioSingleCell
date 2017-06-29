@@ -1,4 +1,4 @@
-#' Package scRNA-Seq counts into [SummarizedExperiment]
+#' Package counts into a SummarizedExperiment
 #'
 #' @rdname summarized_experiment
 #' @keywords internal
@@ -10,7 +10,7 @@
 #' @param row_data Annotable.
 #' @param metadata Custom metadata.
 #'
-#' @return [SummarizedExperiment].
+#' @return [SummarizedExperiment::SummarizedExperiment].
 .summarized_experiment <- function(
     sparse_counts,
     col_data,

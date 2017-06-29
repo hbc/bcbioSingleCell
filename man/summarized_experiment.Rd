@@ -2,7 +2,7 @@
 % Please edit documentation in R/internal-summarized_experiment.R
 \name{.summarized_experiment}
 \alias{.summarized_experiment}
-\title{Package scRNA-Seq counts into \link{SummarizedExperiment}}
+\title{Package counts into a SummarizedExperiment}
 \usage{
 .summarized_experiment(sparse_counts, col_data, row_data, metadata = NULL)
 }
@@ -16,10 +16,10 @@
 \item{metadata}{Custom metadata.}
 }
 \value{
-\link{SummarizedExperiment}.
+\link[SummarizedExperiment:SummarizedExperiment]{SummarizedExperiment::SummarizedExperiment}.
 }
 \description{
-Package scRNA-Seq counts into \link{SummarizedExperiment}
+Package counts into a SummarizedExperiment
 }
 \author{
 Michael Steinbaugh

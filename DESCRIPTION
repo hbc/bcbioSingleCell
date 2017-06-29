@@ -35,6 +35,7 @@ Imports:
     Matrix.utils,
     methods,
     scales,
+    Seurat,
     SummarizedExperiment,
     S4Vectors
 Suggests:
@@ -43,6 +44,7 @@ Suggests:
 Remotes:
     hbc/annotables,
     jimhester/lintr,
+    satijalab/seurat,
     steinbaugh/basejump
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
