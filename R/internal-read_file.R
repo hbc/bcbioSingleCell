@@ -6,7 +6,6 @@
 #'
 #' @rdname read_file
 #' @keywords internal
-#'
 #' @author Michael Steinbaugh
 #'
 #' @param file File path.
@@ -82,7 +81,6 @@
 #'
 #' @rdname data_versions
 #' @keywords internal
-#'
 #' @author Michael Steinbaugh
 #'
 #' @param project_dir Project directory.
@@ -96,7 +94,6 @@
 #'
 #' @rdname program_versions
 #' @keywords internal
-#'
 #' @author Michael Steinbaugh
 #'
 #' @param project_dir Project directory.
