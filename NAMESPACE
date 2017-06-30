@@ -2,6 +2,7 @@
 
 export("%>%")
 export("bcbio<-")
+export(.plot_cb_df)
 export(aggregate_replicates)
 export(assay)
 export(assays)

@@ -4,7 +4,7 @@
 \name{bcbioSCDataSet-class}
 \alias{bcbioSCDataSet-class}
 \alias{bcbioSCDataSet}
-\title{\link{bcbioSCDataSet}}
+\title{bcbioSCDataSet}
 \description{
 \link{bcbioSCDataSet} is a subclass of
 \link[SummarizedExperiment:SummarizedExperiment]{SummarizedExperiment::SummarizedExperiment} designed to store a single-cell

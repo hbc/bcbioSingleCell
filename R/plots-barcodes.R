@@ -1,3 +1,19 @@
+# FIXME Move to S4, supporting bcbioSCFiltered
+
+#' Plot cellular barcode distributions per sample
+#'
+#' @details A violin plot is a compact display of a continuous distribution. It
+#'   is a blend of `geom_boxplot()` and `geom_density()`: a violin plot is a
+#'   mirrored density plot displayed in the same way as a boxplot.
+#'
+#' @author Michael Steinbaugh, Rory Kirchner
+#'
+#' @param object [bcbioSCDataSet].
+
+#' @export
+
+
+
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
 .plot_cb_df <- function(object) {
@@ -93,16 +109,7 @@
 
 
 
-#' Plot cellular barcode distributions per sample
-#'
-#' @details A violin plot is a compact display of a continuous distribution. It
-#'   is a blend of `geom_boxplot()` and `geom_density()`: a violin plot is a
-#'   mirrored density plot displayed in the same way as a boxplot.
-#'
-#' @author Michael Steinbaugh, Rory Kirchner
-#'
-#' @param object [bcbioSCDataSet].
-
+#' @rdname plot_cellular_barcodes
 #' @export
 plot_cellular_barcodes <- function(object) {
     plot_cb_df <- .plot_cb_df(object)

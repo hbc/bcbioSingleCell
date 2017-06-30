@@ -1,4 +1,4 @@
-#' [bcbioSCDataSet]
+#' bcbioSCDataSet
 #'
 #' [bcbioSCDataSet] is a subclass of
 #' [SummarizedExperiment::SummarizedExperiment] designed to store a single-cell
