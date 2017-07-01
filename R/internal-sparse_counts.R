@@ -95,7 +95,8 @@
 #' @rdname sparse_counts
 .sparse_counts_tx2gene <- function(tx_sparse_counts, genome_build) {
     tx_sparse_counts <- .strip_transcript_versions(tx_sparse_counts)
-    tx2gene <- .tx2gene(genome_build) %>% .[rownames(tx_sparse_counts), ]
+    tx2gene <- tx2gene(genome_build) %>%
+        .[rownames(tx_sparse_counts), ]
     if (any(is.na(tx2gene[["enstxp"]]))) stop("Unmapped transcripts present")
     message("Converting transcript-level counts to gene-level")
     tx_sparse_counts %>%

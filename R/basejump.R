@@ -41,3 +41,6 @@ basejump::tibble
 
 #' @export
 basejump::top_n
+
+#' @export
+basejump::write_counts

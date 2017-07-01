@@ -9,7 +9,7 @@
 #'   geom_point geom_smooth geom_text geom_violin geom_vline ggplot ggtitle labs
 #'   qplot scale_x_log10 scale_x_sqrt scale_y_log10 scale_y_sqrt theme unit xlab
 #'   xlim ylab
-#' @importFrom Matrix cBind readMM writeMM
+#' @importFrom Matrix cBind
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom scales math_format trans_breaks trans_format
 #' @importFrom Seurat FeaturePlot VlnPlot

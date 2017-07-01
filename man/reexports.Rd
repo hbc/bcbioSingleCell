@@ -28,6 +28,8 @@
 \alias{tibble}
 \alias{reexports}
 \alias{top_n}
+\alias{reexports}
+\alias{write_counts}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -35,6 +37,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{assay}}, \code{\link[basejump]{assays}}, \code{\link[basejump]{colData}}, \code{\link[basejump]{detect_hpc}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{metadata}}, \code{\link[basejump]{pct}}, \code{\link[basejump]{rowData}}, \code{\link[basejump]{save_data}}, \code{\link[basejump]{tibble}}, \code{\link[basejump]{top_n}}}
+  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{assay}}, \code{\link[basejump]{assays}}, \code{\link[basejump]{colData}}, \code{\link[basejump]{detect_hpc}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{metadata}}, \code{\link[basejump]{pct}}, \code{\link[basejump]{rowData}}, \code{\link[basejump]{save_data}}, \code{\link[basejump]{tibble}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{write_counts}}}
 }}
 

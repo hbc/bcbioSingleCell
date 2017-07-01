@@ -8,5 +8,5 @@
 #'
 #' @param genome_build Genome build.
 .tx2gene <- function(genome_build) {
-    .annotable(genome_build, format = "tx2gene")
+    annotable(genome_build, format = "tx2gene")
 }

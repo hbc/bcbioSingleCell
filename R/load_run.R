@@ -165,7 +165,7 @@ load_run <- function(
 
 
     # Row data ====
-    annotable <- .annotable(genome_build)
+    annotable <- annotable(genome_build)
 
 
     # Column data ====
@@ -193,10 +193,14 @@ load_run <- function(
         pipeline = pipeline,
         upload_dir = upload_dir,
         sample_dirs = sample_dirs,
-        interesting_groups = interesting_groups,
         sample_metadata_file = sample_metadata_file,
         sample_metadata = sample_metadata,
+        interesting_groups = interesting_groups,
+        organism = organism,
         genome_build = genome_build,
+        annotable = annotable,
+        tx2gene = tx2gene,
+        ensembl_version = annotables::ensembl_version,
         umi_type = umi_type,
         all_samples = all_samples,
         experiment_name = experiment_name,
