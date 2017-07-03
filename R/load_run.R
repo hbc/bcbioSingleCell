@@ -18,10 +18,7 @@
 #' @param interesting_groups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
-#' @param experiment_name Experiment name.
-#' @param principal_investigator Principal investigator.
-#' @param researcher Researcher who performed the experiment.
-#' @param email Email for follow-up correspondence.
+#' @param ... Additional arguments, passed as metadata.
 #'
 #' @return [bcbioSCDataSet].
 #' @export
@@ -30,10 +27,7 @@ load_run <- function(
     sample_metadata_file,
     well_metadata_file = NULL,
     interesting_groups = "sample_name",
-    experiment_name = NULL,
-    principal_investigator = NULL,
-    researcher = NULL,
-    email = NULL) {
+    ...) {
     if (!dir.exists(upload_dir)) {
         stop("Upload directory missing")
     }
@@ -68,7 +62,7 @@ load_run <- function(
 
 
     # Pipeline-specific support prior to count loading ====
-    if (pipeline == "bcbio-nextgen") {
+    if (pipeline == "bcbio") {
         # Project directory ====
         project_dir <- dir(upload_dir,
                            pattern = project_dir_pattern,
@@ -126,11 +120,11 @@ load_run <- function(
 
 
     # Read counts into sparse matrix ====
-    if (pipeline == "bcbio-nextgen") {
+    if (pipeline == "bcbio") {
         # bcbio-nextgen outputs at transcript-level. Let's store these inside
         # the bcbioSCDataSet but outside of the SummarizedExperiment, where we
         # will instead slot the gene-level counts.
-        message("Reading bcbio-nextgen transcript-level counts")
+        message("Reading bcbio transcript-level counts")
         tx_sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
             .sparse_counts(sample_dirs[a], pipeline = pipeline)
         }
@@ -170,7 +164,7 @@ load_run <- function(
 
     # Column data ====
     metrics <- .calculate_metrics(sparse_counts, annotable)
-    if (pipeline == "bcbio-nextgen") {
+    if (pipeline == "bcbio") {
         # Add reads per cellular barcode to bcbio-nextgen metrics
         cb_df <- .bind_cellular_barcodes(cellular_barcodes)
         message(paste(nrow(cb_df), "unfiltered cellular barcodes"))
@@ -196,18 +190,14 @@ load_run <- function(
         sample_metadata_file = sample_metadata_file,
         sample_metadata = sample_metadata,
         interesting_groups = interesting_groups,
-        organism = organism,
+        # FIXME add deetection
         genome_build = genome_build,
         annotable = annotable,
-        tx2gene = tx2gene,
+        tx2gene = annotable(genome_build, format = "tx2gene"),
         ensembl_version = annotables::ensembl_version,
         umi_type = umi_type,
-        all_samples = all_samples,
-        experiment_name = experiment_name,
-        principal_investigator = principal_investigator,
-        researcher = researcher,
-        email = email)
-    if (pipeline == "bcbio-nextgen") {
+        all_samples = all_samples)
+    if (pipeline == "bcbio") {
         bcbio_metadata <- SimpleList(
             project_dir = project_dir,
             well_metadata_file = well_metadata_file,
@@ -220,16 +210,22 @@ load_run <- function(
             bcbio_nextgen_commands = bcbio_nextgen_commands)
         metadata <- c(metadata, bcbio_metadata)
     }
+    # Add user-defined custom metadata, if specified
+    dots <- list(...)
+    if (length(dots) > 0L) {
+        metadata <- c(metadata, dots)
+    }
 
 
     # Return [bcbioSCDataSet] ====
     se <- .summarized_experiment(
-        sparse_counts,
+        assays = SimpleList(
+            sparse_counts = sparse_counts),
         col_data = metrics,
         row_data = annotable,
         metadata = metadata)
     bcb <- new("bcbioSCDataSet", se)
-    if (pipeline == "bcbio-nextgen") {
+    if (pipeline == "bcbio") {
         bcbio(bcb, "tx_sparse_counts") <- tx_sparse_counts
         bcbio(bcb, "cellular_barcodes") <- cellular_barcodes
     }
