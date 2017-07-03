@@ -110,7 +110,7 @@ load_run <- function(
         if (!is.null(well_metadata_file)) {
             well_metadata_file <- normalizePath(well_metadata_file)
         }
-        well_metadata <- .read_file(well_metadata_file)
+        well_metadata <- read_file_by_extension(well_metadata_file)
         # FIXME Need a working example from Rory
         # Ensure `sample_id` is factor, by = "well_id"
     } else if (pipeline == "cellranger") {

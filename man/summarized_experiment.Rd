@@ -2,24 +2,25 @@
 % Please edit documentation in R/internal-summarized_experiment.R
 \name{.summarized_experiment}
 \alias{.summarized_experiment}
-\title{Package counts into a SummarizedExperiment}
+\alias{.row_data}
+\title{Package RNA-seq counts into \link{SummarizedExperiment}}
 \usage{
-.summarized_experiment(sparse_counts, col_data, row_data, metadata = NULL)
+.summarized_experiment(assays, col_data, row_data, metadata = NULL)
 }
 \arguments{
-\item{sparse_counts}{Gene-level sparse counts matrix.}
+\item{assays}{assays.}
 
-\item{col_data}{Cellular barcode metrics.}
+\item{col_data}{Sample metadata.}
 
-\item{row_data}{Annotable.}
+\item{row_data}{\href{http://www.ensembl.org/}{Ensembl} gene annotations.}
 
 \item{metadata}{Custom metadata.}
 }
 \value{
-\link[SummarizedExperiment:SummarizedExperiment]{SummarizedExperiment::SummarizedExperiment}.
+\link{SummarizedExperiment}.
 }
 \description{
-Package counts into a SummarizedExperiment
+Package RNA-seq counts into \link{SummarizedExperiment}
 }
 \author{
 Michael Steinbaugh

@@ -74,7 +74,8 @@ setMethod("select_samples", "SummarizedExperiment", function(
     metadata[["sample_metadata"]] <- sample_metadata
 
     .summarized_experiment(
-        sparse_counts = sparse_counts,
+        assays = SimpleList(
+            sparse_counts = sparse_counts),
         col_data = col_data,
         row_data = row_data,
         metadata = metadata)
