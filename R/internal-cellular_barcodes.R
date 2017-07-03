@@ -14,9 +14,10 @@
 #' @rdname cellular_barcodes
 #' @return [tibble].
 .read_cellular_barcode_file <- function(file) {
-    .read_file(file,
-               col_names = c("cellular_barcode", "reads"),
-               col_types = "ci")
+    read_file_by_extension(
+        file,
+        col_names = c("cellular_barcode", "reads"),
+        col_types = "ci")
 }
 
 
