@@ -22,7 +22,7 @@
         # dependency files
         if (all(file.exists(str_c(bcbio_matrix, ".colnames"))) &
             all(file.exists(str_c(bcbio_matrix, ".rownames")))) {
-            pipeline <- "bcbio-nextgen"
+            pipeline <- "bcbio"
         } else {
             pipeline <- NULL
         }

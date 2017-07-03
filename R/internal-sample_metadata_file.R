@@ -17,10 +17,10 @@
     sample_metadata_file,
     sample_dirs,
     pipeline) {
-    sample_metadata <- .read_file(sample_metadata_file)
+    sample_metadata <- read_file_by_extension(sample_metadata_file)
 
     # Check sample_metadata file integrity
-    if (pipeline == "bcbio-nextgen") {
+    if (pipeline == "bcbio") {
         required_cols <- c("index", "sequence", "sample_name")
     } else if (pipeline == "cellranger") {
         required_cols <- "sample_id"
@@ -33,7 +33,7 @@
     }
 
     # bcbio-nextgen sample_id construction
-    if (pipeline == "bcbio-nextgen") {
+    if (pipeline == "bcbio") {
         sample_metadata <- mutate(
             sample_metadata,
             revcomp = vapply(.data[["sequence"]], revcomp, character(1L)))
