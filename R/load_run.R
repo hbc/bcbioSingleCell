@@ -32,10 +32,11 @@ load_run <- function(
         stop("Upload directory missing")
     }
 
+
     # Initial run setup ====
     upload_dir <- normalizePath(upload_dir)
-    sample_dirs <- .sample_dirs(upload_dir)
-    pipeline <- .detect_pipeline(sample_dirs)
+    pipeline <- .detect_pipeline(upload_dir)
+    sample_dirs <- .sample_dirs(upload_dir, pipeline = pipeline)
 
 
     # Sample metadata ====
@@ -114,6 +115,11 @@ load_run <- function(
         # FIXME Need a working example from Rory
         # Ensure `sample_id` is factor, by = "well_id"
     } else if (pipeline == "cellranger") {
+        # Get genome build from sample_dirs
+        genome_build <- basename(sample_dirs) %>% unique
+        if (length(genome_build) > 1) {
+            stop("Multiple genomes detected in cellranger samples")
+        }
         umi_type <- "chromium"
     }
     message(paste("UMI type:", umi_type))
@@ -190,7 +196,6 @@ load_run <- function(
         sample_metadata_file = sample_metadata_file,
         sample_metadata = sample_metadata,
         interesting_groups = interesting_groups,
-        # FIXME add deetection
         genome_build = genome_build,
         annotable = annotable,
         tx2gene = annotable(genome_build, format = "tx2gene"),

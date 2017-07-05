@@ -7,40 +7,26 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param sample_dirs Sample directories.
+#' @param upload_dir Final upload directory.
 #'
 #' @return Pipeline string. Stops on detection failure.
-.detect_pipeline <- function(sample_dirs) {
-    bcbio_matrix <-
-        file.path(sample_dirs,
-                  str_c(basename(sample_dirs), ".mtx"))
-    cellranger_matrix <-
-        file.path(sample_dirs, "matrix.mtx")
-    if (all(file.exists(bcbio_matrix))) {
-        # bcbio-nextgen ====
-        # Check for barcode (`.colnames`) and transcript (`.rownames`)
-        # dependency files
-        if (all(file.exists(str_c(bcbio_matrix, ".colnames"))) &
-            all(file.exists(str_c(bcbio_matrix, ".rownames")))) {
-            pipeline <- "bcbio"
-        } else {
-            pipeline <- NULL
-        }
-    } else if (all(file.exists(cellranger_matrix))) {
-        # 10X Chromium CellRanger ====
-        # Check for barcode (`barcodes.tsv`) and gene (`genes.tsv`) dependency
-        # files
-        if (all(file.exists(file.path(sample_dirs, "barcodes.tsv"))) &
-            all(file.exists(file.path(sample_dirs, "genes.tsv")))) {
-            pipeline <- "cellranger"
-        } else {
-            pipeline <- NULL
-        }
-    } else {
-        pipeline <- NULL
+.detect_pipeline <- function(upload_dir) {
+    # Search for MatrixMarket files
+    matrices <- list.files(
+        upload_dir, pattern = "*\\.mtx$",
+        full.names = TRUE, recursive = TRUE)
+    if (length(matrices) == 0) {
+        stop("Failed to detect any MatrixMarket (.mtx) files")
     }
-    if (is.null(pipeline)) {
+    if (any(str_detect(
+        # bcbio matching by `tagcounts.mtx` in `project_dir`
+        matrices, "\\d{4}-\\d{2}-\\d{2}_[^/]+/tagcounts\\.mtx$"))) {
+        "bcbio"
+    } else if (any(str_detect(
+        # cellranger matching by raw `matrix.mtx`
+        matrices, "outs/raw_gene_bc_matrices/[^/]+/matrix\\.mtx$"))) {
+        "cellranger"
+    } else {
         stop("Pipeline detection failed")
     }
-    pipeline
 }

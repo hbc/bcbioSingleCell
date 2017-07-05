@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Package counts into a SummarizedExperiment — .summarized_experiment • bcbioSinglecell</title>
+<title>Package RNA-seq counts into SummarizedExperiment — .summarized_experiment • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,29 +80,29 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Package counts into a SummarizedExperiment</h1>
+    <h1>Package RNA-seq counts into SummarizedExperiment</h1>
     </div>
 
     
-    <p>Package counts into a SummarizedExperiment</p>
+    <p>Package RNA-seq counts into SummarizedExperiment</p>
     
 
-    <pre class="usage"><span class='fu'>.summarized_experiment</span>(<span class='no'>sparse_counts</span>, <span class='no'>col_data</span>, <span class='no'>row_data</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>.summarized_experiment</span>(<span class='no'>assays</span>, <span class='no'>col_data</span>, <span class='no'>row_data</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>sparse_counts</th>
-      <td><p>Gene-level sparse counts matrix.</p></td>
+      <th>assays</th>
+      <td><p>assays.</p></td>
     </tr>
     <tr>
       <th>col_data</th>
-      <td><p>Cellular barcode metrics.</p></td>
+      <td><p>Sample metadata.</p></td>
     </tr>
     <tr>
       <th>row_data</th>
-      <td><p>Annotable.</p></td>
+      <td><p><a href='http://www.ensembl.org/'>Ensembl</a> gene annotations.</p></td>
     </tr>
     <tr>
       <th>metadata</th>
@@ -112,7 +112,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='http://www.rdocumentation.org/packages/SummarizedExperiment/topics/RangedSummarizedExperiment-class'>SummarizedExperiment::SummarizedExperiment</a>.</p>
+    <p>SummarizedExperiment.</p>
     
 
   </div>
