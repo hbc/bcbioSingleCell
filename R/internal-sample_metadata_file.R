@@ -63,7 +63,7 @@
     }
 
     # Check that sample_ids match samples
-    if (!all(sample_metadata[["sample_id"]] %in% basename(sample_dirs))) {
+    if (!all(sample_metadata[["sample_id"]] %in% names(sample_dirs))) {
         stop("Sample directory names don't match the sample metadata file")
     }
 

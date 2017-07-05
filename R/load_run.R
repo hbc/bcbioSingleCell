@@ -56,11 +56,6 @@ load_run <- function(
         all_samples <- TRUE
     }
 
-    # Finally, re-check that sample directories match the metadata
-    if (!identical(sample_metadata[["sample_id"]], basename(sample_dirs))) {
-        stop("Sample name mismatch between directories and metadata")
-    }
-
 
     # Pipeline-specific support prior to count loading ====
     if (pipeline == "bcbio") {
@@ -78,8 +73,7 @@ load_run <- function(
         template <- match[[3L]]
         project_dir <- file.path(upload_dir, project_dir)
 
-
-        # Data versions and programs ====
+        # Data versions and programs ----
         data_versions <- .data_versions(project_dir)
         programs <- .programs(project_dir)
         genome_build <- data_versions %>%
@@ -87,27 +81,23 @@ load_run <- function(
             filter(.data[["resource"]] == "transcripts") %>%
             pull("genome")
 
-
-        # Log files ====
+        # Log files ----
         message("Reading log files")
         bcbio_nextgen <- read_lines(
             file.path(project_dir, "bcbio-nextgen.log"))
         bcbio_nextgen_commands <- read_lines(
             file.path(project_dir, "bcbio-nextgen-commands.log"))
 
-
-        # Molecular barcode (UMI) type ====
+        # Molecular barcode (UMI) type ----
         if (any(str_detect(bcbio_nextgen_commands,
                            "work/umis/harvard-indrop-v3.json"))) {
             umi_type <- "harvard-indrop-v3"
         }
 
-
-        # Cellular barcodes ====
+        # Cellular barcodes ----
         cellular_barcodes <- .cellular_barcodes(sample_dirs)
 
-
-        # Well metadata ====
+        # Well metadata ----
         if (!is.null(well_metadata_file)) {
             well_metadata_file <- normalizePath(well_metadata_file)
         }
@@ -148,19 +138,6 @@ load_run <- function(
         message("Combining counts into a single sparse matrix")
         sparse_counts <- do.call(cBind, sparse_list)
         rm(sparse_list)
-
-        # Detect genome build based on the Ensembl identifiers. Currently works
-        # for human and mouse samples.
-        id <- rownames(sparse_counts)[[1L]]
-        if (str_detect(id, "^ENSG")) {
-            # H. sapiens
-            genome_build <- "hg38"
-        } else if (str_detect(id, "^ENSMUSG")) {
-            # M. musculus
-            genome_build <- "mm10"
-        } else {
-            stop("Unsupported genome")
-        }
     }
 
 
@@ -198,7 +175,6 @@ load_run <- function(
         interesting_groups = interesting_groups,
         genome_build = genome_build,
         annotable = annotable,
-        tx2gene = annotable(genome_build, format = "tx2gene"),
         ensembl_version = annotables::ensembl_version,
         umi_type = umi_type,
         all_samples = all_samples)
@@ -209,6 +185,7 @@ load_run <- function(
             well_metadata = well_metadata,
             template = template,
             run_date = run_date,
+            tx2gene = annotable(genome_build, format = "tx2gene"),
             data_versions = data_versions,
             programs = programs,
             bcbio_nextgen = bcbio_nextgen,
