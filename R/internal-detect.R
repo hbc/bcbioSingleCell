@@ -15,7 +15,7 @@
     matrices <- list.files(
         upload_dir, pattern = "*\\.mtx$",
         full.names = TRUE, recursive = TRUE)
-    if (length(matrices) == 0) {
+    if (length(matrices) == 0L) {
         stop("Failed to detect any MatrixMarket (.mtx) files")
     }
     if (any(str_detect(

@@ -107,7 +107,7 @@ load_run <- function(
     } else if (pipeline == "cellranger") {
         # Get genome build from sample_dirs
         genome_build <- basename(sample_dirs) %>% unique
-        if (length(genome_build) > 1) {
+        if (length(genome_build) > 1L) {
             stop("Multiple genomes detected in cellranger samples")
         }
         umi_type <- "chromium"
