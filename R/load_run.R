@@ -123,18 +123,18 @@ load_run <- function(
         message("Reading bcbio transcript-level counts")
         tx_sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
             .sparse_counts(sample_dirs[a], pipeline = pipeline)
-        }
-        ) %>% set_names(basename(sample_dirs))
+        }) %>%
+            set_names(basename(sample_dirs))
         message("Combining counts into a single sparse matrix")
         tx_sparse_counts <- do.call(cBind, tx_sparse_list)
         rm(tx_sparse_list)
         sparse_counts <- .sparse_counts_tx2gene(tx_sparse_counts, genome_build)
     } else if (pipeline == "cellranger") {
-        message("Reading 10X Cell Ranger gene-level counts")
+        message("Reading 10x Genomics Cell Ranger gene-level counts")
         sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
             .sparse_counts(sample_dirs[a], pipeline = pipeline)
-        }
-        ) %>% set_names(basename(sample_dirs))
+        }) %>%
+            set_names(names(sample_dirs))
         message("Combining counts into a single sparse matrix")
         sparse_counts <- do.call(cBind, sparse_list)
         rm(sparse_list)

@@ -41,11 +41,11 @@
         if ("file_name" %in% colnames(sample_metadata)) {
             sample_metadata <- sample_metadata %>%
                 mutate(sample_id = paste(
-                    .data[["file_name"]], .data[["revcomp"]], sep = "-"))
+                    .data[["file_name"]], .data[["revcomp"]], sep = "_"))
         } else {
             revcomp_matches <- pull(sample_metadata, "revcomp")
             sample_matches <- basename(sample_dirs) %>%
-                str_match("(.*)-([ACGT]+)$") %>%
+                str_match("(.*)_([ACGT]+)$") %>%
                 as_tibble %>%
                 set_colnames(c("sample_id", "file_name", "revcomp")) %>%
                 filter(.data[["revcomp"]] %in% syms(revcomp_matches))
@@ -61,6 +61,9 @@
                           "sample_name"),
                         everything())
     }
+
+    sample_metadata <- sample_metadata %>%
+        mutate(sample_id = snake(.data[["sample_id"]]))
 
     # Check that sample_ids match samples
     if (!all(sample_metadata[["sample_id"]] %in% names(sample_dirs))) {

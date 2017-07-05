@@ -20,14 +20,10 @@
     assays <- as(assays, "SimpleList")
     assay <- assays[[1L]]
 
-    # colData
-    col_data <- as(col_data, "DataFrame") %>%
-        .[colnames(assay), , drop = FALSE] %>%
-        set_rownames(colnames(assay))
-
     # rowData
-    row_data <- as(row_data, "DataFrame") %>%
-        .[rownames(assay), , drop = FALSE] %>%
+    row_data <- row_data %>%
+        as("DataFrame") %>%
+        .[rownames(assay), ] %>%
         set_rownames(rownames(assay))
 
     # Check for identifier mismatch
