@@ -15,6 +15,15 @@
 #' @usage NULL
 .sample_metadata <- function(object, unique_names = FALSE) {
     meta <- metadata(object)[["sample_metadata"]] %>% as.data.frame
+
+    # Set required columns, if empty
+    if (is.null(meta[["file_name"]])) {
+        meta[["file_name"]] <- "all_samples"
+    }
+    if (is.null(meta[["sample_name"]])) {
+        meta[["sample_name"]] <- meta[["sample_id"]]
+    }
+
     if (isTRUE(unique_names)) {
         # Ensure unique sample names
         if (any(duplicated(meta[["sample_name"]]))) {
