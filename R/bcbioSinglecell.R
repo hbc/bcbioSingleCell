@@ -15,6 +15,7 @@
 #' @importFrom Seurat FeaturePlot Setup SubsetData VlnPlot
 #' @importFrom stats median
 #' @importFrom utils methods object.size
+#' @importClassesFrom Seurat seurat
 "_PACKAGE"
 
 globalVariables(".")

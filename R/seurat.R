@@ -3,25 +3,23 @@
 #' @author Michael Steinbaugh
 #'
 #' @param object [SummarizedExperiment] containing filtered counts.
-#' @param ... Additional parameters, passed to [Seurat::Setup().
+#' @param ... Additional parameters, passed to [Seurat::Setup()].
 #'
 #' @return [seurat].
 #' @export
 new_seurat <- function(object, ...) {
     # Filtering criteria
-    min.genes <- metadata(data) %>%
+    min_genes <- metadata(object) %>%
         .[["filtering_criteria"]] %>%
         .[["genes"]]
-    max.mito.ratio <- metadata(data) %>%
+    max_mito_ratio <- metadata(object) %>%
         .[["filtering_criteria"]] %>%
         .[["mito_ratio"]]
-
-    seurat <- new("seurat", raw.data = counts(data, gene2symbol = TRUE)) %>%
-        Setup(meta.data = metrics(data) %>% dotted(rownames = FALSE),
-              min.genes = min.genes,
+    seurat <- new("seurat", raw.data = counts(object, gene2symbol = TRUE)) %>%
+        Setup(meta.data = metrics(object) %>% dotted(rownames = FALSE),
+              min.genes = min_genes,
               ...) %>%
-        SubsetData(subset.name = "mito.ratio", accept.high = max.mito.ratio)
-
+        SubsetData(subset.name = "mito.ratio", accept.high = max_mito_ratio)
     message(paste("Seurat object:", object_size(seurat)))
     seurat
 }
@@ -55,11 +53,11 @@ plot_clusters <- function(seurat, genes) {
 #'
 #' @return [data.frame]
 #' @export
-top_markers <- function(markers, n = 4) {
+top_markers <- function(markers, n = 4L) {
     markers %>%
-        group_by(cluster) %>%
-        top_n(n, avg_diff) %>%
-        as.data.frame
+        group_by(.data[["cluster"]]) %>%
+        # FIXME Need SE version heres
+        top_n(n = n, wt = .data[["avg_diff"]])
 }
 
 
