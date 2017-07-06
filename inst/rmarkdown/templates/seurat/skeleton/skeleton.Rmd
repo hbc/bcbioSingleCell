@@ -101,7 +101,7 @@ seurat <- MeanVarPlot(seurat)
 Run PCA on the scaled data. By default, the genes in `seurat@var.genes` are used as input, but can be defined using `pc.genes`. We have typically found that running dimensionality reduction on genes with high-dispersion can improve performance. However, with UMI data - particularly after using `RegressOut()`, we often see that PCA returns similar (albeit slower) results when run on much larger subsets of genes, including the whole transcriptome.
 
 ```{r PCA}
-seurat <- PCA(seurat, do.print = FALSE)
+seurat <- PCAFast(seurat, do.print = FALSE)
 ```
 
 `ProjectPCA()` scores each gene in the dataset (including genes not included in the PCA) based on their correlation with the calculated components. Though we don't use this further here, it can be used to identify markers that are strongly correlated with cellular heterogeneity, but may not have passed through variable gene selection.
