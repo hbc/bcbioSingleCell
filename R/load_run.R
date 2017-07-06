@@ -115,45 +115,34 @@ load_run <- function(
     message(paste("UMI type:", umi_type))
 
 
-    # Read counts into sparse matrix ====
-    if (pipeline == "bcbio") {
-        # bcbio-nextgen outputs at transcript-level. Let's store these inside
-        # the bcbioSCDataSet but outside of the SummarizedExperiment, where we
-        # will instead slot the gene-level counts.
-        message("Reading bcbio transcript-level counts")
-        tx_sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
-            .sparse_counts(sample_dirs[a], pipeline = pipeline)
-        }) %>%
-            set_names(basename(sample_dirs))
-        message("Combining counts into a single sparse matrix")
-        tx_sparse_counts <- do.call(cBind, tx_sparse_list)
-        rm(tx_sparse_list)
-        sparse_counts <- .sparse_counts_tx2gene(tx_sparse_counts, genome_build)
-    } else if (pipeline == "cellranger") {
-        message("Reading 10x Genomics Cell Ranger gene-level counts")
-        sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
-            .sparse_counts(sample_dirs[a], pipeline = pipeline)
-        }) %>%
-            set_names(names(sample_dirs))
-        message("Combining counts into a single sparse matrix")
-        sparse_counts <- do.call(cBind, sparse_list)
-        rm(sparse_list)
-    }
-
-
     # Row data ====
     annotable <- annotable(genome_build)
+
+
+    # Read counts into sparse matrix ====
+    message("Reading counts")
+    sparse_list <- pblapply(seq_along(sample_dirs), function(a) {
+        sparse_counts <- .sparse_counts(sample_dirs[a], pipeline = pipeline)
+        if (pipeline == "bcbio") {
+            # Convert transcript-level to gene-level
+            sparse_counts <-
+                .sparse_counts_tx2gene(sparse_counts, genome_build)
+        }
+        # Pre-filter by calculating metrics
+        metrics <- .calculate_metrics(sparse_counts, annotable)
+        sparse_counts[, rownames(metrics)]
+    }) %>%
+        set_names(names(sample_dirs))
+    sparse_counts <- do.call(cBind, sparse_list)
+    rm(sparse_list)
 
 
     # Column data ====
     metrics <- .calculate_metrics(sparse_counts, annotable)
     if (pipeline == "bcbio") {
         # Add reads per cellular barcode to bcbio-nextgen metrics
-        cb_df <- .bind_cellular_barcodes(cellular_barcodes)
-        message(paste(nrow(cb_df), "unfiltered cellular barcodes"))
-        cb_df <- cb_df %>%
+        cb_df <- .bind_cellular_barcodes(cellular_barcodes) %>%
             filter(.data[["cellular_barcode"]] %in% rownames(metrics))
-        message(paste(nrow(cb_df), "filtered cellular barcodes"))
         metrics <- metrics %>%
             as.data.frame %>%
             rownames_to_column %>%
@@ -208,7 +197,6 @@ load_run <- function(
         metadata = metadata)
     bcb <- new("bcbioSCDataSet", se)
     if (pipeline == "bcbio") {
-        bcbio(bcb, "tx_sparse_counts") <- tx_sparse_counts
         bcbio(bcb, "cellular_barcodes") <- cellular_barcodes
     }
     bcb
