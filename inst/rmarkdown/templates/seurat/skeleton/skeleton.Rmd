@@ -1,6 +1,6 @@
 ---
 title: "Seurat clustering"
-author: ""
+author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 template_date: "2017-06-13"
 bibliography: bcbioSinglecell.bib
@@ -12,9 +12,6 @@ library(Seurat)
 data(filtered)
 
 # Filtering criteria
-min.umis <- metadata(filtered) %>%
-    .[["filtering_criteria"]] %>%
-    .[["umis"]]
 min.genes <- metadata(filtered) %>%
     .[["filtering_criteria"]] %>%
     .[["genes"]]
@@ -23,7 +20,7 @@ max.mito.ratio <- metadata(filtered) %>%
     .[["mito_ratio"]]
 
 # Source data
-project <- "XXX"
+# project <- "sample_name"  # Manually define
 data <- select_samples(
     filtered,
     sample_name = project,
@@ -32,7 +29,7 @@ rm(filtered)
 
 # Principal components
 num.pc <- 40
-pc.use <- 10
+pc.use <- 20
 ```
 
 ```{r header, child="header.Rmd"}
@@ -151,7 +148,7 @@ To overcome the extensive technical noise in any single gene for scRNA-seq data,
 
 The `JackStrawPlot()` function provides a visualization tool for comparing the distribution of p-values for each PC with a uniform distribution (dashed line). "Significant" PCs will show a strong enrichment of genes with low p-values (solid curve above the dashed line). Running this process takes a long time for big datasets. More approximate techniques such as those implemented in `PCElbowPlot()` are much faster.
 
-```{r JackStraw, eval=detect_hpc()}
+```{r JackStraw, eval=FALSE}
 # Run this only in HPC environment, CPU intensive
 seurat <- JackStraw(
     seurat,
