@@ -41,7 +41,7 @@
 #' @rdname plot-metrics
 #' @export
 plot_cell_counts <- function(object) {
-    show(.plot_cell_counts_barplot(object))
+    .plot_cell_counts_barplot(object)
 }
 
 
@@ -98,25 +98,26 @@ plot_cell_counts <- function(object) {
 #' @rdname plot-metrics
 #' @export
 plot_umis_per_cell <- function(object, min = 1000L) {
-    show(.plot_umis_per_cell_boxplot(object, min))
-    show(.plot_umis_per_cell_histogram(object, min))
+    plot_grid(.plot_umis_per_cell_histogram(object, min),
+              .plot_umis_per_cell_boxplot(object, min),
+              labels = "auto",
+              nrow = 2L)
 }
 
 
 
 # Genes detected ====
-.plot_genes_detected_boxplot <- function(object, min) {
+.plot_genes_detected_boxplot <- function(object, min, max) {
     metrics <- metrics(object)
     median_genes <- aggregate(genes_detected ~ sample_id, metrics, median) %>%
         left_join(sample_metadata(object), by = "sample_id")
     interesting_group <- interesting_groups(object)[[1L]]
-    ggplot(
+    plot <- ggplot(
         metrics,
         aes_(x = ~sample_name,
              y = ~genes_detected,
              fill = as.name(interesting_group))) +
-        labs(title = "genes detected boxplot",
-             x = "sample",
+        labs(x = "sample",
              y = "genes per cell") +
         facet_wrap(~file_name) +
         geom_boxplot() +
@@ -131,16 +132,23 @@ plot_umis_per_cell <- function(object, min = 1000L) {
                    show.legend = FALSE) +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+    if (!is.null(max)) {
+        plot <- plot +
+            geom_hline(alpha = 0.5,
+                       color = warn_color,
+                       size = 2L,
+                       yintercept = max)
+    }
+    plot
 }
 
-.plot_genes_detected_histogram <- function(object, min) {
+.plot_genes_detected_histogram <- function(object, min, max) {
     metrics <- metrics(object)
-    ggplot(
+    plot <- ggplot(
         metrics,
         aes_(x = ~genes_detected,
              fill = ~sample_name)) +
-        labs(title = "genes detected histogram",
-             x = "genes per cell") +
+        labs(x = "genes per cell") +
         facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
         geom_vline(alpha = 0.5,
@@ -150,13 +158,23 @@ plot_umis_per_cell <- function(object, min = 1000L) {
         scale_x_sqrt() +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+    if (!is.null(max)) {
+        plot <- plot +
+            geom_hline(alpha = 0.5,
+                       color = warn_color,
+                       size = 2L,
+                       xintercept = max)
+    }
+    plot
 }
 
 #' @rdname plot-metrics
 #' @export
-plot_genes_detected <- function(object, min = 500L) {
-    show(.plot_genes_detected_boxplot(object, min))
-    show(.plot_genes_detected_histogram(object, min))
+plot_genes_detected <- function(object, min = 500L, max = NULL) {
+    plot_grid(.plot_genes_detected_histogram(object, min, max),
+              .plot_genes_detected_boxplot(object, min, max),
+              labels = "auto",
+              nrow = 2L)
 }
 
 
@@ -182,7 +200,7 @@ plot_genes_detected <- function(object, min = 500L) {
 #' @rdname plot-metrics
 #' @export
 plot_umis_vs_genes <- function(object) {
-    show(.plot_umis_vs_genes(object))
+    .plot_umis_vs_genes(object)
 }
 
 
@@ -256,9 +274,11 @@ plot_umis_vs_genes <- function(object) {
 #' @rdname plot-metrics
 #' @export
 plot_mito_ratio <- function(object, max = 0.1) {
-    show(.plot_mito_ratio_boxplot(object, max))
-    show(.plot_mito_ratio_histogram(object, max))
-    show(.plot_mito_ratio_scatterplot(object))
+    plot_grid(.plot_mito_ratio_histogram(object, max),
+              .plot_mito_ratio_boxplot(object, max),
+              .plot_mito_ratio_scatterplot(object),
+              labels = "auto",
+              nrow = 3L)
 }
 
 
@@ -315,6 +335,8 @@ plot_mito_ratio <- function(object, max = 0.1) {
 #' @rdname plot-metrics
 #' @export
 plot_novelty <- function(object, min = 0.8) {
-    show(.plot_novelty_boxplot(object, min))
-    show(.plot_novelty_histogram(object, min))
+    plot_grid(.plot_novelty_boxplot(object, min),
+              .plot_novelty_histogram(object, min),
+              labels = "auto",
+              nrow = 2L)
 }
