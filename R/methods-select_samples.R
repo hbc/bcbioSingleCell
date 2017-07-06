@@ -56,7 +56,7 @@ setMethod("select_samples", "SummarizedExperiment", function(
 
     sample_id_pattern <- sample_metadata[["sample_id"]] %>%
         str_c(collapse = "|") %>%
-        str_c("^(", ., ")\\:")
+        str_c("^(", ., ")_")
     cellular_barcodes <- colnames(object) %>%
         .[str_detect(., sample_id_pattern)]
 
