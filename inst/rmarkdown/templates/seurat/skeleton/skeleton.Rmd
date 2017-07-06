@@ -2,7 +2,7 @@
 title: "Seurat clustering"
 author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
-template_date: "2017-06-13"
+template_date: "2017-07-06"
 bibliography: bcbioSinglecell.bib
 ---
 
