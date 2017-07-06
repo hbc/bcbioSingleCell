@@ -26,23 +26,7 @@
     }
     counts <- assay(object)
     if (isTRUE(gene2symbol)) {
-        message("Converting Ensembl gene identifiers to symbols")
-        gene2symbol <- rowData(object) %>%
-            as.data.frame %>%
-            set_rownames(.[["ensgene"]]) %>%
-            .[rownames(counts), c("ensgene", "symbol")]
-        # Check for identifier degradation
-        if (!identical(rownames(counts), gene2symbol[["ensgene"]]) |
-            any(is.na(gene2symbol[["symbol"]]))) {
-            stop(paste("Ensembl identifier degradation detected.",
-                       "Please disable gene2symbol conversion."))
-        }
-        # Make gene symbols unique, if necessary
-        symbol <- gene2symbol[["symbol"]]
-        if (any(duplicated(symbol))) {
-            symbol <- make.unique(symbol)
-        }
-        rownames(counts) <- symbol
+        rownames(counts) <- .gene2symbol(object)
     }
     as(counts, format)
 }

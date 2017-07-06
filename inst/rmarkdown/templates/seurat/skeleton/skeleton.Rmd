@@ -58,10 +58,11 @@ We recommend the following filter criteria:
 - Keep cells with <= `r pct(max.mito.ratio)` mitochondrial percentage.
 
 ```{r seurat}
-seurat <- new("seurat", raw.data = raw.data) %>%
-    Setup(project = "seurat", meta.data = meta.data, min.genes = min.genes) %>%
-    SubsetData(subset.name = "nGene", accept.high = max.genes) %>%
-    SubsetData(subset.name = "mito.ratio", accept.high = mito.ratio)
+seurat <- new("seurat", raw.data = counts(data, gene2symbol = TRUE)) %>%
+    Setup(project = project,
+          meta.data = metrics(data) %>% dotted(rownames = FALSE),
+          min.genes = min.genes) %>%
+    SubsetData(subset.name = "mito.ratio", accept.high = max.mito.ratio)
 print(seurat)
 ```
 
