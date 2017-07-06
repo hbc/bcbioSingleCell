@@ -1,6 +1,6 @@
 ---
 title: "Quality control"
-author: ""
+author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 template_date: "2017-06-13"
 bibliography: bcbioSinglecell.bib
