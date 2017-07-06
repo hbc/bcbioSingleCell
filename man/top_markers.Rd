@@ -4,7 +4,7 @@
 \alias{top_markers}
 \title{Top marker genes}
 \usage{
-top_markers(markers, n = 4)
+top_markers(markers, n = 4L)
 }
 \arguments{
 \item{markers}{Markers.}

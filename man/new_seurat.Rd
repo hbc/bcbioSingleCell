@@ -9,7 +9,7 @@ new_seurat(object, ...)
 \arguments{
 \item{object}{\link{SummarizedExperiment} containing filtered counts.}
 
-\item{...}{Additional parameters, passed to [Seurat::Setup().}
+\item{...}{Additional parameters, passed to \code{\link[Seurat:Setup]{Seurat::Setup()}}.}
 }
 \value{
 \link{seurat}.

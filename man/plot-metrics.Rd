@@ -14,7 +14,7 @@ plot_cell_counts(object)
 
 plot_umis_per_cell(object, min = 1000L)
 
-plot_genes_detected(object, min = 500L)
+plot_genes_detected(object, min = 500L, max = NULL)
 
 plot_umis_vs_genes(object)
 
