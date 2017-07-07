@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Deprecated functions — barcode_metrics • bcbioSinglecell</title>
+<title>Filter cellular barcodes — filter,bcbioSCDataSet-method • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,31 +80,51 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Deprecated functions</h1>
+    <h1>Filter cellular barcodes</h1>
     </div>
 
     
-    <p>Deprecated functions</p>
+    <p>Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
+cellular barcodes.</p>
     
 
-    <pre class="usage"><span class='fu'>barcode_metrics</span>(<span class='no'>...</span>)
-
-<span class='fu'>filter_barcodes</span>(<span class='no'>...</span>)
-
-<span class='fu'>plot_mito_counts</span>(<span class='no'>...</span>)
-
-<span class='fu'>plot_total_cells</span>(<span class='no'>...</span>)
-
-<span class='fu'>plot_total_vs_detected</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
+<span class='fu'>filter</span>(<span class='no'>object</span>, <span class='kw'>umis</span> <span class='kw'>=</span> <span class='fl'>1000L</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='fl'>500L</span>,
+  <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>show_report</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>Passthrough parameters</p></td>
+      <th>object</th>
+      <td><p>Primary object.</p></td>
+    </tr>
+    <tr>
+      <th>umis</th>
+      <td><p>Minimum number of UMI disambiguated counts per cell.</p></td>
+    </tr>
+    <tr>
+      <th>genes</th>
+      <td><p>Minimum number of genes detected.</p></td>
+    </tr>
+    <tr>
+      <th>mito_ratio</th>
+      <td><p>Maximum relative mitochondrial abundance (<code>0-1</code> scale).</p></td>
+    </tr>
+    <tr>
+      <th>novelty</th>
+      <td><p>Minimum novelty score.</p></td>
+    </tr>
+    <tr>
+      <th>show_report</th>
+      <td><p>Show summary statistics report and plots.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><a href='bcbioSCDataSet-class.html'>bcbioSCDataSet</a>, with low quality cellular barcodes that
+don't pass quality control cutoffs removed.</p>
     
 
   </div>
@@ -112,7 +132,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
     <h2>Author</h2>
     
