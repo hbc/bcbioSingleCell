@@ -160,10 +160,10 @@ plot_umis_per_cell <- function(object, min = 1000L) {
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (!is.null(max)) {
         plot <- plot +
-            geom_hline(alpha = 0.5,
+            geom_vline(alpha = 0.5,
                        color = warn_color,
                        size = 2L,
-                       yintercept = max)
+                       xintercept = max)
     }
     plot
 }
