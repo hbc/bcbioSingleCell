@@ -163,7 +163,7 @@ plot_umis_per_cell <- function(object, min = 1000L) {
             geom_hline(alpha = 0.5,
                        color = warn_color,
                        size = 2L,
-                       xintercept = max)
+                       yintercept = max)
     }
     plot
 }
