@@ -217,8 +217,7 @@ plot_umis_vs_genes <- function(object) {
         aes_(x = ~sample_name,
              y = ~mito_ratio,
              fill = as.name(interesting_group))) +
-        labs(title = "mitochondrial abundance boxplot",
-             x = "sample",
+        labs(x = "sample",
              y = "relative mitochondrial abundance") +
         facet_wrap(~file_name) +
         geom_boxplot() +
@@ -241,8 +240,7 @@ plot_umis_vs_genes <- function(object) {
         metrics,
         aes_(x = ~mito_ratio,
              fill = ~sample_name)) +
-        labs(title = "mitochondrial abundance histogram",
-             x = "relative mitochondrial abundance") +
+        labs(x = "relative mitochondrial abundance") +
         facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
         geom_vline(alpha = 0.5,
@@ -261,8 +259,7 @@ plot_umis_vs_genes <- function(object) {
         aes_(x = ~coding_counts,
              y = ~mito_counts,
              color = ~sample_name)) +
-        labs(title = "mitochondrial abundance scatterplot",
-             x = "mitochondrial counts",
+        labs(x = "mitochondrial counts",
              y = "coding counts") +
         facet_wrap(~file_name) +
         geom_point(size = 1L) +
@@ -295,8 +292,7 @@ plot_mito_ratio <- function(object, max = 0.1) {
         aes_(x = ~sample_name,
              y = ~log10_genes_per_umi,
              fill = as.name(interesting_group))) +
-        labs(title = "novelty boxplot",
-             x = "sample",
+        labs(x = "sample",
              y = "log10 genes per umi (novelty score)") +
         facet_wrap(~file_name) +
         geom_boxplot() +
@@ -319,8 +315,7 @@ plot_mito_ratio <- function(object, max = 0.1) {
         metrics,
         aes_(x = ~log10_genes_per_umi,
              fill = ~sample_name)) +
-        labs(title = "novelty histogram",
-             x = "log10 genes per umi (novelty score)") +
+        labs(x = "log10 genes per umi (novelty score)") +
         facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
         geom_vline(alpha = 0.5,
