@@ -3,7 +3,7 @@
 #' Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 #' cellular barcodes.
 #'
-#' @rdname filter_barcodes
+#' @rdname filter
 #' @author Michael Steinbaugh
 #'
 #' @param object Primary object.
@@ -16,7 +16,7 @@
 #' @return [bcbioSCDataSet], with low quality cellular barcodes that
 #'   don't pass quality control cutoffs removed.
 #' @export
-setMethod("filter_barcodes", "bcbioSCDataSet", function(
+setMethod("filter", "bcbioSCDataSet", function(
     object,
     umis = 1000L,
     genes = 500L,

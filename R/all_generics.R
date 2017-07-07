@@ -21,15 +21,6 @@ setGeneric("bcbio<-", function(object, ..., value) standardGeneric("bcbio<-"))
 
 
 
-#' @rdname filter_barcodes
-#' @usage NULL
-#' @export
-setGeneric("filter_barcodes", function(object, ...) {
-    standardGeneric("filter_barcodes")
-})
-
-
-
 #' @rdname metadata_table
 #' @usage NULL
 #' @export
