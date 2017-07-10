@@ -28,6 +28,8 @@
 \alias{top_n}
 \alias{reexports}
 \alias{write_counts}
+\alias{reexports}
+\alias{write_csv}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -35,6 +37,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{detect_hpc}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{left_join}}, \code{\link[basejump]{kable}}, \code{\link[basejump]{pct}}, \code{\link[basejump]{plot_grid}}, \code{\link[basejump]{read_excel}}, \code{\link[basejump]{save_data}}, \code{\link[basejump]{tibble}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{write_counts}}}
+  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{detect_hpc}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{left_join}}, \code{\link[basejump]{kable}}, \code{\link[basejump]{pct}}, \code{\link[basejump]{plot_grid}}, \code{\link[basejump]{read_excel}}, \code{\link[basejump]{save_data}}, \code{\link[basejump]{tibble}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{write_counts}}, \code{\link[basejump]{write_csv}}}
 }}
 

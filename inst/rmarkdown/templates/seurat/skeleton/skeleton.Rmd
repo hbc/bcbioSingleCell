@@ -12,6 +12,8 @@ params:
 source("setup.R")
 library(Seurat)
 data(bcb_filtered)
+
+# Subset the filtered cellular barcodes
 subset <- select_samples(
     bcb_filtered,
     sample_name = params$sample_name,

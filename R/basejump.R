@@ -66,3 +66,6 @@ basejump::top_n
 
 #' @export
 basejump::write_counts
+
+#' @export
+basejump::write_csv
