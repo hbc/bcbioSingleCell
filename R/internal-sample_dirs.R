@@ -24,7 +24,7 @@
         sample_dirs <- list.files(
             upload_dir, pattern = "^matrix\\.mtx$",
             full.names = TRUE, recursive = TRUE) %>%
-            str_subset(file.path("outs", "raw_gene_bc_matrices")) %>%
+            str_subset(file.path("outs", "filtered_gene_bc_matrices")) %>%
             dirname
     } else {
         stop("Unsupported pipeline")
