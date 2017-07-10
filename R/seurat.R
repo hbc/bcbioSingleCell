@@ -11,10 +11,10 @@ new_seurat <- function(object, ...) {
     # Filtering criteria
     min_genes <- metadata(object) %>%
         .[["filtering_criteria"]] %>%
-        .[["genes"]]
+        .[["min_genes"]]
     max_mito_ratio <- metadata(object) %>%
         .[["filtering_criteria"]] %>%
-        .[["mito_ratio"]]
+        .[["max_mito_ratio"]]
     seurat <- new("seurat", raw.data = counts(object, gene2symbol = TRUE)) %>%
         Setup(meta.data = metrics(object) %>% dotted(rownames = FALSE),
               min.genes = min_genes,
@@ -28,7 +28,7 @@ new_seurat <- function(object, ...) {
 
 #' Plot clusters
 #'
-#' @param seurat Seurat object.
+#' @param seurat [seurat].
 #' @param genes Genes.
 #'
 #' @return [ggplot].
@@ -62,9 +62,29 @@ top_markers <- function(markers, n = 4L) {
 
 
 
+#' Plot known markers
+#'
+#' @param seurat [seurat].
+#' @param cell_type Cell type.
+#'
+#' @export
+plot_known_markers <- function(seurat, cell_type) {
+    lapply(seq_along(cell_type), function(a) {
+        writeLines(
+            c("", "",
+              paste("###", cell_type[a]),
+              "", ""))
+        genes <- known_markers_detected %>%
+            .[.$cell_type == cell_type[a], "gene"] %>% unique %>% sort
+        plot_clusters(seurat, genes)
+    }) %>% invisible
+}
+
+
+
 #' Plot top markers
 #'
-#' @param seurat Seurat object.
+#' @param seurat [seurat].
 #' @param top Top genes data frame.
 #'
 #' @return [ggplot].
