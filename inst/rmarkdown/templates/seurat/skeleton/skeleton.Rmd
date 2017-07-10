@@ -229,7 +229,7 @@ markers <- FindAllMarkers(seurat, only.pos = TRUE)
 ```
 
 ```{r save_markers}
-assign_markers(str_c(sample_name, "_markers"), markers)
+assign_data(str_c(sample_name, "_markers"), markers)
 dir.create(markers_dir, recursive = TRUE, showWarnings = FALSE)
 write_csv(markers, file.path(markers_dir, str_c(sample_name, ".csv.gz")))
 ```
@@ -276,12 +276,12 @@ plot_top_markers(seurat, top_markers)
 
 ## Load known markers
 
-```{r known_markers, eval=FALSE}
-known_markers <- file.path("data-raw", "known_markers.xlsx") %>%
+```{r known_markers}
+known_markers <- file.path("meta", "known_markers.xlsx") %>%
     known_markers(genome_build = "mm10")
 save_data(known_markers)
 cell_type <- unique(known_markers$cell_type)
-kable(known_markers, caption = "Known marker genes")
+kable(known_markers, caption = "Known markers")
 ```
 
 
@@ -289,11 +289,11 @@ kable(known_markers, caption = "Known marker genes")
 
 Let's obtain the statistics on our known marker genes from [Seurat][].
 
-```{r known_markers_detected, eval=FALSE}
+```{r known_markers_detected}
 known_markers_detected <- left_join(
     markers,
     known_markers,
-    by = c("gene" = "gene_symbol")) %>%
+    by = c("gene" = "symbol")) %>%
     filter(!is.na(cell_type))
 kable(known_markers_detected, caption = "Known markers detected")
 ```
@@ -301,8 +301,8 @@ kable(known_markers_detected, caption = "Known markers detected")
 
 ## Visualize cluster specificity
 
-```{r plot_known_markers, results="asis", eval=FALSE}
-plot_known_markers(seurat, cell_type)
+```{r plot_known_markers}
+plot_known_markers(seurat, known_markers_detected)
 ```
 
 

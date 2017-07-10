@@ -9,5 +9,7 @@ known_markers <- function(markers_file, genome_build) {
     read_file_by_extension(markers_file) %>%
         snake %>%
         left_join(annotable, by = "symbol") %>%
-        filter(!is.na(.data[["ensgene"]]))
+        filter(!is.na(.data[["ensgene"]])) %>%
+        tidy_select(c("cell_type", "symbol")) %>%
+        distinct
 }

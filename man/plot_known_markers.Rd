@@ -4,12 +4,12 @@
 \alias{plot_known_markers}
 \title{Plot known markers}
 \usage{
-plot_known_markers(seurat, cell_type)
+plot_known_markers(seurat, known_markers_detected)
 }
 \arguments{
 \item{seurat}{\link{seurat}.}
 
-\item{cell_type}{Cell type.}
+\item{known_markers_detected}{Known markers detected \link{data.frame}.}
 }
 \description{
 Plot known markers
