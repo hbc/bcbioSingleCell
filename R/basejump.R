@@ -62,6 +62,9 @@ basejump::rowData -> rowData
 basejump::save_data
 
 #' @export
+basejump::str_c
+
+#' @export
 basejump::tibble
 
 #' @export

@@ -13,10 +13,14 @@ source("setup.R")
 library(Seurat)
 data(bcb_filtered)
 
+markers_dir <- file.path("results", "markers")
+
 # Subset the filtered cellular barcodes
+sample_name <- params$sample_name
 subset <- select_samples(
     bcb_filtered,
-    sample_name = params$sample_name)
+    sample_name = sample_name)
+assign_data(sample_name, subset, compress = FALSE)
 
 # Number of principal components to calculate
 num_pc <- 30
@@ -32,7 +36,7 @@ num_pc <- 30
 Let's convert our `SCSubset` object containing the filtered cellular barcodes into a `seurat` object. This step uses [Seurat][]'s `Setup()` function with the same filtering cutoffs applied during our initial quality control analysis. Here we are imposing a basic minimum gene-cutoff, but also filtering low quality cells that have a high mitochondrial gene abundance. During this step, [Seurat][] applies log normalization to the counts, first scaling each cell to a total of 1e4 molecules [@Drop-seq], and only keeps genes expressed in >= 3 cells.
 
 ```{r seurat}
-seurat <- new_seurat(subset, project = params$sample_name)
+seurat <- new_seurat(subset, project = sample_name)
 ```
 
 ```{r VlnPlot}
@@ -168,10 +172,7 @@ seurat <- RunTSNE(
 ```
 
 ```{r save_seurat}
-assign(params$sample_name, seurat)
-save(list = params$sample_name,
-     file = file.path("data", paste0(params$sample_name, ".rda")),
-     compress = FALSE)
+assign_data(str_c(sample_name, "_seurat"), seurat, compress = FALSE)
 ```
 
 ```{r TSNEPlot}
@@ -228,11 +229,9 @@ markers <- FindAllMarkers(seurat, only.pos = TRUE)
 ```
 
 ```{r save_markers}
-markers_name <- paste0(params$sample_name, "_markers")
-assign(markers_name, markers)
-save(list = markers_name,
-     file = file.path("data", paste0(markers_name, ".rda")),
-     compress = FALSE)
+assign_markers(str_c(sample_name, "_markers"), markers)
+dir.create(markers_dir, recursive = TRUE, showWarnings = FALSE)
+write_csv(markers, file.path(markers_dir, str_c(sample_name, ".csv.gz")))
 ```
 
 
