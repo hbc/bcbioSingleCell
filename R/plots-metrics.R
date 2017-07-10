@@ -330,8 +330,8 @@ plot_mito_ratio <- function(object, max = 0.1) {
 #' @rdname plot-metrics
 #' @export
 plot_novelty <- function(object, min = 0.8) {
-    plot_grid(.plot_novelty_boxplot(object, min),
-              .plot_novelty_histogram(object, min),
+    plot_grid(.plot_novelty_histogram(object, min),
+              .plot_novelty_boxplot(object, min),
               labels = "auto",
               nrow = 2L)
 }
