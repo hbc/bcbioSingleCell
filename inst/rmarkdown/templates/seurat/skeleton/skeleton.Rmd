@@ -4,27 +4,22 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    data: may2017_filtered
-    project: sample_name
+    sample_name: sample_name
     pc_use: 15
 ---
 
 ```{r setup, message=FALSE}
 source("setup.R")
 library(Seurat)
-data(list = params$data)
-
-# Select samples
-project <- params$project
-data <- select_samples(
-    filtered,
-    sample_name = project,
+data(bcb_filtered)
+subset <- select_samples(
+    bcb_filtered,
+    sample_name = params$sample_name,
     file_name = NULL)
-rm(filtered)
+rm(bcb_filtered)
 
-# Principal components to use for clustering
+# Number of principal components to calculate
 num_pc <- 30
-pc_use <- params$pc_use
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -37,7 +32,7 @@ pc_use <- params$pc_use
 Let's convert our `SCSubset` object containing the filtered cellular barcodes into a `seurat` object. This step uses [Seurat][]'s `Setup()` function with the same filtering cutoffs applied during our initial quality control analysis. Here we are imposing a basic minimum gene-cutoff, but also filtering low quality cells that have a high mitochondrial gene abundance. During this step, [Seurat][] applies log normalization to the counts, first scaling each cell to a total of 1e4 molecules [@Drop-seq], and only keeps genes expressed in >= 3 cells.
 
 ```{r seurat}
-seurat <- new_seurat(data, project = project)
+seurat <- new_seurat(subset, project = params$sample_name)
 ```
 
 ```{r VlnPlot}
@@ -139,7 +134,7 @@ PCElbowPlot(seurat, num.pc = num_pc) +
     geom_vline(alpha = 0.5,
                color = "green",
                size = 2,
-               xintercept = pc_use)
+               xintercept = params$pc_use)
 ```
 
 ```{r JackStraw, eval=FALSE}
@@ -160,7 +155,7 @@ Here we will use the selected PCs to find clusters of cells via heirarchical clu
 seurat <- FindClusters(
     seurat,
     do.sparse = TRUE,
-    pc.use = 1:pc_use,
+    pc.use = 1:params$pc_use,
     print.output = FALSE,
     save.SNN = TRUE)
 ```
@@ -168,14 +163,14 @@ seurat <- FindClusters(
 ```{r RunTSNE}
 seurat <- RunTSNE(
     seurat,
-    dims.use = 1:pc_use,
+    dims.use = 1:params$pc_use,
     do.fast = TRUE)
 ```
 
 ```{r save_seurat}
-assign(project, seurat)
-save(list = project,
-     file = file.path("data", paste0(project, ".rda")),
+assign(params$sample_name, seurat)
+save(list = params$sample_name,
+     file = file.path("data", paste0(params$sample_name, ".rda")),
      compress = FALSE)
 ```
 
@@ -233,7 +228,7 @@ markers <- FindAllMarkers(seurat, only.pos = TRUE)
 ```
 
 ```{r save_markers}
-markers_name <- paste0(project, "_markers")
+markers_name <- paste0(params$sample_name, "_markers")
 assign(markers_name, markers)
 save(list = markers_name,
      file = file.path("data", paste0(markers_name, ".rda")),

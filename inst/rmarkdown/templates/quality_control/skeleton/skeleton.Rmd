@@ -3,6 +3,12 @@ title: "Quality control"
 author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
+params:
+    min_umis: 1000
+    min_genes: 500
+    max_genes: 5000
+    max_mito_ratio: 0.1
+    min_novelty: 0.8
 ---
 
 ```{r setup, message=FALSE}
@@ -80,16 +86,16 @@ plot_cell_counts(bcb)
 ## UMI counts per cell
 
 ```{r plot_umis_per_cell}
-plot_umis_per_cell(bcb)
+plot_umis_per_cell(bcb, min = params$min_umis)
 ```
 
 
 ## Genes detected
 
-Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `2000`-`5000` is normal for [inDrop][] analysis.
+Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `1000`-`5000` is normal for [inDrop][] analysis.
 
 ```{r plot_genes_detected}
-plot_genes_detected(bcb)
+plot_genes_detected(bcb, min = params$min_genes, max = params$max_genes)
 ```
 
 
@@ -107,7 +113,7 @@ plot_umis_vs_genes(bcb)
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
 
 ```{r plot_mito_ratio}
-plot_mito_ratio(bcb)
+plot_mito_ratio(bcb, max = params$max_mito_ratio)
 ```
 
 
@@ -116,16 +122,22 @@ plot_mito_ratio(bcb)
 Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
 
 ```{r plot_novelty}
-plot_novelty(bcb)
+plot_novelty(bcb, min = params$min_novelty)
 ```
 
 
 
-# Summary
+# Filter cellular barcodes
 
-```{r filtered}
-filtered <- filter(bcb)
-save_data(filtered, compress = FALSE)
+```{r filtered, fig.height=10, fig.width=7, message=TRUE}
+bcb_filtered <- filter(
+    bcb,
+    min_umis = params$min_umis,
+    min_genes = params$min_genes,
+    max_genes = params$max_genes,
+    max_mito_ratio = params$max_mito_ratio,
+    min_novelty = params$min_novelty)
+save_data(bcb_filtered, compress = FALSE)
 ```
 
 

@@ -10,6 +10,8 @@ if (file.exists("data/bcb.rda")) {
     save_data(bcb, compress = FALSE)
 }
 
+
+
 # knitr ====
 library(knitr)
 opts_chunk$set(
@@ -24,6 +26,8 @@ opts_chunk$set(
     message = FALSE,
     tidy = TRUE,
     warning = FALSE)
+
+
 
 # ggplot2 ====
 library(ggplot2)
