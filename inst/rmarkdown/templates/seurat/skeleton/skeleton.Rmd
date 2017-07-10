@@ -27,7 +27,7 @@ num_pc <- 30
 pc_use <- params$pc_use
 ```
 
-```{r header, child="header.Rmd"}
+```{r header, child="_header.Rmd"}
 ```
 
 
@@ -314,5 +314,5 @@ plot_known_markers(seurat, cell_type)
 
 
 
-```{r footer, child="footer.Rmd"}
+```{r footer, child="_footer.Rmd"}
 ```

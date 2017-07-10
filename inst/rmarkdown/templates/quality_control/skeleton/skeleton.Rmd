@@ -11,7 +11,7 @@ bibliography: bcbioSinglecell.bib
 source("setup.R")
 ```
 
-```{r header, child="header.Rmd"}
+```{r header, child="_header.Rmd"}
 ```
 
 
@@ -130,5 +130,5 @@ save_data(filtered, compress = FALSE)
 
 
 
-```{r footer, child="footer.Rmd"}
+```{r footer, child="_footer.Rmd"}
 ```
