@@ -67,7 +67,7 @@ setMethod("filter", "bcbioSCDataSet", function(
     sparse_counts <- sparse_counts[, rownames(metrics)]
     sparse_size_filtered <- object.size(sparse_counts) %>%
         format(units = "auto")
-    message(paste("Sparse matrix size shrunk from",
+    message(paste("Sparse matrix shrunk from",
                   sparse_size_original, "to", sparse_size_filtered))
 
     # colData ====
@@ -82,10 +82,11 @@ setMethod("filter", "bcbioSCDataSet", function(
         sample_metadata = metadata(object)[["sample_metadata"]],
         interesting_groups = metadata(object)[["interesting_groups"]],
         filtering_criteria = c(
-            umis = umis,
-            genes = genes,
-            mito_ratio = mito_ratio,
-            novelty = novelty),
+            min_umis = min_umis,
+            min_genes = min_genes,
+            max_genes = max_genes,
+            max_mito_ratio = max_mito_ratio,
+            min_novelty = min_novelty),
         date = Sys.Date(),
         wd = getwd(),
         hpc = detect_hpc(),
@@ -102,17 +103,19 @@ setMethod("filter", "bcbioSCDataSet", function(
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(show_report)) {
-        writeLines(c(
+        message(paste(
             "Filtering parameters:",
-            paste0("- `>= ", umis, "` UMI counts per cell"),
-            paste0("- `>= ", genes, "` genes per cell"),
-            paste0("- `<= ", mito_ratio, "` mitochondrial abundance ratio"),
-            paste0("- `>= ", novelty, "` novelty score")))
-        plot_cell_counts(object)
-        plot_umis_per_cell(object, min = min_umis)
-        plot_genes_detected(object, min = min_genes, max = max_genes)
-        plot_mito_ratio(object, max = max_mito_ratio)
-        plot_novelty(object, min = min_novelty)
+            paste("  - >=", min_umis, "UMI counts per cell"),
+            paste("  - >=", min_genes, "genes per cell"),
+            paste("  - <=", max_genes, "genes per cell"),
+            paste("  - <=", max_mito_ratio, "mitochondrial abundance ratio"),
+            paste("  - >=", min_novelty, "novelty score"),
+            sep = "\n"))
+        plot_cell_counts(object) %>% show
+        plot_umis_per_cell(object, min = min_umis) %>% show
+        plot_genes_detected(object, min = min_genes, max = max_genes) %>% show
+        plot_mito_ratio(object, max = max_mito_ratio) %>% show
+        plot_novelty(object, min = min_novelty) %>% show
     }
 
     object

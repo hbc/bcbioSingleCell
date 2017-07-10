@@ -293,7 +293,7 @@ plot_mito_ratio <- function(object, max = 0.1) {
              y = ~log10_genes_per_umi,
              fill = as.name(interesting_group))) +
         labs(x = "sample",
-             y = "log10 genes per umi (novelty score)") +
+             y = "log10 genes per umi") +
         facet_wrap(~file_name) +
         geom_boxplot() +
         geom_hline(alpha = 0.5,
@@ -315,7 +315,7 @@ plot_mito_ratio <- function(object, max = 0.1) {
         metrics,
         aes_(x = ~log10_genes_per_umi,
              fill = ~sample_name)) +
-        labs(x = "log10 genes per umi (novelty score)") +
+        labs(x = "log10 genes per umi") +
         facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
         geom_vline(alpha = 0.5,
