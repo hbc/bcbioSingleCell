@@ -78,19 +78,18 @@ setMethod("filter", "bcbioSCDataSet", function(
 
     # Metadata ====
     metadata <- SimpleList(
-        source = deparse(substitute(object)),
-        sample_metadata = metadata(object)[["sample_metadata"]],
-        interesting_groups = metadata(object)[["interesting_groups"]],
         filtering_criteria = c(
             min_umis = min_umis,
             min_genes = min_genes,
             max_genes = max_genes,
             max_mito_ratio = max_mito_ratio,
             min_novelty = min_novelty),
-        date = Sys.Date(),
-        wd = getwd(),
-        hpc = detect_hpc(),
-        session_info = sessionInfo())
+        source_name = deparse(substitute(object)),
+        sample_metadata = metadata(object)[["sample_metadata"]],
+        interesting_groups = metadata(object)[["interesting_groups"]],
+        ensembl_version = metadata(object)[["ensembl_version"]],
+        genome_build = metadata(object)[["genome_build"]],
+        annotable = metadata(object)[["annotable"]])
 
     # SummarizedExperiment ====
     se <- .summarized_experiment(
