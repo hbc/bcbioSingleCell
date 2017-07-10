@@ -1,14 +1,17 @@
 #' @export
 basejump::`%>%`
 
+#' @rdname all_generics
 #' @export
-basejump::assay
+basejump::assay -> assay
 
+#' @rdname all_generics
 #' @export
-basejump::assays
+basejump::assays -> assays
 
+#' @rdname all_generics
 #' @export
-basejump::colData
+basejump::colData -> colData
 
 #' @rdname counts
 #' @usage NULL
@@ -21,17 +24,36 @@ basejump::detect_hpc
 #' @export
 basejump::dotted
 
+#' @rdname filter
+#' @usage NULL
+#' @export
+basejump::filter -> filter
+
 #' @export
 basejump::group_by
 
 #' @export
-basejump::metadata
+basejump::left_join
+
+#' @export
+basejump::kable
+
+#' @rdname all_generics
+#' @export
+basejump::metadata -> metadata
 
 #' @export
 basejump::pct
 
 #' @export
-basejump::rowData
+basejump::plot_grid
+
+#' @export
+basejump::read_excel
+
+#' @rdname all_generics
+#' @export
+basejump::rowData -> rowData
 
 #' @export
 basejump::save_data
