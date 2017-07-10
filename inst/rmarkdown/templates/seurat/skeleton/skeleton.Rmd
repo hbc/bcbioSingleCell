@@ -16,8 +16,7 @@ data(bcb_filtered)
 # Subset the filtered cellular barcodes
 subset <- select_samples(
     bcb_filtered,
-    sample_name = params$sample_name,
-    file_name = NULL)
+    sample_name = params$sample_name)
 
 # Number of principal components to calculate
 num_pc <- 30
@@ -239,9 +238,9 @@ save(list = markers_name,
 
 ## Top markers per cluster
 
-```{r top}
-top <- top_markers(markers)
-kable(top, caption = "Top markers per cluster")
+```{r top_markers}
+top_markers <- top_markers(markers)
+kable(top_markers, caption = "Top markers per cluster")
 ```
 
 
@@ -254,7 +253,7 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 
 ```{r DoHeatmap, fig.height=10, fig.width=10}
 DoHeatmap(seurat,
-          genes.use = top$gene,
+          genes.use = top_markers$gene,
           order.by.ident = TRUE,
           remove.key = TRUE,
           slim.col.label = TRUE)
@@ -268,8 +267,8 @@ There are several tools for visualizing marker expression. `VlnPlot()` generates
 
 ## Top markers per cluster
 
-```{r plot_top_markers, results="asis"}
-plot_top_markers(seurat, top)
+```{r plot_top_markers}
+plot_top_markers(seurat, top_markers)
 ```
 
 
@@ -280,8 +279,7 @@ plot_top_markers(seurat, top)
 
 ```{r known_markers, eval=FALSE}
 known_markers <- file.path("data-raw", "known_markers.xlsx") %>%
-    read_excel %>%
-    snake
+    known_markers(genome_build = "mm10")
 save_data(known_markers)
 cell_type <- unique(known_markers$cell_type)
 kable(known_markers, caption = "Known marker genes")
