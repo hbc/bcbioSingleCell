@@ -6,8 +6,7 @@
 \alias{SCSubset}
 \title{SCSubset}
 \description{
-\link{SCSubset} is a subclass of
-\link[SummarizedExperiment:SummarizedExperiment]{SummarizedExperiment::SummarizedExperiment} designed to store a subset
+\link{SCSubset} is a subclass of \link{SummarizedExperiment} designed to store a subset
 of single-cell RNA-seq counts filtered by quality control analysis.
 }
 \author{

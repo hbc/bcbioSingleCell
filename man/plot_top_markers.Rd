@@ -7,7 +7,7 @@
 plot_top_markers(seurat, top)
 }
 \arguments{
-\item{seurat}{Seurat object.}
+\item{seurat}{\link{seurat}.}
 
 \item{top}{Top genes data frame.}
 }

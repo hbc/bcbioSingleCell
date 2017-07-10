@@ -7,7 +7,7 @@
 plot_clusters(seurat, genes)
 }
 \arguments{
-\item{seurat}{Seurat object.}
+\item{seurat}{\link{seurat}.}
 
 \item{genes}{Genes.}
 }

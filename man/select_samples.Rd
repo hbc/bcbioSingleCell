@@ -4,10 +4,10 @@
 \name{select_samples}
 \alias{select_samples}
 \alias{select_samples,bcbioSCDataSet-method}
-\alias{select_samples,SummarizedExperiment-method}
+\alias{select_samples,SCSubset-method}
 \title{Select samples}
 \usage{
-\S4method{select_samples}{SummarizedExperiment}(object, sample_name = NULL,
+\S4method{select_samples}{SCSubset}(object, sample_name = NULL,
   file_name = NULL)
 }
 \arguments{
