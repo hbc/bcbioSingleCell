@@ -18,9 +18,9 @@ opts_chunk$set(
     cache.lazy = FALSE,
     dev = c("png", "pdf", "svg"),
     error = FALSE,
-    fig.height = 7,
+    fig.height = 8,
     fig.retina = 2,
-    fig.width = 7,
+    fig.width = 8,
     message = FALSE,
     tidy = TRUE,
     warning = FALSE)
