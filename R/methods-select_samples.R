@@ -21,16 +21,15 @@
 #' @export
 setMethod("select_samples", "bcbioSCDataSet", function(object) {
     stop(paste(
-        "Sample extraction using `select_samples()` can only be performed",
-        "after barcode filtering. Run `filter_barcodes()` first on the",
-        "bcbioSCDataSet."))
+        "Sample extraction can only be performed after barcode filtering.",
+        "Run `filter()` first on the bcbioSCDataSet."))
 })
 
 
 
 #' @rdname select_samples
 #' @export
-setMethod("select_samples", "SummarizedExperiment", function(
+setMethod("select_samples", "SCSubset", function(
     object,
     sample_name = NULL,
     file_name = NULL) {
@@ -60,23 +59,17 @@ setMethod("select_samples", "SummarizedExperiment", function(
     cellular_barcodes <- colnames(object) %>%
         .[str_detect(., sample_id_pattern)]
 
-    # Counts ====
+    # Return the SCSubset object
     sparse_counts <- assay(object)[, cellular_barcodes]
-
-    # colData ====
     col_data <- colData(object)[cellular_barcodes, ]
-
-    # rowData ====
     row_data <- .row_data(object)
-
-    # Metadata ====
     metadata <- metadata(object)
     metadata[["sample_metadata"]] <- sample_metadata
-
-    .summarized_experiment(
+    se <- .summarized_experiment(
         assays = SimpleList(
             sparse_counts = sparse_counts),
         col_data = col_data,
         row_data = row_data,
         metadata = metadata)
+    new("SCSubset", se)
 })
