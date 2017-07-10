@@ -16,7 +16,6 @@ subset <- select_samples(
     bcb_filtered,
     sample_name = params$sample_name,
     file_name = NULL)
-rm(bcb_filtered)
 
 # Number of principal components to calculate
 num_pc <- 30
