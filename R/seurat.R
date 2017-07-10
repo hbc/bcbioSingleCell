@@ -37,10 +37,12 @@ plot_clusters <- function(seurat, genes) {
     VlnPlot(seurat,
             genes,
             use.scaled = TRUE)
-    FeaturePlot(seurat, genes,
+    FeaturePlot(seurat,
+                features.plot = genes,
                 reduction.use = "tsne",
                 cols.use = c("grey", "blue"))
-    FeaturePlot(seurat, genes,
+    FeaturePlot(seurat,
+                features.plot = genes,
                 reduction.use = "pca",
                 cols.use = c("grey", "red"))
 }
@@ -69,11 +71,7 @@ top_markers <- function(markers, n = 4L) {
 #'
 #' @export
 plot_known_markers <- function(seurat, cell_type) {
-    lapply(seq_along(cell_type), function(a) {
-        writeLines(
-            c("", "",
-              paste("###", cell_type[a]),
-              "", ""))
+    pblapply(seq_along(cell_type), function(a) {
         genes <- known_markers_detected %>%
             filter(.data[["cell_type"]] == cell_type[a]) %>%
             pull("gene") %>%
@@ -93,11 +91,7 @@ plot_known_markers <- function(seurat, cell_type) {
 #' @return [ggplot].
 #' @export
 plot_top_markers <- function(seurat, top_markers) {
-    lapply(levels(top_markers[["cluster"]]), function(a) {
-        writeLines(
-            c("", "",
-              paste("###", "Cluster", a),
-              "", ""))
+    pblapply(levels(top_markers[["cluster"]]), function(a) {
         genes <- top_markers %>%
             filter(.data[["cluster"]] == a) %>%
             pull("gene")
