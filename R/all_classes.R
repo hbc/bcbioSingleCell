@@ -14,3 +14,16 @@ bcbioSCDataSet <- setClass(  # nolint
     contains = "SummarizedExperiment",
     representation = representation(callers = "SimpleList"))
 setValidity("bcbioSCDataSet", function(object) TRUE)
+
+
+
+#' SCSubset
+#'
+#' [SCSubset] is a subclass of
+#' [SummarizedExperiment::SummarizedExperiment] designed to store a subset
+#' of single-cell RNA-seq counts filtered by quality control analysis.
+#'
+#' @author Michael Steinbaugh
+#'
+#' @export
+SCSubset <- setClass("SCSubset", contains = "SummarizedExperiment")  # nolint

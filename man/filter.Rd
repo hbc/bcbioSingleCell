@@ -5,25 +5,27 @@
 \alias{filter,bcbioSCDataSet-method}
 \title{Filter cellular barcodes}
 \usage{
-\S4method{filter}{bcbioSCDataSet}(object, umis = 1000L, genes = 500L,
-  mito_ratio = 0.1, novelty = 0.8, show_report = TRUE)
+\S4method{filter}{bcbioSCDataSet}(object, min_umis = 1000L,
+  min_genes = 500L, max_genes = NULL, max_mito_ratio = 0.1,
+  min_novelty = 0.8, show_report = TRUE)
 }
 \arguments{
 \item{object}{Primary object.}
 
-\item{umis}{Minimum number of UMI disambiguated counts per cell.}
+\item{min_umis}{Minimum number of UMI disambiguated counts per cell.}
 
-\item{genes}{Minimum number of genes detected.}
+\item{min_genes}{Minimum number of genes detected.}
 
-\item{mito_ratio}{Maximum relative mitochondrial abundance (\code{0-1} scale).}
+\item{max_genes}{Maximum number of genes detected.}
 
-\item{novelty}{Minimum novelty score.}
+\item{max_mito_ratio}{Maximum relative mitochondrial abundance (\code{0-1} scale).}
+
+\item{min_novelty}{Minimum novelty score.}
 
 \item{show_report}{Show summary statistics report and plots.}
 }
 \value{
-\link{bcbioSCDataSet}, with low quality cellular barcodes that
-don't pass quality control cutoffs removed.
+\link{SCSubset}.
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
