@@ -1,12 +1,11 @@
-# FIXME Set methods matching bcbioSCDataSet and SummarizedExperiment
-
 #' Get gene symbols from Ensembl identifier rownames
 #'
 #' @rdname gene2symbol
 #' @keywords internal
 #' @author Michael Steinbaugh
 #'
-#' @param object Object containing SummarizedExperiment.
+#' @param object Object containing SummarizedExperiment with rownames set as
+#'   Ensembl identifiers.
 #'
 #' @return Ensembl gene symbol (`external_gene_name`) character vector.
 .gene2symbol <- function(object) {
@@ -22,7 +21,7 @@
     g2s <- bind_rows(ok_symbol, na_symbol) %>%
         mutate(symbol = make.unique(.data[["symbol"]])) %>%
         column_to_rownames %>%
-        # Make sure the rownames order match the original object
+        # Ensure the row order matches the original object
         .[rownames(object), ]
 
     # Check for failures
