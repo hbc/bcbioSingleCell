@@ -112,7 +112,7 @@ setMethod("filter", "bcbioSCDataSet", function(
             sep = "\n"))
         plot_cell_counts(object) %>% show
         plot_umis_per_cell(object, min = min_umis) %>% show
-        plot_genes_detected(object, min = min_genes, max = max_genes) %>% show
+        plot_genes_per_cell(object, min = min_genes, max = max_genes) %>% show
         plot_mito_ratio(object, max = max_mito_ratio) %>% show
         plot_novelty(object, min = min_novelty) %>% show
     }

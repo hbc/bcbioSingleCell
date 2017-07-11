@@ -94,8 +94,8 @@ plot_umis_per_cell(bcb, min = params$min_umis)
 
 Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `1000`-`5000` is normal for [inDrop][] analysis.
 
-```{r plot_genes_detected}
-plot_genes_detected(bcb, min = params$min_genes, max = params$max_genes)
+```{r plot_genes_per_cell}
+plot_genes_per_cell(bcb, min = params$min_genes, max = params$max_genes)
 ```
 
 
