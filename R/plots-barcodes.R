@@ -1,5 +1,3 @@
-# FIXME Move to S4, supporting bcbioSCFiltered
-
 #' Plot cellular barcode distributions per sample
 #'
 #' @details A violin plot is a compact display of a continuous distribution. It
@@ -91,8 +89,7 @@
             sample_id = names(cellular_barcodes)[[a]],
             x = x,
             y = y)
-    }
-    ) %>%
+    }) %>%
         set_names(names(cellular_barcodes))
     bind_rows(list) %>%
         left_join(sample_metadata(object), by = "sample_id") %>%
@@ -116,7 +113,9 @@ plot_cellular_barcodes <- function(object) {
     if (is.null(plot_cb_df)) {
         return(NULL)
     }
-    show(.plot_cb_violin(plot_cb_df))
-    show(.plot_cb_histogram(plot_cb_df))
-    show(.plot_cb_histogram2(object))
+    plot_grid(.plot_cb_violin(plot_cb_df),
+              .plot_cb_histogram(plot_cb_df),
+              .plot_cb_histogram2(object),
+              labels = "auto",
+              nrow = 3L)
 }
