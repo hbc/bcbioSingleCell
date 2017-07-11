@@ -5,20 +5,18 @@
 \alias{sample_metadata}
 \alias{.sample_metadata}
 \alias{sample_metadata,bcbioSCDataSet-method}
-\alias{sample_metadata,SummarizedExperiment-method}
+\alias{sample_metadata,SCSubset-method}
 \title{Sample metadata}
 \usage{
-\S4method{sample_metadata}{bcbioSCDataSet}(object, unique_names = FALSE)
+\S4method{sample_metadata}{bcbioSCDataSet}(object)
 
-\S4method{sample_metadata}{SummarizedExperiment}(object, unique_names = FALSE)
+\S4method{sample_metadata}{SCSubset}(object)
 }
 \arguments{
 \item{object}{Primary object.}
-
-\item{unique_names}{Unique sample names.}
 }
 \value{
-\link{data.frame}.
+\link{tibble}.
 }
 \description{
 Sample metadata

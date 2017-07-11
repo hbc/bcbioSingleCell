@@ -12,7 +12,7 @@ top_markers(markers, n = 4L)
 \item{n}{Number of genes per cluster.}
 }
 \value{
-\link{data.frame}
+\link{data.frame}.
 }
 \description{
 Top marker genes

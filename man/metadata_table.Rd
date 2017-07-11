@@ -5,12 +5,12 @@
 \alias{metadata_table}
 \alias{.metadata_table}
 \alias{metadata_table,bcbioSCDataSet-method}
-\alias{metadata_table,SummarizedExperiment-method}
+\alias{metadata_table,SCSubset-method}
 \title{Metadata table for knit report}
 \usage{
 \S4method{metadata_table}{bcbioSCDataSet}(object, ...)
 
-\S4method{metadata_table}{SummarizedExperiment}(object, ...)
+\S4method{metadata_table}{SCSubset}(object, ...)
 }
 \arguments{
 \item{object}{Primary object.}

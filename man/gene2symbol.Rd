@@ -7,7 +7,8 @@
 .gene2symbol(object)
 }
 \arguments{
-\item{object}{Object containing SummarizedExperiment.}
+\item{object}{Object containing SummarizedExperiment with rownames set as
+Ensembl identifiers.}
 }
 \value{
 Ensembl gene symbol (\code{external_gene_name}) character vector.

@@ -5,12 +5,12 @@
 \alias{metrics}
 \alias{.metrics}
 \alias{metrics,bcbioSCDataSet-method}
-\alias{metrics,SummarizedExperiment-method}
+\alias{metrics,SCSubset-method}
 \title{Sample barcode metrics}
 \usage{
 \S4method{metrics}{bcbioSCDataSet}(object, unique_names = FALSE)
 
-\S4method{metrics}{SummarizedExperiment}(object, unique_names = FALSE)
+\S4method{metrics}{SCSubset}(object, unique_names = FALSE)
 }
 \arguments{
 \item{object}{Primary object.}

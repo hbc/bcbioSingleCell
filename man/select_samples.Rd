@@ -3,22 +3,23 @@
 \docType{methods}
 \name{select_samples}
 \alias{select_samples}
+\alias{.select_samples}
 \alias{select_samples,bcbioSCDataSet-method}
 \alias{select_samples,SCSubset-method}
 \title{Select samples}
 \usage{
-\S4method{select_samples}{SCSubset}(object, sample_name = NULL,
-  file_name = NULL)
+\S4method{select_samples}{bcbioSCDataSet}(object, ...)
+
+\S4method{select_samples}{SCSubset}(object, ...)
 }
 \arguments{
 \item{object}{Primary object.}
 
-\item{sample_name}{Character vector of sample names.}
-
-\item{file_name}{Character vector of file names.}
+\item{...}{Columns to use for grep pattern matching. Supply a named character
+vector containing the column name and the grep pattern.}
 }
 \value{
-\link[SummarizedExperiment:SummarizedExperiment]{SummarizedExperiment::SummarizedExperiment}.
+\link{SCSubset}.
 }
 \description{
 Select samples

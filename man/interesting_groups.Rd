@@ -5,12 +5,12 @@
 \alias{interesting_groups}
 \alias{.interesting_groups}
 \alias{interesting_groups,bcbioSCDataSet-method}
-\alias{interesting_groups,SummarizedExperiment-method}
+\alias{interesting_groups,SCSubset-method}
 \title{Interesting groups}
 \usage{
 \S4method{interesting_groups}{bcbioSCDataSet}(object)
 
-\S4method{interesting_groups}{SummarizedExperiment}(object)
+\S4method{interesting_groups}{SCSubset}(object)
 }
 \arguments{
 \item{object}{Primary object.}

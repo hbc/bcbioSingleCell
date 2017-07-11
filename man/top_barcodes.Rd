@@ -5,12 +5,12 @@
 \alias{top_barcodes}
 \alias{.top_barcodes}
 \alias{top_barcodes,bcbioSCDataSet-method}
-\alias{top_barcodes,SummarizedExperiment-method}
+\alias{top_barcodes,SCSubset-method}
 \title{Top barcodes}
 \usage{
 \S4method{top_barcodes}{bcbioSCDataSet}(object, n = 2L)
 
-\S4method{top_barcodes}{SummarizedExperiment}(object, n = 2L)
+\S4method{top_barcodes}{SCSubset}(object, n = 2L)
 }
 \arguments{
 \item{object}{Primary object.}

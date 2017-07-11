@@ -5,13 +5,13 @@
 \alias{counts}
 \alias{.counts}
 \alias{counts,bcbioSCDataSet-method}
-\alias{counts,SummarizedExperiment-method}
+\alias{counts,SCSubset-method}
 \title{Counts accessor}
 \usage{
 \S4method{counts}{bcbioSCDataSet}(object, gene2symbol = FALSE,
   format = "dgCMatrix")
 
-\S4method{counts}{SummarizedExperiment}(object, gene2symbol = FALSE,
+\S4method{counts}{SCSubset}(object, gene2symbol = FALSE,
   format = "dgCMatrix")
 }
 \arguments{
