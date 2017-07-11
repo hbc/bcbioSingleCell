@@ -17,9 +17,6 @@
 .metadata_table <- function(object, ...) {
     object %>%
         sample_metadata %>%
-        as_tibble %>%
-        remove_rownames %>%
-        snake %>%
         mutate(file_name = NULL) %>%
         kable(caption = "Sample metadata", ...)
 }
@@ -32,4 +29,4 @@ setMethod("metadata_table", "bcbioSCDataSet", .metadata_table)
 
 #' @rdname metadata_table
 #' @export
-setMethod("metadata_table", "SummarizedExperiment", .metadata_table)
+setMethod("metadata_table", "SCSubset", .metadata_table)
