@@ -24,6 +24,7 @@
         sample_dirs <- list.files(
             upload_dir, pattern = "^matrix\\.mtx$",
             full.names = TRUE, recursive = TRUE) %>%
+            # Look for the filtered counts
             str_subset(file.path("outs", "filtered_gene_bc_matrices")) %>%
             dirname
     } else {
