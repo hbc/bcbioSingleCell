@@ -4,8 +4,10 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    sample_name: sample_name
+    sample_name: NULL
+    pc_compute: 30
     pc_use: 15
+    markers_dir: !r file.path("results", "markers")
 ---
 
 ```{r setup, message=FALSE}
@@ -20,11 +22,8 @@ subset <- select_samples(
     sample_name = sample_name)
 assign_data(sample_name, subset, compress = FALSE)
 
-# Number of principal components to calculate
-num_pc <- 30
-
-# Directory paths
-markers_dir <- file.path("results", "markers")
+genome_build <- metadata(bcb_filtered)[["genome_build"]]
+rm(bcb_filtered)
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -32,12 +31,12 @@ markers_dir <- file.path("results", "markers")
 
 
 
-# Initialize Seurat
+# Initialize Seurat (`r sample_name`)
 
 Let's convert our `SCSubset` object containing the filtered cellular barcodes into a `seurat` object. This step uses [Seurat][]'s `Setup()` function with the same filtering cutoffs applied during our initial quality control analysis. Here we are imposing a basic minimum gene-cutoff, but also filtering low quality cells that have a high mitochondrial gene abundance. During this step, [Seurat][] applies log normalization to the counts, first scaling each cell to a total of 1e4 molecules [@Drop-seq], and only keeps genes expressed in >= 3 cells.
 
 ```{r seurat}
-seurat <- new_seurat(subset, project = sample_name)
+seurat <- as(subset, "seurat")
 ```
 
 ```{r VlnPlot}
@@ -86,7 +85,7 @@ Run PCA using `PCAFast()` on the scaled data. By default, the genes in `seurat@v
 
 ```{r PCA}
 seurat <- seurat %>%
-    PCAFast(pcs.compute = num_pc, do.print = FALSE) %>%
+    PCAFast(pcs.compute = params$pc_compute, do.print = FALSE) %>%
     ProjectPCA(do.print = FALSE)
 ```
 
@@ -133,7 +132,7 @@ To overcome the extensive technical noise in any single gene for scRNA-seq data,
 Alternatively, [Seurat][] can implement a resampling test inspired by the `jackStraw` procedure [@Drop-seq]. Here we randomly permute a subset of the data (1% by default) and rerun PCA, constructing a "null distribution" of gene scores, and repeat this procedure. We identify "significant" PCs as those who have a strong enrichment of low p-value genes. The `JackStrawPlot()` function provides a visualization tool for comparing the distribution of p-values for each PC with a uniform distribution (dashed line). "Significant" PCs will show a strong enrichment of genes with low p-values (solid curve above the dashed line). Since the `JackStrawPlot()` function takes a very long time to run, even on an HPC cluster, we recommend opting for the `PCElbowPlot()` approach instead.
 
 ```{r PCElbowPlot}
-PCElbowPlot(seurat, num.pc = num_pc) +
+PCElbowPlot(seurat, num.pc = params$pc_compute) +
     ggtitle("pc elbow plot") +
     geom_line() +
     geom_vline(alpha = 0.5,
@@ -145,9 +144,9 @@ PCElbowPlot(seurat, num.pc = num_pc) +
 ```{r JackStraw, eval=FALSE}
 seurat <- JackStraw(
     seurat,
-    num.pc = num_pc,
+    num.pc = params$pc_compute,
     do.print = FALSE)
-JackStrawPlot(seurat, PCs = 1:num_pc)
+JackStrawPlot(seurat, PCs = 1:params$pc_compute)
 ```
 
 
@@ -231,8 +230,11 @@ markers <- FindAllMarkers(seurat, only.pos = TRUE)
 
 ```{r save_markers}
 assign_data(str_c(sample_name, "_markers"), markers)
-dir.create(markers_dir, recursive = TRUE, showWarnings = FALSE)
-write_csv(markers, file.path(markers_dir, str_c(sample_name, ".csv.gz")))
+dir.create(params$markers_dir,
+           recursive = TRUE,
+           showWarnings = FALSE)
+write_csv(markers,
+          file.path(params$markers_dir, str_c(sample_name, ".csv.gz")))
 ```
 
 
@@ -279,8 +281,7 @@ plot_top_markers(seurat, top_markers)
 
 ```{r known_markers}
 known_markers <-
-    known_markers(file.path("meta", "known_markers.xlsx"),
-                  genome_build = "mm10")
+    known_markers(file.path("meta", "known_markers.xlsx"), genome_build)
 save_data(known_markers)
 kable(known_markers, caption = "Known markers")
 ```
