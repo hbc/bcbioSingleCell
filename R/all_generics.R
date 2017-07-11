@@ -17,14 +17,18 @@ setGeneric("aggregate_replicates", function(object, ...) {
 #' @rdname bcbio
 #' @usage NULL
 #' @export
-setGeneric("bcbio", function(object, ...) standardGeneric("bcbio"))
+setGeneric("bcbio", function(object, ...) {
+    standardGeneric("bcbio")
+})
 
 
 
 #' @rdname bcbio
 #' @usage NULL
 #' @export
-setGeneric("bcbio<-", function(object, ..., value) standardGeneric("bcbio<-"))
+setGeneric("bcbio<-", function(object, ..., value) {
+    standardGeneric("bcbio<-")
+})
 
 
 
@@ -49,7 +53,9 @@ setGeneric("interesting_groups", function(object) {
 #' @rdname metrics
 #' @usage NULL
 #' @export
-setGeneric("metrics", function(object, ...) standardGeneric("metrics"))
+setGeneric("metrics", function(object, ...) {
+    standardGeneric("metrics")
+})
 
 
 
