@@ -1,31 +1,3 @@
-#' Create a new Seurat object
-#'
-#' @author Michael Steinbaugh
-#'
-#' @param object [SummarizedExperiment] containing filtered counts.
-#' @param ... Additional parameters, passed to [Seurat::Setup()].
-#'
-#' @return [seurat].
-#' @export
-new_seurat <- function(object, ...) {
-    # Filtering criteria
-    min_genes <- metadata(object) %>%
-        .[["filtering_criteria"]] %>%
-        .[["min_genes"]]
-    max_mito_ratio <- metadata(object) %>%
-        .[["filtering_criteria"]] %>%
-        .[["max_mito_ratio"]]
-    seurat <- new("seurat", raw.data = counts(object, gene2symbol = TRUE)) %>%
-        Setup(meta.data = metrics(object) %>% dotted(rownames = FALSE),
-              min.genes = min_genes,
-              ...) %>%
-        SubsetData(subset.name = "mito.ratio", accept.high = max_mito_ratio)
-    message(paste("Seurat object:", object_size(seurat)))
-    seurat
-}
-
-
-
 #' Plot clusters
 #'
 #' @param seurat [seurat].
@@ -51,7 +23,7 @@ plot_clusters <- function(seurat, genes) {
 #' @param markers Markers.
 #' @param n Number of genes per cluster.
 #'
-#' @return [data.frame]
+#' @return [data.frame].
 #' @export
 top_markers <- function(markers, n = 4L) {
     markers %>%
@@ -76,7 +48,8 @@ plot_known_markers <- function(seurat, known_markers_detected) {
             unique %>%
             sort
         plot_clusters(seurat, genes)
-    }) %>% invisible
+    }) %>%
+        invisible
 }
 
 
@@ -94,5 +67,6 @@ plot_top_markers <- function(seurat, top_markers) {
             filter(.data[["cluster"]] == a) %>%
             pull("gene")
         plot_clusters(seurat, genes)
-    }) %>% invisible
+    }) %>%
+        invisible
 }

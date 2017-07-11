@@ -9,62 +9,50 @@
 #' @rdname select_samples
 #'
 #' @param object Primary object.
-#' @param sample_name Character vector of sample names.
-#' @param file_name Character vector of file names.
+#' @param ... Columns to use for grep pattern matching. Supply a named character
+#'   vector containing the column name and the grep pattern.
 #'
-#' @return [SummarizedExperiment::SummarizedExperiment].
+#' @return [SCSubset].
 
 
 
 #' @rdname select_samples
 #' @usage NULL
-#' @export
-setMethod("select_samples", "bcbioSCDataSet", function(object) {
-    stop(paste(
-        "Sample extraction can only be performed after barcode filtering.",
-        "Run `filter()` first on the bcbioSCDataSet."))
-})
-
-
-
-#' @rdname select_samples
-#' @export
-setMethod("select_samples", "SCSubset", function(
-    object,
-    sample_name = NULL,
-    file_name = NULL) {
+.select_samples <- function(object, ...) {
     sample_metadata <- sample_metadata(object)
-
-    # Filter metadata by sample name
-    if (!is.null(sample_name)) {
-        sample_name_pattern <- str_c(sample_name, collapse = "|")
-        sample_metadata <- sample_metadata %>%
-            filter(str_detect(.data[["sample_name"]], sample_name_pattern))
+    patterns = c(...)
+    list <- lapply(seq_along(patterns), function(a) {
+        sample_metadata %>%
+            filter(str_detect(.data[[names(patterns)[[a]]]], patterns[[a]])) %>%
+            pull("sample_id") %>%
+            unique %>%
+            sort
+    })
+    sample_ids <- Reduce(intersect, list) %>% sort
+    if (!length(sample_ids)) {
+        stop("No samples matched")
     }
+    message(paste(length(sample_ids),
+                  "samples matched:",
+                  toString(sample_ids)))
 
-    # Filter metadata by file name
-    if (!is.null(file_name)) {
-        file_name_pattern <- str_c(file_name, collapse = "|")
-        sample_metadata <- sample_metadata %>%
-            filter(str_detect(.data[["file_name"]], file_name_pattern))
-    }
-
-    if (!nrow(sample_metadata)) {
-        stop("No matching samples")
-    }
-
-    sample_id_pattern <- sample_metadata[["sample_id"]] %>%
+    # Match the sample ID prefix in the cellular barcode columns of the matrix.
+    # Here "cb" is short for "cellular barcodes".
+    cb_pattern <- sample_ids %>%
         str_c(collapse = "|") %>%
         str_c("^(", ., ")_")
-    cellular_barcodes <- colnames(object) %>%
-        .[str_detect(., sample_id_pattern)]
+    cb_matches <- colnames(object) %>% .[str_detect(., cb_pattern)]
+    if (!length(cb_matches)) {
+        stop("No cellular barcodes matched")
+    }
+    message(paste(length(cb_matches), "cellular barcodes"))
 
     # Return the SCSubset object
-    sparse_counts <- assay(object)[, cellular_barcodes]
-    col_data <- colData(object)[cellular_barcodes, ]
+    sparse_counts <- assay(object)[, cb_matches]
+    col_data <- colData(object)[cb_matches, ]
     row_data <- .row_data(object)
     metadata <- metadata(object)
-    metadata[["sample_metadata"]] <- sample_metadata
+    metadata[["sample_metadata"]] <- sample_metadata[sample_ids, ]
     se <- .summarized_experiment(
         assays = SimpleList(
             sparse_counts = sparse_counts),
@@ -72,4 +60,14 @@ setMethod("select_samples", "SCSubset", function(
         row_data = row_data,
         metadata = metadata)
     new("SCSubset", se)
-})
+}
+
+
+
+#' @rdname select_samples
+#' @export
+setMethod("select_samples", "bcbioSCDataSet", .select_samples)
+
+#' @rdname select_samples
+#' @export
+setMethod("select_samples", "SCSubset", .select_samples)

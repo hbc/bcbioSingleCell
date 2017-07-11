@@ -14,9 +14,7 @@
 .top_barcodes <- function(object, n = 2L) {
     metrics(object) %>%
         as_tibble %>%
-        # FIXME Need to set as grouped tibble?
         top_n(n, !!sym("total_counts"))
-    # FIXME Return as data.frame?
 }
 
 
@@ -27,4 +25,4 @@ setMethod("top_barcodes", "bcbioSCDataSet", .top_barcodes)
 
 #' @rdname top_barcodes
 #' @export
-setMethod("top_barcodes", "SummarizedExperiment", .top_barcodes)
+setMethod("top_barcodes", "SCSubset", .top_barcodes)

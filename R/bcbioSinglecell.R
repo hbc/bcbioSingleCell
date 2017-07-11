@@ -26,4 +26,5 @@ fail_color <- "red"
 pass_color <- "green"
 warn_color <- "orange"
 
+meta_priority_cols <- c("sample_id", "sample_name", "file_name")
 project_dir_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"

@@ -188,7 +188,7 @@ load_run <- function(
     }
 
 
-    # Return [bcbioSCDataSet] ====
+    # Return ====
     se <- .summarized_experiment(
         assays = SimpleList(
             sparse_counts = sparse_counts),

@@ -83,13 +83,13 @@
         }
     }
 
-    priority_cols <- c("sample_id", "sample_name", "file_name")
+    # Return
     if (pipeline == "bcbio") {
         meta %>%
-            tidy_select(c(priority_cols, "index", "sequence", "revcomp"),
+            tidy_select(c(meta_priority_cols, "index", "sequence", "revcomp"),
                         everything())
     } else {
         meta %>%
-            tidy_select(priority_cols, everything())
+            tidy_select(meta_priority_cols, everything())
     }
 }
