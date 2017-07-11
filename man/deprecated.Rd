@@ -3,6 +3,7 @@
 \name{barcode_metrics}
 \alias{barcode_metrics}
 \alias{filter_barcodes}
+\alias{plot_genes_detected}
 \alias{plot_mito_counts}
 \alias{plot_total_cells}
 \alias{plot_total_vs_detected}
@@ -11,6 +12,8 @@
 barcode_metrics(...)
 
 filter_barcodes(...)
+
+plot_genes_detected(...)
 
 plot_mito_counts(...)
 

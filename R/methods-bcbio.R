@@ -9,15 +9,18 @@
 #'
 #' @return Matrix/Object containing count data.
 #' @export
-setMethod("bcbio", "bcbioSCDataSet", function(object, type = "counts") {
-    if (type == "counts") {
-        assays(object)[["counts"]]
-    } else if (type %in% names(slot(object, "callers"))) {
-        slot(object, "callers")[[type]]
-    } else {
-        stop(paste(type, "not found"))
-    }
-})
+setMethod(
+    "bcbio",
+    "bcbioSCDataSet",
+    function(object, type = "counts") {
+        if (type == "counts") {
+            assays(object)[["counts"]]
+        } else if (type %in% names(slot(object, "callers"))) {
+            slot(object, "callers")[[type]]
+        } else {
+            stop(paste(type, "not found"))
+        }
+    })
 
 #' @rdname bcbio
 #' @export

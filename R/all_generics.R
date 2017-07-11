@@ -59,6 +59,96 @@ setGeneric("metrics", function(object, ...) {
 
 
 
+#' @rdname plot_cell_counts
+#' @usage NULL
+#' @export
+setGeneric("plot_cell_counts", function(object, ...) {
+    standardGeneric("plot_cell_counts")
+})
+
+
+
+#' @rdname plot_cellular_barcodes
+#' @usage NULL
+#' @export
+setGeneric("plot_cellular_barcodes", function(object, ...) {
+    standardGeneric("plot_cellular_barcodes")
+})
+
+
+
+#' @rdname plot_clusters
+#' @usage NULL
+#' @export
+setGeneric("plot_clusters", function(object, ...) {
+    standardGeneric("plot_clusters")
+})
+
+
+
+#' @rdname plot_genes_per_cell
+#' @usage NULL
+#' @export
+setGeneric("plot_genes_per_cell", function(object, ...) {
+    standardGeneric("plot_genes_per_cell")
+})
+
+
+
+#' @rdname plot_known_markers
+#' @usage NULL
+#' @export
+setGeneric("plot_known_markers", function(object, ...) {
+    standardGeneric("plot_known_markers")
+})
+
+
+
+#' @rdname plot_mito_ratio
+#' @usage NULL
+#' @export
+setGeneric("plot_mito_ratio", function(object, ...) {
+    standardGeneric("plot_mito_ratio")
+})
+
+
+
+#' @rdname plot_novelty
+#' @usage NULL
+#' @export
+setGeneric("plot_novelty", function(object, ...) {
+    standardGeneric("plot_novelty")
+})
+
+
+
+#' @rdname plot_top_markers
+#' @usage NULL
+#' @export
+setGeneric("plot_top_markers", function(object, ...) {
+    standardGeneric("plot_top_markers")
+})
+
+
+
+#' @rdname plot_umis_per_cell
+#' @usage NULL
+#' @export
+setGeneric("plot_umis_per_cell", function(object, ...) {
+    standardGeneric("plot_umis_per_cell")
+})
+
+
+
+#' @rdname plot_umis_vs_genes
+#' @usage NULL
+#' @export
+setGeneric("plot_umis_vs_genes", function(object, ...) {
+    standardGeneric("plot_umis_vs_genes")
+})
+
+
+
 #' @rdname sample_metadata
 #' @usage NULL
 #' @export

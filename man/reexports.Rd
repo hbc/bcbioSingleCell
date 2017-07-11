@@ -7,10 +7,6 @@
 \alias{reexports}
 \alias{assign_data}
 \alias{reexports}
-\alias{detect_hpc}
-\alias{reexports}
-\alias{dotted}
-\alias{reexports}
 \alias{group_by}
 \alias{reexports}
 \alias{left_join}
@@ -18,8 +14,6 @@
 \alias{kable}
 \alias{reexports}
 \alias{pct}
-\alias{reexports}
-\alias{plot_grid}
 \alias{reexports}
 \alias{read_excel}
 \alias{reexports}
@@ -41,6 +35,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{assign_data}}, \code{\link[basejump]{detect_hpc}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{left_join}}, \code{\link[basejump]{kable}}, \code{\link[basejump]{pct}}, \code{\link[basejump]{plot_grid}}, \code{\link[basejump]{read_excel}}, \code{\link[basejump]{save_data}}, \code{\link[basejump]{str_c}}, \code{\link[basejump]{tibble}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{write_counts}}, \code{\link[basejump]{write_csv}}}
+  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{assign_data}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{left_join}}, \code{\link[basejump]{kable}}, \code{\link[basejump]{pct}}, \code{\link[basejump]{read_excel}}, \code{\link[basejump]{save_data}}, \code{\link[basejump]{str_c}}, \code{\link[basejump]{tibble}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{write_counts}}, \code{\link[basejump]{write_csv}}}
 }}
 

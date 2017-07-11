@@ -27,6 +27,15 @@ filter_barcodes <- function(...) {
 
 #' @rdname deprecated
 #' @export
+plot_genes_detected <- function(...) {
+    .Deprecated("plot_genes_per_cell")
+    plot_genes_per_cell(...)
+}
+
+
+
+#' @rdname deprecated
+#' @export
 plot_mito_counts <- function(...) {
     .Deprecated("plot_mito_ratio")
     plot_mito_ratio(...)

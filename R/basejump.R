@@ -21,12 +21,6 @@ basejump::colData -> colData
 #' @export
 basejump::counts -> counts
 
-#' @export
-basejump::detect_hpc
-
-#' @export
-basejump::dotted
-
 #' @rdname filter
 #' @usage NULL
 #' @export
@@ -47,9 +41,6 @@ basejump::metadata -> metadata
 
 #' @export
 basejump::pct
-
-#' @export
-basejump::plot_grid
 
 #' @export
 basejump::read_excel

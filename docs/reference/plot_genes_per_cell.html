@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot cellular barcode distributions per sample — plot_cellular_barcodes • bcbioSinglecell</title>
+<title>Plot genes per cell — plot_genes_per_cell • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,34 +80,40 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot cellular barcode distributions per sample</h1>
+    <h1>Plot genes per cell</h1>
     </div>
 
     
-    <p>Plot cellular barcode distributions per sample</p>
+    <p>Plot genes per cell</p>
     
 
     <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>plot_cellular_barcodes</span>(<span class='no'>object</span>)</pre>
+<span class='fu'>plot_genes_per_cell</span>(<span class='no'>object</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>500L</span>,
+  <span class='kw'>max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S4 method for SCSubset</span>
+<span class='fu'>plot_genes_per_cell</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p><a href='bcbioSCDataSet-class.html'>bcbioSCDataSet</a>.</p></td>
+      <td><p>Primary object.</p></td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td><p>Recommended minimum value cutoff.</p></td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td><p>Recommended maximum value cutoff.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>ggplot.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>A violin plot is a comact display of a continuous distribution. It
-is a blend of <code>geom_boxplot()</code> and <code>geom_density()</code>: a violin plot is a
-mirrored density plot displayed in the same way as a boxplot.</p>
     
 
   </div>
@@ -117,8 +123,6 @@ mirrored density plot displayed in the same way as a boxplot.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
           </ul>
 
     <h2>Author</h2>

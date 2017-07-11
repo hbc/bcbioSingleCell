@@ -1,3 +1,13 @@
+# 0.0.14
+
+- Migrated plotting functions to S4 methods.
+- Improved sample metadata handling.
+- Updated sample name and cellular barcode sanization.
+- Initial commit of Seurat utility functions.
+- Initial commit of YAML parameters for RMarkdown templates.
+
+
+
 # 0.0.13
 
 - Integrated bcbio-nextgen and cellranger workflows into `load_run()`.

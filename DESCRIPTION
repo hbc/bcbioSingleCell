@@ -34,7 +34,7 @@ Imports:
     Matrix.utils,
     methods,
     scales,
-    Seurat,
+    Seurat (>= 1.4.0.16),
     SummarizedExperiment,
     S4Vectors
 Suggests:
