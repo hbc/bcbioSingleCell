@@ -39,4 +39,4 @@ setMethod("counts", "bcbioSCDataSet", .counts)
 
 #' @rdname counts
 #' @export
-setMethod("counts", "SummarizedExperiment", .counts)
+setMethod("counts", "SCSubset", .counts)
