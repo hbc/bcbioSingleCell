@@ -16,6 +16,11 @@
 }
 \arguments{
 \item{object}{Primary object.}
+
+\item{min}{Recommended minimum value cutoff.}
+}
+\value{
+\link{ggplot}.
 }
 \description{
 "Novelty" refers to log10 genes detected per count.

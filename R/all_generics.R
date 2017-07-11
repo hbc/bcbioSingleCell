@@ -173,3 +173,12 @@ setGeneric("select_samples", function(object, ...) {
 setGeneric("top_barcodes", function(object, ...) {
     standardGeneric("top_barcodes")
 })
+
+
+
+#' @rdname top_markers
+#' @usage NULL
+#' @export
+setGeneric("top_markers", function(object, ...) {
+    standardGeneric("top_markers")
+})

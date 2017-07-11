@@ -48,7 +48,7 @@
             revcomp_matches <- pull(meta, "revcomp")
             sample_matches <- basename(sample_dirs) %>%
                 str_match("(.*)_([ACGT]+)$") %>%
-                as_tibble %>%
+                as("tibble") %>%
                 set_colnames(c("sample_id", "file_name", "revcomp")) %>%
                 filter(.data[["revcomp"]] %in% syms(revcomp_matches))
             meta <- suppressWarnings(

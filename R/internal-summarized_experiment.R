@@ -46,7 +46,7 @@
     # identifiers in the metadata.
     if (any(is.na(row_data[["ensgene"]]))) {
         metadata[["retired_ensgene"]] <- row_data %>%
-            as_tibble %>%
+            as("tibble") %>%
             filter(is.na(.data[["ensgene"]])) %>%
             pull("rowname") %>%
             sort

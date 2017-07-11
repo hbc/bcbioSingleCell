@@ -3,7 +3,7 @@
 #' "Novelty" refers to log10 genes detected per count.
 #'
 #' @rdname plot_novelty
-#' @inheritParams plot_cell_counts
+#' @inherit plot_genes_per_cell
 
 
 

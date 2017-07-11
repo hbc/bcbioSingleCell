@@ -23,7 +23,7 @@
     }
 
     # Pull coding and mitochondrial genes from annotable
-    annotable <- as.data.frame(annotable)
+    annotable <- as(annotable, "data.frame")
     coding_genes <- annotable %>%
         filter(.data[["broad_class"]] == "coding") %>%
         pull("ensgene")
@@ -57,7 +57,7 @@
     }
 
     metrics %>%
-        as.data.frame %>%
+        as("data.frame") %>%
         column_to_rownames %>%
-        as.matrix
+        as("matrix")
 }

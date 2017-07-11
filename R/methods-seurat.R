@@ -10,11 +10,11 @@
 #' @export
 setMethod("plot_clusters", "seurat", function(object, genes) {
     VlnPlot(
-        seurat,
+        object,
         features.plot = genes,
         use.scaled = TRUE)
     FeaturePlot(
-        seurat,
+        object,
         features.plot = genes,
         cols.use = c("grey", "blue"))
 })
@@ -38,7 +38,7 @@ setMethod("plot_known_markers", "seurat", function(
             pull("gene") %>%
             unique %>%
             sort
-        plot_clusters(seurat, genes)
+        plot_clusters(object, genes)
     }) %>%
         invisible
 })
@@ -60,7 +60,7 @@ setMethod("plot_top_markers", "seurat", function(
         genes <- top_markers %>%
             filter(.data[["cluster"]] == a) %>%
             pull("gene")
-        plot_clusters(seurat, genes)
+        plot_clusters(object, genes)
     }) %>%
         invisible
 })

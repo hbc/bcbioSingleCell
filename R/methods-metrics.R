@@ -15,7 +15,7 @@
     meta <- sample_metadata(object) %>%
         tidy_select(unique(c(meta_priority_cols, interesting_groups(object))))
     colData(object) %>%
-        as.data.frame %>%
+        as("data.frame") %>%
         rownames_to_column %>%
         mutate(
             sample_id = str_replace(.data[["rowname"]], "_[ACGT_]+$", "")) %>%

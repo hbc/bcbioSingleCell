@@ -13,7 +13,7 @@
 #' @usage NULL
 .top_barcodes <- function(object, n = 2L) {
     metrics(object) %>%
-        as_tibble %>%
+        as("tibble") %>%
         top_n(n, !!sym("total_counts"))
 }
 
