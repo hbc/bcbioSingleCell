@@ -34,9 +34,10 @@
     }
     message(sample_name)
     if (pipeline == "bcbio") {
-        matrix_file <- file.path(sample_dir, paste0(sample_name, ".mtx"))
-        col_file <- paste0(matrix_file, ".colnames")  # barcodes
-        row_file <- paste0(matrix_file, ".rownames")  # transcripts
+        sample_stem <- basename(sample_dir)
+        matrix_file <- file.path(sample_dir, str_c(sample_stem, ".mtx"))
+        col_file <- str_c(matrix_file, ".colnames")  # barcodes
+        row_file <- str_c(matrix_file, ".rownames")  # transcripts
     } else if (pipeline == "cellranger") {
         matrix_file <- file.path(sample_dir, "matrix.mtx")
         col_file <- file.path(sample_dir, "barcodes.tsv")
@@ -50,8 +51,7 @@
     sparse_counts <- read_file_by_extension(matrix_file)
     if (pipeline == "bcbio") {
         colnames(sparse_counts) <-
-            read_file_by_extension(col_file) %>%
-            snake
+            read_file_by_extension(col_file)
         rownames(sparse_counts) <-
             read_file_by_extension(row_file)
     } else if (pipeline == "cellranger") {
@@ -61,8 +61,7 @@
                 col_file,
                 col_names = "cellular_barcode",
                 col_types = "c") %>%
-            pull("cellular_barcode") %>%
-            snake
+            pull("cellular_barcode")
         rownames(sparse_counts) <-
             read_file_by_extension(
                 row_file,
@@ -75,21 +74,21 @@
     # Cellular barcode sanitization =====
     # CellRanger outputs unnecessary trailing `-1`.
     if (pipeline == "cellranger" &
-        all(str_detect(colnames(sparse_counts), "\\_1$"))) {
+        all(str_detect(colnames(sparse_counts), "-1$"))) {
         colnames(sparse_counts) <-
-            str_replace(colnames(sparse_counts), "\\_1$", "")
+            str_replace(colnames(sparse_counts), "-1$", "")
     }
 
-    # Reformat to `[acgt]{8}-[acgt]{8}` instead of `[acgt]{16}`
-    if (all(str_detect(colnames(sparse_counts), "^[acgt]{16}$"))) {
+    # Reformat to `[ACGT]{8}-[ACGT]{8}` instead of `[ACGT]{16}`
+    if (all(str_detect(colnames(sparse_counts), "^[ACGT]{16}$"))) {
         colnames(sparse_counts) <- colnames(sparse_counts) %>%
-            str_replace("^([acgt]{8})([acgt]{8})$", "\\1_\\2")
+            str_replace("^([ACGT]{8})([ACGT]{8})$", "\\1_\\2")
     }
 
     # Add sample name
-    if (all(str_detect(colnames(sparse_counts), "^[acgt]{8}"))) {
+    if (all(str_detect(colnames(sparse_counts), "^[ACGT]{8}"))) {
         colnames(sparse_counts) <- colnames(sparse_counts) %>%
-            paste(sample_name, ., sep = "_")
+            paste(make.names(sample_name), ., sep = "_")
     }
 
     # Return as dgCMatrix, for improved memory overhead
