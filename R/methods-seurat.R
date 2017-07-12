@@ -38,7 +38,6 @@ setMethod(
         pblapply(seq_along(cell_types), function(a) {
             cell_type <- cell_types[[a]]
             if (isTRUE(markdown)) {
-                # FIXME Add support for Markdown header level
                 paste("###", cell_type) %>%
                     asis_output %>%
                     show
