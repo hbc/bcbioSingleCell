@@ -384,10 +384,9 @@ plot_top_markers(seurat, top_markers)
 ## Load known markers
 
 ```{r known_markers}
-known_markers <-
-    known_markers(file.path("meta", "known_markers.xlsx"), genome_build)
+known_markers <- file.path("meta", "known_markers.xlsx") %>%
+    read_known_markers(genome_build)
 save_data(known_markers)
-kable(known_markers, caption = "Known markers")
 ```
 
 
@@ -396,12 +395,7 @@ kable(known_markers, caption = "Known markers")
 Let's obtain the statistics on our known marker genes from [Seurat][].
 
 ```{r known_markers_detected}
-known_markers_detected <- left_join(
-    markers,
-    known_markers,
-    by = c("gene" = "symbol")) %>%
-    filter(!is.na(cell_type))
-kable(known_markers_detected, caption = "Known markers detected")
+known_markers_detected <- known_markers_detected(markers, known_markers)
 ```
 
 

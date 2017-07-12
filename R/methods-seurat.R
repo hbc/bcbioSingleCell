@@ -32,18 +32,19 @@ setMethod(
     "plot_known_markers",
     signature(x = "seurat", y = "grouped_df"),
     function(x, y, markdown = TRUE) {
-        cell_type <- y %>%
+        cell_types <- y %>%
             pull("cell_type") %>%
             unique
-        pblapply(seq_along(cell_type), function(a) {
+        pblapply(seq_along(cell_types), function(a) {
+            cell_type <- cell_types[[a]]
             if (isTRUE(markdown)) {
                 # FIXME Add support for Markdown header level
-                paste("###", cell_type[[a]]) %>%
+                paste("###", cell_type) %>%
                     asis_output %>%
                     show
             }
             symbols <- y %>%
-                filter(.data[["cell_type"]] == cell_type[a]) %>%
+                filter(.data[["cell_type"]] == !!cell_type) %>%
                 pull("symbol") %>%
                 unique %>%
                 sort
