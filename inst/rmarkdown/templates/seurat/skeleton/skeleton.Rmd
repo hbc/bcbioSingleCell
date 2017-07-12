@@ -353,7 +353,9 @@ DoHeatmap(seurat,
           genes.use = top_markers$gene,
           order.by.ident = TRUE,
           remove.key = TRUE,
-          slim.col.label = TRUE)
+          slim.col.label = TRUE,
+          # heatmap.2 warning fix
+          dendrogram = "none")
 ```
 
 

@@ -87,19 +87,23 @@
     <p>Plot known markers</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for seurat</span>
-<span class='fu'>plot_known_markers</span>(<span class='no'>object</span>, <span class='no'>known_markers_detected</span>)</pre>
+    <pre class="usage"><span class='co'># S4 method for seurat,grouped_df</span>
+<span class='fu'>plot_known_markers</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>markdown</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
+      <th>x</th>
       <td><p>Primary object.</p></td>
     </tr>
     <tr>
-      <th>known_markers_detected</th>
-      <td><p>Known markers detected data.frame.</p></td>
+      <th>y</th>
+      <td><p><code><a href='known_markers_detected.html'>known_markers_detected()</a></code> <a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a> grouped by cluster.</p></td>
+    </tr>
+    <tr>
+      <th>markdown</th>
+      <td><p>Print Markdown headers.</p></td>
     </tr>
     </table>
     

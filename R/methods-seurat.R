@@ -4,19 +4,17 @@
 #' @author Michael Steinbaugh
 #'
 #' @param object Primary object.
-#' @param genes Character vector of gene symbols.
+#' @param symbols Character vector of gene symbols.
 #'
 #' @return No value, only graphical output.
 #' @export
-setMethod("plot_clusters", "seurat", function(object, genes) {
-    VlnPlot(
-        object,
-        features.plot = genes,
-        use.scaled = TRUE)
-    FeaturePlot(
-        object,
-        features.plot = genes,
-        cols.use = c("grey", "blue"))
+setMethod("plot_clusters", "seurat", function(object, symbols) {
+    VlnPlot(object,
+            features.plot = symbols,
+            use.scaled = TRUE)
+    FeaturePlot(object,
+                features.plot = symbols,
+                cols.use = c("grey", "blue"))
 })
 
 
@@ -25,23 +23,35 @@ setMethod("plot_clusters", "seurat", function(object, genes) {
 #'
 #' @rdname plot_known_markers
 #'
-#' @param object Primary object.
-#' @param known_markers_detected Known markers detected [data.frame].
+#' @param x Primary object.
+#' @param y [known_markers_detected()] [tibble] grouped by cluster.
+#' @param markdown Print Markdown headers.
 #'
 #' @export
-setMethod("plot_known_markers", "seurat", function(
-    object, known_markers_detected) {
-    cell_type <- known_markers_detected %>% pull("cell_type") %>% unique
-    pblapply(seq_along(cell_type), function(a) {
-        genes <- known_markers_detected %>%
-            filter(.data[["cell_type"]] == cell_type[a]) %>%
-            pull("gene") %>%
-            unique %>%
-            sort
-        plot_clusters(object, genes)
-    }) %>%
-        invisible
-})
+setMethod(
+    "plot_known_markers",
+    signature(x = "seurat", y = "grouped_df"),
+    function(x, y, markdown = TRUE) {
+        cell_type <- y %>%
+            pull("cell_type") %>%
+            unique
+        pblapply(seq_along(cell_type), function(a) {
+            if (isTRUE(markdown)) {
+                # FIXME Add support for Markdown header level
+                paste("###", cell_type[[a]]) %>%
+                    print %>%
+                    asis_output %>%
+                    show
+            }
+            genes <- y %>%
+                filter(.data[["cell_type"]] == cell_type[a]) %>%
+                pull("symbol") %>%
+                unique %>%
+                sort
+            plot_clusters(x, genes)
+        }) %>%
+            invisible
+    })
 
 
 
@@ -49,18 +59,29 @@ setMethod("plot_known_markers", "seurat", function(
 #'
 #' @rdname plot_top_markers
 #'
-#' @param object Primary object.
-#' @param top_markers [data.frame] returned by [top_markers()].
+#' @param x Object.
+#' @param y Top markers grouped [tibble] returned by [top_markers()].
+#' @param markdown Print Markdown headers.
 #'
 #' @return [ggplot].
 #' @export
-setMethod("plot_top_markers", "seurat", function(
-    object, top_markers) {
-    pblapply(levels(top_markers[["cluster"]]), function(a) {
-        genes <- top_markers %>%
-            filter(.data[["cluster"]] == a) %>%
-            pull("gene")
-        plot_clusters(object, genes)
-    }) %>%
-        invisible
-})
+setMethod(
+    "plot_top_markers",
+    signature(x = "seurat", y = "grouped_df"),
+    function(x, y, markdown = TRUE) {
+        cluster_levels <- y[["cluster"]] %>% levels
+        pblapply(cluster_levels, function(a) {
+            if (isTRUE(markdown)) {
+                # FIXME Add support for Markdown header level
+                paste("###", "Cluster", cluster_levels[a]) %>%
+                    print %>%
+                    asis_output %>%
+                    show
+            }
+            genes <- y %>%
+                filter(.data[["cluster"]] == a) %>%
+                pull("symbol")
+            plot_clusters(x, genes)
+        }) %>%
+            invisible
+    })

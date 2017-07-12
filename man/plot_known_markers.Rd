@@ -3,15 +3,17 @@
 \docType{methods}
 \name{plot_known_markers}
 \alias{plot_known_markers}
-\alias{plot_known_markers,seurat-method}
+\alias{plot_known_markers,seurat,grouped_df-method}
 \title{Plot known markers}
 \usage{
-\S4method{plot_known_markers}{seurat}(object, known_markers_detected)
+\S4method{plot_known_markers}{seurat,grouped_df}(x, y, markdown = TRUE)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{x}{Primary object.}
 
-\item{known_markers_detected}{Known markers detected \link{data.frame}.}
+\item{y}{\code{\link[=known_markers_detected]{known_markers_detected()}} \link{tibble} grouped by cluster.}
+
+\item{markdown}{Print Markdown headers.}
 }
 \description{
 Plot known markers

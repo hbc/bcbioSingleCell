@@ -50,6 +50,15 @@ setGeneric("interesting_groups", function(object) {
 
 
 
+#' @rdname known_markers_detected
+#' @usage NULL
+#' @export
+setGeneric("known_markers_detected", function(x, y, ...) {
+    standardGeneric("known_markers_detected")
+})
+
+
+
 #' @rdname metrics
 #' @usage NULL
 #' @export
@@ -98,7 +107,7 @@ setGeneric("plot_genes_per_cell", function(object, ...) {
 #' @rdname plot_known_markers
 #' @usage NULL
 #' @export
-setGeneric("plot_known_markers", function(object, ...) {
+setGeneric("plot_known_markers", function(x, y, ...) {
     standardGeneric("plot_known_markers")
 })
 
@@ -125,7 +134,7 @@ setGeneric("plot_novelty", function(object, ...) {
 #' @rdname plot_top_markers
 #' @usage NULL
 #' @export
-setGeneric("plot_top_markers", function(object, ...) {
+setGeneric("plot_top_markers", function(x, y, ...) {
     standardGeneric("plot_top_markers")
 })
 

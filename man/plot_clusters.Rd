@@ -6,12 +6,12 @@
 \alias{plot_clusters,seurat-method}
 \title{Plot clusters}
 \usage{
-\S4method{plot_clusters}{seurat}(object, genes)
+\S4method{plot_clusters}{seurat}(object, symbols)
 }
 \arguments{
 \item{object}{Primary object.}
 
-\item{genes}{Character vector of gene symbols.}
+\item{symbols}{Character vector of gene symbols.}
 }
 \value{
 No value, only graphical output.

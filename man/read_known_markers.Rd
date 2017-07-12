@@ -4,12 +4,14 @@
 \alias{read_known_markers}
 \title{Read known markers}
 \usage{
-read_known_markers(markers_file, genome_build)
+read_known_markers(markers_file, genome_build, show = TRUE)
 }
 \arguments{
 \item{markers_file}{Gene markers file (CSV or Excel).}
 
 \item{genome_build}{Genome build.}
+
+\item{show}{Show \link{kable}.}
 }
 \value{
 \link{tibble}.

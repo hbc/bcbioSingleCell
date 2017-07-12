@@ -3,15 +3,17 @@
 \docType{methods}
 \name{plot_top_markers}
 \alias{plot_top_markers}
-\alias{plot_top_markers,seurat-method}
+\alias{plot_top_markers,seurat,grouped_df-method}
 \title{Plot top markers}
 \usage{
-\S4method{plot_top_markers}{seurat}(object, top_markers)
+\S4method{plot_top_markers}{seurat,grouped_df}(x, y, markdown = TRUE)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{x}{Object.}
 
-\item{top_markers}{\link{data.frame} returned by \code{\link[=top_markers]{top_markers()}}.}
+\item{y}{Top markers grouped \link{tibble} returned by \code{\link[=top_markers]{top_markers()}}.}
+
+\item{markdown}{Print Markdown headers.}
 }
 \value{
 \link{ggplot}.
