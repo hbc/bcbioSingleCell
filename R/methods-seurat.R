@@ -39,16 +39,15 @@ setMethod(
             if (isTRUE(markdown)) {
                 # FIXME Add support for Markdown header level
                 paste("###", cell_type[[a]]) %>%
-                    print %>%
                     asis_output %>%
                     show
             }
-            genes <- y %>%
+            symbols <- y %>%
                 filter(.data[["cell_type"]] == cell_type[a]) %>%
                 pull("symbol") %>%
                 unique %>%
                 sort
-            plot_clusters(x, genes)
+            plot_clusters(x, symbols)
         }) %>%
             invisible
     })
@@ -69,19 +68,19 @@ setMethod(
     "plot_top_markers",
     signature(x = "seurat", y = "grouped_df"),
     function(x, y, markdown = TRUE) {
-        cluster_levels <- y[["cluster"]] %>% levels
-        pblapply(cluster_levels, function(a) {
+        clusters <- y[["cluster"]] %>% unique
+        pblapply(seq_along(clusters), function(a) {
+            cluster <- clusters[[a]]
             if (isTRUE(markdown)) {
                 # FIXME Add support for Markdown header level
-                paste("###", "Cluster", cluster_levels[a]) %>%
-                    print %>%
+                paste("###", "Cluster", cluster) %>%
                     asis_output %>%
                     show
             }
-            genes <- y %>%
-                filter(.data[["cluster"]] == a) %>%
+            symbols <- y %>%
+                filter(.data[["cluster"]] == cluster) %>%
                 pull("symbol")
-            plot_clusters(x, genes)
+            plot_clusters(x, symbols)
         }) %>%
             invisible
     })

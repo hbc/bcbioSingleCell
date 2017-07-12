@@ -350,7 +350,7 @@ genes. In this case, we are plotting the top markers for each cluster.
 
 ```{r DoHeatmap, fig.height=12, fig.width=12}
 DoHeatmap(seurat,
-          genes.use = top_markers$gene,
+          genes.use = top_markers$symbol,
           order.by.ident = TRUE,
           remove.key = TRUE,
           slim.col.label = TRUE,
