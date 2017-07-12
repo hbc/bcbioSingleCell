@@ -4,26 +4,23 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    sample_name: NULL
+    subset_name: NULL
     pc_compute: 30
     pc_use: 15
     markers_dir: !r file.path("results", "markers")
 ---
 
-```{r setup, message=FALSE}
+```{r setup, cache=FALSE, message=FALSE}
 source("setup.R")
 library(Seurat)
-data(bcb_filtered)
-
-# Subset the filtered cellular barcodes
-sample_name <- params$sample_name
-subset <- select_samples(
-    bcb_filtered,
-    sample_name = sample_name)
-assign_data(sample_name, subset, compress = FALSE)
-
-genome_build <- metadata(bcb_filtered)[["genome_build"]]
-rm(bcb_filtered)
+subset_name <- params$subset_name
+subset <- get(subset_name)
+if (class(subset) != "SCSubset") {
+    stop("SCSubset is required")
+}
+opts_chunk$set(
+    cache.path = paste0(subset_name, "_cache/"),
+    fig.path = paste0(subset_name, "_files/"))
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -31,7 +28,7 @@ rm(bcb_filtered)
 
 
 
-# Initialize Seurat (`r sample_name`)
+# Initialize Seurat (`r subset_name`)
 
 Let's convert our `SCSubset` object containing the filtered cellular barcodes into a `seurat` object. This step uses [Seurat][]'s `Setup()` function with the same filtering cutoffs applied during our initial quality control analysis. Here we are imposing a basic minimum gene-cutoff, but also filtering low quality cells that have a high mitochondrial gene abundance. During this step, [Seurat][] applies log normalization to the counts, first scaling each cell to a total of 1e4 molecules [@Drop-seq], and only keeps genes expressed in >= 3 cells.
 
@@ -172,7 +169,7 @@ seurat <- RunTSNE(
 ```
 
 ```{r save_seurat}
-assign_data(str_c(sample_name, "_seurat"), seurat, compress = FALSE)
+assign_and_save_data(paste0(subset_name, "_seurat"), seurat, compress = FALSE)
 ```
 
 ```{r TSNEPlot}
@@ -229,12 +226,12 @@ markers <- FindAllMarkers(seurat, only.pos = TRUE)
 ```
 
 ```{r save_markers}
-assign_data(str_c(sample_name, "_markers"), markers)
+assign_and_save_data(paste0(subset_name, "_markers"), markers)
 dir.create(params$markers_dir,
            recursive = TRUE,
            showWarnings = FALSE)
 write_csv(markers,
-          file.path(params$markers_dir, str_c(sample_name, ".csv.gz")))
+          file.path(params$markers_dir, paste0(subset_name, ".csv.gz")))
 ```
 
 
