@@ -386,7 +386,6 @@ plot_top_markers(seurat, top_markers)
 ```{r known_markers}
 known_markers <- file.path("meta", "known_markers.xlsx") %>%
     read_known_markers(genome_build)
-save_data(known_markers)
 ```
 
 
