@@ -6,16 +6,17 @@
 \alias{.metrics}
 \alias{metrics,bcbioSCDataSet-method}
 \alias{metrics,SCSubset-method}
+\alias{metrics,seurat-method}
 \title{Sample barcode metrics}
 \usage{
-\S4method{metrics}{bcbioSCDataSet}(object, unique_names = FALSE)
+\S4method{metrics}{bcbioSCDataSet}(object)
 
-\S4method{metrics}{SCSubset}(object, unique_names = FALSE)
+\S4method{metrics}{SCSubset}(object)
+
+\S4method{metrics}{seurat}(object)
 }
 \arguments{
 \item{object}{Primary object.}
-
-\item{unique_names}{Unique sample names.}
 }
 \value{
 \link{data.frame}.

@@ -31,3 +31,9 @@ setMethod("metrics", "bcbioSCDataSet", .metrics)
 #' @rdname metrics
 #' @export
 setMethod("metrics", "SCSubset", .metrics)
+
+#' @rdname metrics
+#' @export
+setMethod("metrics", "seurat", function(object) {
+    object@data.info %>% snake(rownames = FALSE)
+})
