@@ -6,7 +6,7 @@ basejump::`%>%`
 basejump::assay -> assay
 
 #' @export
-basejump::assign_data
+basejump::assign_and_save_data
 
 #' @rdname all_generics
 #' @export
