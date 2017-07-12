@@ -19,6 +19,7 @@ subset_name <- params$subset_name
 if (is.null(subset_name)) {
     stop("Subset name is required")
 }
+data(list = subset_name)
 subset <- get(subset_name)
 if (class(subset) != "SCSubset") {
     stop("Subset must be S4 SCSubset class object")
@@ -69,8 +70,8 @@ VlnPlot(seurat, c("nGene", "nUMI", "mito.ratio"), nCol = 3)
 `GenePlot()` is typically used to visualize gene-gene relationships, but can be
 used for anything calculated by the object (e.g. `seurat@data.info` columns).
 
-```{r GenePlot}
-par(mfrow = c(1, 2))
+```{r GenePlot, fig.height=12}
+par(mfrow = c(2, 1))
 GenePlot(seurat, "nUMI", "mito.ratio")
 GenePlot(seurat, "nUMI", "nGene")
 ```

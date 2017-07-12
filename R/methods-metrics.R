@@ -3,7 +3,6 @@
 #' @rdname metrics
 #'
 #' @param object Primary object.
-#' @param unique_names Unique sample names.
 #'
 #' @return [data.frame].
 
@@ -11,7 +10,7 @@
 
 #' @rdname metrics
 #' @usage NULL
-.metrics <- function(object, unique_names = FALSE) {
+.metrics <- function(object) {
     meta <- sample_metadata(object) %>%
         tidy_select(unique(c(meta_priority_cols, interesting_groups(object))))
     colData(object) %>%
