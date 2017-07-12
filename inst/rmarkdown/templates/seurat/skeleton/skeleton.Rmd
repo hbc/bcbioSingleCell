@@ -19,7 +19,7 @@ if (class(subset) != "SCSubset") {
     stop("SCSubset is required")
 }
 opts_chunk$set(
-    cache.path = paste0(subset_name, "_cache/"),
+    cache = FALSE,
     fig.path = paste0(subset_name, "_files/"))
 ```
 
