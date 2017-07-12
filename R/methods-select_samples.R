@@ -20,7 +20,7 @@
 #' @usage NULL
 .select_samples <- function(object, ...) {
     sample_metadata <- sample_metadata(object)
-    patterns = c(...)
+    patterns <- c(...)
     list <- lapply(seq_along(patterns), function(a) {
         sample_metadata %>%
             filter(str_detect(.data[[names(patterns)[[a]]]], patterns[[a]])) %>%
@@ -35,6 +35,8 @@
     message(paste(length(sample_ids),
                   "samples matched:",
                   toString(sample_ids)))
+    sample_metadata <- sample_metadata %>%
+        filter(.data[["sample_id"]] %in% sample_ids)
 
     # Match the sample ID prefix in the cellular barcode columns of the matrix.
     # Here "cb" is short for "cellular barcodes".
@@ -52,7 +54,7 @@
     col_data <- colData(object)[cb_matches, ]
     row_data <- .row_data(object)
     metadata <- metadata(object)
-    metadata[["sample_metadata"]] <- sample_metadata[sample_ids, ]
+    metadata[["sample_metadata"]] <- sample_metadata
     se <- .summarized_experiment(
         assays = SimpleList(
             sparse_counts = sparse_counts),
