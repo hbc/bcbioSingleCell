@@ -47,7 +47,11 @@ setMethod(
                 pull("symbol") %>%
                 unique %>%
                 sort
-            plot_clusters(x, symbols)
+            if (is.null(symbols)) {
+                plot_clusters(x, symbols)
+            } else {
+                NULL
+            }
         }) %>%
             invisible
     })
@@ -68,19 +72,22 @@ setMethod(
     "plot_top_markers",
     signature(x = "seurat", y = "grouped_df"),
     function(x, y, markdown = TRUE) {
-        clusters <- y[["cluster"]] %>% unique
+        clusters <- y[["cluster"]] %>% levels
         pblapply(seq_along(clusters), function(a) {
             cluster <- clusters[[a]]
             if (isTRUE(markdown)) {
-                # FIXME Add support for Markdown header level
                 paste("###", "Cluster", cluster) %>%
                     asis_output %>%
                     show
             }
             symbols <- y %>%
-                filter(.data[["cluster"]] == cluster) %>%
+                filter(.data[["cluster"]] == !!cluster) %>%
                 pull("symbol")
-            plot_clusters(x, symbols)
+            if (!is.null(symbols)) {
+                plot_clusters(x, symbols)
+            } else {
+                NULL
+            }
         }) %>%
             invisible
     })
