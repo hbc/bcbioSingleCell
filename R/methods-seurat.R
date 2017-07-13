@@ -38,14 +38,18 @@ setMethod(
         pblapply(seq_along(cell_types), function(a) {
             cell_type <- cell_types[[a]]
             if (isTRUE(markdown)) {
-                paste("###", cell_type) %>% asis_output
+                writeLines(c(
+                    "",
+                    "",
+                    paste("###", cell_type),
+                    ""))
             }
             symbols <- y %>%
                 filter(.data[["cell_type"]] == !!cell_type) %>%
                 pull("symbol") %>%
                 unique %>%
                 sort
-            if (is.null(symbols)) {
+            if (!is.null(symbols)) {
                 plot_clusters(x, symbols)
             } else {
                 NULL
@@ -74,7 +78,11 @@ setMethod(
         pblapply(seq_along(clusters), function(a) {
             cluster <- clusters[[a]]
             if (isTRUE(markdown)) {
-                paste("###", "Cluster", cluster) %>% asis_output
+                writeLines(c(
+                    "",
+                    "",
+                    paste("###", "Cluster", cluster),
+                    ""))
             }
             symbols <- y %>%
                 filter(.data[["cluster"]] == !!cluster) %>%
