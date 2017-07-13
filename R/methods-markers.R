@@ -26,9 +26,7 @@ setMethod("top_markers", "data.frame", function(object, n = 4L, show = TRUE) {
         top_n(n = n, wt = .data[["avg_diff"]])
     if (isTRUE(show)) {
         kable(markers,
-              caption = paste("Top", n, "markers per cluster")) %>%
-            asis_output %>%
-            show
+              caption = paste("Top", n, "markers per cluster")) %>% show
     }
     markers
 })
@@ -52,11 +50,9 @@ setMethod(
     function(x, y, show = TRUE) {
         markers <- .seurat_markers(x) %>%
             left_join(y, by = "symbol") %>%
-            filter(!is.na(cell_type))
+            filter(!is.na(.data[["cell_type"]]))
         if (isTRUE(show)) {
-            kable(markers, caption = "Known markers detected") %>%
-                asis_output %>%
-                show
+            kable(markers, caption = "Known markers detected") %>% show
         }
         markers
     })
