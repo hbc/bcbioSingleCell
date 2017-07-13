@@ -38,9 +38,7 @@ setMethod(
         pblapply(seq_along(cell_types), function(a) {
             cell_type <- cell_types[[a]]
             if (isTRUE(markdown)) {
-                paste("###", cell_type) %>%
-                    asis_output %>%
-                    show
+                paste("###", cell_type) %>% asis_output
             }
             symbols <- y %>%
                 filter(.data[["cell_type"]] == !!cell_type) %>%
@@ -76,9 +74,7 @@ setMethod(
         pblapply(seq_along(clusters), function(a) {
             cluster <- clusters[[a]]
             if (isTRUE(markdown)) {
-                paste("###", "Cluster", cluster) %>%
-                    asis_output %>%
-                    show
+                paste("###", "Cluster", cluster) %>% asis_output
             }
             symbols <- y %>%
                 filter(.data[["cluster"]] == !!cluster) %>%
