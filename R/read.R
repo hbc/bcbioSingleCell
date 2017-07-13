@@ -15,9 +15,7 @@ read_known_markers <- function(markers_file, genome_build, show = TRUE) {
         tidy_select(c("cell_type", "symbol")) %>%
         distinct
     if (isTRUE(show)) {
-        kable(markers, caption = "Known markers") %>%
-            asis_output %>%
-            show
+        kable(markers, caption = "Known markers") %>% show
     }
     markers
 }
