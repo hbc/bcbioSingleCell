@@ -14,7 +14,7 @@ basejump::assays -> assays
 
 #' @rdname all_generics
 #' @export
-basejump::colData -> colData
+basejump::colData -> colData  # nolint
 
 #' @rdname counts
 #' @usage NULL
@@ -47,7 +47,7 @@ basejump::read_excel
 
 #' @rdname all_generics
 #' @export
-basejump::rowData -> rowData
+basejump::rowData -> rowData  # nolint
 
 #' @export
 basejump::save_data
