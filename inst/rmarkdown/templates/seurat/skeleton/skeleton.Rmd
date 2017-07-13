@@ -4,7 +4,7 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    subset_name: NULL
+    subset_name: sample_name
     pc_compute: 30
     pc_use: 15
     markers_dir: !r file.path("results", "markers")
@@ -40,8 +40,11 @@ markers_dir <- params$markers_dir
 
 # knitr arguments
 opts_chunk$set(
-    cache = FALSE,
-    fig.path = paste0(subset_name, "_files/"))
+    cache = TRUE,
+    cache.lazy = FALSE,
+    cache.path = paste0(subset_name, "_cache/"),
+    fig.path = paste0(subset_name, "_files/"),
+    results = "asis")
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -141,13 +144,6 @@ seurat <- seurat %>%
     ProjectPCA(do.print = FALSE)
 ```
 
-[Seurat][] provides several useful ways of visualizing both cells and genes that
-define the PCA. First let's print the top genes per component using `PrintPCA()`.
-
-```{r PrintPCA}
-PrintPCA(seurat)
-```
-
 We can visualize these genes graphically using `VizPCA()`.
 
 ```{r VizPCA}
@@ -181,28 +177,12 @@ PCHeatmap(seurat,
 
 # Determine statistically significant principal components
 
-## Elbow plot (preferred)
-
 To overcome the extensive technical noise in any single gene for scRNA-seq data,
 [Seurat][] clusters cells based on their PCA scores, with each PC essentially
 representing a "metagene" that combines information across a correlated gene
 set. Determining how many PCs to include downstream is therefore an important
 step. To accomplish this, we plot the standard deviation ("singular value" for
 `PCAFast()`) of each PC as an elbow plot with `PCElbowPlot()`.
-
-
-## jackStraw plot (alternate)
-
-Alternatively, [Seurat][] can implement a resampling test inspired by the
-`jackStraw` procedure [@Drop-seq]. Here we randomly permute a subset of the data
-(1% by default) and rerun PCA, constructing a "null distribution" of gene
-scores, and repeat this procedure. We identify "significant" PCs as those who
-have a strong enrichment of low p-value genes. The `JackStrawPlot()` function
-provides a visualization tool for comparing the distribution of p-values for
-each PC with a uniform distribution (dashed line). "Significant" PCs will show a
-strong enrichment of genes with low p-values (solid curve above the dashed
-line). Since the `JackStrawPlot()` function takes a very long time to run, even
-on an HPC cluster, we recommend opting for the `PCElbowPlot()` approach instead.
 
 ```{r PCElbowPlot}
 PCElbowPlot(seurat, num.pc = pc_compute) +
