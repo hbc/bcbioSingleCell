@@ -51,7 +51,8 @@
     sparse_counts <- read_file_by_extension(matrix_file)
     if (pipeline == "bcbio") {
         colnames(sparse_counts) <-
-            read_file_by_extension(col_file)
+            read_file_by_extension(col_file) %>%
+            snake
         rownames(sparse_counts) <-
             read_file_by_extension(row_file)
     } else if (pipeline == "cellranger") {
@@ -61,7 +62,8 @@
                 col_file,
                 col_names = "cellular_barcode",
                 col_types = "c") %>%
-            pull("cellular_barcode")
+            pull("cellular_barcode") %>%
+            snake
         rownames(sparse_counts) <-
             read_file_by_extension(
                 row_file,
@@ -72,7 +74,7 @@
 
 
     # Cellular barcode sanitization =====
-    # Sanitize to snake_case
+    # Ensure cellular barcodes are snake_case
     colnames(sparse_counts) <- snake(colnames(sparse_counts))
 
     # CellRanger outputs unnecessary trailing `-1`.
