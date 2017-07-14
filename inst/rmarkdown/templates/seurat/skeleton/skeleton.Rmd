@@ -5,12 +5,12 @@ date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
     subset_name: sample_name
-    pc_compute: 30
-    pc_use: 15
+    pc_compute: 20
+    pc_use: 10
     markers_dir: !r file.path("results", "markers")
 ---
 
-```{r setup, cache=FALSE, message=FALSE}
+```{r setup, cache=FALSE, include=FALSE}
 source("setup.R")
 library(Seurat)
 
@@ -160,18 +160,15 @@ for large datasets. Though clearly a supervised analysis, we find this to be a
 valuable tool for exploring correlated gene sets.
 
 ```{r PCHeatmap, fig.height=12, fig.width=8, warning=FALSE}
-# Plot top 30 genes in top 100 cells for PC1
+# PC1
 PCHeatmap(seurat,
-          cells.use = 100,
           do.balanced = TRUE,
           label.columns = FALSE,
           remove.key = TRUE)
-
-# Top plot 30 genes in top 500 cells for PC1-12
+# All PCs used
 PCHeatmap(seurat,
-          cells.use = 500,
           do.balanced = TRUE,
-          pc.use = 1:12)
+          pc.use = 1:pc_use)
 ```
 
 
@@ -193,14 +190,6 @@ PCElbowPlot(seurat, num.pc = pc_compute) +
                color = "green",
                size = 2,
                xintercept = pc_use)
-```
-
-```{r JackStraw, eval=FALSE}
-seurat <- JackStraw(
-    seurat,
-    num.pc = pc_compute,
-    do.print = FALSE)
-JackStrawPlot(seurat, PCs = 1:pc_compute)
 ```
 
 
