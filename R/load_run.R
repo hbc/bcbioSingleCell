@@ -93,14 +93,14 @@ load_run <- function(
             umi_type <- "harvard-indrop-v3"
         }
 
-        # Cellular barcodes ----
-        cellular_barcodes <- .cellular_barcodes(sample_dirs)
-
         # Well metadata ----
         if (!is.null(well_metadata_file)) {
             well_metadata_file <- normalizePath(well_metadata_file)
         }
         well_metadata <- read_file_by_extension(well_metadata_file)
+
+        # Cellular barcodes ----
+        cellular_barcodes <- .cellular_barcodes(sample_dirs)
     } else if (pipeline == "cellranger") {
         # Get genome build from sample_dirs
         genome_build <- basename(sample_dirs) %>% unique
@@ -125,7 +125,7 @@ load_run <- function(
             sparse_counts <-
                 .sparse_counts_tx2gene(sparse_counts, genome_build)
         }
-        # Pre-filter by calculating metrics
+        # Pre-filter using cellular barcode summary metrics
         metrics <- .calculate_metrics(sparse_counts, annotable)
         sparse_counts[, rownames(metrics)]
     }) %>%
