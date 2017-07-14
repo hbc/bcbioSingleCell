@@ -17,7 +17,7 @@
         # Remove the nested `project_dir`
         if (any(str_detect(basename(sample_dirs), project_dir_pattern))) {
             sample_dirs <- sample_dirs %>%
-                .[!str_detect(names(.), project_dir_pattern)]
+                .[!str_detect(basename(.), project_dir_pattern)]
         }
     } else if (pipeline == "cellranger") {
         # Use the raw, not filtered matrices
