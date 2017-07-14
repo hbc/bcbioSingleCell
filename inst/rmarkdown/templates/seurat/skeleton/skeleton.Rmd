@@ -227,7 +227,7 @@ seurat <- RunTSNE(
 ```
 
 ```{r save_seurat}
-assign_and_save_data(paste0(subset_name, "_seurat"), seurat, compress = FALSE)
+assign_and_save_data(paste0(subset_name, "_seurat"), seurat)
 ```
 
 ```{r TSNEPlot}
