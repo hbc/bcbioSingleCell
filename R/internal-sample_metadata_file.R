@@ -50,7 +50,7 @@
                 str_match("(.*)-([ACGT]+)$") %>%
                 as("tibble") %>%
                 set_colnames(c("sample_id", "file_name", "revcomp")) %>%
-                mutate(sample_id = make.names(.data[["sample_id"]])) %>%
+                mutate(sample_id = snake(.data[["sample_id"]])) %>%
                 filter(.data[["revcomp"]] %in% syms(revcomp_matches))
             meta <- suppressWarnings(
                 full_join(meta, sample_matches, by = "revcomp"))
@@ -59,7 +59,7 @@
 
     # Ensure `sample_id` is valid name then arrange
     meta <- meta %>%
-        mutate(sample_id = make.names(.data[["sample_id"]])) %>%
+        mutate(sample_id = snake(.data[["sample_id"]])) %>%
         arrange(!!sym("sample_id"))
 
     # Check that `sample_id` matches `sample_dirs`

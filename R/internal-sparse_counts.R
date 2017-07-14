@@ -72,23 +72,26 @@
 
 
     # Cellular barcode sanitization =====
+    # Sanitize to snake_case
+    colnames(sparse_counts) <- snake(colnames(sparse_counts))
+
     # CellRanger outputs unnecessary trailing `-1`.
     if (pipeline == "cellranger" &
-        all(str_detect(colnames(sparse_counts), "-1$"))) {
+        all(str_detect(colnames(sparse_counts), "_1$"))) {
         colnames(sparse_counts) <-
-            str_replace(colnames(sparse_counts), "-1$", "")
+            str_replace(colnames(sparse_counts), "_1$", "")
     }
 
-    # Reformat to `[ACGT]{8}-[ACGT]{8}` instead of `[ACGT]{16}`
-    if (all(str_detect(colnames(sparse_counts), "^[ACGT]{16}$"))) {
+    # Reformat to `[acgt]{8}_[acgt]{8}` instead of `[acgt]{16}`
+    if (all(str_detect(colnames(sparse_counts), "^[acgt]{16}$"))) {
         colnames(sparse_counts) <- colnames(sparse_counts) %>%
-            str_replace("^([ACGT]{8})([ACGT]{8})$", "\\1_\\2")
+            str_replace("^([acgt]{8})([acgt]{8})$", "\\1_\\2")
     }
 
     # Add sample name
-    if (all(str_detect(colnames(sparse_counts), "^[ACGT]{8}"))) {
+    if (all(str_detect(colnames(sparse_counts), "^[acgt]{8}"))) {
         colnames(sparse_counts) <- colnames(sparse_counts) %>%
-            paste(make.names(sample_name), ., sep = "_")
+            paste(snake(sample_name), ., sep = "_")
     }
 
     # Return as dgCMatrix, for improved memory overhead

@@ -41,8 +41,8 @@
             str_replace(str_c(upload_dir, "/"), "") %>%
             # Strip subfolders
             #str_replace("/.*", "") %>%
-            # Make valid names
-            make.names
+            # Sanitize names into snake_case
+            snake
         sample_dirs <- normalizePath(sample_dirs)
         names(sample_dirs) <- names
         message(paste(length(sample_dirs), "samples detected"))
