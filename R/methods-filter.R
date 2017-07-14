@@ -32,7 +32,9 @@ setMethod("filter", "bcbioSCDataSet", function(
         message
 
     # Subset metrics
-    metrics <- metrics(object) %>% rownames_to_column
+    metrics <- metrics(object) %>%
+        rownames_to_column %>%
+        as_tibble
 
     # Apply filtering criteria
     if (!is.null(min_umis)) {
@@ -59,7 +61,11 @@ setMethod("filter", "bcbioSCDataSet", function(
         stop("No cellular barcodes passed filtering")
     }
     message(paste(nrow(metrics), "cellular barcodes passed filtering"))
-    metrics <- column_to_rownames(metrics)
+
+    # Convert back to data.frame
+    metrics <- metrics %>%
+        as.data.frame %>%
+        column_to_rownames
 
     # Filter the sparse counts matrix with metrics
     sparse_size_original <- object.size(sparse_counts) %>%
@@ -84,6 +90,7 @@ setMethod("filter", "bcbioSCDataSet", function(
             max_genes = max_genes,
             max_mito_ratio = max_mito_ratio,
             min_novelty = min_novelty),
+        pipeline = metadata(object)[["pipeline"]],
         source_name = deparse(substitute(object)),
         sample_metadata = metadata(object)[["sample_metadata"]],
         interesting_groups = metadata(object)[["interesting_groups"]],
