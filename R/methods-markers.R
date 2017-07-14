@@ -51,6 +51,9 @@ setMethod(
         markers <- .seurat_markers(x) %>%
             left_join(y, by = "symbol") %>%
             filter(!is.na(.data[["cell_type"]]))
+        if (nrow(markers) == 0) {
+            return(NULL)
+        }
         if (isTRUE(show)) {
             kable(markers, caption = "Known markers detected") %>% show
         }
