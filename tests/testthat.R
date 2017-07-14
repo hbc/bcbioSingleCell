@@ -1,4 +1,4 @@
-set.seed(42)
+set.seed(42L)
 
 library(testthat)
 library(bcbioSinglecell)
