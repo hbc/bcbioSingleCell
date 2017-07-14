@@ -4,6 +4,7 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
+    run: !r file.path("data", "bcb.rda")
     min_umis: 1000
     min_genes: 500
     max_genes: 5000
@@ -12,14 +13,13 @@ params:
 ---
 
 ```{r setup, message=FALSE}
-# Download dependency files, including setup.R with [bcbioRnaseq::downloads()].
-# Be sure to edit `setup.R` manually before attempting [knit()].
+# Download dependency files with [bcbioRnaseq::downloads()].
+# Edit these dependencies first before knitting.
 source("setup.R")
-if (!file.exists(file.path("data", "bcb.rda"))) {
-    bcb <- load_run("final")
-    save_data(bcb)
+if (file.exists(params$run)) {
+    load(params$run)
 } else {
-    data(bcb)
+    source("load_run.R")
 }
 ```
 
