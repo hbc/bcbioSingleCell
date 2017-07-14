@@ -171,7 +171,7 @@ load_run <- function(
             well_metadata = well_metadata,
             template = template,
             run_date = run_date,
-            tx2gene = annotable(genome_build, format = "tx2gene"),
+            tx2gene = tx2gene(genome_build),
             data_versions = data_versions,
             programs = programs,
             bcbio_nextgen = bcbio_nextgen,
