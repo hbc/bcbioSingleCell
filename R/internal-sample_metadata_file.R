@@ -11,12 +11,14 @@
 #' @param file Sample metadata file.
 #' @param sample_dirs Sample directory paths.
 #' @param pipeline Pipeline used to process the samples.
+#' @param unique_names Ensure sample names are unique.
 #'
 #' @return [tibble].
 .sample_metadata_file <- function(
     file,
     sample_dirs,
-    pipeline) {
+    pipeline,
+    unique_names = FALSE) {
     meta <- read_file_by_extension(file) %>% snake
 
     # Check file integrity
@@ -75,19 +77,24 @@
         meta[["sample_name"]] <- meta[["sample_id"]]
     }
 
-    # Ensure unique sample names
-    if (any(duplicated(meta[["sample_name"]]))) {
-        meta[["sample_name"]] <-
-            str_c(meta[["sample_name"]], " (", meta[["file_name"]], ")")
+    if (isTRUE(unique_names)) {
+        # Ensure unique sample names
         if (any(duplicated(meta[["sample_name"]]))) {
-            stop("Unique sample name generation failed")
+            meta[["sample_name"]] <-
+                str_c(meta[["sample_name"]], " (", meta[["file_name"]], ")")
+            if (any(duplicated(meta[["sample_name"]]))) {
+                stop("Unique sample name generation failed")
+            }
         }
     }
 
     # Return
     if (pipeline == "bcbio") {
         meta %>%
-            tidy_select(c(meta_priority_cols, "index", "sequence", "revcomp"),
+            tidy_select(c(meta_priority_cols,
+                          "index",
+                          "sequence",
+                          "revcomp"),
                         everything())
     } else {
         meta %>%

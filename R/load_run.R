@@ -35,6 +35,9 @@ load_run <- function(
 
     # Initial run setup ====
     upload_dir <- normalizePath(upload_dir)
+    if (!dir.exists(upload_dir)) {
+        stop("Final upload directory does not exist")
+    }
     pipeline <- .detect_pipeline(upload_dir)
     sample_dirs <- .sample_dirs(upload_dir, pipeline = pipeline)
 

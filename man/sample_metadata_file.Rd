@@ -4,7 +4,7 @@
 \alias{.sample_metadata_file}
 \title{Prepare sample metadata from file}
 \usage{
-.sample_metadata_file(file, sample_dirs, pipeline)
+.sample_metadata_file(file, sample_dirs, pipeline, unique_names = FALSE)
 }
 \arguments{
 \item{file}{Sample metadata file.}
@@ -12,6 +12,8 @@
 \item{sample_dirs}{Sample directory paths.}
 
 \item{pipeline}{Pipeline used to process the samples.}
+
+\item{unique_names}{Ensure sample names are unique.}
 }
 \value{
 \link{tibble}.
