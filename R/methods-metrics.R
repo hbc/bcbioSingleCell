@@ -33,6 +33,9 @@
                 sep = "_")) %>%
             pull("sample_id")
         col_data[["sample_id"]] <- sample_ids
+    } else {
+        col_data <- col_data %>%
+            mutate(sample_id = .data[["cellular_barcode"]])
     }
 
     left_join(col_data, meta, by = "sample_id") %>%
