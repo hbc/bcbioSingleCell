@@ -10,7 +10,7 @@
 #' @return Ensembl gene symbol (`external_gene_name`) character vector.
 .gene2symbol <- function(object) {
     df <- rowData(object) %>%
-        as("data.frame") %>%
+        as.data.frame %>%
         set_rownames(rownames(object)) %>%
         rownames_to_column %>%
         tidy_select(c("rowname", "ensgene", "symbol"))

@@ -9,10 +9,10 @@
 #'
 #' @param sparse_counts Sparse counts matrix.
 #' @param annotable Annotable.
-#' @param filter Whether to apply pre-filtering to the cellular barcodes.
+#' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
 #'
 #' @return [matrix].
-.calculate_metrics <- function(sparse_counts, annotable, filter = TRUE) {
+.calculate_metrics <- function(sparse_counts, annotable, prefilter = TRUE) {
     message("Calculating barcode metrics")
     cb_input <- ncol(sparse_counts)
     message(paste(cb_input, "cellular barcodes detected"))
@@ -23,7 +23,6 @@
     }
 
     # Pull coding and mitochondrial genes from annotable
-    annotable <- as(annotable, "data.frame")
     coding_genes <- annotable %>%
         filter(.data[["broad_class"]] == "coding") %>%
         pull("ensgene")
@@ -32,7 +31,7 @@
         pull("ensgene")
 
     metrics <- tibble(
-        rowname = colnames(sparse_counts),
+        cellular_barcode = colnames(sparse_counts),
         umi_counts = Matrix::colSums(sparse_counts),
         genes_detected = Matrix::colSums(sparse_counts > 0L),
         coding_counts = Matrix::colSums(
@@ -47,7 +46,7 @@
                    .data[["umi_counts"]])
 
     # Apply cellular barcode pre-filtering, if desired
-    if (isTRUE(filter)) {
+    if (isTRUE(prefilter)) {
         metrics <- metrics %>%
             filter(.data[["umi_counts"]] >= 500L,
                    .data[["genes_detected"]] > 0L,
@@ -57,7 +56,7 @@
     }
 
     metrics %>%
-        as("data.frame") %>%
+        as.data.frame %>%
         column_to_rownames %>%
-        as("matrix")
+        as.matrix
 }

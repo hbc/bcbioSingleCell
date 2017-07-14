@@ -17,7 +17,8 @@
     read_file_by_extension(
         file,
         col_names = c("cellular_barcode", "reads"),
-        col_types = "ci")
+        col_types = "ci") %>%
+        mutate(cellular_barcode = snake(.data[["cellular_barcode"]]))
 }
 
 
@@ -43,11 +44,10 @@
 #' @return [tibble].
 .bind_cellular_barcodes <- function(list) {
     lapply(seq_along(list), function(a) {
-        sample_name <- names(list)[[a]]
+        sample_name <- names(list)[[a]] %>% snake
         list[[a]] %>%
             mutate(cellular_barcode =
-                       paste(sample_name,
-                             .data[["cellular_barcode"]],
+                       paste(sample_name, .data[["cellular_barcode"]],
                              sep = "_"))
     }) %>%
         bind_rows
