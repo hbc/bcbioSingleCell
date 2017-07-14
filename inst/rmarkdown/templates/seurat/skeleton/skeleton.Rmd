@@ -316,7 +316,6 @@ write_csv(markers,
 
 ```{r top_markers}
 top_markers <- top_markers(markers)
-kable(top_markers, caption = "Top markers per cluster")
 ```
 
 
