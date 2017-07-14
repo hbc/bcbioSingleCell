@@ -43,13 +43,14 @@
             meta <- meta %>%
                 mutate(sample_id = paste(.data[["file_name"]],
                                          .data[["revcomp"]],
-                                         sep = "_"))
+                                         sep = "."))
         } else {
             revcomp_matches <- pull(meta, "revcomp")
             sample_matches <- basename(sample_dirs) %>%
-                str_match("(.*)_([ACGT]+)$") %>%
+                str_match("(.*)-([ACGT]+)$") %>%
                 as("tibble") %>%
                 set_colnames(c("sample_id", "file_name", "revcomp")) %>%
+                mutate(sample_id = make.names(.data[["sample_id"]])) %>%
                 filter(.data[["revcomp"]] %in% syms(revcomp_matches))
             meta <- suppressWarnings(
                 full_join(meta, sample_matches, by = "revcomp"))

@@ -40,7 +40,7 @@
             # Strip upload_dir
             str_replace(str_c(upload_dir, "/"), "") %>%
             # Strip subfolders
-            str_replace("/.*", "") %>%
+            #str_replace("/.*", "") %>%
             # Make valid names
             make.names
         sample_dirs <- normalizePath(sample_dirs)

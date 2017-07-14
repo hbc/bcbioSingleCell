@@ -50,7 +50,7 @@ load_run <- function(
         message("Loading a subset of samples, defined by the metadata file")
         all_samples <- FALSE
         sample_dirs <- sample_dirs %>%
-            .[basename(sample_dirs) %in% sample_metadata[["sample_id"]]]
+            .[names(sample_dirs) %in% sample_metadata[["sample_id"]]]
         message(paste(length(sample_dirs), "samples matched by metadata"))
     } else {
         all_samples <- TRUE
