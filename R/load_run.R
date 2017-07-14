@@ -142,11 +142,10 @@ load_run <- function(
             filter(.data[["cellular_barcode"]] %in% rownames(metrics))
         metrics <- metrics %>%
             as.data.frame %>%
-            rownames_to_column %>%
-            left_join(cb_df,
-                      by = c("rowname" = "cellular_barcode")) %>%
+            rownames_to_column("cellular_barcode") %>%
+            left_join(cb_df, by = "cellular_barcode") %>%
             tidy_select("reads", everything()) %>%
-            column_to_rownames %>%
+            column_to_rownames("cellular_barcode") %>%
             as.matrix
     }
 

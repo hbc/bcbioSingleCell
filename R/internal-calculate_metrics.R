@@ -57,6 +57,6 @@
 
     metrics %>%
         as.data.frame %>%
-        column_to_rownames %>%
+        column_to_rownames("cellular_barcode") %>%
         as.matrix
 }
