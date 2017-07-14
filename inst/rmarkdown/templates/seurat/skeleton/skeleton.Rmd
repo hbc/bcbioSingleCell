@@ -24,6 +24,7 @@ subset <- get(subset_name)
 if (class(subset) != "SCSubset") {
     stop("Subset must be S4 SCSubset class object")
 }
+genome_build <- metadata(subset)[["genome_build"]]
 
 # Principal components
 pc_compute <- params$pc_compute

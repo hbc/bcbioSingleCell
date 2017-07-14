@@ -32,6 +32,9 @@ setMethod(
     "plot_known_markers",
     signature(x = "seurat", y = "grouped_df"),
     function(x, y, markdown = TRUE) {
+        if (nrow(y) == 0) {
+            return(NULL)
+        }
         cell_types <- y %>%
             pull("cell_type") %>%
             unique
