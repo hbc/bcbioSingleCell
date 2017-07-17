@@ -1,6 +1,7 @@
 library(knitr)
 library(ggplot2)
 library(bcbioSinglecell)
+
 opts_chunk$set(
     audodep = TRUE,
     cache = TRUE,
@@ -12,4 +13,5 @@ opts_chunk$set(
     message = FALSE,
     tidy = TRUE,
     warning = FALSE)
+
 theme_set(theme_light(base_size = 14))
