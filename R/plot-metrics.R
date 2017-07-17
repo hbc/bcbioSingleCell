@@ -318,3 +318,23 @@ plot_novelty <- function(object, min = 0.8) {
     show(.plot_novelty_boxplot(object, min))
     show(.plot_novelty_histogram(object, min))
 }
+
+##' plot percentage of zeros vs library depth
+##'
+##' @param object
+##' @return
+##' @author Rory Kirchner
+plot_zeros_vs_depth <- function(object) {
+  counts = object$counts
+  zeros = data.frame(dropout=100*colSums(counts == 0)/nrow(counts),
+                     depth=colSums(counts))
+  ggplot(zeros, aes_(~depth, ~dropout)) +
+    geom_point(size=0.8) +
+    ylab("percent genes zero") +
+    xlab("library size") +
+    facet_wrap(~file_name) +
+    scale_x_log10(
+      breaks = scales::trans_breaks("log10", function(x) 10L ^ x),
+      labels = scales::trans_format("log10", scales::math_format(10 ^ .x))) + # nolint
+    annotation_logticks(sides = "b")
+}
