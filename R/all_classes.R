@@ -11,7 +11,7 @@
 bcbioSCDataSet <- setClass(  # nolint
     "bcbioSCDataSet",
     contains = "SummarizedExperiment",
-    representation = representation(callers = "SimpleList"))
+    slots = c(callers = "SimpleList"))
 setValidity("bcbioSCDataSet", function(object) TRUE)
 
 
