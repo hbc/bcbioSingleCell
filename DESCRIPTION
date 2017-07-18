@@ -28,7 +28,6 @@ Depends:
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
-    annotables (>= 0.1.3),
     basejump (>= 0.0.18),
     BiocGenerics,
     ggplot2 (>= 2.2.1),
@@ -39,11 +38,9 @@ Imports:
     Seurat (>= 1.4.0.16),
     S4Vectors
 Suggests:
-    lintr (>= 1.0.0.9001),
+    lintr,
     testthat
 Remotes:
-    hbc/annotables,
-    jimhester/lintr,
     satijalab/seurat,
     steinbaugh/basejump
 Roxygen: list(markdown = TRUE)

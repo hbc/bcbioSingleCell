@@ -2,7 +2,7 @@
 #'
 #' Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
 #'
-#' @import annotables basejump methods SummarizedExperiment S4Vectors
+#' @import basejump methods SummarizedExperiment S4Vectors
 #' @importFrom BiocGenerics counts design
 #' @importFrom ggplot2 aes_ coord_flip element_text expand_limits facet_wrap
 #'   geom_bar geom_boxplot geom_histogram geom_hline geom_label geom_line
