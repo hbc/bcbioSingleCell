@@ -163,7 +163,7 @@ load_run <- function(
         interesting_groups = interesting_groups,
         genome_build = genome_build,
         annotable = annotable,
-        ensembl_version = annotables::ensembl_version,
+        ensembl_version = ensembl_version(),
         umi_type = umi_type,
         all_samples = all_samples)
     if (pipeline == "bcbio") {
