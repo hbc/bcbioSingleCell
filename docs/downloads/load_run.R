@@ -4,6 +4,8 @@ bcb <- load_run(
     sample_metadata_file = file.path("meta", "sample_metadata.xlsx"),
     interesting_groups = c("genotype", "treatment"),
     experiment_name = "",
+    researcher = "",
     principal_investigator = "",
-    email = "")
+    author = getOption("author"),
+    email = getOption("email"))
 save_data(bcb)
