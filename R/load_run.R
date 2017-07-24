@@ -108,7 +108,7 @@ load_run <- function(
 
 
         # Molecular barcode (UMI) type ----
-        if (any(str_detect(bcbio_nextgen_commands,
+        if (any(str_detect(bcbio_nextgen_commands_log,
                            "work/umis/harvard-indrop-v3.json"))) {
             umi_type <- "harvard-indrop-v3"
         }
