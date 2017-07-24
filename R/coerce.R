@@ -8,10 +8,11 @@
 
 
 
+# https://goo.gl/GMQAdC
 setAs("SCSubset", "seurat", function(from) {
     name <- deparse(substitute(from))
-    raw_data <- counts(from, gene2symbol = TRUE)
-    meta_data <- metrics(from) %>% dotted(rownames = FALSE)
+    counts <- counts(from, gene2symbol = TRUE)
+    metrics <- metrics(from) %>% dotted
 
     # Filtering criteria
     min_genes <- metadata(from) %>%
@@ -21,9 +22,9 @@ setAs("SCSubset", "seurat", function(from) {
         .[["filtering_criteria"]] %>%
         .[["max_mito_ratio"]]
 
-    new("seurat", raw.data = raw_data) %>%
-        Setup(meta.data = meta_data,
-              min.genes = min_genes,
-              project = name) %>%
+    new("seurat", raw.data = counts) %>%
+        Setup(project = name,
+              min.genes = min_genes) %>%
+        AddMetaData(metrics) %>%
         SubsetData(subset.name = "mito.ratio", accept.high = max_mito_ratio)
 })
