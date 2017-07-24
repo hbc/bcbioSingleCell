@@ -1,4 +1,4 @@
-#' Filter cellular barcodes
+#' Filter Cellular Barcodes
 #'
 #' Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 #' cellular barcodes.
@@ -14,7 +14,7 @@
 #' @param min_novelty Minimum novelty score.
 #' @param show_report Show summary statistics report and plots.
 #'
-#' @return [SCSubset].
+#' @return [bcbioSCSubset].
 #' @export
 setMethod("filter", "bcbioSCDataSet", function(
     object,
@@ -106,7 +106,7 @@ setMethod("filter", "bcbioSCDataSet", function(
         colData = col_data,
         rowData = row_data,
         metadata = metadata)
-    object <- new("SCSubset", se)
+    object <- new("bcbioSCSubset", se)
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(show_report)) {
