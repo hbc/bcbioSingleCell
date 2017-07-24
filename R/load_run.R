@@ -94,8 +94,7 @@ load_run <- function(
             # Data versions aren't saved when using a custom FASTA
             # Remove this in a future update
             genome_pattern <- "work/rapmap/[^/]+/quasiindex/([^/]+)/"
-            if (any(str_detect(bcbio_nextgen_commands_log,
-                               genome_pattern))) {
+            if (any(str_detect(bcbio_nextgen_commands_log, genome_pattern))) {
                 genome_build <- str_match(bcbio_nextgen_commands_log,
                                           genome_pattern) %>%
                     .[, 2L] %>%
@@ -108,9 +107,17 @@ load_run <- function(
 
 
         # Molecular barcode (UMI) type ----
-        if (any(str_detect(bcbio_nextgen_commands_log,
-                           "work/umis/harvard-indrop-v3.json"))) {
-            umi_type <- "harvard-indrop-v3"
+        # data/umis/harvard-indrop-v3-transform.json
+        umi_pattern <- "/umis/([a-z0-9\\-]+)\\.json"
+        if (any(str_detect(bcbio_nextgen_commands_log, umi_pattern))) {
+            umi_type <- str_match(bcbio_nextgen_commands_log,
+                                  umi_pattern) %>%
+                .[, 2L] %>%
+                na.omit %>%
+                unique %>%
+                str_replace("-transform", "")
+        } else {
+            stop("Failed to detect UMI type from JSON file")
         }
 
         # Well metadata ----
