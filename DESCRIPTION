@@ -30,7 +30,6 @@ Encoding: UTF-8
 Imports:
     basejump (>= 0.0.19),
     BiocGenerics,
-    celda,
     ggplot2 (>= 2.2.1),
     Matrix,
     Matrix.utils,
@@ -38,15 +37,13 @@ Imports:
     monocle (>= 2.4.0),
     scales,
     scater (>= 1.4.0),
-    scde (>= 2.4.1),
-    Seurat (>= 1.4.0.16),
+    Seurat (>= 2.0),
     S4Vectors
 Suggests:
     lintr,
     testthat
 Remotes:
-    compbiomed/celda,
-    satijalab/seurat,
+    satijalab/seurat@develop,
     steinbaugh/basejump
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1

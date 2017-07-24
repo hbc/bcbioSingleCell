@@ -12,7 +12,7 @@
 #' @importFrom Matrix cBind
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom scales math_format trans_breaks trans_format
-#' @importFrom Seurat FeaturePlot MultiPlotList Setup SubsetData VlnPlot
+#' @importFrom Seurat CreateSeuratObject FeaturePlot SubsetData VlnPlot
 #' @importFrom stats median
 #' @importFrom utils methods object.size
 #' @importClassesFrom Seurat seurat
