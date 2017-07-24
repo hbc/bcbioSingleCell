@@ -24,23 +24,28 @@ URL:
 BugReports: https://github.com/hbc/bcbioSinglecell/issues
 Depends:
     R (>= 3.3.1),
-    SummarizedExperiment
+    SummarizedExperiment (>= 1.6.3)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
-    basejump (>= 0.0.18),
+    basejump (>= 0.0.19),
     BiocGenerics,
+    celda,
     ggplot2 (>= 2.2.1),
     Matrix,
     Matrix.utils,
     methods,
+    monocle (>= 2.4.0),
     scales,
+    scater (>= 1.4.0),
+    scde (>= 2.4.1),
     Seurat (>= 1.4.0.16),
     S4Vectors
 Suggests:
     lintr,
     testthat
 Remotes:
+    compbiomed/celda,
     satijalab/seurat,
     steinbaugh/basejump
 Roxygen: list(markdown = TRUE)
