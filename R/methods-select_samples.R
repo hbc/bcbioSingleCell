@@ -52,14 +52,15 @@
     # Return the SCSubset object
     sparse_counts <- assay(object)[, cb_matches]
     col_data <- colData(object)[cb_matches, ]
-    row_data <- .row_data(object)
+    row_data <- rowData(object) %>%
+        set_rownames(rownames(object))
     metadata <- metadata(object)
     metadata[["sample_metadata"]] <- sample_metadata
-    se <- .summarized_experiment(
+    se <- packageSE(
         assays = SimpleList(
             sparse_counts = sparse_counts),
-        col_data = col_data,
-        row_data = row_data,
+        colData = col_data,
+        rowData = row_data,
         metadata = metadata)
     new("SCSubset", se)
 }

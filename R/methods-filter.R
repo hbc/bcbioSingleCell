@@ -80,7 +80,8 @@ setMethod("filter", "bcbioSCDataSet", function(
     col_data <- colData(object) %>% .[rownames(metrics), ]
 
     # rowData ====
-    row_data <- .row_data(object)
+    row_data <- rowData(object) %>%
+        set_rownames(rownames(object))
 
     # Metadata ====
     metadata <- SimpleList(
@@ -99,11 +100,11 @@ setMethod("filter", "bcbioSCDataSet", function(
         annotable = metadata(object)[["annotable"]])
 
     # SummarizedExperiment ====
-    se <- .summarized_experiment(
+    se <- packageSE(
         assays = SimpleList(
             sparse_counts = sparse_counts),
-        col_data = col_data,
-        row_data = row_data,
+        colData = col_data,
+        rowData = row_data,
         metadata = metadata)
     object <- new("SCSubset", se)
 

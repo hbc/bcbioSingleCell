@@ -163,7 +163,7 @@ load_run <- function(
         interesting_groups = interesting_groups,
         genome_build = genome_build,
         annotable = annotable,
-        ensembl_version = ensembl_version(),
+        ensembl_version = ensemblVersion(),
         umi_type = umi_type,
         all_samples = all_samples)
     if (pipeline == "bcbio") {
@@ -188,11 +188,11 @@ load_run <- function(
 
 
     # Return ====
-    se <- .summarized_experiment(
+    se <- packageSE(
         assays = SimpleList(
             sparse_counts = sparse_counts),
-        col_data = metrics,
-        row_data = annotable,
+        colData = metrics,
+        rowData = annotable,
         metadata = metadata)
     bcb <- new("bcbioSCDataSet", se)
     if (pipeline == "bcbio") {
