@@ -4,7 +4,7 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    run: !r file.path("data", "bcb.rda")
+    bcb: "data/bcb.rda"
     min_umis: 1000
     min_genes: 500
     max_genes: 5000
@@ -12,15 +12,19 @@ params:
     min_novelty: 0.8
 ---
 
-```{r setup, message=FALSE}
-# Download dependency files with [bcbioRnaseq::downloads()].
-# Edit these dependencies first before knitting.
+```{r setup, include=FALSE}
+bcbioSinglecell::downloads()
 source("setup.R")
-if (file.exists(params$run)) {
-    load(params$run)
-} else {
-    source("load_run.R")
-}
+
+# bcbioSCDataSet
+# Need to save bcb using `load_run()` prior to knit!
+bcb_name <- load(params$bcb)
+assign("bcb", get(bcb_name))
+if (is.null(bcb)) stop("bcbioSCDataSet missing")
+
+# Directory paths
+data_dir <- params$data_dir
+counts_dir <- params$counts_dir
 ```
 
 ```{r header, child="_header.Rmd"}

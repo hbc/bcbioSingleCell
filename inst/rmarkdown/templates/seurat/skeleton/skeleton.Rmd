@@ -11,6 +11,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, include=FALSE}
+bcbioSinglecell::downloads()
 source("setup.R")
 library(Seurat)
 
@@ -300,6 +301,7 @@ write_csv(markers,
           file.path(markers_dir, paste0(subset_name, ".csv.gz")))
 ```
 
+<<<<<<< HEAD
 
 ## Top markers per cluster
 
