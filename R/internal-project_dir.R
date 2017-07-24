@@ -1,25 +1,50 @@
-#' Read data versions
+#' Read Data Versions
 #'
 #' @rdname data_versions
-#' @keywords internal
 #' @author Michael Steinbaugh
+#' @keywords internal
 #'
 #' @param project_dir Project directory.
 .data_versions <- function(project_dir) {
-    file.path(project_dir, "data_versions.csv") %>% read_csv
+    file <- file.path(project_dir, "data_versions.csv")
+    if (!file.exists(file)) {
+        warning(paste(basename(file), "missing"))
+        return(NULL)
+    }
+    read_csv(file)
 }
 
 
 
-#' Read program versions
+#' Read Log File
+#'
+#' @rdname log_file
+#' @author Michael Steinbaugh
+#' @keywords internal
+#'
+#' @param file Log file.
+.log_file <- function(file) {
+    if (!file.exists(file)) {
+        warning(paste(basename(file), "missing"))
+        return(NULL)
+    }
+    read_lines(file)
+}
+
+
+
+#' Read Program Versions
 #'
 #' @rdname program_versions
-#' @keywords internal
 #' @author Michael Steinbaugh
+#' @keywords internal
 #'
 #' @param project_dir Project directory.
 .programs <- function(project_dir) {
-    file.path(project_dir, "programs.txt") %>%
-        read_delim(col_names = c("program", "version"),
-                   delim = ",")
+    file <- file.path(project_dir, "programs.txt")
+    if (!file.exists(file)) {
+        warning(paste(basename(file), "missing"))
+        return(NULL)
+    }
+    read_delim(file, col_names = c("program", "version"), delim = ",")
 }

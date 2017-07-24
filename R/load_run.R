@@ -76,19 +76,36 @@ load_run <- function(
         template <- match[[3L]]
         project_dir <- file.path(upload_dir, project_dir)
 
+        # Log files ----
+        message("Reading log files")
+        bcbio_nextgen_log <- .log_file(
+            file.path(project_dir, "bcbio-nextgen.log"))
+        bcbio_nextgen_commands_log <- .log_file(
+            file.path(project_dir, "bcbio-nextgen-commands.log"))
+
         # Data versions and programs ----
         data_versions <- .data_versions(project_dir)
         programs <- .programs(project_dir)
-        genome_build <- data_versions %>%
-            filter(.data[["resource"]] == "transcripts") %>%
-            pull("genome")
+        if (!is.null(data_versions)) {
+            genome_build <- data_versions %>%
+                filter(.data[["resource"]] == "transcripts") %>%
+                pull("genome")
+        } else {
+            # Data versions aren't saved when using a custom FASTA
+            # Remove this in a future update
+            genome_pattern <- "work/rapmap/[^/]+/quasiindex/([^/]+)/"
+            if (any(str_detect(bcbio_nextgen_commands_log,
+                               genome_pattern))) {
+                genome_build <- str_match(bcbio_nextgen_commands_log,
+                                          genome_pattern) %>%
+                    .[, 2L] %>%
+                    na.omit %>%
+                    unique
+            } else {
+                stop("Genome detection from bcbio commands failed")
+            }
+        }
 
-        # Log files ----
-        message("Reading log files")
-        bcbio_nextgen <- read_lines(
-            file.path(project_dir, "bcbio-nextgen.log"))
-        bcbio_nextgen_commands <- read_lines(
-            file.path(project_dir, "bcbio-nextgen-commands.log"))
 
         # Molecular barcode (UMI) type ----
         if (any(str_detect(bcbio_nextgen_commands,
@@ -176,8 +193,8 @@ load_run <- function(
             tx2gene = tx2gene(genome_build),
             data_versions = data_versions,
             programs = programs,
-            bcbio_nextgen = bcbio_nextgen,
-            bcbio_nextgen_commands = bcbio_nextgen_commands)
+            bcbio_nextgen_log = bcbio_nextgen_log,
+            bcbio_nextgen_commands_log = bcbio_nextgen_commands_log)
         metadata <- c(metadata, bcbio_metadata)
     }
     # Add user-defined custom metadata, if specified

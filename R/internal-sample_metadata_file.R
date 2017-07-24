@@ -45,14 +45,13 @@
             meta <- meta %>%
                 mutate(sample_id = paste(.data[["file_name"]],
                                          .data[["revcomp"]],
-                                         sep = "."))
+                                         sep = "_"))
         } else {
             revcomp_matches <- pull(meta, "revcomp")
             sample_matches <- basename(sample_dirs) %>%
                 str_match("(.*)-([ACGT]+)$") %>%
                 as("tibble") %>%
                 set_colnames(c("sample_id", "file_name", "revcomp")) %>%
-                mutate(sample_id = snake(.data[["sample_id"]])) %>%
                 filter(.data[["revcomp"]] %in% syms(revcomp_matches))
             meta <- suppressWarnings(
                 full_join(meta, sample_matches, by = "revcomp"))
@@ -61,6 +60,7 @@
 
     # Ensure `sample_id` is valid name then arrange
     meta <- meta %>%
+        # Sanitize sample ID into snake_case
         mutate(sample_id = snake(.data[["sample_id"]])) %>%
         arrange(!!sym("sample_id"))
 
