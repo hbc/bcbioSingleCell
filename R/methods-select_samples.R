@@ -12,7 +12,7 @@
 #' @param ... Columns to use for grep pattern matching. Supply a named character
 #'   vector containing the column name and the grep pattern.
 #'
-#' @return [SCSubset].
+#' @return [bcbioSCSubset].
 
 
 
@@ -49,7 +49,7 @@
     }
     message(paste(length(cb_matches), "cellular barcodes"))
 
-    # Return the SCSubset object
+    # Return the bcbioSCSubset object
     sparse_counts <- assay(object)[, cb_matches]
     col_data <- colData(object)[cb_matches, ]
     row_data <- rowData(object) %>%
@@ -62,7 +62,7 @@
         colData = col_data,
         rowData = row_data,
         metadata = metadata)
-    new("SCSubset", se)
+    new("bcbioSCSubset", se)
 }
 
 
@@ -73,4 +73,4 @@ setMethod("select_samples", "bcbioSCDataSet", .select_samples)
 
 #' @rdname select_samples
 #' @export
-setMethod("select_samples", "SCSubset", .select_samples)
+setMethod("select_samples", "bcbioSCSubset", .select_samples)
