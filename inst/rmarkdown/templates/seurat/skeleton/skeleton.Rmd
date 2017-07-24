@@ -36,7 +36,7 @@ num.pc <- 40
 pc.use <- 10
 ```
 
-```{r header, child="header.Rmd"}
+```{r header, child="_header.Rmd"}
 ```
 
 All features in [Seurat][] have been configured to work with both regular and sparse matrices. We prefer to use sparse matrices from the [Matrix][] package, as they result in significant memory and speed savings.
@@ -227,5 +227,5 @@ save(list = project,
      compress = FALSE)
 ```
 
-```{r footer, child="footer.Rmd"}
+```{r footer, child="_footer.Rmd"}
 ```
