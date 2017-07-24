@@ -7,6 +7,7 @@ bibliography: bcbioSinglecell.bib
 ---
 
 ```{r setup, message=FALSE}
+bcbioSinglecell::downloads()
 source("setup.R")
 library(Seurat)
 data(filtered)
