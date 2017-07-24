@@ -14,11 +14,11 @@
 downloads <- function(file = NULL) {
     dl <- function(file) {
         sapply(seq_along(file), function(a) {
-            if (!file.exists(file[a])) {
+            if (!file.exists(file[[a]])) {
                 download.file(
                     file.path("http://bioinformatics.sph.harvard.edu",
-                              "bcbioSinglecell", "downloads", file[a]),
-                    destfile = file[a])
+                              "bcbioSinglecell", "downloads", file[[a]]),
+                    destfile = file[[a]])
             }
         }) %>% invisible
     }
@@ -28,9 +28,10 @@ downloads <- function(file = NULL) {
     } else {
         # HBC project defaults
         dl(c("_output.yaml",
+             "_footer.Rmd",
+             "_header.Rmd",
              "bcbioSinglecell.bib",
-             "footer.Rmd",
-             "header.Rmd",
+             "load_run.R",
              "setup.R"))
     }
 }

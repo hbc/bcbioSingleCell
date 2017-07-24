@@ -7,12 +7,11 @@ bibliography: bcbioSinglecell.bib
 ---
 
 ```{r setup, message=FALSE}
-# Download dependency files, including setup.R with [bcbioRnaseq::downloads()].
-# Be sure to edit `setup.R` manually before attempting [knit()].
+bcbioSinglecell::downloads()
 source("setup.R")
 ```
 
-```{r header, child="header.Rmd"}
+```{r header, child="_header.Rmd"}
 ```
 
 
@@ -131,5 +130,5 @@ save_data(bcb_filtered, compress = FALSE)
 
 
 
-```{r footer, child="footer.Rmd"}
+```{r footer, child="_footer.Rmd"}
 ```
