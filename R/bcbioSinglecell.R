@@ -24,9 +24,16 @@ globalVariables(".")
 
 bins <- 100L
 
-fail_color <- "red"
-pass_color <- "green"
-warn_color <- "orange"
+# Quality control plot colors
+qc_fail_color <- "red"
+qc_pass_color <- "green"
+qc_warn_color <- "orange"
+qc_label_alpha <- 0.5
+qc_line_alpha <- 0.5
+qc_line_size <- 2L
+
+# Plot label separator
+label_sep <- ": "
 
 meta_priority_cols <- c("sample_id", "sample_name", "file_name")
 project_dir_pattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
