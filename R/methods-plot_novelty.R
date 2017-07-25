@@ -15,14 +15,12 @@
         aggregate(log10_genes_per_umi ~ sample_id, metrics, median) %>%
         left_join(sample_metadata(object), by = "sample_id")
     interesting_group <- interesting_groups(object)[[1L]]
-    ggplot(
-        metrics,
+    p <- ggplot(metrics,
         aes_(x = ~sample_name,
              y = ~log10_genes_per_umi,
              fill = as.name(interesting_group))) +
         labs(x = "sample",
              y = "log10 genes per umi") +
-        facet_wrap(~file_name) +
         geom_boxplot() +
         geom_hline(alpha = qc_line_alpha,
                    color = qc_pass_color,
@@ -35,6 +33,10 @@
                    show.legend = FALSE) +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+        p <- p + facet_wrap(~file_name)
+    }
+    p
 }
 
 
@@ -43,20 +45,21 @@
 #' @usage NULL
 .plot_novelty_histogram <- function(object, min) {
     metrics <- metrics(object)
-    ggplot(
-        metrics,
+    p <- ggplot(metrics,
         aes_(x = ~log10_genes_per_umi,
              fill = ~sample_name)) +
         labs(x = "log10 genes per umi") +
-        facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
         geom_vline(alpha = qc_line_alpha,
                    color = qc_pass_color,
                    size = qc_line_size,
                    xintercept = min) +
         scale_x_sqrt() +
-        scale_y_sqrt() +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+        scale_y_sqrt()
+    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+        p <- p + facet_wrap(~file_name)
+    }
+    p
 }
 
 
@@ -64,8 +67,10 @@
 #' @rdname plot_novelty
 #' @usage NULL
 .plot_novelty <- function(object, min) {
-    plot_grid(.plot_novelty_histogram(object, min),
-              .plot_novelty_boxplot(object, min),
+    plot_grid(.plot_novelty_histogram(object, min) +
+                  theme(legend.position = "none"),
+              .plot_novelty_boxplot(object, min) +
+                  theme(legend.position = "bottom"),
               labels = "auto",
               nrow = 2L)
 }

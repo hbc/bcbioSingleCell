@@ -72,11 +72,9 @@
 #' @return [tibble].
 .bind_cellular_barcodes <- function(list) {
     lapply(seq_along(list), function(a) {
-        sample_name <- names(list)[[a]] %>% snake
+        sample_id <- names(list)[[a]] %>% snake
         list[[a]] %>%
-            mutate(cellular_barcode =
-                       paste(sample_name, .data[["cellular_barcode"]],
-                             sep = "_"))
+            mutate(sample_id = !!sample_id)
     }) %>%
         bind_rows
 }

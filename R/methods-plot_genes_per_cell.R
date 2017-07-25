@@ -17,14 +17,12 @@
     median_genes <- aggregate(genes_detected ~ sample_id, metrics, median) %>%
         left_join(sample_metadata(object), by = "sample_id")
     interesting_group <- interesting_groups(object)[[1L]]
-    plot <- ggplot(
-        metrics,
-        aes_(x = ~sample_name,
-             y = ~genes_detected,
-             fill = as.name(interesting_group))) +
+    p <- ggplot(metrics,
+                aes_(x = ~sample_name,
+                     y = ~genes_detected,
+                     fill = as.name(interesting_group))) +
         labs(x = "sample",
              y = "genes per cell") +
-        facet_wrap(~file_name) +
         geom_boxplot() +
         geom_hline(alpha = qc_line_alpha,
                    color = qc_pass_color,
@@ -38,13 +36,16 @@
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (!is.null(max)) {
-        plot <- plot +
+        p <- p +
             geom_hline(alpha = qc_line_alpha,
                        color = qc_pass_color,
                        size = qc_line_size,
                        yintercept = max)
     }
-    plot
+    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+        p <- p + facet_wrap(~file_name)
+    }
+    p
 }
 
 
@@ -53,12 +54,10 @@
 #' @usage NULL
 .plot_genes_per_cell_histogram <- function(object, min, max) {
     metrics <- metrics(object)
-    plot <- ggplot(
-        metrics,
-        aes_(x = ~genes_detected,
-             fill = ~sample_name)) +
+    p <- ggplot(metrics,
+                aes_(x = ~genes_detected,
+                     fill = ~sample_name)) +
         labs(x = "genes per cell") +
-        facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
         geom_vline(alpha = qc_line_alpha,
                    color = qc_pass_color,
@@ -68,13 +67,16 @@
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (!is.null(max)) {
-        plot <- plot +
+        p <- p +
             geom_vline(alpha = qc_line_alpha,
                        color = qc_pass_color,
                        size = qc_line_size,
                        xintercept = max)
     }
-    plot
+    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+        p <- p + facet_wrap(~file_name)
+    }
+    p
 }
 
 

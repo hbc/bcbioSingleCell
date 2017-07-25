@@ -15,11 +15,7 @@ setMethod(
         pblapply(seq_along(clusters), function(a) {
             cluster <- clusters[[a]]
             if (isTRUE(markdown)) {
-                writeLines(c(
-                    "",
-                    "",
-                    paste("###", "Cluster", cluster),
-                    ""))
+                mdHeader(paste("Cluster", cluster), level = 3L)
             }
             symbols <- y %>%
                 filter(.data[["cluster"]] == !!cluster) %>%

@@ -4,7 +4,7 @@
 \alias{.sample_metadata_file}
 \title{Prepare sample metadata from file}
 \usage{
-.sample_metadata_file(file, sample_dirs, pipeline, unique_names = FALSE)
+.sample_metadata_file(file, sample_dirs, pipeline)
 }
 \arguments{
 \item{file}{Sample metadata file.}

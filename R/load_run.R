@@ -200,6 +200,11 @@ load_run <- function(
 
 
     # Metadata ====
+    if (umi_type == "indrop") {
+        multiplexed_fastq <- TRUE
+    } else {
+        multiplexed_fastq <- FALSE
+    }
     metadata <- SimpleList(
         pipeline = pipeline,
         upload_dir = upload_dir,
@@ -211,7 +216,8 @@ load_run <- function(
         annotable = annotable,
         ensembl_version = ensemblVersion(),
         umi_type = umi_type,
-        all_samples = all_samples)
+        all_samples = all_samples,
+        multiplexed_fastq = multiplexed_fastq)
     if (pipeline == "bcbio") {
         bcbio_metadata <- SimpleList(
             project_dir = project_dir,
