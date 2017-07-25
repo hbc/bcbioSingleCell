@@ -91,6 +91,14 @@ load_run <- function(
         bcbio_commands_log <- .log_file(
             file.path(project_dir, "bcbio-nextgen-commands.log"))
 
+        # Cellular barcode cutoff ----
+        cb_cutoff_pattern <- "--cb_cutoff (\\d+)"
+        cb_cutoff <- str_match(bcbio_commands_log, cb_cutoff_pattern) %>%
+            .[, 2L] %>%
+            na.omit %>%
+            unique %>%
+            as.numeric
+
         # Data versions and programs ----
         data_versions <- .data_versions(project_dir)
         programs <- .programs(project_dir)
@@ -212,7 +220,8 @@ load_run <- function(
             data_versions = data_versions,
             programs = programs,
             bcbio_log = bcbio_log,
-            bcbio_commands_log = bcbio_commands_log)
+            bcbio_commands_log = bcbio_commands_log,
+            cb_cutoff = cb_cutoff)
         metadata <- c(metadata, bcbio_metadata)
     }
     # Add user-defined custom metadata, if specified
