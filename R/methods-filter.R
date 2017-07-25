@@ -108,19 +108,28 @@ setMethod("filter", "bcbioSCDataSet", function(
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(show_report)) {
-        message(paste(
-            "Filtering parameters:",
+        mdHeader("Filtering parameters", level = 2L)
+        writeLines(c(
             paste("  - >=", min_umis, "UMI counts per cell"),
             paste("  - >=", min_genes, "genes per cell"),
             paste("  - <=", max_genes, "genes per cell"),
             paste("  - <=", max_mito_ratio, "mitochondrial abundance ratio"),
-            paste("  - >=", min_novelty, "novelty score"),
-            sep = "\n"))
-        plot_cell_counts(object) %>% show
-        plot_umis_per_cell(object) %>% show
-        plot_genes_per_cell(object) %>% show
-        plot_mito_ratio(object) %>% show
-        plot_novelty(object) %>% show
+            paste("  - >=", min_novelty, "novelty score")))
+
+        mdHeader("Filtered cell counts", level = 3L)
+        show(plot_cell_counts(object))
+
+        mdHeader("Filtered UMI counts per cell", level = 3L)
+        show(plot_umis_per_cell(object))
+
+        mdHeader("Filtered genes detected", level = 3L)
+        show(plot_genes_per_cell(object))
+
+        mdHeader("Filtered mitochondrial counts ratio", level = 3L)
+        show(plot_mito_ratio(object))
+
+        mdHeader("Filtered novelty score", level = 3L)
+        show(plot_novelty(object))
     }
 
     object
