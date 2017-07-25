@@ -23,7 +23,7 @@ setMethod("filter", "bcbioSCDataSet", function(
     max_mito_ratio = 0.1,
     min_novelty = 0.8,
     show_report = TRUE) {
-    sparse_counts <- counts(object)
+    sparse_counts <- assay(object)
 
     # Cellular barcode count
     ncol(sparse_counts) %>%
@@ -31,9 +31,7 @@ setMethod("filter", "bcbioSCDataSet", function(
         message
 
     # Subset metrics
-    metrics <- metrics(object) %>%
-        rownames_to_column %>%
-        as_tibble
+    metrics <- metrics(object) %>% as("tibble")
 
     # Apply filtering criteria
     if (!is.null(min_umis)) {
@@ -67,16 +65,17 @@ setMethod("filter", "bcbioSCDataSet", function(
         column_to_rownames
 
     # Filter the sparse counts matrix with metrics
-    sparse_size_original <- object.size(sparse_counts) %>%
-        format(units = "auto")
+    sparse_size_original <- object.size(sparse_counts)
     sparse_counts <- sparse_counts[, rownames(metrics)]
-    sparse_size_filtered <- object.size(sparse_counts) %>%
-        format(units = "auto")
+    sparse_size_filtered <- object.size(sparse_counts)
     message(paste("Sparse matrix shrunk from",
-                  sparse_size_original, "to", sparse_size_filtered))
+                  format(sparse_size_original, units = "auto"),
+                  "to",
+                  format(sparse_size_filtered, units = "auto")))
 
     # colData ====
     col_data <- colData(object) %>% .[rownames(metrics), ]
+    rm(metrics)
 
     # rowData ====
     row_data <- rowData(object) %>%
