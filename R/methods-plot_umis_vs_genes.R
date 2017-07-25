@@ -15,8 +15,7 @@
         aes_(x = ~umi_counts,
              y = ~genes_detected,
              color = ~sample_name)) +
-        labs(title = "umis vs. genes detected",
-             x = "umis per cell",
+        labs(x = "umis per cell",
              y = "genes per cell") +
         facet_wrap(~file_name) +
         geom_smooth(method = "lm", se = FALSE) +

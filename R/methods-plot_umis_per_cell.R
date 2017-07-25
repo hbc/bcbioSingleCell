@@ -22,8 +22,7 @@
         aes_(x = ~sample_name,
              y = ~umi_counts,
              fill = as.name(interesting_group))) +
-        labs(title = "umi counts boxplot",
-             x = "sample",
+        labs(x = "sample",
              y = "umis per cell") +
         facet_wrap(~file_name) +
         geom_boxplot() +
@@ -50,8 +49,7 @@
         metrics,
         aes_(x = ~umi_counts,
              fill = ~sample_name)) +
-        labs(title = "umi counts histogram",
-             x = "umis per cell") +
+        labs(x = "umis per cell") +
         facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
         geom_vline(alpha = qc_line_alpha,
