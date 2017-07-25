@@ -54,7 +54,7 @@
 
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_raw_violin <- function(plot_cb_tbl) {
+.plot_cb_raw_violin <- function(plot_cb_tbl, cb_cutoff_line) {
     ggplot(
         plot_cb_tbl,
         aes_(x = ~sample_name,
@@ -69,7 +69,7 @@
         geom_hline(alpha = qc_line_alpha,
                    color = qc_pass_color,
                    size = qc_line_size,
-                   yintercept = .cb_cutoff_line(object)) +
+                   yintercept = cb_cutoff_line) +
         labs(title = "raw violin",
              x = "",
              y = "log10 reads per cell") +
@@ -81,7 +81,7 @@
 
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_raw_histogram <- function(plot_cb_tbl) {
+.plot_cb_raw_histogram <- function(plot_cb_tbl, cb_cutoff_line) {
     ggplot(
         plot_cb_tbl,
         aes_(x = ~log10_reads,
@@ -99,7 +99,7 @@
         geom_vline(alpha = qc_line_alpha,
                    color = qc_pass_color,
                    size = qc_line_size,
-                   xintercept = .cb_cutoff_line(object)) +
+                   xintercept = cb_cutoff_line) +
         theme(axis.text.y = element_blank(),
               axis.ticks.y = element_blank(),
               legend.position = "none")
@@ -110,7 +110,7 @@
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
 .plot_cb_proportional_histogram <- function(object) {
-
+    cb_cutoff_line <- .cb_cutoff_line(object)
     ggplot(.proportional_cb(object),
            aes_(x = ~log10_reads_per_cell,
                 y = ~proportion_of_cells * 100L,
@@ -124,7 +124,7 @@
         geom_vline(alpha = qc_line_alpha,
                    color = qc_pass_color,
                    size = qc_line_size,
-                   xintercept = .cb_cutoff_line(object)) +
+                   xintercept = cb_cutoff_line) +
         labs(title = "proportional histogram",
              x = "log10 reads per cell",
              y = "% of cells") +
@@ -138,13 +138,14 @@
 setMethod("plot_cellular_barcodes", "bcbioSCDataSet", function(object) {
     # Use defined plot_cb_tbl here for improved speed
     plot_cb_tbl <- .plot_cb_tbl(object)
+    cb_cutoff_line <- .cb_cutoff_line(object)
     ggdraw() +
         # Coordinates are relative to lower left corner
         draw_plot(
-            .plot_cb_raw_violin(plot_cb_tbl),
+            .plot_cb_raw_violin(plot_cb_tbl, cb_cutoff_line),
             x = 0L, y = 0.7, width = 0.5, height = 0.3) +
         draw_plot(
-            .plot_cb_raw_histogram(plot_cb_tbl),
+            .plot_cb_raw_histogram(plot_cb_tbl, cb_cutoff_line),
             x = 0.5, y = 0.7, width = 0.5, height = 0.3) +
         draw_plot(
             .plot_cb_proportional_histogram(object),
