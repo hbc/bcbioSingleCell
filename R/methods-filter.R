@@ -116,19 +116,21 @@ setMethod("filter", "bcbioSCDataSet", function(
             str_c("`<=", max_mito_ratio, "` mitochondrial abundance ratio"),
             str_c("`>=", min_novelty, "` novelty score")))
 
-        mdHeader("Filtered cell counts", level = 2L)
+        mdHeader("Filtered metrics plots {.tabset}", level = 2L)
+
+        mdHeader("Cell counts", level = 3L)
         show(plot_cell_counts(object))
 
-        mdHeader("Filtered UMI counts per cell", level = 2L)
+        mdHeader("UMI counts per cell", level = 3L)
         show(plot_umis_per_cell(object))
 
-        mdHeader("Filtered genes detected", level = 2L)
+        mdHeader("Genes detected", level = 3L)
         show(plot_genes_per_cell(object))
 
-        mdHeader("Filtered mitochondrial counts ratio", level = 2L)
+        mdHeader("Mitochondrial counts ratio", level = 3L)
         show(plot_mito_ratio(object))
 
-        mdHeader("Filtered novelty score", level = 2L)
+        mdHeader("Novelty", level = 3L)
         show(plot_novelty(object))
     }
 
