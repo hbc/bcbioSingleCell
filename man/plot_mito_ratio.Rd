@@ -8,15 +8,19 @@
 \alias{.plot_mito_ratio_scatterplot}
 \alias{.plot_mito_ratio}
 \alias{plot_mito_ratio,bcbioSCDataSet-method}
-\alias{plot_mito_ratio,SCSubset-method}
-\title{Plot mitochondrial transcript abundance}
+\alias{plot_mito_ratio,bcbioSCSubset-method}
+\title{Plot Mitochondrial Transcript Abundance}
 \usage{
+plot_mito_ratio(object, ...)
+
 \S4method{plot_mito_ratio}{bcbioSCDataSet}(object, max = 0.1)
 
-\S4method{plot_mito_ratio}{SCSubset}(object)
+\S4method{plot_mito_ratio}{bcbioSCSubset}(object)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 
 \item{max}{Recommended maximum value cutoff.}
 }
@@ -24,7 +28,7 @@
 \link{ggplot}.
 }
 \description{
-Plot mitochondrial transcript abundance
+Plot Mitochondrial Transcript Abundance
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

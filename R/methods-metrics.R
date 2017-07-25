@@ -1,10 +1,9 @@
-#' Sample barcode metrics
+#' Sample Barcode Metrics
 #'
 #' @rdname metrics
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @param object Primary object.
-#'
-#' @return [data.frame].
+#' @return [data.frame] with cellular barcodes as rows.
 
 
 
@@ -49,12 +48,16 @@
 #' @export
 setMethod("metrics", "bcbioSCDataSet", .metrics)
 
+
+
 #' @rdname metrics
 #' @export
-setMethod("metrics", "SCSubset", .metrics)
+setMethod("metrics", "bcbioSCSubset", .metrics)
+
+
 
 #' @rdname metrics
 #' @export
 setMethod("metrics", "seurat", function(object) {
-    object@data.info %>% snake(rownames = FALSE)
+    object@data.info %>% snake
 })

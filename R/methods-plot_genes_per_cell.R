@@ -1,9 +1,8 @@
-#' Plot genes per cell
+#' Plot Genes per Cell
 #'
 #' @rdname plot_genes_per_cell
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @param object Primary object.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #'
@@ -104,7 +103,7 @@ setMethod(
 #' @export
 setMethod(
     "plot_genes_per_cell",
-    "SCSubset",
+    "bcbioSCSubset",
     function(object) {
         min <- object %>%
             metadata %>%

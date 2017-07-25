@@ -1,4 +1,4 @@
-#' bcbioSCDataSet object accessors
+#' `bcbioSCDataSet` Object Accessors
 #'
 #' @rdname bcbio
 #' @docType methods
@@ -7,7 +7,7 @@
 #' @param type Type of count data to retrieve.
 #' @param value An integer matrix or other object.
 #'
-#' @return Matrix/Object containing count data.
+#' @return Matrix or object containing count data.
 #' @export
 setMethod(
     "bcbio",

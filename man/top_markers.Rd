@@ -4,12 +4,16 @@
 \name{top_markers}
 \alias{top_markers}
 \alias{top_markers,data.frame-method}
-\title{Top markers}
+\title{Top Markers}
 \usage{
+top_markers(object, ...)
+
 \S4method{top_markers}{data.frame}(object, n = 4L, show = TRUE)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{...}{Additional arguments.}
 
 \item{n}{Number of genes per cluster.}
 
@@ -19,5 +23,5 @@
 \link{tibble}.
 }
 \description{
-Top markers
+Top Markers
 }

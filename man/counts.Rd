@@ -5,17 +5,21 @@
 \alias{counts}
 \alias{.counts}
 \alias{counts,bcbioSCDataSet-method}
-\alias{counts,SCSubset-method}
-\title{Counts accessor}
+\alias{counts,bcbioSCSubset-method}
+\title{Counts Accessor}
 \usage{
+counts(object, ...)
+
 \S4method{counts}{bcbioSCDataSet}(object, gene2symbol = FALSE,
   format = "dgCMatrix")
 
-\S4method{counts}{SCSubset}(object, gene2symbol = FALSE,
+\S4method{counts}{bcbioSCSubset}(object, gene2symbol = FALSE,
   format = "dgCMatrix")
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 
 \item{gene2symbol}{Convert Ensembl gene identifiers (rownames) to gene
 symbols. Recommended for passing counts to Seurat.}
@@ -24,10 +28,10 @@ symbols. Recommended for passing counts to Seurat.}
 \code{dgTMatrix}) or dense matrix (\code{matrix}).}
 }
 \value{
-Counts matrix.
+\link{matrix}.
 }
 \description{
-Counts accessor
+Counts Accessor
 }
 \author{
 Michael Steinbaugh

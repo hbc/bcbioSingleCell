@@ -5,21 +5,25 @@
 \alias{sample_metadata}
 \alias{.sample_metadata}
 \alias{sample_metadata,bcbioSCDataSet-method}
-\alias{sample_metadata,SCSubset-method}
-\title{Sample metadata}
+\alias{sample_metadata,bcbioSCSubset-method}
+\title{Sample Metadata}
 \usage{
+sample_metadata(object, ...)
+
 \S4method{sample_metadata}{bcbioSCDataSet}(object)
 
-\S4method{sample_metadata}{SCSubset}(object)
+\S4method{sample_metadata}{bcbioSCSubset}(object)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \link{tibble}.
 }
 \description{
-Sample metadata
+Sample Metadata
 }
 \author{
 Michael Steinbaugh

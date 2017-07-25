@@ -7,7 +7,7 @@
 \alias{plot_mito_counts}
 \alias{plot_total_cells}
 \alias{plot_total_vs_detected}
-\title{Deprecated functions}
+\title{Deprecated Functions}
 \usage{
 barcode_metrics(...)
 
@@ -25,9 +25,6 @@ plot_total_vs_detected(...)
 \item{...}{Passthrough parameters}
 }
 \description{
-Deprecated functions
-}
-\author{
-Michael Steinbaugh
+Deprecated Functions
 }
 \keyword{internal}

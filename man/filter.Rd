@@ -4,14 +4,18 @@
 \name{filter}
 \alias{filter}
 \alias{filter,bcbioSCDataSet-method}
-\title{Filter cellular barcodes}
+\title{Filter Cellular Barcodes}
 \usage{
+filter(object, ...)
+
 \S4method{filter}{bcbioSCDataSet}(object, min_umis = 1000L,
   min_genes = 500L, max_genes = NULL, max_mito_ratio = 0.1,
   min_novelty = 0.8, show_report = TRUE)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 
 \item{min_umis}{Minimum number of UMI disambiguated counts per cell.}
 
@@ -26,7 +30,7 @@
 \item{show_report}{Show summary statistics report and plots.}
 }
 \value{
-\link{SCSubset}.
+\link{bcbioSCSubset}.
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to

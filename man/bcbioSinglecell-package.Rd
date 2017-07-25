@@ -6,7 +6,8 @@
 \alias{bcbioSinglecell-package}
 \title{bcbioSinglecell}
 \description{
-Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
+Import and analyze \href{http://bcbio-nextgen.readthedocs.io}{bcbio} single-cell
+RNA-seq data.
 }
 \seealso{
 Useful links:

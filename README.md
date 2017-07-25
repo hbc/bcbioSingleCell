@@ -4,7 +4,7 @@
 [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 [![codecov](https://codecov.io/gh/hbc/bcbioSinglecell/branch/master/graph/badge.svg)](https://codecov.io/gh/hbc/bcbioSinglecell)
 
-Utility functions for analysis of [bcbio-nextgen][] single-cell RNA-seq data.
+Import and analyze [bcbio][] single-cell RNA-seq data.
 
 
 ## Installation
@@ -33,7 +33,7 @@ devtools::install_github("hbc/bcbioSinglecell")
 - For fixes in a specific release version, commit to the release branch.
 
 
-[bcbio-nextgen]: https://bcbio-nextgen.readthedocs.io
-[Bioconductor]: https://bioconductor.org
+[bcbio]: https://bcbio-nextgen.readthedocs.io
+[bioconductor]: https://bioconductor.org
 [devtools]: https://cran.r-project.org/package=devtools
-[R]: https://www.r-project.org
+[r]: https://www.r-project.org

@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloads.R
 \name{downloads}
 \alias{downloads}
-\title{File downloads}
+\title{File Downloads}
 \usage{
 downloads(file = NULL)
 }

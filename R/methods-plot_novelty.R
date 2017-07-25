@@ -1,6 +1,6 @@
-#' Plot novelty score
+#' Plot Novelty Score
 #'
-#' "Novelty" refers to log10 genes detected per count.
+#' @details "Novelty" refers to log10 genes detected per count.
 #'
 #' @rdname plot_novelty
 #' @inherit plot_genes_per_cell
@@ -85,7 +85,7 @@ setMethod(
 #' @export
 setMethod(
     "plot_novelty",
-    "SCSubset",
+    "bcbioSCSubset",
     function(object) {
         min <- object %>%
             metadata %>%

@@ -1,4 +1,6 @@
-#' Read known markers
+#' Read Known Markers
+#'
+#' @author Michael Steinbaugh
 #'
 #' @param markers_file Gene markers file (CSV or Excel).
 #' @param genome_build Genome build.

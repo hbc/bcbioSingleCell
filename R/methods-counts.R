@@ -1,16 +1,15 @@
-#' Counts accessor
+#' Counts Accessor
 #'
 #' @rdname counts
 #'
 #' @author Michael Steinbaugh
 #'
-#' @param object Primary object.
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.
 #' @param format Return counts as sparse matrix (**recommended**; `dgCMatrix`,
 #'   `dgTMatrix`) or dense matrix (`matrix`).
 #'
-#' @return Counts matrix.
+#' @return [matrix].
 
 
 
@@ -39,4 +38,4 @@ setMethod("counts", "bcbioSCDataSet", .counts)
 
 #' @rdname counts
 #' @export
-setMethod("counts", "SCSubset", .counts)
+setMethod("counts", "bcbioSCSubset", .counts)

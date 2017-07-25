@@ -5,21 +5,25 @@
 \alias{plot_umis_vs_genes}
 \alias{.plot_umis_vs_genes}
 \alias{plot_umis_vs_genes,bcbioSCDataSet-method}
-\alias{plot_umis_vs_genes,SCSubset-method}
-\title{Plot UMI and gene correlation}
+\alias{plot_umis_vs_genes,bcbioSCSubset-method}
+\title{Plot UMI and Gene Correlation}
 \usage{
+plot_umis_vs_genes(object, ...)
+
 \S4method{plot_umis_vs_genes}{bcbioSCDataSet}(object)
 
-\S4method{plot_umis_vs_genes}{SCSubset}(object)
+\S4method{plot_umis_vs_genes}{bcbioSCSubset}(object)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \link{ggplot}.
 }
 \description{
-Plot UMI and gene correlation
+Plot UMI and Gene Correlation
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

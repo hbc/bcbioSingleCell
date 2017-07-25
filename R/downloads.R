@@ -1,4 +1,4 @@
-#' File downloads
+#' File Downloads
 #'
 #' If file isn't present, download latest version from the
 #' [HBC website](http://bioinformatics.sph.harvard.edu/).

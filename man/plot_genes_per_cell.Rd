@@ -7,16 +7,20 @@
 \alias{.plot_genes_per_cell_histogram}
 \alias{.plot_genes_per_cell}
 \alias{plot_genes_per_cell,bcbioSCDataSet-method}
-\alias{plot_genes_per_cell,SCSubset-method}
-\title{Plot genes per cell}
+\alias{plot_genes_per_cell,bcbioSCSubset-method}
+\title{Plot Genes per Cell}
 \usage{
+plot_genes_per_cell(object, ...)
+
 \S4method{plot_genes_per_cell}{bcbioSCDataSet}(object, min = 500L,
   max = NULL)
 
-\S4method{plot_genes_per_cell}{SCSubset}(object)
+\S4method{plot_genes_per_cell}{bcbioSCSubset}(object)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 
 \item{min}{Recommended minimum value cutoff.}
 
@@ -26,7 +30,7 @@
 \link{ggplot}.
 }
 \description{
-Plot genes per cell
+Plot Genes per Cell
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

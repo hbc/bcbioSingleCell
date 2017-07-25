@@ -2,7 +2,7 @@
 % Please edit documentation in R/read.R
 \name{read_known_markers}
 \alias{read_known_markers}
-\title{Read known markers}
+\title{Read Known Markers}
 \usage{
 read_known_markers(markers_file, genome_build, show = TRUE)
 }
@@ -17,5 +17,8 @@ read_known_markers(markers_file, genome_build, show = TRUE)
 \link{tibble}.
 }
 \description{
-Read known markers
+Read Known Markers
+}
+\author{
+Michael Steinbaugh
 }

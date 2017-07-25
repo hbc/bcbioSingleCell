@@ -5,21 +5,25 @@
 \alias{plot_cell_counts}
 \alias{.plot_cell_counts}
 \alias{plot_cell_counts,bcbioSCDataSet-method}
-\alias{plot_cell_counts,SCSubset-method}
-\title{Plot cell counts}
+\alias{plot_cell_counts,bcbioSCSubset-method}
+\title{Plot Cell Counts}
 \usage{
+plot_cell_counts(object, ...)
+
 \S4method{plot_cell_counts}{bcbioSCDataSet}(object)
 
-\S4method{plot_cell_counts}{SCSubset}(object)
+\S4method{plot_cell_counts}{bcbioSCSubset}(object)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \link{ggplot}.
 }
 \description{
-Plot cell counts
+Plot Cell Counts
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

@@ -1,6 +1,7 @@
 #' bcbioSinglecell
 #'
-#' Utility functions for analysis of bcbio-nextgen single-cell RNA-seq data.
+#' Import and analyze [bcbio](http://bcbio-nextgen.readthedocs.io) single-cell
+#' RNA-seq data.
 #'
 #' @import basejump methods SummarizedExperiment S4Vectors
 #' @importFrom BiocGenerics counts design
@@ -12,7 +13,8 @@
 #' @importFrom Matrix cBind
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom scales math_format trans_breaks trans_format
-#' @importFrom Seurat CreateSeuratObject FeaturePlot SubsetData VlnPlot
+#' @importFrom Seurat AddMetaData CreateSeuratObject FeaturePlot SubsetData
+#'   VlnPlot
 #' @importFrom stats median
 #' @importFrom utils methods object.size
 #' @importClassesFrom Seurat seurat

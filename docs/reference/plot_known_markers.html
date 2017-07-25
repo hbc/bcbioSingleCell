@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot known markers — plot_known_markers • bcbioSinglecell</title>
+<title>Plot Known Markers — plot_known_markers • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,14 +80,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot known markers</h1>
+    <h1>Plot Known Markers</h1>
     </div>
 
     
-    <p>Plot known markers</p>
+    <p>Plot Known Markers</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for seurat,grouped_df</span>
+    <pre class="usage"><span class='fu'>plot_known_markers</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for seurat,grouped_df</span>
 <span class='fu'>plot_known_markers</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>markdown</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -100,6 +102,10 @@
     <tr>
       <th>y</th>
       <td><p><code><a href='known_markers_detected.html'>known_markers_detected()</a></code> <a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a> grouped by cluster.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>markdown</th>

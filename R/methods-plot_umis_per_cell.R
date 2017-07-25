@@ -1,4 +1,4 @@
-#' Plot UMIs per cell
+#' Plot UMIs per Cell
 #'
 #' Plot the universal molecular identifiers (UMIs) per cell.
 #'
@@ -85,11 +85,13 @@ setMethod(
         .plot_umis_per_cell(object, min)
     })
 
+
+
 #' @rdname plot_umis_per_cell
 #' @export
 setMethod(
     "plot_umis_per_cell",
-    "SCSubset",
+    "bcbioSCSubset",
     function(object) {
         min <- object %>%
             metadata %>%

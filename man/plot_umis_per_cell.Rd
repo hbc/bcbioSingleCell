@@ -7,15 +7,19 @@
 \alias{.plot_umis_per_cell_histogram}
 \alias{.plot_umis_per_cell}
 \alias{plot_umis_per_cell,bcbioSCDataSet-method}
-\alias{plot_umis_per_cell,SCSubset-method}
-\title{Plot UMIs per cell}
+\alias{plot_umis_per_cell,bcbioSCSubset-method}
+\title{Plot UMIs per Cell}
 \usage{
+plot_umis_per_cell(object, ...)
+
 \S4method{plot_umis_per_cell}{bcbioSCDataSet}(object, min = 1000L)
 
-\S4method{plot_umis_per_cell}{SCSubset}(object)
+\S4method{plot_umis_per_cell}{bcbioSCSubset}(object)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 
 \item{min}{Recommended minimum value cutoff.}
 }

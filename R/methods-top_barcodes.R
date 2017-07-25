@@ -1,8 +1,8 @@
-#' Top barcodes
+#' Top Barcodes
 #'
 #' @rdname top_barcodes
+#' @author Michael Steinbaugh
 #'
-#' @param object Primary object.
 #' @param n Number of barcodes to return per sample.
 #'
 #' @return [tibble].
@@ -25,4 +25,4 @@ setMethod("top_barcodes", "bcbioSCDataSet", .top_barcodes)
 
 #' @rdname top_barcodes
 #' @export
-setMethod("top_barcodes", "SCSubset", .top_barcodes)
+setMethod("top_barcodes", "bcbioSCSubset", .top_barcodes)

@@ -1,8 +1,6 @@
-#' Deprecated functions
+#' Deprecated Functions
 #'
 #' @keywords internal
-#' @author Michael Steinbaugh
-#'
 #' @param ... Passthrough parameters
 
 

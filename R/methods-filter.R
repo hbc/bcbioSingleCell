@@ -6,7 +6,6 @@
 #' @rdname filter
 #' @author Michael Steinbaugh
 #'
-#' @param object Primary object.
 #' @param min_umis Minimum number of UMI disambiguated counts per cell.
 #' @param min_genes Minimum number of genes detected.
 #' @param max_genes Maximum number of genes detected.

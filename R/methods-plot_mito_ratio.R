@@ -1,4 +1,4 @@
-#' Plot mitochondrial transcript abundance
+#' Plot Mitochondrial Transcript Abundance
 #'
 #' @rdname plot_mito_ratio
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -105,7 +105,7 @@ setMethod(
 #' @export
 setMethod(
     "plot_mito_ratio",
-    "SCSubset",
+    "bcbioSCSubset",
     function(object) {
         max <- object %>%
             metadata %>%

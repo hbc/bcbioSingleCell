@@ -1,4 +1,4 @@
-#' Calculate cellular barcode metrics summary
+#' Calculate Cellular Barcode Metrics Summary
 #'
 #' This should only be performed during the initial run loading.
 #'
@@ -16,6 +16,13 @@
     message("Calculating barcode metrics")
     cb_input <- ncol(sparse_counts)
     message(paste(cb_input, "cellular barcodes detected"))
+
+    # Check that all genes are in annotable
+    missing_genes <- rownames(sparse_counts) %>%
+        .[!rownames(sparse_counts) %in% annotable[["ensgene"]]]
+    if (!is.null(missing_genes)) {
+        warning(paste(length(missing_genes), "missing genes"))
+    }
 
     # Check for [Matrix::colSums()] methods support
     if (!"colSums,dgCMatrix-method" %in% methods(colSums)) {

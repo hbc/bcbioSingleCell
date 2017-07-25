@@ -11,7 +11,7 @@ Authors@R: c(
     person("Harvard Chan Bioinformatics Core",
            email = "bioinformatics@hsph.harvard.edu",
            role = c("cph", "fnd")))
-Description: Functions for analysis of bcbio-nextgen single-cell RNA-seq data.
+Description: Import and analyze bcbio single-cell RNA-seq data.
 biocViews:
     GeneExpression,
     QualityControl,
@@ -34,9 +34,7 @@ Imports:
     Matrix,
     Matrix.utils,
     methods,
-    monocle (>= 2.4.0),
     scales,
-    scater (>= 1.4.0),
     Seurat (>= 2.0),
     S4Vectors
 Suggests:

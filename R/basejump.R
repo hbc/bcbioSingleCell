@@ -17,12 +17,12 @@ basejump::assays -> assays
 basejump::colData -> colData  # nolint
 
 #' @rdname counts
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 basejump::counts -> counts
 
 #' @rdname filter
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 basejump::filter -> filter
 

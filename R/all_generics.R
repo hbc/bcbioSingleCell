@@ -1,12 +1,19 @@
-#' S4 generics
+#' S4 Generics
 #'
 #' @rdname all_generics
+#' @name all_generics
 #' @keywords internal
+#'
+#' @param object Object.
+#' @param x Primary object.
+#' @param y Secondary object.
+#' @param ... Additional arguments.
+NULL
 
 
 
 #' @rdname aggregate_replicates
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("aggregate_replicates", function(object, ...) {
     standardGeneric("aggregate_replicates")
@@ -15,7 +22,7 @@ setGeneric("aggregate_replicates", function(object, ...) {
 
 
 #' @rdname bcbio
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("bcbio", function(object, ...) {
     standardGeneric("bcbio")
@@ -33,7 +40,7 @@ setGeneric("bcbio<-", function(object, ..., value) {
 
 
 #' @rdname metadata_table
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("metadata_table", function(object, ...) {
     standardGeneric("metadata_table")
@@ -42,7 +49,7 @@ setGeneric("metadata_table", function(object, ...) {
 
 
 #' @rdname interesting_groups
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("interesting_groups", function(object) {
     standardGeneric("interesting_groups")
@@ -51,7 +58,7 @@ setGeneric("interesting_groups", function(object) {
 
 
 #' @rdname known_markers_detected
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("known_markers_detected", function(x, y, ...) {
     standardGeneric("known_markers_detected")
@@ -60,7 +67,7 @@ setGeneric("known_markers_detected", function(x, y, ...) {
 
 
 #' @rdname metrics
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("metrics", function(object, ...) {
     standardGeneric("metrics")
@@ -69,7 +76,7 @@ setGeneric("metrics", function(object, ...) {
 
 
 #' @rdname plot_cell_counts
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("plot_cell_counts", function(object, ...) {
     standardGeneric("plot_cell_counts")
@@ -78,7 +85,7 @@ setGeneric("plot_cell_counts", function(object, ...) {
 
 
 #' @rdname plot_cellular_barcodes
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("plot_cellular_barcodes", function(object, ...) {
     standardGeneric("plot_cellular_barcodes")
@@ -87,7 +94,7 @@ setGeneric("plot_cellular_barcodes", function(object, ...) {
 
 
 #' @rdname plot_clusters
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("plot_clusters", function(object, ...) {
     standardGeneric("plot_clusters")
@@ -96,7 +103,7 @@ setGeneric("plot_clusters", function(object, ...) {
 
 
 #' @rdname plot_genes_per_cell
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("plot_genes_per_cell", function(object, ...) {
     standardGeneric("plot_genes_per_cell")
@@ -105,7 +112,7 @@ setGeneric("plot_genes_per_cell", function(object, ...) {
 
 
 #' @rdname plot_known_markers
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("plot_known_markers", function(x, y, ...) {
     standardGeneric("plot_known_markers")
@@ -114,7 +121,7 @@ setGeneric("plot_known_markers", function(x, y, ...) {
 
 
 #' @rdname plot_mito_ratio
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("plot_mito_ratio", function(object, ...) {
     standardGeneric("plot_mito_ratio")
@@ -123,7 +130,7 @@ setGeneric("plot_mito_ratio", function(object, ...) {
 
 
 #' @rdname plot_novelty
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("plot_novelty", function(object, ...) {
     standardGeneric("plot_novelty")
@@ -132,7 +139,7 @@ setGeneric("plot_novelty", function(object, ...) {
 
 
 #' @rdname plot_top_markers
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("plot_top_markers", function(x, y, ...) {
     standardGeneric("plot_top_markers")
@@ -141,7 +148,7 @@ setGeneric("plot_top_markers", function(x, y, ...) {
 
 
 #' @rdname plot_umis_per_cell
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("plot_umis_per_cell", function(object, ...) {
     standardGeneric("plot_umis_per_cell")
@@ -150,7 +157,7 @@ setGeneric("plot_umis_per_cell", function(object, ...) {
 
 
 #' @rdname plot_umis_vs_genes
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("plot_umis_vs_genes", function(object, ...) {
     standardGeneric("plot_umis_vs_genes")
@@ -159,7 +166,7 @@ setGeneric("plot_umis_vs_genes", function(object, ...) {
 
 
 #' @rdname sample_metadata
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("sample_metadata", function(object, ...) {
     standardGeneric("sample_metadata")
@@ -168,7 +175,7 @@ setGeneric("sample_metadata", function(object, ...) {
 
 
 #' @rdname select_samples
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("select_samples", function(object, ...) {
     standardGeneric("select_samples")
@@ -177,7 +184,7 @@ setGeneric("select_samples", function(object, ...) {
 
 
 #' @rdname top_barcodes
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("top_barcodes", function(object, ...) {
     standardGeneric("top_barcodes")
@@ -186,7 +193,7 @@ setGeneric("top_barcodes", function(object, ...) {
 
 
 #' @rdname top_markers
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 setGeneric("top_markers", function(object, ...) {
     standardGeneric("top_markers")

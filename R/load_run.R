@@ -1,4 +1,4 @@
-#' Load bcbio-nextgen run
+#' Load `bcbio` Run
 #'
 #' @details
 #' - **cellranger**: Read [10x Genomics
@@ -18,6 +18,8 @@
 #' @param interesting_groups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
+#' @param tx2gene tx2gene [data.frame], required when using a custom
+#'   transcriptome FASTA file. This argument will be removed in a future update.
 #' @param ... Additional arguments, passed as metadata.
 #'
 #' @return [bcbioSCDataSet].
@@ -27,6 +29,7 @@ load_run <- function(
     sample_metadata_file,
     well_metadata_file = NULL,
     interesting_groups = "sample_name",
+    tx2gene = NULL,
     ...) {
     if (!dir.exists(upload_dir)) {
         stop("Upload directory missing")
@@ -62,7 +65,7 @@ load_run <- function(
 
     # Pipeline-specific support prior to count loading ====
     if (pipeline == "bcbio") {
-        # Project directory ====
+        # Project directory ----
         project_dir <- dir(upload_dir,
                            pattern = project_dir_pattern,
                            full.names = FALSE,
@@ -105,9 +108,7 @@ load_run <- function(
             }
         }
 
-
         # Molecular barcode (UMI) type ----
-        # data/umis/harvard-indrop-v3-transform.json
         umi_pattern <- "/umis/([a-z0-9\\-]+)\\.json"
         if (any(str_detect(bcbio_nextgen_commands_log, umi_pattern))) {
             umi_type <- str_match(bcbio_nextgen_commands_log,
@@ -125,6 +126,11 @@ load_run <- function(
             well_metadata_file <- normalizePath(well_metadata_file)
         }
         well_metadata <- read_file_by_extension(well_metadata_file)
+
+        # tx2gene ----
+        if (is.null(tx2gene)) {
+            tx2gene <- tx2gene(genome_build)
+        }
 
         # Cellular barcodes ----
         cellular_barcodes <- .cellular_barcodes(sample_dirs)
@@ -150,7 +156,7 @@ load_run <- function(
         if (pipeline == "bcbio") {
             # Convert transcript-level to gene-level
             sparse_counts <-
-                .sparse_counts_tx2gene(sparse_counts, genome_build)
+                .sparse_counts_tx2gene(sparse_counts, tx2gene)
         }
         # Pre-filter using cellular barcode summary metrics
         metrics <- .calculate_metrics(sparse_counts, annotable)
@@ -197,7 +203,7 @@ load_run <- function(
             well_metadata = well_metadata,
             template = template,
             run_date = run_date,
-            tx2gene = tx2gene(genome_build),
+            tx2gene = tx2gene,
             data_versions = data_versions,
             programs = programs,
             bcbio_nextgen_log = bcbio_nextgen_log,

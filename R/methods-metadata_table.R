@@ -1,12 +1,11 @@
-#' Metadata table for knit report
+#' Metadata Table
+#'
+#' Table output for a knit report.
 #'
 #' @rdname metadata_table
-#' @docType methods
-#'
 #' @author Michael Steinbaugh
 #'
-#' @param object Primary object.
-#' @param ... Passthrough parameters to [knitr::kable()].
+#' @param ... Additional arguments, passed to [knitr::kable()].
 #'
 #' @return [kable].
 
@@ -27,6 +26,8 @@
 #' @export
 setMethod("metadata_table", "bcbioSCDataSet", .metadata_table)
 
+
+
 #' @rdname metadata_table
 #' @export
-setMethod("metadata_table", "SCSubset", .metadata_table)
+setMethod("metadata_table", "bcbioSCSubset", .metadata_table)

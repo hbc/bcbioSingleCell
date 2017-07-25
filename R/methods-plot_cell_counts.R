@@ -1,4 +1,4 @@
-#' Plot cell counts
+#' Plot Cell Counts
 #'
 #' @rdname plot_cell_counts
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -35,6 +35,8 @@
 #' @export
 setMethod("plot_cell_counts", "bcbioSCDataSet", .plot_cell_counts)
 
+
+
 #' @rdname plot_cell_counts
 #' @export
-setMethod("plot_cell_counts", "SCSubset", .plot_cell_counts)
+setMethod("plot_cell_counts", "bcbioSCSubset", .plot_cell_counts)

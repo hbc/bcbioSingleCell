@@ -4,8 +4,10 @@
 \name{known_markers_detected}
 \alias{known_markers_detected}
 \alias{known_markers_detected,data.frame,tbl_df-method}
-\title{Known markers detected}
+\title{Known Markers Detected}
 \usage{
+known_markers_detected(x, y, ...)
+
 \S4method{known_markers_detected}{data.frame,tbl_df}(x, y, show = TRUE)
 }
 \arguments{
@@ -14,11 +16,13 @@
 
 \item{y}{Known markers imported by \code{\link[=read_known_markers]{read_known_markers()}}.}
 
+\item{...}{Additional arguments.}
+
 \item{show}{Show \link{kable}.}
 }
 \value{
 \link{tibble}.
 }
 \description{
-Known markers detected
+Known Markers Detected
 }

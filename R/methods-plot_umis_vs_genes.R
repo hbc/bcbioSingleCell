@@ -1,4 +1,4 @@
-#' Plot UMI and gene correlation
+#' Plot UMI and Gene Correlation
 #'
 #' @rdname plot_umis_vs_genes
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -31,6 +31,8 @@
 #' @export
 setMethod("plot_umis_vs_genes", "bcbioSCDataSet", .plot_umis_vs_genes)
 
+
+
 #' @rdname plot_umis_vs_genes
 #' @export
-setMethod("plot_umis_vs_genes", "SCSubset", .plot_umis_vs_genes)
+setMethod("plot_umis_vs_genes", "bcbioSCSubset", .plot_umis_vs_genes)

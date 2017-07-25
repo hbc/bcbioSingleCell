@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Known markers detected — known_markers_detected • bcbioSinglecell</title>
+<title>Known Markers Detected — known_markers_detected • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,14 +80,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Known markers detected</h1>
+    <h1>Known Markers Detected</h1>
     </div>
 
     
-    <p>Known markers detected</p>
+    <p>Known Markers Detected</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for data.frame,tbl_df</span>
+    <pre class="usage"><span class='fu'>known_markers_detected</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for data.frame,tbl_df</span>
 <span class='fu'>known_markers_detected</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -101,6 +103,10 @@
     <tr>
       <th>y</th>
       <td><p>Known markers imported by <code><a href='read_known_markers.html'>read_known_markers()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>show</th>

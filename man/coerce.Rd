@@ -2,12 +2,12 @@
 % Please edit documentation in R/coerce.R
 \name{coerce}
 \alias{coerce}
-\title{Object coercion definitions}
+\title{Coerce \code{bcbio} Data to Other Single-Cell Classes}
 \arguments{
 \item{from}{Object to coerce.}
 }
 \description{
-Object coercion definitions
+Coerce \code{bcbio} Data to Other Single-Cell Classes
 }
 \author{
 Michael Steinbaugh

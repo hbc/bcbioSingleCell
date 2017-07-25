@@ -7,15 +7,19 @@
 \alias{.plot_novelty_histogram}
 \alias{.plot_novelty}
 \alias{plot_novelty,bcbioSCDataSet-method}
-\alias{plot_novelty,SCSubset-method}
-\title{Plot novelty score}
+\alias{plot_novelty,bcbioSCSubset-method}
+\title{Plot Novelty Score}
 \usage{
+plot_novelty(object, ...)
+
 \S4method{plot_novelty}{bcbioSCDataSet}(object, min = 0.8)
 
-\S4method{plot_novelty}{SCSubset}(object)
+\S4method{plot_novelty}{bcbioSCSubset}(object)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 
 \item{min}{Recommended minimum value cutoff.}
 }
@@ -23,5 +27,8 @@
 \link{ggplot}.
 }
 \description{
+Plot Novelty Score
+}
+\details{
 "Novelty" refers to log10 genes detected per count.
 }

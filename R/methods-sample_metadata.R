@@ -1,10 +1,7 @@
-#' Sample metadata
+#' Sample Metadata
 #'
 #' @rdname sample_metadata
-#'
 #' @author Michael Steinbaugh
-#'
-#' @param object Primary object.
 #'
 #' @return [tibble].
 
@@ -22,6 +19,8 @@
 #' @export
 setMethod("sample_metadata", "bcbioSCDataSet", .sample_metadata)
 
+
+
 #' @rdname sample_metadata
 #' @export
-setMethod("sample_metadata", "SCSubset", .sample_metadata)
+setMethod("sample_metadata", "bcbioSCSubset", .sample_metadata)

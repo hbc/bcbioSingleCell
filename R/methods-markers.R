@@ -11,11 +11,10 @@
 
 
 
-#' Top markers
+#' Top Markers
 #'
 #' @rdname top_markers
 #'
-#' @param object Object.
 #' @param n Number of genes per cluster.
 #' @param show Show [kable].
 #'
@@ -33,7 +32,7 @@ setMethod("top_markers", "data.frame", function(object, n = 4L, show = TRUE) {
 
 
 
-#' Known markers detected
+#' Known Markers Detected
 #'
 #' @rdname known_markers_detected
 #'

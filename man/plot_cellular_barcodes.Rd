@@ -9,18 +9,22 @@
 \alias{.plot_cb_histogram}
 \alias{.plot_cb_histogram2}
 \alias{plot_cellular_barcodes,bcbioSCDataSet-method}
-\title{Plot cellular barcode distributions per sample}
+\title{Plot Cellular Barcode Distributions per Sample}
 \usage{
+plot_cellular_barcodes(object, ...)
+
 \S4method{plot_cellular_barcodes}{bcbioSCDataSet}(object)
 }
 \arguments{
-\item{object}{\link{bcbioSCDataSet}.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \link{ggplot}.
 }
 \description{
-Plot cellular barcode distributions per sample
+Plot Cellular Barcode Distributions per Sample
 }
 \details{
 A violin plot is a comact display of a continuous distribution. It
