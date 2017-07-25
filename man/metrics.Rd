@@ -5,21 +5,29 @@
 \alias{metrics}
 \alias{.metrics}
 \alias{metrics,bcbioSCDataSet-method}
-\alias{metrics,SummarizedExperiment-method}
-\title{Sample barcode metrics}
+\alias{metrics,bcbioSCSubset-method}
+\alias{metrics,seurat-method}
+\title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{bcbioSCDataSet}(object, unique_names = FALSE)
+metrics(object, ...)
 
-\S4method{metrics}{SummarizedExperiment}(object, unique_names = FALSE)
+\S4method{metrics}{bcbioSCDataSet}(object)
+
+\S4method{metrics}{bcbioSCSubset}(object)
+
+\S4method{metrics}{seurat}(object)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
 
-\item{unique_names}{Unique sample names.}
+\item{...}{Additional arguments.}
 }
 \value{
-\link{data.frame}.
+\link{data.frame} with cellular barcodes as rows.
 }
 \description{
-Sample barcode metrics
+Sample Barcode Metrics
+}
+\author{
+Michael Steinbaugh, Rory Kirchner
 }

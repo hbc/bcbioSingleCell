@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load bcbio-nextgen run — load_run • bcbioSinglecell</title>
+<title>Load <code>bcbio</code> Run — load_run • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,17 +80,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load bcbio-nextgen run</h1>
+    <h1>Load <code>bcbio</code> Run</h1>
     </div>
 
     
-    <p>Load bcbio-nextgen run</p>
+    <p>Load <code>bcbio</code> Run</p>
     
 
     <pre class="usage"><span class='fu'>load_run</span>(<span class='kw'>upload_dir</span> <span class='kw'>=</span> <span class='st'>"final"</span>, <span class='no'>sample_metadata_file</span>,
   <span class='kw'>well_metadata_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interesting_groups</span> <span class='kw'>=</span> <span class='st'>"sample_name"</span>,
-  <span class='kw'>experiment_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>principal_investigator</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>researcher</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>email</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>tx2gene</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -115,20 +114,13 @@ is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.</p></td>
     </tr>
     <tr>
-      <th>experiment_name</th>
-      <td><p>Experiment name.</p></td>
+      <th>tx2gene</th>
+      <td><p>tx2gene data.frame, required when using a custom
+transcriptome FASTA file. This argument will be removed in a future update.</p></td>
     </tr>
     <tr>
-      <th>principal_investigator</th>
-      <td><p>Principal investigator.</p></td>
-    </tr>
-    <tr>
-      <th>researcher</th>
-      <td><p>Researcher who performed the experiment.</p></td>
-    </tr>
-    <tr>
-      <th>email</th>
-      <td><p>Email for follow-up correspondence.</p></td>
+      <th>...</th>
+      <td><p>Additional arguments, passed as metadata.</p></td>
     </tr>
     </table>
     
@@ -172,7 +164,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rory Kirchner, Michael J. Steinbaugh, Harvard Chan Bioinformatics Core.</p>
+  <p>Developed by Michael J. Steinbaugh, Rory Kirchner, Harvard Chan Bioinformatics Core.</p>
 </div>
 
 <div class="pkgdown">

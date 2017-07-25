@@ -1,33 +1,45 @@
-#' Sample barcode metrics
+#' Sample Barcode Metrics
 #'
 #' @rdname metrics
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @param object Primary object.
-#' @param unique_names Unique sample names.
-#'
-#' @return [data.frame].
+#' @return [data.frame] with cellular barcodes as rows.
 
 
 
 #' @rdname metrics
 #' @usage NULL
-.metrics <- function(object, unique_names = FALSE) {
-    interesting_groups <- interesting_groups(object)
-    meta <- sample_metadata(object, unique_names = unique_names) %>%
-        tidy_select(unique(c("file_name",
-                             "sample_id",
-                             "sample_name",
-                             interesting_groups)))
-    metrics <- colData(object) %>%
+.metrics <- function(object) {
+    meta <- sample_metadata(object) %>%
+        tidy_select(unique(c(meta_priority_cols, interesting_groups(object))))
+    col_data <- colData(object) %>%
         as.data.frame %>%
-        rownames_to_column %>%
-        mutate(separate = .data[["rowname"]]) %>%
-        separate_(col = "separate",
-                  into = c("sample_id", "cellular_barcode"),
-                  sep = ":") %>%
-        mutate(cellular_barcode = NULL)
-    left_join(meta, metrics, by = "sample_id") %>%
-        column_to_rownames
+        rownames_to_column("cellular_barcode")
+    # Sample identifier match fix
+    if (metadata(object)[["pipeline"]] == "bcbio") {
+        cb <- pull(col_data, "cellular_barcode")
+        pattern <- "^(.*)_([acgt]{8})_([acgt]{8})_([acgt]{8})$"
+        sample_ids <- str_match(cb, pattern) %>%
+            as_tibble %>%
+            set_colnames(c("cellular_barcode",
+                           "file_name",
+                           "revcomp",
+                           "cb1",
+                           "cb2")) %>%
+            mutate(sample_id = paste(
+                .data[["file_name"]],
+                .data[["revcomp"]],
+                sep = "_")) %>%
+            pull("sample_id")
+        col_data[["sample_id"]] <- sample_ids
+    } else {
+        col_data <- col_data %>%
+            mutate(sample_id = .data[["cellular_barcode"]])
+    }
+
+    left_join(col_data, meta, by = "sample_id") %>%
+        as.data.frame %>%
+        column_to_rownames("cellular_barcode")
 }
 
 
@@ -36,6 +48,16 @@
 #' @export
 setMethod("metrics", "bcbioSCDataSet", .metrics)
 
+
+
 #' @rdname metrics
 #' @export
-setMethod("metrics", "SummarizedExperiment", .metrics)
+setMethod("metrics", "bcbioSCSubset", .metrics)
+
+
+
+#' @rdname metrics
+#' @export
+setMethod("metrics", "seurat", function(object) {
+    object@data.info %>% snake
+})

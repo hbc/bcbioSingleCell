@@ -1,43 +1,68 @@
 #' @export
 basejump::`%>%`
 
+#' @rdname all_generics
 #' @export
-basejump::assay
+basejump::assay -> assay
 
 #' @export
-basejump::assays
+basejump::assign_and_save_data
 
+#' @rdname all_generics
 #' @export
-basejump::colData
+basejump::assays -> assays
+
+#' @rdname all_generics
+#' @export
+basejump::colData -> colData  # nolint
 
 #' @rdname counts
-#' @usage NULL
+#' @inherit all_generics
 #' @export
 basejump::counts -> counts
 
+#' @rdname filter
+#' @inherit all_generics
 #' @export
-basejump::detect_hpc
-
-#' @export
-basejump::dotted
+basejump::filter -> filter
 
 #' @export
 basejump::group_by
 
 #' @export
-basejump::metadata
+basejump::left_join
+
+#' @export
+basejump::kable
+
+#' @rdname all_generics
+#' @export
+basejump::metadata -> metadata
 
 #' @export
 basejump::pct
 
 #' @export
-basejump::rowData
+basejump::read_excel
+
+#' @rdname all_generics
+#' @export
+basejump::rowData -> rowData  # nolint
 
 #' @export
 basejump::save_data
+
+#' @export
+basejump::str_c
 
 #' @export
 basejump::tibble
 
 #' @export
 basejump::top_n
+
+#' @export
+basejump::write_counts
+
+#' @export
+basejump::write_csv

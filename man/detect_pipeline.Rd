@@ -4,10 +4,10 @@
 \alias{.detect_pipeline}
 \title{Detect scRNA-seq analysis pipeline}
 \usage{
-.detect_pipeline(sample_dirs)
+.detect_pipeline(upload_dir)
 }
 \arguments{
-\item{sample_dirs}{Sample directories.}
+\item{upload_dir}{Final upload directory.}
 }
 \value{
 Pipeline string. Stops on detection failure.

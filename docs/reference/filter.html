@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filter cellular barcodes — filter,bcbioSCDataSet-method • bcbioSinglecell</title>
+<title>Filter Cellular Barcodes — filter • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,7 +80,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filter cellular barcodes</h1>
+    <h1>Filter Cellular Barcodes</h1>
     </div>
 
     
@@ -88,20 +88,27 @@
 cellular barcodes.</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>filter</span>(<span class='no'>object</span>, <span class='kw'>reads</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>min_genes</span> <span class='kw'>=</span> <span class='fl'>500</span>,
-  <span class='kw'>max_genes</span> <span class='kw'>=</span> <span class='fl'>5000</span>, <span class='kw'>mito_ratio</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>novelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>filter</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for bcbioSCDataSet</span>
+<span class='fu'>filter</span>(<span class='no'>object</span>, <span class='kw'>min_umis</span> <span class='kw'>=</span> <span class='fl'>1000L</span>,
+  <span class='kw'>min_genes</span> <span class='kw'>=</span> <span class='fl'>500L</span>, <span class='kw'>max_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_mito_ratio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>min_novelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>show_report</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p><a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p></td>
+      <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>reads</th>
-      <td><p>Minimum number of total read counts per cell.</p></td>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
+    </tr>
+    <tr>
+      <th>min_umis</th>
+      <td><p>Minimum number of UMI disambiguated counts per cell.</p></td>
     </tr>
     <tr>
       <th>min_genes</th>
@@ -112,22 +119,22 @@ cellular barcodes.</p>
       <td><p>Maximum number of genes detected.</p></td>
     </tr>
     <tr>
-      <th>mito_ratio</th>
+      <th>max_mito_ratio</th>
       <td><p>Maximum relative mitochondrial abundance (<code>0-1</code> scale).</p></td>
     </tr>
     <tr>
-      <th>novelty</th>
+      <th>min_novelty</th>
       <td><p>Minimum novelty score.</p></td>
     </tr>
     <tr>
-      <th>show</th>
-      <td><p>Show summary statistics and plots.</p></td>
+      <th>show_report</th>
+      <td><p>Show summary statistics report and plots.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>New <a href='bcbioSCDataSet.html'>bcbioSCDataSet</a>.</p>
+    <p><a href='bcbioSCSubset-class.html'>bcbioSCSubset</a>.</p>
     
 
   </div>
@@ -148,7 +155,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rory Kirchner, Michael J. Steinbaugh, Harvard Chan Bioinformatics Core.</p>
+  <p>Developed by Michael J. Steinbaugh, Rory Kirchner, Harvard Chan Bioinformatics Core.</p>
 </div>
 
 <div class="pkgdown">

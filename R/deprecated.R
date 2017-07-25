@@ -1,8 +1,6 @@
-#' Deprecated functions
+#' Deprecated Functions
 #'
 #' @keywords internal
-#' @author Michael Steinbaugh
-#'
 #' @param ... Passthrough parameters
 
 
@@ -12,6 +10,24 @@
 barcode_metrics <- function(...) {
     .Deprecated("metrics")
     metrics(...)
+}
+
+
+
+#' @rdname deprecated
+#' @export
+filter_barcodes <- function(...) {
+    .Deprecated("filter")
+    filter(...)
+}
+
+
+
+#' @rdname deprecated
+#' @export
+plot_genes_detected <- function(...) {
+    .Deprecated("plot_genes_per_cell")
+    plot_genes_per_cell(...)
 }
 
 

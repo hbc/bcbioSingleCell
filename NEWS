@@ -1,25 +1,97 @@
-0.0.13  Integrate bcbio-nextgen and cellranger workflows into [load_run()].
-0.0.12  Initial support for S4 object creation using SummarizedExperiment.
-0.0.11  Add testthat, lintr, and covr support for code coverage.
-0.0.10  Update RMarkdown templates.
-0.0.9   Compatibility update for basejump S4 NAMESPACE changes.
-        Improve plots for quality control and filtering.
-0.0.8   Rename mitochondrial plot functions.
-        Present mitochondrial abundance as ratio instead of percentage.
-        Simplify NAMESPACE by offloading dependencies to basejump.
-0.0.7   Initial support for loading of 10x Genomics Cell Ranger output.
-        Add detection of droplet method based on the metadata file.
-        Draft support for import of inDrop i5 index barcode counts.
-0.0.6   Modify `load_run()` function for improved consistency with bcbioRnaseq
-        package.
-        Initial incorporation of scater package into workflow.
-        Initial commit of RMarkdown template skeletons.
-0.0.5   Improvements to run object based on code in bcbioRnaseq.
-        Better handling in plots for datasets with many samples.
-        Label quality control cutoffs on the plots.
-0.0.4   Prepare package for tidyverse dependency updates.
-        Updated HPC server detection.
-0.0.3   NAMESPACE consolidation and function cleanup.
-0.0.2   Added quality control plotting functions.
-        Converted all functions to standard evaluation.
-0.0.1   Initial draft release.
+# 0.0.14
+
+- Migrated plotting functions to S4 methods.
+- Improved sample metadata handling.
+- Updated sample name and cellular barcode sanization.
+- Initial commit of Seurat utility functions.
+- Initial commit of YAML parameters for RMarkdown templates.
+- Draft support for Seurat v2 pre-release.
+
+
+
+# 0.0.13
+
+- Integrated bcbio-nextgen and cellranger workflows into `load_run()`.
+
+
+
+# 0.0.12
+
+- Initial support for S4 object creation using SummarizedExperiment.
+
+
+
+# 0.0.11
+
+- Added testthat, lintr, and covr support for code coverage.
+
+
+
+# 0.0.10
+
+- Updated RMarkdown templates.
+
+
+
+# 0.0.9
+
+- Compatibility update for basejump S4 NAMESPACE changes.
+- Improved plots for quality control and filtering.
+
+
+
+# 0.0.8
+
+- Renamed mitochondrial plot functions.
+- Changed presentation of mitochondrial abundance as ratio instead of percentage.
+- Simplified NAMESPACE by offloading dependencies to basejump.
+
+
+
+# 0.0.7
+
+- Initial support for loading of 10x Genomics Cell Ranger output.
+- Add detection of droplet method based on the metadata file.
+- Draft support for import of inDrop i5 index barcode counts.
+
+
+
+# 0.0.6
+
+- Modified `load_run()` function for improved consistency with bcbioRnaseq package.
+- Initial incorporation of scater package into workflow.
+- Initial commit of RMarkdown template skeletons.
+
+
+
+# 0.0.5
+
+- Improvements to run object based on code in bcbioRnaseq.
+- Better handling in plots for datasets with many samples.
+- Labeled quality control cutoffs on the plots.
+
+
+
+# 0.0.4
+
+- Prepared package for tidyverse dependency updates.
+- Updated HPC server detection.
+
+
+
+# 0.0.3
+
+ - NAMESPACE consolidation and function cleanup.
+
+
+
+# 0.0.2
+
+- Added quality control plotting functions.
+- Converted all functions to standard evaluation.
+
+
+
+# 0.0.1
+
+- Initial draft release.

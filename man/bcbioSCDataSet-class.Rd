@@ -6,7 +6,7 @@
 \alias{bcbioSCDataSet}
 \title{bcbioSCDataSet}
 \description{
-\code{bcbioSCDataSet} is a subclass of \link{SummarizedExperiment} designed to store a
+\link{bcbioSCDataSet} is a subclass of \link{SummarizedExperiment} designed to store a
 single-cell RNA-seq analysis. This class contains read counts save as a
 sparse matrix (\code{dgCMatrix}), sample barcodes, run metadata, and barcode
 summary statistics for each sample analyzed.

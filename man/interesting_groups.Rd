@@ -5,19 +5,21 @@
 \alias{interesting_groups}
 \alias{.interesting_groups}
 \alias{interesting_groups,bcbioSCDataSet-method}
-\alias{interesting_groups,SummarizedExperiment-method}
-\title{Interesting groups}
+\alias{interesting_groups,bcbioSCSubset-method}
+\title{Interesting Groups}
 \usage{
+interesting_groups(object)
+
 \S4method{interesting_groups}{bcbioSCDataSet}(object)
 
-\S4method{interesting_groups}{SummarizedExperiment}(object)
+\S4method{interesting_groups}{bcbioSCSubset}(object)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
 }
 \value{
 Character vector.
 }
 \description{
-Interesting groups
+Interesting Groups
 }

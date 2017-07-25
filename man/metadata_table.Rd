@@ -5,23 +5,25 @@
 \alias{metadata_table}
 \alias{.metadata_table}
 \alias{metadata_table,bcbioSCDataSet-method}
-\alias{metadata_table,SummarizedExperiment-method}
-\title{Metadata table for knit report}
+\alias{metadata_table,bcbioSCSubset-method}
+\title{Metadata Table}
 \usage{
+metadata_table(object, ...)
+
 \S4method{metadata_table}{bcbioSCDataSet}(object, ...)
 
-\S4method{metadata_table}{SummarizedExperiment}(object, ...)
+\S4method{metadata_table}{bcbioSCSubset}(object, ...)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
 
-\item{...}{Passthrough parameters to \code{\link[knitr:kable]{knitr::kable()}}.}
+\item{...}{Additional arguments, passed to \code{\link[knitr:kable]{knitr::kable()}}.}
 }
 \value{
 \link{kable}.
 }
 \description{
-Metadata table for knit report
+Table output for a knit report.
 }
 \author{
 Michael Steinbaugh

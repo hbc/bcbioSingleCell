@@ -2,12 +2,18 @@
 % Please edit documentation in R/deprecated.R
 \name{barcode_metrics}
 \alias{barcode_metrics}
+\alias{filter_barcodes}
+\alias{plot_genes_detected}
 \alias{plot_mito_counts}
 \alias{plot_total_cells}
 \alias{plot_total_vs_detected}
-\title{Deprecated functions}
+\title{Deprecated Functions}
 \usage{
 barcode_metrics(...)
+
+filter_barcodes(...)
+
+plot_genes_detected(...)
 
 plot_mito_counts(...)
 
@@ -19,9 +25,6 @@ plot_total_vs_detected(...)
 \item{...}{Passthrough parameters}
 }
 \description{
-Deprecated functions
-}
-\author{
-Michael Steinbaugh
+Deprecated Functions
 }
 \keyword{internal}

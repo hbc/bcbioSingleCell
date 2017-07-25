@@ -3,15 +3,23 @@
 \docType{methods}
 \name{aggregate_replicates}
 \alias{aggregate_replicates}
-\alias{aggregate_replicates,bcbioSCDataSet-method}
 \alias{.aggregate_features}
 \alias{.aggregate_replicates}
-\title{Aggregation methods}
+\alias{aggregate_replicates,bcbioSCDataSet-method}
+\title{Aggregation Methods}
 \usage{
+aggregate_replicates(object, ...)
+
+.aggregate_features(sparse, featureids)
+
+.aggregate_replicates(sparse, cellids)
+
 \S4method{aggregate_replicates}{bcbioSCDataSet}(object)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 
 \item{sparse}{Sparse counts matrix.}
 
@@ -27,8 +35,6 @@ Aggregated sparse matrix.
 Aggregated sparse matrix.
 }
 \description{
-Aggregation methods
-
 Collapse features with the same feature id by summing them.
 
 Pool cellular technical replicate counts.

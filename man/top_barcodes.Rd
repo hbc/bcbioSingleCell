@@ -5,15 +5,19 @@
 \alias{top_barcodes}
 \alias{.top_barcodes}
 \alias{top_barcodes,bcbioSCDataSet-method}
-\alias{top_barcodes,SummarizedExperiment-method}
-\title{Top barcodes}
+\alias{top_barcodes,bcbioSCSubset-method}
+\title{Top Barcodes}
 \usage{
+top_barcodes(object, ...)
+
 \S4method{top_barcodes}{bcbioSCDataSet}(object, n = 2L)
 
-\S4method{top_barcodes}{SummarizedExperiment}(object, n = 2L)
+\S4method{top_barcodes}{bcbioSCSubset}(object, n = 2L)
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
 
 \item{n}{Number of barcodes to return per sample.}
 }
@@ -21,5 +25,8 @@
 \link{tibble}.
 }
 \description{
-Top barcodes
+Top Barcodes
+}
+\author{
+Michael Steinbaugh
 }

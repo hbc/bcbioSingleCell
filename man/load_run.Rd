@@ -2,12 +2,11 @@
 % Please edit documentation in R/load_run.R
 \name{load_run}
 \alias{load_run}
-\title{Load bcbio-nextgen run}
+\title{Load \code{bcbio} Run}
 \usage{
 load_run(upload_dir = "final", sample_metadata_file,
   well_metadata_file = NULL, interesting_groups = "sample_name",
-  experiment_name = NULL, principal_investigator = NULL,
-  researcher = NULL, email = NULL)
+  tx2gene = NULL, ...)
 }
 \arguments{
 \item{upload_dir}{Path to final upload directory. This path is set when
@@ -21,19 +20,16 @@ running \code{bcbio_nextgen -w template}.}
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
-\item{experiment_name}{Experiment name.}
+\item{tx2gene}{tx2gene \link{data.frame}, required when using a custom
+transcriptome FASTA file. This argument will be removed in a future update.}
 
-\item{principal_investigator}{Principal investigator.}
-
-\item{researcher}{Researcher who performed the experiment.}
-
-\item{email}{Email for follow-up correspondence.}
+\item{...}{Additional arguments, passed as metadata.}
 }
 \value{
 \link{bcbioSCDataSet}.
 }
 \description{
-Load bcbio-nextgen run
+Load \code{bcbio} Run
 }
 \details{
 \itemize{

@@ -5,29 +5,29 @@
 \alias{reexports}
 \alias{\%>\%}
 \alias{reexports}
-\alias{assay}
-\alias{reexports}
-\alias{assays}
-\alias{reexports}
-\alias{colData}
-\alias{reexports}
-\alias{detect_hpc}
-\alias{reexports}
-\alias{dotted}
+\alias{assign_and_save_data}
 \alias{reexports}
 \alias{group_by}
 \alias{reexports}
-\alias{metadata}
+\alias{left_join}
+\alias{reexports}
+\alias{kable}
 \alias{reexports}
 \alias{pct}
 \alias{reexports}
-\alias{rowData}
+\alias{read_excel}
 \alias{reexports}
 \alias{save_data}
+\alias{reexports}
+\alias{str_c}
 \alias{reexports}
 \alias{tibble}
 \alias{reexports}
 \alias{top_n}
+\alias{reexports}
+\alias{write_counts}
+\alias{reexports}
+\alias{write_csv}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -35,6 +35,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{assay}}, \code{\link[basejump]{assays}}, \code{\link[basejump]{colData}}, \code{\link[basejump]{detect_hpc}}, \code{\link[basejump]{dotted}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{metadata}}, \code{\link[basejump]{pct}}, \code{\link[basejump]{rowData}}, \code{\link[basejump]{save_data}}, \code{\link[basejump]{tibble}}, \code{\link[basejump]{top_n}}}
+  \item{basejump}{\code{\link[basejump]{\%>\%}}, \code{\link[basejump]{assign_and_save_data}}, \code{\link[basejump]{group_by}}, \code{\link[basejump]{left_join}}, \code{\link[basejump]{kable}}, \code{\link[basejump]{pct}}, \code{\link[basejump]{read_excel}}, \code{\link[basejump]{save_data}}, \code{\link[basejump]{str_c}}, \code{\link[basejump]{tibble}}, \code{\link[basejump]{top_n}}, \code{\link[basejump]{write_counts}}, \code{\link[basejump]{write_csv}}}
 }}
 

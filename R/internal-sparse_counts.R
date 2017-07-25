@@ -33,10 +33,11 @@
         stop("Sample directory must be passed in as a named character vector")
     }
     message(sample_name)
-    if (pipeline == "bcbio-nextgen") {
-        matrix_file <- file.path(sample_dir, paste0(sample_name, ".mtx"))
-        col_file <- paste0(matrix_file, ".colnames")  # barcodes
-        row_file <- paste0(matrix_file, ".rownames")  # transcripts
+    if (pipeline == "bcbio") {
+        sample_stem <- basename(sample_dir)
+        matrix_file <- file.path(sample_dir, str_c(sample_stem, ".mtx"))
+        col_file <- str_c(matrix_file, ".colnames")  # barcodes
+        row_file <- str_c(matrix_file, ".rownames")  # transcripts
     } else if (pipeline == "cellranger") {
         matrix_file <- file.path(sample_dir, "matrix.mtx")
         col_file <- file.path(sample_dir, "barcodes.tsv")
@@ -47,43 +48,52 @@
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
     # names are gene/transcript identifiers (depending on pipeline).
-    sparse_counts <- .read_file(matrix_file)
-    if (pipeline == "bcbio-nextgen") {
-        colnames(sparse_counts) <- .read_file(col_file)
-        rownames(sparse_counts) <- .read_file(row_file)
+    sparse_counts <- read_file_by_extension(matrix_file)
+    if (pipeline == "bcbio") {
+        colnames(sparse_counts) <-
+            read_file_by_extension(col_file) %>%
+            snake
+        rownames(sparse_counts) <-
+            read_file_by_extension(row_file)
     } else if (pipeline == "cellranger") {
         # Named `barcodes.tsv` but not actually tab delimited
         colnames(sparse_counts) <-
-            .read_file(col_file,
-                       col_names = "cellular_barcode",
-                       col_types = "c") %>%
-            pull("cellular_barcode")
+            read_file_by_extension(
+                col_file,
+                col_names = "cellular_barcode",
+                col_types = "c") %>%
+            pull("cellular_barcode") %>%
+            snake
         rownames(sparse_counts) <-
-            .read_file(row_file,
-                       col_names = c("ensgene", "symbol"),
-                       col_types = "cc") %>%
+            read_file_by_extension(
+                row_file,
+                col_names = c("ensgene", "symbol"),
+                col_types = "cc") %>%
             pull("ensgene")
     }
 
 
     # Cellular barcode sanitization =====
+    # Ensure cellular barcodes are snake_case
+    colnames(sparse_counts) <- snake(colnames(sparse_counts))
+
     # CellRanger outputs unnecessary trailing `-1`.
     if (pipeline == "cellranger" &
-        all(str_detect(colnames(sparse_counts), "\\-1$"))) {
+        all(str_detect(colnames(sparse_counts), "_1$"))) {
         colnames(sparse_counts) <-
-            str_replace(colnames(sparse_counts), "\\-1$", "")
+            str_replace(colnames(sparse_counts), "_1$", "")
     }
 
-    # Reformat to `[ACGT]{8}-[ACGT]{8}` instead of `[ACGT]{16}`
-    if (all(str_detect(colnames(sparse_counts), "^[ACGT]{16}$"))) {
+    # Reformat to `[acgt]{8}_[acgt]{8}` instead of `[acgt]{16}`
+    if (all(str_detect(colnames(sparse_counts), "^[acgt]{16}$"))) {
         colnames(sparse_counts) <- colnames(sparse_counts) %>%
-            str_replace("^([ACGT]{8})([ACGT]{8})$", "\\1-\\2")
+            str_replace("^([acgt]{8})([acgt]{8})$", "\\1_\\2")
     }
 
     # Add sample name
-    if (all(str_detect(colnames(sparse_counts), "^[ACGT]{8}"))) {
+    if (all(str_detect(colnames(sparse_counts), "^[acgt]{8}"))) {
         colnames(sparse_counts) <- colnames(sparse_counts) %>%
-            paste(sample_name, ., sep = ":")
+            paste(snake(sample_name), ., sep = "_")
     }
 
     # Return as dgCMatrix, for improved memory overhead
@@ -93,13 +103,28 @@
 
 
 #' @rdname sparse_counts
-.sparse_counts_tx2gene <- function(tx_sparse_counts, genome_build) {
+.sparse_counts_tx2gene <- function(tx_sparse_counts, tx2gene) {
     tx_sparse_counts <- .strip_transcript_versions(tx_sparse_counts)
-    tx2gene <- .tx2gene(genome_build) %>% .[rownames(tx_sparse_counts), ]
-    if (any(is.na(tx2gene[["enstxp"]]))) stop("Unmapped transcripts present")
+    t2g <- tx2gene[rownames(tx_sparse_counts), ] %>%
+        set_rownames(rownames(tx_sparse_counts))
+    if (any(is.na(t2g[["enstxp"]]))) {
+        t2g <- rownames_to_column(t2g)
+        mapped <- filter(t2g, !is.na(.data[["ensgene"]]))
+        unmapped <- filter(t2g, is.na(.data[["ensgene"]])) %>%
+            mutate(enstxp = .data[["rowname"]],
+                   ensgene = .data[["rowname"]])
+        warning(paste("Unmapped transcripts:",
+                      toString(unmapped[["ensgene"]])))
+        t2g <- bind_rows(mapped, unmapped) %>%
+            column_to_rownames %>%
+            .[rownames(tx_sparse_counts), ]
+    }
+    if (!identical(rownames(tx_sparse_counts), rownames(t2g))) {
+        stop("tx2gene rowname mismatch")
+    }
     message("Converting transcript-level counts to gene-level")
     tx_sparse_counts %>%
-        set_rownames(tx2gene[["ensgene"]]) %>%
+        set_rownames(t2g[["ensgene"]]) %>%
         aggregate.Matrix(rownames(.), fun = "sum")
 }
 

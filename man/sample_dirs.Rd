@@ -4,17 +4,16 @@
 \alias{.sample_dirs}
 \title{Detect sample directories}
 \usage{
-.sample_dirs(upload_dir, pattern = "*\\\\.mtx$")
+.sample_dirs(upload_dir, pipeline = "bcbio")
 }
 \arguments{
 \item{upload_dir}{Upload directory.}
 
-\item{pattern}{Match sample directories by the presence of a nested file
-pattern.}
+\item{pipeline}{Pipeline used to generate the samples.}
 }
 \value{
 Named character vector containing sample directory paths. Function
-will \link{stop} if no sample directories are found.
+will \link{stop} if no complete sample directories match.
 }
 \description{
 Detect sample directories

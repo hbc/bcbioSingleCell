@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot cellular barcode distributions per sample — .plot_cb_df • bcbioSinglecell</title>
+<title>Plot Cellular Barcode Distributions per Sample — plot_cellular_barcodes • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,27 +80,38 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot cellular barcode distributions per sample</h1>
+    <h1>Plot Cellular Barcode Distributions per Sample</h1>
     </div>
 
     
-    <p>Plot cellular barcode distributions per sample</p>
+    <p>Plot Cellular Barcode Distributions per Sample</p>
     
 
-    <pre class="usage"><span class='fu'>plot_cellular_barcodes</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_cellular_barcodes</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for bcbioSCDataSet</span>
+<span class='fu'>plot_cellular_barcodes</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p><a href='bcbioSCDataSet-class.html'>bcbioSCDataSet</a>.</p></td>
+      <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>ggplot.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A violin plot is a compact display of a continuous distribution. It
+    <p>A violin plot is a comact display of a continuous distribution. It
 is a blend of <code>geom_boxplot()</code> and <code>geom_density()</code>: a violin plot is a
 mirrored density plot displayed in the same way as a boxplot.</p>
     
@@ -111,6 +122,8 @@ mirrored density plot displayed in the same way as a boxplot.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
           </ul>
 
@@ -123,7 +136,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rory Kirchner, Michael J. Steinbaugh, Harvard Chan Bioinformatics Core.</p>
+  <p>Developed by Michael J. Steinbaugh, Rory Kirchner, Harvard Chan Bioinformatics Core.</p>
 </div>
 
 <div class="pkgdown">

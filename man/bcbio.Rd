@@ -6,8 +6,10 @@
 \alias{bcbio<-}
 \alias{bcbio,bcbioSCDataSet-method}
 \alias{bcbio<-,bcbioSCDataSet-method}
-\title{bcbioSCDataSet object accessors}
+\title{\code{bcbioSCDataSet} Object Accessors}
 \usage{
+bcbio(object, ...)
+
 \S4method{bcbio}{bcbioSCDataSet}(object, type = "counts")
 
 \S4method{bcbio}{bcbioSCDataSet}(object, type = "counts") <- value
@@ -15,13 +17,15 @@
 \arguments{
 \item{object}{Primary object.}
 
+\item{...}{Additional arguments.}
+
 \item{value}{An integer matrix or other object.}
 
 \item{type}{Type of count data to retrieve.}
 }
 \value{
-Matrix/Object containing count data.
+Matrix or object containing count data.
 }
 \description{
-bcbioSCDataSet object accessors
+\code{bcbioSCDataSet} Object Accessors
 }

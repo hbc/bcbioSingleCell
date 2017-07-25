@@ -2,16 +2,16 @@
 % Please edit documentation in R/internal-calculate_metrics.R
 \name{.calculate_metrics}
 \alias{.calculate_metrics}
-\title{Calculate cellular barcode metrics summary}
+\title{Calculate Cellular Barcode Metrics Summary}
 \usage{
-.calculate_metrics(sparse_counts, annotable, filter = TRUE)
+.calculate_metrics(sparse_counts, annotable, prefilter = TRUE)
 }
 \arguments{
 \item{sparse_counts}{Sparse counts matrix.}
 
 \item{annotable}{Annotable.}
 
-\item{filter}{Whether to apply pre-filtering to the cellular barcodes.}
+\item{prefilter}{Whether to apply pre-filtering to the cellular barcodes.}
 }
 \value{
 \link{matrix}.

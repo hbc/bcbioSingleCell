@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>bcbioSCDataSet object accessors — bcbio • bcbioSinglecell</title>
+<title><code>bcbioSCDataSet</code> Object Accessors — bcbio • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,14 +80,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>bcbioSCDataSet object accessors</h1>
+    <h1><code>bcbioSCDataSet</code> Object Accessors</h1>
     </div>
 
     
-    <p>bcbioSCDataSet object accessors</p>
+    <p><code>bcbioSCDataSet</code> Object Accessors</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
+    <pre class="usage"><span class='fu'>bcbio</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for bcbioSCDataSet</span>
 <span class='fu'>bcbio</span>(<span class='no'>object</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"counts"</span>)
 
 <span class='co'># S4 method for bcbioSCDataSet</span>
@@ -101,6 +103,10 @@
       <td><p>Primary object.</p></td>
     </tr>
     <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
+    </tr>
+    <tr>
       <th>value</th>
       <td><p>An integer matrix or other object.</p></td>
     </tr>
@@ -112,7 +118,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Matrix/Object containing count data.</p>
+    <p>Matrix or object containing count data.</p>
     
 
   </div>
@@ -129,7 +135,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rory Kirchner, Michael J. Steinbaugh, Harvard Chan Bioinformatics Core.</p>
+  <p>Developed by Michael J. Steinbaugh, Rory Kirchner, Harvard Chan Bioinformatics Core.</p>
 </div>
 
 <div class="pkgdown">

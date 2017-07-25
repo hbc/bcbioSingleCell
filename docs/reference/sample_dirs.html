@@ -87,7 +87,7 @@
     <p>Detect sample directories</p>
     
 
-    <pre class="usage"><span class='fu'>.sample_dirs</span>(<span class='no'>upload_dir</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"*\\.mtx$"</span>)</pre>
+    <pre class="usage"><span class='fu'>.sample_dirs</span>(<span class='no'>upload_dir</span>, <span class='kw'>pipeline</span> <span class='kw'>=</span> <span class='st'>"bcbio"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -97,16 +97,15 @@
       <td><p>Upload directory.</p></td>
     </tr>
     <tr>
-      <th>pattern</th>
-      <td><p>Match sample directories by the presence of a nested file
-pattern.</p></td>
+      <th>pipeline</th>
+      <td><p>Pipeline used to generate the samples.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Named character vector containing sample directory paths. Function
-will stop if no sample directories are found.</p>
+will stop if no complete sample directories match.</p>
     
 
   </div>
@@ -127,7 +126,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rory Kirchner, Michael J. Steinbaugh, Harvard Chan Bioinformatics Core.</p>
+  <p>Developed by Michael J. Steinbaugh, Rory Kirchner, Harvard Chan Bioinformatics Core.</p>
 </div>
 
 <div class="pkgdown">
