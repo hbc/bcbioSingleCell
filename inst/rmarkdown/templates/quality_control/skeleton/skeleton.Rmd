@@ -30,6 +30,8 @@ counts_dir <- params$counts_dir
 ```{r header, child="_header.Rmd"}
 ```
 
+[bcbio][] run data was imported from **`r metadata(bcb)[["upload_dir"]]`**.
+
 
 
 # FASTQ generation
@@ -141,7 +143,7 @@ plot_novelty(bcb, min = params$min_novelty)
 
 # Filter cellular barcodes
 
-```{r filtered, fig.height=12, fig.width=8, message=TRUE}
+```{r filtered, fig.height=12, fig.width=8, results="asis"}
 bcb_filtered <- filter(
     bcb,
     min_umis = params$min_umis,
