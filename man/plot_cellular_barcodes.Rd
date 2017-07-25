@@ -4,7 +4,7 @@
 \docType{methods}
 \name{plot_cellular_barcodes}
 \alias{plot_cellular_barcodes}
-\alias{.plot_cb_tbl}
+\alias{.cb_cutoff_line}
 \alias{.plot_cb_raw_violin}
 \alias{.plot_cb_raw_histogram}
 \alias{.plot_cb_proportional_histogram}
