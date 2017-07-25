@@ -107,6 +107,9 @@ load_run <- function(
                 stop("Genome detection from bcbio commands failed")
             }
         }
+        if (length(genome_build) > 1L) {
+            stop("Multiple genomes detected -- not supported")
+        }
 
         # Molecular barcode (UMI) type ----
         umi_pattern <- "/umis/([a-z0-9\\-]+)\\.json"
@@ -125,7 +128,7 @@ load_run <- function(
         if (!is.null(well_metadata_file)) {
             well_metadata_file <- normalizePath(well_metadata_file)
         }
-        well_metadata <- read_file_by_extension(well_metadata_file)
+        well_metadata <- readFileByExtension(well_metadata_file)
 
         # tx2gene ----
         if (is.null(tx2gene)) {
@@ -138,10 +141,11 @@ load_run <- function(
         # Get genome build from sample_dirs
         genome_build <- basename(sample_dirs) %>% unique
         if (length(genome_build) > 1L) {
-            stop("Multiple genomes detected in cellranger samples")
+            stop("Multiple genomes detected -- not supported")
         }
         umi_type <- "chromium"
     }
+
     message(paste("UMI type:", umi_type))
 
 
@@ -164,7 +168,6 @@ load_run <- function(
     }) %>%
         set_names(names(sample_dirs))
     sparse_counts <- do.call(cBind, sparse_list)
-    rm(sparse_list)
 
 
     # Column data ====
