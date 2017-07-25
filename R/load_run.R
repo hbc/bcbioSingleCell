@@ -50,6 +50,11 @@ load_run <- function(
     sample_metadata <- .sample_metadata_file(
         sample_metadata_file, sample_dirs, pipeline)
 
+    # Check to ensure interesting groups are defined
+    if (!all(interesting_groups %in% colnames(sample_metadata))) {
+        stop("Interesting groups missing in sample metadata")
+    }
+
     # Check to see if a subset of samples is requested via the metadata file.
     # This matches by the reverse complement sequence of the index barcode.
     if (length(sample_metadata[["sample_id"]]) < length(sample_dirs)) {
