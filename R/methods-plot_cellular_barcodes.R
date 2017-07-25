@@ -11,13 +11,22 @@
 
 
 
-#' @rdname plot_cellular_barcodes
+#' @rdname cellular_barcodes
 #' @usage NULL
-.plot_cb_df <- function(object) {
-    message("Reformatting cellular barcodes for ggplot")
+.cb_cutoff_line <- function(object) {
+    metadata(object)[["cb_cutoff"]] %>%
+        as.numeric %>%
+        log10
+}
+
+
+
+#' @rdname cellular_barcodes
+#' @usage NULL
+.plot_cb_tbl <- function(object) {
     cellular_barcodes <- bcbio(object, "cellular_barcodes")
     if (is.null(cellular_barcodes)) {
-        return(NULL)
+        stop("Cellular barcode reads not saved in object")
     }
     interesting_group <- interesting_groups(object)[[1L]]
     sample_metadata <- sample_metadata(object) %>%
@@ -27,12 +36,17 @@
                              interesting_group)))
     cellular_barcodes %>%
         .bind_cellular_barcodes %>%
+        # Separate the cellular barcode with unique character (dot)
+        mutate(cellular_barcode = str_replace(
+            .data[["cellular_barcode"]],
+            "_([acgt]{8}_[acgt]{8})$", ".\\1")) %>%
         separate_(col = "cellular_barcode",
                   into = c("sample_id", "cellular_barcode"),
-                  sep = ":") %>%
+                  sep = "\\.") %>%
         mutate(log10_reads = log10(.data[["reads"]]),
                reads = NULL) %>%
-        filter(.data[["log10_reads"]] > 0L) %>%
+        # Only plot barcodes with at least 100 reads (log10 = 2)
+        filter(.data[["log10_reads"]] > 2L) %>%
         left_join(sample_metadata, by = "sample_id")
 }
 
@@ -40,67 +54,81 @@
 
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_violin <- function(plot_cb_df) {
+.plot_cb_raw_violin <- function(plot_cb_tbl) {
     ggplot(
-        plot_cb_df,
+        plot_cb_tbl,
         aes_(x = ~sample_name,
              y = ~log10_reads,
              fill = ~sample_name)) +
         facet_wrap(~file_name) +
         geom_violin(scale = "width") +
-        labs(title = "cellular barcode violin plot",
-             x = "sample name",
+        geom_hline(alpha = qc_line_alpha,
+                   color = qc_fail_color,
+                   size = qc_line_size,
+                   yintercept = 2L) +
+        geom_hline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
+                   yintercept = .cb_cutoff_line(object)) +
+        labs(title = "raw violin",
+             x = "",
              y = "log10 reads per cell") +
-        coord_flip()
+        coord_flip() +
+        theme(legend.position = "none")
 }
 
 
 
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_histogram <- function(plot_cb_df) {
+.plot_cb_raw_histogram <- function(plot_cb_tbl) {
     ggplot(
-        plot_cb_df,
+        plot_cb_tbl,
         aes_(x = ~log10_reads,
              fill = ~sample_name)) +
-        labs(title = "cellular barcode histogram",
-             x = "log10 reads per cell") +
+        labs(title = "raw histogram",
+             x = "log10 reads per cell",
+             y = "") +
         facet_wrap(~file_name) +
-        geom_histogram(bins = 200L) +
-        scale_y_sqrt()
+        geom_histogram(bins = 100L) +
+        scale_y_sqrt() +
+        geom_vline(alpha = qc_line_alpha,
+                   color = qc_fail_color,
+                   size = qc_line_size,
+                   xintercept = 2L) +
+        geom_vline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
+                   xintercept = .cb_cutoff_line(object)) +
+        theme(axis.text.y = element_blank(),
+              axis.ticks.y = element_blank(),
+              legend.position = "none")
 }
 
 
 
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_histogram2 <- function(object) {
-    cellular_barcodes <- bcbio(object, "cellular_barcodes")
-    list <- lapply(seq_along(cellular_barcodes), function(a) {
-        bcs <- cellular_barcodes[[a]] %>%
-            mutate(log10_reads = log10(.data[["reads"]]))
-        bcs_hist <- hist(bcs[["log10_reads"]], n = 100L, plot = FALSE)
-        f_log <- bcs_hist[["counts"]]
-        x_log <-  bcs_hist[["mids"]]
-        x <- x_log
-        y <- f_log * (10L ^ x_log) / sum(f_log * (10L ^ x_log))
-        data.frame(
-            sample_id = names(cellular_barcodes)[[a]],
-            x = x,
-            y = y)
-    }) %>%
-        set_names(names(cellular_barcodes))
-    bind_rows(list) %>%
-        left_join(sample_metadata(object), by = "sample_id") %>%
-        ggplot(
-            aes_(x = ~x,
-                 y = ~y,
-                 color = ~sample_name)) +
+.plot_cb_proportional_histogram <- function(object) {
+
+    ggplot(.proportional_cb(object),
+           aes_(x = ~log10_reads_per_cell,
+                y = ~proportion_of_cells * 100L,
+                color = ~sample_name)) +
         facet_wrap(~file_name) +
         geom_line() +
-        labs(title = "cellular barcode histogram",
+        geom_vline(alpha = qc_line_alpha,
+                   color = qc_fail_color,
+                   size = qc_line_size,
+                   xintercept = 2L) +
+        geom_vline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
+                   xintercept = .cb_cutoff_line(object)) +
+        labs(title = "proportional histogram",
              x = "log10 reads per cell",
-             y = "proportion of cells")
+             y = "% of cells") +
+        theme(legend.position = "bottom")
 }
 
 
@@ -108,13 +136,17 @@
 #' @rdname plot_cellular_barcodes
 #' @export
 setMethod("plot_cellular_barcodes", "bcbioSCDataSet", function(object) {
-    plot_cb_df <- .plot_cb_df(object)
-    if (is.null(plot_cb_df)) {
-        return(NULL)
-    }
-    plot_grid(.plot_cb_violin(plot_cb_df),
-              .plot_cb_histogram(plot_cb_df),
-              .plot_cb_histogram2(object),
-              labels = "auto",
-              nrow = 3L)
+    # Use defined plot_cb_tbl here for improved speed
+    plot_cb_tbl <- .plot_cb_tbl(object)
+    ggdraw() +
+        # Coordinates are relative to lower left corner
+        draw_plot(
+            .plot_cb_raw_violin(plot_cb_tbl),
+            x = 0L, y = 0.7, width = 0.5, height = 0.3) +
+        draw_plot(
+            .plot_cb_raw_histogram(plot_cb_tbl),
+            x = 0.5, y = 0.7, width = 0.5, height = 0.3) +
+        draw_plot(
+            .plot_cb_proportional_histogram(object),
+            x = 0L, y = 0L, width = 1L, height = 0.7)
 })
