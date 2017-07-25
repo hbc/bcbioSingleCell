@@ -29,12 +29,12 @@
         geom_boxplot() +
         geom_label(data = median_umis,
                    aes_(label = ~umi_counts),
-                   alpha = 0.75,
+                   alpha = qc_label_alpha,
                    label.padding = unit(0.1, "lines"),
                    show.legend = FALSE) +
-        geom_hline(alpha = 0.5,
-                   color = warn_color,
-                   size = 2L,
+        geom_hline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
                    yintercept = min) +
         scale_y_log10() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
@@ -54,9 +54,9 @@
              x = "umis per cell") +
         facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
-        geom_vline(alpha = 0.5,
-                   color = warn_color,
-                   size = 2L,
+        geom_vline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
                    xintercept = min) +
         scale_x_log10() +
         scale_y_sqrt() +

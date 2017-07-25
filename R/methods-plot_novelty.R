@@ -24,13 +24,13 @@
              y = "log10 genes per umi") +
         facet_wrap(~file_name) +
         geom_boxplot() +
-        geom_hline(alpha = 0.5,
-                   color = warn_color,
-                   size = 2L,
+        geom_hline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
                    yintercept = min) +
         geom_label(data = median_novelty,
                    aes_(label = ~round(log10_genes_per_umi, digits = 2L)),
-                   alpha = 0.75,
+                   alpha = qc_label_alpha,
                    label.padding = unit(0.1, "lines"),
                    show.legend = FALSE) +
         scale_y_sqrt() +
@@ -50,9 +50,9 @@
         labs(x = "log10 genes per umi") +
         facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
-        geom_vline(alpha = 0.5,
-                   color = warn_color,
-                   size = 2L,
+        geom_vline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
                    xintercept = min) +
         scale_x_sqrt() +
         scale_y_sqrt() +
@@ -80,6 +80,8 @@ setMethod(
     function(object, min = 0.8) {
         .plot_novelty(object, min)
     })
+
+
 
 #' @rdname plot_novelty
 #' @export
