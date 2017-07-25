@@ -5,6 +5,7 @@
 - Updated sample name and cellular barcode sanization.
 - Initial commit of Seurat utility functions.
 - Initial commit of YAML parameters for RMarkdown templates.
+- Draft support for Seurat v2 pre-release.
 
 
 
