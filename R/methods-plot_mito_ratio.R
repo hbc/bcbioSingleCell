@@ -23,13 +23,13 @@
              y = "relative mitochondrial abundance") +
         facet_wrap(~file_name) +
         geom_boxplot() +
-        geom_hline(alpha = 0.5,
-                   color = warn_color,
-                   size = 2L,
+        geom_hline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
                    yintercept = max) +
         geom_label(data = median_mito_ratio,
                    aes_(label = ~round(mito_ratio, digits = 2L)),
-                   alpha = 0.75,
+                   alpha = qc_label_alpha,
                    label.padding = unit(0.1, "lines"),
                    show.legend = FALSE) +
         scale_y_sqrt() +
@@ -49,9 +49,9 @@
         labs(x = "relative mitochondrial abundance") +
         facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
-        geom_vline(alpha = 0.5,
-                   color = warn_color,
-                   size = 2L,
+        geom_vline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
                    xintercept = max) +
         scale_x_sqrt() +
         scale_y_sqrt() +
@@ -100,6 +100,8 @@ setMethod(
     function(object, max = 0.1) {
         .plot_mito_ratio(object, max)
     })
+
+
 
 #' @rdname plot_mito_ratio
 #' @export

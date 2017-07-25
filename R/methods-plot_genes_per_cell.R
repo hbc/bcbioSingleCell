@@ -26,22 +26,22 @@
              y = "genes per cell") +
         facet_wrap(~file_name) +
         geom_boxplot() +
-        geom_hline(alpha = 0.5,
-                   color = warn_color,
-                   size = 2L,
+        geom_hline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
                    yintercept = min) +
         geom_label(data = median_genes,
                    aes_(label = ~round(genes_detected)),
-                   alpha = 0.75,
+                   alpha = qc_label_alpha,
                    label.padding = unit(0.1, "lines"),
                    show.legend = FALSE) +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (!is.null(max)) {
         plot <- plot +
-            geom_hline(alpha = 0.5,
-                       color = warn_color,
-                       size = 2L,
+            geom_hline(alpha = qc_line_alpha,
+                       color = qc_pass_color,
+                       size = qc_line_size,
                        yintercept = max)
     }
     plot
@@ -60,18 +60,18 @@
         labs(x = "genes per cell") +
         facet_wrap(~file_name) +
         geom_histogram(bins = bins) +
-        geom_vline(alpha = 0.5,
-                   color = warn_color,
-                   size = 2L,
+        geom_vline(alpha = qc_line_alpha,
+                   color = qc_pass_color,
+                   size = qc_line_size,
                    xintercept = min) +
         scale_x_sqrt() +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (!is.null(max)) {
         plot <- plot +
-            geom_vline(alpha = 0.5,
-                       color = warn_color,
-                       size = 2L,
+            geom_vline(alpha = qc_line_alpha,
+                       color = qc_pass_color,
+                       size = qc_line_size,
                        xintercept = max)
     }
     plot
@@ -98,6 +98,8 @@ setMethod(
     function(object, min = 500L, max = NULL) {
         .plot_genes_per_cell(object, min, max)
     })
+
+
 
 #' @rdname plot_genes_per_cell
 #' @export

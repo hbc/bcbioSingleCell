@@ -4,10 +4,10 @@
 \docType{methods}
 \name{plot_cellular_barcodes}
 \alias{plot_cellular_barcodes}
-\alias{.plot_cb_df}
-\alias{.plot_cb_violin}
-\alias{.plot_cb_histogram}
-\alias{.plot_cb_histogram2}
+\alias{.cb_cutoff_line}
+\alias{.plot_cb_raw_violin}
+\alias{.plot_cb_raw_histogram}
+\alias{.plot_cb_proportional_histogram}
 \alias{plot_cellular_barcodes,bcbioSCDataSet-method}
 \title{Plot Cellular Barcode Distributions per Sample}
 \usage{

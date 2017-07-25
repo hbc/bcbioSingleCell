@@ -30,7 +30,6 @@ devtools::install_github("hbc/bcbioSinglecell")
 
 - For all changes, fork or create a new branch, then issue a pull request that will be reviewed.
 - Do not commit changes directly to `master` branch.
-- Open issues for any changes affecting `bcbioSCDataSet` class.
 - Support is only provided for the current release version.
 
 

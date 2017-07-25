@@ -50,6 +50,11 @@ load_run <- function(
     sample_metadata <- .sample_metadata_file(
         sample_metadata_file, sample_dirs, pipeline)
 
+    # Check to ensure interesting groups are defined
+    if (!all(interesting_groups %in% colnames(sample_metadata))) {
+        stop("Interesting groups missing in sample metadata")
+    }
+
     # Check to see if a subset of samples is requested via the metadata file.
     # This matches by the reverse complement sequence of the index barcode.
     if (length(sample_metadata[["sample_id"]]) < length(sample_dirs)) {
@@ -81,10 +86,18 @@ load_run <- function(
 
         # Log files ----
         message("Reading log files")
-        bcbio_nextgen_log <- .log_file(
+        bcbio_log <- .log_file(
             file.path(project_dir, "bcbio-nextgen.log"))
-        bcbio_nextgen_commands_log <- .log_file(
+        bcbio_commands_log <- .log_file(
             file.path(project_dir, "bcbio-nextgen-commands.log"))
+
+        # Cellular barcode cutoff ----
+        cb_cutoff_pattern <- "--cb_cutoff (\\d+)"
+        cb_cutoff <- str_match(bcbio_commands_log, cb_cutoff_pattern) %>%
+            .[, 2L] %>%
+            na.omit %>%
+            unique %>%
+            as.numeric
 
         # Data versions and programs ----
         data_versions <- .data_versions(project_dir)
@@ -97,8 +110,8 @@ load_run <- function(
             # Data versions aren't saved when using a custom FASTA
             # Remove this in a future update
             genome_pattern <- "work/rapmap/[^/]+/quasiindex/([^/]+)/"
-            if (any(str_detect(bcbio_nextgen_commands_log, genome_pattern))) {
-                genome_build <- str_match(bcbio_nextgen_commands_log,
+            if (any(str_detect(bcbio_commands_log, genome_pattern))) {
+                genome_build <- str_match(bcbio_commands_log,
                                           genome_pattern) %>%
                     .[, 2L] %>%
                     na.omit %>%
@@ -110,8 +123,8 @@ load_run <- function(
 
         # Molecular barcode (UMI) type ----
         umi_pattern <- "/umis/([a-z0-9\\-]+)\\.json"
-        if (any(str_detect(bcbio_nextgen_commands_log, umi_pattern))) {
-            umi_type <- str_match(bcbio_nextgen_commands_log,
+        if (any(str_detect(bcbio_commands_log, umi_pattern))) {
+            umi_type <- str_match(bcbio_commands_log,
                                   umi_pattern) %>%
                 .[, 2L] %>%
                 na.omit %>%
@@ -206,8 +219,9 @@ load_run <- function(
             tx2gene = tx2gene,
             data_versions = data_versions,
             programs = programs,
-            bcbio_nextgen_log = bcbio_nextgen_log,
-            bcbio_nextgen_commands_log = bcbio_nextgen_commands_log)
+            bcbio_log = bcbio_log,
+            bcbio_commands_log = bcbio_commands_log,
+            cb_cutoff = cb_cutoff)
         metadata <- c(metadata, bcbio_metadata)
     }
     # Add user-defined custom metadata, if specified
