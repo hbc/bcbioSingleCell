@@ -1,4 +1,4 @@
-#' Object coercion definitions
+#' Coerce `bcbio` Data to Other Single-Cell Classes
 #'
 #' @rdname coerce
 #' @name coerce
@@ -9,7 +9,7 @@
 
 
 # https://goo.gl/GMQAdC
-setAs("SCSubset", "seurat", function(from) {
+setAs("bcbioSCSubset", "seurat", function(from) {
     name <- deparse(substitute(from))
     counts <- counts(from, gene2symbol = TRUE)
     metrics <- metrics(from) %>% dotted
@@ -23,8 +23,9 @@ setAs("SCSubset", "seurat", function(from) {
         .[["max_mito_ratio"]]
 
     new("seurat", raw.data = counts) %>%
-        Setup(project = name,
-              min.genes = min_genes) %>%
+        CreateSeuratObject(
+            project = name,
+            min.genes = min_genes) %>%
         AddMetaData(metrics) %>%
         SubsetData(subset.name = "mito.ratio", accept.high = max_mito_ratio)
 })
