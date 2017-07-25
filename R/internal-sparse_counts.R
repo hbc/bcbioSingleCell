@@ -48,24 +48,24 @@
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
     # names are gene/transcript identifiers (depending on pipeline).
-    sparse_counts <- read_file_by_extension(matrix_file)
+    sparse_counts <- readFileByExtension(matrix_file)
     if (pipeline == "bcbio") {
         colnames(sparse_counts) <-
-            read_file_by_extension(col_file) %>%
+            readFileByExtension(col_file) %>%
             snake
         rownames(sparse_counts) <-
-            read_file_by_extension(row_file)
+            readFileByExtension(row_file)
     } else if (pipeline == "cellranger") {
         # Named `barcodes.tsv` but not actually tab delimited
         colnames(sparse_counts) <-
-            read_file_by_extension(
+            readFileByExtension(
                 col_file,
                 col_names = "cellular_barcode",
                 col_types = "c") %>%
             pull("cellular_barcode") %>%
             snake
         rownames(sparse_counts) <-
-            read_file_by_extension(
+            readFileByExtension(
                 row_file,
                 col_names = c("ensgene", "symbol"),
                 col_types = "cc") %>%
@@ -91,9 +91,13 @@
     }
 
     # Add sample name
-    if (all(str_detect(colnames(sparse_counts), "^[acgt]{8}"))) {
+    # 8 nucleotides: inDrop, Chromium
+    # 6 nucleotides: SureCell
+    if (all(str_detect(colnames(sparse_counts), "^[acgt]{6,8}_"))) {
         colnames(sparse_counts) <- colnames(sparse_counts) %>%
             paste(snake(sample_name), ., sep = "_")
+    } else {
+        stop("Failed to add sample name")
     }
 
     # Return as dgCMatrix, for improved memory overhead
@@ -103,10 +107,13 @@
 
 
 #' @rdname sparse_counts
-.sparse_counts_tx2gene <- function(tx_sparse_counts, tx2gene) {
-    tx_sparse_counts <- .strip_transcript_versions(tx_sparse_counts)
-    t2g <- tx2gene[rownames(tx_sparse_counts), ] %>%
-        set_rownames(rownames(tx_sparse_counts))
+.sparse_counts_tx2gene <- function(sparse_counts, tx2gene) {
+    sparse_counts <- .strip_transcript_versions(sparse_counts)
+    if (!all(rownames(sparse_counts) %in% rownames(tx2gene))) {
+        warning("tx2gene missing transcripts present in sparse counts")
+    }
+    t2g <- tx2gene[rownames(sparse_counts), ] %>%
+        set_rownames(rownames(sparse_counts))
     if (any(is.na(t2g[["enstxp"]]))) {
         t2g <- rownames_to_column(t2g)
         mapped <- filter(t2g, !is.na(.data[["ensgene"]]))
@@ -117,13 +124,13 @@
                       toString(unmapped[["ensgene"]])))
         t2g <- bind_rows(mapped, unmapped) %>%
             column_to_rownames %>%
-            .[rownames(tx_sparse_counts), ]
+            .[rownames(sparse_counts), ]
     }
-    if (!identical(rownames(tx_sparse_counts), rownames(t2g))) {
+    if (!identical(rownames(sparse_counts), rownames(t2g))) {
         stop("tx2gene rowname mismatch")
     }
     message("Converting transcript-level counts to gene-level")
-    tx_sparse_counts %>%
+    sparse_counts %>%
         set_rownames(t2g[["ensgene"]]) %>%
         aggregate.Matrix(rownames(.), fun = "sum")
 }
@@ -135,12 +142,16 @@
 #' @return Sparse counts matrix with the transcript versions stripped.
 .strip_transcript_versions <- function(sparse_counts) {
     transcripts <- rownames(sparse_counts)
-    # Tight pattern matching against Ensembl stable transcript IDs
+    # Pattern matching against Ensembl transcript IDs
     # http://www.ensembl.org/info/genome/stable_ids/index.html
-    enstxp_pattern <- "^(ENS[A-Z]{3}T\\d{11})\\.\\d+$"
+    # Examples: ENST (human); ENSMUST (mouse)
+    enstxp_pattern <- "^(ENS.*T\\d{11})\\.\\d+$"
     if (any(str_detect(transcripts, enstxp_pattern))) {
         transcripts <- str_replace(transcripts, enstxp_pattern, "\\1")
         rownames(sparse_counts) <- transcripts
+    }
+    if (any(str_detect(transcripts, "\\.\\d+$"))) {
+        stop("Incomplete transcript version removal")
     }
     sparse_counts
 }
