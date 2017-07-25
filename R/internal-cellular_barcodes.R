@@ -3,11 +3,39 @@
 #' @rdname cellular_barcodes
 #' @keywords internal
 #'
-#' @author Michael Steinbaugh
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @param file Cellular barcode TSV file.
 #' @param sample_dirs Sample directories.
 #' @param list Cellular barcodes list.
+
+
+
+#' @rdname cellular_barcodes
+#' @return [tibble].
+#' @details Modified version of Klein Lab MATLAB code.
+.proportional_cb <- function(object) {
+    metadata <- metadata(object)[["sample_metadata"]] %>%
+        .[, meta_priority_cols]
+    cellular_barcodes <- bcbio(object, "cellular_barcodes")
+    lapply(seq_along(cellular_barcodes), function(a) {
+        cb <- cellular_barcodes[[a]] %>%
+            mutate(log10_reads = log10(.data[["reads"]]))
+        cb_hist <- hist(cb[["log10_reads"]], n = 100L, plot = FALSE)
+        # `fLog` in Klein Lab code
+        counts <- cb_hist[["counts"]]
+        # `xLog` in Klein Lab code
+        mids <-  cb_hist[["mids"]]
+        tibble(
+            sample_id = names(cellular_barcodes)[[a]],
+            log10_reads_per_cell = mids,
+            proportion_of_cells = counts * (10L ^ mids) /
+                sum(counts * (10L ^ mids)))
+    }) %>%
+        set_names(names(cellular_barcodes)) %>%
+        bind_rows %>%
+        left_join(metadata, by = "sample_id")
+}
 
 
 

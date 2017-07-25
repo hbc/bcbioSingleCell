@@ -20,8 +20,7 @@
         aes_(x = ~sample_name,
              y = ~cells,
              fill = as.name(interesting_group))) +
-        labs(title = "cell counts",
-             x = "sample",
+        labs(x = "sample",
              y = "cell count") +
         facet_wrap(~file_name) +
         geom_bar(stat = "identity") +

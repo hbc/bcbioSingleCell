@@ -25,8 +25,7 @@
 #' @param file Log file.
 .log_file <- function(file) {
     if (!file.exists(file)) {
-        warning(paste(basename(file), "missing"))
-        return(NULL)
+        stop(paste(basename(file), "missing"))
     }
     read_lines(file)
 }
@@ -43,8 +42,7 @@
 .programs <- function(project_dir) {
     file <- file.path(project_dir, "programs.txt")
     if (!file.exists(file)) {
-        warning(paste(basename(file), "missing"))
-        return(NULL)
+        stop(paste(basename(file), "missing"))
     }
     read_delim(file, col_names = c("program", "version"), delim = ",")
 }

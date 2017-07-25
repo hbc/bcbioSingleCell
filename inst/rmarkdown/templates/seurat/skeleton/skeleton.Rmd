@@ -56,13 +56,7 @@ opts_chunk$set(
 
 # Initialize Seurat (`r subset_name`)
 
-Let's convert our `SCSubset` object containing the filtered cellular barcodes
-into a `seurat` object. This step uses [Seurat][]'s `Setup()` function with the
-same filtering cutoffs applied during our initial quality control analysis. Here
-we are imposing a basic minimum gene-cutoff, but also filtering low quality
-cells that have a high mitochondrial gene abundance. During this step,
-[Seurat][] applies log normalization to the counts, first scaling each cell to a
-total of 1e4 molecules [@Drop-seq], and only keeps genes expressed in >= 3 cells.
+Let's convert our `SCSubset` object containing the filtered cellular barcodes into a `seurat` object. This step uses [Seurat][]'s `Setup()` function with the same filtering cutoffs applied during our initial quality control analysis. Here we are imposing a basic minimum gene-cutoff, but also filtering low quality cells that have a high mitochondrial gene abundance. During this step, [Seurat][] applies log normalization to the counts, first scaling each cell to a total of 1e4 molecules [@Drop-seq], and only keeps genes expressed in >= 3 cells.
 
 ```{r seurat}
 seurat <- as(subset, "seurat")
@@ -85,24 +79,11 @@ GenePlot(seurat, "nUMI", "nGene")
 
 # Regress out unwanted sources of variation
 
-Your single cell experiment likely contains "uninteresting" sources of
-variation. This could include not only technical noise, but batch effects, or
-even biological sources of variation (e.g. cell cycle stage). Regressing these
-signals out of the analysis can improve downstream dimensionality reduction and
-clustering [@Buettner:2015hp]. [Seurat][] implements a basic version of this by
-constructing linear models to predict gene expression based on user-defined
-variables. [Seurat][] stores the z-scored residuals of these models in the
-`scale.data` slot, and they are used for dimensionality reduction and
-clustering.
+Your single cell experiment likely contains "uninteresting" sources of variation. This could include not only technical noise, but batch effects, or even biological sources of variation (e.g. cell cycle stage). Regressing these signals out of the analysis can improve downstream dimensionality reduction and clustering [@Buettner:2015hp]. [Seurat][] implements a basic version of this by constructing linear models to predict gene expression based on user-defined variables. [Seurat][] stores the z-scored residuals of these models in the `scale.data` slot, and they are used for dimensionality reduction and clustering.
 
-It is typically recommended to regress out cell-cell variation in gene
-expression driven by batch, the number of detected molecules, and mitochondrial
-gene expression. For cycling cells, we can also learn a "cell-cycle" score
-[@Drop-seq] and regress this out as well.
+It is typically recommended to regress out cell-cell variation in gene expression driven by batch, the number of detected molecules, and mitochondrial gene expression. For cycling cells, we can also learn a "cell-cycle" score [@Drop-seq] and regress this out as well.
 
-Here, let's regress effects on gene expression that are due to the number of
-genes detected (`nGene`), the total counts in the cell (`nUMI`), and the percent
-mitochondrial content (`mito.ratio`).
+Here, let's regress effects on gene expression that are due to the number of genes detected (`nGene`), the total counts in the cell (`nUMI`), and the percent mitochondrial content (`mito.ratio`).
 
 ```{r RegressOut}
 seurat <- RegressOut(seurat, latent.vars = c("nGene", "nUMI", "mito.ratio"))
@@ -112,11 +93,7 @@ seurat <- RegressOut(seurat, latent.vars = c("nGene", "nUMI", "mito.ratio"))
 
 # Detection of variable genes across the single cells
 
-[Seurat][] calculates highly variable genes and focuses on these for downstream
-analysis. `MeanVarPlot()`, which works by calculating the average expression and
-dispersion for each gene, placing these genes into bins, and then calculating a
-z-score for dispersion within each bin. This helps control for the relationship
-between variability and average expression [@Drop-seq].
+[Seurat][] calculates highly variable genes and focuses on these for downstream analysis. `MeanVarPlot()`, which works by calculating the average expression and dispersion for each gene, placing these genes into bins, and then calculating a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression [@Drop-seq].
 
 ```{r MeanVarPlot}
 seurat <- MeanVarPlot(seurat)
@@ -126,19 +103,9 @@ seurat <- MeanVarPlot(seurat)
 
 # Linear dimensional reduction
 
-Run PCA using `PCAFast()` on the scaled data. By default, the genes in
-`seurat@var.genes` are used as input, but can be defined using `pc.genes`. We
-have typically found that running dimensionality reduction on genes with
-high-dispersion can improve performance. However, with UMI data - particularly
-after using `RegressOut()`, we often see that PCA returns similar (albeit
-slower) results when run on much larger subsets of genes, including the whole
-transcriptome.
+Run PCA using `PCAFast()` on the scaled data. By default, the genes in `seurat@var.genes` are used as input, but can be defined using `pc.genes`. We have typically found that running dimensionality reduction on genes with high-dispersion can improve performance. However, with UMI data - particularly after using `RegressOut()`, we often see that PCA returns similar (albeit slower) results when run on much larger subsets of genes, including the whole transcriptome.
 
-`ProjectPCA()` scores each gene in the dataset (including genes not included in
-the PCA) based on their correlation with the calculated components. Though we
-don't use this further here, it can be used to identify markers that are
-strongly correlated with cellular heterogeneity, but may not have passed through
-variable gene selection.
+`ProjectPCA()` scores each gene in the dataset (including genes not included in the PCA) based on their correlation with the calculated components. Though we don't use this further here, it can be used to identify markers that are strongly correlated with cellular heterogeneity, but may not have passed through variable gene selection.
 
 ```{r PCA}
 seurat <- seurat %>%
@@ -152,13 +119,7 @@ We can visualize these genes graphically using `VizPCA()`.
 VizPCA(seurat, pcs.use = 1:4)
 ```
 
-In particular, `PCHeatmap()` allows for easy exploration of the primary sources
-of heterogeneity in a dataset, and can be useful when trying to decide which PCs
-to include for further downstream analyses. Both cells and genes are ordered
-according to their PCA scores. Setting `cells.use` to a number plots the
-"extreme" cells on both ends of the spectrum, which dramatically speeds plotting
-for large datasets. Though clearly a supervised analysis, we find this to be a
-valuable tool for exploring correlated gene sets.
+In particular, `PCHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and genes are ordered according to their PCA scores. Setting `cells.use` to a number plots the "extreme" cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated gene sets.
 
 ```{r PCHeatmap, fig.height=12, fig.width=8, warning=FALSE}
 # PC1
@@ -176,12 +137,7 @@ PCHeatmap(seurat,
 
 # Determine statistically significant principal components
 
-To overcome the extensive technical noise in any single gene for scRNA-seq data,
-[Seurat][] clusters cells based on their PCA scores, with each PC essentially
-representing a "metagene" that combines information across a correlated gene
-set. Determining how many PCs to include downstream is therefore an important
-step. To accomplish this, we plot the standard deviation ("singular value" for
-`PCAFast()`) of each PC as an elbow plot with `PCElbowPlot()`.
+To overcome the extensive technical noise in any single gene for scRNA-seq data, [Seurat][] clusters cells based on their PCA scores, with each PC essentially representing a "metagene" that combines information across a correlated gene set. Determining how many PCs to include downstream is therefore an important step. To accomplish this, we plot the standard deviation ("singular value" for `PCAFast()`) of each PC as an elbow plot with `PCElbowPlot()`.
 
 ```{r PCElbowPlot}
 PCElbowPlot(seurat, num.pc = pc_compute) +
@@ -197,9 +153,7 @@ PCElbowPlot(seurat, num.pc = pc_compute) +
 
 # Find clusters and visualize
 
-Here we will use the selected PCs to find clusters of cells via heirarchical
-clustering, then run t-Distributed Stochastic Neighbor Embedding (t-SNE)
-analysis [@tSNE].
+Here we will use the selected PCs to find clusters of cells via heirarchical clustering, then run t-Distributed Stochastic Neighbor Embedding (t-SNE) analysis [@tSNE].
 
 ```{r FindClusters}
 seurat <- FindClusters(
@@ -233,10 +187,7 @@ TSNEPlot(seurat,
          no.legend = TRUE)
 ```
 
-Note that t-SNE is not PCA! The measurement of distance in a t-SNE plot is
-difficult to interpret, and is most helpful for the relationships of close
-neighbors. To better infer separation distance between the putative clusters,
-let's re-apply PCA.
+Note that t-SNE is not PCA! The measurement of distance in a t-SNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's re-apply PCA.
 
 ```{r PCAPlot}
 PCAPlot(seurat,
@@ -252,9 +203,7 @@ PCAPlot(seurat,
 
 # Cluster quality control
 
-Let's look at the variance in the number of genes detected (`nGene`) and the
-percentage of mitochondrial gene expression (`mito.ratio`), to see if any
-abberant cells are clustering.
+Let's look at the variance in the number of genes detected (`nGene`) and the percentage of mitochondrial gene expression (`mito.ratio`), to see if any abberant cells are clustering.
 
 ```{r qc}
 FeaturePlot(seurat, "nGene", cols.use = c("grey","green"))
@@ -269,26 +218,11 @@ FeaturePlot(seurat, "mito.ratio", cols.use = c("grey","red"))
 
 # Differentially expressed genes (cluster markers)
 
-Seurat can help you find markers that define clusters via differential
-expression. By default, it identifes positive and negative markers of a single
-cluster, compared to all other cells. `FindAllMarkers()` automates this process
-for all clusters, but you can also test groups of clusters vs. each other, or
-against all cells.
+Seurat can help you find markers that define clusters via differential expression. By default, it identifes positive and negative markers of a single cluster, compared to all other cells. `FindAllMarkers()` automates this process for all clusters, but you can also test groups of clusters vs. each other, or against all cells.
 
-The `min.pct` argument requires a gene to be detected at a minimum percentage in
-either of the two groups of cells, and the `thresh.test` argument requires a
-gene to be differentially expressed (on average) by some amount between the two
-groups. As another option to speed up these computations, `max.cells.per.ident`
-can be set. This will downsample each identity class to have no more cells than
-whatever this is set to. While there is generally going to be a loss in power,
-the speed increases can be signficiant and the most highly differentially
-expressed genes will likely still rise to the top.
+The `min.pct` argument requires a gene to be detected at a minimum percentage in either of the two groups of cells, and the `thresh.test` argument requires a gene to be differentially expressed (on average) by some amount between the two groups. As another option to speed up these computations, `max.cells.per.ident` can be set. This will downsample each identity class to have no more cells than whatever this is set to. While there is generally going to be a loss in power, the speed increases can be signficiant and the most highly differentially expressed genes will likely still rise to the top.
 
-Seurat has four tests for differential expression which can be set with the
-`test.use` parameter: LRT test based on zero-inflated data (`bimod`, default),
-ROC test (`roc`), t-test (`t`), LRT test based on tobit-censoring models
-(`tobit`) The ROC test returns the 'classification power' for any individual
-marker (ranging from 0 - random, to 1 - perfect).
+Seurat has four tests for differential expression which can be set with the `test.use` parameter: LRT test based on zero-inflated data (`bimod`, default), ROC test (`roc`), t-test (`t`), LRT test based on tobit-censoring models (`tobit`) The ROC test returns the 'classification power' for any individual marker (ranging from 0 - random, to 1 - perfect).
 
 ```{r FindAllMarkers}
 markers <- FindAllMarkers(seurat, only.pos = TRUE)
@@ -301,7 +235,6 @@ write_csv(markers,
           file.path(markers_dir, paste0(subset_name, ".csv.gz")))
 ```
 
-<<<<<<< HEAD
 
 ## Top markers per cluster
 
@@ -315,9 +248,7 @@ top_markers <- top_markers(markers)
 
 ## Cluster heterogeneity
 
-Heatmaps can also be a good way to examine heterogeneity within/between
-clusters. The `DoHeatmap()` function will generate a heatmap for given cells and
-genes. In this case, we are plotting the top markers for each cluster.
+Heatmaps can also be a good way to examine heterogeneity within/between clusters. The `DoHeatmap()` function will generate a heatmap for given cells and genes. In this case, we are plotting the top markers for each cluster.
 
 ```{r DoHeatmap, fig.height=12, fig.width=12}
 DoHeatmap(seurat,
@@ -332,14 +263,7 @@ DoHeatmap(seurat,
 
 ## Cluster marker plots
 
-There are several tools for visualizing marker expression. `VlnPlot()` generates
-a violin plot which shows the probability density at different expression levels
-of the gene for each cluster. As seen below, good marker genes will show
-strongly in a single cluster. It can also be useful to look at gene/gene
-correlation with `GenePlot()` which returns a plot similar to a 'FACS' plot with
-cells colored by cluster identity. Also, the `FeaturePlot()` function is useful
-for viewing the expression of the gene in the context of all the cells and helps
-validate the specificity of the marker or the quality of the clustering.
+There are several tools for visualizing marker expression. `VlnPlot()` generates a violin plot which shows the probability density at different expression levels of the gene for each cluster. As seen below, good marker genes will show strongly in a single cluster. It can also be useful to look at gene/gene correlation with `GenePlot()` which returns a plot similar to a 'FACS' plot with cells colored by cluster identity. Also, the `FeaturePlot()` function is useful for viewing the expression of the gene in the context of all the cells and helps validate the specificity of the marker or the quality of the clustering.
 
 
 ## Top markers per cluster

@@ -23,7 +23,7 @@ setMethod("filter", "bcbioSCDataSet", function(
     max_mito_ratio = 0.1,
     min_novelty = 0.8,
     show_report = TRUE) {
-    sparse_counts <- counts(object)
+    sparse_counts <- assay(object)
 
     # Cellular barcode count
     ncol(sparse_counts) %>%
@@ -31,9 +31,7 @@ setMethod("filter", "bcbioSCDataSet", function(
         message
 
     # Subset metrics
-    metrics <- metrics(object) %>%
-        rownames_to_column %>%
-        as_tibble
+    metrics <- metrics(object) %>% as("tibble")
 
     # Apply filtering criteria
     if (!is.null(min_umis)) {
@@ -67,16 +65,17 @@ setMethod("filter", "bcbioSCDataSet", function(
         column_to_rownames
 
     # Filter the sparse counts matrix with metrics
-    sparse_size_original <- object.size(sparse_counts) %>%
-        format(units = "auto")
+    sparse_size_original <- object.size(sparse_counts)
     sparse_counts <- sparse_counts[, rownames(metrics)]
-    sparse_size_filtered <- object.size(sparse_counts) %>%
-        format(units = "auto")
+    sparse_size_filtered <- object.size(sparse_counts)
     message(paste("Sparse matrix shrunk from",
-                  sparse_size_original, "to", sparse_size_filtered))
+                  format(sparse_size_original, units = "auto"),
+                  "to",
+                  format(sparse_size_filtered, units = "auto")))
 
     # colData ====
     col_data <- colData(object) %>% .[rownames(metrics), ]
+    rm(metrics)
 
     # rowData ====
     row_data <- rowData(object) %>%
@@ -109,19 +108,30 @@ setMethod("filter", "bcbioSCDataSet", function(
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(show_report)) {
-        message(paste(
-            "Filtering parameters:",
-            paste("  - >=", min_umis, "UMI counts per cell"),
-            paste("  - >=", min_genes, "genes per cell"),
-            paste("  - <=", max_genes, "genes per cell"),
-            paste("  - <=", max_mito_ratio, "mitochondrial abundance ratio"),
-            paste("  - >=", min_novelty, "novelty score"),
-            sep = "\n"))
-        plot_cell_counts(object) %>% show
-        plot_umis_per_cell(object) %>% show
-        plot_genes_per_cell(object) %>% show
-        plot_mito_ratio(object) %>% show
-        plot_novelty(object) %>% show
+        mdHeader("Filtering parameters", level = 2L)
+        mdList(c(
+            str_c("`>=", min_umis, "` UMI counts per cell"),
+            str_c("`>=", min_genes, "` genes per cell"),
+            str_c("`<=", max_genes, "` genes per cell"),
+            str_c("`<=", max_mito_ratio, "` mitochondrial abundance ratio"),
+            str_c("`>=", min_novelty, "` novelty score")))
+
+        mdHeader("Filtered metrics plots {.tabset}", level = 2L)
+
+        mdHeader("Cell counts", level = 3L)
+        show(plot_cell_counts(object))
+
+        mdHeader("UMI counts per cell", level = 3L)
+        show(plot_umis_per_cell(object))
+
+        mdHeader("Genes detected", level = 3L)
+        show(plot_genes_per_cell(object))
+
+        mdHeader("Mitochondrial counts ratio", level = 3L)
+        show(plot_mito_ratio(object))
+
+        mdHeader("Novelty", level = 3L)
+        show(plot_novelty(object))
     }
 
     object
