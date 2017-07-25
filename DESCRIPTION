@@ -23,7 +23,7 @@ biocViews:
     SingleCell,
     Visualization
 URL:
-    http://bioinformatics.sph.harvard.edu/bcbioSinglecell/,
+    http://bioinformatics.sph.harvard.edu/bcbioSinglecell,
     https://github.com/hbc/bcbioSinglecell
 BugReports: https://github.com/hbc/bcbioSinglecell/issues
 Depends:
