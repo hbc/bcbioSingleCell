@@ -28,9 +28,10 @@ devtools::install_github("hbc/bcbioSinglecell")
 
 ## Contribute
 
-- For major changes, create a new branch and a pull request that will be revised.
-- For small changes, commit directly to the `master` branch.
-- For fixes in a specific release version, commit to the release branch.
+- For all changes, fork or create a new branch, then issue a pull request that will be reviewed.
+- Do not commit changes directly to `master` branch.
+- Open issues for any changes affecting `bcbioSCDataSet` class.
+- Support is only provided for the current release version.
 
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io
