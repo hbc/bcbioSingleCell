@@ -109,26 +109,26 @@ setMethod("filter", "bcbioSCDataSet", function(
     # Show summary statistics report and plots, if desired
     if (isTRUE(show_report)) {
         mdHeader("Filtering parameters", level = 2L)
-        writeLines(c(
-            str_c("  - `>=", min_umis, "` UMI counts per cell"),
-            str_c("  - `>=", min_genes, "` genes per cell"),
-            str_c("  - `<=", max_genes, "` genes per cell"),
-            str_c("  - `<=", max_mito_ratio, "` mitochondrial abundance ratio"),
-            str_c("  - `>=", min_novelty, "` novelty score")))
+        mdList(c(
+            str_c("`>=", min_umis, "` UMI counts per cell"),
+            str_c("`>=", min_genes, "` genes per cell"),
+            str_c("`<=", max_genes, "` genes per cell"),
+            str_c("`<=", max_mito_ratio, "` mitochondrial abundance ratio"),
+            str_c("`>=", min_novelty, "` novelty score")))
 
-        mdHeader("Filtered cell counts")
+        mdHeader("Filtered cell counts", level = 2L)
         show(plot_cell_counts(object))
 
-        mdHeader("Filtered UMI counts per cell")
+        mdHeader("Filtered UMI counts per cell", level = 2L)
         show(plot_umis_per_cell(object))
 
-        mdHeader("Filtered genes detected")
+        mdHeader("Filtered genes detected", level = 2L)
         show(plot_genes_per_cell(object))
 
-        mdHeader("Filtered mitochondrial counts ratio")
+        mdHeader("Filtered mitochondrial counts ratio", level = 2L)
         show(plot_mito_ratio(object))
 
-        mdHeader("Filtered novelty score")
+        mdHeader("Filtered novelty score", level = 2L)
         show(plot_novelty(object))
     }
 
