@@ -13,8 +13,12 @@ Authors@R: c(
            role = c("cph", "fnd")))
 Description: Import and analyze bcbio single-cell RNA-seq data.
 biocViews:
+    DataImport,
+    DataRepresentation,
     GeneExpression,
+    Infrastructure,
     QualityControl,
+    ReportWriting,
     RNASeq,
     SingleCell,
     Visualization
