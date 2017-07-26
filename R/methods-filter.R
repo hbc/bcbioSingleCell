@@ -82,22 +82,25 @@ setMethod("filter", "bcbioSCDataSet", function(
         set_rownames(rownames(object))
 
     # Metadata ====
-    metadata <- SimpleList(
-        source_name = deparse(substitute(object)),
+    old_meta <- metadata(object) %>%
+        as("SimpleList") %>%
+        .[c("pipeline",
+            "sample_metadata",
+            "interesting_groups",
+            "genome_build",
+            "annotable",
+            "ensembl_version",
+            "umi_type",
+            "multiplexed_fastq")]
+    new_meta <- SimpleList(
         filtering_criteria = c(
             min_umis = min_umis,
             min_genes = min_genes,
             max_genes = max_genes,
             max_mito_ratio = max_mito_ratio,
             min_novelty = min_novelty),
-        pipeline = metadata(object)[["pipeline"]],
-        sample_metadata = metadata(object)[["sample_metadata"]],
-        interesting_groups = metadata(object)[["interesting_groups"]],
-        genome_build = metadata(object)[["genome_build"]],
-        annotable = metadata(object)[["annotable"]],
-        ensembl_version = metadata(object)[["ensembl_version"]],
-        umi_type = metadata(object)[["umi_type"]],
-        multiplexed_fastq = metadata(object)[["multiplexed_fastq"]])
+        source_object = deparse(substitute(object)))
+    metadata <- c(old_meta, new_meta) %>% as("SimpleList")
 
     # SummarizedExperiment ====
     se <- packageSE(
