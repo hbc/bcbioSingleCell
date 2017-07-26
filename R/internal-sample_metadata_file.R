@@ -39,10 +39,10 @@
         # Check if samples are demultiplexed
         if (length(unique(meta[["file_name"]])) == nrow(meta)) {
             # SureCell
-            demultiplexed = TRUE
+            demultiplexed <- TRUE
         } else {
             # inDrop
-            demultiplexed = FALSE
+            demultiplexed <- FALSE
         }
 
         if (isTRUE(demultiplexed)) {
