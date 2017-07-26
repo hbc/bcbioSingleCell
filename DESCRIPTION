@@ -40,7 +40,9 @@ Imports:
     methods,
     scales,
     Seurat (>= 2.0),
-    S4Vectors
+    stats,
+    S4Vectors,
+    utils
 Suggests:
     lintr,
     testthat
