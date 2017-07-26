@@ -47,7 +47,10 @@
 
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_raw_violin <- function(plot_cb_tbl, cb_cutoff_line) {
+.plot_cb_raw_violin <- function(
+    plot_cb_tbl,
+    cb_cutoff_line,
+    multiplexed_fastq) {
     p <- ggplot(plot_cb_tbl,
            aes_(x = ~sample_name,
                 y = ~log10_reads,
@@ -66,7 +69,7 @@
              y = "log10 reads per cell") +
         coord_flip() +
         theme(legend.position = "none")
-    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+    if (isTRUE(multiplexed_fastq)) {
         p <- p + facet_wrap(~file_name)
     }
     p
@@ -76,7 +79,10 @@
 
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_raw_histogram <- function(plot_cb_tbl, cb_cutoff_line) {
+.plot_cb_raw_histogram <- function(
+    plot_cb_tbl,
+    cb_cutoff_line,
+    multiplexed_fastq) {
     p <- ggplot(plot_cb_tbl,
            aes_(x = ~log10_reads,
                 fill = ~sample_name)) +
@@ -96,7 +102,7 @@
         theme(axis.text.y = element_blank(),
               axis.ticks.y = element_blank(),
               legend.position = "none")
-    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+    if (isTRUE(multiplexed_fastq)) {
         p <- p + facet_wrap(~file_name)
     }
     p
@@ -139,13 +145,18 @@ setMethod("plot_cellular_barcodes", "bcbioSCDataSet", function(object) {
     # Use defined plot_cb_tbl here for improved speed
     plot_cb_tbl <- .plot_cb_tbl(object)
     cb_cutoff_line <- .cb_cutoff_line(object)
+    multiplexed_fastq <- metadata(object)[["multiplexed_fastq"]]
     ggdraw() +
         # Coordinates are relative to lower left corner
         draw_plot(
-            .plot_cb_raw_violin(plot_cb_tbl, cb_cutoff_line),
+            .plot_cb_raw_violin(plot_cb_tbl,
+                                cb_cutoff_line,
+                                multiplexed_fastq),
             x = 0L, y = 0.7, width = 0.5, height = 0.3) +
         draw_plot(
-            .plot_cb_raw_histogram(plot_cb_tbl, cb_cutoff_line),
+            .plot_cb_raw_histogram(plot_cb_tbl,
+                                   cb_cutoff_line,
+                                   multiplexed_fastq),
             x = 0.5, y = 0.7, width = 0.5, height = 0.3) +
         draw_plot(
             .plot_cb_proportional_histogram(object),
