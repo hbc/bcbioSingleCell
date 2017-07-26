@@ -83,6 +83,7 @@ setMethod("filter", "bcbioSCDataSet", function(
 
     # Metadata ====
     metadata <- SimpleList(
+        source_name = deparse(substitute(object)),
         filtering_criteria = c(
             min_umis = min_umis,
             min_genes = min_genes,
@@ -90,12 +91,13 @@ setMethod("filter", "bcbioSCDataSet", function(
             max_mito_ratio = max_mito_ratio,
             min_novelty = min_novelty),
         pipeline = metadata(object)[["pipeline"]],
-        source_name = deparse(substitute(object)),
         sample_metadata = metadata(object)[["sample_metadata"]],
         interesting_groups = metadata(object)[["interesting_groups"]],
-        ensembl_version = metadata(object)[["ensembl_version"]],
         genome_build = metadata(object)[["genome_build"]],
-        annotable = metadata(object)[["annotable"]])
+        annotable = metadata(object)[["annotable"]],
+        ensembl_version = metadata(object)[["ensembl_version"]],
+        umi_type = metadata(object)[["umi_type"]],
+        multiplexed_fastq = metadata(object)[["multiplexed_fastq"]])
 
     # SummarizedExperiment ====
     se <- packageSE(
