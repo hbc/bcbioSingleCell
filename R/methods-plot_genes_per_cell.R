@@ -84,7 +84,8 @@
 #' @rdname plot_genes_per_cell
 #' @usage NULL
 .plot_genes_per_cell <- function(object, min, max) {
-    plot_grid(.plot_genes_per_cell_histogram(object, min, max),
+    plot_grid(.plot_genes_per_cell_histogram(object, min, max) +
+                  theme(legend.position = "none"),
               .plot_genes_per_cell_boxplot(object, min, max),
               labels = "auto",
               nrow = 2L)
