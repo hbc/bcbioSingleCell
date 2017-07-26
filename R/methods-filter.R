@@ -83,7 +83,6 @@ setMethod("filter", "bcbioSCDataSet", function(
 
     # Metadata ====
     old_meta <- metadata(object) %>%
-        as("SimpleList") %>%
         .[c("pipeline",
             "sample_metadata",
             "interesting_groups",
@@ -92,7 +91,7 @@ setMethod("filter", "bcbioSCDataSet", function(
             "ensembl_version",
             "umi_type",
             "multiplexed_fastq")]
-    new_meta <- SimpleList(
+    new_meta <- list(
         filtering_criteria = c(
             min_umis = min_umis,
             min_genes = min_genes,
