@@ -190,10 +190,10 @@ load_run <- function(
         cb_tbl <- .bind_cellular_barcodes(cellular_barcodes) %>%
             mutate(cellular_barcode = NULL,
                    sample_id = NULL)
-        metrics %>%
+        metrics <- metrics %>%
             as.data.frame %>%
             rownames_to_column %>%
-            left_join(cb_tbl) %>%
+            left_join(cb_tbl, by = "rowname") %>%
             tidy_select("reads", everything()) %>%
             column_to_rownames %>%
             as.matrix
