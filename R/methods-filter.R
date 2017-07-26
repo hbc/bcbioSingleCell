@@ -97,8 +97,7 @@ setMethod("filter", "bcbioSCDataSet", function(
             min_genes = min_genes,
             max_genes = max_genes,
             max_mito_ratio = max_mito_ratio,
-            min_novelty = min_novelty),
-        source_object = deparse(substitute(object)))
+            min_novelty = min_novelty))
     metadata <- c(old_meta, new_meta) %>% as("SimpleList")
 
     # SummarizedExperiment ====
