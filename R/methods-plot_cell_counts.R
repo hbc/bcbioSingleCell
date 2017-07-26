@@ -15,17 +15,19 @@
         summarise(cells = n()) %>%
         left_join(sample_metadata(object), by = "sample_id")
     interesting_group <- interesting_groups(object)[[1L]]
-    ggplot(
-        cell_counts,
-        aes_(x = ~sample_name,
-             y = ~cells,
-             fill = as.name(interesting_group))) +
+    p <- ggplot(cell_counts,
+                aes_(x = ~sample_name,
+                     y = ~cells,
+                     fill = as.name(interesting_group))) +
         labs(x = "sample",
              y = "cell count") +
-        facet_wrap(~file_name) +
         geom_bar(stat = "identity") +
         geom_text(vjust = -0.5, aes_(label = ~cells)) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+        p <- p + facet_wrap(~file_name)
+    }
+    p
 }
 
 

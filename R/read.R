@@ -10,7 +10,7 @@
 #' @export
 read_known_markers <- function(markers_file, genome_build, show = TRUE) {
     annotable <- annotable(genome_build)
-    markers <- read_file_by_extension(markers_file) %>%
+    markers <- readFileByExtension(markers_file) %>%
         snake %>%
         left_join(annotable, by = "symbol") %>%
         filter(!is.na(.data[["ensgene"]])) %>%

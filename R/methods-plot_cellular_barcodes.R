@@ -29,38 +29,32 @@
         stop("Cellular barcode reads not saved in object")
     }
     interesting_group <- interesting_groups(object)[[1L]]
-    sample_metadata <- sample_metadata(object) %>%
+    meta <- sample_metadata(object) %>%
         tidy_select(unique(c("file_name",
                              "sample_id",
                              "sample_name",
                              interesting_group)))
     cellular_barcodes %>%
         .bind_cellular_barcodes %>%
-        # Separate the cellular barcode with unique character (dot)
-        mutate(cellular_barcode = str_replace(
-            .data[["cellular_barcode"]],
-            "_([acgt]{8}_[acgt]{8})$", ".\\1")) %>%
-        separate_(col = "cellular_barcode",
-                  into = c("sample_id", "cellular_barcode"),
-                  sep = "\\.") %>%
         mutate(log10_reads = log10(.data[["reads"]]),
                reads = NULL) %>%
         # Only plot barcodes with at least 100 reads (log10 = 2)
         filter(.data[["log10_reads"]] > 2L) %>%
-        left_join(sample_metadata, by = "sample_id")
+        left_join(meta, by = "sample_id")
 }
 
 
 
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_raw_violin <- function(plot_cb_tbl, cb_cutoff_line) {
-    ggplot(
-        plot_cb_tbl,
-        aes_(x = ~sample_name,
-             y = ~log10_reads,
-             fill = ~sample_name)) +
-        facet_wrap(~file_name) +
+.plot_cb_raw_violin <- function(
+    plot_cb_tbl,
+    cb_cutoff_line,
+    multiplexed_fastq) {
+    p <- ggplot(plot_cb_tbl,
+           aes_(x = ~sample_name,
+                y = ~log10_reads,
+                fill = ~sample_name)) +
         geom_violin(scale = "width") +
         geom_hline(alpha = qc_line_alpha,
                    color = qc_fail_color,
@@ -71,26 +65,28 @@
                    size = qc_line_size,
                    yintercept = cb_cutoff_line) +
         labs(title = "raw violin",
-             x = "",
              y = "log10 reads per cell") +
-        coord_flip() +
-        theme(legend.position = "none")
+        coord_flip()
+    if (isTRUE(multiplexed_fastq)) {
+        p <- p + facet_wrap(~file_name)
+    }
+    p
 }
 
 
 
 #' @rdname plot_cellular_barcodes
 #' @usage NULL
-.plot_cb_raw_histogram <- function(plot_cb_tbl, cb_cutoff_line) {
-    ggplot(
-        plot_cb_tbl,
-        aes_(x = ~log10_reads,
-             fill = ~sample_name)) +
+.plot_cb_raw_histogram <- function(
+    plot_cb_tbl,
+    cb_cutoff_line,
+    multiplexed_fastq) {
+    p <- ggplot(plot_cb_tbl,
+           aes_(x = ~log10_reads,
+                fill = ~sample_name)) +
         labs(title = "raw histogram",
-             x = "log10 reads per cell",
-             y = "") +
-        facet_wrap(~file_name) +
-        geom_histogram(bins = 100L) +
+             x = "log10 reads per cell") +
+        geom_histogram(bins = bins) +
         scale_y_sqrt() +
         geom_vline(alpha = qc_line_alpha,
                    color = qc_fail_color,
@@ -99,10 +95,11 @@
         geom_vline(alpha = qc_line_alpha,
                    color = qc_pass_color,
                    size = qc_line_size,
-                   xintercept = cb_cutoff_line) +
-        theme(axis.text.y = element_blank(),
-              axis.ticks.y = element_blank(),
-              legend.position = "none")
+                   xintercept = cb_cutoff_line)
+    if (isTRUE(multiplexed_fastq)) {
+        p <- p + facet_wrap(~file_name)
+    }
+    p
 }
 
 
@@ -111,11 +108,10 @@
 #' @usage NULL
 .plot_cb_proportional_histogram <- function(object) {
     cb_cutoff_line <- .cb_cutoff_line(object)
-    ggplot(.proportional_cb(object),
+    p <- ggplot(.proportional_cb(object),
            aes_(x = ~log10_reads_per_cell,
                 y = ~proportion_of_cells * 100L,
                 color = ~sample_name)) +
-        facet_wrap(~file_name) +
         geom_line() +
         geom_vline(alpha = qc_line_alpha,
                    color = qc_fail_color,
@@ -127,8 +123,11 @@
                    xintercept = cb_cutoff_line) +
         labs(title = "proportional histogram",
              x = "log10 reads per cell",
-             y = "% of cells") +
-        theme(legend.position = "bottom")
+             y = "% of cells")
+    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+        p <- p + facet_wrap(~file_name)
+    }
+    p
 }
 
 
@@ -139,15 +138,27 @@ setMethod("plot_cellular_barcodes", "bcbioSCDataSet", function(object) {
     # Use defined plot_cb_tbl here for improved speed
     plot_cb_tbl <- .plot_cb_tbl(object)
     cb_cutoff_line <- .cb_cutoff_line(object)
+    multiplexed_fastq <- metadata(object)[["multiplexed_fastq"]]
     ggdraw() +
         # Coordinates are relative to lower left corner
         draw_plot(
-            .plot_cb_raw_violin(plot_cb_tbl, cb_cutoff_line),
+            .plot_cb_raw_violin(plot_cb_tbl,
+                                cb_cutoff_line,
+                                multiplexed_fastq) +
+                xlab("") +
+                theme(legend.position = "none"),
             x = 0L, y = 0.7, width = 0.5, height = 0.3) +
         draw_plot(
-            .plot_cb_raw_histogram(plot_cb_tbl, cb_cutoff_line),
+            .plot_cb_raw_histogram(plot_cb_tbl,
+                                   cb_cutoff_line,
+                                   multiplexed_fastq) +
+                ylab("") +
+                theme(axis.text.y = element_blank(),
+                      axis.ticks.y = element_blank(),
+                      legend.position = "none"),
             x = 0.5, y = 0.7, width = 0.5, height = 0.3) +
         draw_plot(
-            .plot_cb_proportional_histogram(object),
+            .plot_cb_proportional_histogram(object) +
+                theme(legend.position = "bottom"),
             x = 0L, y = 0L, width = 1L, height = 0.7)
 })

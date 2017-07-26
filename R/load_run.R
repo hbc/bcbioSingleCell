@@ -120,6 +120,9 @@ load_run <- function(
                 stop("Genome detection from bcbio commands failed")
             }
         }
+        if (length(genome_build) > 1L) {
+            stop("Multiple genomes detected -- not supported")
+        }
 
         # Molecular barcode (UMI) type ----
         umi_pattern <- "/umis/([a-z0-9\\-]+)\\.json"
@@ -138,7 +141,7 @@ load_run <- function(
         if (!is.null(well_metadata_file)) {
             well_metadata_file <- normalizePath(well_metadata_file)
         }
-        well_metadata <- read_file_by_extension(well_metadata_file)
+        well_metadata <- readFileByExtension(well_metadata_file)
 
         # tx2gene ----
         if (is.null(tx2gene)) {
@@ -151,10 +154,11 @@ load_run <- function(
         # Get genome build from sample_dirs
         genome_build <- basename(sample_dirs) %>% unique
         if (length(genome_build) > 1L) {
-            stop("Multiple genomes detected in cellranger samples")
+            stop("Multiple genomes detected -- not supported")
         }
         umi_type <- "chromium"
     }
+
     message(paste("UMI type:", umi_type))
 
 
@@ -177,26 +181,31 @@ load_run <- function(
     }) %>%
         set_names(names(sample_dirs))
     sparse_counts <- do.call(cBind, sparse_list)
-    rm(sparse_list)
 
 
     # Column data ====
     metrics <- .calculate_metrics(sparse_counts, annotable)
     if (pipeline == "bcbio") {
-        # Add reads per cellular barcode to bcbio-nextgen metrics
-        cb_df <- .bind_cellular_barcodes(cellular_barcodes) %>%
-            filter(.data[["cellular_barcode"]] %in% rownames(metrics))
+        # Add reads per cellular barcode to metrics
+        cb_tbl <- .bind_cellular_barcodes(cellular_barcodes) %>%
+            mutate(cellular_barcode = NULL,
+                   sample_id = NULL)
         metrics <- metrics %>%
             as.data.frame %>%
-            rownames_to_column("cellular_barcode") %>%
-            left_join(cb_df, by = "cellular_barcode") %>%
+            rownames_to_column %>%
+            left_join(cb_tbl, by = "rowname") %>%
             tidy_select("reads", everything()) %>%
-            column_to_rownames("cellular_barcode") %>%
+            column_to_rownames %>%
             as.matrix
     }
 
 
     # Metadata ====
+    if (umi_type == "indrop") {
+        multiplexed_fastq <- TRUE
+    } else {
+        multiplexed_fastq <- FALSE
+    }
     metadata <- SimpleList(
         pipeline = pipeline,
         upload_dir = upload_dir,
@@ -208,7 +217,8 @@ load_run <- function(
         annotable = annotable,
         ensembl_version = ensemblVersion(),
         umi_type = umi_type,
-        all_samples = all_samples)
+        all_samples = all_samples,
+        multiplexed_fastq = multiplexed_fastq)
     if (pipeline == "bcbio") {
         bcbio_metadata <- SimpleList(
             project_dir = project_dir,

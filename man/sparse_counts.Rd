@@ -8,7 +8,7 @@
 \usage{
 .sparse_counts(sample_dir, pipeline = "bcbio")
 
-.sparse_counts_tx2gene(tx_sparse_counts, tx2gene)
+.sparse_counts_tx2gene(sparse_counts, tx2gene)
 
 .strip_transcript_versions(sparse_counts)
 }

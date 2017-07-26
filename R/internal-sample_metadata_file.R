@@ -17,45 +17,56 @@
 .sample_metadata_file <- function(
     file,
     sample_dirs,
-    pipeline,
-    unique_names = FALSE) {
-    meta <- read_file_by_extension(file) %>% snake
+    pipeline) {
+    meta <- readFileByExtension(file) %>% snake
 
-    # Check file integrity
     if (pipeline == "bcbio") {
-        required_cols <- c("index", "sequence", "sample_name")
-    } else if (pipeline == "cellranger") {
-        required_cols <- "sample_id"
-    } else {
-        stop("Unsupported pipeline")
-    }
-    if (!all(required_cols %in% colnames(meta))) {
-        stop(paste("Metadata file missing columns:",
-                   toString(required_cols)))
-    }
+        # Rename legacy `samplename` column, if set
+        if ("samplename" %in% colnames(meta)) {
+            meta <- rename(meta, file_name = .data[["samplename"]])
+        }
 
-    # bcbio-nextgen sample_id construction
-    if (pipeline == "bcbio") {
-        meta <- meta %>%
-            mutate(revcomp = vapply(.data[["sequence"]],
-                                    revcomp,
-                                    character(1L)))
-        # Map sample names to revcomp barcode indexes
-        if ("file_name" %in% colnames(meta)) {
+        # Rename `description` to `sample_name`, if set.
+        if ("description" %in% colnames(meta)) {
+            meta <- rename(meta, sample_name = .data[["description"]])
+        }
+
+        # Check for general required columns
+        if (!all(c("file_name", "sample_name") %in% colnames(meta))) {
+            stop("`file_name` and `sample_name` are required")
+        }
+
+        # Check if samples are demultiplexed
+        if (length(unique(meta[["file_name"]])) == nrow(meta)) {
+            # SureCell
+            demultiplexed <- TRUE
+        } else {
+            # inDrop
+            demultiplexed <- FALSE
+        }
+
+        if (isTRUE(demultiplexed)) {
+            meta[["sample_id"]] <- meta[["sample_name"]]
+        } else {
+            # Match the UMI demultiplexed sample directories (e.g. inDrop)
+            if (!"sequence" %in% colnames(meta)) {
+                stop("Index i7 sequence required to generate `sample_id`")
+            }
             meta <- meta %>%
-                mutate(sample_id = paste(.data[["file_name"]],
+                mutate(revcomp = vapply(.data[["sequence"]],
+                                        revcomp,
+                                        character(1L)),
+                       sample_id = paste(.data[["file_name"]],
                                          .data[["revcomp"]],
                                          sep = "_"))
-        } else {
-            revcomp_matches <- pull(meta, "revcomp")
-            sample_matches <- basename(sample_dirs) %>%
-                str_match("(.*)-([ACGT]+)$") %>%
-                as("tibble") %>%
-                set_colnames(c("sample_id", "file_name", "revcomp")) %>%
-                filter(.data[["revcomp"]] %in% syms(revcomp_matches))
-            meta <- suppressWarnings(
-                full_join(meta, sample_matches, by = "revcomp"))
         }
+    } else if (pipeline == "cellranger") {
+        if (!"file_name" %in% colnames(meta)) {
+            stop("Required `file_name` column missing")
+        }
+        meta[["sample_id"]] <- meta[["file_name"]]
+    } else {
+        stop("Unsupported pipeline")
     }
 
     # Ensure `sample_id` is valid name then arrange
@@ -69,35 +80,6 @@
         stop("Sample directory names don't match the sample metadata file")
     }
 
-    # Set required columns, if empty
-    if (is.null(meta[["file_name"]])) {
-        meta[["file_name"]] <- "all_samples"
-    }
-    if (is.null(meta[["sample_name"]])) {
-        meta[["sample_name"]] <- meta[["sample_id"]]
-    }
-
-    if (isTRUE(unique_names)) {
-        # Ensure unique sample names
-        if (any(duplicated(meta[["sample_name"]]))) {
-            meta[["sample_name"]] <-
-                str_c(meta[["sample_name"]], " (", meta[["file_name"]], ")")
-            if (any(duplicated(meta[["sample_name"]]))) {
-                stop("Unique sample name generation failed")
-            }
-        }
-    }
-
     # Return
-    if (pipeline == "bcbio") {
-        meta %>%
-            tidy_select(c(meta_priority_cols,
-                          "index",
-                          "sequence",
-                          "revcomp"),
-                        everything())
-    } else {
-        meta %>%
-            tidy_select(meta_priority_cols, everything())
-    }
+    tidy_select(meta, meta_priority_cols, everything())
 }

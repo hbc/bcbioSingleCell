@@ -20,7 +20,7 @@
     # Check that all genes are in annotable
     missing_genes <- rownames(sparse_counts) %>%
         .[!rownames(sparse_counts) %in% annotable[["ensgene"]]]
-    if (!is.null(missing_genes)) {
+    if (length(missing_genes) > 0L) {
         warning(paste(length(missing_genes), "missing genes"))
     }
 
@@ -52,10 +52,10 @@
                    .data[["mito_counts"]] /
                    .data[["umi_counts"]])
 
-    # Apply cellular barcode pre-filtering, if desired
+    # Apply low stringency cellular barcode pre-filtering, if desired
     if (isTRUE(prefilter)) {
         metrics <- metrics %>%
-            filter(.data[["umi_counts"]] >= 500L,
+            filter(.data[["umi_counts"]] > 0L,
                    .data[["genes_detected"]] > 0L,
                    .data[["coding_counts"]] > 0L,
                    !is.na(.data[["log10_genes_per_umi"]]))

@@ -10,18 +10,20 @@
 #' @usage NULL
 .plot_umis_vs_genes <- function(object) {
     metrics <- metrics(object)
-    ggplot(
-        metrics,
+    p <- ggplot(metrics,
         aes_(x = ~umi_counts,
              y = ~genes_detected,
              color = ~sample_name)) +
         labs(x = "umis per cell",
              y = "genes per cell") +
-        facet_wrap(~file_name) +
         geom_smooth(method = "lm", se = FALSE) +
         scale_x_log10() +
         scale_y_log10() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+        p <- p + facet_wrap(~file_name)
+    }
+    p
 }
 
 

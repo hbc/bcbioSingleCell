@@ -10,36 +10,27 @@
 #' @rdname metrics
 #' @usage NULL
 .metrics <- function(object) {
+    umi_type <- metadata(object)[["umi_type"]]
     meta <- sample_metadata(object) %>%
         tidy_select(unique(c(meta_priority_cols, interesting_groups(object))))
     col_data <- colData(object) %>%
         as.data.frame %>%
-        rownames_to_column("cellular_barcode")
-    # Sample identifier match fix
-    if (metadata(object)[["pipeline"]] == "bcbio") {
-        cb <- pull(col_data, "cellular_barcode")
-        pattern <- "^(.*)_([acgt]{8})_([acgt]{8})_([acgt]{8})$"
-        sample_ids <- str_match(cb, pattern) %>%
-            as_tibble %>%
-            set_colnames(c("cellular_barcode",
-                           "file_name",
-                           "revcomp",
-                           "cb1",
-                           "cb2")) %>%
-            mutate(sample_id = paste(
-                .data[["file_name"]],
-                .data[["revcomp"]],
-                sep = "_")) %>%
-            pull("sample_id")
-        col_data[["sample_id"]] <- sample_ids
+        rownames_to_column
+    if (umi_type == "surecell") {
+        match <- str_match(col_data[["rowname"]],
+                           "^(.+)_([acgt]{6}_[acgt]{6}_[acgt]{6})$")
     } else {
-        col_data <- col_data %>%
-            mutate(sample_id = .data[["cellular_barcode"]])
+        match <- str_match(col_data[["rowname"]],
+                           "^(.+)_([acgt]{8}_[acgt]{8})$")
     }
-
-    left_join(col_data, meta, by = "sample_id") %>%
+    match <- match %>%
         as.data.frame %>%
-        column_to_rownames("cellular_barcode")
+        set_colnames(c("rowname", "sample_id", "cellular_barcode"))
+
+    left_join(col_data, match, by = "rowname") %>%
+        left_join(meta, by = "sample_id") %>%
+        as.data.frame %>%
+        column_to_rownames
 }
 
 

@@ -82,20 +82,23 @@ setMethod("filter", "bcbioSCDataSet", function(
         set_rownames(rownames(object))
 
     # Metadata ====
-    metadata <- SimpleList(
+    old_meta <- metadata(object) %>%
+        .[c("pipeline",
+            "sample_metadata",
+            "interesting_groups",
+            "genome_build",
+            "annotable",
+            "ensembl_version",
+            "umi_type",
+            "multiplexed_fastq")]
+    new_meta <- list(
         filtering_criteria = c(
             min_umis = min_umis,
             min_genes = min_genes,
             max_genes = max_genes,
             max_mito_ratio = max_mito_ratio,
-            min_novelty = min_novelty),
-        pipeline = metadata(object)[["pipeline"]],
-        source_name = deparse(substitute(object)),
-        sample_metadata = metadata(object)[["sample_metadata"]],
-        interesting_groups = metadata(object)[["interesting_groups"]],
-        ensembl_version = metadata(object)[["ensembl_version"]],
-        genome_build = metadata(object)[["genome_build"]],
-        annotable = metadata(object)[["annotable"]])
+            min_novelty = min_novelty))
+    metadata <- c(old_meta, new_meta) %>% as("SimpleList")
 
     # SummarizedExperiment ====
     se <- packageSE(
@@ -110,11 +113,11 @@ setMethod("filter", "bcbioSCDataSet", function(
     if (isTRUE(show_report)) {
         mdHeader("Filtering parameters", level = 2L)
         mdList(c(
-            str_c("`>=", min_umis, "` UMI counts per cell"),
-            str_c("`>=", min_genes, "` genes per cell"),
-            str_c("`<=", max_genes, "` genes per cell"),
-            str_c("`<=", max_mito_ratio, "` mitochondrial abundance ratio"),
-            str_c("`>=", min_novelty, "` novelty score")))
+            str_c("`>= ", min_umis, "` UMI counts per cell"),
+            str_c("`>= ", min_genes, "` genes per cell"),
+            str_c("`<= ", max_genes, "` genes per cell"),
+            str_c("`<= ", max_mito_ratio, "` relative mitochondrial abundance"),
+            str_c("`>= ", min_novelty, "` novelty score")))
 
         mdHeader("Filtered metrics plots {.tabset}", level = 2L)
 
