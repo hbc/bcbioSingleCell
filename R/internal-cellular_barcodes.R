@@ -76,5 +76,8 @@
         list[[a]] %>%
             mutate(sample_id = !!sample_id)
     }) %>%
-        bind_rows
+        bind_rows %>%
+        mutate(rowname = str_c(.data[["sample_id"]],
+                               .data[["cellular_barcode"]],
+                               sep = "_"))
 }
