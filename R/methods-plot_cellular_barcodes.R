@@ -65,10 +65,8 @@
                    size = qc_line_size,
                    yintercept = cb_cutoff_line) +
         labs(title = "raw violin",
-             x = "",
              y = "log10 reads per cell") +
-        coord_flip() +
-        theme(legend.position = "none")
+        coord_flip()
     if (isTRUE(multiplexed_fastq)) {
         p <- p + facet_wrap(~file_name)
     }
@@ -87,8 +85,7 @@
            aes_(x = ~log10_reads,
                 fill = ~sample_name)) +
         labs(title = "raw histogram",
-             x = "log10 reads per cell",
-             y = "") +
+             x = "log10 reads per cell") +
         geom_histogram(bins = bins) +
         scale_y_sqrt() +
         geom_vline(alpha = qc_line_alpha,
@@ -98,10 +95,7 @@
         geom_vline(alpha = qc_line_alpha,
                    color = qc_pass_color,
                    size = qc_line_size,
-                   xintercept = cb_cutoff_line) +
-        theme(axis.text.y = element_blank(),
-              axis.ticks.y = element_blank(),
-              legend.position = "none")
+                   xintercept = cb_cutoff_line)
     if (isTRUE(multiplexed_fastq)) {
         p <- p + facet_wrap(~file_name)
     }
@@ -129,8 +123,7 @@
                    xintercept = cb_cutoff_line) +
         labs(title = "proportional histogram",
              x = "log10 reads per cell",
-             y = "% of cells") +
-        theme(legend.position = "bottom")
+             y = "% of cells")
     if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
         p <- p + facet_wrap(~file_name)
     }
@@ -151,14 +144,21 @@ setMethod("plot_cellular_barcodes", "bcbioSCDataSet", function(object) {
         draw_plot(
             .plot_cb_raw_violin(plot_cb_tbl,
                                 cb_cutoff_line,
-                                multiplexed_fastq),
+                                multiplexed_fastq) +
+                xlab("") +
+                theme(legend.position = "none"),
             x = 0L, y = 0.7, width = 0.5, height = 0.3) +
         draw_plot(
             .plot_cb_raw_histogram(plot_cb_tbl,
                                    cb_cutoff_line,
-                                   multiplexed_fastq),
+                                   multiplexed_fastq) +
+                ylab("") +
+                theme(axis.text.y = element_blank(),
+                      axis.ticks.y = element_blank(),
+                      legend.position = "none"),
             x = 0.5, y = 0.7, width = 0.5, height = 0.3) +
         draw_plot(
-            .plot_cb_proportional_histogram(object),
+            .plot_cb_proportional_histogram(object) +
+                theme(legend.position = "bottom"),
             x = 0L, y = 0L, width = 1L, height = 0.7)
 })
