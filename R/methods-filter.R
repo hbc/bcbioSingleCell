@@ -113,11 +113,11 @@ setMethod("filter", "bcbioSCDataSet", function(
     if (isTRUE(show_report)) {
         mdHeader("Filtering parameters", level = 2L)
         mdList(c(
-            str_c("`>=", min_umis, "` UMI counts per cell"),
-            str_c("`>=", min_genes, "` genes per cell"),
-            str_c("`<=", max_genes, "` genes per cell"),
-            str_c("`<=", max_mito_ratio, "` relative mitochondrial abundance"),
-            str_c("`>=", min_novelty, "` novelty score")))
+            str_c("`>= ", min_umis, "` UMI counts per cell"),
+            str_c("`>= ", min_genes, "` genes per cell"),
+            str_c("`<= ", max_genes, "` genes per cell"),
+            str_c("`<= ", max_mito_ratio, "` relative mitochondrial abundance"),
+            str_c("`>= ", min_novelty, "` novelty score")))
 
         mdHeader("Filtered metrics plots {.tabset}", level = 2L)
 
