@@ -25,7 +25,7 @@ plot_mito_ratio(object, ...)
 \item{max}{Recommended maximum value cutoff.}
 }
 \value{
-\link{ggplot}.
+\link{ggplot} grid.
 }
 \description{
 Plot Mitochondrial Transcript Abundance

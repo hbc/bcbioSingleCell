@@ -10,6 +10,9 @@ downloads(file = NULL)
 \item{file}{File name. If \code{NULL} (default), download the default dependency
 files for a consult.}
 }
+\value{
+No return.
+}
 \description{
 If file isn't present, download latest version from the
 \href{http://bioinformatics.sph.harvard.edu/}{HBC website}.

@@ -10,6 +10,8 @@
 \usage{
 bcbio(object, ...)
 
+bcbio(object, ...) <- value
+
 \S4method{bcbio}{bcbioSCDataSet}(object, type = "counts")
 
 \S4method{bcbio}{bcbioSCDataSet}(object, type = "counts") <- value
@@ -19,7 +21,7 @@ bcbio(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{value}{An integer matrix or other object.}
+\item{value}{Object to assign.}
 
 \item{type}{Type of count data to retrieve.}
 }

@@ -5,7 +5,6 @@
 #'
 #' @param object Primary object.
 #' @param type Type of count data to retrieve.
-#' @param value An integer matrix or other object.
 #'
 #' @return Matrix or object containing count data.
 #' @export

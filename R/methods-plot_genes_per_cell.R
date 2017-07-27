@@ -6,7 +6,7 @@
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #'
-#' @return [ggplot].
+#' @return [ggplot] grid.
 
 
 

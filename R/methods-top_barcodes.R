@@ -23,6 +23,8 @@
 #' @export
 setMethod("top_barcodes", "bcbioSCDataSet", .top_barcodes)
 
+
+
 #' @rdname top_barcodes
 #' @export
 setMethod("top_barcodes", "bcbioSCSubset", .top_barcodes)

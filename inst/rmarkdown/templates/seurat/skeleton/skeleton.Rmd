@@ -172,7 +172,7 @@ seurat <- RunTSNE(
 ```
 
 ```{r save_seurat}
-assign_and_save_data(paste0(subset_name, "_seurat"), seurat)
+assignAndSaveData(paste0(subset_name, "_seurat"), seurat)
 ```
 
 ```{r TSNEPlot}
@@ -229,7 +229,7 @@ markers <- FindAllMarkers(seurat, only.pos = TRUE)
 ```
 
 ```{r save_markers}
-assign_and_save_data(paste0(subset_name, "_markers"), markers)
+assignAndSaveData(paste0(subset_name, "_markers"), markers)
 dir.create(markers_dir, recursive = TRUE, showWarnings = FALSE)
 write_csv(markers,
           file.path(markers_dir, paste0(subset_name, ".csv.gz")))

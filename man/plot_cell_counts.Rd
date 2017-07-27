@@ -20,7 +20,7 @@ plot_cell_counts(object, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\link{ggplot}.
+\link{ggplot} grid.
 }
 \description{
 Plot Cell Counts

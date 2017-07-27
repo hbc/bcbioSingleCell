@@ -24,7 +24,7 @@ plot_umis_per_cell(object, ...)
 \item{min}{Recommended minimum value cutoff.}
 }
 \value{
-\link{ggplot}.
+\link{ggplot} grid.
 }
 \description{
 Plot the universal molecular identifiers (UMIs) per cell.

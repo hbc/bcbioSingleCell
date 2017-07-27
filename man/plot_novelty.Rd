@@ -24,7 +24,7 @@ plot_novelty(object, ...)
 \item{min}{Recommended minimum value cutoff.}
 }
 \value{
-\link{ggplot}.
+\link{ggplot} grid.
 }
 \description{
 Plot Novelty Score
