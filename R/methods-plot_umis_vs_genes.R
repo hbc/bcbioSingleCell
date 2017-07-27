@@ -3,6 +3,8 @@
 #' @rdname plot_umis_vs_genes
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit plot_genes_per_cell
+#'
+#' @return [ggplot].
 
 
 
