@@ -27,7 +27,7 @@ plot_genes_per_cell(object, ...)
 \item{max}{Recommended maximum value cutoff.}
 }
 \value{
-\link{ggplot}.
+\link{ggplot} grid.
 }
 \description{
 Plot Genes per Cell
