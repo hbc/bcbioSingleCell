@@ -47,7 +47,7 @@ Suggests:
     lintr,
     testthat
 Remotes:
-    satijalab/seurat@develop,
+    satijalab/seurat,
     steinbaugh/basejump
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
