@@ -144,14 +144,14 @@ plot_novelty(bcb, min = params$min_novelty)
 # Filter cellular barcodes
 
 ```{r filtered, fig.height=12, fig.width=8, results="asis"}
-bcb_filtered <- filter(
+bcb_filtered <- filter_cells(
     bcb,
     min_umis = params$min_umis,
     min_genes = params$min_genes,
     max_genes = params$max_genes,
     max_mito_ratio = params$max_mito_ratio,
     min_novelty = params$min_novelty)
-save_data(bcb_filtered)
+saveData(bcb_filtered)
 ```
 
 
