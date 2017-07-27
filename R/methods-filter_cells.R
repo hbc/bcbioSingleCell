@@ -1,9 +1,9 @@
-#' Filter Cellular Barcodes
+#' Filter Cells
 #'
 #' Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 #' cellular barcodes.
 #'
-#' @rdname filter
+#' @rdname filter_cells
 #' @author Michael Steinbaugh
 #'
 #' @param min_umis Minimum number of UMI disambiguated counts per cell.
@@ -15,7 +15,7 @@
 #'
 #' @return [bcbioSCSubset].
 #' @export
-setMethod("filter", "bcbioSCDataSet", function(
+setMethod("filter_cells", "bcbioSCDataSet", function(
     object,
     min_umis = 1000L,
     min_genes = 500L,
