@@ -12,16 +12,6 @@ Authors@R: c(
            email = "bioinformatics@hsph.harvard.edu",
            role = c("cph", "fnd")))
 Description: Import and analyze bcbio single-cell RNA-seq data.
-biocViews:
-    DataImport,
-    DataRepresentation,
-    GeneExpression,
-    Infrastructure,
-    QualityControl,
-    ReportWriting,
-    RNASeq,
-    SingleCell,
-    Visualization
 URL:
     http://bioinformatics.sph.harvard.edu/bcbioSinglecell,
     https://github.com/hbc/bcbioSinglecell
@@ -49,5 +39,15 @@ Suggests:
 Remotes:
     satijalab/seurat,
     steinbaugh/basejump
+biocViews:
+    DataImport,
+    DataRepresentation,
+    GeneExpression,
+    Infrastructure,
+    QualityControl,
+    ReportWriting,
+    RNASeq,
+    SingleCell,
+    Visualization
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1

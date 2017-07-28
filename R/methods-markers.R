@@ -2,7 +2,7 @@
 .seurat_markers <- function(df) {
     df %>%
         remove_rownames %>%
-        as_tibble %>%
+        as("tibble") %>%
         snake %>%
         rename(symbol = .data[["gene"]]) %>%
         tidy_select(c("cluster", "symbol"), everything()) %>%

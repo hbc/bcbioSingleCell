@@ -14,6 +14,8 @@
   format = "dgCMatrix")
 }
 \arguments{
+\item{object}{Object.}
+
 \item{gene2symbol}{Convert Ensembl gene identifiers (rownames) to gene
 symbols. Recommended for passing counts to Seurat.}
 

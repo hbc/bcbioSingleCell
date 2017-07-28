@@ -1,6 +1,7 @@
 #' Counts Accessor
 #'
 #' @rdname counts
+#' @inheritParams all_generics
 #'
 #' @author Michael Steinbaugh
 #'
