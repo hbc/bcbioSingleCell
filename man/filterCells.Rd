@@ -3,6 +3,7 @@
 \docType{methods}
 \name{filterCells}
 \alias{filterCells}
+\alias{filterCells}
 \alias{filterCells,bcbioSCDataSet-method}
 \title{Filter Cells}
 \usage{
