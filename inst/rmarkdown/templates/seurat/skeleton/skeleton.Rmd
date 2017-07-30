@@ -1,13 +1,13 @@
 ---
-title: "Seurat clustering"
+title: "Seurat Clustering"
 author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    subset_name: sample_name
-    pc_compute: 20
-    pc_use: 10
-    markers_dir: !r file.path("results", "markers")
+    subsetName: sampleName
+    pcCompute: 20
+    pcUse: 10
+    outputDir: "."
 ---
 
 ```{r setup, cache=FALSE, include=FALSE}
@@ -15,37 +15,38 @@ bcbioSinglecell::downloads()
 source("setup.R")
 library(Seurat)
 
-# Get SCSubset object
-subset_name <- params$subset_name
-if (is.null(subset_name)) {
+# Get bcbioSCSubset object
+subsetName <- params$subsetName
+if (is.null(subsetName)) {
     stop("Subset name is required")
 }
-data(list = subset_name)
-subset <- get(subset_name)
+data(list = subsetName)
+subset <- get(subsetName)
 if (class(subset) != "SCSubset") {
     stop("Subset must be S4 SCSubset class object")
 }
-genome_build <- metadata(subset)[["genome_build"]]
+genomeBuild <- metadata(subset)[["genomeBuild"]]
 
 # Principal components
-pc_compute <- params$pc_compute
-if (pc_compute > 30) {
+pcCompute <- params$pcCompute
+if (pcCompute > 30) {
     warning("Computation of > 30 PCs is not recommended")
 }
-pc_use <- params$pc_use
-if (pc_use > 25) {
+pcUse <- params$pcUse
+if (pcUse > 25) {
     warning("Usage of > 25 PCs for analysis is not recommended")
 }
 
 # Directory paths
-markers_dir <- params$markers_dir
+markersDir <- normalizePath(outputDir) %>%
+    file.path("results", "markers")
 
 # knitr arguments
 opts_chunk$set(
     cache = TRUE,
     cache.lazy = FALSE,
-    cache.path = paste0(subset_name, "_cache/"),
-    fig.path = paste0(subset_name, "_files/"),
+    cache.path = paste0(subsetName, "_cache/"),
+    fig.path = paste0(subsetName, "_files/"),
     results = "asis")
 ```
 
@@ -54,7 +55,7 @@ opts_chunk$set(
 
 
 
-# Initialize Seurat (`r subset_name`)
+# Initialize Seurat (`r subsetName`)
 
 Let's convert our `SCSubset` object containing the filtered cellular barcodes into a `seurat` object. This step uses [Seurat][]'s `Setup()` function with the same filtering cutoffs applied during our initial quality control analysis. Here we are imposing a basic minimum gene-cutoff, but also filtering low quality cells that have a high mitochondrial gene abundance. During this step, [Seurat][] applies log normalization to the counts, first scaling each cell to a total of 1e4 molecules [@Drop-seq], and only keeps genes expressed in >= 3 cells.
 
@@ -109,7 +110,7 @@ Run PCA using `PCAFast()` on the scaled data. By default, the genes in `seurat@v
 
 ```{r PCA}
 seurat <- seurat %>%
-    PCAFast(pcs.compute = pc_compute, do.print = FALSE) %>%
+    PCAFast(pcs.compute = pcCompute, do.print = FALSE) %>%
     ProjectPCA(do.print = FALSE)
 ```
 
@@ -130,7 +131,7 @@ PCHeatmap(seurat,
 # All PCs used
 PCHeatmap(seurat,
           do.balanced = TRUE,
-          pc.use = 1:pc_use)
+          pc.use = 1:pcUse)
 ```
 
 
@@ -140,13 +141,13 @@ PCHeatmap(seurat,
 To overcome the extensive technical noise in any single gene for scRNA-seq data, [Seurat][] clusters cells based on their PCA scores, with each PC essentially representing a "metagene" that combines information across a correlated gene set. Determining how many PCs to include downstream is therefore an important step. To accomplish this, we plot the standard deviation ("singular value" for `PCAFast()`) of each PC as an elbow plot with `PCElbowPlot()`.
 
 ```{r PCElbowPlot}
-PCElbowPlot(seurat, num.pc = pc_compute) +
+PCElbowPlot(seurat, num.pc = pcCompute) +
     ggtitle("pc elbow plot") +
     geom_line() +
     geom_vline(alpha = 0.5,
                color = "green",
                size = 2,
-               xintercept = pc_use)
+               xintercept = pcUse)
 ```
 
 
@@ -159,7 +160,7 @@ Here we will use the selected PCs to find clusters of cells via heirarchical clu
 seurat <- FindClusters(
     seurat,
     do.sparse = TRUE,
-    pc.use = 1:pc_use,
+    pc.use = 1:pcUse,
     print.output = FALSE,
     save.SNN = TRUE)
 ```
@@ -167,12 +168,12 @@ seurat <- FindClusters(
 ```{r RunTSNE}
 seurat <- RunTSNE(
     seurat,
-    dims.use = 1:pc_use,
+    dims.use = 1:pcUse,
     do.fast = TRUE)
 ```
 
-```{r save_seurat}
-assignAndSaveData(paste0(subset_name, "_seurat"), seurat)
+```{r saveSeurat}
+assignAndSaveData(paste0(subsetName, "_seurat"), seurat)
 ```
 
 ```{r TSNEPlot}
@@ -228,18 +229,18 @@ Seurat has four tests for differential expression which can be set with the `tes
 markers <- FindAllMarkers(seurat, only.pos = TRUE)
 ```
 
-```{r save_markers}
-assignAndSaveData(paste0(subset_name, "_markers"), markers)
-dir.create(markers_dir, recursive = TRUE, showWarnings = FALSE)
+```{r saveMarkers}
+assignAndSaveData(paste0(subsetName, "_markers"), markers)
+dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 write_csv(markers,
-          file.path(markers_dir, paste0(subset_name, ".csv.gz")))
+          file.path(markersDir, paste0(subsetName, ".csv.gz")))
 ```
 
 
 ## Top markers per cluster
 
-```{r top_markers}
-top_markers <- top_markers(markers)
+```{r topMarkers}
+topMarkers <- topMarkers(markers)
 ```
 
 
@@ -252,7 +253,7 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 
 ```{r DoHeatmap, fig.height=12, fig.width=12}
 DoHeatmap(seurat,
-          genes.use = top_markers$symbol,
+          genes.use = topMarkers$symbol,
           order.by.ident = TRUE,
           remove.key = TRUE,
           slim.col.label = TRUE,
@@ -268,8 +269,8 @@ There are several tools for visualizing marker expression. `VlnPlot()` generates
 
 ## Top markers per cluster
 
-```{r plot_top_markers, fig.height=12, fig.width=12}
-plot_top_markers(seurat, top_markers)
+```{r plotTopMarkers, fig.height=12, fig.width=12}
+plotTopMarkers(seurat, topMarkers)
 ```
 
 
@@ -278,9 +279,9 @@ plot_top_markers(seurat, top_markers)
 
 ## Load known markers
 
-```{r known_markers}
-known_markers <- file.path("meta", "known_markers.xlsx") %>%
-    read_known_markers(genome_build)
+```{r knownMarkers}
+knownMarkers <- file.path("meta", "known_markers.xlsx") %>%
+    readKnownMarkers(genomeBuild)
 ```
 
 
@@ -288,15 +289,15 @@ known_markers <- file.path("meta", "known_markers.xlsx") %>%
 
 Let's obtain the statistics on our known marker genes from [Seurat][].
 
-```{r known_markers_detected}
-known_markers_detected <- known_markers_detected(markers, known_markers)
+```{r knownMarkersDetected}
+knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers)
 ```
 
 
 ## Visualize cluster specificity
 
-```{r plot_known_markers, fig.height=12, fig.width=12}
-plot_known_markers(seurat, known_markers_detected)
+```{r plotKnownMarkers, fig.height=12, fig.width=12}
+plotKnownMarkers(seurat, knownMarkersDetected)
 ```
 
 

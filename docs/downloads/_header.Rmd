@@ -1,11 +1,9 @@
 # Overview
 
-- Primary Investigator: 
-- Researcher: 
-- Experiment: 
-
-```{r metadata_table}
-metadata_table(bcb)
+```{r metadataTable}
+if (exists("bcb")) {
+    metadataTable(bcb)
+}
 ```
 
 
