@@ -32,7 +32,7 @@ downloads <- function(file = NULL) {
              "_footer.Rmd",
              "_header.Rmd",
              "bcbioSinglecell.bib",
-             "load_run.R",
+             "load.R",
              "setup.R"))
     }
 }
