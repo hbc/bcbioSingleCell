@@ -4,9 +4,9 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    subsetName: sampleName
+    subsetID: sampleID
     pcCompute: 20
-    pcUse: 10
+    pcUse: 15
     outputDir: "."
 ---
 
@@ -16,13 +16,13 @@ source("setup.R")
 library(Seurat)
 
 # Get bcbioSCSubset object
-subsetName <- params$subsetName
-if (is.null(subsetName)) {
+subsetID <- params$subsetID
+if (is.null(subsetID)) {
     stop("Subset name is required")
 }
-data(list = subsetName)
-subset <- get(subsetName)
-if (class(subset) != "SCSubset") {
+data(list = subsetID)
+subset <- get(subsetID)
+if (!is(subset, "bcbioSCSubset")) {
     stop("Subset must be S4 SCSubset class object")
 }
 genomeBuild <- metadata(subset)[["genomeBuild"]]
@@ -38,15 +38,16 @@ if (pcUse > 25) {
 }
 
 # Directory paths
-markersDir <- normalizePath(outputDir) %>%
-    file.path("results", "markers")
+markersDir <- file.path(
+    normalizePath(params$outputDir),
+    "results", "markers")
 
 # knitr arguments
 opts_chunk$set(
     cache = TRUE,
     cache.lazy = FALSE,
-    cache.path = paste0(subsetName, "_cache/"),
-    fig.path = paste0(subsetName, "_files/"),
+    cache.path = paste0(subsetID, "_cache/"),
+    fig.path = paste0(subsetID, "_files/"),
     results = "asis")
 ```
 
@@ -55,7 +56,7 @@ opts_chunk$set(
 
 
 
-# Initialize Seurat (`r subsetName`)
+# Initialize Seurat (`r subsetID`)
 
 Let's convert our `SCSubset` object containing the filtered cellular barcodes into a `seurat` object. This step uses [Seurat][]'s `Setup()` function with the same filtering cutoffs applied during our initial quality control analysis. Here we are imposing a basic minimum gene-cutoff, but also filtering low quality cells that have a high mitochondrial gene abundance. During this step, [Seurat][] applies log normalization to the counts, first scaling each cell to a total of 1e4 molecules [@Drop-seq], and only keeps genes expressed in >= 3 cells.
 
@@ -173,7 +174,7 @@ seurat <- RunTSNE(
 ```
 
 ```{r saveSeurat}
-assignAndSaveData(paste0(subsetName, "_seurat"), seurat)
+assignAndSaveData(paste0(subsetID, "_seurat"), seurat)
 ```
 
 ```{r TSNEPlot}
@@ -230,10 +231,10 @@ markers <- FindAllMarkers(seurat, only.pos = TRUE)
 ```
 
 ```{r saveMarkers}
-assignAndSaveData(paste0(subsetName, "_markers"), markers)
+assignAndSaveData(paste0(subsetID, "_markers"), markers)
 dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 write_csv(markers,
-          file.path(markersDir, paste0(subsetName, ".csv.gz")))
+          file.path(markersDir, paste0(subsetID, ".csv.gz")))
 ```
 
 
