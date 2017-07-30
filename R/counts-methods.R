@@ -34,6 +34,10 @@ NULL
             gene2symbol %>%
             .[rownames(counts), ]
         rownames(counts) <- g2s[rownames(counts), "symbol"] %>% make.unique
+        # Warn if any symbols are NA
+        if (any(is.na(rownames(counts)))) {
+            warning("NA symbols detected in counts matrix")
+        }
     }
     as(counts, class)
 }
