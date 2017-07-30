@@ -19,6 +19,7 @@
             sampleDirs <- sampleDirs %>%
                 .[!str_detect(basename(.), projectDirPattern)]
         }
+        names(sampleDirs) <- basename(sampleDirs)
     } else if (pipeline == "cellranger") {
         # Use the raw, not filtered matrices
         sampleDirs <- list.files(
@@ -27,6 +28,13 @@
             # Look for the filtered counts
             str_subset(file.path("outs", "filtered_gene_bc_matrices")) %>%
             dirname
+        # Recurse through file path to get names
+        # cellranger/SAMPLE/outs/filtered_gene_bc_matrices/GENOME"
+        names(sampleDirs) <- sampleDirs %>%
+            dirname %>%
+            dirname %>%
+            dirname %>%
+            basename
     } else {
         stop("Unsupported pipeline")
     }
@@ -35,15 +43,8 @@
     if (length(sampleDirs) == 0L) {
         stop("No sample directories detected")
     } else {
-        # Generate names from file paths
-        names <- sampleDirs %>%
-            # Strip `uploadDir`
-            str_replace(paste0(uploadDir, "/"), "") %>%
-            # Sanitize names into camelCase
-            camel
-        sampleDirs <- normalizePath(sampleDirs)
-        names(sampleDirs) <- names
         message(paste(length(sampleDirs), "samples detected"))
+        sampleDirs <- camel(sampleDirs)
     }
     sampleDirs
 }
