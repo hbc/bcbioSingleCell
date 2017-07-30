@@ -4,6 +4,7 @@
 #' cellular barcodes.
 #'
 #' @rdname filterCells
+#' @name filterCells
 #' @author Michael Steinbaugh
 #'
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
@@ -15,7 +16,12 @@
 #'
 #' @return [bcbioSCSubset].
 #' @export
-setMethod("filterCells", "bcbioSCDataSet", function(
+NULL
+
+
+
+# Constructors ====
+.filterCells <- function(
     object,
     minUMIs = 1000L,
     minGenes = 500L,
@@ -34,15 +40,15 @@ setMethod("filterCells", "bcbioSCDataSet", function(
     metrics <- metrics(object)
     if (!is.null(minUMIs)) {
         metrics <- metrics %>%
-            .[.[["umiCounts"]] >= minUMIs, ]
+            .[.[["nUMI"]] >= minUMIs, ]
     }
     if (!is.null(minGenes)) {
         metrics <- metrics %>%
-            .[.[["genesDetected"]] >= minGenes, ]
+            .[.[["nGene"]] >= minGenes, ]
     }
     if (!is.null(maxGenes)) {
         metrics <- metrics %>%
-            .[.[["genesDetected"]] <= maxGenes, ]
+            .[.[["nGene"]] <= maxGenes, ]
     }
     if (!is.null(maxMitoRatio)) {
         metrics <- metrics %>%
@@ -92,8 +98,7 @@ setMethod("filterCells", "bcbioSCDataSet", function(
 
     # SummarizedExperiment ====
     se <- packageSE(
-        assays = SimpleList(
-            sparseCounts = sparseCounts),
+        sparseCounts,
         colData = colData,
         rowData = rowData,
         metadata = metadata)
@@ -128,4 +133,11 @@ setMethod("filterCells", "bcbioSCDataSet", function(
     }
 
     object
-})
+}
+
+
+
+# Methods ====
+#' @rdname filterCells
+#' @export
+setMethod("filterCells", "bcbioSCDataSet", .filterCells)
