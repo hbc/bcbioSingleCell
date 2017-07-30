@@ -1,9 +1,13 @@
 # Seurat ====
 # [test_seurat_object.R](https://goo.gl/GMQAdC)
 setAs("bcbioSCSubset", "seurat", function(from) {
-    name <- deparse(substitute(from))
+    project <- deparse(substitute(from))
     counts <- counts(from, gene2symbol = TRUE)
-    metrics <- metrics(from) %>% dotted
+    rownames(counts) %>%
+        head(n = 10L) %>%
+        toString %>%
+        paste("Gene symbols:", ., "...") %>%
+        message
 
     # Filtering criteria
     minGenes <- metadata(from) %>%
@@ -13,10 +17,39 @@ setAs("bcbioSCSubset", "seurat", function(from) {
         .[["filteringCriteria"]] %>%
         .[["maxMitoRatio"]]
 
-    new("seurat", raw.data = counts) %>%
-        CreateSeuratObject(
-            project = name,
-            min.genes = minGenes) %>%
-        AddMetaData(metrics) %>%
-        SubsetData(subset.name = "mito.ratio", accept.high = maxMitoRatio)
+    object <- CreateSeuratObject(
+        raw.data = counts,
+        project = project,
+        min.genes = minGenes)
+
+    # Add bcbio metrics as metadata
+    metrics <- metrics(from)
+
+    # Check rowname integrity
+    if (!identical(object@cell.names, rownames(metrics))) {
+        stop("Metrics rowname mismatch with `cell.names` slot")
+    }
+
+    if (!identical(
+        as.integer(object@meta.data[["nGene"]]),
+        as.integer(metrics[["nGene"]]))) {
+        stop("Gene detection mismatch")
+    }
+    if (!identical(
+        as.integer(object@meta.data[["nUMI"]]),
+        as.integer(metrics[["nUMI"]]))) {
+        stop("UMI detection mismatch")
+    }
+
+    # Rows must correspond to `object@cell.names`
+    object <- AddMetaData(object, metrics)
+    glimpse(object@meta.data)
+
+    object <- SubsetData(
+        object,
+        subset.name = "mitoRatio",
+        accept.high = maxMitoRatio)
+    print(object)
+
+    object
 })
