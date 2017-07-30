@@ -60,11 +60,11 @@ setMethod("loadRun", "character", function(
 
     # Check to see if a subset of samples is requested via the metadata file.
     # This matches by the reverse complement sequence of the index barcode.
-    if (length(sampleMetadata[["sampleID"]]) < length(sampleDirs)) {
+    if (nrow(sampleMetadata) < length(sampleDirs)) {
         message("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
         sampleDirs <- sampleDirs %>%
-            .[names(sampleDirs) %in% sampleMetadata[["sampleID"]]]
+            .[names(sampleDirs) %in% rownames(sampleMetadata)]
         message(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
@@ -174,7 +174,7 @@ setMethod("loadRun", "character", function(
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
         sparseCounts <- .readSparseCounts(sampleDirs[a], pipeline = pipeline)
         if (pipeline == "bcbio") {
-            # Convert transcript-level to gene-level
+            # Transcript-level to gene-level counts
             sparseCounts <-
                 .sparseCountsTx2Gene(sparseCounts, tx2gene)
         }
@@ -183,7 +183,7 @@ setMethod("loadRun", "character", function(
         sparseCounts[, rownames(metrics)]
     }) %>%
         set_names(names(sampleDirs))
-    sparseCounts <- do.call(cBind, sparseList)
+    sparseCounts <- do.call(Matrix::cBind, sparseList)
 
 
     # Column data ====

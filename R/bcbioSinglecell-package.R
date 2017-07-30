@@ -35,5 +35,5 @@ qcLineSize <- 2L
 # Plot label separator
 labelSep <- ": "
 
-metaPriorityCols <- c("sampleID", "sample_name", "file_name")
+metaPriorityCols <- c("sampleID", "sampleName", "fileName")
 projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"

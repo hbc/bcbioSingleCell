@@ -19,15 +19,14 @@ NULL
         rownames_to_column
     if (umiType == "surecell") {
         match <- colData[["rowname"]] %>%
-            str_match("^(.+)_([acgt]{6}_[acgt]{6}_[acgt]{6})$")
+            str_match("^(.+)_([ACGT]{6}_[ACGT]{6}_[ACGT]{6})$")
     } else {
         match <- colData[["rowname"]] %>%
-            str_match("^(.+)_([acgt]{8}_[acgt]{8})$")
+            str_match("^(.+)_([ACGT]{8}_[ACGT]{8})$")
     }
     match <- match %>%
         as.data.frame %>%
         set_colnames(c("rowname", "sampleID", "cellularBarcode"))
-
     left_join(colData, match, by = "rowname") %>%
         left_join(meta, by = "sampleID") %>%
         as.data.frame %>%

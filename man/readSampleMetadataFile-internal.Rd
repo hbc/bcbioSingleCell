@@ -16,7 +16,7 @@
 \item{uniqueNames}{Ensure sample names are unique.}
 }
 \value{
-\link{tibble}.
+\link{DataFrame}.
 }
 \description{
 Appends reverse complement sequences by matching against the \code{sequence}

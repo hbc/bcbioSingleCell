@@ -13,12 +13,12 @@
 #' @param pipeline Pipeline used to process the samples.
 #' @param uniqueNames Ensure sample names are unique.
 #'
-#' @return [tibble].
+#' @return [DataFrame].
 .readSampleMetadataFile <- function(
     file,
     sampleDirs,
     pipeline) {
-    meta <- readFileByExtension(file) %>% camel
+    meta <- readFileByExtension(file)
 
     if (pipeline == "bcbio") {
         # Rename legacy `samplename` column, if set
@@ -33,7 +33,7 @@
 
         # Check for general required columns
         if (!all(c("fileName", "sampleName") %in% colnames(meta))) {
-            stop("`fileName` and `sampleName` are required")
+            stop("`fileName` and `sampleName` are required", call. = FALSE)
         }
 
         # Check if samples are demultiplexed
@@ -61,8 +61,9 @@
                                          sep = "_"))
         }
     } else if (pipeline == "cellranger") {
-        if (!"fileName" %in% colnames(meta)) {
-            stop("Required `fileName` column missing")
+        # Check for general required columns
+        if (!all(c("fileName", "sampleName") %in% colnames(meta))) {
+            stop("`fileName` and `sampleName` are required", call. = FALSE)
         }
         meta[["sampleID"]] <- meta[["fileName"]]
     } else {
@@ -80,5 +81,8 @@
     }
 
     # Return
-    tidy_select(meta, metaPriorityCols, everything())
+    tidy_select(meta, metaPriorityCols, everything()) %>%
+        as.data.frame %>%
+        set_rownames(.[["sampleID"]]) %>%
+        as("DataFrame")
 }

@@ -20,7 +20,7 @@ sampleMetadata(object, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\link{tibble}.
+\link{data.frame}.
 }
 \description{
 Sample Metadata

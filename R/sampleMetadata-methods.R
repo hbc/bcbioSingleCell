@@ -4,14 +4,15 @@
 #' @name sampleMetadata
 #' @author Michael Steinbaugh
 #'
-#' @return [tibble].
+#' @return [data.frame].
 NULL
 
 
 
 # Constructors ====
 .sampleMetadata <- function(object) {
-    metadata(object)[["sampleMetadata"]]
+    metadata(object)[["sampleMetadata"]] %>%
+        as.data.frame
 }
 
 

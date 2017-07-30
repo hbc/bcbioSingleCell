@@ -14,14 +14,13 @@
 setMethod("calculateMetrics", "dgCMatrix", function(
     object, annotable, prefilter = TRUE) {
     message("Calculating barcode metrics")
-    cbInput <- ncol(object)
-    message(paste(cbInput, "cellular barcodes detected"))
+    message(paste(ncol(object), "cellular barcodes detected"))
 
     # Check that all genes are in annotable
     missingGenes <- rownames(object) %>%
         .[!rownames(object) %in% annotable[["ensgene"]]]
     if (length(missingGenes) > 0L) {
-        warning(paste(length(missingGenes), "missing genes"))
+        warning(paste(length(missingGenes), "genes missing in annotable"))
     }
 
     # Check for [Matrix::colSums()] methods support
@@ -41,7 +40,7 @@ setMethod("calculateMetrics", "dgCMatrix", function(
         genesDetected = Matrix::colSums(object > 0L),
         codingCounts = Matrix::colSums(
             object[rownames(object) %in% codingGenes, ]),
-        mito_counts = Matrix::colSums(
+        mitoCounts = Matrix::colSums(
             object[rownames(object) %in% mitoGenes, ])) %>%
         mutate(log10GenesPerUMI =
                    log10(.data[["genesDetected"]]) /
