@@ -14,12 +14,13 @@
 #' @usage NULL
 .plotGenesPerCellBoxplot <- function(object, min, max) {
     metrics <- metrics(object)
-    medianGenes <- aggregate(genesDetected ~ sampleID, metrics, median) %>%
-        left_join(sampleMetadata(object), by = "sampleID")
+    medianGenes <- aggregate(nGene ~ sampleID, metrics, median) %>%
+        left_join(sampleMetadata(object), by = "sampleID") %>%
+        mutate(nGene = round(.data[["nGene"]]))
     interestingGroup <- interestingGroups(object)[[1L]]
     p <- ggplot(metrics,
                 aes_(x = ~sampleName,
-                     y = ~genesDetected,
+                     y = ~nGene,
                      fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "genes per cell") +
@@ -29,7 +30,7 @@
                    size = qcLineSize,
                    yintercept = min) +
         geom_label(data = medianGenes,
-                   aes_(label = ~round(genesDetected)),
+                   aes_(label = ~nGene),
                    alpha = qcLabelAlpha,
                    label.padding = unit(0.1, "lines"),
                    show.legend = FALSE) +
@@ -55,7 +56,7 @@
 .plotGenesPerCellHistogram <- function(object, min, max) {
     metrics <- metrics(object)
     p <- ggplot(metrics,
-                aes_(x = ~genesDetected,
+                aes_(x = ~nGene,
                      fill = ~sampleName)) +
         labs(x = "genes per cell") +
         geom_histogram(bins = bins) +

@@ -13,19 +13,19 @@ NULL
 # Constructors ====
 .plotUMIsPerCellBoxplot <- function(object, min) {
     metrics <- metrics(object)
-    medianUMIs <- aggregate(umiCounts ~ sampleID, metrics, median) %>%
+    medianUMIs <- aggregate(nUMI ~ sampleID, metrics, median) %>%
         left_join(sampleMetadata(object), by = "sampleID") %>%
-        mutate(umiCounts = round(.data[["umiCounts"]]))
+        mutate(nUMI = round(.data[["nUMI"]]))
     interestingGroup <- interestingGroups(object)[[1L]]
     p <- ggplot(metrics,
         aes_(x = ~sampleName,
-             y = ~umiCounts,
+             y = ~nUMI,
              fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "umis per cell") +
         geom_boxplot() +
         geom_label(data = medianUMIs,
-                   aes_(label = ~umiCounts),
+                   aes_(label = ~nUMI),
                    alpha = qcLabelAlpha,
                    label.padding = unit(0.1, "lines"),
                    show.legend = FALSE) +
@@ -46,7 +46,7 @@ NULL
 .plotUMIsPerCellHistogram <- function(object, min) {
     metrics <- metrics(object)
     p <- ggplot(metrics,
-        aes_(x = ~umiCounts,
+        aes_(x = ~nUMI,
              fill = ~sampleName)) +
         labs(x = "umis per cell") +
         geom_histogram(bins = bins) +

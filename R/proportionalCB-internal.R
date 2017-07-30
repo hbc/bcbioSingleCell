@@ -24,8 +24,10 @@
         mids <-  cbHist[["mids"]]
         tibble(
             sampleID = names(cb)[[a]],
-            log10ReadsPerCell = mids,
-            proportionOfCells = counts * (10L ^ mids) /
+            # log10 read counts per cell
+            log10Count = mids,
+            # Proportion of cells
+            proportion = counts * (10L ^ mids) /
                 sum(counts * (10L ^ mids)))
     }) %>%
         set_names(names(cb)) %>%

@@ -27,8 +27,7 @@ NULL
                    size = qcLineSize,
                    yintercept = max * 100L) +
         geom_label(data = medianMitoRatio,
-                   aes_(label = ~round(mitoRatio * 100L,
-                                       digits = 2L)),
+                   aes_(label = ~round(mitoRatio * 100L, digits = 2L)),
                    alpha = qcLabelAlpha,
                    label.padding = unit(0.1, "lines"),
                    show.legend = FALSE) +
@@ -66,8 +65,8 @@ NULL
 .plotMitoRatioScatterplot <- function(object) {
     metrics <- metrics(object)
     p <- ggplot(metrics,
-        aes_(x = ~codingCounts,
-             y = ~mitoCounts,
+        aes_(x = ~nCoding,
+             y = ~nMito,
              color = ~sampleName)) +
         labs(x = "mito counts",
              y = "coding counts") +

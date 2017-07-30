@@ -14,8 +14,8 @@ NULL
 .plotUMIsVsGenes <- function(object) {
     metrics <- metrics(object)
     p <- ggplot(metrics,
-        aes_(x = ~umiCounts,
-             y = ~genesDetected,
+        aes_(x = ~nUMI,
+             y = ~nGene,
              color = ~sampleName)) +
         labs(x = "umis per cell",
              y = "genes per cell") +

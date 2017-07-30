@@ -25,7 +25,7 @@ NULL
 .plotCBTbl <- function(object) {
     cellularBarcodes <- bcbio(object, "cellularBarcodes")
     if (is.null(cellularBarcodes)) {
-        stop("Cellular barcode reads not saved in object")
+        stop("Raw cellular barcode counts not saved in object")
     }
     interestingGroup <- interestingGroups(object)[[1L]]
     meta <- sampleMetadata(object) %>%
@@ -35,10 +35,10 @@ NULL
                              interestingGroup)))
     cellularBarcodes %>%
         .bindCB %>%
-        mutate(log10Reads = log10(.data[["reads"]]),
-               reads = NULL) %>%
-        # Only plot barcodes with at least 100 reads (log10 = 2)
-        filter(.data[["log10Reads"]] > 2L) %>%
+        mutate(log10Count = log10(.data[["nCount"]]),
+               nCount = NULL) %>%
+        # Only plot barcodes with at least 100 read counts (log10 = 2)
+        filter(.data[["log10Count"]] > 2L) %>%
         left_join(meta, by = "sampleID")
 }
 
@@ -50,7 +50,7 @@ NULL
     multiplexedFASTQ) {
     p <- ggplot(plotCBTbl,
                 aes_(x = ~sampleName,
-                     y = ~log10Reads,
+                     y = ~log10Count,
                      fill = ~sampleName)) +
         geom_violin(scale = "width") +
         geom_hline(alpha = qcLineAlpha,
@@ -62,7 +62,7 @@ NULL
                    size = qcLineSize,
                    yintercept = cbCutoffLine) +
         labs(title = "raw violin",
-             y = "log10 reads per cell") +
+             y = "log10 read counts per cell") +
         coord_flip()
     if (isTRUE(multiplexedFASTQ)) {
         p <- p + facet_wrap(~fileName)
@@ -77,10 +77,10 @@ NULL
     cbCutoffLine,
     multiplexedFASTQ) {
     p <- ggplot(plotCBTbl,
-                aes_(x = ~log10Reads,
+                aes_(x = ~log10Count,
                      fill = ~sampleName)) +
         labs(title = "raw histogram",
-             x = "log10 reads per cell") +
+             x = "log10 read counts per cell") +
         geom_histogram(bins = bins) +
         scale_y_sqrt() +
         geom_vline(alpha = qcLineAlpha,
@@ -102,8 +102,8 @@ NULL
 .plotCBProportionalHistogram <- function(object) {
     cbCutoffLine <- .cbCutoffLine(object)
     p <- ggplot(.proportionalCB(object),
-                aes_(x = ~log10ReadsPerCell,
-                     y = ~proportionOfCells * 100L,
+                aes_(x = ~log10Count,
+                     y = ~proportion * 100L,
                      color = ~sampleName)) +
         geom_line() +
         geom_vline(alpha = qcLineAlpha,
@@ -115,7 +115,7 @@ NULL
                    size = qcLineSize,
                    xintercept = cbCutoffLine) +
         labs(title = "proportional histogram",
-             x = "log10 reads per cell",
+             x = "log10 read counts per cell",
              y = "% of cells")
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)
