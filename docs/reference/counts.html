@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Counts Accessor — .counts • bcbioSinglecell</title>
+<title>Counts Accessor — counts • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -89,22 +89,26 @@
 
     <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
 <span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)
+  <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)
 
 <span class='co'># S4 method for bcbioSCSubset</span>
 <span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)</pre>
+  <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>Object.</p></td>
+    </tr>
     <tr>
       <th>gene2symbol</th>
       <td><p>Convert Ensembl gene identifiers (rownames) to gene
 symbols. Recommended for passing counts to Seurat.</p></td>
     </tr>
     <tr>
-      <th>format</th>
+      <th>class</th>
       <td><p>Return counts as sparse matrix (<strong>recommended</strong>; <code>dgCMatrix</code>,
 <code>dgTMatrix</code>) or dense matrix (<code>matrix</code>).</p></td>
     </tr>
@@ -112,7 +116,7 @@ symbols. Recommended for passing counts to Seurat.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>matrix.</p>
+    <p>Matrix class object.</p>
     
 
   </div>

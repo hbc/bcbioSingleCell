@@ -1,6 +1,7 @@
 #' Plot Known Markers
 #'
 #' @rdname plotKnownMarkers
+#' @author Michael Steinbaugh
 #'
 #' @param y [knownMarkersDetected()] [tibble] grouped by cluster.
 #' @param markdown Print Markdown headers.

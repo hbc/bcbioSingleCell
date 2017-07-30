@@ -64,6 +64,16 @@ setGeneric("calculateMetrics", function(object, ...) {
 
 
 
+#' @rdname downloads
+#' @family `bcbio` Utilities
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("downloads", function(object) {
+    standardGeneric("downloads")
+})
+
+
+
 #' @rdname filterCells
 #' @family Data Management Utilities
 #' @inheritParams AllGenerics
@@ -230,6 +240,16 @@ setGeneric("plotUMIsPerCell", function(object, ...) {
 #' @export
 setGeneric("plotUMIsVsGenes", function(object, ...) {
     standardGeneric("plotUMIsVsGenes")
+})
+
+
+
+#' @rdname readKnownMarkers
+#' @family Data Management Utilities
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("readKnownMarkers", function(object, ...) {
+    standardGeneric("readKnownMarkers")
 })
 
 

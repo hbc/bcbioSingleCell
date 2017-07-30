@@ -4,13 +4,14 @@
 #' @name counts
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams all_generics
+#' @inheritParams AllGenerics
+#'
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.
 #' @param class Return counts as sparse matrix (**recommended**; `dgCMatrix`,
 #'   `dgTMatrix`) or dense matrix (`matrix`).
 #'
-#' @return [matrix].
+#' @return Matrix class object.
 NULL
 
 
@@ -26,7 +27,13 @@ NULL
     }
     counts <- assay(object)
     if (isTRUE(gene2symbol)) {
-        rownames(counts) <- .gene2symbol(object)
+        g2s <- object %>%
+            rownames %>%
+            .[[1L]] %>%
+            detectOrganism %>%
+            gene2symbol %>%
+            .[rownames(counts), ]
+        rownames(counts) <- g2s[rownames(counts), "symbol"] %>% make.unique
     }
     as(counts, class)
 }

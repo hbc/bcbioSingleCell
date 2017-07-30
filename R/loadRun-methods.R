@@ -1,5 +1,7 @@
 #' Load `bcbio` Run
 #'
+#' @rdname loadRun
+#'
 #' @details
 #' - **cellranger**: Read [10x Genomics
 #'   Chromium](https://www.10xgenomics.com/software/) cell counts from
@@ -11,8 +13,8 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @param uploadDir Path to final upload directory. This path is set when
-#'   running `bcbio_nextgen -w template`.
+#' @param object Path to final upload directory. This path is set when running
+#'   `bcbio_nextgen -w template`.
 #' @param sampleMetadataFile **Required**. Sample barcode metadata file.
 #' @param wellMetadataFile *Optional*. Well identifier metadata file.
 #' @param interestingGroups Character vector of interesting groups. First entry
@@ -48,7 +50,7 @@ setMethod("loadRun", "character", function(
 
     # Sample metadata ====
     sampleMetadataFile <- normalizePath(sampleMetadataFile)
-    sampleMetadata <- .sampleMetadataFile(
+    sampleMetadata <- .readSampleMetadataFile(
         sampleMetadataFile, sampleDirs, pipeline)
 
     # Check to ensure interesting groups are defined
@@ -150,7 +152,7 @@ setMethod("loadRun", "character", function(
         }
 
         # Cellular barcodes ----
-        cellularBarcodes <- .cellularBarcodes(sampleDirs)
+        cellularBarcodes <- .cbList(sampleDirs)
     } else if (pipeline == "cellranger") {
         # Get genome build from `sampleDirs`
         genomeBuild <- basename(sampleDirs) %>% unique
@@ -170,7 +172,7 @@ setMethod("loadRun", "character", function(
     # Read counts into sparse matrix ====
     message("Reading counts")
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
-        sparseCounts <- .sparseCounts(sampleDirs[a], pipeline = pipeline)
+        sparseCounts <- .readSparseCounts(sampleDirs[a], pipeline = pipeline)
         if (pipeline == "bcbio") {
             # Convert transcript-level to gene-level
             sparseCounts <-
@@ -188,7 +190,7 @@ setMethod("loadRun", "character", function(
     metrics <- calculateMetrics(sparseCounts, annotable)
     if (pipeline == "bcbio") {
         # Add reads per cellular barcode to metrics
-        cbTbl <- .bindCellularBarcodes(cellularBarcodes) %>%
+        cbTbl <- .bindCB(cellularBarcodes) %>%
             mutate(cellularBarcode = NULL,
                    sampleID = NULL)
         metrics <- metrics %>%

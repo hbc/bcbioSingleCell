@@ -7,11 +7,11 @@ setAs("bcbioSCSubset", "seurat", function(from) {
 
     # Filtering criteria
     minGenes <- metadata(from) %>%
-        .[["filtering_criteria"]] %>%
-        .[["min_genes"]]
+        .[["filteringCriteria"]] %>%
+        .[["minGenes"]]
     maxMitoRatio <- metadata(from) %>%
-        .[["filtering_criteria"]] %>%
-        .[["max_mito_ratio"]]
+        .[["filteringCriteria"]] %>%
+        .[["maxMitoRatio"]]
 
     new("seurat", raw.data = counts) %>%
         CreateSeuratObject(

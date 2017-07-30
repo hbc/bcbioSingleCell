@@ -13,7 +13,7 @@ NULL
     metrics <- metrics(object)
     cellCounts <- metrics %>%
         group_by(!!sym("sampleID")) %>%
-        summarise(cells = n()) %>%
+        summarize(cells = n()) %>%
         left_join(sampleMetadata(object), by = "sampleID")
     interestingGroup <- interestingGroups(object)[[1L]]
     p <- ggplot(cellCounts,

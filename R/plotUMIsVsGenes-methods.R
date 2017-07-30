@@ -1,15 +1,16 @@
 #' Plot UMI and Gene Correlation
 #'
 #' @rdname plotUMIsVsGenes
+#' @name plotUMIsVsGenes
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit plotGenesPerCell
 #'
 #' @return [ggplot].
+NULL
 
 
 
-#' @rdname plotUMIsVsGenes
-#' @usage NULL
+# Constructors ====
 .plotUMIsVsGenes <- function(object) {
     metrics <- metrics(object)
     p <- ggplot(metrics,
@@ -30,6 +31,7 @@
 
 
 
+# Methods ====
 #' @rdname plotUMIsVsGenes
 #' @export
 setMethod("plotUMIsVsGenes", "bcbioSCDataSet", .plotUMIsVsGenes)

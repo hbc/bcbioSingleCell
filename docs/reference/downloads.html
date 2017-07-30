@@ -88,15 +88,20 @@
 <a href='http://bioinformatics.sph.harvard.edu/'>HBC website</a>.</p>
     
 
-    <pre class="usage"><span class='fu'>downloads</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>downloads</span>(<span class='no'>object</span>)
+
+<span class='co'># S4 method for missing</span>
+<span class='fu'>downloads</span>(<span class='no'>object</span>)
+
+<span class='co'># S4 method for character</span>
+<span class='fu'>downloads</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>File name. If <code>NULL</code> (default), download the default dependency
-files for a consult.</p></td>
+      <th>object</th>
+      <td><p>Object.</p></td>
     </tr>
     </table>
     
@@ -108,7 +113,15 @@ files for a consult.</p></td>
 
     <p>File download utility functions for RMarkdown knit reports.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <p>Other `bcbio` Utilities: <code>bcbio</code>,
+  <code>loadRun</code></p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>downloads</span>()
+<span class='fu'>downloads</span>(<span class='st'>"setup.R"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -118,7 +131,11 @@ files for a consult.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

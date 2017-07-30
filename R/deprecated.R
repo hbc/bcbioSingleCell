@@ -1,3 +1,7 @@
+# nolint start
+
+
+
 #' Deprecated Functions
 #'
 #' @rdname deprecated
@@ -45,3 +49,7 @@ plot_total_cells <- function() {
 plot_total_vs_detected <- function() {
     .Deprecated("plotUMIsVsGenes")
 }
+
+
+
+# nolint end

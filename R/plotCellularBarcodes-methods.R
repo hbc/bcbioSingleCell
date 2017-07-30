@@ -34,7 +34,7 @@ NULL
                              "sampleName",
                              interestingGroup)))
     cellularBarcodes %>%
-        .bindCellularBarcodes %>%
+        .bindCB %>%
         mutate(log10Reads = log10(.data[["reads"]]),
                reads = NULL) %>%
         # Only plot barcodes with at least 100 reads (log10 = 2)
