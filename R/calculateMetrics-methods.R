@@ -36,25 +36,23 @@ setMethod("calculateMetrics", "dgCMatrix", function(
 
     metrics <- tibble(
         rowname = colnames(object),
-        umiCounts = Matrix::colSums(object),
-        genesDetected = Matrix::colSums(object > 0L),
-        codingCounts = Matrix::colSums(
+        # Follow the Seurat `seurat@data.info` conventions
+        nUMI = Matrix::colSums(object),
+        nGene = Matrix::colSums(object > 0L),
+        nCoding = Matrix::colSums(
             object[rownames(object) %in% codingGenes, ]),
-        mitoCounts = Matrix::colSums(
+        nMito = Matrix::colSums(
             object[rownames(object) %in% mitoGenes, ])) %>%
         mutate(log10GenesPerUMI =
-                   log10(.data[["genesDetected"]]) /
-                   log10(.data[["umiCounts"]]),
+                   log10(.data[["nGene"]]) / log10(.data[["nUMI"]]),
                mitoRatio =
-                   .data[["mitoCounts"]] /
-                   .data[["umiCounts"]])
+                   .data[["nMito"]] / .data[["nGene"]])
 
     # Apply low stringency cellular barcode pre-filtering, if desired
     if (isTRUE(prefilter)) {
         metrics <- metrics %>%
-            .[.[["umiCounts"]] > 0L, ] %>%
-            .[.[["genesDetected"]] > 0L, ] %>%
-            .[.[["codingCounts"]] > 0L, ] %>%
+            .[.[["nUMI"]] > 0L, ] %>%
+            .[.[["nGene"]] > 0L, ] %>%
             .[!is.na(.[["log10GenesPerUMI"]]), ]
         message(paste(nrow(metrics), "cellular barcodes passed pre-filtering"))
     }
