@@ -1,3 +1,9 @@
+# 0.0.15
+
+- Renamed functions in lowerCamelCase from snake_case.
+
+
+
 # 0.0.14
 
 - Migrated plotting functions to S4 methods.

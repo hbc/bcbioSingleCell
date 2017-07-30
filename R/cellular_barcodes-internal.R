@@ -27,14 +27,14 @@
         # `xLog` in Klein Lab code
         mids <-  cb_hist[["mids"]]
         tibble(
-            sample_id = names(cellular_barcodes)[[a]],
+            sampleID = names(cellular_barcodes)[[a]],
             log10_reads_per_cell = mids,
             proportion_of_cells = counts * (10L ^ mids) /
                 sum(counts * (10L ^ mids)))
     }) %>%
         set_names(names(cellular_barcodes)) %>%
         bind_rows %>%
-        left_join(metadata, by = "sample_id")
+        left_join(metadata, by = "sampleID")
 }
 
 
@@ -72,12 +72,12 @@
 #' @return [tibble].
 .bind_cellular_barcodes <- function(list) {
     lapply(seq_along(list), function(a) {
-        sample_id <- names(list)[[a]] %>% snake
+        sampleID <- names(list)[[a]] %>% snake
         list[[a]] %>%
-            mutate(sample_id = !!sample_id)
+            mutate(sampleID = !!sampleID)
     }) %>%
         bind_rows %>%
-        mutate(rowname = str_c(.data[["sample_id"]],
+        mutate(rowname = str_c(.data[["sampleID"]],
                                .data[["cellular_barcode"]],
                                sep = "_"))
 }

@@ -46,17 +46,17 @@
         }
 
         if (isTRUE(demultiplexed)) {
-            meta[["sample_id"]] <- meta[["sample_name"]]
+            meta[["sampleID"]] <- meta[["sample_name"]]
         } else {
             # Match the UMI demultiplexed sample directories (e.g. inDrop)
             if (!"sequence" %in% colnames(meta)) {
-                stop("Index i7 sequence required to generate `sample_id`")
+                stop("Index i7 sequence required to generate `sampleID`")
             }
             meta <- meta %>%
                 mutate(revcomp = vapply(.data[["sequence"]],
                                         revcomp,
                                         character(1L)),
-                       sample_id = paste(.data[["file_name"]],
+                       sampleID = paste(.data[["file_name"]],
                                          .data[["revcomp"]],
                                          sep = "_"))
         }
@@ -64,19 +64,19 @@
         if (!"file_name" %in% colnames(meta)) {
             stop("Required `file_name` column missing")
         }
-        meta[["sample_id"]] <- meta[["file_name"]]
+        meta[["sampleID"]] <- meta[["file_name"]]
     } else {
         stop("Unsupported pipeline")
     }
 
-    # Ensure `sample_id` is valid name then arrange
+    # Ensure `sampleID` is valid name then arrange
     meta <- meta %>%
         # Sanitize sample ID into snake_case
-        mutate(sample_id = snake(.data[["sample_id"]])) %>%
-        arrange(!!sym("sample_id"))
+        mutate(sampleID = snake(.data[["sampleID"]])) %>%
+        arrange(!!sym("sampleID"))
 
-    # Check that `sample_id` matches `sample_dirs`
-    if (!all(meta[["sample_id"]] %in% names(sample_dirs))) {
+    # Check that `sampleID` matches `sample_dirs`
+    if (!all(meta[["sampleID"]] %in% names(sample_dirs))) {
         stop("Sample directory names don't match the sample metadata file")
     }
 

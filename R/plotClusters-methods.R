@@ -1,13 +1,13 @@
 #' Plot Clusters
 #'
-#' @rdname plot_clusters
+#' @rdname plotClusters
 #' @author Michael Steinbaugh
 #'
 #' @param symbols Character vector of gene symbols.
 #'
 #' @return No value, only graphical output.
 #' @export
-setMethod("plot_clusters", "seurat", function(object, symbols) {
+setMethod("plotClusters", "seurat", function(object, symbols) {
     VlnPlot(object,
             features.plot = symbols,
             use.scaled = TRUE)

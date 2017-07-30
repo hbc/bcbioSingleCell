@@ -8,7 +8,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @export
-bcbioSCDataSet <- setClass(  # nolint
+bcbioSCDataSet <- setClass(
     "bcbioSCDataSet",
     contains = "SummarizedExperiment",
     slots = c(callers = "SimpleList"))
@@ -24,7 +24,7 @@ setValidity("bcbioSCDataSet", function(object) TRUE)
 #' @author Michael Steinbaugh
 #'
 #' @export
-bcbioSCSubset <- setClass(  # nolint
+bcbioSCSubset <- setClass(
     "bcbioSCSubset",
     contains = "SummarizedExperiment")
 setValidity("bcbioSCSubset", function(object) TRUE)

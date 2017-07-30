@@ -12,8 +12,8 @@
 .plot_novelty_boxplot <- function(object, min) {
     metrics <- metrics(object)
     median_novelty <-
-        aggregate(log10_genes_per_umi ~ sample_id, metrics, median) %>%
-        left_join(sample_metadata(object), by = "sample_id")
+        aggregate(log10_genes_per_umi ~ sampleID, metrics, median) %>%
+        left_join(sample_metadata(object), by = "sampleID")
     interesting_group <- interesting_groups(object)[[1L]]
     p <- ggplot(metrics,
         aes_(x = ~sample_name,
@@ -33,7 +33,7 @@
                    show.legend = FALSE) +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~file_name)
     }
     p
@@ -56,7 +56,7 @@
                    xintercept = min) +
         scale_x_sqrt() +
         scale_y_sqrt()
-    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~file_name)
     }
     p

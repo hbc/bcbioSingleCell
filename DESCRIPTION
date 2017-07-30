@@ -1,6 +1,6 @@
 Package: bcbioSinglecell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.14
+Version: 0.0.15
 Authors@R: c(
     person("Michael J.", "Steinbaugh",
            email = "mike@steinbaugh.com",
@@ -18,7 +18,7 @@ URL:
 BugReports: https://github.com/hbc/bcbioSinglecell/issues
 Depends:
     R (>= 3.4.0),
-    basejump (>= 0.0.19),
+    basejump (>= 0.0.20),
     SummarizedExperiment (>= 1.6.3)
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -34,9 +34,13 @@ Imports:
     S4Vectors,
     utils
 Suggests:
-    lintr,
+    lintr (>= 1.0.0.9000),
+    monocle (>= 2.5.3),
+    scater (>= 1.4.0),
+    scone (>= 1.0.0),
     testthat
 Remotes:
+    cole-trapnell-lab/monocle-release,
     satijalab/seurat,
     steinbaugh/basejump
 biocViews:

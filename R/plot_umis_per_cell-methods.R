@@ -12,8 +12,8 @@
 #' @usage NULL
 .plot_umis_per_cell_boxplot <- function(object, min) {
     metrics <- metrics(object)
-    median_umis <- aggregate(umi_counts ~ sample_id, metrics, median) %>%
-        left_join(sample_metadata(object), by = "sample_id") %>%
+    median_umis <- aggregate(umi_counts ~ sampleID, metrics, median) %>%
+        left_join(sample_metadata(object), by = "sampleID") %>%
         mutate(umi_counts = round(.data[["umi_counts"]]))
     interesting_group <- interesting_groups(object)[[1L]]
     p <- ggplot(metrics,
@@ -34,7 +34,7 @@
                    yintercept = min) +
         scale_y_log10() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~file_name)
     }
     p
@@ -58,7 +58,7 @@
         scale_x_log10() +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-    if (isTRUE(metadata(object)[["multiplexed_fastq"]])) {
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~file_name)
     }
     p

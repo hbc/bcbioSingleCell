@@ -1,37 +1,38 @@
 #' Plot Known Markers
 #'
-#' @rdname plot_known_markers
+#' @rdname plotKnownMarkers
 #'
-#' @param y [known_markers_detected()] [tibble] grouped by cluster.
+#' @param y [knownMarkersDetected()] [tibble] grouped by cluster.
 #' @param markdown Print Markdown headers.
 #'
+#' @return [writeLines()].
 #' @export
 setMethod(
-    "plot_known_markers",
+    "plotKnownMarkers",
     signature(x = "seurat", y = "grouped_df"),
     function(x, y, markdown = TRUE) {
         if (nrow(y) == 0L) {
             return(NULL)
         }
-        cell_types <- y %>%
-            pull("cell_type") %>%
+        cellTypes <- y %>%
+            pull("cellType") %>%
             unique
-        pblapply(seq_along(cell_types), function(a) {
-            cell_type <- cell_types[[a]]
+        pblapply(seq_along(cellTypes), function(a) {
+            cellType <- cellTypes[[a]]
             if (isTRUE(markdown)) {
                 writeLines(c(
                     "",
                     "",
-                    paste("###", cell_type),
+                    paste("###", cellType),
                     ""))
             }
             symbols <- y %>%
-                filter(.data[["cell_type"]] == !!cell_type) %>%
+                filter(.data[["cellType"]] == !!cellType) %>%
                 pull("symbol") %>%
                 unique %>%
                 sort
             if (!is.null(symbols)) {
-                plot_clusters(x, symbols)
+                plotClusters(x, symbols)
             } else {
                 NULL
             }
