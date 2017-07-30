@@ -43,13 +43,14 @@ setAs("bcbioSCSubset", "seurat", function(from) {
 
     # Rows must correspond to `object@cell.names`
     object <- AddMetaData(object, metrics)
-    glimpse(object@meta.data)
+    print(glimpse(object@meta.data))
 
-    object <- SubsetData(
+    # Normalize
+    object <- NormalizeData(
         object,
-        subset.name = "mitoRatio",
-        accept.high = maxMitoRatio)
-    print(object)
+        normalization.method = "LogNormalize",
+        scale.factor = 10000L)
 
+    print(object)
     object
 })
