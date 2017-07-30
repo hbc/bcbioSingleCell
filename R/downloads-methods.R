@@ -35,13 +35,13 @@ NULL
 # Methods ====
 #' @rdname downloads
 #' @export
-setMethod("downloads", "missing", function(object) {
+setMethod("downloads", "missing", function() {
     .downloads(
         c("_output.yaml",
           "_footer.Rmd",
           "_header.Rmd",
           "bcbioSinglecell.bib",
-          "load_run.R",
+          "load.R",
           "setup.R"))
 })
 

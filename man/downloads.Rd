@@ -10,7 +10,7 @@
 \usage{
 downloads(object)
 
-\S4method{downloads}{missing}(object)
+\S4method{downloads}{missing}()
 
 \S4method{downloads}{character}(object)
 }
@@ -33,7 +33,7 @@ downloads("setup.R")
 }
 \seealso{
 Other `bcbio` Utilities: \code{\link{bcbio}},
-  \code{\link{loadRun}}
+  \code{\link{loadSinglecell}}
 }
 \author{
 Michael Steinbaugh

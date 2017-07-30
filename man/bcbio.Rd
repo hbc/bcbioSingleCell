@@ -34,5 +34,5 @@ bcbio(object, ...) <- value
 }
 \seealso{
 Other `bcbio` Utilities: \code{\link{downloads}},
-  \code{\link{loadRun}}
+  \code{\link{loadSinglecell}}
 }

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read Cellular Barcode File — .readCBFile • bcbioSinglecell</title>
+<title>Load <code>bcbio</code> Run — loadSinglecell • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,32 +80,74 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read Cellular Barcode File</h1>
+    <h1>Load <code>bcbio</code> Run</h1>
     </div>
 
     
-    <p>Read Cellular Barcode File</p>
+    <p>Load <code>bcbio</code> Run</p>
     
 
-    <pre class="usage"><span class='fu'>.readCBFile</span>(<span class='no'>file</span>)</pre>
+    <pre class="usage"><span class='fu'>loadSinglecell</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for character</span>
+<span class='fu'>loadSinglecell</span>(<span class='kw'>object</span> <span class='kw'>=</span> <span class='st'>"final"</span>, <span class='no'>sampleMetadataFile</span>,
+  <span class='kw'>wellMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
+  <span class='kw'>tx2gene</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>Cellular barcode TSV file.</p></td>
+      <th>object</th>
+      <td><p>Path to final upload directory. This path is set when running
+<code>bcbio_nextgen -w template</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments, passed as metadata.</p></td>
+    </tr>
+    <tr>
+      <th>sampleMetadataFile</th>
+      <td><p><strong>Required</strong>. Sample barcode metadata file.</p></td>
+    </tr>
+    <tr>
+      <th>wellMetadataFile</th>
+      <td><p><em>Optional</em>. Well identifier metadata file.</p></td>
+    </tr>
+    <tr>
+      <th>interestingGroups</th>
+      <td><p>Character vector of interesting groups. First entry
+is used for plot colors during quality control (QC) analysis. Entire vector
+is used for PCA and heatmap QC functions.</p></td>
+    </tr>
+    <tr>
+      <th>tx2gene</th>
+      <td><p>tx2gene data.frame, required when using a custom
+transcriptome FASTA file. This argument will be removed in a future update.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>tibble.</p>
+    <p><a href='bcbioSCDataSet-class.html'>bcbioSCDataSet</a>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <ul>
+<li><p><strong>cellranger</strong>: Read <a href='https://www.10xgenomics.com/software/'>10x GenomicsChromium</a> cell counts from
+<code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.mtx</code> files.</p></li>
+</ul>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>When working in RStudio, we recommend connecting to the bcbio-nextgen
+run directory as a remote connection over
+<a href='https://github.com/osxfuse/osxfuse/wiki/SSHFS'>sshfs</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Cellular Barcode Utilities: <code><a href='bindCB-internal.html'>.bindCB</a></code>,
-  <code><a href='cbList-internal.html'>.cbList</a></code>, <code><a href='proportionalCB-internal.html'>.proportionalCB</a></code></p>
+    <p>Other `bcbio` Utilities: <code>bcbio</code>,
+  <code>downloads</code></p>
     
 
   </div>
@@ -116,12 +158,16 @@
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#note">Note</a></li>
+
       <li><a href="#see-also">See also</a></li>
           </ul>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Michael Steinbaugh, Rory Kirchner
 
   </div>
 </div>
