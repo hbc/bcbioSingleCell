@@ -84,12 +84,12 @@ setGeneric("filterCells", function(object, ...) {
 
 
 
-#' @rdname loadSinglecell
+#' @rdname loadRun
 #' @family `bcbio` Utilities
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("loadSinglecell", function(object, ...) {
-    standardGeneric("loadSinglecell")
+setGeneric("loadRun", function(object, ...) {
+    standardGeneric("loadRun")
 })
 
 
