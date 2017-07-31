@@ -44,7 +44,7 @@ setAs("bcbioSCSubset", "seurat", function(from) {
     }
 
     # Rows must correspond to `object@cell.names`
-    object <- AddMetaData(object, metrics)
+    object <- Seurat::AddMetaData(object, metrics)
     colnames(object@meta.data) %>%
         toString %>%
         paste("Seurat metadata:", .) %>%

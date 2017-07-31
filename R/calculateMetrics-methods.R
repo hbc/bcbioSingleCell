@@ -46,7 +46,7 @@ setMethod("calculateMetrics", "dgCMatrix", function(
         mutate(log10GenesPerUMI =
                    log10(.data[["nGene"]]) / log10(.data[["nUMI"]]),
                mitoRatio =
-                   .data[["nMito"]] / .data[["nGene"]])
+                   .data[["nMito"]] / .data[["nUMI"]])
 
     # Apply low stringency cellular barcode pre-filtering, if desired
     if (isTRUE(prefilter)) {
