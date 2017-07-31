@@ -3,8 +3,10 @@
 setAs("bcbioSCSubset", "seurat", function(from) {
     project <- deparse(substitute(from))
     counts <- counts(from, gene2symbol = TRUE)
+
+    # Show gene symbols as message. Can remove in future update.
     rownames(counts) %>%
-        head(n = 10L) %>%
+        head %>%
         toString %>%
         paste("Gene symbols:", ., "...") %>%
         message
@@ -17,7 +19,7 @@ setAs("bcbioSCSubset", "seurat", function(from) {
         .[["filteringCriteria"]] %>%
         .[["maxMitoRatio"]]
 
-    object <- CreateSeuratObject(
+    object <- Seurat::CreateSeuratObject(
         raw.data = counts,
         project = project,
         min.genes = minGenes)
@@ -25,28 +27,31 @@ setAs("bcbioSCSubset", "seurat", function(from) {
     # Add bcbio metrics as metadata
     metrics <- metrics(from)
 
-    # Check rowname integrity
+    # Integrity checks
     if (!identical(object@cell.names, rownames(metrics))) {
-        stop("Metrics rowname mismatch with `cell.names` slot")
+        stop("Metrics rowname mismatch with `cell.names` slot",
+             call. = FALSE)
     }
-
     if (!identical(
         as.integer(object@meta.data[["nGene"]]),
         as.integer(metrics[["nGene"]]))) {
-        stop("Gene detection mismatch")
+        stop("Gene detection mismatch", call. = FALSE)
     }
     if (!identical(
         as.integer(object@meta.data[["nUMI"]]),
         as.integer(metrics[["nUMI"]]))) {
-        stop("UMI detection mismatch")
+        stop("UMI detection mismatch", call. = FALSE)
     }
 
     # Rows must correspond to `object@cell.names`
     object <- AddMetaData(object, metrics)
-    print(glimpse(object@meta.data))
+    colnames(object@meta.data) %>%
+        toString %>%
+        paste("Seurat metadata:", .) %>%
+        message
 
     # Normalize
-    object <- NormalizeData(
+    object <- Seurat::NormalizeData(
         object,
         normalization.method = "LogNormalize",
         scale.factor = 10000L)
