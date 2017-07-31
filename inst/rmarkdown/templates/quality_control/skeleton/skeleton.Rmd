@@ -8,7 +8,7 @@ params:
     minUMIs: 1000
     minGenes: 500
     maxGenes: 5000
-    maxMitoRatio: 0.1
+    maxMitoRatio: 0.05
     minNovelty: 0.8
     outputDir: "."
 ---
@@ -68,7 +68,7 @@ plotUMIsPerCell(bcb, min = params$minUMIs)
 ```
 
 
-## Genes detected
+## Genes detected per cell
 
 Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `1000`-`5000` is normal for [inDrop][] analysis.
 
@@ -77,7 +77,7 @@ plotGenesPerCell(bcb, min = params$minGenes, max = params$maxGenes)
 ```
 
 
-## UMIs vs. detected genes
+## UMIs vs. genes detected
 
 If we graph out the total number of UMI counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
 

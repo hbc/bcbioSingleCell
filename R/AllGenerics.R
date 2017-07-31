@@ -118,7 +118,7 @@ setGeneric("interestingGroups", function(object) {
 #' @family Clustering Utilities
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("knownMarkersDetected", function(x, y, ...) {
+setGeneric("knownMarkersDetected", function(object, known, ...) {
     standardGeneric("knownMarkersDetected")
 })
 
@@ -218,7 +218,7 @@ setGeneric("plotStressGenes", function(object, ...) {
 #' @family Clustering Utilities
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("plotTopMarkers", function(x, y, ...) {
+setGeneric("plotTopMarkers", function(object, markers, ...) {
     standardGeneric("plotTopMarkers")
 })
 
@@ -286,6 +286,7 @@ setGeneric("topBarcodes", function(object, ...) {
 
 #' @rdname topMarkers
 #' @family Clustering Utilities
+#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("topMarkers", function(object, ...) {

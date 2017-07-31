@@ -3,17 +3,18 @@
 \docType{methods}
 \name{plotTopMarkers}
 \alias{plotTopMarkers}
+\alias{plotTopMarkers}
 \alias{plotTopMarkers,seurat,grouped_df-method}
 \title{Plot Top Markers}
 \usage{
-plotTopMarkers(x, y, ...)
+plotTopMarkers(object, markers, ...)
 
-\S4method{plotTopMarkers}{seurat,grouped_df}(x, y, markdown = TRUE)
+\S4method{plotTopMarkers}{seurat,grouped_df}(object, markers, markdown = TRUE)
 }
 \arguments{
-\item{x}{Primary object.}
+\item{object}{Object.}
 
-\item{y}{Top markers grouped \link{tibble} returned by \code{\link[=topMarkers]{topMarkers()}}.}
+\item{markers}{Top markers grouped \link{tibble} returned by \code{\link[=topMarkers]{topMarkers()}}.}
 
 \item{...}{Additional arguments.}
 
