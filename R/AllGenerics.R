@@ -178,7 +178,7 @@ setGeneric("plotGenesPerCell", function(object, ...) {
 #' @family Clustering Utilities
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("plotKnownMarkers", function(x, y, ...) {
+setGeneric("plotKnownMarkers", function(object, knownMarkers, ...) {
     standardGeneric("plotKnownMarkers")
 })
 
