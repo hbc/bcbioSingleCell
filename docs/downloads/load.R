@@ -1,5 +1,5 @@
 library(bcbioSinglecell)
-bcb <- loadSinglecell(
+bcb <- loadRun(
     uploadDir = file.path("data", "final"),
     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
     interestingGroups = c("genotype", "treatment"),

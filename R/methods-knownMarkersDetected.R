@@ -15,14 +15,17 @@ NULL
 
 
 # Constructors ====
-# Currently supports [Seurat::FindAllMarkers()] return
-.seuratMarkers <- function(df) {
+# Currently supports [Seurat::FindAllMarkers()]
+.groupMarkers <- function(df) {
+    if (!is.data.frame(df)) stop("data.frame required")
+    # Rename `gene` to `symbol` if necessary
+    if ("gene" %in% colnames(df)) {
+        df <- rename(df, symbol = .data[["gene"]])
+    }
     df %>%
-        as.data.frame %>%
         remove_rownames %>%
         as("tibble") %>%
         camel %>%
-        rename(symbol = .data[["gene"]]) %>%
         tidy_select(c("cluster", "symbol"), everything()) %>%
         group_by(.data[["cluster"]])
 }
@@ -34,10 +37,10 @@ NULL
 #' @export
 setMethod(
     "knownMarkersDetected",
-    signature(x = "data.frame", y = "tbl_df"),
-    function(x, y, show = TRUE) {
-        markers <- .seuratMarkers(x) %>%
-            left_join(y, by = "symbol") %>%
+    signature(object = "data.frame", known = "tbl_df"),
+    function(object, known, show = TRUE) {
+        markers <- .groupMarkers(object) %>%
+            left_join(known, by = "symbol") %>%
             filter(!is.na(.data[["cellType"]]))
         if (isTRUE(show)) {
             kable(markers, caption = "Known markers detected") %>% show

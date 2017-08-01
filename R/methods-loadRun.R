@@ -1,6 +1,6 @@
-#' Load `bcbio` Run
+#' Load `bcbio` Single-Cell RNA-Seq Run
 #'
-#' @rdname loadSinglecell
+#' @rdname loadRun
 #'
 #' @details
 #' - **cellranger**: Read [10x Genomics
@@ -26,7 +26,7 @@
 #'
 #' @return [bcbioSCDataSet].
 #' @export
-setMethod("loadSinglecell", "character", function(
+setMethod("loadRun", "character", function(
     object = "final",
     sampleMetadataFile,
     wellMetadataFile = NULL,

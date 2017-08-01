@@ -8,10 +8,10 @@
 \title{Counts Accessor}
 \usage{
 \S4method{counts}{bcbioSCDataSet}(object, gene2symbol = FALSE,
-  class = "dgCMatrix")
+  as = "dgCMatrix")
 
 \S4method{counts}{bcbioSCSubset}(object, gene2symbol = FALSE,
-  class = "dgCMatrix")
+  as = "dgCMatrix")
 }
 \arguments{
 \item{object}{Object.}
@@ -19,7 +19,7 @@
 \item{gene2symbol}{Convert Ensembl gene identifiers (rownames) to gene
 symbols. Recommended for passing counts to Seurat.}
 
-\item{class}{Return counts as sparse matrix (\strong{recommended}; \code{dgCMatrix},
+\item{as}{Return class (\strong{recommended}; \code{dgCMatrix},
 \code{dgTMatrix}) or dense matrix (\code{matrix}).}
 }
 \value{

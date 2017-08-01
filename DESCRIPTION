@@ -41,6 +41,7 @@ Suggests:
     testthat
 Remotes:
     cole-trapnell-lab/monocle-release,
+    jimhester/lintr,
     satijalab/seurat,
     steinbaugh/basejump
 biocViews:
