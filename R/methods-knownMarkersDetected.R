@@ -14,24 +14,6 @@ NULL
 
 
 
-# Constructors ====
-# Currently supports [Seurat::FindAllMarkers()]
-.groupMarkers <- function(df) {
-    if (!is.data.frame(df)) stop("data.frame required")
-    # Rename `gene` to `symbol` if necessary
-    if ("gene" %in% colnames(df)) {
-        df <- rename(df, symbol = .data[["gene"]])
-    }
-    df %>%
-        remove_rownames %>%
-        as("tibble") %>%
-        camel %>%
-        tidy_select(c("cluster", "symbol"), everything()) %>%
-        group_by(.data[["cluster"]])
-}
-
-
-
 # Methods ====
 #' @rdname knownMarkersDetected
 #' @export
