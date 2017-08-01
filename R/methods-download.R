@@ -5,21 +5,21 @@
 #'
 #' File download utility functions for RMarkdown knit reports.
 #'
-#' @rdname downloads
-#' @name downloads
+#' @rdname download
+#' @name download
 #' @author Michael Steinbaugh
 #'
 #' @return No return.
 #'
 #' @examples
-#' downloads()
-#' downloads("setup.R")
+#' download()
+#' download("setup.R")
 NULL
 
 
 
 # Constructors ====
-.downloads <- function(file) {
+.download <- function(file) {
     sapply(seq_along(file), function(a) {
         if (!file.exists(file[[a]])) {
             download.file(
@@ -33,10 +33,10 @@ NULL
 
 
 # Methods ====
-#' @rdname downloads
+#' @rdname download
 #' @export
-setMethod("downloads", "missing", function() {
-    .downloads(
+setMethod("download", "missing", function() {
+    .download(
         c("_output.yaml",
           "_footer.Rmd",
           "_header.Rmd",
@@ -47,8 +47,8 @@ setMethod("downloads", "missing", function() {
 
 
 
-#' @rdname downloads
+#' @rdname download
 #' @export
-setMethod("downloads", "character", function(object) {
-    .downloads(object)
+setMethod("download", "character", function(object) {
+    .download(object)
 })

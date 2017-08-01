@@ -64,12 +64,12 @@ setGeneric("calculateMetrics", function(object, ...) {
 
 
 
-#' @rdname downloads
+#' @rdname download
 #' @family `bcbio` Utilities
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("downloads", function(object) {
-    standardGeneric("downloads")
+setGeneric("download", function(object) {
+    standardGeneric("download")
 })
 
 
@@ -218,7 +218,7 @@ setGeneric("plotStressGenes", function(object, ...) {
 #' @family Clustering Utilities
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("plotTopMarkers", function(object, markers, ...) {
+setGeneric("plotTopMarkers", function(object, topMarkers, ...) {
     standardGeneric("plotTopMarkers")
 })
 
