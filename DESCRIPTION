@@ -18,8 +18,7 @@ URL:
 BugReports: https://github.com/hbc/bcbioSinglecell/issues
 Depends:
     R (>= 3.4.0),
-    basejump (>= 0.0.20),
-    SummarizedExperiment (>= 1.6.3)
+    basejump (>= 0.0.20)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
@@ -31,6 +30,7 @@ Imports:
     scales,
     Seurat (>= 2.0),
     stats,
+    SummarizedExperiment (>= 1.6.3),
     S4Vectors,
     utils
 Suggests:
