@@ -43,7 +43,7 @@ Remotes:
     cole-trapnell-lab/monocle-release,
     jimhester/lintr,
     satijalab/seurat,
-    steinbaugh/basejump
+    steinbaugh/basejump@dev
 biocViews:
     DataImport,
     DataRepresentation,
