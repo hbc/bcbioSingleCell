@@ -1,11 +1,18 @@
 #' Plot Clusters
 #'
 #' @rdname plotClusters
+#' @name plotClusters
 #' @author Michael Steinbaugh
 #'
 #' @param symbols Character vector of gene symbols.
 #'
 #' @return No value, only graphical output.
+NULL
+
+
+
+# Methods ====
+#' @rdname plotClusters
 #' @export
 setMethod("plotClusters", "seurat", function(object, symbols) {
     # TEMP Fix for Seurat issue #111

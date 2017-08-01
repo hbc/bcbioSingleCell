@@ -7,7 +7,6 @@
 #' @param markdown Print Markdown headers.
 #'
 #' @return [ggplot].
-#' @export
 NULL
 
 

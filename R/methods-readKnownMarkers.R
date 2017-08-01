@@ -1,6 +1,7 @@
 #' Read Known Markers
 #'
 #' @rdname readKnownMarkers
+#' @name readKnownMarkers
 #' @author Michael Steinbaugh
 #'
 #' @param object Gene markers file (CSV or Excel).
@@ -8,6 +9,12 @@
 #' @param show Show [kable].
 #'
 #' @return [tibble].
+NULL
+
+
+
+# Methods ====
+#' @rdname readKnownMarkers
 #' @export
 setMethod("readKnownMarkers", "character", function(
     object, genomeBuild, show = TRUE) {
