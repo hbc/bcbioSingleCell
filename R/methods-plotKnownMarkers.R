@@ -42,6 +42,8 @@ NULL
 
 
 # Methods ====
+#' @rdname plotKnownMarkers
+#' @export
 setMethod(
     "plotKnownMarkers",
     signature(object = "seurat", knownMarkers = "grouped_df"),

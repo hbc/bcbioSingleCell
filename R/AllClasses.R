@@ -1,3 +1,7 @@
+setOldClass(c("grouped_df", "tbl_df", "tibble"))
+
+
+
 #' bcbioSCDataSet
 #'
 #' [bcbioSCDataSet] is a subclass of [SummarizedExperiment] designed to store a

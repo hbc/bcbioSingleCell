@@ -118,7 +118,7 @@ setGeneric("interestingGroups", function(object) {
 #' @family Clustering Utilities
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("knownMarkersDetected", function(object, known, ...) {
+setGeneric("knownMarkersDetected", function(object, knownMarkers, ...) {
     standardGeneric("knownMarkersDetected")
 })
 
