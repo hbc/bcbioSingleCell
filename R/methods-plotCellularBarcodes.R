@@ -23,20 +23,20 @@ NULL
 
 
 .plotCBTbl <- function(object) {
-    cellularBarcodes <- bcbio(object, "cellularBarcodes")
+    lst <- bcbio(object, "cellularBarcodes")
     if (is.null(cellularBarcodes)) {
         stop("Raw cellular barcode counts not saved in object")
     }
     interestingGroup <- interestingGroups(object)[[1L]]
     meta <- sampleMetadata(object) %>%
-        tidy_select(unique(c("fileName",
+        .[, unique(c("fileName",
                              "sampleID",
                              "sampleName",
-                             interestingGroup)))
-    cellularBarcodes %>%
+                             interestingGroup))]
+    lst %>%
         .bindCB %>%
-        mutate(log10Count = log10(.data[["nCount"]]),
-               nCount = NULL) %>%
+        mutate(log10Count = log10(.data[["reads"]]),
+               reads = NULL) %>%
         # Only plot barcodes with at least 100 read counts (log10 = 2)
         filter(.data[["log10Count"]] > 2L) %>%
         left_join(meta, by = "sampleID")
@@ -53,12 +53,7 @@ NULL
                      y = ~log10Count,
                      fill = ~sampleName)) +
         geom_violin(scale = "width") +
-        geom_hline(alpha = qcLineAlpha,
-                   color = qcFailColor,
-                   size = qcLineSize,
-                   yintercept = 2L) +
-        geom_hline(alpha = qcLineAlpha,
-                   color = qcPassColor,
+        geom_hline(color = "black",
                    size = qcLineSize,
                    yintercept = cbCutoffLine) +
         labs(title = "raw violin",
@@ -83,12 +78,7 @@ NULL
              x = "log10 read counts per cell") +
         geom_histogram(bins = bins) +
         scale_y_sqrt() +
-        geom_vline(alpha = qcLineAlpha,
-                   color = qcFailColor,
-                   size = qcLineSize,
-                   xintercept = 2L) +
-        geom_vline(alpha = qcLineAlpha,
-                   color = qcPassColor,
+        geom_vline(color = "black",
                    size = qcLineSize,
                    xintercept = cbCutoffLine)
     if (isTRUE(multiplexedFASTQ)) {
@@ -100,18 +90,15 @@ NULL
 
 
 .plotCBProportionalHistogram <- function(object) {
+    tbl <- .proportionalCB(object)
     cbCutoffLine <- .cbCutoffLine(object)
-    p <- ggplot(.proportionalCB(object),
+    p <- ggplot(tbl,
                 aes_(x = ~log10Count,
                      y = ~proportion * 100L,
                      color = ~sampleName)) +
-        geom_line(size = 2L) +
-        geom_vline(alpha = qcLineAlpha,
-                   color = qcFailColor,
-                   size = qcLineSize,
-                   xintercept = 2L) +
-        geom_vline(alpha = qcLineAlpha,
-                   color = qcPassColor,
+        geom_line(alpha = 0.9,
+                  size = 1.5) +
+        geom_vline(color = "black",
                    size = qcLineSize,
                    xintercept = cbCutoffLine) +
         labs(title = "proportional histogram",
@@ -129,30 +116,27 @@ NULL
 #' @rdname plotCellularBarcodes
 #' @export
 setMethod("plotCellularBarcodes", "bcbioSCDataSet", function(object) {
-    # Use defined plotCBTbl here for improved speed
-    plotCBTbl <- .plotCBTbl(object)
+    tbl <- .plotCBTbl(object)
     cbCutoffLine <- .cbCutoffLine(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
+
+    violin <- .plotCBRawViolin(tbl, cbCutoffLine, multiplexedFASTQ)
+    rawHisto <- .plotCBRawHistogram(tbl, cbCutoffLine, multiplexedFASTQ)
+    propHisto <- .plotCBProportionalHistogram(object)
+
     ggdraw() +
         # Coordinates are relative to lower left corner
-        draw_plot(
-            .plotCBRawViolin(plotCBTbl,
-                             cbCutoffLine,
-                             multiplexedFASTQ) +
-                xlab("") +
-                theme(legend.position = "none"),
-            x = 0L, y = 0.7, width = 0.5, height = 0.3) +
-        draw_plot(
-            .plotCBRawHistogram(plotCBTbl,
-                                cbCutoffLine,
-                                multiplexedFASTQ) +
-                ylab("") +
-                theme(axis.text.y = element_blank(),
-                      axis.ticks.y = element_blank(),
-                      legend.position = "none"),
-            x = 0.5, y = 0.7, width = 0.5, height = 0.3) +
-        draw_plot(
-            .plotCBProportionalHistogram(object) +
-                theme(legend.position = "bottom"),
-            x = 0L, y = 0L, width = 1L, height = 0.7)
+        draw_plot(violin +
+                      xlab("") +
+                      theme(legend.position = "none"),
+                  x = 0L, y = 0.7, width = 0.5, height = 0.3) +
+        draw_plot(rawHisto +
+                      ylab("") +
+                      theme(axis.text.y = element_blank(),
+                            axis.ticks.y = element_blank(),
+                            legend.position = "none"),
+                  x = 0.5, y = 0.7, width = 0.5, height = 0.3) +
+        draw_plot(propHisto +
+                      theme(legend.position = "bottom"),
+                  x = 0L, y = 0L, width = 1L, height = 0.7)
 })

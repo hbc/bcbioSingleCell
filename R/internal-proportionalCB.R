@@ -13,9 +13,9 @@
 .proportionalCB <- function(object) {
     metadata <- sampleMetadata(object) %>%
         .[, metaPriorityCols]
-    cb <- bcbio(object, "cellularBarcodes")
-    lapply(seq_along(cb), function(a) {
-        cb <- cb[[a]] %>%
+    lst <- bcbio(object, "cellularBarcodes")
+    lapply(seq_along(lst), function(a) {
+        cb <- lst[[a]] %>%
             mutate(log10Reads = log10(.data[["reads"]]))
         cbHist <- hist(cb[["log10Reads"]], n = 100L, plot = FALSE)
         # `fLog` in Klein Lab code
@@ -23,14 +23,14 @@
         # `xLog` in Klein Lab code
         mids <-  cbHist[["mids"]]
         tibble(
-            sampleID = names(cb)[[a]],
+            sampleID = names(lst)[[a]],
             # log10 read counts per cell
             log10Count = mids,
             # Proportion of cells
             proportion = counts * (10L ^ mids) /
                 sum(counts * (10L ^ mids)))
     }) %>%
-        set_names(names(cb)) %>%
+        set_names(names(lst)) %>%
         bind_rows %>%
         left_join(metadata, by = "sampleID")
 }
