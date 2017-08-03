@@ -91,7 +91,7 @@
     # 6 nucleotides: SureCell
     if (all(str_detect(colnames(sparseCounts), "^[ACGT]+_"))) {
         colnames(sparseCounts) <- colnames(sparseCounts) %>%
-            paste(camel(sampleName), ., sep = "_")
+            paste(sampleName, ., sep = "_")
     } else {
         stop("Failed to add sample name")
     }
