@@ -17,7 +17,7 @@ Read Cellular Barcode File
 }
 \seealso{
 Other Cellular Barcode Utilities: \code{\link{.bindCB}},
-  \code{\link{.cbList}}, \code{\link{.proportionalCB}}
+  \code{\link{.cbList}}, \code{\link{.propTblFromDataSet}}
 }
 \author{
 Michael Steinbaugh

@@ -219,14 +219,21 @@ NULL
 #' @rdname plotCellularBarcodes
 #' @export
 setMethod("plotCellularBarcodes", "bcbioSCDataSet", function(object) {
+    # Currently only supports bcbio pipeline
+    if (metadata(object)[["pipeline"]] != "bcbio") {
+        warning(paste("`plotCellularBarcodes()` currently only supports",
+                      "bcbio pipeline for `bcbioSCDataSet` class"),
+                call. = FALSE)
+        return(NULL)
+    }
     rawTbl <- .cbTblFromList(object)
     propTbl <- .propTblFromDataSet(object)
     cutoffLine <- .cbCutoffLine(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
     .plotCB(
-        .plotCBRawViolin(tbl, cutoffLine, multiplexedFASTQ),
-        .plotCBRawHisto(tbl, cutoffLine, multiplexedFASTQ),
-        .plotCBPropHisto(object))
+        .plotCBRawViolin(rawTbl, cutoffLine, multiplexedFASTQ),
+        .plotCBRawHisto(rawTbl, cutoffLine, multiplexedFASTQ),
+        .plotCBPropHisto(propTbl, cutoffLine, multiplexedFASTQ))
 })
 
 
