@@ -143,8 +143,10 @@ setMethod("loadRun", "character", function(
         # Well metadata ----
         if (!is.null(wellMetadataFile)) {
             wellMetadataFile <- normalizePath(wellMetadataFile)
+            wellMetadata <- readFileByExtension(wellMetadataFile)
+        } else {
+            wellMetadata <- NULL
         }
-        wellMetadata <- readFileByExtension(wellMetadataFile)
 
         # tx2gene ----
         if (is.null(tx2gene)) {
