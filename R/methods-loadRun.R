@@ -212,6 +212,7 @@ setMethod("loadRun", "character", function(
         multiplexedFASTQ <- FALSE
     }
     metadata <- SimpleList(
+        version = packageVersion("bcbioSinglecell"),
         pipeline = pipeline,
         uploadDir = uploadDir,
         sampleDirs = sampleDirs,
