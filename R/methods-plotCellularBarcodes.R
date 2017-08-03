@@ -105,7 +105,7 @@ NULL
                 aes_(x = ~log10Count,
                      y = ~proportion * 100L,
                      color = ~sampleName)) +
-        geom_line() +
+        geom_line(size = 2L) +
         geom_vline(alpha = qcLineAlpha,
                    color = qcFailColor,
                    size = qcLineSize,
