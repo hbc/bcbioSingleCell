@@ -121,6 +121,9 @@ NULL
 
         mdHeader("Filtered metrics plots {.tabset}", level = 2L)
 
+        mdHeader("Reads per cell", level = 3L)
+        show(plotReadsPerCell(object))
+
         mdHeader("Cell counts", level = 3L)
         show(plotCellCounts(object))
 
