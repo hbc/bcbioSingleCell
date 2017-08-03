@@ -32,6 +32,16 @@ devtools::install_github("hbc/bcbioSinglecell")
 - Do not commit changes directly to `master` branch.
 - Support is only provided for the current release version.
 
+### Required checks
+
+```r
+lintr::lint_package()
+devtools::document()
+devtools::check()
+BiocCheck::BiocCheck(getwd())
+pkgdown::build_site()
+```
+
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [bioconductor]: https://bioconductor.org
