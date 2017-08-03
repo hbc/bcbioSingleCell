@@ -24,7 +24,7 @@ NULL
 
 .plotCBTbl <- function(object) {
     lst <- bcbio(object, "cellularBarcodes")
-    if (is.null(cellularBarcodes)) {
+    if (is.null(lst)) {
         stop("Raw cellular barcode counts not saved in object")
     }
     interestingGroup <- interestingGroups(object)[[1L]]
@@ -45,10 +45,10 @@ NULL
 
 
 .plotCBRawViolin <- function(
-    plotCBTbl,
+    object,
     cbCutoffLine,
     multiplexedFASTQ) {
-    p <- ggplot(plotCBTbl,
+    p <- ggplot(object,
                 aes_(x = ~sampleName,
                      y = ~log10Count,
                      fill = ~sampleName)) +
@@ -68,10 +68,10 @@ NULL
 
 
 .plotCBRawHistogram <- function(
-    plotCBTbl,
+    object,
     cbCutoffLine,
     multiplexedFASTQ) {
-    p <- ggplot(plotCBTbl,
+    p <- ggplot(object,
                 aes_(x = ~log10Count,
                      fill = ~sampleName)) +
         labs(title = "raw histogram",
