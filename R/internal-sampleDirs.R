@@ -19,7 +19,15 @@
             sampleDirs <- sampleDirs %>%
                 .[!str_detect(basename(.), projectDirPattern)]
         }
-        names(sampleDirs) <- basename(sampleDirs)
+        split <- basename(sampleDirs) %>%
+            str_split("-")
+        sampleNames <-
+            sapply(seq_along(split), function(a) {
+            paste(camel(split[[a]][[1L]]),
+                  split[[a]][[2L]],
+                  sep = "_")
+        })
+        names(sampleDirs) <- sampleNames
     } else if (pipeline == "cellranger") {
         # Use the raw, not filtered matrices
         sampleDirs <- list.files(
@@ -34,7 +42,8 @@
             dirname %>%
             dirname %>%
             dirname %>%
-            basename
+            basename %>%
+            camel
     } else {
         stop("Unsupported pipeline")
     }
@@ -42,9 +51,7 @@
     # Return
     if (length(sampleDirs) == 0L) {
         stop("No sample directories detected")
-    } else {
-        message(paste(length(sampleDirs), "samples detected"))
-        sampleDirs <- camel(sampleDirs)
     }
+    message(paste(length(sampleDirs), "samples detected"))
     sampleDirs
 }

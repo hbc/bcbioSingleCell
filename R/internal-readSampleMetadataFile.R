@@ -56,24 +56,23 @@
                 mutate(revcomp = vapply(.data[["sequence"]],
                                         revcomp,
                                         character(1L)),
-                       sampleID = paste(.data[["fileName"]],
-                                         .data[["revcomp"]],
-                                         sep = "_"))
+                       sampleID = paste(
+                           camel(.data[["fileName"]]),
+                           .data[["revcomp"]],
+                           sep = "_"))
         }
     } else if (pipeline == "cellranger") {
         # Check for general required columns
         if (!all(c("fileName", "sampleName") %in% colnames(meta))) {
             stop("`fileName` and `sampleName` are required", call. = FALSE)
         }
-        meta[["sampleID"]] <- meta[["fileName"]]
+        meta[["sampleID"]] <- camel(meta[["fileName"]])
     } else {
         stop("Unsupported pipeline")
     }
 
-    # Ensure `sampleID` is valid name then arrange
-    meta <- meta %>%
-        mutate(sampleID = camel(.data[["sampleID"]])) %>%
-        arrange(!!sym("sampleID"))
+    # Arrange rows by `sampleID`
+    meta <- arrange(meta, !!sym("sampleID"))
 
     # Check that `sampleID` matches `sampleDirs`
     if (!all(meta[["sampleID"]] %in% names(sampleDirs))) {
