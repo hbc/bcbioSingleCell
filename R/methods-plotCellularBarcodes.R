@@ -22,17 +22,14 @@ NULL
 
 
 
-.plotCBTbl <- function(object) {
+.cbTblFromList <- function(object) {
     lst <- bcbio(object, "cellularBarcodes")
     if (is.null(lst)) {
         stop("Raw cellular barcode counts not saved in object")
     }
     interestingGroup <- interestingGroups(object)[[1L]]
     meta <- sampleMetadata(object) %>%
-        .[, unique(c("fileName",
-                             "sampleID",
-                             "sampleName",
-                             interestingGroup))]
+        .[, unique(c(metaPriorityCols, interestingGroup))]
     lst %>%
         .bindCB %>%
         mutate(log10Count = log10(.data[["reads"]]),
@@ -44,21 +41,36 @@ NULL
 
 
 
+.cbTblFromMetrics <- function(object) {
+    interestingGroup <- interestingGroups(object)[[1L]]
+    meta <- sampleMetadata(object) %>%
+        .[, unique(c(metaPriorityCols, interestingGroup))]
+    metrics(object) %>%
+        as("tibble") %>%
+        mutate(log10Count = log10(.data[["nCount"]]),
+               nCount = NULL) %>%
+        filter(.data[["log10Count"]] > 2L)
+}
+
+
+
 .plotCBRawViolin <- function(
     object,
-    cbCutoffLine,
+    cutoffLine = NULL,
     multiplexedFASTQ) {
     p <- ggplot(object,
                 aes_(x = ~sampleName,
                      y = ~log10Count,
                      fill = ~sampleName)) +
         geom_violin(scale = "width") +
-        geom_hline(color = "black",
-                   size = qcLineSize,
-                   yintercept = cbCutoffLine) +
         labs(title = "raw violin",
              y = "log10 read counts per cell") +
         coord_flip()
+    if (!is.null(cutoffLine) & length(cutoffLine)) {
+        p <- p + geom_hline(color = "black",
+                            size = qcLineSize,
+                            yintercept = cutoffLine)
+    }
     if (isTRUE(multiplexedFASTQ)) {
         p <- p + facet_wrap(~fileName)
     }
@@ -67,9 +79,9 @@ NULL
 
 
 
-.plotCBRawHistogram <- function(
+.plotCBRawHisto <- function(
     object,
-    cbCutoffLine,
+    cutoffLine,
     multiplexedFASTQ) {
     p <- ggplot(object,
                 aes_(x = ~log10Count,
@@ -77,10 +89,12 @@ NULL
         labs(title = "raw histogram",
              x = "log10 read counts per cell") +
         geom_histogram(bins = bins) +
-        scale_y_sqrt() +
-        geom_vline(color = "black",
-                   size = qcLineSize,
-                   xintercept = cbCutoffLine)
+        scale_y_sqrt()
+    if (!is.null(cutoffLine) & length(cutoffLine)) {
+        p <- p + geom_hline(color = "black",
+                            size = qcLineSize,
+                            yintercept = cutoffLine)
+    }
     if (isTRUE(multiplexedFASTQ)) {
         p <- p + facet_wrap(~fileName)
     }
@@ -89,22 +103,91 @@ NULL
 
 
 
-.plotCBProportionalHistogram <- function(object) {
-    tbl <- .proportionalCB(object)
-    cbCutoffLine <- .cbCutoffLine(object)
+#' Proportional Cellular Barcodes
+#'
+#' @rdname propCB-internal
+#' @family Cellular Barcode Utilities
+#' @author Rory Kirchner, Michael Steinbaugh
+#' @keywords internal
+#'
+#' @inheritParams AllGenerics
+#'
+#' @details Modified version of Klein Lab MATLAB code.
+#'
+#' @return [tibble].
+.propTblFromDataSet <- function(object) {
+    metadata <- sampleMetadata(object) %>%
+        .[, metaPriorityCols]
+    lst <- bcbio(object, "cellularBarcodes")
+    lapply(seq_along(lst), function(a) {
+        cb <- lst[[a]] %>%
+            mutate(log10Count = log10(.data[["nCount"]]))
+        cbHist <- hist(cb[["log10Count"]], n = 100L, plot = FALSE)
+        # `fLog` in Klein Lab code
+        counts <- cbHist[["counts"]]
+        # `xLog` in Klein Lab code
+        mids <-  cbHist[["mids"]]
+        tibble(
+            sampleID = names(lst)[[a]],
+            # log10 read counts per cell
+            log10Count = mids,
+            # Proportion of cells
+            proportion = counts * (10L ^ mids) /
+                sum(counts * (10L ^ mids)))
+    }) %>%
+        set_names(names(lst)) %>%
+        bind_rows %>%
+        left_join(metadata, by = "sampleID")
+}
+
+
+
+.propTblFromSubset <- function(object) {
+    metadata <- sampleMetadata(object) %>%
+        .[, metaPriorityCols]
+    metrics <- metrics(object) %>%
+        mutate(log10Count = log10(.data[["nCount"]])) %>%
+        .[, c(metaPriorityCols, "log10Count")]
+    uniques <- unique(metrics[["sampleID"]])
+    lapply(seq_along(uniques), function(a) {
+        cb <- metrics %>%
+            .[.[["sampleID"]] %in% uniques[[a]], , drop = FALSE]
+        cbHist <- hist(cb[["log10Count"]], n = 100L, plot = FALSE)
+        # `fLog` in Klein Lab code
+        counts <- cbHist[["counts"]]
+        # `xLog` in Klein Lab code
+        mids <-  cbHist[["mids"]]
+        tibble(
+            sampleID = uniques[[a]],
+            # log10 read counts per cell
+            log10Count = mids,
+            # Proportion of cells
+            proportion = counts * (10L ^ mids) /
+                sum(counts * (10L ^ mids)))
+    }) %>%
+        set_names(uniques) %>%
+        bind_rows %>%
+        left_join(metadata, by = "sampleID")
+}
+
+
+
+.plotCBPropHisto <- function(tbl, cutoffLine, multiplexedFASTQ = FALSE) {
     p <- ggplot(tbl,
                 aes_(x = ~log10Count,
                      y = ~proportion * 100L,
                      color = ~sampleName)) +
         geom_line(alpha = 0.9,
                   size = 1.5) +
-        geom_vline(color = "black",
-                   size = qcLineSize,
-                   xintercept = cbCutoffLine) +
         labs(title = "proportional histogram",
              x = "log10 read counts per cell",
              y = "% of cells")
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
+    if (!is.null(cutoffLine) & length(cutoffLine)) {
+        p <- p + geom_hline(color = "black",
+                            size = qcLineSize,
+                            yintercept = cutoffLine)
+    }
+    if (isTRUE(multiplexedFASTQ)) {
         p <- p + facet_wrap(~fileName)
     }
     p
@@ -112,18 +195,7 @@ NULL
 
 
 
-# Methods ====
-#' @rdname plotCellularBarcodes
-#' @export
-setMethod("plotCellularBarcodes", "bcbioSCDataSet", function(object) {
-    tbl <- .plotCBTbl(object)
-    cbCutoffLine <- .cbCutoffLine(object)
-    multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
-
-    violin <- .plotCBRawViolin(tbl, cbCutoffLine, multiplexedFASTQ)
-    rawHisto <- .plotCBRawHistogram(tbl, cbCutoffLine, multiplexedFASTQ)
-    propHisto <- .plotCBProportionalHistogram(object)
-
+.plotCB <- function(violin, rawHisto, propHisto) {
     ggdraw() +
         # Coordinates are relative to lower left corner
         draw_plot(violin +
@@ -139,4 +211,35 @@ setMethod("plotCellularBarcodes", "bcbioSCDataSet", function(object) {
         draw_plot(propHisto +
                       theme(legend.position = "bottom"),
                   x = 0L, y = 0L, width = 1L, height = 0.7)
+}
+
+
+
+# Methods ====
+#' @rdname plotCellularBarcodes
+#' @export
+setMethod("plotCellularBarcodes", "bcbioSCDataSet", function(object) {
+    rawTbl <- .cbTblFromList(object)
+    propTbl <- .propTblFromDataSet(object)
+    cutoffLine <- .cbCutoffLine(object)
+    multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
+    .plotCB(
+        .plotCBRawViolin(tbl, cutoffLine, multiplexedFASTQ),
+        .plotCBRawHisto(tbl, cutoffLine, multiplexedFASTQ),
+        .plotCBPropHisto(object))
+})
+
+
+
+#' @rdname plotCellularBarcodes
+#' @export
+setMethod("plotCellularBarcodes", "bcbioSCSubset", function(object) {
+    rawTbl <- .cbTblFromMetrics(object)
+    propTbl <- .propTblFromSubset(object)
+    cutoffLine <- .cbCutoffLine(object)
+    multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
+    .plotCB(
+        .plotCBRawViolin(rawTbl, cutoffLine, multiplexedFASTQ),
+        .plotCBRawHisto(rawTbl, cutoffLine, multiplexedFASTQ),
+        .plotCBPropHisto(propTbl, cutoffLine, multiplexedFASTQ))
 })

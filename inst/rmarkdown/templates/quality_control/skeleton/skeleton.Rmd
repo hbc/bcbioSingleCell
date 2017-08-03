@@ -5,8 +5,8 @@ date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
     bcb: "data/bcb.rda"
-    minUMIs: 1000
-    minGenes: 500
+    minUMIs: 100
+    minGenes: 200
     maxGenes: 5000
     maxMitoRatio: 0.05
     minNovelty: 0.8
@@ -70,7 +70,7 @@ plotUMIsPerCell(bcb, min = params$minUMIs)
 
 ## Genes detected per cell
 
-Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `1000`-`5000` is normal for [inDrop][] analysis.
+Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for [inDrop][] analysis.
 
 ```{r plotGenesPerCell, fig.height=12, fig.width=8}
 plotGenesPerCell(bcb, min = params$minGenes, max = params$maxGenes)

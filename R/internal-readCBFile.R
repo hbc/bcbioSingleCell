@@ -11,7 +11,7 @@
 .readCBFile <- function(file) {
     readFileByExtension(
         file,
-        col_names = c("cellularBarcode", "reads"),
+        col_names = c("cellularBarcode", "nCount"),
         col_types = "ci") %>%
         mutate(cellularBarcode = str_replace_all(
             .data[["cellularBarcode"]], "-", "_"))

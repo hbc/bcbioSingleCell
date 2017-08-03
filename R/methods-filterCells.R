@@ -78,14 +78,19 @@ NULL
 
     # Metadata ====
     oldMeta <- metadata(object) %>%
-        .[c("pipeline",
+        .[c("version",
+            "pipeline",
+            "uploadDir",
+            "sampleMetadataFile",
             "sampleMetadata",
             "interestingGroups",
             "genomeBuild",
             "annotable",
             "ensemblVersion",
             "umiType",
-            "multiplexedFASTQ")]
+            "multiplexedFASTQ",
+            "runDate",
+            "cbCutoff")]
     newMeta <- list(
         filteringCriteria = c(
             minUMIs = minUMIs,

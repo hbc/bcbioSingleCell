@@ -5,11 +5,14 @@
 \alias{plotCellularBarcodes}
 \alias{plotCellularBarcodes}
 \alias{plotCellularBarcodes,bcbioSCDataSet-method}
+\alias{plotCellularBarcodes,bcbioSCSubset-method}
 \title{Plot Cellular Barcode Distributions per Sample}
 \usage{
 plotCellularBarcodes(object, ...)
 
 \S4method{plotCellularBarcodes}{bcbioSCDataSet}(object)
+
+\S4method{plotCellularBarcodes}{bcbioSCSubset}(object)
 }
 \arguments{
 \item{object}{Object.}

@@ -199,8 +199,6 @@ setMethod("loadRun", "character", function(
             as.data.frame %>%
             rownames_to_column %>%
             left_join(cbTbl, by = "rowname") %>%
-            # Rename `reads` to `nCount` for consistency
-            rename(nCount = .data[["reads"]]) %>%
             tidy_select("nCount", everything()) %>%
             column_to_rownames %>%
             as.matrix
