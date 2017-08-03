@@ -14,19 +14,19 @@ params:
 ---
 
 ```{r setup, include=FALSE}
-bcbioSinglecell::downloads()
+bcbioSinglecell::download()
 source("setup.R")
 
-# bcbioSCDataSet
-# Need to save bcb using `loadRun()` prior to knit
-load(params$bcb) %>%
-    assign("bcb", get(.))
+# bcbioRNADataSet
+# Need to save bcb using `loadRun()` prior to knit!
+bcbName <- load(params$bcb)
+assign("bcb", get(bcbName))
+if (is.null(bcb)) stop("bcbioSCDataSet missing")
 
 # Directory paths
-dataDir <- normalizePath(outputDir) %>%
-    file.path("data")
-countsDir <- normalizePath(outputDir) %>%
-    file.path("results", "counts")
+outputDir <- normalizePath(params$outputDir)
+dataDir <- file.path(outputDir, "data")
+countsDir <- file.path(outputDir, "results", "counts")
 ```
 
 ```{r header, child="_header.Rmd"}

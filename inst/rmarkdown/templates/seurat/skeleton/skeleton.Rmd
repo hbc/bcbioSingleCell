@@ -12,7 +12,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, include=FALSE}
-bcbioSinglecell::downloads()
+bcbioSinglecell::download()
 source("setup.R")
 library(Seurat)
 
@@ -42,9 +42,8 @@ if (pcUse > 25) {
 varsToRegress <- params$varsToRegress
 
 # Directory paths
-markersDir <- file.path(
-    normalizePath(params$outputDir),
-    "results", "markers")
+outputDir <- normalizePath(params$outputDir)
+markersDir <- file.path(outputDir, "results", "markers")
 
 # knitr arguments
 opts_chunk$set(
