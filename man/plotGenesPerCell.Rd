@@ -34,8 +34,8 @@ Plot Genes per Cell
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
-  \code{\link{plotCellularBarcodes}},
   \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
+  \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}}
 }

@@ -30,9 +30,10 @@ Plot Mitochondrial Transcript Abundance
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
-  \code{\link{plotCellularBarcodes}},
   \code{\link{plotGenesPerCell}},
-  \code{\link{plotNovelty}}, \code{\link{plotUMIsPerCell}},
+  \code{\link{plotNovelty}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}}
 }
 \author{

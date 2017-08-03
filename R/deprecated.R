@@ -28,6 +28,12 @@ filter_barcodes <- function() {
 
 #' @rdname deprecated
 #' @export
+plot_cellular_barcodes <- function() {
+    .Deprecated("plotReadsPerCell")
+}
+
+#' @rdname deprecated
+#' @export
 plot_genes_detected <- function() {
     .Deprecated("plotGenesPerCell")
 }

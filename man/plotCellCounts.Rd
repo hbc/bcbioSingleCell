@@ -27,9 +27,9 @@ Plot Cell Counts
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},
-  \code{\link{plotCellularBarcodes}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
+  \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}}
 }

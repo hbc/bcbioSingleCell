@@ -144,12 +144,12 @@ setGeneric("plotCellCounts", function(object, ...) {
 
 
 
-#' @rdname plotCellularBarcodes
+#' @rdname plotReadsPerCell
 #' @family Quality Control Metrics
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("plotCellularBarcodes", function(object, ...) {
-    standardGeneric("plotCellularBarcodes")
+setGeneric("plotReadsPerCell", function(object, ...) {
+    standardGeneric("plotReadsPerCell")
 })
 
 

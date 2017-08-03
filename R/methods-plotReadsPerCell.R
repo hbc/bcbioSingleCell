@@ -1,12 +1,14 @@
-#' Plot Cellular Barcode Distributions per Sample
+#' Plot Read Counts per Cell
 #'
-#' @rdname plotCellularBarcodes
-#' @name plotCellularBarcodes
+#' @rdname plotReadsPerCell
+#' @name plotReadsPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @details A violin plot is a comact display of a continuous distribution. It
 #'   is a blend of [geom_boxplot()] and [geom_density()]: a violin plot is a
 #'   mirrored density plot displayed in the same way as a boxplot.
+#'
+#' @note Here by cell we mean "cellular barcode".
 #'
 #' @return [ggplot].
 NULL
@@ -216,12 +218,12 @@ NULL
 
 
 # Methods ====
-#' @rdname plotCellularBarcodes
+#' @rdname plotReadsPerCell
 #' @export
-setMethod("plotCellularBarcodes", "bcbioSCDataSet", function(object) {
+setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
     # Currently only supports bcbio pipeline
     if (metadata(object)[["pipeline"]] != "bcbio") {
-        warning(paste("`plotCellularBarcodes()` currently only supports",
+        warning(paste("`plotReadsPerCell()` currently only supports",
                       "bcbio pipeline for `bcbioSCDataSet` class"),
                 call. = FALSE)
         return(NULL)
@@ -238,9 +240,9 @@ setMethod("plotCellularBarcodes", "bcbioSCDataSet", function(object) {
 
 
 
-#' @rdname plotCellularBarcodes
+#' @rdname plotReadsPerCell
 #' @export
-setMethod("plotCellularBarcodes", "bcbioSCSubset", function(object) {
+setMethod("plotReadsPerCell", "bcbioSCSubset", function(object) {
     rawTbl <- .cbTblFromMetrics(object)
     propTbl <- .propTblFromSubset(object)
     cutoffLine <- .cbCutoffLine(object)

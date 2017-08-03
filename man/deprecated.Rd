@@ -4,6 +4,7 @@
 \alias{deprecated}
 \alias{barcode_metrics}
 \alias{filter_barcodes}
+\alias{plot_cellular_barcodes}
 \alias{plot_genes_detected}
 \alias{plot_mito_counts}
 \alias{plot_total_cells}
@@ -13,6 +14,8 @@
 barcode_metrics()
 
 filter_barcodes()
+
+plot_cellular_barcodes()
 
 plot_genes_detected()
 
