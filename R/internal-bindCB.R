@@ -10,12 +10,12 @@
 #' @return [tibble].
 .bindCB <- function(list) {
     lapply(seq_along(list), function(a) {
-        sampleID <- names(list)[[a]] %>% camel
+        sampleID <- names(list)[[a]]
         list[[a]] %>%
             mutate(sampleID = !!sampleID)
     }) %>%
-        as("tibble") %>%
         bind_rows %>%
+        as("tibble") %>%
         mutate(rowname = paste(.data[["sampleID"]],
                                .data[["cellularBarcode"]],
                                sep = "_"))
