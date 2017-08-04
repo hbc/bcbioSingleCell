@@ -35,12 +35,8 @@ Imports:
     utils
 Suggests:
     lintr (>= 1.0.0.9000),
-    monocle (>= 2.5.3),
-    scater (>= 1.4.0),
-    scone (>= 1.0.0),
     testthat
 Remotes:
-    cole-trapnell-lab/monocle-release,
     jimhester/lintr,
     satijalab/seurat,
     steinbaugh/basejump

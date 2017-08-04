@@ -3,8 +3,7 @@
 #' Import and analyze [bcbio](http://bcbio-nextgen.readthedocs.io) single-cell
 #' RNA-seq data.
 #'
-#' @import basejump methods SummarizedExperiment S4Vectors
-#' @importFrom BiocGenerics counts design
+#' @import basejump BiocGenerics methods SummarizedExperiment S4Vectors
 #' @importFrom ggplot2 aes_ coord_flip element_blank element_text expand_limits
 #'   facet_wrap geom_bar geom_boxplot geom_histogram geom_hline geom_label
 #'   geom_line geom_point geom_smooth geom_text geom_violin geom_vline ggplot
