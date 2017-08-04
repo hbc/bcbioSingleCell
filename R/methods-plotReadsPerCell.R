@@ -171,7 +171,8 @@ NULL
 
 
 
-.plotCBPropHisto <- function(tbl, cutoffLine = NULL, multiplexedFASTQ = FALSE) {
+.plotCBPropHisto <- function(
+    tbl, cutoffLine = NULL, multiplexedFASTQ = FALSE) {
     p <- ggplot(tbl,
                 aes_(x = ~log10Count,
                      y = ~proportion * 100L,
@@ -255,14 +256,11 @@ setMethod("plotReadsPerCell", "bcbioSCSubset", function(object) {
     .plotCB(
         .plotCBRawViolin(
             rawTbl,
-            cutoffLine = FALSE,
             multiplexedFASTQ = multiplexedFASTQ),
         .plotCBRawHisto(
             rawTbl,
-            cutoffLine = FALSE,
             multiplexedFASTQ = multiplexedFASTQ),
         .plotCBPropHisto(
             propTbl,
-            cutoffLine = FALSE,
             multiplexedFASTQ = multiplexedFASTQ))
 })
