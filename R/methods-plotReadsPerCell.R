@@ -171,7 +171,7 @@ NULL
 
 
 
-.plotCBPropHisto <- function(tbl, cutoffLine, multiplexedFASTQ = FALSE) {
+.plotCBPropHisto <- function(tbl, cutoffLine = NULL, multiplexedFASTQ = FALSE) {
     p <- ggplot(tbl,
                 aes_(x = ~log10Count,
                      y = ~proportion * 100L,
@@ -230,9 +230,18 @@ setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
     cutoffLine <- .cbCutoffLine(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
     .plotCB(
-        .plotCBRawViolin(rawTbl, cutoffLine, multiplexedFASTQ),
-        .plotCBRawHisto(rawTbl, cutoffLine, multiplexedFASTQ),
-        .plotCBPropHisto(propTbl, cutoffLine, multiplexedFASTQ))
+        .plotCBRawViolin(
+            rawTbl,
+            cutoffLine = cutoffLine,
+            multiplexedFASTQ = multiplexedFASTQ),
+        .plotCBRawHisto(
+            rawTbl,
+            cutoffLine = cutoffLine,
+            multiplexedFASTQ = multiplexedFASTQ),
+        .plotCBPropHisto(
+            propTbl,
+            cutoffLine = cutoffLine,
+            multiplexedFASTQ = multiplexedFASTQ))
 })
 
 
@@ -242,10 +251,18 @@ setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
 setMethod("plotReadsPerCell", "bcbioSCSubset", function(object) {
     rawTbl <- .cbTblFromMetrics(object)
     propTbl <- .propTblFromSubset(object)
-    cutoffLine <- .cbCutoffLine(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
     .plotCB(
-        .plotCBRawViolin(rawTbl, cutoffLine, multiplexedFASTQ),
-        .plotCBRawHisto(rawTbl, cutoffLine, multiplexedFASTQ),
-        .plotCBPropHisto(propTbl, cutoffLine, multiplexedFASTQ))
+        .plotCBRawViolin(
+            rawTbl,
+            cutoffLine = FALSE,
+            multiplexedFASTQ = multiplexedFASTQ),
+        .plotCBRawHisto(
+            rawTbl,
+            cutoffLine = FALSE,
+            multiplexedFASTQ = multiplexedFASTQ),
+        .plotCBPropHisto(
+            propTbl,
+            cutoffLine = FALSE,
+            multiplexedFASTQ = multiplexedFASTQ))
 })
