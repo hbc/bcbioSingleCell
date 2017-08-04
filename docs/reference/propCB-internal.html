@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read Known Markers — readKnownMarkers • bcbioSinglecell</title>
+<title>Proportional Cellular Barcodes — .propTblFromDataSet • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,36 +80,21 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read Known Markers</h1>
+    <h1>Proportional Cellular Barcodes</h1>
     </div>
 
     
-    <p>Read Known Markers</p>
+    <p>Proportional Cellular Barcodes</p>
     
 
-    <pre class="usage"><span class='fu'>readKnownMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for character</span>
-<span class='fu'>readKnownMarkers</span>(<span class='no'>object</span>, <span class='no'>genomeBuild</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>.propTblFromDataSet</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Gene markers file (CSV or Excel).</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
-    </tr>
-    <tr>
-      <th>genomeBuild</th>
-      <td><p>Genome build.</p></td>
-    </tr>
-    <tr>
-      <th>show</th>
-      <td><p>Show kable.</p></td>
+      <td><p>Object.</p></td>
     </tr>
     </table>
     
@@ -117,13 +102,14 @@
 
     <p>tibble.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Modified version of Klein Lab MATLAB code.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Management Utilities: <code>aggregateFeatures</code>,
-  <code>aggregateReplicates</code>,
-  <code>filterCells</code>,
-  <code>interestingGroups</code>,
-  <code>sampleMetadata</code>, <code>selectSamples</code></p>
+    <p>Other Cellular Barcode Utilities: <code><a href='bindCB-internal.html'>.bindCB</a></code>,
+  <code><a href='cbList-internal.html'>.cbList</a></code>, <code><a href='readCBFile-internal.html'>.readCBFile</a></code></p>
     
 
   </div>
@@ -134,12 +120,14 @@
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
           </ul>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Rory Kirchner, Michael Steinbaugh
 
   </div>
 </div>

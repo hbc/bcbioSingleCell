@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read Known Markers — readKnownMarkers • bcbioSinglecell</title>
+<title>File Downloads — download • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,52 +80,48 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read Known Markers</h1>
+    <h1>File Downloads</h1>
     </div>
 
     
-    <p>Read Known Markers</p>
+    <p>If file isn't present, download latest version from the
+<a href='http://bioinformatics.sph.harvard.edu/'>HBC website</a>.</p>
     
 
-    <pre class="usage"><span class='fu'>readKnownMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>download</span>(<span class='no'>object</span>)
+
+<span class='co'># S4 method for missing</span>
+<span class='fu'>download</span>()
 
 <span class='co'># S4 method for character</span>
-<span class='fu'>readKnownMarkers</span>(<span class='no'>object</span>, <span class='no'>genomeBuild</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>download</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Gene markers file (CSV or Excel).</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
-    </tr>
-    <tr>
-      <th>genomeBuild</th>
-      <td><p>Genome build.</p></td>
-    </tr>
-    <tr>
-      <th>show</th>
-      <td><p>Show kable.</p></td>
+      <td><p>Object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>tibble.</p>
+    <p>No return.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>File download utility functions for RMarkdown knit reports.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Management Utilities: <code>aggregateFeatures</code>,
-  <code>aggregateReplicates</code>,
-  <code>filterCells</code>,
-  <code>interestingGroups</code>,
-  <code>sampleMetadata</code>, <code>selectSamples</code></p>
+    <p>Other `bcbio` Utilities: <code>bcbio</code>,
+  <code><a href='loadRun.html'>loadRun</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>download</span>()
+<span class='fu'>download</span>(<span class='st'>"setup.R"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -134,8 +130,12 @@
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

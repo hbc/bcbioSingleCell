@@ -87,21 +87,22 @@
     <p>Plot Top Markers</p>
     
 
-    <pre class="usage"><span class='fu'>plotTopMarkers</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat,grouped_df</span>
-<span class='fu'>plotTopMarkers</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>markdown</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>,
+  <span class='kw'>markdown</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>Primary object.</p></td>
+      <th>object</th>
+      <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>y</th>
-      <td><p>Top markers grouped tibble returned by <code><a href='topMarkers.html'>topMarkers()</a></code>.</p></td>
+      <th>topMarkers</th>
+      <td><p>Top markers grouped tibble returned by <code>topMarkers()</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -120,10 +121,10 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
-  <code><a href='plotClusters.html'>plotClusters</a></code>,
-  <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
+  <code>plotClusters</code>,
+  <code>plotKnownMarkers</code>,
   <code>plotStressGenes</code>, <code>topBarcodes</code>,
-  <code><a href='topMarkers.html'>topMarkers</a></code></p>
+  <code>topMarkers</code></p>
     
 
   </div>

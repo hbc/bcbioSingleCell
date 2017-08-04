@@ -89,11 +89,11 @@
 
     <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
 <span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)
+  <span class='kw'>as</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)
 
 <span class='co'># S4 method for bcbioSCSubset</span>
 <span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)</pre>
+  <span class='kw'>as</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -108,8 +108,8 @@
 symbols. Recommended for passing counts to Seurat.</p></td>
     </tr>
     <tr>
-      <th>class</th>
-      <td><p>Return counts as sparse matrix (<strong>recommended</strong>; <code>dgCMatrix</code>,
+      <th>as</th>
+      <td><p>Return class (<strong>recommended</strong>; <code>dgCMatrix</code>,
 <code>dgTMatrix</code>) or dense matrix (<code>matrix</code>).</p></td>
     </tr>
     </table>
