@@ -1,9 +1,7 @@
 #' Detect Sample Directories
 #'
-#' @rdname sampleDirs
+#' @rdname internal-sampleDirs
 #' @keywords internal
-#'
-#' @author Michael Steinbaugh
 #'
 #' @param uploadDir Upload directory.
 #' @param pipeline Pipeline used to generate the samples.

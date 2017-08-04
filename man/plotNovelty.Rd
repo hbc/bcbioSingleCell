@@ -39,3 +39,6 @@ Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}}
 }
+\author{
+Michael Steinbaugh
+}

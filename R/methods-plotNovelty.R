@@ -2,7 +2,6 @@
 #'
 #' @rdname plotNovelty
 #' @name plotNovelty
-#' @inherit plotGenesPerCell
 #'
 #' @details "Novelty" refers to log10 genes detected per count.
 NULL

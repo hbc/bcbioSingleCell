@@ -1,8 +1,6 @@
 #' Bind Cellular Barcodes
 #'
-#' @rdname bindCB-internal
-#' @family Cellular Barcode Utilities
-#' @author Michael Steinbaugh
+#' @rdname internal-bindCB
 #' @keywords internal
 #'
 #' @param list List of cellular barcodes.

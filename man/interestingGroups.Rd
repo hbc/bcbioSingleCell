@@ -30,3 +30,6 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{readKnownMarkers}},
   \code{\link{sampleMetadata}}, \code{\link{selectSamples}}
 }
+\author{
+Michael Steinbaugh
+}

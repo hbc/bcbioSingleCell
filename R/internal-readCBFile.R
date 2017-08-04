@@ -1,8 +1,6 @@
 #' Read Cellular Barcode File
 #'
-#' @rdname readCBFile-internal
-#' @family Cellular Barcode Utilities
-#' @author Michael Steinbaugh
+#' @rdname internal-readCBFile
 #' @keywords internal
 #'
 #' @param file Cellular barcode TSV file.

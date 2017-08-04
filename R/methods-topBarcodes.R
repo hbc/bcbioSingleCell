@@ -2,7 +2,6 @@
 #'
 #' @rdname topBarcodes
 #' @name topBarcodes
-#' @author Michael Steinbaugh
 #'
 #' @param n Number of barcodes to return per sample.
 #'

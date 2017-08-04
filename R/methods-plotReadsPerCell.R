@@ -2,7 +2,6 @@
 #'
 #' @rdname plotReadsPerCell
 #' @name plotReadsPerCell
-#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @details A violin plot is a comact display of a continuous distribution. It
 #'   is a blend of [geom_boxplot()] and [geom_density()]: a violin plot is a
@@ -107,9 +106,7 @@ NULL
 
 #' Proportional Cellular Barcodes
 #'
-#' @rdname propCB-internal
-#' @family Cellular Barcode Utilities
-#' @author Rory Kirchner, Michael Steinbaugh
+#' @rdname internal-propCB
 #' @keywords internal
 #'
 #' @inheritParams AllGenerics

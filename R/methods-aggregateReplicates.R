@@ -2,7 +2,6 @@
 #'
 #' @rdname aggregateReplicates
 #' @name aggregateReplicates
-#' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @return [bcbioSCDataSet].
 NULL

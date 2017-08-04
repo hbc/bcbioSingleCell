@@ -11,8 +11,7 @@
 #' @note bcbio-nextgen outputs counts at transcript level. 10X Chromium
 #'   CellRanger outputs counts at gene level.
 #'
-#' @rdname readSparseCounts-internal
-#' @author Michael Steinbaugh, Rory Kirchner
+#' @rdname internal-readSparseCounts
 #' @keywords internal
 #'
 #' @param sampleDir Named character vector of sample directory containing the
@@ -104,8 +103,7 @@
 
 #' Transcript To Gene-Level Sparse Counts
 #'
-#' @rdname sparseCountsTx2Gene-internal
-#' @author Michael Steinbaugh, Rory Kirchner
+#' @rdname internal-sparseCountsTx2Gene
 #' @keywords internal
 #'
 #' @param sparseCounts Sparse counts matrix (`dgCMatrix`).
@@ -144,8 +142,7 @@
 
 #' Strip Transcript Versions
 #'
-#' @rdname stripTranscriptVersions-internal
-#' @author Michael Steinbaugh, Rory Kirchner
+#' @rdname internal-stripTranscriptVersions
 #' @keywords internal
 #'
 #' @param sparseCounts Sparse counts matrix (`dgCMatrix`).

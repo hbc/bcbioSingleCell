@@ -36,3 +36,6 @@ bcbio(object, ...) <- value
 Other `bcbio` Utilities: \code{\link{download}},
   \code{\link{loadRun}}
 }
+\author{
+Michael Steinbaugh
+}

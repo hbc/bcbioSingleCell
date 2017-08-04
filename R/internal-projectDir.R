@@ -1,7 +1,6 @@
 #' Read Data Versions
 #'
-#' @rdname dataVersions-internal
-#' @author Michael Steinbaugh
+#' @rdname internal-dataVersions
 #' @keywords internal
 #'
 #' @param projectDir Project directory.
@@ -20,8 +19,7 @@
 
 #' Read Log File
 #'
-#' @rdname logFile-internal
-#' @author Michael Steinbaugh
+#' @rdname internal-logFile
 #' @keywords internal
 #'
 #' @param file Log file.
@@ -38,8 +36,7 @@
 
 #' Read Program Versions
 #'
-#' @rdname programVersions-internal
-#' @author Michael Steinbaugh
+#' @rdname internal-programVersions
 #' @keywords internal
 #'
 #' @param projectDir Project directory.

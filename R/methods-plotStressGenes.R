@@ -2,7 +2,6 @@
 #'
 #' @rdname plotStressGenes
 #' @name plotStressGenes
-#' @author Michael Steinbaugh
 #' @keywords internal
 #'
 #' @return [ggplot].

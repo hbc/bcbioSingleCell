@@ -2,7 +2,6 @@
 #'
 #' @rdname metrics
 #' @name metrics
-#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @return [data.frame] with cellular barcodes as rows.
 NULL

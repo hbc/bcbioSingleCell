@@ -2,10 +2,8 @@
 #'
 #' Currently supports bcbio-nextgen and 10X Genomics Cell Ranger.
 #'
-#' @rdname detectPipeline-internal
+#' @rdname internal-detectPipeline
 #' @keywords internal
-#'
-#' @author Michael Steinbaugh
 #'
 #' @param uploadDir Final upload directory.
 #'

@@ -1,7 +1,6 @@
 #' Plot Genes per Cell
 #'
 #' @rdname plotGenesPerCell
-#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.

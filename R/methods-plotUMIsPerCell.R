@@ -4,8 +4,6 @@
 #'
 #' @rdname plotUMIsPerCell
 #' @name plotUMIsPerCell
-#' @author Michael Steinbaugh, Rory Kirchner
-#' @inherit plotGenesPerCell
 NULL
 
 

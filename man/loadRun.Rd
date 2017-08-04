@@ -3,6 +3,7 @@
 \docType{methods}
 \name{loadRun}
 \alias{loadRun}
+\alias{loadRun}
 \alias{loadRun,character-method}
 \title{Load \code{bcbio} Single-Cell RNA-Seq Run}
 \usage{

@@ -1,8 +1,6 @@
 #' Cellular Barcodes List
 #'
-#' @rdname cbList-internal
-#' @family Cellular Barcode Utilities
-#' @author Michael Steinbaugh
+#' @rdname internal-cbList
 #' @keywords internal
 #'
 #' @param sampleDirs Sample directories.

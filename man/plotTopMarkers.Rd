@@ -34,3 +34,6 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
   \code{\link{plotStressGenes}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}
 }
+\author{
+Michael Steinbaugh
+}

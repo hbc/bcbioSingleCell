@@ -1,6 +1,7 @@
 #' Load `bcbio` Single-Cell RNA-Seq Run
 #'
 #' @rdname loadRun
+#' @name loadRun
 #'
 #' @details
 #' - **cellranger**: Read [10x Genomics
@@ -10,8 +11,6 @@
 #' @note When working in RStudio, we recommend connecting to the bcbio-nextgen
 #'   run directory as a remote connection over
 #'   [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
-#'
-#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @param object Path to final upload directory. This path is set when running
 #'   `bcbio_nextgen -w template`.
@@ -25,6 +24,12 @@
 #' @param ... Additional arguments, passed as metadata.
 #'
 #' @return [bcbioSCDataSet].
+NULL
+
+
+
+# Methods ====
+#' @rdname loadRun
 #' @export
 setMethod("loadRun", "character", function(
     object = "final",

@@ -2,8 +2,6 @@
 #'
 #' @rdname plotCellCounts
 #' @name plotCellCounts
-#' @author Michael Steinbaugh, Rory Kirchner
-#' @inherit plotGenesPerCell
 NULL
 
 

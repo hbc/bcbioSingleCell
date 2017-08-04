@@ -4,7 +4,6 @@
 #'
 #' @rdname metadataTable
 #' @name metadataTable
-#' @author Michael Steinbaugh
 #'
 #' @param ... Additional arguments, passed to [knitr::kable()].
 #'

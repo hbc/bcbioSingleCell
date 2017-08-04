@@ -3,6 +3,7 @@
 \docType{methods}
 \name{calculateMetrics}
 \alias{calculateMetrics}
+\alias{calculateMetrics}
 \alias{calculateMetrics,dgCMatrix-method}
 \title{Calculate Cellular Barcode Metrics Summary}
 \usage{

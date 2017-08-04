@@ -1,8 +1,7 @@
 #' Calculate Cellular Barcode Metrics Summary
 #'
 #' @rdname calculateMetrics
-#'
-#' @author Rory Kirchner, Michael Steinbaugh
+#' @name calculateMetrics
 #'
 #' @param annotable Annotable.
 #' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
@@ -10,6 +9,12 @@
 #' @note This should only be performed during the initial run loading.
 #'
 #' @return [matrix].
+NULL
+
+
+
+# Methods ====
+#' @rdname calculateMetrics
 #' @export
 setMethod("calculateMetrics", "dgCMatrix", function(
     object, annotable, prefilter = TRUE) {

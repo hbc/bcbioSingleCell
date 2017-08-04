@@ -7,7 +7,6 @@
 #'
 #' @rdname download
 #' @name download
-#' @author Michael Steinbaugh
 #'
 #' @return No return.
 #'

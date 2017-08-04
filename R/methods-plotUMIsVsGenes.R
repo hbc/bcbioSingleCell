@@ -2,8 +2,6 @@
 #'
 #' @rdname plotUMIsVsGenes
 #' @name plotUMIsVsGenes
-#' @author Michael Steinbaugh, Rory Kirchner
-#' @inherit plotGenesPerCell
 #'
 #' @return [ggplot].
 NULL

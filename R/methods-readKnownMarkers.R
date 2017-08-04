@@ -2,7 +2,6 @@
 #'
 #' @rdname readKnownMarkers
 #' @name readKnownMarkers
-#' @author Michael Steinbaugh
 #'
 #' @param object Gene markers file (CSV or Excel).
 #' @param genomeBuild Genome build.

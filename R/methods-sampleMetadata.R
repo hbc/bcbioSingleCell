@@ -2,7 +2,6 @@
 #'
 #' @rdname sampleMetadata
 #' @name sampleMetadata
-#' @author Michael Steinbaugh
 #'
 #' @return [data.frame].
 NULL

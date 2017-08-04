@@ -2,7 +2,6 @@
 #'
 #' @rdname plotClusters
 #' @name plotClusters
-#' @author Michael Steinbaugh
 #'
 #' @param symbols Character vector of gene symbols.
 #'

@@ -2,8 +2,6 @@
 #'
 #' @rdname plotMitoRatio
 #' @name plotMitoRatio
-#' @author Michael Steinbaugh, Rory Kirchner
-#' @inherit plotGenesPerCell
 NULL
 
 

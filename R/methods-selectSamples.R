@@ -2,7 +2,6 @@
 #'
 #' @rdname selectSamples
 #' @name selectSamples
-#' @author Michael Steinbaugh
 #'
 #' @details Internally, pattern matching against sample and file names is
 #'   applied using [str_detect()].
