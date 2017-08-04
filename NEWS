@@ -1,3 +1,11 @@
+# 0.0.15
+
+- Renamed functions in lowerCamelCase from snake_case.
+- Draft support for monocle, scater, and scone.
+- Package now depends on SummarizedExperiment.
+
+
+
 # 0.0.14
 
 - Migrated plotting functions to S4 methods.
