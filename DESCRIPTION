@@ -1,6 +1,6 @@
 Package: bcbioSinglecell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.14
+Version: 0.0.15
 Authors@R: c(
     person("Michael J.", "Steinbaugh",
            email = "mike@steinbaugh.com",
@@ -12,23 +12,13 @@ Authors@R: c(
            email = "bioinformatics@hsph.harvard.edu",
            role = c("cph", "fnd")))
 Description: Import and analyze bcbio single-cell RNA-seq data.
-biocViews:
-    DataImport,
-    DataRepresentation,
-    GeneExpression,
-    Infrastructure,
-    QualityControl,
-    ReportWriting,
-    RNASeq,
-    SingleCell,
-    Visualization
 URL:
     http://bioinformatics.sph.harvard.edu/bcbioSinglecell,
     https://github.com/hbc/bcbioSinglecell
 BugReports: https://github.com/hbc/bcbioSinglecell/issues
 Depends:
     R (>= 3.4.0),
-    basejump (>= 0.0.19),
+    basejump (>= 0.0.20),
     SummarizedExperiment (>= 1.6.3)
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -44,10 +34,21 @@ Imports:
     S4Vectors,
     utils
 Suggests:
-    lintr,
+    lintr (>= 1.0.0.9000),
     testthat
 Remotes:
+    jimhester/lintr,
     satijalab/seurat,
     steinbaugh/basejump
+biocViews:
+    DataImport,
+    DataRepresentation,
+    GeneExpression,
+    Infrastructure,
+    QualityControl,
+    ReportWriting,
+    RNASeq,
+    SingleCell,
+    Visualization
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1

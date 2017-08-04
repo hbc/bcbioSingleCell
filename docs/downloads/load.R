@@ -1,11 +1,11 @@
 library(bcbioSinglecell)
-bcb <- load_run(
-    upload_dir = file.path("data", "final"),
-    sample_metadata_file = file.path("meta", "sample_metadata.xlsx"),
-    interesting_groups = c("genotype", "treatment"),
-    experiment_name = "",
+bcb <- loadRun(
+    uploadDir = file.path("data", "final"),
+    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
+    interestingGroups = c("genotype", "treatment"),
+    experimentName = "",
     researcher = "",
-    principal_investigator = "",
+    principalInvestigator = "",
     author = getOption("author"),
     email = getOption("email"))
-save_data(bcb)
+saveData(bcb)

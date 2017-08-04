@@ -1,74 +1,38 @@
 ---
-title: "Quality control"
+title: "Quality Control"
 author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
     bcb: "data/bcb.rda"
-    min_umis: 1000
-    min_genes: 500
-    max_genes: 5000
-    max_mito_ratio: 0.1
-    min_novelty: 0.8
+    minUMIs: 100
+    minGenes: 200
+    maxGenes: 5000
+    maxMitoRatio: 0.05
+    minNovelty: 0.8
+    outputDir: "."
 ---
 
 ```{r setup, include=FALSE}
-bcbioSinglecell::downloads()
+bcbioSinglecell::download()
 source("setup.R")
 
-# bcbioSCDataSet
-# Need to save bcb using `load_run()` prior to knit!
-bcb_name <- load(params$bcb)
-assign("bcb", get(bcb_name))
+# bcbioRNADataSet
+# Need to save bcb using `loadRun()` prior to knit!
+bcbName <- load(params$bcb)
+assign("bcb", get(bcbName))
+if (is.null(bcb)) stop("bcbioSCDataSet missing")
 
 # Directory paths
-data_dir <- params$data_dir
-counts_dir <- params$counts_dir
+outputDir <- normalizePath(params$outputDir)
+dataDir <- file.path(outputDir, "data")
+countsDir <- file.path(outputDir, "results", "counts")
 ```
 
 ```{r header, child="_header.Rmd"}
 ```
 
-[bcbio][] run data was imported from **`r metadata(bcb)[["upload_dir"]]`**.
-
-
-
-# FASTQ generation
-
-## inDrop protocol
-
-- `v1`: Original design
-    - `_R1`: metadata read
-    - `_R2`: biological read
-- `v2`: Inversion of `v1`
-- `v3`: Summer 2016 redesign, requiring manual demultiplexing
-    - `_R1`: biological read
-    - `_R2`: first half of the gel barcode
-    - `_R3`: library index
-    - `_R4`: second half of the gel barcode, the UMI, and a fraction of the
-             polyA tail
-
-This study used the [inDrop][] `v3` design.
-
-
-## Demultiplexing
-
-We demultiplexed the raw BCL run files into FASTQ format using [bcl2fastq][].
-This step generates files with the following suffixes:
-
-- `_R1`: 61 bp read 1, transcript
-- `_R2`: 8 bp index read 1 (i7), single cell barcode
-- `_R3`: 8 bp index read 2 (i5), library index
-- `_R4`: 14 bp read 2, barcode and unique molecular identifiers (UMIs)
-
-We ran this on [Orchestra][] with the following settings:
-
-```{bash bcl2fastq, echo=TRUE, eval=FALSE}
-module load seq/bcl2fastq/2.17.1.14
-bcl2fastq --use-bases-mask y*,y*,y*,y* \
-          --mask-short-adapter-reads 0 \
-          --minimum-trimmed-read-length 0
-```
+[bcbio][] run data was imported from **`r metadata(bcb)[["uploadDir"]]`**.
 
 
 
@@ -78,47 +42,46 @@ We aligned the counts using the latest transcriptome FASTA from [Ensembl][] and 
 
 
 
-# Cellular barcode distributions
+# Quality control metrics {.tabset}
+
+# Reads per cell
 
 These are counts of how many reads are assigned to a given cellular barcode. The purpose of these histograms is that we should see one single large peak that represents cells that were encapsulated. If we see a strong shoulder, or a bimodal distribution of the cells, that can indicate a couple problems. It might be that there is free floating RNA, which happens when cells are dying. It could also be that there are a set of cells that failed for some reason. Finally, it could also be that there are biologically different types of cells, and one type is much smaller than the other. If this is the case we would expect to see less RNA being sequenced from the smaller cells.
 
-```{r plot_cellular_barcodes, fig.height=12, fig.width=8}
-plot_cellular_barcodes(bcb)
+```{r plotReadsPerCell, fig.height=12, fig.width=8}
+plotReadsPerCell(bcb)
 ```
 
 
-
-# Quality control metrics {.tabset}
-
 ## Cell counts
 
-```{r plot_cell_counts}
-plot_cell_counts(bcb)
+```{r plotCellCounts}
+plotCellCounts(bcb)
 ```
 
 
 ## UMI counts per cell
 
-```{r plot_umis_per_cell, fig.height=12, fig.width=8}
-plot_umis_per_cell(bcb, min = params$min_umis)
+```{r plotUMIsPerCell, fig.height=12, fig.width=8}
+plotUMIsPerCell(bcb, min = params$minUMIs)
 ```
 
 
-## Genes detected
+## Genes detected per cell
 
-Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `1000`-`5000` is normal for [inDrop][] analysis.
+Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for [inDrop][] analysis.
 
-```{r plot_genes_per_cell, fig.height=12, fig.width=8}
-plot_genes_per_cell(bcb, min = params$min_genes, max = params$max_genes)
+```{r plotGenesPerCell, fig.height=12, fig.width=8}
+plotGenesPerCell(bcb, min = params$minGenes, max = params$maxGenes)
 ```
 
 
-## UMIs vs. detected genes
+## UMIs vs. genes detected
 
 If we graph out the total number of UMI counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
 
-```{r plot_reads_vs_genes}
-plot_umis_vs_genes(bcb)
+```{r plotUMIsVsGenes}
+plotUMIsVsGenes(bcb)
 ```
 
 
@@ -126,8 +89,8 @@ plot_umis_vs_genes(bcb)
 
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
 
-```{r plot_mito_ratio, fig.height=16, fig.width=8}
-plot_mito_ratio(bcb, max = params$max_mito_ratio)
+```{r plotMitoRatio, fig.height=16, fig.width=8}
+plotMitoRatio(bcb, max = params$maxMitoRatio)
 ```
 
 
@@ -135,8 +98,8 @@ plot_mito_ratio(bcb, max = params$max_mito_ratio)
 
 Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
 
-```{r plot_novelty, fig.height=12, fig.width=8}
-plot_novelty(bcb, min = params$min_novelty)
+```{r plotNovelty, fig.height=12, fig.width=8}
+plotNovelty(bcb, min = params$minNovelty)
 ```
 
 
@@ -144,14 +107,14 @@ plot_novelty(bcb, min = params$min_novelty)
 # Filter cellular barcodes
 
 ```{r filtered, fig.height=12, fig.width=8, results="asis"}
-bcb_filtered <- filter_cells(
+bcbFiltered <- filterCells(
     bcb,
-    min_umis = params$min_umis,
-    min_genes = params$min_genes,
-    max_genes = params$max_genes,
-    max_mito_ratio = params$max_mito_ratio,
-    min_novelty = params$min_novelty)
-saveData(bcb_filtered)
+    minUMIs = params$minUMIs,
+    minGenes = params$minGenes,
+    maxGenes = params$maxGenes,
+    maxMitoRatio = params$maxMitoRatio,
+    minNovelty = params$minNovelty)
+saveData(bcbFiltered)
 ```
 
 

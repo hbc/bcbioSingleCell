@@ -1,40 +1,40 @@
 #' Sample Barcode Metrics
 #'
 #' @rdname metrics
-#' @author Michael Steinbaugh, Rory Kirchner
+#' @name metrics
 #'
 #' @return [data.frame] with cellular barcodes as rows.
+NULL
 
 
 
-#' @rdname metrics
-#' @usage NULL
+# Constructors ====
 .metrics <- function(object) {
-    umi_type <- metadata(object)[["umi_type"]]
-    meta <- sample_metadata(object) %>%
-        tidy_select(unique(c(meta_priority_cols, interesting_groups(object))))
-    col_data <- colData(object) %>%
+    umiType <- metadata(object)[["umiType"]]
+    meta <- sampleMetadata(object) %>%
+        .[, unique(c(metaPriorityCols, interestingGroups(object)))]
+    colData <- colData(object) %>%
         as.data.frame %>%
         rownames_to_column
-    if (umi_type == "surecell") {
-        match <- str_match(col_data[["rowname"]],
-                           "^(.+)_([acgt]{6}_[acgt]{6}_[acgt]{6})$")
+    if (umiType == "surecell") {
+        match <- colData[["rowname"]] %>%
+            str_match("^(.+)_([ACGT]{6}_[ACGT]{6}_[ACGT]{6})$")
     } else {
-        match <- str_match(col_data[["rowname"]],
-                           "^(.+)_([acgt]{8}_[acgt]{8})$")
+        match <- colData[["rowname"]] %>%
+            str_match("^(.+)_([ACGT]{8}_[ACGT]{8})$")
     }
     match <- match %>%
         as.data.frame %>%
-        set_colnames(c("rowname", "sample_id", "cellular_barcode"))
-
-    left_join(col_data, match, by = "rowname") %>%
-        left_join(meta, by = "sample_id") %>%
+        set_colnames(c("rowname", "sampleID", "cellularBarcode"))
+    left_join(colData, match, by = "rowname") %>%
+        left_join(meta, by = "sampleID") %>%
         as.data.frame %>%
         column_to_rownames
 }
 
 
 
+# Methods ====
 #' @rdname metrics
 #' @export
 setMethod("metrics", "bcbioSCDataSet", .metrics)
@@ -50,5 +50,5 @@ setMethod("metrics", "bcbioSCSubset", .metrics)
 #' @rdname metrics
 #' @export
 setMethod("metrics", "seurat", function(object) {
-    object@data.info %>% snake
+    object@data.info %>% camel
 })

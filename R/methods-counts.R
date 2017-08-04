@@ -1,37 +1,40 @@
 #' Counts Accessor
 #'
 #' @rdname counts
-#'
+#' @name counts
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.
-#' @param format Return counts as sparse matrix (**recommended**; `dgCMatrix`,
+#' @param as Return class (**recommended**; `dgCMatrix`,
 #'   `dgTMatrix`) or dense matrix (`matrix`).
 #'
-#' @return [matrix].
+#' @return Matrix class object.
+NULL
 
 
 
-#' @rdname counts
-#' @usage NULL
+# Constructors ====
 .counts <- function(
     object,
     gene2symbol = FALSE,
-    format = "dgCMatrix") {
-    supported_formats <- c("dgCMatrix", "dgTMatrix", "matrix")
-    if (!format %in% supported_formats) {
-        stop(paste("Supported formats", toString(supported_formats)))
+    as = "dgCMatrix") {
+    supportedClasses <- c("dgCMatrix", "dgTMatrix", "matrix")
+    if (!as %in% supportedClasses) {
+        stop(paste("Supported classes:", toString(supportedClasses)),
+             call. = FALSE)
     }
     counts <- assay(object)
     if (isTRUE(gene2symbol)) {
-        rownames(counts) <- .gene2symbol(object)
+        counts <- gene2symbol(counts)
     }
-    as(counts, format)
+    as(counts, as)
 }
 
 
 
+# Methods ====
 #' @rdname counts
 #' @export
 setMethod("counts", "bcbioSCDataSet", .counts)
