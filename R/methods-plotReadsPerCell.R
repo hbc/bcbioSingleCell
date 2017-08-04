@@ -33,8 +33,8 @@ NULL
         .[, unique(c(metaPriorityCols, interestingGroup))]
     lst %>%
         .bindCB %>%
-        mutate(log10Count = log10(.data[["reads"]]),
-               reads = NULL) %>%
+        mutate(log10Count = log10(.data[["nCount"]]),
+               nCount = NULL) %>%
         # Only plot barcodes with at least 100 read counts (log10 = 2)
         filter(.data[["log10Count"]] > 2L) %>%
         left_join(meta, by = "sampleID")
