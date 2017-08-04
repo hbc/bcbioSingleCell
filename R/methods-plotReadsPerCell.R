@@ -58,7 +58,7 @@ NULL
 .plotCBRawViolin <- function(
     object,
     cutoffLine = NULL,
-    multiplexedFASTQ) {
+    multiplexedFASTQ = FALSE) {
     p <- ggplot(object,
                 aes_(x = ~sampleName,
                      y = ~log10Count,
@@ -82,8 +82,8 @@ NULL
 
 .plotCBRawHisto <- function(
     object,
-    cutoffLine,
-    multiplexedFASTQ) {
+    cutoffLine = NULL,
+    multiplexedFASTQ = FALSE) {
     p <- ggplot(object,
                 aes_(x = ~log10Count,
                      fill = ~sampleName)) +
