@@ -92,9 +92,9 @@ NULL
         geom_histogram(bins = bins) +
         scale_y_sqrt()
     if (!is.null(cutoffLine) & length(cutoffLine)) {
-        p <- p + geom_hline(color = "black",
+        p <- p + geom_vline(color = "black",
                             size = qcLineSize,
-                            yintercept = cutoffLine)
+                            xintercept = cutoffLine)
     }
     if (isTRUE(multiplexedFASTQ)) {
         p <- p + facet_wrap(~fileName)
@@ -182,9 +182,9 @@ NULL
              x = "log10 read counts per cell",
              y = "% of cells")
     if (!is.null(cutoffLine) & length(cutoffLine)) {
-        p <- p + geom_hline(color = "black",
+        p <- p + geom_vline(color = "black",
                             size = qcLineSize,
-                            yintercept = cutoffLine)
+                            xintercept = cutoffLine)
     }
     if (isTRUE(multiplexedFASTQ)) {
         p <- p + facet_wrap(~fileName)
