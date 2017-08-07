@@ -32,10 +32,6 @@ bcbio(object, ...) <- value
 \description{
 \code{bcbioSCDataSet} Object Accessors
 }
-\seealso{
-Other `bcbio` Utilities: \code{\link{download}},
-  \code{\link{loadRun}}
-}
 \author{
 Michael Steinbaugh
 }

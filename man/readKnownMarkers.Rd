@@ -9,7 +9,7 @@
 \usage{
 readKnownMarkers(object, ...)
 
-\S4method{readKnownMarkers}{character}(object, genomeBuild, show = TRUE)
+\S4method{readKnownMarkers}{character}(object, genomeBuild, show = FALSE)
 }
 \arguments{
 \item{object}{Gene markers file (CSV or Excel).}
