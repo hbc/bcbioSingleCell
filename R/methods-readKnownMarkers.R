@@ -16,7 +16,7 @@ NULL
 #' @rdname readKnownMarkers
 #' @export
 setMethod("readKnownMarkers", "character", function(
-    object, genomeBuild, show = TRUE) {
+    object, genomeBuild, show = FALSE) {
     annotable <- annotable(genomeBuild)
     markers <- readFileByExtension(object) %>%
         camel %>%
@@ -33,7 +33,8 @@ setMethod("readKnownMarkers", "character", function(
     }
     markers <- markers %>%
         .[!is.na(.[["ensgene"]]), ] %>%
-        .[, c("cellType", "symbol")] %>%
+        .[, c("cellType", "symbol", "ensgene")] %>%
+        arrange(!!!syms(c("cellType", "symbol"))) %>%
         distinct
     if (isTRUE(show)) {
         kable(markers, caption = "Known markers") %>% show
