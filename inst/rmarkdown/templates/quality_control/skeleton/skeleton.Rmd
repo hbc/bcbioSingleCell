@@ -4,7 +4,12 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    bcb: "data/bcb.rda"
+    uploadDir: "data/indrop_rnaseq"
+    sampleMetadataFile: "meta/sample_metadata.xlsx"
+    interestingGroups: !r c("genotype", "treatment")
+    experimentName: ""
+    researcher: ""
+    principalInvestigator: ""
     minUMIs: 100
     minGenes: 200
     maxGenes: 5000
@@ -13,7 +18,7 @@ params:
     outputDir: "."
 ---
 
-```{r setup, include=FALSE}
+```{r setup, cache=FALSE, include=FALSE}
 bcbioSinglecell::download()
 source("setup.R")
 
@@ -27,6 +32,16 @@ if (is.null(bcb)) stop("bcbioSCDataSet missing")
 outputDir <- normalizePath(params$outputDir)
 dataDir <- file.path(outputDir, "data")
 countsDir <- file.path(outputDir, "results", "counts")
+
+# Load bcbio scRNA-seq run
+bcb <- loadSingleCellRun(
+    uploadDir = params$uploadDir,
+    sampleMetadataFile = params$sampleMetadataFile,
+    interestingGroups = params$interestingGroups,
+    experimentName = params$experimentName,
+    researcher = params$researcher,
+    principalInvestigator = params$principalInvestigator)
+saveData(bcb)
 ```
 
 ```{r header, child="_header.Rmd"}
