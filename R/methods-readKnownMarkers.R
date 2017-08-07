@@ -20,9 +20,20 @@ setMethod("readKnownMarkers", "character", function(
     annotable <- annotable(genomeBuild)
     markers <- readFileByExtension(object) %>%
         camel %>%
-        left_join(annotable, by = "symbol") %>%
-        .[!is.na(.data[["ensgene"]]), ] %>%
-        .[, c("cell_type", "symbol")] %>%
+        # Remove rows that don't contain a symbol to map
+        .[!is.na(.[["symbol"]]), ] %>%
+        left_join(annotable, by = "symbol")
+    if (any(is.na(markers[["ensgene"]]))) {
+        missing <- markers %>%
+            .[is.na(.[["ensgene"]]), ] %>%
+            pull("symbol") %>%
+            sort %>%
+            unique
+        stop(paste("Unmapped symbols:", toString(missing)))
+    }
+    markers <- markers %>%
+        .[!is.na(.[["ensgene"]]), ] %>%
+        .[, c("cellType", "symbol")] %>%
         distinct
     if (isTRUE(show)) {
         kable(markers, caption = "Known markers") %>% show
