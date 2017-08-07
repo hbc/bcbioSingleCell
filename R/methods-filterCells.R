@@ -120,8 +120,11 @@ NULL
 
         mdHeader("Filtered metrics plots {.tabset}", level = 2L)
 
-        mdHeader("Reads per cell", level = 3L)
-        show(plotReadsPerCell(object))
+        # Reads per cell currently only supported for bcbio runs
+        if (metadata[["pipeline"]] == "bcbio") {
+            mdHeader("Reads per cell", level = 3L)
+            show(plotReadsPerCell(object))
+        }
 
         mdHeader("Cell counts", level = 3L)
         show(plotCellCounts(object))
