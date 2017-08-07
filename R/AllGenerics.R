@@ -38,13 +38,14 @@ setGeneric("aggregateReplicates", function(object, ...) {
 
 
 #' @rdname bcbio
-#' @family `bcbio` Utilities
 #' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("bcbio", function(object, ...) {
     standardGeneric("bcbio")
 })
+
+
 
 #' @rdname bcbio
 #' @inheritParams AllGenerics
@@ -110,13 +111,12 @@ setGeneric("knownMarkersDetected", function(object, knownMarkers, ...) {
 
 
 
-#' @rdname loadRun
-#' @family `bcbio` Utilities
+#' @rdname loadSingleCellRun
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("loadRun", function(object, ...) {
-    standardGeneric("loadRun")
+setGeneric("loadSingleCellRun", function(object, ...) {
+    standardGeneric("loadSingleCellRun")
 })
 
 
