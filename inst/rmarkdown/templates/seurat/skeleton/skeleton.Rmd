@@ -11,8 +11,7 @@ params:
     outputDir: "."
 ---
 
-```{r setup, cache=FALSE, include=FALSE}
-bcbioSinglecell::download()
+```{r setup, cache=FALSE, message=FALSE, results="hide"}
 source("setup.R")
 library(Seurat)
 
