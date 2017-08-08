@@ -38,7 +38,7 @@ Suggests:
     testthat
 Remotes:
     jimhester/lintr,
-    satijalab/seurat,
+    satijalab/seurat@develop,
     steinbaugh/basejump
 biocViews:
     DataImport,
