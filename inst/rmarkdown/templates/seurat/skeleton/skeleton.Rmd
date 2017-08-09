@@ -8,7 +8,7 @@ params:
     pcCompute: 20
     pcUse: 10
     varsToRegress: !r c("nUMI", "mitoRatio")
-    knownMarkersFile: "meta/known_markers.xlsx"
+    markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
 
@@ -42,7 +42,7 @@ if (pcUse > 25) {
 varsToRegress <- params$varsToRegress
 
 # Known markers file
-knownMarkersFile <- normalizePath(params$knownMarkersFile)
+markersFile <- normalizePath(params$markersFile)
 
 # Directory paths
 outputDir <- normalizePath(params$outputDir)
@@ -365,7 +365,7 @@ plotTopMarkers(seurat, topMarkers)
 ## Load known markers
 
 ```{r knownMarkers}
-knownMarkers <- readKnownMarkers(knownMarkersFile, genomeBuild, show = TRUE)
+knownMarkers <- readMarkers(markersFile, genomeBuild, show = TRUE)
 saveData(knownMarkers)
 ```
 

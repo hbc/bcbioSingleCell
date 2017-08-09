@@ -1,7 +1,7 @@
 #' Read Known Markers
 #'
-#' @rdname readKnownMarkers
-#' @name readKnownMarkers
+#' @rdname readMarkers
+#' @name readMarkers
 #'
 #' @param object Gene markers file (CSV or Excel).
 #' @param genomeBuild Genome build.
@@ -13,13 +13,16 @@ NULL
 
 
 # Methods ====
-#' @rdname readKnownMarkers
+#' @rdname readMarkers
 #' @export
-setMethod("readKnownMarkers", "character", function(
+setMethod("readMarkers", "character", function(
     object, genomeBuild, show = FALSE) {
     annotable <- annotable(genomeBuild)
     markers <- readFileByExtension(object) %>%
-        camel %>%
+        camel
+    # Ensure Ensemble gene identifiers are not set
+    markers[["ensgene"]] <- NULL
+    markers <- markers %>%
         # Remove rows that don't contain a symbol to map
         .[!is.na(.[["symbol"]]), ] %>%
         left_join(annotable, by = "symbol")
