@@ -269,13 +269,13 @@ setGeneric("plotUMIsVsGenes", function(object, ...) {
 
 
 
-#' @rdname readKnownMarkers
+#' @rdname readMarkers
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("readKnownMarkers", function(object, ...) {
-    standardGeneric("readKnownMarkers")
+setGeneric("readMarkers", function(object, ...) {
+    standardGeneric("readMarkers")
 })
 
 

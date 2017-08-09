@@ -11,7 +11,7 @@ loadSingleCellRun(object, ...)
 
 \S4method{loadSingleCellRun}{character}(object = "final", sampleMetadataFile,
   wellMetadataFile = NULL, interestingGroups = "sampleName",
-  tx2gene = NULL, ...)
+  gtfFile = NULL, ...)
 }
 \arguments{
 \item{object}{Path to final upload directory. This path is set when running
@@ -27,8 +27,9 @@ loadSingleCellRun(object, ...)
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
-\item{tx2gene}{tx2gene \link{data.frame}, required when using a custom
-transcriptome FASTA file. This argument will be removed in a future update.}
+\item{gtfFile}{\emph{Optional}. Gene transfer format (GTF) file, which will be
+used for transcript-to-gene (\code{tx2gene}) and gene-to-symbol (\code{gene2symbol})
+annotation mappings.}
 }
 \value{
 \link{bcbioSCDataSet}.
