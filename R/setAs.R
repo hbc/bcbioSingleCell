@@ -2,15 +2,14 @@
 # [test_seurat_object.R](https://goo.gl/GMQAdC)
 setAs("bcbioSCSubset", "seurat", function(from) {
     project <- deparse(substitute(from))
-    genomeBuild <- metadata(from)[["genomeBuild"]]
-    counts <- counts(from, gene2symbol = TRUE, genomeBuild = genomeBuild)
+    counts <- counts(from, gene2symbol = TRUE)
 
     # Filtering criteria
     minGenes <- metadata(from) %>%
-        .[["filteringCriteria"]] %>%
+        .[["filterParams"]] %>%
         .[["minGenes"]]
     maxMitoRatio <- metadata(from) %>%
-        .[["filteringCriteria"]] %>%
+        .[["filterParams"]] %>%
         .[["maxMitoRatio"]]
 
     object <- Seurat::CreateSeuratObject(
