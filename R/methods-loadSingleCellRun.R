@@ -19,8 +19,9 @@
 #' @param interestingGroups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
-#' @param tx2gene tx2gene [data.frame], required when using a custom
-#'   transcriptome FASTA file. This argument will be removed in a future update.
+#' @param gtfFile *Optional*. Gene transfer format (GTF) file, which will be
+#'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
+#'   annotation mappings.
 #' @param ... Additional arguments, passed as metadata.
 #'
 #' @return [bcbioSCDataSet].
@@ -36,7 +37,7 @@ setMethod("loadSingleCellRun", "character", function(
     sampleMetadataFile,
     wellMetadataFile = NULL,
     interestingGroups = "sampleName",
-    tx2gene = NULL,
+    gtfFile = NULL,
     ...) {
     uploadDir <- object
     if (!dir.exists(uploadDir)) {
@@ -78,7 +79,7 @@ setMethod("loadSingleCellRun", "character", function(
 
     # Pipeline-specific support prior to count loading ====
     if (pipeline == "bcbio") {
-        # Project directory ----
+        # Project directory ====
         projectDir <- dir(uploadDir,
                            pattern = projectDirPattern,
                            full.names = FALSE,
@@ -92,14 +93,14 @@ setMethod("loadSingleCellRun", "character", function(
         template <- match[[3L]]
         projectDir <- file.path(uploadDir, projectDir)
 
-        # Log files ----
+        # Log files ====
         message("Reading log files")
         bcbioLog <- .logFile(
             file.path(projectDir, "bcbio-nextgen.log"))
         bcbioCommandsLog <- .logFile(
             file.path(projectDir, "bcbio-nextgen-commands.log"))
 
-        # Cellular barcode cutoff ----
+        # Cellular barcode cutoff ====
         cbCutoffPattern <- "--cb_cutoff (\\d+)"
         cbCutoff <- str_match(bcbioCommandsLog, cbCutoffPattern) %>%
             .[, 2L] %>%
@@ -107,7 +108,7 @@ setMethod("loadSingleCellRun", "character", function(
             unique %>%
             as.numeric
 
-        # Data versions and programs ----
+        # Data versions and programs ====
         dataVersions <- .dataVersions(projectDir)
         programs <- .programs(projectDir)
         if (!is.null(dataVersions)) {
@@ -132,7 +133,7 @@ setMethod("loadSingleCellRun", "character", function(
             stop("Multiple genomes detected -- not supported")
         }
 
-        # Molecular barcode (UMI) type ----
+        # Molecular barcode (UMI) type ====
         umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
         if (any(str_detect(bcbioCommandsLog, umiPattern))) {
             umiType <- str_match(bcbioCommandsLog,
@@ -145,7 +146,7 @@ setMethod("loadSingleCellRun", "character", function(
             stop("Failed to detect UMI type from JSON file")
         }
 
-        # Well metadata ----
+        # Well metadata ====
         if (!is.null(wellMetadataFile)) {
             wellMetadataFile <- normalizePath(wellMetadataFile)
             wellMetadata <- readFileByExtension(wellMetadataFile)
@@ -153,12 +154,14 @@ setMethod("loadSingleCellRun", "character", function(
             wellMetadata <- NULL
         }
 
-        # tx2gene ----
-        if (is.null(tx2gene)) {
+        # tx2gene mappings ====
+        if (!is.null(gtfFile)) {
+            tx2gene <- tx2geneFromGTF(gtfFile)
+        } else {
             tx2gene <- tx2gene(genomeBuild)
         }
 
-        # Cellular barcodes ----
+        # Cellular barcodes ====
         cellularBarcodes <- .cbList(sampleDirs)
     } else if (pipeline == "cellranger") {
         # Get genome build from `sampleDirs`
@@ -172,11 +175,11 @@ setMethod("loadSingleCellRun", "character", function(
     message(paste("UMI type:", umiType))
 
 
-    # Row data ====
+    # Row data =================================================================
     annotable <- annotable(genomeBuild)
 
 
-    # Read counts into sparse matrix ====
+    # Assays ===================================================================
     message("Reading counts")
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
         sparseCounts <- .readSparseCounts(sampleDirs[a], pipeline = pipeline)
@@ -193,7 +196,7 @@ setMethod("loadSingleCellRun", "character", function(
     sparseCounts <- do.call(Matrix::cBind, sparseList)
 
 
-    # Column data ====
+    # Column data ==============================================================
     metrics <- calculateMetrics(sparseCounts, annotable)
     if (pipeline == "bcbio") {
         # Add reads per cellular barcode to metrics
@@ -210,12 +213,22 @@ setMethod("loadSingleCellRun", "character", function(
     }
 
 
-    # Metadata ====
+    # Metadata =================================================================
     if (umiType == "indrop") {
         multiplexedFASTQ <- TRUE
     } else {
         multiplexedFASTQ <- FALSE
     }
+
+    # gene2symbol mappings ====
+    if (!is.null(gtfFile)) {
+        gene2symbol <- gene2symbolFromGTF(gtfFile)
+        tx2gene <- tx2geneFromGTF(gtfFile)
+    } else {
+        gene2symbol <- gene2symbol(genomeBuild)
+        tx2gene <- tx2gene(genomeBuild)
+    }
+
     metadata <- SimpleList(
         version = packageVersion("bcbioSinglecell"),
         pipeline = pipeline,
@@ -226,7 +239,8 @@ setMethod("loadSingleCellRun", "character", function(
         interestingGroups = interestingGroups,
         genomeBuild = genomeBuild,
         annotable = annotable,
-        ensemblVersion = ensemblVersion(),
+        ensemblVersion = annotables::ensembl_version,
+        gene2symbol = gene2symbol,
         umiType = umiType,
         allSamples = allSamples,
         multiplexedFASTQ = multiplexedFASTQ)
@@ -252,7 +266,7 @@ setMethod("loadSingleCellRun", "character", function(
     }
 
 
-    # Return ====
+    # bcbioSCDataSet ===========================================================
     se <- packageSE(
         sparseCounts,
         colData = metrics,
