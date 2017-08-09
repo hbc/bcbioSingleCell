@@ -19,9 +19,6 @@
 \item{gene2symbol}{Convert Ensembl gene identifiers (rownames) to gene
 symbols. Recommended for passing counts to Seurat.}
 
-\item{genomeBuild}{\emph{Optional}. If \code{gene2symbol = TRUE}, specify which
-genomeBuild to use for obtaining gene symbols.}
-
 \item{as}{Return class (\strong{recommended}; \code{dgCMatrix},
 \code{dgTMatrix}) or dense matrix (\code{matrix}).}
 }

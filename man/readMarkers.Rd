@@ -9,16 +9,16 @@
 \usage{
 readMarkers(object, ...)
 
-\S4method{readMarkers}{character}(object, genomeBuild, show = FALSE)
+\S4method{readMarkers}{character}(object, gene2symbol, show = FALSE)
 }
 \arguments{
 \item{object}{Gene markers file (CSV or Excel).}
 
 \item{...}{Additional arguments.}
 
-\item{genomeBuild}{Genome build.}
-
 \item{show}{Show \link{kable}.}
+
+\item{genomeBuild}{Genome build.}
 }
 \value{
 \link{tibble}.
