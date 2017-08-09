@@ -112,11 +112,11 @@ setMethod(
     function(object) {
         min <- object %>%
             metadata %>%
-            .[["filteringCriteria"]] %>%
+            .[["filterParams"]] %>%
             .[["minGenes"]]
         max <- object %>%
             metadata %>%
-            .[["filteringCriteria"]] %>%
+            .[["filterParams"]] %>%
             .[["maxGenes"]]
         .plotGenesPerCell(object, min, max)
     })

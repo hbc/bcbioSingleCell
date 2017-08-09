@@ -94,7 +94,7 @@ setMethod(
     function(object) {
         min <- object %>%
             metadata %>%
-            .[["filteringCriteria"]] %>%
+            .[["filterParams"]] %>%
             .[["minUMIs"]]
         .plotUMIsPerCell(object, min)
     })
