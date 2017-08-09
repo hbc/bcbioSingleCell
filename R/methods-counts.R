@@ -7,8 +7,6 @@
 #' @inheritParams AllGenerics
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.
-#' @param genomeBuild *Optional*. If `gene2symbol = TRUE`, specify which
-#'   genomeBuild to use for obtaining gene symbols.
 #' @param as Return class (**recommended**; `dgCMatrix`,
 #'   `dgTMatrix`) or dense matrix (`matrix`).
 #'
@@ -30,7 +28,23 @@ NULL
     }
     counts <- assay(object)
     if (isTRUE(gene2symbol)) {
-        counts <- gene2symbol(counts, genomeBuild = genomeBuild)
+        g2s <- metadata(object)[["gene2symbol"]]
+        if (!all(rownames(counts) %in% rownames(g2s))) {
+            rescale <- g2s %>%
+                .[rownames(counts), ] %>%
+                set_rownames(rownames(counts))
+            matched <- rescale %>%
+                .[!is.na(.[["symbol"]]), ]
+            unmatched <- rescale %>%
+                .[is.na(.[["symbol"]]), ]
+            warning(paste(
+                "Unmatched in gene2symbol:",
+                toString(rownames(unmatched))), call. = FALSE)
+            unmatched[["ensgene"]] <- rownames(unmatched)
+            unmatched[["symbol"]] <- rownames(unmatched)
+            g2s <- rbind(matched, unmatched)
+        }
+        g2s <- g2s[rownames(counts), ]
     }
     as(counts, as)
 }
