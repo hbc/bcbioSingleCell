@@ -24,6 +24,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
     BiocGenerics,
+    GenomicFeatures,
     ggplot2 (>= 2.2.1),
     Matrix,
     Matrix.utils,
