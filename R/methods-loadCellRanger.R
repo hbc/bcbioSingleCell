@@ -9,9 +9,9 @@
 #' @rdname loadCellRanger
 #' @name loadCellRanger
 #'
+#' @inheritParams loadSingleCellRun
 #' @param object Path to CellRanger output directory. This directory path must
-#'   contain `filtered_gene_bc_matrices`.
-#' @param ... Additional arguments, passed as metadata.
+#'   contain `filtered_gene_bc_matrices/` as a child.
 #'
 #' @return [bcbioSCDataSet].
 NULL
@@ -101,7 +101,6 @@ setMethod("loadCellRanger", "character", function(
         interestingGroups = interestingGroups,
         genomeBuild = genomeBuild,
         annotable = annotable,
-        ensemblVersion = annotables::ensembl_version,
         gene2symbol = gene2symbol,
         umiType = "chromium",
         allSamples = allSamples,
