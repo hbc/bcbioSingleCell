@@ -4,7 +4,7 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    subsetID: bcbFiltered
+    subsetName: bcbFiltered
     pcCompute: 20
     pcUse: 10
     varsToRegress: !r c("nUMI", "mitoRatio")
@@ -17,16 +17,17 @@ source("setup.R")
 library(Seurat)
 
 # Get bcbioSCSubset object
-subsetID <- params$subsetID
-if (is.null(subsetID)) {
+subsetName <- params$subsetName
+if (is.null(subsetName)) {
     stop("Subset name is required")
 }
-data(list = subsetID)
-subset <- get(subsetID)
+data(list = subsetName)
+subset <- get(subsetName)
 if (!is(subset, "bcbioSCSubset")) {
     stop("Subset must bcbioSCSubset class object")
 }
 genomeBuild <- metadata(subset)[["genomeBuild"]]
+gene2symbol <- metadata(subset)[["gene2symbol"]]
 
 # Principal components
 pcCompute <- params$pcCompute
@@ -52,8 +53,8 @@ markersDir <- file.path(outputDir, "results", "markers")
 opts_chunk$set(
     cache = TRUE,
     cache.lazy = FALSE,
-    cache.path = paste0(subsetID, "_cache/"),
-    fig.path = paste0(subsetID, "_files/"))
+    cache.path = paste0(subsetName, "Seurat", "_cache/"),
+    fig.path = paste0(subsetName, "Seurat", "_files/"))
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -63,7 +64,7 @@ This workflow is adapted from the [Seurat v2 Guided Clustering Tutorial](http://
 
 
 
-# Initialize Seurat (`r subsetID`)
+# Initialize Seurat (`r subsetName`)
 
 Let's convert our `bcbioSCSubset` object containing the filtered cellular barcodes into a `seurat` object. This step uses [Seurat][]'s `CreateSeuratObject()` with the same filtering cutoffs applied during our initial quality control analysis. Here we are imposing a basic minimum gene-cutoff, but also filtering low quality cells that have a high mitochondrial gene abundance.
 
@@ -247,7 +248,7 @@ PrintTSNEParams(seurat)
 ```
 
 ```{r saveSeurat}
-assignAndSaveData(paste0(subsetID, "Seurat"), seurat)
+assignAndSaveData(paste0(subsetName, "Seurat"), seurat)
 ```
 
 ```{r TSNEPlot}
@@ -309,9 +310,9 @@ markers <- FindAllMarkers(seurat, latent.vars = varsToRegress)
 ```
 
 ```{r saveMarkers}
-assignAndSaveData(paste0(subsetID, "Markers"), markers)
+assignAndSaveData(paste0(subsetName, "Markers"), markers)
 dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
-write_csv(markers, file.path(markersDir, paste0(subsetID, ".csv.gz")))
+write_csv(markers, file.path(markersDir, paste0(subsetName, ".csv.gz")))
 ```
 
 
@@ -337,7 +338,6 @@ DoHeatmap(seurat,
           order.by.ident = TRUE,
           remove.key = TRUE,
           slim.col.label = TRUE,
-          # heatmap.2 fix
           dendrogram = "none")
 ```
 
@@ -351,9 +351,9 @@ There are several tools for visualizing marker expression:
 - New functions: `JoyPlot()`, `CellPlot()`, `DotPlot()`.
 
 
-## Top markers per cluster
+## Top markers per cluster  {.tabset}
 
-```{r plotTopMarkers, fig.height=12, fig.width=12, results="asis"}
+```{r plotTopMarkers, results="asis"}
 help("plotTopMarkers", "bcbioSinglecell")
 plotTopMarkers(seurat, topMarkers)
 ```
@@ -365,7 +365,10 @@ plotTopMarkers(seurat, topMarkers)
 ## Load known markers
 
 ```{r knownMarkers}
-knownMarkers <- readMarkers(markersFile, genomeBuild, show = TRUE)
+knownMarkers <- readMarkers(
+    markersFile,
+    gene2symbol = gene2symbol,
+    show = TRUE)
 saveData(knownMarkers)
 ```
 
@@ -379,9 +382,9 @@ knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers, show = TRUE)
 ```
 
 
-## Visualize cluster specificity
+## Visualize cluster specificity {.tabset}
 
-```{r plotKnownMarkers, fig.height=12, fig.width=12, results="asis"}
+```{r plotKnownMarkers, results="asis"}
 plotKnownMarkers(seurat, knownMarkersDetected)
 ```
 
