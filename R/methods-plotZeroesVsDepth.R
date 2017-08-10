@@ -11,10 +11,13 @@ NULL
 # Constructors ====
 .plotZerosVsDepth <- function(object) {
     counts <- assay(object)
-    zeros <- data.frame(
+    metrics <- metrics(object)
+    # `nrow(counts)` operation here blows up memory on large datasets.
+    df <- data.frame(
         dropout = Matrix::colSums(counts == 0L) / nrow(counts),
-        depth = Matrix::colSums(counts))
-    p <- ggplot(zeros,
+        depth = Matrix::colSums(counts),
+        fileName = metrics[["fileName"]])
+    p <- ggplot(df,
            aes_(x = ~depth,
                 y = ~dropout * 100L)) +
         geom_point(size = 0.8) +
