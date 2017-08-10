@@ -111,6 +111,16 @@ setGeneric("knownMarkersDetected", function(object, knownMarkers, ...) {
 
 
 
+#' @rdname loadCellRanger
+#' @author Michael Steinbaugh
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("loadCellRanger", function(object, ...) {
+    standardGeneric("loadCellRanger")
+})
+
+
+
 #' @rdname loadSingleCellRun
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inheritParams AllGenerics
