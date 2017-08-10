@@ -12,7 +12,7 @@ NULL
 .plotZerosVsDepth <- function(object) {
     counts <- assay(object)
     metrics <- metrics(object)
-    # `nrow(counts)` operation here blows up memory on large datasets.
+    # The `counts == 0L` operation here blows up memory on large datasets
     df <- data.frame(
         dropout = Matrix::colSums(counts == 0L) / nrow(counts),
         depth = Matrix::colSums(counts),
