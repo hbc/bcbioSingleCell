@@ -23,6 +23,9 @@ NULL
 #' @export
 setMethod("loadCellRanger", "character", function(
     object,
+    sampleMetadataFile,
+    interestingGroups = "sampleName",
+    gtfFile = NULL,
     ...) {
     uploadDir <- object
     if (!dir.exists(uploadDir)) {
