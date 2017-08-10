@@ -22,7 +22,7 @@
         "bcbio"
     } else if (any(str_detect(
         # cellranger matching by filtered output
-        matrices, "outs/filtered_gene_bc_matrices/[^/]+/matrix\\.mtx$"))) {
+        matrices, "filtered_gene_bc_matrices/[^/]+/matrix\\.mtx$"))) {
         "cellranger"
     } else {
         stop("Pipeline detection failed")
