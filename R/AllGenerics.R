@@ -269,6 +269,17 @@ setGeneric("plotUMIsVsGenes", function(object, ...) {
 
 
 
+#' @rdname plotZerosVsDepth
+#' @family Quality Control Metrics
+#' @author Rory Kirchner, Michael Steinbaugh
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("plotZerosVsDepth", function(object, ...) {
+    standardGeneric("plotZerosVsDepth")
+})
+
+
+
 #' @rdname readMarkers
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
