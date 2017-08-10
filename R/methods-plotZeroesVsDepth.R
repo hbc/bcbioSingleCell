@@ -20,7 +20,7 @@ NULL
         geom_point(size = 0.8) +
         scale_x_log10() +
         labs(x = "library size",
-             y = "percent genes zero")
+             y = "% genes zero")
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)
     }

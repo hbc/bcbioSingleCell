@@ -39,7 +39,8 @@ Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
   \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}}
+  \code{\link{plotUMIsVsGenes}},
+  \code{\link{plotZerosVsDepth}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner
