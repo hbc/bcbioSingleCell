@@ -9,7 +9,7 @@
 \usage{
 loadSingleCellRun(object, ...)
 
-\S4method{loadSingleCellRun}{character}(object = "final", sampleMetadataFile,
+\S4method{loadSingleCellRun}{character}(object, sampleMetadataFile,
   wellMetadataFile = NULL, interestingGroups = "sampleName",
   gtfFile = NULL, ...)
 }
@@ -36,12 +36,6 @@ annotation mappings.}
 }
 \description{
 Load \code{bcbio} Single-Cell RNA-Seq Run
-}
-\details{
-\itemize{
-\item \strong{cellranger}: Read \href{https://www.10xgenomics.com/software/}{10x GenomicsChromium} cell counts from
-\code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
-}
 }
 \note{
 When working in RStudio, we recommend connecting to the bcbio-nextgen
