@@ -19,7 +19,6 @@ NULL
 .counts <- function(
     object,
     gene2symbol = FALSE,
-    genomeBuild = NULL,
     as = "dgCMatrix") {
     supportedClasses <- c("dgCMatrix", "dgTMatrix", "matrix")
     if (!as %in% supportedClasses) {
@@ -45,6 +44,7 @@ NULL
             g2s <- rbind(matched, unmatched)
         }
         g2s <- g2s[rownames(counts), ]
+        rownames(counts) <- pull(g2s, "symbol")
     }
     as(counts, as)
 }
@@ -55,6 +55,8 @@ NULL
 #' @rdname counts
 #' @export
 setMethod("counts", "bcbioSCDataSet", .counts)
+
+
 
 #' @rdname counts
 #' @export
