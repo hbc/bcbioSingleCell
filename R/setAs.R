@@ -4,14 +4,6 @@ setAs("bcbioSCSubset", "seurat", function(from) {
     project <- deparse(substitute(from))
     counts <- counts(from, gene2symbol = TRUE)
 
-    # Filtering criteria
-    minGenes <- metadata(from) %>%
-        .[["filterParams"]] %>%
-        .[["minGenes"]]
-    maxMitoRatio <- metadata(from) %>%
-        .[["filterParams"]] %>%
-        .[["maxMitoRatio"]]
-
     object <- Seurat::CreateSeuratObject(
         raw.data = counts,
         project = project,
@@ -44,10 +36,6 @@ setAs("bcbioSCSubset", "seurat", function(from) {
 
     # Rows must correspond to `object@cell.names`
     object <- Seurat::AddMetaData(object, metrics)
-    colnames(object@meta.data) %>%
-        toString %>%
-        paste("Seurat metadata:", .) %>%
-        message
 
     # Normalize
     object <- Seurat::NormalizeData(
