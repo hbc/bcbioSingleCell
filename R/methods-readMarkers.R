@@ -4,7 +4,7 @@
 #' @name readMarkers
 #'
 #' @param object Gene markers file (CSV or Excel).
-#' @param genomeBuild Genome build.
+#' @param gene2symbol Gene-to-symbol annotation [data.frame].
 #' @param show Show [kable].
 #'
 #' @return [tibble].
