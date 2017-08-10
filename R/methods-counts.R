@@ -44,7 +44,9 @@ NULL
             g2s <- rbind(matched, unmatched)
         }
         g2s <- g2s[rownames(counts), ]
-        rownames(counts) <- pull(g2s, "symbol")
+        rows <- pull(g2s, "symbol")
+        names(rows) <- rownames(g2s)
+        rownames(counts) <- rows
     }
     as(counts, as)
 }
