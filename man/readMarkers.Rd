@@ -16,9 +16,9 @@ readMarkers(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{show}{Show \link{kable}.}
+\item{gene2symbol}{Gene-to-symbol annotation \link{data.frame}.}
 
-\item{genomeBuild}{Genome build.}
+\item{show}{Show \link{kable}.}
 }
 \value{
 \link{tibble}.

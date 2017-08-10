@@ -8,10 +8,10 @@
 \title{Counts Accessor}
 \usage{
 \S4method{counts}{bcbioSCDataSet}(object, gene2symbol = FALSE,
-  genomeBuild = NULL, as = "dgCMatrix")
+  as = "dgCMatrix")
 
 \S4method{counts}{bcbioSCSubset}(object, gene2symbol = FALSE,
-  genomeBuild = NULL, as = "dgCMatrix")
+  as = "dgCMatrix")
 }
 \arguments{
 \item{object}{Object.}
