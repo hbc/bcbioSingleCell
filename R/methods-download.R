@@ -40,7 +40,6 @@ setMethod("download", "missing", function() {
           "_footer.Rmd",
           "_header.Rmd",
           "bcbioSinglecell.bib",
-          "load.R",
           "setup.R"))
 })
 
