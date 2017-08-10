@@ -3,5 +3,6 @@
 ^\.Rprofile$
 ^\.Rproj\.user$
 ^\.travis\.yml$
+^CONTRIBUTING\.md$
 ^docs$
 ^API$

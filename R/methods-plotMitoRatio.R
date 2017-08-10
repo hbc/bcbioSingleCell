@@ -113,7 +113,7 @@ setMethod(
     function(object) {
         max <- object %>%
             metadata %>%
-            .[["filteringCriteria"]] %>%
+            .[["filterParams"]] %>%
             .[["maxMitoRatio"]]
         .plotMitoRatio(object, max)
     })

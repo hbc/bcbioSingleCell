@@ -33,8 +33,8 @@ NULL
         .[, unique(c(metaPriorityCols, interestingGroup))]
     lst %>%
         .bindCB %>%
-        mutate(log10Count = log10(.data[["reads"]]),
-               reads = NULL) %>%
+        mutate(log10Count = log10(.data[["nCount"]]),
+               nCount = NULL) %>%
         # Only plot barcodes with at least 100 read counts (log10 = 2)
         filter(.data[["log10Count"]] > 2L) %>%
         left_join(meta, by = "sampleID")
@@ -58,7 +58,7 @@ NULL
 .plotCBRawViolin <- function(
     object,
     cutoffLine = NULL,
-    multiplexedFASTQ) {
+    multiplexedFASTQ = FALSE) {
     p <- ggplot(object,
                 aes_(x = ~sampleName,
                      y = ~log10Count,
@@ -82,8 +82,8 @@ NULL
 
 .plotCBRawHisto <- function(
     object,
-    cutoffLine,
-    multiplexedFASTQ) {
+    cutoffLine = NULL,
+    multiplexedFASTQ = FALSE) {
     p <- ggplot(object,
                 aes_(x = ~log10Count,
                      fill = ~sampleName)) +
@@ -92,9 +92,9 @@ NULL
         geom_histogram(bins = bins) +
         scale_y_sqrt()
     if (!is.null(cutoffLine) & length(cutoffLine)) {
-        p <- p + geom_hline(color = "black",
+        p <- p + geom_vline(color = "black",
                             size = qcLineSize,
-                            yintercept = cutoffLine)
+                            xintercept = cutoffLine)
     }
     if (isTRUE(multiplexedFASTQ)) {
         p <- p + facet_wrap(~fileName)
@@ -171,7 +171,8 @@ NULL
 
 
 
-.plotCBPropHisto <- function(tbl, cutoffLine, multiplexedFASTQ = FALSE) {
+.plotCBPropHisto <- function(
+    tbl, cutoffLine = NULL, multiplexedFASTQ = FALSE) {
     p <- ggplot(tbl,
                 aes_(x = ~log10Count,
                      y = ~proportion * 100L,
@@ -182,9 +183,9 @@ NULL
              x = "log10 read counts per cell",
              y = "% of cells")
     if (!is.null(cutoffLine) & length(cutoffLine)) {
-        p <- p + geom_hline(color = "black",
+        p <- p + geom_vline(color = "black",
                             size = qcLineSize,
-                            yintercept = cutoffLine)
+                            xintercept = cutoffLine)
     }
     if (isTRUE(multiplexedFASTQ)) {
         p <- p + facet_wrap(~fileName)
@@ -230,9 +231,18 @@ setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
     cutoffLine <- .cbCutoffLine(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
     .plotCB(
-        .plotCBRawViolin(rawTbl, cutoffLine, multiplexedFASTQ),
-        .plotCBRawHisto(rawTbl, cutoffLine, multiplexedFASTQ),
-        .plotCBPropHisto(propTbl, cutoffLine, multiplexedFASTQ))
+        .plotCBRawViolin(
+            rawTbl,
+            cutoffLine = cutoffLine,
+            multiplexedFASTQ = multiplexedFASTQ),
+        .plotCBRawHisto(
+            rawTbl,
+            cutoffLine = cutoffLine,
+            multiplexedFASTQ = multiplexedFASTQ),
+        .plotCBPropHisto(
+            propTbl,
+            cutoffLine = cutoffLine,
+            multiplexedFASTQ = multiplexedFASTQ))
 })
 
 
@@ -242,10 +252,15 @@ setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
 setMethod("plotReadsPerCell", "bcbioSCSubset", function(object) {
     rawTbl <- .cbTblFromMetrics(object)
     propTbl <- .propTblFromSubset(object)
-    cutoffLine <- .cbCutoffLine(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
     .plotCB(
-        .plotCBRawViolin(rawTbl, cutoffLine, multiplexedFASTQ),
-        .plotCBRawHisto(rawTbl, cutoffLine, multiplexedFASTQ),
-        .plotCBPropHisto(propTbl, cutoffLine, multiplexedFASTQ))
+        .plotCBRawViolin(
+            rawTbl,
+            multiplexedFASTQ = multiplexedFASTQ),
+        .plotCBRawHisto(
+            rawTbl,
+            multiplexedFASTQ = multiplexedFASTQ),
+        .plotCBPropHisto(
+            propTbl,
+            multiplexedFASTQ = multiplexedFASTQ))
 })

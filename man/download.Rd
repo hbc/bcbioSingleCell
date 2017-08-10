@@ -31,10 +31,6 @@ File download utility functions for RMarkdown knit reports.
 download()
 download("setup.R")
 }
-\seealso{
-Other `bcbio` Utilities: \code{\link{bcbio}},
-  \code{\link{loadRun}}
-}
 \author{
 Michael Steinbaugh
 }

@@ -9,7 +9,7 @@
 \usage{
 plotClusters(object, ...)
 
-\S4method{plotClusters}{seurat}(object, symbols)
+\S4method{plotClusters}{seurat}(object, symbols, markdown = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -17,6 +17,8 @@ plotClusters(object, ...)
 \item{...}{Additional arguments.}
 
 \item{symbols}{Character vector of gene symbols.}
+
+\item{markdown}{Include a Markdown header for each gene.}
 }
 \value{
 No value, only graphical output.

@@ -4,29 +4,30 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    subsetID: sampleID
+    subsetName: bcbFiltered
     pcCompute: 20
     pcUse: 10
-    varsToRegress: !r c("nUMI", "nGene", "mitoRatio")
+    varsToRegress: !r c("nUMI", "mitoRatio")
+    markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
 
-```{r setup, cache=FALSE, include=FALSE}
-bcbioSinglecell::download()
+```{r setup, cache=FALSE, message=FALSE, results="hide"}
 source("setup.R")
 library(Seurat)
 
 # Get bcbioSCSubset object
-subsetID <- params$subsetID
-if (is.null(subsetID)) {
+subsetName <- params$subsetName
+if (is.null(subsetName)) {
     stop("Subset name is required")
 }
-data(list = subsetID)
-subset <- get(subsetID)
+data(list = subsetName)
+subset <- get(subsetName)
 if (!is(subset, "bcbioSCSubset")) {
     stop("Subset must bcbioSCSubset class object")
 }
 genomeBuild <- metadata(subset)[["genomeBuild"]]
+gene2symbol <- metadata(subset)[["gene2symbol"]]
 
 # Principal components
 pcCompute <- params$pcCompute
@@ -41,6 +42,9 @@ if (pcUse > 25) {
 # Latent variables to regress
 varsToRegress <- params$varsToRegress
 
+# Known markers file
+markersFile <- normalizePath(params$markersFile)
+
 # Directory paths
 outputDir <- normalizePath(params$outputDir)
 markersDir <- file.path(outputDir, "results", "markers")
@@ -49,9 +53,8 @@ markersDir <- file.path(outputDir, "results", "markers")
 opts_chunk$set(
     cache = TRUE,
     cache.lazy = FALSE,
-    cache.path = paste0(subsetID, "_cache/"),
-    fig.path = paste0(subsetID, "_files/"),
-    results = "asis")
+    cache.path = paste0(subsetName, "Seurat", "_cache/"),
+    fig.path = paste0(subsetName, "Seurat", "_files/"))
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -61,7 +64,7 @@ This workflow is adapted from the [Seurat v2 Guided Clustering Tutorial](http://
 
 
 
-# Initialize Seurat (`r subsetID`)
+# Initialize Seurat (`r subsetName`)
 
 Let's convert our `bcbioSCSubset` object containing the filtered cellular barcodes into a `seurat` object. This step uses [Seurat][]'s `CreateSeuratObject()` with the same filtering cutoffs applied during our initial quality control analysis. Here we are imposing a basic minimum gene-cutoff, but also filtering low quality cells that have a high mitochondrial gene abundance.
 
@@ -82,7 +85,11 @@ We applied cellular barcode filtering during our initial quality control analysi
 
 ```{r VlnPlot, fig.height=8, fig.width=12}
 help("VlnPlot", "Seurat")
-VlnPlot(seurat, c("nUMI", "nGene", "mitoRatio"), nCol = 3)
+VlnPlot(
+    seurat,
+    features.plot = c("nUMI", "nGene", "mitoRatio"),
+    nCol = 3,
+    x.lab.rot = TRUE)
 ```
 
 Here we are visualizing UMI count correlations with genes detected (`nGene`) and mitochondrial abundance (`mitoRatio`). These scatterplots should resemble the figures presented in the quality control report.
@@ -104,12 +111,12 @@ We suggest that users set these parameters to mark visual outliers on the disper
 
 ```{r FindVariableGenes}
 help("FindVariableGenes", "Seurat")
+# @seealso VariableGenePlot()
 seurat <- FindVariableGenes(
     seurat,
     x.low.cutoff = 0.1,
     x.high.cutoff = 8,
     y.cutoff = 1)
-# @seealso VariableGenePlot()
 ```
 
 
@@ -118,7 +125,7 @@ seurat <- FindVariableGenes(
 
 Your single cell dataset likely contains "uninteresting" sources of variation. This could include not only technical noise, but batch effects, or even biological sources of variation (cell cycle stage). As suggested in Buettner et al, NBT, 2015, regressing these signals out of the analysis can improve downstream dimensionality reduction and clustering. To mitigate the effect of these signals, [Seurat][] constructs linear models to predict gene expression based on user-defined variables. The scaled z-scored residuals of these models are stored in the `seurat@scale.data` slot, and are used for dimensionality reduction and clustering.
 
-We can regress out cell-cell variation in gene expression driven by batch (if applicable), cell alignment rate, the number of detected molecules, and mitochondrial gene expression. For cycling cells, we can also learn a "cell-cycle" score and regress this out as well. *Cell cycle regression is not always generally recommended*, especially if there may be a biological basis for the difference between clusters (e.g. differentiation).
+We can regress out cell-cell variation in gene expression driven by batch (if applicable), cell alignment rate, the number of detected molecules, and mitochondrial gene expression. For cycling cells, we can also learn a "cell-cycle" score and regress this out as well. *Cell cycle regression is not always recommended*, especially if there may be a biological basis for the difference between clusters (e.g. differentiation).
 
 Generally, we currently recommend scaling data to minimize the effects of variable read counts (`nUMI`), gene detection (`nGene`), and mitochondrial abundance (`mitoRatio`).
 
@@ -140,7 +147,6 @@ help("RunPCA", "Seurat")
 seurat <- seurat %>%
     RunPCA(do.print = FALSE) %>%
     ProjectPCA(do.print = FALSE)
-# @seealso ProjectPCA()
 ```
 
 ```{r PrintPCA}
@@ -206,28 +212,28 @@ The `FindClusters()` function implements the procedure, and contains a `resoluti
 
 Regarding the value of the `resolution` argument, use a value `< 1` if you want to obtain fewer clusters.
 
-```{r FindClusters}
+```{r FindClusters, results="hide"}
 help("FindClusters", "Seurat")
 seurat <- FindClusters(
     seurat,
     dims.use = 1:pcUse,
-    print.output = FALSE,
-    plot.SNN = TRUE,
+    force.recalc = TRUE,
+    print.output = TRUE,
+    resolution = 0.8,
     save.SNN = TRUE)
 ```
 
-A useful feature in Seurat v2.0 is the ability to recall the parameters that were used in the latest function calls for commonly used functions. For FindClusters, we provide the function PrintFindClustersParams to print a nicely formatted formatted summary of the parameters that were chosen.
+A useful feature in [Seurat][] v2.0 is the ability to recall the parameters that were used in the latest function calls for commonly used functions. For FindClusters, we provide the function PrintFindClustersParams to print a nicely formatted formatted summary of the parameters that were chosen.
 
 ```{r PrintFindClustersParams}
 PrintFindClustersParams(seurat)
-# @seealso PrintCalcParams()
 ```
 
 
 
 # Run non-linear dimensional reduction (tSNE)
 
-Seurat continues to use tSNE as a powerful tool to visualize and explore these datasets. While we no longer advise clustering directly on tSNE components, cells within the graph-based clusters determined above should co-localize on the tSNE plot. This is because the tSNE aims to place cells with similar local neighborhoods in high-dimensional space together in low-dimensional space. As input to the tSNE, we suggest using the same PCs as input to the clustering analysis, although computing the tSNE based on scaled gene expression is also supported using the `genes.use` argument.
+[Seurat][] continues to use tSNE as a powerful tool to visualize and explore these datasets. While we no longer advise clustering directly on tSNE components, cells within the graph-based clusters determined above should co-localize on the tSNE plot. This is because the tSNE aims to place cells with similar local neighborhoods in high-dimensional space together in low-dimensional space. As input to the tSNE, we suggest using the same PCs as input to the clustering analysis, although computing the tSNE based on scaled gene expression is also supported using the `genes.use` argument.
 
 ```{r RunTSNE}
 help("RunTSNE", "Seurat")
@@ -242,7 +248,7 @@ PrintTSNEParams(seurat)
 ```
 
 ```{r saveSeurat}
-assignAndSaveData(paste0(subsetID, "_seurat"), seurat)
+assignAndSaveData(paste0(subsetName, "Seurat"), seurat)
 ```
 
 ```{r TSNEPlot}
@@ -253,22 +259,20 @@ TSNEPlot(
     label.size = 6)
 TSNEPlot(
     seurat,
+    do.label = FALSE,
     group.by = "sampleName",
-    do.label = TRUE,
     label.size = 6)
 ```
 
-Note that t-SNE is not PCA! The measurement of distance in a t-SNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's re-apply PCA.
+Note that tSNE is not PCA! The measurement of distance in a tSNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.
 
 ```{r PCAPlot}
 help("PCAPlot", "Seurat")
 PCAPlot(seurat,
-        do.label = TRUE,
-        no.legend = TRUE)
+        do.label = TRUE)
 PCAPlot(seurat,
         group.by = "sampleName",
-        do.label = TRUE,
-        no.legend = TRUE)
+        do.label = FALSE)
 ```
 
 
@@ -279,11 +283,11 @@ Let's look at the variance in the number of genes detected (`nGene`) and the per
 
 ```{r qc}
 help("FeaturePlot", "Seurat")
+# @seealso colnames(seurat@meta.data)
 colors <- c("grey","blue")
 FeaturePlot(seurat, "nUMI", cols.use = colors)
 FeaturePlot(seurat, "nGene", cols.use = colors)
 FeaturePlot(seurat, "mitoRatio", cols.use = colors)
-# @seealso colnames(seurat@meta.data)
 ```
 
 
@@ -306,9 +310,9 @@ markers <- FindAllMarkers(seurat, latent.vars = varsToRegress)
 ```
 
 ```{r saveMarkers}
-assignAndSaveData(paste0(subsetID, "_markers"), markers)
+assignAndSaveData(paste0(subsetName, "Markers"), markers)
 dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
-write_csv(markers, file.path(markersDir, paste0(subsetID, ".csv.gz")))
+write_csv(markers, file.path(markersDir, paste0(subsetName, ".csv.gz")))
 ```
 
 
@@ -334,7 +338,6 @@ DoHeatmap(seurat,
           order.by.ident = TRUE,
           remove.key = TRUE,
           slim.col.label = TRUE,
-          # heatmap.2 fix
           dendrogram = "none")
 ```
 
@@ -348,9 +351,9 @@ There are several tools for visualizing marker expression:
 - New functions: `JoyPlot()`, `CellPlot()`, `DotPlot()`.
 
 
-## Top markers per cluster
+## Top markers per cluster  {.tabset}
 
-```{r plotTopMarkers, fig.height=12, fig.width=12}
+```{r plotTopMarkers, results="asis"}
 help("plotTopMarkers", "bcbioSinglecell")
 plotTopMarkers(seurat, topMarkers)
 ```
@@ -362,8 +365,11 @@ plotTopMarkers(seurat, topMarkers)
 ## Load known markers
 
 ```{r knownMarkers}
-knownMarkers <- file.path("meta", "known_markers.xlsx") %>%
-    readKnownMarkers(genomeBuild)
+knownMarkers <- readMarkers(
+    markersFile,
+    gene2symbol = gene2symbol,
+    show = TRUE)
+saveData(knownMarkers)
 ```
 
 
@@ -372,13 +378,13 @@ knownMarkers <- file.path("meta", "known_markers.xlsx") %>%
 Let's obtain the statistics on our known marker genes from [Seurat][].
 
 ```{r knownMarkersDetected}
-knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers)
+knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers, show = TRUE)
 ```
 
 
-## Visualize cluster specificity
+## Visualize cluster specificity {.tabset}
 
-```{r plotKnownMarkers, fig.height=12, fig.width=12}
+```{r plotKnownMarkers, results="asis"}
 plotKnownMarkers(seurat, knownMarkersDetected)
 ```
 

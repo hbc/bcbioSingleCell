@@ -27,7 +27,26 @@ NULL
     }
     counts <- assay(object)
     if (isTRUE(gene2symbol)) {
-        counts <- gene2symbol(counts)
+        g2s <- metadata(object)[["gene2symbol"]]
+        if (!all(rownames(counts) %in% rownames(g2s))) {
+            rescale <- g2s %>%
+                .[rownames(counts), ] %>%
+                set_rownames(rownames(counts))
+            matched <- rescale %>%
+                .[!is.na(.[["symbol"]]), ]
+            unmatched <- rescale %>%
+                .[is.na(.[["symbol"]]), ]
+            warning(paste(
+                "Unmatched in gene2symbol:",
+                toString(rownames(unmatched))), call. = FALSE)
+            unmatched[["ensgene"]] <- rownames(unmatched)
+            unmatched[["symbol"]] <- rownames(unmatched)
+            g2s <- rbind(matched, unmatched)
+        }
+        g2s <- g2s[rownames(counts), ]
+        rows <- pull(g2s, "symbol")
+        names(rows) <- rownames(g2s)
+        rownames(counts) <- rows
     }
     as(counts, as)
 }
@@ -38,6 +57,8 @@ NULL
 #' @rdname counts
 #' @export
 setMethod("counts", "bcbioSCDataSet", .counts)
+
+
 
 #' @rdname counts
 #' @export

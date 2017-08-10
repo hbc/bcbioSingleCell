@@ -24,6 +24,7 @@ Depends:
     SummarizedExperiment (>= 1.6.3)
 Imports:
     BiocGenerics,
+    GenomicFeatures,
     ggplot2 (>= 2.2.1),
     Matrix,
     Matrix.utils,
@@ -38,7 +39,7 @@ Suggests:
     testthat
 Remotes:
     jimhester/lintr,
-    satijalab/seurat,
+    satijalab/seurat@develop,
     steinbaugh/basejump
 biocViews:
     DataImport,

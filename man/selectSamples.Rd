@@ -35,8 +35,7 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
   \code{\link{filterCells}},
   \code{\link{interestingGroups}},
-  \code{\link{readKnownMarkers}},
-  \code{\link{sampleMetadata}}
+  \code{\link{readMarkers}}, \code{\link{sampleMetadata}}
 }
 \author{
 Michael Steinbaugh

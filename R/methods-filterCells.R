@@ -76,29 +76,13 @@ NULL
         set_rownames(rownames(object))
 
     # Metadata ====
-    oldMeta <- metadata(object) %>%
-        .[c("version",
-            "pipeline",
-            "uploadDir",
-            "sampleMetadataFile",
-            "sampleMetadata",
-            "interestingGroups",
-            "genomeBuild",
-            "annotable",
-            "ensemblVersion",
-            "umiType",
-            "multiplexedFASTQ",
-            "runDate",
-            "cbCutoff")]
-    newMeta <- list(
-        filteringCriteria = c(
-            minUMIs = minUMIs,
-            minGenes = minGenes,
-            maxGenes = maxGenes,
-            maxMitoRatio = maxMitoRatio,
-            minNovelty = minNovelty))
-    metadata <- c(oldMeta, newMeta) %>%
-        as("SimpleList")
+    metadata <- metadata(object)
+    metadata[["filterParams"]] <- c(
+        minUMIs = minUMIs,
+        minGenes = minGenes,
+        maxGenes = maxGenes,
+        maxMitoRatio = maxMitoRatio,
+        minNovelty = minNovelty)
 
     # SummarizedExperiment ====
     se <- packageSE(
@@ -110,7 +94,7 @@ NULL
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(showReport)) {
-        mdHeader("Filtering parameters", level = 2L)
+        mdHeader("Filter parameters", level = 2L)
         mdList(c(
             paste0("`>= ", minUMIs, "` UMI counts per cell"),
             paste0("`>= ", minGenes, "` genes per cell"),
@@ -120,8 +104,11 @@ NULL
 
         mdHeader("Filtered metrics plots {.tabset}", level = 2L)
 
-        mdHeader("Reads per cell", level = 3L)
-        show(plotReadsPerCell(object))
+        # Reads per cell currently only supported for bcbio runs
+        if (metadata[["pipeline"]] == "bcbio") {
+            mdHeader("Reads per cell", level = 3L)
+            show(plotReadsPerCell(object))
+        }
 
         mdHeader("Cell counts", level = 3L)
         show(plotCellCounts(object))

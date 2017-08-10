@@ -26,8 +26,7 @@ Interesting Groups
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
-  \code{\link{filterCells}},
-  \code{\link{readKnownMarkers}},
+  \code{\link{filterCells}}, \code{\link{readMarkers}},
   \code{\link{sampleMetadata}}, \code{\link{selectSamples}}
 }
 \author{

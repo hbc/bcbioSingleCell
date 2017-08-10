@@ -38,13 +38,14 @@ setGeneric("aggregateReplicates", function(object, ...) {
 
 
 #' @rdname bcbio
-#' @family `bcbio` Utilities
 #' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("bcbio", function(object, ...) {
     standardGeneric("bcbio")
 })
+
+
 
 #' @rdname bcbio
 #' @inheritParams AllGenerics
@@ -110,13 +111,22 @@ setGeneric("knownMarkersDetected", function(object, knownMarkers, ...) {
 
 
 
-#' @rdname loadRun
-#' @family `bcbio` Utilities
+#' @rdname loadCellRanger
+#' @author Michael Steinbaugh
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("loadCellRanger", function(object, ...) {
+    standardGeneric("loadCellRanger")
+})
+
+
+
+#' @rdname loadSingleCellRun
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("loadRun", function(object, ...) {
-    standardGeneric("loadRun")
+setGeneric("loadSingleCellRun", function(object, ...) {
+    standardGeneric("loadSingleCellRun")
 })
 
 
@@ -269,13 +279,24 @@ setGeneric("plotUMIsVsGenes", function(object, ...) {
 
 
 
-#' @rdname readKnownMarkers
+#' @rdname plotZerosVsDepth
+#' @family Quality Control Metrics
+#' @author Rory Kirchner, Michael Steinbaugh
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("plotZerosVsDepth", function(object, ...) {
+    standardGeneric("plotZerosVsDepth")
+})
+
+
+
+#' @rdname readMarkers
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("readKnownMarkers", function(object, ...) {
-    standardGeneric("readKnownMarkers")
+setGeneric("readMarkers", function(object, ...) {
+    standardGeneric("readMarkers")
 })
 
 

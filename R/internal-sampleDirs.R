@@ -32,10 +32,9 @@
             uploadDir, pattern = "^matrix\\.mtx$",
             full.names = TRUE, recursive = TRUE) %>%
             # Look for the filtered counts
-            str_subset(file.path("outs", "filtered_gene_bc_matrices")) %>%
+            str_subset(file.path("filtered_gene_bc_matrices")) %>%
             dirname
         # Recurse through file path to get names
-        # cellranger/SAMPLE/outs/filtered_gene_bc_matrices/GENOME"
         names(sampleDirs) <- sampleDirs %>%
             dirname %>%
             dirname %>%

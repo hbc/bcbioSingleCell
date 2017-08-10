@@ -21,8 +21,8 @@
         matrices, "\\d{4}-\\d{2}-\\d{2}_[^/]+/tagcounts\\.mtx$"))) {
         "bcbio"
     } else if (any(str_detect(
-        # cellranger matching by raw `matrix.mtx`
-        matrices, "outs/raw_gene_bc_matrices/[^/]+/matrix\\.mtx$"))) {
+        # cellranger matching by filtered output
+        matrices, "filtered_gene_bc_matrices/[^/]+/matrix\\.mtx$"))) {
         "cellranger"
     } else {
         stop("Pipeline detection failed")

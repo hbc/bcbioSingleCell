@@ -4,6 +4,7 @@
 #' @name plotClusters
 #'
 #' @param symbols Character vector of gene symbols.
+#' @param markdown Include a Markdown header for each gene.
 #'
 #' @return No value, only graphical output.
 NULL
@@ -13,23 +14,29 @@ NULL
 # Methods ====
 #' @rdname plotClusters
 #' @export
-setMethod("plotClusters", "seurat", function(object, symbols) {
-    # TEMP Fix for Seurat issue #111
-    if (any(grepl("\\-", symbols))) {
-        warning("Seurat v2 fails on symbols starting with hyphen or number",
-                call. = FALSE)
-        symbols <- symbols %>%
-            .[!grepl("\\-", .)]
-        if (!length(symbols)) return(NULL)
-    }
-    VlnPlot(
-        object,
-        features.plot = symbols,
-        nCol = 2L,
-        x.lab.rot = TRUE)
-    FeaturePlot(
-        object,
-        features.plot = symbols,
-        cols.use = c("grey", "blue"),
-        nCol = 2L)
+setMethod("plotClusters", "seurat", function(
+    object,
+    symbols,
+    markdown = TRUE) {
+    sapply(seq_along(symbols), function(a) {
+        if (isTRUE(markdown)) {
+            mdHeader(symbols[a], level = 4L)
+        }
+
+        # Violin plots
+        VlnPlot(
+            object,
+            do.return = FALSE,
+            features.plot = symbols[a],
+            x.lab.rot = TRUE) %>%
+            show
+
+        # tSNE color plots
+        FeaturePlot(
+            object,
+            do.return = FALSE,
+            features.plot = symbols[a],
+            cols.use = c("grey", "blue"))
+    }) %>%
+        invisible
 })
