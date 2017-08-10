@@ -52,7 +52,7 @@ setMethod("readMarkers", "character", function(
         }
     } else if ("symbol" %in% colnames(markers)) {
         message("Matching by gene symbol")
-        markers <- markers %>?%
+        markers <- markers %>%
             .[, c("cellType", "symbol")] %>%
             .[!is.na(.[["symbol"]]), ] %>%
             left_join(gene2symbol, by = "symbol")
