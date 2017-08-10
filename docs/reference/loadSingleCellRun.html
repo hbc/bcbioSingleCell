@@ -90,9 +90,9 @@
     <pre class="usage"><span class='fu'>loadSingleCellRun</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for character</span>
-<span class='fu'>loadSingleCellRun</span>(<span class='kw'>object</span> <span class='kw'>=</span> <span class='st'>"final"</span>, <span class='no'>sampleMetadataFile</span>,
-  <span class='kw'>wellMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
-  <span class='kw'>gtfFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>loadSingleCellRun</span>(<span class='no'>object</span>, <span class='no'>sampleMetadataFile</span>,
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>gtfFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>wellMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -108,11 +108,7 @@
     </tr>
     <tr>
       <th>sampleMetadataFile</th>
-      <td><p><strong>Required</strong>. Sample barcode metadata file.</p></td>
-    </tr>
-    <tr>
-      <th>wellMetadataFile</th>
-      <td><p><em>Optional</em>. Well identifier metadata file.</p></td>
+      <td><p>Sample barcode metadata file.</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
@@ -126,18 +122,15 @@ is used for PCA and heatmap QC functions.</p></td>
 used for transcript-to-gene (<code>tx2gene</code>) and gene-to-symbol (<code>gene2symbol</code>)
 annotation mappings.</p></td>
     </tr>
+    <tr>
+      <th>wellMetadataFile</th>
+      <td><p><em>Optional</em>. Well identifier metadata file.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><a href='bcbioSCDataSet-class.html'>bcbioSCDataSet</a>.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <ul>
-<li><p><strong>cellranger</strong>: Read <a href='https://www.10xgenomics.com/software/'>10x GenomicsChromium</a> cell counts from
-<code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.mtx</code> files.</p></li>
-</ul>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -153,8 +146,6 @@ run directory as a remote connection over
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
 
       <li><a href="#note">Note</a></li>
           </ul>
