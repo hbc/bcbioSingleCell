@@ -34,8 +34,7 @@
             # Look for the filtered counts
             str_subset(file.path("filtered_gene_bc_matrices")) %>%
             dirname
-        # Recurse through file path to get names
-        # `cellranger/SAMPLE_ID/outs/filtered_gene_bc_matrices/GENOME`
+        # Recurse through file path to get names.
         names(sampleDirs) <- sampleDirs %>%
             dirname %>%
             dirname %>%
