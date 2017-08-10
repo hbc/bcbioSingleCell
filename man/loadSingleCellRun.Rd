@@ -10,8 +10,8 @@
 loadSingleCellRun(object, ...)
 
 \S4method{loadSingleCellRun}{character}(object, sampleMetadataFile,
-  wellMetadataFile = NULL, interestingGroups = "sampleName",
-  gtfFile = NULL, ...)
+  interestingGroups = "sampleName", gtfFile = NULL,
+  wellMetadataFile = NULL, ...)
 }
 \arguments{
 \item{object}{Path to final upload directory. This path is set when running
@@ -19,9 +19,7 @@ loadSingleCellRun(object, ...)
 
 \item{...}{Additional arguments, passed as metadata.}
 
-\item{sampleMetadataFile}{\strong{Required}. Sample barcode metadata file.}
-
-\item{wellMetadataFile}{\emph{Optional}. Well identifier metadata file.}
+\item{sampleMetadataFile}{Sample barcode metadata file.}
 
 \item{interestingGroups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
@@ -30,6 +28,8 @@ is used for PCA and heatmap QC functions.}
 \item{gtfFile}{\emph{Optional}. Gene transfer format (GTF) file, which will be
 used for transcript-to-gene (\code{tx2gene}) and gene-to-symbol (\code{gene2symbol})
 annotation mappings.}
+
+\item{wellMetadataFile}{\emph{Optional}. Well identifier metadata file.}
 }
 \value{
 \link{bcbioSCDataSet}.

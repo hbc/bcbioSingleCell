@@ -13,9 +13,9 @@ loadCellRanger(object, ...)
 }
 \arguments{
 \item{object}{Path to CellRanger output directory. This directory path must
-contain \code{filtered_gene_bc_matrices}.}
+contain \code{filtered_gene_bc_matrices/} as a child.}
 
-\item{...}{Additional arguments, passed as metadata.}
+\item{...}{Additional arguments.}
 }
 \value{
 \link{bcbioSCDataSet}.
