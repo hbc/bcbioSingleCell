@@ -9,14 +9,14 @@
 #'
 #' @param object Path to final upload directory. This path is set when running
 #'   `bcbio_nextgen -w template`.
-#' @param sampleMetadataFile **Required**. Sample barcode metadata file.
-#' @param wellMetadataFile *Optional*. Well identifier metadata file.
+#' @param sampleMetadataFile Sample barcode metadata file.
 #' @param interestingGroups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
 #' @param gtfFile *Optional*. Gene transfer format (GTF) file, which will be
 #'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
 #'   annotation mappings.
+#' @param wellMetadataFile *Optional*. Well identifier metadata file.
 #' @param ... Additional arguments, passed as metadata.
 #'
 #' @return [bcbioSCDataSet].
@@ -30,9 +30,9 @@ NULL
 setMethod("loadSingleCellRun", "character", function(
     object,
     sampleMetadataFile,
-    wellMetadataFile = NULL,
     interestingGroups = "sampleName",
     gtfFile = NULL,
+    wellMetadataFile = NULL,
     ...) {
     uploadDir <- object
     if (!dir.exists(uploadDir)) {
@@ -211,7 +211,6 @@ setMethod("loadSingleCellRun", "character", function(
         interestingGroups = interestingGroups,
         genomeBuild = genomeBuild,
         annotable = annotable,
-        ensemblVersion = annotables::ensembl_version,
         gene2symbol = gene2symbol,
         umiType = umiType,
         allSamples = allSamples,
