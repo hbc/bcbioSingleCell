@@ -3,11 +3,6 @@
 #' @rdname loadSingleCellRun
 #' @name loadSingleCellRun
 #'
-#' @details
-#' - **cellranger**: Read [10x Genomics
-#'   Chromium](https://www.10xgenomics.com/software/) cell counts from
-#'   `barcodes.tsv`, `genes.tsv`, and `matrix.mtx` files.
-#'
 #' @note When working in RStudio, we recommend connecting to the bcbio-nextgen
 #'   run directory as a remote connection over
 #'   [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
@@ -33,7 +28,7 @@ NULL
 #' @rdname loadSingleCellRun
 #' @export
 setMethod("loadSingleCellRun", "character", function(
-    object = "final",
+    object,
     sampleMetadataFile,
     wellMetadataFile = NULL,
     interestingGroups = "sampleName",
@@ -41,9 +36,8 @@ setMethod("loadSingleCellRun", "character", function(
     ...) {
     uploadDir <- object
     if (!dir.exists(uploadDir)) {
-        stop("Upload directory missing")
+        stop("Upload directory missing", call. = FALSE)
     }
-
 
     # Initial run setup ====
     uploadDir <- normalizePath(uploadDir)
@@ -52,7 +46,6 @@ setMethod("loadSingleCellRun", "character", function(
     }
     pipeline <- .detectPipeline(uploadDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
-
 
     # Sample metadata ====
     sampleMetadataFile <- normalizePath(sampleMetadataFile)
@@ -76,118 +69,103 @@ setMethod("loadSingleCellRun", "character", function(
         allSamples <- TRUE
     }
 
+    # Project directory ====
+    projectDir <- dir(uploadDir,
+                      pattern = projectDirPattern,
+                      full.names = FALSE,
+                      recursive = FALSE)
+    if (length(projectDir) != 1L) {
+        stop("Uncertain about project directory location")
+    }
+    message(projectDir)
+    match <- str_match(projectDir, projectDirPattern)
+    runDate <- match[[2L]] %>% as.Date
+    template <- match[[3L]]
+    projectDir <- file.path(uploadDir, projectDir)
 
-    # Pipeline-specific support prior to count loading ====
-    if (pipeline == "bcbio") {
-        # Project directory ====
-        projectDir <- dir(uploadDir,
-                           pattern = projectDirPattern,
-                           full.names = FALSE,
-                           recursive = FALSE)
-        if (length(projectDir) != 1L) {
-            stop("Uncertain about project directory location")
+    # Log files ====
+    message("Reading log files")
+    bcbioLog <- .logFile(
+        file.path(projectDir, "bcbio-nextgen.log"))
+    bcbioCommandsLog <- .logFile(
+        file.path(projectDir, "bcbio-nextgen-commands.log"))
+
+    # Cellular barcode cutoff ====
+    cbCutoffPattern <- "--cb_cutoff (\\d+)"
+    cbCutoff <- str_match(bcbioCommandsLog, cbCutoffPattern) %>%
+        .[, 2L] %>%
+        na.omit %>%
+        unique %>%
+        as.numeric
+
+    # Data versions and programs ====
+    dataVersions <- .dataVersions(projectDir)
+    programs <- .programs(projectDir)
+    if (!is.null(dataVersions)) {
+        genomeBuild <- dataVersions %>%
+            filter(.data[["resource"]] == "transcripts") %>%
+            pull("genome")
+    } else {
+        # Data versions aren't saved when using a custom FASTA
+        # Remove this in a future update
+        genomePattern <- "work/rapmap/[^/]+/quasiindex/([^/]+)/"
+        if (any(str_detect(bcbioCommandsLog, genomePattern))) {
+            genomeBuild <- str_match(bcbioCommandsLog,
+                                     genomePattern) %>%
+                .[, 2L] %>%
+                na.omit %>%
+                unique
+        } else {
+            stop("Genome detection from bcbio commands failed")
         }
-        message(projectDir)
-        match <- str_match(projectDir, projectDirPattern)
-        runDate <- match[[2L]] %>% as.Date
-        template <- match[[3L]]
-        projectDir <- file.path(uploadDir, projectDir)
+    }
+    if (length(genomeBuild) > 1L) {
+        stop("Multiple genomes detected -- not supported")
+    }
 
-        # Log files ====
-        message("Reading log files")
-        bcbioLog <- .logFile(
-            file.path(projectDir, "bcbio-nextgen.log"))
-        bcbioCommandsLog <- .logFile(
-            file.path(projectDir, "bcbio-nextgen-commands.log"))
-
-        # Cellular barcode cutoff ====
-        cbCutoffPattern <- "--cb_cutoff (\\d+)"
-        cbCutoff <- str_match(bcbioCommandsLog, cbCutoffPattern) %>%
+    # Molecular barcode (UMI) type ====
+    umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
+    if (any(str_detect(bcbioCommandsLog, umiPattern))) {
+        umiType <- str_match(bcbioCommandsLog,
+                             umiPattern) %>%
             .[, 2L] %>%
             na.omit %>%
             unique %>%
-            as.numeric
-
-        # Data versions and programs ====
-        dataVersions <- .dataVersions(projectDir)
-        programs <- .programs(projectDir)
-        if (!is.null(dataVersions)) {
-            genomeBuild <- dataVersions %>%
-                filter(.data[["resource"]] == "transcripts") %>%
-                pull("genome")
-        } else {
-            # Data versions aren't saved when using a custom FASTA
-            # Remove this in a future update
-            genomePattern <- "work/rapmap/[^/]+/quasiindex/([^/]+)/"
-            if (any(str_detect(bcbioCommandsLog, genomePattern))) {
-                genomeBuild <- str_match(bcbioCommandsLog,
-                                          genomePattern) %>%
-                    .[, 2L] %>%
-                    na.omit %>%
-                    unique
-            } else {
-                stop("Genome detection from bcbio commands failed")
-            }
-        }
-        if (length(genomeBuild) > 1L) {
-            stop("Multiple genomes detected -- not supported")
-        }
-
-        # Molecular barcode (UMI) type ====
-        umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
-        if (any(str_detect(bcbioCommandsLog, umiPattern))) {
-            umiType <- str_match(bcbioCommandsLog,
-                                  umiPattern) %>%
-                .[, 2L] %>%
-                na.omit %>%
-                unique %>%
-                str_replace("-transform", "")
-        } else {
-            stop("Failed to detect UMI type from JSON file")
-        }
-
-        # Well metadata ====
-        if (!is.null(wellMetadataFile)) {
-            wellMetadataFile <- normalizePath(wellMetadataFile)
-            wellMetadata <- readFileByExtension(wellMetadataFile)
-        } else {
-            wellMetadata <- NULL
-        }
-
-        # tx2gene mappings ====
-        if (!is.null(gtfFile)) {
-            tx2gene <- tx2geneFromGTF(gtfFile)
-        } else {
-            tx2gene <- tx2gene(genomeBuild)
-        }
-
-        # Cellular barcodes ====
-        cellularBarcodes <- .cbList(sampleDirs)
-    } else if (pipeline == "cellranger") {
-        # Get genome build from `sampleDirs`
-        genomeBuild <- basename(sampleDirs) %>% unique
-        if (length(genomeBuild) > 1L) {
-            stop("Multiple genomes detected -- not supported")
-        }
-        umiType <- "chromium"
+            str_replace("-transform", "")
+    } else {
+        stop("Failed to detect UMI type from JSON file")
     }
 
-    message(paste("UMI type:", umiType))
+    # Well metadata ====
+    if (!is.null(wellMetadataFile)) {
+        wellMetadataFile <- normalizePath(wellMetadataFile)
+        wellMetadata <- readFileByExtension(wellMetadataFile)
+    } else {
+        wellMetadata <- NULL
+    }
 
+    # tx2gene mappings ====
+    if (!is.null(gtfFile)) {
+        tx2gene <- tx2geneFromGTF(gtfFile)
+    } else {
+        tx2gene <- tx2gene(genomeBuild)
+    }
+
+    # Cellular barcodes ====
+    cellularBarcodes <- .cbList(sampleDirs)
+
+    message(paste("UMI type:", umiType))
 
     # Row data =================================================================
     annotable <- annotable(genomeBuild)
 
-
     # Assays ===================================================================
     message("Reading counts")
+    # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
         sparseCounts <- .readSparseCounts(sampleDirs[a], pipeline = pipeline)
-        if (pipeline == "bcbio") {
-            # Transcript-level to gene-level counts
-            sparseCounts <-
-                .sparseCountsTx2Gene(sparseCounts, tx2gene)
-        }
+        # Transcript-level to gene-level counts
+        sparseCounts <- .sparseCountsTx2Gene(sparseCounts, tx2gene)
         # Pre-filter using cellular barcode summary metrics
         metrics <- calculateMetrics(sparseCounts, annotable)
         sparseCounts[, rownames(metrics)]
@@ -195,26 +173,22 @@ setMethod("loadSingleCellRun", "character", function(
         set_names(names(sampleDirs))
     sparseCounts <- do.call(Matrix::cBind, sparseList)
 
-
     # Column data ==============================================================
     metrics <- calculateMetrics(sparseCounts, annotable)
-    if (pipeline == "bcbio") {
-        # Add reads per cellular barcode to metrics
-        cbTbl <- .bindCB(cellularBarcodes) %>%
-            mutate(cellularBarcode = NULL,
-                   sampleID = NULL)
-        metrics <- metrics %>%
-            as.data.frame %>%
-            rownames_to_column %>%
-            left_join(cbTbl, by = "rowname") %>%
-            tidy_select("nCount", everything()) %>%
-            column_to_rownames %>%
-            as.matrix
-    }
-
+    # Add reads per cellular barcode to metrics
+    cbTbl <- .bindCB(cellularBarcodes) %>%
+        mutate(cellularBarcode = NULL,
+               sampleID = NULL)
+    metrics <- metrics %>%
+        as.data.frame %>%
+        rownames_to_column %>%
+        left_join(cbTbl, by = "rowname") %>%
+        tidy_select("nCount", everything()) %>%
+        column_to_rownames %>%
+        as.matrix
 
     # Metadata =================================================================
-    if (umiType == "indrop") {
+    if (str_detect(umiType, "indrop")) {
         multiplexedFASTQ <- TRUE
     } else {
         multiplexedFASTQ <- FALSE
@@ -223,10 +197,8 @@ setMethod("loadSingleCellRun", "character", function(
     # gene2symbol mappings ====
     if (!is.null(gtfFile)) {
         gene2symbol <- gene2symbolFromGTF(gtfFile)
-        tx2gene <- tx2geneFromGTF(gtfFile)
     } else {
         gene2symbol <- gene2symbol(genomeBuild)
-        tx2gene <- tx2gene(genomeBuild)
     }
 
     metadata <- SimpleList(
@@ -243,28 +215,24 @@ setMethod("loadSingleCellRun", "character", function(
         gene2symbol = gene2symbol,
         umiType = umiType,
         allSamples = allSamples,
-        multiplexedFASTQ = multiplexedFASTQ)
-    if (pipeline == "bcbio") {
-        bcbioMetadata <- SimpleList(
-            projectDir = projectDir,
-            wellMetadataFile = wellMetadataFile,
-            wellMetadata = wellMetadata,
-            template = template,
-            runDate = runDate,
-            tx2gene = tx2gene,
-            dataVersions = dataVersions,
-            programs = programs,
-            bcbioLog = bcbioLog,
-            bcbioCommandsLog = bcbioCommandsLog,
-            cbCutoff = cbCutoff)
-        metadata <- c(metadata, bcbioMetadata)
-    }
+        multiplexedFASTQ = multiplexedFASTQ,
+        # bcbio pipeline-specific
+        projectDir = projectDir,
+        wellMetadataFile = wellMetadataFile,
+        wellMetadata = wellMetadata,
+        template = template,
+        runDate = runDate,
+        tx2gene = tx2gene,
+        dataVersions = dataVersions,
+        programs = programs,
+        bcbioLog = bcbioLog,
+        bcbioCommandsLog = bcbioCommandsLog,
+        cbCutoff = cbCutoff)
     # Add user-defined custom metadata, if specified
     dots <- list(...)
     if (length(dots) > 0L) {
         metadata <- c(metadata, dots)
     }
-
 
     # bcbioSCDataSet ===========================================================
     se <- packageSE(
@@ -273,8 +241,6 @@ setMethod("loadSingleCellRun", "character", function(
         rowData = annotable,
         metadata = metadata)
     bcb <- new("bcbioSCDataSet", se)
-    if (pipeline == "bcbio") {
-        bcbio(bcb, "cellularBarcodes") <- cellularBarcodes
-    }
+    bcbio(bcb, "cellularBarcodes") <- cellularBarcodes
     bcb
 })
