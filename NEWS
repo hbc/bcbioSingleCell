@@ -3,6 +3,12 @@
 - Renamed functions in lowerCamelCase from snake_case.
 - Draft support for monocle, scater, and scone.
 - Package now depends on SummarizedExperiment.
+- Renamed loadRun() to loadSingleCellRun() for improved compatibility with bcbioRnaseq package. This helps avoid NAMESPACE collisions between packages.
+- Improved support for custom GTF files.
+- Split out cellranger import into a separate utility function named loadCellRanger().
+- Added plotZerosVsDepth() by @roryk.
+- Renamed filteringCriteria to filterParams in metadata slot.
+- Miscellaneous documentation fixes.
 
 
 
