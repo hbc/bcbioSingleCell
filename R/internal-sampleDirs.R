@@ -36,9 +36,6 @@
             dirname
         # Recurse through file path to get names
         # `cellranger/SAMPLE_ID/outs/filtered_gene_bc_matrices/GENOME`
-        # FIXME This will fail for 10X example data where path is simply
-        # `filtered_gene_bc_matrices/hg19/matrix.mtx`. The function won't
-        # identify the sampleID correctly.
         names(sampleDirs) <- sampleDirs %>%
             dirname %>%
             dirname %>%
