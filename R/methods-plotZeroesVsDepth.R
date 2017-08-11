@@ -23,7 +23,7 @@ NULL
     p <- ggplot(df,
            aes_(x = ~depth,
                 y = ~dropout * 100L)) +
-        geom_point(size = 0.8, alpha=0.3) +
+        geom_point(size = 0.8, alpha = 0.3) +
         scale_x_log10() +
         labs(x = "library size",
              y = "% genes zero")
