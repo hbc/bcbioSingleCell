@@ -1,4 +1,4 @@
 library(testthat)
 library(basejump)
 
-test_check("bcbioRnaseq")
+test_check("bcbioSinglecell")
