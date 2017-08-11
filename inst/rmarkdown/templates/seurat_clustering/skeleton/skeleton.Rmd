@@ -18,14 +18,13 @@ library(Seurat)
 
 # Get bcbioSCSubset object
 subsetName <- params$subsetName
-if (is.null(subsetName)) {
-    stop("Subset name is required")
-}
 data(list = subsetName)
 subset <- get(subsetName)
 if (!is(subset, "bcbioSCSubset")) {
     stop("Subset must bcbioSCSubset class object")
 }
+
+# Gene annotations
 genomeBuild <- metadata(subset)[["genomeBuild"]]
 gene2symbol <- metadata(subset)[["gene2symbol"]]
 
