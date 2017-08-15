@@ -27,20 +27,18 @@ NULL
 # Constructors ====
 .selectSamples <- function(object, ...) {
     sampleMetadata <- sampleMetadata(object)
-    patterns <- dots(...)
+    patterns <- list(...)
     list <- lapply(seq_along(patterns), function(a) {
+        col <- names(patterns)[[a]]
+        pattern <- patterns[[a]]
         if (is_string(pattern)) {
             # Use grep pattern matching on string
-            col <- names(patterns)[[a]]
-            pattern <- patterns[[a]]
             match <- sampleMetadata %>%
                 .[str_detect(.[[col]], pattern), , drop = FALSE]
         } else if (is.character(pattern)) {
             # Use exact matching if vector supplied
-            col <- names(patterns)[[a]]
-            vec <- patterns[[a]]
             match <- sampleMetadata %>%
-                .[.[[col]] %in% vec, , drop = FALSE]
+                .[.[[col]] %in% pattern, , drop = FALSE]
         } else {
             stop("Selection argument must be a character")
         }

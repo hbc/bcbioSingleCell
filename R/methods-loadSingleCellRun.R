@@ -103,7 +103,7 @@ setMethod("loadSingleCellRun", "character", function(
     programs <- .programs(projectDir)
     if (!is.null(dataVersions)) {
         genomeBuild <- dataVersions %>%
-            filter(.data[["resource"]] == "transcripts") %>%
+            tidy_filter(.data[["resource"]] == "transcripts") %>%
             pull("genome")
     } else {
         # Data versions aren't saved when using a custom FASTA
