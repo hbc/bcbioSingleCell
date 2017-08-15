@@ -4,8 +4,8 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bcbioSinglecell.bib
 params:
-    uploadDir: "data/indrop_rnaseq"
-    sampleMetadataFile: "meta/sample_metadata.xlsx"
+    uploadDir: "final"
+    sampleMetadataFile: "sample_metadata.xlsx"
     interestingGroups: !r c("genotype", "treatment")
     experimentName: ""
     researcher: ""
@@ -30,13 +30,13 @@ countsDir <- file.path(outputDir, "results", "counts")
 # Load bcbio scRNA-seq run
 if (!file.exists(file.path(dataDir, "bcb.rda"))) {
     bcb <- loadSingleCellRun(
-    uploadDir = params$uploadDir,
-    sampleMetadataFile = params$sampleMetadataFile,
-    interestingGroups = params$interestingGroups,
-    experimentName = params$experimentName,
-    researcher = params$researcher,
-    principalInvestigator = params$principalInvestigator)
-saveData(bcb, dir = dataDir)
+        params$uploadDir,
+        sampleMetadataFile = params$sampleMetadataFile,
+        interestingGroups = params$interestingGroups,
+        experimentName = params$experimentName,
+        researcher = params$researcher,
+        principalInvestigator = params$principalInvestigator)
+    saveData(bcb, dir = dataDir)
 } else {
     load(file.path(dataDir, "bcb.rda"))
 }
