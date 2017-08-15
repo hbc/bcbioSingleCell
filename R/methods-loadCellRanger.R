@@ -89,7 +89,8 @@ setMethod("loadCellRanger", "character", function(
     # Metadata =================================================================
     # gene2symbol mappings ====
     if (!is.null(gtfFile)) {
-        gene2symbol <- gene2symbolFromGTF(gtfFile)
+        gtf <- readGTF(gtfFile)
+        gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
         gene2symbol <- gene2symbol(genomeBuild)
     }
@@ -104,6 +105,8 @@ setMethod("loadCellRanger", "character", function(
         interestingGroups = interestingGroups,
         genomeBuild = genomeBuild,
         annotable = annotable,
+        gtfFile = gtfFile,
+        gtf = gtf,
         gene2symbol = gene2symbol,
         umiType = "chromium",
         allSamples = allSamples,
