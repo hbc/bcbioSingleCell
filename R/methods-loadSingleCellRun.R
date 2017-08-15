@@ -150,6 +150,7 @@ setMethod("loadSingleCellRun", "character", function(
         tx2gene <- tx2geneFromGTF(gtf)
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
+        gtf <- NULL
         tx2gene <- tx2gene(genomeBuild)
         gene2symbol <- gene2symbol(genomeBuild)
     }

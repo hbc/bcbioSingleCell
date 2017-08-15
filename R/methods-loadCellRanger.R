@@ -92,6 +92,7 @@ setMethod("loadCellRanger", "character", function(
         gtf <- readGTF(gtfFile)
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
+        gtf <- NULL
         gene2symbol <- gene2symbol(genomeBuild)
     }
 
