@@ -12,16 +12,16 @@ params:
     outputDir: "."
 ---
 
-```{r setup, cache=FALSE, message=FALSE, results="hide"}
+```{r setup, cache=FALSE}
 source("setup.R")
-library(Seurat)
+library(Seurat, quietly = TRUE)
 
 # Get bcbioSCSubset object
 subsetName <- params$subsetName
 data(list = subsetName)
 subset <- get(subsetName)
 if (!is(subset, "bcbioSCSubset")) {
-    stop("Subset must bcbioSCSubset class object")
+    stop("Subset must be a bcbioSCSubset class object")
 }
 
 # Gene annotations
