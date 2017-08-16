@@ -119,8 +119,8 @@
         set_rownames(rownames(sparseCounts))
     if (any(is.na(t2g[["enstxp"]]))) {
         t2g <- rownames_to_column(t2g)
-        mapped <- filter(t2g, !is.na(.data[["ensgene"]]))
-        unmapped <- filter(t2g, is.na(.data[["ensgene"]])) %>%
+        mapped <- tidy_filter(t2g, !is.na(.data[["ensgene"]]))
+        unmapped <- tidy_filter(t2g, is.na(.data[["ensgene"]])) %>%
             mutate(enstxp = .data[["rowname"]],
                    ensgene = .data[["rowname"]])
         warning(paste("Unmapped transcripts:",

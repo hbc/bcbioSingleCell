@@ -103,7 +103,7 @@ setMethod("loadSingleCellRun", "character", function(
     programs <- .programs(projectDir)
     if (!is.null(dataVersions)) {
         genomeBuild <- dataVersions %>%
-            filter(.data[["resource"]] == "transcripts") %>%
+            tidy_filter(.data[["resource"]] == "transcripts") %>%
             pull("genome")
     } else {
         # Data versions aren't saved when using a custom FASTA
@@ -144,11 +144,15 @@ setMethod("loadSingleCellRun", "character", function(
         wellMetadata <- NULL
     }
 
-    # tx2gene mappings ====
+    # tx2gene and gene2symbol annotations ====
     if (!is.null(gtfFile)) {
-        tx2gene <- tx2geneFromGTF(gtfFile)
+        gtf <- readGTF(gtfFile)
+        tx2gene <- tx2geneFromGTF(gtf)
+        gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
+        gtf <- NULL
         tx2gene <- tx2gene(genomeBuild)
+        gene2symbol <- gene2symbol(genomeBuild)
     }
 
     # Cellular barcodes ====
@@ -194,13 +198,6 @@ setMethod("loadSingleCellRun", "character", function(
         multiplexedFASTQ <- FALSE
     }
 
-    # gene2symbol mappings ====
-    if (!is.null(gtfFile)) {
-        gene2symbol <- gene2symbolFromGTF(gtfFile)
-    } else {
-        gene2symbol <- gene2symbol(genomeBuild)
-    }
-
     metadata <- SimpleList(
         version = packageVersion("bcbioSinglecell"),
         pipeline = pipeline,
@@ -211,16 +208,18 @@ setMethod("loadSingleCellRun", "character", function(
         interestingGroups = interestingGroups,
         genomeBuild = genomeBuild,
         annotable = annotable,
+        gtfFile = gtfFile,
+        gtf = gtf,
         gene2symbol = gene2symbol,
         umiType = umiType,
         allSamples = allSamples,
         multiplexedFASTQ = multiplexedFASTQ,
         # bcbio pipeline-specific
         projectDir = projectDir,
-        wellMetadataFile = wellMetadataFile,
-        wellMetadata = wellMetadata,
         template = template,
         runDate = runDate,
+        wellMetadataFile = wellMetadataFile,
+        wellMetadata = wellMetadata,
         tx2gene = tx2gene,
         dataVersions = dataVersions,
         programs = programs,

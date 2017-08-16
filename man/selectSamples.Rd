@@ -30,6 +30,16 @@ Select Samples
 Internally, pattern matching against sample and file names is
 applied using \code{\link[=str_detect]{str_detect()}}.
 }
+\examples{
+\dontrun{
+data(bcb)
+# grep pattern matching with string
+selectSamples(bcb, sampleName = "wt")
+
+# Exact name matching with character vector
+selectSamples(bcb, sampleName = c("wt1", "wt2"))
+}
+}
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
