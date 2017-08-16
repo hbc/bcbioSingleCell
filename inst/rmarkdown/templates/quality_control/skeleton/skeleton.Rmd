@@ -18,7 +18,7 @@ params:
     outputDir: "."
 ---
 
-```{r setup, cache=FALSE}
+```{r setup}
 bcbioSinglecell::download()
 source("setup.R")
 
