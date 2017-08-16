@@ -18,9 +18,6 @@ library(Seurat)
 
 # Get bcbioSCSubset object
 subsetName <- params$subsetName
-if (is.null(subsetName)) {
-    stop("Subset name is required")
-}
 data(list = subsetName)
 subset <- get(subsetName)
 if (!is(subset, "bcbioSCSubset")) {
