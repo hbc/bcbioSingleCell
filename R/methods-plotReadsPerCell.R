@@ -65,7 +65,7 @@ NULL
                      fill = ~sampleName)) +
         geom_violin(scale = "width") +
         labs(title = "raw violin",
-             y = "log10 read counts per cell") +
+             y = "log10 reads per cell") +
         coord_flip()
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p + geom_hline(color = "black",
@@ -88,7 +88,7 @@ NULL
                 aes_(x = ~log10Count,
                      fill = ~sampleName)) +
         labs(title = "raw histogram",
-             x = "log10 read counts per cell") +
+             x = "log10 reads per cell") +
         geom_histogram(bins = bins) +
         scale_y_sqrt()
     if (!is.null(cutoffLine) & length(cutoffLine)) {
@@ -128,7 +128,7 @@ NULL
         mids <-  cbHist[["mids"]]
         tibble(
             sampleID = names(lst)[[a]],
-            # log10 read counts per cell
+            # log10 reads per cell
             log10Count = mids,
             # Proportion of cells
             proportion = counts * (10L ^ mids) /
@@ -158,7 +158,7 @@ NULL
         mids <-  cbHist[["mids"]]
         tibble(
             sampleID = uniques[[a]],
-            # log10 read counts per cell
+            # log10 reads per cell
             log10Count = mids,
             # Proportion of cells
             proportion = counts * (10L ^ mids) /
@@ -180,7 +180,7 @@ NULL
         geom_line(alpha = 0.9,
                   size = 1.5) +
         labs(title = "proportional histogram",
-             x = "log10 read counts per cell",
+             x = "log10 reads per cell",
              y = "% of cells")
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p + geom_vline(color = "black",
