@@ -1,3 +1,9 @@
+# 0.0.16
+
+- Memory fix for `plotZerosVsDepth()`.
+
+
+
 # 0.0.15
 
 - Renamed functions in lowerCamelCase from snake_case.
