@@ -7,7 +7,7 @@ params:
     subsetName: bcbFiltered
     pcCompute: 20
     pcUse: 10
-    varsToRegress: !r c("nUMI", "mitoRatio")
+    varsToRegress: "nUMI"
     markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
@@ -21,7 +21,7 @@ subsetName <- params$subsetName
 data(list = subsetName)
 subset <- get(subsetName)
 if (!is(subset, "bcbioSCSubset")) {
-    stop("Subset must bcbioSCSubset class object")
+    stop("Subset must be a bcbioSCSubset class object")
 }
 
 # Gene annotations
