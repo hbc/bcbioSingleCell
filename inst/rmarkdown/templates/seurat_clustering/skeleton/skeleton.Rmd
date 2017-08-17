@@ -12,7 +12,7 @@ params:
     outputDir: "."
 ---
 
-```{r setup, cache=FALSE, message=FALSE, results="hide"}
+```{r setup, message=FALSE}
 source("setup.R")
 library(Seurat)
 
