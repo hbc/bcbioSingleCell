@@ -35,7 +35,7 @@ Imports:
     S4Vectors,
     utils
 Suggests:
-    lintr (>= 1.0.0.9000),
+    lintr (>= 1.0.1),
     testthat
 Remotes:
     jimhester/lintr,
