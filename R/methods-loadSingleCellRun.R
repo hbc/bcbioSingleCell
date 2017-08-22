@@ -174,7 +174,7 @@ setMethod("loadSingleCellRun", "character", function(
         metrics <- calculateMetrics(sparseCounts, annotable)
         sparseCounts[, rownames(metrics)]
     }) %>%
-        set_names(names(sampleDirs))
+        setNames(names(sampleDirs))
     sparseCounts <- do.call(Matrix::cBind, sparseList)
 
     # Column data ==============================================================

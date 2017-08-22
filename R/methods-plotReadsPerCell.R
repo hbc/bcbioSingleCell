@@ -134,7 +134,7 @@ NULL
             proportion = counts * (10L ^ mids) /
                 sum(counts * (10L ^ mids)))
     }) %>%
-        set_names(names(lst)) %>%
+        setNames(names(lst)) %>%
         bind_rows %>%
         left_join(metadata, by = "sampleID")
 }
@@ -164,7 +164,7 @@ NULL
             proportion = counts * (10L ^ mids) /
                 sum(counts * (10L ^ mids)))
     }) %>%
-        set_names(uniques) %>%
+        setNames(uniques) %>%
         bind_rows %>%
         left_join(metadata, by = "sampleID")
 }

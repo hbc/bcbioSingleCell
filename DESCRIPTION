@@ -20,25 +20,32 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
     R (>= 3.4.0),
-    basejump (>= 0.0.20),
-    SummarizedExperiment (>= 1.6.3)
+    SummarizedExperiment (>= 1.6.3),
+    basejump (>= 0.0.21)
 Imports:
     BiocGenerics,
-    GenomicFeatures,
+    cowplot,
+    dplyr,
     ggplot2 (>= 2.2.1),
+    knitr,
+    magrittr,
     Matrix,
     Matrix.utils,
-    methods,
+    pbapply,
+    readr,
+    rlang,
+    S4Vectors,
     scales,
     Seurat (>= 2.0),
     stats,
-    S4Vectors,
+    stringr,
+    tibble,
     utils
 Suggests:
+    BiocStyle,
     lintr (>= 1.0.1),
     testthat
 Remotes:
-    jimhester/lintr,
     satijalab/seurat@develop,
     steinbaugh/basejump
 biocViews:
