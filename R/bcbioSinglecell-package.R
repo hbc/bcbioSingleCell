@@ -33,7 +33,7 @@
 #' @importFrom SummarizedExperiment assay
 #' @importFrom tibble column_to_rownames remove_rownames rownames_to_column
 #'   tibble
-#' @importFrom utils methods
+#' @importFrom utils globalVariables methods
 "_PACKAGE"
 
 globalVariables(".")
@@ -53,3 +53,8 @@ labelSep <- ": "
 
 metaPriorityCols <- c("sampleID", "sampleName", "fileName")
 projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
+
+#' Package Website URL
+#' @keywords internal
+#' @export
+url <- "http://bioinformatics.sph.harvard.edu/bcbioSinglecell"
