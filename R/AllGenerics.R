@@ -67,17 +67,6 @@ setGeneric("calculateMetrics", function(object, ...) {
 
 
 
-#' @rdname download
-#' @family `bcbio` Utilities
-#' @author Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("download", function(object) {
-    standardGeneric("download")
-})
-
-
-
 #' @rdname filterCells
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
