@@ -23,7 +23,6 @@ Depends:
     SummarizedExperiment (>= 1.6.3),
     basejump (>= 0.0.21)
 Imports:
-    BiocGenerics,
     cowplot,
     dplyr,
     ggplot2 (>= 2.2.1),
