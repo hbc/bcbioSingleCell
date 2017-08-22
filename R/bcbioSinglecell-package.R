@@ -3,6 +3,7 @@
 #' Import and analyze [bcbio](http://bcbio-nextgen.readthedocs.io) single-cell
 #' RNA-seq data.
 #'
+#' @import methods
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #' @importFrom basejump camel gene2symbolFromGTF mdHeader mdList packageSE
