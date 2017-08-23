@@ -58,11 +58,11 @@ setMethod("loadCellRanger", "character", function(
         allSamples <- TRUE
     }
 
-    # Get genome build from `sampleDirs`
-    genomeBuild <- basename(sampleDirs) %>% unique
-    if (length(genomeBuild) > 1L) {
-        stop("Multiple genomes detected -- not supported")
-    }
+    # Get genome build from first sample directory
+    genomeBuild <- sampleDirs %>%
+        .[[1L]] %>%
+        file.path("outs", "filtered_gene_bc_matrices") %>%
+        list.dirs(full.names = FALSE, recursive = FALSE)
 
     # Row data =================================================================
     annotable <- annotable(genomeBuild)
