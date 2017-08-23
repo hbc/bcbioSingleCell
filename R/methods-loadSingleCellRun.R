@@ -34,17 +34,23 @@ setMethod("loadSingleCellRun", "character", function(
     gtfFile = NULL,
     wellMetadataFile = NULL,
     ...) {
+    # Initial run setup ====
+    pipeline <- "bcbio"
     uploadDir <- object
     if (!dir.exists(uploadDir)) {
-        stop("Upload directory missing", call. = FALSE)
+        stop("Final upload directory does not exist", call. = FALSE)
     }
-
-    # Initial run setup ====
     uploadDir <- normalizePath(uploadDir)
-    if (!dir.exists(uploadDir)) {
-        stop("Final upload directory does not exist")
+    # Check for dated project summary directory
+    detectProjectDir <-
+        list.dirs(uploadDir,
+                  full.names = FALSE,
+                  recursive = FALSE) %>%
+        str_detect("^\\d{4}-\\d{2}-\\d{2}_[^/]+$") %>%
+        any
+    if (!detectProjectDir) {
+        stop("Failed to locate bcbio project summary directory", call. = FALSE)
     }
-    pipeline <- .detectPipeline(uploadDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sample metadata ====
