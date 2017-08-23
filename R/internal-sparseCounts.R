@@ -37,11 +37,24 @@
         colFile <- paste0(matrixFile, ".colnames")  # barcodes
         rowFile <- paste0(matrixFile, ".rownames")  # transcripts
     } else if (pipeline == "cellranger") {
-        matrixFile <- file.path(sampleDir, "matrix.mtx")
-        colFile <- file.path(sampleDir, "barcodes.tsv")
-        rowFile <- file.path(sampleDir, "genes.tsv")
+        filteredDir <- file.path(sampleDir,
+                                 "outs",
+                                 "filtered_gene_bc_matrices")
+        matrixFile <- list.files(filteredDir,
+                                 pattern = "matrix.mtx",
+                                 full.names = TRUE,
+                                 recursive = TRUE)
+        colFile <- dirname(matrixFile) %>%
+            file.path("barcodes.tsv")
+        rowFile <- dirname(matrixFile) %>%
+            file.path("genes.tsv")
     } else {
         stop("Unsupported pipeline")
+    }
+
+    # Check that all files exist
+    if (!all(file.exists(matrixFile, colFile, rowFile))) {
+        stop("Missing MatrixMarket file")
     }
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
@@ -69,7 +82,6 @@
                 col_types = "cc") %>%
             pull("ensgene")
     }
-
 
     # Cellular barcode sanitization =====
     # CellRanger outputs unnecessary trailing `-1`.
