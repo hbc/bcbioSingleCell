@@ -47,7 +47,7 @@ Suggests:
     testthat
 Remotes:
     satijalab/seurat@develop,
-    steinbaugh/basejump
+    steinbaugh/basejump@dev
 biocViews:
     DataImport,
     DataRepresentation,
