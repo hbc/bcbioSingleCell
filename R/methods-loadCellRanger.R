@@ -27,17 +27,13 @@ setMethod("loadCellRanger", "character", function(
     interestingGroups = "sampleName",
     gtfFile = NULL,
     ...) {
+    # Initial run setup ====
+    pipeline <- "cellranger"
     uploadDir <- object
     if (!dir.exists(uploadDir)) {
-        stop("Upload directory missing", call. = FALSE)
+        stop("Final upload directory does not exist", call. = FALSE)
     }
-
-    # Initial run setup ====
     uploadDir <- normalizePath(uploadDir)
-    if (!dir.exists(uploadDir)) {
-        stop("Final upload directory does not exist")
-    }
-    pipeline <- .detectPipeline(uploadDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sample metadata ====
