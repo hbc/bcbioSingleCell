@@ -1,6 +1,8 @@
 # 0.0.16
 
 - Memory fix for `plotZerosVsDepth()`.
+- Support for CRAN version of Seurat.
+- Improved documentation of package NAMESPACE in `bcbioSinglecell-package.R` file.
 
 
 
