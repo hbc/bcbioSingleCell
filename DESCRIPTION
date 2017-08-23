@@ -36,7 +36,7 @@ Imports:
     rlang,
     S4Vectors,
     scales,
-    Seurat (>= 2.0),
+    Seurat (>= 2.0.1),
     stats,
     stringr,
     tibble,
@@ -46,7 +46,6 @@ Suggests:
     lintr (>= 1.0.1),
     testthat
 Remotes:
-    satijalab/seurat@develop,
     steinbaugh/basejump@dev
 biocViews:
     DataImport,
