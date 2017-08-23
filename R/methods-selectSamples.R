@@ -72,7 +72,7 @@ NULL
         set_rownames(rownames(object))
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <- sampleMetadata
-    se <- packageSE(
+    se <- prepareSE(
         sparseCounts,
         colData = colData,
         rowData = rowData,
