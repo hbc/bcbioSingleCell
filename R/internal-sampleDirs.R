@@ -17,6 +17,11 @@
             sampleDirs <- sampleDirs %>%
                 .[!str_detect(basename(.), projectDirPattern)]
         }
+        if (length(sampleDirs) == 0L) {
+            stop("Failed to detect any sample directories",
+                 call. = FALSE)
+        }
+        # Sample directory: `sampleName`-`barcode`
         split <- basename(sampleDirs) %>%
             str_split("-")
         sampleNames <-
@@ -27,28 +32,20 @@
         })
         names(sampleDirs) <- sampleNames
     } else if (pipeline == "cellranger") {
-        # Use the raw, not filtered matrices
-        sampleDirs <- list.files(
-            uploadDir, pattern = "^matrix\\.mtx$",
-            full.names = TRUE, recursive = TRUE) %>%
-            # Look for the filtered counts
-            str_subset(file.path("filtered_gene_bc_matrices")) %>%
-            dirname
-        # Recurse through file path to get names
-        names(sampleDirs) <- sampleDirs %>%
-            dirname %>%
-            dirname %>%
-            dirname %>%
-            basename %>%
-            camel
+        # Faster directory matching
+        subdirs <- list.dirs(uploadDir, full.names = TRUE, recursive = FALSE)
+        matches <- dir.exists(file.path(
+            subdirs, "outs", "filtered_gene_bc_matrices"))
+        if (!any(matches)) {
+            stop("Failed to detect 'filtered_gene_bc_matrices'",
+                 call. = FALSE)
+        }
+        sampleDirs <- subdirs[matches]
+        names(sampleDirs) <- camel(basename(sampleDirs))
     } else {
         stop("Unsupported pipeline")
     }
 
-    # Return
-    if (length(sampleDirs) == 0L) {
-        stop("No sample directories detected")
-    }
     message(paste(length(sampleDirs), "samples detected"))
     sampleDirs
 }
