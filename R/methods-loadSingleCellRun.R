@@ -233,7 +233,7 @@ setMethod("loadSingleCellRun", "character", function(
     }
 
     # bcbioSCDataSet ===========================================================
-    se <- packageSE(
+    se <- prepareSE(
         sparseCounts,
         colData = metrics,
         rowData = annotable,
