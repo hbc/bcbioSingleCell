@@ -51,7 +51,7 @@ Suggests:
     scone (>= 1.0.0),
     testthat
 Remotes:
-    steinbaugh/basejump@dev
+    steinbaugh/basejump
 biocViews:
     DataImport,
     DataRepresentation,
