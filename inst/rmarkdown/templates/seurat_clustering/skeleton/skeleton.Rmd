@@ -2,7 +2,7 @@
 title: "Seurat Clustering"
 author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
-bibliography: bcbioSinglecell.bib
+bibliography: bibliography.bib
 params:
     subsetName: bcbFiltered
     pcCompute: 20
@@ -12,17 +12,25 @@ params:
     outputDir: "."
 ---
 
-```{r setup, cache=FALSE, message=FALSE, results="hide"}
-source("setup.R")
+```{r setup, message=FALSE, warning=FALSE}
 library(Seurat)
+library(bcbioRnaseq)
 
-# Get bcbioSCSubset object
-subsetName <- params$subsetName
-data(list = subsetName)
-subset <- get(subsetName)
-if (!is(subset, "bcbioSCSubset")) {
-    stop("Subset must bcbioSCSubset class object")
+# Shared RMarkdown settings
+prepareSingleCellTemplate()
+if (file.exists("setup.R")) {
+    source("setup.R")
 }
+
+# Load bcbioSCSubset
+subsetName <- params$subsetName
+load(file.path("data", paste0(subsetName, ".rda")))
+subset <- get(subsetName)
+if (!is(subset, "bcbioSCFiltered")) {
+    stop("Subset must be a bcbioSCFiltered class object")
+}
+
+# Gene annotations
 genomeBuild <- metadata(subset)[["genomeBuild"]]
 gene2symbol <- metadata(subset)[["gene2symbol"]]
 
@@ -43,18 +51,16 @@ varsToRegress <- params$varsToRegress
 markersFile <- normalizePath(params$markersFile)
 
 # Directory paths
-outputDir <- normalizePath(params$outputDir)
+outputDir <- params$outputDir
 markersDir <- file.path(outputDir, "results", "markers")
 
 # knitr arguments
 opts_chunk$set(
-    cache = TRUE,
-    cache.lazy = FALSE,
     cache.path = paste0(subsetName, "Seurat", "_cache/"),
     fig.path = paste0(subsetName, "Seurat", "_files/"))
 ```
 
-```{r header, child="_header.Rmd"}
+```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
 ```
 
 This workflow is adapted from the [Seurat v2 Guided Clustering Tutorial](http://satijalab.org/seurat/pbmc3k_tutorial.html).
@@ -387,5 +393,5 @@ plotKnownMarkers(seurat, knownMarkersDetected)
 
 
 
-```{r footer, child="_footer.Rmd"}
+```{r footer, child="_footer.Rmd", eval=file.exists("_footer.Rmd")}
 ```

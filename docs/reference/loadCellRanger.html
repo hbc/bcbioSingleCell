@@ -91,8 +91,8 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
     <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for character</span>
-<span class='fu'>loadCellRanger</span>(<span class='no'>object</span>, <span class='no'>sampleMetadataFile</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>gtfFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>loadCellRanger</span>(<span class='no'>object</span>, <span class='no'>refDataDir</span>, <span class='no'>sampleMetadataFile</span>,
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -107,6 +107,10 @@ contain <code>filtered_gene_bc_matrices/</code> as a child.</p></td>
       <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
+      <th>refDataDir</th>
+      <td><p>Directory path to cellranger reference annotation data.</p></td>
+    </tr>
+    <tr>
       <th>sampleMetadataFile</th>
       <td><p>Sample barcode metadata file.</p></td>
     </tr>
@@ -115,12 +119,6 @@ contain <code>filtered_gene_bc_matrices/</code> as a child.</p></td>
       <td><p>Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.</p></td>
-    </tr>
-    <tr>
-      <th>gtfFile</th>
-      <td><p><em>Optional</em>. Gene transfer format (GTF) file, which will be
-used for transcript-to-gene (<code>tx2gene</code>) and gene-to-symbol (<code>gene2symbol</code>)
-annotation mappings.</p></td>
     </tr>
     </table>
     

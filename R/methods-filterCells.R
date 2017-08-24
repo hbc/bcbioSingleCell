@@ -13,7 +13,7 @@
 #' @param minNovelty Minimum novelty score.
 #' @param showReport Show summary statistics report and plots.
 #'
-#' @return [bcbioSCSubset].
+#' @return [bcbioSCFiltered].
 #' @export
 NULL
 
@@ -85,12 +85,12 @@ NULL
         minNovelty = minNovelty)
 
     # SummarizedExperiment ====
-    se <- packageSE(
+    se <- prepareSE(
         sparseCounts,
         colData = colData,
         rowData = rowData,
         metadata = metadata)
-    object <- new("bcbioSCSubset", se)
+    object <- new("bcbioSCFiltered", se)
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(showReport)) {

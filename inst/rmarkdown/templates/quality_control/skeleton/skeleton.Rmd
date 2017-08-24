@@ -2,47 +2,47 @@
 title: "Quality Control"
 author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
-bibliography: bcbioSinglecell.bib
+bibliography: bibliography.bib
 params:
-    uploadDir: "data/indrop_rnaseq"
-    sampleMetadataFile: "meta/sample_metadata.xlsx"
+    uploadDir: "final"
+    sampleMetadataFile: "sample_metadata.xlsx"
     interestingGroups: !r c("genotype", "treatment")
-    experimentName: ""
-    researcher: ""
-    principalInvestigator: ""
-    minUMIs: 100
-    minGenes: 200
+    minUMIs: 500
+    minGenes: 500
     maxGenes: 5000
     maxMitoRatio: 0.1
-    minNovelty: 0.7
+    minNovelty: 0.8
     outputDir: "."
 ---
 
-```{r setup, cache=FALSE, message=FALSE, results="hide"}
-bcbioSinglecell::download()
-source("setup.R")
+```{r setup, message=FALSE, warning=FALSE}
+library(bcbioSinglecell)
+
+# Shared RMarkdown settings
+prepareSingleCellTemplate()
+if (file.exists("setup.R")) {
+    source("setup.R")
+}
 
 # Directory paths
-outputDir <- normalizePath(params$outputDir)
+outputDir <- params$outputDir
 dataDir <- file.path(outputDir, "data")
 countsDir <- file.path(outputDir, "results", "counts")
 
-# Load bcbio scRNA-seq run
+# Load bcbio run
 if (!file.exists(file.path(dataDir, "bcb.rda"))) {
     bcb <- loadSingleCellRun(
-    uploadDir = params$uploadDir,
-    sampleMetadataFile = params$sampleMetadataFile,
-    interestingGroups = params$interestingGroups,
-    experimentName = params$experimentName,
-    researcher = params$researcher,
-    principalInvestigator = params$principalInvestigator)
-saveData(bcb, dir = dataDir)
+        params$uploadDir,
+        sampleMetadataFile = params$sampleMetadataFile,
+        interestingGroups = params$interestingGroups,
+        params = params)
+    saveData(bcb, dir = dataDir)
 } else {
     load(file.path(dataDir, "bcb.rda"))
 }
 ```
 
-```{r header, child="_header.Rmd"}
+```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
 ```
 
 [bcbio][] run data was imported from **`r metadata(bcb)[["uploadDir"]]`**.
@@ -57,7 +57,7 @@ We aligned the counts using the latest transcriptome FASTA from [Ensembl][] and 
 
 # Quality control metrics {.tabset}
 
-# Reads per cell
+## Reads per cell
 
 These are counts of how many reads are assigned to a given cellular barcode. The purpose of these histograms is that we should see one single large peak that represents cells that were encapsulated. If we see a strong shoulder, or a bimodal distribution of the cells, that can indicate a couple problems. It might be that there is free floating RNA, which happens when cells are dying. It could also be that there are a set of cells that failed for some reason. Finally, it could also be that there are biologically different types of cells, and one type is much smaller than the other. If this is the case we would expect to see less RNA being sequenced from the smaller cells.
 
@@ -132,5 +132,5 @@ saveData(bcbFiltered)
 
 
 
-```{r footer, child="_footer.Rmd"}
+```{r footer, child="_footer.Rmd", eval=file.exists("_footer.Rmd")}
 ```

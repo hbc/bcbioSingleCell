@@ -12,6 +12,7 @@
 #' @inheritParams loadSingleCellRun
 #' @param object Path to CellRanger output directory. This directory path must
 #'   contain `filtered_gene_bc_matrices/` as a child.
+#' @param refDataDir Directory path to cellranger reference annotation data.
 #'
 #' @return [bcbioSCDataSet].
 NULL
@@ -23,21 +24,17 @@ NULL
 #' @export
 setMethod("loadCellRanger", "character", function(
     object,
+    refDataDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
-    gtfFile = NULL,
     ...) {
+    # Initial run setup ====
+    pipeline <- "cellranger"
     uploadDir <- object
     if (!dir.exists(uploadDir)) {
-        stop("Upload directory missing", call. = FALSE)
+        stop("Final upload directory does not exist", call. = FALSE)
     }
-
-    # Initial run setup ====
     uploadDir <- normalizePath(uploadDir)
-    if (!dir.exists(uploadDir)) {
-        stop("Final upload directory does not exist")
-    }
-    pipeline <- .detectPipeline(uploadDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sample metadata ====
@@ -62,11 +59,27 @@ setMethod("loadCellRanger", "character", function(
         allSamples <- TRUE
     }
 
-    # Get genome build from `sampleDirs`
-    genomeBuild <- basename(sampleDirs) %>% unique
-    if (length(genomeBuild) > 1L) {
-        stop("Multiple genomes detected -- not supported")
+    # Reference data ====
+    # JSON data
+    refDataDir <- normalizePath(refDataDir)
+    refJSONFile <- file.path(refDataDir, "reference.json")
+    if (!file.exists(refJSONFile)) {
+        stop("reference.json file missing")
     }
+    refJSON <- read_json(refJSONFile)
+    genomeBuild <- refJSON %>%
+        .[["genomes"]] %>%
+        .[[1L]]
+
+    # GTF
+    gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
+    if (!file.exists(gtfFile)) {
+        stop("GTF file missing")
+    }
+    gtf <- readGTF(gtfFile)
+
+    # gene2symbol mappings
+    gene2symbol <- gene2symbolFromGTF(gtf)
 
     # Row data =================================================================
     annotable <- annotable(genomeBuild)
@@ -80,20 +93,13 @@ setMethod("loadCellRanger", "character", function(
         metrics <- calculateMetrics(sparseCounts, annotable)
         sparseCounts[, rownames(metrics)]
     }) %>%
-        set_names(names(sampleDirs))
+        setNames(names(sampleDirs))
     sparseCounts <- do.call(Matrix::cBind, sparseList)
 
     # Column data ==============================================================
     metrics <- calculateMetrics(sparseCounts, annotable)
 
     # Metadata =================================================================
-    # gene2symbol mappings ====
-    if (!is.null(gtfFile)) {
-        gene2symbol <- gene2symbolFromGTF(gtfFile)
-    } else {
-        gene2symbol <- gene2symbol(genomeBuild)
-    }
-
     metadata <- SimpleList(
         version = packageVersion("bcbioSinglecell"),
         pipeline = pipeline,
@@ -104,10 +110,15 @@ setMethod("loadCellRanger", "character", function(
         interestingGroups = interestingGroups,
         genomeBuild = genomeBuild,
         annotable = annotable,
+        gtfFile = gtfFile,
+        gtf = gtf,
         gene2symbol = gene2symbol,
         umiType = "chromium",
         allSamples = allSamples,
-        multiplexedFASTQ = FALSE)
+        multiplexedFASTQ = FALSE,
+        # cellranger pipeline-specific
+        refDataDir = refDataDir,
+        refJSON = refJSON)
     # Add user-defined custom metadata, if specified
     dots <- list(...)
     if (length(dots) > 0L) {
@@ -115,7 +126,7 @@ setMethod("loadCellRanger", "character", function(
     }
 
     # bcbioSCDataSet ===========================================================
-    se <- packageSE(
+    se <- prepareSE(
         sparseCounts,
         colData = metrics,
         rowData = annotable,

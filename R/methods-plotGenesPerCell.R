@@ -108,7 +108,7 @@ setMethod(
 #' @export
 setMethod(
     "plotGenesPerCell",
-    "bcbioSCSubset",
+    "bcbioSCFiltered",
     function(object) {
         min <- object %>%
             metadata %>%

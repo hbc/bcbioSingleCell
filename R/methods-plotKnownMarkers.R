@@ -25,7 +25,7 @@ NULL
             mdHeader(cellType, level = 3L)
         }
         symbols <- knownMarkers %>%
-            filter(.data[["cellType"]] == !!cellType) %>%
+            tidy_filter(.data[["cellType"]] == !!cellType) %>%
             pull("symbol") %>%
             unique %>%
             sort

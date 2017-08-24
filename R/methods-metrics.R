@@ -43,7 +43,7 @@ setMethod("metrics", "bcbioSCDataSet", .metrics)
 
 #' @rdname metrics
 #' @export
-setMethod("metrics", "bcbioSCSubset", .metrics)
+setMethod("metrics", "bcbioSCFiltered", .metrics)
 
 
 

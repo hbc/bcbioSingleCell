@@ -1,6 +1,6 @@
 Package: bcbioSinglecell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.15
+Version: 0.0.16
 Authors@R: c(
     person("Michael J.", "Steinbaugh",
            email = "mike@steinbaugh.com",
@@ -20,27 +20,38 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
     R (>= 3.4.0),
-    basejump (>= 0.0.20),
-    SummarizedExperiment (>= 1.6.3)
+    SummarizedExperiment (>= 1.6.3),
+    basejump (>= 0.0.21)
 Imports:
-    BiocGenerics,
-    GenomicFeatures,
+    Biobase,
+    cowplot,
+    dplyr,
     ggplot2 (>= 2.2.1),
+    jsonlite,
+    knitr,
+    magrittr,
     Matrix,
     Matrix.utils,
     methods,
+    monocle (>= 2.4.0),
+    pbapply,
+    readr,
+    rlang,
+    S4Vectors,
     scales,
     Seurat (>= 2.0),
     stats,
-    S4Vectors,
+    stringr,
+    tibble,
     utils
 Suggests:
-    lintr (>= 1.0.0.9000),
+    BiocStyle,
+    lintr (>= 1.0.1),
+    scater (>= 1.4.0),
+    scone (>= 1.0.0),
     testthat
 Remotes:
-    jimhester/lintr,
-    satijalab/seurat@develop,
-    steinbaugh/basejump
+    steinbaugh/basejump@dev
 biocViews:
     DataImport,
     DataRepresentation,

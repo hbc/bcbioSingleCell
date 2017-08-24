@@ -5,14 +5,14 @@
 \alias{sampleMetadata}
 \alias{sampleMetadata}
 \alias{sampleMetadata,bcbioSCDataSet-method}
-\alias{sampleMetadata,bcbioSCSubset-method}
+\alias{sampleMetadata,bcbioSCFiltered-method}
 \title{Sample Metadata}
 \usage{
 sampleMetadata(object, ...)
 
 \S4method{sampleMetadata}{bcbioSCDataSet}(object)
 
-\S4method{sampleMetadata}{bcbioSCSubset}(object)
+\S4method{sampleMetadata}{bcbioSCFiltered}(object)
 }
 \arguments{
 \item{object}{Object.}

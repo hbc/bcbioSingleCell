@@ -90,7 +90,7 @@ setMethod(
 #' @export
 setMethod(
     "plotUMIsPerCell",
-    "bcbioSCSubset",
+    "bcbioSCFiltered",
     function(object) {
         min <- object %>%
             metadata %>%

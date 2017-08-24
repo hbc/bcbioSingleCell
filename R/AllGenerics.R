@@ -67,17 +67,6 @@ setGeneric("calculateMetrics", function(object, ...) {
 
 
 
-#' @rdname download
-#' @family `bcbio` Utilities
-#' @author Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("download", function(object) {
-    standardGeneric("download")
-})
-
-
-
 #' @rdname filterCells
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
@@ -275,6 +264,17 @@ setGeneric("plotUMIsPerCell", function(object, ...) {
 #' @export
 setGeneric("plotUMIsVsGenes", function(object, ...) {
     standardGeneric("plotUMIsVsGenes")
+})
+
+
+
+#' @rdname prepareSingleCellTemplate
+#' @family RMarkdown Utilities
+#' @author Michael Steinbaugh
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("prepareSingleCellTemplate", function(object, ...) {
+    standardGeneric("prepareSingleCellTemplate")
 })
 
 

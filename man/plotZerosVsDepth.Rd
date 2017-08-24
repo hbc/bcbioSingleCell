@@ -5,14 +5,14 @@
 \alias{plotZerosVsDepth}
 \alias{plotZerosVsDepth}
 \alias{plotZerosVsDepth,bcbioSCDataSet-method}
-\alias{plotZerosVsDepth,bcbioSCSubset-method}
+\alias{plotZerosVsDepth,bcbioSCFiltered-method}
 \title{Plot Percentage of Zeros vs. Library Depth}
 \usage{
 plotZerosVsDepth(object, ...)
 
 \S4method{plotZerosVsDepth}{bcbioSCDataSet}(object)
 
-\S4method{plotZerosVsDepth}{bcbioSCSubset}(object)
+\S4method{plotZerosVsDepth}{bcbioSCFiltered}(object)
 }
 \arguments{
 \item{object}{Object.}

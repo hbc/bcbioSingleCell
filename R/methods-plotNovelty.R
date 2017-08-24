@@ -89,7 +89,7 @@ setMethod(
 #' @export
 setMethod(
     "plotNovelty",
-    "bcbioSCSubset",
+    "bcbioSCFiltered",
     function(object) {
         min <- object %>%
             metadata %>%

@@ -4,15 +4,12 @@
 \name{selectSamples}
 \alias{selectSamples}
 \alias{selectSamples}
-\alias{selectSamples,bcbioSCDataSet-method}
-\alias{selectSamples,bcbioSCSubset-method}
+\alias{selectSamples,bcbioSCFiltered-method}
 \title{Select Samples}
 \usage{
 selectSamples(object, ...)
 
-\S4method{selectSamples}{bcbioSCDataSet}(object, ...)
-
-\S4method{selectSamples}{bcbioSCSubset}(object, ...)
+\S4method{selectSamples}{bcbioSCFiltered}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -21,7 +18,7 @@ selectSamples(object, ...)
 vector containing the column name and the grep pattern.}
 }
 \value{
-\link{bcbioSCSubset}.
+\link{bcbioSCFiltered}.
 }
 \description{
 Select Samples
@@ -29,6 +26,16 @@ Select Samples
 \details{
 Internally, pattern matching against sample and file names is
 applied using \code{\link[=str_detect]{str_detect()}}.
+}
+\examples{
+\dontrun{
+data(bcbFiltered)
+# grep pattern matching with string
+selectSamples(bcbFiltered, sampleName = "wt")
+
+# Exact name matching with character vector
+selectSamples(bcbFiltered, sampleName = c("wt1", "wt2"))
+}
 }
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},

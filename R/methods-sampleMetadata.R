@@ -25,4 +25,4 @@ setMethod("sampleMetadata", "bcbioSCDataSet", .sampleMetadata)
 
 #' @rdname sampleMetadata
 #' @export
-setMethod("sampleMetadata", "bcbioSCSubset", .sampleMetadata)
+setMethod("sampleMetadata", "bcbioSCFiltered", .sampleMetadata)

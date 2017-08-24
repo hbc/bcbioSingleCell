@@ -2,15 +2,11 @@
 
 
 
-# Methods
-
 ```{r sessionInfo}
 sessionInfo()
 ```
 
 
-
-# References
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [bcl2fastq]: https://support.illumina.com/downloads/bcl2fastq-conversion-software-v217.html

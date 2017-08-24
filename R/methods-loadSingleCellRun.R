@@ -34,17 +34,23 @@ setMethod("loadSingleCellRun", "character", function(
     gtfFile = NULL,
     wellMetadataFile = NULL,
     ...) {
+    # Initial run setup ====
+    pipeline <- "bcbio"
     uploadDir <- object
     if (!dir.exists(uploadDir)) {
-        stop("Upload directory missing", call. = FALSE)
+        stop("Final upload directory does not exist", call. = FALSE)
     }
-
-    # Initial run setup ====
     uploadDir <- normalizePath(uploadDir)
-    if (!dir.exists(uploadDir)) {
-        stop("Final upload directory does not exist")
+    # Check for dated project summary directory
+    detectProjectDir <-
+        list.dirs(uploadDir,
+                  full.names = FALSE,
+                  recursive = FALSE) %>%
+        str_detect("^\\d{4}-\\d{2}-\\d{2}_[^/]+$") %>%
+        any
+    if (!detectProjectDir) {
+        stop("Failed to locate bcbio project summary directory", call. = FALSE)
     }
-    pipeline <- .detectPipeline(uploadDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sample metadata ====
@@ -103,7 +109,7 @@ setMethod("loadSingleCellRun", "character", function(
     programs <- .programs(projectDir)
     if (!is.null(dataVersions)) {
         genomeBuild <- dataVersions %>%
-            filter(.data[["resource"]] == "transcripts") %>%
+            tidy_filter(.data[["resource"]] == "transcripts") %>%
             pull("genome")
     } else {
         # Data versions aren't saved when using a custom FASTA
@@ -144,11 +150,15 @@ setMethod("loadSingleCellRun", "character", function(
         wellMetadata <- NULL
     }
 
-    # tx2gene mappings ====
+    # tx2gene and gene2symbol annotations ====
     if (!is.null(gtfFile)) {
-        tx2gene <- tx2geneFromGTF(gtfFile)
+        gtf <- readGTF(gtfFile)
+        tx2gene <- tx2geneFromGTF(gtf)
+        gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
-        tx2gene <- tx2gene(genomeBuild)
+        gtf <- NULL
+        tx2gene <- annotable(genomeBuild, format = "tx2gene")
+        gene2symbol <- annotable(genomeBuild, format = "gene2symbol")
     }
 
     # Cellular barcodes ====
@@ -170,7 +180,7 @@ setMethod("loadSingleCellRun", "character", function(
         metrics <- calculateMetrics(sparseCounts, annotable)
         sparseCounts[, rownames(metrics)]
     }) %>%
-        set_names(names(sampleDirs))
+        setNames(names(sampleDirs))
     sparseCounts <- do.call(Matrix::cBind, sparseList)
 
     # Column data ==============================================================
@@ -194,13 +204,6 @@ setMethod("loadSingleCellRun", "character", function(
         multiplexedFASTQ <- FALSE
     }
 
-    # gene2symbol mappings ====
-    if (!is.null(gtfFile)) {
-        gene2symbol <- gene2symbolFromGTF(gtfFile)
-    } else {
-        gene2symbol <- gene2symbol(genomeBuild)
-    }
-
     metadata <- SimpleList(
         version = packageVersion("bcbioSinglecell"),
         pipeline = pipeline,
@@ -211,16 +214,18 @@ setMethod("loadSingleCellRun", "character", function(
         interestingGroups = interestingGroups,
         genomeBuild = genomeBuild,
         annotable = annotable,
+        gtfFile = gtfFile,
+        gtf = gtf,
         gene2symbol = gene2symbol,
         umiType = umiType,
         allSamples = allSamples,
         multiplexedFASTQ = multiplexedFASTQ,
         # bcbio pipeline-specific
         projectDir = projectDir,
-        wellMetadataFile = wellMetadataFile,
-        wellMetadata = wellMetadata,
         template = template,
         runDate = runDate,
+        wellMetadataFile = wellMetadataFile,
+        wellMetadata = wellMetadata,
         tx2gene = tx2gene,
         dataVersions = dataVersions,
         programs = programs,
@@ -234,7 +239,7 @@ setMethod("loadSingleCellRun", "character", function(
     }
 
     # bcbioSCDataSet ===========================================================
-    se <- packageSE(
+    se <- prepareSE(
         sparseCounts,
         colData = metrics,
         rowData = annotable,

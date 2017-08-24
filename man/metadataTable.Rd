@@ -5,14 +5,14 @@
 \alias{metadataTable}
 \alias{metadataTable}
 \alias{metadataTable,bcbioSCDataSet-method}
-\alias{metadataTable,bcbioSCSubset-method}
+\alias{metadataTable,bcbioSCFiltered-method}
 \title{Metadata Table}
 \usage{
 metadataTable(object, ...)
 
 \S4method{metadataTable}{bcbioSCDataSet}(object, ...)
 
-\S4method{metadataTable}{bcbioSCSubset}(object, ...)
+\S4method{metadataTable}{bcbioSCFiltered}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -24,6 +24,9 @@ metadataTable(object, ...)
 }
 \description{
 Table output for a knit report.
+}
+\seealso{
+Other RMarkdown Utilities: \code{\link{prepareSingleCellTemplate}}
 }
 \author{
 Michael Steinbaugh

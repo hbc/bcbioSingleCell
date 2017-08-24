@@ -36,7 +36,7 @@ NULL
         mutate(log10Count = log10(.data[["nCount"]]),
                nCount = NULL) %>%
         # Only plot barcodes with at least 100 read counts (log10 = 2)
-        filter(.data[["log10Count"]] > 2L) %>%
+        tidy_filter(.data[["log10Count"]] > 2L) %>%
         left_join(meta, by = "sampleID")
 }
 
@@ -50,7 +50,7 @@ NULL
         as("tibble") %>%
         mutate(log10Count = log10(.data[["nCount"]]),
                nCount = NULL) %>%
-        filter(.data[["log10Count"]] > 2L)
+        tidy_filter(.data[["log10Count"]] > 2L)
 }
 
 
@@ -65,7 +65,7 @@ NULL
                      fill = ~sampleName)) +
         geom_violin(scale = "width") +
         labs(title = "raw violin",
-             y = "log10 read counts per cell") +
+             y = "log10 reads per cell") +
         coord_flip()
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p + geom_hline(color = "black",
@@ -88,7 +88,7 @@ NULL
                 aes_(x = ~log10Count,
                      fill = ~sampleName)) +
         labs(title = "raw histogram",
-             x = "log10 read counts per cell") +
+             x = "log10 reads per cell") +
         geom_histogram(bins = bins) +
         scale_y_sqrt()
     if (!is.null(cutoffLine) & length(cutoffLine)) {
@@ -128,13 +128,13 @@ NULL
         mids <-  cbHist[["mids"]]
         tibble(
             sampleID = names(lst)[[a]],
-            # log10 read counts per cell
+            # log10 reads per cell
             log10Count = mids,
             # Proportion of cells
             proportion = counts * (10L ^ mids) /
                 sum(counts * (10L ^ mids)))
     }) %>%
-        set_names(names(lst)) %>%
+        setNames(names(lst)) %>%
         bind_rows %>%
         left_join(metadata, by = "sampleID")
 }
@@ -158,13 +158,13 @@ NULL
         mids <-  cbHist[["mids"]]
         tibble(
             sampleID = uniques[[a]],
-            # log10 read counts per cell
+            # log10 reads per cell
             log10Count = mids,
             # Proportion of cells
             proportion = counts * (10L ^ mids) /
                 sum(counts * (10L ^ mids)))
     }) %>%
-        set_names(uniques) %>%
+        setNames(uniques) %>%
         bind_rows %>%
         left_join(metadata, by = "sampleID")
 }
@@ -180,7 +180,7 @@ NULL
         geom_line(alpha = 0.9,
                   size = 1.5) +
         labs(title = "proportional histogram",
-             x = "log10 read counts per cell",
+             x = "log10 reads per cell",
              y = "% of cells")
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p + geom_vline(color = "black",
@@ -249,7 +249,7 @@ setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
 
 #' @rdname plotReadsPerCell
 #' @export
-setMethod("plotReadsPerCell", "bcbioSCSubset", function(object) {
+setMethod("plotReadsPerCell", "bcbioSCFiltered", function(object) {
     rawTbl <- .cbTblFromMetrics(object)
     propTbl <- .propTblFromSubset(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]

@@ -5,7 +5,7 @@
 \alias{metrics}
 \alias{metrics}
 \alias{metrics,bcbioSCDataSet-method}
-\alias{metrics,bcbioSCSubset-method}
+\alias{metrics,bcbioSCFiltered-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
@@ -13,7 +13,7 @@ metrics(object, ...)
 
 \S4method{metrics}{bcbioSCDataSet}(object)
 
-\S4method{metrics}{bcbioSCSubset}(object)
+\S4method{metrics}{bcbioSCFiltered}(object)
 
 \S4method{metrics}{seurat}(object)
 }

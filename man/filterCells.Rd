@@ -31,7 +31,7 @@ filterCells(object, ...)
 \item{showReport}{Show summary statistics report and plots.}
 }
 \value{
-\link{bcbioSCSubset}.
+\link{bcbioSCFiltered}.
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to

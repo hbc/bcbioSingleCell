@@ -24,4 +24,4 @@ setMethod("interestingGroups", "bcbioSCDataSet", .interestingGroups)
 
 #' @rdname interestingGroups
 #' @export
-setMethod("interestingGroups", "bcbioSCSubset", .interestingGroups)
+setMethod("interestingGroups", "bcbioSCFiltered", .interestingGroups)

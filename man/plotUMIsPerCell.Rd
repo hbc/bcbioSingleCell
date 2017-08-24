@@ -5,14 +5,14 @@
 \alias{plotUMIsPerCell}
 \alias{plotUMIsPerCell}
 \alias{plotUMIsPerCell,bcbioSCDataSet-method}
-\alias{plotUMIsPerCell,bcbioSCSubset-method}
+\alias{plotUMIsPerCell,bcbioSCFiltered-method}
 \title{Plot UMIs per Cell}
 \usage{
 plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{bcbioSCDataSet}(object, min = 1000L)
 
-\S4method{plotUMIsPerCell}{bcbioSCSubset}(object)
+\S4method{plotUMIsPerCell}{bcbioSCFiltered}(object)
 }
 \arguments{
 \item{object}{Object.}

@@ -5,14 +5,14 @@
 \alias{plotMitoRatio}
 \alias{plotMitoRatio}
 \alias{plotMitoRatio,bcbioSCDataSet-method}
-\alias{plotMitoRatio,bcbioSCSubset-method}
+\alias{plotMitoRatio,bcbioSCFiltered-method}
 \title{Plot Mitochondrial Transcript Abundance}
 \usage{
 plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{bcbioSCDataSet}(object, max = 0.1)
 
-\S4method{plotMitoRatio}{bcbioSCSubset}(object)
+\S4method{plotMitoRatio}{bcbioSCFiltered}(object)
 }
 \arguments{
 \item{object}{Object.}

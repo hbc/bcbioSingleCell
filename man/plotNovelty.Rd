@@ -5,14 +5,14 @@
 \alias{plotNovelty}
 \alias{plotNovelty}
 \alias{plotNovelty,bcbioSCDataSet-method}
-\alias{plotNovelty,bcbioSCSubset-method}
+\alias{plotNovelty,bcbioSCFiltered-method}
 \title{Plot Novelty Score}
 \usage{
 plotNovelty(object, ...)
 
 \S4method{plotNovelty}{bcbioSCDataSet}(object, min = 0.8)
 
-\S4method{plotNovelty}{bcbioSCSubset}(object)
+\S4method{plotNovelty}{bcbioSCFiltered}(object)
 }
 \arguments{
 \item{object}{Object.}
