@@ -59,7 +59,4 @@ labelSep <- ": "
 metaPriorityCols <- c("sampleID", "sampleName", "fileName")
 projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
 
-#' Package Website URL
-#' @keywords internal
-#' @export
 url <- "http://bioinformatics.sph.harvard.edu/bcbioSinglecell"

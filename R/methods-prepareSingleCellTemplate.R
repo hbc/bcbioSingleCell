@@ -17,5 +17,5 @@ NULL
 #' @rdname prepareSingleCellTemplate
 #' @export
 setMethod("prepareSingleCellTemplate", "missing", function(object) {
-    prepareTemplate(package = "bcbioSinglecell")
+    prepareTemplate(sourceDir = file.path(url, "downloads"))
 })
