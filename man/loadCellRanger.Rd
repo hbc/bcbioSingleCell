@@ -9,7 +9,7 @@
 \usage{
 loadCellRanger(object, ...)
 
-\S4method{loadCellRanger}{character}(object, refdataDir, sampleMetadataFile,
+\S4method{loadCellRanger}{character}(object, refDataDir, sampleMetadataFile,
   interestingGroups = "sampleName", ...)
 }
 \arguments{
@@ -18,13 +18,13 @@ contain \code{filtered_gene_bc_matrices/} as a child.}
 
 \item{...}{Additional arguments.}
 
+\item{refDataDir}{Directory path to cellranger reference annotation data.}
+
 \item{sampleMetadataFile}{Sample barcode metadata file.}
 
 \item{interestingGroups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
-
-\item{refDataDir}{Directory path to cellranger reference annotation data.}
 }
 \value{
 \link{bcbioSCDataSet}.

@@ -24,7 +24,7 @@ NULL
 #' @export
 setMethod("loadCellRanger", "character", function(
     object,
-    refdataDir,
+    refDataDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
     ...) {
@@ -61,7 +61,7 @@ setMethod("loadCellRanger", "character", function(
 
     # Reference data ====
     # JSON data
-    refdataDir <- normalizePath(refDataDir)
+    refDataDir <- normalizePath(refDataDir)
     refJSONFile <- file.path(refDataDir, "reference.json")
     if (!file.exists(refJSONFile)) {
         stop("reference.json file missing")
