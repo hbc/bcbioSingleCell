@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Metadata Table — metadataTable • bcbioSinglecell</title>
+<title>Prepare Single-Cell RNA-Seq RMarkdown Template — prepareSingleCellTemplate • bcbioSinglecell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,20 +80,17 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Metadata Table</h1>
+    <h1>Prepare Single-Cell RNA-Seq RMarkdown Template</h1>
     </div>
 
     
-    <p>Table output for a knit report.</p>
+    <p>Prepare Single-Cell RNA-Seq RMarkdown Template</p>
     
 
-    <pre class="usage"><span class='fu'>metadataTable</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>prepareSingleCellTemplate</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>metadataTable</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for bcbioSCFiltered</span>
-<span class='fu'>metadataTable</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='co'># S4 method for missing</span>
+<span class='fu'>prepareSingleCellTemplate</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -104,19 +101,23 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments, passed to <code><a href='http://www.rdocumentation.org/packages/knitr/topics/kable'>knitr::kable()</a></code>.</p></td>
+      <td><p>Additional arguments.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>kable.</p>
+    <p>No value.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other RMarkdown Utilities: <code>prepareSingleCellTemplate</code></p>
+    <p>Other RMarkdown Utilities: <code>metadataTable</code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>prepareSingleCellTemplate</span>()
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -126,7 +127,9 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

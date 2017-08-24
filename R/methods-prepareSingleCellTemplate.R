@@ -4,6 +4,11 @@
 #' @name prepareSingleCellTemplate
 #'
 #' @return No value.
+#'
+#' @examples
+#' \dontrun{
+#' prepareSingleCellTemplate()
+#' }
 NULL
 
 

@@ -23,6 +23,11 @@ No value.
 \description{
 Prepare Single-Cell RNA-Seq RMarkdown Template
 }
+\examples{
+\dontrun{
+prepareSingleCellTemplate()
+}
+}
 \seealso{
 Other RMarkdown Utilities: \code{\link{metadataTable}}
 }
