@@ -45,13 +45,11 @@ varsToRegress <- params$varsToRegress
 markersFile <- normalizePath(params$markersFile)
 
 # Directory paths
-outputDir <- normalizePath(params$outputDir)
+outputDir <- params$outputDir
 markersDir <- file.path(outputDir, "results", "markers")
 
 # knitr arguments
 opts_chunk$set(
-    cache = TRUE,
-    cache.lazy = FALSE,
     cache.path = paste0(subsetName, "Seurat", "_cache/"),
     fig.path = paste0(subsetName, "Seurat", "_files/"))
 ```
