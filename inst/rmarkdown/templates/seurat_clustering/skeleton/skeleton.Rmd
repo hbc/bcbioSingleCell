@@ -18,7 +18,7 @@ library(Seurat)
 
 # Get bcbioSCSubset object
 subsetName <- params$subsetName
-data(list = subsetName)
+load(file.path("data", paste0(subsetName, ".rda")))
 subset <- get(subsetName)
 if (!is(subset, "bcbioSCFiltered")) {
     stop("Subset must be a bcbioSCFiltered class object")
