@@ -249,7 +249,7 @@ setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
 
 #' @rdname plotReadsPerCell
 #' @export
-setMethod("plotReadsPerCell", "bcbioSCSubset", function(object) {
+setMethod("plotReadsPerCell", "bcbioSCFiltered", function(object) {
     rawTbl <- .cbTblFromMetrics(object)
     propTbl <- .propTblFromSubset(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]

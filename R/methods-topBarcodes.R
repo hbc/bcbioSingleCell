@@ -28,4 +28,4 @@ setMethod("topBarcodes", "bcbioSCDataSet", .topBarcodes)
 
 #' @rdname topBarcodes
 #' @export
-setMethod("topBarcodes", "bcbioSCSubset", .topBarcodes)
+setMethod("topBarcodes", "bcbioSCFiltered", .topBarcodes)

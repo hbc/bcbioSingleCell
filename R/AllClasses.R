@@ -20,15 +20,15 @@ setValidity("bcbioSCDataSet", function(object) TRUE)
 
 
 
-#' bcbioSCSubset
+#' bcbioSCFiltered
 #'
-#' [bcbioSCSubset] is a subclass of [SummarizedExperiment] designed to store a
-#' subset of single-cell RNA-seq counts filtered by quality control analysis.
+#' [bcbioSCFiltered] is a subclass of [SummarizedExperiment] designed to store
+#' single-cell RNA-seq counts of cells filtered by quality control analysis.
 #'
 #' @author Michael Steinbaugh
 #'
 #' @export
-bcbioSCSubset <- setClass(
-    "bcbioSCSubset",
+bcbioSCFiltered <- setClass(
+    "bcbioSCFiltered",
     contains = "SummarizedExperiment")
-setValidity("bcbioSCSubset", function(object) TRUE)
+setValidity("bcbioSCFiltered", function(object) TRUE)

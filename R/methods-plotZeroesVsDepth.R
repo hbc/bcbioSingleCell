@@ -44,4 +44,4 @@ setMethod("plotZerosVsDepth", "bcbioSCDataSet", .plotZerosVsDepth)
 
 #' @rdname plotZerosVsDepth
 #' @export
-setMethod("plotZerosVsDepth", "bcbioSCSubset", .plotZerosVsDepth)
+setMethod("plotZerosVsDepth", "bcbioSCFiltered", .plotZerosVsDepth)

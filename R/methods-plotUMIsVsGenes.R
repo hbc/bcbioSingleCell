@@ -39,4 +39,4 @@ setMethod("plotUMIsVsGenes", "bcbioSCDataSet", .plotUMIsVsGenes)
 
 #' @rdname plotUMIsVsGenes
 #' @export
-setMethod("plotUMIsVsGenes", "bcbioSCSubset", .plotUMIsVsGenes)
+setMethod("plotUMIsVsGenes", "bcbioSCFiltered", .plotUMIsVsGenes)

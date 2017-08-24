@@ -33,4 +33,4 @@ setMethod("metadataTable", "bcbioSCDataSet", .metadataTable)
 
 #' @rdname metadataTable
 #' @export
-setMethod("metadataTable", "bcbioSCSubset", .metadataTable)
+setMethod("metadataTable", "bcbioSCFiltered", .metadataTable)

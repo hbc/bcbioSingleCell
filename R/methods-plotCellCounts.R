@@ -40,4 +40,4 @@ setMethod("plotCellCounts", "bcbioSCDataSet", .plotCellCounts)
 
 #' @rdname plotCellCounts
 #' @export
-setMethod("plotCellCounts", "bcbioSCSubset", .plotCellCounts)
+setMethod("plotCellCounts", "bcbioSCFiltered", .plotCellCounts)

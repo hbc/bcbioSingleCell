@@ -109,7 +109,7 @@ setMethod(
 #' @export
 setMethod(
     "plotMitoRatio",
-    "bcbioSCSubset",
+    "bcbioSCFiltered",
     function(object) {
         max <- object %>%
             metadata %>%
