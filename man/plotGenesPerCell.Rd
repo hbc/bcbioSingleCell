@@ -7,14 +7,14 @@
 \alias{.plotGenesPerCellHistogram}
 \alias{.plotGenesPerCell}
 \alias{plotGenesPerCell,bcbioSCDataSet-method}
-\alias{plotGenesPerCell,bcbioSCSubset-method}
+\alias{plotGenesPerCell,bcbioSCFiltered-method}
 \title{Plot Genes per Cell}
 \usage{
 plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{bcbioSCDataSet}(object, min = 500L, max = NULL)
 
-\S4method{plotGenesPerCell}{bcbioSCSubset}(object)
+\S4method{plotGenesPerCell}{bcbioSCFiltered}(object)
 }
 \arguments{
 \item{object}{Object.}

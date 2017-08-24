@@ -13,7 +13,7 @@
 }
 \value{
 Named character vector containing sample directory paths. Function
-will \link{stop} if no complete sample directories match.
+will \code{\link[=stop]{stop()}} if no complete sample directories match.
 }
 \description{
 Detect Sample Directories

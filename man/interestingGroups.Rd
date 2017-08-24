@@ -5,14 +5,14 @@
 \alias{interestingGroups}
 \alias{interestingGroups}
 \alias{interestingGroups,bcbioSCDataSet-method}
-\alias{interestingGroups,bcbioSCSubset-method}
+\alias{interestingGroups,bcbioSCFiltered-method}
 \title{Interesting Groups}
 \usage{
 interestingGroups(object)
 
 \S4method{interestingGroups}{bcbioSCDataSet}(object)
 
-\S4method{interestingGroups}{bcbioSCSubset}(object)
+\S4method{interestingGroups}{bcbioSCFiltered}(object)
 }
 \arguments{
 \item{object}{Object.}

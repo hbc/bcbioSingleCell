@@ -7,7 +7,7 @@
 #' @param pipeline Pipeline used to generate the samples.
 #'
 #' @return Named character vector containing sample directory paths. Function
-#'   will [stop] if no complete sample directories match.
+#'   will [stop()] if no complete sample directories match.
 .sampleDirs <- function(uploadDir, pipeline = "bcbio") {
     if (pipeline == "bcbio") {
         sampleDirs <- list.dirs(

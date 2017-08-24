@@ -5,14 +5,14 @@
 \alias{plotCellCounts}
 \alias{plotCellCounts}
 \alias{plotCellCounts,bcbioSCDataSet-method}
-\alias{plotCellCounts,bcbioSCSubset-method}
+\alias{plotCellCounts,bcbioSCFiltered-method}
 \title{Plot Cell Counts}
 \usage{
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{bcbioSCDataSet}(object)
 
-\S4method{plotCellCounts}{bcbioSCSubset}(object)
+\S4method{plotCellCounts}{bcbioSCFiltered}(object)
 }
 \arguments{
 \item{object}{Object.}

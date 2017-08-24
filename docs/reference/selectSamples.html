@@ -89,10 +89,7 @@
 
     <pre class="usage"><span class='fu'>selectSamples</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>selectSamples</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for bcbioSCSubset</span>
+<span class='co'># S4 method for bcbioSCFiltered</span>
 <span class='fu'>selectSamples</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -111,7 +108,7 @@ vector containing the column name and the grep pattern.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='bcbioSCSubset-class.html'>bcbioSCSubset</a>.</p>
+    <p><a href='bcbioSCFiltered-class.html'>bcbioSCFiltered</a>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -127,6 +124,15 @@ applied using <code>str_detect()</code>.</p>
   <code>readMarkers</code>, <code>sampleMetadata</code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>data</span>(<span class='no'>bcbFiltered</span>)
+<span class='co'># grep pattern matching with string</span>
+<span class='fu'>selectSamples</span>(<span class='no'>bcbFiltered</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='st'>"wt"</span>)
+
+<span class='co'># Exact name matching with character vector</span>
+<span class='fu'>selectSamples</span>(<span class='no'>bcbFiltered</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"wt1"</span>, <span class='st'>"wt2"</span>))
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -138,7 +144,9 @@ applied using <code>str_detect()</code>.</p>
       <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

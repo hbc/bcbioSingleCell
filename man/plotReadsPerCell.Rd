@@ -5,14 +5,14 @@
 \alias{plotReadsPerCell}
 \alias{plotReadsPerCell}
 \alias{plotReadsPerCell,bcbioSCDataSet-method}
-\alias{plotReadsPerCell,bcbioSCSubset-method}
+\alias{plotReadsPerCell,bcbioSCFiltered-method}
 \title{Plot Read Counts per Cell}
 \usage{
 plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSCDataSet}(object)
 
-\S4method{plotReadsPerCell}{bcbioSCSubset}(object)
+\S4method{plotReadsPerCell}{bcbioSCFiltered}(object)
 }
 \arguments{
 \item{object}{Object.}

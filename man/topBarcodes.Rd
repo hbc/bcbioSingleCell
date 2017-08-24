@@ -5,14 +5,14 @@
 \alias{topBarcodes}
 \alias{topBarcodes}
 \alias{topBarcodes,bcbioSCDataSet-method}
-\alias{topBarcodes,bcbioSCSubset-method}
+\alias{topBarcodes,bcbioSCFiltered-method}
 \title{Top Barcodes}
 \usage{
 topBarcodes(object, ...)
 
 \S4method{topBarcodes}{bcbioSCDataSet}(object, n = 2L)
 
-\S4method{topBarcodes}{bcbioSCSubset}(object, n = 2L)
+\S4method{topBarcodes}{bcbioSCFiltered}(object, n = 2L)
 }
 \arguments{
 \item{object}{Object.}

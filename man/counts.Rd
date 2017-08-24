@@ -4,13 +4,13 @@
 \name{counts}
 \alias{counts}
 \alias{counts,bcbioSCDataSet-method}
-\alias{counts,bcbioSCSubset-method}
+\alias{counts,bcbioSCFiltered-method}
 \title{Counts Accessor}
 \usage{
 \S4method{counts}{bcbioSCDataSet}(object, gene2symbol = FALSE,
   as = "dgCMatrix")
 
-\S4method{counts}{bcbioSCSubset}(object, gene2symbol = FALSE,
+\S4method{counts}{bcbioSCFiltered}(object, gene2symbol = FALSE,
   as = "dgCMatrix")
 }
 \arguments{

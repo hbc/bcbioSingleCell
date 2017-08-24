@@ -5,14 +5,14 @@
 \alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes,bcbioSCDataSet-method}
-\alias{plotUMIsVsGenes,bcbioSCSubset-method}
+\alias{plotUMIsVsGenes,bcbioSCFiltered-method}
 \title{Plot UMI and Gene Correlation}
 \usage{
 plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{bcbioSCDataSet}(object)
 
-\S4method{plotUMIsVsGenes}{bcbioSCSubset}(object)
+\S4method{plotUMIsVsGenes}{bcbioSCFiltered}(object)
 }
 \arguments{
 \item{object}{Object.}
