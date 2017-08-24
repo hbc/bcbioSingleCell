@@ -18,7 +18,8 @@ params:
 ```{r setup, message=FALSE}
 library(bcbioSinglecell)
 
-# Optional shared RMarkdown settings
+# Shared RMarkdown settings
+prepareSingleCellTemplate()
 if (file.exists("setup.R")) {
     source("setup.R")
 }

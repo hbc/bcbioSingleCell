@@ -268,6 +268,17 @@ setGeneric("plotUMIsVsGenes", function(object, ...) {
 
 
 
+#' @rdname prepareSingleCellTemplate
+#' @family RMarkdown Utilities
+#' @author Michael Steinbaugh
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("prepareSingleCellTemplate", function(object, ...) {
+    standardGeneric("prepareSingleCellTemplate")
+})
+
+
+
 #' @rdname plotZerosVsDepth
 #' @family Quality Control Metrics
 #' @author Rory Kirchner, Michael Steinbaugh

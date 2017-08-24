@@ -25,6 +25,9 @@ metadataTable(object, ...)
 \description{
 Table output for a knit report.
 }
+\seealso{
+Other RMarkdown Utilities: \code{\link{prepareSingleCellTemplate}}
+}
 \author{
 Michael Steinbaugh
 }
