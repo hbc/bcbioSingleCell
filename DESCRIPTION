@@ -23,6 +23,7 @@ Depends:
     SummarizedExperiment (>= 1.6.3),
     basejump (>= 0.0.21)
 Imports:
+    Biobase,
     cowplot,
     dplyr,
     ggplot2 (>= 2.2.1),
@@ -31,6 +32,7 @@ Imports:
     Matrix,
     Matrix.utils,
     methods,
+    monocle (>= 2.4.0),
     pbapply,
     readr,
     rlang,
@@ -44,6 +46,8 @@ Imports:
 Suggests:
     BiocStyle,
     lintr (>= 1.0.1),
+    scater (>= 1.4.0),
+    scone (>= 1.0.0),
     testthat
 Remotes:
     steinbaugh/basejump@dev

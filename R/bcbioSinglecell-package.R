@@ -4,6 +4,8 @@
 #' RNA-seq data.
 #'
 #' @import methods
+#' @importClassesFrom Biobase AnnotatedDataFrame
+#' @importClassesFrom monocle CellDataSet
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #' @importFrom basejump camel gene2symbolFromGTF mdHeader mdList prepareSE
@@ -20,6 +22,7 @@
 #' @importFrom magrittr %>% set_colnames set_rownames
 #' @importFrom Matrix cBind
 #' @importFrom Matrix.utils aggregate.Matrix
+#' @importFrom monocle newCellDataSet
 #' @importFrom pbapply pblapply
 #' @importFrom readr read_csv read_delim read_lines
 #' @importFrom rlang .data is_string sym syms
@@ -30,7 +33,7 @@
 #' @importFrom stats median
 #' @importFrom stringr str_detect str_match str_replace str_replace_all
 #'   str_split str_subset
-#' @importFrom SummarizedExperiment assay
+#' @importFrom SummarizedExperiment assay colData rowData
 #' @importFrom tibble column_to_rownames remove_rownames rownames_to_column
 #'   tibble
 #' @importFrom utils globalVariables methods
