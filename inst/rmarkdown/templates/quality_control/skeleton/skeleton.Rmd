@@ -2,7 +2,7 @@
 title: "Quality Control"
 author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
-bibliography: bcbioSinglecell.bib
+bibliography: bibliography.bib
 params:
     uploadDir: "final"
     sampleMetadataFile: "sample_metadata.xlsx"

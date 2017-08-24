@@ -2,7 +2,7 @@
 title: "Seurat Clustering"
 author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
-bibliography: bcbioSinglecell.bib
+bibliography: bibliography.bib
 params:
     subsetName: bcbFiltered
     pcCompute: 20
