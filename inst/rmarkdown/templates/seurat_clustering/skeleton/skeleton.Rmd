@@ -13,10 +13,15 @@ params:
 ---
 
 ```{r setup, message=FALSE}
-source("setup.R")
 library(Seurat)
+library(bcbioRnaseq)
 
-# Get bcbioSCSubset object
+# Optional shared RMarkdown settings
+if (file.exists("setup.R")) {
+    source("setup.R")
+}
+
+# Load bcbioSCSubset
 subsetName <- params$subsetName
 load(file.path("data", paste0(subsetName, ".rda")))
 subset <- get(subsetName)
@@ -54,7 +59,7 @@ opts_chunk$set(
     fig.path = paste0(subsetName, "Seurat", "_files/"))
 ```
 
-```{r header, child="_header.Rmd"}
+```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
 ```
 
 This workflow is adapted from the [Seurat v2 Guided Clustering Tutorial](http://satijalab.org/seurat/pbmc3k_tutorial.html).
@@ -387,5 +392,5 @@ plotKnownMarkers(seurat, knownMarkersDetected)
 
 
 
-```{r footer, child="_footer.Rmd"}
+```{r footer, child="_footer.Rmd", eval=file.exists("_footer.Rmd")}
 ```
