@@ -12,6 +12,9 @@
 #' @inheritParams loadSingleCellRun
 #' @param object Path to CellRanger output directory. This directory path must
 #'   contain `filtered_gene_bc_matrices/` as a child.
+#' @param gtfFile Gene transfer format (GTF) file, which will be
+#'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
+#'   annotation mappings.
 #'
 #' @return [bcbioSCDataSet].
 NULL
@@ -25,7 +28,7 @@ setMethod("loadCellRanger", "character", function(
     object,
     sampleMetadataFile,
     interestingGroups = "sampleName",
-    gtfFile = NULL,
+    gtfFile,
     ...) {
     # Initial run setup ====
     pipeline <- "cellranger"
@@ -83,15 +86,8 @@ setMethod("loadCellRanger", "character", function(
     metrics <- calculateMetrics(sparseCounts, annotable)
 
     # Metadata =================================================================
-    # gene2symbol
-    if (!is.null(gtfFile)) {
-        gtf <- readGTF(gtfFile)
-        gene2symbol <- gene2symbolFromGTF(gtf)
-    } else {
-        gtf <- NULL
-        gene2symbol <- annotable(genomeBuild, format = "gene2symbol")
-    }
-
+    gtf <- readGTF(gtfFile)
+    gene2symbol <- gene2symbolFromGTF(gtf)
     metadata <- SimpleList(
         version = packageVersion("bcbioSinglecell"),
         pipeline = pipeline,
