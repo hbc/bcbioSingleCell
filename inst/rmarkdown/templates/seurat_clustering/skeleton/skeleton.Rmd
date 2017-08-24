@@ -12,7 +12,7 @@ params:
     outputDir: "."
 ---
 
-```{r setup, message=FALSE}
+```{r setup, message=FALSE, warning=FALSE}
 library(Seurat)
 library(bcbioRnaseq)
 
