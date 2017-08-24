@@ -20,8 +20,8 @@ library(Seurat)
 subsetName <- params$subsetName
 data(list = subsetName)
 subset <- get(subsetName)
-if (!is(subset, "bcbioSCSubset")) {
-    stop("Subset must be a bcbioSCSubset class object")
+if (!is(subset, "bcbioSCFiltered")) {
+    stop("Subset must be a bcbioSCFiltered class object")
 }
 
 # Gene annotations
