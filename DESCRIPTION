@@ -27,6 +27,7 @@ Imports:
     cowplot,
     dplyr,
     ggplot2 (>= 2.2.1),
+    jsonlite,
     knitr,
     magrittr,
     Matrix,

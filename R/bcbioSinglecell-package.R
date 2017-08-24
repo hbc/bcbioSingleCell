@@ -19,6 +19,7 @@
 #'   geom_line geom_point geom_smooth geom_text geom_violin geom_vline ggplot
 #'   ggtitle labs qplot scale_x_log10 scale_x_sqrt scale_y_log10 scale_y_sqrt
 #'   theme unit xlab xlim ylab
+#' @importFrom jsonlite read_json
 #' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_rownames
 #' @importFrom Matrix cBind

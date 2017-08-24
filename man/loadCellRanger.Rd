@@ -9,8 +9,8 @@
 \usage{
 loadCellRanger(object, ...)
 
-\S4method{loadCellRanger}{character}(object, sampleMetadataFile,
-  interestingGroups = "sampleName", gtfFile, ...)
+\S4method{loadCellRanger}{character}(object, refdataDir, sampleMetadataFile,
+  interestingGroups = "sampleName", ...)
 }
 \arguments{
 \item{object}{Path to CellRanger output directory. This directory path must
@@ -24,9 +24,7 @@ contain \code{filtered_gene_bc_matrices/} as a child.}
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
-\item{gtfFile}{Gene transfer format (GTF) file, which will be
-used for transcript-to-gene (\code{tx2gene}) and gene-to-symbol (\code{gene2symbol})
-annotation mappings.}
+\item{refDataDir}{Directory path to cellranger reference annotation data.}
 }
 \value{
 \link{bcbioSCDataSet}.

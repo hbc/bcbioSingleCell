@@ -12,9 +12,7 @@
 #' @inheritParams loadSingleCellRun
 #' @param object Path to CellRanger output directory. This directory path must
 #'   contain `filtered_gene_bc_matrices/` as a child.
-#' @param gtfFile Gene transfer format (GTF) file, which will be
-#'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
-#'   annotation mappings.
+#' @param refDataDir Directory path to cellranger reference annotation data.
 #'
 #' @return [bcbioSCDataSet].
 NULL
@@ -26,9 +24,9 @@ NULL
 #' @export
 setMethod("loadCellRanger", "character", function(
     object,
+    refdataDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
-    gtfFile,
     ...) {
     # Initial run setup ====
     pipeline <- "cellranger"
@@ -61,11 +59,27 @@ setMethod("loadCellRanger", "character", function(
         allSamples <- TRUE
     }
 
-    # Get genome build from first sample directory
-    genomeBuild <- sampleDirs %>%
-        .[[1L]] %>%
-        file.path("outs", "filtered_gene_bc_matrices") %>%
-        list.dirs(full.names = FALSE, recursive = FALSE)
+    # Reference data ====
+    # JSON data
+    refdataDir <- normalizePath(refDataDir)
+    refJSONFile <- file.path(refDataDir, "reference.json")
+    if (!file.exists(refJSONFile)) {
+        stop("reference.json file missing")
+    }
+    refJSON <- read_json(refJSONFile)
+    genomeBuild <- refJSON %>%
+        .[["genomes"]] %>%
+        .[[1L]]
+
+    # GTF
+    gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
+    if (!file.exists(gtfFile)) {
+        stop("GTF file missing")
+    }
+    gtf <- readGTF(gtfFile)
+
+    # gene2symbol mappings
+    gene2symbol <- gene2symbolFromGTF(gtf)
 
     # Row data =================================================================
     annotable <- annotable(genomeBuild)
@@ -86,8 +100,6 @@ setMethod("loadCellRanger", "character", function(
     metrics <- calculateMetrics(sparseCounts, annotable)
 
     # Metadata =================================================================
-    gtf <- readGTF(gtfFile)
-    gene2symbol <- gene2symbolFromGTF(gtf)
     metadata <- SimpleList(
         version = packageVersion("bcbioSinglecell"),
         pipeline = pipeline,
@@ -103,7 +115,10 @@ setMethod("loadCellRanger", "character", function(
         gene2symbol = gene2symbol,
         umiType = "chromium",
         allSamples = allSamples,
-        multiplexedFASTQ = FALSE)
+        multiplexedFASTQ = FALSE,
+        # cellranger pipeline-specific
+        refDataDir = refDataDir,
+        refJSON = refJSON)
     # Add user-defined custom metadata, if specified
     dots <- list(...)
     if (length(dots) > 0L) {
