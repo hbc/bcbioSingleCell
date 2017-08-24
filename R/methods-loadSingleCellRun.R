@@ -157,8 +157,8 @@ setMethod("loadSingleCellRun", "character", function(
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
         gtf <- NULL
-        tx2gene <- tx2gene(genomeBuild)
-        gene2symbol <- gene2symbol(genomeBuild)
+        tx2gene <- annotable(genomeBuild, format = "tx2gene")
+        gene2symbol <- annotable(genomeBuild, format = "gene2symbol")
     }
 
     # Cellular barcodes ====

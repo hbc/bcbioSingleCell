@@ -83,13 +83,13 @@ setMethod("loadCellRanger", "character", function(
     metrics <- calculateMetrics(sparseCounts, annotable)
 
     # Metadata =================================================================
-    # gene2symbol mappings ====
+    # gene2symbol
     if (!is.null(gtfFile)) {
         gtf <- readGTF(gtfFile)
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
         gtf <- NULL
-        gene2symbol <- gene2symbol(genomeBuild)
+        gene2symbol <- annotable(genomeBuild, format = "gene2symbol")
     }
 
     metadata <- SimpleList(
