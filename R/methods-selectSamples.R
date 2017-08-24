@@ -9,16 +9,16 @@
 #' @param ... Columns to use for grep pattern matching. Supply a named character
 #'   vector containing the column name and the grep pattern.
 #'
-#' @return [bcbioSCSubset].
+#' @return [bcbioSCFiltered].
 #'
 #' @examples
 #' \dontrun{
-#' data(bcb)
+#' data(bcbFiltered)
 #' # grep pattern matching with string
-#' selectSamples(bcb, sampleName = "wt")
+#' selectSamples(bcbFiltered, sampleName = "wt")
 #'
 #' # Exact name matching with character vector
-#' selectSamples(bcb, sampleName = c("wt1", "wt2"))
+#' selectSamples(bcbFiltered, sampleName = c("wt1", "wt2"))
 #' }
 NULL
 
@@ -63,7 +63,7 @@ NULL
     if (!length(cbMatches)) stop("No cellular barcodes matched")
     message(paste(length(cbMatches), "cellular barcodes"))
 
-    # Return the bcbioSCSubset object
+    # Return the bcbioSCFiltered object
     sparseCounts <- assay(object) %>%
         .[, cbMatches]
     colData <- colData(object) %>%
@@ -77,7 +77,7 @@ NULL
         colData = colData,
         rowData = rowData,
         metadata = metadata)
-    new("bcbioSCSubset", se)
+    new("bcbioSCFiltered", se)
 }
 
 
@@ -85,10 +85,4 @@ NULL
 # Methods ====
 #' @rdname selectSamples
 #' @export
-setMethod("selectSamples", "bcbioSCDataSet", .selectSamples)
-
-
-
-#' @rdname selectSamples
-#' @export
-setMethod("selectSamples", "bcbioSCSubset", .selectSamples)
+setMethod("selectSamples", "bcbioSCFiltered", .selectSamples)
