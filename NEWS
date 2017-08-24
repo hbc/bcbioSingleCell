@@ -1,8 +1,21 @@
 # 0.0.16
 
-- Memory fix for `plotZerosVsDepth()`.
 - Support for CRAN version of Seurat.
 - Improved documentation of package NAMESPACE in `bcbioSinglecell-package.R` file.
+- Offloaded `download()` functionality to basejump package, to avoid collisions with bcbioRnaseq package. Function has been renamed to `externalFile()`.
+- Removed function deprecations to simplify the NAMESPACE.
+- Improved cellranger sample matching. With these changes the internal `.detectPipeline()` function is no longer needed.
+- Improved sample directory matching in internal `.sampleDirs()` function.
+- Updated paths to cellranger MatrixMarket files in internal `.readSparseCounts()` function.
+- Updated use of `packageSE()` to `prepareSE()`, matching the corresponding basejump function change.
+- Renamed internal use of `filter()` to `tidy_filter()`, to avoid future NAMESPACE collisions with ensembldb package.
+- Renamed `bcbioSCSubset` class to `bcbioSCFiltered` class.
+- Fixed memory issue in `plotZeroesVsDepth()` for datasets with high cell counts.
+- Improved sample matching for `selectSamples()`. Will attempt to migrate this to bracket-based subsetting in a future update.
+- Restricted sample selection with `selectSamples()` to only work on `bcbioSCFiltered` class for the time being. We can add bracket-based subsetting or S4 method support in `selectSamples()` to properly work on `bcbioSCDataSet` class in a future update.
+- Updated RMarkdown template settings and simplified the setup chunks.
+- Initial support for `bcbioSCFiltered` class coercion to monocle `CellDataSet` class.
+- Suggest scater and scone packages for additional quality control and visualization.
 
 
 
