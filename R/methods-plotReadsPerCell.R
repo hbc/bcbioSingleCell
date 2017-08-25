@@ -221,8 +221,8 @@ NULL
 setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
     # Currently only supports bcbio pipeline
     if (metadata(object)[["pipeline"]] != "bcbio") {
-        warning(paste("`plotReadsPerCell()` currently only supports",
-                      "bcbio pipeline for `bcbioSCDataSet` class"),
+        warning(paste("'plotReadsPerCell()' currently only supports",
+                      "bcbio pipeline for 'bcbioSCDataSet' class"),
                 call. = FALSE)
         return(NULL)
     }

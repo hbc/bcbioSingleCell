@@ -21,15 +21,21 @@ NULL
              y = "% mito counts") +
         geom_boxplot() +
         geom_hline(alpha = qcLineAlpha,
-                   color = qcPassColor,
+                   color = qcCutoffColor,
+                   linetype = qcLineType,
                    size = qcLineSize,
                    yintercept = max * 100L) +
         geom_label(data = medianMitoRatio,
                    aes_(label = ~round(mitoRatio * 100L, digits = 2L)),
                    alpha = qcLabelAlpha,
-                   label.padding = unit(0.1, "lines"),
+                   color = qcLabelColor,
+                   fill = qcLabelFill,
+                   fontface = qcLabelFontface,
+                   label.padding = qcLabelPadding,
+                   label.size = qcLabelSize,
                    show.legend = FALSE) +
         scale_y_sqrt() +
+        scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)
@@ -47,11 +53,13 @@ NULL
         labs(x = "% mito counts") +
         geom_histogram(bins = bins) +
         geom_vline(alpha = qcLineAlpha,
-                   color = qcPassColor,
+                   color = qcCutoffColor,
+                   linetype = qcLineType,
                    size = qcLineSize,
                    xintercept = max * 100L) +
         scale_x_sqrt() +
-        scale_y_sqrt()
+        scale_y_sqrt() +
+        scale_fill_viridis(discrete = TRUE) +
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)
     }
@@ -71,24 +79,12 @@ NULL
         geom_point(size = 1L) +
         scale_x_sqrt() +
         scale_y_sqrt() +
+        scale_color_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)
     }
     p
-}
-
-
-
-.plotMitoRatio <- function(object, max) {
-    plot_grid(.plotMitoRatioScatterplot(object) +
-                  theme(legend.position = "none"),
-              .plotMitoRatioHistogram(object, max) +
-                  theme(legend.position = "none"),
-              .plotMitoRatioBoxplot(object, max) +
-                  theme(legend.position = "bottom"),
-              labels = "auto",
-              nrow = 3L)
 }
 
 
@@ -100,7 +96,11 @@ setMethod(
     "plotMitoRatio",
     "bcbioSCDataSet",
     function(object, max = 0.1) {
-        .plotMitoRatio(object, max)
+        plot_grid(.plotMitoRatioScatterplot(object),
+                  .plotMitoRatioHistogram(object, max),
+                  .plotMitoRatioBoxplot(object, max),
+                  labels = "auto",
+                  nrow = 3L)
     })
 
 
@@ -115,5 +115,8 @@ setMethod(
             metadata %>%
             .[["filterParams"]] %>%
             .[["maxMitoRatio"]]
-        .plotMitoRatio(object, max)
+        plot_grid(.plotMitoRatioHistogram(object, max),
+                  .plotMitoRatioBoxplot(object, max),
+                  labels = "auto",
+                  nrow = 2L)
     })

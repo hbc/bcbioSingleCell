@@ -25,20 +25,27 @@
              y = "genes per cell") +
         geom_boxplot() +
         geom_hline(alpha = qcLineAlpha,
-                   color = qcPassColor,
+                   color = qcCutoffColor,
+                   linetype = qcLineType,
                    size = qcLineSize,
                    yintercept = min) +
         geom_label(data = medianGenes,
                    aes_(label = ~nGene),
                    alpha = qcLabelAlpha,
-                   label.padding = unit(0.1, "lines"),
+                   color = qcLabelColor,
+                   fill = qcLabelFill,
+                   fontface = qcLabelFontface,
+                   label.padding = qcLabelPadding,
+                   label.size = qcLabelSize,
                    show.legend = FALSE) +
         scale_y_sqrt() +
+        scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (!is.null(max)) {
         p <- p +
             geom_hline(alpha = qcLineAlpha,
-                       color = qcPassColor,
+                       color = qcCutoffColor,
+                       linetype = qcLineType,
                        size = qcLineSize,
                        yintercept = max)
     }
@@ -60,16 +67,19 @@
         labs(x = "genes per cell") +
         geom_histogram(bins = bins) +
         geom_vline(alpha = qcLineAlpha,
-                   color = qcPassColor,
+                   color = qcCutoffColor,
+                   linetype = qcLineType,
                    size = qcLineSize,
                    xintercept = min) +
         scale_x_sqrt() +
         scale_y_sqrt() +
+        scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (!is.null(max)) {
         p <- p +
             geom_vline(alpha = qcLineAlpha,
-                       color = qcPassColor,
+                       color = qcCutoffColor,
+                       linetype = qcLineType,
                        size = qcLineSize,
                        xintercept = max)
     }
@@ -84,8 +94,7 @@
 #' @rdname plotGenesPerCell
 #' @usage NULL
 .plotGenesPerCell <- function(object, min, max) {
-    plot_grid(.plotGenesPerCellHistogram(object, min, max) +
-                  theme(legend.position = "none"),
+    plot_grid(.plotGenesPerCellHistogram(object, min, max),
               .plotGenesPerCellBoxplot(object, min, max),
               labels = "auto",
               nrow = 2L)

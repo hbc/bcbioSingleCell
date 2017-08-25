@@ -323,6 +323,17 @@ setGeneric("selectSamples", function(object, ...) {
 
 
 
+#' @rdname subsetPerSample
+#' @family Data Management Utilities
+#' @author Michael Steinbaugh
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("subsetPerSample", function(object, ...) {
+    standardGeneric("subsetPerSample")
+})
+
+
+
 #' @rdname topBarcodes
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh

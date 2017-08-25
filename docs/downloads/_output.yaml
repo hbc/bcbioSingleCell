@@ -4,6 +4,9 @@ html_document:
     highlight: pygments
     number_sections: false
     toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: false
 pdf_document:
     number_sections: false
     toc: true

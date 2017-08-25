@@ -25,9 +25,8 @@ if (file.exists("setup.R")) {
 }
 
 # Directory paths
-outputDir <- params$outputDir
-dataDir <- file.path(outputDir, "data")
-countsDir <- file.path(outputDir, "results", "counts")
+dataDir <- file.path(params$outputDir, "data")
+countsDir <- file.path(params$outputDir, "results", "counts")
 
 # Load bcbio run
 if (!file.exists(file.path(dataDir, "bcb.rda"))) {
@@ -117,9 +116,9 @@ plotNovelty(bcb, min = params$minNovelty)
 
 
 
-# Filter cellular barcodes
+# Filter cells
 
-```{r filtered, fig.height=12, fig.width=8, results="asis"}
+```{r filterCells, fig.height=12, fig.width=8, results="asis"}
 bcbFiltered <- filterCells(
     bcb,
     minUMIs = params$minUMIs,

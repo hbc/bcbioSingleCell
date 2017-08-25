@@ -30,7 +30,8 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
   \code{\link{filterCells}},
   \code{\link{interestingGroups}},
-  \code{\link{readMarkers}}, \code{\link{selectSamples}}
+  \code{\link{readMarkers}}, \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}
 }
 \author{
 Michael Steinbaugh
