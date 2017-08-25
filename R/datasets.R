@@ -2,7 +2,7 @@
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-"cellCycleMarkersMmusculus"
+"cellCycleMarkersHsapiens"
 
 
 
