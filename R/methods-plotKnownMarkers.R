@@ -22,7 +22,7 @@ NULL
     pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
         if (isTRUE(markdown)) {
-            mdHeader(cellType, level = 3L, tabset = TRUE)
+            mdHeader(cellType, level = 3L)
         }
         symbols <- knownMarkers %>%
             tidy_filter(.data[["cellType"]] == !!cellType) %>%
