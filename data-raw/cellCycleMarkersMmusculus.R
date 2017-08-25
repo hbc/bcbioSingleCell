@@ -7,7 +7,7 @@ library(devtools)
 library(tidyverse)
 load_all()
 
-cellCycleMarkersMusculus <-
+cellCycleMarkersMmusculus <-
     read_csv(file.path(
         "data-raw",
         "cellCycleMarkersMmusculus.csv")) %>%
@@ -17,4 +17,4 @@ cellCycleMarkersMusculus <-
     rownames_to_column("ensgene") %>%
     as_tibble
 
-use_data(cellCycleMarkersMusculus, compress = "xz", overwrite = TRUE)
+use_data(cellCycleMarkersMmusculus, compress = "xz", overwrite = TRUE)
