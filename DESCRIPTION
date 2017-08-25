@@ -33,7 +33,7 @@ Imports:
     Matrix,
     Matrix.utils,
     methods,
-    monocle (>= 2.4.0),
+    monocle (>= 2.5.0),
     pbapply,
     readr,
     rlang,
@@ -49,8 +49,10 @@ Suggests:
     lintr (>= 1.0.1),
     scater (>= 1.4.0),
     scone (>= 1.0.0),
+    scde (>= 2.5.0),
     testthat
 Remotes:
+    cole-trapnell-lab/monocle-release,
     steinbaugh/basejump@dev
 biocViews:
     DataImport,
