@@ -7,7 +7,7 @@ params:
     subsetName: bcbFiltered
     pcCompute: 20
     pcUse: 10
-    varsToRegress: "nUMI"
+    varsToRegress: !r c("nUMI", "mitoRatio")
     markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
@@ -23,9 +23,8 @@ if (file.exists("setup.R")) {
 }
 
 # Load bcbioSCSubset
-subsetName <- params$subsetName
-load(file.path("data", paste0(subsetName, ".rda")))
-subset <- get(subsetName)
+load(file.path("data", paste0(params$subsetName, ".rda")))
+subset <- get(params$subsetName)
 if (!is(subset, "bcbioSCFiltered")) {
     stop("Subset must be a bcbioSCFiltered class object")
 }
@@ -35,29 +34,20 @@ genomeBuild <- metadata(subset)[["genomeBuild"]]
 gene2symbol <- metadata(subset)[["gene2symbol"]]
 
 # Principal components
-pcCompute <- params$pcCompute
-if (pcCompute > 30) {
+if (params$pcCompute > 30) {
     warning("Computation of > 30 PCs is not recommended")
 }
-pcUse <- params$pcUse
-if (pcUse > 25) {
+if (params$pcUse > 25) {
     warning("Usage of > 25 PCs for analysis is not recommended")
 }
 
-# Latent variables to regress
-varsToRegress <- params$varsToRegress
-
-# Known markers file
-markersFile <- normalizePath(params$markersFile)
-
 # Directory paths
-outputDir <- params$outputDir
-markersDir <- file.path(outputDir, "results", "markers")
+markersDir <- file.path(params$outputDir, "results", "markers")
 
 # knitr arguments
 opts_chunk$set(
-    cache.path = paste0(subsetName, "Seurat", "_cache/"),
-    fig.path = paste0(subsetName, "Seurat", "_files/"))
+    cache.path = paste0(params$subsetName, "Seurat", "_cache/"),
+    fig.path = paste0(params$subsetName, "Seurat", "_files/"))
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
@@ -67,7 +57,7 @@ This workflow is adapted from the [Seurat v2 Guided Clustering Tutorial](http://
 
 
 
-# Initialize Seurat (`r subsetName`)
+# Initialize Seurat (`r params$subsetName`)
 
 Let's convert our `bcbioSCSubset` object containing the filtered cellular barcodes into a `seurat` object. This step uses [Seurat][]'s `CreateSeuratObject()` with the same filtering cutoffs applied during our initial quality control analysis. Here we are imposing a basic minimum gene-cutoff, but also filtering low quality cells that have a high mitochondrial gene abundance.
 
@@ -114,7 +104,6 @@ We suggest that users set these parameters to mark visual outliers on the disper
 
 ```{r FindVariableGenes}
 help("FindVariableGenes", "Seurat")
-# @seealso VariableGenePlot()
 seurat <- FindVariableGenes(
     seurat,
     x.low.cutoff = 0.1,
@@ -134,7 +123,7 @@ Generally, we currently recommend scaling data to minimize the effects of variab
 
 ```{r ScaleData, results="hide"}
 help("ScaleData", "Seurat")
-seurat <- ScaleData(seurat, vars.to.regress = varsToRegress)
+seurat <- ScaleData(seurat, vars.to.regress = params$varsToRegress)
 ```
 
 
@@ -179,7 +168,7 @@ PCHeatmap(seurat,
 # All PCs used
 PCHeatmap(seurat,
           do.balanced = TRUE,
-          pc.use = 1:pcUse)
+          pc.use = 1:params$pcUse)
 ```
 
 
@@ -196,13 +185,13 @@ PC selection — identifying the true dimensionality of a dataset — is an impo
 
 ```{r PCElbowPlot}
 help("PCElbowPlot", "Seurat")
-PCElbowPlot(seurat, num.pc = pcCompute) +
+PCElbowPlot(seurat, num.pc = params$pcCompute) +
     ggtitle("pc elbow plot") +
     geom_line() +
     geom_vline(alpha = 0.5,
                color = "green",
                size = 2,
-               xintercept = pcUse)
+               xintercept = params$pcUse)
 ```
 
 
@@ -219,7 +208,7 @@ Regarding the value of the `resolution` argument, use a value `< 1` if you want 
 help("FindClusters", "Seurat")
 seurat <- FindClusters(
     seurat,
-    dims.use = 1:pcUse,
+    dims.use = 1:params$pcUse,
     force.recalc = TRUE,
     print.output = TRUE,
     resolution = 0.8,
@@ -242,7 +231,7 @@ PrintFindClustersParams(seurat)
 help("RunTSNE", "Seurat")
 seurat <- RunTSNE(
     seurat,
-    dims.use = 1:pcUse,
+    dims.use = 1:params$pcUse,
     do.fast = TRUE)
 ```
 
@@ -251,7 +240,7 @@ PrintTSNEParams(seurat)
 ```
 
 ```{r saveSeurat}
-assignAndSaveData(paste0(subsetName, "Seurat"), seurat)
+assignAndSaveData(paste0(params$subsetName, "Seurat"), seurat)
 ```
 
 ```{r TSNEPlot}
@@ -309,13 +298,13 @@ Seurat has four tests for differential expression which can be set with the `tes
 
 ```{r FindAllMarkers}
 help("FindAllMarkers", "Seurat")
-markers <- FindAllMarkers(seurat, latent.vars = varsToRegress)
+markers <- FindAllMarkers(seurat, latent.vars = params$varsToRegress)
 ```
 
 ```{r saveMarkers}
-assignAndSaveData(paste0(subsetName, "Markers"), markers)
+assignAndSaveData(paste0(params$subsetName, "Markers"), markers)
 dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
-write_csv(markers, file.path(markersDir, paste0(subsetName, ".csv.gz")))
+write_csv(markers, file.path(markersDir, paste0(params$subsetName, ".csv.gz")))
 ```
 
 
@@ -353,7 +342,7 @@ There are several tools for visualizing marker expression:
 - New functions: `JoyPlot()`, `CellPlot()`, `DotPlot()`.
 
 
-## Top markers per cluster  {.tabset}
+## Top markers per cluster {.tabset}
 
 ```{r plotTopMarkers, results="asis"}
 help("plotTopMarkers", "bcbioSinglecell")
@@ -368,7 +357,7 @@ plotTopMarkers(seurat, topMarkers)
 
 ```{r knownMarkers, results="asis"}
 knownMarkers <- readMarkers(
-    markersFile,
+    params$markersFile,
     gene2symbol = gene2symbol,
     show = TRUE)
 saveData(knownMarkers)
