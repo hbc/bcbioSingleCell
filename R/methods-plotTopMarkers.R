@@ -21,7 +21,7 @@ NULL
     pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
         if (isTRUE(markdown)) {
-            mdHeader(paste("Cluster", cluster), level = 3L)
+            mdHeader(paste("Cluster", cluster), level = 3L, tabset = TRUE)
         }
         symbols <- topMarkers %>%
             .[.[["cluster"]] == cluster, ] %>%
