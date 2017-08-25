@@ -26,7 +26,7 @@ setMethod("subsetPerSample", "bcbioSCFiltered", function(
             sampleID = sampleID)
         # Skip if subset doesn't have enough cells
         if (dim(subset)[[2L]] < minCells) {
-            warning(paste(sampleName, "didn't pass minimum cell cutoff"),
+            warning(paste(sampleID, "didn't pass minimum cell cutoff"),
                     call. = FALSE)
             return(NA)
         }
