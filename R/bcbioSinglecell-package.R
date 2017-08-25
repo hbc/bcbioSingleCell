@@ -25,7 +25,7 @@
 #' @importFrom Matrix cBind
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom monocle newCellDataSet
-#' @importFrom pbapply pblapply
+#' @importFrom pbapply pblapply pbsapply
 #' @importFrom readr read_csv read_delim read_lines
 #' @importFrom rlang .data is_string sym syms
 #' @importFrom S4Vectors metadata SimpleList
