@@ -130,7 +130,7 @@ Your single cell dataset likely contains "uninteresting" sources of variation. T
 
 We can regress out cell-cell variation in gene expression driven by batch (if applicable), cell alignment rate, the number of detected molecules, and mitochondrial gene expression. For cycling cells, we can also learn a "cell-cycle" score and regress this out as well. *Cell cycle regression is not always recommended*, especially if there may be a biological basis for the difference between clusters (e.g. differentiation).
 
-Generally, we currently recommend scaling data to minimize the effects of variable read counts (`nUMI`), gene detection (`nGene`), and mitochondrial abundance (`mitoRatio`).
+Generally, we currently recommend scaling data to minimize the effects of variable read counts (`nUMI`) and mitochondrial abundance (`mitoRatio`).
 
 ```{r ScaleData, results="hide"}
 help("ScaleData", "Seurat")
