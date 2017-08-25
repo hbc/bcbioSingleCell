@@ -89,16 +89,6 @@ NULL
 
 
 
-.plotMitoRatio <- function(object, max) {
-    plot_grid(.plotMitoRatioScatterplot(object),
-              .plotMitoRatioHistogram(object, max),
-              .plotMitoRatioBoxplot(object, max),
-              labels = "auto",
-              nrow = 3L)
-}
-
-
-
 # Methods ====
 #' @rdname plotMitoRatio
 #' @export
@@ -106,7 +96,11 @@ setMethod(
     "plotMitoRatio",
     "bcbioSCDataSet",
     function(object, max = 0.1) {
-        .plotMitoRatio(object, max)
+        plot_grid(.plotMitoRatioScatterplot(object),
+                  .plotMitoRatioHistogram(object, max),
+                  .plotMitoRatioBoxplot(object, max),
+                  labels = "auto",
+                  nrow = 3L)
     })
 
 
@@ -121,5 +115,8 @@ setMethod(
             metadata %>%
             .[["filterParams"]] %>%
             .[["maxMitoRatio"]]
-        .plotMitoRatio(object, max)
+        plot_grid(.plotMitoRatioHistogram(object, max),
+                  .plotMitoRatioBoxplot(object, max),
+                  labels = "auto",
+                  nrow = 2L)
     })
