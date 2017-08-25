@@ -31,7 +31,9 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
   \code{\link{filterCells}},
   \code{\link{interestingGroups}},
-  \code{\link{sampleMetadata}}, \code{\link{selectSamples}}
+  \code{\link{sampleMetadata}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}
 }
 \author{
 Michael Steinbaugh
