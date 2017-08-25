@@ -72,10 +72,8 @@ NULL
 
 
 .plotUMIsPerCell <- function(object, min) {
-    plot_grid(.plotUMIsPerCellHistogram(object, min) +
-                  theme(legend.position = "none"),
-              .plotUMIsPerCellBoxplot(object, min) +
-                  theme(legend.position = "bottom"),
+    plot_grid(.plotUMIsPerCellHistogram(object, min),
+              .plotUMIsPerCellBoxplot(object, min),
               labels = "auto",
               nrow = 2L)
 }
