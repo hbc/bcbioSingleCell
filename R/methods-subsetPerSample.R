@@ -3,6 +3,7 @@
 #' @rdname subsetPerSample
 #' @name subsetPerSample
 #'
+#' @param minCells Minimum number of cells required per sample.
 #' @param dir Output directory where to save the subset data.
 NULL
 
@@ -13,7 +14,9 @@ NULL
 #' @export
 setMethod("subsetPerSample", "bcbioSCFiltered", function(
     object,
+    minCells = 200L,
     dir = "data") {
+    dir.create(dir, recursive = TRUE, showWarnings = FALSE)
     sampleIDs <- sampleMetadata(object) %>%
         pull("sampleID")
     pbsapply(seq_along(sampleIDs), function(a) {
@@ -21,11 +24,17 @@ setMethod("subsetPerSample", "bcbioSCFiltered", function(
         subset <- selectSamples(
             object,
             sampleID = sampleID)
+        # Skip if subset doesn't have enough cells
+        if (dim(subset)[[2L]] < minCells) {
+            warning(paste(sampleName, "didn't pass minimum cell cutoff"),
+                    call. = FALSE)
+            return(NA)
+        }
         assign(sampleID, subset)
-        dir.create(dir, recursive = TRUE, showWarnings = FALSE)
         save(list = sampleID,
              file = file.path(dir, paste0(sampleID, ".rda")))
         sampleID
     }) %>%
+        na.omit %>%
         as.character
 })
