@@ -276,7 +276,7 @@ Let's look at the variance in the number of genes detected (`nGene`) and the per
 ```{r qc}
 help("FeaturePlot", "Seurat")
 # @seealso colnames(seurat@meta.data)
-colors <- c("grey","blue")
+colors <- c("grey", "purple")
 FeaturePlot(seurat, "nUMI", cols.use = colors)
 FeaturePlot(seurat, "nGene", cols.use = colors)
 FeaturePlot(seurat, "mitoRatio", cols.use = colors)
