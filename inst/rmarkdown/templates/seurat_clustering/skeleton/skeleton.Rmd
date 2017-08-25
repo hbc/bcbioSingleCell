@@ -14,7 +14,7 @@ params:
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
 library(Seurat)
-library(bcbioRnaseq)
+library(bcbioSinglecell)
 
 # Shared RMarkdown settings
 prepareSingleCellTemplate()
