@@ -3,15 +3,22 @@
 \docType{data}
 \name{cellCycleMarkersMmusculus}
 \alias{cellCycleMarkersMmusculus}
-\title{Mouse Cell Cycle Markers}
+\alias{cellCycleMarkersMmusculus}
+\title{Cell Cycle Markers (Human)}
 \format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 97 rows and 3 columns.}
 \usage{
 cellCycleMarkersMmusculus
+
+cellCycleMarkersMmusculus
 }
 \description{
-Mouse Cell Cycle Markers
+Cell Cycle Markers (Human)
+
+Cell Cycle Markers (Mouse)
 }
 \author{
+Michael Steinbaugh
+
 Michael Steinbaugh
 }
 \keyword{internal}
