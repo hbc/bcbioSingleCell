@@ -39,6 +39,7 @@
 #' @importFrom tibble column_to_rownames remove_rownames rownames_to_column
 #'   tibble
 #' @importFrom utils globalVariables methods
+#' @importFrom viridis scale_color_viridis scale_fill_viridis
 "_PACKAGE"
 
 globalVariables(".")
@@ -46,12 +47,23 @@ globalVariables(".")
 bins <- 100L
 
 # Quality control plot colors
+qcCutoffColor <- "black"
 qcFailColor <- "red"
 qcPassColor <- "green"
 qcWarnColor <- "orange"
-qcLabelAlpha <- 0.5
-qcLineAlpha <- 0.5
-qcLineSize <- 2L
+
+# Quality control label appearance
+qcLabelAlpha <- 0.75
+qcLabelColor <- "white"
+qcLabelFill <- "black"
+qcLabelFontface <- "bold"
+qcLabelPadding <- unit(0.2, "lines")
+qcLabelSize <- NA
+
+# Quality control line appearance
+qcLineAlpha <- 0.75
+qcLineSize <- 1.5
+qcLineType <- "longdash"
 
 # Plot label separator
 labelSep <- ": "

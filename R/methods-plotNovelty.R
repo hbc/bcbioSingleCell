@@ -23,15 +23,21 @@ NULL
              y = "log10 genes per umi") +
         geom_boxplot() +
         geom_hline(alpha = qcLineAlpha,
-                   color = qcPassColor,
+                   color = qcCutoffColor,
+                   linetype = qcLineType,
                    size = qcLineSize,
                    yintercept = min) +
         geom_label(data = medianNovelty,
                    aes_(label = ~round(log10GenesPerUMI, digits = 2L)),
                    alpha = qcLabelAlpha,
-                   label.padding = unit(0.1, "lines"),
+                   color = qcLabelColor,
+                   fill = qcLabelFill,
+                   fontface = qcLabelFontface,
+                   label.padding = qcLabelPadding,
+                   label.size = qcLabelSize,
                    show.legend = FALSE) +
         scale_y_sqrt() +
+        scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)
@@ -49,11 +55,13 @@ NULL
         labs(x = "log10 genes per umi") +
         geom_histogram(bins = bins) +
         geom_vline(alpha = qcLineAlpha,
-                   color = qcPassColor,
+                   color = qcCutoffColor,
+                   linetype = qcLineType,
                    size = qcLineSize,
                    xintercept = min) +
         scale_x_sqrt() +
-        scale_y_sqrt()
+        scale_y_sqrt() +
+        scale_fill_viridis(discrete = TRUE)
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)
     }
@@ -63,10 +71,8 @@ NULL
 
 
 .plotNovelty <- function(object, min) {
-    plot_grid(.plotNoveltyHistogram(object, min) +
-                  theme(legend.position = "none"),
-              .plotNoveltyBoxplot(object, min) +
-                  theme(legend.position = "bottom"),
+    plot_grid(.plotNoveltyHistogram(object, min),
+              .plotNoveltyBoxplot(object, min),
               labels = "auto",
               nrow = 2L)
 }

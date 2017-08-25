@@ -43,7 +43,8 @@ Imports:
     stats,
     stringr,
     tibble,
-    utils
+    utils,
+    viridis
 Suggests:
     BiocStyle,
     lintr (>= 1.0.1),

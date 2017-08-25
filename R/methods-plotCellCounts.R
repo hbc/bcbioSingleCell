@@ -21,7 +21,11 @@ NULL
         labs(x = "sample",
              y = "cell count") +
         geom_bar(stat = "identity") +
-        geom_text(vjust = -0.5, aes_(label = ~cells)) +
+        geom_text(
+            aes_(label = ~cells),
+            fontface = "bold",
+            vjust = -0.5) +
+        scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)

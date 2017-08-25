@@ -36,7 +36,7 @@ setMethod("plotClusters", "seurat", function(
             object,
             do.return = FALSE,
             features.plot = symbols[a],
-            cols.use = c("grey", "blue"))
+            cols.use = c("grey", "purple"))
     }) %>%
         invisible
 })
