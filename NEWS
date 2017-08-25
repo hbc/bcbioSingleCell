@@ -16,6 +16,11 @@
 - Updated RMarkdown template settings and simplified the setup chunks.
 - Initial support for `bcbioSCFiltered` class coercion to monocle `CellDataSet` class.
 - Suggest scater and scone packages for additional quality control and visualization.
+- Require monocle >= 2.5.0.
+- Added initial support for viridis color palette in quality control plots.
+- Suggest rmarkdown and scde packages.
+- Initial commit of subsetPerSample() function.
+- Miscellaneous RMarkdown template improvements.
 
 
 
