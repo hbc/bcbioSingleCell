@@ -132,7 +132,7 @@ We can regress out cell-cell variation in gene expression driven by batch (if ap
 
 Generally, we currently recommend scaling data to minimize the effects of variable read counts (`nUMI`), gene detection (`nGene`), and mitochondrial abundance (`mitoRatio`).
 
-```{r ScaleData}
+```{r ScaleData, results="hide"}
 help("ScaleData", "Seurat")
 seurat <- ScaleData(seurat, vars.to.regress = varsToRegress)
 ```
@@ -321,7 +321,7 @@ write_csv(markers, file.path(markersDir, paste0(subsetName, ".csv.gz")))
 
 ## Top markers per cluster
 
-```{r topMarkers}
+```{r topMarkers, results="asis"}
 help("topMarkers", "bcbioSinglecell")
 topMarkers <- topMarkers(markers, show = TRUE)
 ```
@@ -336,12 +336,11 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 
 ```{r DoHeatmap, fig.height=12, fig.width=12}
 help("DoHeatmap", "Seurat")
-DoHeatmap(seurat,
-          genes.use = topMarkers$symbol,
-          order.by.ident = TRUE,
-          remove.key = TRUE,
-          slim.col.label = TRUE,
-          dendrogram = "none")
+DoHeatmap(
+    seurat,
+    genes.use = topMarkers$symbol,
+    remove.key = TRUE,
+    slim.col.label = TRUE)
 ```
 
 
@@ -367,7 +366,7 @@ plotTopMarkers(seurat, topMarkers)
 
 ## Load known markers
 
-```{r knownMarkers}
+```{r knownMarkers, results="asis"}
 knownMarkers <- readMarkers(
     markersFile,
     gene2symbol = gene2symbol,
@@ -380,7 +379,7 @@ saveData(knownMarkers)
 
 Let's obtain the statistics on our known marker genes from [Seurat][].
 
-```{r knownMarkersDetected}
+```{r knownMarkersDetected, results="asis"}
 knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers, show = TRUE)
 ```
 
