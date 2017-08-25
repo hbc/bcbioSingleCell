@@ -26,7 +26,6 @@ if (file.exists("setup.R")) {
 
 # Directory paths
 dataDir <- file.path(params$outputDir, "data")
-countsDir <- file.path(params$outputDir, "results", "counts")
 
 # Load bcbio run
 if (!file.exists(file.path(dataDir, "bcb.rda"))) {

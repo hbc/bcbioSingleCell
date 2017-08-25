@@ -43,6 +43,7 @@ if (params$pcUse > 25) {
 
 # Directory paths
 markersDir <- file.path(params$outputDir, "results", "markers")
+dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 
 # knitr arguments
 opts_chunk$set(
@@ -303,7 +304,6 @@ markers <- FindAllMarkers(seurat, latent.vars = params$varsToRegress)
 
 ```{r saveMarkers}
 assignAndSaveData(paste0(params$subsetName, "Markers"), markers)
-dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 write_csv(markers, file.path(markersDir, paste0(params$subsetName, ".csv.gz")))
 ```
 
