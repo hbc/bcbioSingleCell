@@ -30,7 +30,8 @@
 #' @importFrom rlang .data is_string sym syms
 #' @importFrom S4Vectors metadata SimpleList
 #' @importFrom scales math_format trans_breaks trans_format
-#' @importFrom Seurat AddMetaData CreateSeuratObject FeaturePlot NormalizeData
+#' @importFrom Seurat AddMetaData CreateSeuratObject FeaturePlot
+#'   FindVariableGenes NormalizeData ScaleData
 #'   VlnPlot
 #' @importFrom stats median
 #' @importFrom stringr str_detect str_match str_replace str_replace_all
