@@ -59,7 +59,7 @@ NULL
                    xintercept = max * 100L) +
         scale_x_sqrt() +
         scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE) +
+        scale_fill_viridis(discrete = TRUE)
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)
     }
