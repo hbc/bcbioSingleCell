@@ -66,9 +66,12 @@ NULL
         geom_violin(scale = "width") +
         labs(title = "raw violin",
              y = "log10 reads per cell") +
-        coord_flip()
+        coord_flip() +
+        scale_fill_viridis(discrete = TRUE)
     if (!is.null(cutoffLine) & length(cutoffLine)) {
-        p <- p + geom_hline(color = "black",
+        p <- p + geom_hline(alpha = qcLineAlpha,
+                            color = qcCutoffColor,
+                            linetype = qcLineType,
                             size = qcLineSize,
                             yintercept = cutoffLine)
     }
@@ -90,9 +93,12 @@ NULL
         labs(title = "raw histogram",
              x = "log10 reads per cell") +
         geom_histogram(bins = bins) +
-        scale_y_sqrt()
+        scale_y_sqrt() +
+        scale_fill_viridis(discrete = TRUE)
     if (!is.null(cutoffLine) & length(cutoffLine)) {
-        p <- p + geom_vline(color = "black",
+        p <- p + geom_vline(alpha = qcLineAlpha,
+                            color = qcCutoffColor,
+                            linetype = qcLineType,
                             size = qcLineSize,
                             xintercept = cutoffLine)
     }
@@ -181,9 +187,12 @@ NULL
                   size = 1.5) +
         labs(title = "proportional histogram",
              x = "log10 reads per cell",
-             y = "% of cells")
+             y = "% of cells") +
+        scale_color_viridis(discrete = TRUE)
     if (!is.null(cutoffLine) & length(cutoffLine)) {
-        p <- p + geom_vline(color = "black",
+        p <- p + geom_vline(alpha = qcLineAlpha,
+                            color = qcCutoffColor,
+                            linetype = qcLineType,
                             size = qcLineSize,
                             xintercept = cutoffLine)
     }
