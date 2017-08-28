@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Counts Accessor — counts • bcbioSingleCell</title>
+<title>Subset Per Sample — subsetPerSample • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,20 +80,18 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Counts Accessor</h1>
+    <h1>Subset Per Sample</h1>
     </div>
 
     
-    <p>Counts Accessor</p>
+    <p>Subset Per Sample</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>as</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)
+    <pre class="usage"><span class='fu'>subsetPerSample</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for bcbioSCFiltered</span>
-<span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>as</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)</pre>
+<span class='fu'>subsetPerSample</span>(<span class='no'>object</span>, <span class='kw'>minCells</span> <span class='kw'>=</span> <span class='fl'>200L</span>,
+  <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"data"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -103,20 +101,27 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>gene2symbol</th>
-      <td><p>Convert Ensembl gene identifiers (rownames) to gene
-symbols. Recommended for passing counts to Seurat.</p></td>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
-      <th>as</th>
-      <td><p>Return class (<strong>recommended</strong>; <code>dgCMatrix</code>,
-<code>dgTMatrix</code>) or dense matrix (<code>matrix</code>).</p></td>
+      <th>minCells</th>
+      <td><p>Minimum number of cells required per sample.</p></td>
+    </tr>
+    <tr>
+      <th>dir</th>
+      <td><p>Output directory where to save the subset data.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Matrix class object.</p>
+    <p>Other Data Management Utilities: <code>aggregateFeatures</code>,
+  <code>aggregateReplicates</code>,
+  <code>filterCells</code>,
+  <code>interestingGroups</code>,
+  <code>readMarkers</code>, <code>sampleMetadata</code>,
+  <code>selectSamples</code></p>
     
 
   </div>
@@ -125,7 +130,7 @@ symbols. Recommended for passing counts to Seurat.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
           </ul>
 
     <h2>Author</h2>

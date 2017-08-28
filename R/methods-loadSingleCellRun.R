@@ -205,7 +205,7 @@ setMethod("loadSingleCellRun", "character", function(
     }
 
     metadata <- SimpleList(
-        version = packageVersion("bcbioSinglecell"),
+        version = packageVersion("bcbioSingleCell"),
         pipeline = pipeline,
         uploadDir = uploadDir,
         sampleDirs = sampleDirs,

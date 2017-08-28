@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Counts Accessor — counts • bcbioSingleCell</title>
+<title>Cell Cycle Markers (Human) — cellCycleMarkersHsapiens • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,52 +80,26 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Counts Accessor</h1>
+    <h1>Cell Cycle Markers (Human)</h1>
     </div>
 
     
-    <p>Counts Accessor</p>
+    <p>Cell Cycle Markers (Human)</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>as</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)
+    <pre class="usage"><span class='no'>cellCycleMarkersHsapiens</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-<span class='co'># S4 method for bcbioSCFiltered</span>
-<span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>as</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>gene2symbol</th>
-      <td><p>Convert Ensembl gene identifiers (rownames) to gene
-symbols. Recommended for passing counts to Seurat.</p></td>
-    </tr>
-    <tr>
-      <th>as</th>
-      <td><p>Return class (<strong>recommended</strong>; <code>dgCMatrix</code>,
-<code>dgTMatrix</code>) or dense matrix (<code>matrix</code>).</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Matrix class object.</p>
+    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 97 rows and 3 columns.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
           </ul>
 
     <h2>Author</h2>
