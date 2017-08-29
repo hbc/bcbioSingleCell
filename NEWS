@@ -1,6 +1,10 @@
 # 0.0.17
 
 - Renamed package from `bcbioSinglecell` to `bcbioSingleCell`.
+- Added viridis color palette support to quality control plots.
+- Added cell-cycle marker genes for human and mouse.
+- Slotted `organism` in `bcbioSCDataSet` metadata, in addition to `genomeBuild`.
+- Updated `bcbioSCFiltered` to `seurat` coercion method to also run `FindVariableGenes()` and `ScaleData()` by default.
 - Added cell-cycle regression into Seurat clustering RMarkdown template.
 
 
