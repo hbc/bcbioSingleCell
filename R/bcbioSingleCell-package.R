@@ -17,8 +17,8 @@
 #' @importFrom ggplot2 aes_ coord_flip element_blank element_text expand_limits
 #'   facet_wrap geom_bar geom_boxplot geom_histogram geom_hline geom_label
 #'   geom_line geom_point geom_smooth geom_text geom_violin geom_vline ggplot
-#'   ggtitle labs qplot scale_x_log10 scale_x_sqrt scale_y_log10 scale_y_sqrt
-#'   theme unit xlab xlim ylab
+#'   ggtitle labs qplot scale_x_log10 scale_x_sqrt scale_y_continuous
+#'   scale_y_log10 scale_y_sqrt theme unit xlab xlim ylab
 #' @importFrom jsonlite read_json
 #' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_rownames
@@ -29,7 +29,7 @@
 #' @importFrom readr read_csv read_delim read_lines
 #' @importFrom rlang .data is_string sym syms
 #' @importFrom S4Vectors metadata SimpleList
-#' @importFrom scales math_format trans_breaks trans_format
+#' @importFrom scales math_format percent trans_breaks trans_format
 #' @importFrom Seurat AddMetaData CreateSeuratObject FeaturePlot
 #'   FindVariableGenes NormalizeData ScaleData
 #'   VlnPlot

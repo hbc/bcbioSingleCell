@@ -142,6 +142,17 @@ setGeneric("metrics", function(object, ...) {
 
 
 
+#' @rdname pcCutoff
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("pcCutoff", function(object, ...) {
+    standardGeneric("pcCutoff")
+})
+
+
+
 #' @rdname plotCellCounts
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
