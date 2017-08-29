@@ -25,7 +25,7 @@ if (file.exists("setup.R")) {
     source("setup.R")
 }
 
-# Load bcbioSCSubset
+# Load bcbioSCFiltered object
 load(file.path("data", paste0(params$subsetName, ".rda")))
 subset <- get(params$subsetName)
 if (!is(subset, "bcbioSCFiltered")) {
