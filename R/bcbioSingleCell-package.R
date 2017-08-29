@@ -8,9 +8,9 @@
 #' @importClassesFrom monocle CellDataSet
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
-#' @importFrom basejump camel gene2symbolFromGTF mdHeader mdList prepareSE
-#'   prepareTemplate readFileByExtension readGTF revcomp tidy_filter tidy_select
-#'   tx2geneFromGTF
+#' @importFrom basejump camel detectOrganism gene2symbolFromGTF mdHeader mdList
+#'   prepareSE prepareTemplate readFileByExtension readGTF revcomp tidy_filter
+#'   tidy_select tx2geneFromGTF
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows distinct everything group_by left_join
 #'   mutate n pull rename summarize top_n
