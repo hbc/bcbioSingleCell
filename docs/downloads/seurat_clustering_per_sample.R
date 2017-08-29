@@ -1,4 +1,4 @@
-library(bcbioSinglecell)
+library(bcbioSingleCell)
 
 # Generate per sample SCSubset objects
 data(bcbFiltered)

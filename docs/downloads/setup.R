@@ -1,6 +1,6 @@
 library(knitr)
 library(ggplot2)
-library(bcbioSinglecell)
+library(bcbioSingleCell)
 
 opts_chunk$set(
     audodep = TRUE,
