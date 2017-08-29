@@ -1,3 +1,9 @@
+# 0.0.17
+
+- Renamed package from `bcbioSinglecell` to `bcbioSingleCell`.
+
+
+
 # 0.0.16
 
 - Support for CRAN version of Seurat.
