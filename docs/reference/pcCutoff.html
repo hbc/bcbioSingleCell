@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Top Markers — plotTopMarkers • bcbioSingleCell</title>
+<title>Determine PC Cutoff — pcCutoff • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,18 +80,20 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Top Markers</h1>
+    <h1>Determine PC Cutoff</h1>
     </div>
 
     
-    <p>Plot Top Markers</p>
+    <p>Calculate the principal component (PC) with either a maximum SD percentage or
+minimum <!-- % SD cumulative sum cutoff value. This defaults to keeping the larger -->
+PC cutoff for either 5<!-- % SD (\code{maxPct}) or 80% cumulative (\code{minCumsum}). --></p>
     
 
-    <pre class="usage"><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>pcCutoff</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for seurat,grouped_df</span>
-<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>,
-  <span class='kw'>markdown</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>pcCutoff</span>(<span class='no'>object</span>, <span class='kw'>maxPct</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>minCumPct</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -101,29 +103,31 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>topMarkers</th>
-      <td><p>Top markers grouped tibble returned by <code>topMarkers()</code>.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
-      <th>markdown</th>
-      <td><p>Print Markdown headers.</p></td>
+      <th>maxPct</th>
+      <td><p>Maximum percent standard deviation.</p></td>
+    </tr>
+    <tr>
+      <th>minCumPct</th>
+      <td><p>Minimum cumulative percent standard deviation.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>ggplot.</p>
+    <p>Numeric of maximum PC value to use for dimensionality reduction.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
-  <code>pcCutoff</code>, <code>plotClusters</code>,
+    <p><a href='http://www.rdocumentation.org/packages/Seurat/topics/PCElbowPlot'>Seurat::PCElbowPlot</a>.</p>
+<p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
+  <code>plotClusters</code>,
   <code>plotKnownMarkers</code>,
-  <code>plotStressGenes</code>, <code>topBarcodes</code>,
+  <code>plotStressGenes</code>,
+  <code>plotTopMarkers</code>, <code>topBarcodes</code>,
   <code>topMarkers</code></p>
     
 
