@@ -6,7 +6,7 @@ bibliography: bibliography.bib
 params:
     subsetName: bcbFiltered
     pcCompute: 20
-    pcUse: 10
+    pcUse: FALSE
     varsToRegress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
     resolution: 0.8
     markersFile: "meta/markers.xlsx"
@@ -39,14 +39,6 @@ gene2symbol <- metadata(subset)$gene2symbol
 
 # Vector to use for plot looping
 groupBy <- c("ident", "sampleName", "Phase", interestingGroups)
-
-# Principal components
-if (params$pcCompute > 30) {
-    warning("Computation of > 30 PCs is not recommended")
-}
-if (params$pcUse > 25) {
-    warning("Usage of > 25 PCs for analysis is not recommended")
-}
 
 # Directory paths
 markersDir <- file.path(params$outputDir, "results", "markers")
@@ -221,14 +213,12 @@ PC selection — identifying the true dimensionality of a dataset — is an impo
 2. Implement a statistical test based on a random null model. This can be time-consuming for large datasets, and may not return a clear PC cutoff.
 3. **Heuristic approach**, using a metric that can be calculated instantly.
 
-```{r PCElbowPlot}
-PCElbowPlot(seurat, num.pc = params$pcCompute) +
-    ggtitle("pc elbow plot") +
-    geom_line() +
-    geom_vline(alpha = 0.5,
-               color = "green",
-               size = 2,
-               xintercept = params$pcUse)
+```{r pcUse}
+pcUse <- params$pcUse
+if (!is.numeric(params$pcUse)) {
+    pcUse <- pcCutoff(seurat) %>%
+        seq(from = 1, to = .)
+}
 ```
 
 
@@ -244,7 +234,7 @@ Regarding the value of the `resolution` argument, use a value `< 1` if you want 
 ```{r FindClusters, results="hide"}
 seurat <- FindClusters(
     seurat,
-    dims.use = 1:params$pcUse,
+    dims.use = pcUse,
     force.recalc = TRUE,
     print.output = TRUE,
     resolution = params$resolution,
@@ -266,16 +256,13 @@ PrintFindClustersParams(seurat)
 ```{r RunTSNE}
 seurat <- RunTSNE(
     seurat,
-    dims.use = 1:params$pcUse,
+    dims.use = pcUse,
     do.fast = TRUE)
+assignAndSaveData(paste0(params$subsetName, "Seurat"), seurat)
 ```
 
 ```{r PrintTSNEParams}
 PrintTSNEParams(seurat)
-```
-
-```{r saveSeurat}
-assignAndSaveData(paste0(params$subsetName, "Seurat"), seurat)
 ```
 
 ```{r TSNEPlot}
@@ -342,9 +329,6 @@ Seurat has four tests for differential expression which can be set with the `tes
 markers <- FindAllMarkers(
     seurat,
     latent.vars = params$varsToRegress)
-```
-
-```{r saveMarkers}
 assignAndSaveData(paste0(params$subsetName, "Markers"), markers)
 write_csv(markers, file.path(markersDir, paste0(params$subsetName, ".csv.gz")))
 ```
