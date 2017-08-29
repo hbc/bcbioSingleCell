@@ -29,7 +29,7 @@ Top Barcodes
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotClusters}},
+  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
   \code{\link{plotKnownMarkers}},
   \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topMarkers}}

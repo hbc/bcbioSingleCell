@@ -29,7 +29,8 @@ knownMarkersDetected(object, knownMarkers, ...)
 Known Markers Detected
 }
 \seealso{
-Other Clustering Utilities: \code{\link{plotClusters}},
+Other Clustering Utilities: \code{\link{pcCutoff}},
+  \code{\link{plotClusters}},
   \code{\link{plotKnownMarkers}},
   \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
