@@ -8,9 +8,9 @@
 #' @importClassesFrom monocle CellDataSet
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
-#' @importFrom basejump camel gene2symbolFromGTF mdHeader mdList prepareSE
-#'   prepareTemplate readFileByExtension readGTF revcomp tidy_filter tidy_select
-#'   tx2geneFromGTF
+#' @importFrom basejump camel detectOrganism gene2symbolFromGTF mdHeader mdList
+#'   prepareSE prepareTemplate readFileByExtension readGTF revcomp tidy_filter
+#'   tidy_select tx2geneFromGTF
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows distinct everything group_by left_join
 #'   mutate n pull rename summarize top_n
@@ -30,7 +30,8 @@
 #' @importFrom rlang .data is_string sym syms
 #' @importFrom S4Vectors metadata SimpleList
 #' @importFrom scales math_format trans_breaks trans_format
-#' @importFrom Seurat AddMetaData CreateSeuratObject FeaturePlot NormalizeData
+#' @importFrom Seurat AddMetaData CreateSeuratObject FeaturePlot
+#'   FindVariableGenes NormalizeData ScaleData
 #'   VlnPlot
 #' @importFrom stats median
 #' @importFrom stringr str_detect str_match str_replace str_replace_all

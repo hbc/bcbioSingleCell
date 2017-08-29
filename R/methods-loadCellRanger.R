@@ -70,6 +70,7 @@ setMethod("loadCellRanger", "character", function(
     genomeBuild <- refJSON %>%
         .[["genomes"]] %>%
         .[[1L]]
+    organism <- detectOrganism(genomeBuild)
 
     # GTF
     gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
@@ -109,6 +110,7 @@ setMethod("loadCellRanger", "character", function(
         sampleMetadata = sampleMetadata,
         interestingGroups = interestingGroups,
         genomeBuild = genomeBuild,
+        organism = organism,
         annotable = annotable,
         gtfFile = gtfFile,
         gtf = gtf,

@@ -16,7 +16,7 @@ params:
 ---
 
 ```{r setup, message=FALSE, warning=FALSE}
-library(bcbioSinglecell)
+library(bcbioSingleCell)
 
 # Shared RMarkdown settings
 prepareSingleCellTemplate()

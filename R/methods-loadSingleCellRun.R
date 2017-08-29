@@ -128,6 +128,7 @@ setMethod("loadSingleCellRun", "character", function(
     if (length(genomeBuild) > 1L) {
         stop("Multiple genomes detected -- not supported")
     }
+    organism <- detectOrganism(genomeBuild)
 
     # Molecular barcode (UMI) type ====
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
@@ -213,6 +214,7 @@ setMethod("loadSingleCellRun", "character", function(
         sampleMetadata = sampleMetadata,
         interestingGroups = interestingGroups,
         genomeBuild = genomeBuild,
+        organism = organism,
         annotable = annotable,
         gtfFile = gtfFile,
         gtf = gtf,

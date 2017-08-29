@@ -33,7 +33,7 @@ setAs("bcbioSCFiltered", "seurat", function(from) {
     project <- deparse(substitute(from))
     counts <- counts(from, gene2symbol = TRUE)
 
-    object <- CreateSeuratObject(
+    seurat <- CreateSeuratObject(
         raw.data = counts,
         project = project,
         # We already prefiltered by gene level
@@ -43,35 +43,30 @@ setAs("bcbioSCFiltered", "seurat", function(from) {
     metrics <- metrics(from)
 
     # Integrity checks
-    if (!identical(dim(counts), dim(object@data))) {
+    if (!identical(dim(counts), dim(seurat@data))) {
         stop("Dimension mismatch between bcbioSCFiltered and Seurat object")
     }
     if (!identical(colnames(counts), rownames(metrics))) {
         stop("Count matrix and metrics mismatch")
     }
-    if (!identical(object@cell.names, rownames(metrics))) {
+    if (!identical(seurat@cell.names, rownames(metrics))) {
         stop("Metrics rowname mismatch with `cell.names` slot")
     }
     if (!identical(
-        as.integer(object@meta.data[["nGene"]]),
+        as.integer(seurat@meta.data[["nGene"]]),
         as.integer(metrics[["nGene"]]))) {
         stop("Gene detection mismatch", call. = FALSE)
     }
     if (!identical(
-        as.integer(object@meta.data[["nUMI"]]),
+        as.integer(seurat@meta.data[["nUMI"]]),
         as.integer(metrics[["nUMI"]]))) {
         stop("UMI detection mismatch", call. = FALSE)
     }
 
-    # Rows must correspond to `object@cell.names`
-    object <- AddMetaData(object, metrics)
-
-    # Normalize
-    object <- NormalizeData(
-        object,
-        normalization.method = "LogNormalize",
-        scale.factor = 10000L)
-
-    print(object)
-    object
+    # Complete the initalization steps
+    seurat %>%
+        AddMetaData(metrics) %>%
+        NormalizeData %>%
+        FindVariableGenes(do.plot = FALSE) %>%
+        ScaleData
 })

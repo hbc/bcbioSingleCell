@@ -52,7 +52,8 @@ Suggests:
     scater (>= 1.4.0),
     scone (>= 1.0.0),
     scde (>= 2.5.0),
-    testthat
+    testthat,
+    tidyverse
 Remotes:
     steinbaugh/basejump
 biocViews:
