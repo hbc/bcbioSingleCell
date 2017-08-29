@@ -299,7 +299,7 @@ assignAndSaveData(paste0(params$subsetName, "Seurat"), seurat)
 ```
 
 ```{r TSNEPlot}
-lapply(seq_along(groupBy), function(a) {
+sapply(seq_along(groupBy), function(a) {
     TSNEPlot(seurat,
              do.label = TRUE,
              group.by = groupBy[[a]],
@@ -311,7 +311,7 @@ lapply(seq_along(groupBy), function(a) {
 Note that tSNE is not PCA! The measurement of distance in a tSNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.
 
 ```{r PCAPlot}
-lapply(seq_along(groupBy), function(a) {
+sapply(seq_along(groupBy), function(a) {
     PCAPlot(seurat,
             do.label = TRUE,
             group.by = groupBy[[a]])
