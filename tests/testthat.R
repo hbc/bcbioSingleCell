@@ -1,4 +1,6 @@
+set.seed(42L)
+
 library(testthat)
-library(basejump)
+library(bcbioSingleCell)
 
 test_check("bcbioSingleCell")
