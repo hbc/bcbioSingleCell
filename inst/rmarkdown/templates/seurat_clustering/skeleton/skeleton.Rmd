@@ -7,14 +7,17 @@ params:
     subsetName: bcbFiltered
     pcCompute: 20
     pcUse: 10
-    varsToRegress: !r c("nUMI", "mitoRatio")
+    varsToRegress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
+    resolution: 0.8
     markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
 library(Seurat)
-library(bcbioSinglecell)
+library(bcbioSingleCell)
+library(tidyverse)
+library(stringr)
 
 # Shared RMarkdown settings
 prepareSingleCellTemplate()
@@ -29,9 +32,13 @@ if (!is(subset, "bcbioSCFiltered")) {
     stop("Subset must be a bcbioSCFiltered class object")
 }
 
-# Gene annotations
-genomeBuild <- metadata(subset)[["genomeBuild"]]
-gene2symbol <- metadata(subset)[["gene2symbol"]]
+# Useful metadata slots
+interestingGroups <- metadata(subset)$interestingGroups
+organism <- metadata(subset)$organism
+gene2symbol <- metadata(subset)$gene2symbol
+
+# Vector to use for plot looping
+groupBy <- c("ident", "sampleName", "Phase", interestingGroups)
 
 # Principal components
 if (params$pcCompute > 30) {
@@ -43,6 +50,7 @@ if (params$pcUse > 25) {
 
 # Directory paths
 markersDir <- file.path(params$outputDir, "results", "markers")
+dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 
 # knitr arguments
 opts_chunk$set(
@@ -76,19 +84,26 @@ seurat <- as(subset, "seurat")
 
 We applied cellular barcode filtering during our initial quality control analysis using `filterCells()`. Here we're using [Seurat][]'s `VlnPlot()` function to visualize the number of UMI counts (`nUMI`), genes detected (`nGene`), and relative mitochondrial abundance (`mitoRatio`).
 
-```{r VlnPlot, fig.height=8, fig.width=12}
-help("VlnPlot", "Seurat")
-VlnPlot(
-    seurat,
-    features.plot = c("nUMI", "nGene", "mitoRatio"),
-    nCol = 3,
-    x.lab.rot = TRUE)
+```{r qcPlots1}
+features <- c("nUMI", "nGene", "mitoRatio")
+sapply(seq_along(features), function(a) {
+    JoyPlot(
+        seurat,
+        features.plot = features[[a]],
+        x.lab.rot = TRUE) %>%
+        show
+    VlnPlot(
+        seurat,
+        features.plot = features[[a]],
+        x.lab.rot = TRUE) %>%
+        show
+}) %>%
+    invisible
 ```
 
 Here we are visualizing UMI count correlations with genes detected (`nGene`) and mitochondrial abundance (`mitoRatio`). These scatterplots should resemble the figures presented in the quality control report.
 
 ```{r GenePlot, fig.height=12, fig.width=6}
-help("GenePlot", "Seurat")
 par(mfrow = c(2, 1))
 GenePlot(seurat, "nUMI", "nGene")
 GenePlot(seurat, "nUMI", "mitoRatio")
@@ -100,15 +115,8 @@ GenePlot(seurat, "nUMI", "mitoRatio")
 
 [Seurat][] calculates highly variable genes and focuses on these for downstream analysis. `FindVariableGenes()` calculates the average expression and dispersion for each gene, places these genes into bins, and then calculates a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression.
 
-We suggest that users set these parameters to mark visual outliers on the dispersion plot, but the exact parameter settings may vary based on the data type, heterogeneity in the sample, and normalization strategy. The parameters here identify ~2,000 variable genes, and represent typical parameter settings for UMI data that is normalized to a total of 1e4 molecules.
-
-```{r FindVariableGenes}
-help("FindVariableGenes", "Seurat")
-seurat <- FindVariableGenes(
-    seurat,
-    x.low.cutoff = 0.1,
-    x.high.cutoff = 8,
-    y.cutoff = 1)
+```{r VariableGenePlot}
+VariableGenePlot(seurat)
 ```
 
 
@@ -117,15 +125,71 @@ seurat <- FindVariableGenes(
 
 Your single cell dataset likely contains "uninteresting" sources of variation. This could include not only technical noise, but batch effects, or even biological sources of variation (cell cycle stage). As suggested in Buettner et al, NBT, 2015, regressing these signals out of the analysis can improve downstream dimensionality reduction and clustering. To mitigate the effect of these signals, [Seurat][] constructs linear models to predict gene expression based on user-defined variables. The scaled z-scored residuals of these models are stored in the `seurat@scale.data` slot, and are used for dimensionality reduction and clustering.
 
-We can regress out cell-cell variation in gene expression driven by batch (if applicable), cell alignment rate, the number of detected molecules, and mitochondrial gene expression. For cycling cells, we can also learn a "cell-cycle" score and regress this out as well. *Cell cycle regression is not always recommended*, especially if there may be a biological basis for the difference between clusters (e.g. differentiation).
+We can regress out cell-cell variation in gene expression driven by batch, cell alignment rate, the number of detected molecules, and mitochondrial gene expression. For cycling cells, we can also learn a "cell-cycle" score and regress this out as well. *Cell cycle regression is not always recommended*, especially if there may be a biological basis for the difference between clusters (e.g. differentiation).
 
-Generally, we currently recommend scaling data to minimize the effects of variable read counts (`nUMI`) and mitochondrial abundance (`mitoRatio`).
+
+## Cell-cycle scoring and regression
+
+This section is adapted from the [Cell-Cycle Scoring and Regression](http://satijalab.org/seurat/cell_cycle_vignette.html) vignette written by Paul Hoffman.
+
+First, we assign each cell a score, based on its expression of G2/M and S phase markers. These marker sets should be anticorrelated in their expression levels, and cells expressing neither are likely not cycling and in G1 phase.
+
+We assign scores in the `CellCycleScoring()` function, which stores S and G2/M scores in `seurat@meta.data`, along with the predicted classification of each cell in either G2M, S or G1 phase. `CellCycleScoring()` can also set the identity of the Seurat object to the cell-cycle phase by passing `set.ident = TRUE` (the original identities are stored as `old.ident`). Please note that Seurat does not use the discrete classifications (G2M/G1/S) in downstream cell cycle regression. Instead, it uses the quantitative scores for G2M and S phase. However, we provide our predicted classifications in case they are of interest.
+
+```{r CellCycleScoring}
+# Get the cell cycle marker genes
+org <- str_match(organism, "^([A-Z])[a-z]+ ([a-z]+)$") %>%
+    .[, 2:3] %>%
+    as.character %>%
+    paste0(collapse = "")
+ccm <- data(
+    list = paste0("cellCycleMarkers", org),
+    package = "bcbioSingleCell")
+assign("ccm", get(ccm))
+rm(org)
+
+# S and G2/M phases
+s.genes <- filter(ccm, phase == "S") %>%
+    pull("symbol")
+g2m.genes <- filter(ccm, phase == "G2/M") %>%
+    pull("symbol")
+
+# Use `set.ident = FALSE` here?
+seurat <- CellCycleScoring(
+    seurat,
+    g2m.genes = g2m.genes,
+    s.genes = s.genes)
+glimpse(seurat@meta.data)
+```
+
+Here we are checking to see if the cells are grouping by cell cycle.
+
+```{r cellCyclePCA1}
+RunPCA(
+    seurat,
+    pc.genes = c(s.genes, g2m.genes),
+    do.print = FALSE) %>%
+    PCAPlot(group.by = "Phase")
+```
+
+
+## Apply cell-cell variability regression variables
+
+Generally, we currently recommend scaling data to minimize the effects of variable read counts (`nUMI`) and mitochondrial abundance (`mitoRatio`) as a first approach. When regressing out the effects of cell-cycle variation, include `S.Score` and `G2M.Score` in the `vars.to.regress` argument.
 
 ```{r ScaleData, results="hide"}
-help("ScaleData", "Seurat")
 seurat <- ScaleData(seurat, vars.to.regress = params$varsToRegress)
 ```
 
+Now that regression has been applied, let's recheck to see if the cells are clustering by cycle. If the regression has worked, we should now see this go away.
+
+```{r cellCyclePCA2}
+RunPCA(
+    seurat,
+    pc.genes = c(s.genes, g2m.genes),
+    do.print = FALSE) %>%
+    PCAPlot(group.by = "Phase")
+```
 
 
 # Perform linear dimensional reduction
@@ -135,40 +199,34 @@ Next, we perform principal component analysis (PCA) on the scaled data with `Run
 `ProjectPCA()` scores each gene in the dataset (including genes not included in the PCA) based on their correlation with the calculated components. Though we don't use this further here, it can be used to identify markers that are strongly correlated with cellular heterogeneity, but may not have passed through variable gene selection.  The results of the projected PCA can be explored by setting `use.full = TRUE` for `PrintPCA()`.
 
 ```{r RunPCA}
-help("RunPCA", "Seurat")
 seurat <- seurat %>%
     RunPCA(do.print = FALSE) %>%
     ProjectPCA(do.print = FALSE)
 ```
 
 ```{r PrintPCA}
-help("PrintPCA", "Seurat")
 PrintPCA(
     seurat,
-    pcs.print = 1:4,
-    genes.print = 5)
+    pcs.print = 1:params$pcCompute)
 ```
 
 We can visualize these genes graphically using `VizPCA()`.
 
-```{r VizPCA, fig.height=12, fig.width=12}
-help("VizPCA", "Seurat")
-VizPCA(seurat, pcs.use = 1:4)
+```{r VizPCA, fig.height=30, fig.width=10}
+VizPCA(seurat, pcs.use = 1:params$pcCompute, font.size = 1, nCol = 3)
 ```
 
 In particular, `PCHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and genes are ordered according to their PCA scores. Setting `cells.use` to a number plots the "extreme" cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated gene sets.
 
-```{r PCHeatmap, fig.height=12, fig.width=8, warning=FALSE}
-help("PCHeatmap", "Seurat")
-# PC1
+```{r PCHeatmap, fig.height=30, fig.width=10}
+# Balanced
 PCHeatmap(seurat,
           do.balanced = TRUE,
-          label.columns = FALSE,
-          remove.key = TRUE)
-# All PCs used
+          pc.use = 1:params$pcCompute)
+# Unbalanced
 PCHeatmap(seurat,
-          do.balanced = TRUE,
-          pc.use = 1:params$pcUse)
+          do.balanced = FALSE,
+          pc.use = 1:params$pcCompute)
 ```
 
 
@@ -184,7 +242,6 @@ PC selection — identifying the true dimensionality of a dataset — is an impo
 3. **Heuristic approach**, using a metric that can be calculated instantly.
 
 ```{r PCElbowPlot}
-help("PCElbowPlot", "Seurat")
 PCElbowPlot(seurat, num.pc = params$pcCompute) +
     ggtitle("pc elbow plot") +
     geom_line() +
@@ -205,13 +262,12 @@ The `FindClusters()` function implements the procedure, and contains a `resoluti
 Regarding the value of the `resolution` argument, use a value `< 1` if you want to obtain fewer clusters.
 
 ```{r FindClusters, results="hide"}
-help("FindClusters", "Seurat")
 seurat <- FindClusters(
     seurat,
     dims.use = 1:params$pcUse,
     force.recalc = TRUE,
     print.output = TRUE,
-    resolution = 0.8,
+    resolution = params$resolution,
     save.SNN = TRUE)
 ```
 
@@ -228,7 +284,6 @@ PrintFindClustersParams(seurat)
 [Seurat][] continues to use tSNE as a powerful tool to visualize and explore these datasets. While we no longer advise clustering directly on tSNE components, cells within the graph-based clusters determined above should co-localize on the tSNE plot. This is because the tSNE aims to place cells with similar local neighborhoods in high-dimensional space together in low-dimensional space. As input to the tSNE, we suggest using the same PCs as input to the clustering analysis, although computing the tSNE based on scaled gene expression is also supported using the `genes.use` argument.
 
 ```{r RunTSNE}
-help("RunTSNE", "Seurat")
 seurat <- RunTSNE(
     seurat,
     dims.use = 1:params$pcUse,
@@ -244,42 +299,53 @@ assignAndSaveData(paste0(params$subsetName, "Seurat"), seurat)
 ```
 
 ```{r TSNEPlot}
-help("TSNEPlot", "Seurat")
-TSNEPlot(
-    seurat,
-    do.label = TRUE,
-    label.size = 6)
-TSNEPlot(
-    seurat,
-    do.label = FALSE,
-    group.by = "sampleName",
-    label.size = 6)
+sapply(seq_along(groupBy), function(a) {
+    TSNEPlot(seurat,
+             do.label = TRUE,
+             group.by = groupBy[[a]],
+             label.size = 6)
+}) %>%
+    invisible
 ```
 
 Note that tSNE is not PCA! The measurement of distance in a tSNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.
 
 ```{r PCAPlot}
-help("PCAPlot", "Seurat")
-PCAPlot(seurat,
-        do.label = TRUE)
-PCAPlot(seurat,
-        group.by = "sampleName",
-        do.label = FALSE)
+sapply(seq_along(groupBy), function(a) {
+    PCAPlot(seurat,
+            do.label = TRUE,
+            group.by = groupBy[[a]])
+}) %>%
+    invisible
 ```
 
 
 
 # Cluster quality control
 
-Let's look at the variance in the number of genes detected (`nGene`) and the percentage of mitochondrial gene expression (`mitoRatio`), to see if any abberant cells are clustering.
+Let's look at the variance in the number of UMI counts (`nUMI`), gene detection (`nGene`), and the percentage of mitochondrial gene expression (`mitoRatio`), to see if there are any obvious cluster artefacts.
 
-```{r qc}
-help("FeaturePlot", "Seurat")
+```{r qcPlots2}
 # @seealso colnames(seurat@meta.data)
 colors <- c("grey", "purple")
-FeaturePlot(seurat, "nUMI", cols.use = colors)
-FeaturePlot(seurat, "nGene", cols.use = colors)
-FeaturePlot(seurat, "mitoRatio", cols.use = colors)
+features <- c("nUMI", "nGene", "mitoRatio")
+sapply(seq_along(features), function(a) {
+    JoyPlot(
+        seurat,
+        features.plot = features[[a]],
+        x.lab.rot = TRUE) %>%
+        show
+    VlnPlot(
+        seurat,
+        features.plot = features[[a]],
+        x.lab.rot = TRUE) %>%
+        show
+    FeaturePlot(
+        seurat,
+        cols.use = colors,
+        features.plot = features[[a]])
+}) %>%
+    invisible
 ```
 
 
@@ -303,7 +369,6 @@ markers <- FindAllMarkers(seurat, latent.vars = params$varsToRegress)
 
 ```{r saveMarkers}
 assignAndSaveData(paste0(params$subsetName, "Markers"), markers)
-dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 write_csv(markers, file.path(markersDir, paste0(params$subsetName, ".csv.gz")))
 ```
 
@@ -324,7 +389,6 @@ topMarkers <- topMarkers(markers, show = TRUE)
 Heatmaps can also be a good way to examine heterogeneity within/between clusters. The `DoHeatmap()` function will generate a heatmap for given cells and genes. In this case, we are plotting the top markers for each cluster.
 
 ```{r DoHeatmap, fig.height=12, fig.width=12}
-help("DoHeatmap", "Seurat")
 DoHeatmap(
     seurat,
     genes.use = topMarkers$symbol,
@@ -345,7 +409,6 @@ There are several tools for visualizing marker expression:
 ## Top markers per cluster {.tabset}
 
 ```{r plotTopMarkers, results="asis"}
-help("plotTopMarkers", "bcbioSinglecell")
 plotTopMarkers(seurat, topMarkers)
 ```
 

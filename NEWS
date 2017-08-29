@@ -1,3 +1,10 @@
+# 0.0.17
+
+- Renamed package from `bcbioSinglecell` to `bcbioSingleCell`.
+- Added cell-cycle regression into Seurat clustering RMarkdown template.
+
+
+
 # 0.0.16
 
 - Support for CRAN version of Seurat.

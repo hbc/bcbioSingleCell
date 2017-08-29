@@ -1,6 +1,6 @@
-Package: bcbioSinglecell
+Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.16
+Version: 0.0.17
 Authors@R: c(
     person("Michael J.", "Steinbaugh",
            email = "mike@steinbaugh.com",
@@ -13,9 +13,9 @@ Authors@R: c(
            role = c("cph", "fnd")))
 Description: Import and analyze bcbio single-cell RNA-seq data.
 URL:
-    http://bioinformatics.sph.harvard.edu/bcbioSinglecell,
-    https://github.com/hbc/bcbioSinglecell
-BugReports: https://github.com/hbc/bcbioSinglecell/issues
+    http://bioinformatics.sph.harvard.edu/bcbioSingleCell,
+    https://github.com/hbc/bcbioSingleCell
+BugReports: https://github.com/hbc/bcbioSingleCell/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
@@ -33,7 +33,7 @@ Imports:
     Matrix,
     Matrix.utils,
     methods,
-    monocle (>= 2.5.0),
+    monocle (>= 2.4.0),
     pbapply,
     readr,
     rlang,
@@ -52,9 +52,9 @@ Suggests:
     scater (>= 1.4.0),
     scone (>= 1.0.0),
     scde (>= 2.5.0),
-    testthat
+    testthat,
+    tidyverse
 Remotes:
-    cole-trapnell-lab/monocle-release,
     steinbaugh/basejump
 biocViews:
     DataImport,
