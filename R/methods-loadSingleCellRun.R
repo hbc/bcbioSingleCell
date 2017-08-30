@@ -139,6 +139,7 @@ setMethod("loadSingleCellRun", "character", function(
             na.omit %>%
             unique %>%
             str_replace("-transform", "")
+        message(paste("UMI type:", umiType))
     } else {
         stop("Failed to detect UMI type from JSON file")
     }
@@ -165,8 +166,6 @@ setMethod("loadSingleCellRun", "character", function(
 
     # Cellular barcodes ====
     cellularBarcodes <- .cbList(sampleDirs)
-
-    message(paste("UMI type:", umiType))
 
     # Row data =================================================================
     annotable <- annotable(genomeBuild)
