@@ -22,7 +22,7 @@ NULL
     xlab <- "pc"
 
     # Principal component standard deviations
-    pct <- sd ^ 2 / sum(sd ^ 2)
+    pct <- sd ^ 2L / sum(sd ^ 2L)
     cumsum <- cumsum(pct)
     tbl <- tibble(
         pc = seq_along(sd),
