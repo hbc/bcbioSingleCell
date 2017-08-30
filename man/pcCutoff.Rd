@@ -20,6 +20,8 @@ pcCutoff(object, ...)
 \item{maxPct}{Maximum percent standard deviation.}
 
 \item{minCumPct}{Minimum cumulative percent standard deviation.}
+
+\item{plot}{Plot the PC standard deviations.}
 }
 \value{
 Numeric of maximum PC value to use for dimensionality reduction.
