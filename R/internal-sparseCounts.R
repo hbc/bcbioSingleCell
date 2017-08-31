@@ -127,24 +127,11 @@
     if (!all(rownames(sparseCounts) %in% rownames(tx2gene))) {
         missing <- rownames(sparseCounts) %>%
             .[!. %in% rownames(tx2gene)]
-        if (length(missing) >= 500L) {
-            # Fail if GTF file is missing at least 500 transcripts
-            stop(paste(
-                length(missing),
-                "transcripts in matrix missing from tx2gene:",
-                toString(head(missing)),
-                "..."))
-        } else {
-            # Otherwise warn and remove the bad transcripts
-            warning(paste(
-                length(missing),
-                "transcripts in matrix missing from tx2gene:",
-                toString(head(missing)),
-                "..."))
-            sparseCounts <- sparseCounts %>%
-                .[!rownames(.) %in% missing, ]
-        }
-
+        stop(paste(
+            length(missing),
+            "transcripts in matrix missing from tx2gene:",
+            toString(head(missing)),
+            "..."))
     }
     message("Converting transcript-level counts to gene-level")
     t2g <- tx2gene[rownames(sparseCounts), ]
