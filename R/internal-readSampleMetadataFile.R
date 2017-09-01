@@ -31,7 +31,7 @@
 
         # Check for general required columns
         if (!all(c("fileName", "sampleName") %in% colnames(meta))) {
-            stop("`fileName` and `sampleName` are required", call. = FALSE)
+            stop("'fileName' and 'sampleName' are required", call. = FALSE)
         }
 
         # Check if samples are demultiplexed
@@ -48,7 +48,7 @@
         } else {
             # Match the UMI demultiplexed sample directories (e.g. inDrop)
             if (!"sequence" %in% colnames(meta)) {
-                stop("Index i7 sequence required to generate `sampleID`")
+                stop("Index i7 sequence required to generate 'sampleID'")
             }
             meta <- meta %>%
                 mutate(revcomp = vapply(.data[["sequence"]],
@@ -62,7 +62,7 @@
     } else if (pipeline == "cellranger") {
         # Check for general required columns
         if (!all(c("fileName", "sampleName") %in% colnames(meta))) {
-            stop("`fileName` and `sampleName` are required", call. = FALSE)
+            stop("'fileName' and 'sampleName' are required", call. = FALSE)
         }
         meta[["sampleID"]] <- camel(meta[["fileName"]])
     } else {
