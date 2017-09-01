@@ -3,7 +3,6 @@
 \docType{methods}
 \name{metrics}
 \alias{metrics}
-\alias{metrics}
 \alias{metrics,bcbioSCDataSet-method}
 \alias{metrics,bcbioSCFiltered-method}
 \alias{metrics,seurat-method}
@@ -40,3 +39,4 @@ Other Quality Control Metrics: \code{\link{plotCellCounts}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Quality Control Metrics}

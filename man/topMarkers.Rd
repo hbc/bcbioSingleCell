@@ -3,7 +3,6 @@
 \docType{methods}
 \name{topMarkers}
 \alias{topMarkers}
-\alias{topMarkers}
 \alias{topMarkers,data.frame-method}
 \title{Top Markers}
 \usage{
@@ -36,3 +35,4 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Utilities}

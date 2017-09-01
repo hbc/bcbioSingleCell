@@ -4,7 +4,6 @@
 \name{bcbio}
 \alias{bcbio}
 \alias{bcbio<-}
-\alias{bcbio}
 \alias{bcbio,bcbioSCDataSet-method}
 \alias{bcbio<-,bcbioSCDataSet-method}
 \title{\code{bcbioSCDataSet} Object Accessors}

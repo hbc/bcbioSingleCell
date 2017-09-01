@@ -3,7 +3,6 @@
 \docType{methods}
 \name{plotKnownMarkers}
 \alias{plotKnownMarkers}
-\alias{plotKnownMarkers}
 \alias{plotKnownMarkers,seurat,grouped_df-method}
 \title{Plot Known Markers}
 \usage{
@@ -37,3 +36,4 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Utilities}

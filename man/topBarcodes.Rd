@@ -3,7 +3,6 @@
 \docType{methods}
 \name{topBarcodes}
 \alias{topBarcodes}
-\alias{topBarcodes}
 \alias{topBarcodes,bcbioSCDataSet-method}
 \alias{topBarcodes,bcbioSCFiltered-method}
 \title{Top Barcodes}
@@ -37,3 +36,4 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Utilities}

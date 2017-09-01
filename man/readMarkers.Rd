@@ -3,7 +3,6 @@
 \docType{methods}
 \name{readMarkers}
 \alias{readMarkers}
-\alias{readMarkers}
 \alias{readMarkers,character-method}
 \title{Read Known Markers}
 \usage{
@@ -38,3 +37,4 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
 \author{
 Michael Steinbaugh
 }
+\concept{Data Management Utilities}
