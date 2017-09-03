@@ -128,7 +128,7 @@ setMethod("loadCellRanger", "character", function(
     }
 
     # bcbioSCDataSet ===========================================================
-    se <- prepareSE(
+    se <- prepareSummarizedExperiment(
         sparseCounts,
         colData = metrics,
         rowData = annotable,

@@ -85,7 +85,7 @@ NULL
         minNovelty = minNovelty)
 
     # SummarizedExperiment ====
-    se <- prepareSE(
+    se <- prepareSummarizedExperiment(
         sparseCounts,
         colData = colData,
         rowData = rowData,

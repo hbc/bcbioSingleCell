@@ -21,7 +21,7 @@ Encoding: UTF-8
 Depends:
     R (>= 3.4.0),
     SummarizedExperiment (>= 1.6.3),
-    basejump (>= 0.0.21)
+    basejump (>= 0.0.22)
 Imports:
     Biobase,
     cowplot,
