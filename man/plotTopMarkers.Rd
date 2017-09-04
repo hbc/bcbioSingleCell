@@ -16,7 +16,7 @@ plotTopMarkers(object, topMarkers, ...)
 
 \item{topMarkers}{Top markers grouped \link{tibble} returned by \code{\link[=topMarkers]{topMarkers()}}.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{markdown}{Print Markdown headers.}
 }

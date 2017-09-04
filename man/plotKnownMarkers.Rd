@@ -16,7 +16,7 @@ plotKnownMarkers(object, knownMarkers, ...)
 
 \item{knownMarkers}{\code{\link[=knownMarkersDetected]{knownMarkersDetected()}} \link{tibble} grouped by cluster.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{markdown}{Print Markdown headers.}
 }

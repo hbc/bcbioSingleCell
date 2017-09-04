@@ -4,7 +4,7 @@
 \name{loadSingleCellRun}
 \alias{loadSingleCellRun}
 \alias{loadSingleCellRun,character-method}
-\title{Load \code{bcbio} Single-Cell RNA-Seq Run}
+\title{Load bcbio Single-Cell RNA-Seq Run}
 \usage{
 loadSingleCellRun(object, ...)
 
@@ -34,7 +34,7 @@ annotation mappings.}
 \link{bcbioSCDataSet}.
 }
 \description{
-Load \code{bcbio} Single-Cell RNA-Seq Run
+Load bcbio Single-Cell RNA-Seq Run
 }
 \note{
 When working in RStudio, we recommend connecting to the bcbio-nextgen

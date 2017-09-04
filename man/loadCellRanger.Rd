@@ -15,7 +15,7 @@ loadCellRanger(object, ...)
 \item{object}{Path to CellRanger output directory. This directory path must
 contain \code{filtered_gene_bc_matrices/} as a child.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{refDataDir}{Directory path to cellranger reference annotation data.}
 

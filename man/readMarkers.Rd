@@ -13,7 +13,7 @@ readMarkers(object, ...)
 \arguments{
 \item{object}{Gene markers file (CSV or Excel).}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{gene2symbol}{Gene-to-symbol annotation \link{data.frame}.}
 

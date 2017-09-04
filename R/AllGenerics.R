@@ -8,7 +8,7 @@
 #' @param x Primary object.
 #' @param y Secondary object.
 #' @param value Object to assign.
-#' @param ... Additional arguments.
+#' @param ... *Additional arguments (for the S4 generic definition).*
 #'
 #' @return No value.
 NULL

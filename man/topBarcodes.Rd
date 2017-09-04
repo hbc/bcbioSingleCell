@@ -16,7 +16,7 @@ topBarcodes(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{n}{Number of barcodes to return per sample.}
 }

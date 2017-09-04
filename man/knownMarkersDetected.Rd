@@ -17,7 +17,7 @@ knownMarkersDetected(object, knownMarkers, ...)
 
 \item{knownMarkers}{Known markers imported by \code{\link[=readMarkers]{readMarkers()}}.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{show}{Show \link{kable}.}
 }

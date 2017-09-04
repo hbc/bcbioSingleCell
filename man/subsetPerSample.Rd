@@ -14,7 +14,7 @@ subsetPerSample(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{minCells}{Minimum number of cells required per sample.}
 

@@ -16,7 +16,7 @@ plotCellCounts(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 }
 \value{
 \link{ggplot} grid.

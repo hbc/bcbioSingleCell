@@ -19,7 +19,7 @@ bcbio(object, ...) <- value
 \arguments{
 \item{object}{Primary object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{value}{Object to assign.}
 

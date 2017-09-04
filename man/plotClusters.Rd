@@ -13,7 +13,7 @@ plotClusters(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{symbols}{Character vector of gene symbols.}
 

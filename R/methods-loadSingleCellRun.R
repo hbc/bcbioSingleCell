@@ -1,4 +1,4 @@
-#' Load `bcbio` Single-Cell RNA-Seq Run
+#' Load bcbio Single-Cell RNA-Seq Run
 #'
 #' @rdname loadSingleCellRun
 #' @name loadSingleCellRun
