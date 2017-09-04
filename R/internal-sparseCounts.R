@@ -125,26 +125,16 @@
 .sparseCountsTx2Gene <- function(sparseCounts, tx2gene) {
     sparseCounts <- .stripTranscriptVersions(sparseCounts)
     if (!all(rownames(sparseCounts) %in% rownames(tx2gene))) {
-        warning("tx2gene missing transcripts present in sparse counts")
-    }
-    t2g <- tx2gene[rownames(sparseCounts), ] %>%
-        set_rownames(rownames(sparseCounts))
-    if (any(is.na(t2g[["enstxp"]]))) {
-        t2g <- rownames_to_column(t2g)
-        mapped <- tidy_filter(t2g, !is.na(.data[["ensgene"]]))
-        unmapped <- tidy_filter(t2g, is.na(.data[["ensgene"]])) %>%
-            mutate(enstxp = .data[["rowname"]],
-                   ensgene = .data[["rowname"]])
-        warning(paste("Unmapped transcripts:",
-                      toString(unmapped[["ensgene"]])))
-        t2g <- bind_rows(mapped, unmapped) %>%
-            column_to_rownames %>%
-            .[rownames(sparseCounts), ]
-    }
-    if (!identical(rownames(sparseCounts), rownames(t2g))) {
-        stop("tx2gene rowname mismatch")
+        missing <- rownames(sparseCounts) %>%
+            .[!. %in% rownames(tx2gene)]
+        stop(paste(
+            length(missing),
+            "transcripts in matrix missing from tx2gene:",
+            toString(head(missing)),
+            "..."))
     }
     message("Converting transcript-level counts to gene-level")
+    t2g <- tx2gene[rownames(sparseCounts), ]
     sparseCounts %>%
         set_rownames(t2g[["ensgene"]]) %>%
         aggregate.Matrix(rownames(.), fun = "sum")

@@ -21,7 +21,7 @@ Encoding: UTF-8
 Depends:
     R (>= 3.4.0),
     SummarizedExperiment (>= 1.6.3),
-    basejump (>= 0.0.21)
+    basejump (>= 0.0.22)
 Imports:
     Biobase,
     cowplot,
@@ -67,4 +67,4 @@ biocViews:
     SingleCell,
     Visualization
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000

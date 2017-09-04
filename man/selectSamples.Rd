@@ -3,7 +3,6 @@
 \docType{methods}
 \name{selectSamples}
 \alias{selectSamples}
-\alias{selectSamples}
 \alias{selectSamples,bcbioSCFiltered-method}
 \title{Select Samples}
 \usage{
@@ -48,3 +47,4 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
 \author{
 Michael Steinbaugh
 }
+\concept{Data Management Utilities}

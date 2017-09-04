@@ -3,7 +3,6 @@
 \docType{methods}
 \name{topBarcodes}
 \alias{topBarcodes}
-\alias{topBarcodes}
 \alias{topBarcodes,bcbioSCDataSet-method}
 \alias{topBarcodes,bcbioSCFiltered-method}
 \title{Top Barcodes}
@@ -29,7 +28,7 @@ Top Barcodes
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotClusters}},
+  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
   \code{\link{plotKnownMarkers}},
   \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topMarkers}}
@@ -37,3 +36,4 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Utilities}

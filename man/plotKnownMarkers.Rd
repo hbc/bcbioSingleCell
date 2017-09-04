@@ -3,7 +3,6 @@
 \docType{methods}
 \name{plotKnownMarkers}
 \alias{plotKnownMarkers}
-\alias{plotKnownMarkers}
 \alias{plotKnownMarkers,seurat,grouped_df-method}
 \title{Plot Known Markers}
 \usage{
@@ -29,7 +28,7 @@ Plot Known Markers
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotClusters}},
+  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
   \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}
@@ -37,3 +36,4 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Utilities}

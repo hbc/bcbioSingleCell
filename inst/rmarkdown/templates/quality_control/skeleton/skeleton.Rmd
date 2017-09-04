@@ -4,8 +4,8 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    uploadDir: "final"
-    sampleMetadataFile: "sample_metadata.xlsx"
+    uploadDir: "data/final"
+    sampleMetadataFile: "meta/sample_metadata.xlsx"
     interestingGroups: !r c("genotype", "treatment")
     minUMIs: 500
     minGenes: 500

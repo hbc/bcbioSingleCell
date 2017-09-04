@@ -3,7 +3,6 @@
 \docType{methods}
 \name{plotNovelty}
 \alias{plotNovelty}
-\alias{plotNovelty}
 \alias{plotNovelty,bcbioSCDataSet-method}
 \alias{plotNovelty,bcbioSCFiltered-method}
 \title{Plot Novelty Score}
@@ -43,3 +42,4 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh
 }
+\concept{Quality Control Metrics}

@@ -3,7 +3,6 @@
 \docType{methods}
 \name{loadSingleCellRun}
 \alias{loadSingleCellRun}
-\alias{loadSingleCellRun}
 \alias{loadSingleCellRun,character-method}
 \title{Load \code{bcbio} Single-Cell RNA-Seq Run}
 \usage{

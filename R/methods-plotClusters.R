@@ -4,7 +4,7 @@
 #' @name plotClusters
 #'
 #' @param symbols Character vector of gene symbols.
-#' @param markdown Include a Markdown header for each gene.
+#' @param headerLevel Include a Markdown header for each gene.
 #'
 #' @return No value, only graphical output.
 NULL
@@ -17,10 +17,10 @@ NULL
 setMethod("plotClusters", "seurat", function(
     object,
     symbols,
-    markdown = TRUE) {
-    sapply(seq_along(symbols), function(a) {
-        if (isTRUE(markdown)) {
-            mdHeader(symbols[a], level = 4L)
+    headerLevel = 4L) {
+    lapply(seq_along(symbols), function(a) {
+        if (is.numeric(headerLevel)) {
+            mdHeader(symbols[a], level = headerLevel, asis = TRUE)
         }
 
         # Violin plots

@@ -3,7 +3,6 @@
 \docType{methods}
 \name{topMarkers}
 \alias{topMarkers}
-\alias{topMarkers}
 \alias{topMarkers,data.frame-method}
 \title{Top Markers}
 \usage{
@@ -28,7 +27,7 @@ Top Markers
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotClusters}},
+  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
   \code{\link{plotKnownMarkers}},
   \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}}
@@ -36,3 +35,4 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Utilities}

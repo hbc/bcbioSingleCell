@@ -6,13 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read Known Markers — readKnownMarkers • bcbioSinglecell</title>
+<title>Determine PC Cutoff — pcCutoff • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -23,7 +23,7 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
+  <link href="../extra.css" rel="stylesheet">
   
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -47,7 +47,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSinglecell</a>
+      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -64,7 +64,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hbc/bcbioSinglecell">
+  <a href="https://github.com/hbc/bcbioSingleCell">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -80,50 +80,59 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read Known Markers</h1>
+    <h1>Determine PC Cutoff</h1>
     </div>
 
     
-    <p>Read Known Markers</p>
+    <p>Calculate the principal component (PC) with either a maximum SD percentage or
+minimum <!-- % SD cumulative sum cutoff value. This defaults to keeping the larger -->
+PC cutoff for either 5<!-- % SD (\code{maxPct}) or 80% cumulative (\code{minCumsum}). --></p>
     
 
-    <pre class="usage"><span class='fu'>readKnownMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>pcCutoff</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for character</span>
-<span class='fu'>readKnownMarkers</span>(<span class='no'>object</span>, <span class='no'>genomeBuild</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>pcCutoff</span>(<span class='no'>object</span>, <span class='kw'>maxPct</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>minCumPct</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Gene markers file (CSV or Excel).</p></td>
+      <td><p>Object.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
-      <th>genomeBuild</th>
-      <td><p>Genome build.</p></td>
+      <th>maxPct</th>
+      <td><p>Maximum percent standard deviation.</p></td>
     </tr>
     <tr>
-      <th>show</th>
-      <td><p>Show kable.</p></td>
+      <th>minCumPct</th>
+      <td><p>Minimum cumulative percent standard deviation.</p></td>
+    </tr>
+    <tr>
+      <th>plot</th>
+      <td><p>Plot the PC standard deviations.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>tibble.</p>
+    <p>Numeric of maximum PC value to use for dimensionality reduction.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Management Utilities: <code>aggregateFeatures</code>,
-  <code>aggregateReplicates</code>,
-  <code>filterCells</code>,
-  <code>interestingGroups</code>,
-  <code>sampleMetadata</code>, <code>selectSamples</code></p>
+    <p><a href='http://www.rdocumentation.org/packages/Seurat/topics/PCElbowPlot'>Seurat::PCElbowPlot</a>.</p>
+<p>Other Clustering Utilities: <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
+  <code><a href='plotClusters.html'>plotClusters</a></code>,
+  <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
+  <code><a href='plotStressGenes.html'>plotStressGenes</a></code>,
+  <code><a href='plotTopMarkers.html'>plotTopMarkers</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code>,
+  <code><a href='topMarkers.html'>topMarkers</a></code></p>
     
 
   </div>
@@ -146,7 +155,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael J. Steinbaugh, Rory Kirchner, Harvard Chan Bioinformatics Core.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael J. Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

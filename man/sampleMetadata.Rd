@@ -3,7 +3,6 @@
 \docType{methods}
 \name{sampleMetadata}
 \alias{sampleMetadata}
-\alias{sampleMetadata}
 \alias{sampleMetadata,bcbioSCDataSet-method}
 \alias{sampleMetadata,bcbioSCFiltered-method}
 \title{Sample Metadata}
@@ -36,3 +35,4 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
 \author{
 Michael Steinbaugh
 }
+\concept{Data Management Utilities}

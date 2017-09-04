@@ -139,6 +139,7 @@ setMethod("loadSingleCellRun", "character", function(
             na.omit %>%
             unique %>%
             str_replace("-transform", "")
+        message(paste("UMI type:", umiType))
     } else {
         stop("Failed to detect UMI type from JSON file")
     }
@@ -153,6 +154,7 @@ setMethod("loadSingleCellRun", "character", function(
 
     # tx2gene and gene2symbol annotations ====
     if (!is.null(gtfFile)) {
+        gtfFile <- normalizePath(gtfFile)
         gtf <- readGTF(gtfFile)
         tx2gene <- tx2geneFromGTF(gtf)
         gene2symbol <- gene2symbolFromGTF(gtf)
@@ -165,8 +167,6 @@ setMethod("loadSingleCellRun", "character", function(
     # Cellular barcodes ====
     cellularBarcodes <- .cbList(sampleDirs)
 
-    message(paste("UMI type:", umiType))
-
     # Row data =================================================================
     annotable <- annotable(genomeBuild)
 
@@ -174,12 +174,12 @@ setMethod("loadSingleCellRun", "character", function(
     message("Reading counts")
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
-        sparseCounts <- .readSparseCounts(sampleDirs[a], pipeline = pipeline)
+        txlevel <- .readSparseCounts(sampleDirs[a], pipeline = pipeline)
         # Transcript-level to gene-level counts
-        sparseCounts <- .sparseCountsTx2Gene(sparseCounts, tx2gene)
+        genelevel <- .sparseCountsTx2Gene(txlevel, tx2gene)
         # Pre-filter using cellular barcode summary metrics
-        metrics <- calculateMetrics(sparseCounts, annotable)
-        sparseCounts[, rownames(metrics)]
+        metrics <- calculateMetrics(genelevel, annotable)
+        genelevel[, rownames(metrics)]
     }) %>%
         setNames(names(sampleDirs))
     sparseCounts <- do.call(Matrix::cBind, sparseList)
@@ -241,7 +241,7 @@ setMethod("loadSingleCellRun", "character", function(
     }
 
     # bcbioSCDataSet ===========================================================
-    se <- prepareSE(
+    se <- prepareSummarizedExperiment(
         sparseCounts,
         colData = metrics,
         rowData = annotable,

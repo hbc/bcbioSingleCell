@@ -6,6 +6,7 @@
 - Slotted `organism` in `bcbioSCDataSet` metadata, in addition to `genomeBuild`.
 - Updated `bcbioSCFiltered` to `seurat` coercion method to also run `FindVariableGenes()` and `ScaleData()` by default.
 - Added cell-cycle regression into Seurat clustering RMarkdown template.
+- Improved pkgdown settings and website appearance.
 
 
 
