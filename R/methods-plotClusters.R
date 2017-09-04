@@ -19,15 +19,15 @@ setMethod("plotClusters", "seurat", function(
     symbols,
     headerLevel = 2L) {
     lapply(seq_along(symbols), function(a) {
+        message(symbols[[a]])
         mdHeader(symbols[[a]], level = headerLevel, asis = TRUE)
-        # Joy ploy
+        # Joy plot
         JoyPlot(
             object,
             do.return = FALSE,
             features.plot = symbols[[a]],
             x.lab.rot = TRUE) %>%
             show
-
         # Violin plot
         VlnPlot(
             object,
@@ -35,7 +35,6 @@ setMethod("plotClusters", "seurat", function(
             features.plot = symbols[[a]],
             x.lab.rot = TRUE) %>%
             show
-
         # tSNE color plots
         FeaturePlot(
             object,

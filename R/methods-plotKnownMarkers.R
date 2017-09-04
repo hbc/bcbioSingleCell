@@ -25,6 +25,7 @@ NULL
             unique %>%
             sort
         if (!is.null(symbols)) {
+            message(cellType)
             mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
             plotClusters(object, symbols, headerLevel = headerLevel + 1L)
         } else {

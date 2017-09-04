@@ -26,6 +26,7 @@ NULL
             warning("Maximum of 4 genes per cluster is recommended")
             symbols <- symbols[[1L:4L]]
         }
+        message(paste("Cluster", cluster))
         mdHeader(paste("Cluster", cluster),
                  level = headerLevel,
                  tabset = TRUE,
