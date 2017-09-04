@@ -8,7 +8,7 @@
 \usage{
 plotClusters(object, ...)
 
-\S4method{plotClusters}{seurat}(object, symbols, headerLevel = 4L)
+\S4method{plotClusters}{seurat}(object, symbols, headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}

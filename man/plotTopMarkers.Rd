@@ -9,7 +9,7 @@
 plotTopMarkers(object, topMarkers, ...)
 
 \S4method{plotTopMarkers}{seurat,grouped_df}(object, topMarkers,
-  markdown = TRUE)
+  headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
@@ -18,10 +18,10 @@ plotTopMarkers(object, topMarkers, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{markdown}{Print Markdown headers.}
+\item{headerLevel}{Include a Markdown header for each gene.}
 }
 \value{
-\link{ggplot}.
+No value, only graphical output.
 }
 \description{
 Plot Top Markers
