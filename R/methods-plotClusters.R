@@ -17,17 +17,22 @@ NULL
 setMethod("plotClusters", "seurat", function(
     object,
     symbols,
-    headerLevel = 4L) {
+    headerLevel = 2L) {
     lapply(seq_along(symbols), function(a) {
-        if (is.numeric(headerLevel)) {
-            mdHeader(symbols[a], level = headerLevel, asis = TRUE)
-        }
+        mdHeader(symbols[[a]], level = headerLevel, asis = TRUE)
+        # Joy ploy
+        JoyPlot(
+            object,
+            do.return = FALSE,
+            features.plot = symbols[[a]],
+            x.lab.rot = TRUE) %>%
+            show
 
-        # Violin plots
+        # Violin plot
         VlnPlot(
             object,
             do.return = FALSE,
-            features.plot = symbols[a],
+            features.plot = symbols[[a]],
             x.lab.rot = TRUE) %>%
             show
 
@@ -35,7 +40,7 @@ setMethod("plotClusters", "seurat", function(
         FeaturePlot(
             object,
             do.return = FALSE,
-            features.plot = symbols[a],
+            features.plot = symbols[[a]],
             cols.use = c("grey", "purple"))
     }) %>%
         invisible
