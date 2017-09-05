@@ -1,20 +1,19 @@
-
-##' heatmap with quantile breaks
-##'
-##' @details This is helpful for more usefully visualizing single cell data.
-##'   ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
-##' @title heatmap with quantile breaks
-##'
-##' @param mat matrix of data
-##' @param annotation column annotation
-##' @param clusterRows perform row clustering
-##' @param clusterCols perform column clustering
-##' @importFrom pheatmap pheatmap
-##' @importFrom viridis inferno
-##' @importFrom dendsort dendsort
-##' @return pheatmap object
-##' @export
-##' @author Rory Kirchner
+#' heatmap with quantile breaks
+#'
+#' @details This is helpful for more usefully visualizing single cell data.
+#'   ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
+#' @title heatmap with quantile breaks
+#'
+#' @param mat matrix of data
+#' @param annotation column annotation
+#' @param clusterRows perform row clustering
+#' @param clusterCols perform column clustering
+#' @importFrom pheatmap pheatmap
+#' @importFrom viridis inferno
+#' @importFrom dendsort dendsort
+#' @return pheatmap object
+#' @export
+#' @author Rory Kirchner
 quantileHeatmap <- function(mat, annotation=NA, clusterRows=TRUE,
                         clusterCols=TRUE) {
   if (isTRUE(quantile)) {
@@ -42,13 +41,13 @@ quantileHeatmap <- function(mat, annotation=NA, clusterRows=TRUE,
            show_rownames = FALSE)
 }
 
-##' create breaks based on quantiles of the data
-##'
-##' @title quantile breaks
-##' @param xs a vector of numbers
-##' @param n the number of breaks to create
-##' @return a vector of n quantile breaks
-##' @author Rory Kirchner
+#' create breaks based on quantiles of the data
+#'
+#' @title quantile breaks
+#' @param xs a vector of numbers
+#' @param n the number of breaks to create
+#' @return a vector of n quantile breaks
+#' @author Rory Kirchner
 .quantileBreaks <- function(xs, n = 10L) {
   breaks <- quantile(xs, probs = seq(0L, 1L, length.out = n))
   breaks[!duplicated(breaks)]
