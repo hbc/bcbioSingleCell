@@ -3,6 +3,7 @@
 \docType{methods}
 \name{pcCutoff}
 \alias{pcCutoff}
+\alias{pcCutoff}
 \alias{pcCutoff,seurat-method}
 \title{Determine PC Cutoff}
 \usage{
@@ -43,4 +44,3 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

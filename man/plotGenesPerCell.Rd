@@ -43,4 +43,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

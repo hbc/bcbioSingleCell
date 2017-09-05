@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotClusters}
 \alias{plotClusters}
+\alias{plotClusters}
 \alias{plotClusters,seurat-method}
 \title{Plot Clusters}
 \usage{
@@ -35,4 +36,3 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
+\alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes,bcbioSCDataSet-method}
 \alias{plotUMIsVsGenes,bcbioSCFiltered-method}
 \title{Plot UMI and Gene Correlation}
@@ -36,4 +37,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

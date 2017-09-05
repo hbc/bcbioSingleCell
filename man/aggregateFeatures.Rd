@@ -3,6 +3,7 @@
 \docType{methods}
 \name{aggregateFeatures}
 \alias{aggregateFeatures}
+\alias{aggregateFeatures}
 \alias{aggregateFeatures,bcbioSCDataSet-method}
 \title{Aggregate Features}
 \usage{
@@ -32,4 +33,3 @@ Other Data Management Utilities: \code{\link{aggregateReplicates}},
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
-\concept{Data Management Utilities}

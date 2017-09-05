@@ -3,6 +3,7 @@
 \docType{methods}
 \name{subsetPerSample}
 \alias{subsetPerSample}
+\alias{subsetPerSample}
 \alias{subsetPerSample,bcbioSCFiltered-method}
 \title{Subset Per Sample}
 \usage{
@@ -34,4 +35,3 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
 \author{
 Michael Steinbaugh
 }
-\concept{Data Management Utilities}

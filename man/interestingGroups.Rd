@@ -3,6 +3,7 @@
 \docType{methods}
 \name{interestingGroups}
 \alias{interestingGroups}
+\alias{interestingGroups}
 \alias{interestingGroups,bcbioSCDataSet-method}
 \alias{interestingGroups,bcbioSCFiltered-method}
 \title{Interesting Groups}
@@ -33,4 +34,3 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
 \author{
 Michael Steinbaugh
 }
-\concept{Data Management Utilities}

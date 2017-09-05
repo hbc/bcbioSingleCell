@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Stress Genes — plotStressGenes • bcbioSingleCell</title>
+<title>heatmap with quantil breaks — quantileHeatmap • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,42 +80,45 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Stress Genes</h1>
+    <h1>heatmap with quantil breaks</h1>
     </div>
 
     
-    <p>Plot Stress Genes</p>
+    <p>heatmap with quantile breaks</p>
     
 
-    <pre class="usage"><span class='fu'>plotStressGenes</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for ANY</span>
-<span class='fu'>plotStressGenes</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>quantileHeatmap</span>(<span class='no'>mat</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>cluster_rows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>cluster_cols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
+      <th>mat</th>
+      <td><p>matrix of data</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <th>annotation</th>
+      <td><p>column annotation</p></td>
+    </tr>
+    <tr>
+      <th>cluster_rows</th>
+      <td><p>perform row clustering</p></td>
+    </tr>
+    <tr>
+      <th>cluster_cols</th>
+      <td><p>perform column clustering</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>ggplot.</p>
+    <p>pheatmap object</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
-  <code>pcCutoff</code>, <code>plotClusters</code>,
-  <code>plotKnownMarkers</code>,
-  <code>plotTopMarkers</code>, <code>topBarcodes</code>,
-  <code>topMarkers</code></p>
+    <p>This is helpful for more usefully visualizing single cell data.
+ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
     
 
   </div>
@@ -126,12 +129,12 @@
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#details">Details</a></li>
           </ul>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Rory Kirchner
 
   </div>
 </div>

@@ -3,6 +3,7 @@
 \docType{methods}
 \name{aggregateReplicates}
 \alias{aggregateReplicates}
+\alias{aggregateReplicates}
 \alias{aggregateReplicates,bcbioSCDataSet-method}
 \title{Aggregate Replicates}
 \usage{
@@ -32,4 +33,3 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
-\concept{Data Management Utilities}

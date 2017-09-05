@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotReadsPerCell}
 \alias{plotReadsPerCell}
+\alias{plotReadsPerCell}
 \alias{plotReadsPerCell,bcbioSCDataSet-method}
 \alias{plotReadsPerCell,bcbioSCFiltered-method}
 \title{Plot Read Counts per Cell}
@@ -44,4 +45,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

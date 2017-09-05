@@ -4,6 +4,7 @@
 \docType{methods}
 \name{prepareSingleCellTemplate}
 \alias{prepareSingleCellTemplate}
+\alias{prepareSingleCellTemplate}
 \alias{prepareSingleCellTemplate,missing-method}
 \title{Prepare Single-Cell RNA-Seq RMarkdown Template}
 \usage{
@@ -33,4 +34,3 @@ Other RMarkdown Utilities: \code{\link{metadataTable}}
 \author{
 Michael Steinbaugh
 }
-\concept{RMarkdown Utilities}

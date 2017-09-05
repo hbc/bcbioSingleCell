@@ -3,6 +3,7 @@
 \docType{methods}
 \name{metadataTable}
 \alias{metadataTable}
+\alias{metadataTable}
 \alias{metadataTable,bcbioSCDataSet-method}
 \alias{metadataTable,bcbioSCFiltered-method}
 \title{Metadata Table}
@@ -30,4 +31,3 @@ Other RMarkdown Utilities: \code{\link{prepareSingleCellTemplate}}
 \author{
 Michael Steinbaugh
 }
-\concept{RMarkdown Utilities}

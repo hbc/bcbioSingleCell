@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotMitoRatio}
 \alias{plotMitoRatio}
+\alias{plotMitoRatio}
 \alias{plotMitoRatio,bcbioSCDataSet-method}
 \alias{plotMitoRatio,bcbioSCFiltered-method}
 \title{Plot Mitochondrial Transcript Abundance}
@@ -39,4 +40,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

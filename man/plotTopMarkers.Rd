@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotTopMarkers}
 \alias{plotTopMarkers}
+\alias{plotTopMarkers}
 \alias{plotTopMarkers,seurat,grouped_df-method}
 \title{Plot Top Markers}
 \usage{
@@ -36,4 +37,3 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

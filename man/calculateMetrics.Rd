@@ -3,6 +3,7 @@
 \docType{methods}
 \name{calculateMetrics}
 \alias{calculateMetrics}
+\alias{calculateMetrics}
 \alias{calculateMetrics,dgCMatrix-method}
 \title{Calculate Cellular Barcode Metrics Summary}
 \usage{
@@ -31,4 +32,3 @@ This should only be performed during the initial run loading.
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
-\concept{QC Metrics Utilities}

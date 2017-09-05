@@ -25,6 +25,7 @@ Depends:
 Imports:
     Biobase,
     cowplot,
+    dendsort,
     dplyr,
     ggplot2 (>= 2.2.1),
     jsonlite,
@@ -35,6 +36,7 @@ Imports:
     methods,
     monocle (>= 2.4.0),
     pbapply,
+    pheatmap,
     readr,
     rlang,
     S4Vectors,
