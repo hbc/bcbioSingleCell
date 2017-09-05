@@ -4,17 +4,17 @@
 \alias{quantileHeatmap}
 \title{heatmap with quantile breaks}
 \usage{
-quantileHeatmap(mat, annotation = NA, cluster_rows = TRUE,
-  cluster_cols = TRUE)
+quantileHeatmap(mat, annotation = NA, clusterRows = TRUE,
+  clusterCols = TRUE)
 }
 \arguments{
 \item{mat}{matrix of data}
 
 \item{annotation}{column annotation}
 
-\item{cluster_rows}{perform row clustering}
+\item{clusterRows}{perform row clustering}
 
-\item{cluster_cols}{perform column clustering}
+\item{clusterCols}{perform column clustering}
 }
 \value{
 pheatmap object

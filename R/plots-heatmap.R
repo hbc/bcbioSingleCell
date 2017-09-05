@@ -7,39 +7,39 @@
 ##'
 ##' @param mat matrix of data
 ##' @param annotation column annotation
-##' @param cluster_rows perform row clustering
-##' @param cluster_cols perform column clustering
+##' @param clusterRows perform row clustering
+##' @param clusterCols perform column clustering
 ##' @importFrom pheatmap pheatmap
 ##' @importFrom viridis inferno
 ##' @importFrom dendsort dendsort
 ##' @return pheatmap object
 ##' @export
 ##' @author Rory Kirchner
-quantileHeatmap <- function(mat, annotation=NA, cluster_rows=TRUE,
-                        cluster_cols=TRUE) {
+quantileHeatmap <- function(mat, annotation=NA, clusterRows=TRUE,
+                        clusterCols=TRUE) {
   if(isTRUE(quantile)) {
-    mat_breaks = .quantile_breaks(mat)
+    matBreaks = .quantileBreaks(mat)
   }
   if(isTRUE(cluster_rows)) {
-    mat_cluster_rows = dendsort(hclust(dist(mat)))
+    matClusterRows <- dendsort(hclust(dist(mat)))
   }
   else {
-    mat_cluster_rows = FALSE
+    matClusterRows <- FALSE
   }
   if(isTRUE(cluster_cols)) {
-    mat_cluster_cols = dendsort(hclust(dist(t(mat))))
+    matClusterCols <- dendsort(hclust(dist(t(mat))))
   }
   else {
-    mat_cluster_cols = FALSE
+    matClusterCols <- FALSE
   }
   pheatmap(mat,
-           annotation_col=annotation,
-           cluster_cols=mat_cluster_cols,
-           cluster_rows=mat_cluster_rows,
-           breaks=mat_breaks,
-           color=inferno(length(mat_breaks) - 1),
-           show_colnames=FALSE,
-           show_rownames=FALSE)
+           annotation_col = annotation,
+           cluster_cols = matClusterCols,
+           cluster_rows = matClusterRows,
+           breaks = matBreaks,
+           color = inferno(length(matBreaks) - 1),
+           show_colnames = FALSE,
+           show_rownames = FALSE)
 }
 
 ##' create breaks based on quantiles of the data
@@ -49,7 +49,7 @@ quantileHeatmap <- function(mat, annotation=NA, cluster_rows=TRUE,
 ##' @param n the number of breaks to create
 ##' @return a vector of n quantile breaks
 ##' @author Rory Kirchner
-.quantile_breaks <- function(xs, n = 10) {
+.quantileBreaks <- function(xs, n = 10) {
   breaks <- quantile(xs, probs = seq(0, 1, length.out = n))
   breaks[!duplicated(breaks)]
 }
