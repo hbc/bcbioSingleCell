@@ -8,7 +8,7 @@ load_all()
 
 # Store all the sheets in a list
 file <- file.path("data-raw", "cellTypeMarkers.xlsx")
-sheets <- excel_sheets(file)
+sheets <- "mmusculus"
 
 cellTypeMarkers <- lapply(seq_along(sheets), function(a) {
     organism <- sheets[[a]]
