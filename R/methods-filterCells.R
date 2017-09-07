@@ -96,35 +96,49 @@ NULL
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(showReport)) {
-        mdHeader("Filter parameters", level = headerLevel)
+        mdHeader("Filter parameters", level = headerLevel, asis = TRUE)
         mdList(c(
             paste0("`>= ", minUMIs, "` UMI counts per cell"),
             paste0("`>= ", minGenes, "` genes per cell"),
             paste0("`<= ", maxGenes, "` genes per cell"),
             paste0("`<= ", maxMitoRatio, "` relative mitochondrial abundance"),
-            paste0("`>= ", minNovelty, "` novelty score")))
+            paste0("`>= ", minNovelty, "` novelty score")),
+            asis = TRUE)
 
-        mdHeader("Filtered metrics plots", level = headerLevel, tabset = TRUE)
+        mdHeader("Filtered metrics plots",
+                 level = headerLevel,
+                 tabset = TRUE,
+                 asis = TRUE)
 
         # Reads per cell currently only supported for bcbio runs
         if (metadata[["pipeline"]] == "bcbio") {
-            mdHeader("Reads per cell", level = headerLevel + 1L)
+            mdHeader("Reads per cell", level = headerLevel + 1L, asis = TRUE)
             show(plotReadsPerCell(object))
         }
 
-        mdHeader("Cell counts", level = headerLevel + 1L)
+        mdHeader("Cell counts",
+                 level = headerLevel + 1L,
+                 asis = TRUE)
         show(plotCellCounts(object))
 
-        mdHeader("UMI counts per cell", level = headerLevel + 1L)
+        mdHeader("UMI counts per cell",
+                 level = headerLevel + 1L,
+                 asis = TRUE)
         show(plotUMIsPerCell(object))
 
-        mdHeader("Genes detected", level = headerLevel + 1L)
+        mdHeader("Genes detected",
+                 level = headerLevel + 1L,
+                 asis = TRUE)
         show(plotGenesPerCell(object))
 
-        mdHeader("Mitochondrial counts ratio", level = headerLevel + 1L)
+        mdHeader("Mitochondrial counts ratio",
+                 level = headerLevel + 1L,
+                 asis = TRUE)
         show(plotMitoRatio(object))
 
-        mdHeader("Novelty", level = headerLevel + 1L)
+        mdHeader("Novelty",
+                 level = headerLevel + 1L,
+                 asis = TRUE)
         show(plotNovelty(object))
     }
 
