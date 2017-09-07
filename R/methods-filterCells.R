@@ -12,6 +12,7 @@
 #' @param maxMitoRatio Maximum relative mitochondrial abundance (`0-1` scale).
 #' @param minNovelty Minimum novelty score.
 #' @param showReport Show summary statistics report and plots.
+#' @param headerLevel RMarkdown header level, if `showReport = TRUE`.
 #'
 #' @return [bcbioSCFiltered].
 #' @export
@@ -27,7 +28,8 @@ NULL
     maxGenes = NULL,
     maxMitoRatio = 0.1,
     minNovelty = 0.8,
-    showReport = TRUE) {
+    showReport = TRUE,
+    headerLevel = 2L) {
     sparseCounts <- assay(object)
 
     # Cellular barcode count
@@ -39,23 +41,23 @@ NULL
     metrics <- metrics(object)
     if (!is.null(minUMIs)) {
         metrics <- metrics %>%
-            .[.[["nUMI"]] >= minUMIs, ]
+            .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
     }
     if (!is.null(minGenes)) {
         metrics <- metrics %>%
-            .[.[["nGene"]] >= minGenes, ]
+            .[.[["nGene"]] >= minGenes, , drop = FALSE]
     }
     if (!is.null(maxGenes)) {
         metrics <- metrics %>%
-            .[.[["nGene"]] <= maxGenes, ]
+            .[.[["nGene"]] <= maxGenes, , drop = FALSE]
     }
     if (!is.null(maxMitoRatio)) {
         metrics <- metrics %>%
-            .[.[["mitoRatio"]] <= maxMitoRatio, ]
+            .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
     }
     if (!is.null(minNovelty)) {
         metrics <- metrics %>%
-            .[.[["log10GenesPerUMI"]] >= minNovelty, ]
+            .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
     }
     if (!nrow(metrics)) {
         stop("No cellular barcodes passed filtering")
@@ -63,11 +65,11 @@ NULL
     message(paste(nrow(metrics), "cellular barcodes passed filtering"))
 
     # Filter the sparse counts matrix with metrics
-    sparseCounts <- sparseCounts[, rownames(metrics)]
+    sparseCounts <- sparseCounts[, rownames(metrics), drop = FALSE]
 
     # colData ====
     colData <- colData(object) %>%
-        .[rownames(metrics), ]
+        .[rownames(metrics), , drop = FALSE]
     rm(metrics)
 
     # rowData ====
@@ -94,7 +96,7 @@ NULL
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(showReport)) {
-        mdHeader("Filter parameters", level = 2L)
+        mdHeader("Filter parameters", level = headerLevel)
         mdList(c(
             paste0("`>= ", minUMIs, "` UMI counts per cell"),
             paste0("`>= ", minGenes, "` genes per cell"),
@@ -102,27 +104,27 @@ NULL
             paste0("`<= ", maxMitoRatio, "` relative mitochondrial abundance"),
             paste0("`>= ", minNovelty, "` novelty score")))
 
-        mdHeader("Filtered metrics plots {.tabset}", level = 2L)
+        mdHeader("Filtered metrics plots", level = headerLevel, tabset = TRUE)
 
         # Reads per cell currently only supported for bcbio runs
         if (metadata[["pipeline"]] == "bcbio") {
-            mdHeader("Reads per cell", level = 3L)
+            mdHeader("Reads per cell", level = headerLevel + 1L)
             show(plotReadsPerCell(object))
         }
 
-        mdHeader("Cell counts", level = 3L)
+        mdHeader("Cell counts", level = headerLevel + 1L)
         show(plotCellCounts(object))
 
-        mdHeader("UMI counts per cell", level = 3L)
+        mdHeader("UMI counts per cell", level = headerLevel + 1L)
         show(plotUMIsPerCell(object))
 
-        mdHeader("Genes detected", level = 3L)
+        mdHeader("Genes detected", level = headerLevel + 1L)
         show(plotGenesPerCell(object))
 
-        mdHeader("Mitochondrial counts ratio", level = 3L)
+        mdHeader("Mitochondrial counts ratio", level = headerLevel + 1L)
         show(plotMitoRatio(object))
 
-        mdHeader("Novelty", level = 3L)
+        mdHeader("Novelty", level = headerLevel + 1L)
         show(plotNovelty(object))
     }
 
