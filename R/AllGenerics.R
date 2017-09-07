@@ -301,6 +301,16 @@ setGeneric("plotZerosVsDepth", function(object, ...) {
 
 
 
+#' @rdname quantileHeatmap
+#' @author Rory Kirchner
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("quantileHeatmap", function(object, ...) {
+    standardGeneric("quantileHeatmap")
+})
+
+
+
 #' @rdname readMarkers
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
