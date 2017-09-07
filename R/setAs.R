@@ -1,5 +1,23 @@
+# Constructors ====
+.fromMetadata <- function(from) {
+    list(
+        version = metadata(from)[["version"]],
+        annotable = metadata(from)[["annotable"]],
+        filterParams = metadata(from)[["filterParams"]],
+        gene2symbol = metadata(from)[["gene2symbol"]],
+        genomeBuild = metadata(from)[["genomeBuild"]],
+        interestingGroups = metadata(from)[["interestingGroups"]],
+        organism = metadata(from)[["organism"]],
+        uploadDir = metadata(from)[["uploadDir"]])
+}
+
+
+
 # monocle: CellDataSet class ====
 setAs("bcbioSCFiltered", "CellDataSet", function(from) {
+    # CellDataSet currently extends the ExpressionSet class. We can stash
+    # useful metadata in the `experimentData` slot in a future update.
+
     # phenoData
     pd <- colData(from) %>%
         as.data.frame %>%
@@ -64,9 +82,14 @@ setAs("bcbioSCFiltered", "seurat", function(from) {
     }
 
     # Complete the initalization steps
-    seurat %>%
+    seurat <- seurat %>%
         AddMetaData(metrics) %>%
         NormalizeData %>%
         FindVariableGenes(do.plot = FALSE) %>%
         ScaleData
+
+    # Stash useful bcbio run metadata into `misc` slot
+    seurat@misc[["bcbio"]] <- .fromMetadata(from)
+
+    seurat
 })
