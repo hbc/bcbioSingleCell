@@ -12,6 +12,7 @@
 #'   prepareSummarizedExperiment prepareTemplate readFileByExtension readGTF
 #'   revcomp tidy_filter tidy_select tx2geneFromGTF
 #' @importFrom cowplot draw_plot ggdraw plot_grid
+#' @importFrom dendsort dendsort
 #' @importFrom dplyr arrange bind_rows distinct everything group_by left_join
 #'   mutate n pull rename summarize top_n
 #' @importFrom ggplot2 aes_ coord_flip element_blank element_text expand_limits
@@ -26,13 +27,13 @@
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom monocle newCellDataSet
 #' @importFrom pbapply pblapply pbsapply
+#' @importFrom pheatmap pheatmap
 #' @importFrom readr read_csv read_delim read_lines
 #' @importFrom rlang .data is_string sym syms
 #' @importFrom S4Vectors metadata SimpleList
 #' @importFrom scales math_format percent trans_breaks trans_format
 #' @importFrom Seurat AddMetaData CreateSeuratObject FeaturePlot
-#'   FindVariableGenes NormalizeData ScaleData
-#'   VlnPlot
+#'   FindVariableGenes JoyPlot NormalizeData ScaleData VlnPlot
 #' @importFrom stats median
 #' @importFrom stringr str_detect str_match str_replace str_replace_all
 #'   str_split str_subset
@@ -40,7 +41,7 @@
 #' @importFrom tibble column_to_rownames remove_rownames rownames_to_column
 #'   tibble
 #' @importFrom utils globalVariables methods
-#' @importFrom viridis scale_color_viridis scale_fill_viridis
+#' @importFrom viridis inferno scale_color_viridis scale_fill_viridis
 "_PACKAGE"
 
 globalVariables(".")
@@ -63,8 +64,8 @@ qcLabelSize <- NA
 
 # Quality control line appearance
 qcLineAlpha <- 0.75
-qcLineSize <- 1.5
-qcLineType <- "longdash"
+qcLineSize <- 1L
+qcLineType <- "dashed"
 
 # Plot label separator
 labelSep <- ": "
