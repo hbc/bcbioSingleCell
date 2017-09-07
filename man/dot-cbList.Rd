@@ -15,4 +15,7 @@
 \description{
 Cellular Barcodes List
 }
+\author{
+Michael Steinbaugh
+}
 \keyword{internal}

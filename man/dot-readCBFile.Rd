@@ -15,4 +15,7 @@
 \description{
 Read Cellular Barcode File
 }
+\author{
+Michael Steinbaugh
+}
 \keyword{internal}

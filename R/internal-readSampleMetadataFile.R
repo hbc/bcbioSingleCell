@@ -3,7 +3,7 @@
 #' Appends reverse complement sequences by matching against the `sequence`
 #' column.
 #'
-#' @rdname internal-readSampleMetadataFile
+#' @author Michael Steinbaugh
 #' @keywords internal
 #'
 #' @param file Sample metadata file.

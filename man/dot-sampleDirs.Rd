@@ -18,4 +18,7 @@ will \code{\link[=stop]{stop()}} if no complete sample directories match.
 \description{
 Detect Sample Directories
 }
+\author{
+Michael Steinbaugh
+}
 \keyword{internal}

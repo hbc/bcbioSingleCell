@@ -15,4 +15,7 @@
 \description{
 Read Log File
 }
+\author{
+Michael Steinbaugh
+}
 \keyword{internal}

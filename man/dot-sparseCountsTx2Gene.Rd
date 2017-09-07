@@ -17,4 +17,7 @@
 \description{
 Transcript To Gene-Level Sparse Counts
 }
+\author{
+Michael Steinbaugh
+}
 \keyword{internal}

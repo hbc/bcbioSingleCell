@@ -18,4 +18,7 @@ Proportional Cellular Barcodes
 \details{
 Modified version of Klein Lab MATLAB code.
 }
+\author{
+Rory Kirchner, Michael Steinbaugh
+}
 \keyword{internal}

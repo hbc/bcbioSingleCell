@@ -15,4 +15,7 @@
 \description{
 Read Program Versions
 }
+\author{
+Michael Steinbaugh
+}
 \keyword{internal}

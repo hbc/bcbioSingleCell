@@ -34,4 +34,7 @@ CellRanger outputs counts at gene level.
 \seealso{
 \code{help("dgCMatrix-class")}
 }
+\author{
+Michael Steinbaugh
+}
 \keyword{internal}

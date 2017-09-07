@@ -112,7 +112,7 @@ NULL
 
 #' Proportional Cellular Barcodes
 #'
-#' @rdname internal-propCB
+#' @author Rory Kirchner, Michael Steinbaugh
 #' @keywords internal
 #'
 #' @inheritParams AllGenerics

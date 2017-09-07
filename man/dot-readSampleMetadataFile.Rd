@@ -22,4 +22,7 @@
 Appends reverse complement sequences by matching against the \code{sequence}
 column.
 }
+\author{
+Michael Steinbaugh
+}
 \keyword{internal}

@@ -15,4 +15,7 @@
 \description{
 Strip Transcript Versions
 }
+\author{
+Michael Steinbaugh
+}
 \keyword{internal}

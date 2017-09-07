@@ -1,6 +1,6 @@
 #' Read Cellular Barcode File
 #'
-#' @rdname internal-readCBFile
+#' @author Michael Steinbaugh
 #' @keywords internal
 #'
 #' @param file Cellular barcode TSV file.
