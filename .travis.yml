@@ -3,6 +3,7 @@ cache: packages
 sudo: false
 dist: trusty
 r:
+  - bioc-release
   - bioc-devel
 after_success:
   - Rscript -e 'covr::codecov()'
