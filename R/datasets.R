@@ -1,13 +1,13 @@
-#'  Cell Cycle Markers (Human)
+#' Cell-Cycle Markers
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-"cellCycleMarkersHsapiens"
+"cellCycleMarkers"
 
 
 
-#' Cell Cycle Markers (Mouse)
+#' Cell-Type Markers
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-"cellCycleMarkersMmusculus"
+"cellTypeMarkers"
