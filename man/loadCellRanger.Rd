@@ -3,7 +3,6 @@
 \docType{methods}
 \name{loadCellRanger}
 \alias{loadCellRanger}
-\alias{loadCellRanger}
 \alias{loadCellRanger,character-method}
 \title{Load 10X Genomics CellRanger Data}
 \usage{
