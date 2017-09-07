@@ -18,6 +18,7 @@ URL:
 BugReports: https://github.com/hbc/bcbioSingleCell/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
+LazyData: TRUE
 Depends:
     R (>= 3.4.0),
     SummarizedExperiment (>= 1.6.3),
