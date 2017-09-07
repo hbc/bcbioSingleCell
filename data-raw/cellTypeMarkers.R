@@ -21,8 +21,11 @@ cellTypeMarkers <- lapply(seq_along(sheets), function(a) {
             set_rownames(.$symbol) %>%
             symbol2gene(organism = organism) %>%
             rownames_to_column("ensgene") %>%
+            as_tibble %>%
             unnest %>%
-            arrange(cellClass, cellType, symbol),
+            select(cellClass, cellType, ensgene, symbol) %>%
+            group_by(cellClass, cellType) %>%
+            arrange(symbol, .by_group = TRUE),
         warning = function(w) {
             stop(w)
         })
