@@ -23,8 +23,8 @@ cellTypeMarkers <- lapply(seq_along(sheets), function(a) {
             rownames_to_column("ensgene") %>%
             as_tibble %>%
             unnest %>%
-            select(cellClass, cellType, ensgene, symbol) %>%
-            group_by(cellClass, cellType) %>%
+            select(cell, ensgene, symbol) %>%
+            group_by(cell) %>%
             arrange(symbol, .by_group = TRUE),
         warning = function(w) {
             stop(w)
