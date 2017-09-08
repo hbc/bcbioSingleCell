@@ -4,7 +4,7 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    subsetName: bcbFiltered
+    filtered: "data/bcbFiltered.rda"
     pcCompute: 20
     pcUse: FALSE
     varsToRegress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
@@ -26,16 +26,17 @@ if (file.exists("setup.R")) {
 }
 
 # Load bcbioSCFiltered object
-load(file.path("data", paste0(params$subsetName, ".rda")))
-subset <- get(params$subsetName)
-if (!is(subset, "bcbioSCFiltered")) {
-    stop("Subset must be a bcbioSCFiltered class object")
+filteredName <- load(params$filtered)
+filtered <- get(filteredName, inherits = FALSE)
+rm(list = filteredName)
+if (!is(filtered, "bcbioSCFiltered")) {
+    stop("bcbioSCFiltered class object required")
 }
 
 # Useful metadata slots
-interestingGroups <- metadata(subset)$interestingGroups
-organism <- metadata(subset)$organism
-gene2symbol <- metadata(subset)$gene2symbol
+interestingGroups <- metadata(filtered)$interestingGroups
+organism <- metadata(filtered)$organism
+gene2symbol <- metadata(filtered)$gene2symbol
 
 # Vector to use for plot looping
 groupBy <- c("ident", "sampleName", "Phase", interestingGroups)
@@ -46,8 +47,8 @@ dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 
 # knitr arguments
 opts_chunk$set(
-    cache.path = paste0(params$subsetName, "Seurat", "_cache/"),
-    fig.path = paste0(params$subsetName, "Seurat", "_files/"))
+    cache.path = paste0(params$filteredName, "Seurat", "_cache/"),
+    fig.path = paste0(params$filteredName, "Seurat", "_files/"))
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
@@ -60,12 +61,12 @@ This workflow is adapted from the following sources:
 
 
 
-# Initialize Seurat (`r params$subsetName`)
+# Initialize Seurat (`r params$filteredName`)
 
 Let's convert our `bcbioSCFiltered` class object containing the filtered high-quality cells into a `seurat` class object. Interally, this begins by calling `CreateSeuratObject()` without any additional filtering cutoffs, since we already applied them during our quality control analysis. Here we are passing the raw gene-level counts of the filtered cells into a new `seurat` object, using `as()` object coercion. Next, global-scaling normalization is applied to the raw counts with `NormalizeData()`, which (1) normalizes the gene expression measurements for each cell by the total expression, (2) multiplies this by a scale factor (10,000 by default), and (3) log-transforms the result. `FindVariableGenes()` is then called, which calculates the average expression and dispersion for each gene, places these genes into bins, and then calculates a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression. Finally, the genes are scaled and centered using the `ScaleData()` function.
 
 ```{r seurat}
-seurat <- as(subset, "seurat")
+seurat <- as(filtered, "seurat")
 ```
 
 
