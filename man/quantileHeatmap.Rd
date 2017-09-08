@@ -3,12 +3,20 @@
 \docType{methods}
 \name{quantileHeatmap}
 \alias{quantileHeatmap}
+\alias{quantileHeatmap,dgCMatrix-method}
 \alias{quantileHeatmap,matrix-method}
+\alias{quantileHeatmap,seurat-method}
 \title{Heatmap with Quantile Breaks}
 \usage{
 quantileHeatmap(object, ...)
 
+\S4method{quantileHeatmap}{dgCMatrix}(object, annotation = NA,
+  clusterRows = TRUE, clusterCols = TRUE)
+
 \S4method{quantileHeatmap}{matrix}(object, annotation = NA,
+  clusterRows = TRUE, clusterCols = TRUE)
+
+\S4method{quantileHeatmap}{seurat}(object, annotation = NA,
   clusterRows = TRUE, clusterCols = TRUE)
 }
 \arguments{

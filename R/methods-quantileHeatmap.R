@@ -11,7 +11,7 @@
 #' @param clusterRows Perform row clustering.
 #' @param clusterCols Perform column clustering.
 #'
-#' @return `pheatmap()` object.
+#' @return `pheatmap()`.
 NULL
 
 
@@ -30,28 +30,22 @@ NULL
 
 
 
-# Methods ====
-#' @rdname quantileHeatmap
-#' @export
-setMethod("quantileHeatmap", "matrix", function(
+.quantileHeatmap <- function(
     object,
     annotation = NA,
     clusterRows = TRUE,
     clusterCols = TRUE) {
-    mat <- object
-    if (isTRUE(quantile)) {
-        matBreaks <- .quantileBreaks(mat)
-    }
+    mat <- as.matrix(object)
+    matBreaks <- .quantileBreaks(mat)
+    # Dendrogram sorting can take a long time on large datasets
     if (isTRUE(clusterRows)) {
         matClusterRows <- dendsort(hclust(dist(mat)))
-    }
-    else {
+    } else {
         matClusterRows <- FALSE
     }
     if (isTRUE(clusterCols)) {
         matClusterCols <- dendsort(hclust(dist(t(mat))))
-    }
-    else {
+    } else {
         matClusterCols <- FALSE
     }
     pheatmap(mat,
@@ -62,4 +56,34 @@ setMethod("quantileHeatmap", "matrix", function(
              color = inferno(length(matBreaks) - 1L),
              show_colnames = FALSE,
              show_rownames = FALSE)
+}
+
+
+
+# Methods ====
+#' @rdname quantileHeatmap
+#' @export
+setMethod("quantileHeatmap", "dgCMatrix", .quantileHeatmap)
+
+
+
+#' @rdname quantileHeatmap
+#' @export
+setMethod("quantileHeatmap", "matrix", .quantileHeatmap)
+
+
+
+#' @rdname quantileHeatmap
+#' @export
+setMethod("quantileHeatmap", "seurat", function(
+    object,
+    annotation = NA,
+    clusterRows = TRUE,
+    clusterCols = TRUE) {
+    # Use the raw counts
+    .quantileHeatmap(
+        object@raw.data,
+        annotation = annotation,
+        clusterRows = clusterRows,
+        clusterCols = clusterCols)
 })
