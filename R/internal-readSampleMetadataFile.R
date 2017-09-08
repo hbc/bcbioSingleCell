@@ -55,7 +55,7 @@
                                         revcomp,
                                         character(1L)),
                        sampleID = paste(
-                           camel(.data[["fileName"]]),
+                           make.names(.data[["fileName"]]),
                            .data[["revcomp"]],
                            sep = "_"))
         }
@@ -64,7 +64,7 @@
         if (!all(c("fileName", "sampleName") %in% colnames(meta))) {
             stop("'fileName' and 'sampleName' are required", call. = FALSE)
         }
-        meta[["sampleID"]] <- camel(meta[["fileName"]])
+        meta[["sampleID"]] <- make.names(meta[["fileName"]])
     } else {
         stop("Unsupported pipeline")
     }
