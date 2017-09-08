@@ -17,15 +17,15 @@ NULL
 .knownMarkersDetected <- function(object, knownMarkers, show = FALSE) {
     markers <- .groupMarkers(object) %>%
         left_join(knownMarkers, by = "symbol") %>%
-        tidy_select(c("cellType", "symbol", "ensgene", "cluster"),
+        tidy_select(c("cell", "symbol", "ensgene", "cluster"),
                     everything()) %>%
-        .[!is.na(.[["cellType"]]), ] %>%
-        .[order(.[["cellType"]],
+        .[!is.na(.[["cell"]]), ] %>%
+        .[order(.[["cell"]],
                 .[["symbol"]],
                 .[["pVal"]],
                 .[["avgDiff"]],
                 decreasing = c(FALSE, FALSE, FALSE, TRUE)), ] %>%
-        group_by(!!sym("cellType"))
+        group_by(!!sym("cell"))
     if (isTRUE(show)) {
         kable(markers, caption = "Known markers detected") %>% show
     }

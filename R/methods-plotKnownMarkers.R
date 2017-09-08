@@ -15,12 +15,12 @@ NULL
         return(NULL)
     }
     cellTypes <- knownMarkers %>%
-        pull("cellType") %>%
+        pull("cell") %>%
         unique
     pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
         symbols <- knownMarkers %>%
-            tidy_filter(.data[["cellType"]] == !!cellType) %>%
+            tidy_filter(.data[["cell"]] == !!cellType) %>%
             pull("symbol") %>%
             unique %>%
             sort
