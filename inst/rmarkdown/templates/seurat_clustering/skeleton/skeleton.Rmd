@@ -47,8 +47,8 @@ dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 
 # knitr arguments
 opts_chunk$set(
-    cache.path = paste0(params$filteredName, "Seurat", "_cache/"),
-    fig.path = paste0(params$filteredName, "Seurat", "_files/"))
+    cache.path = paste0(filteredName, "Seurat", "_cache/"),
+    fig.path = paste0(filteredName, "Seurat", "_files/"))
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
