@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>heatmap with quantil breaks — quantileHeatmap • bcbioSingleCell</title>
+<title>Heatmap with Quantile Breaks — quantileHeatmap • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,45 +80,52 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>heatmap with quantil breaks</h1>
+    <h1>Heatmap with Quantile Breaks</h1>
     </div>
 
     
-    <p>heatmap with quantile breaks</p>
+    <p>Heatmap with Quantile Breaks</p>
     
 
-    <pre class="usage"><span class='fu'>quantileHeatmap</span>(<span class='no'>mat</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>cluster_rows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>cluster_cols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>quantileHeatmap</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for matrix</span>
+<span class='fu'>quantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>mat</th>
-      <td><p>matrix of data</p></td>
+      <th>object</th>
+      <td><p>Matrix of data.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
     <tr>
       <th>annotation</th>
-      <td><p>column annotation</p></td>
+      <td><p>Column annotations.</p></td>
     </tr>
     <tr>
-      <th>cluster_rows</th>
-      <td><p>perform row clustering</p></td>
+      <th>clusterRows</th>
+      <td><p>Perform row clustering.</p></td>
     </tr>
     <tr>
-      <th>cluster_cols</th>
-      <td><p>perform column clustering</p></td>
+      <th>clusterCols</th>
+      <td><p>Perform column clustering.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>pheatmap object</p>
+    <p><code>pheatmap()</code> object.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This is helpful for more usefully visualizing single cell data.
-ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
+Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
     
 
   </div>
