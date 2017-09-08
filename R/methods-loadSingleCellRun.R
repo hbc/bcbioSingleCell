@@ -195,8 +195,7 @@ setMethod("loadSingleCellRun", "character", function(
         rownames_to_column %>%
         left_join(cbTbl, by = "rowname") %>%
         tidy_select("nCount", everything()) %>%
-        column_to_rownames %>%
-        as.matrix
+        column_to_rownames
 
     # Metadata =================================================================
     if (str_detect(umiType, "indrop")) {
@@ -217,7 +216,6 @@ setMethod("loadSingleCellRun", "character", function(
         organism = organism,
         annotable = annotable,
         gtfFile = gtfFile,
-        gtf = gtf,
         gene2symbol = gene2symbol,
         umiType = umiType,
         allSamples = allSamples,
