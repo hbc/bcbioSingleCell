@@ -89,7 +89,15 @@
 
     <pre class="usage"><span class='fu'>quantileHeatmap</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
+<span class='co'># S4 method for dgCMatrix</span>
+<span class='fu'>quantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='co'># S4 method for matrix</span>
+<span class='fu'>quantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S4 method for seurat</span>
 <span class='fu'>quantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -120,7 +128,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>pheatmap()</code> object.</p>
+    <p><code>pheatmap()</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

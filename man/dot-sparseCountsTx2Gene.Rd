@@ -4,10 +4,10 @@
 \alias{.sparseCountsTx2Gene}
 \title{Transcript To Gene-Level Sparse Counts}
 \usage{
-.sparseCountsTx2Gene(sparseCounts, tx2gene)
+.sparseCountsTx2Gene(txlevel, tx2gene)
 }
 \arguments{
-\item{sparseCounts}{Sparse counts matrix (\code{dgCMatrix}).}
+\item{txlevel}{Transcript-level sparse counts matrix (\code{dgCMatrix}).}
 
 \item{tx2gene}{Transcript to gene identifier mappings.}
 }

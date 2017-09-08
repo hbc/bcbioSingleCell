@@ -31,7 +31,7 @@ quantileHeatmap(object, ...)
 \item{clusterCols}{Perform column clustering.}
 }
 \value{
-\code{pheatmap()} object.
+\code{pheatmap()}.
 }
 \description{
 Heatmap with Quantile Breaks
