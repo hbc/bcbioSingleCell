@@ -130,8 +130,8 @@
 
     # Subset the tx2gene to keep only identifiers present in the matrix
     t2g <- tx2gene %>%
+        as.data.frame %>%
         remove_rownames %>%
-        as_tibble %>%
         .[.[["enstxp"]] %in% rownames(mat), ]
 
     # Detect and handle missing transcript identifiers. These are typically
@@ -146,8 +146,7 @@
         } else {
             # Otherwise warn and append the t2g match tibble
             fxn <- warning
-            t2g <- tibble(enstxp = missing,
-                          ensgene = missing) %>%
+            t2g <- data.frame(enstxp = missing, ensgene = missing) %>%
                 bind_rows(t2g)
          }
         fxn(paste(
