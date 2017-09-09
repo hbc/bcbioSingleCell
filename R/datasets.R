@@ -11,11 +11,3 @@
 #' @author Michael Steinbaugh
 #' @keywords internal
 "cellTypeMarkers"
-
-
-
-#' Gene Symbol Synonyms
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-"synonyms"
