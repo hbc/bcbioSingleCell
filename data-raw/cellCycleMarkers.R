@@ -1,35 +1,33 @@
 # Cell-Cycle Markers
-# Last compiled on September 7, 2017 using Ensembl 90 (annotables)
-# @seealso
+# Last compiled on 2017-09-09 using Ensembl 90
+# This code is derived from:
 #   - Tirosh et al, 2015
 #   - http://satijalab.org/seurat/cell_cycle_vignette.html
 library(devtools)
+library(googlesheets)
 library(tidyverse)
-library(readxl)
 
 load_all()
 
-# Store all the sheets in a list
-file <- file.path("data-raw", "cellCycleMarkers.xlsx")
-sheets <- excel_sheets(file)
+# Download the Google sheet (gs)
+gs <- gs_key("1qA5ktYeimNGpZF1UPSQZATbpzEqgyxN6daoMOjv6YYw")
 
-cellCycleMarkers <- lapply(seq_along(sheets), function(a) {
-    organism <- sheets[[a]]
+# Get a list of the worksheets (ws)
+ws <- gs_ws_ls(gs)
+
+cellCycleMarkers <- lapply(seq_along(ws), function(a) {
     # Stop instead of warn on gene identifier match failure
     tryCatch(
-        read_excel(file, sheet = organism) %>%
-            as.data.frame %>%
-            set_rownames(.$symbol) %>%
-            symbol2gene(organism = organism) %>%
-            rownames_to_column("ensgene") %>%
-            as_tibble %>%
-            select(phase, ensgene, symbol) %>%
+        gs %>%
+            gs_read(ws = ws[[a]]) %>%
+            mutate(ensgene = symbol2gene(symbol, organism = ws[[a]])) %>%
+            select(phase, symbol, ensgene) %>%
             group_by(phase) %>%
             arrange(symbol, .by_group = TRUE),
         warning = function(w) {
             stop(w)
         })
 }) %>%
-    set_names(sheets)
+    set_names(ws)
 
 use_data(cellCycleMarkers, compress = "xz", overwrite = TRUE)
