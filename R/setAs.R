@@ -58,12 +58,9 @@ setAs("bcbioSCFiltered", "seurat", function(from) {
         min.genes = 0L,
         meta.data = metrics(from))
 
-    # Add bcbio metrics as metadata
-    metrics <- metrics(from)
-
     # Integrity checks
     if (!identical(dim(counts), dim(seurat@data))) {
-        stop("Dimension mismatch between bcbioSCFiltered and Seurat object")
+        stop("Dimension mismatch between input counts and seurat object")
     }
 
     # Complete the initalization steps
