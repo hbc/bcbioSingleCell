@@ -114,7 +114,7 @@ setMethod("loadSingleCellRun", "character", function(
     } else {
         # Data versions aren't saved when using a custom FASTA
         # Remove this in a future update
-        genomePattern <- "work/rapmap/[^/]+/quasiindex/([^/]+)/"
+        genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
         if (any(str_detect(bcbioCommandsLog, genomePattern))) {
             genomeBuild <- str_match(bcbioCommandsLog,
                                      genomePattern) %>%
@@ -128,7 +128,9 @@ setMethod("loadSingleCellRun", "character", function(
     if (length(genomeBuild) > 1L) {
         stop("Multiple genomes detected -- not supported")
     }
+    message(paste("Genome build:", genomeBuild))
     organism <- detectOrganism(genomeBuild)
+    message(paste("Organism:", organism))
 
     # Molecular barcode (UMI) type ====
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
@@ -159,7 +161,9 @@ setMethod("loadSingleCellRun", "character", function(
         tx2gene <- tx2geneFromGTF(gtf)
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
-        gtf <- NULL
+        warning(paste(
+            "GTF file matching transcriptome FASTA is advised.",
+            "Using tx2gene mappings from Ensembl as a fallback."))
         tx2gene <- annotable(genomeBuild, format = "tx2gene")
         gene2symbol <- annotable(genomeBuild, format = "gene2symbol")
     }
@@ -178,7 +182,7 @@ setMethod("loadSingleCellRun", "character", function(
         # Transcript-level to gene-level counts
         genelevel <- .sparseCountsTx2Gene(txlevel, tx2gene)
         # Pre-filter using cellular barcode summary metrics
-        metrics <- calculateMetrics(genelevel, annotable)
+        metrics <- calculateMetrics(genelevel, annotable, prefilter = TRUE)
         genelevel[, rownames(metrics)]
     }) %>%
         setNames(names(sampleDirs))
@@ -245,6 +249,8 @@ setMethod("loadSingleCellRun", "character", function(
         rowData = annotable,
         metadata = metadata)
     bcb <- new("bcbioSCDataSet", se)
+    # Keep these in the callers slot because they contain filtered cellular
+    # barcodes not present in the main assay matrix.
     bcbio(bcb, "cellularBarcodes") <- cellularBarcodes
     bcb
 })
