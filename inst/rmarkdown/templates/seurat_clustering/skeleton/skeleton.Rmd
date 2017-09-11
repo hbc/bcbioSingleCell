@@ -25,16 +25,6 @@ if (file.exists("setup.R")) {
     source("setup.R")
 }
 
-# Load bcbioSCFiltered object
-bcbName <- load(params$bcb)
-if (exists("bcb", inherits = FALSE)) {
-    stop("bcb exists in environment")
-}
-bcb <- get(bcbName, inherits = FALSE)
-if (!is(bcb, "bcbioSCFiltered")) {
-    stop("bcbioSCFiltered class object required")
-}
-
 # Vector to use for plot looping
 groupBy <- c("ident",
              "sampleName",
