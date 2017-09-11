@@ -22,10 +22,13 @@ setMethod("calculateMetrics", "dgCMatrix", function(
     message(paste(ncol(object), "cellular barcodes detected"))
 
     # Check that all genes are in annotable
-    missingGenes <- rownames(object) %>%
+    missing <- rownames(object) %>%
         .[!rownames(object) %in% annotable[["ensgene"]]]
-    if (length(missingGenes) > 0L) {
-        warning(paste(length(missingGenes), "genes missing in annotable"))
+    if (length(missing) > 0L) {
+        warning(paste(length(missing), "genes missing in Ensembl annotations",
+                      "used to calculate metrics:",
+                      toString(head(missing)),
+                      "..."))
     }
 
     # Check for [Matrix::colSums()] methods support
