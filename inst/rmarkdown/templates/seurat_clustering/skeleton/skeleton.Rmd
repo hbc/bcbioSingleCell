@@ -27,8 +27,10 @@ if (file.exists("setup.R")) {
 
 # Load bcbioSCFiltered object
 bcbName <- load(params$bcb)
+if (exists("bcb", inherits = FALSE)) {
+    stop("bcb exists in environment")
+}
 bcb <- get(bcbName, inherits = FALSE)
-rm(list = bcbName)
 if (!is(bcb, "bcbioSCFiltered")) {
     stop("bcbioSCFiltered class object required")
 }
