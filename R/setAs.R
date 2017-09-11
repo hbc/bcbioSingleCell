@@ -46,7 +46,6 @@ setAs("bcbioSCFiltered", "CellDataSet", function(from) {
 
 
 # Seurat: seurat class ====
-# [test_seurat_object.R](https://goo.gl/GMQAdC)
 setAs("bcbioSCFiltered", "seurat", function(from) {
     project <- deparse(substitute(from))
     counts <- counts(from, gene2symbol = TRUE)
@@ -54,8 +53,10 @@ setAs("bcbioSCFiltered", "seurat", function(from) {
     seurat <- CreateSeuratObject(
         raw.data = counts,
         project = project,
+        min.cells = 0L,
         # We already prefiltered by gene level
-        min.genes = 0L)
+        min.genes = 0L,
+        meta.data = metrics(from))
 
     # Add bcbio metrics as metadata
     metrics <- metrics(from)
@@ -64,26 +65,9 @@ setAs("bcbioSCFiltered", "seurat", function(from) {
     if (!identical(dim(counts), dim(seurat@data))) {
         stop("Dimension mismatch between bcbioSCFiltered and Seurat object")
     }
-    if (!identical(colnames(counts), rownames(metrics))) {
-        stop("Count matrix and metrics mismatch")
-    }
-    if (!identical(seurat@cell.names, rownames(metrics))) {
-        stop("Metrics rowname mismatch with `cell.names` slot")
-    }
-    if (!identical(
-        as.integer(seurat@meta.data[["nGene"]]),
-        as.integer(metrics[["nGene"]]))) {
-        stop("Gene detection mismatch", call. = FALSE)
-    }
-    if (!identical(
-        as.integer(seurat@meta.data[["nUMI"]]),
-        as.integer(metrics[["nUMI"]]))) {
-        stop("UMI detection mismatch", call. = FALSE)
-    }
 
     # Complete the initalization steps
     seurat <- seurat %>%
-        AddMetaData(metrics) %>%
         NormalizeData %>%
         FindVariableGenes(do.plot = FALSE) %>%
         ScaleData
