@@ -21,11 +21,13 @@
     if (pipeline == "bcbio") {
         # Rename legacy `samplename` column, if set
         if ("samplename" %in% colnames(meta)) {
+            warning("Renamed metadata column 'samplename' to 'fileName'")
             meta <- rename(meta, fileName = .data[["samplename"]])
         }
 
         # Rename `description` to `sampleName`, if set
         if ("description" %in% colnames(meta)) {
+            warning("Renamed metadata column 'description' to 'sampleName'")
             meta <- rename(meta, sampleName = .data[["description"]])
         }
 
@@ -33,6 +35,12 @@
         if (!all(c("fileName", "sampleName") %in% colnames(meta))) {
             stop("'fileName' and 'sampleName' are required", call. = FALSE)
         }
+
+        # Remove incomplete rows
+        meta <- meta %>%
+            tidy_filter(!is.na(.data[["fileName"]])) %>%
+            tidy_filter(!is.na(.data[["sampleName"]]))
+
 
         # Check if samples are demultiplexed
         if (length(unique(meta[["fileName"]])) == nrow(meta)) {
