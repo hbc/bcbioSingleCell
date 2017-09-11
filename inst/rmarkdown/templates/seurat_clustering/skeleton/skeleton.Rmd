@@ -4,7 +4,7 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    bcb: "data/bcb_filtered.rda"
+    bcbFile: "data/bcb_filtered.rda"
     pcCompute: 20
     pcUse: FALSE
     varsToRegress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
@@ -35,13 +35,11 @@ if (!is(bcb, "bcbioSCFiltered")) {
     stop("bcbioSCFiltered class object required")
 }
 
-# Useful metadata slots
-interestingGroups <- metadata(bcb)$interestingGroups
-organism <- metadata(bcb)$organism
-gene2symbol <- metadata(bcb)$gene2symbol
-
 # Vector to use for plot looping
-groupBy <- c("ident", "sampleName", "Phase", interestingGroups)
+groupBy <- c("ident",
+             "sampleName",
+             "Phase",
+             metadata(bcb)$interestingGroups)
 
 # Directory paths
 markersDir <- file.path(params$outputDir, "results", "markers")
@@ -114,27 +112,25 @@ Your single-cell dataset likely contains "uninteresting" sources of variation. T
 First, we assign each cell a score, based on its expression of G2/M and S phase markers. These marker sets should be anticorrelated in their expression levels, and cells expressing neither are likely not cycling and in G1 phase. We assign scores in the `CellCycleScoring()` function, which stores S and G2/M scores in `seurat@meta.data`, along with the predicted classification of each cell in either G2M, S or G1 phase.
 
 ```{r cell_cycle_markers}
-ccm <- str_match(organism, "^([A-Z])[a-z]+ ([a-z]+)$") %>%
+ccm <- str_match(metadata(bcb)$organism, "^([A-Z])[a-z]+ ([a-z]+)$") %>%
     .[, 2:3] %>%
     as.character %>%
     paste0(collapse = "") %>%
     tolower %>%
     bcbioSingleCell::cellCycleMarkers[[.]]
-
-# Filter S and G2/M markers
-s.genes <- filter(ccm, phase == "S") %>%
-    pull("symbol")
-g2m.genes <- filter(ccm, phase == "G2/M") %>%
-    pull("symbol")
+s.genes <- ccm %>%
+    .[.$phase == "S", "symbol"]
+g2m.genes <- ccm %>%
+    .[phase == "G2/M", "symbol"]
+rm(ccm)
 ```
 
 ```{r cell_cycle_scoring}
-# Cell-cycle `Phase` column will be added to `seurat@meta.data`
 seurat <- CellCycleScoring(
     seurat,
     g2m.genes = g2m.genes,
     s.genes = s.genes)
-rm(ccm, org)
+# Cell-cycle `Phase` column should now be added to `seurat@meta.data`
 ```
 
 Here we are checking to see if the cells are grouping by cell cycle. If we don't see clear grouping of the cells into `G1`, `G2M`, and `S` clusters on the PCA plot, then it is recommended that we don't regress out cell-cycle variation. When this is the case, remove `S.Score` and `G2M.Score` from the variables to regress (`varsToRegress`) in the RMarkdown YAML parameters.
