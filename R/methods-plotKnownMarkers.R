@@ -29,7 +29,6 @@ NULL
             unique %>%
             sort
         if (!is.null(symbols)) {
-            message(cellType)
             mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
             plotMarkers(object,
                         symbols = symbols,
