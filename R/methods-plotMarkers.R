@@ -45,8 +45,7 @@ NULL
         features.plot = symbols,
         cols.use = viridis(length(levels(object@ident))),
         do.return = FALSE,
-        nCol = nCol,
-        x.lab.rot = TRUE) %>%
+        nCol = nCol) %>%
         show
 
     # Dot plot
