@@ -13,38 +13,6 @@
 
 
 
-# monocle: CellDataSet class ====
-setAs("bcbioSCFiltered", "CellDataSet", function(from) {
-    # CellDataSet currently extends the ExpressionSet class. We can stash
-    # useful metadata in the `experimentData` slot in a future update.
-
-    # phenoData
-    pd <- colData(from) %>%
-        as.data.frame %>%
-        as("AnnotatedDataFrame")
-    # featureData
-    fd <- rowData(from) %>%
-        as.data.frame %>%
-        # monocle requires `gene_short_name` column for gene symbols
-        mutate(gene_short_name = .data[["symbol"]]) %>%
-        set_rownames(rownames(from)) %>%
-        as("AnnotatedDataFrame")
-    cds <- newCellDataSet(
-        cellData = assay(from),
-        phenoData = pd,
-        featureData = fd)
-
-    # Check to make sure cells or genes aren't dropped. Use `as.numeric()`
-    # conversion here because CellDataSet names the dimensions.
-    if (!identical(as.numeric(dim(from)), as.numeric(dim(cds)))) {
-        stop("Coercion to 'CellDataSet' class changed dimensions")
-    }
-
-    cds
-})
-
-
-
 # Seurat: seurat class ====
 setAs("bcbioSCFiltered", "seurat", function(from) {
     project <- deparse(substitute(from))

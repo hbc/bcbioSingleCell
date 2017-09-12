@@ -24,7 +24,6 @@ Depends:
     SummarizedExperiment (>= 1.6.3),
     basejump (>= 0.0.22)
 Imports:
-    Biobase,
     cowplot,
     dendsort,
     dplyr,
@@ -35,7 +34,6 @@ Imports:
     Matrix,
     Matrix.utils,
     methods,
-    monocle (>= 2.4.0),
     pbapply,
     pheatmap,
     readr,
@@ -52,6 +50,7 @@ Suggests:
     BiocStyle,
     googlesheets,
     lintr (>= 1.0.1),
+    monocle (>= 2.4.0),
     rmarkdown,
     scater (>= 1.4.0),
     scone (>= 1.0.0),

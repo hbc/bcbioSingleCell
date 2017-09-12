@@ -4,8 +4,6 @@
 #' RNA-seq data.
 #'
 #' @import methods
-#' @importClassesFrom Biobase AnnotatedDataFrame
-#' @importClassesFrom monocle CellDataSet
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #' @importFrom basejump camel detectOrganism gene2symbolFromGTF mdHeader mdList
@@ -25,7 +23,6 @@
 #' @importFrom magrittr %>% set_colnames set_rownames
 #' @importFrom Matrix cBind
 #' @importFrom Matrix.utils aggregate.Matrix
-#' @importFrom monocle newCellDataSet
 #' @importFrom pbapply pblapply pbsapply
 #' @importFrom pheatmap pheatmap
 #' @importFrom readr read_csv read_delim read_lines
