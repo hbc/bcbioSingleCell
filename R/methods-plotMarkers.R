@@ -24,27 +24,32 @@ setMethod("plotMarkers", "seurat", function(
         # Joy plot
         JoyPlot(
             object,
+            features.plot = symbols[[a]],
             cols.use = viridis(length(symbols[[a]])),
             do.return = FALSE,
-            features.plot = symbols[[a]],
             x.lab.rot = TRUE) %>%
             show
         # Violin plot
         VlnPlot(
             object,
+            features.plot = symbols[[a]],
             cols.use = viridis(length(symbols[[a]])),
             do.return = FALSE,
-            features.plot = symbols[[a]],
             x.lab.rot = TRUE) %>%
             show
         # tSNE color plots
+        # Dark theme enables greater contrast for marker visualization.
+        # Otherwise use `rev(viridis(2))` for the colors. This will define
+        # yellow as low and purple as high. The dark theme also shows
         FeaturePlot(
             object,
-            do.return = FALSE,
             features.plot = symbols[[a]],
             # Use viridis for better contrast than default colors
-            # (1) low: yellow; (2) high: purple
-            cols.use = rev(viridis(2)))
+            # (1) low: purple; (2) high: yellow
+            cols.use = viridis(2),
+            do.return = FALSE,
+            dark.theme = TRUE,
+            no.legend = FALSE)
     }) %>%
         invisible
 })
