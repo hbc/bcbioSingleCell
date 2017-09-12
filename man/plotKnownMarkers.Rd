@@ -9,7 +9,7 @@
 plotKnownMarkers(object, knownMarkers, ...)
 
 \S4method{plotKnownMarkers}{seurat,grouped_df}(object, knownMarkers,
-  headerLevel = 2L)
+  headerLevel = 2L, combine = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,6 +19,8 @@ plotKnownMarkers(object, knownMarkers, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
+
+\item{combine}{Combine all markers into a single plot.}
 }
 \value{
 No value, only graphical output.

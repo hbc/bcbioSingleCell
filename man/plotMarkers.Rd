@@ -9,7 +9,7 @@
 plotMarkers(object, ...)
 
 \S4method{plotMarkers}{seurat}(object, symbols, headerLevel = 2L,
-  combine = FALSE)
+  combine = TRUE)
 }
 \arguments{
 \item{object}{Object.}
