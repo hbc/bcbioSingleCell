@@ -41,7 +41,7 @@
 #' @importFrom tibble column_to_rownames remove_rownames rownames_to_column
 #'   tibble
 #' @importFrom utils globalVariables methods
-#' @importFrom viridis inferno scale_color_viridis scale_fill_viridis
+#' @importFrom viridis inferno scale_color_viridis scale_fill_viridis viridis
 "_PACKAGE"
 
 globalVariables(".")
