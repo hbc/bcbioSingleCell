@@ -25,7 +25,7 @@ setMethod("plotMarkers", "seurat", function(
         JoyPlot(
             object,
             features.plot = symbols[[a]],
-            cols.use = viridis(length(symbols[[a]])),
+            cols.use = viridis(length(object@ident)),
             do.return = FALSE,
             x.lab.rot = TRUE) %>%
             show
@@ -33,7 +33,7 @@ setMethod("plotMarkers", "seurat", function(
         VlnPlot(
             object,
             features.plot = symbols[[a]],
-            cols.use = viridis(length(symbols[[a]])),
+            cols.use = viridis(length(object@ident)),
             do.return = FALSE,
             x.lab.rot = TRUE) %>%
             show
