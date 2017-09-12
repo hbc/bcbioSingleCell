@@ -1,9 +1,9 @@
-#' Plot Clusters
+#' Plot Gene Markers
 #'
-#' @rdname plotClusters
-#' @name plotClusters
+#' @rdname plotMarkers
+#' @name plotMarkers
 #'
-#' @param symbols Character vector of gene symbols.
+#' @param symbols Character vector of gene marker symbols.
 #' @param headerLevel Include a Markdown header for each gene.
 #'
 #' @return No value, only graphical output.
@@ -12,9 +12,9 @@ NULL
 
 
 # Methods ====
-#' @rdname plotClusters
+#' @rdname plotMarkers
 #' @export
-setMethod("plotClusters", "seurat", function(
+setMethod("plotMarkers", "seurat", function(
     object,
     symbols,
     headerLevel = 2L) {

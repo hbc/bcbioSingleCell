@@ -165,17 +165,6 @@ setGeneric("plotCellCounts", function(object, ...) {
 
 
 
-#' @rdname plotClusters
-#' @family Clustering Utilities
-#' @author Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("plotClusters", function(object, ...) {
-    standardGeneric("plotClusters")
-})
-
-
-
 #' @rdname plotGenesPerCell
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -194,6 +183,17 @@ setGeneric("plotGenesPerCell", function(object, ...) {
 #' @export
 setGeneric("plotKnownMarkers", function(object, knownMarkers, ...) {
     standardGeneric("plotKnownMarkers")
+})
+
+
+
+#' @rdname plotMarkers
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("plotMarkers", function(object, ...) {
+    standardGeneric("plotMarkers")
 })
 
 
