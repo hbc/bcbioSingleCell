@@ -13,13 +13,25 @@ NULL
 
 
 # Constructors ====
-# Currently supports [Seurat::FindAllMarkers()]
 .groupMarkers <- function(df) {
-    if (!is.data.frame(df)) stop("data.frame required")
-    # Rename `gene` to `symbol` if necessary
-    if ("gene" %in% colnames(df)) {
-        df <- rename(df, symbol = .data[["gene"]])
+    df <- camel(df)
+
+    # [Seurat::FindAllMarkers()] output
+    if (identical(colnames(df),
+        c("pVal", "avgDiff", "pct1", "pct2", "cluster", "gene"))) {
+        # Rename the gene symbol and P value columns
+        message("Fixing columns in Seurat marker data.frame")
+        df <- df %>%
+            rename(pvalue = .data[["pVal"]],
+                   symbol = .data[["gene"]])
     }
+
+    # Ensure that required columns are present
+    requiredCols <- c("cluster", "ensgene", "symbol", "pvalue")
+    if (!all(c("cluster", "ensgene", "symbol", "pvalue") %in% colnames(df))) {
+        stop(paste("Marker data.frame must contain:", toString(requiredCols)))
+    }
+
     df %>%
         remove_rownames %>%
         as("tibble") %>%
