@@ -14,25 +14,7 @@ NULL
 
 # Constructors ====
 .plotSeuratMarkers <- function(object, symbols, nCol = NULL) {
-    # Joy plot
-    JoyPlot(
-        object,
-        features.plot = symbols,
-        cols.use = viridis(length(levels(object@ident))),
-        do.return = FALSE,
-        nCol = nCol,
-        x.lab.rot = TRUE) %>%
-        show
-    # Violin plot
-    VlnPlot(
-        object,
-        features.plot = symbols,
-        cols.use = viridis(length(levels(object@ident))),
-        do.return = FALSE,
-        nCol = nCol,
-        x.lab.rot = TRUE) %>%
-        show
-    # tSNE color plots
+    # tSNE color plot
     # Dark theme enables greater contrast for marker visualization.
     # Otherwise use `rev(viridis(2))` for the colors. This will define
     # yellow as low and purple as high. The dark theme also shows
@@ -46,6 +28,34 @@ NULL
         dark.theme = TRUE,
         nCol = nCol,
         no.legend = FALSE)
+
+    # Violin plot
+    VlnPlot(
+        object,
+        features.plot = symbols,
+        cols.use = viridis(length(levels(object@ident))),
+        do.return = FALSE,
+        nCol = nCol,
+        x.lab.rot = TRUE) %>%
+        show
+
+    # Joy plot
+    JoyPlot(
+        object,
+        features.plot = symbols,
+        cols.use = viridis(length(levels(object@ident))),
+        do.return = FALSE,
+        nCol = nCol,
+        x.lab.rot = TRUE) %>%
+        show
+
+    # Dot plot
+    DotPlot(
+        object,
+        genes.plot = symbols,
+        cols.use = viridis(2),
+        plot.legend = TRUE,
+        x.lab.rot = TRUE)
 }
 
 
