@@ -2,7 +2,7 @@
 #'
 #' @rdname plotTopMarkers
 #' @name plotTopMarkers
-#' @inherit plotClusters
+#' @inherit plotMarkers
 #'
 #' @param topMarkers Top markers grouped [tibble] returned by [topMarkers()].
 NULL
@@ -31,7 +31,7 @@ NULL
                  level = headerLevel,
                  tabset = TRUE,
                  asis = TRUE)
-        plotClusters(object, symbols, headerLevel = headerLevel + 1L)
+        plotMarkers(object, symbols, headerLevel = headerLevel + 1L)
     }) %>%
         invisible
 }

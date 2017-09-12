@@ -2,7 +2,7 @@
 #'
 #' @rdname plotKnownMarkers
 #' @name plotKnownMarkers
-#' @inherit plotClusters
+#' @inherit plotMarkers
 #'
 #' @param knownMarkers [knownMarkersDetected()] [tibble] grouped by cluster.
 NULL
@@ -27,7 +27,7 @@ NULL
         if (!is.null(symbols)) {
             message(cellType)
             mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
-            plotClusters(object, symbols, headerLevel = headerLevel + 1L)
+            plotMarkers(object, symbols, headerLevel = headerLevel + 1L)
         } else {
             NULL
         }
