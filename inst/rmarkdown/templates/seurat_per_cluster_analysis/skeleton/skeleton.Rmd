@@ -27,24 +27,6 @@ if (!exists("seurat", inherits = FALSE)) {
 
 
 
-# Seurat diagnostics {.tabset}
-
-```{r seurat_diagnostics}
-mdHeader("PrintPCAParams")
-PrintPCAParams(seurat)
-
-mdHeader("PrintFindClustersParams")
-PrintFindClustersParams(seurat)
-
-mdHeader("PrintTSNEParams")
-PrintTSNEParams(seurat)
-
-mdHeader("PrintSNNParams")
-PrintSNNParams(seurat)
-```
-
-
-
 # t-SNE plots {.tabset}
 
 ```{r tsne}
@@ -113,7 +95,7 @@ lapply(seq_along(ident), function(a) {
                    group.by = intgroup) +
         ggtitle(intgroup) +
         theme(legend.position = "bottom")
-    plot_grid(p1, p2, labels = "auto", ncol = 1L, nrow = 2L) %>%
+    plot_grid(p1, p2, labels = "auto", ncol = 1, nrow = 2) %>%
         show
     
     # Tables
@@ -141,6 +123,24 @@ lapply(seq_along(ident), function(a) {
         show
 }) %>%
     invisible
+```
+
+
+
+# Seurat diagnostics {.tabset}
+
+```{r seurat_diagnostics}
+mdHeader("PrintPCAParams")
+PrintPCAParams(seurat)
+
+mdHeader("PrintFindClustersParams")
+PrintFindClustersParams(seurat)
+
+mdHeader("PrintTSNEParams")
+PrintTSNEParams(seurat)
+
+mdHeader("PrintSNNParams")
+PrintSNNParams(seurat)
 ```
 
 
