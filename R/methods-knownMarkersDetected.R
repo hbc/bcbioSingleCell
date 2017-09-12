@@ -16,13 +16,14 @@ NULL
 # Constructors ====
 .knownMarkersDetected <- function(object, knownMarkers, show = FALSE) {
     markers <- .groupMarkers(object) %>%
-        left_join(knownMarkers, by = "symbol") %>%
-        tidy_select(c("cell", "symbol", "ensgene", "cluster"),
+        left_join(knownMarkers[, c("cell", "ensgene")],
+                  by = "ensgene") %>%
+        tidy_select(c("cell", "ensgene", "symbol", "cluster"),
                     everything()) %>%
-        .[!is.na(.[["cell"]]), ] %>%
+        tidy_filter(!is.na(.data[["cell"]])) %>%
         .[order(.[["cell"]],
                 .[["symbol"]],
-                .[["pVal"]],
+                .[["pvalue"]],
                 .[["avgDiff"]],
                 decreasing = c(FALSE, FALSE, FALSE, TRUE)), ] %>%
         group_by(!!sym("cell"))
