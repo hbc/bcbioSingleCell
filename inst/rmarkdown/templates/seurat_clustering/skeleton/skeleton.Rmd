@@ -202,9 +202,16 @@ VizPCA(seurat, pcs.use = 1:params$pcCompute, font.size = 1, nCol = 3)
 In particular, `PCHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and genes are ordered according to their PCA scores. Setting `cells.use` to a number plots the "extreme" cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated gene sets.
 
 ```{r pc_heatmap, fig.height=30, fig.width=10}
-PCHeatmap(seurat,
-          do.balanced = TRUE,
-          pc.use = 1:params$pcCompute)
+PCHeatmap(
+    seurat,
+    col.use = CustomPalette(
+        low = viridis(3)[[1]],
+        mid = viridis(3)[[2]],
+        high = viridis(3)[[3]]),
+    do.balanced = TRUE,
+    label.columns = FALSE,
+    pc.use = 1:params$pcCompute,
+    remove.key = TRUE)
 ```
 
 
@@ -299,7 +306,6 @@ sapply(seq_along(groupBy), function(a) {
 Let's look at the variance in the number of UMI counts (`nUMI`), gene detection (`nGene`), and the percentage of mitochondrial gene expression (`mitoRatio`), to see if there are any obvious cluster artefacts.
 
 ```{r qc_plots_2}
-colors <- c("grey", "purple")
 features <- c("nUMI", "nGene", "mitoRatio")
 sapply(seq_along(features), function(a) {
     JoyPlot(
@@ -314,7 +320,7 @@ sapply(seq_along(features), function(a) {
         show
     FeaturePlot(
         seurat,
-        cols.use = colors,
+        cols.use = rev(viridis(2)),
         features.plot = features[[a]])
 }) %>%
     invisible
