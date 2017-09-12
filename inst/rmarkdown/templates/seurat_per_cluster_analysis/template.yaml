@@ -1,0 +1,4 @@
+name: Seurat Per Cluster Analysis
+description: >
+  Template for cell cluster quality control with the Seurat package.
+create_dir: false
