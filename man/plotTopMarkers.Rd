@@ -28,10 +28,9 @@ Plot Top Markers
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
-  \code{\link{plotKnownMarkers}},
-  \code{\link{plotStressGenes}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
+  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
+  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

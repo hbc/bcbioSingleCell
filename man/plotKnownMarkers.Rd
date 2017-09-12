@@ -28,7 +28,7 @@ Plot Known Markers
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
+  \code{\link{pcCutoff}}, \code{\link{plotMarkers}},
   \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}
