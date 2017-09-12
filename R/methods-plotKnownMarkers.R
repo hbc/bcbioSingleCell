@@ -10,7 +10,11 @@ NULL
 
 
 # Constructor ====
-.plotKnownMarkers <- function(object, knownMarkers, headerLevel = 2L) {
+.plotKnownMarkers <- function(
+    object,
+    knownMarkers,
+    headerLevel = 2L,
+    combine = FALSE) {
     if (nrow(knownMarkers) == 0L) {
         return(NULL)
     }
@@ -27,7 +31,10 @@ NULL
         if (!is.null(symbols)) {
             message(cellType)
             mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
-            plotMarkers(object, symbols, headerLevel = headerLevel + 1L)
+            plotMarkers(object,
+                        symbols = symbols,
+                        headerLevel = headerLevel + 1L,
+                        combine = combine)
         } else {
             NULL
         }

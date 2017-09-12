@@ -10,7 +10,11 @@ NULL
 
 
 # Constructors ====
-.plotTopMarkers <- function(object, topMarkers, headerLevel = 2L) {
+.plotTopMarkers <- function(
+    object,
+    topMarkers,
+    headerLevel = 2L,
+    combine = FALSE) {
     # Fix for gene symbol mismatch
     if ("gene" %in% colnames(topMarkers)) {
         topMarkers <- rename(topMarkers, symbol = .data[["gene"]])
@@ -31,7 +35,10 @@ NULL
                  level = headerLevel,
                  tabset = TRUE,
                  asis = TRUE)
-        plotMarkers(object, symbols, headerLevel = headerLevel + 1L)
+        plotMarkers(object,
+                    symbols = symbols,
+                    headerLevel = headerLevel + 1L,
+                    combine = combine)
     }) %>%
         invisible
 }
