@@ -24,6 +24,7 @@ setMethod("plotMarkers", "seurat", function(
         # Joy plot
         JoyPlot(
             object,
+            cols.use = viridis(length(symbols[[a]])),
             do.return = FALSE,
             features.plot = symbols[[a]],
             x.lab.rot = TRUE) %>%
@@ -31,6 +32,7 @@ setMethod("plotMarkers", "seurat", function(
         # Violin plot
         VlnPlot(
             object,
+            cols.use = viridis(length(symbols[[a]])),
             do.return = FALSE,
             features.plot = symbols[[a]],
             x.lab.rot = TRUE) %>%
@@ -40,7 +42,9 @@ setMethod("plotMarkers", "seurat", function(
             object,
             do.return = FALSE,
             features.plot = symbols[[a]],
-            cols.use = c("grey", "purple"))
+            # Use viridis for better contrast than default colors
+            # (1) low: yellow; (2) high: purple
+            cols.use = rev(viridis(2)))
     }) %>%
         invisible
 })
