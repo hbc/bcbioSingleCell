@@ -8,7 +8,8 @@
 \usage{
 plotMarkers(object, ...)
 
-\S4method{plotMarkers}{seurat}(object, symbols, headerLevel = 2L)
+\S4method{plotMarkers}{seurat}(object, symbols, headerLevel = 2L,
+  combine = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -18,6 +19,8 @@ plotMarkers(object, ...)
 \item{symbols}{Character vector of gene marker symbols.}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
+
+\item{combine}{Combine all markers into a single plot.}
 }
 \value{
 No value, only graphical output.
