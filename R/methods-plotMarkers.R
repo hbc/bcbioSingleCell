@@ -57,7 +57,7 @@ setMethod("plotMarkers", "seurat", function(
     object,
     symbols,
     headerLevel = 2L,
-    combine = FALSE) {
+    combine = TRUE) {
     if (isTRUE(combine)) {
         .plotSeuratMarkers(object, symbols, nCol = 2L)
     } else {
