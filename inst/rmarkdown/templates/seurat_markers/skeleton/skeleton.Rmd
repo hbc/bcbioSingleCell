@@ -12,8 +12,10 @@ params:
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
 library(Seurat)
 library(bcbioSingleCell)
-library(tidyverse)
+library(viridis)
 library(stringr)
+library(tidyverse)
+
 
 # Shared RMarkdown settings
 prepareSingleCellTemplate()
@@ -85,7 +87,11 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 DoHeatmap(
     seurat,
     genes.use = topMarkers$symbol,
-    remove.key = TRUE,
+    col.low = viridis(3)[[1]],
+    col.mid = viridis(3)[[2]],
+    col.high = viridis(3)[[3]],
+    remove.key = FALSE,
+    rotate.key = TRUE,
     slim.col.label = TRUE)
 ```
 
