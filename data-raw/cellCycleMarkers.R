@@ -13,6 +13,9 @@ library(tidyverse)
 
 load_all()
 
+# Allow tidyverse to access Google Sheets
+# gs_ls()
+
 # Download the Google sheet (gs)
 gs <- gs_key("1qA5ktYeimNGpZF1UPSQZATbpzEqgyxN6daoMOjv6YYw")
 
