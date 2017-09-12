@@ -4,7 +4,7 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seuratFile: "data/bcbFilteredSeurat.rda"
+    seuratFile: "data/bcb_filtered_seurat.rda"
     markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
@@ -34,8 +34,8 @@ dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 
 # knitr arguments
 opts_chunk$set(
-    cache.path = paste0(seuratName, "Markers", "_cache/"),
-    fig.path = paste0(seuratName, "Markers", "_files/"))
+    cache.path = paste(seuratName, "markers", "_cache/", sep = "_"),
+    fig.path = paste(seuratName, "markers", "_files/", sep = "_"))
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
@@ -60,10 +60,8 @@ The `min.pct` argument requires a gene to be detected at a minimum percentage in
 Seurat has four tests for differential expression which can be set with the `test.use` parameter: LRT test based on zero-inflated data (`bimod`, default), ROC test (`roc`), t-test (`t`), LRT test based on tobit-censoring models (`tobit`) The ROC test returns the 'classification power' for any individual marker (ranging from 0 - random, to 1 - perfect).
 
 ```{r find_all_markers, results="hide"}
+markers <- FindAllMarkers(seurat)
 markersName <- paste(seuratName, "markers", sep = "_")
-markers <- FindAllMarkers(
-    seurat,
-    latent.vars = params$varsToRegress)
 assignAndSaveData(markersName, markers)
 write_csv(markers, file.path(markersDir, paste0(markersName, ".csv.gz")))
 ```
@@ -104,7 +102,7 @@ There are several tools for visualizing marker expression:
 ## Top markers per cluster {.tabset}
 
 ```{r plot_top_markers, results="asis"}
-plotTopMarkers(seurat, topMarkers)
+plotTopMarkers(seurat, topMarkers, headerLevel = 3)
 ```
 
 
@@ -134,7 +132,7 @@ knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers, show = TRUE)
 ## Visualize cluster specificity {.tabset}
 
 ```{r plot_known_markers, results="asis"}
-plotKnownMarkers(seurat, knownMarkersDetected)
+plotKnownMarkers(seurat, knownMarkersDetected, headerLevel = 3)
 ```
 
 
