@@ -26,6 +26,12 @@ if (file.exists("setup.R")) {
     source("setup.R")
 }
 
+# Load the bcbio object
+if (!exists("bcb", inherits = FALSE)) {
+    bcbName <- load(params$bcbFile)
+    bcb <- get(bcbName, inherits = FALSE)
+}
+
 # Vector to use for plot looping
 groupBy <- c("ident",
              "sampleName",
