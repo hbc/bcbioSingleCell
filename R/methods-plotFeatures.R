@@ -69,15 +69,15 @@ NULL
 #' @export
 setMethod("plotFeatures", "seurat", function(
     object,
-    symbols,
+    features,
     headerLevel = 2L,
     combine = TRUE) {
     if (isTRUE(combine)) {
-        .plotFeatures.seurat(object, symbols, nCol = 2L)
+        .plotFeatures.seurat(object, features, nCol = 2L)
     } else {
-        lapply(seq_along(symbols), function(a) {
-            mdHeader(symbols[[a]], level = headerLevel, asis = TRUE)
-            .plotFeatures.seurat(object, symbols[[a]])
+        lapply(seq_along(features), function(a) {
+            mdHeader(features[[a]], level = headerLevel, asis = TRUE)
+            .plotFeatures.seurat(object, features[[a]])
         }) %>%
             invisible
     }
