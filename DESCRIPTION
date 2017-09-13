@@ -24,28 +24,7 @@ Depends:
     SummarizedExperiment (>= 1.6.3),
     basejump (>= 0.0.22)
 Imports:
-    cowplot,
-    dendsort,
-    dplyr,
-    ggplot2 (>= 2.2.1),
-    jsonlite,
-    knitr,
-    magrittr,
-    Matrix,
-    Matrix.utils,
-    methods,
-    pbapply,
-    pheatmap,
-    readr,
-    rlang,
-    S4Vectors,
-    scales,
-    Seurat (>= 2.0),
-    stats,
-    stringr,
-    tibble,
-    utils,
-    viridis
+    methods
 Suggests:
     BiocStyle,
     googlesheets,
