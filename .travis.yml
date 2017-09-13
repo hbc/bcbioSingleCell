@@ -5,5 +5,7 @@ dist: trusty
 warnings_are_errors: false
 r:
   - bioc-devel
+r_github_packages:
+  - jimhester/lintr
 after_success:
   - Rscript -e 'covr::codecov()'
