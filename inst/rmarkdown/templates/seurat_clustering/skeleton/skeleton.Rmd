@@ -13,12 +13,12 @@ params:
     outputDir: "."
 ---
 
-```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-library(bcbioSingleCell)
+```{r setup, message=FALSE, warning=FALSE}
 library(viridis)
 library(Seurat)
 library(stringr)
 library(tidyverse)
+library(bcbioSingleCell)
 
 # Shared RMarkdown settings
 prepareSingleCellTemplate()
@@ -42,7 +42,7 @@ groupBy <- c("ident",
 markersDir <- file.path(params$outputDir, "results", "markers")
 dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 
-# knitr arguments
+# knitr arguments (for `rmarkdown::render()` looping)
 opts_chunk$set(
     cache.path = paste(bcbName, "seurat", "cache/", sep = "_"),
     fig.path = paste(bcbName, "seurat", "files/", sep = "_"))

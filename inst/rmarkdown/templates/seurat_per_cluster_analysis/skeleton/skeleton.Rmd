@@ -8,12 +8,17 @@ params:
     intgroup: "genotype"
 ---
 
-```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
+```{r setup, message=FALSE, warning=FALSE}
 library(knitr)
 library(Seurat)
 library(tidyverse)
+library(bcbioSingleCell)
 
-source("setup.R")
+# Shared RMarkdown settings
+prepareSingleCellTemplate()
+if (file.exists("setup.R")) {
+    source("setup.R")
+}
 
 # Load the seurat object
 if (!exists("seurat", inherits = FALSE)) {

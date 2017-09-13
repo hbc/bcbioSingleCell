@@ -9,13 +9,12 @@ params:
     outputDir: "."
 ---
 
-```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-library(Seurat)
-library(bcbioSingleCell)
+```{r setup, message=FALSE, warning=FALSE}
 library(viridis)
+library(Seurat)
 library(stringr)
 library(tidyverse)
-
+library(bcbioSingleCell)
 
 # Shared RMarkdown settings
 prepareSingleCellTemplate()
@@ -23,18 +22,17 @@ if (file.exists("setup.R")) {
     source("setup.R")
 }
 
-# Load seurat object
-seuratName <- load(params$seuratFile)
-seurat <- get(seuratName, inherits = FALSE)
-if (!is(seurat, "seurat")) {
-    stop("seurat class object required")
+# Load the seurat object
+if (!exists("seurat", inherits = FALSE)) {
+    seuratName <- load(params$seuratFile)
+    seurat <- get(seuratName, inherits = FALSE)
 }
 
 # Directory paths
 markersDir <- file.path(params$outputDir, "results", "markers")
 dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 
-# knitr arguments
+# knitr arguments (for `rmarkdown::render()` looping)
 opts_chunk$set(
     cache.path = paste(seuratName, "markers", "cache/", sep = "_"),
     fig.path = paste(seuratName, "markers", "files/", sep = "_"))
