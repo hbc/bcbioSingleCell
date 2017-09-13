@@ -13,7 +13,7 @@ params:
     outputDir: "."
 ---
 
-```{r setup, message=FALSE, warning=FALSE}
+```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
 library(viridis)
 library(Seurat)
 library(stringr)

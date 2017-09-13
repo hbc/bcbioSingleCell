@@ -8,7 +8,7 @@ params:
     intgroup: "genotype"
 ---
 
-```{r setup, message=FALSE, warning=FALSE}
+```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
 library(knitr)
 library(Seurat)
 library(tidyverse)
