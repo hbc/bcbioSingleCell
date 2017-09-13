@@ -24,16 +24,33 @@ Depends:
     SummarizedExperiment (>= 1.6.3),
     basejump (>= 0.0.22)
 Imports:
-    methods
+    cowplot,
+    dendsort,
+    dplyr,
+    ggplot2 (>= 2.2.1),
+    jsonlite,
+    knitr,
+    magrittr,
+    Matrix,
+    Matrix.utils,
+    methods,
+    pbapply,
+    pheatmap,
+    readr,
+    rlang,
+    S4Vectors,
+    scales,
+    Seurat (>= 2.0),
+    stats,
+    stringr,
+    tibble,
+    utils,
+    viridis
 Suggests:
     BiocStyle,
     googlesheets,
     lintr (>= 1.0.1),
-    monocle (>= 2.4.0),
     rmarkdown,
-    scater (>= 1.4.0),
-    scone (>= 1.0.0),
-    scde (>= 2.5.0),
     testthat,
     tidyverse
 Remotes:
