@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Select Samples — selectSamples • bcbioSingleCell</title>
+<title>Plot Features of a Data Set — plotFeatures • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,17 +83,18 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Select Samples</h1>
+    <h1>Plot Features of a Data Set</h1>
     </div>
 
     
-    <p>Select Samples</p>
+    <p>Plot Features of a Data Set</p>
     
 
-    <pre class="usage"><span class='fu'>selectSamples</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotFeatures</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSCFiltered</span>
-<span class='fu'>selectSamples</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotFeatures</span>(<span class='no'>object</span>, <span class='no'>symbols</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
+  <span class='kw'>combine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -104,39 +105,36 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Columns to use for grep pattern matching. Supply a named character
-vector containing the column name and the grep pattern.</p></td>
+      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+    </tr>
+    <tr>
+      <th>headerLevel</th>
+      <td><p>Include a Markdown header for each gene.</p></td>
+    </tr>
+    <tr>
+      <th>combine</th>
+      <td><p>Combine all markers into a single plot.</p></td>
+    </tr>
+    <tr>
+      <th>features</th>
+      <td><p>Character vector of parameters supported by
+<code><a href='http://www.rdocumentation.org/packages/Seurat/topics/FetchData'>Seurat::FetchData()</a></code> (e.g. nUMI, mitoRatio, PC).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='bcbioSCFiltered-class.html'>bcbioSCFiltered</a>.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Internally, pattern matching against sample and file names is
-applied using <code>str_detect()</code>.</p>
+    <p>No value, only graphical output.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Management Utilities: <code><a href='aggregateFeatures.html'>aggregateFeatures</a></code>,
-  <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code><a href='filterCells.html'>filterCells</a></code>,
-  <code><a href='interestingGroups.html'>interestingGroups</a></code>,
-  <code><a href='readMarkers.html'>readMarkers</a></code>, <code><a href='sampleMetadata.html'>sampleMetadata</a></code>,
-  <code><a href='subsetPerSample.html'>subsetPerSample</a></code></p>
+    <p>Other Clustering Utilities: <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
+  <code><a href='pcCutoff.html'>pcCutoff</a></code>, <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
+  <code><a href='plotMarkers.html'>plotMarkers</a></code>, <code><a href='plotStressGenes.html'>plotStressGenes</a></code>,
+  <code><a href='plotTopMarkers.html'>plotTopMarkers</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code>,
+  <code><a href='topMarkers.html'>topMarkers</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>data</span>(<span class='no'>bcbFiltered</span>)
-<span class='co'># grep pattern matching with string</span>
-<span class='fu'>selectSamples</span>(<span class='no'>bcbFiltered</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='st'>"wt"</span>)
-
-<span class='co'># Exact name matching with character vector</span>
-<span class='fu'>selectSamples</span>(<span class='no'>bcbFiltered</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"wt1"</span>, <span class='st'>"wt2"</span>))
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -145,12 +143,8 @@ applied using <code>str_detect()</code>.</p>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
     <h2>Author</h2>
     

@@ -14,10 +14,11 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-library(Seurat)
 library(bcbioSingleCell)
-library(tidyverse)
+library(viridis)
+library(Seurat)
 library(stringr)
+library(tidyverse)
 
 # Shared RMarkdown settings
 prepareSingleCellTemplate()
@@ -153,7 +154,8 @@ RunPCA(
     seurat,
     pc.genes = c(s.genes, g2m.genes),
     do.print = FALSE) %>%
-    PCAPlot(group.by = "Phase")
+    PCAPlot(cols.use = viridis(3),
+            group.by = "Phase")
 ```
 
 
@@ -172,7 +174,8 @@ RunPCA(
     seurat,
     pc.genes = c(s.genes, g2m.genes),
     do.print = FALSE) %>%
-    PCAPlot(group.by = "Phase")
+    PCAPlot(cols.use = viridis(3),
+            group.by = "Phase")
 ```
 
 
@@ -197,8 +200,8 @@ PrintPCA(
 
 We can visualize these genes graphically using `VizPCA()`.
 
-```{r viz_pca, fig.height=30, fig.width=10}
-VizPCA(seurat, pcs.use = 1:params$pcCompute, font.size = 1, nCol = 3)
+```{r viz_pca, fig.height=40, fig.width=8}
+VizPCA(seurat, pcs.use = 1:params$pcCompute, font.size = 1, nCol = 2)
 ```
 
 In particular, `PCHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and genes are ordered according to their PCA scores. Setting `cells.use` to a number plots the "extreme" cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated gene sets.

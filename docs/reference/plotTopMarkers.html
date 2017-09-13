@@ -60,6 +60,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -91,7 +94,7 @@
 
 <span class='co'># S4 method for seurat,grouped_df</span>
 <span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>,
-  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>combine</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -112,6 +115,10 @@
       <th>headerLevel</th>
       <td><p>Include a Markdown header for each gene.</p></td>
     </tr>
+    <tr>
+      <th>combine</th>
+      <td><p>Combine all markers into a single plot.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -121,10 +128,10 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other Clustering Utilities: <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
-  <code><a href='pcCutoff.html'>pcCutoff</a></code>, <code><a href='plotClusters.html'>plotClusters</a></code>,
+  <code><a href='pcCutoff.html'>pcCutoff</a></code>, <code><a href='plotFeatures.html'>plotFeatures</a></code>,
   <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
-  <code><a href='plotStressGenes.html'>plotStressGenes</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code>,
-  <code><a href='topMarkers.html'>topMarkers</a></code></p>
+  <code><a href='plotMarkers.html'>plotMarkers</a></code>, <code><a href='plotStressGenes.html'>plotStressGenes</a></code>,
+  <code><a href='topBarcodes.html'>topBarcodes</a></code>, <code><a href='topMarkers.html'>topMarkers</a></code></p>
     
 
   </div>

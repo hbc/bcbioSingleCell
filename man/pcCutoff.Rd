@@ -34,6 +34,7 @@ PC cutoff for either 5% SD (\code{maxPct}) or 80% cumulative (\code{minCumsum}).
 \link[Seurat:PCElbowPlot]{Seurat::PCElbowPlot}.
 
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+  \code{\link{plotFeatures}},
   \code{\link{plotKnownMarkers}},
   \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
