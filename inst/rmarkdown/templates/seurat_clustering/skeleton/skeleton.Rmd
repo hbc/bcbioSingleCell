@@ -132,7 +132,7 @@ ccm <- str_match(metadata(bcb)$organism, "^([A-Z])[a-z]+ ([a-z]+)$") %>%
 s.genes <- ccm %>%
     .[.$phase == "S", "symbol"]
 g2m.genes <- ccm %>%
-    .[phase == "G2/M", "symbol"]
+    .[.$phase == "G2/M", "symbol"]
 rm(ccm)
 ```
 
