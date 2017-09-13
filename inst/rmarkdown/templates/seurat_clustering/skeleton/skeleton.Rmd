@@ -130,10 +130,10 @@ ccm <- str_match(metadata(bcb)$organism, "^([A-Z])[a-z]+ ([a-z]+)$") %>%
     tolower %>%
     bcbioSingleCell::cellCycleMarkers[[.]]
 s.genes <- ccm %>%
-    tidy_select(phase == "S") %>%
+    tidy_filter(phase == "S") %>%
     pull("symbol")
 g2m.genes <- ccm %>%
-    tidy_select(phase == "G2/M") %>%
+    tidy_filter(phase == "G2/M") %>%
     pull("symbol")
 rm(ccm)
 ```
