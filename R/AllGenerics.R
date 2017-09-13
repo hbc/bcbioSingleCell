@@ -165,6 +165,17 @@ setGeneric("plotCellCounts", function(object, ...) {
 
 
 
+#' @rdname plotFeatures
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("plotFeatures", function(object, ...) {
+    standardGeneric("plotFeatures")
+})
+
+
+
 #' @rdname plotGenesPerCell
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
