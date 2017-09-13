@@ -8,7 +8,7 @@
 \usage{
 plotFeatures(object, ...)
 
-\S4method{plotFeatures}{seurat}(object, symbols, headerLevel = 2L,
+\S4method{plotFeatures}{seurat}(object, features, headerLevel = 2L,
   combine = TRUE)
 }
 \arguments{
@@ -16,12 +16,12 @@ plotFeatures(object, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
+\item{features}{Character vector of parameters supported by
+\code{\link[Seurat:FetchData]{Seurat::FetchData()}} (e.g. nUMI, mitoRatio, PC).}
+
 \item{headerLevel}{Include a Markdown header for each gene.}
 
 \item{combine}{Combine all markers into a single plot.}
-
-\item{features}{Character vector of parameters supported by
-\code{\link[Seurat:FetchData]{Seurat::FetchData()}} (e.g. nUMI, mitoRatio, PC).}
 }
 \value{
 No value, only graphical output.

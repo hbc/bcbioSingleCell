@@ -4,7 +4,7 @@
 \name{cellCycleMarkers}
 \alias{cellCycleMarkers}
 \title{Cell-Cycle Markers}
-\format{An object of class \code{list} of length 2.}
+\format{An object of class \code{list} of length 3.}
 \usage{
 cellCycleMarkers
 }
@@ -14,4 +14,4 @@ Cell-Cycle Markers
 \author{
 Michael Steinbaugh
 }
-\keyword{internal}
+\keyword{datasets}

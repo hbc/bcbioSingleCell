@@ -4,7 +4,7 @@
 \name{cellTypeMarkers}
 \alias{cellTypeMarkers}
 \title{Cell-Type Markers}
-\format{An object of class \code{list} of length 2.}
+\format{An object of class \code{list} of length 3.}
 \usage{
 cellTypeMarkers
 }
@@ -14,4 +14,4 @@ Cell-Type Markers
 \author{
 Michael Steinbaugh
 }
-\keyword{internal}
+\keyword{datasets}
