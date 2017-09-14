@@ -2,6 +2,7 @@
 #'
 #' @rdname coerce
 #' @name coerce
+#' @author Michael Steinbaugh
 #'
 #' @seealso `help("coerce")`
 #'
