@@ -46,6 +46,32 @@ NULL
 
 
 
+# Also called by `knownMarkersDetected()`
+.markersKable <- function(object, caption = NULL) {
+    object %>%
+        .[, c("cluster",
+              "symbol",
+              "ensgene",
+              "pvalue",
+              "description",
+              "biotype")] %>%
+        # Format the P values into consistent scientific notation
+        mutate(pvalue = format(.data[["pvalue"]],
+                               digits = 3L,
+                               scientific = TRUE)) %>%
+        # Remove the source information from description
+        mutate(description = str_replace(
+            .data[["description"]], " \\[.+$", "")) %>%
+        # Truncate the description to 50 characters
+        mutate(description = str_trunc(.data[["description"]], 50L)) %>%
+        # Set digits to a large value to prevent rounding of P values
+        # This works but is hacky. I'd like 0.XXXe-XX.
+        kable(caption = caption) %>%
+        show
+}
+
+
+
 .topMarkers <- function(
     object,
     n = 4L,
@@ -61,8 +87,7 @@ NULL
         # `-n` here means take the smallest P values
         top_n(n = -n, wt = .data[["pvalue"]])
     if (isTRUE(show)) {
-        kable(markers,
-              caption = paste("Top", n, "markers per cluster")) %>% show
+        .markersKable(markers, caption = paste("Top", n, "markers per cluster"))
     }
     markers
 }

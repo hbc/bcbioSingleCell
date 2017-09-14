@@ -28,7 +28,7 @@ NULL
                 decreasing = c(FALSE, FALSE, FALSE, TRUE)), ] %>%
         group_by(!!sym("cell"))
     if (isTRUE(show)) {
-        kable(markers, caption = "Known markers detected") %>% show
+        .markersKable(markers, caption = "Known markers detected")
     }
     markers
 }
