@@ -63,6 +63,12 @@ opts_chunk$set(
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
 ```
 
+```{r sample_metadata}
+sampleMetadata(bcb)
+```
+
+
+
 This workflow is adapted from the following sources:
 
 - Satija Lab: [Seurat v2 Guided Clustering Tutorial](http://satijalab.org/seurat/pbmc3k_tutorial.html)

@@ -53,6 +53,10 @@ opts_chunk$set(
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
 ```
 
+```{r sample_metadata}
+sampleMetadata(seurat)
+```
+
 
 
 This workflow is adapted from the following sources:

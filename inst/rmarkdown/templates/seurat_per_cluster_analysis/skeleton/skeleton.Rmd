@@ -30,6 +30,10 @@ if (!exists("seurat", inherits = FALSE)) {
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
 ```
 
+```{r sample_metadata}
+sampleMetadata(seurat)
+```
+
 
 
 # t-SNE plots {.tabset}
