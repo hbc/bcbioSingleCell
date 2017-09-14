@@ -78,7 +78,8 @@ setMethod("plotFeatures", "seurat", function(
         lapply(seq_along(features), function(a) {
             mdHeader(features[[a]], level = headerLevel, asis = TRUE)
             .plotFeatures.seurat(object, features[[a]])
-        }) %>%
-            invisible
+        })
     }
+    # `combine = TRUE` is outputting NULL. Attempt to fix here.
+    invisible()
 })
