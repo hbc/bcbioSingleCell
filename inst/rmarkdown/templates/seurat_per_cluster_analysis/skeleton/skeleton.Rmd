@@ -51,27 +51,8 @@ TSNEPlot(
 mdHeader(params$intgroup)
 TSNEPlot(
     seurat,
-    do.label = TRUE,
-    group.by = params$intgroup,
-    label.size = 6)
-```
-
-
-
-# PC cluster bias
-
-Let's check the coloring of the clusters according to each principal component included in the analysis. Cluster specificity here can indicate that a specific PC is driving the structure for that individual cluster.
-
-```{r pc_cluster_bias, fig.height=10, fig.width=10}
-pc <- seurat@calc.params %>%
-    .[["RunTSNE"]] %>%
-    .[["dims.use"]] %>%
-    paste0("PC", .)
-FeaturePlot(
-    seurat,
-    cols.use = c("purple", "darkgray"),
-    features.plot = pc,
-    nCol = 3)
+    do.label = FALSE,
+    group.by = params$intgroup)
 ```
 
 
