@@ -8,6 +8,10 @@
 sessionInfo()
 ```
 
+```{r params}
+print(params)
+```
+
 
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io
