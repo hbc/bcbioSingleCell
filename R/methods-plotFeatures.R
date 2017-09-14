@@ -74,12 +74,12 @@ setMethod("plotFeatures", "seurat", function(
     combine = TRUE) {
     if (isTRUE(combine)) {
         .plotFeatures.seurat(object, features, nCol = 2L)
+        # This is returning NULL -- need to fix in future update
     } else {
         lapply(seq_along(features), function(a) {
             mdHeader(features[[a]], level = headerLevel, asis = TRUE)
             .plotFeatures.seurat(object, features[[a]])
         })
     }
-    # `combine = TRUE` is outputting NULL. Attempt to fix here.
     invisible()
 })
