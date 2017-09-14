@@ -23,10 +23,8 @@ if (file.exists("setup.R")) {
 }
 
 # Load the bcbio object
-if (!exists("bcb", inherits = FALSE)) {
-    bcbName <- load(params$bcbFile)
-    bcb <- get(bcbName, inherits = FALSE)
-}
+bcbName <- load(params$bcbFile)
+bcb <- get(bcbName, inherits = FALSE)
 
 # Directory paths
 dataDir <- file.path(params$outputDir, "data")
@@ -41,7 +39,7 @@ dataDir <- file.path(params$outputDir, "data")
 
 # Count alignment
 
-We aligned the counts using the latest transcriptome FASTA from [Ensembl][] and obtained additional annotations with [biomaRt][].
+We aligned the counts using the latest transcriptome FASTA from [Ensembl][].
 
 
 
