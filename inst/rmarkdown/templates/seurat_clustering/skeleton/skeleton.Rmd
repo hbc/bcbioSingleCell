@@ -64,7 +64,7 @@ opts_chunk$set(
 ```
 
 ```{r sample_metadata}
-sampleMetadata(bcb)
+sampleMetadata(bcb, kable = TRUE)
 ```
 
 

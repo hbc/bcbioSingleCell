@@ -31,7 +31,7 @@ if (!exists("seurat", inherits = FALSE)) {
 ```
 
 ```{r sample_metadata}
-sampleMetadata(seurat)
+sampleMetadata(seurat, kable = TRUE)
 ```
 
 

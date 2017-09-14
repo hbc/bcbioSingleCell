@@ -33,6 +33,10 @@ dataDir <- file.path(params$outputDir, "data")
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
 ```
 
+```{r sample_metadata}
+sampleMetadata(bcb, kable = TRUE)
+```
+
 [bcbio][] run data was imported from **`r metadata(bcb)[["uploadDir"]]`**.
 
 
