@@ -3,15 +3,30 @@
 #' @rdname sampleMetadata
 #' @name sampleMetadata
 #'
-#' @return [data.frame].
+#' @param kable Return the output as [kable] instead of [data.frame].
+#'
+#' @return [data.frame], unless `kable = TRUE`, which will return a [kable].
 NULL
 
 
 
 # Constructors ====
-.sampleMetadata <- function(object) {
-    metadata(object)[["sampleMetadata"]] %>%
-        as.data.frame
+# This will extract the stashed `sampleMetadata` data.frame from the
+# SummarizedExperiment
+.sampleMetadata.bcbio <- function(object, kable = FALSE) {
+    object %>%
+        metadata %>%
+        .[["sampleMetadata"]] %>%
+        .sampleMetadata(kable = kable)
+}
+
+.sampleMetadata <- function(object, kable) {
+    df <- as.data.frame(object)
+    if (isTRUE(kable)) {
+        kable(df, caption = "Sample metadata")
+    } else {
+        df
+    }
 }
 
 
@@ -19,10 +34,66 @@ NULL
 # Methods ====
 #' @rdname sampleMetadata
 #' @export
-setMethod("sampleMetadata", "bcbioSCDataSet", .sampleMetadata)
+setMethod("sampleMetadata", "bcbioSCDataSet", .sampleMetadata.bcbio)
 
 
 
 #' @rdname sampleMetadata
 #' @export
-setMethod("sampleMetadata", "bcbioSCFiltered", .sampleMetadata)
+setMethod("sampleMetadata", "bcbioSCFiltered", .sampleMetadata.bcbio)
+
+
+
+#' @rdname sampleMetadata
+#' @export
+setMethod("sampleMetadata", "seurat", function(
+    object,
+    kable = FALSE) {
+    # Check to see if bcbio metadata is stashed in '@misc' slot. This is
+    # saved when using our `setAs()` coercion method.
+    bcbMeta <- object@misc[["bcbio"]][["sampleMetadata"]]
+    if (!is.null(bcbMeta)) {
+        message("Using bcbio sample metadata stashed in '@misc$bcbio'")
+        df <- bcbMeta
+    } else {
+        message(paste("Attempting to construct sample metadata",
+                      "from 'seurat@meta.data' slot"))
+        df <- object@meta.data %>%
+            remove_rownames
+        # Drop any columns that appear to be a count (e.g. `nUMI`)
+        df <- df[, !str_detect(colnames(df), "^n[A-Z]")]
+        # Drop any tSNE resolution columns (e.g. `res.0.8`)
+        df <- df[, !str_detect(colnames(df), "^res\\.")]
+        # Drop any blacklisted columns
+        blacklist <- c(
+            # Seurat
+            "orig.ident",
+            "percent.mito",
+            "G2M.Score",
+            "S.Score",
+            "Phase",
+            # bcbio
+            "cellularBarcode",
+            "log10GenesPerUMI",
+            "mitoRatio")
+        df <- df %>%
+            .[, !colnames(.) %in% blacklist]
+
+        # Only keep columns containing duplicates. Any remaining metrics
+        # columns should be filtered by this step.
+        findColsWithDupes <- function(.data) {
+            .data %>%
+                as.character %>%
+                duplicated %>%
+                any
+        }
+        hasDupes <- summarize_all(df, funs(findColsWithDupes))
+        df <- df[, as.logical(hasDupes)]
+
+        # Finally, attempt to collapse into distinct rows
+        df <- distinct(df) %>%
+            set_rownames(.[["sampleID"]])
+
+        .sampleMetadata(df, kable = kable)
+    }
+})
