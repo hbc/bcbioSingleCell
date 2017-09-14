@@ -22,10 +22,22 @@ if (file.exists("setup.R")) {
     source("setup.R")
 }
 
-# Load the seurat object
-if (!exists("seurat", inherits = FALSE)) {
-    seuratName <- load(params$seuratFile)
-    seurat <- get(seuratName, inherits = FALSE)
+# Load seurat object
+seuratName <- load(params$seuratFile)
+seurat <- get(seuratName, inherits = FALSE)
+if (!is(seurat, "seurat")) {
+    stop("seurat class object required")
+}
+
+# Check to see if we need to process markers
+markersName <- paste(seuratName, "markers", sep = "_")
+markersFile <- file.path("data", paste0(markersName, ".rda"))
+if (file.exists(markersFile)) {
+    load(markersFile)
+    markers <- get(markersName, inherits = FALSE)
+    evalMarkers <- FALSE
+} else {
+    evalMarkers <- TRUE
 }
 
 # Directory paths
@@ -59,29 +71,31 @@ The `min.pct` argument requires a gene to be detected at a minimum percentage in
 
 Seurat has four tests for differential expression which can be set with the `test.use` parameter: LRT test based on zero-inflated data (`bimod`, default), ROC test (`roc`), t-test (`t`), LRT test based on tobit-censoring models (`tobit`) The ROC test returns the 'classification power' for any individual marker (ranging from 0 - random, to 1 - perfect).
 
-```{r find_all_markers, results="hide"}
+```{r find_all_markers, results="hide", eval=evalMarkers}
 markers <- FindAllMarkers(seurat)
-markersName <- paste(seuratName, "markers", sep = "_")
 assignAndSaveData(markersName, markers)
 write_csv(markers, file.path(markersDir, paste0(markersName, ".csv.gz")))
 ```
 
 
-## Top markers per cluster
+
+# Top markers per cluster {.tabset}
 
 ```{r top_markers, results="asis"}
 topMarkers <- topMarkers(markers, show = TRUE)
 ```
 
+```{r plot_top_markers, results="asis"}
+plotTopMarkers(seurat, topMarkers, headerLevel = 2, combine = TRUE)
+```
 
 
-# Visualization
 
-## Cluster heterogeneity
+# Cluster heterogeneity
 
 Heatmaps can also be a good way to examine heterogeneity within/between clusters. The `DoHeatmap()` function will generate a heatmap for given cells and genes. In this case, we are plotting the top markers for each cluster.
 
-```{r do_heatmap, fig.height=12, fig.width=12}
+```{r do_heatmap}
 DoHeatmap(
     seurat,
     genes.use = topMarkers$symbol,
@@ -94,26 +108,8 @@ DoHeatmap(
 ```
 
 
-## Cluster marker plots
-
-There are several tools for visualizing marker expression:
-
-- `VlnPlot()`: shows expression probability distributions across clusters.
-- `FeaturePlot()`: visualizes gene expression on a tSNE or PCA plot.
-- New functions: `JoyPlot()`, `CellPlot()`, `DotPlot()`.
-
-
-## Top markers per cluster {.tabset}
-
-```{r plot_top_markers, results="asis"}
-plotTopMarkers(seurat, topMarkers, headerLevel = 3)
-```
-
-
 
 # Known marker analysis
-
-## Load known markers
 
 ```{r known_markers, results="asis"}
 knownMarkers <- readMarkers(
@@ -133,7 +129,7 @@ knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers, show = TRUE)
 ```
 
 
-## Visualize cluster specificity {.tabset}
+## Known markers by cell type {.tabset}
 
 ```{r plot_known_markers, results="asis"}
 plotKnownMarkers(seurat, knownMarkersDetected, headerLevel = 3)
