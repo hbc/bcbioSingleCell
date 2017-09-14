@@ -7,6 +7,8 @@
 #' @param coding Only include protein coding genes.
 #' @param show Show [kable].
 #'
+#' @seealso [dplyr::top_n()].
+#'
 #' @return [tibble].
 #' @export
 NULL
@@ -54,7 +56,10 @@ NULL
         markers <- tidy_filter(markers, .data[["biotype"]] == "protein_coding")
     }
     markers <- .groupMarkers(markers) %>%
-        top_n(n = n, wt = .data[["pvalue"]])
+        # Use only the positive markers
+        tidy_filter(.data[["avgDiff"]] > 0L) %>%
+        # `-n` here means take the smallest P values
+        top_n(n = -n, wt = .data[["pvalue"]])
     if (isTRUE(show)) {
         kable(markers,
               caption = paste("Top", n, "markers per cluster")) %>% show
