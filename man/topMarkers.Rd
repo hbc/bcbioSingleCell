@@ -29,6 +29,8 @@ topMarkers(object, ...)
 Top Markers
 }
 \seealso{
+\code{\link[dplyr:top_n]{dplyr::top_n()}}.
+
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
   \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
   \code{\link{plotKnownMarkers}},
