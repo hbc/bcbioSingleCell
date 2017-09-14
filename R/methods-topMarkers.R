@@ -4,6 +4,7 @@
 #' @name topMarkers
 #'
 #' @param n Number of genes per cluster.
+#' @param coding Only include protein coding genes.
 #' @param show Show [kable].
 #'
 #' @return [tibble].
@@ -13,6 +14,7 @@ NULL
 
 
 # Constructors ====
+# Also called by `knownMarkersDetected()`
 .groupMarkers <- function(df) {
     df <- camel(df)
 
@@ -42,9 +44,17 @@ NULL
 
 
 
-.topMarkers <- function(object, n = 4L, show = FALSE) {
-    markers <- .groupMarkers(object) %>%
-        top_n(n = n, wt = .data[["avgDiff"]])
+.topMarkers <- function(
+    object,
+    n = 4L,
+    coding = FALSE,
+    show = FALSE) {
+    markers <- object
+    if (isTRUE(coding)) {
+        markers <- tidy_filter(markers, .data[["biotype"]] == "protein_coding")
+    }
+    markers <- .groupMarkers(markers) %>%
+        top_n(n = n, wt = .data[["pvalue"]])
     if (isTRUE(show)) {
         kable(markers,
               caption = paste("Top", n, "markers per cluster")) %>% show
