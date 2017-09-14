@@ -32,7 +32,7 @@
 #'   FindVariableGenes JoyPlot NormalizeData ScaleData VlnPlot
 #' @importFrom stats median
 #' @importFrom stringr str_detect str_match str_replace str_replace_all
-#'   str_split str_subset
+#'   str_split str_subset str_trunc
 #' @importFrom tibble column_to_rownames remove_rownames rownames_to_column
 #'   tibble
 #' @importFrom utils globalVariables methods
