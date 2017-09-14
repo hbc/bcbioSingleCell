@@ -16,15 +16,16 @@ NULL
 
 # Constructors ====
 .fromMetadata <- function(from) {
-    list(
-        version = metadata(from)[["version"]],
-        annotable = metadata(from)[["annotable"]],
-        filterParams = metadata(from)[["filterParams"]],
-        gene2symbol = metadata(from)[["gene2symbol"]],
-        genomeBuild = metadata(from)[["genomeBuild"]],
-        interestingGroups = metadata(from)[["interestingGroups"]],
-        organism = metadata(from)[["organism"]],
-        uploadDir = metadata(from)[["uploadDir"]])
+    metadata(from) %>%
+        .[c("version",
+            "sampleMetadata",
+            "filterParams",
+            "annotable",
+            "gene2symbol",
+            "genomeBuild",
+            "interestingGroups",
+            "organism",
+            "uploadDir")]
 }
 
 
