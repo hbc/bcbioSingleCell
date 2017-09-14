@@ -27,9 +27,21 @@ if (file.exists("setup.R")) {
 }
 
 # Load the bcbio object
-if (!exists("bcb", inherits = FALSE)) {
-    bcbName <- load(params$bcbFile)
-    bcb <- get(bcbName, inherits = FALSE)
+bcbName <- load(params$bcbFile)
+bcb <- get(bcbName, inherits = FALSE)
+
+# Check to see if seurat object exists
+if (!exists("seurat", inherits = FALSE)) {
+    seuratFile <- str_replace(params$bcbFile, "\\.rda$", "_seurat.rda")
+    if (file.exists(seuratFile)) {
+        seuratName <- load(seuratFile)
+        seurat <- get(seuratName, inherits = FALSE)
+        evalSeurat <- FALSE
+    } else {
+        evalSeurat <- TRUE
+    }
+} else {
+    evalSeurat <- FALSE
 }
 
 # Vector to use for plot looping
@@ -88,31 +100,8 @@ seurat <- seurat %>%
 ```
 
 
-## Visualize cells
 
-We already cell filtering cutoffs during our initial quality control analysis using `filterCells()`. Here we are using [Seurat][]'s `VlnPlot()` function to double check the number of UMI counts (`nUMI`), genes detected (`nGene`), and relative mitochondrial abundance (`mitoRatio`). These violin plots should match up with the histograms and bar plots in the quality control report.
-
-```{r qc_plots_1}
-features <- c("nUMI", "nGene", "mitoRatio")
-sapply(seq_along(features), function(a) {
-    VlnPlot(
-        seurat,
-        features.plot = features[[a]],
-        x.lab.rot = TRUE) %>%
-        show
-}) %>%
-    invisible
-```
-
-Here we are visualizing UMI count correlations with genes detected (`nGene`) and mitochondrial abundance (`mitoRatio`). These scatterplots should resemble the figures presented in the quality control report.
-
-```{r gene_plot}
-GenePlot(seurat, "nUMI", "nGene")
-GenePlot(seurat, "nUMI", "mitoRatio")
-```
-
-
-## Plot variable genes
+# Plot variable genes
 
 ```{r variable_gene_plot}
 VariableGenePlot(seurat)
@@ -145,7 +134,7 @@ g2m.genes <- ccm %>%
 rm(ccm)
 ```
 
-```{r cell_cycle_scoring}
+```{r cell_cycle_scoring, eval=evalSeurat}
 seurat <- CellCycleScoring(
     seurat,
     g2m.genes = g2m.genes,
@@ -155,7 +144,7 @@ seurat <- CellCycleScoring(
 
 Here we are checking to see if the cells are grouping by cell cycle. If we don't see clear grouping of the cells into `G1`, `G2M`, and `S` clusters on the PCA plot, then it is recommended that we don't regress out cell-cycle variation. When this is the case, remove `S.Score` and `G2M.Score` from the variables to regress (`varsToRegress`) in the RMarkdown YAML parameters.
 
-```{r cell_cycle_pca_1}
+```{r cell_cycle_pca_1, eval=evalSeurat, include=evalSeurat}
 RunPCA(
     seurat,
     pc.genes = c(s.genes, g2m.genes),
@@ -169,7 +158,7 @@ RunPCA(
 
 Here we are regressing out variables of uninteresting variation, using the `vars.to.regress` argument in the `ScaleData()` function. When variables are defined in the `vars.to.regress` argument, [Seurat][] regresses them individually against each gene, then rescales and centers the resulting residuals. We generally recommend minimizing the effects of variable read count depth (`nUMI`) and mitochondrial gene expression (`mitoRatio`) as a standard first-pass approach. If the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not passing in `mitoRatio` here. When regressing out the effects of cell-cycle variation, include `S.Score` and `G2M.Score` in the `vars.to.regress` argument. Cell-cycle regression is generally recommended but should be avoided for samples containing cells undergoing differentiation.
 
-```{r scale_data, results="hide"}
+```{r scale_data, results="hide", eval=evalSeurat}
 seurat <- ScaleData(seurat, vars.to.regress = params$varsToRegress)
 ```
 
@@ -192,7 +181,7 @@ Next, we perform principal component analysis (PCA) on the scaled data with `Run
 
 `ProjectPCA()` scores each gene in the dataset (including genes not included in the PCA) based on their correlation with the calculated components. Though we don't use this further here, it can be used to identify markers that are strongly correlated with cellular heterogeneity, but may not have passed through variable gene selection.  The results of the projected PCA can be explored by setting `use.full = TRUE` for `PrintPCA()`.
 
-```{r run_pca}
+```{r run_pca, eval=evalSeurat}
 seurat <- seurat %>%
     RunPCA(do.print = FALSE) %>%
     ProjectPCA(do.print = FALSE)
@@ -255,7 +244,7 @@ The `FindClusters()` function implements the procedure, and contains a `resoluti
 
 Regarding the value of the `resolution` argument, use a value `< 1` if you want to obtain fewer clusters.
 
-```{r find_clusters, results="hide"}
+```{r find_clusters, results="hide", eval=evalSeurat}
 seurat <- FindClusters(
     seurat,
     dims.use = pcUse,
@@ -277,7 +266,7 @@ PrintFindClustersParams(seurat)
 
 [Seurat][] continues to use tSNE as a powerful tool to visualize and explore these datasets. While we no longer advise clustering directly on tSNE components, cells within the graph-based clusters determined above should co-localize on the tSNE plot. This is because the tSNE aims to place cells with similar local neighborhoods in high-dimensional space together in low-dimensional space. As input to the tSNE, we suggest using the same PCs as input to the clustering analysis, although computing the tSNE based on scaled gene expression is also supported using the `genes.use` argument.
 
-```{r run_tsne}
+```{r run_tsne, eval=evalSeurat}
 seurat <- RunTSNE(
     seurat,
     dims.use = pcUse,
@@ -289,26 +278,28 @@ assignAndSaveData(paste(bcbName, "seurat", sep = "_"), seurat)
 PrintTSNEParams(seurat)
 ```
 
-```{r tsne_plot}
+```{r dim_reduction_plots}
 sapply(seq_along(groupBy), function(a) {
-    TSNEPlot(seurat,
-             do.label = TRUE,
-             group.by = groupBy[[a]],
-             label.size = 6)
+    if (groupBy[[a]] == "ident") {
+        label <- TRUE
+    } else {
+        label <- FALSE
+    }
+    # t-SNE
+    TSNEPlot(
+        seurat,
+        do.label = label,
+        group.by = groupBy[[a]],
+        label.size = 6)
+    # Principal Component Analysis
+    PCAPlot(seurat,
+            do.label = label,
+            group.by = groupBy[[a]])
 }) %>%
     invisible
 ```
 
 Note that tSNE is not PCA! The measurement of distance in a tSNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.
-
-```{r pca_plot}
-sapply(seq_along(groupBy), function(a) {
-    PCAPlot(seurat,
-            do.label = TRUE,
-            group.by = groupBy[[a]])
-}) %>%
-    invisible
-```
 
 
 
@@ -316,25 +307,11 @@ sapply(seq_along(groupBy), function(a) {
 
 Let's look at the variance in the number of UMI counts (`nUMI`), gene detection (`nGene`), and the percentage of mitochondrial gene expression (`mitoRatio`), to see if there are any obvious cluster artefacts.
 
-```{r qc_plots_2}
-features <- c("nUMI", "nGene", "mitoRatio")
-sapply(seq_along(features), function(a) {
-    JoyPlot(
-        seurat,
-        features.plot = features[[a]],
-        x.lab.rot = TRUE) %>%
-        show
-    VlnPlot(
-        seurat,
-        features.plot = features[[a]],
-        x.lab.rot = TRUE) %>%
-        show
-    FeaturePlot(
-        seurat,
-        cols.use = rev(viridis(2)),
-        features.plot = features[[a]])
-}) %>%
-    invisible
+```{r qc_plots_2, results="asis"}
+plotFeatures(
+    seurat,
+    c("nUMI", "nGene", "mitoRatio", "PC"),
+    combine = TRUE)
 ```
 
 
