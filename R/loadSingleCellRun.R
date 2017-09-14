@@ -1,14 +1,13 @@
 #' Load bcbio Single-Cell RNA-Seq Run
 #'
-#' @rdname loadSingleCellRun
-#' @name loadSingleCellRun
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @note When working in RStudio, we recommend connecting to the bcbio-nextgen
 #'   run directory as a remote connection over
 #'   [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
 #'
-#' @param object Path to final upload directory. This path is set when running
-#'   `bcbio_nextgen -w template`.
+#' @param uploadDir Path to final upload directory. This path is set when
+#'   running `bcbio_nextgen -w template`.
 #' @param sampleMetadataFile Sample barcode metadata file.
 #' @param interestingGroups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
@@ -20,15 +19,9 @@
 #' @param ... Additional arguments, passed as metadata.
 #'
 #' @return [bcbioSCDataSet].
-NULL
-
-
-
-# Methods ====
-#' @rdname loadSingleCellRun
 #' @export
-setMethod("loadSingleCellRun", "character", function(
-    object,
+loadSingleCellRun <- function(
+    uploadDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
     gtfFile = NULL,
@@ -36,7 +29,6 @@ setMethod("loadSingleCellRun", "character", function(
     ...) {
     # Initial run setup ====
     pipeline <- "bcbio"
-    uploadDir <- object
     if (!dir.exists(uploadDir)) {
         stop("Final upload directory does not exist", call. = FALSE)
     }
@@ -253,4 +245,4 @@ setMethod("loadSingleCellRun", "character", function(
     # barcodes not present in the main assay matrix.
     bcbio(bcb, "cellularBarcodes") <- cellularBarcodes
     bcb
-})
+}

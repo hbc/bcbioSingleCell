@@ -6,31 +6,23 @@
 #' @details This function is a simplified version of [loadSingleCellRun()]
 #'   optimized for handling CellRanger output.
 #'
-#' @rdname loadCellRanger
-#' @name loadCellRanger
+#' @author Michael Steinbaugh
 #'
 #' @inheritParams loadSingleCellRun
-#' @param object Path to CellRanger output directory. This directory path must
-#'   contain `filtered_gene_bc_matrices/` as a child.
+#' @param uploadDir Path to CellRanger output directory. This directory path
+#'   must contain `filtered_gene_bc_matrices/` as a child.
 #' @param refDataDir Directory path to cellranger reference annotation data.
 #'
 #' @return [bcbioSCDataSet].
-NULL
-
-
-
-# Methods ====
-#' @rdname loadCellRanger
 #' @export
-setMethod("loadCellRanger", "character", function(
-    object,
+loadCellRanger <- function(
+    uploadDir,
     refDataDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
     ...) {
     # Initial run setup ====
     pipeline <- "cellranger"
-    uploadDir <- object
     if (!dir.exists(uploadDir)) {
         stop("Final upload directory does not exist", call. = FALSE)
     }
@@ -134,4 +126,4 @@ setMethod("loadCellRanger", "character", function(
         rowData = annotable,
         metadata = metadata)
     new("bcbioSCDataSet", se)
-})
+}

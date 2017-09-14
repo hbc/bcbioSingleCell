@@ -100,26 +100,6 @@ setGeneric("knownMarkersDetected", function(object, knownMarkers, ...) {
 
 
 
-#' @rdname loadCellRanger
-#' @author Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("loadCellRanger", function(object, ...) {
-    standardGeneric("loadCellRanger")
-})
-
-
-
-#' @rdname loadSingleCellRun
-#' @author Michael Steinbaugh, Rory Kirchner
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("loadSingleCellRun", function(object, ...) {
-    standardGeneric("loadSingleCellRun")
-})
-
-
-
 #' @rdname metadataTable
 #' @family RMarkdown Utilities
 #' @author Michael Steinbaugh
