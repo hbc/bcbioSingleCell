@@ -5,21 +5,26 @@
 \alias{sampleMetadata}
 \alias{sampleMetadata,bcbioSCDataSet-method}
 \alias{sampleMetadata,bcbioSCFiltered-method}
+\alias{sampleMetadata,seurat-method}
 \title{Sample Metadata}
 \usage{
 sampleMetadata(object, ...)
 
-\S4method{sampleMetadata}{bcbioSCDataSet}(object)
+\S4method{sampleMetadata}{bcbioSCDataSet}(object, kable = FALSE)
 
-\S4method{sampleMetadata}{bcbioSCFiltered}(object)
+\S4method{sampleMetadata}{bcbioSCFiltered}(object, kable = FALSE)
+
+\S4method{sampleMetadata}{seurat}(object, kable = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{kable}{Return the output as \link{kable} instead of \link{data.frame}.}
 }
 \value{
-\link{data.frame}.
+\link{data.frame}, unless \code{kable = TRUE}, which will return a \link{kable}.
 }
 \description{
 Sample Metadata
