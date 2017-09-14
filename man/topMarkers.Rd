@@ -8,7 +8,8 @@
 \usage{
 topMarkers(object, ...)
 
-\S4method{topMarkers}{data.frame}(object, n = 4L, show = FALSE)
+\S4method{topMarkers}{data.frame}(object, n = 4L, coding = FALSE,
+  show = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -16,6 +17,8 @@ topMarkers(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{n}{Number of genes per cluster.}
+
+\item{coding}{Only include protein coding genes.}
 
 \item{show}{Show \link{kable}.}
 }
