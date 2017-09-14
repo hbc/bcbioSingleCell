@@ -2,6 +2,7 @@
 
 - Renamed `plotClusters()` to `plotMarkers()`. Added soft deprecation.
 - Added [viridis][] color support in tSNE plots and heatmaps.
+- Converted `loadSingleCellRun()` and `loadCellRanger()` from S4 generics back to standard functions.
 
 
 
