@@ -93,7 +93,7 @@
     <pre class="usage"><span class='fu'>plotFeatures</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotFeatures</span>(<span class='no'>object</span>, <span class='no'>symbols</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
+<span class='fu'>plotFeatures</span>(<span class='no'>object</span>, <span class='no'>features</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
   <span class='kw'>combine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -108,17 +108,17 @@
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
     <tr>
+      <th>features</th>
+      <td><p>Character vector of parameters supported by
+<code><a href='http://www.rdocumentation.org/packages/Seurat/topics/FetchData'>Seurat::FetchData()</a></code> (e.g. nUMI, mitoRatio, PC).</p></td>
+    </tr>
+    <tr>
       <th>headerLevel</th>
       <td><p>Include a Markdown header for each gene.</p></td>
     </tr>
     <tr>
       <th>combine</th>
       <td><p>Combine all markers into a single plot.</p></td>
-    </tr>
-    <tr>
-      <th>features</th>
-      <td><p>Character vector of parameters supported by
-<code><a href='http://www.rdocumentation.org/packages/Seurat/topics/FetchData'>Seurat::FetchData()</a></code> (e.g. nUMI, mitoRatio, PC).</p></td>
     </tr>
     </table>
     

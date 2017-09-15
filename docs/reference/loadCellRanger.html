@@ -91,23 +91,16 @@
 counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.mtx</code> files.</p>
     
 
-    <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for character</span>
-<span class='fu'>loadCellRanger</span>(<span class='no'>object</span>, <span class='no'>refDataDir</span>, <span class='no'>sampleMetadataFile</span>,
+    <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>uploadDir</span>, <span class='no'>refDataDir</span>, <span class='no'>sampleMetadataFile</span>,
   <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Path to CellRanger output directory. This directory path must
-contain <code>filtered_gene_bc_matrices/</code> as a child.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <th>uploadDir</th>
+      <td><p>Path to CellRanger output directory. This directory path
+must contain <code>filtered_gene_bc_matrices/</code> as a child.</p></td>
     </tr>
     <tr>
       <th>refDataDir</th>
@@ -122,6 +115,10 @@ contain <code>filtered_gene_bc_matrices/</code> as a child.</p></td>
       <td><p>Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments, passed as metadata.</p></td>
     </tr>
     </table>
     

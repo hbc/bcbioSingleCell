@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load bcbio Single-Cell RNA-Seq Run — loadSingleCellRun • bcbioSingleCell</title>
+<title>Coerce <code>bcbioSCFiltered</code> to <code>seurat</code> Object — coerce-bcbioSCFiltered-seurat • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,76 +83,38 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load bcbio Single-Cell RNA-Seq Run</h1>
+    <h1>Coerce <code>bcbioSCFiltered</code> to <code>seurat</code> Object</h1>
     </div>
 
     
-    <p>Load bcbio Single-Cell RNA-Seq Run</p>
+    <p>Interally, this begins by calling <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/CreateSeuratObject'>Seurat::CreateSeuratObject()</a></code> without any
+additional filtering cutoffs, since we already applied them during our
+quality control analysis. Here we are passing the raw gene-level counts of
+the filtered cells into a new seurat class object, using <code>as()</code> object
+coercion. Next, global-scaling normalization is applied to the raw counts
+with <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/NormalizeData'>Seurat::NormalizeData()</a></code>, which (1) normalizes the gene expression
+measurements for each cell by the total expression, (2) multiplies this by a
+scale factor (10,000 by default), and (3) log-transforms the result.
+<code><a href='http://www.rdocumentation.org/packages/Seurat/topics/FindVariableGenes'>Seurat::FindVariableGenes()</a></code> is then called, which calculates the average
+expression and dispersion for each gene, places these genes into bins, and
+then calculates a z-score for dispersion within each bin. This helps control
+for the relationship between variability and average expression. Finally, the
+genes are scaled and centered using the <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/ScaleData'>Seurat::ScaleData()</a></code> function.</p>
     
 
-    <pre class="usage"><span class='fu'>loadSingleCellRun</span>(<span class='no'>uploadDir</span>, <span class='no'>sampleMetadataFile</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>gtfFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>wellMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>uploadDir</th>
-      <td><p>Path to final upload directory. This path is set when
-running <code>bcbio_nextgen -w template</code>.</p></td>
-    </tr>
-    <tr>
-      <th>sampleMetadataFile</th>
-      <td><p>Sample barcode metadata file.</p></td>
-    </tr>
-    <tr>
-      <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. First entry
-is used for plot colors during quality control (QC) analysis. Entire vector
-is used for PCA and heatmap QC functions.</p></td>
-    </tr>
-    <tr>
-      <th>gtfFile</th>
-      <td><p><em>Optional</em>. Gene transfer format (GTF) file, which will be
-used for transcript-to-gene (<code>tx2gene</code>) and gene-to-symbol (<code>gene2symbol</code>)
-annotation mappings.</p></td>
-    </tr>
-    <tr>
-      <th>wellMetadataFile</th>
-      <td><p><em>Optional</em>. Well identifier metadata file.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments, passed as metadata.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+        
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='bcbioSCDataSet-class.html'>bcbioSCDataSet</a>.</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>When working in RStudio, we recommend connecting to the bcbio-nextgen
-run directory as a remote connection over
-<a href='https://github.com/osxfuse/osxfuse/wiki/SSHFS'>sshfs</a>.</p>
+    <p><code>help("coerce")</code></p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
+      <li><a href="#see-also">See also</a></li>
           </ul>
-
-    <h2>Author</h2>
-    
-Michael Steinbaugh, Rory Kirchner
 
   </div>
 </div>

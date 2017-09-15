@@ -23,10 +23,7 @@ Aggregate Features
 }
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateReplicates}},
-  \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
-  \code{\link{readMarkers}}, \code{\link{sampleMetadata}},
-  \code{\link{selectSamples}},
+  \code{\link{filterCells}}, \code{\link{readMarkers}},
   \code{\link{subsetPerSample}}
 }
 \author{

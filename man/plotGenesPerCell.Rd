@@ -3,9 +3,6 @@
 \docType{methods}
 \name{plotGenesPerCell}
 \alias{plotGenesPerCell}
-\alias{.plotGenesPerCellBoxplot}
-\alias{.plotGenesPerCellHistogram}
-\alias{.plotGenesPerCell}
 \alias{plotGenesPerCell,bcbioSCDataSet-method}
 \alias{plotGenesPerCell,bcbioSCFiltered-method}
 \title{Plot Genes per Cell}

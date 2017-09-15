@@ -27,9 +27,6 @@ Prepare Single-Cell RNA-Seq RMarkdown Template
 prepareSingleCellTemplate()
 }
 }
-\seealso{
-Other RMarkdown Utilities: \code{\link{metadataTable}}
-}
 \author{
 Michael Steinbaugh
 }

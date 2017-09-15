@@ -41,10 +41,7 @@ cellular barcodes.
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
-  \code{\link{interestingGroups}},
-  \code{\link{readMarkers}}, \code{\link{sampleMetadata}},
-  \code{\link{selectSamples}},
-  \code{\link{subsetPerSample}}
+  \code{\link{readMarkers}}, \code{\link{subsetPerSample}}
 }
 \author{
 Michael Steinbaugh
