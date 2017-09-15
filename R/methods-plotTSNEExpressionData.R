@@ -45,22 +45,23 @@ setMethod("plotTSNEExpressionData", "grouped_df", function(
     object %>%
         ggplot(
             aes_string(
-                "tSNE_1",
-                "tSNE_2",
+                x = "tSNE_1",
+                y = "tSNE_2",
                 color = colorpoints)) +
         geom_text(
             aes_string(
-                "tSNE_1",
-                "tSNE_2",
+                x = "tSNE_1",
+                y = "tSNE_2",
                 label = "object.ident",
                 color = colorpoints),
             size = 2) +
         scale_color_viridis() +
         guides(color = FALSE) +
         geom_text(
-            aes(x = centerx,
-                y = centery,
-                label = object.ident),
+            aes_string(
+                x = "centerx",
+                y = "centery",
+                label = "object.ident"),
             color = "pink",
             size = 3,
             fontface = "bold") +

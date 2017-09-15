@@ -9,8 +9,17 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @param genes Genes (by symbol name) of which to get expression data.
+#'
 #' @return tidy [data.frame] of t-SNE points, cellular metadata, and gene
 #'   expression.
+#'
+#' @examples
+#' \dontrun{
+#' data(seurat)
+#' genes <- head(rownames(seurat@raw.data))
+#' fetchTSNEExpressionData(seurat, genes)
+#' }
+NULL
 
 
 
@@ -26,5 +35,7 @@ setMethod("fetchTSNEExpressionData", "seurat", function(
         rownames_to_column("cell")
     fetchTSNEData(object) %>%
         left_join(dat, by = "cell") %>%
-        gather(gene, expression, !!genes)
+        gather(key = "gene",
+               value = "expression",
+               !!genes)
 })

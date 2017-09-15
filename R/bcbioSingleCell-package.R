@@ -10,13 +10,14 @@
 #'
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dendsort dendsort
-#' @importFrom dplyr arrange bind_rows distinct everything group_by left_join
-#'   mutate n pull rename summarize top_n
-#' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_text
-#'   expand_limits facet_wrap geom_bar geom_boxplot geom_histogram geom_hline
-#'   geom_label geom_line geom_point geom_smooth geom_text geom_violin
-#'   geom_vline ggplot ggtitle labs qplot scale_x_log10 scale_x_sqrt
-#'   scale_y_continuous scale_y_log10 scale_y_sqrt theme unit xlab xlim ylab
+#' @importFrom dplyr arrange bind_rows distinct everything funs group_by
+#'   left_join mutate n pull rename summarize summarize_all top_n
+#' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_rect
+#'   element_text expand_limits facet_wrap geom_bar geom_boxplot geom_histogram
+#'   geom_hline geom_label geom_line geom_point geom_smooth geom_text
+#'   geom_violin geom_vline ggplot ggtitle guides labs qplot scale_x_log10
+#'   scale_x_sqrt scale_y_continuous scale_y_log10 scale_y_sqrt theme unit xlab
+#'   xlim ylab
 #' @importFrom jsonlite read_json
 #' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_rownames

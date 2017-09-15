@@ -4,6 +4,7 @@
 \docType{methods}
 \name{fetchTSNEExpressionData}
 \alias{fetchTSNEExpressionData}
+\alias{fetchTSNEExpressionData,seurat-method}
 \title{Fetch t-SNE Locations, Cellular Metadata and Expression of Genes}
 \usage{
 fetchTSNEExpressionData(object, ...)
@@ -24,6 +25,13 @@ expression.
 \description{
 This gets t-SNE locations, cellular metadata, expression of genes and
 the geometric mean of the gene expression from a seurat object.
+}
+\examples{
+\dontrun{
+data(seurat)
+genes <- head(rownames(seurat@raw.data))
+fetchTSNEExpressionData(seurat, genes)
+}
 }
 \seealso{
 Other t-SNE Utilities: \code{\link{fetchTSNEData}},
