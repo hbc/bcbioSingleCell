@@ -22,6 +22,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4.0),
     SummarizedExperiment (>= 1.6.3),
+    Seurat (>= 2.0),
     basejump (>= 0.0.22)
 Imports:
     cowplot,
@@ -40,7 +41,6 @@ Imports:
     rlang,
     S4Vectors,
     scales,
-    Seurat (>= 2.0),
     stats,
     stringr,
     tibble,
