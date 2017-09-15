@@ -1,19 +1,4 @@
-##' Fetch t-SNE locations and cellular metadata
-##'
-##' @param seurat a seurat object
-##' @return dataframe of t-SNE points and metadata for each cell
-##' @author Rory Kirchner
-FetchTsneData = function(seurat) {
-  dim.code = c("tSNE_1", "tSNE_2")
-  FetchData(seurat, dim.code) %>%
-    tibble::rownames_to_column("cell") %>%
-    left_join(seurat@meta.data %>%
-              tibble::rownames_to_column("cell")) %>%
-    left_join(data.frame(seurat@ident) %>%
-              tibble::rownames_to_column("cell")) %>%
-    group_by(seurat.ident) %>%
-    mutate(centerx = median(tSNE_1), centery = median(tSNE_2))
-}
+
 
 ##' Fetch t-SNE locations, cellular metadata and expression of genes
 ##'
