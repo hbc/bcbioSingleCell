@@ -2,6 +2,9 @@
 #'
 #' @rdname plotMarkers
 #' @name plotMarkers
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
+#'
 #' @inherit plotFeatures
 #'
 #' @param symbols Character vector of gene marker symbols.

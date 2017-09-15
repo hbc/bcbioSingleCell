@@ -2,6 +2,7 @@
 #'
 #' @rdname interestingGroups
 #' @name interestingGroups
+#' @author Michael Steinbaugh
 #'
 #' @return Character vector.
 NULL

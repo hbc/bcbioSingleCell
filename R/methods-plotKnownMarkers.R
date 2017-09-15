@@ -2,6 +2,9 @@
 #'
 #' @rdname plotKnownMarkers
 #' @name plotKnownMarkers
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
+#'
 #' @inherit plotMarkers
 #'
 #' @param knownMarkers [knownMarkersDetected()] [tibble] grouped by cluster.
@@ -9,7 +12,7 @@ NULL
 
 
 
-# Constructor ====
+# Constructors ====
 .plotKnownMarkers <- function(
     object,
     knownMarkers,

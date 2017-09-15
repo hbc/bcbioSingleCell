@@ -2,7 +2,8 @@
 #'
 #' @rdname plotStressGenes
 #' @name plotStressGenes
-#' @keywords internal
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
 #'
 #' @return [ggplot].
 NULL

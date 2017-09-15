@@ -2,6 +2,8 @@
 #'
 #' @rdname metrics
 #' @name metrics
+#' @family Quality Control Metrics
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @return [data.frame] with cellular barcodes as rows.
 NULL

@@ -2,6 +2,9 @@
 #'
 #' @rdname plotTopMarkers
 #' @name plotTopMarkers
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
+#'
 #' @inherit plotMarkers
 #'
 #' @param topMarkers Top markers grouped [tibble] returned by [topMarkers()].

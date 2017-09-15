@@ -2,6 +2,8 @@
 #'
 #' @rdname aggregateFeatures
 #' @name aggregateFeatures
+#' @family Data Management Utilities
+#' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @return [bcbioSCDataSet].
 NULL

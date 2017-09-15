@@ -2,6 +2,8 @@
 #'
 #' @rdname subsetPerSample
 #' @name subsetPerSample
+#' @family Data Management Utilities
+#' @author Michael Steinbaugh
 #'
 #' @param minCells Minimum number of cells required per sample.
 #' @param dir Output directory where to save the subset data.

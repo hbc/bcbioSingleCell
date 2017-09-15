@@ -2,6 +2,8 @@
 #'
 #' @rdname plotFeatures
 #' @name plotFeatures
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
 #'
 #' @param features Character vector of parameters supported by
 #'   [Seurat::FetchData()] (e.g. nUMI, mitoRatio, PC).

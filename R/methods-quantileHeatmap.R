@@ -2,6 +2,7 @@
 #'
 #' @rdname quantileHeatmap
 #' @name quantileHeatmap
+#' @author Rory Kirchner
 #'
 #' @details This is helpful for more usefully visualizing single cell data.
 #'   Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/

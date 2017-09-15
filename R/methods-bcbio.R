@@ -2,6 +2,7 @@
 #'
 #' @rdname bcbio
 #' @name bcbio
+#' @author Michael Steinbaugh
 #'
 #' @param object Primary object.
 #' @param type Type of count data to retrieve.

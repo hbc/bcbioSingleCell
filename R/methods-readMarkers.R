@@ -2,6 +2,8 @@
 #'
 #' @rdname readMarkers
 #' @name readMarkers
+#' @family Data Management Utilities
+#' @author Michael Steinbaugh
 #'
 #' @param object Gene markers file (CSV or Excel).
 #' @param gene2symbol Gene-to-symbol annotation [data.frame].

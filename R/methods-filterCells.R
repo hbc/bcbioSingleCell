@@ -5,6 +5,8 @@
 #'
 #' @rdname filterCells
 #' @name filterCells
+#' @family Data Management Utilities
+#' @author Michael Steinbaugh
 #'
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.

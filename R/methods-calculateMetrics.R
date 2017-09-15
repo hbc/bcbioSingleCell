@@ -2,6 +2,8 @@
 #'
 #' @rdname calculateMetrics
 #' @name calculateMetrics
+#' @family QC Metrics Utilities
+#' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @param annotable Annotable.
 #' @param prefilter Whether to apply pre-filtering to the cellular barcodes.

@@ -2,6 +2,8 @@
 #'
 #' @rdname prepareSingleCellTemplate
 #' @name prepareSingleCellTemplate
+#' @family RMarkdown Utilities
+#' @author Michael Steinbaugh
 #'
 #' @return No value.
 #'

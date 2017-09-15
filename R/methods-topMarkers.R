@@ -2,6 +2,8 @@
 #'
 #' @rdname topMarkers
 #' @name topMarkers
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
 #'
 #' @param n Number of genes per cluster.
 #' @param coding Only include protein coding genes.

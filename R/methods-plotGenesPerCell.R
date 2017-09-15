@@ -1,16 +1,19 @@
 #' Plot Genes per Cell
 #'
 #' @rdname plotGenesPerCell
+#' @name plotGenesPerCell
+#' @family Quality Control Metrics
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #'
 #' @return [ggplot] grid.
+NULL
 
 
 
-#' @rdname plotGenesPerCell
-#' @usage NULL
+# Constructors ====
 .plotGenesPerCellBoxplot <- function(object, min, max) {
     metrics <- metrics(object)
     medianGenes <- aggregate(nGene ~ sampleID, metrics, median) %>%
@@ -57,8 +60,6 @@
 
 
 
-#' @rdname plotGenesPerCell
-#' @usage NULL
 .plotGenesPerCellHistogram <- function(object, min, max) {
     metrics <- metrics(object)
     p <- ggplot(metrics,
@@ -91,8 +92,6 @@
 
 
 
-#' @rdname plotGenesPerCell
-#' @usage NULL
 .plotGenesPerCell <- function(object, min, max) {
     plot_grid(.plotGenesPerCellHistogram(object, min, max),
               .plotGenesPerCellBoxplot(object, min, max),
@@ -102,6 +101,7 @@
 
 
 
+# Methods ====
 #' @rdname plotGenesPerCell
 #' @export
 setMethod(
