@@ -3,6 +3,7 @@
 - Renamed `plotClusters()` to `plotMarkers()`. Added soft deprecation.
 - Added [viridis][] color support in tSNE plots and heatmaps.
 - Converted `loadSingleCellRun()` and `loadCellRanger()` from S4 generics back to standard functions.
+- Added t-SNE utility functions: `fetchTSNEData()`, `fetchTSNEExpressionData()`, and `plotTSNEExpressionData()`. This enable plotting of geometric mean values of desired marker genes.
 
 
 
