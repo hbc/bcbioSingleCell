@@ -21,6 +21,10 @@ fetchTSNEData(object, ...)
 \description{
 Fetch t-SNE Locations and Cellular Metadata
 }
+\seealso{
+Other t-SNE Utilities: \code{\link{fetchTSNEExpressionData}},
+  \code{\link{plotTSNEExpressionData}}
+}
 \author{
 Rory Kirchner, Michael Steinbaugh
 }

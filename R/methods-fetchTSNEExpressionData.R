@@ -1,10 +1,11 @@
-#' Fetch t-SNE locations, cellular metadata and expression of genes
+#' Fetch t-SNE Locations, Cellular Metadata and Expression of Genes
 #'
 #' This gets t-SNE locations, cellular metadata, expression of genes and
 #' the geometric mean of the gene expression from a seurat object.
 #'
 #' @rdname fetchTSNEExpressionData
 #' @name fetchTSNEExpressionData
+#' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @param genes Genes (by symbol name) of which to get expression data.

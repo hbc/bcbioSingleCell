@@ -4,7 +4,7 @@
 \docType{methods}
 \name{fetchTSNEExpressionData}
 \alias{fetchTSNEExpressionData}
-\title{Fetch t-SNE locations, cellular metadata and expression of genes}
+\title{Fetch t-SNE Locations, Cellular Metadata and Expression of Genes}
 \usage{
 fetchTSNEExpressionData(object, ...)
 
@@ -25,6 +25,11 @@ expression.
 This gets t-SNE locations, cellular metadata, expression of genes and
 the geometric mean of the gene expression from a seurat object.
 }
+\seealso{
+Other t-SNE Utilities: \code{\link{fetchTSNEData}},
+  \code{\link{plotTSNEExpressionData}}
+}
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
+\concept{t-SNE Utilities}

@@ -170,6 +170,15 @@ setGeneric("plotTopMarkers", function(object, topMarkers, ...) {
 
 
 
+#' @rdname plotTSNEExpressionData
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("plotTSNEExpressionData", function(object, ...) {
+    standardGeneric("plotTSNEExpressionData")
+})
+
+
+
 #' @rdname plotUMIsPerCell
 #' @inheritParams AllGenerics
 #' @export
