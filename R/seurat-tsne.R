@@ -1,25 +1,3 @@
-
-
-##' Fetch t-SNE locations, cellular metadata and expression of genes
-##'
-##' This gets t-SNE locations, cellular metadata, expression of genes and
-##' the geometric mean of the gene expression from a seurat object.
-##'
-##' @param seurat a seurat object
-##' @param genes genes of which to get expression data
-##' @return tidy dataframe of t-SNE points, cellular metadata and gene expression
-##' @author Rory Kirchner
-FetchTsneExpressionData = function(seurat, genes) {
-  dat = FetchData(seurat, genes) %>%
-    as.data.frame()
-  dat$geomean = colMeans(t(dat))
-  dat = dat %>%
-    tibble::rownames_to_column("cell")
-  FetchTsneData(seurat) %>%
-    left_join(dat) %>%
-    tidyr::gather(gene, expression, !!genes)
-}
-
 ##' Plot fetched t-SNE expression data
 ##'
 ##' @param df a dataframe from FetchTsneExpressionData

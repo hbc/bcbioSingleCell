@@ -42,6 +42,15 @@ setGeneric("fetchTSNEData", function(object, ...) {
 
 
 
+#' @rdname fetchTSNEExpressionData
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("fetchTSNEExpressionData", function(object, ...) {
+    standardGeneric("fetchTSNEExpressionData")
+})
+
+
+
 #' @rdname filterCells
 #' @inheritParams AllGenerics
 #' @export
