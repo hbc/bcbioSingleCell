@@ -1,0 +1,10 @@
+language: r
+# cache: packages
+sudo: false
+dist: trusty
+warnings_are_errors: false
+r:
+  - bioc-release
+  - bioc-devel
+after_success:
+  - Rscript -e 'covr::codecov()'
