@@ -16,7 +16,7 @@ NULL
 
 
 # Constructors ====
-.plotFeatures.seurat <- function(object, features, nCol = NULL) {
+.plotFeaturesSeurat <- function(object, features, nCol = NULL) {
     # tSNE color plot
     # Dark theme enables greater contrast for marker visualization.
     # Otherwise use `rev(viridis(2))` for the colors. This will define
@@ -58,6 +58,7 @@ NULL
             object,
             genes.plot = features,
             cols.use = viridis(2),
+            do.return = FALSE,
             plot.legend = TRUE,
             x.lab.rot = TRUE) %>%
             show
@@ -75,12 +76,11 @@ setMethod("plotFeatures", "seurat", function(
     headerLevel = 2L,
     combine = TRUE) {
     if (isTRUE(combine)) {
-        .plotFeatures.seurat(object, features, nCol = 2L)
-        # This is returning NULL -- need to fix in future update
+        .plotFeaturesSeurat(object, features, nCol = 2L)
     } else {
         lapply(seq_along(features), function(a) {
             mdHeader(features[[a]], level = headerLevel, asis = TRUE)
-            .plotFeatures.seurat(object, features[[a]])
+            .plotFeaturesSeurat(object, features[[a]])
         })
     }
     invisible()

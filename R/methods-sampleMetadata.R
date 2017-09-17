@@ -12,16 +12,15 @@ NULL
 
 
 # Constructors ====
-# This will extract the stashed `sampleMetadata` data.frame from the
-# SummarizedExperiment
-.sampleMetadata.bcbio <- function(object, kable = FALSE) {
+# This will extract the stashed `sampleMetadata` data.frame
+.bcbioSampleMetadata <- function(object, kable = FALSE) {
     object %>%
         metadata %>%
         .[["sampleMetadata"]] %>%
         .sampleMetadata(kable = kable)
 }
 
-.sampleMetadata <- function(object, kable) {
+.returnSampleMetadata <- function(object, kable) {
     df <- as.data.frame(object)
     if (isTRUE(kable)) {
         kable(df, caption = "Sample metadata")
@@ -35,13 +34,13 @@ NULL
 # Methods ====
 #' @rdname sampleMetadata
 #' @export
-setMethod("sampleMetadata", "bcbioSCDataSet", .sampleMetadata.bcbio)
+setMethod("sampleMetadata", "bcbioSCDataSet", .bcbioSampleMetadata)
 
 
 
 #' @rdname sampleMetadata
 #' @export
-setMethod("sampleMetadata", "bcbioSCFiltered", .sampleMetadata.bcbio)
+setMethod("sampleMetadata", "bcbioSCFiltered", .bcbioSampleMetadata)
 
 
 
@@ -95,6 +94,6 @@ setMethod("sampleMetadata", "seurat", function(
         df <- distinct(df) %>%
             set_rownames(.[["sampleID"]])
 
-        .sampleMetadata(df, kable = kable)
+        .returnSampleMetadata(df, kable = kable)
     }
 })

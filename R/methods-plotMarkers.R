@@ -21,11 +21,11 @@ setMethod("plotMarkers", "seurat", function(
     headerLevel = 2L,
     combine = TRUE) {
     if (isTRUE(combine)) {
-        .plotFeatures.seurat(object, symbols, nCol = 2L)
+        .plotFeaturesSeurat(object, symbols, nCol = 2L)
     } else {
         lapply(seq_along(symbols), function(a) {
             mdHeader(symbols[[a]], level = headerLevel, asis = TRUE)
-            .plotFeatures.seurat(object, symbols[[a]])
+            .plotFeaturesSeurat(object, symbols[[a]])
         }) %>%
             invisible
     }
