@@ -3,6 +3,7 @@
 #' @rdname sampleMetadata
 #' @name sampleMetadata
 #'
+#' @inheritParams AllGenerics
 #' @param kable Return the output as [kable] instead of [data.frame].
 #'
 #' @return [data.frame], unless `kable = TRUE`, which will return a [kable].

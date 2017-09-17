@@ -8,6 +8,9 @@
 \usage{
 \S4method{aggregateReplicates}{bcbioSCDataSet}(object)
 }
+\arguments{
+\item{object}{Object.}
+}
 \value{
 \link{bcbioSCDataSet}.
 }

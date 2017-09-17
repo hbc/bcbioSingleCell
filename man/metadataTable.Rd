@@ -12,6 +12,8 @@
 \S4method{metadataTable}{bcbioSCFiltered}(object, ...)
 }
 \arguments{
+\item{object}{Object.}
+
 \item{...}{Additional arguments, passed to \code{\link[knitr:kable]{knitr::kable()}}.}
 }
 \value{

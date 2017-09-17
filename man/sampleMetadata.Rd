@@ -15,6 +15,8 @@
 \S4method{sampleMetadata}{seurat}(object, kable = FALSE)
 }
 \arguments{
+\item{object}{Object.}
+
 \item{kable}{Return the output as \link{kable} instead of \link{data.frame}.}
 }
 \value{

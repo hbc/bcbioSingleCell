@@ -11,6 +11,9 @@
 
 \S4method{interestingGroups}{bcbioSCFiltered}(object)
 }
+\arguments{
+\item{object}{Object.}
+}
 \value{
 Character vector.
 }

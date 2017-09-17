@@ -12,9 +12,11 @@
 \S4method{bcbio}{bcbioSCDataSet}(object, type) <- value
 }
 \arguments{
-\item{object}{Primary object.}
+\item{object}{Object.}
 
 \item{type}{Type of count data to retrieve.}
+
+\item{value}{Object to assign.}
 }
 \value{
 \link{bcbioSCDataSet}.

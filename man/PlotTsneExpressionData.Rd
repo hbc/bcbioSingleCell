@@ -4,6 +4,7 @@
 \docType{methods}
 \name{plotTSNEExpressionData}
 \alias{plotTSNEExpressionData}
+\alias{plotTSNEExpressionData,grouped_df-method}
 \title{Plot Fetched t-SNE Expression Data}
 \usage{
 plotTSNEExpressionData(object, ...)

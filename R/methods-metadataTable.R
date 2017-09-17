@@ -6,6 +6,7 @@
 #' @name metadataTable
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
 #' @param ... Additional arguments, passed to [knitr::kable()].
 #'
 #' @return [kable].

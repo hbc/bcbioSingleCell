@@ -32,6 +32,13 @@
 #' plotTSNEExpressionData(dat, colorpoints = "expression") +
 #'     facet_wrap(~gene)
 #' }
+NULL
+
+
+
+# Methods ====
+#' @rdname plotTSNEExpressionData
+#' @export
 setMethod("plotTSNEExpressionData", "grouped_df", function(
     object,
     colorpoints = "geomean") {
@@ -39,8 +46,8 @@ setMethod("plotTSNEExpressionData", "grouped_df", function(
         stop("colorpoints supports 'geomean' or 'expression'")
     }
     # Check to make sure only a subset of markers is passed in
-    if (nrow(object) > 30) {
-        stop("'plotTSNEExpressionData()' supports up to 30 marker genes")
+    if (length(unique(object[["gene"]])) > 50) {
+        stop("geomean argument supports up to 50 marker genes")
     }
     object %>%
         ggplot(

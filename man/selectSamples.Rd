@@ -9,6 +9,8 @@
 \S4method{selectSamples}{bcbioSCFiltered}(object, ...)
 }
 \arguments{
+\item{object}{Object.}
+
 \item{...}{Columns to use for grep pattern matching. Supply a named character
 vector containing the column name and the grep pattern.}
 }

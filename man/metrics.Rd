@@ -14,6 +14,9 @@
 
 \S4method{metrics}{seurat}(object)
 }
+\arguments{
+\item{object}{Object.}
+}
 \value{
 \link{data.frame} with cellular barcodes as rows.
 }
