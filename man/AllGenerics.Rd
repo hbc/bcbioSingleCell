@@ -12,7 +12,7 @@
 
 \item{value}{Object to assign.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 }
 \value{
 No value.

@@ -2,8 +2,9 @@
 #'
 #' @rdname bcbio
 #' @name bcbio
+#' @author Michael Steinbaugh
 #'
-#' @param object Primary object.
+#' @inheritParams AllGenerics
 #' @param type Type of count data to retrieve.
 #'
 #' @return [bcbioSCDataSet].

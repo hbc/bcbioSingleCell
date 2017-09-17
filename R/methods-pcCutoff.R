@@ -6,6 +6,8 @@
 #'
 #' @rdname pcCutoff
 #' @name pcCutoff
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
 #'
 #' @param maxPct Maximum percent standard deviation.
 #' @param minCumPct Minimum cumulative percent standard deviation.

@@ -2,6 +2,9 @@
 #'
 #' @rdname interestingGroups
 #' @name interestingGroups
+#' @author Michael Steinbaugh
+#'
+#' @inheritParams AllGenerics
 #'
 #' @return Character vector.
 NULL

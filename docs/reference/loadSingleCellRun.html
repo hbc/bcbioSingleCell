@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load <code>bcbio</code> Single-Cell RNA-Seq Run — loadSingleCellRun • bcbioSingleCell</title>
+<title>Load bcbio Single-Cell RNA-Seq Run — loadSingleCellRun • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -60,6 +60,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -80,17 +83,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load <code>bcbio</code> Single-Cell RNA-Seq Run</h1>
+    <h1>Load bcbio Single-Cell RNA-Seq Run</h1>
     </div>
 
     
-    <p>Load <code>bcbio</code> Single-Cell RNA-Seq Run</p>
+    <p>Load bcbio Single-Cell RNA-Seq Run</p>
     
 
-    <pre class="usage"><span class='fu'>loadSingleCellRun</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for character</span>
-<span class='fu'>loadSingleCellRun</span>(<span class='no'>object</span>, <span class='no'>sampleMetadataFile</span>,
+    <pre class="usage"><span class='fu'>loadSingleCellRun</span>(<span class='no'>uploadDir</span>, <span class='no'>sampleMetadataFile</span>,
   <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>gtfFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>wellMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
@@ -98,13 +98,9 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Path to final upload directory. This path is set when running
-<code>bcbio_nextgen -w template</code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments, passed as metadata.</p></td>
+      <th>uploadDir</th>
+      <td><p>Path to final upload directory. This path is set when
+running <code>bcbio_nextgen -w template</code>.</p></td>
     </tr>
     <tr>
       <th>sampleMetadataFile</th>
@@ -125,6 +121,10 @@ annotation mappings.</p></td>
     <tr>
       <th>wellMetadataFile</th>
       <td><p><em>Optional</em>. Well identifier metadata file.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments, passed as metadata.</p></td>
     </tr>
     </table>
     

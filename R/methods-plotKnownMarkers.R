@@ -2,35 +2,41 @@
 #'
 #' @rdname plotKnownMarkers
 #' @name plotKnownMarkers
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
+#'
+#' @inherit plotMarkers
 #'
 #' @param knownMarkers [knownMarkersDetected()] [tibble] grouped by cluster.
-#' @param markdown Print Markdown headers.
-#'
-#' @return [writeLines()].
 NULL
 
 
 
-# Constructor ====
-.plotKnownMarkers <- function(object, knownMarkers, markdown = TRUE) {
+# Constructors ====
+.plotKnownMarkers <- function(
+    object,
+    knownMarkers,
+    headerLevel = 2L,
+    combine = FALSE) {
     if (nrow(knownMarkers) == 0L) {
         return(NULL)
     }
     cellTypes <- knownMarkers %>%
-        pull("cellType") %>%
+        pull("cell") %>%
         unique
     pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
-        if (isTRUE(markdown)) {
-            mdHeader(cellType, level = 3L, tabset = TRUE)
-        }
         symbols <- knownMarkers %>%
-            tidy_filter(.data[["cellType"]] == !!cellType) %>%
+            tidy_filter(.data[["cell"]] == !!cellType) %>%
             pull("symbol") %>%
             unique %>%
             sort
         if (!is.null(symbols)) {
-            plotClusters(object, symbols)
+            mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
+            plotMarkers(object,
+                        symbols = symbols,
+                        headerLevel = headerLevel + 1L,
+                        combine = combine)
         } else {
             NULL
         }

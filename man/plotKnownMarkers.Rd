@@ -9,27 +9,29 @@
 plotKnownMarkers(object, knownMarkers, ...)
 
 \S4method{plotKnownMarkers}{seurat,grouped_df}(object, knownMarkers,
-  markdown = TRUE)
+  headerLevel = 2L, combine = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{knownMarkers}{\code{\link[=knownMarkersDetected]{knownMarkersDetected()}} \link{tibble} grouped by cluster.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{markdown}{Print Markdown headers.}
+\item{headerLevel}{Include a Markdown header for each gene.}
+
+\item{combine}{Combine all markers into a single plot.}
 }
 \value{
-\code{\link[=writeLines]{writeLines()}}.
+No value, only graphical output.
 }
 \description{
 Plot Known Markers
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
-  \code{\link{plotStressGenes}},
+  \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
+  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}
 }

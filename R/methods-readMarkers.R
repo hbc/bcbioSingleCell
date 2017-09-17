@@ -2,6 +2,8 @@
 #'
 #' @rdname readMarkers
 #' @name readMarkers
+#' @family Data Management Utilities
+#' @author Michael Steinbaugh
 #'
 #' @param object Gene markers file (CSV or Excel).
 #' @param gene2symbol Gene-to-symbol annotation [data.frame].
@@ -38,7 +40,7 @@ setMethod("readMarkers", "character", function(
     if ("ensgene" %in% colnames(markers)) {
         message("Matching by gene identifier")
         markers <- markers %>%
-            .[, c("cellType", "ensgene")] %>%
+            .[, c("cell", "ensgene")] %>%
             .[!is.na(.[["ensgene"]]), ] %>%
             left_join(gene2symbol, by = "ensgene")
         # Check for bad identifiers
@@ -53,7 +55,7 @@ setMethod("readMarkers", "character", function(
     } else if ("symbol" %in% colnames(markers)) {
         message("Matching by gene symbol")
         markers <- markers %>%
-            .[, c("cellType", "symbol")] %>%
+            .[, c("cell", "symbol")] %>%
             .[!is.na(.[["symbol"]]), ] %>%
             left_join(gene2symbol, by = "symbol")
         # Check for bad identifiers
@@ -71,8 +73,8 @@ setMethod("readMarkers", "character", function(
 
     markers <- markers %>%
         .[!is.na(.[["ensgene"]]), ] %>%
-        .[, c("cellType", "symbol", "ensgene")] %>%
-        arrange(!!!syms(c("cellType", "symbol"))) %>%
+        .[, c("cell", "symbol", "ensgene")] %>%
+        arrange(!!!syms(c("cell", "symbol"))) %>%
         distinct
 
     if (isTRUE(show)) {

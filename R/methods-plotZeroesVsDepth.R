@@ -2,6 +2,8 @@
 #'
 #' @rdname plotZerosVsDepth
 #' @name plotZerosVsDepth
+#' @family Quality Control Metrics
+#' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @return [ggplot].
 NULL

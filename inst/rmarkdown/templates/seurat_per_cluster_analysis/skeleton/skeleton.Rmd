@@ -1,0 +1,139 @@
+---
+title: "Per Cluster Analysis"
+author: "`r getOption('author')`"
+date: "`r Sys.Date()`"
+bibliography: bibliography.bib
+params:
+    seuratFile: "data/bcb_filtered_seurat.rda"
+    intgroup: "genotype"
+---
+
+```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(Seurat)
+library(tidyverse)
+library(bcbioSingleCell)
+
+# Shared RMarkdown settings
+prepareSingleCellTemplate()
+if (file.exists("setup.R")) {
+    source("setup.R")
+}
+
+# Load the seurat object
+if (!exists("seurat", inherits = FALSE)) {
+    seuratName <- load(params$seuratFile)
+    seurat <- get(seuratName, inherits = FALSE)
+}
+```
+
+```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
+```
+
+```{r sample_metadata}
+sampleMetadata(seurat, kable = TRUE)
+```
+
+
+
+# t-SNE plots {.tabset}
+
+```{r tsne}
+mdHeader("cluster")
+TSNEPlot(
+    seurat,
+    do.label = TRUE,
+    label.size = 6)
+
+mdHeader("sampleName")
+TSNEPlot(
+    seurat,
+    do.label = TRUE,
+    group.by = "sampleName",
+    label.size = 6)
+
+mdHeader(params$intgroup)
+TSNEPlot(
+    seurat,
+    do.label = FALSE,
+    group.by = params$intgroup)
+```
+
+
+
+# Cells per cluster {.tabset}
+
+```{r per_cluster, fig.height=12, fig.width=6, results="asis"}
+ident <- levels(seurat@ident)
+lapply(seq_along(ident), function(a) {
+    clusterID <- ident[[a]]
+    intgroup <- params$intgroup
+    title <- paste("cluster", clusterID)
+    mdHeader(title, level = 2, asis = TRUE)
+    object <- SubsetData(seurat, ident.use = clusterID)
+    n <- ncol(object@data)
+    
+    # Plots
+    p1 <- TSNEPlot(object,
+                   do.return = TRUE,
+                   group.by = "sampleName") +
+        labs(title = tolower(title),
+             subtitle = paste("n =", n)) +
+        theme(legend.position = "bottom")
+    p2 <- TSNEPlot(object,
+                   do.return = TRUE,
+                   group.by = intgroup) +
+        ggtitle(intgroup) +
+        theme(legend.position = "bottom")
+    plot_grid(p1, p2, labels = "auto", ncol = 1, nrow = 2) %>%
+        show
+    
+    # Tables
+    master <- object@meta.data %>%
+        as.data.frame %>%
+        .[, c("sampleName", intgroup)] %>%
+        rownames_to_column
+    sampleStats <- master %>%
+        arrange(.data[["sampleName"]]) %>%
+        group_by(.data[["sampleName"]]) %>%
+        summarize(count = n()) %>%
+        mutate(pct = .data[["count"]] / sum(.data[["count"]]))
+    intgroupStats <- master %>%
+        arrange(.data[[intgroup]]) %>%
+        group_by(.data[[intgroup]]) %>%
+        summarize(count = n()) %>%
+        mutate(pct = .data[["count"]] / sum(.data[["count"]]))
+    kable(sampleStats,
+          caption = paste0(title, ": sampleName"),
+          digits = 2L) %>%
+        show
+    kable(intgroupStats,
+          caption = paste0(title, ": ", intgroup),
+          digits = 2L) %>%
+        show
+}) %>%
+    invisible
+```
+
+
+
+# Seurat diagnostics {.tabset}
+
+```{r seurat_diagnostics}
+mdHeader("PrintPCAParams")
+PrintPCAParams(seurat)
+
+mdHeader("PrintFindClustersParams")
+PrintFindClustersParams(seurat)
+
+mdHeader("PrintTSNEParams")
+PrintTSNEParams(seurat)
+
+mdHeader("PrintSNNParams")
+PrintSNNParams(seurat)
+```
+
+
+
+```{r footer, child="_footer.Rmd", eval=file.exists("_footer.Rmd")}
+```

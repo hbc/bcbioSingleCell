@@ -2,6 +2,10 @@
 #'
 #' @rdname plotNovelty
 #' @name plotNovelty
+#' @family Quality Control Metrics
+#' @author Michael Steinbaugh
+#'
+#' @inherit plotGenesPerCell
 #'
 #' @details "Novelty" refers to log10 genes detected per count.
 NULL

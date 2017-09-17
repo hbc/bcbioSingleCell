@@ -4,6 +4,10 @@
 #'
 #' @rdname plotUMIsPerCell
 #' @name plotUMIsPerCell
+#' @family Quality Control Metrics
+#' @author Michael Steinbaugh, Rory Kirchner
+#'
+#' @inherit plotGenesPerCell
 NULL
 
 

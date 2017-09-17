@@ -8,14 +8,17 @@
 \usage{
 topMarkers(object, ...)
 
-\S4method{topMarkers}{data.frame}(object, n = 4L, show = FALSE)
+\S4method{topMarkers}{data.frame}(object, n = 4L, coding = FALSE,
+  show = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{n}{Number of genes per cluster.}
+
+\item{coding}{Only include protein coding genes.}
 
 \item{show}{Show \link{kable}.}
 }
@@ -26,10 +29,12 @@ topMarkers(object, ...)
 Top Markers
 }
 \seealso{
+\code{\link[dplyr:top_n]{dplyr::top_n()}}.
+
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
+  \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
   \code{\link{plotKnownMarkers}},
-  \code{\link{plotStressGenes}},
+  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}}
 }
 \author{

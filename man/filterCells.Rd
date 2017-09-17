@@ -10,12 +10,12 @@ filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSCDataSet}(object, minUMIs = 1000L,
   minGenes = 500L, maxGenes = NULL, maxMitoRatio = 0.1,
-  minNovelty = 0.8, showReport = TRUE)
+  minNovelty = 0.8, showReport = TRUE, headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{minUMIs}{Minimum number of UMI disambiguated counts per cell.}
 
@@ -28,6 +28,8 @@ filterCells(object, ...)
 \item{minNovelty}{Minimum novelty score.}
 
 \item{showReport}{Show summary statistics report and plots.}
+
+\item{headerLevel}{RMarkdown header level, if \code{showReport = TRUE}.}
 }
 \value{
 \link{bcbioSCFiltered}.
@@ -39,10 +41,7 @@ cellular barcodes.
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
-  \code{\link{interestingGroups}},
-  \code{\link{readMarkers}}, \code{\link{sampleMetadata}},
-  \code{\link{selectSamples}},
-  \code{\link{subsetPerSample}}
+  \code{\link{readMarkers}}, \code{\link{subsetPerSample}}
 }
 \author{
 Michael Steinbaugh

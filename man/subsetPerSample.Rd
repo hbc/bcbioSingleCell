@@ -14,7 +14,7 @@ subsetPerSample(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{minCells}{Minimum number of cells required per sample.}
 
@@ -26,10 +26,7 @@ Subset Per Sample
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
-  \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
-  \code{\link{readMarkers}}, \code{\link{sampleMetadata}},
-  \code{\link{selectSamples}}
+  \code{\link{filterCells}}, \code{\link{readMarkers}}
 }
 \author{
 Michael Steinbaugh

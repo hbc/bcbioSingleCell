@@ -13,7 +13,7 @@ plotStressGenes(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 }
 \value{
 \link{ggplot}.
@@ -23,13 +23,12 @@ Plot Stress Genes
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
+  \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
   \code{\link{plotKnownMarkers}},
-  \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{plotMarkers}}, \code{\link{plotTopMarkers}},
+  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh
 }
 \concept{Clustering Utilities}
-\keyword{internal}

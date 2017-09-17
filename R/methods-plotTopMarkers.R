@@ -2,17 +2,22 @@
 #'
 #' @rdname plotTopMarkers
 #' @name plotTopMarkers
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
+#'
+#' @inherit plotMarkers
 #'
 #' @param topMarkers Top markers grouped [tibble] returned by [topMarkers()].
-#' @param markdown Print Markdown headers.
-#'
-#' @return [ggplot].
 NULL
 
 
 
 # Constructors ====
-.plotTopMarkers <- function(object, topMarkers, markdown = TRUE) {
+.plotTopMarkers <- function(
+    object,
+    topMarkers,
+    headerLevel = 2L,
+    combine = FALSE) {
     # Fix for gene symbol mismatch
     if ("gene" %in% colnames(topMarkers)) {
         topMarkers <- rename(topMarkers, symbol = .data[["gene"]])
@@ -20,9 +25,6 @@ NULL
     clusters <- topMarkers[["cluster"]] %>% levels
     pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
-        if (isTRUE(markdown)) {
-            mdHeader(paste("Cluster", cluster), level = 3L, tabset = TRUE)
-        }
         symbols <- topMarkers %>%
             .[.[["cluster"]] == cluster, ] %>%
             pull("symbol")
@@ -31,7 +33,14 @@ NULL
             warning("Maximum of 4 genes per cluster is recommended")
             symbols <- symbols[[1L:4L]]
         }
-        plotClusters(object, symbols)
+        mdHeader(paste("Cluster", cluster),
+                 level = headerLevel,
+                 tabset = TRUE,
+                 asis = TRUE)
+        plotMarkers(object,
+                    symbols = symbols,
+                    headerLevel = headerLevel + 1L,
+                    combine = combine)
     }) %>%
         invisible
 }

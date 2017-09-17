@@ -9,29 +9,31 @@
 plotTopMarkers(object, topMarkers, ...)
 
 \S4method{plotTopMarkers}{seurat,grouped_df}(object, topMarkers,
-  markdown = TRUE)
+  headerLevel = 2L, combine = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{topMarkers}{Top markers grouped \link{tibble} returned by \code{\link[=topMarkers]{topMarkers()}}.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{markdown}{Print Markdown headers.}
+\item{headerLevel}{Include a Markdown header for each gene.}
+
+\item{combine}{Combine all markers into a single plot.}
 }
 \value{
-\link{ggplot}.
+No value, only graphical output.
 }
 \description{
 Plot Top Markers
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
+  \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
   \code{\link{plotKnownMarkers}},
-  \code{\link{plotStressGenes}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
+  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

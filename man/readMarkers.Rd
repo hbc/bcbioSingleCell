@@ -13,7 +13,7 @@ readMarkers(object, ...)
 \arguments{
 \item{object}{Gene markers file (CSV or Excel).}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{gene2symbol}{Gene-to-symbol annotation \link{data.frame}.}
 
@@ -28,11 +28,7 @@ Read Known Markers
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
-  \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
-  \code{\link{sampleMetadata}},
-  \code{\link{selectSamples}},
-  \code{\link{subsetPerSample}}
+  \code{\link{filterCells}}, \code{\link{subsetPerSample}}
 }
 \author{
 Michael Steinbaugh

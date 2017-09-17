@@ -2,6 +2,8 @@
 #'
 #' @rdname topBarcodes
 #' @name topBarcodes
+#' @family Clustering Utilities
+#' @author Michael Steinbaugh
 #'
 #' @param n Number of barcodes to return per sample.
 #'

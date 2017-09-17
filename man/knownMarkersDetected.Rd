@@ -17,7 +17,7 @@ knownMarkersDetected(object, knownMarkers, ...)
 
 \item{knownMarkers}{Known markers imported by \code{\link[=readMarkers]{readMarkers()}}.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{show}{Show \link{kable}.}
 }
@@ -29,9 +29,9 @@ Known Markers Detected
 }
 \seealso{
 Other Clustering Utilities: \code{\link{pcCutoff}},
-  \code{\link{plotClusters}},
+  \code{\link{plotFeatures}},
   \code{\link{plotKnownMarkers}},
-  \code{\link{plotStressGenes}},
+  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}
 }

@@ -1,6 +1,5 @@
 #' Bind Cellular Barcodes
 #'
-#' @rdname internal-bindCB
 #' @keywords internal
 #'
 #' @param list List of cellular barcodes.

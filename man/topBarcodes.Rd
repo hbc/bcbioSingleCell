@@ -16,7 +16,7 @@ topBarcodes(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{n}{Number of barcodes to return per sample.}
 }
@@ -28,9 +28,9 @@ Top Barcodes
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotClusters}},
+  \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
   \code{\link{plotKnownMarkers}},
-  \code{\link{plotStressGenes}},
+  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topMarkers}}
 }
 \author{

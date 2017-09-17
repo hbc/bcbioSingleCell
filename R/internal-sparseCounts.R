@@ -11,7 +11,7 @@
 #' @note bcbio-nextgen outputs counts at transcript level. 10X Chromium
 #'   CellRanger outputs counts at gene level.
 #'
-#' @rdname internal-readSparseCounts
+#' @author Michael Steinbaugh
 #' @keywords internal
 #'
 #' @param sampleDir Named character vector of sample directory containing the
@@ -115,27 +115,49 @@
 
 #' Transcript To Gene-Level Sparse Counts
 #'
-#' @rdname internal-sparseCountsTx2Gene
+#' @author Michael Steinbaugh
 #' @keywords internal
 #'
-#' @param sparseCounts Sparse counts matrix (`dgCMatrix`).
+#' @param txlevel Transcript-level sparse counts matrix (`dgCMatrix`).
 #' @param tx2gene Transcript to gene identifier mappings.
 #'
 #' @return `dgCMatrix`.
-.sparseCountsTx2Gene <- function(sparseCounts, tx2gene) {
-    sparseCounts <- .stripTranscriptVersions(sparseCounts)
-    if (!all(rownames(sparseCounts) %in% rownames(tx2gene))) {
-        missing <- rownames(sparseCounts) %>%
-            .[!. %in% rownames(tx2gene)]
-        stop(paste(
+.sparseCountsTx2Gene <- function(txlevel, tx2gene) {
+    if (!is(txlevel, "dgCMatrix")) {
+        stop("txlevel must be dgCMatrix class object")
+    }
+    mat <- .stripTranscriptVersions(txlevel)
+
+    # Subset the tx2gene to keep only identifiers present in the matrix
+    t2g <- tx2gene %>%
+        as.data.frame %>%
+        remove_rownames %>%
+        .[.[["enstxp"]] %in% rownames(mat), ]
+
+    # Detect and handle missing transcript identifiers. These are typically
+    # deprecated transcripts in the current Ensembl release, or FASTA
+    # spike-in sequences (e.g. EGFP, GAL4). We don't want to simply trash here.
+    if (!all(rownames(mat) %in% tx2gene[["enstxp"]])) {
+        missing <- rownames(mat) %>%
+            .[!. %in% tx2gene[["enstxp"]]]
+        if (length(missing) > 200L) {
+            # Stop if there are too many transcript match failures
+            fxn <- stop
+        } else {
+            # Otherwise warn and append the t2g match tibble
+            fxn <- warning
+            t2g <- data.frame(enstxp = missing, ensgene = missing) %>%
+                bind_rows(t2g)
+         }
+        fxn(paste(
             length(missing),
             "transcripts in matrix missing from tx2gene:",
             toString(head(missing)),
             "..."))
     }
+
     message("Converting transcript-level counts to gene-level")
-    t2g <- tx2gene[rownames(sparseCounts), ]
-    sparseCounts %>%
+    mat %>%
         set_rownames(t2g[["ensgene"]]) %>%
         aggregate.Matrix(rownames(.), fun = "sum")
 }
@@ -144,7 +166,7 @@
 
 #' Strip Transcript Versions
 #'
-#' @rdname internal-stripTranscriptVersions
+#' @author Michael Steinbaugh
 #' @keywords internal
 #'
 #' @param sparseCounts Sparse counts matrix (`dgCMatrix`).

@@ -14,7 +14,7 @@ prepareSingleCellTemplate(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 }
 \value{
 No value.
@@ -26,9 +26,6 @@ Prepare Single-Cell RNA-Seq RMarkdown Template
 \dontrun{
 prepareSingleCellTemplate()
 }
-}
-\seealso{
-Other RMarkdown Utilities: \code{\link{metadataTable}}
 }
 \author{
 Michael Steinbaugh

@@ -6,6 +6,7 @@
 #' @details Internally, pattern matching against sample and file names is
 #'   applied using [str_detect()].
 #'
+#' @inheritParams AllGenerics
 #' @param ... Columns to use for grep pattern matching. Supply a named character
 #'   vector containing the column name and the grep pattern.
 #'
@@ -72,7 +73,7 @@ NULL
         set_rownames(rownames(object))
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <- sampleMetadata
-    se <- prepareSummmarizedExperiment(
+    se <- prepareSummarizedExperiment(
         sparseCounts,
         colData = colData,
         rowData = rowData,

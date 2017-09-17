@@ -1,6 +1,6 @@
 #' Detect Sample Directories
 #'
-#' @rdname internal-sampleDirs
+#' @author Michael Steinbaugh
 #' @keywords internal
 #'
 #' @param uploadDir Upload directory.
@@ -21,16 +21,9 @@
             stop("Failed to detect any sample directories",
                  call. = FALSE)
         }
-        # Sample directory: `sampleName`-`barcode`
-        split <- basename(sampleDirs) %>%
-            str_split("-")
-        sampleNames <-
-            sapply(seq_along(split), function(a) {
-            paste(camel(split[[a]][[1L]]),
-                  split[[a]][[2L]],
-                  sep = "_")
-        })
-        names(sampleDirs) <- sampleNames
+        names(sampleDirs) <- basename(sampleDirs) %>%
+            str_replace_all("-", "_") %>%
+            make.names
     } else if (pipeline == "cellranger") {
         # Faster directory matching
         subdirs <- list.dirs(uploadDir, full.names = TRUE, recursive = FALSE)
@@ -41,7 +34,7 @@
                  call. = FALSE)
         }
         sampleDirs <- subdirs[matches]
-        names(sampleDirs) <- camel(basename(sampleDirs))
+        names(sampleDirs) <- make.names(basename(sampleDirs))
     } else {
         stop("Unsupported pipeline")
     }

@@ -1,6 +1,6 @@
 #' Cellular Barcodes List
 #'
-#' @rdname internal-cbList
+#' @author Michael Steinbaugh
 #' @keywords internal
 #'
 #' @param sampleDirs Sample directories.

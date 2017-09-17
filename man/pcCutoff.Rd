@@ -14,7 +14,7 @@ pcCutoff(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{maxPct}{Maximum percent standard deviation.}
 
@@ -34,9 +34,9 @@ PC cutoff for either 5% SD (\code{maxPct}) or 80% cumulative (\code{minCumsum}).
 \link[Seurat:PCElbowPlot]{Seurat::PCElbowPlot}.
 
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotClusters}},
+  \code{\link{plotFeatures}},
   \code{\link{plotKnownMarkers}},
-  \code{\link{plotStressGenes}},
+  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}
 }

@@ -8,7 +8,7 @@
 #' @param x Primary object.
 #' @param y Secondary object.
 #' @param value Object to assign.
-#' @param ... Additional arguments.
+#' @param ... *Additional arguments (for the S4 generic definition).*
 #'
 #' @return No value.
 NULL
@@ -16,8 +16,6 @@ NULL
 
 
 #' @rdname aggregateFeatures
-#' @family Data Management Utilities
-#' @author Rory Kirchner, Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("aggregateFeatures", function(object, ...) {
@@ -26,39 +24,7 @@ setGeneric("aggregateFeatures", function(object, ...) {
 
 
 
-#' @rdname aggregateReplicates
-#' @family Data Management Utilities
-#' @author Rory Kirchner, Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("aggregateReplicates", function(object, ...) {
-    standardGeneric("aggregateReplicates")
-})
-
-
-
-#' @rdname bcbio
-#' @author Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("bcbio", function(object, ...) {
-    standardGeneric("bcbio")
-})
-
-
-
-#' @rdname bcbio
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("bcbio<-", function(object, ..., value) {
-    standardGeneric("bcbio<-")
-})
-
-
-
 #' @rdname calculateMetrics
-#' @family QC Metrics Utilities
-#' @author Rory Kirchner, Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("calculateMetrics", function(object, ...) {
@@ -67,9 +33,25 @@ setGeneric("calculateMetrics", function(object, ...) {
 
 
 
+#' @rdname fetchTSNEData
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("fetchTSNEData", function(object, ...) {
+    standardGeneric("fetchTSNEData")
+})
+
+
+
+#' @rdname fetchTSNEExpressionData
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("fetchTSNEExpressionData", function(object, ...) {
+    standardGeneric("fetchTSNEExpressionData")
+})
+
+
+
 #' @rdname filterCells
-#' @family Data Management Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("filterCells", function(object, ...) {
@@ -78,20 +60,7 @@ setGeneric("filterCells", function(object, ...) {
 
 
 
-#' @rdname interestingGroups
-#' @family Data Management Utilities
-#' @author Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("interestingGroups", function(object) {
-    standardGeneric("interestingGroups")
-})
-
-
-
 #' @rdname knownMarkersDetected
-#' @family Clustering Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("knownMarkersDetected", function(object, knownMarkers, ...) {
@@ -100,51 +69,7 @@ setGeneric("knownMarkersDetected", function(object, knownMarkers, ...) {
 
 
 
-#' @rdname loadCellRanger
-#' @author Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("loadCellRanger", function(object, ...) {
-    standardGeneric("loadCellRanger")
-})
-
-
-
-#' @rdname loadSingleCellRun
-#' @author Michael Steinbaugh, Rory Kirchner
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("loadSingleCellRun", function(object, ...) {
-    standardGeneric("loadSingleCellRun")
-})
-
-
-
-#' @rdname metadataTable
-#' @family RMarkdown Utilities
-#' @author Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("metadataTable", function(object, ...) {
-    standardGeneric("metadataTable")
-})
-
-
-
-#' @rdname metrics
-#' @family Quality Control Metrics
-#' @author Michael Steinbaugh, Rory Kirchner
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("metrics", function(object, ...) {
-    standardGeneric("metrics")
-})
-
-
-
 #' @rdname pcCutoff
-#' @family Clustering Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("pcCutoff", function(object, ...) {
@@ -154,10 +79,7 @@ setGeneric("pcCutoff", function(object, ...) {
 
 
 #' @rdname plotCellCounts
-#' @family Quality Control Metrics
-#' @author Michael Steinbaugh, Rory Kirchner
 #' @inheritParams AllGenerics
-#' @inherit plotGenesPerCell
 #' @export
 setGeneric("plotCellCounts", function(object, ...) {
     standardGeneric("plotCellCounts")
@@ -165,20 +87,16 @@ setGeneric("plotCellCounts", function(object, ...) {
 
 
 
-#' @rdname plotClusters
-#' @family Clustering Utilities
-#' @author Michael Steinbaugh
+#' @rdname plotFeatures
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("plotClusters", function(object, ...) {
-    standardGeneric("plotClusters")
+setGeneric("plotFeatures", function(object, ...) {
+    standardGeneric("plotFeatures")
 })
 
 
 
 #' @rdname plotGenesPerCell
-#' @family Quality Control Metrics
-#' @author Michael Steinbaugh, Rory Kirchner
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("plotGenesPerCell", function(object, ...) {
@@ -188,8 +106,6 @@ setGeneric("plotGenesPerCell", function(object, ...) {
 
 
 #' @rdname plotKnownMarkers
-#' @family Clustering Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("plotKnownMarkers", function(object, knownMarkers, ...) {
@@ -198,11 +114,17 @@ setGeneric("plotKnownMarkers", function(object, knownMarkers, ...) {
 
 
 
-#' @rdname plotMitoRatio
-#' @family Quality Control Metrics
-#' @author Michael Steinbaugh, Rory Kirchner
+#' @rdname plotMarkers
 #' @inheritParams AllGenerics
-#' @inherit plotGenesPerCell
+#' @export
+setGeneric("plotMarkers", function(object, ...) {
+    standardGeneric("plotMarkers")
+})
+
+
+
+#' @rdname plotMitoRatio
+#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotMitoRatio", function(object, ...) {
     standardGeneric("plotMitoRatio")
@@ -211,10 +133,7 @@ setGeneric("plotMitoRatio", function(object, ...) {
 
 
 #' @rdname plotNovelty
-#' @family Quality Control Metrics
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
-#' @inherit plotGenesPerCell
 #' @export
 setGeneric("plotNovelty", function(object, ...) {
     standardGeneric("plotNovelty")
@@ -234,8 +153,6 @@ setGeneric("plotReadsPerCell", function(object, ...) {
 
 
 #' @rdname plotStressGenes
-#' @family Clustering Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("plotStressGenes", function(object, ...) {
@@ -245,8 +162,6 @@ setGeneric("plotStressGenes", function(object, ...) {
 
 
 #' @rdname plotTopMarkers
-#' @family Clustering Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("plotTopMarkers", function(object, topMarkers, ...) {
@@ -255,11 +170,17 @@ setGeneric("plotTopMarkers", function(object, topMarkers, ...) {
 
 
 
-#' @rdname plotUMIsPerCell
-#' @family Quality Control Metrics
-#' @author Michael Steinbaugh, Rory Kirchner
+#' @rdname plotTSNEExpressionData
 #' @inheritParams AllGenerics
-#' @inherit plotGenesPerCell
+#' @export
+setGeneric("plotTSNEExpressionData", function(object, ...) {
+    standardGeneric("plotTSNEExpressionData")
+})
+
+
+
+#' @rdname plotUMIsPerCell
+#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotUMIsPerCell", function(object, ...) {
     standardGeneric("plotUMIsPerCell")
@@ -280,8 +201,6 @@ setGeneric("plotUMIsVsGenes", function(object, ...) {
 
 
 #' @rdname prepareSingleCellTemplate
-#' @family RMarkdown Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("prepareSingleCellTemplate", function(object, ...) {
@@ -291,8 +210,6 @@ setGeneric("prepareSingleCellTemplate", function(object, ...) {
 
 
 #' @rdname plotZerosVsDepth
-#' @family Quality Control Metrics
-#' @author Rory Kirchner, Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("plotZerosVsDepth", function(object, ...) {
@@ -301,9 +218,16 @@ setGeneric("plotZerosVsDepth", function(object, ...) {
 
 
 
+#' @rdname quantileHeatmap
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("quantileHeatmap", function(object, ...) {
+    standardGeneric("quantileHeatmap")
+})
+
+
+
 #' @rdname readMarkers
-#' @family Data Management Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("readMarkers", function(object, ...) {
@@ -312,31 +236,7 @@ setGeneric("readMarkers", function(object, ...) {
 
 
 
-#' @rdname sampleMetadata
-#' @family Data Management Utilities
-#' @author Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("sampleMetadata", function(object, ...) {
-    standardGeneric("sampleMetadata")
-})
-
-
-
-#' @rdname selectSamples
-#' @family Data Management Utilities
-#' @author Michael Steinbaugh
-#' @inheritParams AllGenerics
-#' @export
-setGeneric("selectSamples", function(object, ...) {
-    standardGeneric("selectSamples")
-})
-
-
-
 #' @rdname subsetPerSample
-#' @family Data Management Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("subsetPerSample", function(object, ...) {
@@ -346,8 +246,6 @@ setGeneric("subsetPerSample", function(object, ...) {
 
 
 #' @rdname topBarcodes
-#' @family Clustering Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("topBarcodes", function(object, ...) {
@@ -357,8 +255,6 @@ setGeneric("topBarcodes", function(object, ...) {
 
 
 #' @rdname topMarkers
-#' @family Clustering Utilities
-#' @author Michael Steinbaugh
 #' @inheritParams AllGenerics
 #' @export
 setGeneric("topMarkers", function(object, ...) {
