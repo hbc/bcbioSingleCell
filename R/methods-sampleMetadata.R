@@ -17,7 +17,7 @@ NULL
     object %>%
         metadata %>%
         .[["sampleMetadata"]] %>%
-        .sampleMetadata(kable = kable)
+        .returnSampleMetadata(kable = kable)
 }
 
 .returnSampleMetadata <- function(object, kable) {
