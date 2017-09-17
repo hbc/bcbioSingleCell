@@ -133,6 +133,11 @@ NULL
                  asis = TRUE)
         show(plotGenesPerCell(object))
 
+        mdHeader("UMIs vs. genes",
+                 level = headerLevel + 1L,
+                 asis = TRUE)
+        show(plotUMIsVsGenes(object))
+
         mdHeader("Mitochondrial counts ratio",
                  level = headerLevel + 1L,
                  asis = TRUE)
