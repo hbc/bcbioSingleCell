@@ -4,6 +4,18 @@
 - Added [viridis][] color support in tSNE plots and heatmaps.
 - Converted `loadSingleCellRun()` and `loadCellRanger()` from S4 generics back to standard functions.
 - Added t-SNE utility functions: `fetchTSNEData()`, `fetchTSNEExpressionData()`, and `plotTSNEExpressionData()`. This enable plotting of geometric mean values of desired marker genes.
+- Updated NEWS to Markdown, with hyperlinks.
+- Offloaded generics that would otherwise conflict with bcbioRNASeq to the basejump package.
+- Improved roxygen documentation. Moved as much documentation as possible to the methods files.
+- Updated `cellCycleMarkers` and `cellTypeMarkers` data. Now supports Drosophila.
+- Sample IDs are now sanitized using `make.names()` instead of `camel()`. This avoids undesirable coercion of some IDs (e.g. `group1_1` into `group11`).
+- Added recommended package syntax guidelines.
+- lintr checks now allow implicit integers (e.g. `1` instead of `1L`).
+- Added Seurat as dependency in `DESCRIPTION` file. The package now attaches Seurat automatically.
+- Package no longer imports mononcle or suggests scater, scde, or scone. We're planning on adding these back in a future update, but build checks on Travis CI otherwise take too long.
+- Added new `quantileHeatmap()` function.
+- Improved Markdown header support across functions, where applicable.
+- Improved `bcbioSCFiltered` to `seurat` coercion to slot relevant bcbio metadata.
 
 
 
