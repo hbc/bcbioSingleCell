@@ -36,6 +36,9 @@ if (!exists("seurat", inherits = FALSE)) {
     if (file.exists(seuratFile)) {
         seuratName <- load(seuratFile)
         seurat <- get(seuratName, inherits = FALSE)
+        seuratPreregressFile <- str_replace(seuratFile, "\\.rda$", "_preregress.rda")
+        seuratPreregressName <- load(seuratPreregressFile)
+        seuratPreregress <- get(seuratPreregressName, inherits = FALSE)
         evalSeurat <- FALSE
     } else {
         evalSeurat <- TRUE
@@ -45,10 +48,7 @@ if (!exists("seurat", inherits = FALSE)) {
 }
 
 # Vector to use for plot looping
-groupBy <- c("ident",
-             "sampleName",
-             "Phase",
-             metadata(bcb)$interestingGroups)
+groupBy <- c("ident", "sampleName", "Phase", metadata(bcb)$interestingGroups)
 
 # Directory paths
 markersDir <- file.path(params$outputDir, "results", "markers")
@@ -78,7 +78,7 @@ This workflow is adapted from the following sources:
 
 # Initialize Seurat (`r bcbName`)
 
-Let's convert our `bcbioSCFiltered` class object containing the filtered high-quality cells into a `seurat` class object, without applying any additional cell filtering cutoffs.
+Let's coerce our filtered `bcbioSCDataSet` into a `seurat` object, without applying any additional filtering. During this step, global-scaling normalization is applied to the raw counts with `NormalizeData()`, which (1) normalizes the gene expression measurements for each cell by the total expression, (2) multiplies this by a scale factor (10,000 by default), and (3) log-transforms the result. `FindVariableGenes()` is then called, which calculates the average expression and dispersion for each gene, places these genes into bins, and then calculates a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression. Finally, the genes are scaled and centered using the `ScaleData()` function.
 
 ```{r seurat}
 # S4 object coercion method using `setAs()`, documented in `setAs.R` file.
@@ -89,6 +89,8 @@ seurat <- as(bcb, "seurat")
 
 
 # Plot variable genes
+
+Here we are looking at the dispersion of the variable genes in the dataset. `VariableGenePlot()` plots dispersion (a normalized measure of to cell-to-cell variation) as a function of average expression for each gene. Our goal is to identify a set of high-variance genes, and we recommend setting the cutoff parameters in this function by visually evaluating this plot to define outliers. However, particularly when using UMI data, we often obtain similar results including much larger gene sets, including the entire transcriptome.
 
 ```{r variable_gene_plot}
 VariableGenePlot(seurat)
@@ -111,21 +113,21 @@ ccm <- str_match(metadata(bcb)$organism, "^([A-Z])[a-z]+ ([a-z]+)$") %>%
     as.character %>%
     paste0(collapse = "") %>%
     tolower %>%
-    bcbioSingleCell::cellCycleMarkers[[.]]
-s.genes <- ccm %>%
+    cellCycleMarkers[[.]]
+sGenes <- ccm %>%
     tidy_filter(phase == "S") %>%
     pull("symbol")
-g2m.genes <- ccm %>%
+g2mGenes <- ccm %>%
     tidy_filter(phase == "G2/M") %>%
     pull("symbol")
-rm(ccm)
 ```
 
 ```{r cell_cycle_scoring, eval=evalSeurat}
 seurat <- CellCycleScoring(
     seurat,
-    g2m.genes = g2m.genes,
-    s.genes = s.genes)
+    g2m.genes = g2mGenes,
+    s.genes = sGenes)
+assignAndSaveData(paste(bcbName, "seurat", "preregress", sep = "_"), seurat)
 # Cell-cycle `Phase` column should now be added to `seurat@meta.data`
 ```
 
@@ -133,8 +135,8 @@ Here we are checking to see if the cells are grouping by cell cycle. If we don't
 
 ```{r cell_cycle_pca_1, eval=evalSeurat, include=evalSeurat}
 RunPCA(
-    seurat,
-    pc.genes = c(s.genes, g2m.genes),
+    seuratPreregress,
+    pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
     PCAPlot(cols.use = viridis(3),
             group.by = "Phase")
