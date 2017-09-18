@@ -4,7 +4,8 @@
 
 # R session information
 
-```{r sessionInfo}
+```{r session_info}
+devtools::session_info()
 sessionInfo()
 ```
 
