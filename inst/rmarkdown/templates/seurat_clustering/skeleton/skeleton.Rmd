@@ -30,14 +30,18 @@ if (file.exists("setup.R")) {
 bcbName <- load(params$bcbFile)
 bcb <- get(bcbName, inherits = FALSE)
 
+# Seurat object names and file paths
+seuratFile <- str_replace(params$bcbFile, "\\.rda$", "_seurat.rda")
+seuratName <- paste(bcbName, "seurat", sep = "_")
+seuratPreregressFile <- str_replace(seuratFile, "\\.rda$", "_preregress.rda")
+seuratPreregressName <- paste(seuratName, "preregress", sep = "_")
+
 # Check to see if seurat object exists
 if (!exists("seurat", inherits = FALSE)) {
-    seuratFile <- str_replace(params$bcbFile, "\\.rda$", "_seurat.rda")
     if (file.exists(seuratFile)) {
-        seuratName <- load(seuratFile)
+        load(seuratFile)
+        load(seuratPreregressFile)
         seurat <- get(seuratName, inherits = FALSE)
-        seuratPreregressFile <- str_replace(seuratFile, "\\.rda$", "_preregress.rda")
-        seuratPreregressName <- load(seuratPreregressFile)
         seuratPreregress <- get(seuratPreregressName, inherits = FALSE)
         evalSeurat <- FALSE
     } else {
@@ -76,11 +80,11 @@ This workflow is adapted from the following sources:
 
 
 
-# Initialize Seurat (`r bcbName`)
+# Initialize [Seurat][] (`r bcbName`)
 
 Let's coerce our filtered `bcbioSCDataSet` into a `seurat` object, without applying any additional filtering. During this step, global-scaling normalization is applied to the raw counts with `NormalizeData()`, which (1) normalizes the gene expression measurements for each cell by the total expression, (2) multiplies this by a scale factor (10,000 by default), and (3) log-transforms the result. `FindVariableGenes()` is then called, which calculates the average expression and dispersion for each gene, places these genes into bins, and then calculates a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression. Finally, the genes are scaled and centered using the `ScaleData()` function.
 
-```{r seurat}
+```{r seurat, eval=evalSeurat}
 # S4 object coercion method using `setAs()`, documented in `setAs.R` file.
 # getMethod("coerce", signature(from = "bcbioSCFiltered", to = "seurat"))
 seurat <- as(bcb, "seurat")
@@ -127,19 +131,23 @@ seurat <- CellCycleScoring(
     seurat,
     g2m.genes = g2mGenes,
     s.genes = sGenes)
-assignAndSaveData(paste(bcbName, "seurat", "preregress", sep = "_"), seurat)
 # Cell-cycle `Phase` column should now be added to `seurat@meta.data`
+seuratPreregress <- seurat
+assignAndSaveData(seuratPreregressFile, seuratPreregress)
 ```
 
 Here we are checking to see if the cells are grouping by cell cycle. If we don't see clear grouping of the cells into `G1`, `G2M`, and `S` clusters on the PCA plot, then it is recommended that we don't regress out cell-cycle variation. When this is the case, remove `S.Score` and `G2M.Score` from the variables to regress (`varsToRegress`) in the RMarkdown YAML parameters.
 
-```{r cell_cycle_pca_1, eval=evalSeurat, include=evalSeurat}
+```{r cell_cycle_pca_1}
 RunPCA(
     seuratPreregress,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
     PCAPlot(cols.use = viridis(3),
-            group.by = "Phase")
+            do.return = TRUE,
+            group.by = "Phase") +
+    labs(color = "cell cycle") +
+    DarkTheme()
 ```
 
 
@@ -156,10 +164,13 @@ Now that regression has been applied, let's recheck to see if the cells are no l
 ```{r cell_cycle_pca_2}
 RunPCA(
     seurat,
-    pc.genes = c(s.genes, g2m.genes),
+    pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
     PCAPlot(cols.use = viridis(3),
-            group.by = "Phase")
+            do.return = TRUE,
+            group.by = "Phase") +
+    labs(color = "cell cycle") +
+    DarkTheme()
 ```
 
 
@@ -219,6 +230,13 @@ PC selection — identifying the true dimensionality of a dataset — is an impo
 2. Implement a statistical test based on a random null model. This can be time-consuming for large datasets, and may not return a clear PC cutoff.
 3. **Heuristic approach**, using a metric that can be calculated instantly.
 
+We're using a heuristic approach here, by calculating where the principal components start to elbow. The plots below show where we have defined the principal compoment cutoff used downstream for dimensionality reduction. This is calculated automatically as the larger value of:
+
+1. The point where the principal components only contribute 5% of standard deviation (bottom left).
+2. The point where the principal components cumulatively contribute 80% of the standard deviation (bottom right).
+
+This methodology is also commonly used for PC covariate analysis on bulk RNA-seq samples.
+
 ```{r pc_use}
 pcUse <- params$pcUse
 if (!is.numeric(params$pcUse)) {
@@ -226,6 +244,8 @@ if (!is.numeric(params$pcUse)) {
         seq(from = 1, to = .)
 }
 ```
+
+We are using `r length(pcUse)` principal components for dimensionality reduction calculations.
 
 
 
@@ -264,7 +284,7 @@ seurat <- RunTSNE(
     seurat,
     dims.use = pcUse,
     do.fast = TRUE)
-assignAndSaveData(paste(bcbName, "seurat", sep = "_"), seurat)
+assignAndSaveData(seuratName, seurat)
 ```
 
 ```{r print_tsne_params}
