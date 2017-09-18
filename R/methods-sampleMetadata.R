@@ -93,7 +93,6 @@ setMethod("sampleMetadata", "seurat", function(
         # Finally, attempt to collapse into distinct rows
         df <- distinct(df) %>%
             set_rownames(.[["sampleID"]])
-
-        .returnSampleMetadata(df, kable = kable)
     }
+    .returnSampleMetadata(df, kable = kable)
 })
