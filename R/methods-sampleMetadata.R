@@ -23,7 +23,7 @@ NULL
 .returnSampleMetadata <- function(object, kable) {
     df <- as.data.frame(object)
     if (isTRUE(kable)) {
-        kable(df, caption = "Sample metadata")
+        kable(df, caption = "Sample metadata", row.names = FALSE)
     } else {
         df
     }
