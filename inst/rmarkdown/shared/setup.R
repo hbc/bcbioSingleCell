@@ -1,6 +1,9 @@
-library(knitr)
-library(ggplot2)
 library(bcbioSingleCell)
+library(viridis)
+library(knitr)
+library(ggplot)
+library(stringr)
+library(tidyverse)
 
 opts_chunk$set(
     audodep = TRUE,
