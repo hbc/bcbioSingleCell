@@ -20,6 +20,8 @@ NULL
         .returnSampleMetadata(kable = kable)
 }
 
+
+
 .returnSampleMetadata <- function(object, kable) {
     df <- as.data.frame(object)
     if (isTRUE(kable)) {
