@@ -22,9 +22,11 @@ if (file.exists("setup.R")) {
     source("setup.R")
 }
 
-# Load the bcbio object
-bcbName <- load(params$bcbFile)
-bcb <- get(bcbName, inherits = FALSE)
+# Load bcbio object
+loadDataAsName(c(bcb = params$bcbFile))
+bcbName <- basename(params$bcbFile) %>%
+    # Remove file extension, if specified
+    str_replace("\\.[A-Za-z0-9]+", "")
 
 # Directory paths
 dataDir <- file.path(params$outputDir, "data")
@@ -112,14 +114,14 @@ plotNovelty(bcb, min = params$minNovelty)
 # Filter cells
 
 ```{r filter_cells, fig.height=12, fig.width=8, results="asis"}
-bcb_filtered <- filterCells(
+filtered <- filterCells(
     bcb,
     minUMIs = params$minUMIs,
     minGenes = params$minGenes,
     maxGenes = params$maxGenes,
     maxMitoRatio = params$maxMitoRatio,
     minNovelty = params$minNovelty)
-saveData(bcb_filtered)
+assignAndSaveData(paste(bcbName, "filtered", sep = "_"), filtered)
 ```
 
 
