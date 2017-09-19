@@ -20,5 +20,6 @@ NULL
 #' @export
 setMethod("prepareSingleCellTemplate", "missing", function(object) {
     prepareTemplate(
-        system.file("rmarkdown/shared", package = "bcbioSingleCell"))
+        sourceDir = system.file("rmarkdown/shared",
+                                package = "bcbioSingleCell"))
 })
