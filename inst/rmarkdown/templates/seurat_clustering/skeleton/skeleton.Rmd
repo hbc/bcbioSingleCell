@@ -109,7 +109,8 @@ Your single-cell dataset likely contains "uninteresting" sources of variation. T
 First, we assign each cell a score, based on its expression of G2/M and S phase markers. These marker sets should be anticorrelated in their expression levels, and cells expressing neither are likely not cycling and in G1 phase. We assign scores in the `CellCycleScoring()` function, which stores S and G2/M scores in `seurat@meta.data`, along with the predicted classification of each cell in either G2M, S or G1 phase.
 
 ```{r cell_cycle_markers}
-ccm <- str_match(metadata(bcb)$organism, "^([A-Z])[a-z]+ ([a-z]+)$") %>%
+ccm <- metadata(bcb)$organism %>%
+    str_match("^([A-Z])[a-z]+ ([a-z]+)$") %>%
     .[, 2:3] %>%
     as.character %>%
     paste0(collapse = "") %>%
