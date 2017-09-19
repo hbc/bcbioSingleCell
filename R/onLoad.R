@@ -1,7 +1,8 @@
 # Follow the same order as `Depends:` in `DESCRIPTION` file
 .onLoad <- function(libname, pkgname) {
     pkgs <-
-        c("SummarizedExperiment",
+        c("viridis",
+          "SummarizedExperiment",
           "Seurat",
           "basejump")
     lapply(seq_along(pkgs), function(a) {

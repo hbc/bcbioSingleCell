@@ -27,8 +27,10 @@ if (file.exists("setup.R")) {
 }
 
 # Load the bcbio object
-bcbName <- load(params$bcbFile)
-bcb <- get(bcbName, inherits = FALSE)
+loadDataAsName(c(bcb = params$bcbFile))
+bcbName <- basename(params$bcbFile) %>%
+    # Remove file extension, if specified
+    str_replace("\\.[A-Za-z0-9]+", "")
 
 # Seurat object names and file paths
 seuratFile <- str_replace(params$bcbFile, "\\.rda$", "_seurat.rda")
