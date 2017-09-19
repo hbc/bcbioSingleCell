@@ -10,9 +10,9 @@ opts_chunk$set(
     cache = TRUE,
     cache.lazy = FALSE,
     error = FALSE,
-    fig.height = 8,
+    fig.height = 10,
     fig.retina = 2,
-    fig.width = 8,
+    fig.width = 10,
     message = FALSE,
     tidy = TRUE,
     warning = FALSE)
