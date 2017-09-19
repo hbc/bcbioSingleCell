@@ -14,10 +14,6 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-library(viridis)
-library(Seurat)
-library(stringr)
-library(tidyverse)
 library(bcbioSingleCell)
 
 # Shared RMarkdown settings
@@ -38,19 +34,18 @@ seuratName <- paste(bcbName, "seurat", sep = "_")
 seuratPreregressFile <- str_replace(seuratFile, "\\.rda$", "_preregress.rda")
 seuratPreregressName <- paste(seuratName, "preregress", sep = "_")
 
-# Check to see if seurat object exists
-if (!exists("seurat", inherits = FALSE)) {
-    if (file.exists(seuratFile)) {
-        load(seuratFile)
-        load(seuratPreregressFile)
-        seurat <- get(seuratName, inherits = FALSE)
-        seuratPreregress <- get(seuratPreregressName, inherits = FALSE)
+# Check to see if seurat objects exist
+if (exists(c("seurat", "seuratPregress"), inherits = FALSE)) {
+    evalSeurat <- FALSE
+} else {
+    if (all(file.exists(seuratFile, seuratPreregressFile))) {
+        loadDataAsName(
+            c(seurat = seuratFile,
+              seuratPreregress = seuratPreregressFile))
         evalSeurat <- FALSE
     } else {
         evalSeurat <- TRUE
     }
-} else {
-    evalSeurat <- FALSE
 }
 
 # Vector to use for plot looping
