@@ -23,7 +23,7 @@ NULL
 .returnSampleMetadata <- function(object, kable) {
     df <- as.data.frame(object)
     if (isTRUE(kable)) {
-        kable(df, caption = "Sample metadata")
+        kable(df, caption = "Sample metadata", row.names = FALSE)
     } else {
         df
     }
@@ -93,7 +93,6 @@ setMethod("sampleMetadata", "seurat", function(
         # Finally, attempt to collapse into distinct rows
         df <- distinct(df) %>%
             set_rownames(.[["sampleID"]])
-
-        .returnSampleMetadata(df, kable = kable)
     }
+    .returnSampleMetadata(df, kable = kable)
 })
