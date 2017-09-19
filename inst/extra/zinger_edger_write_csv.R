@@ -4,13 +4,13 @@ dir.create(de_dir, recursive = TRUE, showWarnings = FALSE)
 # Current Ensembl mouse annotations
 anno <- basejump::annotable("Mus musculus")
 
-cluster_de_files <-
+dgelrt_files <-
     dir("data",
         pattern = "zinger_edger_lrt_cluster_",
         full.names = TRUE)
 
-pbapply::pblapply(seq_along(cluster_de_files), function(a) {
-    dge_name <- load(cluster_de_files[[a]])
+pbapply::pblapply(seq_along(dgelrt_files), function(a) {
+    dge_name <- load(dgelrt_files[[a]])
     message(dge_name)
     dge <- get(dge_name, inherits = FALSE)
     tbl <- dge$table %>%
