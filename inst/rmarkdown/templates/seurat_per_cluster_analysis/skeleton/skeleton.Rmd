@@ -9,9 +9,6 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-library(knitr)
-library(Seurat)
-library(tidyverse)
 library(bcbioSingleCell)
 
 # Shared RMarkdown settings
