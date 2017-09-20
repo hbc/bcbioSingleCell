@@ -24,21 +24,18 @@ NULL
     # Dark theme enables greater contrast for marker visualization.
     # Otherwise use `rev(viridis(2))` for the colors. This will define
     # yellow as low and purple as high.
-    tsne <- suppressMessages(
-        FeaturePlot(
+    tsne <- suppressMessages(FeaturePlot(
         object,
         features.plot = feature,
         # Use viridis for better contrast than default colors
         # (1) low: purple; (2) high: yellow
         do.return = TRUE,
         no.legend = FALSE) %>%
-        # FeaturePlot outputs a named list - select the first item
-        .[[1]] +
-        DarkTheme() +
-        # Use this for a better gradient
-        scale_color_viridis(option = "inferno") +
-        theme(title = element_blank(),
-              legend.title = element_blank())
+            # FeaturePlot outputs a named list - select the first item
+            .[[1]] +
+            # Use this for a better gradient
+            scale_color_viridis(option = "inferno") +
+            DarkTheme()
     )
 
     # Violin plot
@@ -55,6 +52,7 @@ NULL
                     y = ~feature,
                     fill = ~ident)) +
         geom_violin(
+            color = NA,
             scale = "width",
             adjust = 1,
             trim = TRUE) +
@@ -75,7 +73,7 @@ NULL
         ggplot(aes_(x = ~feature,
                     y = ~ident,
                     fill = ~ident)) +
-        geom_density_ridges(scale = 2) +
+        geom_density_ridges(color = NA, scale = 2) +
         scale_fill_viridis(discrete = TRUE) +
         theme(legend.position = "none")
 
@@ -83,13 +81,13 @@ NULL
         # Coordinates are relative to lower left corner
         draw_plot(
             tsne,
-            x = 0L, y = 0, width = 1, height = 0.7) +
+            x = 0L, y = 0.3, width = 1, height = 0.7) +
         draw_plot(
             violin,
-            x = 0, y = 0.7, width = 0.5, height = 0.3) +
+            x = 0, y = 0, width = 0.5, height = 0.3) +
         suppressMessages(draw_plot(
             ridges,
-            x = 0.5, y = 0.7, width = 0.5, height = 0.3))
+            x = 0.5, y = 0, width = 0.5, height = 0.3))
 }
 
 
