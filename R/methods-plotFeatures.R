@@ -75,7 +75,7 @@ NULL
         ggplot(aes_(x = ~feature,
                     y = ~ident,
                     fill = ~ident)) +
-        geom_density_ridges(scale = 1) +
+        geom_density_ridges(scale = 2) +
         scale_fill_viridis(discrete = TRUE) +
         theme(legend.position = "none")
 
