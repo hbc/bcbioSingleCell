@@ -23,16 +23,16 @@ if (file.exists("setup.R")) {
 }
 
 # Load the bcbio object
-loadDataAsName(c(bcb = params$bcbFile))
 bcbName <- basename(params$bcbFile) %>%
     # Remove file extension, if specified
     str_replace("\\.[A-Za-z0-9]+", "")
+loadDataAsName(c(bcb = params$bcbFile))
 
 # Seurat object names and file paths
-seuratFile <- str_replace(params$bcbFile, "\\.rda$", "_seurat.rda")
 seuratName <- paste(bcbName, "seurat", sep = "_")
-seuratPreregressFile <- str_replace(seuratFile, "\\.rda$", "_preregress.rda")
+seuratFile <- str_replace(params$bcbFile, "\\.rda$", "_seurat.rda")
 seuratPreregressName <- paste(seuratName, "preregress", sep = "_")
+seuratPreregressFile <- str_replace(seuratFile, "\\.rda$", "_preregress.rda")
 
 # Check to see if seurat objects exist
 if (exists(c("seurat", "seuratPregress"), inherits = FALSE)) {

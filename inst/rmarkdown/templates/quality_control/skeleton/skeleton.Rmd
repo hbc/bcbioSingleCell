@@ -23,10 +23,10 @@ if (file.exists("setup.R")) {
 }
 
 # Load bcbio object
-loadDataAsName(c(bcb = params$bcbFile))
 bcbName <- basename(params$bcbFile) %>%
     # Remove file extension, if specified
     str_replace("\\.[A-Za-z0-9]+", "")
+loadDataAsName(c(bcb = params$bcbFile))
 
 # Directory paths
 dataDir <- file.path(params$outputDir, "data")
