@@ -16,7 +16,7 @@ NULL
 .plotTopMarkers <- function(
     object,
     topMarkers,
-    headerLevel = 2L,
+    headerLevel = 2,
     combine = FALSE) {
     # Fix for gene symbol mismatch
     if ("gene" %in% colnames(topMarkers)) {
@@ -28,10 +28,11 @@ NULL
         symbols <- topMarkers %>%
             .[.[["cluster"]] == cluster, ] %>%
             pull("symbol")
-        if (is.null(symbols)) return(NULL)
-        if (length(symbols) > 4L) {
-            warning("Maximum of 4 genes per cluster is recommended")
-            symbols <- symbols[[1L:4L]]
+        if (is.null(symbols)) {
+            return(NULL)
+        }
+        if (length(symbols) > 10) {
+            warning("Maximum of 10 genes per cluster is recommended")
         }
         mdHeader(paste("Cluster", cluster),
                  level = headerLevel,
@@ -39,7 +40,7 @@ NULL
                  asis = TRUE)
         plotMarkers(object,
                     symbols = symbols,
-                    headerLevel = headerLevel + 1L,
+                    headerLevel = headerLevel + 1,
                     combine = combine)
     }) %>%
         invisible
