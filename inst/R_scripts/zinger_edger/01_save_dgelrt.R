@@ -35,8 +35,8 @@ library(zingeR)
 # independentFiltering=TRUE). We use the independent filtering strategy that was
 # originally implemented in DESeq2. By default, the average fitted values are
 # used as a filter criterion.
-# 
-# https://github.com/statOmics/zingeR/blob/master/vignettes/zingeRVignette_v2.Rmd
+#
+# https://goo.gl/4rTK1w
 # ==============================================================================
 
 loadData(bcb, seurat)
@@ -45,58 +45,50 @@ intgroup <- interestingGroups(bcb)[[1]]
 # Get the cell cluster identities from the final Seurat object
 ident <- levels(seurat@ident)
 
-zinger_edger_lrt <- pblapply(seq_along(ident), function(a) {
+pblapply(seq_along(ident), function(a) {
     cells <- WhichCells(seurat, ident = ident[[a]])
     length(cells)
-    
-    bcb_subset <- bcb[, cells]
-    counts <- assay(bcb_subset)
-    
-    group <- metrics(bcb_subset) %>%
+
+    bcbSubset <- bcb[, cells]
+    counts <- assay(bcbSubset)
+
+    group <- metrics(bcbSubset) %>%
         .[, intgroup] %>%
         as.factor %>%
         # Be sure to set wild-type (`wt`) as the reference level
         relevel(ref = "wt")
-    
+
     # Check the counts
     table(group)
-    
+
     # zingeR + edgeR analysis
     dge <- DGEList(counts, group = group)
     dge <- calcNormFactors(dge, method = "TMM")
-    
+
     # Ensure the design matrix is set up correctly.
     # For comparing `mut` vs. `wt`, define `wt` as the reference level
     design <- model.matrix(~group)
-    levels(group)  # c("wt", "mut")
+    levels(group)  # wt, mut
     table(design[, 2])
-    
+
     # This is the zingeR step that is computationally expensive
     weights <- zeroWeightsLS(
-        dge$counts,
+        dge[["counts"]],
         design = design,
         normalization = "TMM")
-    
-    dge$weights <- weights
+
+    dge[["weights"]] <- weights
     dge <- estimateDisp(dge, design)
 
     plotBCV(dge)
-    
+
     fit <- glmFit(dge, design)
     lrt <- glmWeightedF(fit, coef = 2, independentFiltering = TRUE)
-
-    # hist(lrt$table$PValue)
-    # sum(lrt$table$padjFilter <= 0.05, na.rm = TRUE)
-
-    # DEG data.frame can be returned with:
-    # lrt$table
 
     # Save the DGELRT to disk
     name <- paste0("zinger_edger_lrt_cluster_", ident[[a]])
     assignAndSaveData(name, lrt)
-    
-    lrt
-})
 
-# Optionally save all DGELRT in a single list
-saveData(zinger_edger_lrt)
+    lrt
+}) %>%
+    invisible

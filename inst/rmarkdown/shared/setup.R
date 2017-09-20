@@ -1,11 +1,10 @@
 library(bcbioSingleCell)
 library(viridis)
 library(knitr)
-library(ggplot)
 library(stringr)
 library(tidyverse)
 
-opts_chunk$set(
+opts_chunk[["set"]](
     audodep = TRUE,
     cache = TRUE,
     cache.lazy = FALSE,
