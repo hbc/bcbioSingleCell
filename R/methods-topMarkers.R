@@ -66,8 +66,6 @@ NULL
             .data[["description"]], " \\[.+$", "")) %>%
         # Truncate the description to 50 characters
         mutate(description = str_trunc(.data[["description"]], 50L)) %>%
-        # Set digits to a large value to prevent rounding of P values
-        # This works but is hacky. I'd like 0.XXXe-XX.
         kable(caption = caption) %>%
         show
 }
@@ -86,8 +84,10 @@ NULL
     markers <- .groupMarkers(markers) %>%
         # Use only the positive markers
         tidy_filter(.data[["avgDiff"]] > 0L) %>%
-        # `-n` here means take the smallest P values
-        top_n(n = -n, wt = .data[["pvalue"]])
+        # Arrange by P value
+        arrange(!!sym("pvalue")) %>%
+        # Take the top rows by using slice
+        slice(1:n)
     if (isTRUE(show)) {
         .markersKable(markers, caption = paste("Top", n, "markers per cluster"))
     }
