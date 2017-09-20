@@ -22,13 +22,13 @@
         # Rename legacy `samplename` column, if set
         if ("samplename" %in% colnames(meta)) {
             warning("Renamed metadata column 'samplename' to 'fileName'")
-            meta <- rename(meta, fileName = .data[["samplename"]])
+            meta <- dplyr::rename(meta, fileName = .data[["samplename"]])
         }
 
         # Rename `description` to `sampleName`, if set
         if ("description" %in% colnames(meta)) {
             warning("Renamed metadata column 'description' to 'sampleName'")
-            meta <- rename(meta, sampleName = .data[["description"]])
+            meta <- dplyr::rename(meta, sampleName = .data[["description"]])
         }
 
         # Check for general required columns
@@ -38,8 +38,8 @@
 
         # Remove incomplete rows
         meta <- meta %>%
-            tidy_filter(!is.na(.data[["fileName"]])) %>%
-            tidy_filter(!is.na(.data[["sampleName"]]))
+            dplyr::filter(!is.na(.data[["fileName"]])) %>%
+            dplyr::filter(!is.na(.data[["sampleName"]]))
 
 
         # Check if samples are demultiplexed
@@ -86,7 +86,7 @@
     }
 
     # Return
-    tidy_select(meta, metaPriorityCols, everything()) %>%
+    dplyr::select(meta, metaPriorityCols, everything()) %>%
         as.data.frame %>%
         set_rownames(.[["sampleID"]]) %>%
         as("DataFrame")

@@ -10,8 +10,8 @@
 #'
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dendsort dendsort
-#' @importFrom dplyr arrange bind_rows distinct everything funs group_by
-#'   left_join mutate n pull rename summarize summarize_all top_n
+#' @importFrom dplyr arrange bind_rows distinct everything filter funs group_by
+#'   left_join mutate n pull rename select slice summarize summarize_all
 #' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_rect
 #'   element_text expand_limits facet_wrap geom_bar geom_boxplot geom_histogram
 #'   geom_hline geom_label geom_line geom_point geom_smooth geom_text

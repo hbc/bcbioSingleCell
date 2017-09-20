@@ -20,7 +20,7 @@ NULL
     combine = FALSE) {
     # Fix for gene symbol mismatch
     if ("gene" %in% colnames(topMarkers)) {
-        topMarkers <- rename(topMarkers, symbol = .data[["gene"]])
+        topMarkers <- dplyr::rename(topMarkers, symbol = .data[["gene"]])
     }
     clusters <- topMarkers[["cluster"]] %>% levels
     pblapply(seq_along(clusters), function(a) {

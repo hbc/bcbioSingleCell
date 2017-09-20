@@ -19,7 +19,7 @@ NULL
     sampleMetadata(object) %>%
         mutate(fileName = NULL) %>%
         # Put sample name first and sort
-        tidy_select("sampleName", everything()) %>%
+        dplyr::select("sampleName", everything()) %>%
         arrange(!!sym("sampleName")) %>%
         kable(caption = "Sample metadata", ...)
 }

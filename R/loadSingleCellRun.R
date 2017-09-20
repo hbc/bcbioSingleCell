@@ -101,7 +101,7 @@ loadSingleCellRun <- function(
     programs <- .programs(projectDir)
     if (!is.null(dataVersions)) {
         genomeBuild <- dataVersions %>%
-            tidy_filter(.data[["resource"]] == "transcripts") %>%
+            dplyr::filter(.data[["resource"]] == "transcripts") %>%
             pull("genome")
     } else {
         # Data versions aren't saved when using a custom FASTA
@@ -190,7 +190,7 @@ loadSingleCellRun <- function(
         as.data.frame %>%
         rownames_to_column %>%
         left_join(cbTbl, by = "rowname") %>%
-        tidy_select("nCount", everything()) %>%
+        dplyr::select("nCount", everything()) %>%
         column_to_rownames
 
     # Metadata =================================================================

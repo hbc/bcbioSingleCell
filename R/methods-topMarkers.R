@@ -28,8 +28,8 @@ NULL
         # Rename the gene symbol and P value columns
         message("Fixing columns in Seurat marker data.frame")
         df <- df %>%
-            rename(pvalue = .data[["pVal"]],
-                   symbol = .data[["gene"]])
+            dplyr::rename(pvalue = .data[["pVal"]],
+                        symbol = .data[["gene"]])
     }
 
     # Ensure that required columns are present
@@ -42,7 +42,7 @@ NULL
         remove_rownames %>%
         as("tibble") %>%
         camel %>%
-        tidy_select(c("cluster", "symbol"), everything()) %>%
+        dplyr::select(c("cluster", "symbol"), everything()) %>%
         group_by(.data[["cluster"]])
 }
 
@@ -79,15 +79,15 @@ NULL
     show = FALSE) {
     markers <- object
     if (isTRUE(coding)) {
-        markers <- tidy_filter(markers, .data[["biotype"]] == "protein_coding")
+        markers <- dplyr::filter(markers, .data[["biotype"]] == "protein_coding")
     }
     markers <- .groupMarkers(markers) %>%
         # Use only the positive markers
-        tidy_filter(.data[["avgDiff"]] > 0L) %>%
+        dplyr::filter(.data[["avgDiff"]] > 0L) %>%
         # Arrange by P value
         arrange(!!sym("pvalue")) %>%
         # Take the top rows by using slice
-        slice(1:n)
+        dplyr::slice(1:n)
     if (isTRUE(show)) {
         .markersKable(markers, caption = paste("Top", n, "markers per cluster"))
     }
