@@ -21,7 +21,7 @@ NULL
     # Dark theme enables greater contrast for marker visualization.
     # Otherwise use `rev(viridis(2))` for the colors. This will define
     # yellow as low and purple as high. The dark theme also shows
-    FeaturePlot(
+    tsne <- FeaturePlot(
         object,
         features.plot = features,
         # Use viridis for better contrast than default colors
@@ -31,37 +31,38 @@ NULL
         dark.theme = TRUE,
         nCol = nCol,
         no.legend = FALSE)
+    show(tsne)
 
     # Violin plot
-    VlnPlot(
+    violin <- VlnPlot(
         object,
         features.plot = features,
         cols.use = viridis(length(levels(object@ident))),
         do.return = FALSE,
         nCol = nCol,
-        x.lab.rot = TRUE) %>%
-        show
+        x.lab.rot = TRUE)
+    show(violin)
 
     # Joy plot
-    JoyPlot(
+    joy <- JoyPlot(
         object,
         features.plot = features,
         cols.use = viridis(length(levels(object@ident))),
         do.return = FALSE,
-        nCol = nCol) %>%
-        show
+        nCol = nCol)
+    suppressMessages(show(joy))
 
     # Plots that are informative for only 2+ features
     if (length(features) > 1) {
         # Dot plot
-        DotPlot(
+        dot <- DotPlot(
             object,
             genes.plot = features,
             cols.use = viridis(2),
             do.return = FALSE,
             plot.legend = TRUE,
-            x.lab.rot = TRUE) %>%
-            show
+            x.lab.rot = TRUE)
+        show(dot)
     }
 }
 
