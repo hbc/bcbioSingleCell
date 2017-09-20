@@ -16,8 +16,7 @@ NULL
 .plotTopMarkers <- function(
     object,
     topMarkers,
-    headerLevel = 2,
-    combine = FALSE) {
+    headerLevel = 2) {
     # Fix for gene symbol mismatch
     if ("gene" %in% colnames(topMarkers)) {
         topMarkers <- dplyr::rename(topMarkers, symbol = .data[["gene"]])
@@ -40,8 +39,7 @@ NULL
                  asis = TRUE)
         plotMarkers(object,
                     symbols = symbols,
-                    headerLevel = headerLevel + 1,
-                    combine = combine)
+                    headerLevel = headerLevel + 1)
     }) %>%
         invisible
 }

@@ -18,15 +18,10 @@ NULL
 setMethod("plotMarkers", "seurat", function(
     object,
     symbols,
-    headerLevel = 2L,
-    combine = TRUE) {
-    if (isTRUE(combine)) {
-        .plotFeaturesSeurat(object, symbols, nCol = 2L)
-    } else {
-        lapply(seq_along(symbols), function(a) {
-            mdHeader(symbols[[a]], level = headerLevel, asis = TRUE)
-            .plotFeaturesSeurat(object, symbols[[a]])
-        }) %>%
-            invisible
-    }
+    headerLevel = 2L) {
+    lapply(seq_along(symbols), function(a) {
+        mdHeader(symbols[[a]], level = headerLevel, asis = TRUE)
+        .plotFeatureSeurat(object, symbols[[a]])
+    }) %>%
+        invisible
 })
