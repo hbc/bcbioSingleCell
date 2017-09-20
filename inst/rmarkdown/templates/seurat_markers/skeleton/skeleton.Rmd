@@ -19,14 +19,14 @@ if (file.exists("setup.R")) {
 }
 
 # Load seurat object
-loadDataAsName(c(seurat = params$seuratFile))
 seuratName <- basename(params$seuratFile) %>%
     # Remove file extension, if specified
     str_replace("\\.[A-Za-z0-9]+", "")
+loadDataAsName(c(seurat = params$seuratFile))
 
 # Check to see if we need to process markers
-markersFile <- file.path("data", paste0(markersName, ".rda"))
 markersName <- paste(seuratName, "markers", sep = "_")
+markersFile <- file.path("data", paste0(markersName, ".rda"))
 if (file.exists(markersFile)) {
     loadDataAsName(c(markers = markersFile))
     evalMarkers <- FALSE
@@ -66,6 +66,43 @@ Seurat has four tests for differential expression which can be set with the `tes
 
 ```{r find_all_markers, results="hide", eval=evalMarkers}
 markers <- FindAllMarkers(seurat)
+assignAndSaveData(
+    paste(markersName, "original", sep = "_"),
+    markers)
+
+# Use this data frame to convert the gene symbols ("gene" column) back to
+# Ensembl gene identifiers ("ensgene" column)
+g2s <- data.frame(
+    ensgene = names(rownames(seurat@raw.data)),
+    symbol = rownames(seurat@raw.data))
+
+# The `detectOrganism()` step may error if a FASTA spike-in (e.g. EGFP) is the
+# first row of the seurat count matrix
+organism <- rownames(g2s)[[1]] %>%
+    detectOrganism
+anno <- annotable(organism) %>%
+    # Drop the symbols — use the ones stored in seurat instead. Otherwise
+    # when we join the markers and anno data.frames, there will be a mismatch
+    # between the symbol columns.
+    tidy_select(-symbol)
+
+markers <- markers %>%
+    # The rownames of the markers data.frame will have numbers to the end of the
+    # gene symbol. Be sure to drop the rownames here and map the Ensembl gene
+    # identifiers to the symbols ("gene" column) instead.
+    remove_rownames %>%
+    as("tibble") %>%
+    camel %>%
+    rename(symbol = gene,
+           pvalue = pVal) %>%
+    left_join(g2s, by = "symbol") %>%
+    # We'll lose annotations if we attempt to map by symbol (see above)
+    left_join(anno, by = "ensgene") %>%
+    tidy_select(cluster, ensgene, symbol, everything()) %>%
+    group_by(cluster) %>%
+    arrange(pvalue, .by_group = TRUE)
+
+# Save the markers
 assignAndSaveData(markersName, markers)
 write_csv(markers, file.path(markersDir, paste0(markersName, ".csv.gz")))
 ```
