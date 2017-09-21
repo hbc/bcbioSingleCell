@@ -9,7 +9,7 @@
 plotTopMarkers(object, topMarkers, ...)
 
 \S4method{plotTopMarkers}{seurat,grouped_df}(object, topMarkers,
-  headerLevel = 2L, combine = FALSE)
+  headerLevel = 2)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,8 +19,6 @@ plotTopMarkers(object, topMarkers, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
-
-\item{combine}{Combine all markers into a single plot.}
 }
 \value{
 No value, only graphical output.

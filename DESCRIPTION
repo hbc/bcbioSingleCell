@@ -23,7 +23,7 @@ Depends:
     R (>= 3.4.0),
     SummarizedExperiment (>= 1.6.3),
     Seurat (>= 2.0),
-    basejump (>= 0.0.22)
+    basejump (>= 0.0.24)
 Imports:
     cowplot,
     dendsort,

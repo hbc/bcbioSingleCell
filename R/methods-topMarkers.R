@@ -28,8 +28,8 @@ NULL
         # Rename the gene symbol and P value columns
         message("Fixing columns in Seurat marker data.frame")
         df <- df %>%
-            rename(pvalue = .data[["pVal"]],
-                   symbol = .data[["gene"]])
+            dplyr::rename(pvalue = .data[["pVal"]],
+                        symbol = .data[["gene"]])
     }
 
     # Ensure that required columns are present
@@ -42,7 +42,7 @@ NULL
         remove_rownames %>%
         as("tibble") %>%
         camel %>%
-        tidy_select(c("cluster", "symbol"), everything()) %>%
+        dplyr::select(c("cluster", "symbol"), everything()) %>%
         group_by(.data[["cluster"]])
 }
 
@@ -66,8 +66,6 @@ NULL
             .data[["description"]], " \\[.+$", "")) %>%
         # Truncate the description to 50 characters
         mutate(description = str_trunc(.data[["description"]], 50L)) %>%
-        # Set digits to a large value to prevent rounding of P values
-        # This works but is hacky. I'd like 0.XXXe-XX.
         kable(caption = caption) %>%
         show
 }
@@ -81,13 +79,15 @@ NULL
     show = FALSE) {
     markers <- object
     if (isTRUE(coding)) {
-        markers <- tidy_filter(markers, .data[["biotype"]] == "protein_coding")
+        markers <- dplyr::filter(markers, .data[["biotype"]] == "protein_coding")
     }
     markers <- .groupMarkers(markers) %>%
         # Use only the positive markers
-        tidy_filter(.data[["avgDiff"]] > 0L) %>%
-        # `-n` here means take the smallest P values
-        top_n(n = -n, wt = .data[["pvalue"]])
+        dplyr::filter(.data[["avgDiff"]] > 0L) %>%
+        # Arrange by P value
+        arrange(!!sym("pvalue")) %>%
+        # Take the top rows by using slice
+        dplyr::slice(1:n)
     if (isTRUE(show)) {
         .markersKable(markers, caption = paste("Top", n, "markers per cluster"))
     }

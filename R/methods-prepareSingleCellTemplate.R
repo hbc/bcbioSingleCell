@@ -19,5 +19,7 @@ NULL
 #' @rdname prepareSingleCellTemplate
 #' @export
 setMethod("prepareSingleCellTemplate", "missing", function(object) {
-    prepareTemplate(sourceDir = file.path(url, "downloads"))
+    prepareTemplate(
+        sourceDir = system.file("rmarkdown/shared",
+                                package = "bcbioSingleCell"))
 })

@@ -1,4 +1,4 @@
-# inDrop sample preparations
+# inDrop sample preparation
 
 ## FASTQ structure information
 

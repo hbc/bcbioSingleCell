@@ -9,9 +9,6 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-library(knitr)
-library(Seurat)
-library(tidyverse)
 library(bcbioSingleCell)
 
 # Shared RMarkdown settings
@@ -21,10 +18,7 @@ if (file.exists("setup.R")) {
 }
 
 # Load the seurat object
-if (!exists("seurat", inherits = FALSE)) {
-    seuratName <- load(params$seuratFile)
-    seurat <- get(seuratName, inherits = FALSE)
-}
+loadDataAsName(c(seurat = params$seuratFile))
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}

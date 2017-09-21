@@ -16,8 +16,7 @@ NULL
 .plotKnownMarkers <- function(
     object,
     knownMarkers,
-    headerLevel = 2L,
-    combine = FALSE) {
+    headerLevel = 2L) {
     if (nrow(knownMarkers) == 0L) {
         return(NULL)
     }
@@ -27,7 +26,7 @@ NULL
     pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
         symbols <- knownMarkers %>%
-            tidy_filter(.data[["cell"]] == !!cellType) %>%
+            dplyr::filter(.data[["cell"]] == !!cellType) %>%
             pull("symbol") %>%
             unique %>%
             sort
@@ -35,8 +34,7 @@ NULL
             mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
             plotMarkers(object,
                         symbols = symbols,
-                        headerLevel = headerLevel + 1L,
-                        combine = combine)
+                        headerLevel = headerLevel + 1L)
         } else {
             NULL
         }

@@ -8,7 +8,6 @@
 #' @param features Character vector of parameters supported by
 #'   [Seurat::FetchData()] (e.g. nUMI, mitoRatio, PC).
 #' @param headerLevel Include a Markdown header for each gene.
-#' @param combine Combine all markers into a single plot.
 #'
 #' @return No value, only graphical output.
 NULL
@@ -16,53 +15,79 @@ NULL
 
 
 # Constructors ====
-.plotFeaturesSeurat <- function(object, features, nCol = NULL) {
+.plotFeatureSeurat <- function(object, feature) {
+    if (!is_string(feature)) {
+        stop("feature must be a string", call. = FALSE)
+    }
+
     # tSNE color plot
     # Dark theme enables greater contrast for marker visualization.
     # Otherwise use `rev(viridis(2))` for the colors. This will define
-    # yellow as low and purple as high. The dark theme also shows
-    FeaturePlot(
+    # yellow as low and purple as high.
+    tsne <- suppressMessages(FeaturePlot(
         object,
-        features.plot = features,
+        features.plot = feature,
         # Use viridis for better contrast than default colors
         # (1) low: purple; (2) high: yellow
-        cols.use = viridis(2),
-        do.return = FALSE,
-        dark.theme = TRUE,
-        nCol = nCol,
-        no.legend = FALSE)
+        do.return = TRUE,
+        no.legend = FALSE) %>%
+            # FeaturePlot outputs a named list - select the first item
+            .[[1]] +
+            # Use this for a better gradient
+            scale_color_viridis(option = "inferno") +
+            DarkTheme()
+    )
 
     # Violin plot
-    VlnPlot(
+    violin <- VlnPlot(
         object,
-        features.plot = features,
-        cols.use = viridis(length(levels(object@ident))),
-        do.return = FALSE,
-        nCol = nCol,
-        x.lab.rot = TRUE) %>%
-        show
+        features.plot = feature,
+        do.return = TRUE,
+        return.plotlist = TRUE) %>%
+        .[[1]] %>%
+        .[["data"]] %>%
+        # Remove the low expression features
+        dplyr::filter(feature > 0.1) %>%
+        ggplot(aes_(x = ~ident,
+                    y = ~feature,
+                    fill = ~ident)) +
+        geom_violin(
+            color = NA,
+            scale = "width",
+            adjust = 1,
+            trim = TRUE) +
+        scale_fill_viridis(discrete = TRUE) +
+        theme(legend.position = "none")
 
-    # Joy plot
-    JoyPlot(
+    # Ridgeline (joy) plot
+    ridges <- JoyPlot(
         object,
-        features.plot = features,
+        features.plot = feature,
         cols.use = viridis(length(levels(object@ident))),
-        do.return = FALSE,
-        nCol = nCol) %>%
-        show
+        do.return = TRUE,
+        return.plotlist = TRUE) %>%
+        .[[1]] %>%
+        .[["data"]] %>%
+        # Remove the low expression features
+        dplyr::filter(feature > 0.1) %>%
+        ggplot(aes_(x = ~feature,
+                    y = ~ident,
+                    fill = ~ident)) +
+        geom_density_ridges(color = NA, scale = 2) +
+        scale_fill_viridis(discrete = TRUE) +
+        theme(legend.position = "none")
 
-    # Plots that are informative for only 2+ features
-    if (length(features) > 1) {
-        # Dot plot
-        DotPlot(
-            object,
-            genes.plot = features,
-            cols.use = viridis(2),
-            do.return = FALSE,
-            plot.legend = TRUE,
-            x.lab.rot = TRUE) %>%
-            show
-    }
+    ggdraw() +
+        # Coordinates are relative to lower left corner
+        draw_plot(
+            tsne,
+            x = 0L, y = 0.3, width = 1, height = 0.7) +
+        draw_plot(
+            violin,
+            x = 0, y = 0, width = 0.5, height = 0.3) +
+        suppressMessages(draw_plot(
+            ridges,
+            x = 0.5, y = 0, width = 0.5, height = 0.3))
 }
 
 
@@ -73,15 +98,10 @@ NULL
 setMethod("plotFeatures", "seurat", function(
     object,
     features,
-    headerLevel = 2L,
-    combine = TRUE) {
-    if (isTRUE(combine)) {
-        .plotFeaturesSeurat(object, features, nCol = 2L)
-    } else {
-        lapply(seq_along(features), function(a) {
-            mdHeader(features[[a]], level = headerLevel, asis = TRUE)
-            .plotFeaturesSeurat(object, features[[a]])
-        })
-    }
-    invisible()
+    headerLevel = 2L) {
+    lapply(seq_along(features), function(a) {
+        mdHeader(features[[a]], level = headerLevel, asis = TRUE)
+        .plotFeatureSeurat(object, features[[a]])
+    }) %>%
+        invisible
 })
