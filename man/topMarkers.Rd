@@ -32,8 +32,7 @@ Top Markers
 \code{\link[dplyr:top_n]{dplyr::top_n()}}.
 
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
-  \code{\link{plotKnownMarkers}},
+  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
   \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}}
 }

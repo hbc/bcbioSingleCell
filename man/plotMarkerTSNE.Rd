@@ -26,6 +26,8 @@ individual gene.}
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{label}{Label the clusters on the plot.}
+
+\item{genes}{Genes (by symbol name) of which to get expression data.}
 }
 \value{
 \link{ggplot}.

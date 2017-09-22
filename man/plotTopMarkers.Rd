@@ -21,15 +21,33 @@ plotTopMarkers(object, topMarkers, ...)
 \item{headerLevel}{Include a Markdown header for each gene.}
 }
 \value{
-No value, only graphical output.
+\itemize{
+\item \code{returnAsList = FALSE}: No value, only graphical output.
+\item \code{returnAsList = TRUE}: \link{list}.
+}
 }
 \description{
-Plot Top Markers
+Plot gene expression per cell in multiple formats:
+}
+\details{
+\enumerate{
+\item t-SNE plot
+\item Violin plot
+\item Ridgeline plot
+\item Dot plot
+}
+}
+\examples{
+\dontrun{
+data(seurat, markers)
+top <- topMarkers(markers)
+genes <- top$symbol[1:4]
+plotMarkers(seurat, genes = genes)
+}
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
-  \code{\link{plotKnownMarkers}},
+  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
   \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
   \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }
