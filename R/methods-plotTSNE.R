@@ -29,6 +29,7 @@ NULL
     interestingGroup = "ident",
     label = TRUE) {
     if (interestingGroup == "ident") {
+        # Seurat stores the ident from `FetchData()` as `object.ident`
         color <- "object.ident"
     } else {
         color <- interestingGroup
@@ -38,7 +39,7 @@ NULL
                            y = "tSNE_2",
                            color = color)) +
         # Alpha transparency helps distinguish superimposed points
-        geom_point(alpha = 0.6) +
+        geom_point(alpha = 0.7) +
         DarkTheme()
     if (isTRUE(label)) {
         p <- p +
@@ -73,7 +74,10 @@ NULL
 #' @export
 setMethod("plotTSNE", "seurat", function(
     object,
-    interestingGroup = "ident") {
+    interestingGroup = "ident",
+    label = TRUE) {
     tsne <- fetchTSNEData(object)
-    .plotTSNE(tsne, interestingGroup = interestingGroup)
+    .plotTSNE(tsne,
+              interestingGroup = interestingGroup,
+              label = label)
 })
