@@ -17,3 +17,12 @@ plotClusters <- function(...) {
     .Deprecated("plotMarkers")
     plotMarkers(...)
 }
+
+
+
+#' @rdname deprecated
+#' @export
+plotTSNEExpressionData <- function(...) {
+    .Deprecated("plotMarkerTSNE")
+    plotMarkerTSNE(...)
+}

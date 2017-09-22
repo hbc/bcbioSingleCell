@@ -6,6 +6,12 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @return [data.frame] of t-SNE points and metadata for each cell.
+#'
+#' @examples
+#' \dontrun{
+#' data(seurat)
+#' tsne <- fetchTSNEData(seurat)
+#' }
 NULL
 
 

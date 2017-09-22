@@ -123,6 +123,15 @@ setGeneric("plotMarkers", function(object, ...) {
 
 
 
+#' @rdname plotMarkerTSNE
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("plotMarkerTSNE", function(object, ...) {
+    standardGeneric("plotMarkerTSNE")
+})
+
+
+
 #' @rdname plotMitoRatio
 #' @inheritParams AllGenerics
 #' @export
@@ -170,11 +179,11 @@ setGeneric("plotTopMarkers", function(object, topMarkers, ...) {
 
 
 
-#' @rdname plotTSNEExpressionData
+#' @rdname plotTSNE
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("plotTSNEExpressionData", function(object, ...) {
-    standardGeneric("plotTSNEExpressionData")
+setGeneric("plotTSNE", function(object, ...) {
+    standardGeneric("plotTSNE")
 })
 
 

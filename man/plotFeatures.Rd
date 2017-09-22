@@ -19,6 +19,9 @@ plotFeatures(object, ...)
 \code{\link[Seurat:FetchData]{Seurat::FetchData()}} (e.g. nUMI, mitoRatio, PC).}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
+
+\item{returnAsList}{Return the \code{gg} objects as a list instead of plotting
+with \code{\link[cowplot:plot_grid]{cowplot::plot_grid()}}.}
 }
 \value{
 No value, only graphical output.

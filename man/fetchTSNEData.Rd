@@ -21,9 +21,15 @@ fetchTSNEData(object, ...)
 \description{
 Fetch t-SNE Locations and Cellular Metadata
 }
+\examples{
+\dontrun{
+data(seurat)
+tsne <- fetchTSNEData(seurat)
+}
+}
 \seealso{
 Other t-SNE Utilities: \code{\link{fetchTSNEExpressionData}},
-  \code{\link{plotTSNEExpressionData}}
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotTSNE}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

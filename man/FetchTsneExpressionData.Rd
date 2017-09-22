@@ -24,18 +24,18 @@ expression.
 }
 \description{
 This gets t-SNE locations, cellular metadata, expression of genes and
-the geometric mean of the gene expression from a seurat object.
+the geometric mean of the gene expression from a \link{seurat} object.
 }
 \examples{
 \dontrun{
 data(seurat)
 genes <- head(rownames(seurat@raw.data))
-fetchTSNEExpressionData(seurat, genes)
+tsne <- fetchTSNEExpressionData(seurat, genes)
 }
 }
 \seealso{
 Other t-SNE Utilities: \code{\link{fetchTSNEData}},
-  \code{\link{plotTSNEExpressionData}}
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotTSNE}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

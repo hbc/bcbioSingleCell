@@ -3,9 +3,12 @@
 \name{deprecated}
 \alias{deprecated}
 \alias{plotClusters}
+\alias{plotTSNEExpressionData}
 \title{Deprecated Functions}
 \usage{
 plotClusters(...)
+
+plotTSNEExpressionData(...)
 }
 \arguments{
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}

@@ -1,7 +1,7 @@
 #' Fetch t-SNE Locations, Cellular Metadata and Expression of Genes
 #'
 #' This gets t-SNE locations, cellular metadata, expression of genes and
-#' the geometric mean of the gene expression from a seurat object.
+#' the geometric mean of the gene expression from a [seurat] object.
 #'
 #' @rdname fetchTSNEExpressionData
 #' @name fetchTSNEExpressionData
@@ -17,7 +17,7 @@
 #' \dontrun{
 #' data(seurat)
 #' genes <- head(rownames(seurat@raw.data))
-#' fetchTSNEExpressionData(seurat, genes)
+#' tsne <- fetchTSNEExpressionData(seurat, genes)
 #' }
 NULL
 
