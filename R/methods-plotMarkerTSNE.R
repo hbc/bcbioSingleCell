@@ -6,6 +6,7 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #' @param colorpoints Color points by geometric mean or expression of
 #'  individual gene.
@@ -84,9 +85,7 @@ NULL
     }
     p +
         DarkTheme() +
-        scale_color_viridis(option = "inferno") +
-        labs(x = "",
-             y = "")
+        scale_color_viridis(option = "inferno")
 }
 
 
