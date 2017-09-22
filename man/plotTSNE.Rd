@@ -8,7 +8,8 @@
 \usage{
 plotTSNE(object, ...)
 
-\S4method{plotTSNE}{seurat}(object, interestingGroup = "ident")
+\S4method{plotTSNE}{seurat}(object, interestingGroup = "ident",
+  label = TRUE)
 }
 \arguments{
 \item{object}{Object.}
