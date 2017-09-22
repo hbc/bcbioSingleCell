@@ -79,7 +79,8 @@ NULL
     show = FALSE) {
     markers <- object
     if (isTRUE(coding)) {
-        markers <- dplyr::filter(markers, .data[["biotype"]] == "protein_coding")
+        markers <- dplyr::filter(markers,
+                                 .data[["biotype"]] == "protein_coding")
     }
     markers <- .groupMarkers(markers) %>%
         # Use only the positive markers
