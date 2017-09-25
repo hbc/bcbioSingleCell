@@ -12,11 +12,14 @@
 #' @param interestingGroups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
+#' @param ensemblVersion Ensembl release version. Defaults to current, and does
+#'   not typically need to be user-defined. This parameter can be useful for
+#'   matching Ensembl annotations against an outdated bcbio annotation build.
 #' @param gtfFile *Optional*. Gene transfer format (GTF) file, which will be
 #'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
 #'   annotation mappings.
 #' @param wellMetadataFile *Optional*. Well identifier metadata file.
-#' @param ... Additional arguments, passed as metadata.
+#' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return [bcbioSCDataSet].
 #' @export
@@ -24,6 +27,7 @@ loadSingleCellRun <- function(
     uploadDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
+    ensemblVersion = "current",
     gtfFile = NULL,
     wellMetadataFile = NULL,
     ...) {
@@ -156,9 +160,16 @@ loadSingleCellRun <- function(
     } else {
         warning(paste(
             "GTF file matching transcriptome FASTA is advised.",
-            "Using tx2gene mappings from Ensembl as a fallback."))
-        tx2gene <- annotable(genomeBuild, format = "tx2gene")
-        gene2symbol <- annotable(genomeBuild, format = "gene2symbol")
+            "Using tx2gene mappings from Ensembl as a fallback."
+        ))
+        tx2gene <- annotable(
+            genomeBuild,
+            format = "tx2gene",
+            release = ensemblVersion)
+        gene2symbol <- annotable(
+            genomeBuild,
+            format = "gene2symbol",
+            release = ensemblVersion)
     }
 
     # Cellular barcodes ====
@@ -201,7 +212,7 @@ loadSingleCellRun <- function(
         multiplexedFASTQ <- FALSE
     }
 
-    metadata <- SimpleList(
+    metadata <- list(
         version = packageVersion("bcbioSingleCell"),
         pipeline = pipeline,
         uploadDir = uploadDir,
@@ -209,10 +220,11 @@ loadSingleCellRun <- function(
         sampleMetadataFile = sampleMetadataFile,
         sampleMetadata = sampleMetadata,
         interestingGroups = interestingGroups,
-        genomeBuild = genomeBuild,
         organism = organism,
-        annotable = annotable,
+        genomeBuild = genomeBuild,
+        ensemblVersion = ensemblVersion,
         gtfFile = gtfFile,
+        annotable = annotable,
         gene2symbol = gene2symbol,
         umiType = umiType,
         allSamples = allSamples,
@@ -228,20 +240,42 @@ loadSingleCellRun <- function(
         programs = programs,
         bcbioLog = bcbioLog,
         bcbioCommandsLog = bcbioCommandsLog,
-        cellularBarcodeCutoff = cellularBarcodeCutoff)
+        cellularBarcodeCutoff = cellularBarcodeCutoff,
+        # R session information
+        date = Sys.Date(),
+        wd = getwd(),
+        devtoolsSessionInfo = devtools::session_info(include_base = TRUE),
+        utilsSessionInfo = utils::sessionInfo()
+    )
     # Add user-defined custom metadata, if specified
     dots <- list(...)
     if (length(dots) > 0L) {
         metadata <- c(metadata, dots)
     }
 
-    # bcbioSCDataSet ===========================================================
-    se <- prepareSummarizedExperiment(
-        sparseCounts,
-        colData = metrics,
-        rowData = annotable,
+    # Return `bcbioSingleCell` object ==========================================
+    assay <- sparseCounts
+    colData <- metrics %>%
+        as.data.frame() %>%
+        .[colnames(assay), , drop = FALSE]
+    rowData <- annotable %>%
+        as.data.frame() %>%
+        .[rownames(assay), , drop = FALSE]
+    # Check for gene mismatch
+    if (!all(rownames(assay) %in% rownames(rowData))) {
+        missing <- setdiff(rownames(assay), rownames(rowData))
+        warning(paste(
+            "rowData mismatch with assay slot:",
+            paste0(toString(missing), "."),
+            "These identifiers are missing in the current Ensembl release."
+        ))
+    }
+    sce <- SingleCellExperiment(
+        assays = list(assay),
+        colData = colData,
+        rowData = rowData,
         metadata = metadata)
-    bcb <- new("bcbioSCDataSet", se)
+    bcb <- new("bcbioSingleCell", sce)
     # Keep these in the bcbio slot because they contain filtered cellular
     # barcodes not present in the main assay matrix.
     bcbio(bcb, "cellularBarcodes") <- cellularBarcodes
