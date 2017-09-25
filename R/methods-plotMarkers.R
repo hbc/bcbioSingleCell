@@ -134,10 +134,11 @@ setMethod("plotMarkers", "seurat", function(
     object,
     genes,
     headerLevel = 2L) {
-    lapply(seq_along(gene), function(a) {
-        mdHeader(gene[[a]], level = headerLevel, asis = TRUE)
+    lapply(seq_along(genes), function(a) {
+        gene <- genes[[a]]
+        mdHeader(gene, level = headerLevel, asis = TRUE)
         .plotMarkerSeurat(object,
-                          gene = gene[[a]],
+                          gene = gene,
                           returnAsList = FALSE) %>%
             show()
     }) %>%
