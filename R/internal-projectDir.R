@@ -1,11 +1,11 @@
 #' Read Data Versions
 #'
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @param projectDir Project directory.
 #'
 #' @return [tibble].
+#' @noRd
 .dataVersions <- function(projectDir) {
     file <- file.path(projectDir, "data_versions.csv")
     if (!file.exists(file)) {
@@ -20,11 +20,11 @@
 #' Read Log File
 #'
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @param file Log file.
 #'
 #' @return [character].
+#' @noRd
 .logFile <- function(file) {
     if (!file.exists(file)) {
         stop(paste(basename(file), "missing"))
@@ -37,11 +37,11 @@
 #' Read Program Versions
 #'
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @param projectDir Project directory.
 #'
 #' @return [tibble].
+#' @noRd
 .programs <- function(projectDir) {
     file <- file.path(projectDir, "programs.txt")
     if (!file.exists(file)) {

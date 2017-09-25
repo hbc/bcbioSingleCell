@@ -1,13 +1,13 @@
 #' Detect Sample Directories
 #'
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @param uploadDir Upload directory.
 #' @param pipeline Pipeline used to generate the samples.
 #'
 #' @return Named character vector containing sample directory paths. Function
 #'   will [stop()] if no complete sample directories match.
+#' @noRd
 .sampleDirs <- function(uploadDir, pipeline = "bcbio") {
     if (pipeline == "bcbio") {
         sampleDirs <- list.dirs(

@@ -12,7 +12,6 @@
 #'   CellRanger outputs counts at gene level.
 #'
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @param sampleDir Named character vector of sample directory containing the
 #'   MatrixMart file.
@@ -20,9 +19,10 @@
 #'   bcbio-nextgen (`bcbio`). Also supports 10X Chromium CellRanger
 #'   (`cellranger`).
 #'
-#' @return `dgCMatrix`.
-#'
 #' @seealso `help("dgCMatrix-class")`
+#'
+#' @return `dgCMatrix`.
+#' @noRd
 .readSparseCounts <- function(
     sampleDir,
     pipeline = "bcbio") {
