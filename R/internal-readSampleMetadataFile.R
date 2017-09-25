@@ -4,14 +4,14 @@
 #' column.
 #'
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @param file Sample metadata file.
 #' @param sampleDirs Sample directory paths.
 #' @param pipeline Pipeline used to process the samples.
 #' @param uniqueNames Ensure sample names are unique.
 #'
-#' @return [DataFrame].
+#' @return [data.frame].
+#' @noRd
 .readSampleMetadataFile <- function(
     file,
     sampleDirs,
@@ -88,6 +88,5 @@
     # Return
     dplyr::select(meta, metaPriorityCols, everything()) %>%
         as.data.frame %>%
-        set_rownames(.[["sampleID"]]) %>%
-        as("DataFrame")
+        set_rownames(.[["sampleID"]])
 }
