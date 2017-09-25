@@ -45,11 +45,13 @@ NULL
         }
         match %>%
             pull("sampleID") %>%
-            unique %>%
-            sort
+            unique() %>%
+            sort()
     })
-    sampleIDs <- Reduce(intersect, list) %>% sort
-    if (!length(sampleIDs)) stop("No samples matched")
+    sampleIDs <- Reduce(intersect, list) %>% sort()
+    if (!length(sampleIDs)) {
+        stop("No samples matched")
+    }
     message(paste(length(sampleIDs), "samples matched:", toString(sampleIDs)))
     sampleMetadata <- sampleMetadata %>%
         .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
