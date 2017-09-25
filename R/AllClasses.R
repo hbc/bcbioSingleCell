@@ -1,11 +1,7 @@
-setOldClass(c("grouped_df", "tbl_df", "tibble"))
-
-
-
-#' bcbioSCDataSet
+#' bcbioSingleCell
 #'
-#' [bcbioSCDataSet] is an extension of [SummarizedExperiment] designed to store
-#' a single-cell RNA-seq analysis. This class contains read counts save as a
+#' [bcbioSingleCell] is an extension of [SummarizedExperiment] designed to store
+#' bcbio single-cell RNA-seq counts. This class contains read counts save as a
 #' sparse matrix (`dgCMatrix`), sample barcodes, run metadata, and barcode
 #' summary statistics for each sample analyzed.
 #'
@@ -15,24 +11,59 @@ setOldClass(c("grouped_df", "tbl_df", "tibble"))
 #' that don't match the count matrix. This is currently used to store all
 #' unfiltered cellular barcodes for quality control analysis.
 #'
+#' @seealso `.S4methods(class = "bcbioSingleCell")`
+#'
+#' @export
+bcbioSingleCell <- setClass(
+    "bcbioSingleCell",
+    contains = "SummarizedExperiment",
+    slots = c(bcbio = "SimpleList"))
+setValidity("bcbioSingleCell", function(object) TRUE)
+
+
+
+# Future Class Deprecations ====
+#' bcbioSCDataSet
+#'
+#' This class will be deprecated in favor of [bcbioSingleCell] in a future
+#' release.
+#'
+#' @keywords internal
+#'
 #' @export
 bcbioSCDataSet <- setClass(
     "bcbioSCDataSet",
-    contains = "SummarizedExperiment",
-    slots = c(bcbio = "SimpleList"))
+    contains = "bcbioSingleCell")
 setValidity("bcbioSCDataSet", function(object) TRUE)
 
 
 
 #' bcbioSCFiltered
 #'
-#' [bcbioSCFiltered] is a subclass of [SummarizedExperiment] designed to store
-#' single-cell RNA-seq counts of cells filtered by quality control analysis.
+#' This class will be deprecated in favor of [bcbioSingleCell] in a future
+#' release.
 #'
-#' @author Michael Steinbaugh
+#' @keywords internal
 #'
 #' @export
 bcbioSCFiltered <- setClass(
     "bcbioSCFiltered",
-    contains = "SummarizedExperiment")
+    contains = "bcbioSingleCell")
 setValidity("bcbioSCFiltered", function(object) TRUE)
+
+
+
+# Miscellaneous Class Definitions ====
+# Need to register tibble classes for S4 method support
+setOldClass(
+    Classes = c("grouped_df", "tbl_df", "tibble"))
+# Remove these once the old `bcbioSC*` classes are formally deprecated
+setClassUnion(
+    name = "bcbioSingleCellANY",
+    members = c("bcbioSingleCell",
+                "bcbioSCDataSet",
+                "bcbioSCFiltered"))
+setClassUnion(
+    name = "bcbioSingleCellFiltered",
+    members = c("bcbioSingleCell",
+                "bcbioSCFiltered"))
