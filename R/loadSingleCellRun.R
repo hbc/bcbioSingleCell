@@ -90,8 +90,9 @@ loadSingleCellRun <- function(
         file.path(projectDir, "bcbio-nextgen-commands.log"))
 
     # Cellular barcode cutoff ====
-    cbCutoffPattern <- "--cb_cutoff (\\d+)"
-    cbCutoff <- str_match(bcbioCommandsLog, cbCutoffPattern) %>%
+    cellularBarcodeCutoffPattern <- "--cb_cutoff (\\d+)"
+    cellularBarcodeCutoff <-
+        str_match(bcbioCommandsLog, cellularBarcodeCutoffPattern) %>%
         .[, 2L] %>%
         na.omit() %>%
         unique() %>%
@@ -109,8 +110,8 @@ loadSingleCellRun <- function(
         # Remove this in a future update
         genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
         if (any(str_detect(bcbioCommandsLog, genomePattern))) {
-            genomeBuild <- str_match(bcbioCommandsLog,
-                                     genomePattern) %>%
+            genomeBuild <-
+                str_match(bcbioCommandsLog, genomePattern) %>%
                 .[, 2L] %>%
                 na.omit() %>%
                 unique()
@@ -128,8 +129,7 @@ loadSingleCellRun <- function(
     # Molecular barcode (UMI) type ====
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
     if (any(str_detect(bcbioCommandsLog, umiPattern))) {
-        umiType <- str_match(bcbioCommandsLog,
-                             umiPattern) %>%
+        umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
             .[, 2L] %>%
             na.omit() %>%
             unique() %>%
@@ -162,7 +162,7 @@ loadSingleCellRun <- function(
     }
 
     # Cellular barcodes ====
-    cellularBarcodes <- .cbList(sampleDirs)
+    cellularBarcodes <- .cellularBarcodesList(sampleDirs)
 
     # Row data =================================================================
     annotable <- annotable(genomeBuild)
@@ -184,13 +184,13 @@ loadSingleCellRun <- function(
     # Column data ==============================================================
     metrics <- calculateMetrics(sparseCounts, annotable)
     # Add reads per cellular barcode to metrics
-    cbTbl <- .bindCB(cellularBarcodes) %>%
+    cellularBarcodesTbl <- .bindCellularBarcodes(cellularBarcodes) %>%
         mutate(cellularBarcode = NULL,
                sampleID = NULL)
     metrics <- metrics %>%
         as.data.frame() %>%
         rownames_to_column() %>%
-        left_join(cbTbl, by = "rowname") %>%
+        left_join(cellularBarcodesTbl, by = "rowname") %>%
         dplyr::select("nCount", everything()) %>%
         column_to_rownames()
 
@@ -228,7 +228,7 @@ loadSingleCellRun <- function(
         programs = programs,
         bcbioLog = bcbioLog,
         bcbioCommandsLog = bcbioCommandsLog,
-        cbCutoff = cbCutoff)
+        cellularBarcodeCutoff = cellularBarcodeCutoff)
     # Add user-defined custom metadata, if specified
     dots <- list(...)
     if (length(dots) > 0L) {

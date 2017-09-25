@@ -1,12 +1,12 @@
 #' Cellular Barcodes List
 #'
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @param sampleDirs Sample directories.
 #'
 #' @return [list].
-.cbList <- function(sampleDirs) {
+#' @noRd
+.cellularBarcodesList <- function(sampleDirs) {
     files <- sampleDirs %>%
         file.path(paste(basename(.), "barcodes.tsv", sep = "-")) %>%
         setNames(names(sampleDirs))
@@ -15,7 +15,7 @@
     }
     message("Reading cellular barcode distributions")
     pblapply(seq_along(files), function(a) {
-        .readCBFile(files[a])
+        .readCellularBarcodeFile(files[a])
     }) %>%
         setNames(names(sampleDirs))
 }

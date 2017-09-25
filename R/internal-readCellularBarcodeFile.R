@@ -1,12 +1,12 @@
 #' Read Cellular Barcode File
 #'
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @param file Cellular barcode TSV file.
 #'
 #' @return [tibble].
-.readCBFile <- function(file) {
+#' @noRd
+.readCellularBarcodeFile <- function(file) {
     readFileByExtension(
         file,
         col_names = c("cellularBarcode", "nCount"),
