@@ -13,13 +13,14 @@
 #'   must contain `filtered_gene_bc_matrices/` as a child.
 #' @param refDataDir Directory path to cellranger reference annotation data.
 #'
-#' @return [bcbioSCDataSet].
+#' @return [bcbioSingleCell].
 #' @export
 loadCellRanger <- function(
     uploadDir,
     refDataDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
+    ensemblVersion = "current",
     ...) {
     # Initial run setup ====
     pipeline <- "cellranger"
@@ -75,7 +76,7 @@ loadCellRanger <- function(
     gene2symbol <- gene2symbolFromGTF(gtf)
 
     # Row data =================================================================
-    annotable <- annotable(genomeBuild)
+    annotable <- annotable(genomeBuild, release = ensemblVersion)
 
     # Assays ===================================================================
     message("Reading counts")
@@ -93,7 +94,7 @@ loadCellRanger <- function(
     metrics <- calculateMetrics(sparseCounts, annotable)
 
     # Metadata =================================================================
-    metadata <- SimpleList(
+    metadata <- list(
         version = packageVersion("bcbioSingleCell"),
         pipeline = pipeline,
         uploadDir = uploadDir,
@@ -103,6 +104,7 @@ loadCellRanger <- function(
         interestingGroups = interestingGroups,
         genomeBuild = genomeBuild,
         organism = organism,
+        ensemblVersion = ensemblVersion,
         annotable = annotable,
         gtfFile = gtfFile,
         gtf = gtf,
@@ -119,11 +121,11 @@ loadCellRanger <- function(
         metadata <- c(metadata, dots)
     }
 
-    # bcbioSCDataSet ===========================================================
-    se <- prepareSummarizedExperiment(
-        sparseCounts,
-        colData = metrics,
+    # Return `bcbioSingleCell` object ==========================================
+    sce <- .SingleCellExperiment(
+        assays = list(assay = sparseCounts),
         rowData = annotable,
+        colData = metrics,
         metadata = metadata)
-    new("bcbioSCDataSet", se)
+    new("bcbioSCDataSet", sce)
 }

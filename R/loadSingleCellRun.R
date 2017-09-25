@@ -240,12 +240,7 @@ loadSingleCellRun <- function(
         programs = programs,
         bcbioLog = bcbioLog,
         bcbioCommandsLog = bcbioCommandsLog,
-        cellularBarcodeCutoff = cellularBarcodeCutoff,
-        # R session information
-        date = Sys.Date(),
-        wd = getwd(),
-        devtoolsSessionInfo = devtools::session_info(include_base = TRUE),
-        utilsSessionInfo = utils::sessionInfo()
+        cellularBarcodeCutoff = cellularBarcodeCutoff
     )
     # Add user-defined custom metadata, if specified
     dots <- list(...)
@@ -254,27 +249,12 @@ loadSingleCellRun <- function(
     }
 
     # Return `bcbioSingleCell` object ==========================================
-    assay <- sparseCounts
-    colData <- metrics %>%
-        as.data.frame() %>%
-        .[colnames(assay), , drop = FALSE]
-    rowData <- annotable %>%
-        as.data.frame() %>%
-        .[rownames(assay), , drop = FALSE]
-    # Check for gene mismatch
-    if (!all(rownames(assay) %in% rownames(rowData))) {
-        missing <- setdiff(rownames(assay), rownames(rowData))
-        warning(paste(
-            "rowData mismatch with assay slot:",
-            paste0(toString(missing), "."),
-            "These identifiers are missing in the current Ensembl release."
-        ))
-    }
-    sce <- SingleCellExperiment(
-        assays = list(assay),
-        colData = colData,
-        rowData = rowData,
-        metadata = metadata)
+    sce <- .SingleCellExperiment(
+        assays = list(assay = sparseCounts),
+        colData = metrics,
+        rowData = annotable,
+        metadata = metadata
+    )
     bcb <- new("bcbioSingleCell", sce)
     # Keep these in the bcbio slot because they contain filtered cellular
     # barcodes not present in the main assay matrix.
