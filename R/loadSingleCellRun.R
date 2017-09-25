@@ -39,7 +39,7 @@ loadSingleCellRun <- function(
                   full.names = FALSE,
                   recursive = FALSE) %>%
         str_detect("^\\d{4}-\\d{2}-\\d{2}_[^/]+$") %>%
-        any
+        any()
     if (!detectProjectDir) {
         stop("Failed to locate bcbio project summary directory", call. = FALSE)
     }
@@ -77,7 +77,8 @@ loadSingleCellRun <- function(
     }
     message(projectDir)
     match <- str_match(projectDir, projectDirPattern)
-    runDate <- match[[2L]] %>% as.Date
+    runDate <- match[[2L]] %>%
+        as.Date()
     template <- match[[3L]]
     projectDir <- file.path(uploadDir, projectDir)
 
@@ -92,9 +93,9 @@ loadSingleCellRun <- function(
     cbCutoffPattern <- "--cb_cutoff (\\d+)"
     cbCutoff <- str_match(bcbioCommandsLog, cbCutoffPattern) %>%
         .[, 2L] %>%
-        na.omit %>%
-        unique %>%
-        as.numeric
+        na.omit() %>%
+        unique() %>%
+        as.numeric()
 
     # Data versions and programs ====
     dataVersions <- .dataVersions(projectDir)
@@ -111,8 +112,8 @@ loadSingleCellRun <- function(
             genomeBuild <- str_match(bcbioCommandsLog,
                                      genomePattern) %>%
                 .[, 2L] %>%
-                na.omit %>%
-                unique
+                na.omit() %>%
+                unique()
         } else {
             stop("Genome detection from bcbio commands failed")
         }
@@ -130,8 +131,8 @@ loadSingleCellRun <- function(
         umiType <- str_match(bcbioCommandsLog,
                              umiPattern) %>%
             .[, 2L] %>%
-            na.omit %>%
-            unique %>%
+            na.omit() %>%
+            unique() %>%
             str_replace("-transform", "")
         message(paste("UMI type:", umiType))
     } else {
@@ -187,11 +188,11 @@ loadSingleCellRun <- function(
         mutate(cellularBarcode = NULL,
                sampleID = NULL)
     metrics <- metrics %>%
-        as.data.frame %>%
-        rownames_to_column %>%
+        as.data.frame() %>%
+        rownames_to_column() %>%
         left_join(cbTbl, by = "rowname") %>%
         dplyr::select("nCount", everything()) %>%
-        column_to_rownames
+        column_to_rownames()
 
     # Metadata =================================================================
     if (str_detect(umiType, "indrop")) {
