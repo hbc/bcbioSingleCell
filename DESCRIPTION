@@ -21,14 +21,15 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),
-    SummarizedExperiment (>= 1.6.3),
-    Seurat (>= 2.0),
+    SummarizedExperiment (>= 1.6.4),
+    Seurat (>= 2.0.1),
     basejump (>= 0.0.24)
 Imports:
     cowplot,
     dendsort,
     dplyr,
     ggplot2 (>= 2.2.1),
+    ggridges (>= 0.4.1),
     jsonlite,
     knitr,
     magrittr,
