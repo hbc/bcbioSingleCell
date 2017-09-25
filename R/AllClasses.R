@@ -16,7 +16,7 @@
 #' @export
 bcbioSingleCell <- setClass(
     "bcbioSingleCell",
-    contains = "SummarizedExperiment",
+    contains = "SingleCellExperiment",
     slots = c(bcbio = "SimpleList"))
 setValidity("bcbioSingleCell", function(object) TRUE)
 

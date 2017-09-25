@@ -6,10 +6,11 @@
 #' @import basejump methods SummarizedExperiment
 #'
 #' @importClassesFrom Seurat seurat
-#' @importClassesFrom SummarizedExperiment SummarizedExperiment
+#' @importClassesFrom SingleCellExperiment SingleCellExperiment
 #'
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dendsort dendsort
+#' @importFrom devtools session_info
 #' @importFrom dplyr arrange bind_rows distinct everything filter funs group_by
 #'   left_join mutate n pull rename select slice summarize summarize_all
 #' @importFrom ggridges geom_density_ridges
@@ -33,6 +34,7 @@
 #' @importFrom Seurat AddMetaData CreateSeuratObject DarkTheme DotPlot
 #'   FeaturePlot FetchData FindVariableGenes JoyPlot NormalizeData ScaleData
 #'   VlnPlot
+#' @importFrom SingleCellExperiment SingleCellExperiment
 #' @importFrom stats median
 #' @importFrom stringr str_detect str_match str_replace str_replace_all
 #'   str_split str_subset str_trunc
