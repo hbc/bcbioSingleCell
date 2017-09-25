@@ -23,7 +23,7 @@ symbols. Recommended for passing counts to Seurat.}
 \code{dgTMatrix}) or dense matrix (\code{matrix}).}
 }
 \value{
-Matrix class object.
+Matrix class object, depending on \code{as} argument.
 }
 \description{
 Counts Accessor

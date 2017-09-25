@@ -23,7 +23,7 @@
         }
         names(sampleDirs) <- basename(sampleDirs) %>%
             str_replace_all("-", "_") %>%
-            make.names
+            make.names()
     } else if (pipeline == "cellranger") {
         # Faster directory matching
         subdirs <- list.dirs(uploadDir, full.names = TRUE, recursive = FALSE)
