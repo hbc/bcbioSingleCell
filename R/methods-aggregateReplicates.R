@@ -7,16 +7,27 @@
 #'
 #' @inheritParams AllGenerics
 #'
-#' @return [bcbioSCDataSet].
+#' @return [bcbioSingleCell].
 NULL
 
 
 
 # Constructors ====
+#' Aggregate Replicates Constructor
+#'
+#' @author Rory Kirchner
+#'
+#' @param sparse Sparse counts matrix (e.g. `dgCMatrix`).
+#' @param cellids Cellular barcode identifiers.
+#'
+#' @return [dgCMatrix].
+#' @noRd
 .aggregateReplicates <- function(sparse, cellids) {
     tsparse <- t(sparse)
     rownames(tsparse) <- cellids
-    aggregate.Matrix(tsparse, cellids, fun = "sum") %>% t
+    tsparse %>%
+        aggregate.Matrix(groupings = cellids, fun = "sum") %>%
+        t()
 }
 
 
@@ -24,6 +35,7 @@ NULL
 # Methods ====
 #' @rdname aggregateReplicates
 #' @export
-setMethod("aggregateReplicates", "bcbioSCDataSet", function(object) {
+setMethod("aggregateReplicates", "bcbioSingleCell", function(object) {
     stop("Draft function", call. = FALSE)
+    # Reslot the counts into assay and then update the SummarizedExperiment
 })
