@@ -34,7 +34,7 @@ setMethod("readMarkers", "character", function(
     }
 
     markers <- readFileByExtension(object) %>%
-        camel
+        camel()
 
     # Match the markers file by Ensembl gene identifier, otherwise symbol
     if ("ensgene" %in% colnames(markers)) {
@@ -48,8 +48,8 @@ setMethod("readMarkers", "character", function(
             missing <- markers %>%
                 .[is.na(.[["symbol"]]), ] %>%
                 pull("ensgene") %>%
-                sort %>%
-                unique
+                sort() %>%
+                unique()
             stop(paste("Bad genes:", toString(missing)))
         }
     } else if ("symbol" %in% colnames(markers)) {
@@ -63,8 +63,8 @@ setMethod("readMarkers", "character", function(
             missing <- markers %>%
                 .[is.na(.[["ensgene"]]), ] %>%
                 pull("symbol") %>%
-                sort %>%
-                unique
+                sort() %>%
+                unique()
             stop(paste("Bad symbols:", toString(missing)))
         }
     } else {
@@ -75,10 +75,11 @@ setMethod("readMarkers", "character", function(
         .[!is.na(.[["ensgene"]]), ] %>%
         .[, c("cell", "symbol", "ensgene")] %>%
         arrange(!!!syms(c("cell", "symbol"))) %>%
-        distinct
+        distinct()
 
     if (isTRUE(show)) {
-        kable(markers, caption = "Known markers") %>% show
+        kable(markers, caption = "Known markers") %>%
+            show()
     }
 
     markers

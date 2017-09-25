@@ -116,7 +116,7 @@ setMethod(
     "bcbioSCFiltered",
     function(object) {
         max <- object %>%
-            metadata %>%
+            metadata() %>%
             .[["filterParams"]] %>%
             .[["maxMitoRatio"]]
         plot_grid(.plotMitoRatioHistogram(object, max),

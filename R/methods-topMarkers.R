@@ -39,9 +39,9 @@ NULL
     }
 
     df %>%
-        remove_rownames %>%
+        remove_rownames() %>%
         as("tibble") %>%
-        camel %>%
+        camel() %>%
         dplyr::select(c("cluster", "symbol"), everything()) %>%
         group_by(.data[["cluster"]])
 }
@@ -67,7 +67,7 @@ NULL
         # Truncate the description to 50 characters
         mutate(description = str_trunc(.data[["description"]], 50L)) %>%
         kable(caption = caption) %>%
-        show
+        show()
 }
 
 

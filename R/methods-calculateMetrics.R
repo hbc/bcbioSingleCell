@@ -27,10 +27,11 @@ setMethod("calculateMetrics", "dgCMatrix", function(
     missing <- rownames(object) %>%
         .[!rownames(object) %in% annotable[["ensgene"]]]
     if (length(missing) > 0L) {
-        warning(paste(length(missing), "genes missing in Ensembl annotations",
-                      "used to calculate metrics:",
-                      toString(head(missing)),
-                      "..."))
+        warning(paste(
+            length(missing), "genes missing in Ensembl annotations",
+            "used to calculate metrics:",
+            toString(head(missing)),
+            "..."))
     }
 
     # Check for [Matrix::colSums()] methods support
@@ -68,7 +69,7 @@ setMethod("calculateMetrics", "dgCMatrix", function(
     }
 
     metrics %>%
-        as.data.frame %>%
-        column_to_rownames %>%
-        as.matrix
+        as.data.frame() %>%
+        column_to_rownames() %>%
+        as.matrix()
 })

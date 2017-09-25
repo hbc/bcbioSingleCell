@@ -16,6 +16,7 @@ NULL
 .topBarcodes <- function(object, n = 2L) {
     metrics(object) %>%
         as("tibble") %>%
+        # Use slice here instead?
         top_n(n, !!sym("total_counts"))
 }
 

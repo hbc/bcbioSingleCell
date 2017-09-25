@@ -41,7 +41,7 @@ NULL
                     symbols = symbols,
                     headerLevel = headerLevel + 1)
     }) %>%
-        invisible
+        invisible()
 }
 
 

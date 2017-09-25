@@ -37,6 +37,6 @@ setMethod("subsetPerSample", "bcbioSCFiltered", function(
              file = file.path(dir, paste0(sampleID, ".rda")))
         sampleID
     }) %>%
-        na.omit %>%
-        as.character
+        na.omit() %>%
+        as.character()
 })

@@ -48,7 +48,9 @@ NULL
             unique() %>%
             sort()
     })
-    sampleIDs <- Reduce(intersect, list) %>% sort()
+    # Use `base::Reduce()` explicitly here instead? Warning about init missing
+    sampleIDs <- Reduce(f = intersect, x = list) %>%
+        sort()
     if (!length(sampleIDs)) {
         stop("No samples matched")
     }
@@ -58,19 +60,19 @@ NULL
 
     # Match the sample ID prefix in the cellular barcode columns of the matrix.
     # Here `cb` is short for "cellular barcodes".
-    cbPattern <- sampleIDs %>%
+    cellularBarcodePattern <- sampleIDs %>%
         paste0(collapse = "|") %>%
         paste0("^(", ., ")_")
-    cbMatches <- colnames(object) %>%
-        .[str_detect(., cbPattern)]
-    if (!length(cbMatches)) stop("No cellular barcodes matched")
-    message(paste(length(cbMatches), "cellular barcodes"))
+    cellularBarcodeMatches <- colnames(object) %>%
+        .[str_detect(., cellularBarcodePattern)]
+    if (!length(cellularBarcodeMatches)) stop("No cellular barcodes matched")
+    message(paste(length(cellularBarcodeMatches), "cellular barcodes"))
 
     # Return the bcbioSCFiltered object
     sparseCounts <- assay(object) %>%
-        .[, cbMatches]
+        .[, cellularBarcodeMatches]
     colData <- colData(object) %>%
-        .[cbMatches, ]
+        .[cellularBarcodeMatches, ]
     rowData <- rowData(object) %>%
         set_rownames(rownames(object))
     metadata <- metadata(object)

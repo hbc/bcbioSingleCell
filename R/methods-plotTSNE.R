@@ -22,8 +22,14 @@ NULL
 
 
 # Constructors ====
-#' Plot t-SNE Constructor Function
+#' Plot t-SNE Constructor
+#'
+#' @author Rory Kirchner, Michael Steinbaugh
+#'
 #' @param object [data.frame] returned from [fetchTSNEExpressionData()].
+#'
+#' @return [ggplot].
+#' @noRd
 .plotTSNE <- function(
     object,
     interestingGroup = "ident",

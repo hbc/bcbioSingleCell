@@ -35,10 +35,10 @@ NULL
 
     cutoffPct <- tbl %>%
         .[.[["pct"]] >= maxPct, "pc"] %>%
-        max
+        max()
     cutoffCumPct <- tbl %>%
         .[.[["cumsum"]] <= minCumPct, "pc"] %>%
-        max
+        max()
 
     # Pick the larger of the two cutoffs
     cutoff <- max(cutoffPct, cutoffCumPct)

@@ -10,7 +10,7 @@
 #' @param as Return class (**recommended**; `dgCMatrix`,
 #'   `dgTMatrix`) or dense matrix (`matrix`).
 #'
-#' @return Matrix class object.
+#' @return Matrix class object, depending on `as` argument.
 NULL
 
 

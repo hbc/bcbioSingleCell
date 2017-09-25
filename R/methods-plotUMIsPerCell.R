@@ -103,7 +103,7 @@ setMethod(
     "bcbioSCFiltered",
     function(object) {
         min <- object %>%
-            metadata %>%
+            metadata() %>%
             .[["filterParams"]] %>%
             .[["minUMIs"]]
         .plotUMIsPerCell(object, min)

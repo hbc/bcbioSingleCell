@@ -120,11 +120,11 @@ setMethod(
     "bcbioSCFiltered",
     function(object) {
         min <- object %>%
-            metadata %>%
+            metadata() %>%
             .[["filterParams"]] %>%
             .[["minGenes"]]
         max <- object %>%
-            metadata %>%
+            metadata() %>%
             .[["filterParams"]] %>%
             .[["maxGenes"]]
         .plotGenesPerCell(object, min, max)

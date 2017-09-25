@@ -37,7 +37,7 @@ NULL
     # Cellular barcode count
     ncol(sparseCounts) %>%
         paste("cellular barcodes in dataset") %>%
-        message
+        message()
 
     # Subset metrics
     metrics <- metrics(object)

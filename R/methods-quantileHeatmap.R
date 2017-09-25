@@ -12,7 +12,7 @@
 #' @param clusterRows Perform row clustering.
 #' @param clusterCols Perform column clustering.
 #'
-#' @return `pheatmap()`.
+#' @return [pheatmap::pheatmap()].
 NULL
 
 
@@ -24,9 +24,11 @@ NULL
 #' @param n The number of breaks to create.
 #'
 #' @return A vector of `n` quantile breaks.
+#' @noRd
 .quantileBreaks <- function(xs, n = 10L) {
-    breaks <- quantile(xs, probs = seq(0L, 1L, length.out = n))
-    breaks[!duplicated(breaks)]
+    xs %>%
+        quantile(probs = seq(0L, 1L, length.out = n)) %>%
+        .[!duplicated(.)]
 }
 
 

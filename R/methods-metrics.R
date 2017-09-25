@@ -15,8 +15,8 @@ NULL
 # Constructors ====
 .metrics <- function(object) {
     colData <- colData(object) %>%
-        as.data.frame %>%
-        rownames_to_column
+        as.data.frame() %>%
+        rownames_to_column()
 
     # Get the barcode format based on the umiType
     umiType <- metadata(object)[["umiType"]]
@@ -34,7 +34,7 @@ NULL
     # Match the sampleID from the cellular barcode (rowname)
     match <- colData[["rowname"]] %>%
         str_match(paste0("^(.+)_(", barcode, ")$")) %>%
-        as.data.frame %>%
+        as.data.frame() %>%
         set_colnames(c("rowname", "sampleID", "cellularBarcode")) %>%
         # Remove the unnecessary cellularBarcode column
         mutate(cellularBarcode = NULL)
@@ -46,8 +46,8 @@ NULL
     # Join the sample metadata by sampleID, extracted from the barcode ID
     left_join(colData, match, by = "rowname") %>%
         left_join(sampleMetadata(object), by = "sampleID") %>%
-        as.data.frame %>%
-        column_to_rownames
+        as.data.frame() %>%
+        column_to_rownames()
 }
 
 
@@ -68,5 +68,6 @@ setMethod("metrics", "bcbioSCFiltered", .metrics)
 #' @rdname metrics
 #' @export
 setMethod("metrics", "seurat", function(object) {
-    object@data.info %>% camel
+    object@data.info %>%
+        camel()
 })

@@ -102,7 +102,7 @@ setMethod(
     "bcbioSCFiltered",
     function(object) {
         min <- object %>%
-            metadata %>%
+            metadata() %>%
             .[["filterParams"]] %>%
             .[["minNovelty"]]
         .plotNovelty(object, min)

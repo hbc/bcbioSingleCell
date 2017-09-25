@@ -29,7 +29,7 @@ NULL
 setMethod("fetchTSNEExpressionData", "seurat", function(
     object, genes) {
     dat <- FetchData(object, vars.all = genes) %>%
-        as.data.frame
+        as.data.frame()
     dat[["geomean"]] <- colMeans(t(dat))
     dat <- dat %>%
         rownames_to_column("cell")

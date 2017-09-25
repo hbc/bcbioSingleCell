@@ -15,7 +15,7 @@ NULL
 # This will extract the stashed `sampleMetadata` data.frame
 .bcbioSampleMetadata <- function(object, kable = FALSE) {
     object %>%
-        metadata %>%
+        metadata() %>%
         .[["sampleMetadata"]] %>%
         .returnSampleMetadata(kable = kable)
 }
@@ -61,7 +61,7 @@ setMethod("sampleMetadata", "seurat", function(
         message(paste("Attempting to construct sample metadata",
                       "from 'seurat@meta.data' slot"))
         df <- object@meta.data %>%
-            remove_rownames
+            remove_rownames()
         # Drop any columns that appear to be a count (e.g. `nUMI`)
         df <- df[, !str_detect(colnames(df), "^n[A-Z]")]
         # Drop any tSNE resolution columns (e.g. `res.0.8`)
@@ -85,9 +85,9 @@ setMethod("sampleMetadata", "seurat", function(
         # columns should be filtered by this step.
         findColsWithDupes <- function(.data) {
             .data %>%
-                as.character %>%
-                duplicated %>%
-                any
+                as.character() %>%
+                duplicated() %>%
+                any()
         }
         hasDupes <- summarize_all(df, funs(findColsWithDupes))
         df <- df[, as.logical(hasDupes)]
