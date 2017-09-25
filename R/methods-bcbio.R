@@ -15,8 +15,8 @@ NULL
 #' @rdname bcbio
 #' @export
 setMethod("bcbio", "bcbioSCDataSet", function(object, type) {
-    if (type %in% names(slot(object, "callers"))) {
-        slot(object, "callers")[[type]]
+    if (type %in% names(slot(object, "bcbio"))) {
+        slot(object, "bcbio")[[type]]
     } else {
         stop(paste(type, "not found"))
     }
@@ -30,7 +30,7 @@ setMethod(
     "bcbio<-",
     signature(object = "bcbioSCDataSet", value = "ANY"),
     function(object, type, value) {
-        slot(object, "callers")[[type]] <- value
+        slot(object, "bcbio")[[type]] <- value
         validObject(object)
         object
     })

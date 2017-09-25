@@ -242,7 +242,7 @@ loadSingleCellRun <- function(
         rowData = annotable,
         metadata = metadata)
     bcb <- new("bcbioSCDataSet", se)
-    # Keep these in the callers slot because they contain filtered cellular
+    # Keep these in the bcbio slot because they contain filtered cellular
     # barcodes not present in the main assay matrix.
     bcbio(bcb, "cellularBarcodes") <- cellularBarcodes
     bcb
