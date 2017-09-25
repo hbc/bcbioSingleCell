@@ -15,15 +15,15 @@ NULL
 
 
 # Constructors ====
-.cbCutoffLine <- function(object) {
-    metadata(object)[["cbCutoff"]] %>%
-        as.numeric %>%
-        log10
+.cellularBarcodeCutoffLine <- function(object) {
+    metadata(object)[["cellularBarcodeCutoff"]] %>%
+        as.numeric() %>%
+        log10()
 }
 
 
 
-.cbTblFromList <- function(object) {
+.cellularBarcodeTblFromList <- function(object) {
     lst <- bcbio(object, "cellularBarcodes")
     if (is.null(lst)) {
         stop("Raw cellular barcode counts not saved in object")
@@ -32,7 +32,7 @@ NULL
     meta <- sampleMetadata(object) %>%
         .[, unique(c(metaPriorityCols, interestingGroup))]
     lst %>%
-        .bindCB %>%
+        .bindCellularBarcodes() %>%
         mutate(log10Count = log10(.data[["nCount"]]),
                nCount = NULL) %>%
         # Only plot barcodes with at least 100 read counts (log10 = 2)
@@ -42,7 +42,7 @@ NULL
 
 
 
-.cbTblFromMetrics <- function(object) {
+.cellularBarcodeTblFromMetrics <- function(object) {
     interestingGroup <- interestingGroups(object)[[1L]]
     meta <- sampleMetadata(object) %>%
         .[, unique(c(metaPriorityCols, interestingGroup))]
@@ -55,7 +55,7 @@ NULL
 
 
 
-.plotCBRawViolin <- function(
+.plotCellularBarcodeRawViolin <- function(
     object,
     cutoffLine = NULL,
     multiplexedFASTQ = FALSE) {
@@ -83,7 +83,7 @@ NULL
 
 
 
-.plotCBRawHisto <- function(
+.plotCellularBarcodeRawHisto <- function(
     object,
     cutoffLine = NULL,
     multiplexedFASTQ = FALSE) {
@@ -113,13 +113,13 @@ NULL
 #' Proportional Cellular Barcodes
 #'
 #' @author Rory Kirchner, Michael Steinbaugh
-#' @keywords internal
 #'
 #' @inheritParams AllGenerics
 #'
 #' @details Modified version of Klein Lab MATLAB code.
 #'
 #' @return [tibble].
+#' @noRd
 .propTblFromDataSet <- function(object) {
     metadata <- sampleMetadata(object) %>%
         .[, metaPriorityCols]
@@ -141,7 +141,7 @@ NULL
                 sum(counts * (10L ^ mids)))
     }) %>%
         setNames(names(lst)) %>%
-        bind_rows %>%
+        bind_rows() %>%
         left_join(metadata, by = "sampleID")
 }
 
@@ -171,13 +171,13 @@ NULL
                 sum(counts * (10L ^ mids)))
     }) %>%
         setNames(uniques) %>%
-        bind_rows %>%
+        bind_rows() %>%
         left_join(metadata, by = "sampleID")
 }
 
 
 
-.plotCBPropHisto <- function(
+.plotCellularBarcodePropHisto <- function(
     tbl, cutoffLine = NULL, multiplexedFASTQ = FALSE) {
     p <- ggplot(tbl,
                 aes_(x = ~log10Count,
@@ -204,7 +204,7 @@ NULL
 
 
 
-.plotCB <- function(violin, rawHisto, propHisto) {
+.plotCellularBarcode <- function(violin, rawHisto, propHisto) {
     ggdraw() +
         # Coordinates are relative to lower left corner
         draw_plot(violin +
@@ -230,25 +230,26 @@ NULL
 setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
     # Currently only supports bcbio pipeline
     if (metadata(object)[["pipeline"]] != "bcbio") {
-        warning(paste("'plotReadsPerCell()' currently only supports",
-                      "bcbio pipeline for 'bcbioSCDataSet' class"),
-                call. = FALSE)
+        warning(paste(
+            "'plotReadsPerCell()' currently only supports",
+            "bcbio pipeline for 'bcbioSCDataSet' class"),
+            call. = FALSE)
         return(NULL)
     }
-    rawTbl <- .cbTblFromList(object)
+    rawTbl <- .cellularBarcodeTblFromList(object)
     propTbl <- .propTblFromDataSet(object)
-    cutoffLine <- .cbCutoffLine(object)
+    cutoffLine <- .cellularBarcodeCutoffLine(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
-    .plotCB(
-        .plotCBRawViolin(
+    .plotCellularBarcode(
+        .plotCellularBarcodeRawViolin(
             rawTbl,
             cutoffLine = cutoffLine,
             multiplexedFASTQ = multiplexedFASTQ),
-        .plotCBRawHisto(
+        .plotCellularBarcodeRawHisto(
             rawTbl,
             cutoffLine = cutoffLine,
             multiplexedFASTQ = multiplexedFASTQ),
-        .plotCBPropHisto(
+        .plotCellularBarcodePropHisto(
             propTbl,
             cutoffLine = cutoffLine,
             multiplexedFASTQ = multiplexedFASTQ))
@@ -259,17 +260,17 @@ setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
 #' @rdname plotReadsPerCell
 #' @export
 setMethod("plotReadsPerCell", "bcbioSCFiltered", function(object) {
-    rawTbl <- .cbTblFromMetrics(object)
+    rawTbl <- .cellularBarcodeTblFromMetrics(object)
     propTbl <- .propTblFromSubset(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
-    .plotCB(
-        .plotCBRawViolin(
+    .plotCellularBarcode(
+        .plotCellularBarcodeRawViolin(
             rawTbl,
             multiplexedFASTQ = multiplexedFASTQ),
-        .plotCBRawHisto(
+        .plotCellularBarcodeRawHisto(
             rawTbl,
             multiplexedFASTQ = multiplexedFASTQ),
-        .plotCBPropHisto(
+        .plotCellularBarcodePropHisto(
             propTbl,
             multiplexedFASTQ = multiplexedFASTQ))
 })
