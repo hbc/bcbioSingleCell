@@ -139,7 +139,7 @@ setMethod("plotMarkers", "seurat", function(
         .plotMarkerSeurat(object,
                           gene = gene[[a]],
                           returnAsList = FALSE) %>%
-            show
+            show()
     }) %>%
-        invisible
+        invisible()
 })
