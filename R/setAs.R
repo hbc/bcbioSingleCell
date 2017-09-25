@@ -4,7 +4,9 @@
 #' @name coerce
 #' @author Michael Steinbaugh
 #'
-#' @seealso `help("coerce")`
+#' @param from Class for which the coerce method will perform coercion.
+#'
+#' @seealso `help(topic = "coerce", package = "methods")`.
 #'
 #' @examples
 #' \dontrun{
@@ -15,6 +17,12 @@ NULL
 
 
 # Constructors ====
+#' Keep Essential Metadata
+#'
+#' @inheritParams coerce
+#'
+#' @return Metadata [list].
+#' @noRd
 .fromMetadata <- function(from) {
     metadata(from) %>%
         .[c("version",
@@ -32,9 +40,9 @@ NULL
 
 # Methods ====
 #' @rdname coerce
-#' @name coerce-bcbioSCFiltered-seurat
+#' @name coerce-bcbioSingleCell-seurat
 #'
-#' @section [bcbioSCFiltered] to [seurat]:
+#' @section [bcbioSingleCell] to [seurat]:
 #' Interally, this begins by calling [Seurat::CreateSeuratObject()] without any
 #' additional filtering cutoffs, since we already applied them during our
 #' quality control analysis. Here we are passing the raw gene-level counts of
@@ -48,28 +56,36 @@ NULL
 #' then calculates a z-score for dispersion within each bin. This helps control
 #' for the relationship between variability and average expression. Finally, the
 #' genes are scaled and centered using the [Seurat::ScaleData()] function.
-setAs("bcbioSCFiltered", "seurat", function(from) {
-    project <- deparse(substitute(from))
-    counts <- counts(from, gene2symbol = TRUE)
+setAs("bcbioSingleCellANY", "seurat", function(from) {
+    # Check for required `filteredCells` metadata
+    if (is.null(metadata(from)[["filteredCells"]])) {
+        stop(paste(
+            "'filterCells()' must be performed on 'from' object",
+            "prior to 'seurat' coercion"
+        ))
+    }
 
+    counts <- counts(from, gene2symbol = TRUE)
     seurat <- CreateSeuratObject(
         raw.data = counts,
-        project = project,
         min.cells = 0L,
-        # We already prefiltered by gene level
         min.genes = 0L,
-        meta.data = metrics(from))
+        meta.data = metrics(from)
+    )
 
     # Integrity checks
     if (!identical(dim(counts), dim(seurat@data))) {
-        stop("Dimension mismatch between input counts and seurat object")
+        stop(paste(
+            "Unexpected dimension mismatch between",
+            "'bcbioSingleCell' and 'seurat' objects"
+        ))
     }
 
     # Complete the initalization steps
     seurat <- seurat %>%
-        NormalizeData %>%
+        NormalizeData() %>%
         FindVariableGenes(do.plot = FALSE) %>%
-        ScaleData
+        ScaleData()
 
     # Stash useful bcbio run metadata into `misc` slot
     seurat@misc[["bcbio"]] <- .fromMetadata(from)
