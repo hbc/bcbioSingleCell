@@ -127,5 +127,5 @@ loadCellRanger <- function(
         rowData = annotable,
         colData = metrics,
         metadata = metadata)
-    new("bcbioSCDataSet", sce)
+    new("bcbioSingleCell", sce)
 }

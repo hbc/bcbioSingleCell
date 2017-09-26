@@ -21,7 +21,7 @@
 #' @param wellMetadataFile *Optional*. Well identifier metadata file.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
-#' @return [bcbioSCDataSet].
+#' @return [bcbioSingleCell].
 #' @export
 loadSingleCellRun <- function(
     uploadDir,
