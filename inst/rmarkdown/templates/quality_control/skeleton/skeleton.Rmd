@@ -114,14 +114,14 @@ plotNovelty(bcb, min = params$minNovelty)
 # Filter cells
 
 ```{r filter_cells, fig.height=12, fig.width=8, results="asis"}
-filtered <- filterCells(
+bcb <- filterCells(
     bcb,
     minUMIs = params$minUMIs,
     minGenes = params$minGenes,
     maxGenes = params$maxGenes,
     maxMitoRatio = params$maxMitoRatio,
     minNovelty = params$minNovelty)
-assignAndSaveData(paste(bcbName, "filtered", sep = "_"), filtered)
+assignAndSaveData(bcbName, bcb)
 ```
 
 
