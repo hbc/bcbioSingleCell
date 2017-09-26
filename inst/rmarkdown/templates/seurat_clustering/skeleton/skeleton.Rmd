@@ -131,7 +131,7 @@ seurat <- CellCycleScoring(
     s.genes = sGenes)
 # Cell-cycle `Phase` column should now be added to `seurat@meta.data`
 seuratPreregress <- seurat
-assignAndSaveData(seuratPreregressFile, seuratPreregress)
+assignAndSaveData(seuratPreregressName, seuratPreregress)
 ```
 
 Here we are checking to see if the cells are grouping by cell cycle. If we don't see clear grouping of the cells into `G1`, `G2M`, and `S` clusters on the PCA plot, then it is recommended that we don't regress out cell-cycle variation. When this is the case, remove `S.Score` and `G2M.Score` from the variables to regress (`varsToRegress`) in the RMarkdown YAML parameters.
