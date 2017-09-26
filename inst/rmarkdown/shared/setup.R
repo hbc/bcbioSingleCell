@@ -4,6 +4,9 @@ library(knitr)
 library(stringr)
 library(tidyverse)
 
+# Set seed for reproducibility
+set.seed(1454944673)
+
 opts_chunk[["set"]](
     audodep = TRUE,
     cache = TRUE,
