@@ -19,7 +19,6 @@ loadCellRanger <- function(
     refDataDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
-    ensemblVersion = "current",
     prefilter = TRUE,
     ...) {
     # Initial run setup ====
@@ -64,6 +63,15 @@ loadCellRanger <- function(
         .[["genomes"]] %>%
         .[[1L]]
     organism <- detectOrganism(genomeBuild)
+    # Get the Ensembl version from the JSON reference file (via GTF)
+    ensemblVersion <- refJSON %>%
+        .[["input_gtf_files"]] %>%
+        .[[1]] %>%
+        str_split("\\.", simplify = TRUE) %>%
+        .[1, 3]
+    message(paste("Organism:", organism))
+    message(paste("Genome build:", genomeBuild))
+    message(paste("Ensembl release:", ensemblVersion))
 
     # GTF
     gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
@@ -76,7 +84,7 @@ loadCellRanger <- function(
     gene2symbol <- gene2symbolFromGTF(gtf)
 
     # Row data =================================================================
-    annotable <- annotable(genomeBuild, release = ensemblVersion)
+    annotable <- annotable(organism, release = ensemblVersion)
 
     # Assays ===================================================================
     message("Reading counts")
@@ -108,8 +116,8 @@ loadCellRanger <- function(
         sampleMetadataFile = sampleMetadataFile,
         sampleMetadata = sampleMetadata,
         interestingGroups = interestingGroups,
-        genomeBuild = genomeBuild,
         organism = organism,
+        genomeBuild = genomeBuild,
         ensemblVersion = ensemblVersion,
         annotable = annotable,
         gtfFile = gtfFile,
