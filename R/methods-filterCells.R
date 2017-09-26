@@ -16,8 +16,18 @@
 #' @param showReport Show summary statistics report and plots.
 #' @param headerLevel RMarkdown header level, if `showReport = TRUE`.
 #'
-#' @return [bcbioSCFiltered].
-#' @export
+#' @note This operation can be re-run on a [bcbioSingleCell] object that has
+#'   been previously filtered. This function simply saves `filterCells` and
+#'   `filterParams` vectors into the [metadata()] slot.
+#'
+#' @return [bcbioSingleCell] object, with filtering information slotted into
+#'   [metadata()] as `filterCells` and `filterParams`.
+#'
+#' @examples
+#' \dontrun{
+#' data(bcb)
+#' bcb <- filterCells(bcb)
+#' }
 NULL
 
 
@@ -32,15 +42,15 @@ NULL
     minNovelty = 0.8,
     showReport = TRUE,
     headerLevel = 2L) {
-    sparseCounts <- assay(object)
-
     # Cellular barcode count
-    ncol(sparseCounts) %>%
+    ncol(object) %>%
         paste("cellular barcodes in dataset") %>%
         message()
 
-    # Subset metrics
-    metrics <- metrics(object)
+    # Use the metrics data.frame to identify filtered cells
+    metrics <- metrics(object) %>%
+        as.data.frame() %>%
+        rownames_to_column("cell")
     if (!is.null(minUMIs)) {
         metrics <- metrics %>%
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
@@ -66,35 +76,15 @@ NULL
     }
     message(paste(nrow(metrics), "cellular barcodes passed filtering"))
 
-    # Filter the sparse counts matrix with metrics
-    sparseCounts <- sparseCounts[, rownames(metrics), drop = FALSE]
-
-    # colData ====
-    colData <- colData(object) %>%
-        .[rownames(metrics), , drop = FALSE]
-    rm(metrics)
-
-    # rowData ====
-    # Add the rownames back
-    rowData <- rowData(object) %>%
-        set_rownames(rownames(object))
-
     # Metadata ====
-    metadata <- metadata(object)
-    metadata[["filterParams"]] <- c(
+    metadata(object)[["filterCells"]] <- metrics[["cell"]]
+    metadata(object)[["filterParams"]] <- c(
         minUMIs = minUMIs,
         minGenes = minGenes,
         maxGenes = maxGenes,
         maxMitoRatio = maxMitoRatio,
-        minNovelty = minNovelty)
-
-    # SummarizedExperiment ====
-    se <- prepareSummarizedExperiment(
-        sparseCounts,
-        colData = colData,
-        rowData = rowData,
-        metadata = metadata)
-    object <- new("bcbioSCFiltered", se)
+        minNovelty = minNovelty
+    )
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(showReport)) {
@@ -113,7 +103,7 @@ NULL
                  asis = TRUE)
 
         # Reads per cell currently only supported for bcbio runs
-        if (metadata[["pipeline"]] == "bcbio") {
+        if (metadata(object)[["pipeline"]] == "bcbio") {
             mdHeader("Reads per cell", level = headerLevel + 1L, asis = TRUE)
             show(plotReadsPerCell(object))
         }
@@ -157,4 +147,12 @@ NULL
 # Methods ====
 #' @rdname filterCells
 #' @export
-setMethod("filterCells", "bcbioSCDataSet", .filterCells)
+setMethod("filterCells", "bcbioSingleCell", .filterCells)
+
+
+
+#' @rdname filterCells
+#' @export
+setMethod("filterCells", "bcbioSCDataSet", function(object) {
+    stop("Upgrade 'bcbioSCDataSet' to 'bcbioSingleCell' class object first")
+})
