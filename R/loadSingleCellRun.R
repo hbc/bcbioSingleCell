@@ -251,8 +251,8 @@ loadSingleCellRun <- function(
     # Return `bcbioSingleCell` object ==========================================
     sce <- .SingleCellExperiment(
         assays = list(assay = sparseCounts),
-        colData = metrics,
         rowData = annotable,
+        colData = metrics,
         metadata = metadata
     )
     bcb <- new("bcbioSingleCell", sce)
