@@ -8,6 +8,7 @@
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.
 #' @param maxGenes Maximum number of genes detected.

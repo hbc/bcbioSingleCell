@@ -2,6 +2,11 @@
 #'
 #' @rdname plotReadsPerCell
 #' @name plotReadsPerCell
+#' @family Quality Control Metrics
+#' @author Michael Steinbaugh, Rory Kirchner
+#'
+#' @inheritParams AllGenerics
+#' @param interestingGroup Interesting group, used for colors.
 #'
 #' @details A violin plot is a comact display of a continuous distribution. It
 #'   is a blend of [geom_boxplot()] and [geom_density()]: a violin plot is a

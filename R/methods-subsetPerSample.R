@@ -5,6 +5,7 @@
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
 #' @param minCells Minimum number of cells required per sample.
 #' @param dir Output directory where to save the subset data.
 #'

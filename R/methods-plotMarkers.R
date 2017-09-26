@@ -12,6 +12,7 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
 #' @inheritParams plotMarkerTSNE
 #' @param headerLevel Include a Markdown header for each gene.
 #'

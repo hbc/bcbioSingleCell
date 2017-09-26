@@ -14,6 +14,8 @@ plotReadsPerCell(object, ...)
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{interestingGroup}{Interesting group, used for colors.}
 }
 \value{
 \link{ggplot}.

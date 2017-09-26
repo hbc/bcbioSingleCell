@@ -9,6 +9,7 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
 #' @param maxPct Maximum percent standard deviation.
 #' @param minCumPct Minimum cumulative percent standard deviation.
 #' @param plot Plot the PC standard deviations.

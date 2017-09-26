@@ -16,7 +16,7 @@ plotUMIsVsGenes(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 }
 \value{
-\link{ggplot}.
+\link{ggplot} grid.
 }
 \description{
 Plot UMI and Gene Correlation

@@ -7,6 +7,7 @@
 #' @details This is helpful for more usefully visualizing single cell data.
 #'   Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 #'
+#' @inheritParams AllGenerics
 #' @param object Matrix of data.
 #' @param annotation Column annotations.
 #' @param clusterRows Perform row clustering.

@@ -5,6 +5,8 @@
 #' @family Data Management Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
+#'
 #' @return [bcbioSingleCell].
 NULL
 

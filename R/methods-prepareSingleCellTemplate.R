@@ -5,6 +5,8 @@
 #' @family RMarkdown Utilities
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
+#'
 #' @return No value.
 #'
 #' @examples

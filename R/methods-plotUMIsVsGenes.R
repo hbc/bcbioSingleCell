@@ -2,8 +2,10 @@
 #'
 #' @rdname plotUMIsVsGenes
 #' @name plotUMIsVsGenes
+#' @family Quality Control Metrics
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @return [ggplot].
+#' @inherit plotGenesPerCell
 NULL
 
 

@@ -16,7 +16,6 @@ NULL
 
 
 #' @rdname aggregateFeatures
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("aggregateFeatures", function(object, ...) {
     standardGeneric("aggregateFeatures")
@@ -25,7 +24,6 @@ setGeneric("aggregateFeatures", function(object, ...) {
 
 
 #' @rdname calculateMetrics
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("calculateMetrics", function(object, ...) {
     standardGeneric("calculateMetrics")
@@ -34,7 +32,6 @@ setGeneric("calculateMetrics", function(object, ...) {
 
 
 #' @rdname fetchTSNEData
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("fetchTSNEData", function(object, ...) {
     standardGeneric("fetchTSNEData")
@@ -43,7 +40,6 @@ setGeneric("fetchTSNEData", function(object, ...) {
 
 
 #' @rdname fetchTSNEExpressionData
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("fetchTSNEExpressionData", function(object, ...) {
     standardGeneric("fetchTSNEExpressionData")
@@ -52,7 +48,6 @@ setGeneric("fetchTSNEExpressionData", function(object, ...) {
 
 
 #' @rdname filterCells
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("filterCells", function(object, ...) {
     standardGeneric("filterCells")
@@ -61,7 +56,6 @@ setGeneric("filterCells", function(object, ...) {
 
 
 #' @rdname knownMarkersDetected
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("knownMarkersDetected", function(all, known, ...) {
     standardGeneric("knownMarkersDetected")
@@ -70,7 +64,6 @@ setGeneric("knownMarkersDetected", function(all, known, ...) {
 
 
 #' @rdname pcCutoff
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("pcCutoff", function(object, ...) {
     standardGeneric("pcCutoff")
@@ -79,7 +72,6 @@ setGeneric("pcCutoff", function(object, ...) {
 
 
 #' @rdname plotCellCounts
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotCellCounts", function(object, ...) {
     standardGeneric("plotCellCounts")
@@ -88,7 +80,6 @@ setGeneric("plotCellCounts", function(object, ...) {
 
 
 #' @rdname plotGenesPerCell
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotGenesPerCell", function(object, ...) {
     standardGeneric("plotGenesPerCell")
@@ -97,7 +88,6 @@ setGeneric("plotGenesPerCell", function(object, ...) {
 
 
 #' @rdname plotKnownMarkers
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotKnownMarkers", function(object, knownMarkers, ...) {
     standardGeneric("plotKnownMarkers")
@@ -106,7 +96,6 @@ setGeneric("plotKnownMarkers", function(object, knownMarkers, ...) {
 
 
 #' @rdname plotMarkers
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotMarkers", function(object, ...) {
     standardGeneric("plotMarkers")
@@ -115,7 +104,6 @@ setGeneric("plotMarkers", function(object, ...) {
 
 
 #' @rdname plotMarkerTSNE
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotMarkerTSNE", function(object, ...) {
     standardGeneric("plotMarkerTSNE")
@@ -124,7 +112,6 @@ setGeneric("plotMarkerTSNE", function(object, ...) {
 
 
 #' @rdname plotMitoRatio
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotMitoRatio", function(object, ...) {
     standardGeneric("plotMitoRatio")
@@ -133,7 +120,6 @@ setGeneric("plotMitoRatio", function(object, ...) {
 
 
 #' @rdname plotNovelty
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotNovelty", function(object, ...) {
     standardGeneric("plotNovelty")
@@ -142,9 +128,6 @@ setGeneric("plotNovelty", function(object, ...) {
 
 
 #' @rdname plotReadsPerCell
-#' @family Quality Control Metrics
-#' @author Michael Steinbaugh, Rory Kirchner
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotReadsPerCell", function(object, ...) {
     standardGeneric("plotReadsPerCell")
@@ -153,7 +136,6 @@ setGeneric("plotReadsPerCell", function(object, ...) {
 
 
 #' @rdname plotStressGenes
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotStressGenes", function(object, ...) {
     standardGeneric("plotStressGenes")
@@ -162,7 +144,6 @@ setGeneric("plotStressGenes", function(object, ...) {
 
 
 #' @rdname plotTopMarkers
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotTopMarkers", function(object, topMarkers, ...) {
     standardGeneric("plotTopMarkers")
@@ -171,7 +152,6 @@ setGeneric("plotTopMarkers", function(object, topMarkers, ...) {
 
 
 #' @rdname plotTSNE
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotTSNE", function(object, ...) {
     standardGeneric("plotTSNE")
@@ -180,7 +160,6 @@ setGeneric("plotTSNE", function(object, ...) {
 
 
 #' @rdname plotUMIsPerCell
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotUMIsPerCell", function(object, ...) {
     standardGeneric("plotUMIsPerCell")
@@ -189,10 +168,6 @@ setGeneric("plotUMIsPerCell", function(object, ...) {
 
 
 #' @rdname plotUMIsVsGenes
-#' @family Quality Control Metrics
-#' @author Michael Steinbaugh, Rory Kirchner
-#' @inheritParams AllGenerics
-#' @inherit plotGenesPerCell
 #' @export
 setGeneric("plotUMIsVsGenes", function(object, ...) {
     standardGeneric("plotUMIsVsGenes")
@@ -201,7 +176,6 @@ setGeneric("plotUMIsVsGenes", function(object, ...) {
 
 
 #' @rdname prepareSingleCellTemplate
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("prepareSingleCellTemplate", function(object, ...) {
     standardGeneric("prepareSingleCellTemplate")
@@ -210,7 +184,6 @@ setGeneric("prepareSingleCellTemplate", function(object, ...) {
 
 
 #' @rdname plotZerosVsDepth
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("plotZerosVsDepth", function(object, ...) {
     standardGeneric("plotZerosVsDepth")
@@ -219,7 +192,6 @@ setGeneric("plotZerosVsDepth", function(object, ...) {
 
 
 #' @rdname quantileHeatmap
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("quantileHeatmap", function(object, ...) {
     standardGeneric("quantileHeatmap")
@@ -228,7 +200,6 @@ setGeneric("quantileHeatmap", function(object, ...) {
 
 
 #' @rdname readMarkers
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("readMarkers", function(object, ...) {
     standardGeneric("readMarkers")
@@ -237,7 +208,6 @@ setGeneric("readMarkers", function(object, ...) {
 
 
 #' @rdname sanitizeMarkers
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("sanitizeMarkers", function(object, markers, ...) {
     standardGeneric("sanitizeMarkers")
@@ -246,7 +216,6 @@ setGeneric("sanitizeMarkers", function(object, markers, ...) {
 
 
 #' @rdname subsetPerSample
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("subsetPerSample", function(object, ...) {
     standardGeneric("subsetPerSample")
@@ -255,7 +224,6 @@ setGeneric("subsetPerSample", function(object, ...) {
 
 
 #' @rdname topBarcodes
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("topBarcodes", function(object, ...) {
     standardGeneric("topBarcodes")
@@ -264,7 +232,6 @@ setGeneric("topBarcodes", function(object, ...) {
 
 
 #' @rdname topMarkers
-#' @inheritParams AllGenerics
 #' @export
 setGeneric("topMarkers", function(object, ...) {
     standardGeneric("topMarkers")

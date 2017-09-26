@@ -5,6 +5,8 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
+#'
 #' @return [ggplot].
 NULL
 

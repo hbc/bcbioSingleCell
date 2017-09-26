@@ -5,6 +5,8 @@
 #' @family Quality Control Metrics
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
+#'
 #' @return [ggplot].
 NULL
 
