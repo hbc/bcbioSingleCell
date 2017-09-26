@@ -7,6 +7,8 @@
 #'
 #' @param minCells Minimum number of cells required per sample.
 #' @param dir Output directory where to save the subset data.
+#'
+#' @return Character vector of saved [bcbioSingleCell] subsets.
 NULL
 
 
@@ -14,7 +16,7 @@ NULL
 # Methods ====
 #' @rdname subsetPerSample
 #' @export
-setMethod("subsetPerSample", "bcbioSCFiltered", function(
+setMethod("subsetPerSample", "bcbioSingleCellANY", function(
     object,
     minCells = 200L,
     dir = "data") {
