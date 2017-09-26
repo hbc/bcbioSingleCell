@@ -178,7 +178,7 @@ loadSingleCellRun <- function(
     cellularBarcodes <- .cellularBarcodesList(sampleDirs)
 
     # Row data =================================================================
-    annotable <- annotable(genomeBuild, release = ensemblVersion)
+    annotable <- annotable(organism, release = ensemblVersion)
 
     # Assays ===================================================================
     message("Reading counts")
