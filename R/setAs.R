@@ -48,7 +48,7 @@ NULL
 #' `bcbioSinglecell` (note case) will likely fail to load with newer versions of
 #' the package.
 setAs("bcbioSingleCellANY", "bcbioSingleCell", function(from) {
-    # Can extract the information from the slotted SummarizedExperiment
+    # Can extract the information from the slotted SingleCellExperiment
     # Add a warning for `bcbioSCFiltered`, since these only contain a subset
     stop("Draft function")
 })
