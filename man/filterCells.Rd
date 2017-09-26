@@ -3,14 +3,17 @@
 \docType{methods}
 \name{filterCells}
 \alias{filterCells}
+\alias{filterCells,bcbioSingleCell-method}
 \alias{filterCells,bcbioSCDataSet-method}
 \title{Filter Cells}
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{bcbioSCDataSet}(object, minUMIs = 1000L,
+\S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000L,
   minGenes = 500L, maxGenes = NULL, maxMitoRatio = 0.1,
   minNovelty = 0.8, showReport = TRUE, headerLevel = 2L)
+
+\S4method{filterCells}{bcbioSCDataSet}(object)
 }
 \arguments{
 \item{object}{Object.}
@@ -32,10 +35,8 @@ filterCells(object, ...)
 \item{headerLevel}{RMarkdown header level, if \code{showReport = TRUE}.}
 }
 \value{
-\link{bcbioSingleCell} object, with filtering information saved as a named
-logical vector slotted at \code{object@metadata[["filteredCells"]]}.
-
-[["filteredCells"]: R:[%22filteredCells%22
+\link{bcbioSingleCell} object, with filtering information slotted into
+\code{\link[=metadata]{metadata()}} as \code{filterCells} and \code{filterParams}.
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
@@ -43,8 +44,14 @@ cellular barcodes.
 }
 \note{
 This operation can be re-run on a \link{bcbioSingleCell} object that has
-been previously filtered. This function simply saves a named logical vector
-of cells that have passed filtering criteria in the \code{metadata} slot.
+been previously filtered. This function simply saves \code{filterCells} and
+\code{filterParams} vectors into the \code{\link[=metadata]{metadata()}} slot.
+}
+\examples{
+\dontrun{
+data(bcb)
+bcb <- filterCells(bcb)
+}
 }
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},

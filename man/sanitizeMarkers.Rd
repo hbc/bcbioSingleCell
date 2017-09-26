@@ -11,7 +11,9 @@ sanitizeMarkers(object, markers, ...)
 \S4method{sanitizeMarkers}{seurat,data.frame}(object, markers)
 }
 \arguments{
-\item{object}{\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}
+\item{object}{Object.}
+
+\item{markers}{\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 }

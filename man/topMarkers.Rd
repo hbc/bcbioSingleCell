@@ -3,12 +3,12 @@
 \docType{methods}
 \name{topMarkers}
 \alias{topMarkers}
-\alias{topMarkers,data.frame-method}
+\alias{topMarkers,grouped_df-method}
 \title{Top Markers}
 \usage{
 topMarkers(object, ...)
 
-\S4method{topMarkers}{data.frame}(object, n = 4L, coding = FALSE,
+\S4method{topMarkers}{grouped_df}(object, n = 4L, coding = FALSE,
   show = FALSE)
 }
 \arguments{
@@ -29,7 +29,10 @@ topMarkers(object, ...)
 Top Markers
 }
 \seealso{
-\code{\link[dplyr:top_n]{dplyr::top_n()}}.
+\itemize{
+\item \code{\link[dplyr:slice]{dplyr::slice()}}
+\item \code{\link[dplyr:top_n]{dplyr::top_n()}}.
+}
 
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
   \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},

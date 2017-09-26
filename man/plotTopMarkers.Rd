@@ -21,10 +21,7 @@ plotTopMarkers(object, topMarkers, ...)
 \item{headerLevel}{Include a Markdown header for each gene.}
 }
 \value{
-\itemize{
-\item \code{returnAsList = FALSE}: No value, only graphical output.
-\item \code{returnAsList = TRUE}: \link{list}.
-}
+No value, only graphical output.
 }
 \description{
 Plot gene expression per cell in multiple formats:

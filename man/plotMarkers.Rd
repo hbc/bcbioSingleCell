@@ -18,15 +18,9 @@ plotMarkers(object, ...)
 \item{genes}{Genes (by symbol name) of which to get expression data.}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
-
-\item{returnAsList}{Return the \code{gg} objects as a list instead of plotting
-with \code{\link[cowplot:plot_grid]{cowplot::plot_grid()}}.}
 }
 \value{
-\itemize{
-\item \code{returnAsList = FALSE}: No value, only graphical output.
-\item \code{returnAsList = TRUE}: \link{list}.
-}
+No value, only graphical output.
 }
 \description{
 Plot gene expression per cell in multiple formats:

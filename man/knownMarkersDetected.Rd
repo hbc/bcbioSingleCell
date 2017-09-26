@@ -3,26 +3,26 @@
 \docType{methods}
 \name{knownMarkersDetected}
 \alias{knownMarkersDetected}
-\alias{knownMarkersDetected,data.frame,tbl_df-method}
+\alias{knownMarkersDetected,grouped_df,tbl_df-method}
 \title{Known Markers Detected}
 \usage{
 knownMarkersDetected(all, known, ...)
 
-\S4method{knownMarkersDetected}{data.frame,tbl_df}(all, known,
+\S4method{knownMarkersDetected}{grouped_df,tbl_df}(all, known,
   removePromiscuous = TRUE, show = FALSE)
 }
 \arguments{
+\item{all}{\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}
+
+\item{known}{Known markers \link{data.frame} imported by \code{\link[=readMarkers]{readMarkers()}} or
+pulled from internal \link{cellCycleMarkers} object.}
+
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{removePromiscuous}{Remove markers with very poor specificity, which are
 present in at least 5 clusters.}
 
 \item{show}{Show \link{kable}.}
-
-\item{object}{\link{data.frame}: \code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}
-
-\item{knownMarkers}{Known markers \link{data.frame} imported by \code{\link[=readMarkers]{readMarkers()}} or
-pulled from internal \link{cellCycleMarkers} object.}
 }
 \value{
 \link{tibble}.
