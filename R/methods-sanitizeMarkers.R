@@ -3,7 +3,8 @@
 #' @rdname sanitizeMarkers
 #' @name sanitizeMarkers
 #'
-#' @param object [Seurat::FindAllMarkers()] return.
+#' @inheritParams AllGenerics
+#' @param markers [Seurat::FindAllMarkers()] return.
 #'
 #' @return [grouped_df], grouped by cluster ident.
 NULL
