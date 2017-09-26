@@ -1,7 +1,6 @@
 #' Prepare SingleCellExperiment Object
 #'
 #' @inherit basejump::prepareSummarizedExperiment
-#' @param subset Stash in [metadata()] whether the object is a subset.
 #'
 #' @seealso [basejump::prepareSummarizedExperiment()].
 #'
@@ -36,9 +35,6 @@
 
     # Metadata ====
     metadata <- as.list(metadata)
-    if (isTRUE(subset)) {
-        metadata[["subset"]] <- TRUE
-    }
     # R session information
     metadata[["date"]] <- Sys.Date()
     metadata[["wd"]] <- getwd()
