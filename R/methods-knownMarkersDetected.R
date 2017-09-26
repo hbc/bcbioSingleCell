@@ -5,8 +5,8 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @param object [data.frame]: [Seurat::FindAllMarkers()] return.
-#' @param knownMarkers Known markers [data.frame] imported by [readMarkers()] or
+#' @param all [Seurat::FindAllMarkers()] return.
+#' @param known Known markers [data.frame] imported by [readMarkers()] or
 #'   pulled from internal [cellCycleMarkers] object.
 #' @param removePromiscuous Remove markers with very poor specificity, which are
 #'   present in at least 5 clusters.
@@ -35,9 +35,7 @@ NULL
     known,
     removePromiscuous = TRUE,
     show = FALSE) {
-    # Check for valid, sanitized markers data.frame
-    # TODO Make sure this stops properly
-    .validMarkers(all, stop = TRUE)
+    .validMarkers(all)
     # Check for `ensgene` column in both `all` and `known`
     if (!"ensgene" %in% colnames(all) & "ensgene" %in% colnames(known)) {
         stop("'all' and 'known' objects must contain 'ensgene' column")
@@ -46,7 +44,7 @@ NULL
     if (!any(known$ensgene %in% all$ensgene)) {
         stop("No 'ensgene' intersect between 'all' and 'known'")
     }
-    markers <- .sanitizeMarkers(all) %>%
+    markers <- all %>%
         left_join(known[, c("cell", "ensgene")], by = "ensgene") %>%
         dplyr::select(c("cell", "ensgene", "symbol", "cluster"),
                       everything()) %>%
@@ -55,12 +53,17 @@ NULL
                 decreasing = c(FALSE, FALSE, FALSE, TRUE)), , drop = FALSE] %>%
         group_by(!!sym("cell"))
     if (isTRUE(removePromiscuous)) {
+        # FIXME Need to update this step
         # Filter out promiscuous markers present in at least 5 clusters
         promiscuous <- markers %>%
-            group_by(cell, ensgene, symbol) %>%
+            group_by(!!!syms(c("cell", "ensgene", "symbol"))) %>%
             summarize(n = n()) %>%
             dplyr::filter(n >= 5) %>%
             pull("ensgene")
+        warning(paste(
+            "Promiscuous markers:",
+            toString(promiscuous)),
+            call. = FALSE)
     }
     if (isTRUE(show)) {
         .markersKable(markers, caption = "Known markers detected")

@@ -49,11 +49,7 @@ NULL
     n = 4L,
     coding = FALSE,
     show = FALSE) {
-    # Check for `sanitizedMarkers()` return
-    if (attributes(object)[["vars"]] != "cluster" |
-        !"ensgene" %in% colnames(object)) {
-        stop("'sanitizeMarkers()' is required for Seurat markers data.frame")
-    }
+    .validMarkers(object)
     if (isTRUE(coding)) {
         object <- dplyr::filter(
             object, .data[["biotype"]] == "protein_coding")
