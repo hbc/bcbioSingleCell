@@ -28,12 +28,18 @@ setValidity("bcbioSingleCell", function(object) TRUE)
 #' This class will be deprecated in favor of [bcbioSingleCell] in a future
 #' release.
 #'
+#' @author Michael Steinbaugh
 #' @keywords internal
+#'
+#' @slot callers [SimpleList] containing additional bcbio run data with dimensions
+#' that don't match the count matrix. This is currently used to store all
+#' unfiltered cellular barcodes for quality control analysis.
 #'
 #' @export
 bcbioSCDataSet <- setClass(
     "bcbioSCDataSet",
-    contains = "bcbioSingleCell")
+    contains = "SummarizedExperiment",
+    slots = c(callers = "SimpleList"))
 setValidity("bcbioSCDataSet", function(object) TRUE)
 
 
@@ -43,12 +49,13 @@ setValidity("bcbioSCDataSet", function(object) TRUE)
 #' This class will be deprecated in favor of [bcbioSingleCell] in a future
 #' release.
 #'
+#' @author Michael Steinbaugh
 #' @keywords internal
 #'
 #' @export
 bcbioSCFiltered <- setClass(
     "bcbioSCFiltered",
-    contains = "bcbioSingleCell")
+    contains = "SummarizedExperiment")
 setValidity("bcbioSCFiltered", function(object) TRUE)
 
 

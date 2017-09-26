@@ -11,6 +11,7 @@
 #'
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
+#' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #'
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dendsort dendsort
