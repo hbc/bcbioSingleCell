@@ -21,8 +21,7 @@ NULL
 # Constructors ====
 .topBarcodes <- function(object, n = 10L) {
     metrics <- metrics(object) %>%
-        as_tibble() %>%
-        rownames_to_column()
+        as("tibble")
     # Check for unfiltered barcode counts in `nCount`
     if (!"nCount" %in% colnames(metrics)) {
         warning("'nCount' missing from 'metrics()'")
