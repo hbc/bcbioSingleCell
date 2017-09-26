@@ -3,14 +3,11 @@
 \docType{methods}
 \name{sampleMetadata}
 \alias{sampleMetadata}
-\alias{sampleMetadata,bcbioSCDataSet-method}
-\alias{sampleMetadata,bcbioSCFiltered-method}
+\alias{sampleMetadata,bcbioSingleCellANY-method}
 \alias{sampleMetadata,seurat-method}
 \title{Sample Metadata}
 \usage{
-\S4method{sampleMetadata}{bcbioSCDataSet}(object, kable = FALSE)
-
-\S4method{sampleMetadata}{bcbioSCFiltered}(object, kable = FALSE)
+\S4method{sampleMetadata}{bcbioSingleCellANY}(object, kable = FALSE)
 
 \S4method{sampleMetadata}{seurat}(object, kable = FALSE)
 }

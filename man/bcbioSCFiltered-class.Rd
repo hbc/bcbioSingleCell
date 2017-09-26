@@ -6,9 +6,7 @@
 \alias{bcbioSCFiltered}
 \title{bcbioSCFiltered}
 \description{
-\link{bcbioSCFiltered} is a subclass of \link{SummarizedExperiment} designed to store
-single-cell RNA-seq counts of cells filtered by quality control analysis.
+This class will be deprecated in favor of \link{bcbioSingleCell} in a future
+release.
 }
-\author{
-Michael Steinbaugh
-}
+\keyword{internal}

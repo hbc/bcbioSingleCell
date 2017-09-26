@@ -3,15 +3,12 @@
 \docType{methods}
 \name{plotMitoRatio}
 \alias{plotMitoRatio}
-\alias{plotMitoRatio,bcbioSCDataSet-method}
-\alias{plotMitoRatio,bcbioSCFiltered-method}
+\alias{plotMitoRatio,bcbioSingleCellANY-method}
 \title{Plot Mitochondrial Transcript Abundance}
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSCDataSet}(object, max = 0.1)
-
-\S4method{plotMitoRatio}{bcbioSCFiltered}(object)
+\S4method{plotMitoRatio}{bcbioSingleCellANY}(object, max)
 }
 \arguments{
 \item{object}{Object.}

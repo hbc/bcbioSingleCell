@@ -3,16 +3,16 @@
 \docType{methods}
 \name{aggregateReplicates}
 \alias{aggregateReplicates}
-\alias{aggregateReplicates,bcbioSCDataSet-method}
+\alias{aggregateReplicates,bcbioSingleCell-method}
 \title{Aggregate Replicates}
 \usage{
-\S4method{aggregateReplicates}{bcbioSCDataSet}(object)
+\S4method{aggregateReplicates}{bcbioSingleCell}(object)
 }
 \arguments{
 \item{object}{Object.}
 }
 \value{
-\link{bcbioSCDataSet}.
+\link{bcbioSingleCell}.
 }
 \description{
 Aggregate Replicates

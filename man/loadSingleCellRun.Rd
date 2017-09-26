@@ -5,8 +5,8 @@
 \title{Load bcbio Single-Cell RNA-Seq Run}
 \usage{
 loadSingleCellRun(uploadDir, sampleMetadataFile,
-  interestingGroups = "sampleName", gtfFile = NULL,
-  wellMetadataFile = NULL, ...)
+  interestingGroups = "sampleName", ensemblVersion = "current",
+  gtfFile = NULL, wellMetadataFile = NULL, ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -18,16 +18,20 @@ running \code{bcbio_nextgen -w template}.}
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
+\item{ensemblVersion}{Ensembl release version. Defaults to current, and does
+not typically need to be user-defined. This parameter can be useful for
+matching Ensembl annotations against an outdated bcbio annotation build.}
+
 \item{gtfFile}{\emph{Optional}. Gene transfer format (GTF) file, which will be
 used for transcript-to-gene (\code{tx2gene}) and gene-to-symbol (\code{gene2symbol})
 annotation mappings.}
 
 \item{wellMetadataFile}{\emph{Optional}. Well identifier metadata file.}
 
-\item{...}{Additional arguments, passed as metadata.}
+\item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
 \value{
-\link{bcbioSCDataSet}.
+\link{bcbioSingleCell}.
 }
 \description{
 Load bcbio Single-Cell RNA-Seq Run

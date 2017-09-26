@@ -3,14 +3,11 @@
 \docType{methods}
 \name{metrics}
 \alias{metrics}
-\alias{metrics,bcbioSCDataSet-method}
-\alias{metrics,bcbioSCFiltered-method}
+\alias{metrics,bcbioSingleCellANY-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{bcbioSCDataSet}(object)
-
-\S4method{metrics}{bcbioSCFiltered}(object)
+\S4method{metrics}{bcbioSingleCellANY}(object)
 
 \S4method{metrics}{seurat}(object)
 }

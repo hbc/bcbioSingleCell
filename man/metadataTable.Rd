@@ -3,13 +3,10 @@
 \docType{methods}
 \name{metadataTable}
 \alias{metadataTable}
-\alias{metadataTable,bcbioSCDataSet-method}
-\alias{metadataTable,bcbioSCFiltered-method}
+\alias{metadataTable,bcbioSingleCellANY-method}
 \title{Metadata Table}
 \usage{
-\S4method{metadataTable}{bcbioSCDataSet}(object, ...)
-
-\S4method{metadataTable}{bcbioSCFiltered}(object, ...)
+\S4method{metadataTable}{bcbioSingleCellANY}(object, ...)
 }
 \arguments{
 \item{object}{Object.}

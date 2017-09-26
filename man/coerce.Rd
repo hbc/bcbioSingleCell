@@ -2,12 +2,25 @@
 % Please edit documentation in R/setAs.R
 \name{coerce}
 \alias{coerce}
-\alias{coerce-bcbioSCFiltered-seurat}
+\alias{upgrade-bcbioSingleCell}
+\alias{coerce-bcbioSingleCell-seurat}
 \title{Coerce Object}
+\arguments{
+\item{from}{Class for which the coerce method will perform coercion.}
+}
 \description{
 Coerce Object
 }
-\section{\link{bcbioSCFiltered} to \link{seurat}}{
+\section{Upgrade \link{bcbioSingleCell} to current version}{
+
+This method adds support for upgrading \code{bcbioSCDataSet} objects to the latest
+\link{bcbioSingleCell} class version. This should be backwards compatible to
+\link{bcbioSingleCell} version 0.0.17. Previous objects saved using
+\code{bcbioSinglecell} (note case) will likely fail to load with newer versions of
+the package.
+}
+
+\section{\link{bcbioSingleCell} to \link{seurat}}{
 
 Interally, this begins by calling \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}} without any
 additional filtering cutoffs, since we already applied them during our
@@ -30,7 +43,7 @@ seurat <- as(bcb, "seurat")
 }
 }
 \seealso{
-\code{help("coerce")}
+\code{help(topic = "coerce", package = "methods")}.
 }
 \author{
 Michael Steinbaugh

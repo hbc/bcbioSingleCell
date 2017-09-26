@@ -3,13 +3,10 @@
 \docType{methods}
 \name{interestingGroups}
 \alias{interestingGroups}
-\alias{interestingGroups,bcbioSCDataSet-method}
-\alias{interestingGroups,bcbioSCFiltered-method}
+\alias{interestingGroups,bcbioSingleCellANY-method}
 \title{Interesting Groups}
 \usage{
-\S4method{interestingGroups}{bcbioSCDataSet}(object)
-
-\S4method{interestingGroups}{bcbioSCFiltered}(object)
+\S4method{interestingGroups}{bcbioSingleCellANY}(object)
 }
 \arguments{
 \item{object}{Object.}

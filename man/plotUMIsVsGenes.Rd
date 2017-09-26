@@ -3,15 +3,12 @@
 \docType{methods}
 \name{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
-\alias{plotUMIsVsGenes,bcbioSCDataSet-method}
-\alias{plotUMIsVsGenes,bcbioSCFiltered-method}
+\alias{plotUMIsVsGenes,bcbioSingleCellANY-method}
 \title{Plot UMI and Gene Correlation}
 \usage{
 plotUMIsVsGenes(object, ...)
 
-\S4method{plotUMIsVsGenes}{bcbioSCDataSet}(object)
-
-\S4method{plotUMIsVsGenes}{bcbioSCFiltered}(object)
+\S4method{plotUMIsVsGenes}{bcbioSingleCellANY}(object)
 }
 \arguments{
 \item{object}{Object.}

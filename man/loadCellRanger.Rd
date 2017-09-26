@@ -5,7 +5,7 @@
 \title{Load 10X Genomics CellRanger Data}
 \usage{
 loadCellRanger(uploadDir, refDataDir, sampleMetadataFile,
-  interestingGroups = "sampleName", ...)
+  interestingGroups = "sampleName", ensemblVersion = "current", ...)
 }
 \arguments{
 \item{uploadDir}{Path to CellRanger output directory. This directory path
@@ -19,10 +19,14 @@ must contain \code{filtered_gene_bc_matrices/} as a child.}
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
-\item{...}{Additional arguments, passed as metadata.}
+\item{ensemblVersion}{Ensembl release version. Defaults to current, and does
+not typically need to be user-defined. This parameter can be useful for
+matching Ensembl annotations against an outdated bcbio annotation build.}
+
+\item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
 \value{
-\link{bcbioSCDataSet}.
+\link{bcbioSingleCell}.
 }
 \description{
 Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} cell

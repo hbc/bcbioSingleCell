@@ -32,11 +32,19 @@ filterCells(object, ...)
 \item{headerLevel}{RMarkdown header level, if \code{showReport = TRUE}.}
 }
 \value{
-\link{bcbioSCFiltered}.
+\link{bcbioSingleCell} object, with filtering information saved as a named
+logical vector slotted at \code{object@metadata[["filteredCells"]]}.
+
+[["filteredCells"]: R:[%22filteredCells%22
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.
+}
+\note{
+This operation can be re-run on a \link{bcbioSingleCell} object that has
+been previously filtered. This function simply saves a named logical vector
+of cells that have passed filtering criteria in the \code{metadata} slot.
 }
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},

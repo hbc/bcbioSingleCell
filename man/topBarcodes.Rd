@@ -3,15 +3,12 @@
 \docType{methods}
 \name{topBarcodes}
 \alias{topBarcodes}
-\alias{topBarcodes,bcbioSCDataSet-method}
-\alias{topBarcodes,bcbioSCFiltered-method}
+\alias{topBarcodes,bcbioSingleCellANY-method}
 \title{Top Barcodes}
 \usage{
 topBarcodes(object, ...)
 
-\S4method{topBarcodes}{bcbioSCDataSet}(object, n = 2L)
-
-\S4method{topBarcodes}{bcbioSCFiltered}(object, n = 2L)
+\S4method{topBarcodes}{bcbioSingleCellANY}(object, n = 10L)
 }
 \arguments{
 \item{object}{Object.}
@@ -21,10 +18,16 @@ topBarcodes(object, ...)
 \item{n}{Number of barcodes to return per sample.}
 }
 \value{
-\link{tibble}.
+\link{data.frame}
 }
 \description{
 Top Barcodes
+}
+\examples{
+\dontrun{
+data(bcb)
+topBarcodes(bcb)
+}
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},

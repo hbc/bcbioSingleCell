@@ -3,15 +3,12 @@
 \docType{methods}
 \name{plotCellCounts}
 \alias{plotCellCounts}
-\alias{plotCellCounts,bcbioSCDataSet-method}
-\alias{plotCellCounts,bcbioSCFiltered-method}
+\alias{plotCellCounts,bcbioSingleCellANY-method}
 \title{Plot Cell Counts}
 \usage{
 plotCellCounts(object, ...)
 
-\S4method{plotCellCounts}{bcbioSCDataSet}(object)
-
-\S4method{plotCellCounts}{bcbioSCFiltered}(object)
+\S4method{plotCellCounts}{bcbioSingleCellANY}(object)
 }
 \arguments{
 \item{object}{Object.}
