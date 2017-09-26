@@ -29,10 +29,11 @@ setMethod("calculateMetrics", "dgCMatrix", function(
         .[!rownames(object) %in% annotable[["ensgene"]]]
     if (length(missing) > 0L) {
         warning(paste(
-            length(missing), "genes missing in Ensembl annotations",
+            length(missing), "genes missing in annotable",
             "used to calculate metrics:",
             toString(head(missing)),
-            "..."))
+            "..."
+        ))
     }
 
     # Check for [Matrix::colSums()] methods support

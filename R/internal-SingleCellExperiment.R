@@ -23,9 +23,9 @@
     if (!all(rownames(assay) %in% rownames(rowData))) {
         missing <- setdiff(rownames(assay), rownames(rowData))
         warning(paste(
-            "rowData mismatch with assay slot:",
-            paste0(toString(missing), "."),
-            "These identifiers are missing in the current Ensembl release."
+            "'rowData' mismatch with 'assay':",
+            toString(head(missing)),
+            "..."
         ))
     }
 
