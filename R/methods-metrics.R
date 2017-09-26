@@ -13,7 +13,14 @@ NULL
 
 
 # Constructors ====
-.metrics <- function(object) {
+#' Metrics Constructor
+#'
+#' @inheritParams AllGenerics
+#' @param filterCells Return only metrics for the filtered cells.
+#'
+#' @return [data.frame].
+#' @noRd
+.metricsBCB <- function(object) {
     colData <- colData(object) %>%
         as.data.frame() %>%
         rownames_to_column()
@@ -55,7 +62,23 @@ NULL
 # Methods ====
 #' @rdname metrics
 #' @export
-setMethod("metrics", "bcbioSingleCellANY", .metrics)
+setMethod("metrics", "bcbioSingleCell", function(
+    object,
+    filterCells = TRUE) {
+    if (isTRUE(filterCells)) {
+        cells <- metadata(object)[["filterCells"]]
+        if (!is.null(cells)) {
+            object <- object[, cells]
+        }
+    }
+    .metricsBCB(object)
+})
+
+
+
+#' @rdname metrics
+#' @export
+setMethod("metrics", "bcbioSingleCellLegacy", .metricsBCB)
 
 
 
