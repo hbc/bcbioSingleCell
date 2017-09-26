@@ -26,14 +26,15 @@ NULL
 .fromMetadata <- function(from) {
     metadata(from) %>%
         .[c("version",
+            "uploadDir",
             "sampleMetadata",
-            "filterParams",
-            "annotable",
-            "gene2symbol",
-            "genomeBuild",
             "interestingGroups",
+            "filterParams",
             "organism",
-            "uploadDir")]
+            "genomeBuild",
+            "ensemblVersion",
+            "annotable",
+            "gene2symbol")]
 }
 
 
@@ -72,13 +73,18 @@ setAs("bcbioSingleCellANY", "bcbioSingleCell", function(from) {
 #' for the relationship between variability and average expression. Finally, the
 #' genes are scaled and centered using the [Seurat::ScaleData()] function.
 setAs("bcbioSingleCellANY", "seurat", function(from) {
+    cells <- metadata(from)[["filterCells"]]
+
     # Check for required `filterCells` metadata
-    if (is.null(metadata(from)[["filterCells"]])) {
+    if (is.null(cells)) {
         stop(paste(
             "'filterCells()' must be performed on 'from' object",
             "prior to 'seurat' coercion"
         ))
     }
+
+    # Subset the object to only contain filtered cells
+    from <- from[, cells]
 
     counts <- counts(from, gene2symbol = TRUE)
     seurat <- CreateSeuratObject(
@@ -89,7 +95,7 @@ setAs("bcbioSingleCellANY", "seurat", function(from) {
     )
 
     # Integrity checks
-    if (!identical(dim(counts), dim(seurat@data))) {
+    if (!identical(dim(counts), dim(seurat@raw.data))) {
         stop(paste(
             "Unexpected dimension mismatch between",
             "'bcbioSingleCell' and 'seurat' objects"
