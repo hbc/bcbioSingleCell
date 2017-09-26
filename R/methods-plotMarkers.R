@@ -14,12 +14,8 @@
 #'
 #' @inheritParams plotMarkerTSNE
 #' @param headerLevel Include a Markdown header for each gene.
-#' @param returnAsList Return the `gg` objects as a list instead of plotting
-#'   with [cowplot::plot_grid()].
 #'
-#' @return
-#' - `returnAsList = FALSE`: No value, only graphical output.
-#' - `returnAsList = TRUE`: [list].
+#' @return No value, only graphical output.
 #'
 #' @examples
 #' \dontrun{
@@ -33,6 +29,12 @@ NULL
 
 
 # Constructors ====
+#' Plot Marker Seurat Constructor
+#'
+#' @param returnAsList Return the `gg` objects as a list instead of plotting
+#'   with [cowplot::plot_grid()].
+#'
+#' @noRd
 .plotMarkerSeurat <- function(object, gene, returnAsList = FALSE) {
     if (!is_string(gene)) {
         stop("gene must be a string", call. = FALSE)
@@ -54,7 +56,7 @@ NULL
         .[[1]] %>%
         .[["data"]] %>%
         # Remove the low expression features
-        dplyr::filter(feature > lowExpressionCutoff) %>%
+        dplyr::filter(.data[["feature"]] > lowExpressionCutoff) %>%
         ggplot(aes_(x = ~ident,
                     y = ~feature,
                     fill = ~ident)) +
@@ -76,7 +78,7 @@ NULL
         .[[1]] %>%
         .[["data"]] %>%
         # Remove the low expression features
-        dplyr::filter(feature > lowExpressionCutoff) %>%
+        dplyr::filter(.data[["feature"]] > lowExpressionCutoff) %>%
         ggplot(aes_(x = ~feature,
                     y = ~ident,
                     fill = ~ident)) +
