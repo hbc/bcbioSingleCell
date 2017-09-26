@@ -27,30 +27,39 @@ NULL
         labs(x = "sample",
              y = "genes per cell") +
         geom_boxplot() +
-        geom_hline(alpha = qcLineAlpha,
-                   color = qcCutoffColor,
-                   linetype = qcLineType,
-                   size = qcLineSize,
-                   yintercept = min) +
-        geom_label(data = medianGenes,
-                   aes_(label = ~nGene),
-                   alpha = qcLabelAlpha,
-                   color = qcLabelColor,
-                   fill = qcLabelFill,
-                   fontface = qcLabelFontface,
-                   label.padding = qcLabelPadding,
-                   label.size = qcLabelSize,
-                   show.legend = FALSE) +
+        geom_label(
+            data = medianGenes,
+            aes_(label = ~nGene),
+            alpha = qcLabelAlpha,
+            color = qcLabelColor,
+            fill = qcLabelFill,
+            fontface = qcLabelFontface,
+            label.padding = qcLabelPadding,
+            label.size = qcLabelSize,
+            show.legend = FALSE
+        ) +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+    if (!is.null(min)) {
+        p <- p +
+            geom_hline(
+                alpha = qcLineAlpha,
+                color = qcCutoffColor,
+                linetype = qcLineType,
+                size = qcLineSize,
+                yintercept = min
+            )
+    }
     if (!is.null(max)) {
         p <- p +
-            geom_hline(alpha = qcLineAlpha,
-                       color = qcCutoffColor,
-                       linetype = qcLineType,
-                       size = qcLineSize,
-                       yintercept = max)
+            geom_hline(
+                alpha = qcLineAlpha,
+                color = qcCutoffColor,
+                linetype = qcLineType,
+                size = qcLineSize,
+                yintercept = max
+            )
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)
@@ -67,22 +76,29 @@ NULL
                      fill = ~sampleName)) +
         labs(x = "genes per cell") +
         geom_histogram(bins = bins) +
-        geom_vline(alpha = qcLineAlpha,
-                   color = qcCutoffColor,
-                   linetype = qcLineType,
-                   size = qcLineSize,
-                   xintercept = min) +
         scale_x_sqrt() +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+    if (!is.null(min)) {
+        p <- p +
+            geom_vline(
+                alpha = qcLineAlpha,
+                color = qcCutoffColor,
+                linetype = qcLineType,
+                size = qcLineSize,
+                xintercept = min
+            )
+    }
     if (!is.null(max)) {
         p <- p +
-            geom_vline(alpha = qcLineAlpha,
-                       color = qcCutoffColor,
-                       linetype = qcLineType,
-                       size = qcLineSize,
-                       xintercept = max)
+            geom_vline(
+                alpha = qcLineAlpha,
+                color = qcCutoffColor,
+                linetype = qcLineType,
+                size = qcLineSize,
+                xintercept = max
+            )
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p + facet_wrap(~fileName)
@@ -93,19 +109,6 @@ NULL
 
 
 .plotGenesPerCell <- function(object, min, max) {
-    plot_grid(.plotGenesPerCellHistogram(object, min, max),
-              .plotGenesPerCellBoxplot(object, min, max),
-              labels = "auto",
-              nrow = 2L)
-}
-
-
-
-# Methods ====
-#' @rdname plotGenesPerCell
-#' @export
-setMethod("plotGenesPerCell", "bcbioSingleCellANY", function(
-    object, min, max) {
     if (missing(min)) {
         min <- object %>%
             metadata() %>%
@@ -118,5 +121,16 @@ setMethod("plotGenesPerCell", "bcbioSingleCellANY", function(
             .[["filterParams"]] %>%
             .[["maxGenes"]]
     }
-    .plotGenesPerCell(object, min = min, max = max)
-})
+    plot_grid(
+        .plotGenesPerCellHistogram(object, min = min, max = max),
+        .plotGenesPerCellBoxplot(object, min = min, max = max),
+        labels = "auto",
+        nrow = 2L)
+}
+
+
+
+# Methods ====
+#' @rdname plotGenesPerCell
+#' @export
+setMethod("plotGenesPerCell", "bcbioSingleCellANY", .plotGenesPerCell)
