@@ -26,7 +26,7 @@ NULL
                      fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "genes per cell") +
-        geom_boxplot(color = qcBorderColor) +
+        geom_boxplot(color = lineColor) +
         geom_label(
             data = medianGenes,
             aes_(label = ~nGene),

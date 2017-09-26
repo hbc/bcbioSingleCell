@@ -22,7 +22,7 @@ NULL
                      fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "% mito counts") +
-        geom_boxplot(color = qcBorderColor) +
+        geom_boxplot(color = lineColor) +
         geom_label(
             data = medianMitoRatio,
             aes_(label = ~round(mitoRatio * 100L, digits = 2L)),
