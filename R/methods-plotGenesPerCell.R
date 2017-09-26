@@ -26,7 +26,7 @@ NULL
                      fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "genes per cell") +
-        geom_boxplot() +
+        geom_boxplot(color = qcBorderColor) +
         geom_label(
             data = medianGenes,
             aes_(label = ~nGene),
@@ -62,7 +62,8 @@ NULL
             )
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
+        p <- p +
+            facet_wrap(~fileName)
     }
     p
 }
@@ -101,7 +102,8 @@ NULL
             )
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
+        p <- p +
+            facet_wrap(~fileName)
     }
     p
 }

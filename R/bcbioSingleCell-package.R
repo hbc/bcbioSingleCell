@@ -54,6 +54,7 @@ globalVariables(".")
 bins <- 100L
 
 # Quality control plot colors
+qcBorderColor <- "black"
 qcCutoffColor <- "black"
 qcFailColor <- "red"
 qcPassColor <- "green"
@@ -64,7 +65,7 @@ qcLabelAlpha <- 0.75
 qcLabelColor <- "white"
 qcLabelFill <- "black"
 qcLabelFontface <- "bold"
-qcLabelPadding <- ggplot2::unit(0.2, "lines")
+qcLabelPadding <- unit(0.2, "lines")
 qcLabelSize <- NA
 
 # Quality control line appearance
