@@ -11,13 +11,16 @@ NULL
 
 
 # Constructors ====
-.plotCellCounts <- function(object) {
-    metrics <- metrics(object)
-    cellCounts <- metrics %>%
+.plotCellCounts <- function(
+    object,
+    interestingGroup) {
+    if (missing(interestingGroup)) {
+        interestingGroup <- interestingGroups(object)[[1L]]
+    }
+    cellCounts <- metrics(object) %>%
         group_by(!!sym("sampleID")) %>%
         summarize(cells = n()) %>%
         left_join(sampleMetadata(object), by = "sampleID")
-    interestingGroup <- interestingGroups(object)[[1L]]
     p <- ggplot(cellCounts,
                 aes_(x = ~sampleName,
                      y = ~cells,
