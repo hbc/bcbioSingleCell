@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams AllGenerics
+#' @param filterCells Only return cells that pass filtering criteria.
 #'
 #' @return [data.frame] with cellular barcodes as rows.
 NULL
