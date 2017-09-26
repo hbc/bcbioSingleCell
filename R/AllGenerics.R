@@ -63,7 +63,7 @@ setGeneric("filterCells", function(object, ...) {
 #' @rdname knownMarkersDetected
 #' @inheritParams AllGenerics
 #' @export
-setGeneric("knownMarkersDetected", function(object, knownMarkers, ...) {
+setGeneric("knownMarkersDetected", function(all, known, ...) {
     standardGeneric("knownMarkersDetected")
 })
 
@@ -232,6 +232,15 @@ setGeneric("quantileHeatmap", function(object, ...) {
 #' @export
 setGeneric("readMarkers", function(object, ...) {
     standardGeneric("readMarkers")
+})
+
+
+
+#' @rdname sanitizeMarkers
+#' @inheritParams AllGenerics
+#' @export
+setGeneric("sanitizeMarkers", function(object, markers, ...) {
+    standardGeneric("sanitizeMarkers")
 })
 
 
