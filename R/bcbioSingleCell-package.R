@@ -3,6 +3,10 @@
 #' Import and analyze [bcbio](http://bcbio-nextgen.readthedocs.io) single-cell
 #' RNA-seq data.
 #'
+#' @rdname bcbioSingleCell-package
+#' @name bcbioSingleCell-package
+#' @docType package
+#'
 #' @import basejump methods SingleCellExperiment SummarizedExperiment
 #'
 #' @importClassesFrom Seurat seurat
@@ -42,7 +46,7 @@
 #' @importFrom tidyr gather
 #' @importFrom utils globalVariables methods
 #' @importFrom viridis inferno scale_color_viridis scale_fill_viridis viridis
-"_PACKAGE"
+NULL
 
 globalVariables(".")
 

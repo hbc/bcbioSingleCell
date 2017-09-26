@@ -2,33 +2,9 @@
 % Please edit documentation in R/bcbioSingleCell-package.R
 \docType{package}
 \name{bcbioSingleCell-package}
-\alias{bcbioSingleCell}
 \alias{bcbioSingleCell-package}
 \title{bcbioSingleCell}
 \description{
 Import and analyze \href{http://bcbio-nextgen.readthedocs.io}{bcbio} single-cell
 RNA-seq data.
-}
-\seealso{
-Useful links:
-\itemize{
-  \item \url{http://bioinformatics.sph.harvard.edu/bcbioSingleCell}
-  \item \url{https://github.com/hbc/bcbioSingleCell}
-  \item Report bugs at \url{https://github.com/hbc/bcbioSingleCell/issues}
-}
-
-}
-\author{
-\strong{Maintainer}: Michael Steinbaugh \email{mike@steinbaugh.com}
-
-Authors:
-\itemize{
-  \item Rory Kirchner \email{roryk@alum.mit.edu}
-}
-
-Other contributors:
-\itemize{
-  \item Harvard Chan Bioinformatics Core \email{bioinformatics@hsph.harvard.edu} [copyright holder, funder]
-}
-
 }
