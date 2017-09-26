@@ -112,15 +112,15 @@ First, we assign each cell a score, based on its expression of G2/M and S phase 
 ccm <- metadata(bcb)$organism %>%
     str_match("^([A-Z])[a-z]+ ([a-z]+)$") %>%
     .[, 2:3] %>%
-    as.character %>%
+    as.character() %>%
     paste0(collapse = "") %>%
-    tolower %>%
+    tolower() %>%
     cellCycleMarkers[[.]]
 sGenes <- ccm %>%
-    tidy_filter(phase == "S") %>%
+    dplyr::filter(phase == "S") %>%
     pull("symbol")
 g2mGenes <- ccm %>%
-    tidy_filter(phase == "G2/M") %>%
+    dplyr::filter(phase == "G2/M") %>%
     pull("symbol")
 ```
 
@@ -307,7 +307,7 @@ sapply(seq_along(groupBy), function(a) {
             do.label = label,
             group.by = groupBy[[a]])
 }) %>%
-    invisible
+    invisible()
 ```
 
 Note that tSNE is not PCA! The measurement of distance in a tSNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.
