@@ -6,7 +6,7 @@
 \usage{
 loadSingleCellRun(uploadDir, sampleMetadataFile,
   interestingGroups = "sampleName", ensemblVersion = "current",
-  gtfFile = NULL, wellMetadataFile = NULL, ...)
+  gtfFile = NULL, wellMetadataFile = NULL, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -27,6 +27,8 @@ used for transcript-to-gene (\code{tx2gene}) and gene-to-symbol (\code{gene2symb
 annotation mappings.}
 
 \item{wellMetadataFile}{\emph{Optional}. Well identifier metadata file.}
+
+\item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }

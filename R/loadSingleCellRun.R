@@ -19,6 +19,7 @@
 #'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
 #'   annotation mappings.
 #' @param wellMetadataFile *Optional*. Well identifier metadata file.
+#' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return [bcbioSingleCell].
@@ -30,6 +31,7 @@ loadSingleCellRun <- function(
     ensemblVersion = "current",
     gtfFile = NULL,
     wellMetadataFile = NULL,
+    prefilter = TRUE,
     ...) {
     # Initial run setup ====
     pipeline <- "bcbio"
@@ -126,9 +128,9 @@ loadSingleCellRun <- function(
     if (length(genomeBuild) > 1L) {
         stop("Multiple genomes detected -- not supported")
     }
-    message(paste("Genome build:", genomeBuild))
     organism <- detectOrganism(genomeBuild)
     message(paste("Organism:", organism))
+    message(paste("Genome build:", genomeBuild))
 
     # Molecular barcode (UMI) type ====
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
@@ -176,25 +178,33 @@ loadSingleCellRun <- function(
     cellularBarcodes <- .cellularBarcodesList(sampleDirs)
 
     # Row data =================================================================
-    annotable <- annotable(genomeBuild)
+    annotable <- annotable(genomeBuild, release = ensemblVersion)
 
     # Assays ===================================================================
     message("Reading counts")
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
-        txlevel <- .readSparseCounts(sampleDirs[a], pipeline = pipeline)
-        # Transcript-level to gene-level counts
-        genelevel <- .sparseCountsTx2Gene(txlevel, tx2gene)
-        # Pre-filter using cellular barcode summary metrics
-        metrics <- calculateMetrics(genelevel, annotable, prefilter = TRUE)
-        genelevel[, rownames(metrics)]
+        .readSparseCounts(sampleDirs[a], pipeline = pipeline)
     }) %>%
         setNames(names(sampleDirs))
-    sparseCounts <- do.call(Matrix::cBind, sparseList)
+    # Combine the individual per-sample transcript-level sparse matrices into a
+    # single sparse matrix
+    txlevel <- do.call(Matrix::cBind, sparseList)
+    # Convert counts from transcript-level to gene-level
+    counts <- .sparseCountsTx2Gene(txlevel, tx2gene)
+    # Calculate the cellular barcode metrics
+    metrics <- calculateMetrics(
+        counts,
+        annotable = annotable,
+        prefilter = prefilter)
+    if (isTRUE(prefilter)) {
+        # Subset the counts matrix to match the metrics
+        counts <- counts[, rownames(metrics)]
+    }
 
     # Column data ==============================================================
-    metrics <- calculateMetrics(sparseCounts, annotable)
-    # Add reads per cellular barcode to metrics
+    # Slot the cellular barcode metrics into colData
+    # Add reads per cellular barcode
     cellularBarcodesTibble <- .bindCellularBarcodes(cellularBarcodes) %>%
         mutate(cellularBarcode = NULL,
                sampleID = NULL)
@@ -250,7 +260,7 @@ loadSingleCellRun <- function(
 
     # Return `bcbioSingleCell` object ==========================================
     sce <- .SingleCellExperiment(
-        assays = list(assay = sparseCounts),
+        assays = list(assay = counts),
         rowData = annotable,
         colData = metrics,
         metadata = metadata
