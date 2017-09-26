@@ -58,8 +58,7 @@ Suggests:
     testthat,
     tidyverse
 Remotes:
-    steinbaugh/basejump@develop,
-    bioc::3.6/SingleCellExperiment
+    steinbaugh/basejump@develop
 biocViews:
     DataImport,
     DataRepresentation,
