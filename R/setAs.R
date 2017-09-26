@@ -72,8 +72,8 @@ setAs("bcbioSingleCellANY", "bcbioSingleCell", function(from) {
 #' for the relationship between variability and average expression. Finally, the
 #' genes are scaled and centered using the [Seurat::ScaleData()] function.
 setAs("bcbioSingleCellANY", "seurat", function(from) {
-    # Check for required `filteredCells` metadata
-    if (is.null(metadata(from)[["filteredCells"]])) {
+    # Check for required `filterCells` metadata
+    if (is.null(metadata(from)[["filterCells"]])) {
         stop(paste(
             "'filterCells()' must be performed on 'from' object",
             "prior to 'seurat' coercion"
