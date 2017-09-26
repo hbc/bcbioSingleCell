@@ -59,6 +59,7 @@ Suggests:
     tidyverse
 Remotes:
     steinbaugh/basejump@develop
+    git::https://git.bioconductor.org/packages/SingleCellExperiment
 biocViews:
     DataImport,
     DataRepresentation,
