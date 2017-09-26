@@ -9,7 +9,9 @@
 #' @param coding Only include protein coding genes.
 #' @param show Show [kable].
 #'
-#' @seealso [dplyr::top_n()].
+#' @seealso
+#' - [dplyr::slice()]
+#' - [dplyr::top_n()].
 #'
 #' @return [tibble].
 #' @export
@@ -18,36 +20,6 @@ NULL
 
 
 # Constructors ====
-# Also called by `knownMarkersDetected()`
-.groupMarkers <- function(df) {
-    df <- camel(df)
-
-    # [Seurat::FindAllMarkers()] output
-    if (identical(colnames(df),
-        c("pVal", "avgDiff", "pct1", "pct2", "cluster", "gene"))) {
-        # Rename the gene symbol and P value columns
-        message("Fixing columns in Seurat marker data.frame")
-        df <- df %>%
-            dplyr::rename(pvalue = .data[["pVal"]],
-                        symbol = .data[["gene"]])
-    }
-
-    # Ensure that required columns are present
-    requiredCols <- c("cluster", "ensgene", "symbol", "pvalue")
-    if (!all(c("cluster", "ensgene", "symbol", "pvalue") %in% colnames(df))) {
-        stop(paste("Marker data.frame must contain:", toString(requiredCols)))
-    }
-
-    df %>%
-        remove_rownames() %>%
-        as("tibble") %>%
-        camel() %>%
-        dplyr::select(c("cluster", "symbol"), everything()) %>%
-        group_by(.data[["cluster"]])
-}
-
-
-
 # Also called by `knownMarkersDetected()`
 .markersKable <- function(object, caption = NULL) {
     object %>%
@@ -77,12 +49,16 @@ NULL
     n = 4L,
     coding = FALSE,
     show = FALSE) {
-    markers <- object
-    if (isTRUE(coding)) {
-        markers <- dplyr::filter(markers,
-                                 .data[["biotype"]] == "protein_coding")
+    # Check for `sanitizedMarkers()` return
+    if (attributes(object)[["vars"]] != "cluster" |
+        !"ensgene" %in% colnames(object)) {
+        stop("'sanitizeMarkers()' is required for Seurat markers data.frame")
     }
-    markers <- .groupMarkers(markers) %>%
+    if (isTRUE(coding)) {
+        object <- dplyr::filter(
+            object, .data[["biotype"]] == "protein_coding")
+    }
+    object <- object %>%
         # Use only the positive markers
         dplyr::filter(.data[["avgDiff"]] > 0L) %>%
         # Arrange by P value
@@ -90,9 +66,9 @@ NULL
         # Take the top rows by using slice
         dplyr::slice(1:n)
     if (isTRUE(show)) {
-        .markersKable(markers, caption = paste("Top", n, "markers per cluster"))
+        .markersKable(object, caption = paste("Top", n, "markers per cluster"))
     }
-    markers
+    object
 }
 
 
@@ -100,4 +76,4 @@ NULL
 # Methods ====
 #' @rdname topMarkers
 #' @export
-setMethod("topMarkers", "data.frame", .topMarkers)
+setMethod("topMarkers", "grouped_df", .topMarkers)
