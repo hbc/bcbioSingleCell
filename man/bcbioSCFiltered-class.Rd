@@ -9,4 +9,7 @@
 This class will be deprecated in favor of \link{bcbioSingleCell} in a future
 release.
 }
+\author{
+Michael Steinbaugh
+}
 \keyword{internal}

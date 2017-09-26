@@ -3,16 +3,21 @@
 \docType{methods}
 \name{metrics}
 \alias{metrics}
-\alias{metrics,bcbioSingleCellANY-method}
+\alias{metrics,bcbioSingleCell-method}
+\alias{metrics,bcbioSingleCellLegacy-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{bcbioSingleCellANY}(object)
+\S4method{metrics}{bcbioSingleCell}(object, filterCells = TRUE)
+
+\S4method{metrics}{bcbioSingleCellLegacy}(object)
 
 \S4method{metrics}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{filterCells}{Only return cells that pass filtering criteria.}
 }
 \value{
 \link{data.frame} with cellular barcodes as rows.

@@ -3,13 +3,19 @@
 \docType{methods}
 \name{bcbio}
 \alias{bcbio}
-\alias{bcbio,bcbioSingleCellANY-method}
-\alias{bcbio<-,bcbioSingleCellANY-method}
+\alias{bcbio,bcbioSingleCell-method}
+\alias{bcbio<-,bcbioSingleCell-method}
+\alias{bcbio,bcbioSCDataSet-method}
+\alias{bcbio<-,bcbioSCDataSet-method}
 \title{\code{bcbioSingleCell} Object Accessors}
 \usage{
-\S4method{bcbio}{bcbioSingleCellANY}(object, type)
+\S4method{bcbio}{bcbioSingleCell}(object, type)
 
-\S4method{bcbio}{bcbioSingleCellANY}(object, type) <- value
+\S4method{bcbio}{bcbioSingleCell}(object, type) <- value
+
+\S4method{bcbio}{bcbioSCDataSet}(object, type)
+
+\S4method{bcbio}{bcbioSCDataSet}(object, type) <- value
 }
 \arguments{
 \item{object}{Object.}

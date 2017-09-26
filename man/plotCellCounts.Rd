@@ -8,12 +8,14 @@
 \usage{
 plotCellCounts(object, ...)
 
-\S4method{plotCellCounts}{bcbioSingleCellANY}(object)
+\S4method{plotCellCounts}{bcbioSingleCellANY}(object, interestingGroup)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{interestingGroup}{Interesting group, to use for colors.}
 }
 \value{
 \link{ggplot} grid.
