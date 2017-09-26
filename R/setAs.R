@@ -40,8 +40,23 @@ NULL
 
 # Methods ====
 #' @rdname coerce
+#' @name upgrade-bcbioSingleCell
+#' @section Upgrade [bcbioSingleCell] to current version:
+#' This method adds support for upgrading `bcbioSCDataSet` objects to the latest
+#' [bcbioSingleCell] class version. This should be backwards compatible to
+#' [bcbioSingleCell] version 0.0.17. Previous objects saved using
+#' `bcbioSinglecell` (note case) will likely fail to load with newer versions of
+#' the package.
+setAs("bcbioSingleCellANY", "bcbioSingleCell", function(from) {
+    # Can extract the information from the slotted SummarizedExperiment
+    # Add a warning for `bcbioSCFiltered`, since these only contain a subset
+    stop("Draft function")
+})
+
+
+
+#' @rdname coerce
 #' @name coerce-bcbioSingleCell-seurat
-#'
 #' @section [bcbioSingleCell] to [seurat]:
 #' Interally, this begins by calling [Seurat::CreateSeuratObject()] without any
 #' additional filtering cutoffs, since we already applied them during our
