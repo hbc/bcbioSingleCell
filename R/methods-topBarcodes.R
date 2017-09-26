@@ -7,17 +7,33 @@
 #'
 #' @param n Number of barcodes to return per sample.
 #'
-#' @return [tibble].
+#' @return [data.frame]
+#'
+#' @examples
+#' \dontrun{
+#' data(bcb)
+#' topBarcodes(bcb)
+#' }
 NULL
 
 
 
 # Constructors ====
-.topBarcodes <- function(object, n = 2L) {
-    metrics(object) %>%
-        as("tibble") %>%
-        # Use slice here instead?
-        top_n(n, !!sym("total_counts"))
+.topBarcodes <- function(object, n = 10L) {
+    metrics <- metrics(object) %>%
+        as_tibble() %>%
+        rownames_to_column()
+    # Check for unfiltered barcode counts in `nCount`
+    if (!"nCount" %in% colnames(metrics)) {
+        warning("'nCount' missing from 'metrics()'")
+        return(NULL)
+    }
+    metrics %>%
+        .[order(.[["nCount"]], decreasing = TRUE), , drop = FALSE] %>%
+        # Take the top rows by using slice
+        dplyr::slice(1:n) %>%
+        as.data.frame() %>%
+        column_to_rownames()
 }
 
 
@@ -25,10 +41,4 @@ NULL
 # Methods ====
 #' @rdname topBarcodes
 #' @export
-setMethod("topBarcodes", "bcbioSCDataSet", .topBarcodes)
-
-
-
-#' @rdname topBarcodes
-#' @export
-setMethod("topBarcodes", "bcbioSCFiltered", .topBarcodes)
+setMethod("topBarcodes", "bcbioSingleCellANY", .topBarcodes)
