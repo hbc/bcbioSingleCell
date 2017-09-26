@@ -3,7 +3,7 @@
 #' Import and analyze [bcbio](http://bcbio-nextgen.readthedocs.io) single-cell
 #' RNA-seq data.
 #'
-#' @import basejump methods SummarizedExperiment
+#' @import basejump methods SingleCellExperiment SummarizedExperiment
 #'
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
@@ -17,9 +17,9 @@
 #' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_rect
 #'   element_text expand_limits facet_wrap geom_bar geom_boxplot geom_histogram
 #'   geom_hline geom_label geom_line geom_point geom_smooth geom_text
-#'   geom_violin geom_vline ggplot ggtitle guides labs qplot scale_x_log10
-#'   scale_x_sqrt scale_y_continuous scale_y_log10 scale_y_sqrt theme unit xlab
-#'   xlim ylab
+#'   geom_violin geom_vline ggplot ggtitle guide_legend guides labs qplot
+#'   scale_color_gradient scale_radius scale_x_log10 scale_x_sqrt
+#'   scale_y_continuous scale_y_log10 scale_y_sqrt theme unit xlab xlim ylab
 #' @importFrom jsonlite read_json
 #' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_rownames
@@ -34,7 +34,6 @@
 #' @importFrom Seurat AddMetaData CreateSeuratObject DarkTheme DotPlot
 #'   FeaturePlot FetchData FindVariableGenes JoyPlot NormalizeData ScaleData
 #'   VlnPlot
-#' @importFrom SingleCellExperiment SingleCellExperiment
 #' @importFrom stats median
 #' @importFrom stringr str_detect str_match str_replace str_replace_all
 #'   str_split str_subset str_trunc

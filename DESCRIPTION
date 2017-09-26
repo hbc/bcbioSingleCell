@@ -45,6 +45,7 @@ Imports:
     scales,
     stats,
     stringr,
+    SummarizedExperiment (>= 1.7.9),
     tibble,
     tidyr,
     utils,
