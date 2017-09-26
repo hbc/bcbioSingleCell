@@ -65,7 +65,8 @@ NULL
         as("tibble") %>%
         camel() %>%
         dplyr::select(c("cluster", "symbol"), everything()) %>%
-        group_by(.data[["cluster"]])
+        group_by(.data[["cluster"]]) %>%
+        arrange(!!sym("pvalue"), .by_group = TRUE)
 }
 
 
