@@ -15,15 +15,6 @@ NULL
 .sanitizeMarkersSeurat <- function(
     object,
     markers) {
-    # Check for previously sanitized markers and early return, if detected. This
-    # function groups by `cluster` ident and ensures Ensembl gene identifiers
-    # are added in the `ensgene` column, so this step checks for these.
-    if (is(markers, "grouped_df") &
-        attributes(markers)[["vars"]] == "cluster" &
-        "ensgene" %in% colnames(markers)) {
-        return(markers)
-    }
-
     # Check for original `Seurat::FindAllMarkers()` return
     seuratCols <- c("p_val", "avg_diff", "pct.1", "pct.2", "cluster", "gene")
     if (all(seuratCols %in% colnames(markers))) {
