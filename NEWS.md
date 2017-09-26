@@ -1,3 +1,10 @@
+# bcbioSingleCell 0.0.19
+
+- Renamed main object class from `bcbioSCDataSet` to `bcbioSingleCell`.
+- Cell filtering with `filterCells()` will now slot a named logical vector into `metadata(object)[["filteredCells"]]`, which will be used to dynamically subset the slotted internal `SummarizedExperiment` data. Now that we're using this approach, we can return a modified `bcbioSingleCell` object rather than defining a separate `bcbioSCFiltered` class.
+
+
+
 # bcbioSingleCell 0.0.18
 
 - Renamed `plotClusters()` to `plotMarkers()`. Added soft deprecation.
