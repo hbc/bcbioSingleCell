@@ -4,7 +4,7 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seuratFile: "data/bcb_filtered_seurat.rda"
+    seuratFile: "data/bcb_seurat.rda"
     markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
