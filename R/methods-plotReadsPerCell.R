@@ -237,8 +237,8 @@ setMethod("plotReadsPerCell", "bcbioSingleCellANY", function(object) {
         return(NULL)
     }
 
-    # Check for `filteredCells` in `metadata()`
-    if (is.null(metadata(object)[["filteredCells"]])) {
+    # Check for `filterCells` in `metadata()`
+    if (is.null(metadata(object)[["filterCells"]])) {
         rawTbl <- .cellularBarcodeTblFromList(object)
         propTbl <- .propTblFromDataSet(object)
     } else {
