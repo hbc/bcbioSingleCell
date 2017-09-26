@@ -14,7 +14,7 @@
     }) %>%
         bind_rows() %>%
         as("tibble") %>%
-        mutate(rowname = paste(.data[["sampleID"]],
-                               .data[["cellularBarcode"]],
-                               sep = "_"))
+        mutate(cellID = paste(.data[["sampleID"]],
+                              .data[["cellularBarcode"]],
+                              sep = "_"))
 }
