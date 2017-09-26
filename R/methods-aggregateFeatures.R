@@ -17,6 +17,9 @@ NULL
 #'
 #' @param sparse Sparse counts matrix (e.g. [dgCMatrix]).
 #' @param featureids Feature identifiers (e.g. gene or transcript IDs).
+#'
+#' @return [dgCMatrix].
+#' @noRd
 .aggregateFeatures <- function(sparse, featureids) {
     rownames(sparse) <- featureids
     sparse <- sparse[!is.na(rownames(sparse)), , drop = FALSE]
@@ -30,5 +33,5 @@ NULL
 #' @export
 setMethod("aggregateFeatures", "bcbioSingleCellANY", function(object) {
     stop("Draft function", call. = FALSE)
-    # Reslot the counts into assay and then update the SummarizedExperiment
+    # Reslot the counts into assay and then update the SingleCellExperiment
 })

@@ -37,5 +37,5 @@ NULL
 #' @export
 setMethod("aggregateReplicates", "bcbioSingleCell", function(object) {
     stop("Draft function", call. = FALSE)
-    # Reslot the counts into assay and then update the SummarizedExperiment
+    # Reslot the counts into assay and then update the SingleCellExperiment
 })
