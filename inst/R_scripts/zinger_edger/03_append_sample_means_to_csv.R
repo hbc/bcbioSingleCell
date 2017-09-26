@@ -41,7 +41,7 @@ pblapply(seq_along(csv), function(a) {
     means <- lapply(seq_along(samples), function(b) {
         cells <- subset@meta.data %>%
             .[.[["sampleName"]] == samples[[b]], ] %>%
-            rownames
+            rownames()
         # The log normalized counts from Seurat are in the `@data` slot. Don't
         # use `@raw.data` or `@scale.data`.
         counts <- subset@data[, cells, drop = FALSE]
@@ -57,19 +57,19 @@ pblapply(seq_along(csv), function(a) {
         }
     }) %>%
         set_names(samples) %>%
-        as.data.frame %>%
+        as.data.frame() %>%
         rownames_to_column("ensgene")
 
     # Load and subset the data frame. The annotated CSVs we're loading haven't
     # been filtered by P value.
     df <- read_csv(file) %>%
         # Remove rows without an adjusted P value
-        filter(!is.na(padjFilter)) %>%
+        dplyr::filter(!is.na(padjFilter)) %>%
         # Remove rows with an adjusted P value >= 0.05
-        filter(padjFilter < 0.05) %>%
+        dplyr::filter(padjFilter < 0.05) %>%
         # Now arrange by adjusted P value
         arrange(padjFilter, symbol) %>%
         left_join(means, by = "ensgene")
     write_csv(df, file.path(newTableDir, basename(file)))
 }) %>%
-    invisible
+    invisible()

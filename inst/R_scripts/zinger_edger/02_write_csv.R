@@ -25,4 +25,4 @@ pblapply(seq_along(files), function(a) {
         left_join(anno, by = "ensgene")
     write_csv(tbl, file.path(deDir, paste0(fileStem, ".csv.gz")))
 }) %>%
-    invisible
+    invisible()

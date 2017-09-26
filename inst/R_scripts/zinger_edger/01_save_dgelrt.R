@@ -54,7 +54,7 @@ pblapply(seq_along(ident), function(a) {
 
     group <- metrics(bcbSubset) %>%
         .[, intgroup] %>%
-        as.factor %>%
+        as.factor() %>%
         # Be sure to set wild-type (`wt`) as the reference level
         relevel(ref = "wt")
 
@@ -91,4 +91,4 @@ pblapply(seq_along(ident), function(a) {
 
     lrt
 }) %>%
-    invisible
+    invisible()
