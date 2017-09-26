@@ -57,13 +57,9 @@ setValidity("bcbioSCFiltered", function(object) TRUE)
 # Need to register tibble classes for S4 method support
 setOldClass(
     Classes = c("grouped_df", "tbl_df", "tibble"))
-# Remove these once the old `bcbioSC*` classes are formally deprecated
+# Remove this once the old `bcbioSC*` classes are formally deprecated
 setClassUnion(
     name = "bcbioSingleCellANY",
     members = c("bcbioSingleCell",
                 "bcbioSCDataSet",
-                "bcbioSCFiltered"))
-setClassUnion(
-    name = "bcbioSingleCellFiltered",
-    members = c("bcbioSingleCell",
                 "bcbioSCFiltered"))
