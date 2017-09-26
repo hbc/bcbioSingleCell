@@ -6,11 +6,15 @@
 #' @details Internally, pattern matching against sample and file names is
 #'   applied using [str_detect()].
 #'
+#' @note Bracket based subsetting with `[` also works on [bcbioSingleCell]
+#'   objects. In this case, provide cellular barcode identifiers for columns
+#'   and Ensembl gene identifiers for rows.
+#'
 #' @inheritParams AllGenerics
 #' @param ... Columns to use for grep pattern matching. Supply a named character
 #'   vector containing the column name and the grep pattern.
 #'
-#' @return [bcbioSCFiltered].
+#' @return [bcbioSingleCell].
 #'
 #' @examples
 #' \dontrun{
@@ -68,7 +72,7 @@ NULL
     if (!length(cellularBarcodeMatches)) stop("No cellular barcodes matched")
     message(paste(length(cellularBarcodeMatches), "cellular barcodes"))
 
-    # Return the bcbioSCFiltered object
+    # Return the bcbioSingleCell object
     sparseCounts <- assay(object) %>%
         .[, cellularBarcodeMatches]
     colData <- colData(object) %>%
@@ -77,12 +81,15 @@ NULL
         set_rownames(rownames(object))
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <- sampleMetadata
-    se <- prepareSummarizedExperiment(
-        sparseCounts,
+    # Stash that samples are a subset
+    metadata[["subset"]] <- TRUE
+    sce <- .SingleCellExperiment(
+        assays = list(sparseCounts),
         colData = colData,
         rowData = rowData,
         metadata = metadata)
-    new("bcbioSCFiltered", se)
+    new("bcbioSingleCell", sce)
+    # This will drop the unfiltered cellular barcodes
 }
 
 
@@ -90,4 +97,4 @@ NULL
 # Methods ====
 #' @rdname selectSamples
 #' @export
-setMethod("selectSamples", "bcbioSCFiltered", .selectSamples)
+setMethod("selectSamples", "bcbioSingleCellANY", .selectSamples)
