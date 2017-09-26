@@ -1,6 +1,6 @@
 # Cell Markers
 #
-# Last updated: 2017-09-13
+# Last updated: 2017-09-26
 # Gene annotations: Ensembl Genes 90
 #
 # This code is derived from:
@@ -37,7 +37,7 @@ print(ws)
 cellCycleMarkers <- lapply(seq_along(ws), function(a) {
     gs %>%
         gs_read(ws = ws[[a]]) %>%
-        tidy_select(phase, ensgene) %>%
+        dplyr::select(phase, ensgene) %>%
         mutate(symbol = gene2symbol(
             ensgene, organism = ws[[a]], release = release)) %>%
         group_by(phase) %>%
@@ -58,7 +58,7 @@ print(ws)
 cellTypeMarkers <- lapply(seq_along(ws), function(a) {
     gs %>%
         gs_read(ws = ws[[a]]) %>%
-        tidy_select(cell, ensgene) %>%
+        dplyr::select(cell, ensgene) %>%
         mutate(symbol = gene2symbol(
             ensgene, organism = ws[[a]], release = release)) %>%
         group_by(cell) %>%
