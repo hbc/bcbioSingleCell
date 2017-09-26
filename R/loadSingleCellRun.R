@@ -195,15 +195,15 @@ loadSingleCellRun <- function(
     # Column data ==============================================================
     metrics <- calculateMetrics(sparseCounts, annotable)
     # Add reads per cellular barcode to metrics
-    cellularBarcodesTbl <- .bindCellularBarcodes(cellularBarcodes) %>%
+    cellularBarcodesTibble <- .bindCellularBarcodes(cellularBarcodes) %>%
         mutate(cellularBarcode = NULL,
                sampleID = NULL)
     metrics <- metrics %>%
         as.data.frame() %>%
-        rownames_to_column() %>%
-        left_join(cellularBarcodesTbl, by = "rowname") %>%
+        rownames_to_column("cellID") %>%
+        left_join(cellularBarcodesTibble, by = "cellID") %>%
         dplyr::select("nCount", everything()) %>%
-        column_to_rownames()
+        column_to_rownames("cellID")
 
     # Metadata =================================================================
     if (str_detect(umiType, "indrop")) {

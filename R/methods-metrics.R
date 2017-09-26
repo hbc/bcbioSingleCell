@@ -24,7 +24,7 @@ NULL
 .metricsBCB <- function(object) {
     colData <- colData(object) %>%
         as.data.frame() %>%
-        rownames_to_column()
+        rownames_to_column("cellID")
 
     # Get the barcode format based on the umiType
     umiType <- metadata(object)[["umiType"]]
@@ -35,15 +35,15 @@ NULL
     }
 
     # Check for presence of valid barcode in cell identifiers
-    if (!all(str_detect(colData[["rowname"]], paste0(barcode, "$")))) {
+    if (!all(str_detect(colData[["cellID"]], paste0(barcode, "$")))) {
         stop("Failed to detect surecell barcodes")
     }
 
     # Match the sampleID from the cellular barcode (rowname)
-    match <- colData[["rowname"]] %>%
+    match <- colData[["cellID"]] %>%
         str_match(paste0("^(.+)_(", barcode, ")$")) %>%
         as.data.frame() %>%
-        set_colnames(c("rowname", "sampleID", "cellularBarcode")) %>%
+        set_colnames(c("cellID", "sampleID", "cellularBarcode")) %>%
         # Remove the unnecessary cellularBarcode column
         mutate(cellularBarcode = NULL)
 
@@ -52,10 +52,10 @@ NULL
     # in the sampleMetadata before joining with the colData.
 
     # Join the sample metadata by sampleID, extracted from the barcode ID
-    left_join(colData, match, by = "rowname") %>%
+    left_join(colData, match, by = "cellID") %>%
         left_join(sampleMetadata(object), by = "sampleID") %>%
         as.data.frame() %>%
-        column_to_rownames()
+        column_to_rownames("cellID")
 }
 
 
