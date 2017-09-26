@@ -5,6 +5,7 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
+#' @param interestingGroup Interesting group, to use for colors.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #'
@@ -14,12 +15,11 @@ NULL
 
 
 # Constructors ====
-.plotGenesPerCellBoxplot <- function(object, min, max) {
+.plotGenesPerCellBoxplot <- function(object, interestingGroup, min, max) {
     metrics <- metrics(object)
     medianGenes <- aggregate(nGene ~ sampleID, metrics, median) %>%
         left_join(sampleMetadata(object), by = "sampleID") %>%
         mutate(nGene = round(.data[["nGene"]]))
-    interestingGroup <- interestingGroups(object)[[1L]]
     p <- ggplot(metrics,
                 aes_(x = ~sampleName,
                      y = ~nGene,
@@ -36,8 +36,7 @@ NULL
             fontface = qcLabelFontface,
             label.padding = qcLabelPadding,
             label.size = qcLabelSize,
-            show.legend = FALSE
-        ) +
+            show.legend = FALSE) +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
@@ -48,8 +47,7 @@ NULL
                 color = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
-                yintercept = min
-            )
+                yintercept = min)
     }
     if (!is.null(max)) {
         p <- p +
@@ -58,8 +56,7 @@ NULL
                 color = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
-                yintercept = max
-            )
+                yintercept = max)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
@@ -88,8 +85,7 @@ NULL
                 color = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
-                xintercept = min
-            )
+                xintercept = min)
     }
     if (!is.null(max)) {
         p <- p +
@@ -98,8 +94,7 @@ NULL
                 color = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
-                xintercept = max
-            )
+                xintercept = max)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
@@ -110,7 +105,10 @@ NULL
 
 
 
-.plotGenesPerCell <- function(object, min, max) {
+.plotGenesPerCell <- function(object, interestingGroup, min, max) {
+    if (missing(interestingGroup)) {
+        interestingGroup <- interestingGroups(object)[[1L]]
+    }
     if (missing(min)) {
         min <- object %>%
             metadata() %>%
@@ -124,8 +122,15 @@ NULL
             .[["maxGenes"]]
     }
     plot_grid(
-        .plotGenesPerCellHistogram(object, min = min, max = max),
-        .plotGenesPerCellBoxplot(object, min = min, max = max),
+        .plotGenesPerCellHistogram(
+            object,
+            min = min,
+            max = max),
+        .plotGenesPerCellBoxplot(
+            object,
+            interestingGroup = interestingGroup,
+            min = min,
+            max = max),
         labels = "auto",
         nrow = 2L)
 }
