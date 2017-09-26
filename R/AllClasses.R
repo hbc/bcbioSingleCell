@@ -70,3 +70,7 @@ setClassUnion(
     members = c("bcbioSingleCell",
                 "bcbioSCDataSet",
                 "bcbioSCFiltered"))
+setClassUnion(
+    name = "bcbioSingleCellLegacy",
+    members = c("bcbioSCDataSet",
+                "bcbioSCFiltered"))
