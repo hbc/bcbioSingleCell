@@ -40,10 +40,4 @@ NULL
 # Methods ====
 #' @rdname plotZerosVsDepth
 #' @export
-setMethod("plotZerosVsDepth", "bcbioSCDataSet", .plotZerosVsDepth)
-
-
-
-#' @rdname plotZerosVsDepth
-#' @export
-setMethod("plotZerosVsDepth", "bcbioSCFiltered", .plotZerosVsDepth)
+setMethod("plotZerosVsDepth", "bcbioSingleCellANY", .plotZerosVsDepth)

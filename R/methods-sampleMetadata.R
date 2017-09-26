@@ -12,16 +12,6 @@ NULL
 
 
 # Constructors ====
-# This will extract the stashed `sampleMetadata` data.frame
-.bcbioSampleMetadata <- function(object, kable = FALSE) {
-    object %>%
-        metadata() %>%
-        .[["sampleMetadata"]] %>%
-        .returnSampleMetadata(kable = kable)
-}
-
-
-
 .returnSampleMetadata <- function(object, kable) {
     df <- as.data.frame(object)
     if (isTRUE(kable)) {
@@ -36,13 +26,14 @@ NULL
 # Methods ====
 #' @rdname sampleMetadata
 #' @export
-setMethod("sampleMetadata", "bcbioSCDataSet", .bcbioSampleMetadata)
-
-
-
-#' @rdname sampleMetadata
-#' @export
-setMethod("sampleMetadata", "bcbioSCFiltered", .bcbioSampleMetadata)
+setMethod("sampleMetadata", "bcbioSingleCellANY", function(
+    object,
+    kable = FALSE) {
+    object %>%
+        metadata() %>%
+        .[["sampleMetadata"]] %>%
+        .returnSampleMetadata(kable = kable)
+})
 
 
 

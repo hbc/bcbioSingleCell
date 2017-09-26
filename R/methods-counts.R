@@ -56,10 +56,4 @@ NULL
 # Methods ====
 #' @rdname counts
 #' @export
-setMethod("counts", "bcbioSCDataSet", .counts)
-
-
-
-#' @rdname counts
-#' @export
-setMethod("counts", "bcbioSCFiltered", .counts)
+setMethod("counts", "bcbioSingleCellANY", .counts)

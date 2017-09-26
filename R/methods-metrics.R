@@ -55,13 +55,7 @@ NULL
 # Methods ====
 #' @rdname metrics
 #' @export
-setMethod("metrics", "bcbioSCDataSet", .metrics)
-
-
-
-#' @rdname metrics
-#' @export
-setMethod("metrics", "bcbioSCFiltered", .metrics)
+setMethod("metrics", "bcbioSingleCellANY", .metrics)
 
 
 

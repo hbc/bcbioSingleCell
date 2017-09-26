@@ -104,28 +104,19 @@ NULL
 # Methods ====
 #' @rdname plotGenesPerCell
 #' @export
-setMethod(
-    "plotGenesPerCell",
-    "bcbioSCDataSet",
-    function(object, min = 500L, max = NULL) {
-        .plotGenesPerCell(object, min, max)
-    })
-
-
-
-#' @rdname plotGenesPerCell
-#' @export
-setMethod(
-    "plotGenesPerCell",
-    "bcbioSCFiltered",
-    function(object) {
+setMethod("plotGenesPerCell", "bcbioSingleCellANY", function(
+    object, min, max) {
+    if (missing(min)) {
         min <- object %>%
             metadata() %>%
             .[["filterParams"]] %>%
             .[["minGenes"]]
+    }
+    if (missing(max)) {
         max <- object %>%
             metadata() %>%
             .[["filterParams"]] %>%
             .[["maxGenes"]]
-        .plotGenesPerCell(object, min, max)
-    })
+    }
+    .plotGenesPerCell(object, min = min, max = max)
+})

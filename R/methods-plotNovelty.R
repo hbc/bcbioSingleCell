@@ -20,9 +20,9 @@ NULL
         left_join(sampleMetadata(object), by = "sampleID")
     interestingGroup <- interestingGroups(object)[[1L]]
     p <- ggplot(metrics,
-        aes_(x = ~sampleName,
-             y = ~log10GenesPerUMI,
-             fill = as.name(interestingGroup))) +
+                aes_(x = ~sampleName,
+                     y = ~log10GenesPerUMI,
+                     fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "log10 genes per umi") +
         geom_boxplot() +
@@ -54,8 +54,8 @@ NULL
 .plotNoveltyHistogram <- function(object, min) {
     metrics <- metrics(object)
     p <- ggplot(metrics,
-        aes_(x = ~log10GenesPerUMI,
-             fill = ~sampleName)) +
+                aes_(x = ~log10GenesPerUMI,
+                     fill = ~sampleName)) +
         labs(x = "log10 genes per umi") +
         geom_histogram(bins = bins) +
         geom_vline(alpha = qcLineAlpha,
@@ -75,10 +75,11 @@ NULL
 
 
 .plotNovelty <- function(object, min) {
-    plot_grid(.plotNoveltyHistogram(object, min),
-              .plotNoveltyBoxplot(object, min),
-              labels = "auto",
-              nrow = 2L)
+    plot_grid(
+        .plotNoveltyHistogram(object, min),
+        .plotNoveltyBoxplot(object, min),
+        labels = "auto",
+        nrow = 2L)
 }
 
 
@@ -88,22 +89,13 @@ NULL
 #' @export
 setMethod(
     "plotNovelty",
-    "bcbioSCDataSet",
-    function(object, min = 0.8) {
-        .plotNovelty(object, min)
-    })
-
-
-
-#' @rdname plotNovelty
-#' @export
-setMethod(
-    "plotNovelty",
-    "bcbioSCFiltered",
-    function(object) {
-        min <- object %>%
-            metadata() %>%
-            .[["filterParams"]] %>%
-            .[["minNovelty"]]
-        .plotNovelty(object, min)
+    "bcbioSingleCellANY",
+    function(object, min) {
+        if (missing(min)) {
+            min <- object %>%
+                metadata() %>%
+                .[["filterParams"]] %>%
+                .[["minNovelty"]]
+        }
+        .plotNovelty(object, min = min)
     })

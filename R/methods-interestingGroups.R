@@ -21,10 +21,4 @@ NULL
 # Methods ====
 #' @rdname interestingGroups
 #' @export
-setMethod("interestingGroups", "bcbioSCDataSet", .interestingGroups)
-
-
-
-#' @rdname interestingGroups
-#' @export
-setMethod("interestingGroups", "bcbioSCFiltered", .interestingGroups)
+setMethod("interestingGroups", "bcbioSingleCellANY", .interestingGroups)

@@ -34,10 +34,4 @@ NULL
 # Methods ====
 #' @rdname plotUMIsVsGenes
 #' @export
-setMethod("plotUMIsVsGenes", "bcbioSCDataSet", .plotUMIsVsGenes)
-
-
-
-#' @rdname plotUMIsVsGenes
-#' @export
-setMethod("plotUMIsVsGenes", "bcbioSCFiltered", .plotUMIsVsGenes)
+setMethod("plotUMIsVsGenes", "bcbioSingleCellANY", .plotUMIsVsGenes)

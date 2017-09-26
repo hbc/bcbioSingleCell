@@ -42,10 +42,4 @@ NULL
 # Methods ====
 #' @rdname plotCellCounts
 #' @export
-setMethod("plotCellCounts", "bcbioSCDataSet", .plotCellCounts)
-
-
-
-#' @rdname plotCellCounts
-#' @export
-setMethod("plotCellCounts", "bcbioSCFiltered", .plotCellCounts)
+setMethod("plotCellCounts", "bcbioSingleCellANY", .plotCellCounts)

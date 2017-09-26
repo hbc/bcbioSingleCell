@@ -20,9 +20,9 @@ NULL
         mutate(nUMI = round(.data[["nUMI"]]))
     interestingGroup <- interestingGroups(object)[[1L]]
     p <- ggplot(metrics,
-        aes_(x = ~sampleName,
-             y = ~nUMI,
-             fill = as.name(interestingGroup))) +
+                aes_(x = ~sampleName,
+                     y = ~nUMI,
+                     fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "umis per cell") +
         geom_boxplot() +
@@ -54,8 +54,8 @@ NULL
 .plotUMIsPerCellHistogram <- function(object, min) {
     metrics <- metrics(object)
     p <- ggplot(metrics,
-        aes_(x = ~nUMI,
-             fill = ~sampleName)) +
+                aes_(x = ~nUMI,
+                     fill = ~sampleName)) +
         labs(x = "umis per cell") +
         geom_histogram(bins = bins) +
         geom_vline(alpha = qcLineAlpha,
@@ -76,10 +76,12 @@ NULL
 
 
 .plotUMIsPerCell <- function(object, min) {
-    plot_grid(.plotUMIsPerCellHistogram(object, min),
-              .plotUMIsPerCellBoxplot(object, min),
-              labels = "auto",
-              nrow = 2L)
+    plot_grid(
+        .plotUMIsPerCellHistogram(object, min),
+        .plotUMIsPerCellBoxplot(object, min),
+        labels = "auto",
+        nrow = 2L
+    )
 }
 
 
@@ -87,24 +89,12 @@ NULL
 # Methods ====
 #' @rdname plotUMIsPerCell
 #' @export
-setMethod(
-    "plotUMIsPerCell",
-    "bcbioSCDataSet",
-    function(object, min = 1000L) {
-        .plotUMIsPerCell(object, min)
-    })
-
-
-
-#' @rdname plotUMIsPerCell
-#' @export
-setMethod(
-    "plotUMIsPerCell",
-    "bcbioSCFiltered",
-    function(object) {
+setMethod("plotUMIsPerCell", "bcbioSingleCell", function(object, min) {
+    if (missing(min)) {
         min <- object %>%
             metadata() %>%
             .[["filterParams"]] %>%
             .[["minUMIs"]]
-        .plotUMIsPerCell(object, min)
-    })
+    }
+    .plotUMIsPerCell(object, min = min)
+})

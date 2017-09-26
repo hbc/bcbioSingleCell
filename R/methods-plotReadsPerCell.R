@@ -227,19 +227,28 @@ NULL
 # Methods ====
 #' @rdname plotReadsPerCell
 #' @export
-setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
-    # Currently only supports bcbio pipeline
+setMethod("plotReadsPerCell", "bcbioSingleCellANY", function(object) {
+    # This function currently only supports bcbio pipeline
     if (metadata(object)[["pipeline"]] != "bcbio") {
         warning(paste(
             "'plotReadsPerCell()' currently only supports",
-            "bcbio pipeline for 'bcbioSCDataSet' class"),
+            "bcbio pipeline for 'bcbioSingleCell' class"),
             call. = FALSE)
         return(NULL)
     }
-    rawTbl <- .cellularBarcodeTblFromList(object)
-    propTbl <- .propTblFromDataSet(object)
+
+    # Check for `filteredCells` in `metadata()`
+    if (is.null(metadata(object)[["filteredCells"]])) {
+        rawTbl <- .cellularBarcodeTblFromList(object)
+        propTbl <- .propTblFromDataSet(object)
+    } else {
+        rawTbl <- .cellularBarcodeTblFromMetrics(object)
+        propTbl <- .propTblFromSubset(object)
+    }
+
     cutoffLine <- .cellularBarcodeCutoffLine(object)
     multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
+
     .plotCellularBarcode(
         .plotCellularBarcodeRawViolin(
             rawTbl,
@@ -252,25 +261,5 @@ setMethod("plotReadsPerCell", "bcbioSCDataSet", function(object) {
         .plotCellularBarcodePropHisto(
             propTbl,
             cutoffLine = cutoffLine,
-            multiplexedFASTQ = multiplexedFASTQ))
-})
-
-
-
-#' @rdname plotReadsPerCell
-#' @export
-setMethod("plotReadsPerCell", "bcbioSCFiltered", function(object) {
-    rawTbl <- .cellularBarcodeTblFromMetrics(object)
-    propTbl <- .propTblFromSubset(object)
-    multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
-    .plotCellularBarcode(
-        .plotCellularBarcodeRawViolin(
-            rawTbl,
-            multiplexedFASTQ = multiplexedFASTQ),
-        .plotCellularBarcodeRawHisto(
-            rawTbl,
-            multiplexedFASTQ = multiplexedFASTQ),
-        .plotCellularBarcodePropHisto(
-            propTbl,
             multiplexedFASTQ = multiplexedFASTQ))
 })

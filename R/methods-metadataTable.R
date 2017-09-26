@@ -29,10 +29,4 @@ NULL
 # Methods ====
 #' @rdname metadataTable
 #' @export
-setMethod("metadataTable", "bcbioSCDataSet", .metadataTable)
-
-
-
-#' @rdname metadataTable
-#' @export
-setMethod("metadataTable", "bcbioSCFiltered", .metadataTable)
+setMethod("metadataTable", "bcbioSingleCellANY", .metadataTable)

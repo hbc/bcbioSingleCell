@@ -18,9 +18,9 @@ NULL
         left_join(sampleMetadata(object), by = "sampleID")
     interestingGroup <- interestingGroups(object)[[1L]]
     p <- ggplot(metrics,
-           aes_(x = ~sampleName,
-                y = ~mitoRatio * 100L,
-                fill = as.name(interestingGroup))) +
+                aes_(x = ~sampleName,
+                     y = ~mitoRatio * 100L,
+                     fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "% mito counts") +
         geom_boxplot() +
@@ -52,8 +52,8 @@ NULL
 .plotMitoRatioHistogram <- function(object, max) {
     metrics <- metrics(object)
     p <- ggplot(metrics,
-        aes_(x = ~mitoRatio * 100L,
-             fill = ~sampleName)) +
+                aes_(x = ~mitoRatio * 100L,
+                     fill = ~sampleName)) +
         labs(x = "% mito counts") +
         geom_histogram(bins = bins) +
         geom_vline(alpha = qcLineAlpha,
@@ -75,9 +75,9 @@ NULL
 .plotMitoRatioScatterplot <- function(object) {
     metrics <- metrics(object)
     p <- ggplot(metrics,
-        aes_(x = ~nCoding,
-             y = ~nMito,
-             color = ~sampleName)) +
+                aes_(x = ~nCoding,
+                     y = ~nMito,
+                     color = ~sampleName)) +
         labs(x = "mito counts",
              y = "coding counts") +
         geom_point(size = 1L) +
@@ -98,29 +98,18 @@ NULL
 #' @export
 setMethod(
     "plotMitoRatio",
-    "bcbioSCDataSet",
-    function(object, max = 0.1) {
-        plot_grid(.plotMitoRatioScatterplot(object),
-                  .plotMitoRatioHistogram(object, max),
-                  .plotMitoRatioBoxplot(object, max),
-                  labels = "auto",
-                  nrow = 3L)
-    })
-
-
-
-#' @rdname plotMitoRatio
-#' @export
-setMethod(
-    "plotMitoRatio",
-    "bcbioSCFiltered",
-    function(object) {
-        max <- object %>%
-            metadata() %>%
-            .[["filterParams"]] %>%
-            .[["maxMitoRatio"]]
-        plot_grid(.plotMitoRatioHistogram(object, max),
-                  .plotMitoRatioBoxplot(object, max),
-                  labels = "auto",
-                  nrow = 2L)
+    "bcbioSingleCellANY",
+    function(object, max) {
+        if (missing(max)) {
+            max <- object %>%
+                metadata() %>%
+                .[["filterParams"]] %>%
+                .[["maxMitoRatio"]]
+        }
+        plot_grid(
+            .plotMitoRatioScatterplot(object),
+            .plotMitoRatioHistogram(object, max = max),
+            .plotMitoRatioBoxplot(object, max = max),
+            labels = "auto",
+            nrow = 3L)
     })

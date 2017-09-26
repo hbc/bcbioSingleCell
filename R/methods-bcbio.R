@@ -1,4 +1,4 @@
-#' `bcbioSCDataSet` Object Accessors
+#' `bcbioSingleCell` Object Accessors
 #'
 #' @rdname bcbio
 #' @name bcbio
@@ -7,14 +7,14 @@
 #' @inheritParams AllGenerics
 #' @param type Type of count data to retrieve.
 #'
-#' @return [bcbioSCDataSet].
+#' @return [bcbioSingleCell].
 NULL
 
 
 
 #' @rdname bcbio
 #' @export
-setMethod("bcbio", "bcbioSCDataSet", function(object, type) {
+setMethod("bcbio", "bcbioSingleCellANY", function(object, type) {
     if (type %in% names(slot(object, "bcbio"))) {
         slot(object, "bcbio")[[type]]
     } else {
@@ -28,7 +28,7 @@ setMethod("bcbio", "bcbioSCDataSet", function(object, type) {
 #' @export
 setMethod(
     "bcbio<-",
-    signature(object = "bcbioSCDataSet", value = "ANY"),
+    signature(object = "bcbioSingleCellANY", value = "ANY"),
     function(object, type, value) {
         slot(object, "bcbio")[[type]] <- value
         validObject(object)
