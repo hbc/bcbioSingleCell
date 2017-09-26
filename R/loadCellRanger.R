@@ -8,12 +8,11 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams loadSingleCellRun
+#' @inherit loadSingleCellRun
 #' @param uploadDir Path to CellRanger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices/` as a child.
 #' @param refDataDir Directory path to cellranger reference annotation data.
 #'
-#' @return [bcbioSingleCell].
 #' @export
 loadCellRanger <- function(
     uploadDir,
@@ -21,6 +20,7 @@ loadCellRanger <- function(
     sampleMetadataFile,
     interestingGroups = "sampleName",
     ensemblVersion = "current",
+    prefilter = TRUE,
     ...) {
     # Initial run setup ====
     pipeline <- "cellranger"
@@ -82,16 +82,22 @@ loadCellRanger <- function(
     message("Reading counts")
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
-        sparseCounts <- .readSparseCounts(sampleDirs[a], pipeline = pipeline)
-        # Pre-filter using cellular barcode summary metrics
-        metrics <- calculateMetrics(sparseCounts, annotable)
-        sparseCounts[, rownames(metrics)]
+        .readSparseCounts(sampleDirs[a], pipeline = pipeline)
     }) %>%
         setNames(names(sampleDirs))
-    sparseCounts <- do.call(Matrix::cBind, sparseList)
+    # Cell Ranger outputs at gene-level
+    counts <- do.call(Matrix::cBind, sparseList)
 
     # Column data ==============================================================
-    metrics <- calculateMetrics(sparseCounts, annotable)
+    # Calculate the cellular barcode metrics
+    metrics <- calculateMetrics(
+        counts,
+        annotable = annotable,
+        prefilter = prefilter)
+    if (isTRUE(prefilter)) {
+        # Subset the counts matrix to match the metrics
+        counts <- counts[, rownames(metrics)]
+    }
 
     # Metadata =================================================================
     metadata <- list(
@@ -112,6 +118,7 @@ loadCellRanger <- function(
         umiType = "chromium",
         allSamples = allSamples,
         multiplexedFASTQ = FALSE,
+        prefilter = prefilter,
         # cellranger pipeline-specific
         refDataDir = refDataDir,
         refJSON = refJSON)
@@ -123,7 +130,7 @@ loadCellRanger <- function(
 
     # Return `bcbioSingleCell` object ==========================================
     sce <- .SingleCellExperiment(
-        assays = list(assay = sparseCounts),
+        assays = list(assay = counts),
         rowData = annotable,
         colData = metrics,
         metadata = metadata)

@@ -192,6 +192,8 @@ loadSingleCellRun <- function(
     txlevel <- do.call(Matrix::cBind, sparseList)
     # Convert counts from transcript-level to gene-level
     counts <- .sparseCountsTx2Gene(txlevel, tx2gene)
+
+    # Column data ==============================================================
     # Calculate the cellular barcode metrics
     metrics <- calculateMetrics(
         counts,
@@ -202,7 +204,6 @@ loadSingleCellRun <- function(
         counts <- counts[, rownames(metrics)]
     }
 
-    # Column data ==============================================================
     # Slot the cellular barcode metrics into colData
     # Add reads per cellular barcode
     cellularBarcodesTibble <- .bindCellularBarcodes(cellularBarcodes) %>%
@@ -239,6 +240,7 @@ loadSingleCellRun <- function(
         umiType = umiType,
         allSamples = allSamples,
         multiplexedFASTQ = multiplexedFASTQ,
+        prefilter = prefilter,
         # bcbio pipeline-specific
         projectDir = projectDir,
         template = template,
