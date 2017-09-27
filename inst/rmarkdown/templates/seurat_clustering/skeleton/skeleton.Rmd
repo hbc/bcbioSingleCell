@@ -49,7 +49,7 @@ if (exists(c("seurat", "seuratPregress"), inherits = FALSE)) {
 }
 
 # Vector to use for plot looping
-groupBy <- c("ident", "sampleName", "Phase", metadata(bcb)$interestingGroups)
+groupBy <- c("ident", "sampleName", "phase", metadata(bcb)$interestingGroups)
 
 # Directory paths
 markersDir <- file.path(params$outputDir, "results", "markers")
@@ -65,7 +65,7 @@ opts_chunk$set(
 ```
 
 ```{r sample_metadata}
-sampleMetadata(bcb, kable = TRUE)
+sampleMetadata(bcb)
 ```
 
 
@@ -141,11 +141,7 @@ RunPCA(
     seuratPreregress,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
-    PCAPlot(cols.use = viridis(3),
-            do.return = TRUE,
-            group.by = "Phase") +
-    labs(color = "cell cycle") +
-    DarkTheme()
+    plotPCA(interestingGroup = "phase")
 ```
 
 
@@ -164,16 +160,12 @@ RunPCA(
     seurat,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
-    PCAPlot(cols.use = viridis(3),
-            do.return = TRUE,
-            group.by = "Phase") +
-    labs(color = "cell cycle") +
-    DarkTheme()
+    plotPCA(interestingGroup = "phase")
 ```
 
 
 
-# Perform linear dimensional reduction
+# Linear dimensionality reduction {.tabset}
 
 Next, we perform principal component analysis (PCA) on the scaled data with `RunPCA()`. By default, the genes in `seurat@var.genes` are used as input, but can be defined using the `pc.genes` argument. We have typically found that running dimensionality reduction on highly variable genes can improve performance. However, with UMI data — particularly after regressing out technical variables — we often see that PCA returns similar (albeit slower) results when run on much larger subsets of genes, including the whole transcriptome.
 
@@ -185,23 +177,11 @@ seurat <- seurat %>%
     ProjectPCA(do.print = FALSE)
 ```
 
-```{r print_pca}
-PrintPCA(
-    seurat,
-    pcs.print = 1:params$pcCompute)
-```
-
-We can visualize these genes graphically using `VizPCA()`.
-
-```{r viz_pca, fig.height=40, fig.width=8}
-VizPCA(
-    seurat,
-    pcs.use = 1:params$pcCompute,
-    do.balanced = TRUE,
-    nCol = 2)
-```
 
 In particular, `PCHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and genes are ordered according to their PCA scores. Setting `cells.use` to a number plots the "extreme" cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated gene sets.
+
+
+## `PCHeatmap()`
 
 ```{r pc_heatmap, fig.height=30, fig.width=10}
 PCHeatmap(
@@ -214,6 +194,26 @@ PCHeatmap(
     label.columns = FALSE,
     pc.use = 1:params$pcCompute,
     remove.key = TRUE)
+```
+
+
+## `VizPCA()`
+
+```{r viz_pca, fig.height=40, fig.width=8}
+VizPCA(
+    seurat,
+    pcs.use = 1:params$pcCompute,
+    do.balanced = TRUE,
+    nCol = 2)
+```
+
+
+## `PrintPCA()`
+
+```{r print_pca}
+PrintPCA(
+    seurat,
+    pcs.print = 1:params$pcCompute)
 ```
 
 
@@ -296,16 +296,14 @@ sapply(seq_along(groupBy), function(a) {
     } else {
         label <- FALSE
     }
-    # t-SNE
-    TSNEPlot(
+    plotTSNE(
         seurat,
-        do.label = label,
-        group.by = groupBy[[a]],
-        label.size = 6)
-    # Principal Component Analysis
-    PCAPlot(seurat,
-            do.label = label,
-            group.by = groupBy[[a]])
+        interestingGroup = groupBy[[a]],
+        label = label)
+    plotPCA(
+        seurat,
+        interestingGroup = groupBy[[a]],
+        label = label)
 }) %>%
     invisible()
 ```
@@ -316,13 +314,17 @@ Note that tSNE is not PCA! The measurement of distance in a tSNE plot is difficu
 
 # Cluster quality control
 
-Let's look at the variance in the number of UMI counts (`nUMI`), gene detection (`nGene`), and the percentage of mitochondrial gene expression (`mitoRatio`), to see if there are any obvious cluster artefacts.
+Let's look at the variance in the number of UMI counts (`nUMI`), gene detection (`nGene`), and the percentage of mitochondrial gene expression (`mitoRatio`), to see if there are any obvious cluster artefacts. We can also assess cell cycle batch effects (`S.Score`, `G2M.Score`) and any principal component bias toward individual clusters.
 
-```{r qc_plots_2, results="asis"}
+```{r qc_plots_2}
 plotFeatures(
     seurat,
-    c("nUMI", "nGene", "mitoRatio", "PC"),
-    combine = TRUE)
+    features = c("nUMI", "nGene",
+                 "log10GenesPerUMI", "mitoRatio",
+                 "S.Score", "G2M.Score"))
+plotFeatures(
+    seurat,
+    features = paste0("PC", pcUse))
 ```
 
 

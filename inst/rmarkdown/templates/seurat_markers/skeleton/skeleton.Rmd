@@ -43,7 +43,7 @@ dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 ```
 
 ```{r sample_metadata}
-sampleMetadata(seurat, kable = TRUE)
+sampleMetadata(seurat)
 ```
 
 
@@ -76,12 +76,16 @@ write_csv(markers, file.path(markersDir, paste0(markersName, ".csv.gz")))
 
 # Top markers per cluster {.tabset}
 
-```{r top_markers, results="asis"}
-topMarkers <- topMarkers(markers, show = TRUE)
+```{r top_markers}
+topMarkers <- topMarkers(markers, coding = TRUE)
+print(topMarkers)
 ```
 
 ```{r plot_top_markers, results="asis"}
-plotTopMarkers(seurat, topMarkers, headerLevel = 2, combine = TRUE)
+plotTopMarkers(
+    seurat,
+    topMarkers = topMarkers,
+    headerLevel = 2)
 ```
 
 
@@ -104,30 +108,18 @@ DoHeatmap(
 
 
 
-# Known marker analysis
+# Known markers {.tabset]
 
-```{r known_markers, results="asis"}
+```{r known_markers}
 knownMarkers <- readMarkers(
     params$markersFile,
-    gene2symbol = gene2symbol,
-    show = TRUE)
+    gene2symbol = gene2symbol)
 saveData(knownMarkers)
 ```
 
-
-## Known markers detected
-
-Let's obtain the statistics on our known marker genes from [Seurat][].
-
-```{r known_markers_detected, results="asis"}
-knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers, show = TRUE)
-```
-
-
-## Known markers by cell type {.tabset}
-
 ```{r plot_known_markers, results="asis"}
-plotKnownMarkers(seurat, knownMarkersDetected, headerLevel = 3)
+knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers)
+plotKnownMarkers(seurat, knownMarkersDetected, headerLevel = 2)
 ```
 
 

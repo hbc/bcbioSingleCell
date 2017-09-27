@@ -25,7 +25,7 @@ loadDataAsName(c(seurat = params$seuratFile))
 ```
 
 ```{r sample_metadata}
-sampleMetadata(seurat, kable = TRUE)
+sampleMetadata(seurat)
 ```
 
 
