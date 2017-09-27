@@ -13,6 +13,15 @@ NULL
 
 #' @rdname deprecated
 #' @export
+metadataTable <- function(...) {
+    .Deprecated("sampleMetadata")
+    sampleMetadata(...)
+}
+
+
+
+#' @rdname deprecated
+#' @export
 plotClusters <- function(...) {
     .Deprecated("plotMarkers")
     plotMarkers(...)
