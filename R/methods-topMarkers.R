@@ -23,8 +23,7 @@ NULL
 .topMarkers <- function(
     object,
     n = 10,
-    coding = FALSE,
-    show = FALSE) {
+    coding = FALSE) {
     .validMarkers(object)
     if (isTRUE(coding)) {
         object <- dplyr::filter(
