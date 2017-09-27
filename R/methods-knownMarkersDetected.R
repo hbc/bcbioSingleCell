@@ -11,7 +11,6 @@
 #'   pulled from internal [cellCycleMarkers] object.
 #' @param removePromiscuous Remove markers with very poor specificity, which are
 #'   present in at least 5 clusters.
-#' @param show Show [kable].
 #'
 #' @return [tibble].
 NULL
@@ -34,8 +33,7 @@ NULL
 .knownMarkersDetected <- function(
     all,
     known,
-    removePromiscuous = TRUE,
-    show = FALSE) {
+    removePromiscuous = FALSE) {
     .validMarkers(all)
     # Check for `ensgene` column in both `all` and `known`
     if (!"ensgene" %in% colnames(all) & "ensgene" %in% colnames(known)) {
@@ -65,9 +63,6 @@ NULL
             "Promiscuous markers:",
             toString(promiscuous)),
             call. = FALSE)
-    }
-    if (isTRUE(show)) {
-        .markersKable(markers, caption = "Known markers detected")
     }
     markers
 }

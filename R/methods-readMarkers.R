@@ -8,7 +8,6 @@
 #' @inheritParams AllGenerics
 #' @param object Gene markers file (CSV or Excel).
 #' @param gene2symbol Gene-to-symbol annotation [data.frame].
-#' @param show Show [kable].
 #'
 #' @return [tibble].
 NULL
@@ -18,10 +17,7 @@ NULL
 # Methods ====
 #' @rdname readMarkers
 #' @export
-setMethod("readMarkers", "character", function(
-    object,
-    gene2symbol,
-    show = FALSE) {
+setMethod("readMarkers", "character", function(object, gene2symbol) {
     if (!is.data.frame(gene2symbol)) {
         stop("gene2symbol must be data.frame")
     }
@@ -72,16 +68,9 @@ setMethod("readMarkers", "character", function(
         stop("Marker file must contain 'ensgene' or 'symbol'")
     }
 
-    markers <- markers %>%
+    markers %>%
         .[!is.na(.[["ensgene"]]), ] %>%
         .[, c("cell", "symbol", "ensgene")] %>%
         arrange(!!!syms(c("cell", "symbol"))) %>%
         distinct()
-
-    if (isTRUE(show)) {
-        kable(markers, caption = "Known markers") %>%
-            show()
-    }
-
-    markers
 })

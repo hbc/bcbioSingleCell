@@ -4,44 +4,26 @@
 #' @name sampleMetadata
 #'
 #' @inheritParams AllGenerics
-#' @param kable Return the output as [kable] instead of [data.frame].
 #'
-#' @return [data.frame], unless `kable = TRUE`, which will return a [kable].
+#' @return [data.frame].
 NULL
-
-
-
-# Constructors ====
-.returnSampleMetadata <- function(object, kable) {
-    df <- as.data.frame(object)
-    if (isTRUE(kable)) {
-        kable(df, caption = "Sample metadata", row.names = FALSE)
-    } else {
-        df
-    }
-}
 
 
 
 # Methods ====
 #' @rdname sampleMetadata
 #' @export
-setMethod("sampleMetadata", "bcbioSingleCellANY", function(
-    object,
-    kable = FALSE) {
+setMethod("sampleMetadata", "bcbioSingleCellANY", function(object) {
     object %>%
         metadata() %>%
-        .[["sampleMetadata"]] %>%
-        .returnSampleMetadata(kable = kable)
+        .[["sampleMetadata"]]
 })
 
 
 
 #' @rdname sampleMetadata
 #' @export
-setMethod("sampleMetadata", "seurat", function(
-    object,
-    kable = FALSE) {
+setMethod("sampleMetadata", "seurat", function(object) {
     # Check to see if bcbio metadata is stashed in '@misc' slot. This is
     # saved when using our `setAs()` coercion method.
     bcbMeta <- object@misc[["bcbio"]][["sampleMetadata"]]
@@ -87,5 +69,5 @@ setMethod("sampleMetadata", "seurat", function(
         df <- distinct(df) %>%
             set_rownames(.[["sampleID"]])
     }
-    .returnSampleMetadata(df, kable = kable)
+    df
 })
