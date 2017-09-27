@@ -13,11 +13,12 @@
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #'
+#' @importFrom BiocGenerics plotPCA
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dendsort dendsort
 #' @importFrom devtools session_info
 #' @importFrom dplyr arrange bind_rows distinct everything filter funs group_by
-#'   left_join mutate n pull rename select slice summarize summarize_all
+#'   left_join mutate n pull rename select slice summarize summarize_all ungroup
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_rect
 #'   element_text expand_limits facet_wrap geom_bar geom_boxplot geom_histogram
