@@ -56,17 +56,17 @@ NULL
     p <- tibble %>%
         ggplot(
             aes_string(
-                x = "tSNE_1",
-                y = "tSNE_2",
+                x = "tSNE1",
+                y = "tSNE2",
                 color = colorpoints))
     if (isTRUE(pointsAsNumbers)) {
         # This seems to take longer to plot than the points?
         p <- p +
             geom_text(
                 aes_string(
-                    x = "tSNE_1",
-                    y = "tSNE_2",
-                    label = "object.ident",
+                    x = "tSNE1",
+                    y = "tSNE2",
+                    label = "ident",
                     color = colorpoints),
                 size = 2)
     } else {
@@ -77,24 +77,21 @@ NULL
         p <- p +
             geom_text(
                 aes_string(
-                    x = "centerx",
-                    y = "centery",
-                    label = "object.ident"),
+                    x = "centerX",
+                    y = "centerY",
+                    label = "ident"),
                 color = "white",
                 size = 6,
                 fontface = "bold")
     }
-    p <- p +
-        DarkTheme() +
-        scale_color_viridis(option = "inferno") +
-        guides(color = guide_colorbar(direction = "horizontal")) +
-        theme(legend.justification = "center",
-              legend.position = "bottom")
     if (length(genes) <= 10) {
         p <- p +
             ggtitle(toString(genes))
     }
-    p
+    p +
+        scale_color_viridis(option = "inferno") +
+        guides(color = guide_colorbar(direction = "horizontal")) +
+        darkTheme()
 }
 
 
@@ -108,14 +105,14 @@ setMethod("plotMarkerTSNE", "grouped_df", function(
     pointsAsNumbers = FALSE,
     label = TRUE) {
     requiredCols <- c(
-        "centerx",
-        "centery",
+        "centerX",
+        "centerY",
         "expression",
         "gene",
         "geomean",
-        "object.ident",
-        "tSNE_1",
-        "tSNE_2")
+        "ident",
+        "tSNE1",
+        "tSNE2")
     if (!all(requiredCols %in% colnames(object))) {
         stop(paste("Required columns:", toString(requiredCols)),
              call. = FALSE)
