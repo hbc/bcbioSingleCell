@@ -72,25 +72,24 @@ setMethod("plotDot", "seurat", function(
     data <- data %>%
         group_by(!!!syms(c("ident", "symbol"))) %>%
         summarize(
-            avgExp = mean(expm1(expression)),
-            pctExp = .percentAbove(expression, threshold = 0)
+            avgExp = mean(expm1(.data[["expression"]])),
+            pctExp = .percentAbove(.data[["expression"]], threshold = 0)
         )
     data <- data %>%
         ungroup() %>%
         group_by(!!sym("symbol")) %>%
-        mutate(avgExpScale = scale(x = avgExp)) %>%
-        mutate(avgExpScale = .minMax(
-            data = avgExpScale,
-            max = colMax,
-            min = colMin))
+        mutate(avgExpScale = scale(.data[["avgExp"]])) %>%
+        mutate(avgExpScale = .minMax(.data[["avgExpScale"]],
+                                     max = colMax,
+                                     min = colMin))
     data[["pctExp"]][data[["pctExp"]] < dotMin] <- NA
     ggplot(
         data = data,
         mapping = aes_(x = ~symbol,
                        y = ~ident)) +
         geom_point(
-            mapping = aes_(size = ~pctExp,
-                           color = ~avgExpScale)) +
+            mapping = aes_(colour = ~avgExpScale,
+                           size = ~pctExp)) +
         scale_radius(range = c(0, dotScale)) +
         scale_color_gradient(low = colors[["low"]], high = colors[["high"]]) +
         labs(y = "ident") +
