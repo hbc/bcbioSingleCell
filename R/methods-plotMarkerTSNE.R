@@ -81,7 +81,7 @@ NULL
                     y = "centery",
                     label = "object.ident"),
                 color = "white",
-                size = 7,
+                size = 6,
                 fontface = "bold")
     }
     p <- p +
