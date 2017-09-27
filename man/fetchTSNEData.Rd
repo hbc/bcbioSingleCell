@@ -28,6 +28,8 @@ tsne <- fetchTSNEData(seurat)
 }
 }
 \seealso{
+\code{\link[Seurat:TSNEPlot]{Seurat::TSNEPlot()}}.
+
 Other t-SNE Utilities: \code{\link{fetchTSNEExpressionData}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotTSNE}}
 }
