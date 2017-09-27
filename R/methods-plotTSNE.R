@@ -50,7 +50,6 @@ NULL
         darkTheme() +
         guides(color = guide_legend(
             title.position = "left",
-            nrow = 2,
             byrow = TRUE))
     if (isTRUE(label)) {
         p <- p +
