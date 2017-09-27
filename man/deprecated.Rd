@@ -3,13 +3,10 @@
 \name{deprecated}
 \alias{deprecated}
 \alias{plotClusters}
-\alias{plotFeatures}
 \alias{plotTSNEExpressionData}
 \title{Deprecated Functions}
 \usage{
 plotClusters(...)
-
-plotFeatures(...)
 
 plotTSNEExpressionData(...)
 }

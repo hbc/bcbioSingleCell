@@ -79,6 +79,14 @@ setGeneric("plotCellCounts", function(object, ...) {
 
 
 
+#' @rdname plotFeatures
+#' @export
+setGeneric("plotFeatures", function(object, ...) {
+    standardGeneric("plotFeatures")
+})
+
+
+
 #' @rdname plotGenesPerCell
 #' @export
 setGeneric("plotGenesPerCell", function(object, ...) {

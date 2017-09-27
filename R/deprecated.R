@@ -22,15 +22,6 @@ plotClusters <- function(...) {
 
 #' @rdname deprecated
 #' @export
-plotFeatures <- function(...) {
-    .Deprecated("plotMarkers")
-    plotFeatures(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
 plotTSNEExpressionData <- function(...) {
     .Deprecated("plotMarkerTSNE")
     plotMarkerTSNE(...)
