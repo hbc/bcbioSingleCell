@@ -32,7 +32,6 @@ Imports:
     ggplot2 (>= 2.2.1),
     ggridges (>= 0.4.1),
     jsonlite,
-    knitr,
     magrittr,
     Matrix,
     Matrix.utils,
