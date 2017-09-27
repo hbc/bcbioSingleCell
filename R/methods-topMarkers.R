@@ -22,7 +22,7 @@ NULL
 # Constructors ====
 .topMarkers <- function(
     object,
-    n = 4L,
+    n = 10,
     coding = FALSE,
     show = FALSE) {
     .validMarkers(object)
@@ -32,7 +32,7 @@ NULL
     }
     object %>%
         # Use only the positive markers
-        dplyr::filter(.data[["avgDiff"]] > 0L) %>%
+        dplyr::filter(.data[["avgDiff"]] > 0) %>%
         # Arrange by P value
         arrange(!!sym("pvalue")) %>%
         # Take the top rows by using slice
