@@ -41,7 +41,7 @@ NULL
 
 # Constructors ====
 .plotMarkerTSNE <- function(
-    object,
+    tibble,
     colorpoints = "geomean",
     pointsAsNumbers = FALSE,
     label = TRUE) {
@@ -49,10 +49,11 @@ NULL
         stop("colorpoints supports 'geomean' or 'expression'")
     }
     # Check to make sure only a subset of markers is passed in
-    if (length(unique(object[["gene"]])) > 100) {
+    genes <- sort(unique(tibble[["gene"]]))
+    if (length(genes) > 100) {
         stop("geomean argument supports up to 100 marker genes")
     }
-    p <- object %>%
+    p <- tibble %>%
         ggplot(
             aes_string(
                 x = "tSNE_1",
@@ -80,12 +81,20 @@ NULL
                     y = "centery",
                     label = "object.ident"),
                 color = "white",
-                size = 6,
+                size = 7,
                 fontface = "bold")
     }
-    p +
+    p <- p +
         DarkTheme() +
-        scale_color_viridis(option = "inferno")
+        scale_color_viridis(option = "inferno") +
+        guides(color = guide_colorbar(direction = "horizontal")) +
+        theme(legend.justification = "center",
+              legend.position = "bottom")
+    if (length(genes) <= 10) {
+        p <- p +
+            ggtitle(toString(genes))
+    }
+    p
 }
 
 
@@ -96,7 +105,7 @@ NULL
 setMethod("plotMarkerTSNE", "grouped_df", function(
     object,
     colorpoints = "geomean",
-    pointsAsNumbers = TRUE,
+    pointsAsNumbers = FALSE,
     label = TRUE) {
     requiredCols <- c(
         "centerx",
@@ -112,7 +121,7 @@ setMethod("plotMarkerTSNE", "grouped_df", function(
              call. = FALSE)
     }
     .plotMarkerTSNE(
-        object,
+        tibble = object,
         colorpoints = colorpoints,
         pointsAsNumbers = pointsAsNumbers,
         label = label)
@@ -126,10 +135,11 @@ setMethod("plotMarkerTSNE", "seurat", function(
     object,
     genes,
     colorpoints = "geomean",
-    pointsAsNumbers = TRUE,
+    pointsAsNumbers = FALSE,
     label = TRUE) {
-    fetchTSNEExpressionData(object, genes = genes) %>%
+    tibble <- fetchTSNEExpressionData(object, genes = genes)
         .plotMarkerTSNE(
+            tibble = tibble,
             colorpoints = colorpoints,
             pointsAsNumbers = pointsAsNumbers,
             label = label)

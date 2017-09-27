@@ -10,10 +10,10 @@
 plotMarkerTSNE(object, ...)
 
 \S4method{plotMarkerTSNE}{grouped_df}(object, colorpoints = "geomean",
-  pointsAsNumbers = TRUE, label = TRUE)
+  pointsAsNumbers = FALSE, label = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, colorpoints = "geomean",
-  pointsAsNumbers = TRUE, label = TRUE)
+  pointsAsNumbers = FALSE, label = TRUE)
 }
 \arguments{
 \item{object}{Object.}
