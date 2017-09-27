@@ -31,6 +31,14 @@ setGeneric("calculateMetrics", function(object, ...) {
 
 
 
+#' @rdname fetchPCAData
+#' @export
+setGeneric("fetchPCAData", function(object, ...) {
+    standardGeneric("fetchPCAData")
+})
+
+
+
 #' @rdname fetchTSNEData
 #' @export
 setGeneric("fetchTSNEData", function(object, ...) {
