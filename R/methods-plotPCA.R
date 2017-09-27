@@ -6,6 +6,8 @@
 #' @author Michael Steinbaugh
 #'
 #' @inherit plotTSNE
+#'
+#' @seealso [plotTSNE()].
 NULL
 
 
@@ -18,8 +20,9 @@ setMethod("plotPCA", "seurat", function(
     interestingGroup = "ident",
     label = TRUE) {
     pca <- fetchPCAData(object)
-    .plotPCA(
+    .plotDim(
         pca,
+        axes = c(x = "pc1", y = "pc2"),
         interestingGroup = interestingGroup,
         label = label)
 })

@@ -30,19 +30,20 @@ NULL
 #'
 #' @return [ggplot].
 #' @noRd
-.plotTSNE <- function(
+.plotDim <- function(
     object,
+    axes,
     interestingGroup = "ident",
     label = TRUE) {
     if (interestingGroup == "ident") {
         # Seurat stores the ident from `FetchData()` as `object.ident`
-        color <- "object.ident"
+        color <- "ident"
     } else {
         color <- interestingGroup
     }
     p <- ggplot(object,
-                aes_string(x = "tSNE1",
-                           y = "tSNE2",
+                aes_string(x = axes[["x"]],
+                           y = axes[["y"]],
                            color = color)) +
         # Alpha transparency helps distinguish superimposed points
         geom_point(alpha = 0.7) +
@@ -79,8 +80,9 @@ setMethod("plotTSNE", "seurat", function(
     interestingGroup = "ident",
     label = TRUE) {
     tsne <- fetchTSNEData(object)
-    .plotTSNE(
+    .plotDim(
         tsne,
+        axes = c(x = "tSNE1", y = "tSNE2"),
         interestingGroup = interestingGroup,
         label = label)
 })

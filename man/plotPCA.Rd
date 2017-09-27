@@ -27,6 +27,8 @@ plotTSNE(seurat)
 }
 }
 \seealso{
+\code{\link[=plotTSNE]{plotTSNE()}}.
+
 Other PCA Utilities: \code{\link{fetchPCAData}}
 }
 \author{
