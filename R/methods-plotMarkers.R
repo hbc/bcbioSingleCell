@@ -95,43 +95,28 @@ NULL
         theme(legend.position = "none")
 
     # Dot plot
-    # `DotPlot()` is still plotting when `do.return = TRUE`
-    dot <- DotPlot(
-        object,
-        genes.plot = gene,
-        cols.use = c("white", "black"),
-        do.return = TRUE,
-        plot.legend = FALSE) %>%
-        .[["data"]] %>%
-        ggplot(aes_(x = ~genes.plot,
-                     y = ~id)) +
-        geom_point(aes_(size = ~pct.exp, color = ~avg.exp.scale)) +
-        scale_radius(range = c(0, 6)) +
-        scale_color_gradient(low = "white", high = "black") +
-        labs(y = "ident") +
-        theme(axis.title.x = element_blank(),
-              legend.position = "none")
+    dot <- plotDot(object, genes = gene)
 
     if (isTRUE(returnAsList)) {
         list(tsne = tsne,
+             dot = dot,
              violin = violin,
-             ridges = ridges,
-             dot = dot)
+             ridges = ridges)
     } else {
         ggdraw() +
             # Coordinates are relative to lower left corner
             draw_plot(
                 tsne,
-                x = 0L, y = 0.3, width = 1, height = 0.7) +
-            draw_plot(
-                violin,
-                x = 0, y = 0, width = 0.425, height = 0.3) +
-            suppressMessages(draw_plot(
-                ridges,
-                x = 0.425, y = 0, width = 0.425, height = 0.3)) +
+                x = 0L, y = 0.25, width = 1, height = 0.75) +
             draw_plot(
                 dot,
-                x = 0.85, y = 0, width = 0.15, height = 0.3)
+                x = 0, y = 0, width = 0.2, height = 0.25) +
+            draw_plot(
+                violin,
+                x = 0.2, y = 0, width = 0.45, height = 0.25) +
+            suppressMessages(draw_plot(
+                ridges,
+                x = 0.65, y = 0, width = 0.35, height = 0.25))
     }
 }
 

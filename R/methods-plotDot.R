@@ -58,7 +58,7 @@ setMethod("plotDot", "seurat", function(
     colMin = -2.5,
     colMax = 2.5,
     dotMin = 0,
-    dotScale = 6) {
+    dotScale = 5) {
     data <- FetchData(object, vars.all = genes) %>%
         as.data.frame() %>%
         rownames_to_column("cell") %>%
