@@ -69,11 +69,12 @@ NULL
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
     if (!is.null(min)) {
         p <- p +
-            geom_vline(alpha = qcLineAlpha,
-                       color = qcCutoffColor,
-                       linetype = qcLineType,
-                       size = qcLineSize,
-                       xintercept = min)
+            geom_vline(
+                alpha = qcLineAlpha,
+                color = qcCutoffColor,
+                linetype = qcLineType,
+                size = qcLineSize,
+                xintercept = min)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
@@ -84,7 +85,7 @@ NULL
 
 
 
-.plotUMIsPerCell <- function(object, min) {
+.plotUMIsPerCell <- function(object, interestingGroup, min) {
     if (missing(interestingGroup)) {
         interestingGroup <- interestingGroups(object)[[1L]]
     }
