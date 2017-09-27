@@ -27,12 +27,12 @@ NULL
                      fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "genes per cell") +
-        geom_boxplot(color = lineColor) +
+        geom_boxplot(colour = lineColor) +
         geom_label(
             data = medianGenes,
             aes_(label = ~nGene),
             alpha = qcLabelAlpha,
-            color = qcLabelColor,
+            colour = qcLabelColor,
             fill = qcLabelFill,
             fontface = qcLabelFontface,
             label.padding = qcLabelPadding,
@@ -45,7 +45,7 @@ NULL
         p <- p +
             geom_hline(
                 alpha = qcLineAlpha,
-                color = qcCutoffColor,
+                colour = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
                 yintercept = min)
@@ -54,7 +54,7 @@ NULL
         p <- p +
             geom_hline(
                 alpha = qcLineAlpha,
-                color = qcCutoffColor,
+                colour = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
                 yintercept = max)
@@ -83,7 +83,7 @@ NULL
         p <- p +
             geom_vline(
                 alpha = qcLineAlpha,
-                color = qcCutoffColor,
+                colour = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
                 xintercept = min)
@@ -92,7 +92,7 @@ NULL
         p <- p +
             geom_vline(
                 alpha = qcLineAlpha,
-                color = qcCutoffColor,
+                colour = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
                 xintercept = max)

@@ -8,8 +8,7 @@
 \usage{
 topMarkers(object, ...)
 
-\S4method{topMarkers}{grouped_df}(object, n = 10, coding = FALSE,
-  show = FALSE)
+\S4method{topMarkers}{grouped_df}(object, n = 10, coding = FALSE)
 }
 \arguments{
 \item{object}{Object.}

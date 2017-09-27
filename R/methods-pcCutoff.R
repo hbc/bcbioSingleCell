@@ -52,7 +52,7 @@ NULL
         geom_point() +
         geom_line() +
         geom_vline(alpha = 0.5,
-                   color = "black",
+                   colour = "black",
                    linetype = "longdash",
                    size = 1.5,
                    xintercept = cutoff) +
@@ -67,11 +67,11 @@ NULL
         geom_point() +
         geom_line() +
         geom_hline(alpha = 0.5,
-                   color = "orange",
+                   colour = "orange",
                    size = 1.5,
                    yintercept = maxPct) +
         geom_vline(alpha = 0.5,
-                   color = "black",
+                   colour = "black",
                    linetype = "longdash",
                    size = 1.5,
                    xintercept = cutoff) +
@@ -87,11 +87,11 @@ NULL
         geom_point() +
         geom_line() +
         geom_hline(alpha = 0.5,
-                   color = "orange",
+                   colour = "orange",
                    size = 1.5,
                    yintercept = minCumPct) +
         geom_vline(alpha = 0.5,
-                   color = "black",
+                   colour = "black",
                    linetype = "longdash",
                    size = 1.5,
                    xintercept = cutoff) +

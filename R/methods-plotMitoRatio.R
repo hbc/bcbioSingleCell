@@ -22,12 +22,12 @@ NULL
                      fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "% mito counts") +
-        geom_boxplot(color = lineColor) +
+        geom_boxplot(colour = lineColor) +
         geom_label(
             data = medianMitoRatio,
             aes_(label = ~round(mitoRatio * 100L, digits = 2L)),
             alpha = qcLabelAlpha,
-            color = qcLabelColor,
+            colour = qcLabelColor,
             fill = qcLabelFill,
             fontface = qcLabelFontface,
             label.padding = qcLabelPadding,
@@ -40,7 +40,7 @@ NULL
         p <- p +
             geom_hline(
                 alpha = qcLineAlpha,
-                color = qcCutoffColor,
+                colour = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
                 yintercept = max * 100L)
@@ -68,7 +68,7 @@ NULL
         p <- p +
             geom_vline(
                 alpha = qcLineAlpha,
-                color = qcCutoffColor,
+                colour = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
                 xintercept = max * 100L)
@@ -87,13 +87,13 @@ NULL
     p <- ggplot(metrics,
                 aes_(x = ~nCoding,
                      y = ~nMito,
-                     color = ~sampleName)) +
+                     colour = ~sampleName)) +
         labs(x = "mito counts",
              y = "coding counts") +
         geom_point(alpha = 0.6, size = 1L) +
         scale_x_sqrt() +
         scale_y_sqrt() +
-        scale_color_viridis(discrete = TRUE)
+        scale_colour_viridis(discrete = TRUE)
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
             facet_wrap(~fileName)

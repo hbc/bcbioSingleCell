@@ -80,7 +80,7 @@ NULL
                     x = "centerX",
                     y = "centerY",
                     label = "ident"),
-                color = "white",
+                colour = "white",
                 size = 6,
                 fontface = "bold")
     }
@@ -89,8 +89,8 @@ NULL
             ggtitle(toString(genes))
     }
     p +
-        scale_color_viridis(option = "inferno") +
-        guides(color = guide_colorbar(direction = "horizontal")) +
+        scale_colour_viridis(option = "inferno") +
+        guides(colour = guide_colourbar(direction = "horizontal")) +
         darkTheme()
 }
 
