@@ -95,7 +95,9 @@ NULL
         theme(legend.position = "none")
 
     # Dot plot
-    dot <- plotDot(object, genes = gene)
+    dot <- plotDot(object, genes = gene) +
+        theme(axis.title.x = element_blank(),
+              legend.position = "none")
 
     if (isTRUE(returnAsList)) {
         list(tsne = tsne,

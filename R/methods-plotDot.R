@@ -22,6 +22,12 @@
 #' RMarkdown looping of our marker plots.
 #'
 #' @seealso Modified version of [Seurat::DotPlot()].
+#'
+#' @examples
+#' \dontrun{
+#' data(seurat)
+#' plotDot(seurat, genes = "Hspe1")
+#' }
 NULL
 
 
@@ -58,24 +64,21 @@ setMethod("plotDot", "seurat", function(
     colMin = -2.5,
     colMax = 2.5,
     dotMin = 0,
-    dotScale = 5) {
+    dotScale = 6) {
     data <- FetchData(object, vars.all = genes) %>%
         as.data.frame() %>%
         rownames_to_column("cell") %>%
-        mutate(ident = object@ident)
-    data <- data %>%
+        mutate(ident = object@ident) %>%
         gather(
-            key = symbol,
-            value = expression,
-            -c(cell, ident)
-        )
-    data <- data %>%
+            key = "symbol",
+            value = "expression",
+            !!genes
+        ) %>%
         group_by(!!!syms(c("ident", "symbol"))) %>%
         summarize(
             avgExp = mean(expm1(.data[["expression"]])),
             pctExp = .percentAbove(.data[["expression"]], threshold = 0)
-        )
-    data <- data %>%
+        ) %>%
         ungroup() %>%
         group_by(!!sym("symbol")) %>%
         mutate(avgExpScale = scale(.data[["avgExp"]])) %>%
@@ -91,8 +94,7 @@ setMethod("plotDot", "seurat", function(
             mapping = aes_(colour = ~avgExpScale,
                            size = ~pctExp)) +
         scale_radius(range = c(0, dotScale)) +
-        scale_color_gradient(low = colors[["low"]], high = colors[["high"]]) +
-        labs(y = "ident") +
-        theme(axis.title.x = element_blank(),
-              legend.position = "none")
+        scale_colour_gradient(low = colors[["low"]], high = colors[["high"]]) +
+        labs(x = "gene",
+             y = "ident")
 })

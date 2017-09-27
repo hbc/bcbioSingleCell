@@ -9,7 +9,7 @@
 plotDot(object, ...)
 
 \S4method{plotDot}{seurat}(object, genes, colors = c(low = "white", high =
-  "black"), colMin = -2.5, colMax = 2.5, dotMin = 0, dotScale = 5)
+  "black"), colMin = -2.5, colMax = 2.5, dotMin = 0, dotScale = 6)
 }
 \arguments{
 \item{object}{Object.}
@@ -39,6 +39,12 @@ Plot Dot
 \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}} is still plotting even when \code{do.return = TRUE}.
 In the meantime, we've broken out the code into this generic to fix
 RMarkdown looping of our marker plots.
+}
+\examples{
+\dontrun{
+data(seurat)
+plotDot(seurat, genes = "Hspe1")
+}
 }
 \seealso{
 Modified version of \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}}.
