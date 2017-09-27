@@ -41,31 +41,27 @@ NULL
         color <- interestingGroup
     }
     p <- ggplot(object,
-                aes_string(x = "tSNE_1",
-                           y = "tSNE_2",
+                aes_string(x = "tSNE1",
+                           y = "tSNE2",
                            color = color)) +
         # Alpha transparency helps distinguish superimposed points
         geom_point(alpha = 0.7) +
-        DarkTheme()
+        darkTheme() +
+        guides(color = guide_legend(
+            title.position = "left",
+            nrow = 2,
+            byrow = TRUE))
     if (isTRUE(label)) {
         p <- p +
             geom_text(
                 aes_string(
-                    x = "centerx",
-                    y = "centery",
-                    label = "object.ident"),
+                    x = "centerX",
+                    y = "centerY",
+                    label = "ident"),
                 color = "white",
                 size = 6,
                 fontface = "bold")
     }
-    p <- p +
-        # Use the default color palette here -- more dynamic range than viridis
-        guides(color = guide_legend(
-            title.position = "left",
-            nrow = 2,
-            byrow = TRUE)) +
-        theme(legend.justification = "center",
-              legend.position = "bottom")
     if (interestingGroup == "ident") {
         # Fix the cluster identity label
         p <- p + labs(color = "cluster")
@@ -83,7 +79,8 @@ setMethod("plotTSNE", "seurat", function(
     interestingGroup = "ident",
     label = TRUE) {
     tsne <- fetchTSNEData(object)
-    .plotTSNE(tsne,
-              interestingGroup = interestingGroup,
-              label = label)
+    .plotTSNE(
+        tsne,
+        interestingGroup = interestingGroup,
+        label = label)
 })
