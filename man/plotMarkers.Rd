@@ -8,7 +8,8 @@
 \usage{
 plotMarkers(object, ...)
 
-\S4method{plotMarkers}{seurat}(object, genes, headerLevel = 2L)
+\S4method{plotMarkers}{seurat}(object, genes, pointsAsNumbers = FALSE,
+  headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
@@ -17,6 +18,8 @@ plotMarkers(object, ...)
 
 \item{genes}{Genes (by symbol name) of which to get expression data.}
 
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+
 \item{headerLevel}{Include a Markdown header for each gene.}
 }
 \value{
@@ -24,8 +27,6 @@ No value, only graphical output.
 }
 \description{
 Plot gene expression per cell in multiple formats:
-}
-\details{
 \enumerate{
 \item t-SNE plot
 \item Violin plot

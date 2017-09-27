@@ -43,7 +43,7 @@ NULL
 .plotMarkerTSNE <- function(
     object,
     colorpoints = "geomean",
-    pointsAsNumbers = TRUE,
+    pointsAsNumbers = FALSE,
     label = TRUE) {
     if (!colorpoints %in% c("expression", "geomean")) {
         stop("colorpoints supports 'geomean' or 'expression'")

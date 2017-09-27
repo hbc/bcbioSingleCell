@@ -9,7 +9,7 @@
 plotTopMarkers(object, topMarkers, ...)
 
 \S4method{plotTopMarkers}{seurat,grouped_df}(object, topMarkers,
-  headerLevel = 2)
+  pointsAsNumbers = FALSE, headerLevel = 2)
 }
 \arguments{
 \item{object}{Object.}
@@ -18,6 +18,8 @@ plotTopMarkers(object, topMarkers, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+
 \item{headerLevel}{Include a Markdown header for each gene.}
 }
 \value{
@@ -25,8 +27,6 @@ No value, only graphical output.
 }
 \description{
 Plot gene expression per cell in multiple formats:
-}
-\details{
 \enumerate{
 \item t-SNE plot
 \item Violin plot

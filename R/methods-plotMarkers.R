@@ -1,5 +1,6 @@
 #' Plot Cell-Type Gene Markers
 #'
+#' @description
 #' Plot gene expression per cell in multiple formats:
 #'
 #' 1. t-SNE plot
@@ -36,7 +37,11 @@ NULL
 #'   with [cowplot::plot_grid()].
 #'
 #' @noRd
-.plotMarkerSeurat <- function(object, gene, returnAsList = FALSE) {
+.plotMarkerSeurat <- function(
+    object,
+    gene,
+    pointsAsNumbers = FALSE,
+    returnAsList = FALSE) {
     if (!is_string(gene)) {
         stop("gene must be a string", call. = FALSE)
     }
@@ -44,9 +49,11 @@ NULL
     lowExpressionCutoff <- 0.1
 
     # tSNE marker expression plot
-    tsne <- plotMarkerTSNE(object,
-                           genes = gene,
-                           colorpoints = "expression")
+    tsne <- plotMarkerTSNE(
+        object,
+        genes = gene,
+        colorpoints = "expression",
+        pointsAsNumbers = pointsAsNumbers)
 
     # Violin plot
     violin <- VlnPlot(
@@ -136,13 +143,16 @@ NULL
 setMethod("plotMarkers", "seurat", function(
     object,
     genes,
+    pointsAsNumbers = FALSE,
     headerLevel = 2L) {
     lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
         mdHeader(gene, level = headerLevel, asis = TRUE)
-        .plotMarkerSeurat(object,
-                          gene = gene,
-                          returnAsList = FALSE) %>%
+        .plotMarkerSeurat(
+            object,
+            gene = gene,
+            pointsAsNumbers = pointsAsNumbers,
+            returnAsList = FALSE) %>%
             show()
     }) %>%
         invisible()

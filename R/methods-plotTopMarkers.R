@@ -16,6 +16,7 @@ NULL
 .plotTopMarkers <- function(
     object,
     topMarkers,
+    pointsAsNumbers = FALSE,
     headerLevel = 2) {
     # Fix for gene symbol mismatch
     if ("gene" %in% colnames(topMarkers)) {
@@ -24,13 +25,13 @@ NULL
     clusters <- topMarkers[["cluster"]] %>% levels
     pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
-        symbols <- topMarkers %>%
+        genes <- topMarkers %>%
             .[.[["cluster"]] == cluster, ] %>%
             pull("symbol")
-        if (is.null(symbols)) {
+        if (is.null(genes)) {
             return(NULL)
         }
-        if (length(symbols) > 10) {
+        if (length(genes) > 10) {
             warning("Maximum of 10 genes per cluster is recommended")
         }
         mdHeader(paste("Cluster", cluster),
@@ -38,7 +39,8 @@ NULL
                  tabset = TRUE,
                  asis = TRUE)
         plotMarkers(object,
-                    symbols = symbols,
+                    genes = genes,
+                    pointsAsNumbers = pointsAsNumbers,
                     headerLevel = headerLevel + 1)
     }) %>%
         invisible()

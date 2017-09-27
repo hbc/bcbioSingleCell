@@ -25,8 +25,6 @@ No value, only graphical output.
 }
 \description{
 Plot gene expression per cell in multiple formats:
-}
-\details{
 \enumerate{
 \item t-SNE plot
 \item Violin plot
