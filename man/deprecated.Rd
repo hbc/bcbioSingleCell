@@ -2,10 +2,13 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
+\alias{metadataTable}
 \alias{plotClusters}
 \alias{plotTSNEExpressionData}
 \title{Deprecated Functions}
 \usage{
+metadataTable(...)
+
 plotClusters(...)
 
 plotTSNEExpressionData(...)

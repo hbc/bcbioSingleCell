@@ -19,8 +19,6 @@ topMarkers(object, ...)
 \item{n}{Number of genes per cluster.}
 
 \item{coding}{Only include protein coding genes.}
-
-\item{show}{Show \link{kable}.}
 }
 \value{
 \link{tibble}.

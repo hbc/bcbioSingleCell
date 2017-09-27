@@ -7,17 +7,15 @@
 \alias{sampleMetadata,seurat-method}
 \title{Sample Metadata}
 \usage{
-\S4method{sampleMetadata}{bcbioSingleCellANY}(object, kable = FALSE)
+\S4method{sampleMetadata}{bcbioSingleCellANY}(object)
 
-\S4method{sampleMetadata}{seurat}(object, kable = FALSE)
+\S4method{sampleMetadata}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
-
-\item{kable}{Return the output as \link{kable} instead of \link{data.frame}.}
 }
 \value{
-\link{data.frame}, unless \code{kable = TRUE}, which will return a \link{kable}.
+\link{data.frame}.
 }
 \description{
 Sample Metadata

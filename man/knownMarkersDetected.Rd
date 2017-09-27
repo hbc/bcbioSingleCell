@@ -9,7 +9,7 @@
 knownMarkersDetected(all, known, ...)
 
 \S4method{knownMarkersDetected}{grouped_df,tbl_df}(all, known,
-  removePromiscuous = TRUE, show = FALSE)
+  removePromiscuous = FALSE)
 }
 \arguments{
 \item{all}{\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}
@@ -21,8 +21,6 @@ pulled from internal \link{cellCycleMarkers} object.}
 
 \item{removePromiscuous}{Remove markers with very poor specificity, which are
 present in at least 5 clusters.}
-
-\item{show}{Show \link{kable}.}
 }
 \value{
 \link{tibble}.
