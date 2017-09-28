@@ -29,7 +29,7 @@ NULL
     }
 
     # Sanitize column names into lowerCamelCase
-    markers <- camel(markers)
+    markers <- camel(markers, strict = FALSE)
     # Check for ensgene and add from `gene2symbol` if necessary
     if (!"ensgene" %in% colnames(markers)) {
         message("Adding missing Ensembl gene identifiers")
@@ -45,11 +45,25 @@ NULL
             stop("gene2symbol failed to match all genes")
         }
     }
+    # Check for annotable annotations and add if necessary
+    if (!"biotype" %in% colnames(markers)) {
+        message("Joining annotable metadata")
+        # Drop the symbols from annotable before join to avoid mismatch
+        annotable <- object@misc[["bcbio"]][["annotable"]] %>%
+            mutate(symbol = NULL)
+        markers <- left_join(markers, annotable, by = "ensgene")
+    }
 
     # Ensure that required columns are present
-    requiredCols <- c("cluster", "ensgene", "pvalue", "symbol")
+    requiredCols <- c("biotype",
+                      "cluster",
+                      "description",
+                      "ensgene",
+                      "pvalue",
+                      "symbol")
     if (!all(requiredCols %in% colnames(markers))) {
-        stop(paste("Marker data.frame must contain:", toString(requiredCols)))
+        stop(paste("Marker data.frame must contain:",
+                   toString(requiredCols)))
     }
 
     markers %>%
