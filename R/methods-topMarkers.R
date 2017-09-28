@@ -23,11 +23,14 @@ NULL
 .topMarkers <- function(
     object,
     n = 10,
-    coding = FALSE) {
+    coding = TRUE) {
     .validMarkers(object)
     if (isTRUE(coding)) {
-        object <- dplyr::filter(
-            object, .data[["biotype"]] == "protein_coding")
+        object <- object %>%
+            dplyr::filter(.data[["biotype"]] == "protein_coding") %>%
+            # Remove additional genes annotated as "predicted" in description
+            dplyr::filter(!str_detect(.data[["description"]],
+                                      "^predicted\\s"))
     }
     object %>%
         # Use only the positive markers
