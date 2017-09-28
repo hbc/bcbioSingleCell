@@ -5,8 +5,8 @@
           "Seurat",
           "basejump")
     lapply(seq_along(pkgs), function(a) {
-        if (!pkgs[a] %in% (.packages())) {
-            attachNamespace(pkgs[a])
+        if (!pkgs[[a]] %in% (.packages())) {
+            attachNamespace(pkgs[[a]])
         }
     })
     invisible()
