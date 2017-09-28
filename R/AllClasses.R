@@ -1,6 +1,10 @@
-#' bcbioSingleCell
+setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
+
+
+
+#' `bcbioSingleCell`
 #'
-#' [bcbioSingleCell] is an extension of [SingleCellExperiment] designed to store
+#' `bcbioSingleCell` is an extension of [SingleCellExperiment] designed to store
 #' bcbio single-cell RNA-seq counts. This class contains read counts save as a
 #' sparse matrix (`dgCMatrix`), sample barcodes, run metadata, and barcode
 #' summary statistics for each sample analyzed.
@@ -11,7 +15,10 @@
 #' that don't match the count matrix. This is currently used to store all
 #' unfiltered cellular barcodes for quality control analysis.
 #'
-#' @seealso `.S4methods(class = "bcbioSingleCell")`
+#' @seealso
+#' - [SingleCellExperiment::SingleCellExperiment()].
+#' - [SummarizedExperiment::SummarizedExperiment()].
+#' - `.S4methods(class = "bcbioSingleCell")`.
 #'
 #' @export
 bcbioSingleCell <- setClass(
@@ -22,8 +29,8 @@ setValidity("bcbioSingleCell", function(object) TRUE)
 
 
 
-# Future Class Deprecations ====
-#' bcbioSCDataSet
+# Legacy class support ====
+#' `bcbioSCDataSet`
 #'
 #' This class will be deprecated in favor of [bcbioSingleCell] in a future
 #' release.
@@ -31,9 +38,9 @@ setValidity("bcbioSingleCell", function(object) TRUE)
 #' @author Michael Steinbaugh
 #' @keywords internal
 #'
-#' @slot callers [SimpleList] containing additional bcbio run data with dimensions
-#' that don't match the count matrix. This is currently used to store all
-#' unfiltered cellular barcodes for quality control analysis.
+#' @slot callers [SimpleList] containing additional bcbio run data with
+#'   dimensions that don't match the count matrix. This is currently used to
+#'   store all unfiltered cellular barcodes for quality control analysis.
 #'
 #' @export
 bcbioSCDataSet <- setClass(
@@ -44,7 +51,7 @@ setValidity("bcbioSCDataSet", function(object) TRUE)
 
 
 
-#' bcbioSCFiltered
+#' `bcbioSCFiltered`
 #'
 #' This class will be deprecated in favor of [bcbioSingleCell] in a future
 #' release.
@@ -60,11 +67,6 @@ setValidity("bcbioSCFiltered", function(object) TRUE)
 
 
 
-# Miscellaneous Class Definitions ====
-# Need to register tibble classes for S4 method support
-setOldClass(
-    Classes = c("grouped_df", "tbl_df", "tibble"))
-# Remove this once the old `bcbioSC*` classes are formally deprecated
 setClassUnion(
     name = "bcbioSingleCellANY",
     members = c("bcbioSingleCell",

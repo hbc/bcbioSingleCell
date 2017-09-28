@@ -11,15 +11,7 @@ NULL
 
 
 
-#' @rdname deprecated
-#' @export
-metadataTable <- function(...) {
-    .Deprecated("sampleMetadata")
-    sampleMetadata(...)
-}
-
-
-
+# 0.0.18 ====
 #' @rdname deprecated
 #' @export
 plotClusters <- function(...) {

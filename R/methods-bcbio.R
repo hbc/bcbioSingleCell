@@ -1,4 +1,4 @@
-#' `bcbioSingleCell` Object Accessors
+#' `bcbioSingleCell` Additional Run Data Accessor
 #'
 #' @rdname bcbio
 #' @name bcbio
@@ -12,6 +12,7 @@ NULL
 
 
 
+# Methods ====
 #' @rdname bcbio
 #' @export
 setMethod("bcbio", "bcbioSingleCell", function(object, type) {
@@ -37,7 +38,7 @@ setMethod(
 
 
 
-# Deprecated `bcbioSCDataSet` object support ====
+# Legacy class support ====
 #' @rdname bcbio
 #' @export
 setMethod("bcbio", "bcbioSCDataSet", function(object, type) {
