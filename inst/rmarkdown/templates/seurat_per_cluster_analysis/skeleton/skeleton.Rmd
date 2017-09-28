@@ -24,6 +24,8 @@ loadDataAsName(c(seurat = params$seuratFile))
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
 ```
 
+
+
 ```{r sample_metadata}
 sampleMetadata(seurat)
 ```
