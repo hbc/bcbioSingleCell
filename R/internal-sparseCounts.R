@@ -151,9 +151,9 @@
          }
         fxn(paste(
             length(missing),
-            "transcripts in matrix missing from tx2gene:",
-            toString(head(missing)),
-            "..."))
+            "rows missing from tx2gene:",
+            toString(missing)
+        ))
     }
 
     message("Converting transcript-level counts to gene-level")

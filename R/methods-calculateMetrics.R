@@ -31,8 +31,7 @@ setMethod("calculateMetrics", "dgCMatrix", function(
         warning(paste(
             length(missing), "genes missing in annotable",
             "used to calculate metrics:",
-            toString(head(missing)),
-            "..."
+            toString(missing)
         ))
     }
 
