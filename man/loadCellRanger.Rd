@@ -13,18 +13,10 @@ must contain \code{filtered_gene_bc_matrices/} as a child.}
 
 \item{refDataDir}{Directory path to cellranger reference annotation data.}
 
-\item{sampleMetadataFile}{Sample barcode metadata file.}
-
-\item{interestingGroups}{Character vector of interesting groups. First entry
-is used for plot colors during quality control (QC) analysis. Entire vector
-is used for PCA and heatmap QC functions.}
-
-\item{prefilter}{Prefilter counts prior to quality control analysis.}
-
-\item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
+\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 }
 \value{
-\link{bcbioSingleCell}.
+Soft deprecation to new functions.
 }
 \description{
 Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} cell

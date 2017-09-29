@@ -7,7 +7,7 @@
 \alias{bcbio<-,bcbioSingleCell-method}
 \alias{bcbio,bcbioSCDataSet-method}
 \alias{bcbio<-,bcbioSCDataSet-method}
-\title{\code{bcbioSingleCell} Object Accessors}
+\title{\code{bcbioSingleCell} Additional bcbio Run Data Accessor}
 \usage{
 \S4method{bcbio}{bcbioSingleCell}(object, type)
 
@@ -28,7 +28,7 @@
 \link{bcbioSingleCell}.
 }
 \description{
-\code{bcbioSingleCell} Object Accessors
+\code{bcbioSingleCell} Additional bcbio Run Data Accessor
 }
 \author{
 Michael Steinbaugh

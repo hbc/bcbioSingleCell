@@ -2,16 +2,16 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
-\alias{metadataTable}
 \alias{plotClusters}
 \alias{plotTSNEExpressionData}
+\alias{loadSingleCellRun}
 \title{Deprecated Functions}
 \usage{
-metadataTable(...)
-
 plotClusters(...)
 
 plotTSNEExpressionData(...)
+
+loadSingleCellRun(...)
 }
 \arguments{
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}

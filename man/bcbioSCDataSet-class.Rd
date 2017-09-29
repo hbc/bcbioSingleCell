@@ -4,7 +4,7 @@
 \name{bcbioSCDataSet-class}
 \alias{bcbioSCDataSet-class}
 \alias{bcbioSCDataSet}
-\title{bcbioSCDataSet}
+\title{\code{bcbioSCDataSet}}
 \description{
 This class will be deprecated in favor of \link{bcbioSingleCell} in a future
 release.
@@ -12,9 +12,9 @@ release.
 \section{Slots}{
 
 \describe{
-\item{\code{callers}}{\link{SimpleList} containing additional bcbio run data with dimensions
-that don't match the count matrix. This is currently used to store all
-unfiltered cellular barcodes for quality control analysis.}
+\item{\code{callers}}{\link{SimpleList} containing additional bcbio run data with
+dimensions that don't match the count matrix. This is currently used to
+store all unfiltered cellular barcodes for quality control analysis.}
 }}
 
 \author{

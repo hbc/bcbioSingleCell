@@ -4,7 +4,7 @@
 \name{bcbioSCFiltered-class}
 \alias{bcbioSCFiltered-class}
 \alias{bcbioSCFiltered}
-\title{bcbioSCFiltered}
+\title{\code{bcbioSCFiltered}}
 \description{
 This class will be deprecated in favor of \link{bcbioSingleCell} in a future
 release.
