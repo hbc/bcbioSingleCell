@@ -20,14 +20,17 @@ NULL
     medianMitoRatio <-
         aggregate(mitoRatio ~ sampleID, metrics, median) %>%
         left_join(sampleMetadata(object), by = "sampleID")
-    p <- ggplot(metrics,
-                aes_(x = ~sampleName,
-                     y = ~mitoRatio,
-                     fill = as.name(interestingGroup))) +
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "mitoRatio",
+            fill = interestingGroup)
+    ) +
         geom_boxplot(color = lineColor) +
         geom_label(
             data = medianMitoRatio,
-            aes_(label = ~round(mitoRatio, digits = 2)),
+            mapping = aes_(label = ~round(mitoRatio, digits = 2)),
             alpha = qcLabelAlpha,
             color = qcLabelColor,
             fill = qcLabelFill,
@@ -58,9 +61,12 @@ NULL
     max = NULL,
     filterCells = FALSE) {
     metrics <- metrics(object, filterCells = filterCells)
-    p <- ggplot(metrics,
-                aes_(x = ~mitoRatio,
-                     fill = ~sampleName)) +
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "mitoRatio",
+            fill = "sampleName")
+    ) +
         geom_histogram(bins = bins) +
         scale_x_sqrt() +
         scale_y_sqrt() +
@@ -84,10 +90,13 @@ NULL
     object,
     filterCells = FALSE) {
     metrics <- metrics(object, filterCells = filterCells)
-    p <- ggplot(metrics,
-                aes_(x = ~nCoding,
-                     y = ~nMito,
-                     color = ~sampleName)) +
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "nCoding",
+            y = "nMito",
+            color = "sampleName")
+    ) +
         labs(x = "mito counts",
              y = "coding counts") +
         geom_point(alpha = 0.6, size = 1) +

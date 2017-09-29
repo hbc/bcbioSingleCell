@@ -24,7 +24,7 @@ NULL
         left_join(sampleMetadata(object), by = "sampleID")
     p <- ggplot(
         cellCounts,
-        aes_string(
+        mapping = aes_string(
             x = "sampleName",
             y = "cells",
             fill = interestingGroup)
@@ -33,7 +33,7 @@ NULL
              y = "cell count") +
         geom_bar(stat = "identity") +
         geom_text(
-            aes_string(label = "cells"),
+            mapping = aes_string(label = "cells"),
             fontface = "bold",
             vjust = -0.5) +
         scale_fill_viridis(discrete = TRUE) +

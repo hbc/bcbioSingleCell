@@ -55,15 +55,16 @@ NULL
     }
     p <- tibble %>%
         ggplot(
-            aes_string(
+            mapping = aes_string(
                 x = "tSNE1",
                 y = "tSNE2",
-                color = colorpoints))
+                color = colorpoints)
+        )
     if (isTRUE(pointsAsNumbers)) {
         # This seems to take longer to plot than the points?
         p <- p +
             geom_text(
-                aes_string(
+                mapping = aes_string(
                     x = "tSNE1",
                     y = "tSNE2",
                     label = "ident",
@@ -76,7 +77,7 @@ NULL
     if (isTRUE(label)) {
         p <- p +
             geom_text(
-                aes_string(
+                mapping = aes_string(
                     x = "centerX",
                     y = "centerY",
                     label = "ident"),

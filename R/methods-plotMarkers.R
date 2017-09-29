@@ -65,9 +65,12 @@ NULL
         .[["data"]] %>%
         # Remove the low expression features
         dplyr::filter(.data[["feature"]] > lowExpressionCutoff) %>%
-        ggplot(aes_(x = ~ident,
-                    y = ~feature,
-                    fill = ~ident)) +
+        ggplot(
+            mapping = aes_string(
+                x = "ident",
+                y = "feature",
+                fill = "ident")
+        ) +
         geom_violin(
             color = NA,
             scale = "width",
@@ -87,9 +90,12 @@ NULL
         .[["data"]] %>%
         # Remove the low expression features
         dplyr::filter(.data[["feature"]] > lowExpressionCutoff) %>%
-        ggplot(aes_(x = ~feature,
-                    y = ~ident,
-                    fill = ~ident)) +
+        ggplot(
+            mapping = aes_string(
+                x = "feature",
+                y = "ident",
+                fill = "ident")
+        ) +
         geom_density_ridges(color = NA, scale = 2) +
         scale_fill_viridis(discrete = TRUE) +
         theme(legend.position = "none")

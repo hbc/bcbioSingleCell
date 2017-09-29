@@ -13,14 +13,17 @@ NULL
 # Constructors ====
 .plotUMIsVsGenes <- function(object) {
     metrics <- metrics(object)
-    p <- ggplot(metrics,
-        aes_(x = ~nUMI,
-             y = ~nGene,
-             color = ~sampleName)) +
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "nUMI",
+            y = "nGene",
+            color = "sampleName")
+    ) +
         labs(x = "umis per cell",
              y = "genes per cell") +
         geom_point(size = 0.8, alpha = 0.25) +
-        geom_smooth(se = FALSE) +
+        geom_smooth(method = "gam", se = FALSE) +
         scale_x_log10() +
         scale_y_log10() +
         scale_color_viridis(discrete = TRUE) +

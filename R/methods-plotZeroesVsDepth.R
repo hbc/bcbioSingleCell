@@ -24,15 +24,19 @@ NULL
         dropout = (nrow(present) - Matrix::colSums(present)) / nrow(present),
         depth = Matrix::colSums(counts),
         fileName = metrics[["fileName"]])
-    p <- ggplot(df,
-           aes_(x = ~depth,
-                y = ~dropout * 100)) +
+    p <- ggplot(
+        df,
+        mapping = aes_(
+            x = ~depth,
+            y = ~dropout * 100)
+    ) +
         geom_point(size = 0.8, alpha = 0.3) +
         scale_x_log10() +
         labs(x = "library size",
              y = "% genes zero")
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
+        p <- p +
+            facet_wrap(~fileName)
     }
     p
 }

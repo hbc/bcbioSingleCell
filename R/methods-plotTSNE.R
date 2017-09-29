@@ -41,10 +41,13 @@ NULL
     } else {
         color <- interestingGroup
     }
-    p <- ggplot(object,
-                aes_string(x = axes[["x"]],
-                           y = axes[["y"]],
-                           color = color)) +
+    p <- ggplot(
+        object,
+        mapping = aes_string(
+            x = axes[["x"]],
+            y = axes[["y"]],
+            color = color)
+    ) +
         # Alpha transparency helps distinguish superimposed points
         geom_point(alpha = 0.7) +
         darkTheme() +
@@ -54,7 +57,7 @@ NULL
     if (isTRUE(label)) {
         p <- p +
             geom_text(
-                aes_string(
+                mapping = aes_string(
                     x = "centerX",
                     y = "centerY",
                     label = "ident"),
@@ -64,7 +67,8 @@ NULL
     }
     if (interestingGroup == "ident") {
         # Fix the cluster identity label
-        p <- p + labs(color = "cluster")
+        p <- p +
+            labs(color = "cluster")
     }
     p
 }

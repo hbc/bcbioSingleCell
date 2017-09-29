@@ -22,10 +22,13 @@ NULL
     medianNovelty <-
         aggregate(log10GenesPerUMI ~ sampleID, metrics, median) %>%
         left_join(sampleMetadata(object), by = "sampleID")
-    p <- ggplot(metrics,
-                aes_(x = ~sampleName,
-                     y = ~log10GenesPerUMI,
-                     fill = as.name(interestingGroup))) +
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "log10GenesPerUMI",
+            fill = interestingGroup)
+    ) +
         labs(x = "sample",
              y = "log10 genes per UMI") +
         geom_boxplot(color = lineColor) +
@@ -44,12 +47,7 @@ NULL
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
     if (!is.null(min)) {
         p <- p +
-            geom_hline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                yintercept = min)
+            .qcCutoffLine(yintercept = min)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
@@ -67,9 +65,12 @@ NULL
     if (isTRUE(filterCells)) {
     }
     metrics <- metrics(object, filterCells = filterCells)
-    p <- ggplot(metrics,
-                aes_(x = ~log10GenesPerUMI,
-                     fill = ~sampleName)) +
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "log10GenesPerUMI",
+            fill = "sampleName")
+    ) +
         labs(x = "log10 genes per UMI") +
         geom_histogram(bins = bins) +
         scale_x_sqrt() +
@@ -77,12 +78,7 @@ NULL
         scale_fill_viridis(discrete = TRUE)
     if (!is.null(min)) {
         p <- p +
-            geom_vline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                xintercept = min)
+            .qcCutoffLine(xintercept = min)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +

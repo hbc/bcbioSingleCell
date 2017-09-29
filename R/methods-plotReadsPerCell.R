@@ -47,10 +47,13 @@ NULL
     tibble,
     cutoffLine,
     multiplexedFASTQ) {
-    p <- ggplot(tibble,
-                aes_(x = ~sampleName,
-                     y = ~log10Count,
-                     fill = ~sampleName)) +
+    p <- ggplot(
+        tibble,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "log10Count",
+            fill = "sampleName")
+    ) +
         geom_violin(color = "NA", scale = "width") +
         labs(title = "raw violin",
              y = "log10 reads per cell") +
@@ -73,9 +76,12 @@ NULL
     tibble,
     cutoffLine,
     multiplexedFASTQ) {
-    p <- ggplot(tibble,
-                aes_(x = ~log10Count,
-                     fill = ~sampleName)) +
+    p <- ggplot(
+        tibble,
+        mapping = aes_string(
+            x = "log10Count",
+            fill = "sampleName")
+    ) +
         labs(title = "raw histogram",
              x = "log10 reads per cell") +
         geom_histogram(bins = bins) +
@@ -152,10 +158,12 @@ NULL
     tibble,
     cutoffLine,
     multiplexedFASTQ) {
-    p <- ggplot(tibble,
-                aes_(x = ~log10Count,
-                     y = ~proportion * 100,
-                     color = ~sampleName)) +
+    p <- ggplot(
+        tibble,
+        mapping = aes_(
+            x = ~log10Count,
+            y = ~proportion * 100,
+            color = ~sampleName)) +
         geom_line(alpha = 0.9,
                   size = 1.5) +
         labs(title = "proportional histogram",
