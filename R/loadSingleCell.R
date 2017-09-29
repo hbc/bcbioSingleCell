@@ -15,9 +15,9 @@
 #' @param ensemblVersion Ensembl release version. Defaults to current, and does
 #'   not typically need to be user-defined. This parameter can be useful for
 #'   matching Ensembl annotations against an outdated bcbio annotation build.
-#' @param gtfFile *Optional*. Gene transfer format (GTF) file, which will be
-#'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
-#'   annotation mappings.
+#' @param gffFile *Optional*. GFF (General Feature Format) or GTF (Gene Transfer
+#'   Format) file, which will be used for transcript-to-gene (`tx2gene`) and
+#'   gene-to-symbol (`gene2symbol`) annotation mappings. A GTF file is GFF v2.
 #' @param wellMetadataFile *Optional*. Well identifier metadata file.
 #' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
@@ -34,7 +34,7 @@
 #'     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
 #'     interestingGroups = c("genotype", "treatment"),
 #'     ensemblVersion = 88,
-#'     gtfFile = file.path(
+#'     gffFile = file.path(
 #'         "annotations",
 #'         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"))
 #' }
@@ -43,7 +43,7 @@ loadSingleCell <- function(
     sampleMetadataFile,
     interestingGroups = "sampleName",
     ensemblVersion = "current",
-    gtfFile = NULL,
+    gffFile = NULL,
     wellMetadataFile = NULL,
     prefilter = TRUE,
     ...) {
@@ -168,14 +168,14 @@ loadSingleCell <- function(
     }
 
     # tx2gene and gene2symbol annotations ====
-    if (!is.null(gtfFile)) {
-        gtfFile <- normalizePath(gtfFile)
-        gtf <- readGTF(gtfFile)
-        tx2gene <- tx2geneFromGTF(gtf)
-        gene2symbol <- gene2symbolFromGTF(gtf)
+    if (!is.null(gffFile)) {
+        gffFile <- normalizePath(gffFile)
+        gff <- readGFF(gffFile)
+        tx2gene <- tx2geneFromGFF(gff)
+        gene2symbol <- gene2symbolFromGFF(gff)
     } else {
         warning(paste(
-            "GTF file matching transcriptome FASTA is advised.",
+            "GFF/GTF file matching transcriptome FASTA is advised.",
             "Using tx2gene mappings from Ensembl as a fallback."
         ))
         tx2gene <- annotable(
@@ -214,7 +214,7 @@ loadSingleCell <- function(
         annotable = annotable,
         prefilter = prefilter)
     if (isTRUE(prefilter)) {
-        # Subset the counts matrix to match the metrics
+        # Subset the counts matrix to match the cells that passed prefiltering
         counts <- counts[, rownames(metrics)]
     }
 
@@ -248,7 +248,7 @@ loadSingleCell <- function(
         organism = organism,
         genomeBuild = genomeBuild,
         ensemblVersion = ensemblVersion,
-        gtfFile = gtfFile,
+        gffFile = gffFile,
         annotable = annotable,
         gene2symbol = gene2symbol,
         umiType = umiType,
@@ -275,6 +275,10 @@ loadSingleCell <- function(
     }
 
     # Return `bcbioSingleCell` object ==========================================
+    # Use an internal SingleCellExperiment function call to handle rowname
+    # mismatches with the annotable. This can happen when newer Ensembl
+    # annotations are requested than those used for count alignment, or when
+    # we pass in FASTA spike-ins (e.g. EGFP).
     sce <- .SingleCellExperiment(
         assays = list(assay = counts),
         rowData = annotable,
