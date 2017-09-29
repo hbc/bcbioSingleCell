@@ -27,17 +27,19 @@ NULL
     medianGenes <- aggregate(nGene ~ sampleID, metrics, median) %>%
         left_join(sampleMetadata(object), by = "sampleID") %>%
         mutate(nGene = round(.data[["nGene"]]))
-    p <- ggplot(metrics,
-                mapping = aes_string(
-                    x = "sampleName",
-                    y = "nGene",
-                    fill = interestingGroup)) +
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "nGene",
+            fill = interestingGroup)
+    ) +
         labs(x = "sample",
              y = "genes per cell") +
         geom_boxplot(color = lineColor) +
         geom_label(
             data = medianGenes,
-            mapping = aes_(label = ~nGene),
+            mapping = aes_string(label = "nGene"),
             alpha = qcLabelAlpha,
             color = qcLabelColor,
             fill = qcLabelFill,
@@ -50,21 +52,11 @@ NULL
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
     if (!is.null(min)) {
         p <- p +
-            geom_hline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                yintercept = min)
+            .qcCutoffLine(yintercept = min)
     }
     if (!is.null(max)) {
         p <- p +
-            geom_hline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                yintercept = max)
+            .qcCutoffLine(yintercept = max)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
@@ -81,9 +73,12 @@ NULL
     max = NULL,
     filterCells = FALSE) {
     metrics <- metrics(object, filterCells = filterCells)
-    p <- ggplot(metrics,
-                aes_(x = ~nGene,
-                     fill = ~sampleName)) +
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "nGene",
+            fill = "sampleName")
+    ) +
         labs(x = "genes per cell") +
         geom_histogram(bins = bins) +
         scale_x_sqrt() +
