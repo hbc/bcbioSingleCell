@@ -13,8 +13,12 @@ NULL
 
 
 # Constructors ====
-.plotNoveltyBoxplot <- function(object, interestingGroup, min) {
-    metrics <- metrics(object)
+.plotNoveltyBoxplot <- function(
+    object,
+    interestingGroup = "sampleName",
+    min = NULL,
+    filterCells = FALSE) {
+    metrics <- metrics(object, filterCells = filterCells)
     medianNovelty <-
         aggregate(log10GenesPerUMI ~ sampleID, metrics, median) %>%
         left_join(sampleMetadata(object), by = "sampleID")
@@ -27,7 +31,7 @@ NULL
         geom_boxplot(color = lineColor) +
         geom_label(
             data = medianNovelty,
-            aes_(label = ~round(log10GenesPerUMI, digits = 2L)),
+            aes_(label = ~round(log10GenesPerUMI, digits = 2)),
             alpha = qcLabelAlpha,
             color = qcLabelColor,
             fill = qcLabelFill,
@@ -37,7 +41,7 @@ NULL
             show.legend = FALSE) +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
     if (!is.null(min)) {
         p <- p +
             geom_hline(
@@ -56,8 +60,13 @@ NULL
 
 
 
-.plotNoveltyHistogram <- function(object, min) {
-    metrics <- metrics(object)
+.plotNoveltyHistogram <- function(
+    object,
+    min = NULL,
+    filterCells = FALSE) {
+    if (isTRUE(filterCells)) {
+    }
+    metrics <- metrics(object, filterCells = filterCells)
     p <- ggplot(metrics,
                 aes_(x = ~log10GenesPerUMI,
                      fill = ~sampleName)) +
@@ -84,9 +93,13 @@ NULL
 
 
 
-.plotNovelty <- function(object, interestingGroup, min) {
+.plotNovelty <- function(
+    object,
+    interestingGroup,
+    min,
+    filterCells = FALSE) {
     if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1L]]
+        interestingGroup <- interestingGroups(object)[[1]]
     }
     if (missing(min)) {
         min <- object %>%
@@ -97,13 +110,15 @@ NULL
     plot_grid(
         .plotNoveltyHistogram(
             object,
-            min = min),
+            min = min,
+            filterCells = filterCells),
         .plotNoveltyBoxplot(
             object,
             interestingGroup = interestingGroup,
-            min = min),
+            min = min,
+            filterCells = filterCells),
         labels = "auto",
-        nrow = 2L)
+        nrow = 2)
 }
 
 
