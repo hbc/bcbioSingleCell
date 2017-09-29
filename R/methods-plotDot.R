@@ -72,8 +72,7 @@ setMethod("plotDot", "seurat", function(
         gather(
             key = "symbol",
             value = "expression",
-            !!genes
-        ) %>%
+            !!genes) %>%
         group_by(!!!syms(c("ident", "symbol"))) %>%
         summarize(
             avgExp = mean(expm1(.data[["expression"]])),
@@ -82,19 +81,28 @@ setMethod("plotDot", "seurat", function(
         ungroup() %>%
         group_by(!!sym("symbol")) %>%
         mutate(avgExpScale = scale(.data[["avgExp"]])) %>%
-        mutate(avgExpScale = .minMax(.data[["avgExpScale"]],
-                                     max = colMax,
-                                     min = colMin))
+        mutate(
+            avgExpScale = .minMax(
+                .data[["avgExpScale"]],
+                max = colMax,
+                min = colMin)
+        )
     data[["pctExp"]][data[["pctExp"]] < dotMin] <- NA
     ggplot(
         data = data,
-        mapping = aes_(x = ~symbol,
-                       y = ~ident)) +
+        mapping = aes_string(
+            x = "symbol",
+            y = "ident")
+    ) +
         geom_point(
-            mapping = aes_(color = ~avgExpScale,
-                           size = ~pctExp)) +
+            mapping = aes_string(
+                color = "avgExpScale",
+                size = "pctExp")
+        ) +
         scale_radius(range = c(0, dotScale)) +
-        scale_color_gradient(low = colors[["low"]], high = colors[["high"]]) +
+        scale_color_gradient(
+            low = colors[["low"]],
+            high = colors[["high"]]) +
         labs(x = "gene",
              y = "ident")
 })
