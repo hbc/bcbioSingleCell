@@ -21,10 +21,9 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),
-    SingleCellExperiment (>= 0.99.3),
-    Seurat (>= 2.0.1),
-    basejump (>= 0.0.24)
+    SingleCellExperiment (>= 0.99.3)
 Imports:
+    basejump (>= 0.0.24),
     BiocGenerics,
     cowplot,
     dendsort,
@@ -43,6 +42,7 @@ Imports:
     rlang,
     S4Vectors,
     scales,
+    Seurat (>= 2.0.1),
     stats,
     stringr,
     SummarizedExperiment (>= 1.7.9),

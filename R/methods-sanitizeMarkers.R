@@ -33,8 +33,8 @@ NULL
     # Check for ensgene and add from `gene2symbol` if necessary
     if (!"ensgene" %in% colnames(markers)) {
         message("Adding missing Ensembl gene identifiers")
-        # Use this data frame to convert the gene symbols ("gene" column) back to
-        # Ensembl gene identifiers ("ensgene" column)
+        # Use this data frame to convert the gene symbols ("gene" column) back
+        # to Ensembl gene identifiers ("ensgene" column)
         gene2symbol <- data.frame(
             ensgene = names(rownames(object@raw.data)),
             symbol = rownames(object@raw.data)
