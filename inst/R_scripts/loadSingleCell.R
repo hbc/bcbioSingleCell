@@ -9,7 +9,7 @@ download.file(
               "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
     file.path("annotations",
               "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"))
-bcb <- loadSingleCellRun(
+bcb <- loadSingleCell(
     file.path("data", "indrop_rnaseq"),
     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
     interestingGroups = c("genotype", "treatment"),
