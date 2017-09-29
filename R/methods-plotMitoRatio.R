@@ -11,21 +11,23 @@ NULL
 
 
 # Constructors ====
-.plotMitoRatioBoxplot <- function(object, interestingGroup, max) {
-    metrics <- metrics(object)
+.plotMitoRatioBoxplot <- function(
+    object,
+    interestingGroup = "sampleName",
+    max = NULL,
+    filterCells = FALSE) {
+    metrics <- metrics(object, filterCells = filterCells)
     medianMitoRatio <-
         aggregate(mitoRatio ~ sampleID, metrics, median) %>%
         left_join(sampleMetadata(object), by = "sampleID")
     p <- ggplot(metrics,
                 aes_(x = ~sampleName,
-                     y = ~mitoRatio * 100L,
+                     y = ~mitoRatio,
                      fill = as.name(interestingGroup))) +
-        labs(x = "sample",
-             y = "% mito counts") +
         geom_boxplot(color = lineColor) +
         geom_label(
             data = medianMitoRatio,
-            aes_(label = ~round(mitoRatio * 100L, digits = 2L)),
+            aes_(label = ~round(mitoRatio, digits = 2)),
             alpha = qcLabelAlpha,
             color = qcLabelColor,
             fill = qcLabelFill,
@@ -35,15 +37,12 @@ NULL
             show.legend = FALSE) +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 15L, hjust = 1L))
+        labs(x = "sample",
+             y = "mito ratio") +
+        theme(axis.text.x = element_text(angle = 15, hjust = 1))
     if (!is.null(max)) {
         p <- p +
-            geom_hline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                yintercept = max * 100L)
+            .qcCutoffLine(yintercept = max)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
@@ -54,24 +53,23 @@ NULL
 
 
 
-.plotMitoRatioHistogram <- function(object, max) {
-    metrics <- metrics(object)
+.plotMitoRatioHistogram <- function(
+    object,
+    max = NULL,
+    filterCells = FALSE) {
+    metrics <- metrics(object, filterCells = filterCells)
     p <- ggplot(metrics,
-                aes_(x = ~mitoRatio * 100L,
+                aes_(x = ~mitoRatio,
                      fill = ~sampleName)) +
-        labs(x = "% mito counts") +
         geom_histogram(bins = bins) +
         scale_x_sqrt() +
         scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE)
+        scale_fill_viridis(discrete = TRUE) +
+        labs(x = "mito ratio",
+             y = "sample")
     if (!is.null(max)) {
         p <- p +
-            geom_vline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                xintercept = max * 100L)
+            .qcCutoffLine(xintercept = max)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
@@ -82,15 +80,18 @@ NULL
 
 
 
-.plotMitoRatioScatterplot <- function(object) {
-    metrics <- metrics(object)
+.plotMitoRatioScatterplot <- function(
+    object,
+    filterCells = FALSE) {
+    metrics <- metrics(object, filterCells = filterCells)
     p <- ggplot(metrics,
                 aes_(x = ~nCoding,
                      y = ~nMito,
                      color = ~sampleName)) +
         labs(x = "mito counts",
              y = "coding counts") +
-        geom_point(alpha = 0.6, size = 1L) +
+        geom_point(alpha = 0.6, size = 1) +
+        geom_smooth(se = FALSE) +
         scale_x_sqrt() +
         scale_y_sqrt() +
         scale_color_viridis(discrete = TRUE)
@@ -103,9 +104,13 @@ NULL
 
 
 
-.plotMitoRatio <- function(object, interestingGroup, max) {
+.plotMitoRatio <- function(
+    object,
+    interestingGroup,
+    max,
+    filterCells = FALSE) {
     if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1L]]
+        interestingGroup <- interestingGroups(object)[[1]]
     }
     if (missing(max)) {
         max <- object %>%
@@ -114,16 +119,18 @@ NULL
             .[["maxMitoRatio"]]
     }
     plot_grid(
-        .plotMitoRatioScatterplot(object),
+        .plotMitoRatioScatterplot(object, filterCells = filterCells),
         .plotMitoRatioHistogram(
             object,
-            max = max),
+            max = max,
+            filterCells = filterCells),
         .plotMitoRatioBoxplot(
             object,
             interestingGroup = interestingGroup,
-            max = max),
+            max = max,
+            filterCells = filterCells),
         labels = "auto",
-        nrow = 3L)
+        nrow = 3)
 }
 
 
