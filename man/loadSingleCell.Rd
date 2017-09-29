@@ -6,7 +6,7 @@
 \usage{
 loadSingleCell(uploadDir, sampleMetadataFile,
   interestingGroups = "sampleName", ensemblVersion = "current",
-  gtfFile = NULL, wellMetadataFile = NULL, prefilter = TRUE, ...)
+  gffFile = NULL, wellMetadataFile = NULL, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -22,9 +22,9 @@ is used for PCA and heatmap QC functions.}
 not typically need to be user-defined. This parameter can be useful for
 matching Ensembl annotations against an outdated bcbio annotation build.}
 
-\item{gtfFile}{\emph{Optional}. Gene transfer format (GTF) file, which will be
-used for transcript-to-gene (\code{tx2gene}) and gene-to-symbol (\code{gene2symbol})
-annotation mappings.}
+\item{gffFile}{\emph{Optional}. GFF (General Feature Format) or GTF (Gene Transfer
+Format) file, which will be used for transcript-to-gene (\code{tx2gene}) and
+gene-to-symbol (\code{gene2symbol}) annotation mappings. A GTF file is GFF v2.}
 
 \item{wellMetadataFile}{\emph{Optional}. Well identifier metadata file.}
 
@@ -52,7 +52,7 @@ bcb <- loadSingleCell(
     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
     interestingGroups = c("genotype", "treatment"),
     ensemblVersion = 88,
-    gtfFile = file.path(
+    gffFile = file.path(
         "annotations",
         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"))
 }
