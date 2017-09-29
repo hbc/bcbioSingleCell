@@ -17,21 +17,32 @@
     assay <- assays[[1]]
 
     # Row data ====
-    rowData <- as.data.frame(rowData) %>%
-        .[rownames(assay), , drop = FALSE]
-    # Check for gene mismatch
+    # Warn on any gene mismatches
     if (!all(rownames(assay) %in% rownames(rowData))) {
         missing <- setdiff(rownames(assay), rownames(rowData))
         warning(paste(
             "'rowData' mismatch with 'assay':",
-            toString(head(missing)),
-            "..."
-        ))
+            toString(missing)
+        ), call. = FALSE)
     }
+    rowData <- rowData %>%
+        as.data.frame() %>%
+        .[rownames(assay), , drop = FALSE] %>%
+        set_rownames(rownames(assay))
 
     # Column data ====
-    colData <- as.data.frame(colData) %>%
-        .[colnames(assay), , drop = FALSE]
+    # Stop on any cell mismatches
+    if (!all(colnames(assay) %in% rownames(colData))) {
+        missing <- setdiff(colnames(assay), rownames(colData))
+        stop(paste(
+            "'colData' mismatch with 'assay':",
+            toString(missing)
+        ), call. = FALSE)
+    }
+    colData <- colData %>%
+        as.data.frame() %>%
+        .[colnames(assay), , drop = FALSE] %>%
+        set_rownames(colnames(assay))
 
     # Metadata ====
     metadata <- as.list(metadata)
