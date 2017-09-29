@@ -13,21 +13,26 @@ NULL
 
 
 # Constructors ====
-.plotUMIsPerCellBoxplot <- function(object, interestingGroup, min) {
-    metrics <- metrics(object)
+.plotUMIsPerCellBoxplot <- function(
+    object,
+    interestingGroup = "sampleName",
+    min = NULL,
+    filterCells = FALSE) {
+    metrics <- metrics(object, filterCells = filterCells)
     medianUMIs <- aggregate(nUMI ~ sampleID, metrics, median) %>%
         left_join(sampleMetadata(object), by = "sampleID") %>%
         mutate(nUMI = round(.data[["nUMI"]]))
     p <- ggplot(metrics,
-                aes_(x = ~sampleName,
-                     y = ~nUMI,
-                     fill = as.name(interestingGroup))) +
+                mapping = aes_string(
+                    x = "sampleName",
+                    y = "nUMI",
+                    fill = interestingGroup)) +
         labs(x = "sample",
              y = "umis per cell") +
         geom_boxplot(color = lineColor) +
         geom_label(
             data = medianUMIs,
-            aes_(label = ~nUMI),
+            mapping = aes_string(label = "nUMI"),
             alpha = qcLabelAlpha,
             color = qcLabelColor,
             fill = qcLabelFill,
@@ -37,15 +42,10 @@ NULL
             show.legend = FALSE) +
         scale_y_log10() +
         scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
     if (!is.null(min)) {
         p <- p +
-            geom_hline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                yintercept = min)
+            .qcCutoffLine(yintercept = min)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
@@ -56,25 +56,24 @@ NULL
 
 
 
-.plotUMIsPerCellHistogram <- function(object, min) {
-    metrics <- metrics(object)
+.plotUMIsPerCellHistogram <- function(
+    object,
+    min = NULL,
+    filterCells = FALSE) {
+    metrics <- metrics(object, filterCells = filterCells)
     p <- ggplot(metrics,
-                aes_(x = ~nUMI,
-                     fill = ~sampleName)) +
+                mapping = aes_string(
+                    x = "nUMI",
+                    fill = "sampleName")) +
         labs(x = "umis per cell") +
         geom_histogram(bins = bins) +
         scale_x_log10() +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
     if (!is.null(min)) {
         p <- p +
-            geom_vline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                xintercept = min)
+            .qcCutoffLine(xintercept = min)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
@@ -85,9 +84,13 @@ NULL
 
 
 
-.plotUMIsPerCell <- function(object, interestingGroup, min) {
+.plotUMIsPerCell <- function(
+    object,
+    interestingGroup,
+    min,
+    filterCells = FALSE) {
     if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1L]]
+        interestingGroup <- interestingGroups(object)[[1]]
     }
     if (missing(min)) {
         min <- object %>%
@@ -98,13 +101,15 @@ NULL
     plot_grid(
         .plotUMIsPerCellHistogram(
             object,
-            min = min),
+            min = min,
+            filterCells = filterCells),
         .plotUMIsPerCellBoxplot(
             object,
             interestingGroup = interestingGroup,
-            min = min),
+            min = min,
+            filterCells = filterCells),
         labels = "auto",
-        nrow = 2L
+        nrow = 2
     )
 }
 
