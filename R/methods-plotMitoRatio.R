@@ -91,7 +91,7 @@ NULL
         labs(x = "mito counts",
              y = "coding counts") +
         geom_point(alpha = 0.6, size = 1) +
-        geom_smooth(se = FALSE) +
+        geom_smooth(method = "gam", se = FALSE) +
         scale_x_sqrt() +
         scale_y_sqrt() +
         scale_color_viridis(discrete = TRUE)
