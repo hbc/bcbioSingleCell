@@ -22,15 +22,18 @@ NULL
         group_by(!!sym("sampleID")) %>%
         summarize(cells = n()) %>%
         left_join(sampleMetadata(object), by = "sampleID")
-    p <- ggplot(cellCounts,
-                aes_(x = ~sampleName,
-                     y = ~cells,
-                     fill = as.name(interestingGroup))) +
+    p <- ggplot(
+        cellCounts,
+        aes_string(
+            x = "sampleName",
+            y = "cells",
+            fill = interestingGroup)
+    ) +
         labs(x = "sample",
              y = "cell count") +
         geom_bar(stat = "identity") +
         geom_text(
-            aes_(label = ~cells),
+            aes_string(label = "cells"),
             fontface = "bold",
             vjust = -0.5) +
         scale_fill_viridis(discrete = TRUE) +
