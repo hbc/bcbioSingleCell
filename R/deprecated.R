@@ -27,3 +27,13 @@ plotTSNEExpressionData <- function(...) {
     .Deprecated("plotMarkerTSNE")
     plotMarkerTSNE(...)
 }
+
+
+
+# 0.0.19 ====
+#' @rdname deprecated
+#' @export
+loadSingleCellRun <- function(...) {
+    .Deprecated("loadSingleCell")
+    loadSingleCell(...)
+}

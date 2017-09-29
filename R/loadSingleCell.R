@@ -1,4 +1,4 @@
-#' Load bcbio Single-Cell RNA-Seq Run
+#' Load bcbio Single-Cell RNA-Seq Data
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
@@ -24,7 +24,21 @@
 #'
 #' @return [bcbioSingleCell].
 #' @export
-loadSingleCellRun <- function(
+#'
+#' @examples
+#' \dontrun{
+#' # Mus musculus
+#' # Run with Ensembl 88 transcriptome FASTA and GTF files
+#' bcb <- loadSingleCell(
+#'     uploadDir = file.path("indrop_rnaseq", "final"),
+#'     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
+#'     interestingGroups = c("genotype", "treatment"),
+#'     ensemblVersion = 88,
+#'     gtfFile = file.path(
+#'         "annotations",
+#'         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"))
+#' }
+loadSingleCell <- function(
     uploadDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
