@@ -37,7 +37,7 @@ NULL
                cellularBarcode = NULL,
                nCount = NULL) %>%
         # Only plot barcodes with at least 100 read counts (log10 = 2)
-        dplyr::filter(.data[["log10Count"]] > 2L) %>%
+        dplyr::filter(.data[["log10Count"]] > 2) %>%
         left_join(.interestingMetadata(object), by = "sampleID")
 }
 
@@ -58,12 +58,7 @@ NULL
         scale_fill_viridis(discrete = TRUE)
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p +
-            geom_hline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                yintercept = cutoffLine)
+            .qcCutoffLine(yintercept = cutoffLine)
     }
     if (isTRUE(multiplexedFASTQ)) {
         p <- p +
@@ -88,12 +83,7 @@ NULL
         scale_fill_viridis(discrete = TRUE)
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p +
-            geom_vline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                xintercept = cutoffLine)
+            .qcCutoffLine(xintercept = cutoffLine)
     }
     if (isTRUE(multiplexedFASTQ)) {
         p <- p +
@@ -139,7 +129,7 @@ NULL
                 return(NULL)
             }
         }
-        cbHist <- hist(cb[["log10Count"]], n = 100L, plot = FALSE)
+        cbHist <- hist(cb[["log10Count"]], n = 100, plot = FALSE)
         # `fLog` in MATLAB version
         counts <- cbHist[["counts"]]
         # `xLog` in MATLAB version
@@ -149,8 +139,8 @@ NULL
             # log10 reads per cell
             log10Count = mids,
             # Proportion of cells
-            proportion = counts * (10L ^ mids) /
-                sum(counts * (10L ^ mids)))
+            proportion = counts * (10 ^ mids) /
+                sum(counts * (10 ^ mids)))
     }) %>%
         bind_rows() %>%
         left_join(.interestingMetadata(object), by = "sampleID")
@@ -164,7 +154,7 @@ NULL
     multiplexedFASTQ) {
     p <- ggplot(tibble,
                 aes_(x = ~log10Count,
-                     y = ~proportion * 100L,
+                     y = ~proportion * 100,
                      color = ~sampleName)) +
         geom_line(alpha = 0.9,
                   size = 1.5) +
@@ -174,12 +164,7 @@ NULL
         scale_color_viridis(discrete = TRUE)
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p +
-            geom_vline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                xintercept = cutoffLine)
+            .qcCutoffLine(xintercept = cutoffLine)
     }
     if (isTRUE(multiplexedFASTQ)) {
         p <- p +
@@ -200,7 +185,7 @@ NULL
             violin +
                 xlab("") +
                 theme(legend.position = "none"),
-            x = 0L, y = 0.7, width = 0.5, height = 0.3) +
+            x = 0, y = 0.7, width = 0.5, height = 0.3) +
         draw_plot(
             rawHistogram +
                 ylab("") +
@@ -212,12 +197,15 @@ NULL
             proportionalHistogram +
                 theme(legend.justification = "center",
                       legend.position = "bottom"),
-            x = 0L, y = 0L, width = 1L, height = 0.7)
+            x = 0, y = 0, width = 1, height = 0.7)
 }
 
 
 
-.plotReadsPerCell <- function(object, interestingGroup) {
+.plotReadsPerCell <- function(
+    object,
+    interestingGroup,
+    filterCells = FALSE) {
     # This function currently only supports bcbio pipeline
     if (metadata(object)[["pipeline"]] != "bcbio") {
         warning(paste(
@@ -228,14 +216,7 @@ NULL
     }
 
     if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1L]]
-    }
-
-    # Check to see if we should use only the cells that pass filtering
-    if (!is.null(metadata(object)[["filterCells"]])) {
-        filterCells <- TRUE
-    } else {
-        filterCells <- FALSE
+        interestingGroup <- interestingGroups(object)[[1]]
     }
 
     rawTibble <-
