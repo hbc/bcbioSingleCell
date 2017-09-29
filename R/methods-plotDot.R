@@ -91,10 +91,10 @@ setMethod("plotDot", "seurat", function(
         mapping = aes_(x = ~symbol,
                        y = ~ident)) +
         geom_point(
-            mapping = aes_(colour = ~avgExpScale,
+            mapping = aes_(color = ~avgExpScale,
                            size = ~pctExp)) +
         scale_radius(range = c(0, dotScale)) +
-        scale_colour_gradient(low = colors[["low"]], high = colors[["high"]]) +
+        scale_color_gradient(low = colors[["low"]], high = colors[["high"]]) +
         labs(x = "gene",
              y = "ident")
 })

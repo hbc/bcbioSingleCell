@@ -24,12 +24,12 @@ NULL
                      fill = as.name(interestingGroup))) +
         labs(x = "sample",
              y = "log10 genes per UMI") +
-        geom_boxplot(colour = lineColor) +
+        geom_boxplot(color = lineColor) +
         geom_label(
             data = medianNovelty,
             aes_(label = ~round(log10GenesPerUMI, digits = 2L)),
             alpha = qcLabelAlpha,
-            colour = qcLabelColor,
+            color = qcLabelColor,
             fill = qcLabelFill,
             fontface = qcLabelFontface,
             label.padding = qcLabelPadding,
@@ -42,7 +42,7 @@ NULL
         p <- p +
             geom_hline(
                 alpha = qcLineAlpha,
-                colour = qcCutoffColor,
+                color = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
                 yintercept = min)
@@ -70,7 +70,7 @@ NULL
         p <- p +
             geom_vline(
                 alpha = qcLineAlpha,
-                colour = qcCutoffColor,
+                color = qcCutoffColor,
                 linetype = qcLineType,
                 size = qcLineSize,
                 xintercept = min)

@@ -171,7 +171,7 @@ NULL
         labs(title = "proportional histogram",
              x = "log10 reads per cell",
              y = "% of cells") +
-        scale_colour_viridis(discrete = TRUE)
+        scale_color_viridis(discrete = TRUE)
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p +
             geom_vline(

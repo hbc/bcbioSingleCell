@@ -13,15 +13,13 @@ darkTheme <- function() {
     Seurat::DarkTheme() +
         theme(
             axis.line = element_line(
-                colour = "white",
+                color = "white",
                 linetype = "solid",
-                size = 1
-            ),
+                size = 1),
             axis.ticks = element_line(
-                colour = "white",
+                color = "white",
                 linetype = "solid",
-                size = 1
-            ),
+                size = 1),
             legend.justification = "center",
             legend.position = "bottom",
             panel.background = element_blank(),

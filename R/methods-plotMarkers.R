@@ -69,7 +69,7 @@ NULL
                     y = ~feature,
                     fill = ~ident)) +
         geom_violin(
-            colour = NA,
+            color = NA,
             scale = "width",
             adjust = 1,
             trim = TRUE) +
@@ -90,7 +90,7 @@ NULL
         ggplot(aes_(x = ~feature,
                     y = ~ident,
                     fill = ~ident)) +
-        geom_density_ridges(colour = NA, scale = 2) +
+        geom_density_ridges(color = NA, scale = 2) +
         scale_fill_viridis(discrete = TRUE) +
         theme(legend.position = "none")
 
