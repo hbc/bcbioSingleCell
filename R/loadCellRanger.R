@@ -73,10 +73,10 @@ loadCellRanger <- function(
     message(paste("Genome build:", genomeBuild))
     message(paste("Ensembl release:", ensemblVersion))
 
-    # GTF
+    # Cell Ranger uses reference GTF file
     gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
     if (!file.exists(gtfFile)) {
-        stop("GTF file missing")
+        stop("Reference GTF file missing")
     }
     gtf <- readGTF(gtfFile)
 
@@ -120,8 +120,7 @@ loadCellRanger <- function(
         genomeBuild = genomeBuild,
         ensemblVersion = ensemblVersion,
         annotable = annotable,
-        gtfFile = gtfFile,
-        gtf = gtf,
+        gffFile = gtfFile,
         gene2symbol = gene2symbol,
         umiType = "chromium",
         allSamples = allSamples,
