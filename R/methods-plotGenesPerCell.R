@@ -9,6 +9,7 @@
 #' @param interestingGroup Interesting group, to use for colors.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
+#' @param filterCells Show only the cells that have passed filtering cutoffs.
 #'
 #' @return [ggplot] grid.
 NULL
@@ -16,21 +17,27 @@ NULL
 
 
 # Constructors ====
-.plotGenesPerCellBoxplot <- function(object, interestingGroup, min, max) {
-    metrics <- metrics(object)
+.plotGenesPerCellBoxplot <- function(
+    object,
+    interestingGroup = "sampleName",
+    min = NULL,
+    max = NULL,
+    filterCells = FALSE) {
+    metrics <- metrics(object, filterCells = filterCells)
     medianGenes <- aggregate(nGene ~ sampleID, metrics, median) %>%
         left_join(sampleMetadata(object), by = "sampleID") %>%
         mutate(nGene = round(.data[["nGene"]]))
     p <- ggplot(metrics,
-                aes_(x = ~sampleName,
-                     y = ~nGene,
-                     fill = as.name(interestingGroup))) +
+                mapping = aes_string(
+                    x = "sampleName",
+                    y = "nGene",
+                    fill = interestingGroup)) +
         labs(x = "sample",
              y = "genes per cell") +
         geom_boxplot(color = lineColor) +
         geom_label(
             data = medianGenes,
-            aes_(label = ~nGene),
+            mapping = aes_(label = ~nGene),
             alpha = qcLabelAlpha,
             color = qcLabelColor,
             fill = qcLabelFill,
@@ -40,7 +47,7 @@ NULL
             show.legend = FALSE) +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
     if (!is.null(min)) {
         p <- p +
             geom_hline(
@@ -68,8 +75,12 @@ NULL
 
 
 
-.plotGenesPerCellHistogram <- function(object, min, max) {
-    metrics <- metrics(object)
+.plotGenesPerCellHistogram <- function(
+    object,
+    min = NULL,
+    max = NULL,
+    filterCells = FALSE) {
+    metrics <- metrics(object, filterCells = filterCells)
     p <- ggplot(metrics,
                 aes_(x = ~nGene,
                      fill = ~sampleName)) +
@@ -78,24 +89,14 @@ NULL
         scale_x_sqrt() +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
     if (!is.null(min)) {
         p <- p +
-            geom_vline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                xintercept = min)
+            .qcCutoffLine(xintercept = min)
     }
     if (!is.null(max)) {
         p <- p +
-            geom_vline(
-                alpha = qcLineAlpha,
-                color = qcCutoffColor,
-                linetype = qcLineType,
-                size = qcLineSize,
-                xintercept = max)
+            .qcCutoffLine(xintercept = max)
     }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
@@ -106,9 +107,14 @@ NULL
 
 
 
-.plotGenesPerCell <- function(object, interestingGroup, min, max) {
+.plotGenesPerCell <- function(
+    object,
+    interestingGroup,
+    min,
+    max,
+    filterCells = FALSE) {
     if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1L]]
+        interestingGroup <- interestingGroups(object)[[1]]
     }
     if (missing(min)) {
         min <- object %>%
@@ -126,14 +132,16 @@ NULL
         .plotGenesPerCellHistogram(
             object,
             min = min,
-            max = max),
+            max = max,
+            filterCells = filterCells),
         .plotGenesPerCellBoxplot(
             object,
             interestingGroup = interestingGroup,
             min = min,
-            max = max),
+            max = max,
+            filterCells = filterCells),
         labels = "auto",
-        nrow = 2L)
+        nrow = 2)
 }
 
 
