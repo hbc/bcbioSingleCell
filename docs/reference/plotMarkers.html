@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Gene Markers — plotMarkers • bcbioSingleCell</title>
+<title>Plot Cell-Type Gene Markers — plotMarkers • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,18 +83,23 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Gene Markers</h1>
+    <h1>Plot Cell-Type Gene Markers</h1>
     </div>
 
     
-    <p>Plot Gene Markers</p>
+    <p>Plot gene expression per cell in multiple formats:</p><ol>
+<li><p>t-SNE plot</p></li>
+<li><p>Violin plot</p></li>
+<li><p>Ridgeline plot</p></li>
+<li><p>Dot plot</p></li>
+</ol>
     
 
     <pre class="usage"><span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>symbols</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
-  <span class='kw'>combine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -108,16 +113,16 @@
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
     <tr>
-      <th>symbols</th>
-      <td><p>Character vector of gene marker symbols.</p></td>
+      <th>genes</th>
+      <td><p>Genes (by symbol name) of which to get expression data.</p></td>
+    </tr>
+    <tr>
+      <th>pointsAsNumbers</th>
+      <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
       <td><p>Include a Markdown header for each gene.</p></td>
-    </tr>
-    <tr>
-      <th>combine</th>
-      <td><p>Combine all markers into a single plot.</p></td>
     </tr>
     </table>
     
@@ -128,13 +133,19 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other Clustering Utilities: <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
-  <code><a href='pcCutoff.html'>pcCutoff</a></code>, <code><a href='plotFeatures.html'>plotFeatures</a></code>,
-  <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
+  <code><a href='pcCutoff.html'>pcCutoff</a></code>, <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
   <code><a href='plotStressGenes.html'>plotStressGenes</a></code>,
   <code><a href='plotTopMarkers.html'>plotTopMarkers</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code>,
   <code><a href='topMarkers.html'>topMarkers</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>data</span>(<span class='no'>seurat</span>, <span class='no'>markers</span>)
+<span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='topMarkers.html'>topMarkers</a></span>(<span class='no'>markers</span>)
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='no'>top</span>$<span class='no'>symbol</span>[<span class='fl'>1</span>:<span class='fl'>4</span>]
+<span class='fu'>plotMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -144,7 +155,9 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     
@@ -155,7 +168,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael J. Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

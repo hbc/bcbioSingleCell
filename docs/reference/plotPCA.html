@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Interesting Groups — interestingGroups • bcbioSingleCell</title>
+<title>Plot Principal Component Analysis (PCA) — plotPCA • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,15 +83,15 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Interesting Groups</h1>
+    <h1>Plot Principal Component Analysis (PCA)</h1>
     </div>
 
     
-    <p>Interesting Groups</p>
+    <p>Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for bcbioSingleCellANY</span>
-<span class='fu'>interestingGroups</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='co'># S4 method for seurat</span>
+<span class='fu'>plotPCA</span>(<span class='no'>object</span>, <span class='kw'>interestingGroup</span> <span class='kw'>=</span> <span class='st'>"ident"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -100,13 +100,30 @@
       <th>object</th>
       <td><p>Object.</p></td>
     </tr>
+    <tr>
+      <th>interestingGroup</th>
+      <td><p>Interesting group to use for plot colors.</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>Label the clusters on the plot.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Character vector.</p>
+    <p>ggplot.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='plotTSNE.html'>plotTSNE()</a></code>.</p>
+<p>Other PCA Utilities: <code><a href='fetchPCAData.html'>fetchPCAData</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='plotTSNE.html'>plotTSNE</a></span>(<span class='no'>seurat</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -114,7 +131,11 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

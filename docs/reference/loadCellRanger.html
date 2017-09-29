@@ -92,7 +92,7 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
     
 
     <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>uploadDir</span>, <span class='no'>refDataDir</span>, <span class='no'>sampleMetadataFile</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -107,28 +107,18 @@ must contain <code>filtered_gene_bc_matrices/</code> as a child.</p></td>
       <td><p>Directory path to cellranger reference annotation data.</p></td>
     </tr>
     <tr>
-      <th>sampleMetadataFile</th>
-      <td><p>Sample barcode metadata file.</p></td>
-    </tr>
-    <tr>
-      <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. First entry
-is used for plot colors during quality control (QC) analysis. Entire vector
-is used for PCA and heatmap QC functions.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
-      <td><p>Additional arguments, passed as metadata.</p></td>
+      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='bcbioSCDataSet-class.html'>bcbioSCDataSet</a>.</p>
+    <p>Soft deprecation to new functions.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is a simplified version of <code><a href='loadSingleCellRun.html'>loadSingleCellRun()</a></code>
+    <p>This function is a simplified version of <code><a href='deprecated.html'>loadSingleCellRun()</a></code>
 optimized for handling CellRanger output.</p>
     
 
@@ -152,7 +142,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael J. Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

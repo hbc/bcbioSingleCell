@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Determine PC Cutoff — pcCutoff • bcbioSingleCell</title>
+<title>Plot Marker t-SNE — plotMarkerTSNE • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,20 +83,22 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Determine PC Cutoff</h1>
+    <h1>Plot Marker t-SNE</h1>
     </div>
 
     
-    <p>Calculate the principal component (PC) with either a maximum SD percentage or
-minimum <!-- % SD cumulative sum cutoff value. This defaults to keeping the larger -->
-PC cutoff for either 5<!-- % SD (\code{maxPct}) or 80% cumulative (\code{minCumsum}). --></p>
+    <p>Plot Marker t-SNE</p>
     
 
-    <pre class="usage"><span class='fu'>pcCutoff</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for grouped_df</span>
+<span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='kw'>colorpoints</span> <span class='kw'>=</span> <span class='st'>"geomean"</span>,
+  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>pcCutoff</span>(<span class='no'>object</span>, <span class='kw'>maxPct</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>minCumPct</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>colorpoints</span> <span class='kw'>=</span> <span class='st'>"geomean"</span>,
+  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -110,33 +112,56 @@ PC cutoff for either 5<!-- % SD (\code{maxPct}) or 80% cumulative (\code{minCums
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
     <tr>
-      <th>maxPct</th>
-      <td><p>Maximum percent standard deviation.</p></td>
+      <th>colorpoints</th>
+      <td><p>Color points by geometric mean or expression of
+individual gene.</p></td>
     </tr>
     <tr>
-      <th>minCumPct</th>
-      <td><p>Minimum cumulative percent standard deviation.</p></td>
+      <th>pointsAsNumbers</th>
+      <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
     </tr>
     <tr>
-      <th>plot</th>
-      <td><p>Plot the PC standard deviations.</p></td>
+      <th>label</th>
+      <td><p>Label the clusters on the plot.</p></td>
+    </tr>
+    <tr>
+      <th>genes</th>
+      <td><p>Genes (by symbol name) of which to get expression data.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Numeric of maximum PC value to use for dimensionality reduction.</p>
+    <p>ggplot.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='http://www.rdocumentation.org/packages/Seurat/topics/PCElbowPlot'>Seurat::PCElbowPlot</a>.</p>
-<p>Other Clustering Utilities: <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
-  <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
-  <code><a href='plotMarkers.html'>plotMarkers</a></code>, <code><a href='plotStressGenes.html'>plotStressGenes</a></code>,
-  <code><a href='plotTopMarkers.html'>plotTopMarkers</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code>,
-  <code><a href='topMarkers.html'>topMarkers</a></code></p>
+    <p>Other t-SNE Utilities: <code><a href='fetchTSNEData.html'>fetchTSNEData</a></code>,
+  <code><a href='fetchTSNEExpressionData.html'>fetchTSNEExpressionData</a></code>,
+  <code><a href='plotTSNE.html'>plotTSNE</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>data</span>(<span class='no'>markers</span>, <span class='no'>seurat</span>)
+<span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='topMarkers.html'>topMarkers</a></span>(<span class='no'>markers</span>)
+
+<span class='co'># Let's take the top markers specific to cluster 0, as an example</span>
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='no'>top</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'>filter</span>(<span class='no'>cluster</span> <span class='kw'>==</span> <span class='fl'>0</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>pull</span>(<span class='no'>symbol</span>)
+
+<span class='co'># Fetch the t-SNE expression data for the desired gene symbols</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fetchTSNEExpressionData.html'>fetchTSNEExpressionData</a></span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)
+<span class='fu'>print</span>(<span class='fu'>unique</span>(<span class='no'>dat</span>$<span class='no'>gene</span>))
+
+<span class='co'># To make t-SNE plot colored by geometric mean of topGenes</span>
+<span class='fu'><a href='plotTSNE.html'>plotTSNE</a></span>(<span class='no'>dat</span>, <span class='kw'>colorpoints</span> <span class='kw'>=</span> <span class='st'>"geomean"</span>)
+
+<span class='co'># To make faceted t-SNE plot of each gene (looks good at up to 6 genes)</span>
+<span class='fu'><a href='plotTSNE.html'>plotTSNE</a></span>(<span class='no'>dat</span>, <span class='kw'>colorpoints</span> <span class='kw'>=</span> <span class='st'>"expression"</span>) +
+    <span class='fu'>facet_wrap</span>(~<span class='no'>gene</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -146,11 +171,13 @@ PC cutoff for either 5<!-- % SD (\code{maxPct}) or 80% cumulative (\code{minCums
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Rory Kirchner, Michael Steinbaugh
 
   </div>
 </div>

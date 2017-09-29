@@ -88,13 +88,34 @@
     </div>
 
     <div class="contents">
+    <div id="bcbiosinglecell-0-0-19" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-19" class="anchor"></a>bcbioSingleCell 0.0.19</h1>
+<ul>
+<li>Renamed main object class from <code>bcbioSCDataSet</code> to <code>bcbioSingleCell</code>.</li>
+<li>Cell filtering with <code><a href="../reference/filterCells.html">filterCells()</a></code> will now slot a named logical vector into <code>metadata(object)[["filteredCells"]]</code>, which will be used to dynamically subset the slotted internal <code>SummarizedExperiment</code> data. Now that we’re using this approach, we can return a modified <code>bcbioSingleCell</code> object rather than defining a separate <code>bcbioSCFiltered</code> class.</li>
+</ul>
+</div>
     <div id="bcbiosinglecell-0-0-18" class="section level1">
 <h1 class="hasAnchor">
 <a href="#bcbiosinglecell-0-0-18" class="anchor"></a>bcbioSingleCell 0.0.18</h1>
 <ul>
 <li>Renamed <code><a href="../reference/deprecated.html">plotClusters()</a></code> to <code><a href="../reference/plotMarkers.html">plotMarkers()</a></code>. Added soft deprecation.</li>
 <li>Added <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color support in tSNE plots and heatmaps.</li>
-<li>Converted <code><a href="../reference/loadSingleCellRun.html">loadSingleCellRun()</a></code> and <code><a href="../reference/loadCellRanger.html">loadCellRanger()</a></code> from S4 generics back to standard functions.</li>
+<li>Converted <code><a href="../reference/deprecated.html">loadSingleCellRun()</a></code> and <code><a href="../reference/loadCellRanger.html">loadCellRanger()</a></code> from S4 generics back to standard functions.</li>
+<li>Added t-SNE utility functions: <code><a href="../reference/fetchTSNEData.html">fetchTSNEData()</a></code>, <code><a href="../reference/fetchTSNEExpressionData.html">fetchTSNEExpressionData()</a></code>, and <code><a href="../reference/deprecated.html">plotTSNEExpressionData()</a></code>. This enable plotting of geometric mean values of desired marker genes.</li>
+<li>Updated NEWS to Markdown, with hyperlinks.</li>
+<li>Offloaded generics that would otherwise conflict with bcbioRNASeq to the basejump package.</li>
+<li>Improved roxygen documentation. Moved as much documentation as possible to the methods files.</li>
+<li>Updated <code>cellCycleMarkers</code> and <code>cellTypeMarkers</code> data. Now supports Drosophila.</li>
+<li>Sample IDs are now sanitized using <code>make.names()</code> instead of <code>camel()</code>. This avoids undesirable coercion of some IDs (e.g. <code>group1_1</code> into <code>group11</code>).</li>
+<li>Added recommended package syntax guidelines.</li>
+<li>lintr checks now allow implicit integers (e.g. <code>1</code> instead of <code>1L</code>).</li>
+<li>Added Seurat as dependency in <code>DESCRIPTION</code> file. The package now attaches Seurat automatically.</li>
+<li>Package no longer imports mononcle or suggests scater, scde, or scone. We’re planning on adding these back in a future update, but build checks on Travis CI otherwise take too long.</li>
+<li>Added new <code><a href="../reference/quantileHeatmap.html">quantileHeatmap()</a></code> function.</li>
+<li>Improved Markdown header support across functions, where applicable.</li>
+<li>Improved <code>bcbioSCFiltered</code> to <code>seurat</code> coercion to slot relevant bcbio metadata.</li>
 </ul>
 </div>
     <div id="bcbiosinglecell-0-0-17" class="section level1">
@@ -119,8 +140,8 @@
 <li>Offloaded <code>download()</code> functionality to <a href="http://steinbaugh.com/basejump">basejump</a> package, to avoid collisions with <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package. Function has been renamed to <code>externalFile()</code>.</li>
 <li>Removed function deprecations to simplify the NAMESPACE.</li>
 <li>Improved <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> sample matching. With these changes the internal <code>.detectPipeline()</code> function is no longer needed.</li>
-<li>Improved sample directory matching in internal <code><a href="../reference/dot-sampleDirs.html">.sampleDirs()</a></code> function.</li>
-<li>Updated paths to <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> MatrixMarket files in internal <code><a href="../reference/dot-readSparseCounts.html">.readSparseCounts()</a></code> function.</li>
+<li>Improved sample directory matching in internal <code>.sampleDirs()</code> function.</li>
+<li>Updated paths to <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> MatrixMarket files in internal <code>.readSparseCounts()</code> function.</li>
 <li>Updated use of <code>packageSE()</code> to <code>prepareSE()</code>, matching the corresponding <a href="http://steinbaugh.com/basejump">basejump</a> function change.</li>
 <li>Renamed internal use of <code>filter()</code> to <code>tidy_filter()</code>, to avoid future NAMESPACE collisions with <a href="http://bioconductor.org/packages/release/bioc/html/ensembldb.html">ensembldb</a> package.</li>
 <li>Renamed <code>bcbioSCSubset</code> class to <code>bcbioSCFiltered</code> class.</li>
@@ -144,7 +165,7 @@
 <li>Renamed functions in <code>lowerCamelCase</code> from <code>snake_case</code>.</li>
 <li>Draft support for <a href="http://cole-trapnell-lab.github.io/monocle-release/">monocle</a>, <a href="http://bioconductor.org/packages/release/bioc/html/scater.html">scater</a>, and <a href="https://bioconductor.org/packages/release/bioc/html/scone.html">scone</a>.</li>
 <li>Package now depends on <a href="https://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">SummarizedExperiment</a>.</li>
-<li>Renamed <code>loadRun()</code> to <code><a href="../reference/loadSingleCellRun.html">loadSingleCellRun()</a></code> for improved compatibility with <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package. This helps avoid NAMESPACE collisions between packages.</li>
+<li>Renamed <code>loadRun()</code> to <code><a href="../reference/deprecated.html">loadSingleCellRun()</a></code> for improved compatibility with <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package. This helps avoid NAMESPACE collisions between packages.</li>
 <li>Improved support for custom GTF files.</li>
 <li>Split out <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> import into a separate utility function named <code><a href="../reference/loadCellRanger.html">loadCellRanger()</a></code>.</li>
 <li>Added plotZerosVsDepth() by @roryk.</li>
@@ -274,6 +295,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bcbiosinglecell-0-0-19">0.0.19</a></li>
         <li><a href="#bcbiosinglecell-0-0-18">0.0.18</a></li>
         <li><a href="#bcbiosinglecell-0-0-17">0.0.17</a></li>
         <li><a href="#bcbiosinglecell-0-0-16">0.0.16</a></li>
@@ -300,7 +322,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael J. Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

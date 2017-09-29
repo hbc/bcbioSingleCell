@@ -90,12 +90,10 @@
     <p>Sample Barcode Metrics</p>
     
 
-    <pre class="usage"><span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>filterCells</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for bcbioSCFiltered</span>
+<span class='co'># S4 method for bcbioSingleCellLegacy</span>
 <span class='fu'>metrics</span>(<span class='no'>object</span>)
 
 <span class='co'># S4 method for seurat</span>
@@ -109,8 +107,8 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <th>filterCells</th>
+      <td><p>Only return cells that pass filtering criteria.</p></td>
     </tr>
     </table>
     
@@ -149,7 +147,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael J. Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

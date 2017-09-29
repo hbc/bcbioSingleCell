@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Interesting Groups — interestingGroups • bcbioSingleCell</title>
+<title>Plot Dot — plotDot • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,15 +83,18 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Interesting Groups</h1>
+    <h1>Plot Dot</h1>
     </div>
 
     
-    <p>Interesting Groups</p>
+    <p>Plot Dot</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for bcbioSingleCellANY</span>
-<span class='fu'>interestingGroups</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>plotDot</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotDot</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>high</span> <span class='kw'>=</span>
+  <span class='st'>"black"</span>), <span class='kw'>colMin</span> <span class='kw'>=</span> -<span class='fl'>2.5</span>, <span class='kw'>colMax</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>dotMin</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>dotScale</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -100,21 +103,68 @@
       <th>object</th>
       <td><p>Object.</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+    </tr>
+    <tr>
+      <th>genes</th>
+      <td><p>Character vector of gene symbols.</p></td>
+    </tr>
+    <tr>
+      <th>colors</th>
+      <td><p>Named character vector (<code>low</code>, <code>high</code>) for plot colors.</p></td>
+    </tr>
+    <tr>
+      <th>colMin</th>
+      <td><p>Minimum scaled average expression threshold. Everything
+smaller will be set to this.</p></td>
+    </tr>
+    <tr>
+      <th>colMax</th>
+      <td><p>Maximum scaled average expression threshold. Everything larger
+will be set to this.</p></td>
+    </tr>
+    <tr>
+      <th>dotMin</th>
+      <td><p>The fraction of cells at which to draw the smallest dot. All
+cell groups with less than this expressing the given gene will have no dot
+drawn.</p></td>
+    </tr>
+    <tr>
+      <th>dotScale</th>
+      <td><p>Scale the size of the points, similar to <code>cex</code>.</p></td>
+    </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Character vector.</p>
+    <p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/DotPlot'>Seurat::DotPlot()</a></code> is still plotting even when <code>do.return = TRUE</code>.
+In the meantime, we've broken out the code into this generic to fix
+RMarkdown looping of our marker plots.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p>Modified version of <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/DotPlot'>Seurat::DotPlot()</a></code>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>data</span>(<span class='no'>seurat</span>)
+<span class='fu'>plotDot</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='st'>"Hspe1"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-          </ul>
+      <li><a href="#note">Note</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     
