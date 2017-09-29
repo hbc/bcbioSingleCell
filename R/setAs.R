@@ -89,8 +89,8 @@ setAs("bcbioSingleCellANY", "seurat", function(from) {
     counts <- counts(from, gene2symbol = TRUE)
     seurat <- CreateSeuratObject(
         raw.data = counts,
-        min.cells = 0L,
-        min.genes = 0L,
+        min.cells = 0,
+        min.genes = 0,
         meta.data = metrics(from)
     )
 
