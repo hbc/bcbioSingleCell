@@ -92,14 +92,14 @@ loadSingleCell <- function(
                       pattern = projectDirPattern,
                       full.names = FALSE,
                       recursive = FALSE)
-    if (length(projectDir) != 1L) {
+    if (length(projectDir) != 1) {
         stop("Uncertain about project directory location")
     }
     message(projectDir)
     match <- str_match(projectDir, projectDirPattern)
-    runDate <- match[[2L]] %>%
+    runDate <- match[[2]] %>%
         as.Date()
-    template <- match[[3L]]
+    template <- match[[3]]
     projectDir <- file.path(uploadDir, projectDir)
 
     # Log files ====
@@ -113,7 +113,7 @@ loadSingleCell <- function(
     cellularBarcodeCutoffPattern <- "--cb_cutoff (\\d+)"
     cellularBarcodeCutoff <-
         str_match(bcbioCommandsLog, cellularBarcodeCutoffPattern) %>%
-        .[, 2L] %>%
+        .[, 2] %>%
         na.omit() %>%
         unique() %>%
         as.numeric()
@@ -132,14 +132,14 @@ loadSingleCell <- function(
         if (any(str_detect(bcbioCommandsLog, genomePattern))) {
             genomeBuild <-
                 str_match(bcbioCommandsLog, genomePattern) %>%
-                .[, 2L] %>%
+                .[, 2] %>%
                 na.omit() %>%
                 unique()
         } else {
             stop("Genome detection from bcbio commands failed")
         }
     }
-    if (length(genomeBuild) > 1L) {
+    if (length(genomeBuild) > 1) {
         stop("Multiple genomes detected -- not supported")
     }
     organism <- detectOrganism(genomeBuild)
@@ -150,7 +150,7 @@ loadSingleCell <- function(
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
     if (any(str_detect(bcbioCommandsLog, umiPattern))) {
         umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
-            .[, 2L] %>%
+            .[, 2] %>%
             na.omit() %>%
             unique() %>%
             str_replace("-transform", "")
@@ -270,7 +270,7 @@ loadSingleCell <- function(
     )
     # Add user-defined custom metadata, if specified
     dots <- list(...)
-    if (length(dots) > 0L) {
+    if (length(dots) > 0) {
         metadata <- c(metadata, dots)
     }
 

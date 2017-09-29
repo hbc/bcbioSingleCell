@@ -13,11 +13,12 @@ NULL
 # Constructors ====
 .plotCellCounts <- function(
     object,
-    interestingGroup) {
+    interestingGroup,
+    filterCells = FALSE) {
     if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1L]]
+        interestingGroup <- interestingGroups(object)[[1]]
     }
-    cellCounts <- metrics(object) %>%
+    cellCounts <- metrics(object, filterCells = filterCells) %>%
         group_by(!!sym("sampleID")) %>%
         summarize(cells = n()) %>%
         left_join(sampleMetadata(object), by = "sampleID")
@@ -33,7 +34,7 @@ NULL
             fontface = "bold",
             vjust = -0.5) +
         scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+        theme(axis.text.x = element_text(angle = 15, hjust = 1))
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
             facet_wrap(~fileName)

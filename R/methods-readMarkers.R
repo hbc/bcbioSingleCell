@@ -21,7 +21,7 @@ setMethod("readMarkers", "character", function(object, gene2symbol) {
     if (!is.data.frame(gene2symbol)) {
         stop("gene2symbol must be data.frame")
     }
-    if (length(dimnames(gene2symbol)[[2L]]) != 2L) {
+    if (length(dimnames(gene2symbol)[[2]]) != 2) {
         stop("gene2symbol must only contain two columns")
     }
     if (!identical(

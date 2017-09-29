@@ -24,7 +24,7 @@ NULL
         scale_x_log10() +
         scale_y_log10() +
         scale_color_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
             facet_wrap(~fileName)

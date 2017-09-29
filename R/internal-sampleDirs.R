@@ -17,7 +17,7 @@
             sampleDirs <- sampleDirs %>%
                 .[!str_detect(basename(.), projectDirPattern)]
         }
-        if (length(sampleDirs) == 0L) {
+        if (length(sampleDirs) == 0) {
             stop("Failed to detect any sample directories",
                  call. = FALSE)
         }

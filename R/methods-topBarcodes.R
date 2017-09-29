@@ -20,7 +20,7 @@ NULL
 
 
 # Constructors ====
-.topBarcodes <- function(object, n = 10L) {
+.topBarcodes <- function(object, n = 10) {
     metrics <- metrics(object) %>%
         as("tibble")
     # Check for unfiltered barcode counts in `nCount`

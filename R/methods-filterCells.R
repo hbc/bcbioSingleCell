@@ -36,13 +36,13 @@ NULL
 # Constructors ====
 .filterCells <- function(
     object,
-    minUMIs = 1000L,
-    minGenes = 500L,
+    minUMIs = 1000,
+    minGenes = 500,
     maxGenes = NULL,
     maxMitoRatio = 0.1,
     minNovelty = 0.8,
     showReport = TRUE,
-    headerLevel = 2L) {
+    headerLevel = 2) {
     # Cellular barcode count
     ncol(object) %>%
         paste("cellular barcodes in dataset") %>%
@@ -105,39 +105,46 @@ NULL
 
         # Reads per cell currently only supported for bcbio runs
         if (metadata(object)[["pipeline"]] == "bcbio") {
-            mdHeader("Reads per cell", level = headerLevel + 1L, asis = TRUE)
-            show(plotReadsPerCell(object))
+            mdHeader("Reads per cell", level = headerLevel + 1, asis = TRUE)
+            plotReadsPerCell(object, filterCells = TRUE) %>%
+                show()
         }
 
         mdHeader("Cell counts",
-                 level = headerLevel + 1L,
+                 level = headerLevel + 1,
                  asis = TRUE)
-        show(plotCellCounts(object))
+        plotCellCounts(object, filterCells = TRUE) %>%
+            show()
 
         mdHeader("UMI counts per cell",
-                 level = headerLevel + 1L,
+                 level = headerLevel + 1,
                  asis = TRUE)
-        show(plotUMIsPerCell(object))
+        plotUMIsPerCell(object, filterCells = TRUE) %>%
+            show()
 
         mdHeader("Genes detected",
-                 level = headerLevel + 1L,
+                 level = headerLevel + 1,
                  asis = TRUE)
-        show(plotGenesPerCell(object))
+        plotGenesPerCell(object, filterCells = TRUE) %>%
+            show()
 
         mdHeader("UMIs vs. genes",
-                 level = headerLevel + 1L,
+                 level = headerLevel + 1,
                  asis = TRUE)
-        show(plotUMIsVsGenes(object))
+        plotUMIsVsGenes(object, filterCells = TRUE) %>%
+            show()
 
         mdHeader("Mitochondrial counts ratio",
-                 level = headerLevel + 1L,
+                 level = headerLevel + 1,
                  asis = TRUE)
-        show(plotMitoRatio(object))
+        plotMitoRatio(object, filterCells = TRUE) %>%
+            show()
 
         mdHeader("Novelty",
-                 level = headerLevel + 1L,
+                 level = headerLevel + 1,
                  asis = TRUE)
-        show(plotNovelty(object))
+        plotNovelty(object, filterCells = TRUE) %>%
+            show()
     }
 
     object

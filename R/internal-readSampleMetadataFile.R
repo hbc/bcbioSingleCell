@@ -61,7 +61,7 @@
             meta <- meta %>%
                 mutate(revcomp = vapply(.data[["sequence"]],
                                         revcomp,
-                                        character(1L)),
+                                        character(1)),
                        sampleID = paste(
                            make.names(.data[["fileName"]]),
                            .data[["revcomp"]],

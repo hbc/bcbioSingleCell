@@ -27,7 +27,7 @@ setMethod("calculateMetrics", "dgCMatrix", function(
     # Check that all genes are in annotable
     missing <- rownames(object) %>%
         .[!rownames(object) %in% annotable[["ensgene"]]]
-    if (length(missing) > 0L) {
+    if (length(missing) > 0) {
         warning(paste(
             length(missing), "genes missing in annotable",
             "used to calculate metrics:",
@@ -50,7 +50,7 @@ setMethod("calculateMetrics", "dgCMatrix", function(
         rowname = colnames(object),
         # Follow the Seurat `seurat@data.info` conventions
         nUMI = Matrix::colSums(object),
-        nGene = Matrix::colSums(object > 0L),
+        nGene = Matrix::colSums(object > 0),
         nCoding = Matrix::colSums(
             object[rownames(object) %in% codingGenes, ]),
         nMito = Matrix::colSums(
@@ -63,8 +63,8 @@ setMethod("calculateMetrics", "dgCMatrix", function(
     # Apply low stringency cellular barcode pre-filtering, if desired
     if (isTRUE(prefilter)) {
         metrics <- metrics %>%
-            .[.[["nUMI"]] > 0L, ] %>%
-            .[.[["nGene"]] > 0L, ] %>%
+            .[.[["nUMI"]] > 0, ] %>%
+            .[.[["nGene"]] > 0, ] %>%
             .[!is.na(.[["log10GenesPerUMI"]]), ]
         message(paste(nrow(metrics), "cellular barcodes passed pre-filtering"))
     }

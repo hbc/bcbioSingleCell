@@ -19,7 +19,7 @@ NULL
 #' @export
 setMethod("subsetPerSample", "bcbioSingleCellANY", function(
     object,
-    minCells = 200L,
+    minCells = 200,
     dir = "data") {
     dir.create(dir, recursive = TRUE, showWarnings = FALSE)
     sampleIDs <- sampleMetadata(object) %>%
@@ -30,7 +30,7 @@ setMethod("subsetPerSample", "bcbioSingleCellANY", function(
             object,
             sampleID = sampleID)
         # Skip if subset doesn't have enough cells
-        if (dim(subset)[[2L]] < minCells) {
+        if (dim(subset)[[2]] < minCells) {
             warning(paste(sampleID, "didn't pass minimum cell cutoff"),
                     call. = FALSE)
             return(NA)

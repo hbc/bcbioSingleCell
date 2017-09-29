@@ -140,7 +140,7 @@
     if (!all(rownames(mat) %in% tx2gene[["enstxp"]])) {
         missing <- rownames(mat) %>%
             .[!. %in% tx2gene[["enstxp"]]]
-        if (length(missing) > 200L) {
+        if (length(missing) > 200) {
             # Stop if there are too many transcript match failures
             fxn <- stop
         } else {

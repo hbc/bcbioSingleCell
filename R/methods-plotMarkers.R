@@ -109,7 +109,7 @@ NULL
             # Coordinates are relative to lower left corner
             draw_plot(
                 tsne,
-                x = 0L, y = 0.25, width = 1, height = 0.75) +
+                x = 0, y = 0.25, width = 1, height = 0.75) +
             draw_plot(
                 dot,
                 x = 0, y = 0, width = 0.2, height = 0.25) +
@@ -131,7 +131,7 @@ setMethod("plotMarkers", "seurat", function(
     object,
     genes,
     pointsAsNumbers = FALSE,
-    headerLevel = 2L) {
+    headerLevel = 2) {
     lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
         mdHeader(gene, level = headerLevel, asis = TRUE)

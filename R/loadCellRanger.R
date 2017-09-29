@@ -61,7 +61,7 @@ loadCellRanger <- function(
     refJSON <- read_json(refJSONFile)
     genomeBuild <- refJSON %>%
         .[["genomes"]] %>%
-        .[[1L]]
+        .[[1]]
     organism <- detectOrganism(genomeBuild)
     # Get the Ensembl version from the JSON reference file (via GTF)
     ensemblVersion <- refJSON %>%
@@ -131,7 +131,7 @@ loadCellRanger <- function(
         refJSON = refJSON)
     # Add user-defined custom metadata, if specified
     dots <- list(...)
-    if (length(dots) > 0L) {
+    if (length(dots) > 0) {
         metadata <- c(metadata, dots)
     }
 

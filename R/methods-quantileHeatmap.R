@@ -26,9 +26,9 @@ NULL
 #'
 #' @return A vector of `n` quantile breaks.
 #' @noRd
-.quantileBreaks <- function(xs, n = 10L) {
+.quantileBreaks <- function(xs, n = 10) {
     xs %>%
-        quantile(probs = seq(0L, 1L, length.out = n)) %>%
+        quantile(probs = seq(0, 1, length.out = n)) %>%
         .[!duplicated(.)]
 }
 
@@ -57,7 +57,7 @@ NULL
              cluster_cols = matClusterCols,
              cluster_rows = matClusterRows,
              breaks = matBreaks,
-             color = inferno(length(matBreaks) - 1L),
+             color = inferno(length(matBreaks) - 1),
              show_colnames = FALSE,
              show_rownames = FALSE)
 }

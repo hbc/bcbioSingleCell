@@ -16,8 +16,8 @@ NULL
 .plotKnownMarkers <- function(
     object,
     knownMarkers,
-    headerLevel = 2L) {
-    if (nrow(knownMarkers) == 0L) {
+    headerLevel = 2) {
+    if (nrow(knownMarkers) == 0) {
         return(NULL)
     }
     cellTypes <- knownMarkers %>%
@@ -34,7 +34,7 @@ NULL
             mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
             plotMarkers(object,
                         genes = genes,
-                        headerLevel = headerLevel + 1L)
+                        headerLevel = headerLevel + 1)
         } else {
             NULL
         }
