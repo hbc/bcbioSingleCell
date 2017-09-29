@@ -8,7 +8,7 @@
 \usage{
 subsetPerSample(object, ...)
 
-\S4method{subsetPerSample}{bcbioSingleCellANY}(object, minCells = 200L,
+\S4method{subsetPerSample}{bcbioSingleCellANY}(object, minCells = 200,
   dir = "data")
 }
 \arguments{

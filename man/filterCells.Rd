@@ -9,9 +9,9 @@
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000L,
-  minGenes = 500L, maxGenes = NULL, maxMitoRatio = 0.1,
-  minNovelty = 0.8, showReport = TRUE, headerLevel = 2L)
+\S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000,
+  minGenes = 500, maxGenes = NULL, maxMitoRatio = 0.1, minNovelty = 0.8,
+  showReport = TRUE, headerLevel = 2)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
 }

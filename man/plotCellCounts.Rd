@@ -8,7 +8,8 @@
 \usage{
 plotCellCounts(object, ...)
 
-\S4method{plotCellCounts}{bcbioSingleCellANY}(object, interestingGroup)
+\S4method{plotCellCounts}{bcbioSingleCellANY}(object, interestingGroup,
+  filterCells = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -16,6 +17,8 @@ plotCellCounts(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{interestingGroup}{Interesting group, to use for colors.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 }
 \value{
 \link{ggplot} grid.

@@ -9,7 +9,7 @@
 plotKnownMarkers(object, knownMarkers, ...)
 
 \S4method{plotKnownMarkers}{seurat,grouped_df}(object, knownMarkers,
-  headerLevel = 2L)
+  headerLevel = 2)
 }
 \arguments{
 \item{object}{Object.}

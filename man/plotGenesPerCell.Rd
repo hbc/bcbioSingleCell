@@ -9,7 +9,7 @@
 plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{bcbioSingleCellANY}(object, interestingGroup, min,
-  max)
+  max, filterCells = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -21,6 +21,8 @@ plotGenesPerCell(object, ...)
 \item{min}{Recommended minimum value cutoff.}
 
 \item{max}{Recommended maximum value cutoff.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 }
 \value{
 \link{ggplot} grid.

@@ -8,7 +8,8 @@
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSingleCellANY}(object, interestingGroup, max)
+\S4method{plotMitoRatio}{bcbioSingleCellANY}(object, interestingGroup, max,
+  filterCells = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -18,6 +19,8 @@ plotMitoRatio(object, ...)
 \item{interestingGroup}{Interesting group, to use for colors.}
 
 \item{max}{Recommended maximum value cutoff.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 }
 \value{
 \link{ggplot} grid.

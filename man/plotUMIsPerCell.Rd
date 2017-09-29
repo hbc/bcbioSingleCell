@@ -8,7 +8,8 @@
 \usage{
 plotUMIsPerCell(object, ...)
 
-\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, interestingGroup, min)
+\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, interestingGroup, min,
+  filterCells = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -18,6 +19,8 @@ plotUMIsPerCell(object, ...)
 \item{interestingGroup}{Interesting group, to use for colors.}
 
 \item{min}{Recommended minimum value cutoff.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 }
 \value{
 \link{ggplot} grid.

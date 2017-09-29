@@ -9,7 +9,7 @@
 plotMarkers(object, ...)
 
 \S4method{plotMarkers}{seurat}(object, genes, pointsAsNumbers = FALSE,
-  headerLevel = 2L)
+  headerLevel = 2)
 }
 \arguments{
 \item{object}{Object.}

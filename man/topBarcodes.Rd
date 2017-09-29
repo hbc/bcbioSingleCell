@@ -8,7 +8,7 @@
 \usage{
 topBarcodes(object, ...)
 
-\S4method{topBarcodes}{bcbioSingleCellANY}(object, n = 10L)
+\S4method{topBarcodes}{bcbioSingleCellANY}(object, n = 10)
 }
 \arguments{
 \item{object}{Object.}
