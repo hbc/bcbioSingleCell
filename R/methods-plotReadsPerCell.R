@@ -6,13 +6,13 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams AllGenerics
-#' @param interestingGroup Interesting group, used for colors.
+#' @inheritParams plotGenesPerCell
 #'
 #' @details A violin plot is a comact display of a continuous distribution. It
 #'   is a blend of [geom_boxplot()] and [geom_density()]: a violin plot is a
 #'   mirrored density plot displayed in the same way as a boxplot.
 #'
-#' @note Here by cell we mean "cellular barcode".
+#' @note Here by "cell" we mean "cellular barcode".
 #'
 #' @return [ggplot].
 NULL
@@ -20,7 +20,18 @@ NULL
 
 
 # Constructors ====
-.rawCBTibble <- function(object, filterCells = FALSE) {
+#' Raw Cellular Barcodes
+#'
+#' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
+#'
+#' @inheritParams plotReadsPerCell
+#'
+#' @return [tibble].
+.rawCBTibble <- function(
+    object,
+    filterCells = FALSE) {
     cellularBarcodes <- bcbio(object, "cellularBarcodes")
     if (is.null(cellularBarcodes)) {
         stop("Raw cellular barcode counts not saved in object")
@@ -43,58 +54,129 @@ NULL
 
 
 
+#' Plot Raw Cellular Barcodes Violin
+#'
+#' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
+#'
+#' @inheritParams plotReadsPerCell
+#'
+#' @return [ggplot].
 .plotRawCBViolin <- function(
     tibble,
-    cutoffLine,
-    multiplexedFASTQ) {
+    cutoffLine = NULL,
+    multiplexedFASTQ = FALSE,
+    aggregateReplicates = TRUE) {
+    if (isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(tibble)) {
+        xCol <- "sampleNameAggregate"
+    } else {
+        xCol <- "sampleName"
+    }
+
     p <- ggplot(
         tibble,
         mapping = aes_string(
-            x = "sampleName",
+            x = xCol,
             y = "log10Count",
             fill = "sampleName")
     ) +
-        geom_violin(color = "NA", scale = "width") +
         labs(title = "raw violin",
-             y = "log10 reads per cell") +
+             y = "log10 reads per cell",
+             fill = "sample") +
+        geom_violin(color = "NA",
+                    scale = "width") +
         coord_flip() +
         scale_fill_viridis(discrete = TRUE)
+
+    # Cutoff lines
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p +
             .qcCutoffLine(yintercept = cutoffLine)
     }
+
+    # Facets
+    facets <- NULL
     if (isTRUE(multiplexedFASTQ)) {
-        p <- p +
-            facet_wrap(~fileName)
+        facets <- c(facets, "fileName")
     }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(tibble)) {
+        facets <- c(facets, "sampleNameAggregate")
+        # Turn off the legend
+        p <- p +
+            theme(legend.position = "none")
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            # Use `free_y` here because of `coord_flip()`
+            facet_wrap(facets = facets, scales = "free_y")
+    }
+
     p
 }
 
 
 
+#' Plot Raw Cellular Barcodes Histogram
+#'
+#' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
+#'
+#' @inheritParams plotReadsPerCell
+#'
+#' @return [ggplot].
 .plotRawCBHistogram <- function(
     tibble,
-    cutoffLine,
-    multiplexedFASTQ) {
+    cutoffLine = NULL,
+    multiplexedFASTQ = FALSE,
+    aggregateReplicates = TRUE) {
+    if (isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(tibble)) {
+        fill <- "sampleNameAggregate"
+    } else {
+        fill <- "sampleName"
+    }
+
     p <- ggplot(
         tibble,
         mapping = aes_string(
             x = "log10Count",
-            fill = "sampleName")
+            fill = fill)
     ) +
         labs(title = "raw histogram",
-             x = "log10 reads per cell") +
+             x = "log10 reads per cell",
+             fill = "sample") +
         geom_histogram(bins = bins) +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE)
+
+    # Cutoff lines
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p +
             .qcCutoffLine(xintercept = cutoffLine)
     }
+
+    # Facets
+    facets <- NULL
     if (isTRUE(multiplexedFASTQ)) {
-        p <- p +
-            facet_wrap(~fileName)
+        facets <- c(facets, "fileName")
     }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(tibble)) {
+        # FIXME Improve the color contrast here
+        facets <- c(facets, "sampleNameAggregate")
+        # Turn off the legend
+        p <- p +
+            theme(legend.position = "none")
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets)
+    }
+
     p
 }
 
@@ -103,15 +185,23 @@ NULL
 #' Proportional Cellular Barcodes
 #'
 #' @author Rory Kirchner, Michael Steinbaugh
+#' @keywords internal
+#' @noRd
 #'
-#' @inheritParams AllGenerics
-#' @param filterCells Use only the cells that have passed filtering.
+#' @inheritParams plotReadsPerCell
 #'
-#' @details Modified version of Klein Lab MATLAB code.
+#' @details Modified version of Allon Klein Lab MATLAB code.
 #'
 #' @return [tibble].
-#' @noRd
-.proportionalCBTibble <- function(object, filterCells = FALSE) {
+.proportionalCBTibble <- function(
+    object,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    # FIXME Need to add aggregation support
+    if (isTRUE(aggregateReplicates)) {
+        stop("aggregateReplicates support not added yet")
+    }
+
     cellularBarcodes <- bcbio(object, "cellularBarcodes")
     lapply(seq_along(cellularBarcodes), function(a) {
         sampleID <- names(cellularBarcodes)[[a]]
@@ -154,39 +244,128 @@ NULL
 
 
 
+#' Plot Proportional Cellular Barcodes Histogram
+#'
+#' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
+#'
+#' @inheritParams plotReadsPerCell
+#'
+#' @return [ggplot].
 .plotProportionalCBHistogram <- function(
     tibble,
-    cutoffLine,
-    multiplexedFASTQ) {
+    cutoffLine = NULL,
+    multiplexedFASTQ = FALSE,
+    aggregateReplicates = TRUE) {
+
     p <- ggplot(
         tibble,
-        mapping = aes_(
-            x = ~log10Count,
-            y = ~proportion * 100,
-            color = ~sampleName)) +
-        geom_line(alpha = 0.9,
+        mapping = aes_string(
+            x = "log10Count",
+            y = "proportion",
+            color = "sampleName")
+    ) +
+        geom_line(alpha = 0.8,
                   size = 1.5) +
         labs(title = "proportional histogram",
              x = "log10 reads per cell",
-             y = "% of cells") +
+             y = "proportion of cells",
+             color = "sample") +
         scale_color_viridis(discrete = TRUE)
+
+    # Cutoff lines
     if (!is.null(cutoffLine) & length(cutoffLine)) {
         p <- p +
             .qcCutoffLine(xintercept = cutoffLine)
     }
+
+    # Facets
+    facets <- NULL
     if (isTRUE(multiplexedFASTQ)) {
-        p <- p +
-            facet_wrap(~fileName)
+        facets <- c(facets, "fileName")
     }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(tibble)) {
+        facets <- c(facets, "sampleNameAggregate")
+        # Turn off the legend
+        p <- p +
+            theme(legend.position = "none")
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets)
+    }
+
     p
 }
 
 
 
-.plotCellularBarcode <- function(
-    violin,
-    rawHistogram,
-    proportionalHistogram) {
+#' Plot Read Counts per Cell Constructor
+#'
+#' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
+#' @inherit plotReadsPerCell
+.plotReadsPerCell <- function(
+    object,
+    interestingGroup,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    # This function currently only supports bcbio pipeline
+    if (metadata(object)[["pipeline"]] != "bcbio") {
+        warning(paste(
+            "'plotReadsPerCell()' currently only supports",
+            "bcbio pipeline for 'bcbioSingleCell' class"),
+            call. = FALSE)
+        return(NULL)
+    }
+
+    if (missing(interestingGroup)) {
+        interestingGroup <- interestingGroups(object)[[1]]
+    }
+
+    rawTibble <- .rawCBTibble(object, filterCells = filterCells)
+    proportionalTibble <-
+        .proportionalCBTibble(
+            object,
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates)
+
+    # Need to set the cellular barcode cutoff in log10 to match the plots
+    if (!is.null(metadata(object)[["cbCutoff"]])) {
+        # This will be deprecated in a future release in favor of the longer
+        # spelling variant
+        cutoffLine <- metadata(object)[["cbCutoff"]]
+    } else if (!is.null(metadata(object)[["cellularBarcodeCutoff"]])) {
+        cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
+    } else {
+        warning("Failed to detect cellular barcode cutoff")
+        cutoffLine <- NULL
+    }
+    cutoffLine <- cutoffLine %>%
+        as.numeric() %>%
+        log10()
+
+    multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
+
+    violin <- .plotRawCBViolin(
+            rawTibble,
+            cutoffLine = cutoffLine,
+            multiplexedFASTQ = multiplexedFASTQ,
+            aggregateReplicates = aggregateReplicates)
+    rawHistogram <- .plotRawCBHistogram(
+            rawTibble,
+            cutoffLine = cutoffLine,
+            multiplexedFASTQ = multiplexedFASTQ,
+            aggregateReplicates = aggregateReplicates)
+    proportionalHistogram <- .plotProportionalCBHistogram(
+            proportionalTibble,
+            cutoffLine = cutoffLine,
+            multiplexedFASTQ = multiplexedFASTQ,
+            aggregateReplicates = aggregateReplicates)
+
     ggdraw() +
         # Coordinates are relative to lower left corner
         draw_plot(
@@ -206,62 +385,6 @@ NULL
                 theme(legend.justification = "center",
                       legend.position = "bottom"),
             x = 0, y = 0, width = 1, height = 0.7)
-}
-
-
-
-.plotReadsPerCell <- function(
-    object,
-    interestingGroup,
-    filterCells = FALSE) {
-    # This function currently only supports bcbio pipeline
-    if (metadata(object)[["pipeline"]] != "bcbio") {
-        warning(paste(
-            "'plotReadsPerCell()' currently only supports",
-            "bcbio pipeline for 'bcbioSingleCell' class"),
-            call. = FALSE)
-        return(NULL)
-    }
-
-    if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1]]
-    }
-
-    rawTibble <-
-        .rawCBTibble(object, filterCells = filterCells)
-    proportionalTibble <-
-        .proportionalCBTibble(object, filterCells = filterCells)
-
-    # Need to set the cellular barcode cutoff in log10 to match the plots
-    if (!is.null(metadata(object)[["cbCutoff"]])) {
-        # This will be deprecated in a future release in favor of the longer
-        # spelling variant
-        cutoffLine <- metadata(object)[["cbCutoff"]]
-    } else if (!is.null(metadata(object)[["cellularBarcodeCutoff"]])) {
-        cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
-    } else {
-        warning("Failed to detect cellular barcode cutoff")
-        cutoffLine <- NULL
-    }
-    cutoffLine <- cutoffLine %>%
-        as.numeric() %>%
-        log10()
-
-    multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
-
-    .plotCellularBarcode(
-        .plotRawCBViolin(
-            rawTibble,
-            cutoffLine = cutoffLine,
-            multiplexedFASTQ = multiplexedFASTQ),
-        .plotRawCBHistogram(
-            rawTibble,
-            cutoffLine = cutoffLine,
-            multiplexedFASTQ = multiplexedFASTQ),
-        .plotProportionalCBHistogram(
-            proportionalTibble,
-            cutoffLine = cutoffLine,
-            multiplexedFASTQ = multiplexedFASTQ))
 }
 
 
