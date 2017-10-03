@@ -17,42 +17,67 @@ NULL
     object,
     interestingGroup = "sampleName",
     min = NULL,
-    filterCells = FALSE) {
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
     metrics <- metrics(object, filterCells = filterCells)
-    medianNovelty <-
-        aggregate(log10GenesPerUMI ~ sampleID, metrics, median) %>%
-        left_join(sampleMetadata(object), by = "sampleID")
+
+    if (isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        xCol <- "sampleNameAggregate"
+    } else {
+        xCol <- "sampleName"
+    }
+
     p <- ggplot(
         metrics,
         mapping = aes_string(
-            x = "sampleName",
+            x = xCol,
             y = "log10GenesPerUMI",
             fill = interestingGroup)
     ) +
         labs(x = "sample",
              y = "log10 genes per UMI") +
         geom_boxplot(color = lineColor) +
-        geom_label(
-            data = medianNovelty,
-            aes_(label = ~round(log10GenesPerUMI, digits = 2)),
-            alpha = qcLabelAlpha,
-            color = qcLabelColor,
-            fill = qcLabelFill,
-            fontface = qcLabelFontface,
-            label.padding = qcLabelPadding,
-            label.size = qcLabelSize,
-            show.legend = FALSE) +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    # Median labels
+    if (length(unique(metrics[[xCol]])) <= qcLabelMaxNum) {
+        formula <- formula(paste("log10GenesPerUMI", xCol, sep = " ~ "))
+        medianNovelty <-
+            aggregate(
+                formula = formula,
+                data = metrics,
+                FUN = median) %>%
+            left_join(sampleMetadata(object), by = xCol)
+        p <- p +
+            geom_label(
+                data = medianNovelty,
+                aes_(label = ~round(log10GenesPerUMI, digits = 2)),
+                alpha = qcLabelAlpha,
+                color = qcLabelColor,
+                fill = qcLabelFill,
+                fontface = qcLabelFontface,
+                label.padding = qcLabelPadding,
+                label.size = qcLabelSize,
+                show.legend = FALSE)
+    }
+
+    # Cutoff lines
     if (!is.null(min)) {
         p <- p +
             .qcCutoffLine(yintercept = min)
     }
+
+    # Facets
+    facets <- NULL
+
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
-            facet_wrap(~fileName)
+            facet_wrap(facets = facets)
     }
+
     p
 }
 
@@ -61,29 +86,42 @@ NULL
 .plotNoveltyHistogram <- function(
     object,
     min = NULL,
-    filterCells = FALSE) {
-    if (isTRUE(filterCells)) {
-    }
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
     metrics <- metrics(object, filterCells = filterCells)
+
+    if (isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        fill <- "sampleNameAggregate"
+    } else {
+        fill <- "sampleName"
+    }
+
     p <- ggplot(
         metrics,
         mapping = aes_string(
             x = "log10GenesPerUMI",
-            fill = "sampleName")
+            fill = fill)
     ) +
-        labs(x = "log10 genes per UMI") +
+        labs(x = "log10 genes per UMI",
+             fill = "sample") +
         geom_histogram(bins = bins) +
         scale_x_sqrt() +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE)
+
+    # Cutoff lines
     if (!is.null(min)) {
         p <- p +
             .qcCutoffLine(xintercept = min)
     }
+
+    # Facet wrap multiplexed files
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
             facet_wrap(~fileName)
     }
+
     p
 }
 
@@ -93,7 +131,8 @@ NULL
     object,
     interestingGroup,
     min,
-    filterCells = FALSE) {
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
     if (missing(interestingGroup)) {
         interestingGroup <- interestingGroups(object)[[1]]
     }
@@ -107,12 +146,14 @@ NULL
         .plotNoveltyHistogram(
             object,
             min = min,
-            filterCells = filterCells),
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
         .plotNoveltyBoxplot(
             object,
             interestingGroup = interestingGroup,
             min = min,
-            filterCells = filterCells),
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
         labels = "auto",
         nrow = 2)
 }
