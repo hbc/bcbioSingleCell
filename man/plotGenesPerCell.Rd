@@ -9,7 +9,7 @@
 plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{bcbioSingleCellANY}(object, interestingGroup, min,
-  max, filterCells = FALSE)
+  max, filterCells = FALSE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -23,6 +23,12 @@ plotGenesPerCell(object, ...)
 \item{max}{Recommended maximum value cutoff.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if present. If
+\code{TRUE}, this function uses the values slotted in
+\code{sampleMetadata(object)[["sampleNameAggregate"]])}.
+
+[["sampleNameAggregate"]: R:[%22sampleNameAggregate%22}
 }
 \value{
 \link{ggplot} grid.

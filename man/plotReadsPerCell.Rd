@@ -9,14 +9,22 @@
 plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCellANY}(object, interestingGroup,
-  filterCells = FALSE)
+  filterCells = FALSE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{interestingGroup}{Interesting group, used for colors.}
+\item{interestingGroup}{Interesting group, to use for colors.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if present. If
+\code{TRUE}, this function uses the values slotted in
+\code{sampleMetadata(object)[["sampleNameAggregate"]])}.
+
+[["sampleNameAggregate"]: R:[%22sampleNameAggregate%22}
 }
 \value{
 \link{ggplot}.
@@ -30,7 +38,7 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \note{
-Here by cell we mean "cellular barcode".
+Here by "cell" we mean "cellular barcode".
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

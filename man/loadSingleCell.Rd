@@ -4,23 +4,19 @@
 \alias{loadSingleCell}
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
-loadSingleCell(uploadDir, sampleMetadataFile,
-  interestingGroups = "sampleName", ensemblVersion = "current",
-  gffFile = NULL, wellMetadataFile = NULL, prefilter = TRUE, ...)
+loadSingleCell(uploadDir, interestingGroups = "sampleName",
+  sampleMetadataFile = NULL, gffFile = NULL, wellMetadataFile = NULL,
+  prefilter = TRUE, ensemblVersion = "current", ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
 running \code{bcbio_nextgen -w template}.}
 
-\item{sampleMetadataFile}{Sample barcode metadata file.}
-
 \item{interestingGroups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
-\item{ensemblVersion}{Ensembl release version. Defaults to current, and does
-not typically need to be user-defined. This parameter can be useful for
-matching Ensembl annotations against an outdated bcbio annotation build.}
+\item{sampleMetadataFile}{Sample barcode metadata file.}
 
 \item{gffFile}{\emph{Optional}. GFF (General Feature Format) or GTF (Gene Transfer
 Format) file, which will be used for transcript-to-gene (\code{tx2gene}) and
@@ -29,6 +25,10 @@ gene-to-symbol (\code{gene2symbol}) annotation mappings. A GTF file is GFF v2.}
 \item{wellMetadataFile}{\emph{Optional}. Well identifier metadata file.}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
+
+\item{ensemblVersion}{Ensembl release version. Defaults to current, and does
+not typically need to be user-defined. This parameter can be useful for
+matching Ensembl annotations against an outdated bcbio annotation build.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
@@ -49,12 +49,12 @@ run directory as a remote connection over
 # Run with Ensembl 88 transcriptome FASTA and GTF files
 bcb <- loadSingleCell(
     uploadDir = file.path("indrop_rnaseq", "final"),
-    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
     interestingGroups = c("genotype", "treatment"),
-    ensemblVersion = 88,
+    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
     gffFile = file.path(
         "annotations",
-        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"))
+        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
+    ensemblVersion = 88)
 }
 }
 \author{
