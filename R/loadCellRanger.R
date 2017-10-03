@@ -8,7 +8,7 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @inherit loadSingleCellRun
+#' @inherit loadSingleCell
 #' @param uploadDir Path to CellRanger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices/` as a child.
 #' @param refDataDir Directory path to cellranger reference annotation data.
@@ -17,12 +17,14 @@
 loadCellRanger <- function(
     uploadDir,
     refDataDir,
-    sampleMetadataFile,
     interestingGroups = "sampleName",
+    sampleMetadataFile,
     prefilter = TRUE,
     ...) {
-    # Initial run setup ====
     pipeline <- "cellranger"
+
+    # Directory paths ====
+    # Check connection to final upload directory
     if (!dir.exists(uploadDir)) {
         stop("Final upload directory does not exist", call. = FALSE)
     }
@@ -34,13 +36,15 @@ loadCellRanger <- function(
     sampleMetadata <- .readSampleMetadataFile(
         sampleMetadataFile, sampleDirs, pipeline)
 
+    # Interesting groups ====
+    # Ensure internal formatting in camelCase
+    interestingGroups <- camel(interestingGroups, strict = FALSE)
     # Check to ensure interesting groups are defined
     if (!all(interestingGroups %in% colnames(sampleMetadata))) {
-        stop("Interesting groups missing in sample metadata")
+        stop("Interesting groups missing in sample metadata", call. = FALSE)
     }
 
-    # Check to see if a subset of samples is requested via the metadata file.
-    # This matches by the reverse complement sequence of the index barcode.
+    # Subset sample directories by metadata ====
     if (nrow(sampleMetadata) < length(sampleDirs)) {
         message("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
@@ -56,7 +60,7 @@ loadCellRanger <- function(
     refDataDir <- normalizePath(refDataDir)
     refJSONFile <- file.path(refDataDir, "reference.json")
     if (!file.exists(refJSONFile)) {
-        stop("reference.json file missing")
+        stop("'reference.json' file missing", call. = FALSE)
     }
     refJSON <- read_json(refJSONFile)
     genomeBuild <- refJSON %>%
@@ -76,7 +80,7 @@ loadCellRanger <- function(
     # Cell Ranger uses reference GTF file
     gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
     if (!file.exists(gtfFile)) {
-        stop("Reference GTF file missing")
+        stop("Reference GTF file missing", call. = FALSE)
     }
     gtf <- readGTF(gtfFile)
 
