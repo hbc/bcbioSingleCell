@@ -38,7 +38,7 @@ NULL
                nCount = NULL) %>%
         # Only plot barcodes with at least 100 read counts (log10 = 2)
         dplyr::filter(.data[["log10Count"]] > 2) %>%
-        left_join(.interestingMetadata(object), by = "sampleID")
+        left_join(sampleMetadata(object), by = "sampleID")
 }
 
 
@@ -149,7 +149,7 @@ NULL
                 sum(counts * (10 ^ mids)))
     }) %>%
         bind_rows() %>%
-        left_join(.interestingMetadata(object), by = "sampleID")
+        left_join(sampleMetadata(object), by = "sampleID")
 }
 
 
