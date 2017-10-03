@@ -19,8 +19,9 @@ untar(localFile)
 rm(remoteFile, localFile)
 
 bcb <- loadCellRanger(
-    file.path("data", "cellranger"),
+    uploadDir = file.path("data", "cellranger"),
     refDataDir = file.path("annotations", "refdata-cellranger-mm10-1.2.0"),
     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
-    interestingGroups = c("genotype", "age"))
+    interestingGroups = c("genotype", "age")
+)
 saveData(bcb)
