@@ -1,4 +1,4 @@
-bins <- 100
+bins <- 200
 
 lineColor <- "black"
 qcColors <- inferno(3)
@@ -16,6 +16,9 @@ qcLabelFill <- "black"
 qcLabelFontface <- "bold"
 qcLabelPadding <- unit(0.2, "lines")
 qcLabelSize <- NA
+
+# Maximum number of samples to label in a bar or boxplot
+qcLabelMaxNum <- 16
 
 # Quality control line appearance
 qcLineAlpha <- 0.75
