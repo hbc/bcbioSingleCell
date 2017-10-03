@@ -47,34 +47,76 @@ loadSingleCell <- function(
     wellMetadataFile = NULL,
     prefilter = TRUE,
     ...) {
-    # Initial run setup ====
     pipeline <- "bcbio"
+
+    # Directory paths ====
+    # Check connection to final upload directory
     if (!dir.exists(uploadDir)) {
         stop("Final upload directory does not exist", call. = FALSE)
     }
     uploadDir <- normalizePath(uploadDir)
-    # Check for dated project summary directory
-    detectProjectDir <-
-        list.dirs(uploadDir,
-                  full.names = FALSE,
-                  recursive = FALSE) %>%
-        str_detect("^\\d{4}-\\d{2}-\\d{2}_[^/]+$") %>%
-        any()
-    if (!detectProjectDir) {
-        stop("Failed to locate bcbio project summary directory", call. = FALSE)
+    projectDir <- dir(
+        uploadDir,
+        pattern = projectDirPattern,
+        full.names = FALSE,
+        recursive = FALSE)
+    if (length(projectDir) != 1) {
+        stop("Uncertain about project directory location")
     }
+    message(projectDir)
+    match <- str_match(projectDir, projectDirPattern)
+    runDate <- match[[2]] %>%
+        as.Date()
+    template <- match[[3]]
+    projectDir <- file.path(uploadDir, projectDir)
+
+    # Project summary YAML ====
+    yamlFile <- file.path(projectDir, "project-summary.yaml")
+    if (!file.exists(yamlFile)) {
+        stop("YAML project summary missing", call. = FALSE)
+    }
+    yaml <- readYAML(yamlFile)
+
+    # Sample directories ====
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
+    # Sequencing lanes ====
+    lanePattern <- "_L(\\d{3})"
+    if (any(str_detect(sampleDirs, lanePattern))) {
+        lanes <- str_match(names(sampleDirs), lanePattern) %>%
+            .[, 2] %>%
+            unique %>%
+            length
+        message(paste(
+            lanes, "sequencing lane detected", "(technical replicates)"))
+    } else {
+        lanes <- 1
+    }
+
     # Sample metadata ====
-    sampleMetadataFile <- normalizePath(sampleMetadataFile)
-    sampleMetadata <- .readSampleMetadataFile(
-        sampleMetadataFile, sampleDirs, pipeline)
+    if (!is.null(sampleMetadataFile)) {
+        sampleMetadataFile <- normalizePath(sampleMetadataFile)
+        # TODO Add lanes support
+        sampleMetadata <- .readSampleMetadataFile(
+            file = sampleMetadataFile,
+            sampleDirs = sampleDirs,
+            pipeline = pipeline)
+    } else {
+        sampleMetadata <- .sampleYAMLMetadata(yaml)
+    }
+    if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
+        stop("Sample name mismatch", call. = FALSE)
+    }
+    sampleMetadata <- sampleMetadata %>%
+        as.data.frame() %>%
+        set_rownames(.[["sampleID"]])
 
     # Check to ensure interesting groups are defined
     if (!all(interestingGroups %in% colnames(sampleMetadata))) {
         stop("Interesting groups missing in sample metadata")
     }
 
+    # Subset sample directories by metadata ====
     # Check to see if a subset of samples is requested via the metadata file.
     # This matches by the reverse complement sequence of the index barcode.
     if (nrow(sampleMetadata) < length(sampleDirs)) {
@@ -87,20 +129,13 @@ loadSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Project directory ====
-    projectDir <- dir(uploadDir,
-                      pattern = projectDirPattern,
-                      full.names = FALSE,
-                      recursive = FALSE)
-    if (length(projectDir) != 1) {
-        stop("Uncertain about project directory location")
+    # Interesting groups ====
+    # Ensure internal formatting in camelCase
+    interestingGroups <- camel(interestingGroups, strict = FALSE)
+    # Check to ensure interesting groups are defined
+    if (!all(interestingGroups %in% colnames(sampleMetadata))) {
+        stop("Interesting groups missing in sample metadata")
     }
-    message(projectDir)
-    match <- str_match(projectDir, projectDirPattern)
-    runDate <- match[[2]] %>%
-        as.Date()
-    template <- match[[3]]
-    projectDir <- file.path(uploadDir, projectDir)
 
     # Log files ====
     message("Reading log files")
@@ -259,6 +294,8 @@ loadSingleCell <- function(
         projectDir = projectDir,
         template = template,
         runDate = runDate,
+        yamlFile = yamlFile,
+        yaml = yaml,
         wellMetadataFile = wellMetadataFile,
         wellMetadata = wellMetadata,
         tx2gene = tx2gene,
