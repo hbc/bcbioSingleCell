@@ -16,12 +16,13 @@ NULL
 #' Aggregate Replicates Constructor
 #'
 #' @author Rory Kirchner
+#' @keywords internal
+#' @noRd
 #'
 #' @param sparse Sparse counts matrix (e.g. `dgCMatrix`).
 #' @param cellids Cellular barcode identifiers.
 #'
 #' @return [dgCMatrix].
-#' @noRd
 .aggregateReplicates <- function(sparse, cellids) {
     tsparse <- t(sparse)
     rownames(tsparse) <- cellids
@@ -38,4 +39,5 @@ NULL
 setMethod("aggregateReplicates", "bcbioSingleCell", function(object) {
     stop("Draft function", call. = FALSE)
     # Reslot the counts into assay and then update the SingleCellExperiment
+    # TODO Slot `sampleNameAggregate` into `sampleMetadata()`
 })
