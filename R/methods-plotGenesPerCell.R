@@ -43,11 +43,11 @@ NULL
             y = "nGene",
             fill = interestingGroup)
     ) +
+        labs(x = "sample",
+             y = "genes per cell") +
         geom_boxplot(color = lineColor) +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
-        labs(x = "sample",
-             y = "genes per cell") +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
     # Median labels
