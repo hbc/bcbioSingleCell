@@ -34,8 +34,7 @@ NULL
         geom_bar(stat = "identity") +
         scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
-    # Show cell counts for up to 20 samples (too busy otherwise)
-    if (nrow(cellCounts) <= 20) {
+    if (nrow(cellCounts) <= qcLabelMaxNum) {
         p <- p +
             geom_text(
                 mapping = aes_string(label = "cells"),
