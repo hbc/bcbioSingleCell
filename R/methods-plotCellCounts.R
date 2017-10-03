@@ -32,12 +32,16 @@ NULL
         labs(x = "sample",
              y = "cell count") +
         geom_bar(stat = "identity") +
-        geom_text(
-            mapping = aes_string(label = "cells"),
-            fontface = "bold",
-            vjust = -0.5) +
         scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 15, hjust = 1))
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    # Show cell counts for up to 20 samples (too busy otherwise)
+    if (nrow(cellCounts) <= 20) {
+        p <- p +
+            geom_text(
+                mapping = aes_string(label = "cells"),
+                fontface = "bold",
+                vjust = -0.5)
+    }
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
             facet_wrap(~fileName)
