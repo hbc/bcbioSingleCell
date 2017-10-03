@@ -17,9 +17,6 @@ NULL
     max = NULL,
     filterCells = FALSE) {
     metrics <- metrics(object, filterCells = filterCells)
-    medianMitoRatio <-
-        aggregate(mitoRatio ~ sampleID, metrics, median) %>%
-        left_join(sampleMetadata(object), by = "sampleID")
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -28,21 +25,27 @@ NULL
             fill = interestingGroup)
     ) +
         geom_boxplot(color = lineColor) +
-        geom_label(
-            data = medianMitoRatio,
-            mapping = aes_(label = ~round(mitoRatio, digits = 2)),
-            alpha = qcLabelAlpha,
-            color = qcLabelColor,
-            fill = qcLabelFill,
-            fontface = qcLabelFontface,
-            label.padding = qcLabelPadding,
-            label.size = qcLabelSize,
-            show.legend = FALSE) +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
         labs(x = "sample",
              y = "mito ratio") +
-        theme(axis.text.x = element_text(angle = 15, hjust = 1))
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
+        medianMitoRatio <-
+            aggregate(mitoRatio ~ sampleID, metrics, median) %>%
+            left_join(sampleMetadata(object), by = "sampleID")
+        p <- p +
+            geom_label(
+                data = medianMitoRatio,
+                mapping = aes_(label = ~round(mitoRatio, digits = 2)),
+                alpha = qcLabelAlpha,
+                color = qcLabelColor,
+                fill = qcLabelFill,
+                fontface = qcLabelFontface,
+                label.padding = qcLabelPadding,
+                label.size = qcLabelSize,
+                show.legend = FALSE)
+    }
     if (!is.null(max)) {
         p <- p +
             .qcCutoffLine(yintercept = max)
