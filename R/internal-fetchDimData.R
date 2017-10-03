@@ -1,14 +1,15 @@
 #' Fetch Data
 #'
 #' @author Rory Kirchner, Michael Steinbaugh
+#' @keywords internal
+#' @noRd
 #'
 #' @param object [seurat] object.
 #' @param dimCode Character vector of X and Y coordinate data to be used for
 #'   plotting. This can be `c("tSNE_1", "tSNE_2")` for tSNE data, or `c("PC1",
 #'   "PC2")` for PCA data.
 #'
-#' @return [data.frame]
-#' @noRd
+#' @return [data.frame].
 .fetchDimDataSeurat <- function(object, dimCode) {
     meta <- object@meta.data %>%
         camel(strict = FALSE) %>%

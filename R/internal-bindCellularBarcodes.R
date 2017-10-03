@@ -1,11 +1,12 @@
 #' Bind Cellular Barcodes
 #'
 #' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
 #'
 #' @param list List of cellular barcodes.
 #'
 #' @return [tibble].
-#' @noRd
 .bindCellularBarcodes <- function(list) {
     lapply(seq_along(list), function(a) {
         sampleID <- names(list)[[a]]

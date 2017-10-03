@@ -1,11 +1,12 @@
 #' Cellular Barcodes List
 #'
 #' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
 #'
 #' @param sampleDirs Sample directories.
 #'
 #' @return [list].
-#' @noRd
 .cellularBarcodesList <- function(sampleDirs) {
     files <- sampleDirs %>%
         file.path(paste(basename(.), "barcodes.tsv", sep = "-")) %>%

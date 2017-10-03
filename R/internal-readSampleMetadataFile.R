@@ -4,6 +4,8 @@
 #' column.
 #'
 #' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
 #'
 #' @param file Sample metadata file.
 #' @param sampleDirs Sample directory paths.
@@ -11,7 +13,6 @@
 #' @param uniqueNames Ensure sample names are unique.
 #'
 #' @return [data.frame].
-#' @noRd
 .readSampleMetadataFile <- function(
     file,
     sampleDirs,
@@ -40,7 +41,6 @@
         meta <- meta %>%
             dplyr::filter(!is.na(.data[["fileName"]])) %>%
             dplyr::filter(!is.na(.data[["sampleName"]]))
-
 
         # Check if samples are demultiplexed
         if (length(unique(meta[["fileName"]])) == nrow(meta)) {
@@ -87,6 +87,6 @@
 
     # Return
     dplyr::select(meta, metaPriorityCols, everything()) %>%
-        as.data.frame %>%
+        as.data.frame() %>%
         set_rownames(.[["sampleID"]])
 }
