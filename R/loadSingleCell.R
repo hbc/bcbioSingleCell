@@ -8,18 +8,18 @@
 #'
 #' @param uploadDir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
-#' @param sampleMetadataFile Sample barcode metadata file.
 #' @param interestingGroups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
-#' @param ensemblVersion Ensembl release version. Defaults to current, and does
-#'   not typically need to be user-defined. This parameter can be useful for
-#'   matching Ensembl annotations against an outdated bcbio annotation build.
+#' @param sampleMetadataFile Sample barcode metadata file.
 #' @param gffFile *Optional*. GFF (General Feature Format) or GTF (Gene Transfer
 #'   Format) file, which will be used for transcript-to-gene (`tx2gene`) and
 #'   gene-to-symbol (`gene2symbol`) annotation mappings. A GTF file is GFF v2.
 #' @param wellMetadataFile *Optional*. Well identifier metadata file.
 #' @param prefilter Prefilter counts prior to quality control analysis.
+#' @param ensemblVersion Ensembl release version. Defaults to current, and does
+#'   not typically need to be user-defined. This parameter can be useful for
+#'   matching Ensembl annotations against an outdated bcbio annotation build.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return [bcbioSingleCell].
@@ -31,21 +31,21 @@
 #' # Run with Ensembl 88 transcriptome FASTA and GTF files
 #' bcb <- loadSingleCell(
 #'     uploadDir = file.path("indrop_rnaseq", "final"),
-#'     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
 #'     interestingGroups = c("genotype", "treatment"),
-#'     ensemblVersion = 88,
+#'     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
 #'     gffFile = file.path(
 #'         "annotations",
-#'         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"))
+#'         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
+#'     ensemblVersion = 88)
 #' }
 loadSingleCell <- function(
     uploadDir,
-    sampleMetadataFile,
     interestingGroups = "sampleName",
-    ensemblVersion = "current",
+    sampleMetadataFile = NULL,
     gffFile = NULL,
     wellMetadataFile = NULL,
     prefilter = TRUE,
+    ensemblVersion = "current",
     ...) {
     pipeline <- "bcbio"
 
@@ -61,7 +61,7 @@ loadSingleCell <- function(
         full.names = FALSE,
         recursive = FALSE)
     if (length(projectDir) != 1) {
-        stop("Uncertain about project directory location")
+        stop("Uncertain about project directory location", call. = FALSE)
     }
     message(projectDir)
     match <- str_match(projectDir, projectDirPattern)
@@ -69,15 +69,6 @@ loadSingleCell <- function(
         as.Date()
     template <- match[[3]]
     projectDir <- file.path(uploadDir, projectDir)
-
-    # Project summary YAML ====
-    yamlFile <- file.path(projectDir, "project-summary.yaml")
-    if (!file.exists(yamlFile)) {
-        stop("YAML project summary missing", call. = FALSE)
-    }
-    yaml <- readYAML(yamlFile)
-
-    # Sample directories ====
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sequencing lanes ====
@@ -85,13 +76,20 @@ loadSingleCell <- function(
     if (any(str_detect(sampleDirs, lanePattern))) {
         lanes <- str_match(names(sampleDirs), lanePattern) %>%
             .[, 2] %>%
-            unique %>%
-            length
+            unique() %>%
+            length()
         message(paste(
             lanes, "sequencing lane detected", "(technical replicates)"))
     } else {
         lanes <- 1
     }
+
+    # Project summary YAML ====
+    yamlFile <- file.path(projectDir, "project-summary.yaml")
+    if (!file.exists(yamlFile)) {
+        stop("'project-summary.yaml' file missing", call. = FALSE)
+    }
+    yaml <- readYAML(yamlFile)
 
     # Sample metadata ====
     if (!is.null(sampleMetadataFile)) {
@@ -111,9 +109,12 @@ loadSingleCell <- function(
         as.data.frame() %>%
         set_rownames(.[["sampleID"]])
 
+    # Interesting groups ====
+    # Ensure internal formatting in camelCase
+    interestingGroups <- camel(interestingGroups, strict = FALSE)
     # Check to ensure interesting groups are defined
     if (!all(interestingGroups %in% colnames(sampleMetadata))) {
-        stop("Interesting groups missing in sample metadata")
+        stop("Interesting groups missing in sample metadata", call. = FALSE)
     }
 
     # Subset sample directories by metadata ====
@@ -127,14 +128,6 @@ loadSingleCell <- function(
         message(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
-    }
-
-    # Interesting groups ====
-    # Ensure internal formatting in camelCase
-    interestingGroups <- camel(interestingGroups, strict = FALSE)
-    # Check to ensure interesting groups are defined
-    if (!all(interestingGroups %in% colnames(sampleMetadata))) {
-        stop("Interesting groups missing in sample metadata")
     }
 
     # Log files ====
@@ -171,11 +164,11 @@ loadSingleCell <- function(
                 na.omit() %>%
                 unique()
         } else {
-            stop("Genome detection from bcbio commands failed")
+            stop("Genome detection from bcbio commands failed", call. = FALSE)
         }
     }
     if (length(genomeBuild) > 1) {
-        stop("Multiple genomes detected -- not supported")
+        stop("Multiple genomes detected", call. = FALSE)
     }
     organism <- detectOrganism(genomeBuild)
     message(paste("Organism:", organism))
@@ -191,7 +184,7 @@ loadSingleCell <- function(
             str_replace("-transform", "")
         message(paste("UMI type:", umiType))
     } else {
-        stop("Failed to detect UMI type from JSON file")
+        stop("Failed to detect UMI type from JSON file", call. = FALSE)
     }
 
     # Well metadata ====
