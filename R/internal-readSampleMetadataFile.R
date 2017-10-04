@@ -20,15 +20,26 @@
     meta <- readFileByExtension(file)
 
     if (pipeline == "bcbio") {
-        # Rename legacy `samplename` column, if set
+        # Stop on legacy `samplename` column. We need to work on improving the
+        # consistency in examples or the internal handlng of file and sample
+        # names in a future update.
         if ("samplename" %in% colnames(meta)) {
-            warning("Renamed metadata column 'samplename' to 'fileName'")
-            meta <- dplyr::rename(meta, fileName = .data[["samplename"]])
+            stop(paste(
+                "'samplename' is used in some bcbio examples to define FASTQ",
+                "file names, and 'description' to define sample names. Here",
+                "we are using 'sampleName' (note lowerCamelCase) in the",
+                "package to define sample names. When passing in a sample",
+                "metadata file here, use 'fileName' for file names",
+                "(e.g. 'control_replicate_1.fastq.gz') and either",
+                "'description' or 'sampleName' for sample names",
+                "(e.g. 'control replicate 1')"
+            ))
         }
 
         # Rename `description` to `sampleName`, if set
         if ("description" %in% colnames(meta)) {
-            warning("Renamed metadata column 'description' to 'sampleName'")
+            message("Renamed metadata column 'description' to 'sampleName'",
+                    call. = FALSE)
             meta <- dplyr::rename(meta, sampleName = .data[["description"]])
         }
 
