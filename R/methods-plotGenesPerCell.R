@@ -6,13 +6,10 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams AllGenerics
+#' @inheritParams metrics
 #' @param interestingGroup Interesting group, to use for colors.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
-#' @param filterCells Show only the cells that have passed filtering cutoffs.
-#' @param aggregateReplicates Aggregate technical replicates, if present. If
-#'   `TRUE`, this function uses the values slotted in
-#'   `sampleMetadata(object)[["sampleNameAggregate"]])`.
 #'
 #' @return [ggplot] grid.
 NULL
@@ -26,20 +23,15 @@ NULL
     min = NULL,
     max = NULL,
     filterCells = FALSE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(object, filterCells = filterCells)
-
-    if (isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        xCol <- "sampleNameAggregate"
-    } else {
-        xCol <- "sampleName"
-    }
-
+    aggregateReplicates = FALSE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
     p <- ggplot(
         metrics,
         mapping = aes_string(
-            x = xCol,
+            x = "sampleName",
             y = "nGene",
             fill = interestingGroup)
     ) +
@@ -51,14 +43,17 @@ NULL
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
     # Median labels
-    if (length(unique(metrics[[xCol]])) <= qcLabelMaxNum) {
-        formula <- formula(paste("nGene", xCol, sep = " ~ "))
+    if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
+        formula <- formula(paste("nGene", "sampleName", sep = " ~ "))
+        meta <- sampleMetadata(
+            object,
+            aggregateReplicates = aggregateReplicates)
         medianGenes <-
             aggregate(
                 formula = formula,
                 data = metrics,
                 FUN = median) %>%
-            left_join(sampleMetadata(object), by = xCol) %>%
+            left_join(meta, by = "sampleName") %>%
             mutate(nGene = round(.data[["nGene"]]))
         p <- p +
             geom_label(
@@ -108,21 +103,16 @@ NULL
     min = NULL,
     max = NULL,
     filterCells = FALSE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(object, filterCells = filterCells)
-
-    if (isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        fill <- "sampleNameAggregate"
-    } else {
-        fill <- "sampleName"
-    }
-
+    aggregateReplicates = FALSE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
     p <- ggplot(
         metrics,
         mapping = aes_string(
             x = "nGene",
-            fill = fill)
+            fill = "sampleName")
     ) +
         labs(x = "genes per cell",
              fill = "sample") +
@@ -170,7 +160,7 @@ NULL
     min,
     max,
     filterCells = FALSE,
-    aggregateReplicates = TRUE) {
+    aggregateReplicates = FALSE) {
     if (missing(interestingGroup)) {
         interestingGroup <- interestingGroups(object)[[1]]
     }
