@@ -51,5 +51,5 @@
 NULL
 
 globalVariables(".")
-metaPriorityCols <- c("sampleID", "sampleName", "fileName")
+metaPriorityCols <- c("sampleID", "sampleName")
 projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
