@@ -14,14 +14,22 @@ NULL
 .plotCellCounts <- function(
     object,
     interestingGroup,
-    filterCells = FALSE) {
+    filterCells = FALSE,
+    aggregateReplicates = FALSE) {
     if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1]]
+        interestingGroup <- .interestingGroup(object)
     }
-    cellCounts <- metrics(object, filterCells = filterCells) %>%
-        group_by(!!sym("sampleID")) %>%
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
+    meta <- sampleMetadata(
+        object,
+        aggregateReplicates = aggregateReplicates)
+    cellCounts <- metrics %>%
+        group_by(!!sym("sampleName")) %>%
         summarize(cells = n()) %>%
-        left_join(sampleMetadata(object), by = "sampleID")
+        left_join(meta, by = "sampleName")
     p <- ggplot(
         cellCounts,
         mapping = aes_string(
@@ -34,6 +42,8 @@ NULL
         geom_bar(stat = "identity") +
         scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    # Labels
     if (nrow(cellCounts) <= qcLabelMaxNum) {
         p <- p +
             geom_text(
@@ -41,10 +51,22 @@ NULL
                 fontface = "bold",
                 vjust = -0.5)
     }
+
+    # Facets
+    facets <- NULL
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p +
-            facet_wrap(~fileName)
+        facets <- c(facets, "fileName")
     }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets,
+                       scales = "free_x")
+    }
+
     p
 }
 
