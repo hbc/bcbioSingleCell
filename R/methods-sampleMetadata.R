@@ -4,6 +4,7 @@
 #' @name sampleMetadata
 #'
 #' @inheritParams AllGenerics
+#' @inheritParams metrics
 #'
 #' @return [data.frame].
 NULL
@@ -13,10 +14,33 @@ NULL
 # Methods ====
 #' @rdname sampleMetadata
 #' @export
-setMethod("sampleMetadata", "bcbioSingleCellANY", function(object) {
-    object %>%
-        metadata() %>%
-        .[["sampleMetadata"]]
+setMethod("sampleMetadata", "bcbioSingleCellANY", function(
+    object,
+    aggregateReplicates = FALSE) {
+    meta <- metadata(object)[["sampleMetadata"]]
+    if (isTRUE(aggregateReplicates)) {
+        if (!"sampleNameAggregate" %in% colnames(meta)) {
+            if (!"sampleNameAggregate" %in% colnames(meta)) {
+                stop(paste(
+                    "'sampleNameAggregate' column must be set in sample",
+                    "metadata to aggregate replicates"
+                ))
+            }
+        }
+        meta <- meta %>%
+            mutate(sampleName = .data[["sampleNameAggregate"]],
+                   sampleID = make.names(.data[["sampleName"]]),
+                   sampleNameAggregate = NULL) %>%
+            # Here we're keeping the priority and interesting group columns
+            # only, so we can collapse down to distinct per sample rows
+            dplyr::select(c(
+                metaPriorityCols,
+                interestingGroups(object)
+            )) %>%
+            distinct() %>%
+            set_rownames(.[["sampleID"]])
+    }
+    meta
 })
 
 
@@ -67,6 +91,7 @@ setMethod("sampleMetadata", "seurat", function(object) {
 
         # Finally, attempt to collapse into distinct rows
         df <- distinct(df) %>%
+            camel(strict = FALSE) %>%
             set_rownames(.[["sampleID"]])
     }
     df
