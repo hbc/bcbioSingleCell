@@ -7,9 +7,11 @@
 #'
 #' @inheritParams AllGenerics
 #' @param filterCells Show only the cells that have passed filtering cutoffs.
-#' @param aggregateReplicates Aggregate technical replicates, if present. If
-#'   `TRUE`, this function uses the values slotted in
-#'   `sampleMetadata(object)[["sampleNameAggregate"]])`.
+#' @param aggregateReplicates Aggregate technical replicates, if specified. This
+#'   function uses values assigned in the `sampleNameAggregate` column of the
+#'   internal sample metadata [data.frame].
+#'
+#' @seealso [sampleMetadata()].
 #'
 #' @return [data.frame] with cellular barcodes as rows.
 NULL
@@ -32,14 +34,10 @@ NULL
 
     # Rename `sampleName` when aggregating replicates
     if (isTRUE(aggregateReplicates)) {
-        if (!"sampleNameAggregate" %in% colnames(meta)) {
-            stop(paste(
-                "'sampleNameAggregate' column must be set in sample metadata",
-                "to aggregate replicates"
-            ))
+        if ("sampleNameAggregate" %in% colnames(meta)) {
+            meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
+            meta[["sampleNameAggregate"]] <- NULL
         }
-        meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
-        meta[["sampleNameAggregate"]] <- NULL
     }
 
     # Get the barcode format based on the umiType
