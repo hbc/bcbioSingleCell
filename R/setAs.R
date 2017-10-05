@@ -48,10 +48,11 @@ NULL
 #' [bcbioSingleCell] version 0.0.17. Previous objects saved using
 #' `bcbioSinglecell` (note case) will likely fail to load with newer versions of
 #' the package.
-setAs("bcbioSingleCellANY", "bcbioSingleCell", function(from) {
+setAs("bcbioSingleCellLegacy", "bcbioSingleCell", function(from) {
+    # FIXME Need to add support for upgrade method
     # Can extract the information from the slotted SingleCellExperiment
     # Add a warning for `bcbioSCFiltered`, since these only contain a subset
-    stop("Draft function")
+    stop("Upgrade coercion method will be added in future update")
 })
 
 
@@ -72,7 +73,7 @@ setAs("bcbioSingleCellANY", "bcbioSingleCell", function(from) {
 #' then calculates a z-score for dispersion within each bin. This helps control
 #' for the relationship between variability and average expression. Finally, the
 #' genes are scaled and centered using the [Seurat::ScaleData()] function.
-setAs("bcbioSingleCellANY", "seurat", function(from) {
+setAs("bcbioSingleCell", "seurat", function(from) {
     cells <- metadata(from)[["filterCells"]]
 
     # Check for required `filterCells` metadata
@@ -91,7 +92,7 @@ setAs("bcbioSingleCellANY", "seurat", function(from) {
         raw.data = counts,
         min.cells = 0,
         min.genes = 0,
-        meta.data = metrics(from)
+        meta.data = metrics(from, aggregateReplicates = TRUE)
     )
 
     # Integrity checks
