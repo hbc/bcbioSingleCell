@@ -9,6 +9,9 @@ qcWarnColor <- qcColors[[2]]
 qcFailColor <- qcColors[[3]]
 qcCutoffColor <- qcPassColor
 
+qcPlotAlpha <- 0.85
+qcRidgeScale <- 2
+
 # Quality control label appearance
 qcLabelAlpha <- 0.75
 qcLabelColor <- "white"

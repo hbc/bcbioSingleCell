@@ -59,7 +59,7 @@ NULL
                 FUN = median) %>%
             left_join(meta, by = "sampleName") %>%
             mutate(log10GenesPerUMI = round(.data[["log10GenesPerUMI"]],
-                                            digits = 2))
+                                            digits = 3))
         p <- p +
             geom_label(
                 data = medianNovelty,
@@ -103,7 +103,7 @@ NULL
 
 
 
-.plotNoveltyHistogram <- function(
+.plotNoveltyRidgeline <- function(
     object,
     interestingGroup = "sampleName",
     min = 0,
@@ -117,22 +117,19 @@ NULL
         metrics,
         mapping = aes_string(
             x = "log10GenesPerUMI",
+            y = "sampleName",
             fill = interestingGroup)
     ) +
-        labs(x = "log10 genes per UMI") +
+        labs(x = "log10 genes per UMI",
+             y = "sample") +
+        geom_density_ridges(
+            alpha = qcPlotAlpha,
+            color = lineColor,
+            panel_scaling = TRUE,
+            scale = qcRidgeScale) +
+        scale_fill_viridis(discrete = TRUE) +
         scale_x_sqrt() +
-        scale_y_sqrt()
-
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroup == "sampleName") {
-        p <- p +
-            geom_histogram(bins = bins, fill = "black")
-    } else {
-        p <- p +
-            geom_histogram(bins = bins) +
-            scale_fill_viridis(discrete = TRUE)
-    }
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
     # Cutoff lines
     if (min > 0) {
@@ -180,9 +177,10 @@ NULL
             min <- 0
         }
     }
-    plot_grid(
-        .plotNoveltyHistogram(
+    suppressMessages(plot_grid(
+        .plotNoveltyRidgeline(
             object,
+            interestingGroup = interestingGroup,
             min = min,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
@@ -193,7 +191,8 @@ NULL
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
         labels = "auto",
-        nrow = 2)
+        nrow = 2
+    ))
 }
 
 

@@ -37,10 +37,14 @@ NULL
         "sampleNameAggregate" %in% colnames(metrics) &
         interestingGroup == "sampleName") {
         p <- p +
-            geom_boxplot(color = lineColor, fill = "white")
+            geom_boxplot(
+                color = lineColor,
+                fill = "white")
     } else {
         p <- p +
-            geom_boxplot(color = lineColor) +
+            geom_boxplot(
+                alpha = qcPlotAlpha,
+                color = lineColor) +
             scale_fill_viridis(discrete = TRUE)
     }
 
@@ -56,7 +60,7 @@ NULL
                 data = metrics,
                 FUN = median) %>%
             left_join(meta, by = "sampleName") %>%
-            mutate(mitoRatio = round(.data[["mitoRatio"]], digits = 2))
+            mutate(mitoRatio = round(.data[["mitoRatio"]], digits = 3))
         p <- p +
             geom_label(
                 data = medianMitoRatio,
@@ -100,7 +104,7 @@ NULL
 
 
 
-.plotMitoRatioHistogram <- function(
+.plotMitoRatioRidgeline <- function(
     object,
     interestingGroup = "sampleName",
     max = 1,
@@ -114,22 +118,19 @@ NULL
         metrics,
         mapping = aes_string(
             x = "mitoRatio",
+            y = "sampleName",
             fill = interestingGroup)
     ) +
-        labs(x = "mito ratio") +
+        labs(x = "mito ratio",
+             y = "sample") +
+        geom_density_ridges(
+            alpha = qcPlotAlpha,
+            color = lineColor,
+            panel_scaling = TRUE,
+            scale = qcRidgeScale) +
+        scale_fill_viridis(discrete = TRUE) +
         scale_x_sqrt() +
-        scale_y_sqrt()
-
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroup == "sampleName") {
-        p <- p +
-            geom_histogram(bins = bins, fill = "black")
-    } else {
-        p <- p +
-            geom_histogram(bins = bins) +
-            scale_fill_viridis(discrete = TRUE)
-    }
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
     # Cutoff lines
     if (max < 1) {
@@ -244,13 +245,14 @@ NULL
             max <- 1
         }
     }
-    plot_grid(
+    suppressMessages(plot_grid(
         .plotMitoRatioScatterplot(
             object,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
-        .plotMitoRatioHistogram(
+        .plotMitoRatioRidgeline(
             object,
+            interestingGroup = interestingGroup,
             max = max,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
@@ -261,7 +263,8 @@ NULL
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
         labels = "auto",
-        nrow = 3)
+        nrow = 3
+    ))
 }
 
 

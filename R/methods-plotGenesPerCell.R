@@ -44,10 +44,14 @@ NULL
         "sampleNameAggregate" %in% colnames(metrics) &
         interestingGroup == "sampleName") {
         p <- p +
-            geom_boxplot(color = lineColor, fill = "white")
+            geom_boxplot(
+                color = lineColor,
+                fill = "white")
     } else {
         p <- p +
-            geom_boxplot(color = lineColor) +
+            geom_boxplot(
+                alpha = qcPlotAlpha,
+                color = lineColor) +
             scale_fill_viridis(discrete = TRUE)
     }
 
@@ -111,7 +115,7 @@ NULL
 
 
 
-.plotGenesPerCellHistogram <- function(
+.plotGenesPerCellRidgeline <- function(
     object,
     interestingGroup = "sampleName",
     min = 0,
@@ -126,23 +130,19 @@ NULL
         metrics,
         mapping = aes_string(
             x = "nGene",
+            y = "sampleName",
             fill = interestingGroup)
     ) +
-        labs(x = "genes per cell") +
+        labs(x = "genes per cell",
+             y = "sample") +
+        geom_density_ridges(
+            alpha = qcPlotAlpha,
+            color = lineColor,
+            panel_scaling = TRUE,
+            scale = qcRidgeScale) +
+        scale_fill_viridis(discrete = TRUE) +
         scale_x_sqrt() +
-        scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroup == "sampleName") {
-        p <- p +
-            geom_histogram(bins = bins, fill = "black")
-    } else {
-        p <- p +
-            geom_histogram(bins = bins) +
-            scale_fill_viridis(discrete = TRUE)
-    }
 
     # Cutoff lines
     if (min > 0) {
@@ -168,7 +168,8 @@ NULL
     }
     if (!is.null(facets)) {
         p <- p +
-            facet_wrap(facets = facets)
+            facet_wrap(facets = facets,
+                       scales = "free_y")
     }
 
     p
@@ -204,9 +205,10 @@ NULL
             max <- Inf
         }
     }
-    plot_grid(
-        .plotGenesPerCellHistogram(
+    suppressMessages(plot_grid(
+        .plotGenesPerCellRidgeline(
             object,
+            interestingGroup = interestingGroup,
             min = min,
             max = max,
             filterCells = filterCells,
@@ -219,7 +221,8 @@ NULL
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
         labels = "auto",
-        nrow = 2)
+        nrow = 2
+    ))
 }
 
 
