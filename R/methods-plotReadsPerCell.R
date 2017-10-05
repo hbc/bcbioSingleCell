@@ -28,10 +28,11 @@ NULL
 #'
 #' @inheritParams plotReadsPerCell
 #'
-#' @return [tibble].
+#' @return [tibble] grouped by `sampleName` containing `log10Count` values.
 .rawCBTibble <- function(
     object,
-    filterCells = FALSE) {
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
     cellularBarcodes <- bcbio(object, "cellularBarcodes")
     if (is.null(cellularBarcodes)) {
         stop("Raw cellular barcode counts not saved in object")
@@ -40,16 +41,65 @@ NULL
     # Keep only the cells that have passed filtering, if desired
     if (isTRUE(filterCells)) {
         cells <- metadata(object)[["filterCells"]]
-        cellularBarcodes <- cellularBarcodes %>%
-            .[.[["cellID"]] %in% cells, , drop = FALSE]
+        if (!is.null(cells)) {
+            cellularBarcodes <- cellularBarcodes %>%
+                .[.[["cellID"]] %in% cells, , drop = FALSE]
+        }
     }
+    meta <- metadata(object)[["sampleMetadata"]]
+    if (isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(meta)) {
+        meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
+        meta[["sampleNameAggregate"]] <- NULL
+    }
+    meta <- meta[, metaPriorityCols]
     cellularBarcodes %>%
         mutate(log10Count = log10(.data[["nCount"]]),
                cellularBarcode = NULL,
                nCount = NULL) %>%
-        # Only plot barcodes with at least 100 read counts (log10 = 2)
-        dplyr::filter(.data[["log10Count"]] > 2) %>%
-        left_join(sampleMetadata(object), by = "sampleID")
+        left_join(meta, by = "sampleID") %>%
+        .[, c("sampleName", "log10Count")] %>%
+        group_by(!!sym("sampleName"))
+}
+
+
+
+#' Proportional Cellular Barcodes
+#'
+#' @author Rory Kirchner, Michael Steinbaugh
+#' @keywords internal
+#' @noRd
+#'
+#' @param rawTibble [.rawCBTibble()] return.
+#' @param perSampleMetadata [sampleMetadata()] return with `sampleName` columns
+#'   that match the `rawTibble`.
+#'
+#' @details Modified version of Allon Klein Lab MATLAB code.
+#'
+#' @return [tibble].
+.proportionalCBTibble <- function(
+    rawTibble,
+    perSampleMetadata) {
+    mclapply(
+        seq_along(levels(rawTibble[["sampleName"]])), function(a) {
+            sampleName <- levels(rawTibble[["sampleName"]])[[a]]
+            cb <- rawTibble %>%
+                .[.[["sampleName"]] == sampleName, , drop = FALSE]
+            cbHist <- hist(cb[["log10Count"]], n = 100, plot = FALSE)
+            # `counts = fLog` in MATLAB version
+            counts <- cbHist[["counts"]]
+            # `mids = xLog` in MATLAB version
+            mids <-  cbHist[["mids"]]
+            tibble(
+                sampleName = sampleName,
+                # log10 reads per cell
+                log10Count = mids,
+                # Proportion of cells
+                proportion = counts * (10 ^ mids) / sum(counts * (10 ^ mids)))
+        }) %>%
+        bind_rows() %>%
+        mutate(sampleName = factor(.data[["sampleName"]])) %>%
+        left_join(perSampleMetadata, by = "sampleName")
 }
 
 
@@ -65,29 +115,27 @@ NULL
 #' @return [ggplot].
 .plotRawCBViolin <- function(
     tibble,
-    cutoffLine = NULL,
+    interestingGroup = "sampleName",
+    cutoffLine = 0,
     multiplexedFASTQ = FALSE,
     aggregateReplicates = TRUE) {
-    # FIXME Is there a way to simplify this in the tibble function instead?
-    if (isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(tibble)) {
-        xCol <- "sampleNameAggregate"
-    } else {
-        xCol <- "sampleName"
-    }
-
+    # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
+    # plot gets dominated by cellular barcodes with low read counts.
+    tibble <- tibble %>%
+        .[.[["log10Count"]] >= 2, , drop = FALSE]
     p <- ggplot(
         tibble,
         mapping = aes_string(
-            x = xCol,
+            x = "sampleName",
             y = "log10Count",
-            fill = "sampleName")
+            fill = interestingGroup)
     ) +
         labs(title = "raw violin",
-             y = "log10 reads per cell",
-             fill = "sample") +
-        geom_violin(color = "NA",
-                    scale = "width") +
+             y = "log10 reads per cell") +
+        geom_violin(
+            alpha = qcPlotAlpha,
+            color = lineColor,
+            scale = "width") +
         coord_flip() +
         scale_fill_viridis(discrete = TRUE)
 
@@ -129,31 +177,32 @@ NULL
 #' @inheritParams plotReadsPerCell
 #'
 #' @return [ggplot].
-.plotRawCBHistogram <- function(
+.plotRawCBRidgeline <- function(
     tibble,
-    cutoffLine = 0,
+    interestingGroup = "sampleName",
+    cutoffLine = 2,
     multiplexedFASTQ = FALSE,
     aggregateReplicates = TRUE) {
-    # FIXME Again, try to set this at the tibble step instead
-    if (isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(tibble)) {
-        fill <- "sampleNameAggregate"
-    } else {
-        fill <- "sampleName"
-    }
-
+    # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
+    # plot gets dominated by cellular barcodes with low read counts.
+    tibble <- tibble %>%
+        .[.[["log10Count"]] >= 2, , drop = FALSE]
     p <- ggplot(
         tibble,
         mapping = aes_string(
             x = "log10Count",
-            fill = fill)
+            y = "sampleName",
+            fill = interestingGroup)
     ) +
         labs(title = "raw histogram",
-             x = "log10 reads per cell",
-             fill = "sample") +
-        geom_histogram(bins = bins) +
-        scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE)
+             x = "log10 reads per cell") +
+        geom_density_ridges(
+            alpha = qcPlotAlpha,
+            color = lineColor,
+            panel_scaling = TRUE,
+            scale = qcRidgeScale) +
+        scale_fill_viridis(discrete = TRUE) +
+        scale_x_sqrt()
 
     # Cutoff lines
     if (cutoffLine > 0 & length(cutoffLine)) {
@@ -168,7 +217,6 @@ NULL
     }
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(tibble)) {
-        # FIXME Improve the color contrast here
         facets <- c(facets, "sampleNameAggregate")
         # Turn off the legend
         p <- p +
@@ -184,68 +232,6 @@ NULL
 
 
 
-#' Proportional Cellular Barcodes
-#'
-#' @author Rory Kirchner, Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @inheritParams plotReadsPerCell
-#'
-#' @details Modified version of Allon Klein Lab MATLAB code.
-#'
-#' @return [tibble].
-.proportionalCBTibble <- function(
-    object,
-    filterCells = FALSE,
-    aggregateReplicates = TRUE) {
-    # FIXME Need to add aggregation support for the calculations here
-    if (isTRUE(aggregateReplicates)) {
-        stop("aggregateReplicates support not added yet")
-    }
-
-    cellularBarcodes <- bcbio(object, "cellularBarcodes")
-    lapply(seq_along(cellularBarcodes), function(a) {
-        sampleID <- names(cellularBarcodes)[[a]]
-        cb <- cellularBarcodes[[a]] %>%
-            mutate(
-                cellID = paste(sampleID,
-                               .data[["cellularBarcode"]],
-                               sep = "_"),
-                log10Count = log10(.data[["nCount"]]),
-                cellularBarcode = NULL,
-                nCount = NULL)
-        # Keep only the cells that have passed filtering, if desired
-        if (isTRUE(filterCells)) {
-            cells <- metadata(object)[["filterCells"]]
-            cb <- cb %>%
-                .[.[["cellID"]] %in% cells, , drop = FALSE]
-            # Return NULL if none of the cells in the sample passed filtering
-            if (!nrow(cb)) {
-                warning(paste("No cells passed filtering for", sampleID),
-                        call. = FALSE)
-                return(NULL)
-            }
-        }
-        cbHist <- hist(cb[["log10Count"]], n = 100, plot = FALSE)
-        # `fLog` in MATLAB version
-        counts <- cbHist[["counts"]]
-        # `xLog` in MATLAB version
-        mids <-  cbHist[["mids"]]
-        tibble(
-            sampleID = sampleID,
-            # log10 reads per cell
-            log10Count = mids,
-            # Proportion of cells
-            proportion = counts * (10 ^ mids) /
-                sum(counts * (10 ^ mids)))
-    }) %>%
-        bind_rows() %>%
-        left_join(sampleMetadata(object), by = "sampleID")
-}
-
-
-
 #' Plot Proportional Cellular Barcodes Histogram
 #'
 #' @author Michael Steinbaugh
@@ -257,23 +243,22 @@ NULL
 #' @return [ggplot].
 .plotProportionalCBHistogram <- function(
     tibble,
+    interestingGroup = "sampleName",
     cutoffLine = NULL,
     multiplexedFASTQ = FALSE,
     aggregateReplicates = TRUE) {
-
     p <- ggplot(
         tibble,
         mapping = aes_string(
             x = "log10Count",
             y = "proportion",
-            color = "sampleName")
+            color = interestingGroup)
     ) +
-        geom_line(alpha = 0.8,
+        geom_line(alpha = qcPlotAlpha,
                   size = 1.5) +
         labs(title = "proportional histogram",
              x = "log10 reads per cell",
-             y = "proportion of cells",
-             color = "sample") +
+             y = "proportion of cells") +
         scale_color_viridis(discrete = TRUE)
 
     # Cutoff lines
@@ -326,18 +311,23 @@ NULL
         interestingGroup <- interestingGroups(object)[[1]]
     }
 
-    rawTibble <- .rawCBTibble(object, filterCells = filterCells)
-    proportionalTibble <-
-        .proportionalCBTibble(
-            object,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates)
+    rawTibble <- .rawCBTibble(
+        object,
+        filterCells = filterCells)
+    perSampleMetadata <- sampleMetadata(
+        object, aggregateReplicates = aggregateReplicates)
+    proportionalTibble <- .proportionalCBTibble(
+        rawTibble = rawTibble,
+        perSampleMetadata = perSampleMetadata)
 
     # Need to set the cellular barcode cutoff in log10 to match the plots
     if (!is.null(metadata(object)[["cbCutoff"]])) {
         # This will be deprecated in a future release in favor of the longer
         # spelling variant
-        # FIXME Add a warning here if we detect cbCutoff?
+        warning(paste(
+            "'cbCutoff' in metadata will be deprecated in favor of",
+            "'cellularBarcodeCutoff' in a future update"
+        ))
         cutoffLine <- metadata(object)[["cbCutoff"]]
     } else if (!is.null(metadata(object)[["cellularBarcodeCutoff"]])) {
         cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
@@ -356,7 +346,7 @@ NULL
             cutoffLine = cutoffLine,
             multiplexedFASTQ = multiplexedFASTQ,
             aggregateReplicates = aggregateReplicates)
-    rawHistogram <- .plotRawCBHistogram(
+    ridgeline <- .plotRawCBRidgeline(
             rawTibble,
             cutoffLine = cutoffLine,
             multiplexedFASTQ = multiplexedFASTQ,
@@ -374,13 +364,13 @@ NULL
                 xlab("") +
                 theme(legend.position = "none"),
             x = 0, y = 0.7, width = 0.5, height = 0.3) +
-        draw_plot(
-            rawHistogram +
+        suppresMessages(draw_plot(
+            ridgeline +
                 ylab("") +
                 theme(axis.text.y = element_blank(),
                       axis.ticks.y = element_blank(),
                       legend.position = "none"),
-            x = 0.5, y = 0.7, width = 0.5, height = 0.3) +
+            x = 0.5, y = 0.7, width = 0.5, height = 0.3)) +
         draw_plot(
             proportionalHistogram +
                 theme(legend.justification = "center",
