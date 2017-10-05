@@ -38,7 +38,7 @@ NULL
 .filterCells <- function(
     object,
     aggregateReplicates = TRUE,
-    minUMIs = 500,
+    minUMIs = 1000,
     minGenes = 500,
     maxGenes = Inf,
     maxMitoRatio = 0.1,
