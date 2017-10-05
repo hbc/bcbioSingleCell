@@ -86,6 +86,10 @@ NULL
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics)) {
         facets <- c(facets, "sampleNameAggregate")
+        if (interestingGroup == "sampleName") {
+            p <- p +
+                theme(legend.position = "none")
+        }
     }
     if (!is.null(facets)) {
         p <- p +
