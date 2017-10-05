@@ -8,7 +8,7 @@
 #'
 #' @return [tibble].
 .bindCellularBarcodes <- function(list) {
-    lapply(seq_along(list), function(a) {
+    mclapply(seq_along(list), function(a) {
         sampleID <- names(list)[[a]]
         list[[a]] %>%
             mutate(sampleID = !!sampleID)

@@ -36,6 +36,7 @@ Imports:
     Matrix,
     Matrix.utils,
     methods,
+    parallel,
     pbapply,
     pheatmap,
     readr,

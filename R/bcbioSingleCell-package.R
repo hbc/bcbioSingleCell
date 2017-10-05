@@ -31,6 +31,7 @@
 #' @importFrom magrittr %>% set_colnames set_rownames
 #' @importFrom Matrix cBind
 #' @importFrom Matrix.utils aggregate.Matrix
+#' @importFrom parallel mclapply
 #' @importFrom pbapply pblapply pbsapply
 #' @importFrom pheatmap pheatmap
 #' @importFrom readr read_csv read_delim read_lines
