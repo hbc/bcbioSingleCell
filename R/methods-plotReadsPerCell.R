@@ -67,7 +67,8 @@ NULL
     tibble,
     cutoffLine = NULL,
     multiplexedFASTQ = FALSE,
-    aggregateReplicates = TRUE) {
+    aggregateReplicates = FALSE) {
+    # FIXME Is there a way to simplify this in the tibble function instead?
     if (isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(tibble)) {
         xCol <- "sampleNameAggregate"
@@ -132,7 +133,8 @@ NULL
     tibble,
     cutoffLine = NULL,
     multiplexedFASTQ = FALSE,
-    aggregateReplicates = TRUE) {
+    aggregateReplicates = FALSE) {
+    # FIXME Again, try to set this at the tibble step instead
     if (isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(tibble)) {
         fill <- "sampleNameAggregate"
@@ -196,8 +198,8 @@ NULL
 .proportionalCBTibble <- function(
     object,
     filterCells = FALSE,
-    aggregateReplicates = TRUE) {
-    # FIXME Need to add aggregation support
+    aggregateReplicates = FALSE) {
+    # FIXME Need to add aggregation support for the calculations here
     if (isTRUE(aggregateReplicates)) {
         stop("aggregateReplicates support not added yet")
     }
@@ -257,7 +259,7 @@ NULL
     tibble,
     cutoffLine = NULL,
     multiplexedFASTQ = FALSE,
-    aggregateReplicates = TRUE) {
+    aggregateReplicates = FALSE) {
 
     p <- ggplot(
         tibble,
@@ -312,16 +314,14 @@ NULL
     object,
     interestingGroup,
     filterCells = FALSE,
-    aggregateReplicates = TRUE) {
-    # This function currently only supports bcbio pipeline
+    aggregateReplicates = FALSE) {
     if (metadata(object)[["pipeline"]] != "bcbio") {
         warning(paste(
             "'plotReadsPerCell()' currently only supports",
-            "bcbio pipeline for 'bcbioSingleCell' class"),
+            "bcbio pipeline output for 'bcbioSingleCell' class"),
             call. = FALSE)
         return(NULL)
     }
-
     if (missing(interestingGroup)) {
         interestingGroup <- interestingGroups(object)[[1]]
     }
@@ -337,6 +337,7 @@ NULL
     if (!is.null(metadata(object)[["cbCutoff"]])) {
         # This will be deprecated in a future release in favor of the longer
         # spelling variant
+        # FIXME Add a warning here if we detect cbCutoff?
         cutoffLine <- metadata(object)[["cbCutoff"]]
     } else if (!is.null(metadata(object)[["cellularBarcodeCutoff"]])) {
         cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
