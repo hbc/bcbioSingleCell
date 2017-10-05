@@ -57,11 +57,13 @@ NULL
                 formula = formula,
                 data = metrics,
                 FUN = median) %>%
-            left_join(meta, by = "sampleName")
+            left_join(meta, by = "sampleName") %>%
+            mutate(log10GenesPerUMI = round(.data[["log10GenesPerUMI"]],
+                                            digits = 2))
         p <- p +
             geom_label(
                 data = medianNovelty,
-                aes_(label = ~round(log10GenesPerUMI, digits = 2)),
+                mapping = aes_string(label = "log10GenesPerUMI"),
                 alpha = qcLabelAlpha,
                 color = qcLabelColor,
                 fill = qcLabelFill,
@@ -103,6 +105,7 @@ NULL
 
 .plotNoveltyHistogram <- function(
     object,
+    interestingGroup = "sampleName",
     min = 0,
     filterCells = FALSE,
     aggregateReplicates = FALSE) {
@@ -114,14 +117,22 @@ NULL
         metrics,
         mapping = aes_string(
             x = "log10GenesPerUMI",
-            fill = "sampleName")
+            fill = interestingGroup)
     ) +
-        labs(x = "log10 genes per UMI",
-             fill = "sample") +
-        geom_histogram(bins = bins) +
+        labs(x = "log10 genes per UMI") +
         scale_x_sqrt() +
-        scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE)
+        scale_y_sqrt()
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroup == "sampleName") {
+        p <- p +
+            geom_histogram(bins = bins, fill = "black")
+    } else {
+        p <- p +
+            geom_histogram(bins = bins) +
+            scale_fill_viridis(discrete = TRUE)
+    }
 
     # Cutoff lines
     if (min > 0) {
@@ -165,6 +176,9 @@ NULL
             metadata() %>%
             .[["filterParams"]] %>%
             .[["minNovelty"]]
+        if (is.null(min)) {
+            min <- 0
+        }
     }
     plot_grid(
         .plotNoveltyHistogram(

@@ -32,7 +32,7 @@ NULL
     ) +
         labs(x = "sample",
              y = "umis per cell") +
-        scale_y_log10() +
+        scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
     if (!isTRUE(aggregateReplicates) &
@@ -103,6 +103,7 @@ NULL
 
 .plotUMIsPerCellHistogram <- function(
     object,
+    interestingGroup = "sampleName",
     min = 0,
     filterCells = FALSE,
     aggregateReplicates = FALSE) {
@@ -114,15 +115,24 @@ NULL
         metrics,
         mapping = aes_string(
             x = "nUMI",
-            fill = "sampleName")
+            fill = interestingGroup)
     ) +
-        labs(x = "umis per cell",
-             fill = "sample") +
-        geom_histogram(bins = bins) +
+        labs(x = "umis per cell") +
         scale_x_log10() +
         scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE) +
+
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroup == "sampleName") {
+        p <- p +
+            geom_histogram(bins = bins, fill = "black")
+    } else {
+        p <- p +
+            geom_histogram(bins = bins) +
+            scale_fill_viridis(discrete = TRUE)
+    }
 
     # Cutoff lines
     if (min > 0) {
@@ -166,6 +176,9 @@ NULL
             metadata() %>%
             .[["filterParams"]] %>%
             .[["minUMIs"]]
+        if (is.null(min)) {
+            min <- 0
+        }
     }
     plot_grid(
         .plotUMIsPerCellHistogram(
@@ -180,8 +193,7 @@ NULL
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
         labels = "auto",
-        nrow = 2
-    )
+        nrow = 2)
 }
 
 

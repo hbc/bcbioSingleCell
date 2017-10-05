@@ -25,16 +25,38 @@ NULL
         mapping = aes_string(
             x = "nUMI",
             y = "nGene",
-            color = interestingGroup)
+            color = interestingGroup,
+            fill = interestingGroup)
     ) +
         labs(x = "umis per cell",
              y = "genes per cell") +
-        geom_point(alpha = 0.25, size = 0.8) +
-        geom_smooth(method = "gam", se = FALSE, size = 2) +
         scale_x_log10() +
         scale_y_log10() +
-        scale_color_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroup == "sampleName") {
+        p <- p +
+            geom_point(
+                color = "gray",
+                size = 0.8) +
+            geom_smooth(
+                color = "black",
+                method = "gam",
+                se = FALSE,
+                size = 1.5)
+    } else {
+        p <- p +
+            geom_point(
+                alpha = 0.25,
+                size = 0.8) +
+            geom_smooth(
+                method = "gam",
+                se = FALSE,
+                size = 1.5) +
+            scale_color_viridis(discrete = TRUE)
+    }
 
     # Facets
     facets <- NULL

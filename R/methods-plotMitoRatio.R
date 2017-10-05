@@ -55,11 +55,12 @@ NULL
                 formula = formula,
                 data = metrics,
                 FUN = median) %>%
-            left_join(meta, by = "sampleName")
+            left_join(meta, by = "sampleName") %>%
+            mutate(mitoRatio = round(.data[["mitoRatio"]], digits = 2))
         p <- p +
             geom_label(
                 data = medianMitoRatio,
-                mapping = aes_(label = ~round(mitoRatio, digits = 2)),
+                mapping = aes_string(label = "mitoRatio"),
                 alpha = qcLabelAlpha,
                 color = qcLabelColor,
                 fill = qcLabelFill,
@@ -115,21 +116,18 @@ NULL
             x = "mitoRatio",
             fill = interestingGroup)
     ) +
-        geom_histogram(bins = bins) +
+        labs(x = "mito ratio") +
         scale_x_sqrt() +
-        scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE) +
-        labs(x = "mito ratio",
-             y = "sample")
+        scale_y_sqrt()
 
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics) &
         interestingGroup == "sampleName") {
         p <- p +
-            geom_boxplot(color = lineColor, fill = "white")
+            geom_histogram(bins = bins, fill = "black")
     } else {
         p <- p +
-            geom_boxplot(color = lineColor) +
+            geom_histogram(bins = bins) +
             scale_fill_viridis(discrete = TRUE)
     }
 
@@ -179,11 +177,32 @@ NULL
     ) +
         labs(x = "mito counts",
              y = "coding counts") +
-        geom_point(alpha = 0.25, size = 0.8) +
-        geom_smooth(method = "gam", se = FALSE, size = 2) +
         scale_x_sqrt() +
-        scale_y_sqrt() +
-        scale_color_viridis(discrete = TRUE)
+        scale_y_sqrt()
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroup == "sampleName") {
+        p <- p +
+            geom_point(
+                color = "gray",
+                size = 0.8) +
+            geom_smooth(
+                color = "black",
+                method = "gam",
+                se = FALSE,
+                size = 1.5)
+    } else {
+        p <- p +
+            geom_point(
+                alpha = 0.25,
+                size = 0.8) +
+            geom_smooth(
+                method = "gam",
+                se = FALSE,
+                size = 1.5) +
+            scale_color_viridis(discrete = TRUE)
+    }
 
     # Facets
     facets <- NULL
@@ -221,6 +240,9 @@ NULL
             metadata() %>%
             .[["filterParams"]] %>%
             .[["maxMitoRatio"]]
+        if (is.null(max)) {
+            max <- 1
+        }
     }
     plot_grid(
         .plotMitoRatioScatterplot(
