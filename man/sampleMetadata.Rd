@@ -8,18 +8,16 @@
 \title{Sample Metadata}
 \usage{
 \S4method{sampleMetadata}{bcbioSingleCellANY}(object,
-  aggregateReplicates = FALSE)
+  aggregateReplicates = TRUE)
 
 \S4method{sampleMetadata}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{aggregateReplicates}{Aggregate technical replicates, if present. If
-\code{TRUE}, this function uses the values slotted in
-\code{sampleMetadata(object)[["sampleNameAggregate"]])}.
-
-[["sampleNameAggregate"]: R:[%22sampleNameAggregate%22}
+\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
+function uses values assigned in the \code{sampleNameAggregate} column of the
+internal sample metadata \link{data.frame}.}
 }
 \value{
 \link{data.frame}.

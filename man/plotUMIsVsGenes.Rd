@@ -10,7 +10,7 @@ plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{bcbioSingleCellANY}(object,
   interestingGroup = "sampleName", filterCells = FALSE,
-  aggregateReplicates = FALSE)
+  aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -21,11 +21,9 @@ plotUMIsVsGenes(object, ...)
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
-\item{aggregateReplicates}{Aggregate technical replicates, if present. If
-\code{TRUE}, this function uses the values slotted in
-\code{sampleMetadata(object)[["sampleNameAggregate"]])}.
-
-[["sampleNameAggregate"]: R:[%22sampleNameAggregate%22}
+\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
+function uses values assigned in the \code{sampleNameAggregate} column of the
+internal sample metadata \link{data.frame}.}
 }
 \value{
 \link{ggplot} grid.
