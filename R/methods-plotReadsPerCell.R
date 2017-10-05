@@ -67,7 +67,7 @@ NULL
     tibble,
     cutoffLine = NULL,
     multiplexedFASTQ = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     # FIXME Is there a way to simplify this in the tibble function instead?
     if (isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(tibble)) {
@@ -92,7 +92,7 @@ NULL
         scale_fill_viridis(discrete = TRUE)
 
     # Cutoff lines
-    if (!is.null(cutoffLine) & length(cutoffLine)) {
+    if (cutoffLine > 0 & length(cutoffLine)) {
         p <- p +
             .qcCutoffLine(yintercept = cutoffLine)
     }
@@ -131,9 +131,9 @@ NULL
 #' @return [ggplot].
 .plotRawCBHistogram <- function(
     tibble,
-    cutoffLine = NULL,
+    cutoffLine = 0,
     multiplexedFASTQ = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     # FIXME Again, try to set this at the tibble step instead
     if (isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(tibble)) {
@@ -156,7 +156,7 @@ NULL
         scale_fill_viridis(discrete = TRUE)
 
     # Cutoff lines
-    if (!is.null(cutoffLine) & length(cutoffLine)) {
+    if (cutoffLine > 0 & length(cutoffLine)) {
         p <- p +
             .qcCutoffLine(xintercept = cutoffLine)
     }
@@ -198,7 +198,7 @@ NULL
 .proportionalCBTibble <- function(
     object,
     filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     # FIXME Need to add aggregation support for the calculations here
     if (isTRUE(aggregateReplicates)) {
         stop("aggregateReplicates support not added yet")
@@ -259,7 +259,7 @@ NULL
     tibble,
     cutoffLine = NULL,
     multiplexedFASTQ = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
 
     p <- ggplot(
         tibble,
@@ -314,7 +314,7 @@ NULL
     object,
     interestingGroup,
     filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     if (metadata(object)[["pipeline"]] != "bcbio") {
         warning(paste(
             "'plotReadsPerCell()' currently only supports",
@@ -343,7 +343,7 @@ NULL
         cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
     } else {
         warning("Failed to detect cellular barcode cutoff")
-        cutoffLine <- NULL
+        cutoffLine <- 0
     }
     cutoffLine <- cutoffLine %>%
         as.numeric() %>%

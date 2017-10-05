@@ -37,7 +37,7 @@ NULL
 # Constructors ====
 .filterCells <- function(
     object,
-    aggregateReplicates = FALSE,
+    aggregateReplicates = TRUE,
     minUMIs = 500,
     minGenes = 500,
     maxGenes = Inf,

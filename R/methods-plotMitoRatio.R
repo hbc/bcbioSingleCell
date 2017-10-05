@@ -16,7 +16,7 @@ NULL
     interestingGroup = "sampleName",
     max = 1,
     filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
         filterCells = filterCells,
@@ -105,7 +105,7 @@ NULL
     interestingGroup = "sampleName",
     max = 1,
     filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
         filterCells = filterCells,
@@ -163,7 +163,7 @@ NULL
     object,
     interestingGroup = "sampleName",
     filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
         filterCells = filterCells,
@@ -231,7 +231,7 @@ NULL
     interestingGroup,
     max,
     filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     if (missing(interestingGroup)) {
         interestingGroup <- interestingGroups(object)[[1]]
     }

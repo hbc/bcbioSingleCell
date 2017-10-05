@@ -26,7 +26,7 @@ NULL
 #'
 #' @return [data.frame].
 #' @noRd
-.metrics <- function(object, aggregateReplicates = FALSE) {
+.metrics <- function(object, aggregateReplicates = TRUE) {
     colData <- colData(object) %>%
         as.data.frame() %>%
         rownames_to_column("cellID")
@@ -76,7 +76,7 @@ NULL
 setMethod("metrics", "bcbioSingleCell", function(
     object,
     filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     if (isTRUE(filterCells)) {
         cells <- metadata(object)[["filterCells"]]
         if (!is.null(cells)) {

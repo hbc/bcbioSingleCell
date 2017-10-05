@@ -15,7 +15,7 @@ NULL
     object,
     interestingGroup,
     filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     if (missing(interestingGroup)) {
         interestingGroup <- .interestingGroup(object)
     }

@@ -16,7 +16,7 @@ NULL
 #' @export
 setMethod("sampleMetadata", "bcbioSingleCellANY", function(
     object,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     meta <- metadata(object)[["sampleMetadata"]] %>%
         as.data.frame()
     if (isTRUE(aggregateReplicates) &

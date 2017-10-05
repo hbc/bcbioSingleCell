@@ -15,7 +15,7 @@ NULL
     object,
     interestingGroup = "sampleName",
     filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
         filterCells = filterCells,
