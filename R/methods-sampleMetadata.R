@@ -17,7 +17,8 @@ NULL
 setMethod("sampleMetadata", "bcbioSingleCellANY", function(
     object,
     aggregateReplicates = FALSE) {
-    meta <- metadata(object)[["sampleMetadata"]]
+    meta <- metadata(object)[["sampleMetadata"]] %>%
+        as.data.frame()
     if (isTRUE(aggregateReplicates)) {
         if (!"sampleNameAggregate" %in% colnames(meta)) {
             if (!"sampleNameAggregate" %in% colnames(meta)) {
