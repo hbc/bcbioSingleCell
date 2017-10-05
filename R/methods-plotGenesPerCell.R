@@ -113,6 +113,7 @@ NULL
 
 .plotGenesPerCellHistogram <- function(
     object,
+    interestingGroup = "sampleName",
     min = 0,
     max = Inf,
     filterCells = FALSE,
@@ -125,15 +126,23 @@ NULL
         metrics,
         mapping = aes_string(
             x = "nGene",
-            fill = "sampleName")
+            fill = interestingGroup)
     ) +
-        labs(x = "genes per cell",
-             fill = "sample") +
-        geom_histogram(bins = bins) +
+        labs(x = "genes per cell") +
         scale_x_sqrt() +
         scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroup == "sampleName") {
+        p <- p +
+            geom_histogram(bins = bins, fill = "black")
+    } else {
+        p <- p +
+            geom_histogram(bins = bins) +
+            scale_fill_viridis(discrete = TRUE)
+    }
 
     # Cutoff lines
     if (min > 0) {
@@ -182,12 +191,18 @@ NULL
             metadata() %>%
             .[["filterParams"]] %>%
             .[["minGenes"]]
+        if (is.null(min)) {
+            min <- 0
+        }
     }
     if (missing(max)) {
         max <- object %>%
             metadata() %>%
             .[["filterParams"]] %>%
             .[["maxGenes"]]
+        if (is.null(max)) {
+            max <- Inf
+        }
     }
     plot_grid(
         .plotGenesPerCellHistogram(
