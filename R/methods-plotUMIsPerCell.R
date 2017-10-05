@@ -16,7 +16,7 @@ NULL
 .plotUMIsPerCellBoxplot <- function(
     object,
     interestingGroup = "sampleName",
-    min = NULL,
+    min = 0,
     filterCells = FALSE,
     aggregateReplicates = FALSE) {
     metrics <- metrics(
@@ -63,7 +63,7 @@ NULL
     }
 
     # Cutoff lines
-    if (!is.null(min)) {
+    if (min > 0) {
         p <- p +
             .qcCutoffLine(yintercept = min)
     }
@@ -94,7 +94,7 @@ NULL
 
 .plotUMIsPerCellHistogram <- function(
     object,
-    min = NULL,
+    min = 0,
     filterCells = FALSE,
     aggregateReplicates = FALSE) {
     metrics <- metrics(
@@ -116,7 +116,7 @@ NULL
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
     # Cutoff lines
-    if (!is.null(min)) {
+    if (min > 0) {
         p <- p +
             .qcCutoffLine(xintercept = min)
     }
