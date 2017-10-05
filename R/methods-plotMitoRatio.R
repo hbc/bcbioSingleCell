@@ -28,12 +28,23 @@ NULL
             y = "mitoRatio",
             fill = interestingGroup)
     ) +
-        geom_boxplot(color = lineColor) +
         scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE) +
         labs(x = "sample",
              y = "mito ratio") +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroup == "sampleName") {
+        p <- p +
+            geom_boxplot(color = lineColor, fill = "white")
+    } else {
+        p <- p +
+            geom_boxplot(color = lineColor) +
+            scale_fill_viridis(discrete = TRUE)
+    }
+
+    # Median labels
     if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
         formula <- formula(paste("mitoRatio", "sampleName", sep = " ~ "))
         meta <- sampleMetadata(
@@ -110,6 +121,17 @@ NULL
         scale_fill_viridis(discrete = TRUE) +
         labs(x = "mito ratio",
              y = "sample")
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroup == "sampleName") {
+        p <- p +
+            geom_boxplot(color = lineColor, fill = "white")
+    } else {
+        p <- p +
+            geom_boxplot(color = lineColor) +
+            scale_fill_viridis(discrete = TRUE)
+    }
 
     # Cutoff lines
     if (max < 1) {

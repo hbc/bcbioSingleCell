@@ -32,10 +32,19 @@ NULL
     ) +
         labs(x = "sample",
              y = "umis per cell") +
-        geom_boxplot(color = lineColor) +
         scale_y_log10() +
-        scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroup == "sampleName") {
+        p <- p +
+            geom_boxplot(color = lineColor, fill = "white")
+    } else {
+        p <- p +
+            geom_boxplot(color = lineColor) +
+            scale_fill_viridis(discrete = TRUE)
+    }
 
     # Median labels
     if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
