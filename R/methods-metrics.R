@@ -30,7 +30,8 @@ NULL
     colData <- colData(object) %>%
         as.data.frame() %>%
         rownames_to_column("cellID")
-    meta <- sampleMetadata(object)
+    meta <- metadata(object)[["sampleMetadata"]] %>%
+        as.data.frame()
 
     # Rename `sampleName` when aggregating replicates
     if (isTRUE(aggregateReplicates) &
