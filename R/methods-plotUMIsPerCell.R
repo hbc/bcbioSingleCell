@@ -17,22 +17,37 @@ NULL
     object,
     interestingGroup = "sampleName",
     min = NULL,
-    filterCells = FALSE) {
-    metrics <- metrics(object, filterCells = filterCells)
-    p <- ggplot(metrics,
-                mapping = aes_string(
-                    x = "sampleName",
-                    y = "nUMI",
-                    fill = interestingGroup)) +
+    filterCells = FALSE,
+    aggregateReplicates = FALSE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "nUMI",
+            fill = interestingGroup)
+    ) +
+        labs(x = "sample",
+             y = "umis per cell") +
         geom_boxplot(color = lineColor) +
         scale_y_log10() +
         scale_fill_viridis(discrete = TRUE) +
-        labs(x = "sample",
-             y = "umis per cell") +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    # Median labels
     if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
-        medianUMIs <- aggregate(nUMI ~ sampleID, metrics, median) %>%
-            left_join(sampleMetadata(object), by = "sampleID") %>%
+        formula <- formula(paste("nUMI", "sampleName", sep = " ~ "))
+        meta <- sampleMetadata(
+            object,
+            aggregateReplicates = aggregateReplicates)
+        medianUMIs <- aggregate(
+            formula = formula,
+            data = metrics,
+            FUN = median) %>%
+            left_join(meta, by = "sampleName") %>%
             mutate(nUMI = round(.data[["nUMI"]]))
         p <- p +
             geom_label(
@@ -46,14 +61,32 @@ NULL
                 label.size = qcLabelSize,
                 show.legend = FALSE)
     }
+
+    # Cutoff lines
     if (!is.null(min)) {
         p <- p +
             .qcCutoffLine(yintercept = min)
     }
+
+    # Facets
+    facets <- NULL
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p +
-            facet_wrap(~fileName)
+        facets <- c(facets, "fileName")
     }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+        if (interestingGroup == "sampleName") {
+            p <- p +
+                theme(legend.position = "none")
+        }
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets,
+                       scales = "free_x")
+    }
+
     p
 }
 
@@ -62,26 +95,49 @@ NULL
 .plotUMIsPerCellHistogram <- function(
     object,
     min = NULL,
-    filterCells = FALSE) {
-    metrics <- metrics(object, filterCells = filterCells)
-    p <- ggplot(metrics,
-                mapping = aes_string(
-                    x = "nUMI",
-                    fill = "sampleName")) +
-        labs(x = "umis per cell") +
+    filterCells = FALSE,
+    aggregateReplicates = FALSE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "nUMI",
+            fill = "sampleName")
+    ) +
+        labs(x = "umis per cell",
+             fill = "sample") +
         geom_histogram(bins = bins) +
         scale_x_log10() +
         scale_y_sqrt() +
         scale_fill_viridis(discrete = TRUE) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    # Cutoff lines
     if (!is.null(min)) {
         p <- p +
             .qcCutoffLine(xintercept = min)
     }
+
+    # Facets
+    facets <- NULL
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p +
-            facet_wrap(~fileName)
+        facets <- c(facets, "fileName")
     }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+        # Turn off the legend
+        p <- p +
+            theme(legend.position = "none")
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets)
+    }
+
     p
 }
 
@@ -91,7 +147,8 @@ NULL
     object,
     interestingGroup,
     min,
-    filterCells = FALSE) {
+    filterCells = FALSE,
+    aggregateReplicates = FALSE) {
     if (missing(interestingGroup)) {
         interestingGroup <- interestingGroups(object)[[1]]
     }
@@ -105,12 +162,14 @@ NULL
         .plotUMIsPerCellHistogram(
             object,
             min = min,
-            filterCells = filterCells),
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
         .plotUMIsPerCellBoxplot(
             object,
             interestingGroup = interestingGroup,
             min = min,
-            filterCells = filterCells),
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
         labels = "auto",
         nrow = 2
     )
