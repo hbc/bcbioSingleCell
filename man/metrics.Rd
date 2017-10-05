@@ -11,8 +11,6 @@
 \S4method{metrics}{bcbioSingleCell}(object, filterCells = FALSE,
   aggregateReplicates = FALSE)
 
-\S4method{metrics}{bcbioSingleCellLegacy}(object, aggregateReplicates = FALSE)
-
 \S4method{metrics}{seurat}(object)
 }
 \arguments{

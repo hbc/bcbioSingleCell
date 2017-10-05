@@ -92,6 +92,7 @@ setMethod("metrics", "bcbioSingleCell", function(
 
 
 #' @rdname metrics
+#' @usage NULL
 #' @export
 setMethod("metrics", "bcbioSingleCellLegacy", function(
     object,
