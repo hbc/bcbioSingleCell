@@ -16,7 +16,7 @@ NULL
 .plotNoveltyBoxplot <- function(
     object,
     interestingGroup = "sampleName",
-    min = NULL,
+    min = 0,
     filterCells = FALSE,
     aggregateReplicates = FALSE) {
     metrics <- metrics(
@@ -63,7 +63,7 @@ NULL
     }
 
     # Cutoff lines
-    if (!is.null(min)) {
+    if (min > 0) {
         p <- p +
             .qcCutoffLine(yintercept = min)
     }
@@ -94,7 +94,7 @@ NULL
 
 .plotNoveltyHistogram <- function(
     object,
-    min = NULL,
+    min = 0,
     filterCells = FALSE,
     aggregateReplicates = FALSE) {
     metrics <- metrics(
@@ -115,7 +115,7 @@ NULL
         scale_fill_viridis(discrete = TRUE)
 
     # Cutoff lines
-    if (!is.null(min)) {
+    if (min > 0) {
         p <- p +
             .qcCutoffLine(xintercept = min)
     }
