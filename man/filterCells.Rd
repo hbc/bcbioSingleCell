@@ -10,7 +10,7 @@
 filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, aggregateReplicates = TRUE,
-  minUMIs = 500, minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1,
+  minUMIs = 1000, minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1,
   minNovelty = 0.8, showReport = TRUE, headerLevel = 2)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
