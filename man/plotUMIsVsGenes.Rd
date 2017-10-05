@@ -8,12 +8,24 @@
 \usage{
 plotUMIsVsGenes(object, ...)
 
-\S4method{plotUMIsVsGenes}{bcbioSingleCellANY}(object)
+\S4method{plotUMIsVsGenes}{bcbioSingleCellANY}(object,
+  interestingGroup = "sampleName", filterCells = FALSE,
+  aggregateReplicates = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{interestingGroup}{Interesting group, to use for colors.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if present. If
+\code{TRUE}, this function uses the values slotted in
+\code{sampleMetadata(object)[["sampleNameAggregate"]])}.
+
+[["sampleNameAggregate"]: R:[%22sampleNameAggregate%22}
 }
 \value{
 \link{ggplot} grid.
