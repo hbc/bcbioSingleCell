@@ -14,7 +14,7 @@ NULL
 .plotMitoRatioBoxplot <- function(
     object,
     interestingGroup = "sampleName",
-    max = Inf,
+    max = 1,
     filterCells = FALSE,
     aggregateReplicates = FALSE) {
     metrics <- metrics(
@@ -59,7 +59,7 @@ NULL
     }
 
     # Cutoff lines
-    if (max < Inf) {
+    if (max < 1) {
         p <- p +
             .qcCutoffLine(yintercept = max)
     }
@@ -91,7 +91,7 @@ NULL
 .plotMitoRatioHistogram <- function(
     object,
     interestingGroup = "sampleName",
-    max = Inf,
+    max = 1,
     filterCells = FALSE,
     aggregateReplicates = FALSE) {
     metrics <- metrics(
@@ -112,7 +112,7 @@ NULL
              y = "sample")
 
     # Cutoff lines
-    if (max < Inf) {
+    if (max < 1) {
         p <- p +
             .qcCutoffLine(xintercept = max)
     }
