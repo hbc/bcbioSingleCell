@@ -20,8 +20,8 @@ NULL
 .plotGenesPerCellBoxplot <- function(
     object,
     interestingGroup = "sampleName",
-    min = NULL,
-    max = NULL,
+    min = 0,
+    max = Inf,
     filterCells = FALSE,
     aggregateReplicates = FALSE) {
     metrics <- metrics(
@@ -69,11 +69,11 @@ NULL
     }
 
     # Cutoff lines
-    if (!is.null(min)) {
+    if (min > 0) {
         p <- p +
             .qcCutoffLine(yintercept = min)
     }
-    if (!is.null(max)) {
+    if (max < Inf) {
         p <- p +
             .qcCutoffLine(yintercept = max)
     }
@@ -104,8 +104,8 @@ NULL
 
 .plotGenesPerCellHistogram <- function(
     object,
-    min = NULL,
-    max = NULL,
+    min = 0,
+    max = Inf,
     filterCells = FALSE,
     aggregateReplicates = FALSE) {
     metrics <- metrics(
@@ -127,11 +127,11 @@ NULL
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
     # Cutoff lines
-    if (!is.null(min)) {
+    if (min > 0) {
         p <- p +
             .qcCutoffLine(xintercept = min)
     }
-    if (!is.null(max)) {
+    if (max < Inf) {
         p <- p +
             .qcCutoffLine(xintercept = max)
     }
