@@ -33,11 +33,10 @@ NULL
     meta <- sampleMetadata(object)
 
     # Rename `sampleName` when aggregating replicates
-    if (isTRUE(aggregateReplicates)) {
-        if ("sampleNameAggregate" %in% colnames(meta)) {
-            meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
-            meta[["sampleNameAggregate"]] <- NULL
-        }
+    if (isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(meta)) {
+        meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
+        meta[["sampleNameAggregate"]] <- NULL
     }
 
     # Get the barcode format based on the umiType

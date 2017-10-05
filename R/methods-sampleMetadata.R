@@ -19,15 +19,8 @@ setMethod("sampleMetadata", "bcbioSingleCellANY", function(
     aggregateReplicates = FALSE) {
     meta <- metadata(object)[["sampleMetadata"]] %>%
         as.data.frame()
-    if (isTRUE(aggregateReplicates)) {
-        if (!"sampleNameAggregate" %in% colnames(meta)) {
-            if (!"sampleNameAggregate" %in% colnames(meta)) {
-                stop(paste(
-                    "'sampleNameAggregate' column must be set in sample",
-                    "metadata to aggregate replicates"
-                ))
-            }
-        }
+    if (isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(meta)) {
         meta <- meta %>%
             mutate(sampleName = .data[["sampleNameAggregate"]],
                    sampleID = make.names(.data[["sampleName"]]),
