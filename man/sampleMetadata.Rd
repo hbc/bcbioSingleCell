@@ -7,12 +7,19 @@
 \alias{sampleMetadata,seurat-method}
 \title{Sample Metadata}
 \usage{
-\S4method{sampleMetadata}{bcbioSingleCellANY}(object)
+\S4method{sampleMetadata}{bcbioSingleCellANY}(object,
+  aggregateReplicates = FALSE)
 
 \S4method{sampleMetadata}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if present. If
+\code{TRUE}, this function uses the values slotted in
+\code{sampleMetadata(object)[["sampleNameAggregate"]])}.
+
+[["sampleNameAggregate"]: R:[%22sampleNameAggregate%22}
 }
 \value{
 \link{data.frame}.

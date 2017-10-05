@@ -8,16 +8,23 @@
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{bcbioSingleCell}(object, filterCells = TRUE)
+\S4method{metrics}{bcbioSingleCell}(object, filterCells = FALSE,
+  aggregateReplicates = FALSE)
 
-\S4method{metrics}{bcbioSingleCellLegacy}(object)
+\S4method{metrics}{bcbioSingleCellLegacy}(object, aggregateReplicates = FALSE)
 
 \S4method{metrics}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{filterCells}{Only return cells that pass filtering criteria.}
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if present. If
+\code{TRUE}, this function uses the values slotted in
+\code{sampleMetadata(object)[["sampleNameAggregate"]])}.
+
+[["sampleNameAggregate"]: R:[%22sampleNameAggregate%22}
 }
 \value{
 \link{data.frame} with cellular barcodes as rows.

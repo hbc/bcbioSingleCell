@@ -9,7 +9,7 @@
 plotNovelty(object, ...)
 
 \S4method{plotNovelty}{bcbioSingleCellANY}(object, interestingGroup, min,
-  filterCells = FALSE, aggregateReplicates = TRUE)
+  filterCells = FALSE, aggregateReplicates = FALSE)
 }
 \arguments{
 \item{object}{Object.}
