@@ -18,20 +18,15 @@ NULL
     interestingGroup = "sampleName",
     min = NULL,
     filterCells = FALSE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(object, filterCells = filterCells)
-
-    if (isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        xCol <- "sampleNameAggregate"
-    } else {
-        xCol <- "sampleName"
-    }
-
+    aggregateReplicates = FALSE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
     p <- ggplot(
         metrics,
         mapping = aes_string(
-            x = xCol,
+            x = "sampleName",
             y = "log10GenesPerUMI",
             fill = interestingGroup)
     ) +
@@ -43,14 +38,17 @@ NULL
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
     # Median labels
-    if (length(unique(metrics[[xCol]])) <= qcLabelMaxNum) {
-        formula <- formula(paste("log10GenesPerUMI", xCol, sep = " ~ "))
+    if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
+        formula <- formula(paste("log10GenesPerUMI", "sampleName", sep = " ~ "))
+        meta <- sampleMetadata(
+            object,
+            aggregateReplicates = aggregateReplicates)
         medianNovelty <-
             aggregate(
                 formula = formula,
                 data = metrics,
                 FUN = median) %>%
-            left_join(sampleMetadata(object), by = xCol)
+            left_join(meta, by = "sampleName")
         p <- p +
             geom_label(
                 data = medianNovelty,
@@ -72,10 +70,17 @@ NULL
 
     # Facets
     facets <- NULL
-
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
+        facets <- c(facets, "fileName")
+    }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+    }
+    if (!is.null(facets)) {
         p <- p +
-            facet_wrap(facets = facets)
+            facet_wrap(facets = facets,
+                       scales = "free_x")
     }
 
     p
@@ -87,21 +92,16 @@ NULL
     object,
     min = NULL,
     filterCells = FALSE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(object, filterCells = filterCells)
-
-    if (isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        fill <- "sampleNameAggregate"
-    } else {
-        fill <- "sampleName"
-    }
-
+    aggregateReplicates = FALSE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
     p <- ggplot(
         metrics,
         mapping = aes_string(
             x = "log10GenesPerUMI",
-            fill = fill)
+            fill = "sampleName")
     ) +
         labs(x = "log10 genes per UMI",
              fill = "sample") +
@@ -116,10 +116,21 @@ NULL
             .qcCutoffLine(xintercept = min)
     }
 
-    # Facet wrap multiplexed files
+    # Facets
+    facets <- NULL
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
+        facets <- c(facets, "fileName")
+    }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+        # Turn off the legend
         p <- p +
-            facet_wrap(~fileName)
+            theme(legend.position = "none")
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets)
     }
 
     p
@@ -132,7 +143,7 @@ NULL
     interestingGroup,
     min,
     filterCells = FALSE,
-    aggregateReplicates = TRUE) {
+    aggregateReplicates = FALSE) {
     if (missing(interestingGroup)) {
         interestingGroup <- interestingGroups(object)[[1]]
     }
