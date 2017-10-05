@@ -9,6 +9,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#' @inheritParams metrics
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.
 #' @param maxGenes Maximum number of genes detected.
@@ -36,9 +37,10 @@ NULL
 # Constructors ====
 .filterCells <- function(
     object,
-    minUMIs = 1000,
+    aggregateReplicates = FALSE,
+    minUMIs = 500,
     minGenes = 500,
-    maxGenes = NULL,
+    maxGenes = Inf,
     maxMitoRatio = 0.1,
     minNovelty = 0.8,
     showReport = TRUE,
@@ -49,9 +51,13 @@ NULL
         message()
 
     # Use the metrics data.frame to identify filtered cells
-    metrics <- metrics(object) %>%
+    metrics <- metrics(
+        object,
+        filterCells = FALSE,
+        aggregateReplicates = aggregateReplicates) %>%
         as.data.frame() %>%
         rownames_to_column("cell")
+
     if (!is.null(minUMIs)) {
         metrics <- metrics %>%
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
@@ -98,52 +104,83 @@ NULL
             paste0("`>= ", minNovelty, "` novelty score")),
             asis = TRUE)
 
-        mdHeader("Filtered metrics plots",
-                 level = headerLevel,
-                 tabset = TRUE,
-                 asis = TRUE)
+        mdHeader(
+            "Filtered metrics plots",
+            level = headerLevel,
+            tabset = TRUE,
+            asis = TRUE)
 
         # Reads per cell currently only supported for bcbio runs
         if (metadata(object)[["pipeline"]] == "bcbio") {
-            mdHeader("Reads per cell", level = headerLevel + 1, asis = TRUE)
-            plotReadsPerCell(object, filterCells = TRUE) %>%
+            mdHeader(
+                "Reads per cell",
+                level = headerLevel + 1,
+                asis = TRUE)
+            plotReadsPerCell(
+                object,
+                filterCells = TRUE,
+                aggregateReplicates = aggregateReplicates) %>%
                 show()
         }
 
-        mdHeader("Cell counts",
-                 level = headerLevel + 1,
-                 asis = TRUE)
-        plotCellCounts(object, filterCells = TRUE) %>%
+        mdHeader(
+            "Cell counts",
+            level = headerLevel + 1,
+            asis = TRUE)
+        plotCellCounts(
+            object,
+            filterCells = TRUE,
+            aggregateReplicates = aggregateReplicates) %>%
             show()
 
-        mdHeader("UMI counts per cell",
-                 level = headerLevel + 1,
-                 asis = TRUE)
-        plotUMIsPerCell(object, filterCells = TRUE) %>%
+        mdHeader(
+            "UMI counts per cell",
+            level = headerLevel + 1,
+            asis = TRUE)
+        plotUMIsPerCell(
+            object,
+            filterCells = TRUE,
+            aggregateReplicates = aggregateReplicates) %>%
             show()
 
-        mdHeader("Genes detected",
-                 level = headerLevel + 1,
-                 asis = TRUE)
-        plotGenesPerCell(object, filterCells = TRUE) %>%
+        mdHeader(
+            "Genes detected",
+            level = headerLevel + 1,
+            asis = TRUE)
+        plotGenesPerCell(
+            object,
+            filterCells = TRUE,
+            aggregateReplicates = aggregateReplicates) %>%
             show()
 
-        mdHeader("UMIs vs. genes",
-                 level = headerLevel + 1,
-                 asis = TRUE)
-        plotUMIsVsGenes(object, filterCells = TRUE) %>%
+        mdHeader(
+            "UMIs vs. genes",
+            level = headerLevel + 1,
+            asis = TRUE)
+        plotUMIsVsGenes(
+            object,
+            filterCells = TRUE,
+            aggregateReplicates = aggregateReplicates) %>%
             show()
 
-        mdHeader("Mitochondrial counts ratio",
-                 level = headerLevel + 1,
-                 asis = TRUE)
-        plotMitoRatio(object, filterCells = TRUE) %>%
+        mdHeader(
+            "Mitochondrial counts ratio",
+            level = headerLevel + 1,
+            asis = TRUE)
+        plotMitoRatio(
+            object,
+            filterCells = TRUE,
+            aggregateReplicates = aggregateReplicates) %>%
             show()
 
-        mdHeader("Novelty",
-                 level = headerLevel + 1,
-                 asis = TRUE)
-        plotNovelty(object, filterCells = TRUE) %>%
+        mdHeader(
+            "Novelty",
+            level = headerLevel + 1,
+            asis = TRUE)
+        plotNovelty(
+            object,
+            filterCells = TRUE,
+            aggregateReplicates = aggregateReplicates) %>%
             show()
     }
 
