@@ -148,7 +148,7 @@ NULL
     # Facets
     facets <- NULL
     if (isTRUE(multiplexedFASTQ)) {
-        facets <- c(facets, "fileName")
+        facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(tibble)) {
@@ -213,7 +213,7 @@ NULL
     # Facets
     facets <- NULL
     if (isTRUE(multiplexedFASTQ)) {
-        facets <- c(facets, "fileName")
+        facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(tibble)) {
@@ -270,7 +270,7 @@ NULL
     # Facets
     facets <- NULL
     if (isTRUE(multiplexedFASTQ)) {
-        facets <- c(facets, "fileName")
+        facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(tibble)) {

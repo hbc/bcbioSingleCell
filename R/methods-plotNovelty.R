@@ -82,7 +82,7 @@ NULL
     # Facets
     facets <- NULL
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        facets <- c(facets, "fileName")
+        facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics)) {
@@ -140,7 +140,7 @@ NULL
     # Facets
     facets <- NULL
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        facets <- c(facets, "fileName")
+        facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics)) {

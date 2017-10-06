@@ -23,7 +23,7 @@ NULL
     df <- data.frame(
         dropout = (nrow(present) - Matrix::colSums(present)) / nrow(present),
         depth = Matrix::colSums(counts),
-        fileName = metrics[["fileName"]])
+        description = metrics[["description"]])
     p <- ggplot(
         df,
         mapping = aes_(
@@ -36,7 +36,7 @@ NULL
              y = "% genes zero")
     if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
         p <- p +
-            facet_wrap(~fileName)
+            facet_wrap(facets = "description")
     }
     p
 }
