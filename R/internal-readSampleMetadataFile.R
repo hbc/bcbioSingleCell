@@ -8,103 +8,93 @@
 #' @noRd
 #'
 #' @param file Sample metadata file.
-#' @param sampleDirs Sample directory paths.
-#' @param pipeline Pipeline used to process the samples.
-#' @param uniqueNames Ensure sample names are unique.
 #'
 #' @return [data.frame].
-.readSampleMetadataFile <- function(
-    file,
-    sampleDirs,
-    pipeline) {
+.readSampleMetadataFile <- function(file) {
     meta <- readFileByExtension(file)
 
-    if (pipeline == "bcbio") {
-        # Stop on legacy `samplename` column. We need to work on improving the
-        # consistency in examples or the internal handlng of file and sample
-        # names in a future update.
-        if ("samplename" %in% colnames(meta)) {
+    # Stop on legacy `samplename` column. We need to work on improving the
+    # consistency in examples or the internal handlng of file and sample
+    # names in a future update.
+    if ("samplename" %in% colnames(meta)) {
+        stop(paste(
+            "'samplename' is used in some bcbio examples for FASTQ file names,",
+            "and 'description' for sample names. Here we are using 'fileName'",
+            "for FASTQ file names (e.g. 'control_replicate_1.fastq.gz'),",
+            "'description' for multiplexed per file sample names",
+            "(e.g. 'control replicate 1', and 'sampleName' for multiplexed",
+            "sample names (i.e. inDrop barcoded samples)."
+        ))
+    }
+
+    if (any(duplicated(meta[["description"]]))) {
+        multiplexedFASTQ <- TRUE
+    } else {
+        multiplexedFASTQ <- FALSE
+    }
+
+    if (isTRUE(multiplexedFASTQ)) {
+        requiredCols <- c("fileName", "description", "sampleName", "sequence")
+        if (!all(requiredCols %in% colnames(meta))) {
+            stop(paste("Required columns:", toString(requiredCols)))
+        }
+    } else {
+        requiredCols <- c("fileName", "description")
+        if (!all(requiredCols %in% colnames(meta))) {
+            stop(paste("Required columns:", toString(requiredCols)))
+        }
+        # Check for duplicate `description` and `sampleName`
+        if (all(c("description", "sampleName"))) {
             stop(paste(
-                "'samplename' is used in some bcbio examples to define FASTQ",
-                "file names, and 'description' to define sample names. Here",
-                "we are using 'sampleName' (note lowerCamelCase) in the",
-                "package to define sample names. When passing in a sample",
-                "metadata file here, use 'fileName' for file names",
-                "(e.g. 'control_replicate_1.fastq.gz') and either",
-                "'description' or 'sampleName' for sample names",
-                "(e.g. 'control replicate 1')"
+                "Specify only 'description' and omit 'sampleName' for",
+                "demultiplexed FASTQ file metadata"
             ))
         }
+        meta[["sampleName"]] <- meta[["description"]]
+    }
 
-        # Rename `description` to `sampleName`, if `sampleName` is unset
-        if ("description" %in% colnames(meta) &
-            !"sampleName" %in% colnames(meta)) {
-            message("Renamed metadata column 'description' to 'sampleName'",
-                    call. = FALSE)
-            meta <- dplyr::rename(meta, sampleName = .data[["description"]])
-        }
+    # Remove incomplete rows
+    meta <- meta %>%
+        dplyr::filter(!is.na(.data[["description"]])) %>%
+        dplyr::filter(!is.na(.data[["sampleName"]]))
 
-        # Check for general required columns
-        if (!all(c("fileName", "sampleName") %in% colnames(meta))) {
-            stop("'fileName' and 'sampleName' are required", call. = FALSE)
-        }
+    # Check that sample names are unique
+    if (any(duplicated(meta[["sampleName"]]))) {
+        stop("Sample name descriptions are not unique",
+             call. = FALSE)
+    }
 
-        # Remove incomplete rows
+    # Set the `sampleID` column
+    if (isTRUE(multiplexedFASTQ)) {
+        # The per sample directories are created by combining the
+        # `sampleName` column with the reverse complement (`revcomp`) of the
+        # index barcode sequence (`sequence`)
         meta <- meta %>%
-            dplyr::filter(!is.na(.data[["fileName"]])) %>%
-            dplyr::filter(!is.na(.data[["sampleName"]]))
-
-        # Check that sample names are unique
-        if (any(duplicated(meta[["sampleName"]]))) {
-            stop("'sampleName' column does not contain unique values",
-                 call. = FALSE)
-        }
-
-        # Check if samples are demultiplexed
-        if (length(unique(meta[["fileName"]])) == nrow(meta)) {
-            # SureCell
-            demultiplexed <- TRUE
-        } else {
-            # inDrop
-            demultiplexed <- FALSE
-        }
-
-        if (isTRUE(demultiplexed)) {
-            meta[["sampleID"]] <- meta[["sampleName"]]
-        } else {
-            # Match the UMI demultiplexed sample directories (e.g. inDrop)
-            if (!"sequence" %in% colnames(meta)) {
-                stop("Index i7 sequence required to generate 'sampleID'")
-            }
-            meta <- meta %>%
-                mutate(revcomp = vapply(.data[["sequence"]],
-                                        revcomp,
-                                        character(1)),
-                       sampleID = paste(
-                           make.names(.data[["fileName"]]),
-                           .data[["revcomp"]],
-                           sep = "_"))
-        }
-    } else if (pipeline == "cellranger") {
-        # Check for general required columns
-        if (!all(c("fileName", "sampleName") %in% colnames(meta))) {
-            stop("'fileName' and 'sampleName' are required", call. = FALSE)
-        }
-        meta[["sampleID"]] <- make.names(meta[["fileName"]])
+            mutate(
+                revcomp = vapply(.data[["sequence"]], revcomp, character(1)),
+                sampleID = paste(
+                    .data[["description"]],
+                    .data[["revcomp"]],
+                    sep = "_")
+            )
     } else {
-        stop("Unsupported pipeline")
+        meta[["sampleID"]] <- meta[["sampleName"]]
     }
 
-    # Arrange rows by `sampleID`
-    meta <- arrange(meta, !!sym("sampleID"))
-
-    # Check that `sampleID` matches `sampleDirs`
-    if (!all(meta[["sampleID"]] %in% names(sampleDirs))) {
-        stop("Sample directory names don't match the sample metadata file")
-    }
-
-    # Return
-    dplyr::select(meta, metaPriorityCols, everything()) %>%
+    meta %>%
+        mutate(
+            revcomp = vapply(.data[["sequence"]], revcomp, character(1)),
+            # Match the sample directories exactly
+            sampleID = paste(
+                .data[["description"]],
+                .data[["revcomp"]],
+                sep = "-"),
+            # Now sanitize following the sample rules in `.sampleDirs()`
+            sampleID = make.names(
+                str_replace_all(.data[["sampleID"]], "-", "_"))
+        ) %>%
+        dplyr::select(metaPriorityCols, everything()) %>%
+        arrange(!!sym("sampleID")) %>%
         as.data.frame() %>%
         set_rownames(.[["sampleID"]])
 }
