@@ -54,6 +54,12 @@
             dplyr::filter(!is.na(.data[["fileName"]])) %>%
             dplyr::filter(!is.na(.data[["sampleName"]]))
 
+        # Check that sample names are unique
+        if (any(duplicated(meta[["sampleName"]]))) {
+            stop("'sampleName' column does not contain unique values",
+                 call. = FALSE)
+        }
+
         # Check if samples are demultiplexed
         if (length(unique(meta[["fileName"]])) == nrow(meta)) {
             # SureCell
