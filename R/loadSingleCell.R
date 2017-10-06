@@ -91,45 +91,6 @@ loadSingleCell <- function(
     }
     yaml <- readYAML(yamlFile)
 
-    # Sample metadata ====
-    if (!is.null(sampleMetadataFile)) {
-        sampleMetadataFile <- normalizePath(sampleMetadataFile)
-        # TODO Add lanes support
-        sampleMetadata <- .readSampleMetadataFile(
-            file = sampleMetadataFile,
-            sampleDirs = sampleDirs,
-            pipeline = pipeline)
-    } else {
-        sampleMetadata <- .sampleYAMLMetadata(yaml)
-    }
-    if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
-        stop("Sample name mismatch", call. = FALSE)
-    }
-    sampleMetadata <- sampleMetadata %>%
-        as.data.frame() %>%
-        set_rownames(.[["sampleID"]])
-
-    # Interesting groups ====
-    # Ensure internal formatting in camelCase
-    interestingGroups <- camel(interestingGroups, strict = FALSE)
-    # Check to ensure interesting groups are defined
-    if (!all(interestingGroups %in% colnames(sampleMetadata))) {
-        stop("Interesting groups missing in sample metadata", call. = FALSE)
-    }
-
-    # Subset sample directories by metadata ====
-    # Check to see if a subset of samples is requested via the metadata file.
-    # This matches by the reverse complement sequence of the index barcode.
-    if (nrow(sampleMetadata) < length(sampleDirs)) {
-        message("Loading a subset of samples, defined by the metadata file")
-        allSamples <- FALSE
-        sampleDirs <- sampleDirs %>%
-            .[names(sampleDirs) %in% rownames(sampleMetadata)]
-        message(paste(length(sampleDirs), "samples matched by metadata"))
-    } else {
-        allSamples <- TRUE
-    }
-
     # Log files ====
     message("Reading log files")
     bcbioLog <- .logFile(
@@ -147,7 +108,8 @@ loadSingleCell <- function(
         as.numeric()
 
     # Data versions and programs ====
-    dataVersions <- .dataVersions(projectDir)
+    # `data_versions.csv` isn't always saved, so don't warn the user?
+    dataVersions <- suppressWarnings(.dataVersions(projectDir))
     programs <- .programs(projectDir)
     if (!is.null(dataVersions)) {
         genomeBuild <- dataVersions %>%
@@ -185,6 +147,53 @@ loadSingleCell <- function(
         message(paste("UMI type:", umiType))
     } else {
         stop("Failed to detect UMI type from JSON file", call. = FALSE)
+    }
+
+    # Multiplexed FASTQ ====
+    # This value determines how we assign sampleIDs and downstream plot
+    # appearance in the quality control analysis
+    if (str_detect(umiType, "indrop")) {
+        multiplexedFASTQ <- TRUE
+    } else {
+        multiplexedFASTQ <- FALSE
+    }
+
+    # Sample metadata ====
+    if (!is.null(sampleMetadataFile)) {
+        sampleMetadataFile <- normalizePath(sampleMetadataFile)
+        sampleMetadata <- .readSampleMetadataFile(sampleMetadataFile)
+    } else {
+        sampleMetadata <- .sampleYAMLMetadata(yaml)
+    }
+    # Check that `sampleID` matches `sampleDirs`
+    if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
+        stop("Sample directory names don't match the sample metadata file",
+             call. = FALSE)
+    }
+    # Ensure the rownames get set correctly
+    sampleMetadata <- sampleMetadata %>%
+        as.data.frame() %>%
+        set_rownames(.[["sampleID"]])
+
+    # Interesting groups ====
+    # Ensure internal formatting in camelCase
+    interestingGroups <- camel(interestingGroups, strict = FALSE)
+    # Check to ensure interesting groups are defined
+    if (!all(interestingGroups %in% colnames(sampleMetadata))) {
+        stop("Interesting groups missing in sample metadata", call. = FALSE)
+    }
+
+    # Subset sample directories by metadata ====
+    # Check to see if a subset of samples is requested via the metadata file.
+    # This matches by the reverse complement sequence of the index barcode.
+    if (nrow(sampleMetadata) < length(sampleDirs)) {
+        message("Loading a subset of samples, defined by the metadata file")
+        allSamples <- FALSE
+        sampleDirs <- sampleDirs %>%
+            .[names(sampleDirs) %in% rownames(sampleMetadata)]
+        message(paste(length(sampleDirs), "samples matched by metadata"))
+    } else {
+        allSamples <- TRUE
     }
 
     # Well metadata ====
@@ -259,12 +268,6 @@ loadSingleCell <- function(
         column_to_rownames("cellID")
 
     # Metadata =================================================================
-    if (str_detect(umiType, "indrop")) {
-        multiplexedFASTQ <- TRUE
-    } else {
-        multiplexedFASTQ <- FALSE
-    }
-
     metadata <- list(
         version = packageVersion("bcbioSingleCell"),
         pipeline = pipeline,
