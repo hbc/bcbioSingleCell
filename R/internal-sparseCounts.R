@@ -153,7 +153,7 @@
             length(missing),
             "rows missing from tx2gene:",
             toString(missing)
-        ))
+        ), call. = FALSE)
     }
 
     message("Converting transcript-level counts to gene-level")

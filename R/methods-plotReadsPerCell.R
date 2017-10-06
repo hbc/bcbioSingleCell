@@ -364,7 +364,7 @@ NULL
                 xlab("") +
                 theme(legend.position = "none"),
             x = 0, y = 0.7, width = 0.5, height = 0.3) +
-        suppresMessages(draw_plot(
+        suppressMessages(draw_plot(
             ridgeline +
                 ylab("") +
                 theme(axis.text.y = element_blank(),

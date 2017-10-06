@@ -32,7 +32,7 @@ setMethod("calculateMetrics", "dgCMatrix", function(
             length(missing), "genes missing in annotable",
             "used to calculate metrics:",
             toString(missing)
-        ))
+        ), call. = FALSE)
     }
 
     # Check for [Matrix::colSums()] methods support
