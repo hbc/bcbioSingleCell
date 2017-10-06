@@ -36,8 +36,9 @@
             ))
         }
 
-        # Rename `description` to `sampleName`, if set
-        if ("description" %in% colnames(meta)) {
+        # Rename `description` to `sampleName`, if `sampleName` is unset
+        if ("description" %in% colnames(meta) &
+            !"sampleName" %in% colnames(meta)) {
             message("Renamed metadata column 'description' to 'sampleName'",
                     call. = FALSE)
             meta <- dplyr::rename(meta, sampleName = .data[["description"]])
