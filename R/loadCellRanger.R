@@ -22,6 +22,8 @@ loadCellRanger <- function(
     prefilter = TRUE,
     ...) {
     pipeline <- "cellranger"
+    umiType <- "chromium"
+    multiplexedFASTQ <- FALSE
 
     # Directory paths ====
     # Check connection to final upload directory
@@ -33,8 +35,12 @@ loadCellRanger <- function(
 
     # Sample metadata ====
     sampleMetadataFile <- normalizePath(sampleMetadataFile)
-    sampleMetadata <- .readSampleMetadataFile(
-        sampleMetadataFile, sampleDirs, pipeline)
+    sampleMetadata <- .readSampleMetadataFile(sampleMetadataFile)
+    # Check that `sampleID` matches `sampleDirs`
+    if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
+        stop("Sample directory names don't match the sample metadata file",
+             call. = FALSE)
+    }
 
     # Interesting groups ====
     # Ensure internal formatting in camelCase
@@ -126,9 +132,9 @@ loadCellRanger <- function(
         annotable = annotable,
         gffFile = gtfFile,
         gene2symbol = gene2symbol,
-        umiType = "chromium",
+        umiType = umiType,
         allSamples = allSamples,
-        multiplexedFASTQ = FALSE,
+        multiplexedFASTQ = multiplexedFASTQ,
         prefilter = prefilter,
         # cellranger pipeline-specific
         refDataDir = refDataDir,
