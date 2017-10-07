@@ -58,7 +58,7 @@ NULL
                cellularBarcode = NULL,
                nCount = NULL) %>%
         left_join(meta, by = "sampleID") %>%
-        .[, c("sampleName", "log10Count")] %>%
+        mutate(sampleName = as.factor(.data[["sampleName"]])) %>%
         group_by(!!sym("sampleName"))
 }
 
@@ -71,7 +71,7 @@ NULL
 #' @noRd
 #'
 #' @param rawTibble [.rawCBTibble()] return.
-#' @param perSampleMetadata [sampleMetadata()] return with `sampleName` columns
+#' @param sampleMetadata [sampleMetadata()] return with `sampleName` columns
 #'   that match the `rawTibble`.
 #'
 #' @details Modified version of Allon Klein Lab MATLAB code.
@@ -79,12 +79,18 @@ NULL
 #' @return [tibble].
 .proportionalCBTibble <- function(
     rawTibble,
-    perSampleMetadata) {
+    sampleMetadata) {
+    # Ensure `sampleName` is set as factor across both data frames
+    rawTibble[["sampleName"]] <-
+        as.factor(rawTibble[["sampleName"]])
+    sampleMetadata[["sampleName"]] <-
+        as.factor(sampleMetadata[["sampleName"]])
     mclapply(
         seq_along(levels(rawTibble[["sampleName"]])), function(a) {
             sampleName <- levels(rawTibble[["sampleName"]])[[a]]
             cb <- rawTibble %>%
                 .[.[["sampleName"]] == sampleName, , drop = FALSE]
+            # Check for
             cbHist <- hist(cb[["log10Count"]], n = 100, plot = FALSE)
             # `counts = fLog` in MATLAB version
             counts <- cbHist[["counts"]]
@@ -98,8 +104,8 @@ NULL
                 proportion = counts * (10 ^ mids) / sum(counts * (10 ^ mids)))
         }) %>%
         bind_rows() %>%
-        mutate(sampleName = factor(.data[["sampleName"]])) %>%
-        left_join(perSampleMetadata, by = "sampleName")
+        mutate(sampleName = as.factor(.data[["sampleName"]])) %>%
+        left_join(sampleMetadata, by = "sampleName")
 }
 
 
@@ -147,7 +153,8 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexedFASTQ)) {
+    if (isTRUE(multiplexedFASTQ) &
+        length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
@@ -212,7 +219,8 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexedFASTQ)) {
+    if (isTRUE(multiplexedFASTQ) &
+        length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
@@ -269,7 +277,8 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexedFASTQ)) {
+    if (isTRUE(multiplexedFASTQ) &
+        length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
@@ -297,7 +306,7 @@ NULL
 #' @inherit plotReadsPerCell
 .plotReadsPerCell <- function(
     object,
-    interestingGroup,
+    interestingGroup = "sampleName",
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
     if (metadata(object)[["pipeline"]] != "bcbio") {
@@ -314,11 +323,11 @@ NULL
     rawTibble <- .rawCBTibble(
         object,
         filterCells = filterCells)
-    perSampleMetadata <- sampleMetadata(
+    sampleMetadata <- sampleMetadata(
         object, aggregateReplicates = aggregateReplicates)
     proportionalTibble <- .proportionalCBTibble(
         rawTibble = rawTibble,
-        perSampleMetadata = perSampleMetadata)
+        sampleMetadata = sampleMetadata)
 
     # Need to set the cellular barcode cutoff in log10 to match the plots
     if (!is.null(metadata(object)[["cbCutoff"]])) {

@@ -81,7 +81,8 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(metrics[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
@@ -139,7 +140,8 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(metrics[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
