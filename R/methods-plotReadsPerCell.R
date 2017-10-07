@@ -90,7 +90,6 @@ NULL
             sampleName <- levels(rawTibble[["sampleName"]])[[a]]
             cb <- rawTibble %>%
                 .[.[["sampleName"]] == sampleName, , drop = FALSE]
-            # Check for
             cbHist <- hist(cb[["log10Count"]], n = 100, plot = FALSE)
             # `counts = fLog` in MATLAB version
             counts <- cbHist[["counts"]]
