@@ -35,7 +35,7 @@ loadCellRanger <- function(
 
     # Sample metadata ====
     sampleMetadataFile <- normalizePath(sampleMetadataFile)
-    sampleMetadata <- .readSampleMetadataFile(sampleMetadataFile)
+    sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     # Check that `sampleID` matches `sampleDirs`
     if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
         stop("Sample directory names don't match the sample metadata file",

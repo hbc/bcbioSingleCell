@@ -161,7 +161,7 @@ loadSingleCell <- function(
     # Sample metadata ====
     if (!is.null(sampleMetadataFile)) {
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
-        sampleMetadata <- .readSampleMetadataFile(sampleMetadataFile)
+        sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
         sampleMetadata <- .sampleYAMLMetadata(yaml)
     }
@@ -170,10 +170,6 @@ loadSingleCell <- function(
         stop("Sample directory names don't match the sample metadata file",
              call. = FALSE)
     }
-    # Ensure the rownames get set correctly
-    sampleMetadata <- sampleMetadata %>%
-        as.data.frame() %>%
-        set_rownames(.[["sampleID"]])
 
     # Interesting groups ====
     # Ensure internal formatting in camelCase
