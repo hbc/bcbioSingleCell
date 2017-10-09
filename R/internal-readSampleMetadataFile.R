@@ -38,8 +38,8 @@
 
         # Remove incomplete rows
         meta <- meta %>%
-            tidy_filter(!is.na(.data[["fileName"]])) %>%
-            tidy_filter(!is.na(.data[["sampleName"]]))
+            dplyr::filter(!is.na(.data[["fileName"]])) %>%
+            dplyr::filter(!is.na(.data[["sampleName"]]))
 
 
         # Check if samples are demultiplexed
@@ -86,7 +86,7 @@
     }
 
     # Return
-    tidy_select(meta, metaPriorityCols, everything()) %>%
+    dplyr::select(meta, metaPriorityCols, everything()) %>%
         as.data.frame %>%
         set_rownames(.[["sampleID"]]) %>%
         as("DataFrame")

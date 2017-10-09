@@ -42,7 +42,7 @@ NULL
         remove_rownames %>%
         as("tibble") %>%
         camel %>%
-        tidy_select(c("cluster", "symbol"), everything()) %>%
+        dplyr::select(c("cluster", "symbol"), everything()) %>%
         group_by(.data[["cluster"]])
 }
 
@@ -81,11 +81,11 @@ NULL
     show = FALSE) {
     markers <- object
     if (isTRUE(coding)) {
-        markers <- tidy_filter(markers, .data[["biotype"]] == "protein_coding")
+        markers <- dplyr::filter(markers, .data[["biotype"]] == "protein_coding")
     }
     markers <- .groupMarkers(markers) %>%
         # Use only the positive markers
-        tidy_filter(.data[["avgDiff"]] > 0L) %>%
+        dplyr::filter(.data[["avgDiff"]] > 0L) %>%
         # `-n` here means take the smallest P values
         top_n(n = -n, wt = .data[["pvalue"]])
     if (isTRUE(show)) {

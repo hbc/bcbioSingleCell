@@ -20,9 +20,9 @@ NULL
     markers <- .groupMarkers(object) %>%
         left_join(knownMarkers[, c("cell", "ensgene")],
                   by = "ensgene") %>%
-        tidy_select(c("cell", "ensgene", "symbol", "cluster"),
+        dplyr::select(c("cell", "ensgene", "symbol", "cluster"),
                     everything()) %>%
-        tidy_filter(!is.na(.data[["cell"]])) %>%
+        dplyr::filter(!is.na(.data[["cell"]])) %>%
         .[order(.[["cell"]],
                 .[["symbol"]],
                 .[["pvalue"]],

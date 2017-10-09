@@ -27,7 +27,7 @@ NULL
     pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
         symbols <- knownMarkers %>%
-            tidy_filter(.data[["cell"]] == !!cellType) %>%
+            dplyr::filter(.data[["cell"]] == !!cellType) %>%
             pull("symbol") %>%
             unique %>%
             sort
