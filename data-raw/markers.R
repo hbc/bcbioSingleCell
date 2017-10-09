@@ -37,7 +37,7 @@ print(ws)
 cellCycleMarkers <- lapply(seq_along(ws), function(a) {
     gs %>%
         gs_read(ws = ws[[a]]) %>%
-        tidy_select(phase, ensgene) %>%
+        dplyr::select(phase, ensgene) %>%
         mutate(symbol = gene2symbol(
             ensgene, organism = ws[[a]], release = release)) %>%
         group_by(phase) %>%
@@ -58,7 +58,7 @@ print(ws)
 cellTypeMarkers <- lapply(seq_along(ws), function(a) {
     gs %>%
         gs_read(ws = ws[[a]]) %>%
-        tidy_select(cell, ensgene) %>%
+        dplyr::select(cell, ensgene) %>%
         mutate(symbol = gene2symbol(
             ensgene, organism = ws[[a]], release = release)) %>%
         group_by(cell) %>%
