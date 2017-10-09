@@ -4,9 +4,9 @@ sudo: false
 dist: trusty
 warnings_are_errors: false
 r:
-  - bioc-release
   - bioc-devel
 r_github_packages:
   - jimhester/lintr
+  - r-lib/covr
 after_success:
   - Rscript -e 'covr::codecov()'
