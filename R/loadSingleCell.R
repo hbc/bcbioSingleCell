@@ -86,9 +86,6 @@ loadSingleCell <- function(
 
     # Project summary YAML ====
     yamlFile <- file.path(projectDir, "project-summary.yaml")
-    if (!file.exists(yamlFile)) {
-        stop("'project-summary.yaml' file missing", call. = FALSE)
-    }
     yaml <- readYAML(yamlFile)
 
     # Log files ====
