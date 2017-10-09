@@ -6,7 +6,7 @@
 \alias{bcbioSingleCell}
 \title{\code{bcbioSingleCell}}
 \description{
-\code{bcbioSingleCell} is an extension of \link{SingleCellExperiment} designed to store
+\code{bcbioSingleCell} is an extension of \code{SummarizedExperiment} designed to store
 bcbio single-cell RNA-seq counts. This class contains read counts save as a
 sparse matrix (\code{dgCMatrix}), sample barcodes, run metadata, and barcode
 summary statistics for each sample analyzed.
@@ -21,7 +21,6 @@ unfiltered cellular barcodes for quality control analysis.}
 
 \seealso{
 \itemize{
-\item \code{\link[SingleCellExperiment:SingleCellExperiment]{SingleCellExperiment::SingleCellExperiment()}}.
 \item \code{\link[SummarizedExperiment:SummarizedExperiment]{SummarizedExperiment::SummarizedExperiment()}}.
 \item \code{.S4methods(class = "bcbioSingleCell")}.
 }
