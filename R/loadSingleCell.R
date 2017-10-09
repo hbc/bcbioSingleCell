@@ -105,8 +105,7 @@ loadSingleCell <- function(
         as.numeric()
 
     # Data versions and programs ====
-    # `data_versions.csv` isn't always saved, so don't warn the user?
-    dataVersions <- suppressWarnings(.dataVersions(projectDir))
+    dataVersions <- .dataVersions(projectDir)
     programs <- .programs(projectDir)
     if (!is.null(dataVersions)) {
         genomeBuild <- dataVersions %>%
