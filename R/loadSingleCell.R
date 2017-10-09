@@ -300,17 +300,17 @@ loadSingleCell <- function(
     }
 
     # Return `bcbioSingleCell` object ==========================================
-    # Use an internal SingleCellExperiment function call to handle rowname
+    # Use an internal `SummarizedExperiment()` function call to handle rowname
     # mismatches with the annotable. This can happen when newer Ensembl
     # annotations are requested than those used for count alignment, or when
     # we pass in FASTA spike-ins (e.g. EGFP).
-    sce <- .SingleCellExperiment(
+    se <- prepareSummarizedExperiment(
         assays = list(assay = counts),
         rowData = annotable,
         colData = metrics,
         metadata = metadata
     )
-    bcb <- new("bcbioSingleCell", sce)
+    bcb <- new("bcbioSingleCell", se)
     # Keep these in the bcbio slot because they contain filtered cellular
     # barcodes not present in the main assay matrix.
     bcbio(bcb, "cellularBarcodes") <- cellularBarcodes

@@ -1,6 +1,6 @@
 .onLoad <- function(libname, pkgname) {
     packages <-
-        c("SingleCellExperiment",
+        c("SummarizedExperiment",
           "Seurat",
           "basejump")
     lapply(seq_along(packages), function(a) {

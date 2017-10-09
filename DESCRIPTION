@@ -21,7 +21,7 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),
-    SingleCellExperiment (>= 0.99.3)
+    SummarizedExperiment (>= 1.6.5)
 Imports:
     basejump (>= 0.0.24),
     BiocGenerics,
@@ -46,7 +46,6 @@ Imports:
     Seurat (>= 2.0.1),
     stats,
     stringr,
-    SummarizedExperiment (>= 1.7.9),
     tibble,
     tidyr,
     utils,

@@ -35,5 +35,5 @@ NULL
 #' @export
 setMethod("aggregateFeatures", "bcbioSingleCellANY", function(object) {
     stop("Draft function", call. = FALSE)
-    # Reslot the counts into assay and then update the SingleCellExperiment
+    # Reslot the counts into assay and then update the object
 })

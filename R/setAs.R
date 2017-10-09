@@ -49,9 +49,9 @@ NULL
 #' `bcbioSinglecell` (note case) will likely fail to load with newer versions of
 #' the package.
 setAs("bcbioSingleCellLegacy", "bcbioSingleCell", function(from) {
-    # FIXME Need to add support for upgrade method
-    # Can extract the information from the slotted SingleCellExperiment
-    # Add a warning for `bcbioSCFiltered`, since these only contain a subset
+    # FIXME Need to add support for upgrade method.
+    # Can extract the information from the slotted SummarizedExperiment.
+    # Add a warning for `bcbioSCFiltered`, since these only contain a subset.
     stop("Upgrade coercion method will be added in future update")
 })
 

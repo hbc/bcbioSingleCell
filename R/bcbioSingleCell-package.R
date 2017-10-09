@@ -7,10 +7,9 @@
 #' @name bcbioSingleCell-package
 #' @docType package
 #'
-#' @import basejump methods SingleCellExperiment SummarizedExperiment
+#' @import basejump methods SummarizedExperiment
 #'
 #' @importClassesFrom Seurat seurat
-#' @importClassesFrom SingleCellExperiment SingleCellExperiment
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #'
 #' @importFrom BiocGenerics plotPCA
