@@ -105,8 +105,8 @@ loadSingleCell <- function(
         as.numeric()
 
     # Data versions and programs ====
-    dataVersions <- .dataVersions(projectDir)
-    programs <- .programs(projectDir)
+    dataVersions <- readDataVersions(file.path(projectDir, "data_versions.csv"))
+    programs <- readProgramVersions(file.path(projectDir, "programs.txt"))
     if (!is.null(dataVersions)) {
         genomeBuild <- dataVersions %>%
             dplyr::filter(.data[["resource"]] == "transcripts") %>%
