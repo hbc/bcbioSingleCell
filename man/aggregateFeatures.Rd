@@ -30,3 +30,4 @@ Other Data Management Utilities: \code{\link{aggregateReplicates}},
 Rory Kirchner, Michael Steinbaugh
 }
 \concept{Data Management Utilities}
+\keyword{internal}

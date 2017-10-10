@@ -31,3 +31,4 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 Michael Steinbaugh
 }
 \concept{Clustering Utilities}
+\keyword{internal}

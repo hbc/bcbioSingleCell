@@ -10,8 +10,7 @@
 \usage{
 quantileHeatmap(object, ...)
 
-\S4method{quantileHeatmap}{dgCMatrix}(object, annotation = NA,
-  clusterRows = TRUE, clusterCols = TRUE)
+\S4method{quantileHeatmap}{dgCMatrix}(object, ...)
 
 \S4method{quantileHeatmap}{matrix}(object, annotation = NA,
   clusterRows = TRUE, clusterCols = TRUE)

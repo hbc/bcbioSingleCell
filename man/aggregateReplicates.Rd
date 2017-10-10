@@ -26,3 +26,4 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
 Rory Kirchner, Michael Steinbaugh
 }
 \concept{Data Management Utilities}
+\keyword{internal}
