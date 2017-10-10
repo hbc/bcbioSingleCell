@@ -26,6 +26,23 @@ devtools::install_github("hbc/bcbioSingleCell")
 ```
 
 
+## Sample metadata examples
+
+### Multiplexed inDrop run
+
+```
+fileName	description	index	sequence	sampleName
+170201_R1.fastq.gz	run1	17	GGAGGTAA	sample1
+170201_R1.fastq.gz	run1	18	CATAACTG	sample2
+170620_R1.fastq.gz	run2	12	GCGTAAGA	sample3
+170620_R1.fastq.gz	run2	13	CTATTAAG	sample4
+170620_R1.fastq.gz	run2	14	AAGGCTAT	sample5
+170620_R1.fastq.gz	run2	15	GAGCCTTA	sample6
+170620_R1.fastq.gz	run2	16	TTATGCGA	sample7
+```
+
+
+
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [bioconductor]: https://bioconductor.org
 [devtools]: https://cran.r-project.org/package=devtools
