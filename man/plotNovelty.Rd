@@ -8,7 +8,7 @@
 \usage{
 plotNovelty(object, ...)
 
-\S4method{plotNovelty}{bcbioSingleCellANY}(object, interestingGroup, min,
+\S4method{plotNovelty}{bcbioSingleCellANY}(object, interestingGroups, min,
   filterCells = FALSE, aggregateReplicates = TRUE)
 }
 \arguments{
@@ -16,7 +16,7 @@ plotNovelty(object, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{interestingGroup}{Interesting group, to use for colors.}
+\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{min}{Recommended minimum value cutoff.}
 

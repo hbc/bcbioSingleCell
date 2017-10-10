@@ -9,7 +9,7 @@
 plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCellANY}(object,
-  interestingGroup = "sampleName", filterCells = FALSE,
+  interestingGroups = "sampleName", filterCells = FALSE,
   aggregateReplicates = TRUE)
 }
 \arguments{
@@ -17,7 +17,7 @@ plotReadsPerCell(object, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{interestingGroup}{Interesting group, to use for colors.}
+\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 

@@ -8,7 +8,7 @@
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{bcbioSingleCellANY}(object, interestingGroup, min,
+\S4method{plotGenesPerCell}{bcbioSingleCellANY}(object, interestingGroups, min,
   max, filterCells = FALSE, aggregateReplicates = TRUE)
 }
 \arguments{
@@ -16,7 +16,7 @@ plotGenesPerCell(object, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{interestingGroup}{Interesting group, to use for colors.}
+\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{min}{Recommended minimum value cutoff.}
 

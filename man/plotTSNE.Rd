@@ -8,7 +8,7 @@
 \usage{
 plotTSNE(object, ...)
 
-\S4method{plotTSNE}{seurat}(object, interestingGroup = "ident",
+\S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
   label = TRUE)
 }
 \arguments{
@@ -16,7 +16,7 @@ plotTSNE(object, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{interestingGroup}{Interesting group to use for plot colors.}
+\item{interestingGroups}{Interesting group to use for plot colors.}
 
 \item{label}{Label the clusters on the plot.}
 }

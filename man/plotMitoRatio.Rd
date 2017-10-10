@@ -8,7 +8,7 @@
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSingleCellANY}(object, interestingGroup, max,
+\S4method{plotMitoRatio}{bcbioSingleCellANY}(object, interestingGroups, max,
   filterCells = FALSE, aggregateReplicates = TRUE)
 }
 \arguments{
@@ -16,7 +16,7 @@ plotMitoRatio(object, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{interestingGroup}{Interesting group, to use for colors.}
+\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{max}{Recommended maximum value cutoff.}
 

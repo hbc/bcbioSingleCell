@@ -6,12 +6,13 @@
 \alias{plotPCA,seurat-method}
 \title{Plot Principal Component Analysis (PCA)}
 \usage{
-\S4method{plotPCA}{seurat}(object, interestingGroup = "ident", label = TRUE)
+\S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
+  label = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroup}{Interesting group to use for plot colors.}
+\item{interestingGroups}{Interesting group to use for plot colors.}
 
 \item{label}{Label the clusters on the plot.}
 }
