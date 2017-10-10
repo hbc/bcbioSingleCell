@@ -46,7 +46,8 @@ NULL
                 .[.[["cellID"]] %in% cells, , drop = FALSE]
         }
     }
-    meta <- metadata(object)[["sampleMetadata"]]
+    meta <- metadata(object)[["sampleMetadata"]] %>%
+        as.data.frame()
     if (isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(meta)) {
         meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
@@ -332,10 +333,6 @@ NULL
     if (!is.null(metadata(object)[["cbCutoff"]])) {
         # This will be deprecated in a future release in favor of the longer
         # spelling variant
-        warning(paste(
-            "'cbCutoff' in metadata will be deprecated in favor of",
-            "'cellularBarcodeCutoff' in a future update"
-        ))
         cutoffLine <- metadata(object)[["cbCutoff"]]
     } else if (!is.null(metadata(object)[["cellularBarcodeCutoff"]])) {
         cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
