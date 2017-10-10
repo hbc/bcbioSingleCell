@@ -48,12 +48,12 @@ fileName	description	index	sequence	sampleName
 This is our current method for handling 10X and SureCell samples.
 
 ```
-fileName	description	index	sequence
-sample1_170620_R1.fastq.gz	sample1	12	GCGTAAGA
-sample2_170620_R1.fastq.gz	sample2	13	CTATTAAG
-sample3_170620_R1.fastq.gz	sample3	14	AAGGCTAT
-sample4_170620_R1.fastq.gz	sample4	15	GAGCCTTA
-sample5_170620_R1.fastq.gz	sample5	16	TTATGCGA
+fileName	description
+sample1_170620_R1.fastq.gz	sample1
+sample2_170620_R1.fastq.gz	sample2
+sample3_170620_R1.fastq.gz	sample3
+sample4_170620_R1.fastq.gz	sample4
+sample5_170620_R1.fastq.gz	sample5
 ```
 
 
