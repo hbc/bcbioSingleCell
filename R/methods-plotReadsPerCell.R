@@ -174,7 +174,7 @@ NULL
 
 
 
-#' Plot Raw Cellular Barcodes Histogram
+#' Plot Raw Cellular Barcodes Ridgeline
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
@@ -200,7 +200,7 @@ NULL
             y = "sampleName",
             fill = interestingGroups)
     ) +
-        labs(title = "raw histogram",
+        labs(title = "raw ridgeline",
              x = "log10 reads per cell") +
         geom_density_ridges(
             alpha = qcPlotAlpha,
