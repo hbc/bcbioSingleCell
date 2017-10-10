@@ -3,7 +3,7 @@
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
 #' counts from `barcodes.tsv`, `genes.tsv`, and `matrix.mtx` files.
 #'
-#' @details This function is a simplified version of [loadSingleCellRun()]
+#' @details This function is a simplified version of [loadSingleCell()]
 #'   optimized for handling CellRanger output.
 #'
 #' @author Michael Steinbaugh
@@ -35,7 +35,7 @@ loadCellRanger <- function(
 
     # Sample metadata ====
     sampleMetadataFile <- normalizePath(sampleMetadataFile)
-    sampleMetadata <- .readSampleMetadataFile(sampleMetadataFile)
+    sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     # Check that `sampleID` matches `sampleDirs`
     if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
         stop("Sample directory names don't match the sample metadata file",
@@ -146,10 +146,10 @@ loadCellRanger <- function(
     }
 
     # Return `bcbioSingleCell` object ==========================================
-    sce <- .SingleCellExperiment(
+    se <- prepareSummarizedExperiment(
         assays = list(assay = counts),
         rowData = annotable,
         colData = metrics,
         metadata = metadata)
-    new("bcbioSingleCell", sce)
+    new("bcbioSingleCell", se)
 }

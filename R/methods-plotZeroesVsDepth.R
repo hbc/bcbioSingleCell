@@ -16,10 +16,9 @@ NULL
 .plotZerosVsDepth <- function(object) {
     counts <- assay(object)
     metrics <- metrics(object)
-    # using a logical matrix is much faster than a == 0 comparison
+    # Using a logical matrix is much faster and more memory efficient than
+    # `counts == 0` comparison
     present <- as(counts, "lgCMatrix")
-
-    # The `counts == 0` operation here blows up memory on large datasets
     df <- data.frame(
         dropout = (nrow(present) - Matrix::colSums(present)) / nrow(present),
         depth = Matrix::colSums(counts),
@@ -34,7 +33,8 @@ NULL
         scale_x_log10() +
         labs(x = "library size",
              y = "% genes zero")
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(df[["description"]])) > 1) {
         p <- p +
             facet_wrap(facets = "description")
     }

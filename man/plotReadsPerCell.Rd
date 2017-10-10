@@ -8,8 +8,9 @@
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSingleCellANY}(object, interestingGroup,
-  filterCells = FALSE, aggregateReplicates = TRUE)
+\S4method{plotReadsPerCell}{bcbioSingleCellANY}(object,
+  interestingGroup = "sampleName", filterCells = FALSE,
+  aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}

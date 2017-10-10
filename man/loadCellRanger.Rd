@@ -31,7 +31,7 @@ Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} cell
 counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 }
 \details{
-This function is a simplified version of \code{\link[=loadSingleCellRun]{loadSingleCellRun()}}
+This function is a simplified version of \code{\link[=loadSingleCell]{loadSingleCell()}}
 optimized for handling CellRanger output.
 }
 \examples{

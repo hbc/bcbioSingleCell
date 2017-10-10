@@ -83,12 +83,12 @@ NULL
     metadata[["sampleMetadata"]] <- sampleMetadata
     # Stash that samples are a subset
     metadata[["subset"]] <- TRUE
-    sce <- .SingleCellExperiment(
+    se <- prepareSummarizedExperiment(
         assays = list(sparseCounts),
         colData = colData,
         rowData = rowData,
         metadata = metadata)
-    new("bcbioSingleCell", sce)
+    new("bcbioSingleCell", se)
     # This will drop the unfiltered cellular barcodes
 }
 

@@ -4,7 +4,7 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 #' `bcbioSingleCell`
 #'
-#' `bcbioSingleCell` is an extension of [SingleCellExperiment] designed to store
+#' `bcbioSingleCell` is an extension of `SummarizedExperiment` designed to store
 #' bcbio single-cell RNA-seq counts. This class contains read counts save as a
 #' sparse matrix (`dgCMatrix`), sample barcodes, run metadata, and barcode
 #' summary statistics for each sample analyzed.
@@ -16,14 +16,13 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 #' unfiltered cellular barcodes for quality control analysis.
 #'
 #' @seealso
-#' - [SingleCellExperiment::SingleCellExperiment()].
 #' - [SummarizedExperiment::SummarizedExperiment()].
 #' - `.S4methods(class = "bcbioSingleCell")`.
 #'
 #' @export
 bcbioSingleCell <- setClass(
     "bcbioSingleCell",
-    contains = "SingleCellExperiment",
+    contains = "SummarizedExperiment",
     slots = c(bcbio = "SimpleList"))
 setValidity("bcbioSingleCell", function(object) TRUE)
 

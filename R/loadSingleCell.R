@@ -86,9 +86,6 @@ loadSingleCell <- function(
 
     # Project summary YAML ====
     yamlFile <- file.path(projectDir, "project-summary.yaml")
-    if (!file.exists(yamlFile)) {
-        stop("'project-summary.yaml' file missing", call. = FALSE)
-    }
     yaml <- readYAML(yamlFile)
 
     # Log files ====
@@ -108,8 +105,7 @@ loadSingleCell <- function(
         as.numeric()
 
     # Data versions and programs ====
-    # `data_versions.csv` isn't always saved, so don't warn the user?
-    dataVersions <- suppressWarnings(.dataVersions(projectDir))
+    dataVersions <- .dataVersions(projectDir)
     programs <- .programs(projectDir)
     if (!is.null(dataVersions)) {
         genomeBuild <- dataVersions %>%
@@ -161,7 +157,7 @@ loadSingleCell <- function(
     # Sample metadata ====
     if (!is.null(sampleMetadataFile)) {
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
-        sampleMetadata <- .readSampleMetadataFile(sampleMetadataFile)
+        sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
         sampleMetadata <- .sampleYAMLMetadata(yaml)
     }
@@ -170,10 +166,6 @@ loadSingleCell <- function(
         stop("Sample directory names don't match the sample metadata file",
              call. = FALSE)
     }
-    # Ensure the rownames get set correctly
-    sampleMetadata <- sampleMetadata %>%
-        as.data.frame() %>%
-        set_rownames(.[["sampleID"]])
 
     # Interesting groups ====
     # Ensure internal formatting in camelCase
@@ -308,17 +300,17 @@ loadSingleCell <- function(
     }
 
     # Return `bcbioSingleCell` object ==========================================
-    # Use an internal SingleCellExperiment function call to handle rowname
+    # Use an internal `SummarizedExperiment()` function call to handle rowname
     # mismatches with the annotable. This can happen when newer Ensembl
     # annotations are requested than those used for count alignment, or when
     # we pass in FASTA spike-ins (e.g. EGFP).
-    sce <- .SingleCellExperiment(
+    se <- prepareSummarizedExperiment(
         assays = list(assay = counts),
         rowData = annotable,
         colData = metrics,
         metadata = metadata
     )
-    bcb <- new("bcbioSingleCell", sce)
+    bcb <- new("bcbioSingleCell", se)
     # Keep these in the bcbio slot because they contain filtered cellular
     # barcodes not present in the main assay matrix.
     bcbio(bcb, "cellularBarcodes") <- cellularBarcodes
