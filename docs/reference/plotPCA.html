@@ -91,7 +91,8 @@
     
 
     <pre class="usage"><span class='co'># S4 method for seurat</span>
-<span class='fu'>plotPCA</span>(<span class='no'>object</span>, <span class='kw'>interestingGroup</span> <span class='kw'>=</span> <span class='st'>"ident"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>plotPCA</span>(<span class='no'>object</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"ident"</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -101,7 +102,7 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>interestingGroup</th>
+      <th>interestingGroups</th>
       <td><p>Interesting group to use for plot colors.</p></td>
     </tr>
     <tr>
@@ -116,13 +117,13 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='plotTSNE.html'>plotTSNE()</a></code>.</p>
-<p>Other PCA Utilities: <code><a href='fetchPCAData.html'>fetchPCAData</a></code></p>
+    <p><code>plotTSNE()</code>.</p>
+<p>Other PCA Utilities: <code>fetchPCAData</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='plotTSNE.html'>plotTSNE</a></span>(<span class='no'>seurat</span>)
+<span class='fu'>plotTSNE</span>(<span class='no'>seurat</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

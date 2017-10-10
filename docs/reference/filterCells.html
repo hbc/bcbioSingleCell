@@ -94,9 +94,9 @@ cellular barcodes.</p>
     <pre class="usage"><span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>showReport</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>showReport</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
 <span class='co'># S4 method for bcbioSCDataSet</span>
 <span class='fu'>filterCells</span>(<span class='no'>object</span>)</pre>
@@ -111,6 +111,12 @@ cellular barcodes.</p>
     <tr>
       <th>...</th>
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+    </tr>
+    <tr>
+      <th>aggregateReplicates</th>
+      <td><p>Aggregate technical replicates, if specified. This
+function uses values assigned in the <code>sampleNameAggregate</code> column of the
+internal sample metadata data.frame.</p></td>
     </tr>
     <tr>
       <th>minUMIs</th>
@@ -144,20 +150,20 @@ cellular barcodes.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object, with filtering information slotted into
-<code><a href='metadata.html'>metadata()</a></code> as <code>filterCells</code> and <code>filterParams</code>.</p>
+    <p>bcbioSingleCell object, with filtering information slotted into
+<code>metadata()</code> as <code>filterCells</code> and <code>filterParams</code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>This operation can be re-run on a <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object that has
+    <p>This operation can be re-run on a bcbioSingleCell object that has
 been previously filtered. This function simply saves <code>filterCells</code> and
-<code>filterParams</code> vectors into the <code><a href='metadata.html'>metadata()</a></code> slot.</p>
+<code>filterParams</code> vectors into the <code>metadata()</code> slot.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Management Utilities: <code><a href='aggregateFeatures.html'>aggregateFeatures</a></code>,
-  <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code><a href='readMarkers.html'>readMarkers</a></code>, <code><a href='subsetPerSample.html'>subsetPerSample</a></code></p>
+    <p>Other Data Management Utilities: <code>aggregateFeatures</code>,
+  <code>aggregateReplicates</code>,
+  <code>readMarkers</code>, <code>subsetPerSample</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

@@ -91,8 +91,8 @@
 counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.mtx</code> files.</p>
     
 
-    <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>uploadDir</span>, <span class='no'>refDataDir</span>, <span class='no'>sampleMetadataFile</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>uploadDir</span>, <span class='no'>refDataDir</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
+  <span class='no'>sampleMetadataFile</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -107,21 +107,48 @@ must contain <code>filtered_gene_bc_matrices/</code> as a child.</p></td>
       <td><p>Directory path to cellranger reference annotation data.</p></td>
     </tr>
     <tr>
+      <th>interestingGroups</th>
+      <td><p>Character vector of interesting groups. First entry
+is used for plot colors during quality control (QC) analysis. Entire vector
+is used for PCA and heatmap QC functions.</p></td>
+    </tr>
+    <tr>
+      <th>sampleMetadataFile</th>
+      <td><p>Sample barcode metadata file.</p></td>
+    </tr>
+    <tr>
+      <th>prefilter</th>
+      <td><p>Prefilter counts prior to quality control analysis.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <td><p>Additional arguments, to be stashed in the <code>metadata()</code> slot.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Soft deprecation to new functions.</p>
+    <p>bcbioSingleCell.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is a simplified version of <code><a href='deprecated.html'>loadSingleCellRun()</a></code>
+    <p>This function is a simplified version of <code>loadSingleCell()</code>
 optimized for handling CellRanger output.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Mus musculus</span>
+<span class='co'># Run with Ensembl 88 transcriptome FASTA and GTF files</span>
+<span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='fu'>loadSingleCell</span>(
+    <span class='kw'>uploadDir</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"indrop_rnaseq"</span>, <span class='st'>"final"</span>),
+    <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"genotype"</span>, <span class='st'>"treatment"</span>),
+    <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"meta"</span>, <span class='st'>"sample_metadata.xlsx"</span>),
+    <span class='kw'>gffFile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(
+        <span class='st'>"annotations"</span>,
+        <span class='st'>"Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"</span>),
+    <span class='kw'>ensemblVersion</span> <span class='kw'>=</span> <span class='fl'>88</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -131,7 +158,9 @@ optimized for handling CellRanger output.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

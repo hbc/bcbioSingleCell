@@ -93,17 +93,29 @@
 <a href="#bcbiosinglecell-0-0-19" class="anchor"></a>bcbioSingleCell 0.0.19</h1>
 <ul>
 <li>Renamed main object class from <code>bcbioSCDataSet</code> to <code>bcbioSingleCell</code>.</li>
-<li>Cell filtering with <code><a href="../reference/filterCells.html">filterCells()</a></code> will now slot a named logical vector into <code>metadata(object)[["filteredCells"]]</code>, which will be used to dynamically subset the slotted internal <code>SummarizedExperiment</code> data. Now that we’re using this approach, we can return a modified <code>bcbioSingleCell</code> object rather than defining a separate <code>bcbioSCFiltered</code> class.</li>
+<li>Cell filtering with <code>filterCells()</code> will now slot a named logical vector into <code>metadata(object)[["filteredCells"]]</code>, which will be used to dynamically subset the slotted internal <code>SummarizedExperiment</code> data. Now that we’re using this approach, we can return a modified <code>bcbioSingleCell</code> object rather than defining a separate <code>bcbioSCFiltered</code> class.</li>
+<li>Renamed <code>loadSingleCellRun()</code> to <code>loadSingleCell()</code>, to match bcbioRNASeq package.</li>
+<li>Now allowing implicit integers in our function code.</li>
+<li>Added support for plotting technical replicates. This is handled by <code>sampleNameAggregate</code> in the sample metadata.</li>
+<li>Now using ridgeline plots in place of histograms where applicable.</li>
+<li>Travis CI checks take too long when loading SummarizedExperiment. Hopefully this will be fixed in the 3.6 release later this month.</li>
+<li>New internal dark theme (<code>darkTheme()</code>), based on the Seurat theme.</li>
+<li>Initial commit of <code>plotDot()</code> function, based on <code><a href="http://www.rdocumentation.org/packages/Seurat/topics/DotPlot">Seurat::DotPlot()</a></code>.</li>
+<li>Added new tSNE plots that allow for consistent cluster labeling.</li>
+<li>Providing legacy support for <code>bcbioSCDataSet</code> and <code>bcbioSCFiltered</code>, which will be deprecated in a future release.</li>
+<li>Offloaded some internal code to basejump, for improved consistency with bcbioRNASeq package: <code>internal-projectDir.R</code>, <code>internal-readSampleMetadataFile.R</code>, <code>internal-sampleDirs.R</code>. We may want to provide this code as a shared bcbio core package (e.g. bcbioBase) in the future.</li>
+<li>Added internal utility to check for valid marker genes (<code>.validMarkers()</code>).</li>
+<li>Improved Ensembl release version support (<code>ensemblVersion</code>).</li>
 </ul>
 </div>
     <div id="bcbiosinglecell-0-0-18" class="section level1">
 <h1 class="hasAnchor">
 <a href="#bcbiosinglecell-0-0-18" class="anchor"></a>bcbioSingleCell 0.0.18</h1>
 <ul>
-<li>Renamed <code><a href="../reference/deprecated.html">plotClusters()</a></code> to <code><a href="../reference/plotMarkers.html">plotMarkers()</a></code>. Added soft deprecation.</li>
+<li>Renamed <code>plotClusters()</code> to <code>plotMarkers()</code>. Added soft deprecation.</li>
 <li>Added <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color support in tSNE plots and heatmaps.</li>
-<li>Converted <code><a href="../reference/deprecated.html">loadSingleCellRun()</a></code> and <code><a href="../reference/loadCellRanger.html">loadCellRanger()</a></code> from S4 generics back to standard functions.</li>
-<li>Added t-SNE utility functions: <code><a href="../reference/fetchTSNEData.html">fetchTSNEData()</a></code>, <code><a href="../reference/fetchTSNEExpressionData.html">fetchTSNEExpressionData()</a></code>, and <code><a href="../reference/deprecated.html">plotTSNEExpressionData()</a></code>. This enable plotting of geometric mean values of desired marker genes.</li>
+<li>Converted <code>loadSingleCellRun()</code> and <code>loadCellRanger()</code> from S4 generics back to standard functions.</li>
+<li>Added t-SNE utility functions: <code>fetchTSNEData()</code>, <code>fetchTSNEExpressionData()</code>, and <code>plotTSNEExpressionData()</code>. This enable plotting of geometric mean values of desired marker genes.</li>
 <li>Updated NEWS to Markdown, with hyperlinks.</li>
 <li>Offloaded generics that would otherwise conflict with bcbioRNASeq to the basejump package.</li>
 <li>Improved roxygen documentation. Moved as much documentation as possible to the methods files.</li>
@@ -113,7 +125,7 @@
 <li>lintr checks now allow implicit integers (e.g. <code>1</code> instead of <code>1L</code>).</li>
 <li>Added Seurat as dependency in <code>DESCRIPTION</code> file. The package now attaches Seurat automatically.</li>
 <li>Package no longer imports mononcle or suggests scater, scde, or scone. We’re planning on adding these back in a future update, but build checks on Travis CI otherwise take too long.</li>
-<li>Added new <code><a href="../reference/quantileHeatmap.html">quantileHeatmap()</a></code> function.</li>
+<li>Added new <code>quantileHeatmap()</code> function.</li>
 <li>Improved Markdown header support across functions, where applicable.</li>
 <li>Improved <code>bcbioSCFiltered</code> to <code>seurat</code> coercion to slot relevant bcbio metadata.</li>
 </ul>
@@ -146,15 +158,15 @@
 <li>Renamed internal use of <code>filter()</code> to <code>tidy_filter()</code>, to avoid future NAMESPACE collisions with <a href="http://bioconductor.org/packages/release/bioc/html/ensembldb.html">ensembldb</a> package.</li>
 <li>Renamed <code>bcbioSCSubset</code> class to <code>bcbioSCFiltered</code> class.</li>
 <li>Fixed memory issue in <code>plotZeroesVsDepth()</code> for datasets with high cell counts.</li>
-<li>Improved sample matching for <code><a href="../reference/selectSamples.html">selectSamples()</a></code>. Will attempt to migrate this to bracket-based subsetting in a future update.</li>
-<li>Restricted sample selection with <code><a href="../reference/selectSamples.html">selectSamples()</a></code> to only work on <code>bcbioSCFiltered</code> class for the time being. We can add bracket-based subsetting or S4 method support in <code><a href="../reference/selectSamples.html">selectSamples()</a></code> to properly work on <code>bcbioSCDataSet</code> class in a future update.</li>
+<li>Improved sample matching for <code>selectSamples()</code>. Will attempt to migrate this to bracket-based subsetting in a future update.</li>
+<li>Restricted sample selection with <code>selectSamples()</code> to only work on <code>bcbioSCFiltered</code> class for the time being. We can add bracket-based subsetting or S4 method support in <code>selectSamples()</code> to properly work on <code>bcbioSCDataSet</code> class in a future update.</li>
 <li>Updated <a href="http://rmarkdown.rstudio.com">RMarkdown</a> template settings and simplified the setup chunks.</li>
 <li>Initial support for <code>bcbioSCFiltered</code> class coercion to <a href="http://cole-trapnell-lab.github.io/monocle-release/">monocle</a> <code>CellDataSet</code> class.</li>
 <li>Suggest <a href="http://bioconductor.org/packages/release/bioc/html/scater.html">scater</a> and <a href="https://bioconductor.org/packages/release/bioc/html/scone.html">scone</a> packages for additional quality control and visualization.</li>
 <li>Require <a href="http://cole-trapnell-lab.github.io/monocle-release/">monocle</a> &gt;= 2.5.0.</li>
 <li>Added initial support for <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color palette in quality control plots.</li>
 <li>Suggest <a href="http://rmarkdown.rstudio.com">rmarkdown</a> and <a href="http://bioconductor.org/packages/release/bioc/html/scde.html">scde</a> packages.</li>
-<li>Initial commit of <code><a href="../reference/subsetPerSample.html">subsetPerSample()</a></code> function.</li>
+<li>Initial commit of <code>subsetPerSample()</code> function.</li>
 <li>Miscellaneous <a href="http://rmarkdown.rstudio.com">RMarkdown</a> template improvements.</li>
 </ul>
 </div>
@@ -165,9 +177,9 @@
 <li>Renamed functions in <code>lowerCamelCase</code> from <code>snake_case</code>.</li>
 <li>Draft support for <a href="http://cole-trapnell-lab.github.io/monocle-release/">monocle</a>, <a href="http://bioconductor.org/packages/release/bioc/html/scater.html">scater</a>, and <a href="https://bioconductor.org/packages/release/bioc/html/scone.html">scone</a>.</li>
 <li>Package now depends on <a href="https://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">SummarizedExperiment</a>.</li>
-<li>Renamed <code>loadRun()</code> to <code><a href="../reference/deprecated.html">loadSingleCellRun()</a></code> for improved compatibility with <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package. This helps avoid NAMESPACE collisions between packages.</li>
+<li>Renamed <code>loadRun()</code> to <code>loadSingleCellRun()</code> for improved compatibility with <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package. This helps avoid NAMESPACE collisions between packages.</li>
 <li>Improved support for custom GTF files.</li>
-<li>Split out <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> import into a separate utility function named <code><a href="../reference/loadCellRanger.html">loadCellRanger()</a></code>.</li>
+<li>Split out <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> import into a separate utility function named <code>loadCellRanger()</code>.</li>
 <li>Added plotZerosVsDepth() by @roryk.</li>
 <li>Renamed <code>filteringCriteria</code> to <code>filterParams</code> in <code>@metadata</code> slot.</li>
 <li>Miscellaneous documentation fixes.</li>

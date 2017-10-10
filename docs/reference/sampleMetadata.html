@@ -91,7 +91,8 @@
     
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCellANY</span>
-<span class='fu'>sampleMetadata</span>(<span class='no'>object</span>)
+<span class='fu'>sampleMetadata</span>(<span class='no'>object</span>,
+  <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>sampleMetadata</span>(<span class='no'>object</span>)</pre>
@@ -102,6 +103,12 @@
     <tr>
       <th>object</th>
       <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>aggregateReplicates</th>
+      <td><p>Aggregate technical replicates, if specified. This
+function uses values assigned in the <code>sampleNameAggregate</code> column of the
+internal sample metadata data.frame.</p></td>
     </tr>
     </table>
     

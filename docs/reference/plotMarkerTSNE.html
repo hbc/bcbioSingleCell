@@ -136,15 +136,15 @@ individual gene.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other t-SNE Utilities: <code><a href='fetchTSNEData.html'>fetchTSNEData</a></code>,
-  <code><a href='fetchTSNEExpressionData.html'>fetchTSNEExpressionData</a></code>,
-  <code><a href='plotTSNE.html'>plotTSNE</a></code></p>
+    <p>Other t-SNE Utilities: <code>fetchTSNEData</code>,
+  <code>fetchTSNEExpressionData</code>,
+  <code>plotTSNE</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'>data</span>(<span class='no'>markers</span>, <span class='no'>seurat</span>)
-<span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='topMarkers.html'>topMarkers</a></span>(<span class='no'>markers</span>)
+<span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(<span class='no'>markers</span>)
 
 <span class='co'># Let's take the top markers specific to cluster 0, as an example</span>
 <span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='no'>top</span> <span class='kw'>%&gt;%</span>
@@ -152,14 +152,14 @@ individual gene.</p></td>
     <span class='fu'>pull</span>(<span class='no'>symbol</span>)
 
 <span class='co'># Fetch the t-SNE expression data for the desired gene symbols</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fetchTSNEExpressionData.html'>fetchTSNEExpressionData</a></span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>fetchTSNEExpressionData</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)
 <span class='fu'>print</span>(<span class='fu'>unique</span>(<span class='no'>dat</span>$<span class='no'>gene</span>))
 
 <span class='co'># To make t-SNE plot colored by geometric mean of topGenes</span>
-<span class='fu'><a href='plotTSNE.html'>plotTSNE</a></span>(<span class='no'>dat</span>, <span class='kw'>colorpoints</span> <span class='kw'>=</span> <span class='st'>"geomean"</span>)
+<span class='fu'>plotTSNE</span>(<span class='no'>dat</span>, <span class='kw'>colorpoints</span> <span class='kw'>=</span> <span class='st'>"geomean"</span>)
 
 <span class='co'># To make faceted t-SNE plot of each gene (looks good at up to 6 genes)</span>
-<span class='fu'><a href='plotTSNE.html'>plotTSNE</a></span>(<span class='no'>dat</span>, <span class='kw'>colorpoints</span> <span class='kw'>=</span> <span class='st'>"expression"</span>) +
+<span class='fu'>plotTSNE</span>(<span class='no'>dat</span>, <span class='kw'>colorpoints</span> <span class='kw'>=</span> <span class='st'>"expression"</span>) +
     <span class='fu'>facet_wrap</span>(~<span class='no'>gene</span>)
 <span class='co'># }</span></pre>
   </div>

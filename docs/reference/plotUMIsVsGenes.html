@@ -93,7 +93,9 @@
     <pre class="usage"><span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for bcbioSingleCellANY</span>
-<span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>)</pre>
+<span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>,
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>filterCells</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -106,6 +108,20 @@
       <th>...</th>
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
+    <tr>
+      <th>interestingGroups</th>
+      <td><p>Interesting group, to use for colors.</p></td>
+    </tr>
+    <tr>
+      <th>filterCells</th>
+      <td><p>Show only the cells that have passed filtering cutoffs.</p></td>
+    </tr>
+    <tr>
+      <th>aggregateReplicates</th>
+      <td><p>Aggregate technical replicates, if specified. This
+function uses values assigned in the <code>sampleNameAggregate</code> column of the
+internal sample metadata data.frame.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -114,13 +130,13 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Quality Control Metrics: <code><a href='metrics.html'>metrics</a></code>,
-  <code><a href='plotCellCounts.html'>plotCellCounts</a></code>,
-  <code><a href='plotGenesPerCell.html'>plotGenesPerCell</a></code>,
-  <code><a href='plotMitoRatio.html'>plotMitoRatio</a></code>, <code><a href='plotNovelty.html'>plotNovelty</a></code>,
-  <code><a href='plotReadsPerCell.html'>plotReadsPerCell</a></code>,
-  <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code>,
-  <code><a href='plotZerosVsDepth.html'>plotZerosVsDepth</a></code></p>
+    <p>Other Quality Control Metrics: <code>metrics</code>,
+  <code>plotCellCounts</code>,
+  <code>plotGenesPerCell</code>,
+  <code>plotMitoRatio</code>, <code>plotNovelty</code>,
+  <code>plotReadsPerCell</code>,
+  <code>plotUMIsPerCell</code>,
+  <code>plotZerosVsDepth</code></p>
     
 
   </div>
