@@ -7,7 +7,7 @@
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
-#' @param interestingGroup Interesting group, to use for colors.
+#' @param interestingGroups Interesting group, to use for colors.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #'
@@ -19,7 +19,7 @@ NULL
 # Constructors ====
 .plotGenesPerCellBoxplot <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     min = 0,
     max = Inf,
     filterCells = FALSE,
@@ -33,7 +33,7 @@ NULL
         mapping = aes_string(
             x = "sampleName",
             y = "nGene",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         labs(x = "sample",
              y = "genes per cell") +
@@ -42,7 +42,7 @@ NULL
 
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroup == "sampleName") {
+        interestingGroups == "sampleName") {
         p <- p +
             geom_boxplot(
                 color = lineColor,
@@ -100,7 +100,7 @@ NULL
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics)) {
         facets <- c(facets, "sampleNameAggregate")
-        if (interestingGroup == "sampleName") {
+        if (interestingGroups == "sampleName") {
             p <- p +
                 theme(legend.position = "none")
         }
@@ -118,7 +118,7 @@ NULL
 
 .plotGenesPerCellRidgeline <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     min = 0,
     max = Inf,
     filterCells = FALSE,
@@ -132,7 +132,7 @@ NULL
         mapping = aes_string(
             x = "nGene",
             y = "sampleName",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         labs(x = "genes per cell",
              y = "sample") +
@@ -181,13 +181,13 @@ NULL
 
 .plotGenesPerCell <- function(
     object,
-    interestingGroup,
+    interestingGroups,
     min,
     max,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
-    if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1]]
+    if (missing(interestingGroups)) {
+        interestingGroups <- interestingGroups(object)[[1]]
     }
     if (missing(min)) {
         min <- object %>%
@@ -210,14 +210,14 @@ NULL
     suppressMessages(plot_grid(
         .plotGenesPerCellRidgeline(
             object,
-            interestingGroup = interestingGroup,
+            interestingGroups = interestingGroups,
             min = min,
             max = max,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
         .plotGenesPerCellBoxplot(
             object,
-            interestingGroup = interestingGroup,
+            interestingGroups = interestingGroups,
             min = min,
             max = max,
             filterCells = filterCells,
@@ -232,4 +232,7 @@ NULL
 # Methods ====
 #' @rdname plotGenesPerCell
 #' @export
-setMethod("plotGenesPerCell", "bcbioSingleCellANY", .plotGenesPerCell)
+setMethod(
+    "plotGenesPerCell",
+    signature("bcbioSingleCellANY"),
+    .plotGenesPerCell)

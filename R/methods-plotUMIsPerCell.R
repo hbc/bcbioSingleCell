@@ -15,7 +15,7 @@ NULL
 # Constructors ====
 .plotUMIsPerCellBoxplot <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     min = 0,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
@@ -28,7 +28,7 @@ NULL
         mapping = aes_string(
             x = "sampleName",
             y = "nUMI",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         labs(x = "sample",
              y = "umis per cell") +
@@ -37,7 +37,7 @@ NULL
 
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroup == "sampleName") {
+        interestingGroups == "sampleName") {
         p <- p +
             geom_boxplot(
                 color = lineColor,
@@ -90,7 +90,7 @@ NULL
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics)) {
         facets <- c(facets, "sampleNameAggregate")
-        if (interestingGroup == "sampleName") {
+        if (interestingGroups == "sampleName") {
             p <- p +
                 theme(legend.position = "none")
         }
@@ -108,7 +108,7 @@ NULL
 
 .plotUMIsPerCellRidgeline <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     min = 0,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
@@ -121,7 +121,7 @@ NULL
         mapping = aes_string(
             x = "nUMI",
             y = "sampleName",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         labs(x = "umis per cell",
              y = "sample") +
@@ -165,12 +165,13 @@ NULL
 
 .plotUMIsPerCell <- function(
     object,
-    interestingGroup,
+    interestingGroups,
     min,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
-    if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1]]
+    if (missing(interestingGroups)) {
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]][[1]]
     }
     if (missing(min)) {
         min <- object %>%
@@ -184,13 +185,13 @@ NULL
     suppressMessages(plot_grid(
         .plotUMIsPerCellRidgeline(
             object,
-            interestingGroup = interestingGroup,
+            interestingGroups = interestingGroups,
             min = min,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
         .plotUMIsPerCellBoxplot(
             object,
-            interestingGroup = interestingGroup,
+            interestingGroups = interestingGroups,
             min = min,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),

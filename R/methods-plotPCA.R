@@ -20,12 +20,12 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        interestingGroup = "ident",
+        interestingGroups = "ident",
         label = TRUE) {
         pca <- fetchPCAData(object)
         .plotDim(
             pca,
             axes = c(x = "pc1", y = "pc2"),
-            interestingGroup = interestingGroup,
+            interestingGroups = interestingGroups,
             label = label)
     })

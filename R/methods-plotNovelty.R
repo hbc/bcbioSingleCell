@@ -15,7 +15,7 @@ NULL
 # Constructors ====
 .plotNoveltyBoxplot <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     min = 0,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
@@ -28,7 +28,7 @@ NULL
         mapping = aes_string(
             x = "sampleName",
             y = "log10GenesPerUMI",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         labs(x = "sample",
              y = "log10 genes per UMI") +
@@ -37,7 +37,7 @@ NULL
 
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroup == "sampleName") {
+        interestingGroups == "sampleName") {
         p <- p +
             geom_boxplot(color = lineColor, fill = "white")
     } else {
@@ -88,7 +88,7 @@ NULL
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics)) {
         facets <- c(facets, "sampleNameAggregate")
-        if (interestingGroup == "sampleName") {
+        if (interestingGroups == "sampleName") {
             p <- p +
                 theme(legend.position = "none")
         }
@@ -106,7 +106,7 @@ NULL
 
 .plotNoveltyRidgeline <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     min = 0,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
@@ -119,7 +119,7 @@ NULL
         mapping = aes_string(
             x = "log10GenesPerUMI",
             y = "sampleName",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         labs(x = "log10 genes per UMI",
              y = "sample") +
@@ -163,12 +163,13 @@ NULL
 
 .plotNovelty <- function(
     object,
-    interestingGroup,
+    interestingGroups,
     min,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
-    if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1]]
+    if (missing(interestingGroups)) {
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]][[1]]
     }
     if (missing(min)) {
         min <- object %>%
@@ -182,13 +183,13 @@ NULL
     suppressMessages(plot_grid(
         .plotNoveltyRidgeline(
             object,
-            interestingGroup = interestingGroup,
+            interestingGroups = interestingGroups,
             min = min,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
         .plotNoveltyBoxplot(
             object,
-            interestingGroup = interestingGroup,
+            interestingGroups = interestingGroups,
             min = min,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),

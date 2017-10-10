@@ -119,7 +119,7 @@ NULL
 #' @return [ggplot].
 .plotRawCBViolin <- function(
     tibble,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     cutoffLine = 0,
     multiplexedFASTQ = FALSE,
     aggregateReplicates = TRUE) {
@@ -132,7 +132,7 @@ NULL
         mapping = aes_string(
             x = "sampleName",
             y = "log10Count",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         labs(title = "raw violin",
              y = "log10 reads per cell") +
@@ -184,7 +184,7 @@ NULL
 #' @return [ggplot].
 .plotRawCBRidgeline <- function(
     tibble,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     cutoffLine = 2,
     multiplexedFASTQ = FALSE,
     aggregateReplicates = TRUE) {
@@ -197,7 +197,7 @@ NULL
         mapping = aes_string(
             x = "log10Count",
             y = "sampleName",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         labs(title = "raw histogram",
              x = "log10 reads per cell") +
@@ -249,7 +249,7 @@ NULL
 #' @return [ggplot].
 .plotProportionalCBHistogram <- function(
     tibble,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     cutoffLine = NULL,
     multiplexedFASTQ = FALSE,
     aggregateReplicates = TRUE) {
@@ -258,7 +258,7 @@ NULL
         mapping = aes_string(
             x = "log10Count",
             y = "proportion",
-            color = interestingGroup)
+            color = interestingGroups)
     ) +
         geom_line(alpha = qcPlotAlpha,
                   size = 1.5) +
@@ -304,7 +304,7 @@ NULL
 #' @inherit plotReadsPerCell
 .plotReadsPerCell <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
     if (metadata(object)[["pipeline"]] != "bcbio") {
@@ -314,8 +314,9 @@ NULL
             call. = FALSE)
         return(NULL)
     }
-    if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1]]
+    if (missing(interestingGroups)) {
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]][[1]]
     }
 
     rawTibble <- .rawCBTibble(

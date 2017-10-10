@@ -13,11 +13,12 @@ NULL
 # Constructors ====
 .plotCellCounts <- function(
     object,
-    interestingGroup,
+    interestingGroups,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
-    if (missing(interestingGroup)) {
-        interestingGroup <- .interestingGroup(object)
+    if (missing(interestingGroups)) {
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]][[1]]
     }
     metrics <- metrics(
         object,
@@ -35,7 +36,7 @@ NULL
         mapping = aes_string(
             x = "sampleName",
             y = "cells",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         labs(x = "sample",
              y = "cell count") +
@@ -76,4 +77,7 @@ NULL
 # Methods ====
 #' @rdname plotCellCounts
 #' @export
-setMethod("plotCellCounts", "bcbioSingleCellANY", .plotCellCounts)
+setMethod(
+    "plotCellCounts",
+    signature("bcbioSingleCellANY"),
+    .plotCellCounts)

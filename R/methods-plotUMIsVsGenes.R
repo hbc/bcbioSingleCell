@@ -13,7 +13,7 @@ NULL
 # Constructors ====
 .plotUMIsVsGenes <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
@@ -25,8 +25,8 @@ NULL
         mapping = aes_string(
             x = "nUMI",
             y = "nGene",
-            color = interestingGroup,
-            fill = interestingGroup)
+            color = interestingGroups,
+            fill = interestingGroups)
     ) +
         labs(x = "umis per cell",
              y = "genes per cell") +
@@ -36,7 +36,7 @@ NULL
 
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroup == "sampleName") {
+        interestingGroups == "sampleName") {
         p <- p +
             geom_point(
                 color = "gray",
@@ -67,7 +67,7 @@ NULL
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics)) {
         facets <- c(facets, "sampleNameAggregate")
-        if (interestingGroup == "sampleName") {
+        if (interestingGroups == "sampleName") {
             p <- p +
                 theme(legend.position = "none")
         }

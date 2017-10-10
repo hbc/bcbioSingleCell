@@ -13,7 +13,7 @@ NULL
 # Constructors ====
 .plotMitoRatioBoxplot <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     max = 1,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
@@ -26,7 +26,7 @@ NULL
         mapping = aes_string(
             x = "sampleName",
             y = "mitoRatio",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         scale_y_sqrt() +
         labs(x = "sample",
@@ -35,7 +35,7 @@ NULL
 
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroup == "sampleName") {
+        interestingGroups == "sampleName") {
         p <- p +
             geom_boxplot(
                 color = lineColor,
@@ -89,7 +89,7 @@ NULL
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics)) {
         facets <- c(facets, "sampleNameAggregate")
-        if (interestingGroup == "sampleName") {
+        if (interestingGroups == "sampleName") {
             p <- p +
                 theme(legend.position = "none")
         }
@@ -107,7 +107,7 @@ NULL
 
 .plotMitoRatioRidgeline <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     max = 1,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
@@ -120,7 +120,7 @@ NULL
         mapping = aes_string(
             x = "mitoRatio",
             y = "sampleName",
-            fill = interestingGroup)
+            fill = interestingGroups)
     ) +
         labs(x = "mito ratio",
              y = "sample") +
@@ -164,7 +164,7 @@ NULL
 
 .plotMitoRatioScatterplot <- function(
     object,
-    interestingGroup = "sampleName",
+    interestingGroups = "sampleName",
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
@@ -176,7 +176,7 @@ NULL
         mapping = aes_string(
             x = "nCoding",
             y = "nMito",
-            color = interestingGroup)
+            color = interestingGroups)
     ) +
         labs(x = "mito counts",
              y = "coding counts") +
@@ -185,7 +185,7 @@ NULL
 
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroup == "sampleName") {
+        interestingGroups == "sampleName") {
         p <- p +
             geom_point(
                 color = "gray",
@@ -232,12 +232,13 @@ NULL
 
 .plotMitoRatio <- function(
     object,
-    interestingGroup,
+    interestingGroups,
     max,
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
-    if (missing(interestingGroup)) {
-        interestingGroup <- interestingGroups(object)[[1]]
+    if (missing(interestingGroups)) {
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]][[1]]
     }
     if (missing(max)) {
         max <- object %>%
@@ -251,13 +252,13 @@ NULL
     suppressMessages(plot_grid(
         .plotMitoRatioRidgeline(
             object,
-            interestingGroup = interestingGroup,
+            interestingGroups = interestingGroups,
             max = max,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
         .plotMitoRatioBoxplot(
             object,
-            interestingGroup = interestingGroup,
+            interestingGroups = interestingGroups,
             max = max,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),

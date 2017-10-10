@@ -8,7 +8,7 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
-#' @param interestingGroup Interesting group to use for plot colors.
+#' @param interestingGroups Interesting group to use for plot colors.
 #' @param label Label the clusters on the plot.
 #'
 #' @return [ggplot].
@@ -33,13 +33,13 @@ NULL
 .plotDim <- function(
     object,
     axes,
-    interestingGroup = "ident",
+    interestingGroups = "ident",
     label = TRUE) {
-    if (interestingGroup == "ident") {
+    if (interestingGroups == "ident") {
         # Seurat stores the ident from `FetchData()` as `object.ident`
         color <- "ident"
     } else {
-        color <- interestingGroup
+        color <- interestingGroups
     }
     p <- ggplot(
         object,
@@ -65,7 +65,7 @@ NULL
                 size = 6,
                 fontface = "bold")
     }
-    if (interestingGroup == "ident") {
+    if (interestingGroups == "ident") {
         # Fix the cluster identity label
         p <- p +
             labs(color = "cluster")
@@ -83,12 +83,12 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        interestingGroup = "ident",
+        interestingGroups = "ident",
         label = TRUE) {
         tsne <- fetchTSNEData(object)
         .plotDim(
             tsne,
             axes = c(x = "tSNE1", y = "tSNE2"),
-            interestingGroup = interestingGroup,
+            interestingGroups = interestingGroups,
             label = label)
     })
