@@ -96,10 +96,6 @@ setMethod("metrics", "bcbioSingleCellLegacy", function(
     object,
     filterCells = NULL,
     aggregateReplicates = NULL) {
-    warning(paste(
-        class(object),
-        "class is being deprecated, resave as 'bcbioSingleCell'"),
-        call. = FALSE)
     .metrics(object, aggregateReplicates = FALSE)
 })
 
