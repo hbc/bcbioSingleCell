@@ -28,7 +28,9 @@ devtools::install_github("hbc/bcbioSingleCell")
 
 ## Sample metadata examples
 
-### Multiplexed inDrop run
+### FASTQ files with samples multiplexed by index barcode
+
+This is our current method for handling inDrop samples.
 
 ```
 fileName	description	index	sequence	sampleName
@@ -39,6 +41,19 @@ fileName	description	index	sequence	sampleName
 170620_R1.fastq.gz	run2	14	AAGGCTAT	sample5
 170620_R1.fastq.gz	run2	15	GAGCCTTA	sample6
 170620_R1.fastq.gz	run2	16	TTATGCGA	sample7
+```
+
+### FASTQ files demultiplexed per sample
+
+This is our current method for handling 10X and SureCell samples.
+
+```
+fileName	description	index	sequence
+sample1_170620_R1.fastq.gz	sample1	12	GCGTAAGA
+sample2_170620_R1.fastq.gz	sample2	13	CTATTAAG
+sample3_170620_R1.fastq.gz	sample3	14	AAGGCTAT
+sample4_170620_R1.fastq.gz	sample4	15	GAGCCTTA
+sample5_170620_R1.fastq.gz	sample5	16	TTATGCGA
 ```
 
 
