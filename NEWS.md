@@ -2,6 +2,18 @@
 
 - Renamed main object class from `bcbioSCDataSet` to `bcbioSingleCell`.
 - Cell filtering with `filterCells()` will now slot a named logical vector into `metadata(object)[["filteredCells"]]`, which will be used to dynamically subset the slotted internal `SummarizedExperiment` data. Now that we're using this approach, we can return a modified `bcbioSingleCell` object rather than defining a separate `bcbioSCFiltered` class.
+- Renamed `loadSingleCellRun()` to `loadSingleCell()`, to match bcbioRNASeq package.
+- Now allowing implicit integers in our function code.
+- Added support for plotting technical replicates. This is handled by `sampleNameAggregate` in the sample metadata.
+- Now using ridgeline plots in place of histograms where applicable.
+- Travis CI checks take too long when loading SummarizedExperiment. Hopefully this will be fixed in the 3.6 release later this month.
+- New internal dark theme (`darkTheme()`), based on the Seurat theme.
+- Initial commit of `plotDot()` function, based on `Seurat::DotPlot()`.
+- Added new tSNE plots that allow for consistent cluster labeling.
+- Providing legacy support for `bcbioSCDataSet` and `bcbioSCFiltered`, which will be deprecated in a future release.
+- Offloaded some internal code to basejump, for improved consistency with bcbioRNASeq package: `internal-projectDir.R`, `internal-readSampleMetadataFile.R`, `internal-sampleDirs.R`. We may want to provide this code as a shared bcbio core package (e.g. bcbioBase) in the future.
+- Added internal utility to check for valid marker genes (`.validMarkers()`).
+- Improved Ensembl release version support (`ensemblVersion`).
 
 
 
