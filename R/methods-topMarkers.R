@@ -46,4 +46,7 @@ NULL
 # Methods ====
 #' @rdname topMarkers
 #' @export
-setMethod("topMarkers", "grouped_df", .topMarkers)
+setMethod(
+    "topMarkers",
+    signature("grouped_df"),
+    .topMarkers)

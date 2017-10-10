@@ -57,10 +57,16 @@ NULL
 # Methods ====
 #' @rdname counts
 #' @export
-setMethod("counts", "bcbioSingleCell", .counts)
+setMethod(
+    "counts",
+    signature("bcbioSingleCell"),
+    .counts)
 
 
 
 #' @rdname counts
 #' @export
-setMethod("counts", "bcbioSingleCellLegacy", .counts)
+setMethod(
+    "counts",
+    signature("bcbioSingleCellLegacy"),
+    .counts)

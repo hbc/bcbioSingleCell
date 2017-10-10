@@ -41,4 +41,7 @@ NULL
 # Methods ====
 #' @rdname topBarcodes
 #' @export
-setMethod("topBarcodes", "bcbioSingleCellANY", .topBarcodes)
+setMethod(
+    "topBarcodes",
+    signature("bcbioSingleCellANY"),
+    .topBarcodes)

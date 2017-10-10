@@ -11,14 +11,12 @@ NULL
 
 
 
-# Constructors ====
-.interestingGroups <- function(object) {
-    metadata(object)[["interestingGroups"]]
-}
-
-
-
 # Methods ====
 #' @rdname interestingGroups
 #' @export
-setMethod("interestingGroups", "bcbioSingleCellANY", .interestingGroups)
+setMethod(
+    "interestingGroups",
+    signature("bcbioSingleCellANY"),
+    function(object) {
+        metadata(object)[["interestingGroups"]]
+    })

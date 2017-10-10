@@ -53,5 +53,6 @@ NULL
 #' @export
 setMethod(
     "plotTopMarkers",
-    signature(object = "seurat", topMarkers = "grouped_df"),
+    signature(object = "seurat",
+              topMarkers = "grouped_df"),
     .plotTopMarkers)

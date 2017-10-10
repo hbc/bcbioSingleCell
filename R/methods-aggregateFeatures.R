@@ -4,6 +4,7 @@
 #' @name aggregateFeatures
 #' @family Data Management Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
+#' @keywords internal
 #'
 #' @inheritParams AllGenerics
 #'
@@ -33,7 +34,10 @@ NULL
 # Methods ====
 #' @rdname aggregateFeatures
 #' @export
-setMethod("aggregateFeatures", "bcbioSingleCellANY", function(object) {
-    stop("Draft function", call. = FALSE)
-    # Reslot the counts into assay and then update the SingleCellExperiment
-})
+setMethod(
+    "aggregateFeatures",
+    signature("bcbioSingleCellANY"),
+    function(object) {
+        stop("Draft function", call. = FALSE)
+        # Reslot the counts into assay and then update the SingleCellExperiment
+    })

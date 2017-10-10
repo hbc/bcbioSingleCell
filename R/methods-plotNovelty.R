@@ -200,4 +200,7 @@ NULL
 # Methods ====
 #' @rdname plotNovelty
 #' @export
-setMethod("plotNovelty", "bcbioSingleCellANY", .plotNovelty)
+setMethod(
+    "plotNovelty",
+    signature("bcbioSingleCellANY"),
+    .plotNovelty)

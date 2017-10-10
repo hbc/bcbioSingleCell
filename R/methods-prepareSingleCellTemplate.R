@@ -20,9 +20,12 @@ NULL
 # Methods ====
 #' @rdname prepareSingleCellTemplate
 #' @export
-setMethod("prepareSingleCellTemplate", "missing", function(object) {
-    prepareTemplate(
-        sourceDir = system.file(
-            "rmarkdown/shared",
-            package = "bcbioSingleCell"))
-})
+setMethod(
+    "prepareSingleCellTemplate",
+    signature("missing"),
+    function(object) {
+        prepareTemplate(
+            sourceDir = system.file(
+                "rmarkdown/shared",
+                package = "bcbioSingleCell"))
+    })

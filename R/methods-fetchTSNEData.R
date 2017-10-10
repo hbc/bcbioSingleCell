@@ -23,9 +23,12 @@ NULL
 # Methods ====
 #' @rdname fetchTSNEData
 #' @export
-setMethod("fetchTSNEData", "seurat", function(object) {
-    .fetchDimDataSeurat(
-        object,
-        dimCode = c(x = "tSNE_1", y = "tSNE_2")
-    )
-})
+setMethod(
+    "fetchTSNEData",
+    signature("seurat"),
+    function(object) {
+        .fetchDimDataSeurat(
+            object,
+            dimCode = c(x = "tSNE_1", y = "tSNE_2")
+        )
+    })

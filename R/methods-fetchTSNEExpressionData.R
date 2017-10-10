@@ -27,16 +27,18 @@ NULL
 # Methods ====
 #' @rdname fetchTSNEExpressionData
 #' @export
-setMethod("fetchTSNEExpressionData", "seurat", function(
-    object, genes) {
-    dat <- FetchData(object, vars.all = genes) %>%
-        as.data.frame()
-    dat[["geomean"]] <- colMeans(t(dat))
-    dat <- dat %>%
-        rownames_to_column("cell")
-    fetchTSNEData(object) %>%
-        left_join(dat, by = "cell") %>%
-        gather(key = "gene",
-               value = "expression",
-               !!genes)
-})
+setMethod(
+    "fetchTSNEExpressionData",
+    signature("seurat"), function(
+        object, genes) {
+        dat <- FetchData(object, vars.all = genes) %>%
+            as.data.frame()
+        dat[["geomean"]] <- colMeans(t(dat))
+        dat <- dat %>%
+            rownames_to_column("cell")
+        fetchTSNEData(object) %>%
+            left_join(dat, by = "cell") %>%
+            gather(key = "gene",
+                   value = "expression",
+                   !!genes)
+    })

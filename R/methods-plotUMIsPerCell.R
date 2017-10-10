@@ -202,4 +202,7 @@ NULL
 # Methods ====
 #' @rdname plotUMIsPerCell
 #' @export
-setMethod("plotUMIsPerCell", "bcbioSingleCell", .plotUMIsPerCell)
+setMethod(
+    "plotUMIsPerCell",
+    signature("bcbioSingleCell"),
+    .plotUMIsPerCell)

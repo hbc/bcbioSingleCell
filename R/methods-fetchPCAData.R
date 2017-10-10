@@ -23,9 +23,12 @@ NULL
 # Methods ====
 #' @rdname fetchPCAData
 #' @export
-setMethod("fetchPCAData", "seurat", function(object) {
-    .fetchDimDataSeurat(
-        object,
-        dimCode = c(x = "PC1", y = "PC2")
-    )
-})
+setMethod(
+    "fetchPCAData",
+    signature("seurat"),
+    function(object) {
+        .fetchDimDataSeurat(
+            object,
+            dimCode = c(x = "PC1", y = "PC2")
+        )
+    })

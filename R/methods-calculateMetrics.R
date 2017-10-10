@@ -16,10 +16,8 @@ NULL
 
 
 
-# Methods ====
-#' @rdname calculateMetrics
-#' @export
-setMethod("calculateMetrics", "dgCMatrix", function(
+# Constructors ====
+.calculateMetricsSparse <- function(
     object, annotable, prefilter = TRUE) {
     message("Calculating barcode metrics")
     message(paste(ncol(object), "cellular barcodes detected"))
@@ -66,11 +64,23 @@ setMethod("calculateMetrics", "dgCMatrix", function(
             .[.[["nUMI"]] > 0, ] %>%
             .[.[["nGene"]] > 0, ] %>%
             .[!is.na(.[["log10GenesPerUMI"]]), ]
-        message(paste(nrow(metrics), "cellular barcodes passed pre-filtering"))
+        message(paste(
+            nrow(metrics), "cellular barcodes passed pre-filtering"
+        ))
     }
 
     metrics %>%
         as.data.frame() %>%
         column_to_rownames() %>%
         as.matrix()
-})
+}
+
+
+
+# Methods ====
+#' @rdname calculateMetrics
+#' @export
+setMethod(
+    "calculateMetrics",
+    signature("dgCMatrix"),
+    .calculateMetricsSparse)

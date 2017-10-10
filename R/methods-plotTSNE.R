@@ -78,14 +78,17 @@ NULL
 # Methods ====
 #' @rdname plotTSNE
 #' @export
-setMethod("plotTSNE", "seurat", function(
-    object,
-    interestingGroup = "ident",
-    label = TRUE) {
-    tsne <- fetchTSNEData(object)
-    .plotDim(
-        tsne,
-        axes = c(x = "tSNE1", y = "tSNE2"),
-        interestingGroup = interestingGroup,
-        label = label)
-})
+setMethod(
+    "plotTSNE",
+    signature("seurat"),
+    function(
+        object,
+        interestingGroup = "ident",
+        label = TRUE) {
+        tsne <- fetchTSNEData(object)
+        .plotDim(
+            tsne,
+            axes = c(x = "tSNE1", y = "tSNE2"),
+            interestingGroup = interestingGroup,
+            label = label)
+    })

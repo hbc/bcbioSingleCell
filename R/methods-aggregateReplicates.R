@@ -4,6 +4,7 @@
 #' @name aggregateReplicates
 #' @family Data Management Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
+#' @keywords internal
 #'
 #' @inheritParams AllGenerics
 #'
@@ -36,8 +37,11 @@ NULL
 # Methods ====
 #' @rdname aggregateReplicates
 #' @export
-setMethod("aggregateReplicates", "bcbioSingleCell", function(object) {
-    stop("Draft function", call. = FALSE)
-    # Reslot the counts into assay and then update the SingleCellExperiment
-    # TODO Slot `sampleNameAggregate` into `sampleMetadata()`
-})
+setMethod(
+    "aggregateReplicates",
+    signature("bcbioSingleCell"),
+    function(object) {
+        stop("Draft function", call. = FALSE)
+        # Reslot the counts into assay and then update the SingleCellExperiment
+        # TODO Slot `sampleNameAggregate` into `sampleMetadata()`
+    })

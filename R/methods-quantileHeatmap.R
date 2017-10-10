@@ -52,14 +52,15 @@ NULL
     } else {
         matClusterCols <- FALSE
     }
-    pheatmap(mat,
-             annotation_col = annotation,
-             cluster_cols = matClusterCols,
-             cluster_rows = matClusterRows,
-             breaks = matBreaks,
-             color = inferno(length(matBreaks) - 1),
-             show_colnames = FALSE,
-             show_rownames = FALSE)
+    pheatmap(
+        mat,
+        annotation_col = annotation,
+        cluster_cols = matClusterCols,
+        cluster_rows = matClusterRows,
+        breaks = matBreaks,
+        color = inferno(length(matBreaks) - 1),
+        show_colnames = FALSE,
+        show_rownames = FALSE)
 }
 
 
@@ -67,27 +68,36 @@ NULL
 # Methods ====
 #' @rdname quantileHeatmap
 #' @export
-setMethod("quantileHeatmap", "dgCMatrix", .quantileHeatmap)
+setMethod(
+    "quantileHeatmap",
+    signature("dgCMatrix"),
+    quantileHeatmap)
 
 
 
 #' @rdname quantileHeatmap
 #' @export
-setMethod("quantileHeatmap", "matrix", .quantileHeatmap)
+setMethod(
+    "quantileHeatmap",
+    signature("matrix"),
+    .quantileHeatmap)
 
 
 
 #' @rdname quantileHeatmap
 #' @export
-setMethod("quantileHeatmap", "seurat", function(
-    object,
-    annotation = NA,
-    clusterRows = TRUE,
-    clusterCols = TRUE) {
-    # Use the raw counts
-    .quantileHeatmap(
-        object@raw.data,
-        annotation = annotation,
-        clusterRows = clusterRows,
-        clusterCols = clusterCols)
-})
+setMethod(
+    "quantileHeatmap",
+    signature("seurat"),
+    function(
+        object,
+        annotation = NA,
+        clusterRows = TRUE,
+        clusterCols = TRUE) {
+        # Use the raw counts
+        .quantileHeatmap(
+            object@raw.data,
+            annotation = annotation,
+            clusterRows = clusterRows,
+            clusterCols = clusterCols)
+    })

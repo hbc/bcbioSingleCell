@@ -97,4 +97,7 @@ NULL
 # Methods ====
 #' @rdname selectSamples
 #' @export
-setMethod("selectSamples", "bcbioSingleCellANY", .selectSamples)
+setMethod(
+    "selectSamples",
+    signature("bcbioSingleCellANY"),
+    .selectSamples)

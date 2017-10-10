@@ -85,4 +85,7 @@ NULL
 # Methods ====
 #' @rdname plotUMIsVsGenes
 #' @export
-setMethod("plotUMIsVsGenes", "bcbioSingleCellANY", .plotUMIsVsGenes)
+setMethod(
+    "plotUMIsVsGenes",
+    signature("bcbioSingleCellANY"),
+    .plotUMIsVsGenes)

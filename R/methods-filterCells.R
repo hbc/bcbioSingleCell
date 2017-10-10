@@ -192,12 +192,19 @@ NULL
 # Methods ====
 #' @rdname filterCells
 #' @export
-setMethod("filterCells", "bcbioSingleCell", .filterCells)
+setMethod(
+    "filterCells",
+    signature("bcbioSingleCell"),
+    .filterCells)
 
 
 
 #' @rdname filterCells
 #' @export
-setMethod("filterCells", "bcbioSCDataSet", function(object) {
-    stop("Upgrade 'bcbioSCDataSet' to 'bcbioSingleCell' class object first")
+setMethod(
+    "filterCells",
+    signature("bcbioSCDataSet"),
+    function(object) {
+    stop("Upgrade 'bcbioSCDataSet' to 'bcbioSingleCell' class object first",
+         call. = FALSE)
 })

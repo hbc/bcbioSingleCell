@@ -246,10 +246,6 @@ NULL
         }
     }
     suppressMessages(plot_grid(
-        .plotMitoRatioScatterplot(
-            object,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates),
         .plotMitoRatioRidgeline(
             object,
             interestingGroup = interestingGroup,
@@ -262,6 +258,10 @@ NULL
             max = max,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates),
+        .plotMitoRatioScatterplot(
+            object,
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
         labels = "auto",
         nrow = 3
     ))
@@ -272,4 +272,7 @@ NULL
 # Methods ====
 #' @rdname plotMitoRatio
 #' @export
-setMethod("plotMitoRatio", "bcbioSingleCellANY", .plotMitoRatio)
+setMethod(
+    "plotMitoRatio",
+    signature("bcbioSingleCellANY"),
+    .plotMitoRatio)

@@ -15,14 +15,17 @@ NULL
 # Methods ====
 #' @rdname plotPCA
 #' @export
-setMethod("plotPCA", "seurat", function(
-    object,
-    interestingGroup = "ident",
-    label = TRUE) {
-    pca <- fetchPCAData(object)
-    .plotDim(
-        pca,
-        axes = c(x = "pc1", y = "pc2"),
-        interestingGroup = interestingGroup,
-        label = label)
-})
+setMethod(
+    "plotPCA",
+    signature("seurat"),
+    function(
+        object,
+        interestingGroup = "ident",
+        label = TRUE) {
+        pca <- fetchPCAData(object)
+        .plotDim(
+            pca,
+            axes = c(x = "pc1", y = "pc2"),
+            interestingGroup = interestingGroup,
+            label = label)
+    })

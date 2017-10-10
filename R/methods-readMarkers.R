@@ -14,10 +14,8 @@ NULL
 
 
 
-# Methods ====
-#' @rdname readMarkers
-#' @export
-setMethod("readMarkers", "character", function(object, gene2symbol) {
+# Constructors ====
+.readMarkers <- function(object, gene2symbol) {
     if (!is.data.frame(gene2symbol)) {
         stop("gene2symbol must be data.frame")
     }
@@ -73,4 +71,14 @@ setMethod("readMarkers", "character", function(object, gene2symbol) {
         .[, c("cell", "symbol", "ensgene")] %>%
         arrange(!!!syms(c("cell", "symbol"))) %>%
         distinct()
-})
+}
+
+
+
+# Methods ====
+#' @rdname readMarkers
+#' @export
+setMethod(
+    "readMarkers",
+    signature("character"),
+    .readMarkers)

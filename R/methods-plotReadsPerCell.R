@@ -50,9 +50,8 @@ NULL
     if (isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(meta)) {
         meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
-        meta[["sampleNameAggregate"]] <- NULL
     }
-    meta <- meta[, metaPriorityCols]
+    meta <- meta[, c("sampleID", "sampleName")]
     cellularBarcodes %>%
         mutate(log10Count = log10(.data[["nCount"]]),
                cellularBarcode = NULL,
@@ -383,4 +382,7 @@ NULL
 # Methods ====
 #' @rdname plotReadsPerCell
 #' @export
-setMethod("plotReadsPerCell", "bcbioSingleCellANY", .plotReadsPerCell)
+setMethod(
+    "plotReadsPerCell",
+    signature("bcbioSingleCellANY"),
+    .plotReadsPerCell)
