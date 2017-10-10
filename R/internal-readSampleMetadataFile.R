@@ -93,7 +93,8 @@
             sampleID = make.names(
                 str_replace_all(.data[["sampleID"]], "-", "_"))
         ) %>%
-        dplyr::select(metaPriorityCols, everything()) %>%
+        dplyr::select(c("sampleID", "sampleName", "description"),
+                      everything()) %>%
         arrange(!!sym("sampleID")) %>%
         as.data.frame() %>%
         set_rownames(.[["sampleID"]])
