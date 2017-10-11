@@ -59,12 +59,16 @@ NULL
     assays <- assays(from)
     rowData <- rowData(from)
     rownames(rowData) <- slot(from, "NAMES")
-    colData <- colData(from)
 
     metadata <- metadata(from)
     metadata[["originalVersion"]] <- metadata[["version"]]
     metadata[["version"]] <- packageVersion("bcbioSingleCell")
     metadata[["upgradeDate"]] <- Sys.Date()
+
+    # Recalculate the cellular barcode metrics
+    colData <- calculateMetrics(
+        assay(from),
+        metadata[["annotable"]])
 
     # Version-specific modifications ====
     if (version <= package_version("0.0.18")) {
@@ -84,8 +88,6 @@ NULL
     # Return updated object ====
     to <- new("bcbioSingleCell", se)
     slot(to, "bcbio") <- bcbio
-    # Recalculate the cellular barcode metrics
-    colData(to) <- calculateMetrics(to)
     validObject(to)
     to
 }
