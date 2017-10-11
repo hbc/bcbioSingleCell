@@ -10,6 +10,7 @@ params:
     maxGenes: 5000
     maxMitoRatio: 0.1
     minNovelty: 0.8
+    minCellsPerGene: 3
     outputDir: "."
 ---
 
@@ -126,7 +127,8 @@ bcb <- filterCells(
     minGenes = params$minGenes,
     maxGenes = params$maxGenes,
     maxMitoRatio = params$maxMitoRatio,
-    minNovelty = params$minNovelty)
+    minNovelty = params$minNovelty,
+    minCellsPerGene = params$minCellsPerGene)
 assignAndSaveData(bcbName, bcb)
 ```
 
