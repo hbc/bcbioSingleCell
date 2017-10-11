@@ -170,7 +170,22 @@ NULL
     metrics <- metrics(
         object,
         filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates)
+        aggregateReplicates = aggregateReplicates) %>%
+        rownames_to_column("cellID")
+        # Drop cells with zeroes for both `nCoding` and `nMito`
+    dropCells <- dplyr::filter(
+        metrics,
+        .data[["nCoding"]] == 0 &
+        .data[["nMito"]] == 0) %>%
+        pull("cellID")
+    metrics <- dplyr::filter(metrics, !.data[["cellID"]] %in% dropCells)
+    if (nrow(metrics) == 0) {
+        stop(paste(
+            "No cells contain coding and mito counts.",
+            "Check that your organism is set correctly",
+            "and rerun 'calculateMetrics()'."
+            ), call. = FALSE)
+    }
     p <- ggplot(
         metrics,
         mapping = aes_string(
