@@ -225,6 +225,8 @@ setMethod(
     "filterCells",
     signature("bcbioSCDataSet"),
     function(object) {
-    stop("Upgrade 'bcbioSCDataSet' to 'bcbioSingleCell' class object first",
-         call. = FALSE)
+        stop(paste(
+            "Convert 'bcbioSCDataSet' to 'bcbioSingleCell' class.\n",
+            "Run this code: bcb <- as(bcb, \"bcbioSingleCell\")"
+        ), call. = FALSE)
 })

@@ -11,7 +11,8 @@ filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, aggregateReplicates = TRUE,
   minUMIs = 1000, minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1,
-  minNovelty = 0.8, showReport = TRUE, headerLevel = 2)
+  minNovelty = 0.8, minCellsPerGene = 3, showReport = TRUE,
+  headerLevel = 2)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
 }
@@ -33,6 +34,9 @@ internal sample metadata \link{data.frame}.}
 \item{maxMitoRatio}{Maximum relative mitochondrial abundance (\code{0-1} scale).}
 
 \item{minNovelty}{Minimum novelty score.}
+
+\item{minCellsPerGene}{Include genes with non-zero expression in at least
+this many cells.}
 
 \item{showReport}{Show summary statistics report and plots.}
 
@@ -58,6 +62,8 @@ bcb <- filterCells(bcb)
 }
 }
 \seealso{
+\code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
+
 Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
   \code{\link{readMarkers}}, \code{\link{subsetPerSample}}
