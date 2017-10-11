@@ -187,7 +187,8 @@ NULL
     filterCells = FALSE,
     aggregateReplicates = TRUE) {
     if (missing(interestingGroups)) {
-        interestingGroups <- interestingGroups(object)[[1]]
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]][[1]]
     }
     if (missing(min)) {
         min <- object %>%
