@@ -169,8 +169,8 @@ NULL
 #' `bcbioSinglecell` (note case) will likely fail to load with newer versions of
 #' the package.
 setAs(
-    "bcbioSingleCellLegacy",
-    "bcbioSingleCell",
+    "bcbioSCDataSet",
+    signature("bcbioSingleCell"),
     .coerceLegacy)
 
 
