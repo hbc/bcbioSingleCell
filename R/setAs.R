@@ -49,10 +49,10 @@ NULL
         ), call. = FALSE)
     }
     message(paste(
-        "Upgrading to",
-        packageVersion("bcbioSingleCell"),
-        "from",
-        version
+        "Upgrading from",
+        version,
+        "to",
+        packageVersion("bcbioSingleCell")
     ))
     message(paste("Existing metadata:", toString(names(metadata(from)))))
 
