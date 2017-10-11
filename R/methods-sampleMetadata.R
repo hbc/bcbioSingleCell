@@ -24,14 +24,19 @@ setMethod(
             as.data.frame()
         # Check for and assign missing description (deprecate in future update)
         if (!"description" %in% colnames(meta)) {
-            # `description` is missing in some older bcbio objects because we
-            # used `fileName` and `sampleName` initially to define the minimal
-            # sample metadata. Now `description` is used for multiplexed
-            # samples in QC plots.
-            meta[["description"]] <- str_match(
-                meta$sampleID,
-                pattern = "^(.+)_[ACGT]+$") %>%
-                .[, 2]
+            if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
+                # `description` is missing in some older bcbio objects because we
+                # used `fileName` and `sampleName` initially to define the minimal
+                # sample metadata. Now `description` is used for multiplexed
+                # samples in QC plots.
+                meta[["description"]] <- str_match(
+                    meta$sampleID,
+                    pattern = "^(.+)_[ACGT]+$") %>%
+                    .[, 2]
+            } else {
+                # `sampleName` is from `description` for demultiplexed samples
+                meta[["description"]] <- meta[["sampleName"]]
+            }
         }
         if (isTRUE(aggregateReplicates) &
             "sampleNameAggregate" %in% colnames(meta)) {
