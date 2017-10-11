@@ -23,6 +23,7 @@ setMethod(
             assays = assays(object),
             rowData = rowData(object),
             colData = colData(object),
-            metadata = metadata(object)
+            metadata = metadata(object),
+            bcbio = bcbio(object)
         )
     })

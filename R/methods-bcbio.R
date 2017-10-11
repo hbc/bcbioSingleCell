@@ -19,10 +19,13 @@ setMethod(
     "bcbio",
     signature("bcbioSingleCell"),
     function(object, type) {
+        if (missing(type)) {
+            return(slot(object, "bcbio"))
+        }
         if (type %in% names(slot(object, "bcbio"))) {
             slot(object, "bcbio")[[type]]
         } else {
-            stop(paste(type, "not found"))
+            stop(paste(type, "not found"), call. = FALSE)
         }
     })
 
@@ -43,16 +46,21 @@ setMethod(
 
 
 # Legacy class support ====
+# Package versions prior to 0.0.19 used `callers` to define the extra bcbio
+# slot. The structure of the object is otherwise the same.
 #' @rdname bcbio
 #' @export
 setMethod(
     "bcbio",
     signature("bcbioSCDataSet"),
     function(object, type) {
+        if (missing(type)) {
+            return(slot(object, "callers"))
+        }
         if (type %in% names(slot(object, "callers"))) {
             slot(object, "callers")[[type]]
         } else {
-            stop(paste(type, "not found"))
+            stop(paste(type, "not found"), call. = FALSE)
         }
     })
 
