@@ -3,12 +3,12 @@
 \docType{methods}
 \name{plotUMIsPerCell}
 \alias{plotUMIsPerCell}
-\alias{plotUMIsPerCell,bcbioSingleCell-method}
+\alias{plotUMIsPerCell,bcbioSingleCellANY-method}
 \title{Plot UMIs per Cell}
 \usage{
 plotUMIsPerCell(object, ...)
 
-\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, interestingGroups, min,
+\S4method{plotUMIsPerCell}{bcbioSingleCellANY}(object, interestingGroups, min,
   filterCells = FALSE, aggregateReplicates = TRUE)
 }
 \arguments{
