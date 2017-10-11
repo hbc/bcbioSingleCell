@@ -58,7 +58,7 @@ Suggests:
     testthat,
     tidyverse
 Remotes:
-    steinbaugh/basejump@develop
+    steinbaugh/basejump
 biocViews:
     DataImport,
     DataRepresentation,
