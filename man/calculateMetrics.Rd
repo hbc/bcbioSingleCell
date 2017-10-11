@@ -20,7 +20,7 @@ calculateMetrics(object, ...)
 \item{prefilter}{Whether to apply pre-filtering to the cellular barcodes.}
 }
 \value{
-\link{matrix}.
+\link{data.frame}.
 }
 \description{
 Calculate Cellular Barcode Metrics Summary
