@@ -11,7 +11,7 @@
 #'
 #' @note This should only be performed during the initial run loading.
 #'
-#' @return [matrix].
+#' @return [data.frame].
 NULL
 
 
@@ -45,7 +45,7 @@ NULL
 
     # Check for [Matrix::colSums()] methods support
     if (!"colSums,dgCMatrix-method" %in% methods(colSums)) {
-        stop("dgCMatrix not supported in `colSums()`", call. = FALSE)
+        stop("'dgCMatrix' not supported in 'colSums()'", call. = FALSE)
     }
 
     # Extract coding and mitochondrial genes from annotable
@@ -81,8 +81,7 @@ NULL
 
     metrics %>%
         as.data.frame() %>%
-        column_to_rownames() %>%
-        as.matrix()
+        column_to_rownames()
 }
 
 
