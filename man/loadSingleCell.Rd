@@ -5,8 +5,8 @@
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
 loadSingleCell(uploadDir, interestingGroups = "sampleName",
-  sampleMetadataFile = NULL, gtfFile = NULL, wellMetadataFile = NULL,
-  prefilter = TRUE, ensemblVersion = "current", ...)
+  sampleMetadataFile = NULL, gtfFile = NULL, prefilter = TRUE,
+  ensemblVersion = "current", ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -21,8 +21,6 @@ is used for PCA and heatmap QC functions.}
 \item{gtfFile}{\emph{Optional}. GTF (Gene Transfer Format) file, which will be
 used for transcript-to-gene (\code{tx2gene}) and gene-to-symbol (\code{gene2symbol})
 annotation mappings.}
-
-\item{wellMetadataFile}{\emph{Optional}. Well identifier metadata file.}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 

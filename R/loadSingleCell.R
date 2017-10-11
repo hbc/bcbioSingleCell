@@ -15,7 +15,6 @@
 #' @param gtfFile *Optional*. GTF (Gene Transfer Format) file, which will be
 #'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
 #'   annotation mappings.
-#' @param wellMetadataFile *Optional*. Well identifier metadata file.
 #' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param ensemblVersion Ensembl release version. Defaults to current, and does
 #'   not typically need to be user-defined. This parameter can be useful for
@@ -43,7 +42,6 @@ loadSingleCell <- function(
     interestingGroups = "sampleName",
     sampleMetadataFile = NULL,
     gtfFile = NULL,
-    wellMetadataFile = NULL,
     prefilter = TRUE,
     ensemblVersion = "current",
     ...) {
@@ -190,14 +188,6 @@ loadSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Well metadata ====
-    if (!is.null(wellMetadataFile)) {
-        wellMetadataFile <- normalizePath(wellMetadataFile)
-        wellMetadata <- readFileByExtension(wellMetadataFile)
-    } else {
-        wellMetadata <- NULL
-    }
-
     # tx2gene and gene2symbol annotations ====
     if (!is.null(gtfFile)) {
         gtfFile <- normalizePath(gtfFile)
@@ -286,8 +276,6 @@ loadSingleCell <- function(
         runDate = runDate,
         yamlFile = yamlFile,
         yaml = yaml,
-        wellMetadataFile = wellMetadataFile,
-        wellMetadata = wellMetadata,
         tx2gene = tx2gene,
         dataVersions = dataVersions,
         programs = programs,
