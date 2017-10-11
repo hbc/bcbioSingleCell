@@ -90,9 +90,9 @@ loadSingleCell <- function(
 
     # Log files ====
     message("Reading log files")
-    bcbioLog <- .logFile(
+    bcbioLog <- readLogFile(
         file.path(projectDir, "bcbio-nextgen.log"))
-    bcbioCommandsLog <- .logFile(
+    bcbioCommandsLog <- readLogFile(
         file.path(projectDir, "bcbio-nextgen-commands.log"))
 
     # Cellular barcode cutoff ====
@@ -105,8 +105,10 @@ loadSingleCell <- function(
         as.numeric()
 
     # Data versions and programs ====
-    dataVersions <- readDataVersions(file.path(projectDir, "data_versions.csv"))
-    programs <- readProgramVersions(file.path(projectDir, "programs.txt"))
+    dataVersions <- readDataVersions(
+        file.path(projectDir, "data_versions.csv"))
+    programs <- readProgramVersions(
+        file.path(projectDir, "programs.txt"))
     if (!is.null(dataVersions)) {
         genomeBuild <- dataVersions %>%
             dplyr::filter(.data[["resource"]] == "transcripts") %>%
@@ -159,7 +161,7 @@ loadSingleCell <- function(
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
-        sampleMetadata <- .sampleYAMLMetadata(yaml)
+        sampleMetadata <- sampleYAMLMetadata(yaml)
     }
     # Check that `sampleID` matches `sampleDirs`
     if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
