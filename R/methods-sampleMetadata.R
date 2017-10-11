@@ -45,13 +45,18 @@ setMethod(
                 dplyr::select(
                     unique(c("sampleID",
                              "sampleName",
-                             "description",
                              interestingGroups(object)))
                 ) %>%
-                distinct() %>%
-                set_rownames(.[["sampleID"]])
+                distinct()
+        } else {
+            # Put the priority columns first
+            meta <- meta %>%
+                dplyr::select(c("sampleID", "sampleName", "description"),
+                              everything())
         }
-        meta
+        meta %>%
+            # Ensure the rownames are set
+            set_rownames(.[["sampleID"]])
     })
 
 
