@@ -39,53 +39,74 @@ NULL
 
 
 
-# Methods ====
-#' @rdname coerce
-#' @name upgrade-bcbioSingleCell
-#' @section Upgrade [bcbioSingleCell] to current version:
-#' This method adds support for upgrading `bcbioSCDataSet` objects to the latest
-#' [bcbioSingleCell] class version. This should be backwards compatible to
-#' [bcbioSingleCell] version 0.0.17. Previous objects saved using
-#' `bcbioSinglecell` (note case) will likely fail to load with newer versions of
-#' the package.
-setAs("bcbioSingleCellLegacy", "bcbioSingleCell", function(from) {
-    # FIXME Need to add support for upgrade method.
-    # Can extract the information from the slotted SummarizedExperiment.
-    # Add a warning for `bcbioSCFiltered`, since these only contain a subset.
-    stop("Upgrade coercion method will be added in future update")
-})
+.upgradeFromLegacy <- function(from) {
+    # Check for version
+    version <- metadata(from)[["version"]]
+    if (is.null(version)) {
+        stop(paste(
+            "Unknown bcbio object version.",
+            "Please reload with 'loadSingleCell()'."
+        ), call. = FALSE)
+    }
+    message(paste(
+        "Upgrading to",
+        packageVersion("bcbioSingleCell"),
+        "from",
+        version
+    ))
+    message(paste("Existing metadata:", toString(names(metadata(from)))))
+
+    assays <- slot(from, "assays")
+    rowData <- slot(from, "elementMetadata")
+    rownames(rowData) <- slot(from, "NAMES")
+    colData <- slot(from, "colData")
+
+    metadata <- slot(from, "metadata")
+    metadata[["originalVersion"]] <- metadata[["version"]]
+    metadata[["version"]] <- packageVersion("bcbioSingleCell")
+    metadata[["upgradeDate"]] <- Sys.Date()
+
+    # Version-specific modifications ====
+    if (version <= package_version("0.0.18")) {
+        bcbio <- slot(from, "callers")
+        # Remove GTF file, if present (too large)
+        metadata[["gtf"]] <- NULL
+    } else {
+        bcbio <- slot(from, "bcbio")
+    }
+
+    se <- SummarizedExperiment(
+        assays = assays,
+        rowData = rowData,
+        colData = colData,
+        metadata = metadata)
+
+    # Return updated object ====
+    to <- new("bcbioSingleCell", se)
+    slot(to, "bcbio") <- bcbio
+    # Recalculate the cellular barcode metrics
+    colData(to) <- calculateMetrics(to)
+    validObject(to)
+    to
+}
 
 
 
-#' @rdname coerce
-#' @name coerce-bcbioSingleCell-seurat
-#' @section [bcbioSingleCell] to [seurat]:
-#' Interally, this begins by calling [Seurat::CreateSeuratObject()] without any
-#' additional filtering cutoffs, since we already applied them during our
-#' quality control analysis. Here we are passing the raw gene-level counts of
-#' the filtered cells into a new [seurat] class object, using [as()] object
-#' coercion. Next, global-scaling normalization is applied to the raw counts
-#' with [Seurat::NormalizeData()], which (1) normalizes the gene expression
-#' measurements for each cell by the total expression, (2) multiplies this by a
-#' scale factor (10,000 by default), and (3) log-transforms the result.
-#' [Seurat::FindVariableGenes()] is then called, which calculates the average
-#' expression and dispersion for each gene, places these genes into bins, and
-#' then calculates a z-score for dispersion within each bin. This helps control
-#' for the relationship between variability and average expression. Finally, the
-#' genes are scaled and centered using the [Seurat::ScaleData()] function.
-setAs("bcbioSingleCell", "seurat", function(from) {
+.coerceToSeurat <- function(from) {
     cells <- metadata(from)[["filterCells"]]
-
-    # Check for required `filterCells` metadata
     if (is.null(cells)) {
         stop(paste(
             "'filterCells()' must be performed on 'from' object",
             "prior to 'seurat' coercion"
-        ))
+        ), call. = FALSE)
     }
+
+    genes <- metadata(from)[["filterCells"]]
 
     # Subset the object to only contain filtered cells
     from <- from[, cells]
+
+    # FIXME Pass the filtering values here
 
     counts <- counts(from, gene2symbol = TRUE)
     seurat <- CreateSeuratObject(
@@ -113,4 +134,43 @@ setAs("bcbioSingleCell", "seurat", function(from) {
     seurat@misc[["bcbio"]] <- .fromMetadata(from)
 
     seurat
-})
+}
+
+
+
+# Methods ====
+#' @rdname coerce
+#' @name upgrade-bcbioSingleCell
+#' @section Upgrade [bcbioSingleCell] to current version:
+#' This method adds support for upgrading `bcbioSCDataSet` objects to the latest
+#' [bcbioSingleCell] class version. This should be backwards compatible to
+#' [bcbioSingleCell] version 0.0.17. Previous objects saved using
+#' `bcbioSinglecell` (note case) will likely fail to load with newer versions of
+#' the package.
+setAs(
+    "bcbioSingleCellLegacy",
+    "bcbioSingleCell",
+    .upgradeFromLegacy)
+
+
+
+#' @rdname coerce
+#' @name coerce-bcbioSingleCell-seurat
+#' @section [bcbioSingleCell] to [seurat]:
+#' Interally, this begins by calling [Seurat::CreateSeuratObject()] without any
+#' additional filtering cutoffs, since we already applied them during our
+#' quality control analysis. Here we are passing the raw gene-level counts of
+#' the filtered cells into a new [seurat] class object, using [as()] object
+#' coercion. Next, global-scaling normalization is applied to the raw counts
+#' with [Seurat::NormalizeData()], which (1) normalizes the gene expression
+#' measurements for each cell by the total expression, (2) multiplies this by a
+#' scale factor (10,000 by default), and (3) log-transforms the result.
+#' [Seurat::FindVariableGenes()] is then called, which calculates the average
+#' expression and dispersion for each gene, places these genes into bins, and
+#' then calculates a z-score for dispersion within each bin. This helps control
+#' for the relationship between variability and average expression. Finally, the
+#' genes are scaled and centered using the [Seurat::ScaleData()] function.
+setAs(
+    "bcbioSingleCell",
+    signature("seurat"),
+    .coerceToSeurat)
