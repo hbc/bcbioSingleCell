@@ -56,12 +56,12 @@ NULL
     ))
     message(paste("Existing metadata:", toString(names(metadata(from)))))
 
-    assays <- slot(from, "assays")
-    rowData <- slot(from, "elementMetadata")
+    assays <- assays(from)
+    rowData <- rowData(from)
     rownames(rowData) <- slot(from, "NAMES")
-    colData <- slot(from, "colData")
+    colData <- colData(from)
 
-    metadata <- slot(from, "metadata")
+    metadata <- metadata(from)
     metadata[["originalVersion"]] <- metadata[["version"]]
     metadata[["version"]] <- packageVersion("bcbioSingleCell")
     metadata[["upgradeDate"]] <- Sys.Date()
