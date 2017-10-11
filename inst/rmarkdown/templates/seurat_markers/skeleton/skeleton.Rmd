@@ -79,7 +79,7 @@ write_csv(markers, file.path(markersDir, paste0(markersName, ".csv.gz")))
 
 ```{r top_markers}
 topMarkers <- topMarkers(markers, coding = TRUE)
-print(topMarkers)
+topMarkers
 ```
 
 ```{r plot_top_markers, results="asis"}
