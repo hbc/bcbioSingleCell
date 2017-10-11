@@ -18,17 +18,27 @@ NULL
 
 # Constructors ====
 .calculateMetricsSparse <- function(
-    object, annotable, prefilter = TRUE) {
+    object,
+    annotable,
+    prefilter = TRUE) {
     message("Calculating barcode metrics")
     message(paste(ncol(object), "cellular barcodes detected"))
 
     # Check that all genes are in annotable
     missing <- rownames(object) %>%
         .[!rownames(object) %in% annotable[["ensgene"]]]
+
+    if (identical(length(missing), nrow(object))) {
+        stop(paste(
+            "No genes in the counts matrix matched the annotable.",
+            "Check to ensure 'organism' is correct."
+        ), call. = FALSE)
+    }
+
     if (length(missing) > 0) {
         warning(paste(
-            length(missing), "genes missing in annotable",
-            "used to calculate metrics:",
+            length(missing),
+            "genes present in counts matrix but missing in annotable:",
             toString(missing)
         ), call. = FALSE)
     }
