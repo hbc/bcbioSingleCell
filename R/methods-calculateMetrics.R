@@ -48,22 +48,34 @@ NULL
         stop("'dgCMatrix' not supported in 'colSums()'", call. = FALSE)
     }
 
-    # Extract coding and mitochondrial genes from annotable
-    codingGenes <- annotable %>%
-        .[.[["broadClass"]] == "coding", "ensgene"]
-    mitoGenes <- annotable %>%
-        .[.[["broadClass"]] == "mito", "ensgene"]
-
-    # Message which mitochondrial genes used for calculations
-    annotable %>%
-        .[mitoGenes, "symbol"] %>%
-        sort() %>%
-        toString() %>%
-        paste(
-            length(mitoGenes),
-            "mitochondrial genes used for metrics:",
-            .) %>%
-        message()
+    # Obtain detected coding and mitochondrial genes, using annotable
+    codingGenesDetected <- annotable %>%
+        dplyr::filter(.data[["broadClass"]] == "coding") %>%
+        pull("ensgene") %>%
+        .[. %in% rownames(object)]
+    if (length(codingGenesDetected) == 0) {
+        stop("No coding genes detected", call. = FALSE)
+    }
+    mitoGenesDetected <- annotable %>%
+        dplyr::filter(.data[["broadClass"]] == "mito") %>%
+        pull("ensgene") %>%
+        .[. %in% rownames(object)]
+    if (length(mitoGenesDetected) == 0) {
+        warning("No mitochondrial genes detected", call. = FALSE)
+    } else {
+        # Message which mitochondrial genes used for calculations
+        annotable %>%
+            .[.[["ensgene"]] %in% mitoGenesDetected, "symbol"] %>%
+            sort() %>%
+            toString() %>%
+            paste(
+                "Detected",
+                length(mitoGenesDetected),
+                "annotated mitochondrial genes;",
+                "used to calculate 'mitoRatio':",
+                .) %>%
+            message()
+    }
 
     metrics <- tibble(
         rowname = colnames(object),
@@ -71,16 +83,18 @@ NULL
         nUMI = Matrix::colSums(object),
         nGene = Matrix::colSums(object > 0),
         nCoding = Matrix::colSums(
-            object[rownames(object) %in% codingGenes, ]),
+            object[codingGenesDetected, , drop = FALSE]),
         nMito = Matrix::colSums(
-            object[rownames(object) %in% mitoGenes, ])) %>%
+            object[mitoGenesDetected, , drop = FALSE])) %>%
         mutate(log10GenesPerUMI =
                    log10(.data[["nGene"]]) / log10(.data[["nUMI"]]),
+               # Using `nUMI` here like in Seurat example
                mitoRatio =
                    .data[["nMito"]] / .data[["nUMI"]])
 
     # Apply low stringency cellular barcode pre-filtering, if desired
     if (isTRUE(prefilter)) {
+        # Here we're only keeping cellular barcodes that have a gene detected
         metrics <- metrics %>%
             .[.[["nUMI"]] > 0, ] %>%
             .[.[["nGene"]] > 0, ] %>%
@@ -104,3 +118,19 @@ setMethod(
     "calculateMetrics",
     signature("dgCMatrix"),
     .calculateMetricsSparse)
+
+
+
+#' @rdname calculateMetrics
+#' @export
+setMethod(
+    "calculateMetrics",
+    signature("bcbioSingleCellANY"),
+    function(
+        object,
+        prefilter = TRUE) {
+        .calculateMetricsSparse(
+            assay(object),
+            annotable = metadata(object)[["annotable"]],
+            prefilter = prefilter)
+    })

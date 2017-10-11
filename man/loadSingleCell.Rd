@@ -5,7 +5,7 @@
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
 loadSingleCell(uploadDir, interestingGroups = "sampleName",
-  sampleMetadataFile = NULL, gffFile = NULL, wellMetadataFile = NULL,
+  sampleMetadataFile = NULL, gtfFile = NULL, wellMetadataFile = NULL,
   prefilter = TRUE, ensemblVersion = "current", ...)
 }
 \arguments{
@@ -18,9 +18,9 @@ is used for PCA and heatmap QC functions.}
 
 \item{sampleMetadataFile}{Sample barcode metadata file.}
 
-\item{gffFile}{\emph{Optional}. GFF (General Feature Format) or GTF (Gene Transfer
-Format) file, which will be used for transcript-to-gene (\code{tx2gene}) and
-gene-to-symbol (\code{gene2symbol}) annotation mappings. A GTF file is GFF v2.}
+\item{gtfFile}{\emph{Optional}. GTF (Gene Transfer Format) file, which will be
+used for transcript-to-gene (\code{tx2gene}) and gene-to-symbol (\code{gene2symbol})
+annotation mappings.}
 
 \item{wellMetadataFile}{\emph{Optional}. Well identifier metadata file.}
 
@@ -51,7 +51,7 @@ bcb <- loadSingleCell(
     uploadDir = file.path("indrop_rnaseq", "final"),
     interestingGroups = c("genotype", "treatment"),
     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
-    gffFile = file.path(
+    gtfFile = file.path(
         "annotations",
         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
     ensemblVersion = 88)

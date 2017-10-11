@@ -130,7 +130,7 @@ loadCellRanger <- function(
         genomeBuild = genomeBuild,
         ensemblVersion = ensemblVersion,
         annotable = annotable,
-        gffFile = gtfFile,
+        gtfFile = gtfFile,
         gene2symbol = gene2symbol,
         umiType = umiType,
         allSamples = allSamples,

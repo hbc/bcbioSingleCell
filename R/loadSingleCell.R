@@ -12,9 +12,9 @@
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
 #' @param sampleMetadataFile Sample barcode metadata file.
-#' @param gffFile *Optional*. GFF (General Feature Format) or GTF (Gene Transfer
-#'   Format) file, which will be used for transcript-to-gene (`tx2gene`) and
-#'   gene-to-symbol (`gene2symbol`) annotation mappings. A GTF file is GFF v2.
+#' @param gtfFile *Optional*. GTF (Gene Transfer Format) file, which will be
+#'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
+#'   annotation mappings.
 #' @param wellMetadataFile *Optional*. Well identifier metadata file.
 #' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param ensemblVersion Ensembl release version. Defaults to current, and does
@@ -33,7 +33,7 @@
 #'     uploadDir = file.path("indrop_rnaseq", "final"),
 #'     interestingGroups = c("genotype", "treatment"),
 #'     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
-#'     gffFile = file.path(
+#'     gtfFile = file.path(
 #'         "annotations",
 #'         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
 #'     ensemblVersion = 88)
@@ -42,7 +42,7 @@ loadSingleCell <- function(
     uploadDir,
     interestingGroups = "sampleName",
     sampleMetadataFile = NULL,
-    gffFile = NULL,
+    gtfFile = NULL,
     wellMetadataFile = NULL,
     prefilter = TRUE,
     ensemblVersion = "current",
@@ -199,11 +199,11 @@ loadSingleCell <- function(
     }
 
     # tx2gene and gene2symbol annotations ====
-    if (!is.null(gffFile)) {
-        gffFile <- normalizePath(gffFile)
-        gff <- readGFF(gffFile)
-        tx2gene <- tx2geneFromGFF(gff)
-        gene2symbol <- gene2symbolFromGFF(gff)
+    if (!is.null(gtfFile)) {
+        gtfFile <- normalizePath(gtfFile)
+        gtf <- readGFF(gtfFile)
+        tx2gene <- tx2geneFromGTF(gtf)
+        gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
         warning(paste(
             "GFF/GTF file matching transcriptome FASTA is advised.",
@@ -273,7 +273,7 @@ loadSingleCell <- function(
         organism = organism,
         genomeBuild = genomeBuild,
         ensemblVersion = ensemblVersion,
-        gffFile = gffFile,
+        gtfFile = gtfFile,
         annotable = annotable,
         gene2symbol = gene2symbol,
         umiType = umiType,

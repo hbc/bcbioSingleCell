@@ -42,7 +42,7 @@ bcb <- loadSingleCell(
     uploadDir = file.path("indrop_rnaseq", "final"),
     interestingGroups = c("genotype", "treatment"),
     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
-    gffFile = file.path(
+    gtfFile = file.path(
         "annotations",
         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
     ensemblVersion = 88)
