@@ -54,6 +54,17 @@ NULL
     mitoGenes <- annotable %>%
         .[.[["broadClass"]] == "mito", "ensgene"]
 
+    # Message which mitochondrial genes used for calculations
+    annotable %>%
+        .[mitoGenes, "symbol"] %>%
+        sort() %>%
+        toString() %>%
+        paste(
+            length(mitoGenes),
+            "mitochondrial genes used for metrics:",
+            .) %>%
+        message()
+
     metrics <- tibble(
         rowname = colnames(object),
         # Follow the Seurat `seurat@data.info` conventions
