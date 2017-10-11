@@ -66,12 +66,11 @@ NULL
                 formula = formula,
                 data = metrics,
                 FUN = median) %>%
-            left_join(meta, by = "sampleName") %>%
-            mutate(nGene = round(.data[["nGene"]]))
+            left_join(meta, by = "sampleName")
         p <- p +
             geom_label(
                 data = medianGenes,
-                mapping = aes_string(label = "nGene"),
+                mapping = aes_(label = ~round(nGene)),
                 alpha = qcLabelAlpha,
                 color = qcLabelColor,
                 fill = qcLabelFill,

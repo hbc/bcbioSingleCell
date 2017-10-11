@@ -59,12 +59,11 @@ NULL
                 formula = formula,
                 data = metrics,
                 FUN = median) %>%
-            left_join(meta, by = "sampleName") %>%
-            mutate(mitoRatio = round(.data[["mitoRatio"]], digits = 3))
+            left_join(meta, by = "sampleName")
         p <- p +
             geom_label(
                 data = medianMitoRatio,
-                mapping = aes_string(label = "mitoRatio"),
+                mapping = aes_(label = ~round(mitoRatio, digits = 2)),
                 alpha = qcLabelAlpha,
                 color = qcLabelColor,
                 fill = qcLabelFill,

@@ -60,12 +60,11 @@ NULL
             formula = formula,
             data = metrics,
             FUN = median) %>%
-            left_join(meta, by = "sampleName") %>%
-            mutate(nUMI = round(.data[["nUMI"]]))
+            left_join(meta, by = "sampleName")
         p <- p +
             geom_label(
                 data = medianUMIs,
-                mapping = aes_string(label = "nUMI"),
+                mapping = aes_(label = ~round(nUMI)),
                 alpha = qcLabelAlpha,
                 color = qcLabelColor,
                 fill = qcLabelFill,
