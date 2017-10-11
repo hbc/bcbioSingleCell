@@ -17,13 +17,16 @@ NULL
 
 
 # Constructors ====
-#' Keep Essential Metadata
+#' Essential Metadata
+#'
+#' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
 #'
 #' @inheritParams coerce
 #'
 #' @return Metadata [list].
-#' @noRd
-.fromMetadata <- function(from) {
+.essentialMetadata <- function(from) {
     metadata(from) %>%
         .[c("version",
             "uploadDir",
@@ -39,7 +42,18 @@ NULL
 
 
 
-.upgradeFromLegacy <- function(from) {
+#' Coerce Legacy bcbio Object to `bcbioSingleCell` class
+#'
+#' Compatible with old versions created by bcbioSingleCell package.
+#' The previous bcbioSinglecell package (note lowercase "c") must be reinstalled
+#' to load objects from versions <= 0.0.16.
+#'
+#' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
+#'
+#' @return [bcbioSingleCell] object.
+.coerceLegacy <- function(from) {
     # Check for version
     version <- metadata(from)[["version"]]
     if (is.null(version)) {
@@ -94,47 +108,52 @@ NULL
 
 
 
+#' Coerce `bcbioSingleCell` to `seurat`
+#'
+#' Last tested against CRAN version 2.0.1
+#'
+#' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
+#'
+#' @return [seurat] object.
 .coerceToSeurat <- function(from) {
-    cells <- metadata(from)[["filterCells"]]
-    if (is.null(cells)) {
-        stop(paste(
-            "'filterCells()' must be performed on 'from' object",
-            "prior to 'seurat' coercion"
-        ), call. = FALSE)
+    if (is.null(metadata(from)[["filterParams"]])) {
+        stop("'filterCells()' must be run prior to 'seurat' coercion",
+             call. = FALSE)
     }
 
-    genes <- metadata(from)[["filterCells"]]
-
-    # Subset the object to only contain filtered cells
-    from <- from[, cells]
-
-    # FIXME Pass the filtering values here
-
-    counts <- counts(from, gene2symbol = TRUE)
+    # Create the initial `seurat` object
+    rawData <- counts(from, gene2symbol = TRUE)
+    minGenes <- metadata(from)[["filterParams"]][["minGenes"]]
+    if (is.null(minGenes)) {
+        minGenes <- 0
+    }
+    minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
+    if (is.null(minCellsPerGene)) {
+        minCells <- 0
+    }
+    metadata <- metrics(from, aggregateReplicates = TRUE)
     seurat <- CreateSeuratObject(
-        raw.data = counts,
-        min.cells = 0,
-        min.genes = 0,
-        meta.data = metrics(from, aggregateReplicates = TRUE)
-    )
-
-    # Integrity checks
-    if (!identical(dim(counts), dim(seurat@raw.data))) {
-        stop(paste(
-            "Unexpected dimension mismatch between",
-            "'bcbioSingleCell' and 'seurat' objects"
-        ))
-    }
-
-    # Complete the initalization steps
-    seurat <- seurat %>%
-        NormalizeData() %>%
-        FindVariableGenes(do.plot = FALSE) %>%
-        ScaleData()
+        raw.data = rawData,
+        project = "bcbioSingleCell",
+        min.cells = minCells,
+        min.genes = minGenes,
+        is.expr = 0,  # Default for UMI datasets
+        meta.data = metadata) %>%
+        NormalizeData(
+            normalization.method = "LogNormalize",
+            scale.factor = 10000) %>%
+        FindVariableGenes(
+            mean.function = ExpMean,
+            dispersion.function = LogVMR,
+            do.plot = FALSE) %>%
+        ScaleData(model.use = "linear")
 
     # Stash useful bcbio run metadata into `misc` slot
-    seurat@misc[["bcbio"]] <- .fromMetadata(from)
+    slot(seurat, "misc")[["bcbio"]] <- .essentialMetadata(from)
 
+    print(seurat)
     seurat
 }
 
@@ -152,7 +171,7 @@ NULL
 setAs(
     "bcbioSingleCellLegacy",
     "bcbioSingleCell",
-    .upgradeFromLegacy)
+    .coerceLegacy)
 
 
 
