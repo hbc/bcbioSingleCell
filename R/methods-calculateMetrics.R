@@ -129,6 +129,7 @@ setMethod(
     function(
         object,
         prefilter = TRUE) {
+        message("Recalculating cellular barcode metrics")
         .calculateMetricsSparse(
             assay(object),
             annotable = metadata(object)[["annotable"]],
