@@ -15,12 +15,16 @@
 #' @param maxGenes Maximum number of genes detected.
 #' @param maxMitoRatio Maximum relative mitochondrial abundance (`0-1` scale).
 #' @param minNovelty Minimum novelty score.
+#' @param minCellsPerGene Include genes with non-zero expression in at least
+#'   this many cells.
 #' @param showReport Show summary statistics report and plots.
 #' @param headerLevel RMarkdown header level, if `showReport = TRUE`.
 #'
 #' @note This operation can be re-run on a [bcbioSingleCell] object that has
 #'   been previously filtered. This function simply saves `filterCells` and
 #'   `filterParams` vectors into the [metadata()] slot.
+#'
+#' @seealso [Seurat::CreateSeuratObject()].
 #'
 #' @return [bcbioSingleCell] object, with filtering information slotted into
 #'   [metadata()] as `filterCells` and `filterParams`.
@@ -43,20 +47,21 @@ NULL
     maxGenes = Inf,
     maxMitoRatio = 0.1,
     minNovelty = 0.8,
+    minCellsPerGene = 3,
     showReport = TRUE,
     headerLevel = 2) {
-    # Cellular barcode count
     ncol(object) %>%
-        paste("cellular barcodes in dataset") %>%
+        paste("unfiltered cellular barcodes") %>%
         message()
 
-    # Use the metrics data.frame to identify filtered cells
+    # Cellular barcode filtering ====
+    # Use the metrics `data.frame` to identify filtered cells
     metrics <- metrics(
         object,
         filterCells = FALSE,
         aggregateReplicates = aggregateReplicates) %>%
         as.data.frame() %>%
-        rownames_to_column("cell")
+        rownames_to_column("cellID")
 
     if (!is.null(minUMIs)) {
         metrics <- metrics %>%
@@ -81,16 +86,31 @@ NULL
     if (!nrow(metrics)) {
         stop("No cellular barcodes passed filtering")
     }
-    message(paste(nrow(metrics), "cellular barcodes passed filtering"))
+    message(paste(
+        nrow(metrics),
+        "filtered cellular barcodes",
+        paste0("(", pct(nrow(metrics) / ncol(object)), ")")
+    ))
+
+    # Filter low expression genes ====
+    if (minCellsPerGene > 0) {
+        counts <- assay(object)
+        numCells <- Matrix::rowSums(counts > 0)
+        filterGenes <- names(numCells[which(numCells >= minCellsPerGene)])
+    } else {
+        filterGenes <- NULL
+    }
 
     # Metadata ====
-    metadata(object)[["filterCells"]] <- metrics[["cell"]]
+    metadata(object)[["filterCells"]] <- metrics[["cellID"]]
+    metadata(object)[["filterGenes"]] <- filterGenes
     metadata(object)[["filterParams"]] <- c(
         minUMIs = minUMIs,
         minGenes = minGenes,
         maxGenes = maxGenes,
         maxMitoRatio = maxMitoRatio,
-        minNovelty = minNovelty
+        minNovelty = minNovelty,
+        minCellsPerGene = minCellsPerGene
     )
 
     # Show summary statistics report and plots, if desired
