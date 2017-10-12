@@ -23,14 +23,12 @@ if (file.exists("setup.R")) {
     source("setup.R")
 }
 
-# Load bcbio object
-bcbName <- basename(params$bcbFile) %>%
-    # Remove file extension, if specified
-    str_replace("\\.[A-Za-z0-9]+", "")
-loadDataAsName(c(bcb = params$bcbFile))
-
 # Directory paths
 dataDir <- file.path(params$outputDir, "data")
+
+# Load bcbioSingleCell object
+bcbName <- load(params$bcbFile)
+bcb <- get(bcbName, inherits = FALSE)
 
 # Back up all data inside bcbio object
 flatFiles <- flatFiles(bcb)
