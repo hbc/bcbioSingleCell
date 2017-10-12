@@ -6,11 +6,15 @@
 #' @details Internally, pattern matching against sample and file names is
 #'   applied using [str_detect()].
 #'
+#' @note Bracket based subsetting with `[` also works on [bcbioSingleCell]
+#'   objects. In this case, provide cellular barcode identifiers for columns
+#'   and Ensembl gene identifiers for rows.
+#'
 #' @inheritParams AllGenerics
 #' @param ... Columns to use for grep pattern matching. Supply a named character
 #'   vector containing the column name and the grep pattern.
 #'
-#' @return [bcbioSCFiltered].
+#' @return [bcbioSingleCell].
 #'
 #' @examples
 #' \dontrun{
@@ -45,40 +49,47 @@ NULL
         }
         match %>%
             pull("sampleID") %>%
-            unique %>%
-            sort
+            unique() %>%
+            sort()
     })
-    sampleIDs <- Reduce(intersect, list) %>% sort
-    if (!length(sampleIDs)) stop("No samples matched")
+    # Use `base::Reduce()` explicitly here instead? Warning about init missing
+    sampleIDs <- Reduce(f = intersect, x = list) %>%
+        sort()
+    if (!length(sampleIDs)) {
+        stop("No samples matched")
+    }
     message(paste(length(sampleIDs), "samples matched:", toString(sampleIDs)))
     sampleMetadata <- sampleMetadata %>%
         .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
 
     # Match the sample ID prefix in the cellular barcode columns of the matrix.
     # Here `cb` is short for "cellular barcodes".
-    cbPattern <- sampleIDs %>%
+    cellularBarcodePattern <- sampleIDs %>%
         paste0(collapse = "|") %>%
         paste0("^(", ., ")_")
-    cbMatches <- colnames(object) %>%
-        .[str_detect(., cbPattern)]
-    if (!length(cbMatches)) stop("No cellular barcodes matched")
-    message(paste(length(cbMatches), "cellular barcodes"))
+    cellularBarcodeMatches <- colnames(object) %>%
+        .[str_detect(., cellularBarcodePattern)]
+    if (!length(cellularBarcodeMatches)) stop("No cellular barcodes matched")
+    message(paste(length(cellularBarcodeMatches), "cellular barcodes"))
 
-    # Return the bcbioSCFiltered object
+    # Return the bcbioSingleCell object
     sparseCounts <- assay(object) %>%
-        .[, cbMatches]
+        .[, cellularBarcodeMatches]
     colData <- colData(object) %>%
-        .[cbMatches, ]
+        .[cellularBarcodeMatches, ]
     rowData <- rowData(object) %>%
         set_rownames(rownames(object))
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <- sampleMetadata
+    # Stash that samples are a subset
+    metadata[["subset"]] <- TRUE
     se <- prepareSummarizedExperiment(
-        sparseCounts,
+        assays = list(sparseCounts),
         colData = colData,
         rowData = rowData,
         metadata = metadata)
-    new("bcbioSCFiltered", se)
+    new("bcbioSingleCell", se)
+    # This will drop the unfiltered cellular barcodes
 }
 
 
@@ -86,4 +97,7 @@ NULL
 # Methods ====
 #' @rdname selectSamples
 #' @export
-setMethod("selectSamples", "bcbioSCFiltered", .selectSamples)
+setMethod(
+    "selectSamples",
+    signature("bcbioSingleCellANY"),
+    .selectSamples)

@@ -5,6 +5,8 @@
 #' @family Quality Control Metrics
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
+#'
 #' @return [ggplot].
 NULL
 
@@ -14,23 +16,27 @@ NULL
 .plotZerosVsDepth <- function(object) {
     counts <- assay(object)
     metrics <- metrics(object)
-    # using a logical matrix is much faster than a == 0L comparison
+    # Using a logical matrix is much faster and more memory efficient than
+    # `counts == 0` comparison
     present <- as(counts, "lgCMatrix")
-
-    # The `counts == 0L` operation here blows up memory on large datasets
     df <- data.frame(
         dropout = (nrow(present) - Matrix::colSums(present)) / nrow(present),
         depth = Matrix::colSums(counts),
-        fileName = metrics[["fileName"]])
-    p <- ggplot(df,
-           aes_(x = ~depth,
-                y = ~dropout * 100L)) +
+        description = metrics[["description"]])
+    p <- ggplot(
+        df,
+        mapping = aes_(
+            x = ~depth,
+            y = ~dropout * 100)
+    ) +
         geom_point(size = 0.8, alpha = 0.3) +
         scale_x_log10() +
         labs(x = "library size",
              y = "% genes zero")
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(df[["description"]])) > 1) {
+        p <- p +
+            facet_wrap(facets = "description")
     }
     p
 }
@@ -40,10 +46,7 @@ NULL
 # Methods ====
 #' @rdname plotZerosVsDepth
 #' @export
-setMethod("plotZerosVsDepth", "bcbioSCDataSet", .plotZerosVsDepth)
-
-
-
-#' @rdname plotZerosVsDepth
-#' @export
-setMethod("plotZerosVsDepth", "bcbioSCFiltered", .plotZerosVsDepth)
+setMethod(
+    "plotZerosVsDepth",
+    signature("bcbioSingleCellANY"),
+    .plotZerosVsDepth)

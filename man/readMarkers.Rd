@@ -8,7 +8,7 @@
 \usage{
 readMarkers(object, ...)
 
-\S4method{readMarkers}{character}(object, gene2symbol, show = FALSE)
+\S4method{readMarkers}{character}(object, gene2symbol)
 }
 \arguments{
 \item{object}{Gene markers file (CSV or Excel).}
@@ -16,8 +16,6 @@ readMarkers(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{gene2symbol}{Gene-to-symbol annotation \link{data.frame}.}
-
-\item{show}{Show \link{kable}.}
 }
 \value{
 \link{tibble}.

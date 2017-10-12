@@ -11,29 +11,64 @@ NULL
 
 
 # Constructors ====
-.plotCellCounts <- function(object) {
-    metrics <- metrics(object)
+.plotCellCounts <- function(
+    object,
+    interestingGroups,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    if (missing(interestingGroups)) {
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]][[1]]
+    }
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
+    meta <- sampleMetadata(
+        object,
+        aggregateReplicates = aggregateReplicates)
     cellCounts <- metrics %>%
-        group_by(!!sym("sampleID")) %>%
+        group_by(!!sym("sampleName")) %>%
         summarize(cells = n()) %>%
-        left_join(sampleMetadata(object), by = "sampleID")
-    interestingGroup <- interestingGroups(object)[[1L]]
-    p <- ggplot(cellCounts,
-                aes_(x = ~sampleName,
-                     y = ~cells,
-                     fill = as.name(interestingGroup))) +
+        left_join(meta, by = "sampleName")
+    p <- ggplot(
+        cellCounts,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "cells",
+            fill = interestingGroups)
+    ) +
         labs(x = "sample",
              y = "cell count") +
         geom_bar(stat = "identity") +
-        geom_text(
-            aes_(label = ~cells),
-            fontface = "bold",
-            vjust = -0.5) +
         scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    # Labels
+    if (nrow(cellCounts) <= qcLabelMaxNum) {
+        p <- p +
+            geom_text(
+                mapping = aes_string(label = "cells"),
+                fontface = "bold",
+                vjust = -0.5)
     }
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(metrics[["description"]])) > 1) {
+        facets <- c(facets, "description")
+    }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets,
+                       scales = "free_x")
+    }
+
     p
 }
 
@@ -42,10 +77,7 @@ NULL
 # Methods ====
 #' @rdname plotCellCounts
 #' @export
-setMethod("plotCellCounts", "bcbioSCDataSet", .plotCellCounts)
-
-
-
-#' @rdname plotCellCounts
-#' @export
-setMethod("plotCellCounts", "bcbioSCFiltered", .plotCellCounts)
+setMethod(
+    "plotCellCounts",
+    signature("bcbioSingleCellANY"),
+    .plotCellCounts)

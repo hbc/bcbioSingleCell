@@ -4,39 +4,26 @@
 \name{plotFeatures}
 \alias{plotFeatures}
 \alias{plotFeatures,seurat-method}
-\title{Plot Features of a Data Set}
+\title{Plot Features}
 \usage{
 plotFeatures(object, ...)
 
-\S4method{plotFeatures}{seurat}(object, features, headerLevel = 2L,
-  combine = TRUE)
+\S4method{plotFeatures}{seurat}(object, features)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{features}{Character vector of parameters supported by
-\code{\link[Seurat:FetchData]{Seurat::FetchData()}} (e.g. nUMI, mitoRatio, PC).}
-
-\item{headerLevel}{Include a Markdown header for each gene.}
-
-\item{combine}{Combine all markers into a single plot.}
+\item{features}{Character vector of features (e.g. gene expression, PC
+scores, number of genes detected).}
 }
 \value{
-No value, only graphical output.
+No return, only graphical output.
 }
 \description{
-Plot Features of a Data Set
-}
-\seealso{
-Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
-  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
-  \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+Plot Features
 }
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

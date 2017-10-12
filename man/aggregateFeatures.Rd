@@ -3,12 +3,12 @@
 \docType{methods}
 \name{aggregateFeatures}
 \alias{aggregateFeatures}
-\alias{aggregateFeatures,bcbioSCDataSet-method}
+\alias{aggregateFeatures,bcbioSingleCellANY-method}
 \title{Aggregate Features}
 \usage{
 aggregateFeatures(object, ...)
 
-\S4method{aggregateFeatures}{bcbioSCDataSet}(object)
+\S4method{aggregateFeatures}{bcbioSingleCellANY}(object)
 }
 \arguments{
 \item{object}{Object.}
@@ -16,7 +16,7 @@ aggregateFeatures(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 }
 \value{
-\link{bcbioSCDataSet}.
+\link{bcbioSingleCell}.
 }
 \description{
 Aggregate Features
@@ -30,3 +30,4 @@ Other Data Management Utilities: \code{\link{aggregateReplicates}},
 Rory Kirchner, Michael Steinbaugh
 }
 \concept{Data Management Utilities}
+\keyword{internal}

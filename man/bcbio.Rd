@@ -3,10 +3,16 @@
 \docType{methods}
 \name{bcbio}
 \alias{bcbio}
+\alias{bcbio,bcbioSingleCell-method}
+\alias{bcbio<-,bcbioSingleCell-method}
 \alias{bcbio,bcbioSCDataSet-method}
 \alias{bcbio<-,bcbioSCDataSet-method}
-\title{\code{bcbioSCDataSet} Object Accessors}
+\title{\code{bcbioSingleCell} Additional bcbio Run Data Accessor}
 \usage{
+\S4method{bcbio}{bcbioSingleCell}(object, type)
+
+\S4method{bcbio}{bcbioSingleCell}(object, type) <- value
+
 \S4method{bcbio}{bcbioSCDataSet}(object, type)
 
 \S4method{bcbio}{bcbioSCDataSet}(object, type) <- value
@@ -19,10 +25,10 @@
 \item{value}{Object to assign.}
 }
 \value{
-\link{bcbioSCDataSet}.
+\link{bcbioSingleCell}.
 }
 \description{
-\code{bcbioSCDataSet} Object Accessors
+\code{bcbioSingleCell} Additional bcbio Run Data Accessor
 }
 \author{
 Michael Steinbaugh

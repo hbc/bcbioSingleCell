@@ -3,19 +3,27 @@
 \docType{methods}
 \name{filterCells}
 \alias{filterCells}
+\alias{filterCells,bcbioSingleCell-method}
 \alias{filterCells,bcbioSCDataSet-method}
 \title{Filter Cells}
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{bcbioSCDataSet}(object, minUMIs = 1000L,
-  minGenes = 500L, maxGenes = NULL, maxMitoRatio = 0.1,
-  minNovelty = 0.8, showReport = TRUE, headerLevel = 2L)
+\S4method{filterCells}{bcbioSingleCell}(object, aggregateReplicates = TRUE,
+  minUMIs = 1000, minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1,
+  minNovelty = 0.8, minCellsPerGene = 3, showReport = TRUE,
+  headerLevel = 2)
+
+\S4method{filterCells}{bcbioSCDataSet}(object)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
+function uses values assigned in the \code{sampleNameAggregate} column of the
+internal sample metadata \link{data.frame}.}
 
 \item{minUMIs}{Minimum number of UMI disambiguated counts per cell.}
 
@@ -27,18 +35,35 @@ filterCells(object, ...)
 
 \item{minNovelty}{Minimum novelty score.}
 
+\item{minCellsPerGene}{Include genes with non-zero expression in at least
+this many cells.}
+
 \item{showReport}{Show summary statistics report and plots.}
 
 \item{headerLevel}{RMarkdown header level, if \code{showReport = TRUE}.}
 }
 \value{
-\link{bcbioSCFiltered}.
+\link{bcbioSingleCell} object, with filtering information slotted into
+\code{\link[=metadata]{metadata()}} as \code{filterCells} and \code{filterParams}.
 }
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.
 }
+\note{
+This operation can be re-run on a \link{bcbioSingleCell} object that has
+been previously filtered. This function simply saves \code{filterCells} and
+\code{filterParams} vectors into the \code{\link[=metadata]{metadata()}} slot.
+}
+\examples{
+\dontrun{
+data(bcb)
+bcb <- filterCells(bcb)
+}
+}
 \seealso{
+\code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
+
 Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{aggregateReplicates}},
   \code{\link{readMarkers}}, \code{\link{subsetPerSample}}

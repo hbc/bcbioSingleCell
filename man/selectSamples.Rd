@@ -3,10 +3,10 @@
 \docType{methods}
 \name{selectSamples}
 \alias{selectSamples}
-\alias{selectSamples,bcbioSCFiltered-method}
+\alias{selectSamples,bcbioSingleCellANY-method}
 \title{Select Samples}
 \usage{
-\S4method{selectSamples}{bcbioSCFiltered}(object, ...)
+\S4method{selectSamples}{bcbioSingleCellANY}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -15,7 +15,7 @@
 vector containing the column name and the grep pattern.}
 }
 \value{
-\link{bcbioSCFiltered}.
+\link{bcbioSingleCell}.
 }
 \description{
 Select Samples
@@ -23,6 +23,13 @@ Select Samples
 \details{
 Internally, pattern matching against sample and file names is
 applied using \code{\link[=str_detect]{str_detect()}}.
+}
+\note{
+Bracket based subsetting with \code{[} also works on [bcbioSingleCell]
+objects. In this case, provide cellular barcode identifiers for columns
+and Ensembl gene identifiers for rows.
+
+[` also works on [bcbioSingleCell]: R:%60%20also%20works%20on%20[bcbioSingleCell
 }
 \examples{
 \dontrun{

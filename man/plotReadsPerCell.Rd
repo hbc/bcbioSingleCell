@@ -3,20 +3,27 @@
 \docType{methods}
 \name{plotReadsPerCell}
 \alias{plotReadsPerCell}
-\alias{plotReadsPerCell,bcbioSCDataSet-method}
-\alias{plotReadsPerCell,bcbioSCFiltered-method}
+\alias{plotReadsPerCell,bcbioSingleCellANY-method}
 \title{Plot Read Counts per Cell}
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSCDataSet}(object)
-
-\S4method{plotReadsPerCell}{bcbioSCFiltered}(object)
+\S4method{plotReadsPerCell}{bcbioSingleCellANY}(object,
+  interestingGroups = "sampleName", filterCells = FALSE,
+  aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{interestingGroups}{Interesting group, to use for colors.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
+function uses values assigned in the \code{sampleNameAggregate} column of the
+internal sample metadata \link{data.frame}.}
 }
 \value{
 \link{ggplot}.
@@ -30,7 +37,7 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \note{
-Here by cell we mean "cellular barcode".
+Here by "cell" we mean "cellular barcode".
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

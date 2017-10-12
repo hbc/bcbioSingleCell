@@ -4,11 +4,14 @@
 \name{calculateMetrics}
 \alias{calculateMetrics}
 \alias{calculateMetrics,dgCMatrix-method}
+\alias{calculateMetrics,bcbioSingleCellANY-method}
 \title{Calculate Cellular Barcode Metrics Summary}
 \usage{
 calculateMetrics(object, ...)
 
 \S4method{calculateMetrics}{dgCMatrix}(object, annotable, prefilter = TRUE)
+
+\S4method{calculateMetrics}{bcbioSingleCellANY}(object, prefilter = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -20,7 +23,7 @@ calculateMetrics(object, ...)
 \item{prefilter}{Whether to apply pre-filtering to the cellular barcodes.}
 }
 \value{
-\link{matrix}.
+\link{data.frame}.
 }
 \description{
 Calculate Cellular Barcode Metrics Summary

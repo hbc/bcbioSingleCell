@@ -13,72 +13,187 @@ NULL
 
 
 # Constructors ====
-.plotNoveltyBoxplot <- function(object, min) {
-    metrics <- metrics(object)
-    medianNovelty <-
-        aggregate(log10GenesPerUMI ~ sampleID, metrics, median) %>%
-        left_join(sampleMetadata(object), by = "sampleID")
-    interestingGroup <- interestingGroups(object)[[1L]]
-    p <- ggplot(metrics,
-        aes_(x = ~sampleName,
-             y = ~log10GenesPerUMI,
-             fill = as.name(interestingGroup))) +
+.plotNoveltyBoxplot <- function(
+    object,
+    interestingGroups = "sampleName",
+    min = 0,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "log10GenesPerUMI",
+            fill = interestingGroups)
+    ) +
         labs(x = "sample",
-             y = "log10 genes per umi") +
-        geom_boxplot() +
-        geom_hline(alpha = qcLineAlpha,
-                   color = qcCutoffColor,
-                   linetype = qcLineType,
-                   size = qcLineSize,
-                   yintercept = min) +
-        geom_label(data = medianNovelty,
-                   aes_(label = ~round(log10GenesPerUMI, digits = 2L)),
-                   alpha = qcLabelAlpha,
-                   color = qcLabelColor,
-                   fill = qcLabelFill,
-                   fontface = qcLabelFontface,
-                   label.padding = qcLabelPadding,
-                   label.size = qcLabelSize,
-                   show.legend = FALSE) +
+             y = "log10 genes per UMI") +
         scale_y_sqrt() +
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroups == "sampleName") {
+        p <- p +
+            geom_boxplot(color = lineColor, fill = "white")
+    } else {
+        p <- p +
+            geom_boxplot(color = lineColor) +
+            scale_fill_viridis(discrete = TRUE)
+    }
+
+    # Median labels
+    if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
+        formula <- formula(paste("log10GenesPerUMI", "sampleName", sep = " ~ "))
+        meta <- sampleMetadata(
+            object,
+            aggregateReplicates = aggregateReplicates)
+        medianNovelty <-
+            aggregate(
+                formula = formula,
+                data = metrics,
+                FUN = median) %>%
+            left_join(meta, by = "sampleName")
+        p <- p +
+            geom_label(
+                data = medianNovelty,
+                mapping = aes_(label = ~round(log10GenesPerUMI, digits = 2)),
+                alpha = qcLabelAlpha,
+                color = qcLabelColor,
+                fill = qcLabelFill,
+                fontface = qcLabelFontface,
+                label.padding = qcLabelPadding,
+                label.size = qcLabelSize,
+                show.legend = FALSE)
+    }
+
+    # Cutoff lines
+    if (min > 0) {
+        p <- p +
+            .qcCutoffLine(yintercept = min)
+    }
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(metrics[["description"]])) > 1) {
+        facets <- c(facets, "description")
+    }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+        if (interestingGroups == "sampleName") {
+            p <- p +
+                theme(legend.position = "none")
+        }
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets,
+                       scales = "free_x")
+    }
+
+    p
+}
+
+
+
+.plotNoveltyRidgeline <- function(
+    object,
+    interestingGroups = "sampleName",
+    min = 0,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "log10GenesPerUMI",
+            y = "sampleName",
+            fill = interestingGroups)
+    ) +
+        labs(x = "log10 genes per UMI",
+             y = "sample") +
+        geom_density_ridges(
+            alpha = qcPlotAlpha,
+            color = lineColor,
+            panel_scaling = TRUE,
+            scale = qcRidgeScale) +
         scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
-    }
-    p
-}
-
-
-
-.plotNoveltyHistogram <- function(object, min) {
-    metrics <- metrics(object)
-    p <- ggplot(metrics,
-        aes_(x = ~log10GenesPerUMI,
-             fill = ~sampleName)) +
-        labs(x = "log10 genes per umi") +
-        geom_histogram(bins = bins) +
-        geom_vline(alpha = qcLineAlpha,
-                   color = qcCutoffColor,
-                   linetype = qcLineType,
-                   size = qcLineSize,
-                   xintercept = min) +
         scale_x_sqrt() +
-        scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE)
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    # Cutoff lines
+    if (min > 0) {
+        p <- p +
+            .qcCutoffLine(xintercept = min)
     }
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(metrics[["description"]])) > 1) {
+        facets <- c(facets, "description")
+    }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+        # Turn off the legend
+        p <- p +
+            theme(legend.position = "none")
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets)
+    }
+
     p
 }
 
 
 
-.plotNovelty <- function(object, min) {
-    plot_grid(.plotNoveltyHistogram(object, min),
-              .plotNoveltyBoxplot(object, min),
-              labels = "auto",
-              nrow = 2L)
+.plotNovelty <- function(
+    object,
+    interestingGroups,
+    min,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    if (missing(interestingGroups)) {
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]][[1]]
+    }
+    if (missing(min)) {
+        min <- object %>%
+            metadata() %>%
+            .[["filterParams"]] %>%
+            .[["minNovelty"]]
+        if (is.null(min)) {
+            min <- 0
+        }
+    }
+    suppressMessages(plot_grid(
+        .plotNoveltyRidgeline(
+            object,
+            interestingGroups = interestingGroups,
+            min = min,
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
+        .plotNoveltyBoxplot(
+            object,
+            interestingGroups = interestingGroups,
+            min = min,
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
+        labels = "auto",
+        nrow = 2
+    ))
 }
 
 
@@ -88,22 +203,5 @@ NULL
 #' @export
 setMethod(
     "plotNovelty",
-    "bcbioSCDataSet",
-    function(object, min = 0.8) {
-        .plotNovelty(object, min)
-    })
-
-
-
-#' @rdname plotNovelty
-#' @export
-setMethod(
-    "plotNovelty",
-    "bcbioSCFiltered",
-    function(object) {
-        min <- object %>%
-            metadata %>%
-            .[["filterParams"]] %>%
-            .[["minNovelty"]]
-        .plotNovelty(object, min)
-    })
+    signature("bcbioSingleCellANY"),
+    .plotNovelty)

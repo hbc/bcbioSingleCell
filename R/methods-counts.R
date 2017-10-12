@@ -10,7 +10,7 @@
 #' @param as Return class (**recommended**; `dgCMatrix`,
 #'   `dgTMatrix`) or dense matrix (`matrix`).
 #'
-#' @return Matrix class object.
+#' @return Matrix class object, depending on `as` argument.
 NULL
 
 
@@ -29,13 +29,14 @@ NULL
     if (isTRUE(gene2symbol)) {
         g2s <- metadata(object)[["gene2symbol"]]
         if (!all(rownames(counts) %in% rownames(g2s))) {
-            rescale <- g2s %>%
-                .[rownames(counts), ] %>%
+            # Resize the gene2symbol data.frame
+            g2s <- g2s %>%
+                .[rownames(counts), , drop = FALSE] %>%
                 set_rownames(rownames(counts))
-            matched <- rescale %>%
-                .[!is.na(.[["symbol"]]), ]
-            unmatched <- rescale %>%
-                .[is.na(.[["symbol"]]), ]
+            matched <- g2s %>%
+                .[!is.na(.[["symbol"]]), , drop = FALSE]
+            unmatched <- g2s %>%
+                .[is.na(.[["symbol"]]), , drop = FALSE]
             warning(paste(
                 "Unmatched in gene2symbol:",
                 toString(rownames(unmatched))), call. = FALSE)
@@ -43,7 +44,7 @@ NULL
             unmatched[["symbol"]] <- rownames(unmatched)
             g2s <- rbind(matched, unmatched)
         }
-        g2s <- g2s[rownames(counts), ]
+        g2s <- g2s[rownames(counts), , drop = FALSE]
         rows <- pull(g2s, "symbol")
         names(rows) <- rownames(g2s)
         rownames(counts) <- rows
@@ -56,10 +57,16 @@ NULL
 # Methods ====
 #' @rdname counts
 #' @export
-setMethod("counts", "bcbioSCDataSet", .counts)
+setMethod(
+    "counts",
+    signature("bcbioSingleCell"),
+    .counts)
 
 
 
 #' @rdname counts
 #' @export
-setMethod("counts", "bcbioSCFiltered", .counts)
+setMethod(
+    "counts",
+    signature("bcbioSingleCellLegacy"),
+    .counts)

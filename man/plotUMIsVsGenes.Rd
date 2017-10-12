@@ -3,23 +3,30 @@
 \docType{methods}
 \name{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
-\alias{plotUMIsVsGenes,bcbioSCDataSet-method}
-\alias{plotUMIsVsGenes,bcbioSCFiltered-method}
+\alias{plotUMIsVsGenes,bcbioSingleCellANY-method}
 \title{Plot UMI and Gene Correlation}
 \usage{
 plotUMIsVsGenes(object, ...)
 
-\S4method{plotUMIsVsGenes}{bcbioSCDataSet}(object)
-
-\S4method{plotUMIsVsGenes}{bcbioSCFiltered}(object)
+\S4method{plotUMIsVsGenes}{bcbioSingleCellANY}(object,
+  interestingGroups = "sampleName", filterCells = FALSE,
+  aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{interestingGroups}{Interesting group, to use for colors.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
+function uses values assigned in the \code{sampleNameAggregate} column of the
+internal sample metadata \link{data.frame}.}
 }
 \value{
-\link{ggplot}.
+\link{ggplot} grid.
 }
 \description{
 Plot UMI and Gene Correlation

@@ -3,22 +3,28 @@
 \docType{methods}
 \name{plotNovelty}
 \alias{plotNovelty}
-\alias{plotNovelty,bcbioSCDataSet-method}
-\alias{plotNovelty,bcbioSCFiltered-method}
+\alias{plotNovelty,bcbioSingleCellANY-method}
 \title{Plot Novelty Score}
 \usage{
 plotNovelty(object, ...)
 
-\S4method{plotNovelty}{bcbioSCDataSet}(object, min = 0.8)
-
-\S4method{plotNovelty}{bcbioSCFiltered}(object)
+\S4method{plotNovelty}{bcbioSingleCellANY}(object, interestingGroups, min,
+  filterCells = FALSE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
+\item{interestingGroups}{Interesting group, to use for colors.}
+
 \item{min}{Recommended minimum value cutoff.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
+function uses values assigned in the \code{sampleNameAggregate} column of the
+internal sample metadata \link{data.frame}.}
 }
 \value{
 \link{ggplot} grid.

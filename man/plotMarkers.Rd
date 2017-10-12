@@ -4,34 +4,47 @@
 \name{plotMarkers}
 \alias{plotMarkers}
 \alias{plotMarkers,seurat-method}
-\title{Plot Gene Markers}
+\title{Plot Cell-Type Gene Markers}
 \usage{
 plotMarkers(object, ...)
 
-\S4method{plotMarkers}{seurat}(object, symbols, headerLevel = 2L,
-  combine = TRUE)
+\S4method{plotMarkers}{seurat}(object, genes, pointsAsNumbers = FALSE,
+  headerLevel = 2)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{symbols}{Character vector of gene marker symbols.}
+\item{genes}{Genes (by symbol name) of which to get expression data.}
+
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
-
-\item{combine}{Combine all markers into a single plot.}
 }
 \value{
 No value, only graphical output.
 }
 \description{
-Plot Gene Markers
+Plot gene expression per cell in multiple formats:
+\enumerate{
+\item t-SNE plot
+\item Violin plot
+\item Ridgeline plot
+\item Dot plot
+}
+}
+\examples{
+\dontrun{
+data(seurat, markers)
+top <- topMarkers(markers)
+genes <- top$symbol[1:4]
+plotMarkers(seurat, genes = genes)
+}
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
-  \code{\link{plotKnownMarkers}},
+  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
   \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}

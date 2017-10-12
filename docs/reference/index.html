@@ -85,7 +85,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.0.18</small>
+        <small>version&nbsp;0.0.19</small>
       </h1>
     </div>
 
@@ -107,33 +107,15 @@
         <tr>
           <!--  -->
           <td>
-            <p><code><a href="aggregateFeatures.html">aggregateFeatures</a></code> </p>
-          </td>
-          <td><p>Aggregate Features</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="aggregateReplicates.html">aggregateReplicates</a></code> </p>
-          </td>
-          <td><p>Aggregate Replicates</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="bcbio.html">bcbio</a></code> <code><a href="bcbio.html">bcbio<-</a></code> </p>
           </td>
-          <td><p><code>bcbioSCDataSet</code> Object Accessors</p></td>
+          <td><p><code>bcbioSingleCell</code> Additional bcbio Run Data Accessor</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="bcbioSCDataSet-class.html">bcbioSCDataSet-class</a></code> </p>
+            <p><code><a href="bcbioSingleCell-class.html">bcbioSingleCell-class</a></code> </p>
           </td>
-          <td><p>bcbioSCDataSet</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bcbioSCFiltered-class.html">bcbioSCFiltered-class</a></code> </p>
-          </td>
-          <td><p>bcbioSCFiltered</p></td>
+          <td><p><code>bcbioSingleCell</code></p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -161,9 +143,9 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="coerce-bcbioSCFiltered-seurat.html">coerce-bcbioSCFiltered-seurat</a></code> </p>
+            <p><code><a href="coerce.html">coerce</a></code> </p>
           </td>
-          <td><p>Coerce <code>bcbioSCFiltered</code> to <code>seurat</code> Object</p></td>
+          <td><p>Coerce Object</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -173,9 +155,21 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="dot-quantileBreaks.html">.quantileBreaks</a></code> </p>
+            <p><code><a href="fetchPCAData.html">fetchPCAData</a></code> </p>
           </td>
-          <td><p>Create Breaks Based on Quantiles of the Data</p></td>
+          <td><p>Fetch PCA Dimensions and Cellular Metadata</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="fetchTSNEData.html">fetchTSNEData</a></code> </p>
+          </td>
+          <td><p>Fetch t-SNE Locations and Cellular Metadata</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="fetchTSNEExpressionData.html">fetchTSNEExpressionData</a></code> </p>
+          </td>
+          <td><p>Fetch t-SNE Locations, Cellular Metadata and Expression of Genes</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -203,15 +197,9 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="loadSingleCellRun.html">loadSingleCellRun</a></code> </p>
+            <p><code><a href="loadSingleCell.html">loadSingleCell</a></code> </p>
           </td>
-          <td><p>Load bcbio Single-Cell RNA-Seq Run</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="metadataTable.html">metadataTable</a></code> </p>
-          </td>
-          <td><p>Metadata Table</p></td>
+          <td><p>Load bcbio Single-Cell RNA-Seq Data</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -233,9 +221,15 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="plotDot.html">plotDot</a></code> </p>
+          </td>
+          <td><p>Plot Dot</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="plotFeatures.html">plotFeatures</a></code> </p>
           </td>
-          <td><p>Plot Features of a Data Set</p></td>
+          <td><p>Plot Features</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -253,7 +247,13 @@
           <td>
             <p><code><a href="plotMarkers.html">plotMarkers</a></code> </p>
           </td>
-          <td><p>Plot Gene Markers</p></td>
+          <td><p>Plot Cell-Type Gene Markers</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotMarkerTSNE.html">plotMarkerTSNE</a></code> </p>
+          </td>
+          <td><p>Plot Marker t-SNE</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -269,6 +269,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="plotPCA.html">plotPCA</a></code> </p>
+          </td>
+          <td><p>Plot Principal Component Analysis (PCA)</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="plotReadsPerCell.html">plotReadsPerCell</a></code> </p>
           </td>
           <td><p>Plot Read Counts per Cell</p></td>
@@ -278,6 +284,12 @@
             <p><code><a href="plotTopMarkers.html">plotTopMarkers</a></code> </p>
           </td>
           <td><p>Plot Top Markers</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotTSNE.html">plotTSNE</a></code> </p>
+          </td>
+          <td><p>Plot t-SNE</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -323,6 +335,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="sanitizeMarkers.html">sanitizeMarkers</a></code> </p>
+          </td>
+          <td><p>Sanitize Markers Output</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="selectSamples.html">selectSamples</a></code> </p>
           </td>
           <td><p>Select Samples</p></td>
@@ -360,7 +378,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael J. Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -5,70 +5,133 @@
 #' @family QC Metrics Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
 #' @param annotable Annotable.
 #' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
 #'
 #' @note This should only be performed during the initial run loading.
 #'
-#' @return [matrix].
+#' @return [data.frame].
 NULL
 
 
 
-# Methods ====
-#' @rdname calculateMetrics
-#' @export
-setMethod("calculateMetrics", "dgCMatrix", function(
-    object, annotable, prefilter = TRUE) {
+# Constructors ====
+.calculateMetricsSparse <- function(
+    object,
+    annotable,
+    prefilter = TRUE) {
     message("Calculating barcode metrics")
     message(paste(ncol(object), "cellular barcodes detected"))
 
     # Check that all genes are in annotable
     missing <- rownames(object) %>%
         .[!rownames(object) %in% annotable[["ensgene"]]]
-    if (length(missing) > 0L) {
-        warning(paste(length(missing), "genes missing in Ensembl annotations",
-                      "used to calculate metrics:",
-                      toString(head(missing)),
-                      "..."))
+
+    if (identical(length(missing), nrow(object))) {
+        stop(paste(
+            "No genes in the counts matrix matched the annotable.",
+            "Check to ensure 'organism' is correct."
+        ), call. = FALSE)
+    }
+
+    if (length(missing) > 0) {
+        warning(paste(
+            length(missing),
+            "genes present in counts matrix but missing in annotable:",
+            toString(missing)
+        ), call. = FALSE)
     }
 
     # Check for [Matrix::colSums()] methods support
     if (!"colSums,dgCMatrix-method" %in% methods(colSums)) {
-        stop("dgCMatrix not supported in `colSums()`", call. = FALSE)
+        stop("'dgCMatrix' not supported in 'colSums()'", call. = FALSE)
     }
 
-    # Extract coding and mitochondrial genes from annotable
-    codingGenes <- annotable %>%
-        .[.[["broadClass"]] == "coding", "ensgene"]
-    mitoGenes <- annotable %>%
-        .[.[["broadClass"]] == "mito", "ensgene"]
+    # Obtain detected coding and mitochondrial genes, using annotable
+    codingGenesDetected <- annotable %>%
+        dplyr::filter(.data[["broadClass"]] == "coding") %>%
+        pull("ensgene") %>%
+        .[. %in% rownames(object)]
+    if (length(codingGenesDetected) == 0) {
+        stop("No coding genes detected", call. = FALSE)
+    }
+    mitoGenesDetected <- annotable %>%
+        dplyr::filter(.data[["broadClass"]] == "mito") %>%
+        pull("ensgene") %>%
+        .[. %in% rownames(object)]
+    if (length(mitoGenesDetected) == 0) {
+        warning("No mitochondrial genes detected", call. = FALSE)
+    } else {
+        # Message which mitochondrial genes used for calculations
+        annotable %>%
+            .[.[["ensgene"]] %in% mitoGenesDetected, "symbol"] %>%
+            sort() %>%
+            toString() %>%
+            paste(
+                "Detected",
+                length(mitoGenesDetected),
+                "annotated mitochondrial genes;",
+                "used to calculate 'mitoRatio':",
+                .) %>%
+            message()
+    }
 
     metrics <- tibble(
         rowname = colnames(object),
         # Follow the Seurat `seurat@data.info` conventions
         nUMI = Matrix::colSums(object),
-        nGene = Matrix::colSums(object > 0L),
+        nGene = Matrix::colSums(object > 0),
         nCoding = Matrix::colSums(
-            object[rownames(object) %in% codingGenes, ]),
+            object[codingGenesDetected, , drop = FALSE]),
         nMito = Matrix::colSums(
-            object[rownames(object) %in% mitoGenes, ])) %>%
+            object[mitoGenesDetected, , drop = FALSE])) %>%
         mutate(log10GenesPerUMI =
                    log10(.data[["nGene"]]) / log10(.data[["nUMI"]]),
+               # Using `nUMI` here like in Seurat example
                mitoRatio =
                    .data[["nMito"]] / .data[["nUMI"]])
 
     # Apply low stringency cellular barcode pre-filtering, if desired
     if (isTRUE(prefilter)) {
+        # Here we're only keeping cellular barcodes that have a gene detected
         metrics <- metrics %>%
-            .[.[["nUMI"]] > 0L, ] %>%
-            .[.[["nGene"]] > 0L, ] %>%
+            .[.[["nUMI"]] > 0, ] %>%
+            .[.[["nGene"]] > 0, ] %>%
             .[!is.na(.[["log10GenesPerUMI"]]), ]
-        message(paste(nrow(metrics), "cellular barcodes passed pre-filtering"))
+        message(paste(
+            nrow(metrics), "cellular barcodes passed pre-filtering"
+        ))
     }
 
     metrics %>%
-        as.data.frame %>%
-        column_to_rownames %>%
-        as.matrix
-})
+        as.data.frame() %>%
+        column_to_rownames()
+}
+
+
+
+# Methods ====
+#' @rdname calculateMetrics
+#' @export
+setMethod(
+    "calculateMetrics",
+    signature("dgCMatrix"),
+    .calculateMetricsSparse)
+
+
+
+#' @rdname calculateMetrics
+#' @export
+setMethod(
+    "calculateMetrics",
+    signature("bcbioSingleCellANY"),
+    function(
+        object,
+        prefilter = TRUE) {
+        message("Recalculating cellular barcode metrics")
+        .calculateMetricsSparse(
+            assay(object),
+            annotable = metadata(object)[["annotable"]],
+            prefilter = prefilter)
+    })

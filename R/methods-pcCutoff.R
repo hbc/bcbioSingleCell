@@ -9,6 +9,7 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
 #' @param maxPct Maximum percent standard deviation.
 #' @param minCumPct Minimum cumulative percent standard deviation.
 #' @param plot Plot the PC standard deviations.
@@ -25,7 +26,7 @@ NULL
     xlab <- "pc"
 
     # Principal component standard deviations
-    pct <- sd ^ 2L / sum(sd ^ 2L)
+    pct <- sd ^ 2 / sum(sd ^ 2)
     cumsum <- cumsum(pct)
     tbl <- tibble(
         pc = seq_along(sd),
@@ -35,10 +36,10 @@ NULL
 
     cutoffPct <- tbl %>%
         .[.[["pct"]] >= maxPct, "pc"] %>%
-        max
+        max()
     cutoffCumPct <- tbl %>%
         .[.[["cumsum"]] <= minCumPct, "pc"] %>%
-        max
+        max()
 
     # Pick the larger of the two cutoffs
     cutoff <- max(cutoffPct, cutoffCumPct)
@@ -46,34 +47,31 @@ NULL
     # Elbow plot
     ggelbow <- ggplot(
         tbl,
-        aes_(x = ~pc,
-             y = ~sd)) +
+        mapping = aes_string(
+            x = "pc",
+            y = "sd")
+    ) +
         geom_point() +
         geom_line() +
-        geom_vline(alpha = 0.5,
-                   color = "black",
-                   linetype = "longdash",
-                   size = 1.5,
-                   xintercept = cutoff) +
+        .qcCutoffLine(xintercept = cutoff) +
         labs(x = xlab,
              y = "std dev")
 
     # Percentage plot
     ggpct <- ggplot(
         tbl,
-        aes_(x = ~pc,
-             y = ~pct)) +
+        mapping = aes_string(
+            x = "pc",
+            y = "pct")
+    ) +
         geom_point() +
         geom_line() +
-        geom_hline(alpha = 0.5,
-                   color = "orange",
-                   size = 1.5,
-                   yintercept = maxPct) +
-        geom_vline(alpha = 0.5,
-                   color = "black",
-                   linetype = "longdash",
-                   size = 1.5,
-                   xintercept = cutoff) +
+        geom_hline(
+            alpha = 0.5,
+            color = "orange",
+            size = 1.5,
+            yintercept = maxPct) +
+        .qcCutoffLine(xintercept = cutoff) +
         labs(x = xlab,
              y = "% std dev") +
         scale_y_continuous(labels = scales::percent)
@@ -81,19 +79,18 @@ NULL
     # Cumulative plot
     ggcumsum <- ggplot(
         tbl,
-        aes_(x = ~pc,
-             y = ~cumsum)) +
+        mapping = aes_string(
+            x = "pc",
+            y = "cumsum")
+    ) +
         geom_point() +
         geom_line() +
-        geom_hline(alpha = 0.5,
-                   color = "orange",
-                   size = 1.5,
-                   yintercept = minCumPct) +
-        geom_vline(alpha = 0.5,
-                   color = "black",
-                   linetype = "longdash",
-                   size = 1.5,
-                   xintercept = cutoff) +
+        geom_hline(
+            alpha = 0.5,
+            color = "orange",
+            size = 1.5,
+            yintercept = minCumPct) +
+        .qcCutoffLine(xintercept = cutoff) +
         labs(x = xlab,
              y = "cumulative % std dev") +
         scale_y_continuous(labels = scales::percent)
@@ -102,12 +99,12 @@ NULL
         # Coordinates are relative to lower left corner
         draw_plot(
             ggelbow,
-            x = 0L, y = 0.5, width = 1L, height = 0.5) +
+            x = 0, y = 0.5, width = 1, height = 0.5) +
         draw_plot(
             ggpct,
-            x = 0L, y = 0L, width = 0.5, height = 0.5) +
+            x = 0, y = 0, width = 0.5, height = 0.5) +
         draw_plot(
-            ggcumsum, x = 0.5, y = 0L, width = 0.5, height = 0.5)
+            ggcumsum, x = 0.5, y = 0, width = 0.5, height = 0.5)
     show(p)
 
     cutoff
@@ -127,8 +124,9 @@ setMethod("pcCutoff", "seurat", function(
     # dr: dimensionality reduction
     # sdev: standard deviation
     sd <- object@dr[["pca"]]@sdev
-    .pcCutoff(sd,
-              maxPct = maxPct,
-              minCumPct = minCumPct,
-              plot = plot)
+    .pcCutoff(
+        sd,
+        maxPct = maxPct,
+        minCumPct = minCumPct,
+        plot = plot)
 })

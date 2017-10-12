@@ -3,14 +3,14 @@
 \docType{methods}
 \name{counts}
 \alias{counts}
-\alias{counts,bcbioSCDataSet-method}
-\alias{counts,bcbioSCFiltered-method}
+\alias{counts,bcbioSingleCell-method}
+\alias{counts,bcbioSingleCellLegacy-method}
 \title{Counts Accessor}
 \usage{
-\S4method{counts}{bcbioSCDataSet}(object, gene2symbol = FALSE,
+\S4method{counts}{bcbioSingleCell}(object, gene2symbol = FALSE,
   as = "dgCMatrix")
 
-\S4method{counts}{bcbioSCFiltered}(object, gene2symbol = FALSE,
+\S4method{counts}{bcbioSingleCellLegacy}(object, gene2symbol = FALSE,
   as = "dgCMatrix")
 }
 \arguments{
@@ -23,7 +23,7 @@ symbols. Recommended for passing counts to Seurat.}
 \code{dgTMatrix}) or dense matrix (\code{matrix}).}
 }
 \value{
-Matrix class object.
+Matrix class object, depending on \code{as} argument.
 }
 \description{
 Counts Accessor

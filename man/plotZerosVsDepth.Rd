@@ -3,15 +3,12 @@
 \docType{methods}
 \name{plotZerosVsDepth}
 \alias{plotZerosVsDepth}
-\alias{plotZerosVsDepth,bcbioSCDataSet-method}
-\alias{plotZerosVsDepth,bcbioSCFiltered-method}
+\alias{plotZerosVsDepth,bcbioSingleCellANY-method}
 \title{Plot Percentage of Zeros vs. Library Depth}
 \usage{
 plotZerosVsDepth(object, ...)
 
-\S4method{plotZerosVsDepth}{bcbioSCDataSet}(object)
-
-\S4method{plotZerosVsDepth}{bcbioSCFiltered}(object)
+\S4method{plotZerosVsDepth}{bcbioSingleCellANY}(object)
 }
 \arguments{
 \item{object}{Object.}

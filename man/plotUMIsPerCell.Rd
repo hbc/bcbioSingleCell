@@ -3,22 +3,28 @@
 \docType{methods}
 \name{plotUMIsPerCell}
 \alias{plotUMIsPerCell}
-\alias{plotUMIsPerCell,bcbioSCDataSet-method}
-\alias{plotUMIsPerCell,bcbioSCFiltered-method}
+\alias{plotUMIsPerCell,bcbioSingleCellANY-method}
 \title{Plot UMIs per Cell}
 \usage{
 plotUMIsPerCell(object, ...)
 
-\S4method{plotUMIsPerCell}{bcbioSCDataSet}(object, min = 1000L)
-
-\S4method{plotUMIsPerCell}{bcbioSCFiltered}(object)
+\S4method{plotUMIsPerCell}{bcbioSingleCellANY}(object, interestingGroups, min,
+  filterCells = FALSE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
+\item{interestingGroups}{Interesting group, to use for colors.}
+
 \item{min}{Recommended minimum value cutoff.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
+function uses values assigned in the \code{sampleNameAggregate} column of the
+internal sample metadata \link{data.frame}.}
 }
 \value{
 \link{ggplot} grid.

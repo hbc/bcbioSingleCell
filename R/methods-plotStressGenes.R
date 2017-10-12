@@ -4,6 +4,9 @@
 #' @name plotStressGenes
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
+#' @keywords internal
+#'
+#' @inheritParams AllGenerics
 #'
 #' @return [ggplot].
 NULL
@@ -26,6 +29,9 @@ NULL
 # Methods ====
 #' @rdname plotStressGenes
 #' @export
-setMethod("plotStressGenes", "ANY", function(object) {
+setMethod(
+    "plotStressGenes",
+    signature("ANY"),
+    function(object) {
     stop("Draft function")
 })

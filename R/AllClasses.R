@@ -1,15 +1,45 @@
-setOldClass(c("grouped_df", "tbl_df", "tibble"))
+setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 
 
-#' bcbioSCDataSet
+#' `bcbioSingleCell`
 #'
-#' [bcbioSCDataSet] is a subclass of [SummarizedExperiment] designed to store a
-#' single-cell RNA-seq analysis. This class contains read counts save as a
+#' `bcbioSingleCell` is an extension of `SummarizedExperiment` designed to store
+#' bcbio single-cell RNA-seq counts. This class contains read counts save as a
 #' sparse matrix (`dgCMatrix`), sample barcodes, run metadata, and barcode
 #' summary statistics for each sample analyzed.
 #'
 #' @author Michael Steinbaugh
+#'
+#' @slot bcbio [SimpleList] containing additional bcbio run data with dimensions
+#' that don't match the count matrix. This is currently used to store all
+#' unfiltered cellular barcodes for quality control analysis.
+#'
+#' @seealso
+#' - [SummarizedExperiment::SummarizedExperiment()].
+#' - `.S4methods(class = "bcbioSingleCell")`.
+#'
+#' @export
+bcbioSingleCell <- setClass(
+    "bcbioSingleCell",
+    contains = "SummarizedExperiment",
+    slots = c(bcbio = "SimpleList"))
+setValidity("bcbioSingleCell", function(object) TRUE)
+
+
+
+# Legacy class support ====
+#' `bcbioSCDataSet`
+#'
+#' This class will be deprecated in favor of [bcbioSingleCell] in a future
+#' release.
+#'
+#' @author Michael Steinbaugh
+#' @keywords internal
+#'
+#' @slot callers [SimpleList] containing additional bcbio run data with
+#'   dimensions that don't match the count matrix. This is currently used to
+#'   store all unfiltered cellular barcodes for quality control analysis.
 #'
 #' @export
 bcbioSCDataSet <- setClass(
@@ -20,15 +50,28 @@ setValidity("bcbioSCDataSet", function(object) TRUE)
 
 
 
-#' bcbioSCFiltered
+#' `bcbioSCFiltered`
 #'
-#' [bcbioSCFiltered] is a subclass of [SummarizedExperiment] designed to store
-#' single-cell RNA-seq counts of cells filtered by quality control analysis.
+#' This class will be deprecated in favor of [bcbioSingleCell] in a future
+#' release.
 #'
 #' @author Michael Steinbaugh
+#' @keywords internal
 #'
 #' @export
 bcbioSCFiltered <- setClass(
     "bcbioSCFiltered",
     contains = "SummarizedExperiment")
 setValidity("bcbioSCFiltered", function(object) TRUE)
+
+
+
+setClassUnion(
+    name = "bcbioSingleCellANY",
+    members = c("bcbioSingleCell",
+                "bcbioSCDataSet",
+                "bcbioSCFiltered"))
+setClassUnion(
+    name = "bcbioSingleCellLegacy",
+    members = c("bcbioSCDataSet",
+                "bcbioSCFiltered"))

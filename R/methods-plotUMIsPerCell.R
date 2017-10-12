@@ -13,73 +13,190 @@ NULL
 
 
 # Constructors ====
-.plotUMIsPerCellBoxplot <- function(object, min) {
-    metrics <- metrics(object)
-    medianUMIs <- aggregate(nUMI ~ sampleID, metrics, median) %>%
-        left_join(sampleMetadata(object), by = "sampleID") %>%
-        mutate(nUMI = round(.data[["nUMI"]]))
-    interestingGroup <- interestingGroups(object)[[1L]]
-    p <- ggplot(metrics,
-        aes_(x = ~sampleName,
-             y = ~nUMI,
-             fill = as.name(interestingGroup))) +
+.plotUMIsPerCellBoxplot <- function(
+    object,
+    interestingGroups = "sampleName",
+    min = 0,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "nUMI",
+            fill = interestingGroups)
+    ) +
         labs(x = "sample",
              y = "umis per cell") +
-        geom_boxplot() +
-        geom_label(data = medianUMIs,
-                   aes_(label = ~nUMI),
-                   alpha = qcLabelAlpha,
-                   color = qcLabelColor,
-                   fill = qcLabelFill,
-                   fontface = qcLabelFontface,
-                   label.padding = qcLabelPadding,
-                   label.size = qcLabelSize,
-                   show.legend = FALSE) +
-        geom_hline(alpha = qcLineAlpha,
-                   color = qcCutoffColor,
-                   linetype = qcLineType,
-                   size = qcLineSize,
-                   yintercept = min) +
-        scale_y_log10() +
-        scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
-    }
-    p
-}
-
-
-
-.plotUMIsPerCellHistogram <- function(object, min) {
-    metrics <- metrics(object)
-    p <- ggplot(metrics,
-        aes_(x = ~nUMI,
-             fill = ~sampleName)) +
-        labs(x = "umis per cell") +
-        geom_histogram(bins = bins) +
-        geom_vline(alpha = qcLineAlpha,
-                   color = qcCutoffColor,
-                   linetype = qcLineType,
-                   size = qcLineSize,
-                   xintercept = min) +
-        scale_x_log10() +
         scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroups == "sampleName") {
+        p <- p +
+            geom_boxplot(
+                color = lineColor,
+                fill = "white")
+    } else {
+        p <- p +
+            geom_boxplot(
+                alpha = qcPlotAlpha,
+                color = lineColor) +
+            scale_fill_viridis(discrete = TRUE)
     }
+
+    # Median labels
+    if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
+        formula <- formula(paste("nUMI", "sampleName", sep = " ~ "))
+        meta <- sampleMetadata(
+            object,
+            aggregateReplicates = aggregateReplicates)
+        medianUMIs <- aggregate(
+            formula = formula,
+            data = metrics,
+            FUN = median) %>%
+            left_join(meta, by = "sampleName")
+        p <- p +
+            geom_label(
+                data = medianUMIs,
+                mapping = aes_(label = ~round(nUMI)),
+                alpha = qcLabelAlpha,
+                color = qcLabelColor,
+                fill = qcLabelFill,
+                fontface = qcLabelFontface,
+                label.padding = qcLabelPadding,
+                label.size = qcLabelSize,
+                show.legend = FALSE)
+    }
+
+    # Cutoff lines
+    if (min > 0) {
+        p <- p +
+            .qcCutoffLine(yintercept = min)
+    }
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(metrics[["description"]])) > 1) {
+        facets <- c(facets, "description")
+    }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+        if (interestingGroups == "sampleName") {
+            p <- p +
+                theme(legend.position = "none")
+        }
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets,
+                       scales = "free_x")
+    }
+
     p
 }
 
 
 
-.plotUMIsPerCell <- function(object, min) {
-    plot_grid(.plotUMIsPerCellHistogram(object, min),
-              .plotUMIsPerCellBoxplot(object, min),
-              labels = "auto",
-              nrow = 2L)
+.plotUMIsPerCellRidgeline <- function(
+    object,
+    interestingGroups = "sampleName",
+    min = 0,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "nUMI",
+            y = "sampleName",
+            fill = interestingGroups)
+    ) +
+        labs(x = "umis per cell",
+             y = "sample") +
+        geom_density_ridges(
+            alpha = qcPlotAlpha,
+            color = lineColor,
+            panel_scaling = TRUE,
+            scale = qcRidgeScale) +
+        scale_fill_viridis(discrete = TRUE) +
+        scale_x_sqrt() +
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    # Cutoff lines
+    if (min > 0) {
+        p <- p +
+            .qcCutoffLine(xintercept = min)
+    }
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(metrics[["description"]])) > 1) {
+        facets <- c(facets, "description")
+    }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+        # Turn off the legend
+        p <- p +
+            theme(legend.position = "none")
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets)
+    }
+
+    p
+}
+
+
+
+.plotUMIsPerCell <- function(
+    object,
+    interestingGroups,
+    min,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    if (missing(interestingGroups)) {
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]][[1]]
+    }
+    if (missing(min)) {
+        min <- object %>%
+            metadata() %>%
+            .[["filterParams"]] %>%
+            .[["minUMIs"]]
+        if (is.null(min)) {
+            min <- 0
+        }
+    }
+    suppressMessages(plot_grid(
+        .plotUMIsPerCellRidgeline(
+            object,
+            interestingGroups = interestingGroups,
+            min = min,
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
+        .plotUMIsPerCellBoxplot(
+            object,
+            interestingGroups = interestingGroups,
+            min = min,
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
+        labels = "auto",
+        nrow = 2
+    ))
 }
 
 
@@ -89,22 +206,5 @@ NULL
 #' @export
 setMethod(
     "plotUMIsPerCell",
-    "bcbioSCDataSet",
-    function(object, min = 1000L) {
-        .plotUMIsPerCell(object, min)
-    })
-
-
-
-#' @rdname plotUMIsPerCell
-#' @export
-setMethod(
-    "plotUMIsPerCell",
-    "bcbioSCFiltered",
-    function(object) {
-        min <- object %>%
-            metadata %>%
-            .[["filterParams"]] %>%
-            .[["minUMIs"]]
-        .plotUMIsPerCell(object, min)
-    })
+    signature("bcbioSingleCellANY"),
+    .plotUMIsPerCell)

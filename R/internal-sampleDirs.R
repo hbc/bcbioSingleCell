@@ -1,13 +1,13 @@
 #' Detect Sample Directories
 #'
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @param uploadDir Upload directory.
 #' @param pipeline Pipeline used to generate the samples.
 #'
 #' @return Named character vector containing sample directory paths. Function
 #'   will [stop()] if no complete sample directories match.
+#' @noRd
 .sampleDirs <- function(uploadDir, pipeline = "bcbio") {
     if (pipeline == "bcbio") {
         sampleDirs <- list.dirs(
@@ -17,13 +17,13 @@
             sampleDirs <- sampleDirs %>%
                 .[!str_detect(basename(.), projectDirPattern)]
         }
-        if (length(sampleDirs) == 0L) {
+        if (length(sampleDirs) == 0) {
             stop("Failed to detect any sample directories",
                  call. = FALSE)
         }
         names(sampleDirs) <- basename(sampleDirs) %>%
             str_replace_all("-", "_") %>%
-            make.names
+            make.names()
     } else if (pipeline == "cellranger") {
         # Faster directory matching
         subdirs <- list.dirs(uploadDir, full.names = TRUE, recursive = FALSE)

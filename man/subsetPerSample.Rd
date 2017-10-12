@@ -3,12 +3,12 @@
 \docType{methods}
 \name{subsetPerSample}
 \alias{subsetPerSample}
-\alias{subsetPerSample,bcbioSCFiltered-method}
+\alias{subsetPerSample,bcbioSingleCellANY-method}
 \title{Subset Per Sample}
 \usage{
 subsetPerSample(object, ...)
 
-\S4method{subsetPerSample}{bcbioSCFiltered}(object, minCells = 200L,
+\S4method{subsetPerSample}{bcbioSingleCellANY}(object, minCells = 200,
   dir = "data")
 }
 \arguments{
@@ -19,6 +19,9 @@ subsetPerSample(object, ...)
 \item{minCells}{Minimum number of cells required per sample.}
 
 \item{dir}{Output directory where to save the subset data.}
+}
+\value{
+Character vector of saved \link{bcbioSingleCell} subsets.
 }
 \description{
 Subset Per Sample

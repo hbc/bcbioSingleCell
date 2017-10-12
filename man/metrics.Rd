@@ -3,19 +3,24 @@
 \docType{methods}
 \name{metrics}
 \alias{metrics}
-\alias{metrics,bcbioSCDataSet-method}
-\alias{metrics,bcbioSCFiltered-method}
+\alias{metrics,bcbioSingleCell-method}
+\alias{metrics,bcbioSingleCellLegacy-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{bcbioSCDataSet}(object)
-
-\S4method{metrics}{bcbioSCFiltered}(object)
+\S4method{metrics}{bcbioSingleCell}(object, filterCells = FALSE,
+  aggregateReplicates = TRUE)
 
 \S4method{metrics}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
+function uses values assigned in the \code{sampleNameAggregate} column of the
+internal sample metadata \link{data.frame}.}
 }
 \value{
 \link{data.frame} with cellular barcodes as rows.
@@ -24,6 +29,8 @@
 Sample Barcode Metrics
 }
 \seealso{
+\code{\link[=sampleMetadata]{sampleMetadata()}}.
+
 Other Quality Control Metrics: \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},

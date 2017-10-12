@@ -9,7 +9,7 @@
 plotKnownMarkers(object, knownMarkers, ...)
 
 \S4method{plotKnownMarkers}{seurat,grouped_df}(object, knownMarkers,
-  headerLevel = 2L, combine = FALSE)
+  headerLevel = 2)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,19 +19,31 @@ plotKnownMarkers(object, knownMarkers, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
-
-\item{combine}{Combine all markers into a single plot.}
 }
 \value{
 No value, only graphical output.
 }
 \description{
-Plot Known Markers
+Plot gene expression per cell in multiple formats:
+\enumerate{
+\item t-SNE plot
+\item Violin plot
+\item Ridgeline plot
+\item Dot plot
+}
+}
+\examples{
+\dontrun{
+data(seurat, markers)
+top <- topMarkers(markers)
+genes <- top$symbol[1:4]
+plotMarkers(seurat, genes = genes)
+}
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
-  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
+  \code{\link{pcCutoff}}, \code{\link{plotMarkers}},
+  \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}
 }

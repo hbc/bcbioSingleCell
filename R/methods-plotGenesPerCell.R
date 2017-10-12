@@ -5,6 +5,9 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
+#' @inheritParams AllGenerics
+#' @inheritParams metrics
+#' @param interestingGroups Interesting group, to use for colors.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #'
@@ -14,89 +17,214 @@ NULL
 
 
 # Constructors ====
-.plotGenesPerCellBoxplot <- function(object, min, max) {
-    metrics <- metrics(object)
-    medianGenes <- aggregate(nGene ~ sampleID, metrics, median) %>%
-        left_join(sampleMetadata(object), by = "sampleID") %>%
-        mutate(nGene = round(.data[["nGene"]]))
-    interestingGroup <- interestingGroups(object)[[1L]]
-    p <- ggplot(metrics,
-                aes_(x = ~sampleName,
-                     y = ~nGene,
-                     fill = as.name(interestingGroup))) +
+.plotGenesPerCellBoxplot <- function(
+    object,
+    interestingGroups = "sampleName",
+    min = 0,
+    max = Inf,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "nGene",
+            fill = interestingGroups)
+    ) +
         labs(x = "sample",
              y = "genes per cell") +
-        geom_boxplot() +
-        geom_hline(alpha = qcLineAlpha,
-                   color = qcCutoffColor,
-                   linetype = qcLineType,
-                   size = qcLineSize,
-                   yintercept = min) +
-        geom_label(data = medianGenes,
-                   aes_(label = ~nGene),
-                   alpha = qcLabelAlpha,
-                   color = qcLabelColor,
-                   fill = qcLabelFill,
-                   fontface = qcLabelFontface,
-                   label.padding = qcLabelPadding,
-                   label.size = qcLabelSize,
-                   show.legend = FALSE) +
         scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-    if (!is.null(max)) {
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics) &
+        interestingGroups == "sampleName") {
         p <- p +
-            geom_hline(alpha = qcLineAlpha,
-                       color = qcCutoffColor,
-                       linetype = qcLineType,
-                       size = qcLineSize,
-                       yintercept = max)
+            geom_boxplot(
+                color = lineColor,
+                fill = "white")
+    } else {
+        p <- p +
+            geom_boxplot(
+                alpha = qcPlotAlpha,
+                color = lineColor) +
+            scale_fill_viridis(discrete = TRUE)
     }
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
+
+    # Median labels
+    if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
+        formula <- formula(paste("nGene", "sampleName", sep = " ~ "))
+        meta <- sampleMetadata(
+            object,
+            aggregateReplicates = aggregateReplicates)
+        medianGenes <-
+            aggregate(
+                formula = formula,
+                data = metrics,
+                FUN = median) %>%
+            left_join(meta, by = "sampleName")
+        p <- p +
+            geom_label(
+                data = medianGenes,
+                mapping = aes_(label = ~round(nGene)),
+                alpha = qcLabelAlpha,
+                color = qcLabelColor,
+                fill = qcLabelFill,
+                fontface = qcLabelFontface,
+                label.padding = qcLabelPadding,
+                label.size = qcLabelSize,
+                show.legend = FALSE)
     }
+
+    # Cutoff lines
+    if (min > 0) {
+        p <- p +
+            .qcCutoffLine(yintercept = min)
+    }
+    if (max < Inf) {
+        p <- p +
+            .qcCutoffLine(yintercept = max)
+    }
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(metrics[["description"]])) > 1) {
+        facets <- c(facets, "description")
+    }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+        if (interestingGroups == "sampleName") {
+            p <- p +
+                theme(legend.position = "none")
+        }
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets,
+                       scales = "free_x")
+    }
+
     p
 }
 
 
 
-.plotGenesPerCellHistogram <- function(object, min, max) {
-    metrics <- metrics(object)
-    p <- ggplot(metrics,
-                aes_(x = ~nGene,
-                     fill = ~sampleName)) +
-        labs(x = "genes per cell") +
-        geom_histogram(bins = bins) +
-        geom_vline(alpha = qcLineAlpha,
-                   color = qcCutoffColor,
-                   linetype = qcLineType,
-                   size = qcLineSize,
-                   xintercept = min) +
+.plotGenesPerCellRidgeline <- function(
+    object,
+    interestingGroups = "sampleName",
+    min = 0,
+    max = Inf,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates)
+    p <- ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "nGene",
+            y = "sampleName",
+            fill = interestingGroups)
+    ) +
+        labs(x = "genes per cell",
+             y = "sample") +
+        geom_density_ridges(
+            alpha = qcPlotAlpha,
+            color = lineColor,
+            panel_scaling = TRUE,
+            scale = qcRidgeScale) +
+        scale_fill_viridis(discrete = TRUE) +
         scale_x_sqrt() +
-        scale_y_sqrt() +
-        scale_fill_viridis(discrete = TRUE) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-    if (!is.null(max)) {
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+    # Cutoff lines
+    if (min > 0) {
         p <- p +
-            geom_vline(alpha = qcLineAlpha,
-                       color = qcCutoffColor,
-                       linetype = qcLineType,
-                       size = qcLineSize,
-                       xintercept = max)
+            .qcCutoffLine(xintercept = min)
     }
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-        p <- p + facet_wrap(~fileName)
+    if (max < Inf) {
+        p <- p +
+            .qcCutoffLine(xintercept = max)
     }
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(metrics[["description"]])) > 1) {
+        facets <- c(facets, "description")
+    }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+        # Turn off the legend
+        p <- p +
+            theme(legend.position = "none")
+    }
+    if (!is.null(facets)) {
+        p <- p +
+            facet_wrap(facets = facets,
+                       scales = "free_y")
+    }
+
     p
 }
 
 
 
-.plotGenesPerCell <- function(object, min, max) {
-    plot_grid(.plotGenesPerCellHistogram(object, min, max),
-              .plotGenesPerCellBoxplot(object, min, max),
-              labels = "auto",
-              nrow = 2L)
+.plotGenesPerCell <- function(
+    object,
+    interestingGroups,
+    min,
+    max,
+    filterCells = FALSE,
+    aggregateReplicates = TRUE) {
+    if (missing(interestingGroups)) {
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]][[1]]
+    }
+    if (missing(min)) {
+        min <- object %>%
+            metadata() %>%
+            .[["filterParams"]] %>%
+            .[["minGenes"]]
+        if (is.null(min)) {
+            min <- 0
+        }
+    }
+    if (missing(max)) {
+        max <- object %>%
+            metadata() %>%
+            .[["filterParams"]] %>%
+            .[["maxGenes"]]
+        if (is.null(max)) {
+            max <- Inf
+        }
+    }
+    suppressMessages(plot_grid(
+        .plotGenesPerCellRidgeline(
+            object,
+            interestingGroups = interestingGroups,
+            min = min,
+            max = max,
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
+        .plotGenesPerCellBoxplot(
+            object,
+            interestingGroups = interestingGroups,
+            min = min,
+            max = max,
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates),
+        labels = "auto",
+        nrow = 2
+    ))
 }
 
 
@@ -106,26 +234,5 @@ NULL
 #' @export
 setMethod(
     "plotGenesPerCell",
-    "bcbioSCDataSet",
-    function(object, min = 500L, max = NULL) {
-        .plotGenesPerCell(object, min, max)
-    })
-
-
-
-#' @rdname plotGenesPerCell
-#' @export
-setMethod(
-    "plotGenesPerCell",
-    "bcbioSCFiltered",
-    function(object) {
-        min <- object %>%
-            metadata %>%
-            .[["filterParams"]] %>%
-            .[["minGenes"]]
-        max <- object %>%
-            metadata %>%
-            .[["filterParams"]] %>%
-            .[["maxGenes"]]
-        .plotGenesPerCell(object, min, max)
-    })
+    signature("bcbioSingleCellANY"),
+    .plotGenesPerCell)

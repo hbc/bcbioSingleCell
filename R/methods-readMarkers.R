@@ -5,26 +5,21 @@
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams AllGenerics
 #' @param object Gene markers file (CSV or Excel).
 #' @param gene2symbol Gene-to-symbol annotation [data.frame].
-#' @param show Show [kable].
 #'
 #' @return [tibble].
 NULL
 
 
 
-# Methods ====
-#' @rdname readMarkers
-#' @export
-setMethod("readMarkers", "character", function(
-    object,
-    gene2symbol,
-    show = FALSE) {
+# Constructors ====
+.readMarkers <- function(object, gene2symbol) {
     if (!is.data.frame(gene2symbol)) {
         stop("gene2symbol must be data.frame")
     }
-    if (length(dimnames(gene2symbol)[[2L]]) != 2L) {
+    if (length(dimnames(gene2symbol)[[2]]) != 2) {
         stop("gene2symbol must only contain two columns")
     }
     if (!identical(
@@ -34,7 +29,7 @@ setMethod("readMarkers", "character", function(
     }
 
     markers <- readFileByExtension(object) %>%
-        camel
+        camel()
 
     # Match the markers file by Ensembl gene identifier, otherwise symbol
     if ("ensgene" %in% colnames(markers)) {
@@ -48,8 +43,8 @@ setMethod("readMarkers", "character", function(
             missing <- markers %>%
                 .[is.na(.[["symbol"]]), ] %>%
                 pull("ensgene") %>%
-                sort %>%
-                unique
+                sort() %>%
+                unique()
             stop(paste("Bad genes:", toString(missing)))
         }
     } else if ("symbol" %in% colnames(markers)) {
@@ -63,23 +58,27 @@ setMethod("readMarkers", "character", function(
             missing <- markers %>%
                 .[is.na(.[["ensgene"]]), ] %>%
                 pull("symbol") %>%
-                sort %>%
-                unique
+                sort() %>%
+                unique()
             stop(paste("Bad symbols:", toString(missing)))
         }
     } else {
         stop("Marker file must contain 'ensgene' or 'symbol'")
     }
 
-    markers <- markers %>%
+    markers %>%
         .[!is.na(.[["ensgene"]]), ] %>%
         .[, c("cell", "symbol", "ensgene")] %>%
         arrange(!!!syms(c("cell", "symbol"))) %>%
-        distinct
+        distinct()
+}
 
-    if (isTRUE(show)) {
-        kable(markers, caption = "Known markers") %>% show
-    }
 
-    markers
-})
+
+# Methods ====
+#' @rdname readMarkers
+#' @export
+setMethod(
+    "readMarkers",
+    signature("character"),
+    .readMarkers)

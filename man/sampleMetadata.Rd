@@ -3,24 +3,24 @@
 \docType{methods}
 \name{sampleMetadata}
 \alias{sampleMetadata}
-\alias{sampleMetadata,bcbioSCDataSet-method}
-\alias{sampleMetadata,bcbioSCFiltered-method}
+\alias{sampleMetadata,bcbioSingleCellANY-method}
 \alias{sampleMetadata,seurat-method}
 \title{Sample Metadata}
 \usage{
-\S4method{sampleMetadata}{bcbioSCDataSet}(object, kable = FALSE)
+\S4method{sampleMetadata}{bcbioSingleCellANY}(object,
+  aggregateReplicates = TRUE)
 
-\S4method{sampleMetadata}{bcbioSCFiltered}(object, kable = FALSE)
-
-\S4method{sampleMetadata}{seurat}(object, kable = FALSE)
+\S4method{sampleMetadata}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{kable}{Return the output as \link{kable} instead of \link{data.frame}.}
+\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
+function uses values assigned in the \code{sampleNameAggregate} column of the
+internal sample metadata \link{data.frame}.}
 }
 \value{
-\link{data.frame}, unless \code{kable = TRUE}, which will return a \link{kable}.
+\link{data.frame}.
 }
 \description{
 Sample Metadata

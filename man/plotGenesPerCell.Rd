@@ -3,24 +3,30 @@
 \docType{methods}
 \name{plotGenesPerCell}
 \alias{plotGenesPerCell}
-\alias{plotGenesPerCell,bcbioSCDataSet-method}
-\alias{plotGenesPerCell,bcbioSCFiltered-method}
+\alias{plotGenesPerCell,bcbioSingleCellANY-method}
 \title{Plot Genes per Cell}
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{bcbioSCDataSet}(object, min = 500L, max = NULL)
-
-\S4method{plotGenesPerCell}{bcbioSCFiltered}(object)
+\S4method{plotGenesPerCell}{bcbioSingleCellANY}(object, interestingGroups, min,
+  max, filterCells = FALSE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
+\item{interestingGroups}{Interesting group, to use for colors.}
+
 \item{min}{Recommended minimum value cutoff.}
 
 \item{max}{Recommended maximum value cutoff.}
+
+\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
+
+\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
+function uses values assigned in the \code{sampleNameAggregate} column of the
+internal sample metadata \link{data.frame}.}
 }
 \value{
 \link{ggplot} grid.

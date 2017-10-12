@@ -3,26 +3,30 @@
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
 #' counts from `barcodes.tsv`, `genes.tsv`, and `matrix.mtx` files.
 #'
-#' @details This function is a simplified version of [loadSingleCellRun()]
+#' @details This function is a simplified version of [loadSingleCell()]
 #'   optimized for handling CellRanger output.
 #'
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams loadSingleCellRun
+#' @inherit loadSingleCell
 #' @param uploadDir Path to CellRanger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices/` as a child.
 #' @param refDataDir Directory path to cellranger reference annotation data.
 #'
-#' @return [bcbioSCDataSet].
 #' @export
 loadCellRanger <- function(
     uploadDir,
     refDataDir,
-    sampleMetadataFile,
     interestingGroups = "sampleName",
+    sampleMetadataFile,
+    prefilter = TRUE,
     ...) {
-    # Initial run setup ====
     pipeline <- "cellranger"
+    umiType <- "chromium"
+    multiplexedFASTQ <- FALSE
+
+    # Directory paths ====
+    # Check connection to final upload directory
     if (!dir.exists(uploadDir)) {
         stop("Final upload directory does not exist", call. = FALSE)
     }
@@ -31,16 +35,22 @@ loadCellRanger <- function(
 
     # Sample metadata ====
     sampleMetadataFile <- normalizePath(sampleMetadataFile)
-    sampleMetadata <- .readSampleMetadataFile(
-        sampleMetadataFile, sampleDirs, pipeline)
-
-    # Check to ensure interesting groups are defined
-    if (!all(interestingGroups %in% colnames(sampleMetadata))) {
-        stop("Interesting groups missing in sample metadata")
+    sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
+    # Check that `sampleID` matches `sampleDirs`
+    if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
+        stop("Sample directory names don't match the sample metadata file",
+             call. = FALSE)
     }
 
-    # Check to see if a subset of samples is requested via the metadata file.
-    # This matches by the reverse complement sequence of the index barcode.
+    # Interesting groups ====
+    # Ensure internal formatting in camelCase
+    interestingGroups <- camel(interestingGroups, strict = FALSE)
+    # Check to ensure interesting groups are defined
+    if (!all(interestingGroups %in% colnames(sampleMetadata))) {
+        stop("Interesting groups missing in sample metadata", call. = FALSE)
+    }
+
+    # Subset sample directories by metadata ====
     if (nrow(sampleMetadata) < length(sampleDirs)) {
         message("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
@@ -56,18 +66,27 @@ loadCellRanger <- function(
     refDataDir <- normalizePath(refDataDir)
     refJSONFile <- file.path(refDataDir, "reference.json")
     if (!file.exists(refJSONFile)) {
-        stop("reference.json file missing")
+        stop("'reference.json' file missing", call. = FALSE)
     }
     refJSON <- read_json(refJSONFile)
     genomeBuild <- refJSON %>%
         .[["genomes"]] %>%
-        .[[1L]]
+        .[[1]]
     organism <- detectOrganism(genomeBuild)
+    # Get the Ensembl version from the JSON reference file (via GTF)
+    ensemblVersion <- refJSON %>%
+        .[["input_gtf_files"]] %>%
+        .[[1]] %>%
+        str_split("\\.", simplify = TRUE) %>%
+        .[1, 3]
+    message(paste("Organism:", organism))
+    message(paste("Genome build:", genomeBuild))
+    message(paste("Ensembl release:", ensemblVersion))
 
-    # GTF
+    # Cell Ranger uses reference GTF file
     gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
     if (!file.exists(gtfFile)) {
-        stop("GTF file missing")
+        stop("Reference GTF file missing", call. = FALSE)
     }
     gtf <- readGTF(gtfFile)
 
@@ -75,25 +94,31 @@ loadCellRanger <- function(
     gene2symbol <- gene2symbolFromGTF(gtf)
 
     # Row data =================================================================
-    annotable <- annotable(genomeBuild)
+    annotable <- annotable(organism, release = ensemblVersion)
 
     # Assays ===================================================================
     message("Reading counts")
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
-        sparseCounts <- .readSparseCounts(sampleDirs[a], pipeline = pipeline)
-        # Pre-filter using cellular barcode summary metrics
-        metrics <- calculateMetrics(sparseCounts, annotable)
-        sparseCounts[, rownames(metrics)]
+        .readSparseCounts(sampleDirs[a], pipeline = pipeline)
     }) %>%
         setNames(names(sampleDirs))
-    sparseCounts <- do.call(Matrix::cBind, sparseList)
+    # Cell Ranger outputs at gene-level
+    counts <- do.call(Matrix::cBind, sparseList)
 
     # Column data ==============================================================
-    metrics <- calculateMetrics(sparseCounts, annotable)
+    # Calculate the cellular barcode metrics
+    metrics <- calculateMetrics(
+        counts,
+        annotable = annotable,
+        prefilter = prefilter)
+    if (isTRUE(prefilter)) {
+        # Subset the counts matrix to match the metrics
+        counts <- counts[, rownames(metrics)]
+    }
 
     # Metadata =================================================================
-    metadata <- SimpleList(
+    metadata <- list(
         version = packageVersion("bcbioSingleCell"),
         pipeline = pipeline,
         uploadDir = uploadDir,
@@ -101,29 +126,30 @@ loadCellRanger <- function(
         sampleMetadataFile = sampleMetadataFile,
         sampleMetadata = sampleMetadata,
         interestingGroups = interestingGroups,
-        genomeBuild = genomeBuild,
         organism = organism,
+        genomeBuild = genomeBuild,
+        ensemblVersion = ensemblVersion,
         annotable = annotable,
         gtfFile = gtfFile,
-        gtf = gtf,
         gene2symbol = gene2symbol,
-        umiType = "chromium",
+        umiType = umiType,
         allSamples = allSamples,
-        multiplexedFASTQ = FALSE,
+        multiplexedFASTQ = multiplexedFASTQ,
+        prefilter = prefilter,
         # cellranger pipeline-specific
         refDataDir = refDataDir,
         refJSON = refJSON)
     # Add user-defined custom metadata, if specified
     dots <- list(...)
-    if (length(dots) > 0L) {
+    if (length(dots) > 0) {
         metadata <- c(metadata, dots)
     }
 
-    # bcbioSCDataSet ===========================================================
+    # Return `bcbioSingleCell` object ==========================================
     se <- prepareSummarizedExperiment(
-        sparseCounts,
-        colData = metrics,
+        assays = list(assay = counts),
         rowData = annotable,
+        colData = metrics,
         metadata = metadata)
-    new("bcbioSCDataSet", se)
+    new("bcbioSingleCell", se)
 }

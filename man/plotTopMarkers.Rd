@@ -9,7 +9,7 @@
 plotTopMarkers(object, topMarkers, ...)
 
 \S4method{plotTopMarkers}{seurat,grouped_df}(object, topMarkers,
-  headerLevel = 2L, combine = FALSE)
+  pointsAsNumbers = FALSE, headerLevel = 2)
 }
 \arguments{
 \item{object}{Object.}
@@ -18,20 +18,33 @@ plotTopMarkers(object, topMarkers, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{headerLevel}{Include a Markdown header for each gene.}
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
-\item{combine}{Combine all markers into a single plot.}
+\item{headerLevel}{Include a Markdown header for each gene.}
 }
 \value{
 No value, only graphical output.
 }
 \description{
-Plot Top Markers
+Plot gene expression per cell in multiple formats:
+\enumerate{
+\item t-SNE plot
+\item Violin plot
+\item Ridgeline plot
+\item Dot plot
+}
+}
+\examples{
+\dontrun{
+data(seurat, markers)
+top <- topMarkers(markers)
+genes <- top$symbol[1:4]
+plotMarkers(seurat, genes = genes)
+}
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotFeatures}},
-  \code{\link{plotKnownMarkers}},
+  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
   \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
   \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }

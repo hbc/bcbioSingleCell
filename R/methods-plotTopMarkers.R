@@ -16,33 +16,34 @@ NULL
 .plotTopMarkers <- function(
     object,
     topMarkers,
-    headerLevel = 2L,
-    combine = FALSE) {
+    pointsAsNumbers = FALSE,
+    headerLevel = 2) {
     # Fix for gene symbol mismatch
     if ("gene" %in% colnames(topMarkers)) {
-        topMarkers <- rename(topMarkers, symbol = .data[["gene"]])
+        topMarkers <- dplyr::rename(topMarkers, symbol = .data[["gene"]])
     }
     clusters <- topMarkers[["cluster"]] %>% levels
     pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
-        symbols <- topMarkers %>%
+        genes <- topMarkers %>%
             .[.[["cluster"]] == cluster, ] %>%
             pull("symbol")
-        if (is.null(symbols)) return(NULL)
-        if (length(symbols) > 4L) {
-            warning("Maximum of 4 genes per cluster is recommended")
-            symbols <- symbols[[1L:4L]]
+        if (is.null(genes)) {
+            return(NULL)
+        }
+        if (length(genes) > 10) {
+            warning("Maximum of 10 genes per cluster is recommended")
         }
         mdHeader(paste("Cluster", cluster),
                  level = headerLevel,
                  tabset = TRUE,
                  asis = TRUE)
         plotMarkers(object,
-                    symbols = symbols,
-                    headerLevel = headerLevel + 1L,
-                    combine = combine)
+                    genes = genes,
+                    pointsAsNumbers = pointsAsNumbers,
+                    headerLevel = headerLevel + 1)
     }) %>%
-        invisible
+        invisible()
 }
 
 
@@ -52,5 +53,6 @@ NULL
 #' @export
 setMethod(
     "plotTopMarkers",
-    signature(object = "seurat", topMarkers = "grouped_df"),
+    signature(object = "seurat",
+              topMarkers = "grouped_df"),
     .plotTopMarkers)

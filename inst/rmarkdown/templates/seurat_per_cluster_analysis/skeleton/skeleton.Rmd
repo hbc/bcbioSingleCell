@@ -4,14 +4,11 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seuratFile: "data/bcb_filtered_seurat.rda"
+    seuratFile: "data/bcb_seurat.rda"
     intgroup: "genotype"
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-library(knitr)
-library(Seurat)
-library(tidyverse)
 library(bcbioSingleCell)
 
 # Shared RMarkdown settings
@@ -21,17 +18,16 @@ if (file.exists("setup.R")) {
 }
 
 # Load the seurat object
-if (!exists("seurat", inherits = FALSE)) {
-    seuratName <- load(params$seuratFile)
-    seurat <- get(seuratName, inherits = FALSE)
-}
+loadDataAsName(c(seurat = params$seuratFile))
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
 ```
 
+
+
 ```{r sample_metadata}
-sampleMetadata(seurat, kable = TRUE)
+sampleMetadata(seurat)
 ```
 
 
@@ -86,13 +82,13 @@ lapply(seq_along(ident), function(a) {
         ggtitle(intgroup) +
         theme(legend.position = "bottom")
     plot_grid(p1, p2, labels = "auto", ncol = 1, nrow = 2) %>%
-        show
+        show()
     
     # Tables
     master <- object@meta.data %>%
-        as.data.frame %>%
+        as.data.frame() %>%
         .[, c("sampleName", intgroup)] %>%
-        rownames_to_column
+        rownames_to_column()
     sampleStats <- master %>%
         arrange(.data[["sampleName"]]) %>%
         group_by(.data[["sampleName"]]) %>%
@@ -106,13 +102,13 @@ lapply(seq_along(ident), function(a) {
     kable(sampleStats,
           caption = paste0(title, ": sampleName"),
           digits = 2L) %>%
-        show
+        show()
     kable(intgroupStats,
           caption = paste0(title, ": ", intgroup),
           digits = 2L) %>%
-        show
+        show()
 }) %>%
-    invisible
+    invisible()
 ```
 
 

@@ -4,16 +4,12 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seuratFile: "data/bcb_filtered_seurat.rda"
+    seuratFile: "data/bcb_seurat.rda"
     markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-library(viridis)
-library(Seurat)
-library(stringr)
-library(tidyverse)
 library(bcbioSingleCell)
 
 # Shared RMarkdown settings
@@ -23,18 +19,16 @@ if (file.exists("setup.R")) {
 }
 
 # Load seurat object
-seuratName <- load(params$seuratFile)
-seurat <- get(seuratName, inherits = FALSE)
-if (!is(seurat, "seurat")) {
-    stop("seurat class object required")
-}
+seuratName <- basename(params$seuratFile) %>%
+    # Remove file extension, if specified
+    str_replace("\\.[A-Za-z0-9]+", "")
+loadDataAsName(c(seurat = params$seuratFile))
 
 # Check to see if we need to process markers
 markersName <- paste(seuratName, "markers", sep = "_")
 markersFile <- file.path("data", paste0(markersName, ".rda"))
 if (file.exists(markersFile)) {
-    load(markersFile)
-    markers <- get(markersName, inherits = FALSE)
+    loadDataAsName(c(markers = markersFile))
     evalMarkers <- FALSE
 } else {
     evalMarkers <- TRUE
@@ -43,21 +37,17 @@ if (file.exists(markersFile)) {
 # Directory paths
 markersDir <- file.path(params$outputDir, "results", "markers")
 dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
-
-# knitr arguments (for `rmarkdown::render()` looping)
-opts_chunk$set(
-    cache.path = paste(seuratName, "markers", "cache/", sep = "_"),
-    fig.path = paste(seuratName, "markers", "files/", sep = "_"))
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
 ```
 
+
+
+
 ```{r sample_metadata}
-sampleMetadata(seurat, kable = TRUE)
+sampleMetadata(seurat)
 ```
-
-
 
 This workflow is adapted from the following sources:
 
@@ -77,6 +67,8 @@ Seurat has four tests for differential expression which can be set with the `tes
 
 ```{r find_all_markers, results="hide", eval=evalMarkers}
 markers <- FindAllMarkers(seurat)
+assignAndSaveData(paste(markersName, "original", sep = "_"), markers)
+markers <- sanitizeMarkers(seurat, markers)
 assignAndSaveData(markersName, markers)
 write_csv(markers, file.path(markersDir, paste0(markersName, ".csv.gz")))
 ```
@@ -85,12 +77,16 @@ write_csv(markers, file.path(markersDir, paste0(markersName, ".csv.gz")))
 
 # Top markers per cluster {.tabset}
 
-```{r top_markers, results="asis"}
-topMarkers <- topMarkers(markers, show = TRUE)
+```{r top_markers}
+topMarkers <- topMarkers(markers, coding = TRUE)
+topMarkers
 ```
 
 ```{r plot_top_markers, results="asis"}
-plotTopMarkers(seurat, topMarkers, headerLevel = 2, combine = TRUE)
+plotTopMarkers(
+    seurat,
+    topMarkers = topMarkers,
+    headerLevel = 2)
 ```
 
 
@@ -113,30 +109,18 @@ DoHeatmap(
 
 
 
-# Known marker analysis
+# Known markers {.tabset]
 
-```{r known_markers, results="asis"}
+```{r known_markers}
 knownMarkers <- readMarkers(
     params$markersFile,
-    gene2symbol = gene2symbol,
-    show = TRUE)
+    gene2symbol = gene2symbol)
 saveData(knownMarkers)
 ```
 
-
-## Known markers detected
-
-Let's obtain the statistics on our known marker genes from [Seurat][].
-
-```{r known_markers_detected, results="asis"}
-knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers, show = TRUE)
-```
-
-
-## Known markers by cell type {.tabset}
-
 ```{r plot_known_markers, results="asis"}
-plotKnownMarkers(seurat, knownMarkersDetected, headerLevel = 3)
+knownMarkersDetected <- knownMarkersDetected(markers, knownMarkers)
+plotKnownMarkers(seurat, knownMarkersDetected, headerLevel = 2)
 ```
 
 

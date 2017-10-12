@@ -4,8 +4,8 @@
 \alias{loadCellRanger}
 \title{Load 10X Genomics CellRanger Data}
 \usage{
-loadCellRanger(uploadDir, refDataDir, sampleMetadataFile,
-  interestingGroups = "sampleName", ...)
+loadCellRanger(uploadDir, refDataDir, interestingGroups = "sampleName",
+  sampleMetadataFile, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to CellRanger output directory. This directory path
@@ -13,24 +13,40 @@ must contain \code{filtered_gene_bc_matrices/} as a child.}
 
 \item{refDataDir}{Directory path to cellranger reference annotation data.}
 
-\item{sampleMetadataFile}{Sample barcode metadata file.}
-
 \item{interestingGroups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
-\item{...}{Additional arguments, passed as metadata.}
+\item{sampleMetadataFile}{Sample barcode metadata file.}
+
+\item{prefilter}{Prefilter counts prior to quality control analysis.}
+
+\item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
 \value{
-\link{bcbioSCDataSet}.
+\link{bcbioSingleCell}.
 }
 \description{
 Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} cell
 counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 }
 \details{
-This function is a simplified version of \code{\link[=loadSingleCellRun]{loadSingleCellRun()}}
+This function is a simplified version of \code{\link[=loadSingleCell]{loadSingleCell()}}
 optimized for handling CellRanger output.
+}
+\examples{
+\dontrun{
+# Mus musculus
+# Run with Ensembl 88 transcriptome FASTA and GTF files
+bcb <- loadSingleCell(
+    uploadDir = file.path("indrop_rnaseq", "final"),
+    interestingGroups = c("genotype", "treatment"),
+    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
+    gtfFile = file.path(
+        "annotations",
+        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
+    ensemblVersion = 88)
+}
 }
 \author{
 Michael Steinbaugh
