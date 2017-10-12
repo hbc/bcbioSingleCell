@@ -143,7 +143,10 @@ seurat <- CellCycleScoring(
     s.genes = sGenes)
 # Cell-cycle `Phase` column should now be added to `seurat@meta.data`
 seuratPreregress <- seurat
-assignAndSaveData(seuratPreregressName, seuratPreregress)
+assignAndSaveData(
+    name = seuratPreregressName,
+    object = seuratPreregress,
+    dir = dataDir)
 ```
 
 Here we are checking to see if the cells are grouping by cell cycle. If we don't see clear grouping of the cells into `G1`, `G2M`, and `S` clusters on the PCA plot, then it is recommended that we don't regress out cell-cycle variation. When this is the case, remove `S.Score` and `G2M.Score` from the variables to regress (`varsToRegress`) in the RMarkdown YAML parameters.
@@ -294,7 +297,10 @@ seurat <- RunTSNE(
     seurat,
     dims.use = pcUse,
     do.fast = TRUE)
-assignAndSaveData(params$seuratName, seurat)
+assignAndSaveData(
+    name = params$seuratName,
+    object = seurat,
+    dir = dataDir)
 ```
 
 ```{r print_tsne_params}
@@ -302,7 +308,7 @@ PrintTSNEParams(seurat)
 ```
 
 ```{r dim_reduction_plots}
-sapply(seq_along(groupBy), function(a) {
+lapply(seq_along(groupBy), function(a) {
     if (groupBy[[a]] == "ident") {
         label <- TRUE
     } else {
