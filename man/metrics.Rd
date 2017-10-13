@@ -8,7 +8,7 @@
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{bcbioSingleCell}(object, filterCells = FALSE,
+\S4method{metrics}{bcbioSingleCell}(object, filterCells = TRUE,
   aggregateReplicates = TRUE)
 
 \S4method{metrics}{seurat}(object)

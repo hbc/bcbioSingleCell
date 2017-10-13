@@ -9,7 +9,7 @@
 plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{bcbioSingleCellANY}(object,
-  interestingGroups = "sampleName", filterCells = FALSE,
+  interestingGroups = "sampleName", filterCells = TRUE,
   aggregateReplicates = TRUE)
 }
 \arguments{

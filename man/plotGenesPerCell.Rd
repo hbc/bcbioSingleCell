@@ -9,7 +9,7 @@
 plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{bcbioSingleCellANY}(object, interestingGroups, min,
-  max, filterCells = FALSE, aggregateReplicates = TRUE)
+  max, filterCells = TRUE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}

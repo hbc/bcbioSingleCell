@@ -9,7 +9,7 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{bcbioSingleCellANY}(object, interestingGroups,
-  filterCells = FALSE, aggregateReplicates = TRUE)
+  filterCells = TRUE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}
