@@ -31,7 +31,7 @@ NULL
 #' @return [tibble] grouped by `sampleName` containing `log10Count` values.
 .rawCBTibble <- function(
     object,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     cellularBarcodes <- bcbio(object, "cellularBarcodes")
     if (is.null(cellularBarcodes)) {
@@ -306,7 +306,7 @@ NULL
 .plotReadsPerCell <- function(
     object,
     interestingGroups = "sampleName",
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (metadata(object)[["pipeline"]] != "bcbio") {
         warning(paste(

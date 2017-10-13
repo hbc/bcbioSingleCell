@@ -76,7 +76,7 @@ NULL
 #' @export
 setMethod("metrics", "bcbioSingleCell", function(
     object,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (isTRUE(filterCells)) {
         cells <- metadata(object)[["filterCells"]]

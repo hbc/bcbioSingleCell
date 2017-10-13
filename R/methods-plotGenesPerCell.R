@@ -22,7 +22,7 @@ NULL
     interestingGroups = "sampleName",
     min = 0,
     max = Inf,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -120,7 +120,7 @@ NULL
     interestingGroups = "sampleName",
     min = 0,
     max = Inf,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -183,7 +183,7 @@ NULL
     interestingGroups,
     min,
     max,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (missing(interestingGroups)) {
         interestingGroups <-

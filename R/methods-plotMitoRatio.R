@@ -15,7 +15,7 @@ NULL
     object,
     interestingGroups = "sampleName",
     max = 1,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -108,7 +108,7 @@ NULL
     object,
     interestingGroups = "sampleName",
     max = 1,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -164,7 +164,7 @@ NULL
 .plotMitoRatioScatterplot <- function(
     object,
     interestingGroups = "sampleName",
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -248,7 +248,7 @@ NULL
     object,
     interestingGroups,
     max,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (missing(interestingGroups)) {
         interestingGroups <-

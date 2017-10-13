@@ -14,7 +14,7 @@ NULL
 .plotCellCounts <- function(
     object,
     interestingGroups,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (missing(interestingGroups)) {
         interestingGroups <-

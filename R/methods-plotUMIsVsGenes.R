@@ -14,7 +14,7 @@ NULL
 .plotUMIsVsGenes <- function(
     object,
     interestingGroups = "sampleName",
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
