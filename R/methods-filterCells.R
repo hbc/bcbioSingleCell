@@ -84,7 +84,7 @@ NULL
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
     }
     if (!nrow(metrics)) {
-        stop("No cellular barcodes passed filtering")
+        stop("No cellular barcodes passed filtering", call. = FALSE)
     }
     message(paste(
         nrow(metrics),
