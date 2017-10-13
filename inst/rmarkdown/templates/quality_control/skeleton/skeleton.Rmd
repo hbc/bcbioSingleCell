@@ -61,21 +61,24 @@ We aligned the counts using the latest transcriptome FASTA from [Ensembl][].
 These are counts of how many reads are assigned to a given cellular barcode. The purpose of these histograms is that we should see one single large peak that represents cells that were encapsulated. If we see a strong shoulder, or a bimodal distribution of the cells, that can indicate a couple problems. It might be that there is free floating RNA, which happens when cells are dying. It could also be that there are a set of cells that failed for some reason. Finally, it could also be that there are biologically different types of cells, and one type is much smaller than the other. If this is the case we would expect to see less RNA being sequenced from the smaller cells.
 
 ```{r plot_reads_per_cell, fig.height=12, fig.width=8}
-plotReadsPerCell(bcb)
+plotReadsPerCell(bcb, filterCells = FALSE)
 ```
 
 
 ## Cell counts
 
 ```{r plot_cell_counts}
-plotCellCounts(bcb)
+plotCellCounts(bcb, filterCells = FALSE)
 ```
 
 
 ## UMI counts per cell
 
 ```{r plot_umis_per_cell, fig.height=12, fig.width=8}
-plotUMIsPerCell(bcb, min = params$minUMIs)
+plotUMIsPerCell(
+    bcb,
+    filterCells = FALSE,
+    min = params$minUMIs)
 ```
 
 
@@ -84,7 +87,11 @@ plotUMIsPerCell(bcb, min = params$minUMIs)
 Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for [inDrop][] analysis.
 
 ```{r plot_genes_per_cell, fig.height=12, fig.width=8}
-plotGenesPerCell(bcb, min = params$minGenes, max = params$maxGenes)
+plotGenesPerCell(
+    bcb,
+    filterCells = FALSE,
+    min = params$minGenes,
+    max = params$maxGenes)
 ```
 
 
@@ -93,7 +100,7 @@ plotGenesPerCell(bcb, min = params$minGenes, max = params$maxGenes)
 If we graph out the total number of UMI counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
 
 ```{r plot_umis_vs_genes}
-plotUMIsVsGenes(bcb)
+plotUMIsVsGenes(bcb, filterCells = FALSE)
 ```
 
 
@@ -102,7 +109,10 @@ plotUMIsVsGenes(bcb)
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
 
 ```{r plot_mito_ratio, fig.height=16, fig.width=8}
-plotMitoRatio(bcb, max = params$maxMitoRatio)
+plotMitoRatio(
+    bcb,
+    filterCells = FALSE,
+    max = params$maxMitoRatio)
 ```
 
 
@@ -111,7 +121,10 @@ plotMitoRatio(bcb, max = params$maxMitoRatio)
 Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
 
 ```{r plot_novelty, fig.height=12, fig.width=8}
-plotNovelty(bcb, min = params$minNovelty)
+plotNovelty(
+    bcb,
+    filterCells = FALSE,
+    min = params$minNovelty)
 ```
 
 
