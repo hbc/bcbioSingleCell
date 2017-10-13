@@ -32,7 +32,10 @@ bcb <- get(bcbName, inherits = FALSE)
 
 # Back up all data inside bcbio object
 flatFiles <- flatFiles(bcb)
-saveData(flatFiles, dir = dataDir)
+assignAndSaveData(
+    name = paste0(bcbName, "FlatFiles"),
+    object = flatFiles,
+    dir = dataDir)
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
