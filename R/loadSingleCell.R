@@ -198,7 +198,7 @@ loadSingleCell <- function(
         warning(paste(
             "GFF/GTF file matching transcriptome FASTA is advised.",
             "Using tx2gene mappings from Ensembl as a fallback."
-        ))
+        ), call. = FALSE)
         tx2gene <- annotable(
             genomeBuild,
             format = "tx2gene",
