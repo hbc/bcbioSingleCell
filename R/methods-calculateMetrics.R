@@ -47,14 +47,9 @@ NULL
 
     if (length(missing) > 0) {
         warning(paste(
-            paste(
-                length(missing),
-                "genes",
-                paste0("(", pct(length(missing) / ncol(object)), ")"),
-                "missing in annotable used to calculate metrics:"
-            ),
-            toString(missing),
-            sep = "\n"
+            length(missing),
+            "genes missing in annotable used to calculate metrics",
+            paste0("(", pct(length(missing) / ncol(object)), ")")
         ), call. = FALSE)
     }
 
