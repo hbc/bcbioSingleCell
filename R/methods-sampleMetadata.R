@@ -30,7 +30,7 @@ setMethod(
                 # sample metadata. Now `description` is used for multiplexed
                 # samples in QC plots.
                 meta[["description"]] <- str_match(
-                    meta$sampleID,
+                    meta[["sampleID"]],
                     pattern = "^(.+)_[ACGT]+$") %>%
                     .[, 2]
             } else {
