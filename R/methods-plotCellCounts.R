@@ -11,6 +11,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_fill_viridis
 .plotCellCounts <- function(
     object,
     interestingGroups,

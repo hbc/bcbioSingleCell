@@ -11,6 +11,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_fill_viridis
 .plotMitoRatioBoxplot <- function(
     object,
     interestingGroups = "sampleName",
@@ -104,6 +105,7 @@ NULL
 
 
 
+#' @importFrom ggridges geom_density_ridges
 .plotMitoRatioRidgeline <- function(
     object,
     interestingGroups = "sampleName",
@@ -161,6 +163,7 @@ NULL
 
 
 
+#' @importFrom viridis scale_color_viridis
 .plotMitoRatioScatterplot <- function(
     object,
     interestingGroups = "sampleName",
@@ -244,6 +247,7 @@ NULL
 
 
 
+#' @importFrom cowplot plot_grid
 .plotMitoRatio <- function(
     object,
     interestingGroups,

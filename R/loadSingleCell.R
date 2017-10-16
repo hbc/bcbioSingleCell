@@ -1,10 +1,22 @@
 #' Load bcbio Single-Cell RNA-Seq Data
 #'
-#' @author Michael Steinbaugh, Rory Kirchner
-#'
 #' @note When working in RStudio, we recommend connecting to the bcbio-nextgen
 #'   run directory as a remote connection over
 #'   [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
+#'
+#' @author Michael Steinbaugh, Rory Kirchner
+#'
+#' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
+#'   prepareSummarizedExperiment readDataVersions readGTF readLogFile
+#'   readProgramVersions readSampleMetadataFile readYAML sampleYAMLMetadata
+#'   tx2geneFromGTF
+#' @importFrom dplyr filter left_join mutate pull select
+#' @importFrom Matrix cBind
+#' @importFrom pbapply pblapply
+#' @importFrom stats na.omit setNames
+#' @importFrom stringr str_match
+#' @importFrom tibble column_to_rownames rownames_to_column
+#' @importFrom utils packageVersion
 #'
 #' @param uploadDir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
@@ -71,7 +83,7 @@ loadSingleCell <- function(
 
     # Sequencing lanes ====
     lanePattern <- "_L(\\d{3})"
-    if (any(str_detect(sampleDirs, lanePattern))) {
+    if (any(grepl(x = sampleDirs, pattern = lanePattern))) {
         lanes <- str_match(names(sampleDirs), lanePattern) %>%
             .[, 2] %>%
             unique() %>%
@@ -115,7 +127,7 @@ loadSingleCell <- function(
         # Data versions aren't saved when using a custom FASTA
         # Remove this in a future update
         genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
-        if (any(str_detect(bcbioCommandsLog, genomePattern))) {
+        if (any(grepl(x = bcbioCommandsLog, pattern = genomePattern))) {
             genomeBuild <-
                 str_match(bcbioCommandsLog, genomePattern) %>%
                 .[, 2] %>%
@@ -134,12 +146,14 @@ loadSingleCell <- function(
 
     # Molecular barcode (UMI) type ====
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
-    if (any(str_detect(bcbioCommandsLog, umiPattern))) {
+    if (any(grepl(x = bcbioCommandsLog, pattern = umiPattern))) {
         umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
             .[, 2] %>%
             na.omit() %>%
             unique() %>%
-            str_replace("-transform", "")
+            gsub(x = .,
+                 pattern = "-transform",
+                 replacement = "")
         message(paste("UMI type:", umiType))
     } else {
         stop("Failed to detect UMI type from JSON file", call. = FALSE)
@@ -148,7 +162,7 @@ loadSingleCell <- function(
     # Multiplexed FASTQ ====
     # This value determines how we assign sampleIDs and downstream plot
     # appearance in the quality control analysis
-    if (str_detect(umiType, "indrop")) {
+    if (grepl(x = umiType, pattern = "indrop")) {
         multiplexedFASTQ <- TRUE
     } else {
         multiplexedFASTQ <- FALSE
@@ -191,7 +205,7 @@ loadSingleCell <- function(
     # tx2gene and gene2symbol annotations ====
     if (!is.null(gtfFile)) {
         gtfFile <- normalizePath(gtfFile)
-        gtf <- readGFF(gtfFile)
+        gtf <- readGTF(gtfFile)
         tx2gene <- tx2geneFromGTF(gtf)
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else {

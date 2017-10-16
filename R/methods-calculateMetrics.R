@@ -18,7 +18,15 @@ NULL
 
 
 # Constructors ====
+#' Calculate Metrics from Sparse Counts Matrix
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @importFrom basejump pct
+#' @importFrom dplyr filter mutate pull
 #' @importFrom Matrix colSums
+#' @importFrom tibble column_to_rownames tibble
 .calculateMetricsSparse <- function(
     object,
     annotable,
@@ -117,6 +125,8 @@ setMethod(
 
 
 #' @rdname calculateMetrics
+#' @importFrom S4Vectors metadata
+#' @importFrom SummarizedExperiment assay
 #' @export
 setMethod(
     "calculateMetrics",

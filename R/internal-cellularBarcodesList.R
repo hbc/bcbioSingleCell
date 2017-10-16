@@ -4,6 +4,9 @@
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom pbapply pblapply
+#' @importFrom stats setNames
+#'
 #' @param sampleDirs Sample directories.
 #'
 #' @return [list].

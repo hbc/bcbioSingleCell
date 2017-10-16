@@ -17,6 +17,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom magrittr set_rownames
 .counts <- function(
     object,
     gene2symbol = FALSE,

@@ -16,6 +16,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom rlang syms !!!
 .readMarkers <- function(object, gene2symbol) {
     if (!is.data.frame(gene2symbol)) {
         stop("gene2symbol must be data.frame")

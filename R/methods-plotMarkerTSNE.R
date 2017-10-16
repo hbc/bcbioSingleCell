@@ -41,6 +41,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_color_viridis
 .plotMarkerTSNE <- function(
     tibble,
     colorpoints = "geomean",

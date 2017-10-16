@@ -21,6 +21,8 @@ NULL
 
 
 # Constructors ====
+#' @importFrom dplyr slice
+#' @importFrom tibble column_to_rownames
 .topBarcodes <- function(object, n = 10) {
     metrics <- metrics(object) %>%
         as("tibble")

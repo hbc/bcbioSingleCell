@@ -13,6 +13,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_fill_viridis
 .plotNoveltyBoxplot <- function(
     object,
     interestingGroups = "sampleName",
@@ -102,6 +103,7 @@ NULL
 
 
 
+#' @importFrom ggridges geom_density_ridges
 .plotNoveltyRidgeline <- function(
     object,
     interestingGroups = "sampleName",
@@ -159,6 +161,7 @@ NULL
 
 
 
+#' @importFrom cowplot plot_grid
 .plotNovelty <- function(
     object,
     interestingGroups,

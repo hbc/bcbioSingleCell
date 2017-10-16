@@ -18,6 +18,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_fill_viridis
 .plotGenesPerCellBoxplot <- function(
     object,
     interestingGroups = "sampleName",
@@ -116,6 +117,7 @@ NULL
 
 
 
+#' @importFrom ggridges geom_density_ridges
 .plotGenesPerCellRidgeline <- function(
     object,
     interestingGroups = "sampleName",
@@ -179,6 +181,7 @@ NULL
 
 
 
+#' @importFrom cowplot plot_grid
 .plotGenesPerCell <- function(
     object,
     interestingGroups,

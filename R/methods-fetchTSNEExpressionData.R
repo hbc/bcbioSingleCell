@@ -27,14 +27,19 @@ NULL
 
 # Methods ====
 #' @rdname fetchTSNEExpressionData
+#' @importFrom dplyr left_join
+#' @importFrom Matrix colMeans
+#' @importFrom Seurat FetchData
+#' @importFrom tibble rownames_to_column
+#' @importFrom tidyr gather
 #' @export
 setMethod(
     "fetchTSNEExpressionData",
     signature("seurat"), function(
         object, genes) {
-        dat <- FetchData(object, vars.all = genes) %>%
+        dat <- Seurat::FetchData(object, vars.all = genes) %>%
             as.data.frame()
-        dat[["geomean"]] <- colMeans(t(dat))
+        dat[["geomean"]] <- Matrix::colMeans(t(dat))
         dat <- dat %>%
             rownames_to_column("cell")
         fetchTSNEData(object) %>%

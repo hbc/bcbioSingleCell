@@ -22,6 +22,9 @@ NULL
 # Constructors ====
 #' Metrics Constructor
 #'
+#' @importFrom magrittr set_colnames
+#' @importFrom tibble column_to_rownames
+#'
 #' @inheritParams AllGenerics
 #' @param filterCells Return only metrics for the filtered cells.
 #'

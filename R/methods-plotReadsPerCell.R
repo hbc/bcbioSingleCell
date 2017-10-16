@@ -70,6 +70,9 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom parallel mclapply
+#' @importFrom tibble tibble
+#'
 #' @param rawTibble [.rawCBTibble()] return.
 #' @param sampleMetadata [sampleMetadata()] return with `sampleName` columns
 #'   that match the `rawTibble`.
@@ -114,6 +117,8 @@ NULL
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
+#'
+#' @importFrom viridis scale_fill_viridis
 #'
 #' @inheritParams plotReadsPerCell
 #'
@@ -180,6 +185,8 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom ggridges geom_density_ridges
+#'
 #' @inheritParams plotReadsPerCell
 #'
 #' @return [ggplot].
@@ -245,6 +252,8 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom viridis scale_color_viridis
+#'
 #' @inheritParams plotReadsPerCell
 #'
 #' @return [ggplot].
@@ -302,6 +311,9 @@ NULL
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
+#'
+#' @importFrom cowplot draw_plot ggdraw
+#'
 #' @inherit plotReadsPerCell
 .plotReadsPerCell <- function(
     object,

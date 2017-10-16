@@ -13,6 +13,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_fill_viridis
 .plotUMIsPerCellBoxplot <- function(
     object,
     interestingGroups = "sampleName",
@@ -105,6 +106,7 @@ NULL
 
 
 
+#' @importFrom ggridges geom_density_ridges
 .plotUMIsPerCellRidgeline <- function(
     object,
     interestingGroups = "sampleName",
@@ -162,6 +164,7 @@ NULL
 
 
 
+#' @importFrom cowplot plot_grid
 .plotUMIsPerCell <- function(
     object,
     interestingGroups,

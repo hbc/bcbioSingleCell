@@ -1,11 +1,11 @@
 #' Heatmap with Quantile Breaks
 #'
+#' @details This is helpful for more usefully visualizing single cell data.
+#'   Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
+#'
 #' @rdname quantileHeatmap
 #' @name quantileHeatmap
 #' @author Rory Kirchner
-#'
-#' @details This is helpful for more usefully visualizing single cell data.
-#'   Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 #'
 #' @inheritParams AllGenerics
 #'
@@ -22,11 +22,15 @@ NULL
 # Constructors ====
 #' Create Breaks Based on Quantiles of the Data
 #'
+#' @keywords internal
+#' @noRd
+#'
+#' @importFrom stats quantile
+#'
 #' @param xs Numeric vector.
 #' @param n The number of breaks to create.
 #'
 #' @return A vector of `n` quantile breaks.
-#' @noRd
 .quantileBreaks <- function(xs, n = 10) {
     xs %>%
         quantile(probs = seq(0, 1, length.out = n)) %>%
@@ -35,6 +39,15 @@ NULL
 
 
 
+#' Quantile Heatmap Constructor
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @importFrom dendsort dendsort
+#' @importFrom pheatmap pheatmap
+#' @importFrom stats dist hclust
+#' @importFrom viridis inferno
 .quantileHeatmap <- function(
     object,
     annotation = NA,
@@ -97,7 +110,7 @@ setMethod(
         clusterCols = TRUE) {
         # Use the raw counts
         .quantileHeatmap(
-            object@raw.data,
+            slot(object, "raw.data"),
             annotation = annotation,
             clusterRows = clusterRows,
             clusterCols = clusterCols)

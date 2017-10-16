@@ -31,6 +31,8 @@ NULL
 
 
 # Constructors ====
+#' @importFrom magrittr set_rownames
+#' @importFrom rlang is_string
 .selectSamples <- function(object, ...) {
     sampleMetadata <- sampleMetadata(object)
     patterns <- list(...)

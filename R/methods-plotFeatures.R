@@ -16,6 +16,7 @@ NULL
 
 # Methods ====
 #' @rdname plotFeatures
+#' @importFrom Seurat FeaturePlot
 #' @export
 setMethod("plotFeatures", "seurat", function(object, features) {
     Seurat::FeaturePlot(

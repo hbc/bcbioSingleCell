@@ -1,7 +1,10 @@
+#' @importFrom ggplot2 unit
+#' @importFrom viridis inferno
+
 bins <- 200
 
 lineColor <- "black"
-qcColors <- inferno(3)
+qcColors <- viridis::inferno(3)
 
 # Quality control plot colors
 qcPassColor <- qcColors[[1]]
@@ -17,7 +20,7 @@ qcLabelAlpha <- 0.75
 qcLabelColor <- "white"
 qcLabelFill <- "black"
 qcLabelFontface <- "bold"
-qcLabelPadding <- unit(0.2, "lines")
+qcLabelPadding <- ggplot2::unit(0.2, "lines")
 qcLabelSize <- NA
 
 # Maximum number of samples to label in a bar or boxplot
@@ -34,6 +37,7 @@ labelSep <- ": "
 
 
 # Internal functions ====
+#' @importFrom ggplot2 geom_hline geom_vline
 .qcCutoffLine <- function(xintercept, yintercept) {
     if (!missing(xintercept)) {
         geom_vline(

@@ -40,6 +40,11 @@ NULL
 
 
 # Constructors ====
+#' @importFrom basejump mdHeader mdList
+#' @importFrom Matrix rowSums
+#' @importFrom S4Vectors metadata
+#' @importFrom SummarizedExperiment assay
+#' @importFrom tibble rownames_to_column
 .filterCells <- function(
     object,
     aggregateReplicates = TRUE,

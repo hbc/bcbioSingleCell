@@ -20,6 +20,8 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom Matrix.utils aggregate.Matrix
+#'
 #' @param sparse Sparse counts matrix (e.g. `dgCMatrix`).
 #' @param cellids Cellular barcode identifiers.
 #'
@@ -42,6 +44,6 @@ setMethod(
     signature("bcbioSingleCell"),
     function(object) {
         stop("Draft function", call. = FALSE)
-        # Reslot the counts into assay and then update the object
-        # TODO Slot `sampleNameAggregate` into `sampleMetadata()`
+        # Reslot the counts into assay and then update the object.
+        # Slot `sampleNameAggregate` into `sampleMetadata()`.
     })

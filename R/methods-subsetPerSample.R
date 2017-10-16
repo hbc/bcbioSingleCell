@@ -5,6 +5,8 @@
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
+#' @importFrom pbapply pblapply
+#'
 #' @inheritParams AllGenerics
 #'
 #' @param minCells Minimum number of cells required per sample.
@@ -28,7 +30,7 @@ setMethod(
         dir.create(dir, recursive = TRUE, showWarnings = FALSE)
         sampleIDs <- sampleMetadata(object) %>%
             pull("sampleID")
-        pbsapply(seq_along(sampleIDs), function(a) {
+        pblapply(seq_along(sampleIDs), function(a) {
             sampleID <- sampleIDs[[a]]
             subset <- selectSamples(
                 object,

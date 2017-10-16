@@ -8,6 +8,15 @@
 #'
 #' @author Michael Steinbaugh
 #'
+#' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
+#'   prepareSummarizedExperiment readGTF readSampleMetadataFile
+#' @importFrom jsonlite read_json
+#' @importFrom Matrix cBind
+#' @importFrom pbapply pblapply
+#' @importFrom stats setNames
+#' @importFrom stringr str_split
+#' @importFrom utils packageVersion
+#'
 #' @inherit loadSingleCell
 #'
 #' @param uploadDir Path to CellRanger output directory. This directory path
