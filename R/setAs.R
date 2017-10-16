@@ -130,16 +130,15 @@ NULL
         minGenes <- 0
     }
     minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
-    if (is.null(minCellsPerGene)) {
+    if (is.null(minCells)) {
         minCells <- 0
     }
     metadata <- metrics(
         from,
         aggregateReplicates = FALSE,
         filterCells = FALSE)
-    # TODO Add a call to `aggregateReplicates()` here to combine the counts
-    # per sample before passing to Seurat, if technical replicates are
-    # present?
+    # Add a call to `aggregateReplicates()` here to combine the counts per
+    # sample before passing to Seurat, if technical replicates are present?
     seurat <- CreateSeuratObject(
         raw.data = rawData,
         project = "bcbioSingleCell",
