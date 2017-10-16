@@ -13,6 +13,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom Matrix colSums
 .plotZerosVsDepth <- function(object) {
     counts <- assay(object)
     metrics <- metrics(object)
