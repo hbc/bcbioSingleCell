@@ -39,7 +39,6 @@ Imports:
     parallel,
     pbapply,
     pheatmap,
-    readr,
     rlang,
     S4Vectors,
     scales,

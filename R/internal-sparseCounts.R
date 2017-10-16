@@ -132,7 +132,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @importFrom dplyr bind_rows
-#' @importFrom Matrix aggregate.Matrix
+#' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom magrittr set_rownames
 #' @importFrom tibble remove_rownames
 #'
