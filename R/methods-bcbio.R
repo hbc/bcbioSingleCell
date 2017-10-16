@@ -5,6 +5,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param type Type of count data to retrieve.
 #'
 #' @return [bcbioSingleCell].

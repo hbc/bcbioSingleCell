@@ -9,6 +9,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inherit loadSingleCell
+#'
 #' @param uploadDir Path to CellRanger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices/` as a child.
 #' @param refDataDir Directory path to cellranger reference annotation data.

@@ -7,6 +7,7 @@
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
+#'
 #' @param interestingGroups Interesting group, to use for colors.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.

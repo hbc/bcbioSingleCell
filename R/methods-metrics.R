@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param filterCells Show only the cells that have passed filtering cutoffs.
 #' @param aggregateReplicates Aggregate technical replicates, if specified. This
 #'   function uses values assigned in the `sampleNameAggregate` column of the

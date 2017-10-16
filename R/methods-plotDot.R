@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param genes Character vector of gene symbols.
 #' @param colors Named character vector (`low`, `high`) for plot colors.
 #' @param colMin Minimum scaled average expression threshold. Everything

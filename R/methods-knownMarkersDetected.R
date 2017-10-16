@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param all [Seurat::FindAllMarkers()] return.
 #' @param known Known markers [data.frame] imported by [readMarkers()] or
 #'   pulled from internal [cellCycleMarkers] object.

@@ -15,6 +15,7 @@
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams plotMarkerTSNE
+#'
 #' @param headerLevel Include a Markdown header for each gene.
 #'
 #' @return No value, only graphical output.

@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param n Number of barcodes to return per sample.
 #'
 #' @return [data.frame]

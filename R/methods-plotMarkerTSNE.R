@@ -8,6 +8,7 @@
 #' @inheritParams AllGenerics
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
+#'
 #' @param colorpoints Color points by geometric mean or expression of
 #'  individual gene.
 #' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).

@@ -8,6 +8,7 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param interestingGroups Interesting group to use for plot colors.
 #' @param label Label the clusters on the plot.
 #'

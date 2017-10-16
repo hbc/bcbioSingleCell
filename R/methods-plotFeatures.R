@@ -5,6 +5,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param features Character vector of features (e.g. gene expression, PC
 #'   scores, number of genes detected).
 #'

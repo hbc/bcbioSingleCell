@@ -6,6 +6,7 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param annotable Annotable.
 #' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
 #'

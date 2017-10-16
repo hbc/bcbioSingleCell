@@ -9,6 +9,7 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param genes Genes (by symbol name) of which to get expression data.
 #'
 #' @return tidy [data.frame] of t-SNE points, cellular metadata, and gene
