@@ -43,7 +43,7 @@ Imports:
     rlang,
     S4Vectors,
     scales,
-    Seurat (>= 2.0.1),
+    Seurat (>= 2.1.0),
     stats,
     stringr,
     tibble,
