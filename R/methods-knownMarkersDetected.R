@@ -43,7 +43,7 @@ NULL
         stop("'all' and 'known' objects must contain 'ensgene' column")
     }
     # Check for `ensgene` overlap; avoid accidental organism mismatch
-    if (!any(known$ensgene %in% all$ensgene)) {
+    if (!any(known[["ensgene"]] %in% all[["ensgene"]])) {
         stop("No 'ensgene' intersect between 'all' and 'known'")
     }
     markers <- all %>%
@@ -55,7 +55,6 @@ NULL
                 decreasing = c(FALSE, FALSE, FALSE, TRUE)), , drop = FALSE] %>%
         group_by(!!sym("cell"))
     if (isTRUE(removePromiscuous)) {
-        # FIXME Need to update this step
         # Filter out promiscuous markers present in at least 5 clusters
         promiscuous <- markers %>%
             group_by(!!!syms(c("cell", "ensgene", "symbol"))) %>%
