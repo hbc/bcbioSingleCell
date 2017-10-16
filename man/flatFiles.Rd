@@ -8,6 +8,9 @@
 \usage{
 \S4method{flatFiles}{bcbioSingleCellANY}(object)
 }
+\arguments{
+\item{object}{Object.}
+}
 \value{
 \link{list}.
 }
