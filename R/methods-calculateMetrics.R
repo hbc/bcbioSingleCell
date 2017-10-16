@@ -18,6 +18,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom Matrix colSums
 .calculateMetricsSparse <- function(
     object,
     annotable,
@@ -38,15 +39,15 @@ NULL
 
     if (length(missing) > 0) {
         warning(paste(
-            length(missing),
-            "genes present in counts matrix but missing in annotable:",
-            toString(missing)
+            paste(
+                length(missing),
+                "genes",
+                paste0("(", pct(length(missing) / ncol(object)), ")"),
+                "missing in annotable used to calculate metrics:"
+            ),
+            toString(missing),
+            sep = "\n"
         ), call. = FALSE)
-    }
-
-    # Check for [Matrix::colSums()] methods support
-    if (!"colSums,dgCMatrix-method" %in% methods(colSums)) {
-        stop("'dgCMatrix' not supported in 'colSums()'", call. = FALSE)
     }
 
     # Obtain detected coding and mitochondrial genes, using annotable
@@ -64,18 +65,10 @@ NULL
     if (length(mitoGenesDetected) == 0) {
         warning("No mitochondrial genes detected", call. = FALSE)
     } else {
-        # Message which mitochondrial genes used for calculations
-        annotable %>%
-            .[.[["ensgene"]] %in% mitoGenesDetected, "symbol"] %>%
-            sort() %>%
-            toString() %>%
-            paste(
-                "Detected",
-                length(mitoGenesDetected),
-                "annotated mitochondrial genes;",
-                "used to calculate 'mitoRatio':",
-                .) %>%
-            message()
+        message(paste(
+            length(mitoGenesDetected),
+            "mitochondrial genes detected"
+        ))
     }
 
     metrics <- tibble(
@@ -101,7 +94,8 @@ NULL
             .[.[["nGene"]] > 0, ] %>%
             .[!is.na(.[["log10GenesPerUMI"]]), ]
         message(paste(
-            nrow(metrics), "cellular barcodes passed pre-filtering"
+            nrow(metrics), "cellular barcodes passed pre-filtering",
+            paste0("(", pct(nrow(metrics) / ncol(object)), ")")
         ))
     }
 
