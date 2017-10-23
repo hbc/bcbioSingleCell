@@ -3,12 +3,11 @@
 \docType{methods}
 \name{sampleMetadata}
 \alias{sampleMetadata}
-\alias{sampleMetadata,bcbioSingleCellANY-method}
+\alias{sampleMetadata,bcbioSingleCell-method}
 \alias{sampleMetadata,seurat-method}
 \title{Sample Metadata}
 \usage{
-\S4method{sampleMetadata}{bcbioSingleCellANY}(object,
-  aggregateReplicates = TRUE)
+\S4method{sampleMetadata}{bcbioSingleCell}(object, aggregateReplicates = TRUE)
 
 \S4method{sampleMetadata}{seurat}(object)
 }

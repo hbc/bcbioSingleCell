@@ -3,19 +3,29 @@
 \docType{methods}
 \name{aggregateFeatures}
 \alias{aggregateFeatures}
-\alias{aggregateFeatures,bcbioSingleCellANY-method}
+\alias{aggregateFeatures,bcbioSingleCell-method}
+\alias{aggregateFeatures,dgCMatrix-method}
+\alias{aggregateFeatures,dgTMatrix-method}
 \title{Aggregate Features}
 \usage{
 aggregateFeatures(object, ...)
 
-\S4method{aggregateFeatures}{bcbioSingleCellANY}(object)
+\S4method{aggregateFeatures}{bcbioSingleCell}(object, featureids)
+
+\S4method{aggregateFeatures}{dgCMatrix}(object, featureids)
+
+\S4method{aggregateFeatures}{dgTMatrix}(object, featureids)
 }
 \arguments{
-\item{object}{Object.}
+\item{object}{Sparse counts matrix (e.g. \link{dgCMatrix}).}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{featureids}{Feature identifiers (e.g. gene or transcript IDs).}
 }
 \value{
+\link{dgCMatrix}.
+
 \link{bcbioSingleCell}.
 }
 \description{
