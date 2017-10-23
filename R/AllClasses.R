@@ -67,11 +67,6 @@ setValidity("bcbioSCFiltered", function(object) TRUE)
 
 
 setClassUnion(
-    name = "bcbioSingleCellANY",
-    members = c("bcbioSingleCell",
-                "bcbioSCDataSet",
-                "bcbioSCFiltered"))
-setClassUnion(
     name = "bcbioSingleCellLegacy",
     members = c("bcbioSCDataSet",
                 "bcbioSCFiltered"))
