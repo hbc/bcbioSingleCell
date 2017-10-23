@@ -8,24 +8,19 @@
 #'
 #' @inheritParams AllGenerics
 #'
+#' @param object Sparse counts matrix (e.g. [dgCMatrix]).
+#' @param featureids Feature identifiers (e.g. gene or transcript IDs).
+#'
+#' @return [dgCMatrix].
+#'
 #' @return [bcbioSingleCell].
 NULL
 
 
 
 # Constructors ====
-#' Aggregate Features Constructor
-#'
-#' @author Rory Kirchner
-#'
 #' @importFrom Matrix.utils aggregate.Matrix
-#'
-#' @param sparse Sparse counts matrix (e.g. [dgCMatrix]).
-#' @param featureids Feature identifiers (e.g. gene or transcript IDs).
-#'
-#' @return [dgCMatrix].
-#' @noRd
-.aggregateFeatures <- function(sparse, featureids) {
+.aggregateSparseFeatures <- function(object, featureids) {
     rownames(sparse) <- featureids
     sparse <- sparse[!is.na(rownames(sparse)), , drop = FALSE]
     aggregate.Matrix(sparse, groupings = rownames(sparse), fun = "sum")
@@ -38,8 +33,32 @@ NULL
 #' @export
 setMethod(
     "aggregateFeatures",
-    signature("bcbioSingleCellANY"),
-    function(object) {
-        stop("Draft function", call. = FALSE)
-        # Reslot the counts into assay and then update the object
+    signature("bcbioSingleCell"),
+    function(object, featureids) {
+        warning(paste(
+            "Draft function.",
+            "Returning an aggregated counts matrix."),
+            call. = FALSE)
+        .aggregateSparseFeatures(
+            object = assay(object),
+            featureids = featureids
+        )
     })
+
+
+
+#' @rdname aggregateFeatures
+#' @export
+setMethod(
+    "aggregateFeatures",
+    signature("dgCMatrix"),
+    .aggregateSparseFeatures)
+
+
+
+#' @rdname aggregateFeatures
+#' @export
+setMethod(
+    "aggregateFeatures",
+    signature("dgTMatrix"),
+    .aggregateSparseFeatures)
