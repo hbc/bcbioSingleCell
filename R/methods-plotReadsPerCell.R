@@ -31,7 +31,7 @@ NULL
 #' @return [tibble] grouped by `sampleName` containing `log10Count` values.
 .rawCBTibble <- function(
     object,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     cellularBarcodes <- bcbio(object, "cellularBarcodes")
     if (is.null(cellularBarcodes)) {
@@ -69,6 +69,9 @@ NULL
 #' @author Rory Kirchner, Michael Steinbaugh
 #' @keywords internal
 #' @noRd
+#'
+#' @importFrom parallel mclapply
+#' @importFrom tibble tibble
 #'
 #' @param rawTibble [.rawCBTibble()] return.
 #' @param sampleMetadata [sampleMetadata()] return with `sampleName` columns
@@ -114,6 +117,8 @@ NULL
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
+#'
+#' @importFrom viridis scale_fill_viridis
 #'
 #' @inheritParams plotReadsPerCell
 #'
@@ -180,6 +185,8 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom ggridges geom_density_ridges
+#'
 #' @inheritParams plotReadsPerCell
 #'
 #' @return [ggplot].
@@ -245,6 +252,8 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom viridis scale_color_viridis
+#'
 #' @inheritParams plotReadsPerCell
 #'
 #' @return [ggplot].
@@ -302,11 +311,14 @@ NULL
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
+#'
+#' @importFrom cowplot draw_plot ggdraw
+#'
 #' @inherit plotReadsPerCell
 .plotReadsPerCell <- function(
     object,
     interestingGroups = "sampleName",
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (metadata(object)[["pipeline"]] != "bcbio") {
         warning(paste(

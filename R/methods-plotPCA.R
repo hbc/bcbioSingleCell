@@ -5,6 +5,8 @@
 #' @family PCA Utilities
 #' @author Michael Steinbaugh
 #'
+#' @importFrom BiocGenerics plotPCA
+#'
 #' @inherit plotTSNE
 #'
 #' @seealso [plotTSNE()].

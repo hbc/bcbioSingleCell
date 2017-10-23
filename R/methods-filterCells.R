@@ -10,6 +10,7 @@
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
+#'
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.
 #' @param maxGenes Maximum number of genes detected.
@@ -39,6 +40,11 @@ NULL
 
 
 # Constructors ====
+#' @importFrom basejump mdHeader mdList
+#' @importFrom Matrix rowSums
+#' @importFrom S4Vectors metadata
+#' @importFrom SummarizedExperiment assay
+#' @importFrom tibble rownames_to_column
 .filterCells <- function(
     object,
     aggregateReplicates = TRUE,
@@ -84,7 +90,7 @@ NULL
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
     }
     if (!nrow(metrics)) {
-        stop("No cellular barcodes passed filtering")
+        stop("No cellular barcodes passed filtering", call. = FALSE)
     }
     message(paste(
         nrow(metrics),

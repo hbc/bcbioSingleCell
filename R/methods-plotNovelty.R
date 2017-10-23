@@ -13,11 +13,12 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_fill_viridis
 .plotNoveltyBoxplot <- function(
     object,
     interestingGroups = "sampleName",
     min = 0,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -102,11 +103,12 @@ NULL
 
 
 
+#' @importFrom ggridges geom_density_ridges
 .plotNoveltyRidgeline <- function(
     object,
     interestingGroups = "sampleName",
     min = 0,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -159,11 +161,12 @@ NULL
 
 
 
+#' @importFrom cowplot plot_grid
 .plotNovelty <- function(
     object,
     interestingGroups,
     min,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (missing(interestingGroups)) {
         interestingGroups <-

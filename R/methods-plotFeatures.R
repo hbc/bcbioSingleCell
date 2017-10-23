@@ -5,6 +5,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param features Character vector of features (e.g. gene expression, PC
 #'   scores, number of genes detected).
 #'
@@ -15,6 +16,7 @@ NULL
 
 # Methods ====
 #' @rdname plotFeatures
+#' @importFrom Seurat FeaturePlot
 #' @export
 setMethod("plotFeatures", "seurat", function(object, features) {
     Seurat::FeaturePlot(

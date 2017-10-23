@@ -6,6 +6,7 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param annotable Annotable.
 #' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
 #'
@@ -17,6 +18,15 @@ NULL
 
 
 # Constructors ====
+#' Calculate Metrics from Sparse Counts Matrix
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @importFrom basejump pct
+#' @importFrom dplyr filter mutate pull
+#' @importFrom Matrix colSums
+#' @importFrom tibble column_to_rownames tibble
 .calculateMetricsSparse <- function(
     object,
     annotable,
@@ -38,14 +48,9 @@ NULL
     if (length(missing) > 0) {
         warning(paste(
             length(missing),
-            "genes present in counts matrix but missing in annotable:",
-            toString(missing)
+            "genes missing in annotable used to calculate metrics",
+            paste0("(", pct(length(missing) / ncol(object)), ")")
         ), call. = FALSE)
-    }
-
-    # Check for [Matrix::colSums()] methods support
-    if (!"colSums,dgCMatrix-method" %in% methods(colSums)) {
-        stop("'dgCMatrix' not supported in 'colSums()'", call. = FALSE)
     }
 
     # Obtain detected coding and mitochondrial genes, using annotable
@@ -63,18 +68,10 @@ NULL
     if (length(mitoGenesDetected) == 0) {
         warning("No mitochondrial genes detected", call. = FALSE)
     } else {
-        # Message which mitochondrial genes used for calculations
-        annotable %>%
-            .[.[["ensgene"]] %in% mitoGenesDetected, "symbol"] %>%
-            sort() %>%
-            toString() %>%
-            paste(
-                "Detected",
-                length(mitoGenesDetected),
-                "annotated mitochondrial genes;",
-                "used to calculate 'mitoRatio':",
-                .) %>%
-            message()
+        message(paste(
+            length(mitoGenesDetected),
+            "mitochondrial genes detected"
+        ))
     }
 
     metrics <- tibble(
@@ -100,7 +97,8 @@ NULL
             .[.[["nGene"]] > 0, ] %>%
             .[!is.na(.[["log10GenesPerUMI"]]), ]
         message(paste(
-            nrow(metrics), "cellular barcodes passed pre-filtering"
+            nrow(metrics), "cellular barcodes passed pre-filtering",
+            paste0("(", pct(nrow(metrics) / ncol(object)), ")")
         ))
     }
 
@@ -122,6 +120,8 @@ setMethod(
 
 
 #' @rdname calculateMetrics
+#' @importFrom S4Vectors metadata
+#' @importFrom SummarizedExperiment assay
 #' @export
 setMethod(
     "calculateMetrics",

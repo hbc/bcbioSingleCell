@@ -2,7 +2,7 @@ template:
   params:
     bootswatch: readable
 authors:
-  Michael J. Steinbaugh:
+  Michael Steinbaugh:
     href: http://steinbaugh.com
   Rory Kirchner:
     href: https://github.com/roryk

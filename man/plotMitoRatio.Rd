@@ -9,7 +9,7 @@
 plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{bcbioSingleCellANY}(object, interestingGroups, max,
-  filterCells = FALSE, aggregateReplicates = TRUE)
+  filterCells = TRUE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}

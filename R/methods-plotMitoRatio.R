@@ -11,11 +11,12 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_fill_viridis
 .plotMitoRatioBoxplot <- function(
     object,
     interestingGroups = "sampleName",
     max = 1,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -104,11 +105,12 @@ NULL
 
 
 
+#' @importFrom ggridges geom_density_ridges
 .plotMitoRatioRidgeline <- function(
     object,
     interestingGroups = "sampleName",
     max = 1,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -161,10 +163,11 @@ NULL
 
 
 
+#' @importFrom viridis scale_color_viridis
 .plotMitoRatioScatterplot <- function(
     object,
     interestingGroups = "sampleName",
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -244,11 +247,12 @@ NULL
 
 
 
+#' @importFrom cowplot plot_grid
 .plotMitoRatio <- function(
     object,
     interestingGroups,
     max,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (missing(interestingGroups)) {
         interestingGroups <-

@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param genes Character vector of gene symbols.
 #' @param colors Named character vector (`low`, `high`) for plot colors.
 #' @param colMin Minimum scaled average expression threshold. Everything
@@ -56,6 +57,13 @@ NULL
 
 # Methods ====
 #' @rdname plotDot
+#' @importFrom dplyr group_by mutate summarize ungroup
+#' @importFrom ggplot2 aes_string geom_point labs scale_color_gradient
+#'   scale_radius
+#' @importFrom Seurat FetchData
+#' @importFrom tibble rownames_to_column
+#' @importFrom rlang syms !!!
+#' @importFrom tidyr gather
 #' @export
 setMethod("plotDot", "seurat", function(
     object,
@@ -65,7 +73,7 @@ setMethod("plotDot", "seurat", function(
     colMax = 2.5,
     dotMin = 0,
     dotScale = 6) {
-    data <- FetchData(object, vars.all = genes) %>%
+    data <- Seurat::FetchData(object, vars.all = genes) %>%
         as.data.frame() %>%
         rownames_to_column("cell") %>%
         mutate(ident = object@ident) %>%

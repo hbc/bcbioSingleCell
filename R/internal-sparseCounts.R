@@ -11,6 +11,9 @@
 #' @note bcbio-nextgen outputs counts at transcript level. 10X Chromium
 #'   CellRanger outputs counts at gene level.
 #'
+#' @importFrom basejump readFileByExtension
+#' @importFrom dplyr pull
+#'
 #' @author Michael Steinbaugh
 #'
 #' @param sampleDir Named character vector of sample directory containing the
@@ -28,7 +31,8 @@
     pipeline = "bcbio") {
     sampleName <- names(sampleDir)
     if (is.null(sampleName)) {
-        stop("Sample directory must be passed in as a named character vector")
+        stop("Sample directory must be passed in as a named character vector",
+             call. = FALSE)
     }
     message(sampleName)
     if (pipeline == "bcbio") {
@@ -37,24 +41,26 @@
         colFile <- paste0(matrixFile, ".colnames")  # barcodes
         rowFile <- paste0(matrixFile, ".rownames")  # transcripts
     } else if (pipeline == "cellranger") {
-        filteredDir <- file.path(sampleDir,
-                                 "outs",
-                                 "filtered_gene_bc_matrices")
-        matrixFile <- list.files(filteredDir,
-                                 pattern = "matrix.mtx",
-                                 full.names = TRUE,
-                                 recursive = TRUE)
+        filteredDir <- file.path(
+            sampleDir,
+            "outs",
+            "filtered_gene_bc_matrices")
+        matrixFile <- list.files(
+            filteredDir,
+            pattern = "matrix.mtx",
+            full.names = TRUE,
+            recursive = TRUE)
         colFile <- dirname(matrixFile) %>%
             file.path("barcodes.tsv")
         rowFile <- dirname(matrixFile) %>%
             file.path("genes.tsv")
     } else {
-        stop("Unsupported pipeline")
+        stop("Unsupported pipeline", call. = FALSE)
     }
 
     # Check that all files exist
     if (!all(file.exists(matrixFile, colFile, rowFile))) {
-        stop("Missing MatrixMarket file")
+        stop("Missing MatrixMarket file", call. = FALSE)
     }
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
@@ -63,7 +69,9 @@
     if (pipeline == "bcbio") {
         colnames(sparseCounts) <-
             readFileByExtension(colFile) %>%
-            str_replace_all("-", "_")
+            gsub(x = .,
+                 pattern = "-",
+                 replacement = "_")
         rownames(sparseCounts) <-
             readFileByExtension(rowFile)
     } else if (pipeline == "cellranger") {
@@ -74,7 +82,9 @@
                 col_names = "cellularBarcode",
                 col_types = "c") %>%
             pull("cellularBarcode") %>%
-            str_replace_all("-", "_")
+            gsub(x = .,
+                 pattern = "-",
+                 replacement = "_")
         rownames(sparseCounts) <-
             readFileByExtension(
                 rowFile,
@@ -86,25 +96,29 @@
     # Cellular barcode sanitization =====
     # CellRanger outputs unnecessary trailing `-1`.
     if (pipeline == "cellranger" &
-        all(str_detect(colnames(sparseCounts), "_1$"))) {
+        all(grepl(x = colnames(sparseCounts), pattern = "_1$"))) {
         colnames(sparseCounts) <-
-            str_replace(colnames(sparseCounts), "_1$", "")
+            gsub(x = colnames(sparseCounts),
+                 pattern = "_1$",
+                 replacement = "")
     }
 
     # Reformat to `[ACGT]{8}_[ACGT]{8}` instead of `[ACGT]{16}`
-    if (all(str_detect(colnames(sparseCounts), "^[ACGT]{16}$"))) {
+    if (all(grepl(x = colnames(sparseCounts), pattern = "^[ACGT]{16}$"))) {
         colnames(sparseCounts) <- colnames(sparseCounts) %>%
-            str_replace("^([ACGT]{8})([ACGT]{8})$", "\\1_\\2")
+            gsub(x = .,
+                 pattern = "^([ACGT]{8})([ACGT]{8})$",
+                 replacement = "\\1_\\2")
     }
 
     # Add sample name
     # 8 nucleotides: inDrop, Chromium
     # 6 nucleotides: SureCell
-    if (all(str_detect(colnames(sparseCounts), "^[ACGT]+_"))) {
+    if (all(grepl(x = colnames(sparseCounts), pattern = "^[ACGT]+_"))) {
         colnames(sparseCounts) <- colnames(sparseCounts) %>%
             paste(sampleName, ., sep = "_")
     } else {
-        stop("Failed to add sample name")
+        stop("Failed to add sample name", call. = FALSE)
     }
 
     # Return as dgCMatrix, for improved memory overhead
@@ -115,7 +129,12 @@
 
 #' Transcript To Gene-Level Sparse Counts
 #'
-#' @author Michael Steinbaugh
+#' @author Michael Steinbaugh, Rory Kirchner
+#'
+#' @importFrom dplyr bind_rows
+#' @importFrom Matrix.utils aggregate.Matrix
+#' @importFrom magrittr set_rownames
+#' @importFrom tibble remove_rownames
 #'
 #' @param txlevel Transcript-level sparse counts matrix (`dgCMatrix`).
 #' @param tx2gene Transcript to gene identifier mappings.
@@ -124,7 +143,7 @@
 #' @noRd
 .sparseCountsTx2Gene <- function(txlevel, tx2gene) {
     if (!is(txlevel, "dgCMatrix")) {
-        stop("txlevel must be dgCMatrix class object")
+        stop("txlevel must be dgCMatrix class object", call. = FALSE)
     }
     mat <- .stripTranscriptVersions(txlevel)
 
@@ -146,7 +165,8 @@
         } else {
             # Otherwise warn and append the t2g match tibble
             fxn <- warning
-            t2g <- data.frame(enstxp = missing, ensgene = missing) %>%
+            t2g <- data.frame(enstxp = missing,
+                              ensgene = missing) %>%
                 bind_rows(t2g)
          }
         fxn(paste(
@@ -178,12 +198,15 @@
     # http://www.ensembl.org/info/genome/stable_ids/index.html
     # Examples: ENST (human); ENSMUST (mouse)
     enstxpPattern <- "^(ENS.*T\\d{11})\\.\\d+$"
-    if (any(str_detect(transcripts, enstxpPattern))) {
-        transcripts <- str_replace(transcripts, enstxpPattern, "\\1")
+    if (any(grepl(x = transcripts, pattern = enstxpPattern))) {
+        transcripts <- gsub(
+            x = transcripts,
+            pattern = enstxpPattern,
+            replacement = "\\1")
         rownames(sparseCounts) <- transcripts
     }
-    if (any(str_detect(transcripts, "\\.\\d+$"))) {
-        stop("Incomplete transcript version removal")
+    if (any(grepl(x = transcripts, pattern = "\\.\\d+$"))) {
+        stop("Incomplete transcript version removal", call. = FALSE)
     }
     sparseCounts
 }

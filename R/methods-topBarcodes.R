@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param n Number of barcodes to return per sample.
 #'
 #' @return [data.frame]
@@ -20,6 +21,8 @@ NULL
 
 
 # Constructors ====
+#' @importFrom dplyr slice
+#' @importFrom tibble column_to_rownames
 .topBarcodes <- function(object, n = 10) {
     metrics <- metrics(object) %>%
         as("tibble")

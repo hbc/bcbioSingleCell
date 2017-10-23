@@ -11,10 +11,11 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_fill_viridis
 .plotCellCounts <- function(
     object,
     interestingGroups,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (missing(interestingGroups)) {
         interestingGroups <-

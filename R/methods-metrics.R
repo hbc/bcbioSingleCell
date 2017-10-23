@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param filterCells Show only the cells that have passed filtering cutoffs.
 #' @param aggregateReplicates Aggregate technical replicates, if specified. This
 #'   function uses values assigned in the `sampleNameAggregate` column of the
@@ -20,6 +21,9 @@ NULL
 
 # Constructors ====
 #' Metrics Constructor
+#'
+#' @importFrom magrittr set_colnames
+#' @importFrom tibble column_to_rownames
 #'
 #' @inheritParams AllGenerics
 #' @param filterCells Return only metrics for the filtered cells.
@@ -76,7 +80,7 @@ NULL
 #' @export
 setMethod("metrics", "bcbioSingleCell", function(
     object,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (isTRUE(filterCells)) {
         cells <- metadata(object)[["filterCells"]]

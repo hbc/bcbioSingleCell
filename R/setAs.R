@@ -23,6 +23,8 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom S4Vectors metadata
+#'
 #' @inheritParams coerce
 #'
 #' @return Metadata [list].
@@ -51,6 +53,10 @@ NULL
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
+#'
+#' @importFrom S4Vectors metadata
+#' @importFrom SummarizedExperiment assay assays rowData
+#' @importFrom utils packageVersion
 #'
 #' @return [bcbioSingleCell] object.
 .coerceLegacy <- function(from) {
@@ -116,6 +122,11 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom BiocGenerics counts
+#' @importFrom S4Vectors metadata
+#' @importFrom Seurat CreateSeuratObject FindVariableGenes NormalizeData
+#'   ScaleData
+#'
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
     if (is.null(metadata(from)[["filterParams"]])) {
@@ -130,25 +141,34 @@ NULL
         minGenes <- 0
     }
     minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
-    if (is.null(minCellsPerGene)) {
+    if (is.null(minCells)) {
         minCells <- 0
     }
-    metadata <- metrics(from, aggregateReplicates = TRUE)
-    seurat <- CreateSeuratObject(
+    metadata <- metrics(
+        from,
+        aggregateReplicates = FALSE,
+        filterCells = FALSE)
+    # Add a call to `aggregateReplicates()` here to combine the counts per
+    # sample before passing to Seurat, if technical replicates are present?
+    seurat <- Seurat::CreateSeuratObject(
         raw.data = rawData,
         project = "bcbioSingleCell",
         min.cells = minCells,
         min.genes = minGenes,
         is.expr = 0,  # Default for UMI datasets
         meta.data = metadata) %>%
-        NormalizeData(
+        Seurat::NormalizeData(
+            object = .,
             normalization.method = "LogNormalize",
             scale.factor = 10000) %>%
-        FindVariableGenes(
+        Seurat::FindVariableGenes(
+            object = .,
             mean.function = ExpMean,
             dispersion.function = LogVMR,
             do.plot = FALSE) %>%
-        ScaleData(model.use = "linear")
+        Seurat::ScaleData(
+            object = .,
+            model.use = "linear")
 
     # Stash useful bcbio run metadata into `misc` slot
     slot(seurat, "misc")[["bcbio"]] <- .essentialMetadata(from)

@@ -11,6 +11,7 @@
 #'   and Ensembl gene identifiers for rows.
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param ... Columns to use for grep pattern matching. Supply a named character
 #'   vector containing the column name and the grep pattern.
 #'
@@ -30,6 +31,8 @@ NULL
 
 
 # Constructors ====
+#' @importFrom magrittr set_rownames
+#' @importFrom rlang is_string
 .selectSamples <- function(object, ...) {
     sampleMetadata <- sampleMetadata(object)
     patterns <- list(...)

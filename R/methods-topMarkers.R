@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param n Number of genes per cluster.
 #' @param coding Only include protein coding genes.
 #'

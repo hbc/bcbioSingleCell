@@ -4,13 +4,14 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seuratFile: "data/bcb_seurat.rda"
+    seuratFile: "data/seurat.rda"
     markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
 library(bcbioSingleCell)
+library(Seurat)
 
 # Shared RMarkdown settings
 prepareSingleCellTemplate()
@@ -18,25 +19,24 @@ if (file.exists("setup.R")) {
     source("setup.R")
 }
 
-# Load seurat object
-seuratName <- basename(params$seuratFile) %>%
-    # Remove file extension, if specified
-    str_replace("\\.[A-Za-z0-9]+", "")
-loadDataAsName(c(seurat = params$seuratFile))
+# Directory paths
+dataDir <- file.path(params$outputDir, "data")
+markersDir <- file.path(params$outputDir, "results", "markers")
+dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
+
+# Load bcbioSingleCell object
+seuratName <- load(params$seuratFile)
+seurat <- get(seurat, inherits = FALSE)
 
 # Check to see if we need to process markers
-markersName <- paste(seuratName, "markers", sep = "_")
-markersFile <- file.path("data", paste0(markersName, ".rda"))
+markersName <- paste0(seuratName, "Markers")
+markersFile <- file.path(dataDir, paste0(markersName, ".rda"))
 if (file.exists(markersFile)) {
     loadDataAsName(c(markers = markersFile))
     evalMarkers <- FALSE
 } else {
     evalMarkers <- TRUE
 }
-
-# Directory paths
-markersDir <- file.path(params$outputDir, "results", "markers")
-dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
@@ -67,10 +67,18 @@ Seurat has four tests for differential expression which can be set with the `tes
 
 ```{r find_all_markers, results="hide", eval=evalMarkers}
 markers <- FindAllMarkers(seurat)
-assignAndSaveData(paste(markersName, "original", sep = "_"), markers)
+assignAndSaveData(
+    name = paste0(markersName, "Unmodified"),
+    object = markers,
+    dir = dataDir)
 markers <- sanitizeMarkers(seurat, markers)
-assignAndSaveData(markersName, markers)
-write_csv(markers, file.path(markersDir, paste0(markersName, ".csv.gz")))
+assignAndSaveData(
+    name = markersName,
+    object = markers,
+    dir = dataDir)
+readr::write_csv(
+    markers,
+    path = file.path(markersDir, paste0(markersName, ".csv.gz")))
 ```
 
 
@@ -115,7 +123,7 @@ DoHeatmap(
 knownMarkers <- readMarkers(
     params$markersFile,
     gene2symbol = gene2symbol)
-saveData(knownMarkers)
+saveData(knownMarkers, dir = dataDir)
 ```
 
 ```{r plot_known_markers, results="asis"}

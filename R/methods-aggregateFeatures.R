@@ -18,6 +18,8 @@ NULL
 #'
 #' @author Rory Kirchner
 #'
+#' @importFrom Matrix.utils aggregate.Matrix
+#'
 #' @param sparse Sparse counts matrix (e.g. [dgCMatrix]).
 #' @param featureids Feature identifiers (e.g. gene or transcript IDs).
 #'

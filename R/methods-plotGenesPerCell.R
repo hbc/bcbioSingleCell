@@ -7,6 +7,7 @@
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
+#'
 #' @param interestingGroups Interesting group, to use for colors.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
@@ -17,12 +18,13 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_fill_viridis
 .plotGenesPerCellBoxplot <- function(
     object,
     interestingGroups = "sampleName",
     min = 0,
     max = Inf,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -115,12 +117,13 @@ NULL
 
 
 
+#' @importFrom ggridges geom_density_ridges
 .plotGenesPerCellRidgeline <- function(
     object,
     interestingGroups = "sampleName",
     min = 0,
     max = Inf,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -178,12 +181,13 @@ NULL
 
 
 
+#' @importFrom cowplot plot_grid
 .plotGenesPerCell <- function(
     object,
     interestingGroups,
     min,
     max,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (missing(interestingGroups)) {
         interestingGroups <-

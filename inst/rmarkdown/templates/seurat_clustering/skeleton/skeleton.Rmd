@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
     bcbFile: "data/bcb.rda"
+    seuratName: "seurat"
     pcCompute: 20
     pcUse: FALSE
     varsToRegress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
@@ -22,17 +23,19 @@ if (file.exists("setup.R")) {
     source("setup.R")
 }
 
-# Load the bcbio object
-bcbName <- basename(params$bcbFile) %>%
-    # Remove file extension, if specified
-    str_replace("\\.[A-Za-z0-9]+", "")
-loadDataAsName(c(bcb = params$bcbFile))
+# Directory paths
+dataDir <- file.path(params$outputDir, "data")
+markersDir <- file.path(params$outputDir, "results", "markers")
+dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
+
+# Load bcbioSingleCell object
+bcbName <- load(params$bcbFile)
+bcb <- get(bcbName, inherits = FALSE)
 
 # Seurat object names and file paths
-seuratName <- paste(bcbName, "seurat", sep = "_")
-seuratFile <- str_replace(params$bcbFile, "\\.rda$", "_seurat.rda")
-seuratPreregressName <- paste(seuratName, "preregress", sep = "_")
-seuratPreregressFile <- str_replace(seuratFile, "\\.rda$", "_preregress.rda")
+seuratFile <- file.path(dataDir, paste0(params$seuratName, ".rda"))
+seuratPreregressName <- paste0(params$seuratName, "Preregress")
+seuratPreregressFile <- file.path(dataDir, paste0(seuratPreregressName, ".rda"))
 
 # Check to see if seurat objects exist
 if (exists(c("seurat", "seuratPregress"), inherits = FALSE)) {
@@ -51,14 +54,19 @@ if (exists(c("seurat", "seuratPregress"), inherits = FALSE)) {
 # Vector to use for plot looping
 groupBy <- c("ident", "sampleName", "phase", metadata(bcb)$interestingGroups)
 
-# Directory paths
-markersDir <- file.path(params$outputDir, "results", "markers")
-dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
-
 # knitr arguments (for `rmarkdown::render()` looping)
 opts_chunk$set(
-    cache.path = paste(bcbName, "seurat", "cache/", sep = "_"),
-    fig.path = paste(bcbName, "seurat", "files/", sep = "_"))
+    cache.path = paste(
+        params$seuratName,
+        "clustering",
+        "cache/",
+        sep = "_"),
+    fig.path = paste(
+        params$seuratName,
+        "clustering",
+        "files/",
+        sep = "_")
+)
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
@@ -135,7 +143,10 @@ seurat <- CellCycleScoring(
     s.genes = sGenes)
 # Cell-cycle `Phase` column should now be added to `seurat@meta.data`
 seuratPreregress <- seurat
-assignAndSaveData(seuratPreregressName, seuratPreregress)
+assignAndSaveData(
+    name = seuratPreregressName,
+    object = seuratPreregress,
+    dir = dataDir)
 ```
 
 Here we are checking to see if the cells are grouping by cell cycle. If we don't see clear grouping of the cells into `G1`, `G2M`, and `S` clusters on the PCA plot, then it is recommended that we don't regress out cell-cycle variation. When this is the case, remove `S.Score` and `G2M.Score` from the variables to regress (`varsToRegress`) in the RMarkdown YAML parameters.
@@ -286,7 +297,10 @@ seurat <- RunTSNE(
     seurat,
     dims.use = pcUse,
     do.fast = TRUE)
-assignAndSaveData(seuratName, seurat)
+assignAndSaveData(
+    name = params$seuratName,
+    object = seurat,
+    dir = dataDir)
 ```
 
 ```{r print_tsne_params}
@@ -294,7 +308,7 @@ PrintTSNEParams(seurat)
 ```
 
 ```{r dim_reduction_plots}
-sapply(seq_along(groupBy), function(a) {
+lapply(seq_along(groupBy), function(a) {
     if (groupBy[[a]] == "ident") {
         label <- TRUE
     } else {

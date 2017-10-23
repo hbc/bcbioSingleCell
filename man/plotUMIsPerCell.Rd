@@ -9,7 +9,7 @@
 plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{bcbioSingleCellANY}(object, interestingGroups, min,
-  filterCells = FALSE, aggregateReplicates = TRUE)
+  filterCells = TRUE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}

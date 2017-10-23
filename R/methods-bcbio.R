@@ -4,7 +4,10 @@
 #' @name bcbio
 #' @author Michael Steinbaugh
 #'
+#' @importFrom basejump bcbio
+#'
 #' @inheritParams AllGenerics
+#'
 #' @param type Type of count data to retrieve.
 #'
 #' @return [bcbioSingleCell].

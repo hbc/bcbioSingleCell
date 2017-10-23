@@ -5,6 +5,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.
 #' @param as Return class (**recommended**; `dgCMatrix`,
@@ -16,6 +17,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom magrittr set_rownames
 .counts <- function(
     object,
     gene2symbol = FALSE,

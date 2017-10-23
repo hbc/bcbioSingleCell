@@ -2,6 +2,9 @@
 #'
 #' @author Michael Steinbaugh
 #'
+#' @importFrom basejump readFileByExtension
+#' @importFrom dplyr mutate
+#'
 #' @param file Cellular barcode TSV file.
 #'
 #' @return [tibble].
@@ -11,6 +14,8 @@
         file,
         col_names = c("cellularBarcode", "nCount"),
         col_types = "ci") %>%
-        mutate(cellularBarcode = str_replace_all(
-            .data[["cellularBarcode"]], "-", "_"))
+        mutate(cellularBarcode = gsub(
+            x = .data[["cellularBarcode"]],
+            pattern = "-",
+            replacement = "_"))
 }

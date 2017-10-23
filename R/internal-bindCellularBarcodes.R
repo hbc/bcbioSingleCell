@@ -4,6 +4,9 @@
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom dplyr bind_rows mutate
+#' @importFrom parallel mclapply
+#'
 #' @param list List of cellular barcodes.
 #'
 #' @return [tibble].

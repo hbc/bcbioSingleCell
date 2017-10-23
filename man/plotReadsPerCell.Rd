@@ -9,7 +9,7 @@
 plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCellANY}(object,
-  interestingGroups = "sampleName", filterCells = FALSE,
+  interestingGroups = "sampleName", filterCells = TRUE,
   aggregateReplicates = TRUE)
 }
 \arguments{
