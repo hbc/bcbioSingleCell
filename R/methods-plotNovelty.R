@@ -206,5 +206,5 @@ NULL
 #' @export
 setMethod(
     "plotNovelty",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotNovelty)

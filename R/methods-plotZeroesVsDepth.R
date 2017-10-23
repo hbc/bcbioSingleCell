@@ -49,5 +49,5 @@ NULL
 #' @export
 setMethod(
     "plotZerosVsDepth",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotZerosVsDepth)

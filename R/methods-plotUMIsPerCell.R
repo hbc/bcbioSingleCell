@@ -209,5 +209,5 @@ NULL
 #' @export
 setMethod(
     "plotUMIsPerCell",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotUMIsPerCell)

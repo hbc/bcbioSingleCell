@@ -80,5 +80,5 @@ NULL
 #' @export
 setMethod(
     "plotCellCounts",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotCellCounts)

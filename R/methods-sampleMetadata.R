@@ -16,7 +16,7 @@ NULL
 #' @export
 setMethod(
     "sampleMetadata",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(
         object,
         aggregateReplicates = TRUE) {

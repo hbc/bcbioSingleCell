@@ -125,7 +125,7 @@ setMethod(
 #' @export
 setMethod(
     "calculateMetrics",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(
         object,
         prefilter = TRUE) {

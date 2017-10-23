@@ -17,7 +17,7 @@ NULL
 #' @export
 setMethod(
     "annotable",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(object) {
         metadata(object)[["annotable"]]
     })

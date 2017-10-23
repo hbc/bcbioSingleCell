@@ -102,5 +102,5 @@ NULL
 #' @export
 setMethod(
     "selectSamples",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .selectSamples)
