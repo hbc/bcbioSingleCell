@@ -8,26 +8,18 @@
 #'
 #' @inheritParams AllGenerics
 #'
-#' @return [bcbioSingleCell].
+#' @param object Sparse counts matrix (e.g. `dgCMatrix`).
+#' @param cellids Cellular barcode identifiers.
+#'
+#' @return `dgCMatrix`.
 NULL
 
 
 
 # Constructors ====
-#' Aggregate Replicates Constructor
-#'
-#' @author Rory Kirchner
-#' @keywords internal
-#' @noRd
-#'
 #' @importFrom Matrix.utils aggregate.Matrix
-#'
-#' @param sparse Sparse counts matrix (e.g. `dgCMatrix`).
-#' @param cellids Cellular barcode identifiers.
-#'
-#' @return [dgCMatrix].
-.aggregateReplicates <- function(sparse, cellids) {
-    tsparse <- t(sparse)
+.aggregateSparseReplicates <- function(object, cellids) {
+    tsparse <- t(object)
     rownames(tsparse) <- cellids
     tsparse %>%
         aggregate.Matrix(groupings = cellids, fun = "sum") %>%
@@ -42,8 +34,22 @@ NULL
 setMethod(
     "aggregateReplicates",
     signature("bcbioSingleCell"),
-    function(object) {
-        stop("Draft function", call. = FALSE)
-        # Reslot the counts into assay and then update the object.
-        # Slot `sampleNameAggregate` into `sampleMetadata()`.
+    function(object, cellids) {
+        warning(paste(
+            "Draft function.",
+            "Returning an aggregated counts matrix."
+        ), call. = FALSE)
+        .aggregateSparseReplicates(
+            object = assay(object),
+            cellids = cellids
+        )
     })
+
+
+
+#' @rdname aggregateReplicates
+#' @export
+setMethod(
+    "aggregateReplicatess",
+    signature("dgCMatrix"),
+    .aggregateSparseReplicates)
