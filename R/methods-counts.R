@@ -4,6 +4,8 @@
 #' @name counts
 #' @author Michael Steinbaugh
 #'
+#' @importFrom BiocGenerics counts
+#'
 #' @inheritParams AllGenerics
 #'
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
@@ -17,6 +19,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom dplyr pull
 #' @importFrom magrittr set_rownames
 .counts <- function(
     object,
@@ -62,13 +65,4 @@ NULL
 setMethod(
     "counts",
     signature("bcbioSingleCell"),
-    .counts)
-
-
-
-#' @rdname counts
-#' @export
-setMethod(
-    "counts",
-    signature("bcbioSingleCellLegacy"),
     .counts)

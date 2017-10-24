@@ -4,7 +4,7 @@
 #' @name bcbio
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump bcbio
+#' @importFrom basejump bcbio bcbio<-
 #'
 #' @inheritParams AllGenerics
 #'

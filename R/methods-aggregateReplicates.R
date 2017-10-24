@@ -6,6 +6,8 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #' @keywords internal
 #'
+#' @importFrom basejump aggregateReplicates
+#'
 #' @inheritParams AllGenerics
 #'
 #' @param object Sparse counts matrix (e.g. `dgCMatrix`).

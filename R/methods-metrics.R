@@ -5,6 +5,8 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
+#' @importFrom basejump metrics
+#'
 #' @inheritParams AllGenerics
 #'
 #' @param filterCells Show only the cells that have passed filtering cutoffs.
@@ -22,10 +24,13 @@ NULL
 # Constructors ====
 #' Metrics Constructor
 #'
+#' @importFrom dplyr left_join mutate
 #' @importFrom magrittr set_colnames
-#' @importFrom tibble column_to_rownames
+#' @importFrom stringr str_match
+#' @importFrom tibble column_to_rownames rownames_to_column
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param filterCells Return only metrics for the filtered cells.
 #'
 #' @return [data.frame].
@@ -53,8 +58,8 @@ NULL
     }
 
     # Check for presence of valid barcode in cell identifiers
-    if (!all(str_detect(colData[["cellID"]], paste0(barcode, "$")))) {
-        stop("Failed to detect surecell barcodes")
+    if (!all(grepl(x = colData[["cellID"]], pattern = paste0(barcode, "$")))) {
+        stop("Failed to detect surecell barcodes", call. = FALSE)
     }
 
     # Match the sampleID from the cellular barcode (rowname)
@@ -94,18 +99,7 @@ setMethod("metrics", "bcbioSingleCell", function(
 
 
 #' @rdname metrics
-#' @usage NULL
-#' @export
-setMethod("metrics", "bcbioSingleCellLegacy", function(
-    object,
-    filterCells = NULL,
-    aggregateReplicates = NULL) {
-    .metrics(object, aggregateReplicates = FALSE)
-})
-
-
-
-#' @rdname metrics
+#' @importFrom basejump camel
 #' @export
 setMethod("metrics", "seurat", function(object) {
     object@data.info %>%
