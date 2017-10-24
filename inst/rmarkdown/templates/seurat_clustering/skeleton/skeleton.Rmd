@@ -52,7 +52,7 @@ if (exists(c(params$seuratName, seuratPreregressName), inherits = FALSE)) {
 }
 
 # Vector to use for plot looping
-if (length(unique(seurat@meta.data$sampleName)) == 1) {
+if (length(unique(sampleMetadata(bcb)$sampleName)) == 1) {
     groupBy <- "ident"
 } else {
     groupBy <- c("ident", "sampleName", "phase",
