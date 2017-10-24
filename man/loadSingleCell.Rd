@@ -24,9 +24,10 @@ annotation mappings.}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 
-\item{ensemblVersion}{Ensembl release version. Defaults to current, and does
-not typically need to be user-defined. This parameter can be useful for
-matching Ensembl annotations against an outdated bcbio annotation build.}
+\item{ensemblVersion}{Ensembl release version. Defaults to "current", and
+does not typically need to be user-defined. This parameter can be useful
+for matching Ensembl annotations against an outdated bcbio annotation
+build.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }

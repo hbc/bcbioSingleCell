@@ -106,7 +106,7 @@ loadSingleCell <- function(
     bcbioCommandsLog <- readLogFile(
         file.path(projectDir, "bcbio-nextgen-commands.log"))
 
-    # Cellular barcode cutoff ====
+    # Cellular barcode cutoff
     cellularBarcodeCutoffPattern <- "--cb_cutoff (\\d+)"
     cellularBarcodeCutoff <-
         str_match(bcbioCommandsLog, cellularBarcodeCutoffPattern) %>%
@@ -114,6 +114,15 @@ loadSingleCell <- function(
         na.omit() %>%
         unique() %>%
         as.numeric()
+
+    # Detect MatrixMarket output at transcript or gene level
+    # This grep pattern may not be strict enough against the file path
+    genemapPattern <- "--genemap (.+)-tx2gene.tsv"
+    if (any(grepl(x = bcbioCommandsLog, genemapPattern))) {
+        countsLevel <- "gene"
+    } else {
+        countsLevel <- "transcript"
+    }
 
     # Data versions and programs ====
     dataVersions <- readDataVersions(
@@ -212,17 +221,21 @@ loadSingleCell <- function(
     if (!is.null(gtfFile)) {
         gtfFile <- normalizePath(gtfFile)
         gtf <- readGTF(gtfFile)
-        tx2gene <- tx2geneFromGTF(gtf)
+        if (countsLevel == "transcript") {
+            tx2gene <- tx2geneFromGTF(gtf)
+        }
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
         warning(paste(
             "GFF/GTF file matching transcriptome FASTA is advised.",
             "Using tx2gene mappings from Ensembl as a fallback."
         ), call. = FALSE)
-        tx2gene <- annotable(
-            genomeBuild,
-            format = "tx2gene",
-            release = ensemblVersion)
+        if (countsLevel == "transcript") {
+            tx2gene <- annotable(
+                genomeBuild,
+                format = "tx2gene",
+                release = ensemblVersion)
+        }
         gene2symbol <- annotable(
             genomeBuild,
             format = "gene2symbol",
@@ -244,9 +257,11 @@ loadSingleCell <- function(
         setNames(names(sampleDirs))
     # Combine the individual per-sample transcript-level sparse matrices into a
     # single sparse matrix
-    txlevel <- do.call(Matrix::cBind, sparseList)
-    # Convert counts from transcript-level to gene-level
-    counts <- .sparseCountsTx2Gene(txlevel, tx2gene)
+    counts <- do.call(Matrix::cBind, sparseList)
+    # Convert counts from transcript-level to gene-level, if necessary
+    if (countsLevel == "transcript") {
+        counts <- .sparseCountsTx2Gene(txlevel, tx2gene)
+    }
 
     # Column data ==============================================================
     # Calculate the cellular barcode metrics
