@@ -55,14 +55,14 @@ NULL
 
     # Obtain detected coding and mitochondrial genes, using annotable
     codingGenesDetected <- annotable %>%
-        dplyr::filter(.data[["broadClass"]] == "coding") %>%
+        filter(.data[["broadClass"]] == "coding") %>%
         pull("ensgene") %>%
         .[. %in% rownames(object)]
     if (length(codingGenesDetected) == 0) {
         stop("No coding genes detected", call. = FALSE)
     }
     mitoGenesDetected <- annotable %>%
-        dplyr::filter(.data[["broadClass"]] == "mito") %>%
+        filter(.data[["broadClass"]] == "mito") %>%
         pull("ensgene") %>%
         .[. %in% rownames(object)]
     if (length(mitoGenesDetected) == 0) {
@@ -120,8 +120,6 @@ setMethod(
 
 
 #' @rdname calculateMetrics
-#' @importFrom S4Vectors metadata
-#' @importFrom SummarizedExperiment assay
 #' @export
 setMethod(
     "calculateMetrics",
