@@ -24,4 +24,6 @@ bcb <- loadCellRanger(
     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
     interestingGroups = c("genotype", "age")
 )
-saveData(bcb)
+# Back up all data inside bcbio object
+flatFiles <- flatFiles(bcb)
+saveData(bcb, flatFiles)

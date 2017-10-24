@@ -29,13 +29,6 @@ dataDir <- file.path(params$outputDir, "data")
 # Load bcbioSingleCell object
 bcbName <- load(params$bcbFile)
 bcb <- get(bcbName, inherits = FALSE)
-
-# Back up all data inside bcbio object
-flatFiles <- flatFiles(bcb)
-assignAndSaveData(
-    name = paste0(bcbName, "FlatFiles"),
-    object = flatFiles,
-    dir = dataDir)
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
@@ -143,10 +136,10 @@ bcb <- filterCells(
     maxMitoRatio = params$maxMitoRatio,
     minNovelty = params$minNovelty,
     minCellsPerGene = params$minCellsPerGene)
-assignAndSaveData(
-    name = bcbName,
-    object = bcb,
-    dir = dataDir)
+```
+
+```{r resave}
+assignAndSaveData(name = bcbName, object = bcb, dir = dataDir)
 ```
 
 
