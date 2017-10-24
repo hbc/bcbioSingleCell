@@ -15,13 +15,13 @@
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams plotMarkerTSNE
+#'
 #' @param headerLevel Include a Markdown header for each gene.
 #'
 #' @return No value, only graphical output.
 #'
 #' @examples
 #' \dontrun{
-#' data(seurat, markers)
 #' top <- topMarkers(markers)
 #' genes <- top$symbol[1:4]
 #' plotMarkers(seurat, genes = genes)
@@ -33,10 +33,18 @@ NULL
 # Constructors ====
 #' Plot Marker Seurat Constructor
 #'
-#' @param returnAsList Return the `gg` objects as a list instead of plotting
-#'   with [cowplot::plot_grid()].
-#'
+#' @keywords internal
 #' @noRd
+#'
+#' @importFrom cowplot draw_plot ggdraw
+#' @importFrom dplyr filter
+#' @importFrom ggplot2 aes_string element_blank geom_violin ggplot theme
+#' @importFrom ggridges geom_density_ridges
+#' @importFrom rlang is_string
+#' @importFrom Seurat JoyPlot VlnPlot
+#' @importFrom viridis scale_fill_viridis viridis
+#'
+#' @param returnAsList Return the `gg` objects as a list.
 .plotMarkerSeurat <- function(
     object,
     gene,
@@ -64,7 +72,7 @@ NULL
         .[[1]] %>%
         .[["data"]] %>%
         # Remove the low expression features
-        dplyr::filter(.data[["feature"]] > lowExpressionCutoff) %>%
+        filter(.data[["feature"]] > lowExpressionCutoff) %>%
         ggplot(
             mapping = aes_string(
                 x = "ident",
@@ -89,7 +97,7 @@ NULL
         .[[1]] %>%
         .[["data"]] %>%
         # Remove the low expression features
-        dplyr::filter(.data[["feature"]] > lowExpressionCutoff) %>%
+        filter(.data[["feature"]] > lowExpressionCutoff) %>%
         ggplot(
             mapping = aes_string(
                 x = "feature",
@@ -132,6 +140,7 @@ NULL
 
 # Methods ====
 #' @rdname plotMarkers
+#' @importFrom basejump mdHeader
 #' @export
 setMethod("plotMarkers", "seurat", function(
     object,

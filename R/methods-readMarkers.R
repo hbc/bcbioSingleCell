@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param object Gene markers file (CSV or Excel).
 #' @param gene2symbol Gene-to-symbol annotation [data.frame].
 #'
@@ -15,6 +16,9 @@ NULL
 
 
 # Constructors ====
+#' @importFrom basejump camel readFileByExtension
+#' @importFrom dplyr arrange distinct left_join pull
+#' @importFrom rlang syms !!!
 .readMarkers <- function(object, gene2symbol) {
     if (!is.data.frame(gene2symbol)) {
         stop("gene2symbol must be data.frame")
@@ -29,7 +33,7 @@ NULL
     }
 
     markers <- readFileByExtension(object) %>%
-        camel()
+        camel(strict = FALSE)
 
     # Match the markers file by Ensembl gene identifier, otherwise symbol
     if ("ensgene" %in% colnames(markers)) {
@@ -63,7 +67,7 @@ NULL
             stop(paste("Bad symbols:", toString(missing)))
         }
     } else {
-        stop("Marker file must contain 'ensgene' or 'symbol'")
+        stop("Marker file must contain 'ensgene' or 'symbol'", call. = FALSE)
     }
 
     markers %>%

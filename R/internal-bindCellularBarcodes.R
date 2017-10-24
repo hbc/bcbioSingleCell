@@ -4,6 +4,10 @@
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom dplyr bind_rows mutate
+#' @importFrom parallel mclapply
+#' @importFrom tibble as_tibble
+#'
 #' @param list List of cellular barcodes.
 #'
 #' @return [tibble].
@@ -14,7 +18,7 @@
             mutate(sampleID = !!sampleID)
     }) %>%
         bind_rows() %>%
-        as("tibble") %>%
+        as_tibble() %>%
         mutate(cellID = paste(.data[["sampleID"]],
                               .data[["cellularBarcode"]],
                               sep = "_"))

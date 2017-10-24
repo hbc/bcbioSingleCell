@@ -3,13 +3,13 @@
 \docType{methods}
 \name{plotGenesPerCell}
 \alias{plotGenesPerCell}
-\alias{plotGenesPerCell,bcbioSingleCellANY-method}
+\alias{plotGenesPerCell,bcbioSingleCell-method}
 \title{Plot Genes per Cell}
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{bcbioSingleCellANY}(object, interestingGroups, min,
-  max, filterCells = FALSE, aggregateReplicates = TRUE)
+\S4method{plotGenesPerCell}{bcbioSingleCell}(object, interestingGroups, min,
+  max, filterCells = TRUE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}

@@ -7,6 +7,10 @@
 #' @name flatFiles
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
+#' @importFrom basejump flatFiles
+#'
+#' @inheritParams AllGenerics
+#'
 #' @return [list].
 NULL
 
@@ -17,7 +21,7 @@ NULL
 #' @export
 setMethod(
     "flatFiles",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(object) {
         list(
             assays = assays(object),

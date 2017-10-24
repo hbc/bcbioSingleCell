@@ -11,10 +11,15 @@ NULL
 
 
 # Constructors ====
+#' @importFrom dplyr group_by left_join n summarize
+#' @importFrom ggplot2 aes_string element_text facet_wrap geom_bar geom_text
+#'   ggplot labs theme
+#' @importFrom rlang !! sym
+#' @importFrom viridis scale_fill_viridis
 .plotCellCounts <- function(
     object,
     interestingGroups,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (missing(interestingGroups)) {
         interestingGroups <-
@@ -64,9 +69,7 @@ NULL
         facets <- c(facets, "sampleNameAggregate")
     }
     if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets,
-                       scales = "free_x")
+        p <- p + facet_wrap(facets = facets, scales = "free_x")
     }
 
     p
@@ -79,5 +82,5 @@ NULL
 #' @export
 setMethod(
     "plotCellCounts",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotCellCounts)

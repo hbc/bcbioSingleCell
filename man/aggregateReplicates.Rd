@@ -4,15 +4,20 @@
 \name{aggregateReplicates}
 \alias{aggregateReplicates}
 \alias{aggregateReplicates,bcbioSingleCell-method}
+\alias{aggregateReplicates,dgCMatrix-method}
 \title{Aggregate Replicates}
 \usage{
-\S4method{aggregateReplicates}{bcbioSingleCell}(object)
+\S4method{aggregateReplicates}{bcbioSingleCell}(object, cellids)
+
+\S4method{aggregateReplicates}{dgCMatrix}(object, cellids)
 }
 \arguments{
-\item{object}{Object.}
+\item{object}{Sparse counts matrix (e.g. \code{dgCMatrix}).}
+
+\item{cellids}{Cellular barcode identifiers.}
 }
 \value{
-\link{bcbioSingleCell}.
+\code{dgCMatrix}.
 }
 \description{
 Aggregate Replicates

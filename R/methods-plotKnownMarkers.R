@@ -13,6 +13,8 @@ NULL
 
 
 # Constructors ====
+#' @importFrom basejump mdHeader
+#' @importFrom dplyr filter pull
 .plotKnownMarkers <- function(
     object,
     knownMarkers,
@@ -26,15 +28,13 @@ NULL
     pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
         genes <- knownMarkers %>%
-            dplyr::filter(.data[["cell"]] == !!cellType) %>%
+            filter(.data[["cell"]] == !!cellType) %>%
             pull("symbol") %>%
             unique() %>%
             sort()
         if (!is.null(genes)) {
             mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
-            plotMarkers(object,
-                        genes = genes,
-                        headerLevel = headerLevel + 1)
+            plotMarkers(object, genes = genes, headerLevel = headerLevel + 1)
         } else {
             NULL
         }

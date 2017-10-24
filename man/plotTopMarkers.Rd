@@ -36,7 +36,6 @@ Plot gene expression per cell in multiple formats:
 }
 \examples{
 \dontrun{
-data(seurat, markers)
 top <- topMarkers(markers)
 genes <- top$symbol[1:4]
 plotMarkers(seurat, genes = genes)

@@ -3,13 +3,13 @@
 \docType{methods}
 \name{plotCellCounts}
 \alias{plotCellCounts}
-\alias{plotCellCounts,bcbioSingleCellANY-method}
+\alias{plotCellCounts,bcbioSingleCell-method}
 \title{Plot Cell Counts}
 \usage{
 plotCellCounts(object, ...)
 
-\S4method{plotCellCounts}{bcbioSingleCellANY}(object, interestingGroups,
-  filterCells = FALSE, aggregateReplicates = TRUE)
+\S4method{plotCellCounts}{bcbioSingleCell}(object, interestingGroups,
+  filterCells = TRUE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}

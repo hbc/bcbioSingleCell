@@ -5,12 +5,15 @@
 #' @author Michael Steinbaugh
 #' @keywords internal
 #'
+#' @importFrom ggplot2 element_blank element_line theme
+#' @importFrom Seurat DarkTheme
+#'
 #' @seealso Modified version of [Seurat::DarkTheme()].
 #'
 #' @return No return.
 #' @export
 darkTheme <- function() {
-    Seurat::DarkTheme() +
+    DarkTheme() +
         theme(
             axis.line = element_line(
                 color = "white",

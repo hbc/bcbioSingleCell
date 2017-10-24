@@ -4,6 +4,8 @@
 #' @name annotable
 #' @author Michael Steinbaugh
 #'
+#' @importFrom basejump annotable
+#'
 #' @inheritParams AllGenerics
 #'
 #' @return [data.frame]
@@ -16,7 +18,7 @@ NULL
 #' @export
 setMethod(
     "annotable",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(object) {
         metadata(object)[["annotable"]]
     })

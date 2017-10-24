@@ -4,6 +4,14 @@
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom basejump camel
+#' @importFrom dplyr group_by left_join mutate
+#' @importFrom magrittr set_colnames
+#' @importFrom Seurat FetchData
+#' @importFrom stats median
+#' @importFrom tibble rownames_to_column
+#' @importFrom rlang !! sym
+#'
 #' @param object [seurat] object.
 #' @param dimCode Character vector of X and Y coordinate data to be used for
 #'   plotting. This can be `c("tSNE_1", "tSNE_2")` for tSNE data, or `c("PC1",
@@ -11,10 +19,10 @@
 #'
 #' @return [data.frame].
 .fetchDimDataSeurat <- function(object, dimCode) {
-    meta <- object@meta.data %>%
+    meta <- slot(object, "meta.data") %>%
         camel(strict = FALSE) %>%
         rownames_to_column("cell")
-    ident <- object@ident %>%
+    ident <- slot(object, "ident") %>%
         as.data.frame() %>%
         set_colnames("ident") %>%
         rownames_to_column("cell")

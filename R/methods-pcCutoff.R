@@ -10,6 +10,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param maxPct Maximum percent standard deviation.
 #' @param minCumPct Minimum cumulative percent standard deviation.
 #' @param plot Plot the PC standard deviations.
@@ -22,6 +23,11 @@ NULL
 
 
 # Constructors ====
+#' @importFrom cowplot draw_plot ggdraw
+#' @importFrom ggplot2 aes_string geom_hline geom_line geom_point ggplot labs
+#'   scale_y_continuous
+#' @importFrom scales percent
+#' @importFrom tibble tibble
 .pcCutoff <- function(sd, maxPct, minCumPct, plot) {
     xlab <- "pc"
 
@@ -123,7 +129,9 @@ setMethod("pcCutoff", "seurat", function(
     # seurat slot descriptions
     # dr: dimensionality reduction
     # sdev: standard deviation
-    sd <- object@dr[["pca"]]@sdev
+    sd <- slot(object, "dr") %>%
+        .[["pca"]] %>%
+        slot("sdev")
     .pcCutoff(
         sd,
         maxPct = maxPct,

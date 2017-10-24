@@ -4,6 +4,8 @@
 #' @name interestingGroups
 #' @author Michael Steinbaugh
 #'
+#' @importFrom basejump interestingGroups
+#'
 #' @inheritParams AllGenerics
 #'
 #' @return Character vector.
@@ -16,7 +18,7 @@ NULL
 #' @export
 setMethod(
     "interestingGroups",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(object) {
         metadata(object)[["interestingGroups"]]
     })

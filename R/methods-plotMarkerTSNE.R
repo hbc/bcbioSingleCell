@@ -8,6 +8,7 @@
 #' @inheritParams AllGenerics
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
+#'
 #' @param colorpoints Color points by geometric mean or expression of
 #'  individual gene.
 #' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).
@@ -21,8 +22,8 @@
 #'
 #' # Let's take the top markers specific to cluster 0, as an example
 #' genes <- top %>%
-#'     filter(cluster == 0) %>%
-#'     pull(symbol)
+#'     dplyr::filter(cluster == 0) %>%
+#'     dplyr::pull(symbol)
 #'
 #' # Fetch the t-SNE expression data for the desired gene symbols
 #' dat <- fetchTSNEExpressionData(seurat, genes = genes)
@@ -33,20 +34,21 @@
 #'
 #' # To make faceted t-SNE plot of each gene (looks good at up to 6 genes)
 #' plotTSNE(dat, colorpoints = "expression") +
-#'     facet_wrap(~gene)
+#'     ggplot2::facet_wrap(~gene)
 #' }
 NULL
 
 
 
 # Constructors ====
+#' @importFrom viridis scale_color_viridis
 .plotMarkerTSNE <- function(
     tibble,
     colorpoints = "geomean",
     pointsAsNumbers = FALSE,
     label = TRUE) {
     if (!colorpoints %in% c("expression", "geomean")) {
-        stop("colorpoints supports 'geomean' or 'expression'")
+        stop("colorpoints supports 'geomean' or 'expression'", call. = FALSE)
     }
     # Check to make sure only a subset of markers is passed in
     genes <- sort(unique(tibble[["gene"]]))
@@ -71,8 +73,7 @@ NULL
                     color = colorpoints),
                 size = 2)
     } else {
-        p <- p +
-            geom_point()
+        p <- p + geom_point()
     }
     if (isTRUE(label)) {
         p <- p +
@@ -86,8 +87,7 @@ NULL
                 fontface = "bold")
     }
     if (length(genes) <= 10) {
-        p <- p +
-            ggtitle(toString(genes))
+        p <- p + ggtitle(toString(genes))
     }
     p +
         scale_color_viridis(option = "inferno") +

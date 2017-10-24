@@ -3,10 +3,10 @@
 \docType{methods}
 \name{annotable}
 \alias{annotable}
-\alias{annotable,bcbioSingleCellANY-method}
+\alias{annotable,bcbioSingleCell-method}
 \title{Ensembl Annotations}
 \usage{
-\S4method{annotable}{bcbioSingleCellANY}(object)
+\S4method{annotable}{bcbioSingleCell}(object)
 }
 \arguments{
 \item{object}{Object.}

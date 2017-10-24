@@ -15,7 +15,7 @@ knownMarkersDetected(all, known, ...)
 \item{all}{\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}
 
 \item{known}{Known markers \link{data.frame} imported by \code{\link[=readMarkers]{readMarkers()}} or
-pulled from internal \link{cellCycleMarkers} object.}
+pulled from internal \link{cellCycleMarkers} data.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 

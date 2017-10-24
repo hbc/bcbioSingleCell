@@ -3,10 +3,10 @@
 \docType{methods}
 \name{selectSamples}
 \alias{selectSamples}
-\alias{selectSamples,bcbioSingleCellANY-method}
+\alias{selectSamples,bcbioSingleCell-method}
 \title{Select Samples}
 \usage{
-\S4method{selectSamples}{bcbioSingleCellANY}(object, ...)
+\S4method{selectSamples}{bcbioSingleCell}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -22,7 +22,7 @@ Select Samples
 }
 \details{
 Internally, pattern matching against sample and file names is
-applied using \code{\link[=str_detect]{str_detect()}}.
+applied using logical grep matching.
 }
 \note{
 Bracket based subsetting with \code{[} also works on [bcbioSingleCell]

@@ -3,6 +3,8 @@
 #' @rdname sampleMetadata
 #' @name sampleMetadata
 #'
+#' @importFrom basejump sampleMetadata
+#'
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
 #'
@@ -13,10 +15,13 @@ NULL
 
 # Methods ====
 #' @rdname sampleMetadata
+#' @importFrom dplyr distinct everything mutate select
+#' @importFrom magrittr set_rownames
+#' @importFrom stringr str_match
 #' @export
 setMethod(
     "sampleMetadata",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(
         object,
         aggregateReplicates = TRUE) {
@@ -25,12 +30,12 @@ setMethod(
         # Check for and assign missing description (deprecate in future update)
         if (!"description" %in% colnames(meta)) {
             if (isTRUE(metadata(object)[["multiplexedFASTQ"]])) {
-                # `description` is missing in some older bcbio objects because we
-                # used `fileName` and `sampleName` initially to define the minimal
-                # sample metadata. Now `description` is used for multiplexed
-                # samples in QC plots.
+                # `description` is missing in some older bcbio objects because
+                # we used `fileName` and `sampleName` initially to define the
+                # minimal sample metadata. Now `description` is used for
+                # multiplexed samples in QC plots.
                 meta[["description"]] <- str_match(
-                    meta$sampleID,
+                    meta[["sampleID"]],
                     pattern = "^(.+)_[ACGT]+$") %>%
                     .[, 2]
             } else {
@@ -42,22 +47,20 @@ setMethod(
             "sampleNameAggregate" %in% colnames(meta)) {
             meta <- meta %>%
                 mutate(sampleName = .data[["sampleNameAggregate"]],
-                       sampleID = make.names(.data[["sampleName"]]),
+                       sampleID = make.names(
+                           .data[["sampleName"]], unique = TRUE),
                        sampleNameAggregate = NULL) %>%
                 # Here we're keeping the sampleName and interesting group
                 # columns only, so we can collapse down to distinct per sample
                 # rows
-                dplyr::select(
-                    unique(c("sampleID",
-                             "sampleName",
-                             interestingGroups(object)))
-                ) %>%
+                select(unique(c(
+                    "sampleID", "sampleName", interestingGroups(object)
+                ))) %>%
                 distinct()
         } else {
             # Put the priority columns first
             meta <- meta %>%
-                dplyr::select(c("sampleID", "sampleName", "description"),
-                              everything())
+                select(c("sampleID", "sampleName", "description"), everything())
         }
         meta %>%
             # Ensure the rownames are set
@@ -67,6 +70,10 @@ setMethod(
 
 
 #' @rdname sampleMetadata
+#' @importFrom basejump camel
+#' @importFrom dplyr distinct funs summarize_all
+#' @importFrom magrittr set_rownames
+#' @importFrom tibble remove_rownames
 #' @export
 setMethod(
     "sampleMetadata",
@@ -74,19 +81,21 @@ setMethod(
     function(object) {
         # Check to see if bcbio metadata is stashed in '@misc' slot. This is
         # saved when using our `setAs()` coercion method.
-        bcbMeta <- object@misc[["bcbio"]][["sampleMetadata"]]
+        bcbMeta <- slot(object, "misc") %>%
+            .[["bcbio"]] %>%
+            .[["sampleMetadata"]]
         if (!is.null(bcbMeta)) {
             message("Using bcbio sample metadata stashed in '@misc$bcbio'")
             df <- bcbMeta
         } else {
             message(paste("Attempting to construct sample metadata",
                           "from 'seurat@meta.data' slot"))
-            df <- object@meta.data %>%
+            df <- slot(object, "meta.data") %>%
                 remove_rownames()
             # Drop any columns that appear to be a count (e.g. `nUMI`)
-            df <- df[, !str_detect(colnames(df), "^n[A-Z]")]
+            df <- df[, !grepl(x = colnames(df), pattern = "^n[A-Z]")]
             # Drop any tSNE resolution columns (e.g. `res.0.8`)
-            df <- df[, !str_detect(colnames(df), "^res\\.")]
+            df <- df[, !grepl(x = colnames(df), pattern = "^res\\.")]
             # Drop any blacklisted columns
             blacklist <- c(
                 # Seurat

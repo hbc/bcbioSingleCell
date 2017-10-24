@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param n Number of genes per cluster.
 #' @param coding Only include protein coding genes.
 #'
@@ -20,6 +21,8 @@ NULL
 
 
 # Constructors ====
+#' @importFrom dplyr arrange filter slice
+#' @importFrom rlang !! sym
 .topMarkers <- function(
     object,
     n = 10,
@@ -27,18 +30,18 @@ NULL
     .validMarkers(object)
     if (isTRUE(coding)) {
         object <- object %>%
-            dplyr::filter(.data[["biotype"]] == "protein_coding") %>%
+            filter(.data[["biotype"]] == "protein_coding") %>%
             # Remove additional genes annotated as "predicted" in description
-            dplyr::filter(!str_detect(.data[["description"]],
-                                      "^predicted\\s"))
+            filter(!grepl(x = .data[["description"]],
+                          pattern = "^predicted\\s"))
     }
     object %>%
         # Use only the positive markers
-        dplyr::filter(.data[["avgDiff"]] > 0) %>%
+        filter(.data[["avgDiff"]] > 0) %>%
         # Arrange by P value
         arrange(!!sym("pvalue")) %>%
         # Take the top rows by using slice
-        dplyr::slice(1:n)
+        slice(1:n)
 }
 
 

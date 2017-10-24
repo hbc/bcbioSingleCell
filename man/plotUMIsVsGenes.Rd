@@ -3,13 +3,13 @@
 \docType{methods}
 \name{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
-\alias{plotUMIsVsGenes,bcbioSingleCellANY-method}
+\alias{plotUMIsVsGenes,bcbioSingleCell-method}
 \title{Plot UMI and Gene Correlation}
 \usage{
 plotUMIsVsGenes(object, ...)
 
-\S4method{plotUMIsVsGenes}{bcbioSingleCellANY}(object,
-  interestingGroups = "sampleName", filterCells = FALSE,
+\S4method{plotUMIsVsGenes}{bcbioSingleCell}(object,
+  interestingGroups = "sampleName", filterCells = TRUE,
   aggregateReplicates = TRUE)
 }
 \arguments{

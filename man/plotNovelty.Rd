@@ -3,13 +3,13 @@
 \docType{methods}
 \name{plotNovelty}
 \alias{plotNovelty}
-\alias{plotNovelty,bcbioSingleCellANY-method}
+\alias{plotNovelty,bcbioSingleCell-method}
 \title{Plot Novelty Score}
 \usage{
 plotNovelty(object, ...)
 
-\S4method{plotNovelty}{bcbioSingleCellANY}(object, interestingGroups, min,
-  filterCells = FALSE, aggregateReplicates = TRUE)
+\S4method{plotNovelty}{bcbioSingleCell}(object, interestingGroups, min,
+  filterCells = TRUE, aggregateReplicates = TRUE)
 }
 \arguments{
 \item{object}{Object.}

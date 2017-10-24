@@ -3,13 +3,13 @@
 \docType{methods}
 \name{plotReadsPerCell}
 \alias{plotReadsPerCell}
-\alias{plotReadsPerCell,bcbioSingleCellANY-method}
+\alias{plotReadsPerCell,bcbioSingleCell-method}
 \title{Plot Read Counts per Cell}
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSingleCellANY}(object,
-  interestingGroups = "sampleName", filterCells = FALSE,
+\S4method{plotReadsPerCell}{bcbioSingleCell}(object,
+  interestingGroups = "sampleName", filterCells = TRUE,
   aggregateReplicates = TRUE)
 }
 \arguments{

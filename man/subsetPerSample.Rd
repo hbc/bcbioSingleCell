@@ -3,12 +3,12 @@
 \docType{methods}
 \name{subsetPerSample}
 \alias{subsetPerSample}
-\alias{subsetPerSample,bcbioSingleCellANY-method}
+\alias{subsetPerSample,bcbioSingleCell-method}
 \title{Subset Per Sample}
 \usage{
 subsetPerSample(object, ...)
 
-\S4method{subsetPerSample}{bcbioSingleCellANY}(object, minCells = 200,
+\S4method{subsetPerSample}{bcbioSingleCell}(object, minCells = 200,
   dir = "data")
 }
 \arguments{

@@ -4,6 +4,7 @@
 #' @name sanitizeMarkers
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param markers [Seurat::FindAllMarkers()] return.
 #'
 #' @return [grouped_df], grouped by cluster ident.
@@ -12,6 +13,10 @@ NULL
 
 
 # Constructors ====
+#' @importFrom basejump camel
+#' @importFrom dplyr arrange everything group_by left_join mutate rename select
+#' @importFrom rlang !! sym
+#' @importFrom tibble as_tibble remove_rownames
 .sanitizeMarkersSeurat <- function(
     object,
     markers) {
@@ -21,10 +26,10 @@ NULL
         message("Sanitizing Seurat markers data.frame")
         # Rename specific columns prior to camelCase
         if ("p_val" %in% colnames(markers)) {
-            markers <- dplyr::rename(markers, pvalue = .data[["p_val"]])
+            markers <- rename(markers, pvalue = .data[["p_val"]])
         }
         if ("gene" %in% colnames(markers)) {
-            markers <- dplyr::rename(markers, symbol = .data[["gene"]])
+            markers <- rename(markers, symbol = .data[["gene"]])
         }
     }
 
@@ -36,41 +41,46 @@ NULL
         # Use this data frame to convert the gene symbols ("gene" column) back
         # to Ensembl gene identifiers ("ensgene" column)
         gene2symbol <- data.frame(
-            ensgene = names(rownames(object@raw.data)),
-            symbol = rownames(object@raw.data)
+            ensgene = names(rownames(slot(object, "raw.data"))),
+            symbol = rownames(slot(object, "raw.data"))
         )
         markers <- left_join(markers, gene2symbol, by = "symbol")
         # Ensure all the symbols matched
         if (any(is.na(markers[["ensgene"]]))) {
-            stop("gene2symbol failed to match all genes")
+            stop("gene2symbol failed to match all genes", call. = FALSE)
         }
     }
     # Check for annotable annotations and add if necessary
     if (!"biotype" %in% colnames(markers)) {
         message("Joining annotable metadata")
         # Drop the symbols from annotable before join to avoid mismatch
-        annotable <- object@misc[["bcbio"]][["annotable"]] %>%
+        annotable <- slot(object, "misc") %>%
+            .[["bcbio"]] %>%
+            .[["annotable"]] %>%
             mutate(symbol = NULL)
         markers <- left_join(markers, annotable, by = "ensgene")
     }
 
     # Ensure that required columns are present
-    requiredCols <- c("biotype",
-                      "cluster",
-                      "description",
-                      "ensgene",
-                      "pvalue",
-                      "symbol")
+    requiredCols <- c(
+        "biotype",
+        "cluster",
+        "description",
+        "ensgene",
+        "pvalue",
+        "symbol")
     if (!all(requiredCols %in% colnames(markers))) {
-        stop(paste("Marker data.frame must contain:",
-                   toString(requiredCols)))
+        stop(paste(
+            "Marker data.frame must contain:",
+            toString(requiredCols)
+        ), call. = FALSE)
     }
 
     markers %>%
         remove_rownames() %>%
-        as("tibble") %>%
-        camel() %>%
-        dplyr::select(c("cluster", "symbol"), everything()) %>%
+        as_tibble() %>%
+        camel(strict = FALSE) %>%
+        select(c("cluster", "symbol"), everything()) %>%
         group_by(.data[["cluster"]]) %>%
         arrange(!!sym("pvalue"), .by_group = TRUE)
 }

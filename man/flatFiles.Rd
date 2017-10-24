@@ -3,10 +3,13 @@
 \docType{methods}
 \name{flatFiles}
 \alias{flatFiles}
-\alias{flatFiles,bcbioSingleCellANY-method}
+\alias{flatFiles,bcbioSingleCell-method}
 \title{Get Flat Files from S4 Object}
 \usage{
-\S4method{flatFiles}{bcbioSingleCellANY}(object)
+\S4method{flatFiles}{bcbioSingleCell}(object)
+}
+\arguments{
+\item{object}{Object.}
 }
 \value{
 \link{list}.

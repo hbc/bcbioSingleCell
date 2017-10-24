@@ -1,6 +1,6 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.19
+Version: 0.0.20
 Authors@R: c(
     person("Michael", "Steinbaugh",
            email = "mike@steinbaugh.com",
@@ -23,7 +23,7 @@ Depends:
     R (>= 3.4.0),
     SummarizedExperiment (>= 1.6.5)
 Imports:
-    basejump (>= 0.0.25),
+    basejump (>= 0.1.0),
     BiocGenerics,
     cowplot,
     dendsort,
@@ -31,6 +31,7 @@ Imports:
     dplyr,
     ggplot2 (>= 2.2.1),
     ggridges (>= 0.4.1),
+    grid,
     jsonlite,
     magrittr,
     Matrix,
@@ -39,11 +40,10 @@ Imports:
     parallel,
     pbapply,
     pheatmap,
-    readr,
     rlang,
     S4Vectors,
     scales,
-    Seurat (>= 2.0.1),
+    Seurat (>= 2.1.0),
     stats,
     stringr,
     tibble,
@@ -58,7 +58,7 @@ Suggests:
     testthat,
     tidyverse
 Remotes:
-    steinbaugh/basejump@develop
+    steinbaugh/basejump
 biocViews:
     DataImport,
     DataRepresentation,

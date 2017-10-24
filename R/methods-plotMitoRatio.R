@@ -11,11 +11,13 @@ NULL
 
 
 # Constructors ====
+#' @importFrom dplyr left_join
+#' @importFrom viridis scale_fill_viridis
 .plotMitoRatioBoxplot <- function(
     object,
     interestingGroups = "sampleName",
     max = 1,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -89,14 +91,11 @@ NULL
         "sampleNameAggregate" %in% colnames(metrics)) {
         facets <- c(facets, "sampleNameAggregate")
         if (interestingGroups == "sampleName") {
-            p <- p +
-                theme(legend.position = "none")
+            p <- p + theme(legend.position = "none")
         }
     }
     if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets,
-                       scales = "free_x")
+        p <- p + facet_wrap(facets = facets, scales = "free_x")
     }
 
     p
@@ -104,11 +103,12 @@ NULL
 
 
 
+#' @importFrom ggridges geom_density_ridges
 .plotMitoRatioRidgeline <- function(
     object,
     interestingGroups = "sampleName",
     max = 1,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -161,10 +161,13 @@ NULL
 
 
 
+#' @importFrom dplyr filter pull
+#' @importFrom tibble rownames_to_column
+#' @importFrom viridis scale_color_viridis
 .plotMitoRatioScatterplot <- function(
     object,
     interestingGroups = "sampleName",
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -172,12 +175,12 @@ NULL
         aggregateReplicates = aggregateReplicates) %>%
         rownames_to_column("cellID")
         # Drop cells with zeroes for both `nCoding` and `nMito`
-    dropCells <- dplyr::filter(
+    dropCells <- filter(
         metrics,
         .data[["nCoding"]] == 0 &
         .data[["nMito"]] == 0) %>%
         pull("cellID")
-    metrics <- dplyr::filter(metrics, !.data[["cellID"]] %in% dropCells)
+    metrics <- filter(metrics, !.data[["cellID"]] %in% dropCells)
     if (nrow(metrics) == 0) {
         stop(paste(
             "No cells contain coding and mito counts.",
@@ -231,12 +234,10 @@ NULL
         "sampleNameAggregate" %in% colnames(metrics)) {
         facets <- c(facets, "sampleNameAggregate")
         # Turn off the legend
-        p <- p +
-            theme(legend.position = "none")
+        p <- p + theme(legend.position = "none")
     }
     if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets)
+        p <- p + facet_wrap(facets = facets)
     }
 
     p
@@ -244,19 +245,19 @@ NULL
 
 
 
+#' @importFrom cowplot plot_grid
 .plotMitoRatio <- function(
     object,
     interestingGroups,
     max,
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (missing(interestingGroups)) {
         interestingGroups <-
             metadata(object)[["interestingGroups"]][[1]]
     }
     if (missing(max)) {
-        max <- object %>%
-            metadata() %>%
+        max <- metadata(object) %>%
             .[["filterParams"]] %>%
             .[["maxMitoRatio"]]
         if (is.null(max)) {
@@ -292,5 +293,5 @@ NULL
 #' @export
 setMethod(
     "plotMitoRatio",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotMitoRatio)

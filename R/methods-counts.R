@@ -4,7 +4,10 @@
 #' @name counts
 #' @author Michael Steinbaugh
 #'
+#' @importFrom BiocGenerics counts
+#'
 #' @inheritParams AllGenerics
+#'
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.
 #' @param as Return class (**recommended**; `dgCMatrix`,
@@ -16,6 +19,8 @@ NULL
 
 
 # Constructors ====
+#' @importFrom dplyr pull
+#' @importFrom magrittr set_rownames
 .counts <- function(
     object,
     gene2symbol = FALSE,
@@ -60,13 +65,4 @@ NULL
 setMethod(
     "counts",
     signature("bcbioSingleCell"),
-    .counts)
-
-
-
-#' @rdname counts
-#' @export
-setMethod(
-    "counts",
-    signature("bcbioSingleCellLegacy"),
     .counts)

@@ -52,6 +52,8 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom utils packageVersion
+#'
 #' @return [bcbioSingleCell] object.
 .coerceLegacy <- function(from) {
     # Check for version
@@ -63,12 +65,11 @@ NULL
         ), call. = FALSE)
     }
     message(paste(
-        "Upgrading from",
-        version,
-        "to",
-        packageVersion("bcbioSingleCell")
+        "Upgrading from", version, "to", packageVersion("bcbioSingleCell")
     ))
-    message(paste("Existing metadata:", toString(names(metadata(from)))))
+    message(paste(
+        "Existing metadata:", toString(names(metadata(from)))
+    ))
 
     assays <- assays(from)
     rowData <- rowData(from)
@@ -116,6 +117,9 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom Seurat CreateSeuratObject FindVariableGenes NormalizeData
+#'   ScaleData
+#'
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
     if (is.null(metadata(from)[["filterParams"]])) {
@@ -130,10 +134,15 @@ NULL
         minGenes <- 0
     }
     minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
-    if (is.null(minCellsPerGene)) {
+    if (is.null(minCells)) {
         minCells <- 0
     }
-    metadata <- metrics(from, aggregateReplicates = TRUE)
+    metadata <- metrics(
+        from,
+        aggregateReplicates = FALSE,
+        filterCells = FALSE)
+    # Add a call to `aggregateReplicates()` here to combine the counts per
+    # sample before passing to Seurat, if technical replicates are present?
     seurat <- CreateSeuratObject(
         raw.data = rawData,
         project = "bcbioSingleCell",
@@ -142,13 +151,17 @@ NULL
         is.expr = 0,  # Default for UMI datasets
         meta.data = metadata) %>%
         NormalizeData(
+            object = .,
             normalization.method = "LogNormalize",
             scale.factor = 10000) %>%
         FindVariableGenes(
+            object = .,
             mean.function = ExpMean,
             dispersion.function = LogVMR,
             do.plot = FALSE) %>%
-        ScaleData(model.use = "linear")
+        ScaleData(
+            object = .,
+            model.use = "linear")
 
     # Stash useful bcbio run metadata into `misc` slot
     slot(seurat, "misc")[["bcbio"]] <- .essentialMetadata(from)

@@ -6,6 +6,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
 #' @param minCells Minimum number of cells required per sample.
 #' @param dir Output directory where to save the subset data.
 #'
@@ -16,10 +17,12 @@ NULL
 
 # Methods ====
 #' @rdname subsetPerSample
+#' @importFrom dplyr pull
+#' @importFrom pbapply pblapply
 #' @export
 setMethod(
     "subsetPerSample",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(
         object,
         minCells = 200,
@@ -27,7 +30,7 @@ setMethod(
         dir.create(dir, recursive = TRUE, showWarnings = FALSE)
         sampleIDs <- sampleMetadata(object) %>%
             pull("sampleID")
-        pbsapply(seq_along(sampleIDs), function(a) {
+        pblapply(seq_along(sampleIDs), function(a) {
             sampleID <- sampleIDs[[a]]
             subset <- selectSamples(
                 object,

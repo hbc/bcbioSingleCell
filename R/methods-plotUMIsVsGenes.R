@@ -11,10 +11,11 @@ NULL
 
 
 # Constructors ====
+#' @importFrom viridis scale_color_viridis
 .plotUMIsVsGenes <- function(
     object,
     interestingGroups = "sampleName",
-    filterCells = FALSE,
+    filterCells = TRUE,
     aggregateReplicates = TRUE) {
     metrics <- metrics(
         object,
@@ -88,5 +89,5 @@ NULL
 #' @export
 setMethod(
     "plotUMIsVsGenes",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotUMIsVsGenes)
