@@ -16,6 +16,8 @@ NULL
 
 
 # Constructors ====
+#' @importFrom basejump camel readFileByExtension
+#' @importFrom dplyr arrange distinct left_join pull
 #' @importFrom rlang syms !!!
 .readMarkers <- function(object, gene2symbol) {
     if (!is.data.frame(gene2symbol)) {
@@ -31,7 +33,7 @@ NULL
     }
 
     markers <- readFileByExtension(object) %>%
-        camel()
+        camel(strict = FALSE)
 
     # Match the markers file by Ensembl gene identifier, otherwise symbol
     if ("ensgene" %in% colnames(markers)) {
@@ -65,7 +67,7 @@ NULL
             stop(paste("Bad symbols:", toString(missing)))
         }
     } else {
-        stop("Marker file must contain 'ensgene' or 'symbol'")
+        stop("Marker file must contain 'ensgene' or 'symbol'", call. = FALSE)
     }
 
     markers %>%
