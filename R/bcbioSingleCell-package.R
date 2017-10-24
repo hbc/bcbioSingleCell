@@ -7,13 +7,14 @@
 #' @name bcbioSingleCell-package
 #' @docType package
 #'
-#' @import basejump methods SummarizedExperiment
+#' @import methods SummarizedExperiment
 #'
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @importFrom S4Vectors metadata
 #' @importFrom utils globalVariables
 NULL
 
