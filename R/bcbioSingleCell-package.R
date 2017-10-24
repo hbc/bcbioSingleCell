@@ -18,5 +18,5 @@
 #' @importFrom utils globalVariables
 NULL
 
-utils::globalVariables(".")
+globalVariables(".")
 projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
