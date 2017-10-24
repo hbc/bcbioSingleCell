@@ -3,8 +3,10 @@
 #' @rdname selectSamples
 #' @name selectSamples
 #'
+#' @importFrom basejump selectSamples
+#'
 #' @details Internally, pattern matching against sample and file names is
-#'   applied using [str_detect()].
+#'   applied using logical grep matching.
 #'
 #' @note Bracket based subsetting with `[` also works on [bcbioSingleCell]
 #'   objects. In this case, provide cellular barcode identifiers for columns
@@ -31,6 +33,8 @@ NULL
 
 
 # Constructors ====
+#' @importFrom basejump prepareSummarizedExperiment
+#' @importFrom dplyr pull
 #' @importFrom magrittr set_rownames
 #' @importFrom rlang is_string
 .selectSamples <- function(object, ...) {
@@ -42,7 +46,7 @@ NULL
         if (is_string(pattern)) {
             # Use grep pattern matching on string
             match <- sampleMetadata %>%
-                .[str_detect(.[[col]], pattern), , drop = FALSE]
+                .[grepl(x = .[[col]], pattern = pattern), , drop = FALSE]
         } else if (is.character(pattern)) {
             # Use exact matching if vector supplied
             match <- sampleMetadata %>%
@@ -71,8 +75,10 @@ NULL
         paste0(collapse = "|") %>%
         paste0("^(", ., ")_")
     cellularBarcodeMatches <- colnames(object) %>%
-        .[str_detect(., cellularBarcodePattern)]
-    if (!length(cellularBarcodeMatches)) stop("No cellular barcodes matched")
+        .[grepl(x = ., pattern = cellularBarcodePattern)]
+    if (!length(cellularBarcodeMatches)) {
+        stop("No cellular barcodes matched")
+    }
     message(paste(length(cellularBarcodeMatches), "cellular barcodes"))
 
     # Return the bcbioSingleCell object
