@@ -62,7 +62,7 @@ NULL
 #'   scale_radius
 #' @importFrom Seurat FetchData
 #' @importFrom tibble rownames_to_column
-#' @importFrom rlang syms !!!
+#' @importFrom rlang !! !!! sym syms
 #' @importFrom tidyr gather
 #' @export
 setMethod("plotDot", "seurat", function(
@@ -73,7 +73,7 @@ setMethod("plotDot", "seurat", function(
     colMax = 2.5,
     dotMin = 0,
     dotScale = 6) {
-    data <- Seurat::FetchData(object, vars.all = genes) %>%
+    data <- FetchData(object, vars.all = genes) %>%
         as.data.frame() %>%
         rownames_to_column("cell") %>%
         mutate(ident = object@ident) %>%
