@@ -5,7 +5,6 @@
 \alias{aggregateFeatures}
 \alias{aggregateFeatures,bcbioSingleCell-method}
 \alias{aggregateFeatures,dgCMatrix-method}
-\alias{aggregateFeatures,dgTMatrix-method}
 \title{Aggregate Features}
 \usage{
 aggregateFeatures(object, ...)
@@ -13,8 +12,6 @@ aggregateFeatures(object, ...)
 \S4method{aggregateFeatures}{bcbioSingleCell}(object, featureids)
 
 \S4method{aggregateFeatures}{dgCMatrix}(object, featureids)
-
-\S4method{aggregateFeatures}{dgTMatrix}(object, featureids)
 }
 \arguments{
 \item{object}{Sparse counts matrix (e.g. \link{dgCMatrix}).}
@@ -24,9 +21,7 @@ aggregateFeatures(object, ...)
 \item{featureids}{Feature identifiers (e.g. gene or transcript IDs).}
 }
 \value{
-\link{dgCMatrix}.
-
-\link{bcbioSingleCell}.
+\code{dgCMatrix}.
 }
 \description{
 Aggregate Features
