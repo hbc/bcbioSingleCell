@@ -18,6 +18,9 @@ NULL
 
 
 # Constructors ====
+#' @importFrom dplyr left_join
+#' @importFrom ggplot2 aes_ aes_string element_text geom_boxplot geom_label labs
+#'   scale_y_sqrt theme
 #' @importFrom viridis scale_fill_viridis
 .plotGenesPerCellBoxplot <- function(
     object,
@@ -84,12 +87,10 @@ NULL
 
     # Cutoff lines
     if (min > 0) {
-        p <- p +
-            .qcCutoffLine(yintercept = min)
+        p <- p + .qcCutoffLine(yintercept = min)
     }
     if (max < Inf) {
-        p <- p +
-            .qcCutoffLine(yintercept = max)
+        p <- p + .qcCutoffLine(yintercept = max)
     }
 
     # Facets
@@ -102,14 +103,11 @@ NULL
         "sampleNameAggregate" %in% colnames(metrics)) {
         facets <- c(facets, "sampleNameAggregate")
         if (interestingGroups == "sampleName") {
-            p <- p +
-                theme(legend.position = "none")
+            p <- p + theme(legend.position = "none")
         }
     }
     if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets,
-                       scales = "free_x")
+        p <- p + facet_wrap(facets = facets, scales = "free_x")
     }
 
     p
