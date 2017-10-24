@@ -37,7 +37,7 @@ setMethod(
     "fetchTSNEExpressionData",
     signature("seurat"), function(
         object, genes) {
-        dat <- Seurat::FetchData(object, vars.all = genes) %>%
+        dat <- FetchData(object, vars.all = genes) %>%
             as.data.frame()
         dat[["geomean"]] <- Matrix::colMeans(t(dat))
         dat <- dat %>%
