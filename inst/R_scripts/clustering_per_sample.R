@@ -10,7 +10,8 @@ opts_chunk[["set"]](
 
 loadData(bcb)
 
-sampleIDs <- sampleMetadata(bcb) %>% pull("sampleID")
+sampleIDs <- sampleMetadata(bcb) %>%
+    pull("sampleID")
 sampleSubsets <- pblapply(seq_along(sampleIDs), function(a) {
     sampleID <- sampleIDs[[a]]
     subset <- selectSamples(bcb, sampleID = sampleID)
