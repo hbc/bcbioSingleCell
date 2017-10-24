@@ -129,7 +129,9 @@ setMethod("pcCutoff", "seurat", function(
     # seurat slot descriptions
     # dr: dimensionality reduction
     # sdev: standard deviation
-    sd <- object@dr[["pca"]]@sdev
+    sd <- slot(object, "dr") %>%
+        .[["pca"]] %>%
+        slot("sdev")
     .pcCutoff(
         sd,
         maxPct = maxPct,
