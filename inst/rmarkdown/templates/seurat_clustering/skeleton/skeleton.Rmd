@@ -34,11 +34,11 @@ bcb <- get(bcbName, inherits = FALSE)
 
 # Seurat object names and file paths
 seuratFile <- file.path(dataDir, paste0(params$seuratName, ".rda"))
-seuratPreregressName <- paste0(params$seuratName, "Preregress")
+seuratPreregressName <- paste(params$seuratName, "preregress", sep = "_")
 seuratPreregressFile <- file.path(dataDir, paste0(seuratPreregressName, ".rda"))
 
 # Check to see if seurat objects exist
-if (exists(c("seurat", "seuratPregress"), inherits = FALSE)) {
+if (exists(c(params$seuratName, seuratPreregressName), inherits = FALSE)) {
     evalSeurat <- FALSE
 } else {
     if (all(file.exists(seuratFile, seuratPreregressFile))) {
@@ -52,7 +52,12 @@ if (exists(c("seurat", "seuratPregress"), inherits = FALSE)) {
 }
 
 # Vector to use for plot looping
-groupBy <- c("ident", "sampleName", "phase", metadata(bcb)$interestingGroups)
+if (length(unique(seurat@meta.data$sampleName)) == 1) {
+    groupBy <- "ident"
+} else {
+    groupBy <- c("ident", "sampleName", "phase",
+                 metadata(bcb)$interestingGroups)
+}
 
 # knitr arguments (for `rmarkdown::render()` looping)
 opts_chunk$set(
@@ -317,11 +322,13 @@ lapply(seq_along(groupBy), function(a) {
     plotTSNE(
         seurat,
         interestingGroup = groupBy[[a]],
-        label = label)
+        label = label) %>%
+        show()
     plotPCA(
         seurat,
         interestingGroup = groupBy[[a]],
-        label = label)
+        label = label) %>%
+        show()
 }) %>%
     invisible()
 ```
