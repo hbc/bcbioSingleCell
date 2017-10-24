@@ -22,7 +22,7 @@ Select Samples
 }
 \details{
 Internally, pattern matching against sample and file names is
-applied using \code{\link[=str_detect]{str_detect()}}.
+applied using logical grep matching.
 }
 \note{
 Bracket based subsetting with \code{[} also works on [bcbioSingleCell]

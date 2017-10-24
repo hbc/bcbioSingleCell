@@ -4,7 +4,6 @@
 \name{metrics}
 \alias{metrics}
 \alias{metrics,bcbioSingleCell-method}
-\alias{metrics,bcbioSingleCellLegacy-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{

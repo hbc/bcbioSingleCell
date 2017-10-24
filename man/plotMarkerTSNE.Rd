@@ -42,8 +42,8 @@ top <- topMarkers(markers)
 
 # Let's take the top markers specific to cluster 0, as an example
 genes <- top \%>\%
-    filter(cluster == 0) \%>\%
-    pull(symbol)
+    dplyr::filter(cluster == 0) \%>\%
+    dplyr::pull(symbol)
 
 # Fetch the t-SNE expression data for the desired gene symbols
 dat <- fetchTSNEExpressionData(seurat, genes = genes)
@@ -54,7 +54,7 @@ plotTSNE(dat, colorpoints = "geomean")
 
 # To make faceted t-SNE plot of each gene (looks good at up to 6 genes)
 plotTSNE(dat, colorpoints = "expression") +
-    facet_wrap(~gene)
+    ggplot2::facet_wrap(~gene)
 }
 }
 \seealso{

@@ -4,13 +4,9 @@
 \name{counts}
 \alias{counts}
 \alias{counts,bcbioSingleCell-method}
-\alias{counts,bcbioSingleCellLegacy-method}
 \title{Counts Accessor}
 \usage{
 \S4method{counts}{bcbioSingleCell}(object, gene2symbol = FALSE,
-  as = "dgCMatrix")
-
-\S4method{counts}{bcbioSingleCellLegacy}(object, gene2symbol = FALSE,
   as = "dgCMatrix")
 }
 \arguments{
