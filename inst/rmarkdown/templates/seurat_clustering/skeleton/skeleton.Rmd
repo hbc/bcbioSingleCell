@@ -161,7 +161,7 @@ RunPCA(
     seuratPreregress,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
-    plotPCA(interestingGroup = "phase")
+    plotPCA(interestingGroups = "phase")
 ```
 
 
@@ -180,7 +180,7 @@ RunPCA(
     seurat,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
-    plotPCA(interestingGroup = "phase")
+    plotPCA(interestingGroups = "phase")
 ```
 
 
@@ -321,12 +321,12 @@ lapply(seq_along(groupBy), function(a) {
     }
     plotTSNE(
         seurat,
-        interestingGroup = groupBy[[a]],
+        interestingGroups = groupBy[[a]],
         label = label) %>%
         show()
     plotPCA(
         seurat,
-        interestingGroup = groupBy[[a]],
+        interestingGroups = groupBy[[a]],
         label = label) %>%
         show()
 }) %>%
