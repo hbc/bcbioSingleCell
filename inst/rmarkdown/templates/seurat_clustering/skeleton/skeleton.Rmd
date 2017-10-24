@@ -161,7 +161,7 @@ RunPCA(
     seuratPreregress,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
-    plotPCA(interestingGroups = "phase")
+    plotPCA(interestingGroups = "phase", label = FALSE)
 ```
 
 
@@ -180,7 +180,7 @@ RunPCA(
     seurat,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
-    plotPCA(interestingGroups = "phase")
+    plotPCA(interestingGroups = "phase", label = FALSE)
 ```
 
 
