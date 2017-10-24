@@ -19,7 +19,7 @@ NULL
 #' @importFrom Seurat FeaturePlot
 #' @export
 setMethod("plotFeatures", "seurat", function(object, features) {
-    Seurat::FeaturePlot(
+    FeaturePlot(
         object,
         features.plot = features,
         cols.use = c("white", "black"),
