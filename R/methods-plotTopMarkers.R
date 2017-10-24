@@ -13,6 +13,7 @@ NULL
 
 
 # Constructors ====
+#' @importFrom dplyr pull rename
 .plotTopMarkers <- function(
     object,
     topMarkers,
@@ -20,7 +21,7 @@ NULL
     headerLevel = 2) {
     # Fix for gene symbol mismatch
     if ("gene" %in% colnames(topMarkers)) {
-        topMarkers <- dplyr::rename(topMarkers, symbol = .data[["gene"]])
+        topMarkers <- rename(topMarkers, symbol = .data[["gene"]])
     }
     clusters <- topMarkers[["cluster"]] %>% levels
     pblapply(seq_along(clusters), function(a) {
