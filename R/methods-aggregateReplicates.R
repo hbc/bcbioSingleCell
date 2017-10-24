@@ -50,6 +50,6 @@ setMethod(
 #' @rdname aggregateReplicates
 #' @export
 setMethod(
-    "aggregateReplicatess",
+    "aggregateReplicates",
     signature("dgCMatrix"),
     .aggregateSparseReplicates)
