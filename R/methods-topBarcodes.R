@@ -46,5 +46,5 @@ NULL
 #' @export
 setMethod(
     "topBarcodes",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .topBarcodes)

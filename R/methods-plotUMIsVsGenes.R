@@ -89,5 +89,5 @@ NULL
 #' @export
 setMethod(
     "plotUMIsVsGenes",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotUMIsVsGenes)

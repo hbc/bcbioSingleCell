@@ -16,7 +16,7 @@ NULL
 #' @export
 setMethod(
     "interestingGroups",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(object) {
         metadata(object)[["interestingGroups"]]
     })

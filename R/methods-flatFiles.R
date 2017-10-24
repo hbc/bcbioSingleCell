@@ -19,7 +19,7 @@ NULL
 #' @export
 setMethod(
     "flatFiles",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(object) {
         list(
             assays = assays(object),

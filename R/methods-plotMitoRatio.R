@@ -296,5 +296,5 @@ NULL
 #' @export
 setMethod(
     "plotMitoRatio",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotMitoRatio)

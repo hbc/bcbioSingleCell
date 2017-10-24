@@ -173,6 +173,11 @@ loadSingleCell <- function(
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
+        if (str_detect(umiType, "indrop")) {
+            # Enforce `sampleMetadataFile` for multiplexed samples
+            stop("'sampleMetadataFile' is required for multiplexed samples",
+                 call. = FALSE)
+        }
         sampleMetadata <- sampleYAMLMetadata(yaml)
     }
     # Check that `sampleID` matches `sampleDirs`

@@ -402,5 +402,5 @@ NULL
 #' @export
 setMethod(
     "plotReadsPerCell",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotReadsPerCell)

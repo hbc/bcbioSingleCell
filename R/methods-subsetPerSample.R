@@ -22,7 +22,7 @@ NULL
 #' @export
 setMethod(
     "subsetPerSample",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     function(
         object,
         minCells = 200,

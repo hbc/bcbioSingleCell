@@ -3,10 +3,10 @@
 \docType{methods}
 \name{interestingGroups}
 \alias{interestingGroups}
-\alias{interestingGroups,bcbioSingleCellANY-method}
+\alias{interestingGroups,bcbioSingleCell-method}
 \title{Interesting Groups}
 \usage{
-\S4method{interestingGroups}{bcbioSingleCellANY}(object)
+\S4method{interestingGroups}{bcbioSingleCell}(object)
 }
 \arguments{
 \item{object}{Object.}

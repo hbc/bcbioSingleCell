@@ -238,5 +238,5 @@ NULL
 #' @export
 setMethod(
     "plotGenesPerCell",
-    signature("bcbioSingleCellANY"),
+    signature("bcbioSingleCell"),
     .plotGenesPerCell)

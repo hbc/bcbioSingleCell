@@ -3,12 +3,12 @@
 \docType{methods}
 \name{topBarcodes}
 \alias{topBarcodes}
-\alias{topBarcodes,bcbioSingleCellANY-method}
+\alias{topBarcodes,bcbioSingleCell-method}
 \title{Top Barcodes}
 \usage{
 topBarcodes(object, ...)
 
-\S4method{topBarcodes}{bcbioSingleCellANY}(object, n = 10)
+\S4method{topBarcodes}{bcbioSingleCell}(object, n = 10)
 }
 \arguments{
 \item{object}{Object.}
