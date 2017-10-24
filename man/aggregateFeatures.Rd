@@ -14,7 +14,7 @@ aggregateFeatures(object, ...)
 \S4method{aggregateFeatures}{dgCMatrix}(object, featureids)
 }
 \arguments{
-\item{object}{Sparse counts matrix (e.g. \link{dgCMatrix}).}
+\item{object}{Sparse counts matrix (e.g. \code{dgCMatrix}).}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 

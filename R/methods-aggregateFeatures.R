@@ -8,7 +8,7 @@
 #'
 #' @inheritParams AllGenerics
 #'
-#' @param object Sparse counts matrix (e.g. [dgCMatrix]).
+#' @param object Sparse counts matrix (e.g. `dgCMatrix`).
 #' @param featureids Feature identifiers (e.g. gene or transcript IDs).
 #'
 #' @return `dgCMatrix`.
