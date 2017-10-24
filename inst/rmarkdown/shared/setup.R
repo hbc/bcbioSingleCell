@@ -1,4 +1,5 @@
 library(bcbioSingleCell)
+library(knitr)
 library(viridis)
 library(stringr)
 library(tidyverse)
@@ -6,7 +7,7 @@ library(tidyverse)
 # Set seed for reproducibility
 set.seed(1454944673)
 
-knitr::opts_chunk[["set"]](
+opts_chunk[["set"]](
     audodep = TRUE,
     cache = FALSE,
     cache.lazy = FALSE,
