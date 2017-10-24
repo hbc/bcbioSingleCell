@@ -5,8 +5,6 @@
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
-#' @importFrom pbapply pblapply
-#'
 #' @inheritParams AllGenerics
 #'
 #' @param minCells Minimum number of cells required per sample.
@@ -19,6 +17,8 @@ NULL
 
 # Methods ====
 #' @rdname subsetPerSample
+#' @importFrom dplyr pull
+#' @importFrom pbapply pblapply
 #' @export
 setMethod(
     "subsetPerSample",
