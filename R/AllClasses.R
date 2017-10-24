@@ -63,10 +63,3 @@ bcbioSCFiltered <- setClass(
     "bcbioSCFiltered",
     contains = "SummarizedExperiment")
 setValidity("bcbioSCFiltered", function(object) TRUE)
-
-
-
-setClassUnion(
-    name = "bcbioSingleCellLegacy",
-    members = c("bcbioSCDataSet",
-                "bcbioSCFiltered"))
