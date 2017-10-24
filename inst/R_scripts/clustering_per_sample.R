@@ -1,6 +1,13 @@
 library(pbapply)
 library(rmarkdown)
 source("setup.R")
+
+# Enforce caching
+opts_chunk[["set"]](
+    audodep = TRUE,
+    cache = TRUE,
+    cache.lazy = FALSE)
+
 loadData(bcb)
 
 sampleIDs <- sampleMetadata(bcb) %>% pull("sampleID")
