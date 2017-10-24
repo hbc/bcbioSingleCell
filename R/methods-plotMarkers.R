@@ -72,7 +72,7 @@ NULL
         .[[1]] %>%
         .[["data"]] %>%
         # Remove the low expression features
-        dplyr::filter(.data[["feature"]] > lowExpressionCutoff) %>%
+        filter(.data[["feature"]] > lowExpressionCutoff) %>%
         ggplot(
             mapping = aes_string(
                 x = "ident",
@@ -97,7 +97,7 @@ NULL
         .[[1]] %>%
         .[["data"]] %>%
         # Remove the low expression features
-        dplyr::filter(.data[["feature"]] > lowExpressionCutoff) %>%
+        filter(.data[["feature"]] > lowExpressionCutoff) %>%
         ggplot(
             mapping = aes_string(
                 x = "feature",
