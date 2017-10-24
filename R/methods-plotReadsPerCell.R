@@ -26,6 +26,9 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom dplyr group_by left_join mutate
+#' @importFrom rlang !! sym
+#'
 #' @inheritParams plotReadsPerCell
 #'
 #' @return [tibble] grouped by `sampleName` containing `log10Count` values.
@@ -70,6 +73,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom dplyr bind_rows left_join mutate
 #' @importFrom parallel mclapply
 #' @importFrom tibble tibble
 #'
