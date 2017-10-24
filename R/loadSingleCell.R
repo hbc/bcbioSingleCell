@@ -28,9 +28,10 @@
 #'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
 #'   annotation mappings.
 #' @param prefilter Prefilter counts prior to quality control analysis.
-#' @param ensemblVersion Ensembl release version. Defaults to current, and does
-#'   not typically need to be user-defined. This parameter can be useful for
-#'   matching Ensembl annotations against an outdated bcbio annotation build.
+#' @param ensemblVersion Ensembl release version. Defaults to "current", and
+#'   does not typically need to be user-defined. This parameter can be useful
+#'   for matching Ensembl annotations against an outdated bcbio annotation
+#'   build.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return [bcbioSingleCell].
