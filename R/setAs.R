@@ -23,8 +23,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom S4Vectors metadata
-#'
 #' @inheritParams coerce
 #'
 #' @return Metadata [list].
@@ -54,8 +52,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom S4Vectors metadata
-#' @importFrom SummarizedExperiment assay assays rowData
 #' @importFrom utils packageVersion
 #'
 #' @return [bcbioSingleCell] object.
@@ -69,12 +65,11 @@ NULL
         ), call. = FALSE)
     }
     message(paste(
-        "Upgrading from",
-        version,
-        "to",
-        packageVersion("bcbioSingleCell")
+        "Upgrading from", version, "to", packageVersion("bcbioSingleCell")
     ))
-    message(paste("Existing metadata:", toString(names(metadata(from)))))
+    message(paste(
+        "Existing metadata:", toString(names(metadata(from)))
+    ))
 
     assays <- assays(from)
     rowData <- rowData(from)
@@ -122,8 +117,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom BiocGenerics counts
-#' @importFrom S4Vectors metadata
 #' @importFrom Seurat CreateSeuratObject FindVariableGenes NormalizeData
 #'   ScaleData
 #'
@@ -150,23 +143,23 @@ NULL
         filterCells = FALSE)
     # Add a call to `aggregateReplicates()` here to combine the counts per
     # sample before passing to Seurat, if technical replicates are present?
-    seurat <- Seurat::CreateSeuratObject(
+    seurat <- CreateSeuratObject(
         raw.data = rawData,
         project = "bcbioSingleCell",
         min.cells = minCells,
         min.genes = minGenes,
         is.expr = 0,  # Default for UMI datasets
         meta.data = metadata) %>%
-        Seurat::NormalizeData(
+        NormalizeData(
             object = .,
             normalization.method = "LogNormalize",
             scale.factor = 10000) %>%
-        Seurat::FindVariableGenes(
+        FindVariableGenes(
             object = .,
             mean.function = ExpMean,
             dispersion.function = LogVMR,
             do.plot = FALSE) %>%
-        Seurat::ScaleData(
+        ScaleData(
             object = .,
             model.use = "linear")
 
