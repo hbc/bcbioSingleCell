@@ -14,7 +14,7 @@
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
-#' @importFrom S4Vectors metadata
+#' @importFrom S4Vectors aggregate metadata
 #' @importFrom utils globalVariables
 NULL
 
