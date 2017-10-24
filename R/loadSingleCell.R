@@ -118,7 +118,7 @@ loadSingleCell <- function(
     # Detect MatrixMarket output at transcript or gene level
     # This grep pattern may not be strict enough against the file path
     genemapPattern <- "--genemap (.+)-tx2gene.tsv"
-    if (any(grepl(x = bcbioCommandsLog, genemapPattern))) {
+    if (any(grepl(x = bcbioCommandsLog, pattern = genemapPattern))) {
         countsLevel <- "gene"
     } else {
         countsLevel <- "transcript"
