@@ -10,7 +10,7 @@
 #'   prepareSummarizedExperiment readDataVersions readGTF readLogFile
 #'   readProgramVersions readSampleMetadataFile readYAML sampleYAMLMetadata
 #'   tx2geneFromGTF
-#' @importFrom dplyr filter left_join mutate pull select
+#' @importFrom dplyr everything filter left_join mutate pull select
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
 #' @importFrom stats na.omit setNames
@@ -121,7 +121,7 @@ loadSingleCell <- function(
         file.path(projectDir, "programs.txt"))
     if (!is.null(dataVersions)) {
         genomeBuild <- dataVersions %>%
-            dplyr::filter(.data[["resource"]] == "transcripts") %>%
+            filter(.data[["resource"]] == "transcripts") %>%
             pull("genome")
     } else {
         # Data versions aren't saved when using a custom FASTA
@@ -173,7 +173,7 @@ loadSingleCell <- function(
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
-        if (str_detect(umiType, "indrop")) {
+        if (grepl(x = umiType, pattern = "indrop")) {
             # Enforce `sampleMetadataFile` for multiplexed samples
             stop("'sampleMetadataFile' is required for multiplexed samples",
                  call. = FALSE)
@@ -267,7 +267,7 @@ loadSingleCell <- function(
         as.data.frame() %>%
         rownames_to_column("cellID") %>%
         left_join(cellularBarcodesTibble, by = "cellID") %>%
-        dplyr::select("nCount", everything()) %>%
+        select("nCount", everything()) %>%
         column_to_rownames("cellID")
 
     # Metadata =================================================================
