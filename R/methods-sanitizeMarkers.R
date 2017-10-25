@@ -20,41 +20,43 @@ NULL
 .sanitizeMarkersSeurat <- function(
     object,
     markers) {
-    # Check for original `Seurat::FindAllMarkers()` return.
-    # These columns are output in an inconsistent format, so we'll sanitize
-    # into lowerCamelCase.
-    seuratCols <-
-        c("avg_diff",   # legacy, now "avg_logFC"
-          "avg_logFC",  # renamed in v2.1
-          "cluster",
-          "gene",       # gene symbol, we'll rename to "symbol"
-          "p_val",      # we'll rename to pvalue, matching DESeq2
-          "p_val_adj",  # new in v2.1, we'll rename to padj, matching DESeq2
-          "pct.1",
-          "pct.2")
-    if (all(colnames(markers) %in% seuratCols)) {
-        message("Original Seurat markers return detected")
-        # Rename specific columns prior to camelCase
-        if ("gene" %in% colnames(markers)) {
-            markers <- rename(markers, symbol = .data[["gene"]])
-        }
-        if ("p_val" %in% colnames(markers)) {
-            markers <- rename(markers, pvalue = .data[["p_val"]])
-        }
-        if ("p_val_adj" %in% colnames(markers)) {
-            markers <- rename(markers, padj = .data[["p_val_adj"]])
-        }
-    } else {
-        stop(paste(
-            "Failed to match the original Seurat marker columns.",
-            "Has the 'markers' data.frame already been sanitized?",
-            "If not, check to see if the Seurat code has changed.",
-            "Columns should resemble (legacy included):",
-            toString(seuratCols)
-        ), call. = FALSE)
+    sanitized <- .checkSanitizedMarkers(markers, package = "Seurat")
+    # Message and return unmodified, if already sanitized
+    if (isTRUE(sanitized)) {
+        message("Markers are already sanitized")
+        return(markers)
+    }
+
+    # Update legacy columns
+    if ("avg_diff" %in% colnames(markers)) {
+        message(paste(
+            "Renaming legacy 'avg_diff' to 'avg_logFC'",
+            "(changed in Seurat v2.1)"
+        ))
+    }
+
+    # Rename specific columns prior to camelCase
+    if ("gene" %in% colnames(markers)) {
+        message("Renaming 'gene' to 'symbol'")
+        markers <- rename(markers, symbol = .data[["gene"]])
+    }
+    if ("p_val" %in% colnames(markers)) {
+        message(paste(
+            "Renaming 'p_val' to 'pvalue'",
+            "(matching DESeq2)"
+        ))
+        markers <- rename(markers, pvalue = .data[["p_val"]])
+    }
+    if ("p_val_adj" %in% colnames(markers)) {
+        message(paste(
+            "Renaming 'p_val_adj' to 'padj'",
+            "(matching DESeq2)"
+        ))
+        markers <- rename(markers, padj = .data[["p_val_adj"]])
     }
 
     # Sanitize column names into lowerCamelCase
+    message("Converting columns into camelCase")
     markers <- camel(markers, strict = FALSE)
 
     # Check for ensgene and add from `gene2symbol` if necessary
@@ -89,7 +91,7 @@ NULL
     }
 
     # Check for annotable annotations and add if necessary
-    if (!"biotype" %in% colnames(markers)) {
+    if (!"description" %in% colnames(markers)) {
         message("Adding stashed Ensembl annotations")
         annotable <- slot(object, "misc") %>%
             .[["bcbio"]] %>%
@@ -101,12 +103,14 @@ NULL
 
     # Ensure that required columns are present
     requiredCols <- c(
-        "biotype",
-        "cluster",
-        "description",
-        "ensgene",
-        "pvalue",
-        "symbol")
+        "avgLogFC",     # Seurat v2.1
+        "biotype",      # Ensembl annotations
+        "cluster",      # Unmodified
+        "description",  # Ensembl annotations
+        "ensgene",      # Ensembl annotations
+        "pvalue",       # Renamed from `p_val`
+        "symbol"        # Renamed from `gene`
+    )
     if (!all(requiredCols %in% colnames(markers))) {
         stop(paste(
             "Marker data.frame must contain:",
@@ -117,9 +121,11 @@ NULL
     markers %>%
         remove_rownames() %>%
         as_tibble() %>%
+        # Ensure all the annotations added are camelCase
         camel(strict = FALSE) %>%
         select(c("cluster", "symbol"), everything()) %>%
         group_by(.data[["cluster"]]) %>%
+        # Arrange by P value
         arrange(!!sym("pvalue"), .by_group = TRUE)
 }
 
