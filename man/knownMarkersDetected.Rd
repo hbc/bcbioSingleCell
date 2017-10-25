@@ -9,7 +9,7 @@
 knownMarkersDetected(all, known, ...)
 
 \S4method{knownMarkersDetected}{grouped_df,tbl_df}(all, known,
-  removePromiscuous = FALSE)
+  removePromiscuous = TRUE)
 }
 \arguments{
 \item{all}{\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}

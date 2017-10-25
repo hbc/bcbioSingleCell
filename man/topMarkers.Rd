@@ -8,7 +8,8 @@
 \usage{
 topMarkers(object, ...)
 
-\S4method{topMarkers}{grouped_df}(object, n = 10, coding = TRUE)
+\S4method{topMarkers}{grouped_df}(object, n = 10, direction = "positive",
+  coding = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -16,6 +17,9 @@ topMarkers(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{n}{Number of genes per cluster.}
+
+\item{direction}{Whether to include only \code{positive}, \code{negative}, or \code{both}
+directions of association per cluster. Defaults to \code{positive}.}
 
 \item{coding}{Only include protein coding genes.}
 }
