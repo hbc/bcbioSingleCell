@@ -33,4 +33,5 @@ pblapply(seq_along(sampleSubsets), function(a) {
                bcbFile = bcbFile,
                seuratName = seuratName
            ))
-})
+}) %>%
+    invisible()
