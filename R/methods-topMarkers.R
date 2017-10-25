@@ -28,6 +28,11 @@ NULL
     n = 10,
     coding = TRUE) {
     .validMarkers(object)
+    .checkSanitizedMarkers(object, stop = TRUE)
+    # Check to make sure `avgLogFC` column exists
+    if (!"avgLogFC" %in% colnames(object)) {
+        stop("'avgLogFC' column missing")
+    }
     if (isTRUE(coding)) {
         object <- object %>%
             filter(.data[["biotype"]] == "protein_coding") %>%
@@ -37,7 +42,8 @@ NULL
     }
     object %>%
         # Use only the positive markers
-        filter(.data[["avgDiff"]] > 0) %>%
+        # `avgDiff` renamed to `avgLogFC` in Seurat v2.1
+        filter(.data[["avgLogFC"]] > 0) %>%
         # Arrange by P value
         arrange(!!sym("pvalue")) %>%
         # Take the top rows by using slice
