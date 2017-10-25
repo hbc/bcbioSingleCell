@@ -20,9 +20,9 @@ NULL
 .sanitizeMarkersSeurat <- function(
     object,
     markers) {
-    sanitized <- .checkSanitizedMarkers(markers, package = "Seurat")
+    sanitizedMarkers <- .checkSanitizedMarkers(markers, package = "Seurat")
     # Message and return unmodified, if already sanitized
-    if (isTRUE(sanitized)) {
+    if (isTRUE(sanitizedMarkers)) {
         message("Markers are already sanitized")
         return(markers)
     }
