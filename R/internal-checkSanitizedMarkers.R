@@ -7,11 +7,13 @@
 #' @param object Input should be a sanitized markers [data.frame], returned from
 #'   [sanitizeMarkers()].
 #' @param package Name of package used to generate the markers.
+#' @param stop Stop on failure, instead of returning `FALSE`.
 #'
 #' @return `TRUE` if sanitized, `FALSE` if not.
 .checkSanitizedMarkers <- function(
     object,
-    package = "Seurat") {
+    package = "Seurat",
+    stop = FALSE) {
     if (package == "Seurat") {
         # Check for `Seurat::FindAllMarkers()` return.
         # These columns are output in an inconsistent format, so we'll sanitize
@@ -26,12 +28,24 @@
               "pct.2")
         if (any(seuratBlacklist %in% colnames(object))) {
             # Original
-            FALSE
+            sanitized <- FALSE
         } else {
             # Sanitized
-            TRUE
+            sanitized <- TRUE
         }
     } else {
         stop("Unsupported package")
+    }
+
+    # Return or stop
+    # Silent return if sanitized = TRUE and stop = FALSE
+    if (identical(stop, FALSE)) {
+        sanitized
+    } else if (identical(stop, TRUE) &
+               identical(sanitized, FALSE)) {
+        stop(paste(
+            "Markers table doesn't sanitization checks.",
+            "Ensure that 'sanitizeMarkers()' has been run."
+        ), call. = FALSE)
     }
 }
