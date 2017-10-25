@@ -8,6 +8,8 @@
 #' @inheritParams AllGenerics
 #'
 #' @param n Number of genes per cluster.
+#' @param direction Whether to include only `positive`, `negative`, or `both`
+#'   directions of association per cluster. Defaults to `positive`.
 #' @param coding Only include protein coding genes.
 #'
 #' @seealso
@@ -26,12 +28,20 @@ NULL
 .topMarkers <- function(
     object,
     n = 10,
+    direction = "positive",
     coding = TRUE) {
-    .validMarkers(object)
     .checkSanitizedMarkers(object, stop = TRUE)
     # Check to make sure `avgLogFC` column exists
     if (!"avgLogFC" %in% colnames(object)) {
-        stop("'avgLogFC' column missing")
+        stop("'avgLogFC' column is required")
+    }
+    # Check for valid direction
+    directionArgs <- c("positive", "negative", "both")
+    if (!direction %in% directionArgs) {
+        stop(paste(
+            "Valid 'direction':",
+            toString(directionArgs)
+        ), call. = FALSE)
     }
     if (isTRUE(coding)) {
         object <- object %>%
@@ -40,10 +50,14 @@ NULL
             filter(!grepl(x = .data[["description"]],
                           pattern = "^predicted\\s"))
     }
+    # Subset to positive or negative correlation, if desired ("direction")
+    # Note that `avgDiff` has been renamed to `avgLogFC` in Seurat v2.1
+    if (direction == "positive") {
+        object <- filter(object, .data[["avgLogFC"]] > 0)
+    } else if (direction == "negative") {
+        object <- filter(object, .data[["avgLogFC"]] < 0)
+    }
     object %>%
-        # Use only the positive markers
-        # `avgDiff` renamed to `avgLogFC` in Seurat v2.1
-        filter(.data[["avgLogFC"]] > 0) %>%
         # Arrange by P value
         arrange(!!sym("pvalue")) %>%
         # Take the top rows by using slice
