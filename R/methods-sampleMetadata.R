@@ -87,7 +87,7 @@ setMethod(
         if (!is.null(bcbMeta)) {
             message(paste(
                 "Using bcbio sample metadata stashed in",
-                "'object@misc$bcbio'"
+                "'object@misc$bcbio$sampleMetadata'"
             ))
             df <- bcbMeta
         } else {
