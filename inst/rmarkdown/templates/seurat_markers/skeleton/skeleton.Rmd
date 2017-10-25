@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
     seuratFile: "data/seurat.rda"
-    markersFile: "meta/markers.xlsx"
+    markersFile: NULL
     outputDir: "."
 ---
 
@@ -26,11 +26,35 @@ dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 
 # Load bcbioSingleCell object
 seuratName <- load(params$seuratFile)
-seurat <- get(seurat, inherits = FALSE)
+seurat <- get(seuratName, inherits = FALSE)
 
-# Check to see if we need to process markers
-markersName <- paste0(seuratName, "Markers")
-markersFile <- file.path(dataDir, paste0(markersName, ".rda"))
+# Default to using our internal marker tibble managed on Google Sheets.
+if (!is.null(params$markersFile)) {
+    markers <- readFileByExtension(params$markersFile)
+} else {
+    # Detect the organism from the seurat object
+    organism <- slot(seurat, "misc") %>%
+        .[["bcbio"]] %>%
+        .[["organism"]]
+    if (is.null(organism)) {
+        stop("Organism is not slotted in 'seurat@misc$bcbio$organism'")
+    }
+    # Reformat organism name to match internal list (e.g. "mmusculus")
+    organismShorthand <- organism %>%
+        gsub(x = .,
+             pattern = "^([A-Z])[a-z]+\\s([a-z]+)$",
+             replacement = "\\L\\1\\2",
+             perl = TRUE)
+    # Load our internal cell type markers
+    cellTypeMarkers = get("cellTypeMarkers", asNamespace("bcbioSingleCell"))
+    # Check whether the organism is supported
+    if (!organismShorthand %in% names(cellTypeMarkers)) {
+        stop(paste("No internal markers for", organismShorthand))
+    }
+    markers <- cellTypeMarkers[[organismShorthand]]
+}
+
+# Attempt to load Seurat markers, if already calculated
 if (file.exists(markersFile)) {
     loadDataAsName(c(markers = markersFile))
     evalMarkers <- FALSE
