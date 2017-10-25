@@ -118,12 +118,23 @@ NULL
         ), call. = FALSE)
     }
 
+    # Return as a tibble
+    # Grouped by cluster
+    # Arranged by P value (per cluster)
     markers %>%
         remove_rownames() %>%
         as_tibble() %>%
         # Ensure all the annotations added are camelCase
         camel(strict = FALSE) %>%
-        select(c("cluster", "symbol"), everything()) %>%
+        select(c("cluster",
+                 "ensgene",
+                 "symbol",
+                 "pct1",
+                 "pct2",
+                 "avgLogFC",
+                 "pvalue"),
+               # `padj` should come after this, but isn't in legacy output
+               everything()) %>%
         group_by(.data[["cluster"]]) %>%
         # Arrange by P value
         arrange(!!sym("pvalue"), .by_group = TRUE)
