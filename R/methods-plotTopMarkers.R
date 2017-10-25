@@ -1,5 +1,10 @@
 #' Plot Top Markers
 #'
+#' @note The number of markers to plot is determined by the output of the
+#' [topMarkers()] function. If you want to reduce the number of genes to plot,
+#' simply reassign first using that function. If necessary, we can add support
+#' for the number of genes to plot here in a future update.
+#'
 #' @rdname plotTopMarkers
 #' @name plotTopMarkers
 #' @family Clustering Utilities
@@ -19,7 +24,7 @@ NULL
     topMarkers,
     pointsAsNumbers = FALSE,
     headerLevel = 2) {
-    .checkMarkers(topMarkers)
+    .checkSanitizedMarkers(topMarkers)
     clusters <- topMarkers[["cluster"]] %>%
         levels()
     pblapply(seq_along(clusters), function(a) {
@@ -41,6 +46,7 @@ NULL
                     genes = genes,
                     pointsAsNumbers = pointsAsNumbers,
                     headerLevel = headerLevel + 1)
+        # Don't show here, already defined in `plotMarkers()`
     }) %>%
         invisible()
 }
