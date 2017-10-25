@@ -19,11 +19,9 @@ NULL
     topMarkers,
     pointsAsNumbers = FALSE,
     headerLevel = 2) {
-    # Fix for gene symbol mismatch
-    if ("gene" %in% colnames(topMarkers)) {
-        topMarkers <- rename(topMarkers, symbol = .data[["gene"]])
-    }
-    clusters <- topMarkers[["cluster"]] %>% levels
+    .checkMarkers(topMarkers)
+    clusters <- topMarkers[["cluster"]] %>%
+        levels()
     pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
         genes <- topMarkers %>%
