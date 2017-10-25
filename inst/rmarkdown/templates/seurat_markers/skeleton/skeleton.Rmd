@@ -28,9 +28,11 @@ dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 seuratName <- load(params$seuratFile)
 seurat <- get(seuratName, inherits = FALSE)
 
-# Default to using our internal marker tibble managed on Google Sheets.
-if (!is.null(params$markersFile)) {
-    markers <- readFileByExtension(params$markersFile)
+# Default to using our internal cell type markers, managed on Google Sheets.
+# File on issue on the bcbioSingleCell GitHub repo if this list needs to get
+# updated or the desired organism isn't yet supported.
+if (!is.null(params$cellTypeMarkersFile)) {
+    cellTypeMarkers <- readFileByExtension(params$cellTypeMarkersFile)
 } else {
     # Detect the organism from the seurat object
     organism <- slot(seurat, "misc") %>%
@@ -51,12 +53,15 @@ if (!is.null(params$markersFile)) {
     if (!organismShorthand %in% names(cellTypeMarkers)) {
         stop(paste("No internal markers for", organismShorthand))
     }
-    markers <- cellTypeMarkers[[organismShorthand]]
+    cellTypeMarkers <- cellTypeMarkers[[organismShorthand]]
 }
 
-# Attempt to load Seurat markers, if already calculated
-if (file.exists(markersFile)) {
-    loadDataAsName(c(markers = markersFile))
+# Attempt to load all detected markers, if already saved. This step is
+# useful for regenerating the report when caching is disabled.
+seuratAllMarkersName <- paste(seuratName, "markers", sep = "_")
+seuratAllMarkersFile <- file.path(dataDir, paste0(seuratAllMarkersName, ".rda"))
+if (file.exists(seuratAllMarkersFile)) {
+    loadDataAsName(c(markers = seuratAllMarkersFile))
     evalMarkers <- FALSE
 } else {
     evalMarkers <- TRUE
