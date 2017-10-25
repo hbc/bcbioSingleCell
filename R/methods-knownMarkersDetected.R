@@ -38,8 +38,8 @@ NULL
 .knownMarkersDetected <- function(
     all,
     known,
-    removePromiscuous = FALSE) {
-    .validMarkers(all)
+    removePromiscuous = TRUE) {
+    .checkSanitizedMarkers(all, stop = TRUE)
     # Check for `ensgene` column in both `all` and `known`
     if (!"ensgene" %in% colnames(all) & "ensgene" %in% colnames(known)) {
         stop("'all' and 'known' objects must contain 'ensgene' column",
@@ -50,13 +50,13 @@ NULL
         stop("No 'ensgene' intersect between 'all' and 'known'",
              call. = FALSE)
     }
+    # Group by cell type and arrange by P value
     markers <- all %>%
         left_join(known[, c("cell", "ensgene")], by = "ensgene") %>%
         select(c("cell", "ensgene", "symbol", "cluster"), everything()) %>%
         filter(!is.na(.data[["cell"]])) %>%
-        .[order(.[["cell"]], .[["symbol"]], .[["pvalue"]], .[["avgDiff"]],
-                decreasing = c(FALSE, FALSE, FALSE, TRUE)), , drop = FALSE] %>%
-        group_by(!!sym("cell"))
+        group_by(.data[["cell"]]) %>%
+        arrange(.data[["pvalue"]], .by_group = TRUE)
     if (isTRUE(removePromiscuous)) {
         # Filter out promiscuous markers present in at least 5 clusters
         promiscuous <- markers %>%
@@ -64,10 +64,11 @@ NULL
             summarize(n = n()) %>%
             filter(n >= 5) %>%
             pull("ensgene")
-        warning(paste(
-            "Promiscuous markers:",
-            toString(promiscuous)),
-            call. = FALSE)
+        message(paste(
+            "Promiscuous markers:", toString(promiscuous)
+        ))
+        markers <- markers %>%
+            .[!.[["ensgene"]] %in% promiscuous, , drop = FALSE]
     }
     markers
 }
