@@ -40,7 +40,7 @@ NULL
             "Required columns:", toString(sort(requiredCols))
         ), call. = FALSE)
     }
-    groupCols <- quos("cluster", "cell")
+    groupCols <- syms(c("cluster", "cell"))
     tbl <- object %>%
         ungroup() %>%
         # Keep only positive markers
