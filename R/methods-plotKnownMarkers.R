@@ -35,8 +35,7 @@ NULL
         if (!is.null(genes)) {
             mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
             plotMarkers(object, genes = genes, headerLevel = headerLevel + 1)
-        } else {
-            NULL
+            # Show is already declared in `plotMarkers()`
         }
     }) %>%
         invisible()
