@@ -10,7 +10,8 @@
 plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat,grouped_df}(object,
-  cellTypesPerCluster, headerLevel = 2)
+  cellTypesPerCluster, color = scale_color_viridis(option = "inferno"),
+  dark = TRUE, headerLevel = 2)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,6 +20,11 @@ plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{color}{Color palette to use for points. Defaults to the inferno
+palette from the viridis package.}
+
+\item{dark}{Enable dark mode.}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
 }

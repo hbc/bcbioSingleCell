@@ -7,7 +7,7 @@
 \title{Plot Principal Component Analysis (PCA)}
 \usage{
 \S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
-  label = TRUE)
+  label = TRUE, dark = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -15,6 +15,8 @@
 \item{interestingGroups}{Interesting group to use for plot colors.}
 
 \item{label}{Label the clusters on the plot.}
+
+\item{dark}{Enable dark mode.}
 }
 \value{
 \link{ggplot}.

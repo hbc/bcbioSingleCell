@@ -9,7 +9,7 @@
 plotTSNE(object, ...)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
-  label = TRUE)
+  label = TRUE, dark = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,6 +19,8 @@ plotTSNE(object, ...)
 \item{interestingGroups}{Interesting group to use for plot colors.}
 
 \item{label}{Label the clusters on the plot.}
+
+\item{dark}{Enable dark mode.}
 }
 \value{
 \link{ggplot}.
