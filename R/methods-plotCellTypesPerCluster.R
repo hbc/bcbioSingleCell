@@ -27,7 +27,6 @@ NULL
 # Constructors ====
 #' @importFrom dplyr pull
 #' @importFrom pbapply pblapply
-#' @importFrom stringr str_split
 .plotCellTypesPerCluster <- function(
     object,
     cellTypesPerCluster,
@@ -43,11 +42,12 @@ NULL
             level = headerLevel,
             tabset = TRUE,
             asis = TRUE)
-        subset <- filter(cellTypesPerCluster, .data[["cluster"]] == cluster)
-        pblapply(seq_len(nrow(subset)), function(b) {
+        subset <- cellTypesPerCluster %>%
+                .[.[["cluster"]] == cluster, ]
+        lapply(seq_len(nrow(subset)), function(b) {
             cellType <- subset[b, ]
             genes <- pull(cellType, "symbol") %>%
-                str_split(", ") %>%
+                strsplit(", ") %>%
                 .[[1]]
             title <- pull(cellType, "cell")
             mdHeader(
