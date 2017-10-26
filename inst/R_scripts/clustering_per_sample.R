@@ -24,9 +24,9 @@ saveData(sampleSubsets)
 # Render RMarkdown reports per bcbioSingleCell subset file
 pblapply(seq_along(sampleSubsets), function(a) {
     bcbName <- sampleSubsets[[a]]
-    bcbFile <- paste0("data/", bcbName, ".rda")
+    bcbFile <- file.path("data", paste0(bcbName, ".rda"))
     seuratName <- paste(bcbName, "seurat", sep = "_")
-    render(input = "seurat.Rmd",
+    render(input = "clustering.Rmd",
            output_file = paste0(bcbName, ".html"),
            output_format = "html_document",
            params = list(
