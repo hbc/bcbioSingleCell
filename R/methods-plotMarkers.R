@@ -56,8 +56,6 @@ NULL
         stop("gene must be a string", call. = FALSE)
     }
 
-    lowExpressionCutoff <- 0.1
-
     # tSNE marker expression plot
     tsne <- plotMarkerTSNE(
         object,
@@ -76,7 +74,7 @@ NULL
         .[[1]] %>%
         .[["data"]] %>%
         # Remove the low expression features
-        filter(.data[["feature"]] > lowExpressionCutoff) %>%
+        filter(.data[["feature"]] > 0.1) %>%
         ggplot(
             mapping = aes_string(
                 x = "ident",
@@ -88,34 +86,44 @@ NULL
             scale = "width",
             adjust = 1,
             trim = TRUE) +
-        scale_fill_viridis(discrete = TRUE) +
-        theme(legend.position = "none")
+        scale_fill_viridis(discrete = TRUE)
 
     # Dot plot
     # We're transposing the dot plot here to align vertically with the
     # violin and tSNE plots. The violin is preferable over the ridgeline
     # here because it works better horizontally.
-    dot <- plotDot(object, genes = gene) +
-        theme(axis.title.x = element_blank(),
-              legend.position = "none") +
-        coord_flip()
+    dot <- plotDot(object, genes = gene)
 
     if (isTRUE(returnAsList)) {
         list(tsne = tsne,
              dot = dot,
              violin = violin)
     } else {
-        ggdraw() +
-            # Coordinates are relative to lower left corner
-            draw_plot(
-                tsne,
-                x = 0, y = 0.3, width = 1, height = 0.75) +
-            draw_plot(
-                dot,
-                x = 0, y = 0.2, width = 1, height = 0.1) +
-            draw_plot(
-                violin,
-                x = 0, y = 0, width = 1, height = 0.2)
+        # Customize the plots before arrangement
+        violin <- violin +
+            theme(
+                axis.text.x = element_blank(),
+                axis.title.x = element_blank(),
+                axis.ticks.x = element_blank(),
+                legend.position = "none"
+            )
+        dot <- dot +
+            labs(x = "") +
+            coord_flip() +
+            theme(
+                # hjust 0.5 centers the gene symbol here
+                axis.text.y = element_text(angle = 90, hjust = 0.5),
+                legend.position = "none"
+            )
+        plot_grid(
+            tsne,
+            violin,
+            dot,
+            labels = NULL,
+            ncol = 1,
+            nrow = 3,
+            rel_heights = c(1, 0.3, 0.15)
+        )
     }
 }
 
