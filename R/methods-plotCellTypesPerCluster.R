@@ -31,10 +31,12 @@ NULL
 .plotCellTypesPerCluster <- function(
     object,
     cellTypesPerCluster,
+    color = scale_color_viridis(option = "inferno"),
+    dark = TRUE,
     headerLevel = 2) {
     # Output Markdown headers per cluster
     clusters <- unique(cellTypesPerCluster[["cluster"]])
-    pblapply(seq_along(clusters, function(a) {
+    pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
         mdHeader(
             paste("Cluster", cluster),
@@ -59,6 +61,8 @@ NULL
                 object = object,
                 genes = genes,
                 colorPoints = "geomean",
+                color = color,
+                dark = dark,
                 pointsAsNumbers = FALSE,
                 label = TRUE,
                 title = title) %>%
