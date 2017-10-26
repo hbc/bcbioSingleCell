@@ -39,9 +39,8 @@ NULL
 #' @importFrom cowplot draw_plot ggdraw
 #' @importFrom dplyr filter
 #' @importFrom ggplot2 aes_string element_blank geom_violin ggplot theme
-#' @importFrom ggridges geom_density_ridges
 #' @importFrom rlang is_string
-#' @importFrom Seurat JoyPlot VlnPlot
+#' @importFrom Seurat VlnPlot
 #' @importFrom viridis scale_fill_viridis viridis
 #'
 #' @param returnAsList Return the `gg` objects as a list.
@@ -80,31 +79,10 @@ NULL
                 fill = "ident")
         ) +
         geom_violin(
-            color = NA,
+            color = "black",
             scale = "width",
             adjust = 1,
             trim = TRUE) +
-        scale_fill_viridis(discrete = TRUE) +
-        theme(legend.position = "none")
-
-    # Ridgeline (joy) plot
-    ridges <- JoyPlot(
-        object,
-        features.plot = gene,
-        cols.use = viridis(length(levels(object@ident))),
-        do.return = TRUE,
-        return.plotlist = TRUE) %>%
-        .[[1]] %>%
-        .[["data"]] %>%
-        # Remove the low expression features
-        filter(.data[["feature"]] > lowExpressionCutoff) %>%
-        ggplot(
-            mapping = aes_string(
-                x = "feature",
-                y = "ident",
-                fill = "ident")
-        ) +
-        geom_density_ridges(color = NA, scale = 2) +
         scale_fill_viridis(discrete = TRUE) +
         theme(legend.position = "none")
 
@@ -116,8 +94,7 @@ NULL
     if (isTRUE(returnAsList)) {
         list(tsne = tsne,
              dot = dot,
-             violin = violin,
-             ridges = ridges)
+             violin = violin)
     } else {
         ggdraw() +
             # Coordinates are relative to lower left corner
@@ -126,13 +103,10 @@ NULL
                 x = 0, y = 0.25, width = 1, height = 0.75) +
             draw_plot(
                 dot,
-                x = 0, y = 0, width = 0.2, height = 0.25) +
+                x = 0, y = 0, width = 0.25, height = 0.25) +
             draw_plot(
                 violin,
-                x = 0.2, y = 0, width = 0.45, height = 0.25) +
-            suppressMessages(draw_plot(
-                ridges,
-                x = 0.65, y = 0, width = 0.35, height = 0.25))
+                x = 0.2, y = 0, width = 0.75, height = 0.25)
     }
 }
 
