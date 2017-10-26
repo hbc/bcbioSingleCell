@@ -10,9 +10,11 @@
 plotMarkerTSNE(object, ...)
 
 \S4method{plotMarkerTSNE}{grouped_df}(object, colorPoints = "geomean",
+  color = scale_color_viridis(option = "inferno"), dark = TRUE,
   pointsAsNumbers = FALSE, label = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, colorPoints = "geomean",
+  color = scale_color_viridis(option = "inferno"), dark = TRUE,
   pointsAsNumbers = FALSE, label = TRUE, title = NULL)
 }
 \arguments{
@@ -22,6 +24,11 @@ plotMarkerTSNE(object, ...)
 
 \item{colorPoints}{Color points by geometric mean (\code{geomean}) or expression
 of individual gene (\code{expression}).}
+
+\item{color}{Color palette to use for points. Defaults to the inferno
+palette from the viridis package.}
+
+\item{dark}{Enable dark mode.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
