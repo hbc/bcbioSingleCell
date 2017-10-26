@@ -60,7 +60,7 @@ NULL
     tsne <- plotMarkerTSNE(
         object,
         genes = gene,
-        colorpoints = "expression",
+        colorPoints = "expression",
         pointsAsNumbers = pointsAsNumbers)
 
     # Violin plot
