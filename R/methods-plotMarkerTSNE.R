@@ -9,8 +9,11 @@
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #'
+#' @param color Color palette to use for points. Defaults to the inferno
+#'   palette from the viridis package.
 #' @param colorPoints Color points by geometric mean (`geomean`) or expression
 #'   of individual gene (`expression`).
+#' @param dark Enable dark mode.
 #' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).
 #' @param title Plot title.
 #'
@@ -55,6 +58,8 @@ NULL
 .plotMarkerTSNE <- function(
     object,
     colorPoints = "geomean",
+    color = scale_color_viridis(option = "inferno"),
+    dark = TRUE,
     pointsAsNumbers = FALSE,
     label = TRUE,
     title = NULL) {
@@ -72,7 +77,10 @@ NULL
                 x = "tSNE1",
                 y = "tSNE2",
                 color = colorPoints)
-        )
+        ) +
+        labs(title = title,
+             subtitle = genes) +
+        guides(color = guide_colorbar(direction = "horizontal"))
     if (isTRUE(pointsAsNumbers)) {
         # This seems to take longer to plot than the points?
         p <- p +
@@ -97,12 +105,13 @@ NULL
                 size = 6,
                 fontface = "bold")
     }
-    p +
-        labs(title = title,
-             subtitle = genes) +
-        scale_color_viridis(option = "inferno") +
-        guides(color = guide_colorbar(direction = "horizontal")) +
-        darkTheme()
+    if (!is.null(color)) {
+        p <- p + color
+    }
+    if (isTRUE(dark)) {
+        p <- p + darkTheme()
+    }
+    p
 }
 
 
@@ -113,6 +122,8 @@ NULL
 setMethod("plotMarkerTSNE", "grouped_df", function(
     object,
     colorPoints = "geomean",
+    color = scale_color_viridis(option = "inferno"),
+    dark = TRUE,
     pointsAsNumbers = FALSE,
     label = TRUE) {
     requiredCols <- c(
@@ -132,6 +143,8 @@ setMethod("plotMarkerTSNE", "grouped_df", function(
     .plotMarkerTSNE(
         object = object,
         colorPoints = colorPoints,
+        color = color,
+        dark = dark,
         pointsAsNumbers = pointsAsNumbers,
         label = label)
 })
@@ -144,6 +157,8 @@ setMethod("plotMarkerTSNE", "seurat", function(
     object,
     genes,
     colorPoints = "geomean",
+    color = scale_color_viridis(option = "inferno"),
+    dark = TRUE,
     pointsAsNumbers = FALSE,
     label = TRUE,
     title = NULL) {
@@ -151,6 +166,8 @@ setMethod("plotMarkerTSNE", "seurat", function(
         .plotMarkerTSNE(
             object = fetch,
             colorPoints = colorPoints,
+            color = color,
+            dark = dark,
             pointsAsNumbers = pointsAsNumbers,
             label = label,
             title = title)
