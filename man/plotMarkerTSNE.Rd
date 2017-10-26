@@ -13,7 +13,7 @@ plotMarkerTSNE(object, ...)
   pointsAsNumbers = FALSE, label = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, colorPoints = "geomean",
-  pointsAsNumbers = FALSE, label = TRUE)
+  pointsAsNumbers = FALSE, label = TRUE, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -28,6 +28,8 @@ of individual gene (\code{expression}).}
 \item{label}{Label the clusters on the plot.}
 
 \item{genes}{Genes (by symbol name) of which to get expression data.}
+
+\item{title}{Plot title.}
 }
 \value{
 \link{ggplot}.
