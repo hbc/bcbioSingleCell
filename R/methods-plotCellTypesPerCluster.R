@@ -8,7 +8,7 @@
 #' @name plotCellTypesPerCluster
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inherit plotMarkers
 #'
 #' @param cellTypesPerCluster Cell types per cluster grouped [tibble]. This must
 #'   be the return from [cellTypesPerCluster()].
@@ -28,17 +28,19 @@ NULL
 #' @importFrom dplyr pull
 #' @importFrom pbapply pblapply
 #' @importFrom stringr str_split
-.plotCellTypesPerCluster <- function(object, cellTypesPerCluster) {
+.plotCellTypesPerCluster <- function(
+    object,
+    cellTypesPerCluster,
+    headerLevel = 2) {
     pblapply(seq_len(nrow(cellTypesPerCluster)), function(a) {
         cellType <- cellTypesPerCluster[a, ]
         genes <- pull(cellType, "symbol") %>%
             str_split(", ") %>%
             .[[1]]
         title <- paste(
-            paste("cluster", pull(cellType, "cluster")),
-            paste(tolower(pull(cellType, "cell")), "markers"),
-            sep = " : "
-        )
+            paste0("Cluster ", pull(cellType, "cluster"), ":"),
+            paste(pull(cellType, "cell"), "markers"))
+        mdHeader(title, level = headerLevel, tabset = TRUE, asis = TRUE)
         plotMarkerTSNE(
             object = object,
             genes = genes,

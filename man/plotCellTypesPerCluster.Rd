@@ -10,7 +10,7 @@
 plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat,grouped_df}(object,
-  cellTypesPerCluster)
+  cellTypesPerCluster, headerLevel = 2)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,6 +19,8 @@ plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{headerLevel}{Include a Markdown header for each gene.}
 }
 \value{
 \link{ggplot}.
@@ -33,6 +35,13 @@ many (\code{max} cutoff) marker genes will be skipped.
 cellTypes <- cellTypesPerCluster(knownMakersDetected)
 plotCellTypesPerCluster(cellTypes)
 }
+}
+\seealso{
+Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
+  \code{\link{plotStressGenes}},
+  \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh
