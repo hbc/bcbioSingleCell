@@ -22,7 +22,7 @@
             return(FALSE)
         }
     }
-    if (is.null(attr(object, "vars") |
+    if (is.null(attr(object, "vars")) |
         attr(object, "vars") != "cluster") {
         if (isTRUE(stop)) {
             stop("Object must be grouped by 'cluster'", call. = FALSE)
