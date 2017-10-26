@@ -38,7 +38,8 @@ NULL
 #'
 #' @importFrom cowplot draw_plot ggdraw
 #' @importFrom dplyr filter
-#' @importFrom ggplot2 aes_string element_blank geom_violin ggplot theme
+#' @importFrom ggplot2 aes_string coord_flip element_blank geom_violin ggplot
+#'   theme
 #' @importFrom rlang is_string
 #' @importFrom Seurat VlnPlot
 #' @importFrom viridis scale_fill_viridis viridis
@@ -91,9 +92,13 @@ NULL
         theme(legend.position = "none")
 
     # Dot plot
+    # We're transposing the dot plot here to align vertically with the
+    # violin and tSNE plots. The violin is preferable over the ridgeline
+    # here because it works better horizontally.
     dot <- plotDot(object, genes = gene) +
         theme(axis.title.x = element_blank(),
-              legend.position = "none")
+              legend.position = "none") +
+        coord_flip()
 
     if (isTRUE(returnAsList)) {
         list(tsne = tsne,
@@ -104,13 +109,13 @@ NULL
             # Coordinates are relative to lower left corner
             draw_plot(
                 tsne,
-                x = 0, y = 0.25, width = 1, height = 0.75) +
+                x = 0, y = 0.3, width = 1, height = 0.75) +
             draw_plot(
                 dot,
-                x = 0, y = 0, width = 0.25, height = 0.25) +
+                x = 0, y = 0.2, width = 1, height = 0.1) +
             draw_plot(
                 violin,
-                x = 0.25, y = 0, width = 0.75, height = 0.25)
+                x = 0, y = 0, width = 1, height = 0.2)
     }
 }
 
