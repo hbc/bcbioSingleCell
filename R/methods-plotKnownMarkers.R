@@ -14,7 +14,7 @@ NULL
 
 # Constructors ====
 #' @importFrom basejump mdHeader
-#' @importFrom dplyr filter pull
+#' @importFrom dplyr pull
 .plotKnownMarkers <- function(
     object,
     knownMarkers,
@@ -30,7 +30,7 @@ NULL
     pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
         genes <- knownMarkers %>%
-            filter(.data[["cell"]] == !!cellType) %>%
+            .[.[["cell"]] == cellType, ] %>%
             pull("symbol") %>%
             unique()
         if (!is.null(genes)) {
