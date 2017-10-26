@@ -97,9 +97,11 @@ setGeneric("plotCellCounts", function(object, ...) {
 
 #' @rdname plotCellTypesPerCluster
 #' @export
-setGeneric("plotCellTypesPerCluster", function(object, ...) {
-    standardGeneric("plotCellTypesPerCluster")
-})
+setGeneric(
+    "plotCellTypesPerCluster",
+    function(object, cellTypesPerCluster, ...) {
+        standardGeneric("plotCellTypesPerCluster")
+    })
 
 
 
