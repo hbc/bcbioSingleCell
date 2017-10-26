@@ -99,22 +99,15 @@ NULL
              dot = dot,
              violin = violin)
     } else {
-        # Customize the plots before arrangement
+        # Customize the plots before preparing the grid
         violin <- violin +
-            theme(
-                axis.text.x = element_blank(),
-                axis.title.x = element_blank(),
-                axis.ticks.x = element_blank(),
-                legend.position = "none"
-            )
+            labs(y = "log expression") +
+            theme(legend.position = "none")
         dot <- dot +
             labs(x = "") +
             coord_flip() +
-            theme(
-                # hjust 0.5 centers the gene symbol here
-                axis.text.y = element_text(angle = 90, hjust = 0.5),
-                legend.position = "none"
-            )
+            theme(axis.text.y = element_text(angle = 90, hjust = 0.5),
+                  legend.position = "none")
         plot_grid(
             tsne,
             violin,
