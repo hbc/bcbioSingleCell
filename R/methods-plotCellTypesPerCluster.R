@@ -39,7 +39,8 @@ NULL
             .[[1]]
         title <- paste(
             paste0("Cluster ", pull(cellType, "cluster"), ":"),
-            paste(pull(cellType, "cell"), "markers"))
+            pull(cellType, "cell")
+        )
         mdHeader(title, level = headerLevel, tabset = TRUE, asis = TRUE)
         plotMarkerTSNE(
             object = object,
