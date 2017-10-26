@@ -38,14 +38,16 @@ NULL
         if (length(genes) > 10) {
             warning("Maximum of 10 genes per cluster is recommended")
         }
-        mdHeader(paste("Cluster", cluster),
-                 level = headerLevel,
-                 tabset = TRUE,
-                 asis = TRUE)
-        plotMarkers(object,
-                    genes = genes,
-                    pointsAsNumbers = pointsAsNumbers,
-                    headerLevel = headerLevel + 1)
+        mdHeader(
+            paste("Cluster", cluster),
+            level = headerLevel,
+            tabset = TRUE,
+            asis = TRUE)
+        plotMarkers(
+            object,
+            genes = genes,
+            pointsAsNumbers = pointsAsNumbers,
+            headerLevel = headerLevel + 1)
         # Don't show here, already defined in `plotMarkers()`
     }) %>%
         invisible()
