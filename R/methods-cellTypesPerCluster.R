@@ -21,7 +21,7 @@ NULL
 
 
 # Constructors ====
-#' @importFrom dplyr everything group_by select ungroup
+#' @importFrom dplyr desc everything group_by select ungroup
 #' @importFrom rlang !!! quos
 .cellTypesPerCluster <- function(object) {
     if (attr(object, "vars") != "cell") {
@@ -40,7 +40,7 @@ NULL
             "Required columns:", toString(sort(requiredCols))
         ), call. = FALSE)
     }
-    groupCols <- quos(cluster, cell)
+    groupCols <- quos("cluster", "cell")
     tbl <- object %>%
         ungroup() %>%
         # Keep only positive markers
@@ -53,10 +53,10 @@ NULL
         summarize(
             n = n(),
             # Genes are arranged by P value
-            symbol = toString(symbol),
-            ensgene = toString(ensgene)
+            symbol = toString(.data[["symbol"]]),
+            ensgene = toString(.data[["ensgene"]])
         ) %>%
-        group_by(!!quo(cluster)) %>%
+        group_by(!!sym("cluster")) %>%
         arrange(desc(.data[["n"]]), .by_group = TRUE)
 }
 
