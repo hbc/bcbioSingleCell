@@ -95,13 +95,18 @@ NULL
         p <- p + geom_point()
     }
     if (isTRUE(label)) {
+        if (isTRUE(dark)) {
+            labelColor <- "white"
+        } else {
+            labelColor <- "black"
+        }
         p <- p +
             geom_text(
                 mapping = aes_string(
                     x = "centerX",
                     y = "centerY",
                     label = "ident"),
-                color = "white",
+                color = labelColor,
                 size = 6,
                 fontface = "bold")
     }
