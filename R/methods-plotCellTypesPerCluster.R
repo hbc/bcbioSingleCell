@@ -37,7 +37,7 @@ NULL
         title <- paste(
             paste("cluster", pull(cellType, "cluster")),
             paste(tolower(pull(cellType, "cell")), "markers"),
-            sep = " — "
+            sep = " : "
         )
         plotMarkerTSNE(
             object = object,
