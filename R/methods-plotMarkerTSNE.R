@@ -12,6 +12,7 @@
 #' @param colorPoints Color points by geometric mean (`geomean`) or expression
 #'   of individual gene (`expression`).
 #' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).
+#' @param title Plot title.
 #'
 #' @return [ggplot].
 #'
@@ -41,19 +42,15 @@ NULL
 
 
 # Constructors ====
-#' Plot Marker tSNE Constructor
-#'
-#' @keywords internal
-#' @noRd
-#'
+#' @importFrom ggplot2 aes_string geom_point geom_text ggplot labs guides
+#'   guide_colorbar
 #' @importFrom viridis scale_color_viridis
-#'
-#' @param object Marker gene expression [tibble].
 .plotMarkerTSNE <- function(
     object,
     colorPoints = "geomean",
     pointsAsNumbers = FALSE,
-    label = TRUE) {
+    label = TRUE,
+    title = NULL) {
     if (!colorPoints %in% c("expression", "geomean")) {
         stop("colorPoints supports 'geomean' or 'expression'", call. = FALSE)
     }
@@ -93,10 +90,9 @@ NULL
                 size = 6,
                 fontface = "bold")
     }
-    if (length(genes) <= 10) {
-        p <- p + ggtitle(toString(genes))
-    }
     p +
+        labs(title = title,
+             subtitle = genes) +
         scale_color_viridis(option = "inferno") +
         guides(color = guide_colorbar(direction = "horizontal")) +
         darkTheme()
@@ -142,11 +138,13 @@ setMethod("plotMarkerTSNE", "seurat", function(
     genes,
     colorPoints = "geomean",
     pointsAsNumbers = FALSE,
-    label = TRUE) {
+    label = TRUE,
+    title = NULL) {
     fetch <- fetchTSNEExpressionData(object, genes = genes)
         .plotMarkerTSNE(
             object = fetch,
             colorPoints = colorPoints,
             pointsAsNumbers = pointsAsNumbers,
-            label = label)
+            label = label,
+            title = title)
 })
