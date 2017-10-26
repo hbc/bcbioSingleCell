@@ -95,6 +95,14 @@ setGeneric("plotCellCounts", function(object, ...) {
 
 
 
+#' @rdname plotCellTypesPerCluster
+#' @export
+setGeneric("plotCellTypesPerCluster", function(object, ...) {
+    standardGeneric("plotCellTypesPerCluster")
+})
+
+
+
 #' @rdname plotDot
 #' @export
 setGeneric("plotDot", function(object, ...) {
