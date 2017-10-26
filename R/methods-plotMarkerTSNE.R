@@ -42,9 +42,16 @@ NULL
 
 
 # Constructors ====
+#' Plot Marker tSNE Constructor
+#'
+#' @keywords internal
+#' @noRd
+#'
 #' @importFrom ggplot2 aes_string geom_point geom_text ggplot labs guides
 #'   guide_colorbar
 #' @importFrom viridis scale_color_viridis
+#'
+#' @param object Marker gene expression [tibble].
 .plotMarkerTSNE <- function(
     object,
     colorPoints = "geomean",
