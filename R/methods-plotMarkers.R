@@ -47,6 +47,8 @@ NULL
 .plotMarkerSeurat <- function(
     object,
     gene,
+    color = scale_color_viridis(option = "inferno"),
+    dark = TRUE,
     pointsAsNumbers = FALSE,
     returnAsList = FALSE) {
     if (!is_string(gene)) {
@@ -60,6 +62,8 @@ NULL
         object,
         genes = gene,
         colorPoints = "expression",
+        color = color,
+        dark = dark,
         pointsAsNumbers = pointsAsNumbers)
 
     # Violin plot
@@ -119,6 +123,8 @@ NULL
 setMethod("plotMarkers", "seurat", function(
     object,
     genes,
+    color = scale_color_viridis(option = "inferno"),
+    dark = TRUE,
     pointsAsNumbers = FALSE,
     headerLevel = 2) {
     lapply(seq_along(genes), function(a) {
@@ -127,6 +133,8 @@ setMethod("plotMarkers", "seurat", function(
         .plotMarkerSeurat(
             object,
             gene = gene,
+            color = color,
+            dark = dark,
             pointsAsNumbers = pointsAsNumbers,
             returnAsList = FALSE) %>%
             show()
