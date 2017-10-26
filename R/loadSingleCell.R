@@ -260,7 +260,7 @@ loadSingleCell <- function(
     counts <- do.call(Matrix::cBind, sparseList)
     # Convert counts from transcript-level to gene-level, if necessary
     if (countsLevel == "transcript") {
-        counts <- .sparseCountsTx2Gene(txlevel, tx2gene)
+        counts <- .sparseCountsTx2Gene(counts, tx2gene)
     }
 
     # Column data ==============================================================
