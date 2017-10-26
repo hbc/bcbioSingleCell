@@ -110,7 +110,7 @@ NULL
                 x = 0, y = 0, width = 0.25, height = 0.25) +
             draw_plot(
                 violin,
-                x = 0.2, y = 0, width = 0.75, height = 0.25)
+                x = 0.25, y = 0, width = 0.75, height = 0.25)
     }
 }
 
