@@ -8,12 +8,16 @@
 \usage{
 cellTypesPerCluster(object, ...)
 
-\S4method{cellTypesPerCluster}{grouped_df}(object)
+\S4method{cellTypesPerCluster}{grouped_df}(object, min = 3, max = Inf)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{min}{Minimum number of marker genes per cluster.}
+
+\item{max}{Maximum number of marker genes per cluster.}
 }
 \value{
 \link{tibble} grouped by cluster, containing the count (\code{n}) of

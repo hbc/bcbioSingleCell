@@ -6,6 +6,9 @@
 #'
 #' @inheritParams AllGenerics
 #'
+#' @param min Minimum number of marker genes per cluster.
+#' @param max Maximum number of marker genes per cluster.
+#'
 #' @return [tibble] grouped by cluster, containing the count (`n`) of
 #'   significant known makers per cell type.
 #'
@@ -23,7 +26,10 @@ NULL
 # Constructors ====
 #' @importFrom dplyr desc everything group_by select ungroup
 #' @importFrom rlang !!! quos
-.cellTypesPerCluster <- function(object) {
+.cellTypesPerCluster <- function(
+    object,
+    min = 3,
+    max = Inf) {
     if (attr(object, "vars") != "cell") {
         stop("Markers tibble should be grouped by cell", call. = FALSE)
     }
@@ -58,6 +64,15 @@ NULL
         ) %>%
         group_by(!!sym("cluster")) %>%
         arrange(desc(.data[["n"]]), .by_group = TRUE)
+    # Apply minimum and maximum gene cutoffs
+    if (is.numeric(min) & min > 1) {
+        tbl <- filter(tbl, .data[["n"]] >= min)
+    }
+    if (is.numeric(max) & max > 1) {
+        tbl <- filter(tbl, .data[["n"]] <= max)
+
+    }
+    tbl
 }
 
 
