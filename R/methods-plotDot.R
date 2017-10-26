@@ -68,7 +68,7 @@ NULL
 setMethod("plotDot", "seurat", function(
     object,
     genes,
-    colors = c(low = "white", high = "black"),
+    colors = c(low = "lightgray", high = "purple"),
     colMin = -2.5,
     colMax = 2.5,
     dotMin = 0,

@@ -8,8 +8,8 @@
 \usage{
 plotDot(object, ...)
 
-\S4method{plotDot}{seurat}(object, genes, colors = c(low = "white", high =
-  "black"), colMin = -2.5, colMax = 2.5, dotMin = 0, dotScale = 6)
+\S4method{plotDot}{seurat}(object, genes, colors = c(low = "lightgray", high =
+  "purple"), colMin = -2.5, colMax = 2.5, dotMin = 0, dotScale = 6)
 }
 \arguments{
 \item{object}{Object.}
