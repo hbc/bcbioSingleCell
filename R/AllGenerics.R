@@ -31,6 +31,14 @@ setGeneric("calculateMetrics", function(object, ...) {
 
 
 
+#' @rdname cellTypesPerCluster
+#' @export
+setGeneric("cellTypesPerCluster", function(object, ...) {
+    standardGeneric("cellTypesPerCluster")
+})
+
+
+
 #' @rdname fetchPCAData
 #' @export
 setGeneric("fetchPCAData", function(object, ...) {
