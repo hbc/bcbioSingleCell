@@ -32,8 +32,7 @@ NULL
         genes <- knownMarkers %>%
             filter(.data[["cell"]] == !!cellType) %>%
             pull("symbol") %>%
-            unique() %>%
-            sort()
+            unique()
         if (!is.null(genes)) {
             mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
             plotMarkers(
