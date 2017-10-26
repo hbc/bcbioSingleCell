@@ -13,7 +13,6 @@
 #'   palette from the viridis package.
 #' @param colorPoints Color points by geometric mean (`geomean`) or expression
 #'   of individual gene (`expression`).
-#' @param dark Enable dark mode.
 #' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).
 #' @param title Plot title.
 #'
