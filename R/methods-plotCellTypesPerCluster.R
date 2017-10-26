@@ -10,24 +10,45 @@
 #'
 #' @inheritParams AllGenerics
 #'
-#' @param min Minimum number of marker genes per cell type.
-#' @param max Maximum number of marker genes per cell type.
+#' @param cellTypesPerCluster Cell types per cluster grouped [tibble]. This must
+#'   be the return from [cellTypesPerCluster()].
 #'
 #' @return [ggplot].
 #'
 #' @examples
 #' \dontrun{
-#' cells <- cellTypesPerCluster(knownMakersDetected)
-#' plotCellTypesPerCluster(cells)
+#' cellTypes <- cellTypesPerCluster(knownMakersDetected)
+#' plotCellTypesPerCluster(cellTypes)
 #' }
 NULL
 
 
 
 # Constructors ====
-.plotCellTypesPerCluster <- function(object) {
-    object
-    plotMarkerTSNE()
+#' @importFrom dplyr pull
+#' @importFrom pbapply pblapply
+#' @importFrom stringr str_split
+.plotCellTypesPerCluster <- function(object, cellTypesPerCluster) {
+    pblapply(seq_len(nrow(cellTypesPerCluster)), function(a) {
+        cellType <- cellTypesPerCluster[a, ]
+        genes <- pull(cellType, "symbol") %>%
+            str_split(", ") %>%
+            .[[1]]
+        title <- paste(
+            paste("cluster", pull(cellType, "cluster")),
+            paste(tolower(pull(cellType, "cell")), "markers"),
+            sep = " — "
+        )
+        plotMarkerTSNE(
+            object = object,
+            genes = genes,
+            colorPoints = "geomean",
+            pointsAsNumbers = FALSE,
+            label = TRUE,
+            title = title) %>%
+            show()
+    }) %>%
+        invisible()
 }
 
 
@@ -35,3 +56,8 @@ NULL
 # Methods ====
 #' @rdname plotCellTypesPerCluster
 #' @export
+setMethod(
+    "plotCellTypesPerCluster",
+    signature(object = "seurat",
+              cellTypesPerCluster = "grouped_df"),
+    .plotCellTypesPerCluster)
