@@ -14,18 +14,31 @@
     object,
     package = "Seurat",
     stop = FALSE) {
-    # General checks
+    # General checks ====
     if (!is(object, "grouped_df")) {
-        stop("Object must be 'grouped_df' class", call. = FALSE)
+        if (isTRUE(stop)) {
+            stop("Object must be 'grouped_df' class", call. = FALSE)
+        } else {
+            return(FALSE)
+        }
     }
-    if (attributes(object)[["vars"]] != "cluster") {
-        stop("Object must be grouped by 'cluster'", call. = FALSE)
+    if (is.null(attributes(object)[["vars"]]) |
+        attributes(object)[["vars"]] != "cluster") {
+        if (isTRUE(stop)) {
+            stop("Object must be grouped by 'cluster'", call. = FALSE)
+        } else {
+            return(FALSE)
+        }
     }
     if (!"ensgene" %in% colnames(object)) {
-        stop("Object missing 'ensgene' column", call. = FALSE)
+        if (isTRUE(stop)) {
+            stop("Object missing 'ensgene' column", call. = FALSE)
+        } else {
+            return(FALSE)
+        }
     }
 
-    # Package-specific checks
+    # Package-specific checks ====
     if (package == "Seurat") {
         # Check for `Seurat::FindAllMarkers()` return.
         # These columns are output in an inconsistent format, so we'll sanitize
@@ -56,7 +69,7 @@
     } else if (identical(stop, TRUE) &
                identical(sanitized, FALSE)) {
         stop(paste(
-            "Markers table doesn't sanitization checks.",
+            "Markers table doesn't pass sanitization checks.",
             "Ensure that 'sanitizeMarkers()' has been run."
         ), call. = FALSE)
     }
