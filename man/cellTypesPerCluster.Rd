@@ -8,7 +8,7 @@
 \usage{
 cellTypesPerCluster(object, ...)
 
-\S4method{cellTypesPerCluster}{grouped_df}(object, min = 3, max = Inf)
+\S4method{cellTypesPerCluster}{grouped_df}(object, min = 2, max = Inf)
 }
 \arguments{
 \item{object}{Object.}

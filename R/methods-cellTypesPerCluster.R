@@ -28,7 +28,7 @@ NULL
 #' @importFrom rlang !!! quos
 .cellTypesPerCluster <- function(
     object,
-    min = 3,
+    min = 2,
     max = Inf) {
     if (attr(object, "vars") != "cell") {
         stop("Markers tibble should be grouped by cell", call. = FALSE)
@@ -49,11 +49,8 @@ NULL
     groupCols <- syms(c("cluster", "cell"))
     tbl <- object %>%
         ungroup() %>%
-        # Keep only positive markers
+        # Use only positive markers for this approach
         filter(.data[["avgLogFC"]] > 0) %>%
-        # Keep only significant markers
-        # Apply this step in the `knownCellMarkers()` function instead
-        # filter(.data[["padj"]] < 0.05) %>%
         select(!!!groupCols, everything()) %>%
         group_by(!!!groupCols) %>%
         arrange(.data[["padj"]], .by_group = TRUE) %>%
