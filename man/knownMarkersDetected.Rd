@@ -8,7 +8,7 @@
 \usage{
 knownMarkersDetected(all, known, ...)
 
-\S4method{knownMarkersDetected}{grouped_df,tbl_df}(all, known,
+\S4method{knownMarkersDetected}{grouped_df,tbl_df}(all, known, alpha = 0.05,
   filterPromiscuous = FALSE, promiscuousCutoff = 5)
 }
 \arguments{
@@ -18,6 +18,8 @@ knownMarkersDetected(all, known, ...)
 pulled from internal \link{cellCycleMarkers} data.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{alpha}{Alpha cutoff (adjusted P value; false discovery rate).}
 
 \item{filterPromiscuous}{Remove markers with poor specificity, that are
 present in as many clusters as defined by \code{promiscuousCutoff}.}
