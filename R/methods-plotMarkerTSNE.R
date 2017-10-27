@@ -10,7 +10,8 @@
 #' @inheritParams plotTSNE
 #'
 #' @param color Color palette to use for points. Defaults to the inferno
-#'   palette from the viridis package.
+#'   palette from the viridis package. Use [ggplot2::scale_color_gradient()]
+#'   to easily define your own low/high gradient.
 #' @param colorPoints Color points by geometric mean (`geomean`) or expression
 #'   of individual gene (`expression`).
 #' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).
@@ -68,6 +69,11 @@ NULL
     # Prepare a list of the genes used for the ggplot subtitle
     genes <- pull(fetchData, "gene") %>%
         unique()
+    # Use `expression` if we're only plotting a single gene. The `geomean`
+    # argument for `colorPoints` is only informative for 2+ genes.
+    if (length(genes) == 1) {
+        colorPoints = "expression"
+    }
     # Limit to displaying the top 5, with an ellipsis if necessary
     if (length(genes) > 5) {
         genes <- c(genes[1:5], "...")
@@ -79,10 +85,21 @@ NULL
                 x = "tSNE1",
                 y = "tSNE2",
                 color = colorPoints)
-        ) +
+        )
+    if (isTRUE(dark)) {
+        p <- p + darkTheme()
+    }
+    p <- p +
         labs(title = title,
-             subtitle = genes) +
-        guides(color = guide_colorbar(direction = "horizontal"))
+         subtitle = genes) +
+        # Make the guide longer than normal, to improve appearance of values
+        # containing a decimal point
+        guides(color = guide_colorbar(
+            barwidth = 20,
+            barheight = 1,
+            direction = "horizontal")) +
+        theme(legend.justification = "center",
+              legend.position = "bottom")
     if (isTRUE(pointsAsNumbers)) {
         # This seems to take longer to plot than the points?
         p <- p +
@@ -114,9 +131,6 @@ NULL
     }
     if (!is.null(color)) {
         p <- p + color
-    }
-    if (isTRUE(dark)) {
-        p <- p + darkTheme()
     }
     p
 }
