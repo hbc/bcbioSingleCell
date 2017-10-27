@@ -32,16 +32,18 @@ NULL
     cellTypesPerCluster,
     color = scale_color_viridis(option = "inferno"),
     dark = TRUE,
-    headerLevel = 2) {
+    headerLevel = NULL) {
     # Output Markdown headers per cluster
     clusters <- unique(cellTypesPerCluster[["cluster"]])
     pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
-        mdHeader(
-            paste("Cluster", cluster),
-            level = headerLevel,
-            tabset = TRUE,
-            asis = TRUE)
+        if (!is.null(headerLevel)) {
+            mdHeader(
+                paste("Cluster", cluster),
+                level = headerLevel,
+                tabset = TRUE,
+                asis = TRUE)
+        }
         subset <- cellTypesPerCluster %>%
                 .[.[["cluster"]] == cluster, ]
         lapply(seq_len(nrow(subset)), function(b) {
@@ -50,11 +52,15 @@ NULL
                 strsplit(", ") %>%
                 .[[1]]
             title <- pull(cellType, "cell")
-            mdHeader(
-                title,
-                level = headerLevel + 1,
-                tabset = TRUE,
-                asis = TRUE)
+            if (!is.null(headerLevel)) {
+                if (!is.null(headerLevel)) {
+                    mdHeader(
+                        title,
+                        level = headerLevel + 1,
+                        tabset = TRUE,
+                        asis = TRUE)
+                }
+            }
             # Modify the title by adding the cluster number (for the plot)
             title <- paste(paste0("Cluster ", cluster, ":"), title)
             plotMarkerTSNE(

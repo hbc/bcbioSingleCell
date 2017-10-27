@@ -10,7 +10,7 @@ plotKnownMarkers(object, knownMarkers, ...)
 
 \S4method{plotKnownMarkers}{seurat,grouped_df}(object, knownMarkers,
   color = scale_color_viridis(option = "inferno"), dark = TRUE,
-  headerLevel = 2)
+  headerLevel = NULL)
 }
 \arguments{
 \item{object}{Object.}

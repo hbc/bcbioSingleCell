@@ -20,7 +20,7 @@ NULL
     knownMarkers,
     color = scale_color_viridis(option = "inferno"),
     dark = TRUE,
-    headerLevel = 2) {
+    headerLevel = NULL) {
     if (nrow(knownMarkers) == 0) {
         return(NULL)
     }
@@ -34,7 +34,13 @@ NULL
             pull("symbol") %>%
             unique()
         if (!is.null(genes)) {
-            mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
+            if (!is.null(headerLevel)) {
+                mdHeader(
+                    cellType,
+                    level = headerLevel,
+                    tabset = TRUE,
+                    asis = TRUE)
+            }
             plotMarkers(
                 object,
                 genes = genes,

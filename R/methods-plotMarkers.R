@@ -132,10 +132,12 @@ setMethod("plotMarkers", "seurat", function(
     color = scale_color_viridis(option = "inferno"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = 2) {
+    headerLevel = NULL) {
     lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
-        mdHeader(gene, level = headerLevel, asis = TRUE)
+        if (!is.null(headerLevel)) {
+            mdHeader(gene, level = headerLevel, asis = TRUE)
+        }
         .plotMarkerSeurat(
             object,
             gene = gene,

@@ -23,7 +23,7 @@ NULL
     object,
     topMarkers,
     pointsAsNumbers = FALSE,
-    headerLevel = 2) {
+    headerLevel = NULL) {
     .checkSanitizedMarkers(topMarkers)
     clusters <- topMarkers[["cluster"]] %>%
         levels()
@@ -38,11 +38,13 @@ NULL
         if (length(genes) > 10) {
             warning("Maximum of 10 genes per cluster is recommended")
         }
-        mdHeader(
-            paste("Cluster", cluster),
-            level = headerLevel,
-            tabset = TRUE,
-            asis = TRUE)
+        if (!is.null(headerLevel)) {
+            mdHeader(
+                paste("Cluster", cluster),
+                level = headerLevel,
+                tabset = TRUE,
+                asis = TRUE)
+        }
         plotMarkers(
             object,
             genes = genes,

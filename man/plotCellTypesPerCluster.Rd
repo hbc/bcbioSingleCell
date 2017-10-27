@@ -11,7 +11,7 @@ plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat,grouped_df}(object,
   cellTypesPerCluster, color = scale_color_viridis(option = "inferno"),
-  dark = TRUE, headerLevel = 2)
+  dark = TRUE, headerLevel = NULL)
 }
 \arguments{
 \item{object}{Object.}

@@ -9,7 +9,7 @@
 plotTopMarkers(object, topMarkers, ...)
 
 \S4method{plotTopMarkers}{seurat,grouped_df}(object, topMarkers,
-  pointsAsNumbers = FALSE, headerLevel = 2)
+  pointsAsNumbers = FALSE, headerLevel = NULL)
 }
 \arguments{
 \item{object}{Object.}

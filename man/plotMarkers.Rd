@@ -10,7 +10,7 @@ plotMarkers(object, ...)
 
 \S4method{plotMarkers}{seurat}(object, genes,
   color = scale_color_viridis(option = "inferno"), dark = TRUE,
-  pointsAsNumbers = FALSE, headerLevel = 2)
+  pointsAsNumbers = FALSE, headerLevel = NULL)
 }
 \arguments{
 \item{object}{Object.}
