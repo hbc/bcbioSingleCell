@@ -135,6 +135,10 @@ setMethod("plotMarkers", "seurat", function(
     headerLevel = NULL) {
     lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
+        # Skip and warn if gene is missing
+        if (!gene %in% rownames(slot(object, "data"))) {
+            return(warning(paste(gene, "missing"), call. = FALSE))
+        }
         if (!is.null(headerLevel)) {
             mdHeader(gene, level = headerLevel, asis = TRUE)
         }
