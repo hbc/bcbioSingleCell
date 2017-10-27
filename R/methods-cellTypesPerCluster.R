@@ -52,7 +52,8 @@ NULL
         # Keep only positive markers
         filter(.data[["avgLogFC"]] > 0) %>%
         # Keep only significant markers
-        filter(.data[["padj"]] < 0.05) %>%
+        # Apply this step in the `knownCellMarkers()` function instead
+        # filter(.data[["padj"]] < 0.05) %>%
         select(!!!groupCols, everything()) %>%
         group_by(!!!groupCols) %>%
         arrange(.data[["padj"]], .by_group = TRUE) %>%
