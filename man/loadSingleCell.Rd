@@ -5,8 +5,8 @@
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
 loadSingleCell(uploadDir, interestingGroups = "sampleName",
-  sampleMetadataFile = NULL, gtfFile = NULL, prefilter = TRUE,
-  ensemblVersion = "current", ...)
+  sampleMetadataFile = NULL, gtfFile = NULL, prefilter = TRUE, annotable,
+  ensemblVersion = NULL, ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -24,10 +24,18 @@ annotation mappings.}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 
-\item{ensemblVersion}{Ensembl release version. Defaults to "current", and
-does not typically need to be user-defined. This parameter can be useful
-for matching Ensembl annotations against an outdated bcbio annotation
-build.}
+\item{annotable}{\emph{Optional}. User-defined gene annotations (a.k.a.
+"annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
+be left undefined. By default, the function will automatically generate an
+annotable from the annotations available on Ensembl. If set \code{NULL}, then
+\code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioRNASeq} object will be left empty.
+This is recommended for projects dealing with genes or transcripts that are
+poorly annotated.}
+
+\item{ensemblVersion}{\emph{Optional}. Ensembl release version. If \code{NULL},
+defaults to current release, and does not typically need to be
+user-defined. This parameter can be useful for matching Ensembl annotations
+against an outdated bcbio annotation build.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }

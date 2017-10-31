@@ -7,9 +7,9 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
-#'   prepareSummarizedExperiment readDataVersions readGTF readLogFile
-#'   readProgramVersions readSampleMetadataFile readYAML sampleYAMLMetadata
-#'   tx2geneFromGTF
+#'   prepareAnnotable prepareSummarizedExperiment readDataVersions readGTF
+#'   readLogFile readProgramVersions readSampleMetadataFile readYAML
+#'   sampleYAMLMetadata tx2geneFromGTF
 #' @importFrom dplyr everything filter left_join mutate pull select
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
@@ -28,10 +28,17 @@
 #'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
 #'   annotation mappings.
 #' @param prefilter Prefilter counts prior to quality control analysis.
-#' @param ensemblVersion Ensembl release version. Defaults to "current", and
-#'   does not typically need to be user-defined. This parameter can be useful
-#'   for matching Ensembl annotations against an outdated bcbio annotation
-#'   build.
+#' @param annotable *Optional*. User-defined gene annotations (a.k.a.
+#'   "annotable"), which will be slotted into [rowData()]. Typically this should
+#'   be left undefined. By default, the function will automatically generate an
+#'   annotable from the annotations available on Ensembl. If set `NULL`, then
+#'   [rowData()] inside the resulting [bcbioRNASeq] object will be left empty.
+#'   This is recommended for projects dealing with genes or transcripts that are
+#'   poorly annotated.
+#' @param ensemblVersion *Optional*. Ensembl release version. If `NULL`,
+#'   defaults to current release, and does not typically need to be
+#'   user-defined. This parameter can be useful for matching Ensembl annotations
+#'   against an outdated bcbio annotation build.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return [bcbioSingleCell].
@@ -56,7 +63,8 @@ loadSingleCell <- function(
     sampleMetadataFile = NULL,
     gtfFile = NULL,
     prefilter = TRUE,
-    ensemblVersion = "current",
+    annotable,
+    ensemblVersion = NULL,
     ...) {
     pipeline <- "bcbio"
 
@@ -151,8 +159,7 @@ loadSingleCell <- function(
         stop("Multiple genomes detected", call. = FALSE)
     }
     organism <- detectOrganism(genomeBuild)
-    message(paste("Organism:", organism))
-    message(paste("Genome build:", genomeBuild))
+    message(paste0("Genome: ", organism, " (", genomeBuild, ")"))
 
     # Molecular barcode (UMI) type ====
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
@@ -217,7 +224,7 @@ loadSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # tx2gene and gene2symbol annotations ====
+    # Gene and transcript annotations ====
     if (!is.null(gtfFile)) {
         gtfFile <- normalizePath(gtfFile)
         gtf <- readGTF(gtfFile)
@@ -232,12 +239,12 @@ loadSingleCell <- function(
         ), call. = FALSE)
         if (countsLevel == "transcript") {
             tx2gene <- annotable(
-                genomeBuild,
+                organism,
                 format = "tx2gene",
                 release = ensemblVersion)
         }
         gene2symbol <- annotable(
-            genomeBuild,
+            organism,
             format = "gene2symbol",
             release = ensemblVersion)
     }
@@ -246,7 +253,11 @@ loadSingleCell <- function(
     cellularBarcodes <- .cellularBarcodesList(sampleDirs)
 
     # Row data =================================================================
-    annotable <- annotable(organism, release = ensemblVersion)
+    if (missing(annotable)) {
+        annotable <- basejump::annotable(organism, release = ensemblVersion)
+    } else if (!is.null(annotable)) {
+        annotable <- prepareAnnotable(annotable)
+    }
 
     # Assays ===================================================================
     message("Reading counts")
