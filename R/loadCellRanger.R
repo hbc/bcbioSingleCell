@@ -88,7 +88,8 @@ loadCellRanger <- function(
         .[["input_gtf_files"]] %>%
         .[[1]] %>%
         str_split("\\.", simplify = TRUE) %>%
-        .[1, 3]
+        .[1, 3] %>%
+        as.integer()
     message(paste0("Genome: ", organism, " (", genomeBuild, ")"))
     message(paste("Ensembl release:", ensemblVersion))
 
