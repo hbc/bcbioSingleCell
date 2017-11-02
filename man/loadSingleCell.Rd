@@ -28,9 +28,9 @@ annotation mappings.}
 "annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
 be left undefined. By default, the function will automatically generate an
 annotable from the annotations available on Ensembl. If set \code{NULL}, then
-\code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioRNASeq} object will be left empty.
-This is recommended for projects dealing with genes or transcripts that are
-poorly annotated.}
+\code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
+empty. This is recommended for projects dealing with genes or transcripts
+that are poorly annotated.}
 
 \item{ensemblVersion}{\emph{Optional}. Ensembl release version. If \code{NULL},
 defaults to current release, and does not typically need to be

@@ -32,9 +32,9 @@
 #'   "annotable"), which will be slotted into [rowData()]. Typically this should
 #'   be left undefined. By default, the function will automatically generate an
 #'   annotable from the annotations available on Ensembl. If set `NULL`, then
-#'   [rowData()] inside the resulting [bcbioRNASeq] object will be left empty.
-#'   This is recommended for projects dealing with genes or transcripts that are
-#'   poorly annotated.
+#'   [rowData()] inside the resulting [bcbioSingleCell] object will be left
+#'   empty. This is recommended for projects dealing with genes or transcripts
+#'   that are poorly annotated.
 #' @param ensemblVersion *Optional*. Ensembl release version. If `NULL`,
 #'   defaults to current release, and does not typically need to be
 #'   user-defined. This parameter can be useful for matching Ensembl annotations
