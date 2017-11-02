@@ -8,14 +8,14 @@ opts_chunk[["set"]](
     cache = TRUE,
     cache.lazy = FALSE)
 
-loadData(bcb)
+loadData(bcb, dir = "data")
 
 sampleIDs <- sampleMetadata(bcb) %>%
     pull(sampleID)
 sampleSubsets <- pblapply(seq_along(sampleIDs), function(a) {
     sampleID <- sampleIDs[[a]]
     subset <- selectSamples(bcb, sampleID = sampleID)
-    assignAndSaveData(name = sampleID, object = subset)
+    assignAndSaveData(name = sampleID, object = subset, dir = "data")
     sampleID
 }) %>%
     unlist()
