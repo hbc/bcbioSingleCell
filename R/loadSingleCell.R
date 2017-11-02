@@ -84,8 +84,7 @@ loadSingleCell <- function(
     }
     message(projectDir)
     match <- str_match(projectDir, projectDirPattern)
-    runDate <- match[[2]] %>%
-        as.Date()
+    runDate <- as.Date(match[[2]])
     template <- match[[3]]
     projectDir <- file.path(uploadDir, projectDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
