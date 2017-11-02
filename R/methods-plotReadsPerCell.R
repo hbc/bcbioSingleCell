@@ -325,11 +325,9 @@ NULL
     filterCells = TRUE,
     aggregateReplicates = TRUE) {
     if (metadata(object)[["pipeline"]] != "bcbio") {
-        warning(paste(
-            "'plotReadsPerCell()' currently only supports",
-            "bcbio pipeline output for 'bcbioSingleCell' class"),
-            call. = FALSE)
-        return(NULL)
+        return(warning(paste(
+            "'plotReadsPerCell()' currently only supports bcbio pipeline"
+            ), call. = FALSE))
     }
     if (missing(interestingGroups)) {
         interestingGroups <-
@@ -353,7 +351,7 @@ NULL
     } else if (!is.null(metadata(object)[["cellularBarcodeCutoff"]])) {
         cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
     } else {
-        warning("Failed to detect cellular barcode cutoff")
+        warning("Failed to detect cellular barcode cutoff", call. = FALSE)
         cutoffLine <- 0
     }
     cutoffLine <- cutoffLine %>%
