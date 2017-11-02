@@ -10,7 +10,6 @@ params:
     pcUse: FALSE
     varsToRegress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
     resolution: 0.8
-    markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
 
