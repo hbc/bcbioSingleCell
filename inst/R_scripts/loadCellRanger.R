@@ -26,4 +26,4 @@ bcb <- loadCellRanger(
 )
 # Back up all data inside bcbio object
 flatFiles <- flatFiles(bcb)
-saveData(bcb, flatFiles)
+saveData(bcb, flatFiles, dir = "data")
