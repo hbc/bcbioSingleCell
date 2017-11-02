@@ -89,8 +89,7 @@ loadCellRanger <- function(
         .[[1]] %>%
         str_split("\\.", simplify = TRUE) %>%
         .[1, 3]
-    message(paste("Organism:", organism))
-    message(paste("Genome build:", genomeBuild))
+    message(paste0("Genome: ", organism, " (", genomeBuild, ")"))
     message(paste("Ensembl release:", ensemblVersion))
 
     # Cell Ranger uses reference GTF file
