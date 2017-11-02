@@ -42,6 +42,7 @@ NULL
 # Constructors ====
 #' @importFrom basejump mdHeader mdList
 #' @importFrom Matrix rowSums
+#' @importFrom scales percent
 #' @importFrom tibble rownames_to_column
 .filterCells <- function(
     object,
@@ -93,7 +94,7 @@ NULL
     message(paste(
         nrow(metrics),
         "filtered cellular barcodes",
-        paste0("(", pct(nrow(metrics) / ncol(object)), ")")
+        paste0("(", percent(nrow(metrics) / ncol(object)), ")")
     ))
 
     # Filter low expression genes ====
