@@ -8,9 +8,8 @@
 #' @inheritParams AllGenerics
 #' @inheritParams plotGenesPerCell
 #'
-#' @details A violin plot is a comact display of a continuous distribution. It
-#'   is a blend of [geom_boxplot()] and [geom_density()]: a violin plot is a
-#'   mirrored density plot displayed in the same way as a boxplot.
+#' @param geom Plot type. Supported formats: proportional `histogram`
+#'   (*recommended*), raw `ridgeline`, and raw `violin`.
 #'
 #' @note Here by "cell" we mean "cellular barcode".
 #'
@@ -20,7 +19,9 @@ NULL
 
 
 # Constructors ====
-#' Raw Cellular Barcodes
+#' Raw Cellular Barcodes Tibble
+#'
+#' Used for `geom` parameter: `ridgeline` and `violin` arguments.
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
@@ -67,7 +68,7 @@ NULL
 
 
 
-#' Proportional Cellular Barcodes
+#' Proportional Cellular Barcodes Tibble
 #'
 #' @author Rory Kirchner, Michael Steinbaugh
 #' @keywords internal
@@ -131,7 +132,7 @@ NULL
     tibble,
     interestingGroups = "sampleName",
     cutoffLine = 0,
-    multiplexedFASTQ = FALSE,
+    multiplexed = FALSE,
     aggregateReplicates = TRUE) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
@@ -161,7 +162,7 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexedFASTQ) &
+    if (isTRUE(multiplexed) &
         length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
@@ -198,7 +199,7 @@ NULL
     tibble,
     interestingGroups = "sampleName",
     cutoffLine = 2,
-    multiplexedFASTQ = FALSE,
+    multiplexed = FALSE,
     aggregateReplicates = TRUE) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
@@ -217,7 +218,7 @@ NULL
             alpha = qcPlotAlpha,
             color = lineColor,
             panel_scaling = TRUE,
-            scale = 3) +
+            scale = 10) +
         scale_fill_viridis(discrete = TRUE) +
         scale_x_sqrt()
 
@@ -229,7 +230,7 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexedFASTQ) &
+    if (isTRUE(multiplexed) &
         length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
@@ -265,7 +266,7 @@ NULL
     tibble,
     interestingGroups = "sampleName",
     cutoffLine = NULL,
-    multiplexedFASTQ = FALSE,
+    multiplexed = FALSE,
     aggregateReplicates = TRUE) {
     p <- ggplot(
         tibble,
@@ -289,7 +290,7 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexedFASTQ) &
+    if (isTRUE(multiplexed) &
         length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
@@ -321,27 +322,33 @@ NULL
 #' @inherit plotReadsPerCell
 .plotReadsPerCell <- function(
     object,
-    interestingGroups = "sampleName",
+    geom = "histogram",
+    interestingGroups,
     filterCells = TRUE,
     aggregateReplicates = TRUE) {
+    # Currently only supported for `loadSingleCell()` return
     if (metadata(object)[["pipeline"]] != "bcbio") {
         return(warning(paste(
             "'plotReadsPerCell()' currently only supports bcbio pipeline"
-            ), call. = FALSE))
-    }
-    if (missing(interestingGroups)) {
-        interestingGroups <-
-            metadata(object)[["interestingGroups"]][[1]]
+        ), call. = FALSE))
     }
 
-    rawTibble <- .rawCBTibble(
-        object,
-        filterCells = filterCells)
+    if (missing(interestingGroups)) {
+        interestingGroups <-
+            metadata(object)[["interestingGroups"]]
+    }
+
+    # Acquire the data required for plotting
     sampleMetadata <- sampleMetadata(
-        object, aggregateReplicates = aggregateReplicates)
-    proportionalTibble <- .proportionalCBTibble(
-        rawTibble = rawTibble,
-        sampleMetadata = sampleMetadata)
+        object,
+        interestingGroups = interestingGroups,
+        aggregateReplicates = aggregateReplicates)
+    rawTibble <- .rawCBTibble(object, filterCells = filterCells)
+    if (geom == "histogram") {
+        proportionalTibble <- .proportionalCBTibble(
+            rawTibble = rawTibble,
+            sampleMetadata = sampleMetadata)
+    }
 
     # Need to set the cellular barcode cutoff in log10 to match the plots
     if (!is.null(metadata(object)[["cbCutoff"]])) {
@@ -358,43 +365,29 @@ NULL
         as.numeric() %>%
         log10()
 
-    multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
+    multiplexed <- metadata(object)[["multiplexedFASTQ"]]
 
-    violin <- .plotRawCBViolin(
-            rawTibble,
-            cutoffLine = cutoffLine,
-            multiplexedFASTQ = multiplexedFASTQ,
-            aggregateReplicates = aggregateReplicates)
-    ridgeline <- .plotRawCBRidgeline(
-            rawTibble,
-            cutoffLine = cutoffLine,
-            multiplexedFASTQ = multiplexedFASTQ,
-            aggregateReplicates = aggregateReplicates)
-    proportionalHistogram <- .plotProportionalCBHistogram(
+    if (geom == "histogram") {
+        p <- .plotProportionalCBHistogram(
             proportionalTibble,
             cutoffLine = cutoffLine,
-            multiplexedFASTQ = multiplexedFASTQ,
+            multiplexed = multiplexed,
             aggregateReplicates = aggregateReplicates)
+    } else if (geom == "ridgeline") {
+        p <- .plotRawCBRidgeline(
+            rawTibble,
+            cutoffLine = cutoffLine,
+            multiplexed = multiplexed,
+            aggregateReplicates = aggregateReplicates)
+    } else if (geom == "violin") {
+        p <- .plotRawCBViolin(
+            rawTibble,
+            cutoffLine = cutoffLine,
+            multiplexed = multiplexed,
+            aggregateReplicates = aggregateReplicates)
+    }
 
-    ggdraw() +
-        # Coordinates are relative to lower left corner
-        draw_plot(
-            violin +
-                xlab("") +
-                theme(legend.position = "none"),
-            x = 0, y = 0.7, width = 0.5, height = 0.3) +
-        suppressMessages(draw_plot(
-            ridgeline +
-                ylab("") +
-                theme(axis.text.y = element_blank(),
-                      axis.ticks.y = element_blank(),
-                      legend.position = "none"),
-            x = 0.5, y = 0.7, width = 0.5, height = 0.3)) +
-        draw_plot(
-            proportionalHistogram +
-                theme(legend.justification = "center",
-                      legend.position = "bottom"),
-            x = 0, y = 0, width = 1, height = 0.7)
+    p
 }
 
 
