@@ -32,9 +32,8 @@ NULL
 #' @importFrom viridis scale_fill_viridis
 .plotUMIsPerCell <- function(
     object,
-    geom = "violin",
+    geom = "boxplot",
     min = 0,
-    max = Inf,
     interestingGroups,
     multiplexed = FALSE,
     samplesOnYAxis = TRUE,
@@ -44,8 +43,7 @@ NULL
         object,
         geom = geom,
         metricCol = metricCol,
-        min = min,
-        max = max)
+        min = min)
 
     # Label interesting groups
     if (!missing(interestingGroups)) {
@@ -94,9 +92,8 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        geom = "violin",
+        geom = "boxplot",
         min,
-        max,
         interestingGroups,
         filterCells = TRUE,
         aggregateReplicates = TRUE,
@@ -113,14 +110,6 @@ setMethod(
                 min <- 0
             }
         }
-        if (missing(max)) {
-            max <- metadata(object) %>%
-                .[["filterParams"]] %>%
-                .[["maxUMIs"]]
-            if (is.null(max)) {
-                max <- Inf
-            }
-        }
         multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(
             object,
@@ -131,7 +120,6 @@ setMethod(
             object = metrics,
             geom = geom,
             min = min,
-            max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
             fill = fill,
@@ -156,9 +144,8 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        geom = "violin",
-        min = 0,
-        max = Inf,
+        geom = "boxplot",
+        min,
         interestingGroups,
         multiplexed = FALSE,
         samplesOnYAxis = TRUE,
@@ -168,12 +155,17 @@ setMethod(
                 .[["bcbio"]] %>%
                 .[["interestingGroups"]]
         }
+        if (missing(min)) {
+            min <- slot(object, "misc") %>%
+                .[["bcbio"]] %>%
+                .[["filterParams"]] %>%
+                .[["minUMIs"]]
+        }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotUMIsPerCell(
             object = metrics,
             geom = geom,
             min = min,
-            max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
             fill = fill,

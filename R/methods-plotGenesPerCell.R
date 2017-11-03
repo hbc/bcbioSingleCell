@@ -8,8 +8,8 @@
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
 #'
-#' @param geom Plot type. Currently support formats: `boxplot`, `histogram`,
-#'   `ridgeline`, and `violin` (default).
+#' @param geom Plot type. Supported formats: `boxplot`, `histogram`,
+#'   `ridgeline`, and `violin`.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #' @param fill Desired ggplot fill scale. Defaults to
@@ -45,7 +45,7 @@ NULL
 #' @importFrom viridis scale_fill_viridis
 .plotGenesPerCell <- function(
     object,
-    geom = "violin",
+    geom = "boxplot",
     min = 0,
     max = Inf,
     interestingGroups,
@@ -107,7 +107,7 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        geom = "violin",
+        geom = "boxplot",
         min,
         max,
         interestingGroups,
@@ -169,7 +169,7 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        geom = "violin",
+        geom = "boxplot",
         min,
         max,
         interestingGroups,

@@ -31,7 +31,7 @@ NULL
 #' @importFrom viridis scale_fill_viridis
 .plotMitoRatio <- function(
     object,
-    geom = "violin",
+    geom = "boxplot",
     max = Inf,
     interestingGroups,
     multiplexed = FALSE,
@@ -91,7 +91,7 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        geom = "violin",
+        geom = "boxplot",
         max,
         interestingGroups,
         filterCells = TRUE,
@@ -143,7 +143,7 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        geom = "violin",
+        geom = "boxplot",
         max = Inf,
         interestingGroups,
         multiplexed = FALSE,
