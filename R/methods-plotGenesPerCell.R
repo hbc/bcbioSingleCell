@@ -27,16 +27,15 @@
 #' plotGenesPerCell(bcb)
 #' }
 #'
-#' # data.frame
-#' # This is recommended for advanced users only
-#' \dontrun{
-#' metrics <- metrics(bcb)
-#' plotGenesPerCell(metrics)
-#' }
-#'
 #' # seurat
 #' \dontrun{
 #' plotGenesPerCell(seurat)
+#' }
+#'
+#' # metrics data.frame
+#' \dontrun{
+#' metrics <- metrics(bcb)
+#' plotGenesPerCell(metrics)
 #' }
 NULL
 
@@ -54,12 +53,12 @@ NULL
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "nGene"
-    p <- .dynamicQCPlot(
+    p <- .plotQCGeom(
         object,
+        geom = geom,
         metricCol = metricCol,
         min = min,
-        max = max,
-        geom = geom)
+        max = max)
 
     # Label interesting groups
     if (!missing(interestingGroups)) {
@@ -135,12 +134,12 @@ setMethod(
                 max <- Inf
             }
         }
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(
             object,
             interestingGroups = interestingGroups,
             filterCells = filterCells,
             aggregateReplicates = aggregateReplicates)
+        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         .plotGenesPerCell(
             object = metrics,
             geom = geom,
