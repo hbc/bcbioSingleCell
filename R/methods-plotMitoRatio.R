@@ -37,9 +37,9 @@ NULL
     min <- 0
     metrics <- metrics(
         object,
+        interestingGroups = interestingGroups,
         filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates) %>%
-        uniteInterestingGroups(interestingGroups)
+        aggregateReplicates = aggregateReplicates)
     col <- "mitoRatio"
     if (geom == "boxplot") {
         p <- .plotQCBoxplot(
