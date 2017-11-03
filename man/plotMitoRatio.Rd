@@ -8,8 +8,9 @@
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSingleCell}(object, interestingGroups, max,
-  filterCells = TRUE, aggregateReplicates = TRUE)
+\S4method{plotMitoRatio}{bcbioSingleCell}(object, interestingGroups,
+  geom = "violin", max, filterCells = TRUE, aggregateReplicates = TRUE,
+  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -18,6 +19,9 @@ plotMitoRatio(object, ...)
 
 \item{interestingGroups}{Interesting group, to use for colors.}
 
+\item{geom}{Plot type. Currently support formats: \code{boxplot}, \code{histogram},
+\code{ridgeline}, and \code{violin} (default).}
+
 \item{max}{Recommended maximum value cutoff.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
@@ -25,6 +29,14 @@ plotMitoRatio(object, ...)
 \item{aggregateReplicates}{Aggregate technical replicates, if specified. This
 function uses values assigned in the \code{sampleNameAggregate} column of the
 internal sample metadata \link{data.frame}.}
+
+\item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
+histogram.}
+
+\item{fill}{Desired ggplot fill scale. Defaults to
+\code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
+\code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
 \link{ggplot} grid.
