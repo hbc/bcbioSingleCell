@@ -10,15 +10,15 @@
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "violin", max,
+\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "boxplot", max,
   interestingGroups, filterCells = TRUE, aggregateReplicates = TRUE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotMitoRatio}{data.frame}(object, geom = "violin", max = Inf,
+\S4method{plotMitoRatio}{data.frame}(object, geom = "boxplot", max = Inf,
   interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotMitoRatio}{seurat}(object, geom = "violin", max = Inf,
+\S4method{plotMitoRatio}{seurat}(object, geom = "boxplot", max = Inf,
   interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 }
@@ -27,8 +27,8 @@ plotMitoRatio(object, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{geom}{Plot type. Currently support formats: \code{boxplot}, \code{histogram},
-\code{ridgeline}, and \code{violin} (default).}
+\item{geom}{Plot type. Supported formats: \code{boxplot}, \code{histogram},
+\code{ridgeline}, and \code{violin}.}
 
 \item{max}{Recommended maximum value cutoff.}
 

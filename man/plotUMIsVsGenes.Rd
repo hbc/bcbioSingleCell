@@ -51,18 +51,18 @@ Plot UMI and Gene Correlation
 \examples{
 # bcbioSingleCell
 \dontrun{
-plotGenesPerCell(bcb)
+plotUMIsVsGenes(bcb)
 }
 
 # seurat
 \dontrun{
-plotGenesPerCell(seurat)
+plotUMIsVsGenes(seurat)
 }
 
-# metrics data.frame
+# data.frame
 \dontrun{
 metrics <- metrics(bcb)
-plotGenesPerCell(metrics)
+plotUMIsPerCell(metrics)
 }
 }
 \seealso{

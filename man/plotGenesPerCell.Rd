@@ -10,25 +10,25 @@
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "violin", min,
+\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "boxplot", min,
   max, interestingGroups, filterCells = TRUE, aggregateReplicates = TRUE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0,
+\S4method{plotGenesPerCell}{data.frame}(object, geom = "boxplot", min = 0,
   max = Inf, interestingGroups, multiplexed = FALSE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotGenesPerCell}{seurat}(object, geom = "violin", min = 0,
-  max = Inf, interestingGroups, multiplexed = FALSE,
-  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+\S4method{plotGenesPerCell}{seurat}(object, geom = "boxplot", min, max,
+  interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{geom}{Plot type. Currently support formats: \code{boxplot}, \code{histogram},
-\code{ridgeline}, and \code{violin} (default).}
+\item{geom}{Plot type. Supported formats: \code{boxplot}, \code{histogram},
+\code{ridgeline}, and \code{violin}.}
 
 \item{min}{Recommended minimum value cutoff.}
 
