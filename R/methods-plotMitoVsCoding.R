@@ -5,13 +5,7 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inherit plotGenesPerCell
-#'
-#' @param color *Only applies to scatterplot*. Desired ggplot color scale.
-#'   Defaults to [viridis::scale_color_viridis()]. Must supply discrete values.
-#'   When set to `NULL`, the default ggplot2 color palette will be used. If
-#'   manual color definitions are desired, we recommend using
-#'   [ggplot2::scale_color_manual()].
+#' @inherit plotUMIsVsGenes
 #'
 #' @examples
 #' # bcbioSingleCell
@@ -34,19 +28,14 @@ NULL
 
 
 # Constructors ====
-#' @importFrom viridis scale_fill_viridis
+#' @importFrom ggplot2 facet_wrap labs
+#' @importFrom viridis scale_color_viridis
 .plotMitoVsCoding <- function(
     object,
-    geom = "violin",
-    max = Inf,
     interestingGroups,
     multiplexed = FALSE,
-    samplesOnYAxis = TRUE,
     color = scale_color_viridis(discrete = TRUE)) {
-    p <- .plotQCScatterplot(
-            object,
-            xCol = "nCoding",
-            yCol = "nMito")
+    p <- .plotQCScatterplot(object, xCol = "nCoding", yCol = "nMito")
 
     # Label interesting groups
     if (!missing(interestingGroups)) {
@@ -80,6 +69,7 @@ NULL
 
 # Methods ====
 #' @rdname plotMitoVsCoding
+#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotMitoVsCoding",
@@ -119,6 +109,7 @@ setMethod(
 
 
 #' @rdname plotMitoVsCoding
+#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotMitoVsCoding",
