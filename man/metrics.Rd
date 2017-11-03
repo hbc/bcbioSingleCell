@@ -7,13 +7,15 @@
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{bcbioSingleCell}(object, filterCells = TRUE,
-  aggregateReplicates = TRUE)
+\S4method{metrics}{bcbioSingleCell}(object, interestingGroups,
+  filterCells = TRUE, aggregateReplicates = TRUE)
 
-\S4method{metrics}{seurat}(object)
+\S4method{metrics}{seurat}(object, interestingGroups)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
