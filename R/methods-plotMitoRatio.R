@@ -7,20 +7,18 @@
 #'
 #' @inherit plotGenesPerCell
 #'
-#' @param color *Only applies to scatterplot*. Desired ggplot color scale.
-#'   Defaults to [viridis::scale_color_viridis()]. Must supply discrete values.
-#'   When set to `NULL`, the default ggplot2 color palette will be used. If
-#'   manual color definitions are desired, we recommend using
-#'   [ggplot2::scale_color_manual()].
-#'
 #' @examples
 #' # bcbioSingleCell
 #' \dontrun{
 #' plotMitoRatio(bcb)
 #' }
 #'
-#' # data.frame
-#' # This is recommended for advanced users only
+#' # seurat
+#' \dontrun{
+#' plotMitoRatio(seurat)
+#' }
+#'
+#' # metrics data.frame
 #' \dontrun{
 #' metrics <- metrics(bcb)
 #' plotMitoRatio(metrics)
@@ -38,36 +36,23 @@ NULL
     interestingGroups,
     multiplexed = FALSE,
     samplesOnYAxis = TRUE,
-    color = scale_color_viridis(discrete = TRUE),
     fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "mitoRatio"
-    if (geom == "scatterplot") {
-        p <- .plotQCScatterplot(
+    p <- .plotQCGeom(
             object,
-            xCol = "nCoding",
-            yCol = "nMito")
-    } else {
-        p <- .dynamicQCPlot(
-            object,
+            geom = geom,
             metricCol = metricCol,
             min = 0,
-            max = max,
-            geom = geom)
-    }
+            max = max)
 
     # Label interesting groups
     if (!missing(interestingGroups)) {
-        p <- p +
-            labs(color = paste(interestingGroups, collapse = ":\n"),
-                 fill = paste(interestingGroups, collapse = ":\n"))
+        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
     } else {
         p <- p + labs(color = NULL, fill = NULL)
     }
 
     # Color palette
-    if (!is.null(color)) {
-        p <- p + color
-    }
     if (!is.null(fill)) {
         p <- p + fill
     }
