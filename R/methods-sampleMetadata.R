@@ -122,10 +122,11 @@ setMethod(
 
             # Finally, attempt to collapse into distinct rows
             df <- distinct(df) %>%
-                camel(strict = FALSE) %>%
-                # Ensure strings as factors
-                mutate_if(is.character, as.factor) %>%
-                set_rownames(.[["sampleID"]])
+                camel(strict = FALSE)
         }
+
+        # Ensure strings as factors
+        df <- mutate_if(df, is.character, as.factor)
+        rownames(df) <- df[["sampleID"]]
         df
     })
