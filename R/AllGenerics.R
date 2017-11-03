@@ -153,18 +153,18 @@ setGeneric("plotMarkerTSNE", function(object, ...) {
 
 
 
-#' @rdname plotMitoCounts
-#' @export
-setGeneric("plotMitoCounts", function(object, ...) {
-    standardGeneric("plotMitoCounts")
-})
-
-
-
 #' @rdname plotMitoRatio
 #' @export
 setGeneric("plotMitoRatio", function(object, ...) {
     standardGeneric("plotMitoRatio")
+})
+
+
+
+#' @rdname plotMitoVsCoding
+#' @export
+setGeneric("plotMitoVsCoding", function(object, ...) {
+    standardGeneric("plotMitoVsCoding")
 })
 
 
