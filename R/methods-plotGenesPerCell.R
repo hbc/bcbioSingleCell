@@ -1,5 +1,9 @@
 #' Plot Genes per Cell
 #'
+#' @details A violin plot is a comact display of a continuous distribution. It
+#'   is a blend of [geom_boxplot()] and [geom_density()]: a violin plot is a
+#'   mirrored density plot displayed in the same way as a boxplot.
+#'
 #' @rdname plotGenesPerCell
 #' @name plotGenesPerCell
 #' @family Quality Control Metrics
