@@ -4,27 +4,51 @@
 \name{plotUMIsPerCell}
 \alias{plotUMIsPerCell}
 \alias{plotUMIsPerCell,bcbioSingleCell-method}
+\alias{plotUMIsPerCell,data.frame-method}
+\alias{plotUMIsPerCell,seurat-method}
 \title{Plot UMIs per Cell}
 \usage{
 plotUMIsPerCell(object, ...)
 
-\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, interestingGroups, min,
-  filterCells = TRUE, aggregateReplicates = TRUE)
+\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = "violin", min, max,
+  interestingGroups, filterCells = TRUE, aggregateReplicates = TRUE,
+  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+
+\S4method{plotUMIsPerCell}{data.frame}(object, geom = "violin", min = 0,
+  max = Inf, interestingGroups, multiplexed = FALSE,
+  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+
+\S4method{plotUMIsPerCell}{seurat}(object, geom = "violin", min = 0,
+  max = Inf, interestingGroups, multiplexed = FALSE,
+  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{geom}{Plot type. Currently support formats: \code{boxplot}, \code{histogram},
+\code{ridgeline}, and \code{violin} (default).}
 
 \item{min}{Recommended minimum value cutoff.}
+
+\item{max}{Recommended maximum value cutoff.}
+
+\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
 \item{aggregateReplicates}{Aggregate technical replicates, if specified. This
 function uses values assigned in the \code{sampleNameAggregate} column of the
 internal sample metadata \link{data.frame}.}
+
+\item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
+histogram.}
+
+\item{fill}{Desired ggplot fill scale. Defaults to
+\code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
+\code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
 \link{ggplot}.
