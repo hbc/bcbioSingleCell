@@ -35,6 +35,13 @@ NULL
         scale_y_log10() +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
+    # Label interesting groups
+    if (!missing(interestingGroups)) {
+        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
+    } else {
+        p <- p + labs(color = NULL, fill = NULL)
+    }
+
     if (!isTRUE(aggregateReplicates) &
         "sampleNameAggregate" %in% colnames(metrics) &
         interestingGroups == "sampleName") {
