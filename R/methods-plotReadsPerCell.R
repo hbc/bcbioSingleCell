@@ -217,7 +217,7 @@ NULL
             alpha = qcPlotAlpha,
             color = lineColor,
             panel_scaling = TRUE,
-            scale = qcRidgeScale) +
+            scale = 3) +
         scale_fill_viridis(discrete = TRUE) +
         scale_x_sqrt()
 
