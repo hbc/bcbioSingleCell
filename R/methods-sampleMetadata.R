@@ -15,7 +15,7 @@ NULL
 
 # Methods ====
 #' @rdname sampleMetadata
-#' @importFrom dplyr distinct everything mutate select
+#' @importFrom dplyr distinct everything mutate mutate_if select
 #' @importFrom magrittr set_rownames
 #' @importFrom stringr str_match
 #' @export
@@ -54,6 +54,8 @@ setMethod(
         interestingGroups <- metadata(object)[["interestingGroups"]]
         meta %>%
             uniteInterestingGroups(interestingGroups) %>%
+            # Ensure strings as factors
+            mutate_if(is.character, as.factor) %>%
             # Ensure the rownames are set
             set_rownames(.[["sampleID"]])
     })
@@ -62,7 +64,7 @@ setMethod(
 
 #' @rdname sampleMetadata
 #' @importFrom basejump camel
-#' @importFrom dplyr distinct funs summarize_all
+#' @importFrom dplyr distinct funs mutate_if summarize_all
 #' @importFrom magrittr set_rownames
 #' @importFrom tibble remove_rownames
 #' @export
@@ -82,8 +84,10 @@ setMethod(
             ))
             df <- bcbMeta
         } else {
-            message(paste("Attempting to construct sample metadata",
-                          "from 'seurat@meta.data' slot"))
+            message(paste(
+                "Attempting to construct sample metadata",
+                "from 'seurat@meta.data' slot"
+            ))
             df <- slot(object, "meta.data") %>%
                 remove_rownames()
             # Drop any columns that appear to be a count (e.g. `nUMI`)
@@ -119,6 +123,8 @@ setMethod(
             # Finally, attempt to collapse into distinct rows
             df <- distinct(df) %>%
                 camel(strict = FALSE) %>%
+                # Ensure strings as factors
+                mutate_if(is.character, as.factor) %>%
                 set_rownames(.[["sampleID"]])
         }
         df
