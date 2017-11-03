@@ -9,8 +9,16 @@
 #' @inheritParams metrics
 #'
 #' @param interestingGroups Interesting group, to use for colors.
+#' @param geom Plot type. Currently support formats: `boxplot`, `histogram`,
+#'   `ridgeline`, and `violin` (default).
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
+#' @param fill Desired ggplot fill scale. Defaults to
+#'   [viridis::scale_fill_viridis()]. Must supply discrete values. When set to
+#'   `NULL`, the default ggplot2 color palette will be used. If manual color
+#'   definitions are desired, we recommend using [ggplot2::scale_fill_manual()].
+#' @param samplesOnYAxis Plot the samples on the y axis. Doesn't apply to
+#'   histogram.
 #'
 #' @return [ggplot] grid.
 NULL
@@ -18,182 +26,24 @@ NULL
 
 
 # Constructors ====
-#' @importFrom dplyr left_join
-#' @importFrom ggplot2 aes_ aes_string element_text geom_boxplot geom_label labs
-#'   scale_y_sqrt theme
 #' @importFrom viridis scale_fill_viridis
-.plotGenesPerCellBoxplot <- function(
-    object,
-    interestingGroups = "sampleName",
-    min = 0,
-    max = Inf,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(
-        object,
-        filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates)
-    p <- ggplot(
-        metrics,
-        mapping = aes_string(
-            x = "sampleName",
-            y = "nGene",
-            fill = interestingGroups)
-    ) +
-        labs(x = "sample",
-             y = "genes per cell") +
-        scale_y_sqrt() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroups == "sampleName") {
-        p <- p +
-            geom_boxplot(
-                color = lineColor,
-                fill = "white")
-    } else {
-        p <- p +
-            geom_boxplot(
-                alpha = qcPlotAlpha,
-                color = lineColor) +
-            scale_fill_viridis(discrete = TRUE)
-    }
-
-    # Median labels
-    if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
-        formula <- formula(paste("nGene", "sampleName", sep = " ~ "))
-        meta <- sampleMetadata(
-            object,
-            aggregateReplicates = aggregateReplicates)
-        medianGenes <-
-            aggregate(
-                formula = formula,
-                data = metrics,
-                FUN = median) %>%
-            left_join(meta, by = "sampleName")
-        p <- p +
-            geom_label(
-                data = medianGenes,
-                mapping = aes_(label = ~round(nGene)),
-                alpha = qcLabelAlpha,
-                color = qcLabelColor,
-                fill = qcLabelFill,
-                fontface = qcLabelFontface,
-                label.padding = qcLabelPadding,
-                label.size = qcLabelSize,
-                show.legend = FALSE)
-    }
-
-    # Cutoff lines
-    if (min > 0) {
-        p <- p + .qcCutoffLine(yintercept = min)
-    }
-    if (max < Inf) {
-        p <- p + .qcCutoffLine(yintercept = max)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
-        length(unique(metrics[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        facets <- c(facets, "sampleNameAggregate")
-        if (interestingGroups == "sampleName") {
-            p <- p + theme(legend.position = "none")
-        }
-    }
-    if (!is.null(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_x")
-    }
-
-    p
-}
-
-
-
-#' @importFrom ggridges geom_density_ridges
-.plotGenesPerCellRidgeline <- function(
-    object,
-    interestingGroups = "sampleName",
-    min = 0,
-    max = Inf,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(
-        object,
-        filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates)
-    p <- ggplot(
-        metrics,
-        mapping = aes_string(
-            x = "nGene",
-            y = "sampleName",
-            fill = interestingGroups)
-    ) +
-        labs(x = "genes per cell",
-             y = "sample") +
-        geom_density_ridges(
-            alpha = qcPlotAlpha,
-            color = lineColor,
-            panel_scaling = TRUE,
-            scale = qcRidgeScale) +
-        scale_fill_viridis(discrete = TRUE) +
-        scale_x_sqrt() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-    # Cutoff lines
-    if (min > 0) {
-        p <- p +
-            .qcCutoffLine(xintercept = min)
-    }
-    if (max < Inf) {
-        p <- p +
-            .qcCutoffLine(xintercept = max)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
-        length(unique(metrics[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        facets <- c(facets, "sampleNameAggregate")
-        # Turn off the legend
-        p <- p +
-            theme(legend.position = "none")
-    }
-    if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets,
-                       scales = "free_y")
-    }
-
-    p
-}
-
-
-
-#' @importFrom cowplot plot_grid
 .plotGenesPerCell <- function(
     object,
     interestingGroups,
+    geom = "violin",
     min,
     max,
     filterCells = TRUE,
-    aggregateReplicates = TRUE) {
+    aggregateReplicates = TRUE,
+    samplesOnYAxis = TRUE,
+    fill = scale_fill_viridis(discrete = TRUE)) {
+    .checkGeom(geom)
     if (missing(interestingGroups)) {
         interestingGroups <-
-            metadata(object)[["interestingGroups"]][[1]]
+            metadata(object)[["interestingGroups"]]
     }
     if (missing(min)) {
-        min <- object %>%
-            metadata() %>%
+        min <- metadata(object) %>%
             .[["filterParams"]] %>%
             .[["minGenes"]]
         if (is.null(min)) {
@@ -201,32 +51,77 @@ NULL
         }
     }
     if (missing(max)) {
-        max <- object %>%
-            metadata() %>%
+        max <- metadata(object) %>%
             .[["filterParams"]] %>%
             .[["maxGenes"]]
         if (is.null(max)) {
             max <- Inf
         }
     }
-    suppressMessages(plot_grid(
-        .plotGenesPerCellRidgeline(
-            object,
-            interestingGroups = interestingGroups,
+    metrics <- metrics(
+        object,
+        filterCells = filterCells,
+        aggregateReplicates = aggregateReplicates) %>%
+        uniteInterestingGroups(interestingGroups)
+    col <- "nGene"
+    if (geom == "boxplot") {
+        p <- .plotQCBoxplot(
+            metrics = metrics,
+            col = col,
             min = min,
-            max = max,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates),
-        .plotGenesPerCellBoxplot(
-            object,
-            interestingGroups = interestingGroups,
+            max  = max)
+    } else if (geom == "histogram") {
+        p <- .plotQCHistogram(
+            metrics = metrics,
+            col = col,
             min = min,
-            max = max,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates),
-        labels = "auto",
-        nrow = 2
-    ))
+            max  = max)
+    } else if (geom == "ridgeline") {
+        p <- .plotQCRidgeline(
+            metrics = metrics,
+            col = col,
+            min = min,
+            max  = max)
+    } else if (geom == "violin") {
+        p <- .plotQCViolin(
+            metrics = metrics,
+            col = col,
+            min = min,
+            max = max)
+    }
+
+    # Label interesting groups
+    p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
+
+    # Color palette
+    if (!is.null(fill)) {
+        p <- p + fill
+    }
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
+        length(unique(metrics[["description"]])) > 1) {
+        facets <- c(facets, "description")
+    }
+    if (!isTRUE(aggregateReplicates) &
+        "sampleNameAggregate" %in% colnames(metrics)) {
+        facets <- c(facets, "sampleNameAggregate")
+    }
+    if (!is.null(facets)) {
+        p <- p + facet_wrap(facets = facets, scales = "free_y")
+    } else {
+        # Add median labels
+        if (geom != "histogram") {
+            p <- p + .medianLabels(metrics, medianCol = "nGene", digits = 0)
+        }
+    }
+
+    if (isTRUE(samplesOnYAxis) & geom %in% validGCGeomFlip) {
+        p <- p + coord_flip()
+    }
+
+    p
 }
 
 
