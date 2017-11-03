@@ -25,7 +25,9 @@ Plot Percentage of Zeros vs. Library Depth
 Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}}

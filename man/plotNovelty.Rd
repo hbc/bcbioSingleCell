@@ -41,16 +41,15 @@ Plot Novelty Score
 plotGenesPerCell(bcb)
 }
 
-# data.frame
-# This is recommended for advanced users only
-\dontrun{
-metrics <- metrics(bcb)
-plotGenesPerCell(metrics)
-}
-
 # seurat
 \dontrun{
 plotGenesPerCell(seurat)
+}
+
+# metrics data.frame
+\dontrun{
+metrics <- metrics(bcb)
+plotGenesPerCell(metrics)
 }
 }
 \seealso{
@@ -58,6 +57,7 @@ Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}},

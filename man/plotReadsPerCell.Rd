@@ -43,8 +43,9 @@ Here by "cell" we mean "cellular barcode".
 Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
-  \code{\link{plotUMIsPerCell}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}}, \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}},
   \code{\link{plotZerosVsDepth}}
 }
