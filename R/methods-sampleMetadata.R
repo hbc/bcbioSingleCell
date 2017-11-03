@@ -85,7 +85,7 @@ setMethod(
             df <- bcbMeta
         } else {
             message(paste(
-                "Attempting to construct sample metadata",
+                "Constructing sample metadata",
                 "from 'seurat@meta.data' slot"
             ))
             df <- slot(object, "meta.data") %>%
