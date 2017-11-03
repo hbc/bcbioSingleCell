@@ -28,8 +28,8 @@ NULL
 .plotMitoRatio <- function(
     object,
     geom = "violin",
-    interestingGroups,
     max = Inf,
+    interestingGroups,
     multiplexed = FALSE,
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
@@ -106,21 +106,12 @@ NULL
 #' @export
 setMethod(
     "plotMitoRatio",
-    signature("data.frame"),
-    .plotMitoRatio)
-
-
-
-#' @rdname plotMitoRatio
-#' @export
-setMethod(
-    "plotMitoRatio",
     signature("bcbioSingleCell"),
     function(
         object,
         geom = "violin",
-        interestingGroups,
         max,
+        interestingGroups,
         filterCells = TRUE,
         aggregateReplicates = TRUE,
         samplesOnYAxis = TRUE,
@@ -145,8 +136,8 @@ setMethod(
         .plotMitoRatio(
             object = metrics,
             geom = geom,
-            interestingGroups = interestingGroups,
             max = max,
+            interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
             fill = fill,
             multiplexed = multiplexed)
@@ -158,12 +149,21 @@ setMethod(
 #' @export
 setMethod(
     "plotMitoRatio",
+    signature("data.frame"),
+    .plotMitoRatio)
+
+
+
+#' @rdname plotMitoRatio
+#' @export
+setMethod(
+    "plotMitoRatio",
     signature("seurat"),
     function(
         object,
         geom = "violin",
-        interestingGroups,
         max = Inf,
+        interestingGroups,
         multiplexed = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
@@ -176,8 +176,8 @@ setMethod(
         .plotMitoRatio(
             object = metrics,
             geom = geom,
-            interestingGroups = interestingGroups,
             max = max,
+            interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
             fill = fill,
             multiplexed = multiplexed)
