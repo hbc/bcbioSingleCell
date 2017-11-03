@@ -27,6 +27,8 @@ setMethod(
         aggregateReplicates = TRUE) {
         meta <- metadata(object)[["sampleMetadata"]] %>%
             as.data.frame()
+
+        # Aggregate replicates, if necessary
         if (isTRUE(aggregateReplicates) &
             "sampleNameAggregate" %in% colnames(meta)) {
             meta <- meta %>%
@@ -48,7 +50,10 @@ setMethod(
                          "description"),
                        everything())
         }
+
+        interestingGroups <- metadata(object)[["interestingGroups"]]
         meta %>%
+            uniteInterestingGroups(interestingGroups) %>%
             # Ensure the rownames are set
             set_rownames(.[["sampleID"]])
     })
