@@ -2,11 +2,21 @@ validQCGeom <- c("boxplot", "histogram", "ridgeline", "violin")
 validGCGeomFlip <- c("boxplot", "violin")
 
 
-.checkGeom <- function(geom) {
+
+.dynamicQCPlot <- function(..., geom) {
     if (!geom %in% validQCGeom) {
         stop(paste(
             "Valid formats:", toString(validQCGeom)
         ), call. = FALSE)
+    }
+    if (geom == "boxplot") {
+        plotQCBoxplot(...)
+    } else if (geom == "histogram") {
+        .plotQCHistogram(...)
+    } else if (geom == "ridgeline") {
+        .plotQCRidgeline(...)
+    } else if (geom == "violin") {
+        .plotQCViolin(...)
     }
 }
 
@@ -14,12 +24,12 @@ validGCGeomFlip <- c("boxplot", "violin")
 
 #' @importFrom ggplot2 aes_string element_text geom_boxplot ggplot labs
 #'   scale_y_sqrt theme
-.plotQCBoxplot <- function(metrics, col, min, max) {
+.plotQCBoxplot <- function(metrics, col1, min, max) {
     p <- ggplot(
         metrics,
         mapping = aes_string(
             x = "sampleName",
-            y = col,
+            y = col1,
             fill = "interestingGroups")
     ) +
         geom_boxplot(color = lineColor, outlier.shape = NA) +
@@ -41,11 +51,11 @@ validGCGeomFlip <- c("boxplot", "violin")
 
 #' @importFrom ggplot2 aes_string element_text geom_histogram ggplot labs
 #'   scale_x_sqrt scale_y_sqrt theme
-.plotQCHistogram <- function(metrics, col, min, max) {
+.plotQCHistogram <- function(metrics, col1, min, max) {
     p <- ggplot(
         metrics,
         mapping = aes_string(
-            x = col,
+            x = col1,
             fill = "interestingGroups")
     ) +
         geom_histogram(bins = bins) +
@@ -69,11 +79,11 @@ validGCGeomFlip <- c("boxplot", "violin")
 #' @importFrom ggplot2 aes_string element_text geom_boxplot ggplot labs
 #'   scale_x_sqrt theme
 #' @importFrom ggridges geom_density_ridges
-.plotQCRidgeline <- function(metrics, col, min, max) {
+.plotQCRidgeline <- function(metrics, col1, min, max) {
     p <- ggplot(
         metrics,
         mapping = aes_string(
-            x = col,
+            x = col1,
             y = "sampleName",
             fill = "interestingGroups")
     ) +
@@ -101,12 +111,12 @@ validGCGeomFlip <- c("boxplot", "violin")
 #' @importFrom dplyr filter pull
 #' @importFrom tibble rownames_to_column
 #' @importFrom viridis scale_color_viridis
-.plotQCScatterplot <- function(metrics, xCol, yCol) {
+.plotQCScatterplot <- function(metrics, col1, col2) {
     ggplot(
         metrics,
         mapping = aes_string(
-            x = "nCoding",
-            y = "nMito",
+            x = col1,
+            y = col2,
             color = "interestingGroups")
     ) +
         geom_point(
@@ -124,12 +134,12 @@ validGCGeomFlip <- c("boxplot", "violin")
 
 #' @importFrom ggplot2 aes_string element_text geom_violin ggplot labs
 #'   scale_y_sqrt theme
-.plotQCViolin <- function(metrics, col, min, max) {
+.plotQCViolin <- function(metrics, col1, min, max) {
     p <- ggplot(
         metrics,
         mapping = aes_string(
             x = "sampleName",
-            y = col,
+            y = col1,
             fill = "interestingGroups")
     ) +
         geom_violin(
