@@ -27,7 +27,6 @@ Imports:
     BiocGenerics (>= 0.24.0),
     cowplot (>= 0.8.0),
     dendsort (>= 0.3.3),
-    devtools (>= 1.13.3),
     dplyr (>= 0.7.4),
     ggplot2 (>= 2.2.1),
     ggridges (>= 0.4.1),
@@ -52,6 +51,7 @@ Imports:
     viridis (>= 0.4.0)
 Suggests:
     BiocStyle,
+    devtools,
     googlesheets,
     lintr (>= 1.0.1),
     rmarkdown,
