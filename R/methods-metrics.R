@@ -41,10 +41,8 @@ NULL
         rownames_to_column("cellID")
 
     # Prepare the metadata
-    interestingGroups <- metadata(object)[["interestingGroups"]]
     meta <- metadata(object)[["sampleMetadata"]] %>%
-        as.data.frame() %>%
-        uniteInterestingGroups(interestingGroups)
+        as.data.frame()
 
     # Rename `sampleName` when aggregating replicates
     if (isTRUE(aggregateReplicates) &
