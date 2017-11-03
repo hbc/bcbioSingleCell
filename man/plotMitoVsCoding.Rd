@@ -41,6 +41,9 @@ Defaults to \code{\link[viridis:scale_color_viridis]{viridis::scale_color_viridi
 When set to \code{NULL}, the default ggplot2 color palette will be used. If
 manual color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
+\item{multiplexed}{Whether the FASTQ files are multiplexed. This is
+detected automatically for \link{bcbioSingleCell} objects.}
 }
 \value{
 \link{ggplot}.
