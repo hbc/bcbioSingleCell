@@ -4,21 +4,28 @@
 \name{plotGenesPerCell}
 \alias{plotGenesPerCell}
 \alias{plotGenesPerCell,bcbioSingleCell-method}
+\alias{plotGenesPerCell,data.frame-method}
+\alias{plotGenesPerCell,seurat-method}
 \title{Plot Genes per Cell}
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{bcbioSingleCell}(object, interestingGroups,
-  geom = "violin", min, max, filterCells = TRUE,
-  aggregateReplicates = TRUE, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
+\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "violin", min,
+  max, interestingGroups, filterCells = TRUE, aggregateReplicates = TRUE,
+  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+
+\S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0,
+  max = Inf, interestingGroups, multiplexed = FALSE,
+  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+
+\S4method{plotGenesPerCell}{seurat}(object, geom = "violin", min = 0,
+  max = Inf, interestingGroups, multiplexed = FALSE,
+  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
-
-\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{geom}{Plot type. Currently support formats: \code{boxplot}, \code{histogram},
 \code{ridgeline}, and \code{violin} (default).}
@@ -26,6 +33,8 @@ plotGenesPerCell(object, ...)
 \item{min}{Recommended minimum value cutoff.}
 
 \item{max}{Recommended maximum value cutoff.}
+
+\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
@@ -42,10 +51,28 @@ histogram.}
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
-\link{ggplot} grid.
+\link{ggplot}.
 }
 \description{
 Plot Genes per Cell
+}
+\examples{
+# bcbioSingleCell
+\dontrun{
+plotGenesPerCell(bcb)
+}
+
+# data.frame
+# This is recommended for advanced users only
+\dontrun{
+metrics <- metrics(bcb)
+plotGenesPerCell(metrics)
+}
+
+# seurat
+\dontrun{
+plotGenesPerCell(seurat)
+}
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

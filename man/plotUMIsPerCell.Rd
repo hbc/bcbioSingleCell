@@ -27,10 +27,28 @@ function uses values assigned in the \code{sampleNameAggregate} column of the
 internal sample metadata \link{data.frame}.}
 }
 \value{
-\link{ggplot} grid.
+\link{ggplot}.
 }
 \description{
 Plot the universal molecular identifiers (UMIs) per cell.
+}
+\examples{
+# bcbioSingleCell
+\dontrun{
+plotGenesPerCell(bcb)
+}
+
+# data.frame
+# This is recommended for advanced users only
+\dontrun{
+metrics <- metrics(bcb)
+plotGenesPerCell(metrics)
+}
+
+# seurat
+\dontrun{
+plotGenesPerCell(seurat)
+}
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

@@ -4,25 +4,35 @@
 \name{plotMitoRatio}
 \alias{plotMitoRatio}
 \alias{plotMitoRatio,bcbioSingleCell-method}
+\alias{plotMitoRatio,data.frame-method}
+\alias{plotMitoRatio,seurat-method}
 \title{Plot Mitochondrial Transcript Abundance}
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSingleCell}(object, interestingGroups,
-  geom = "violin", max, filterCells = TRUE, aggregateReplicates = TRUE,
+\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "violin", max,
+  interestingGroups, filterCells = TRUE, aggregateReplicates = TRUE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+
+\S4method{plotMitoRatio}{data.frame}(object, geom = "violin", max = Inf,
+  interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
+  fill = scale_fill_viridis(discrete = TRUE))
+
+\S4method{plotMitoRatio}{seurat}(object, geom = "violin", max = Inf,
+  interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
-
 \item{geom}{Plot type. Currently support formats: \code{boxplot}, \code{histogram},
 \code{ridgeline}, and \code{violin} (default).}
 
 \item{max}{Recommended maximum value cutoff.}
+
+\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
@@ -39,10 +49,23 @@ histogram.}
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
-\link{ggplot} grid.
+\link{ggplot}.
 }
 \description{
 Plot Mitochondrial Transcript Abundance
+}
+\examples{
+# bcbioSingleCell
+\dontrun{
+plotMitoRatio(bcb)
+}
+
+# data.frame
+# This is recommended for advanced users only
+\dontrun{
+metrics <- metrics(bcb)
+plotMitoRatio(metrics)
+}
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},
