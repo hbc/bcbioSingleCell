@@ -170,8 +170,8 @@ setMethod(
     function(
         object,
         geom = "violin",
-        min = 0,
-        max = Inf,
+        min,
+        max,
         interestingGroups,
         multiplexed = FALSE,
         samplesOnYAxis = TRUE,
@@ -180,6 +180,18 @@ setMethod(
             interestingGroups <- slot(object, "misc") %>%
                 .[["bcbio"]] %>%
                 .[["interestingGroups"]]
+        }
+        if (missing(min)) {
+            min <- slot(object, "misc") %>%
+                .[["bcbio"]] %>%
+                .[["filterParams"]] %>%
+                .[["minGenes"]]
+        }
+        if (missing(max)) {
+            max <- slot(object, "misc") %>%
+                .[["bcbio"]] %>%
+                .[["filterParams"]] %>%
+                .[["maxGenes"]]
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotGenesPerCell(
