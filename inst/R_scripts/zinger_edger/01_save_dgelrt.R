@@ -75,6 +75,8 @@ pblapply(seq_along(ident), function(a) {
     weights <- zeroWeightsLS(
         dge[["counts"]],
         design = design,
+        # The `maxit` default of 200 is too low
+        maxit = 1000,
         normalization = "TMM")
 
     dge[["weights"]] <- weights
