@@ -19,7 +19,7 @@
 #' @param samplesOnYAxis Plot the samples on the y axis. Doesn't apply to
 #'   histogram.
 #'
-#' @return [ggplot] grid.
+#' @return [ggplot].
 NULL
 
 
