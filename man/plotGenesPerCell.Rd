@@ -59,6 +59,11 @@ detected automatically for \link{bcbioSingleCell} objects.}
 \description{
 Plot Genes per Cell
 }
+\details{
+A violin plot is a comact display of a continuous distribution. It
+is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_density]{geom_density()}}: a violin plot is a
+mirrored density plot displayed in the same way as a boxplot.
+}
 \examples{
 # bcbioSingleCell
 \dontrun{
