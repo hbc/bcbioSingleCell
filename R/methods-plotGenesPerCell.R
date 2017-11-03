@@ -8,7 +8,6 @@
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
 #'
-#' @param interestingGroups Interesting group, to use for colors.
 #' @param geom Plot type. Currently support formats: `boxplot`, `histogram`,
 #'   `ridgeline`, and `violin` (default).
 #' @param min Recommended minimum value cutoff.
@@ -60,9 +59,9 @@ NULL
     }
     metrics <- metrics(
         object,
+        interestingGroups = interestingGroups,
         filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates) %>%
-        uniteInterestingGroups(interestingGroups)
+        aggregateReplicates = aggregateReplicates)
     col <- "nGene"
     if (geom == "boxplot") {
         p <- .plotQCBoxplot(
