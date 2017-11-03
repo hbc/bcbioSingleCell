@@ -33,34 +33,13 @@ NULL
     multiplexed = FALSE,
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
-    .checkGeom(geom)
-    col <- "mitoRatio"
-    min <- 0
-    if (geom == "boxplot") {
-        p <- .plotQCBoxplot(
-            metrics = object,
-            col = col,
-            min = min,
-            max  = max)
-    } else if (geom == "histogram") {
-        p <- .plotQCHistogram(
-            metrics = object,
-            col = col,
-            min = min,
-            max  = max)
-    } else if (geom == "ridgeline") {
-        p <- .plotQCRidgeline(
-            metrics = object,
-            col = col,
-            min = min,
-            max  = max)
-    } else if (geom == "violin") {
-        p <- .plotQCViolin(
-            metrics = object,
-            col = col,
-            min = min,
-            max = max)
-    }
+    metricCol <- "mitoRatio"
+    p <- .dynamicQCPlot(
+        object,
+        col1 = metricCol,
+        min = 0,
+        max = max,
+        geom = geom)
 
     # Label interesting groups
     if (!missing(interestingGroups)) {
@@ -88,7 +67,7 @@ NULL
     } else {
         # Add median labels
         if (geom != "histogram") {
-            p <- p + .medianLabels(object, medianCol = col, digits = 2)
+            p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
         }
     }
 
