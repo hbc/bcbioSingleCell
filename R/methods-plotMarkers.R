@@ -36,7 +36,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom cowplot draw_plot ggdraw
+#' @importFrom cowplot plot_grid
 #' @importFrom dplyr filter
 #' @importFrom ggplot2 aes_string coord_flip element_blank geom_violin ggplot
 #'   theme
