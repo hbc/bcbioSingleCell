@@ -20,6 +20,24 @@
 #'   histogram.
 #'
 #' @return [ggplot].
+#'
+#' @examples
+#' # bcbioSingleCell
+#' \dontrun{
+#' plotGenesPerCell(bcb)
+#' }
+#'
+#' # data.frame
+#' # This is recommended for advanced users only
+#' \dontrun{
+#' metrics <- metrics(bcb)
+#' plotGenesPerCell(metrics)
+#' }
+#'
+#' # seurat
+#' \dontrun{
+#' plotGenesPerCell(seurat)
+#' }
 NULL
 
 
@@ -28,69 +46,27 @@ NULL
 #' @importFrom viridis scale_fill_viridis
 .plotGenesPerCell <- function(
     object,
-    interestingGroups,
     geom = "violin",
-    min,
-    max,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE,
+    min = 0,
+    max = Inf,
+    interestingGroups,
+    multiplexed = FALSE,
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
-    .checkGeom(geom)
-    if (missing(interestingGroups)) {
-        interestingGroups <-
-            metadata(object)[["interestingGroups"]]
-    }
-    if (missing(min)) {
-        min <- metadata(object) %>%
-            .[["filterParams"]] %>%
-            .[["minGenes"]]
-        if (is.null(min)) {
-            min <- 0
-        }
-    }
-    if (missing(max)) {
-        max <- metadata(object) %>%
-            .[["filterParams"]] %>%
-            .[["maxGenes"]]
-        if (is.null(max)) {
-            max <- Inf
-        }
-    }
-    metrics <- metrics(
+    metricCol <- "nGene"
+    p <- .dynamicQCPlot(
         object,
-        interestingGroups = interestingGroups,
-        filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates)
-    col <- "nGene"
-    if (geom == "boxplot") {
-        p <- .plotQCBoxplot(
-            metrics = metrics,
-            col = col,
-            min = min,
-            max  = max)
-    } else if (geom == "histogram") {
-        p <- .plotQCHistogram(
-            metrics = metrics,
-            col = col,
-            min = min,
-            max  = max)
-    } else if (geom == "ridgeline") {
-        p <- .plotQCRidgeline(
-            metrics = metrics,
-            col = col,
-            min = min,
-            max  = max)
-    } else if (geom == "violin") {
-        p <- .plotQCViolin(
-            metrics = metrics,
-            col = col,
-            min = min,
-            max = max)
-    }
+        col1 = metricCol,
+        min = min,
+        max = max,
+        geom = geom)
 
     # Label interesting groups
-    p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
+    if (!missing(interestingGroups)) {
+        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
+    } else {
+        p <- p + labs(fill = NULL)
+    }
 
     # Color palette
     if (!is.null(fill)) {
@@ -99,12 +75,11 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
-        length(unique(metrics[["description"]])) > 1) {
+    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
     if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
+        "sampleNameAggregate" %in% colnames(object)) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (!is.null(facets)) {
@@ -112,7 +87,7 @@ NULL
     } else {
         # Add median labels
         if (geom != "histogram") {
-            p <- p + .medianLabels(metrics, medianCol = col, digits = 0)
+            p <- p + .medianLabels(object, medianCol = metricCol)
         }
     }
 
@@ -131,4 +106,90 @@ NULL
 setMethod(
     "plotGenesPerCell",
     signature("bcbioSingleCell"),
+    function(
+        object,
+        geom = "violin",
+        min,
+        max,
+        interestingGroups,
+        filterCells = TRUE,
+        aggregateReplicates = TRUE,
+        samplesOnYAxis = TRUE,
+        fill = scale_fill_viridis(discrete = TRUE)) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- metadata(object)[["interestingGroups"]]
+        }
+        if (missing(min)) {
+            min <- metadata(object) %>%
+                .[["filterParams"]] %>%
+                .[["minGenes"]]
+            if (is.null(min)) {
+                min <- 0
+            }
+        }
+        if (missing(max)) {
+            max <- metadata(object) %>%
+                .[["filterParams"]] %>%
+                .[["maxGenes"]]
+            if (is.null(max)) {
+                max <- Inf
+            }
+        }
+        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
+        metrics <- metrics(
+            object,
+            interestingGroups = interestingGroups,
+            filterCells = filterCells,
+            aggregateReplicates = aggregateReplicates)
+        .plotGenesPerCell(
+            object = metrics,
+            geom = geom,
+            min = min,
+            max = max,
+            interestingGroups = interestingGroups,
+            samplesOnYAxis = samplesOnYAxis,
+            fill = fill,
+            multiplexed = multiplexed)
+    })
+
+
+
+#' @rdname plotGenesPerCell
+#' @export
+setMethod(
+    "plotGenesPerCell",
+    signature("data.frame"),
     .plotGenesPerCell)
+
+
+
+#' @rdname plotGenesPerCell
+#' @export
+setMethod(
+    "plotGenesPerCell",
+    signature("seurat"),
+    function(
+        object,
+        geom = "violin",
+        min = 0,
+        max = Inf,
+        interestingGroups,
+        multiplexed = FALSE,
+        samplesOnYAxis = TRUE,
+        fill = scale_fill_viridis(discrete = TRUE)) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- slot(object, "misc") %>%
+                .[["bcbio"]] %>%
+                .[["interestingGroups"]]
+        }
+        metrics <- metrics(object, interestingGroups = interestingGroups)
+        .plotGenesPerCell(
+            object = metrics,
+            geom = geom,
+            min = min,
+            max = max,
+            interestingGroups = interestingGroups,
+            samplesOnYAxis = samplesOnYAxis,
+            fill = fill,
+            multiplexed = multiplexed)
+    })
