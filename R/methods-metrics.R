@@ -25,7 +25,7 @@ NULL
 # Methods ====
 #' @rdname metrics
 #' @importFrom basejump uniteInterestingGroups
-#' @importFrom dplyr left_join mutate
+#' @importFrom dplyr left_join mutate mutate_all
 #' @importFrom magrittr set_colnames
 #' @importFrom stringr str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
