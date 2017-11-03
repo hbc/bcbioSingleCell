@@ -41,7 +41,7 @@ validQCGeomFlip <- c(
 
 #' @importFrom ggplot2 aes_string element_text geom_boxplot ggplot labs
 #'   scale_y_sqrt theme
-.plotQCBoxplot <- function(metrics, metricCol, min, max) {
+.plotQCBoxplot <- function(metrics, metricCol, min = 0, max = Inf) {
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -68,7 +68,7 @@ validQCGeomFlip <- c(
 
 #' @importFrom ggplot2 aes_string element_text geom_dotplot ggplot labs
 #'   scale_y_sqrt theme
-.plotQCDotplot <- function(metrics, metricCol, min, max) {
+.plotQCDotplot <- function(metrics, metricCol, min = 0 , max = Inf) {
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -101,7 +101,7 @@ validQCGeomFlip <- c(
 
 #' @importFrom ggplot2 aes_string element_text geom_histogram ggplot labs
 #'   scale_x_sqrt scale_y_sqrt theme
-.plotQCHistogram <- function(metrics, metricCol, min, max) {
+.plotQCHistogram <- function(metrics, metricCol, min = 0, max = Inf) {
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -129,7 +129,7 @@ validQCGeomFlip <- c(
 #' @importFrom ggplot2 aes_string element_text geom_boxplot ggplot labs
 #'   scale_x_sqrt theme
 #' @importFrom ggridges geom_density_ridges
-.plotQCRidgeline <- function(metrics, metricCol, min, max) {
+.plotQCRidgeline <- function(metrics, metricCol, min = 0, max = Inf) {
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -184,7 +184,7 @@ validQCGeomFlip <- c(
 
 #' @importFrom ggplot2 aes_string element_text geom_violin ggplot labs
 #'   scale_y_sqrt theme
-.plotQCViolin <- function(metrics, metricCol, min, max) {
+.plotQCViolin <- function(metrics, metricCol, min = 0, max = Inf) {
     p <- ggplot(
         metrics,
         mapping = aes_string(
