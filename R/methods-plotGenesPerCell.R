@@ -113,7 +113,7 @@ NULL
     } else {
         # Add median labels
         if (geom != "histogram") {
-            p <- p + .medianLabels(metrics, medianCol = "nGene", digits = 0)
+            p <- p + .medianLabels(metrics, medianCol = col, digits = 0)
         }
     }
 
