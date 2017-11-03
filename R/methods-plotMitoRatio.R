@@ -42,7 +42,6 @@ NULL
             object,
             geom = geom,
             metricCol = metricCol,
-            min = 0,
             max = max)
 
     # Label interesting groups
