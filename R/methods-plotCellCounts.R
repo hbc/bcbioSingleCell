@@ -7,6 +7,8 @@
 #'
 #' @inherit plotGenesPerCell
 #'
+#' @param metadata Sample metadata [data.frame].
+#'
 #' @examples
 #' # bcbioSingleCell
 #' \dontrun{

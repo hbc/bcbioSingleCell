@@ -16,6 +16,8 @@
 #'   [viridis::scale_fill_viridis()]. Must supply discrete values. When set to
 #'   `NULL`, the default ggplot2 color palette will be used. If manual color
 #'   definitions are desired, we recommend using [ggplot2::scale_fill_manual()].
+#' @param multiplexed Whether the FASTQ files are multiplexed. This is
+#'   detected automatically for [bcbioSingleCell] objects.
 #' @param samplesOnYAxis Plot the samples on the y axis. Doesn't apply to
 #'   histogram.
 #'
