@@ -14,9 +14,8 @@ plotMitoVsCoding(object, ...)
   filterCells = TRUE, aggregateReplicates = TRUE, samplesOnYAxis = TRUE,
   color = scale_color_viridis(discrete = TRUE))
 
-\S4method{plotMitoVsCoding}{data.frame}(object, geom = "violin", max = Inf,
-  interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
-  color = scale_color_viridis(discrete = TRUE))
+\S4method{plotMitoVsCoding}{data.frame}(object, interestingGroups,
+  multiplexed = FALSE, color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
   multiplexed = FALSE, color = scale_color_viridis(discrete = TRUE))
@@ -42,11 +41,6 @@ Defaults to \code{\link[viridis:scale_color_viridis]{viridis::scale_color_viridi
 When set to \code{NULL}, the default ggplot2 color palette will be used. If
 manual color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
-
-\item{geom}{Plot type. Currently support formats: \code{boxplot}, \code{histogram},
-\code{ridgeline}, and \code{violin} (default).}
-
-\item{max}{Recommended maximum value cutoff.}
 }
 \value{
 \link{ggplot}.

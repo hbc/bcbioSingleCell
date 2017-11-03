@@ -4,13 +4,21 @@
 \name{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes,bcbioSingleCell-method}
+\alias{plotUMIsVsGenes,data.frame-method}
+\alias{plotUMIsVsGenes,seurat-method}
 \title{Plot UMI and Gene Correlation}
 \usage{
 plotUMIsVsGenes(object, ...)
 
-\S4method{plotUMIsVsGenes}{bcbioSingleCell}(object,
-  interestingGroups = "sampleName", filterCells = TRUE,
-  aggregateReplicates = TRUE)
+\S4method{plotUMIsVsGenes}{bcbioSingleCell}(object, interestingGroups,
+  filterCells = TRUE, aggregateReplicates = TRUE, samplesOnYAxis = TRUE,
+  color = scale_color_viridis(discrete = TRUE))
+
+\S4method{plotUMIsVsGenes}{data.frame}(object, interestingGroups,
+  multiplexed = FALSE, color = scale_color_viridis(discrete = TRUE))
+
+\S4method{plotUMIsVsGenes}{seurat}(object, interestingGroups,
+  multiplexed = FALSE, color = scale_color_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -24,6 +32,15 @@ plotUMIsVsGenes(object, ...)
 \item{aggregateReplicates}{Aggregate technical replicates, if specified. This
 function uses values assigned in the \code{sampleNameAggregate} column of the
 internal sample metadata \link{data.frame}.}
+
+\item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
+histogram.}
+
+\item{color}{\emph{Only applies to scatterplot}. Desired ggplot color scale.
+Defaults to \code{\link[viridis:scale_color_viridis]{viridis::scale_color_viridis()}}. Must supply discrete values.
+When set to \code{NULL}, the default ggplot2 color palette will be used. If
+manual color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 }
 \value{
 \link{ggplot}.

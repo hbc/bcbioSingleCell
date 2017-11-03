@@ -59,18 +59,17 @@ Plot the universal molecular identifiers (UMIs) per cell.
 \examples{
 # bcbioSingleCell
 \dontrun{
-plotGenesPerCell(bcb)
+plotUMIsPerCell(bcb)
 }
 
 # seurat
 \dontrun{
-plotGenesPerCell(seurat)
-}
+plotUMIsPerCell(seurat)}
 
-# metrics data.frame
+# data.frame
 \dontrun{
 metrics <- metrics(bcb)
-plotGenesPerCell(metrics)
+plotUMIsPerCell(metrics)
 }
 }
 \seealso{
