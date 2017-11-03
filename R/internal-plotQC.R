@@ -195,7 +195,7 @@ validQCGeomFlip <- c(
         geom_violin(
             alpha = qcPlotAlpha,
             color = lineColor,
-            scale = "count",
+            scale = "area",
             trim = TRUE) +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
