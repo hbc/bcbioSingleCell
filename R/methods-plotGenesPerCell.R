@@ -56,7 +56,7 @@ NULL
     metricCol <- "nGene"
     p <- .dynamicQCPlot(
         object,
-        col1 = metricCol,
+        metricCol = metricCol,
         min = min,
         max = max,
         geom = geom)
@@ -86,12 +86,12 @@ NULL
         p <- p + facet_wrap(facets = facets, scales = "free_y")
     } else {
         # Add median labels
-        if (geom != "histogram") {
+        if (geom %in% validMedianGeom) {
             p <- p + .medianLabels(object, medianCol = metricCol)
         }
     }
 
-    if (isTRUE(samplesOnYAxis) & geom %in% validGCGeomFlip) {
+    if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
         p <- p + coord_flip()
     }
 

@@ -16,6 +16,7 @@ plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{data.frame}(object, geom = "violin", max = Inf,
   interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
+  color = scale_color_viridis(discrete = TRUE),
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotMitoRatio}{seurat}(object, geom = "violin", max = Inf,
@@ -47,6 +48,12 @@ histogram.}
 \code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
 \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{color}{\emph{Only applies to scatterplot}. Desired ggplot color scale.
+Defaults to \code{\link[viridis:scale_color_viridis]{viridis::scale_color_viridis()}}. Must supply discrete values.
+When set to \code{NULL}, the default ggplot2 color palette will be used. If
+manual color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 }
 \value{
 \link{ggplot}.

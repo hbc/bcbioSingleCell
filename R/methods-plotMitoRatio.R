@@ -7,6 +7,12 @@
 #'
 #' @inherit plotGenesPerCell
 #'
+#' @param color *Only applies to scatterplot*. Desired ggplot color scale.
+#'   Defaults to [viridis::scale_color_viridis()]. Must supply discrete values.
+#'   When set to `NULL`, the default ggplot2 color palette will be used. If
+#'   manual color definitions are desired, we recommend using
+#'   [ggplot2::scale_color_manual()].
+#'
 #' @examples
 #' # bcbioSingleCell
 #' \dontrun{
@@ -32,23 +38,36 @@ NULL
     interestingGroups,
     multiplexed = FALSE,
     samplesOnYAxis = TRUE,
+    color = scale_color_viridis(discrete = TRUE),
     fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "mitoRatio"
-    p <- .dynamicQCPlot(
-        object,
-        col1 = metricCol,
-        min = 0,
-        max = max,
-        geom = geom)
+    if (geom == "scatterplot") {
+        p <- .plotQCScatterplot(
+            object,
+            xCol = "nCoding",
+            yCol = "nMito")
+    } else {
+        p <- .dynamicQCPlot(
+            object,
+            metricCol = metricCol,
+            min = 0,
+            max = max,
+            geom = geom)
+    }
 
     # Label interesting groups
     if (!missing(interestingGroups)) {
-        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
+        p <- p +
+            labs(color = paste(interestingGroups, collapse = ":\n"),
+                 fill = paste(interestingGroups, collapse = ":\n"))
     } else {
-        p <- p + labs(fill = NULL)
+        p <- p + labs(color = NULL, fill = NULL)
     }
 
     # Color palette
+    if (!is.null(color)) {
+        p <- p + color
+    }
     if (!is.null(fill)) {
         p <- p + fill
     }
@@ -66,12 +85,12 @@ NULL
         p <- p + facet_wrap(facets = facets, scales = "free_y")
     } else {
         # Add median labels
-        if (geom != "histogram") {
+        if (geom %in% validMedianGeom) {
             p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
         }
     }
 
-    if (isTRUE(samplesOnYAxis) & geom %in% validGCGeomFlip) {
+    if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
         p <- p + coord_flip()
     }
 
