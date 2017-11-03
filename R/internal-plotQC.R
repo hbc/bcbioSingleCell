@@ -22,8 +22,6 @@ validGCGeomFlip <- c("boxplot", "violin")
             y = col,
             fill = "interestingGroups")
     ) +
-        labs(x = "sample",
-             y = "genes per cell") +
         geom_boxplot(color = lineColor, outlier.shape = NA) +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
@@ -50,7 +48,6 @@ validGCGeomFlip <- c("boxplot", "violin")
             x = col,
             fill = "interestingGroups")
     ) +
-        labs(x = "genes per cell") +
         geom_histogram(bins = bins) +
         scale_x_sqrt() +
         scale_y_sqrt() +
@@ -80,8 +77,6 @@ validGCGeomFlip <- c("boxplot", "violin")
             y = "sampleName",
             fill = "interestingGroups")
     ) +
-        labs(x = "genes per cell",
-             y = "sample") +
         geom_density_ridges(
             alpha = qcPlotAlpha,
             color = lineColor,
@@ -103,6 +98,30 @@ validGCGeomFlip <- c("boxplot", "violin")
 
 
 
+#' @importFrom dplyr filter pull
+#' @importFrom tibble rownames_to_column
+#' @importFrom viridis scale_color_viridis
+.plotQCScatterplot <- function(metrics, xCol, yCol) {
+    ggplot(
+        metrics,
+        mapping = aes_string(
+            x = "nCoding",
+            y = "nMito",
+            color = "interestingGroups")
+    ) +
+        geom_point(
+            alpha = 0.25,
+            size = 0.8) +
+        geom_smooth(
+            method = "gam",
+            se = FALSE,
+            size = 1.5) +
+        scale_x_sqrt() +
+        scale_y_sqrt()
+}
+
+
+
 #' @importFrom ggplot2 aes_string element_text geom_violin ggplot labs
 #'   scale_y_sqrt theme
 .plotQCViolin <- function(metrics, col, min, max) {
@@ -113,8 +132,6 @@ validGCGeomFlip <- c("boxplot", "violin")
             y = col,
             fill = "interestingGroups")
     ) +
-        labs(x = "sample",
-             y = "genes per cell") +
         geom_violin(
             alpha = qcPlotAlpha,
             color = lineColor,
