@@ -8,6 +8,22 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell
+#'
+#' @examples
+#' # bcbioSingleCell
+#' \dontrun{
+#' plotUMIsPerCell(bcb)
+#' }
+#'
+#' # seurat
+#' \dontrun{
+#' plotUMIsPerCell(seurat)}
+#'
+#' # data.frame
+#' \dontrun{
+#' metrics <- metrics(bcb)
+#' plotUMIsPerCell(metrics)
+#' }
 NULL
 
 
