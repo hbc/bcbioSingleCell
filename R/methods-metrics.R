@@ -127,8 +127,8 @@ setMethod(
     # This slot was previously named `data.info` in earlier releases
     metrics <- slot(object, "meta.data") %>%
         as.data.frame() %>%
-        rownames_to_column() %>%
-        camel(strict = FALSE)
+        camel(strict = FALSE) %>%
+        rownames_to_column("cellID")
     # Check for required columns, and make sure they're factors
     requiredCols <- c("description", "sampleID", "sampleName")
     if (!all(requiredCols %in% colnames(metrics))) {
@@ -141,6 +141,6 @@ setMethod(
     metrics <- mutate_if(metrics, is.character, as.factor)
     # Create the `interestingGroups` column required for QC plots
     metrics <- uniteInterestingGroups(metrics, interestingGroups)
-    metrics <- column_to_rownames(metrics)
+    metrics <- column_to_rownames(metrics, "cellID")
     metrics
 })
