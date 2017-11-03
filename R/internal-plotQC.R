@@ -1,18 +1,15 @@
 validMedianGeom <- c(
     "boxplot",
-    "dotplot",
     "ridgeline",
     "violin"
 )
 validQCGeom <- c(
     "boxplot",
-    "dotplot",
     "histogram",
     "ridgeline",
     "violin")
 validQCGeomFlip <- c(
     "boxplot",
-    "dotplot",
     "violin"
 )
 
@@ -26,8 +23,6 @@ validQCGeomFlip <- c(
     }
     if (geom == "boxplot") {
         .plotQCBoxplot(...)
-    } else if (geom == "dotplot") {
-        .plotQCDotplot(...)
     } else if (geom == "histogram") {
         .plotQCHistogram(...)
     } else if (geom == "ridgeline") {
@@ -50,39 +45,6 @@ validQCGeomFlip <- c(
             fill = "interestingGroups")
     ) +
         geom_boxplot(color = lineColor, outlier.shape = NA) +
-        scale_y_sqrt() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-    # Cutoff lines
-    if (min > 0) {
-        p <- p + .qcCutoffLine(yintercept = min)
-    }
-    if (max < Inf) {
-        p <- p + .qcCutoffLine(yintercept = max)
-    }
-
-    p
-}
-
-
-
-#' @importFrom ggplot2 aes_string element_text geom_dotplot ggplot labs
-#'   scale_y_sqrt theme
-.plotQCDotplot <- function(metrics, metricCol, min = 0 , max = Inf) {
-    p <- ggplot(
-        metrics,
-        mapping = aes_string(
-            x = "sampleName",
-            y = metricCol,
-            fill = "interestingGroups")
-    ) +
-        geom_dotplot(
-            binaxis = "y",
-            binwidth = 1,
-            color = NA,
-            drop = TRUE,
-            stackdir = "center",
-            stackratio = 0.01) +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
