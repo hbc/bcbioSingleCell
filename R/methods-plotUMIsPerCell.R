@@ -24,12 +24,12 @@ NULL
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "nUMI"
-    p <- .dynamicQCPlot(
+    p <- .plotQCGeom(
         object,
+        geom = geom,
         metricCol = metricCol,
         min = min,
-        max = max,
-        geom = geom)
+        max = max)
 
     # Label interesting groups
     if (!missing(interestingGroups)) {
