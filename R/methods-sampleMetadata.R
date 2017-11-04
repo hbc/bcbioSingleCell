@@ -26,7 +26,7 @@ NULL
 #'
 #' @importFrom basejump camel
 #' @importFrom dplyr distinct mutate_if select_if
-#' @importFrom tidyr remove_rownames
+#' @importFrom tibble remove_rownames
 .prepareSampleMetadataFromSeurat <- function(metadata) {
     # Assign the required metadata columns from `orig.ident`, if necessary
     if (!all(metadataPriorityCols %in% colnames(metadata))) {
