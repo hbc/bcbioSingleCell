@@ -20,37 +20,28 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @param metadata Seurat metadata [data.frame] per cellular barcode. Currently
+#'   this is slotted in `object@meta.data` but older versions used
+#'   `object@data.info`.
+#'
 #' @importFrom basejump camel
 #' @importFrom dplyr distinct mutate_if select_if
-#' @importFrom tibble remove_rownames
-.prepareSampleMetadataFromSeurat <- function(object) {
-    df <- slot(object, "meta.data") %>%
-        as.data.frame() %>%
-        remove_rownames()
-
-    # Check for required columns
-    if (!all(metadataPriorityCols %in% colnames(df))) {
-        stop(paste(
-            "Required columns:", toString(metadataPriorityCols)
-        ), call. = FALSE)
+#' @importFrom tidyr remove_rownames
+.prepareSampleMetadataFromSeurat <- function(metadata) {
+    # Assign the required metadata columns from `orig.ident`, if necessary
+    if (!all(metadataPriorityCols %in% colnames(metadata))) {
+        for (i in seq_len(ncol(metadata))) {
+            metadata[[metadataPriorityCols[[i]]]] <- metadata[["orig.ident"]]
+        }
     }
-
-    # Remove cell cycle regression and resolution columns
     blacklist <- paste(c("Phase", "res\\."), collapse = "|")
-
-    df <- df %>%
+    metadata %>%
+        remove_rownames() %>%
         .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
         mutate_if(is.character, as.factor) %>%
         select_if(is.factor) %>%
         distinct() %>%
         camel(strict = FALSE)
-
-    # Check for distinct failure
-    if (any(duplicated(df[["sampleID"]]))) {
-        stop("Failed to make sample metadata rows distinct", call. = TRUE)
-    }
-
-    df
 }
 
 
@@ -84,17 +75,12 @@ setMethod(
                        sampleID = make.names(
                            .data[["sampleName"]], unique = FALSE),
                        sampleNameAggregate = NULL) %>%
-                select(unique(c(
-                    "sampleID", "sampleName", interestingGroups
-                ))) %>%
+                select(unique(c(metadataPriorityCols, interestingGroups))) %>%
                 distinct()
         } else {
             # Put the priority columns first
             metadata <- metadata %>%
-                select(c("sampleID",
-                         "sampleName",
-                         "description"),
-                       everything())
+                select(c(metadataPriorityCols), everything())
         }
 
         metadata %>%
@@ -117,27 +103,49 @@ setMethod(
     function(
         object,
         interestingGroups) {
-        # Check for stashed metadata in `misc` slot
+        metadata <- NULL
+        # Attempt to use stashed metadata at `object@misc$bcbio`. This will
+        # only exist for seurat class objects created from bcbioSingleCell.
         bcbio <- bcbio(object)
         if (!is.null(bcbio)) {
+            metadata <- bcbio[["sampleMetadata"]]
+            if (!identical(
+                unique(metadata[["sampleID"]]),
+                unique(slot(object, "meta.data")[["sampleID"]])
+            )) {
+                warning(paste(
+                    "Dimension mismatch with stashed metadata.",
+                    "Using Seurat cellular barcode metadata instead"
+                ), call. = FALSE)
+                metadata <- NULL
+            }
+            # Define interesting groups
             if (missing(interestingGroups)) {
                 interestingGroups <- bcbio[["interestingGroups"]]
             }
-            df <- bcbio[["sampleMetadata"]]
-            if (!identical(
-                unique(df[["sampleID"]]),
-                unique(slot(object, "meta.data")[["sampleID"]])
-            )) {
-                stop("Dimension mismatch with stashed metadata",
+        }
+        # Fall back to constructing metadata from cellular barcode info
+        if (is.null(metadata)) {
+            if (!.hasSlot(object, "version")) {
+                warning("Failed to detect seurat version", call. = FALSE)
+            }
+            if (.hasSlot(object, "meta.data")) {
+                metadata <- slot(object, "meta.data") %>%
+                    .prepareSampleMetadataFromSeurat()
+            } else if (.hasSlot(object, "data.info")) {
+                # Legacy support for older seurat objects (e.g. pbmc33k)
+                metadata <- slot(object, "data.info") %>%
+                    .prepareSampleMetadataFromSeurat()
+            } else {
+                stop("Failed to detect metadata in seurat object",
                      call. = FALSE)
             }
-        } else {
+            # Define interesting groups
             if (missing(interestingGroups)) {
                 interestingGroups <- "sampleName"
             }
-            df <- .prepareSampleMetadataFromSeurat(object)
         }
-        df %>%
+        metadata %>%
             # Ensure strings as factors
             mutate_if(is.character, as.factor) %>%
             uniteInterestingGroups(interestingGroups) %>%
