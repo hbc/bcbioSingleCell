@@ -60,13 +60,10 @@ setMethod(
         interestingGroups,
         aggregateReplicates = TRUE) {
         if (missing(interestingGroups)) {
-            interestingGroups <-
-                metadata(object)[["interestingGroups"]]
+            interestingGroups <- basejump::interestingGroups(object)
         }
-
         metadata <- metadata(object)[["sampleMetadata"]] %>%
             as.data.frame()
-
         # Aggregate replicates, if necessary
         if (isTRUE(aggregateReplicates) &
             "sampleNameAggregate" %in% colnames(metadata)) {
@@ -82,7 +79,6 @@ setMethod(
             metadata <- metadata %>%
                 select(c(metadataPriorityCols), everything())
         }
-
         metadata %>%
             uniteInterestingGroups(interestingGroups) %>%
             # Ensure strings as factors

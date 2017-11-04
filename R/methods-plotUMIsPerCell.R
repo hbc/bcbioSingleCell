@@ -100,7 +100,7 @@ setMethod(
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- metadata(object)[["interestingGroups"]]
+            interestingGroups <- basejump::interestingGroups(object)
         }
         if (missing(min)) {
             min <- metadata(object) %>%
@@ -151,15 +151,10 @@ setMethod(
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- slot(object, "misc") %>%
-                .[["bcbio"]] %>%
-                .[["interestingGroups"]]
+            interestingGroups <- basejump::interestingGroups(object)
         }
         if (missing(min)) {
-            min <- slot(object, "misc") %>%
-                .[["bcbio"]] %>%
-                .[["filterParams"]] %>%
-                .[["minUMIs"]]
+            min <- bcbio(object)[["filterParams"]][["minUMIs"]]
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotUMIsPerCell(

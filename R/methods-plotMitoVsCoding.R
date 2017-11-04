@@ -82,7 +82,7 @@ setMethod(
         samplesOnYAxis = TRUE,
         color = scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- metadata(object)[["interestingGroups"]]
+            interestingGroups <- basejump::interestingGroups(object)
         }
         multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(

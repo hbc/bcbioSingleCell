@@ -334,8 +334,7 @@ NULL
     }
 
     if (missing(interestingGroups)) {
-        interestingGroups <-
-            metadata(object)[["interestingGroups"]]
+        interestingGroups <- basejump::interestingGroups(object)
     }
 
     # Acquire the data required for plotting

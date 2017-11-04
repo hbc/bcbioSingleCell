@@ -109,8 +109,7 @@ setMethod(
         aggregateReplicates = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <-
-                metadata(object)[["interestingGroups"]]
+            interestingGroups <- basejump::interestingGroups(object)
         }
         metrics <- metrics(
             object,
