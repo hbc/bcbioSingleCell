@@ -103,12 +103,7 @@ setMethod(
             interestingGroups <- basejump::interestingGroups(object)
         }
         if (missing(min)) {
-            min <- metadata(object) %>%
-                .[["filterParams"]] %>%
-                .[["minUMIs"]]
-            if (is.null(min)) {
-                min <- 0
-            }
+            min <- metadata(object)[["filterParams"]][["minUMIs"]]
         }
         multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(

@@ -125,20 +125,10 @@ setMethod(
             interestingGroups <- basejump::interestingGroups(object)
         }
         if (missing(min)) {
-            min <- metadata(object) %>%
-                .[["filterParams"]] %>%
-                .[["minGenes"]]
-            if (is.null(min)) {
-                min <- 0
-            }
+            min <- metadata(object)[["filterParams"]][["minGenes"]]
         }
         if (missing(max)) {
-            max <- metadata(object) %>%
-                .[["filterParams"]] %>%
-                .[["maxGenes"]]
-            if (is.null(max)) {
-                max <- Inf
-            }
+            max <- metadata(object)[["filterParams"]][["maxGenes"]]
         }
         metrics <- metrics(
             object,
@@ -188,16 +178,10 @@ setMethod(
                 .[["interestingGroups"]]
         }
         if (missing(min)) {
-            min <- slot(object, "misc") %>%
-                .[["bcbio"]] %>%
-                .[["filterParams"]] %>%
-                .[["minGenes"]]
+            min <- bcbio(object)[["filterParams"]][["minGenes"]]
         }
         if (missing(max)) {
-            max <- slot(object, "misc") %>%
-                .[["bcbio"]] %>%
-                .[["filterParams"]] %>%
-                .[["maxGenes"]]
+            max <- bcbio(object)[["filterParams"]][["maxGenes"]]
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotGenesPerCell(

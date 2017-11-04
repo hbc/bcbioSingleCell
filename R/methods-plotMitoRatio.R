@@ -102,12 +102,7 @@ setMethod(
             interestingGroups <- basejump::interestingGroups(object)
         }
         if (missing(max)) {
-            max <- metadata(object) %>%
-                .[["filterParams"]] %>%
-                .[["maxMitoRatio"]]
-            if (is.null(max)) {
-                max <- Inf
-            }
+            max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
         }
         multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(

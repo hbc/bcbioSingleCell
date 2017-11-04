@@ -104,12 +104,7 @@ setMethod(
             interestingGroups <- basejump::interestingGroups(object)
         }
         if (missing(min)) {
-            min <- metadata(object) %>%
-                .[["filterParams"]] %>%
-                .[["minNovelty"]]
-            if (is.null(min)) {
-                min <- 0
-            }
+            min <- metadata(object)[["filterParams"]][["minNovelty"]]
         }
         multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(
@@ -157,10 +152,7 @@ setMethod(
                 .[["interestingGroups"]]
         }
         if (missing(min)) {
-            min <- slot(object, "misc") %>%
-                .[["bcbio"]] %>%
-                .[["filterParams"]] %>%
-                .[["minNovelty"]]
+            min <- bcbio(object)[["filterParams"]][["minNovelty"]]
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotNovelty(
