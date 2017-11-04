@@ -4,7 +4,7 @@
 #' @name interestingGroups
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump interestingGroups
+#' @importFrom basejump interestingGroups interestingGroups<-
 #'
 #' @inheritParams AllGenerics
 #'
