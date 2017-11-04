@@ -173,9 +173,7 @@ setMethod(
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- slot(object, "misc") %>%
-                .[["bcbio"]] %>%
-                .[["interestingGroups"]]
+            interestingGroups <- basejump::interestingGroups(object)
         }
         if (missing(min)) {
             min <- bcbio(object)[["filterParams"]][["minGenes"]]

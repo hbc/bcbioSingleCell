@@ -149,10 +149,7 @@ setMethod(
         interestingGroups,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <-
-                slot(object, "misc") %>%
-                .[["bcbio"]] %>%
-                .[["interestingGroups"]]
+            interestingGroups <- basejump::interestingGroups(object)
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         metadata <- sampleMetadata(object)

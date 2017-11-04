@@ -120,9 +120,7 @@ setMethod(
         multiplexed = FALSE,
         color = scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- slot(object, "misc") %>%
-                .[["bcbio"]] %>%
-                .[["interestingGroups"]]
+            interestingGroups <- basejump::interestingGroups(object)
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotMitoVsCoding(
