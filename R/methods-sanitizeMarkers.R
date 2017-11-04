@@ -93,9 +93,7 @@ NULL
     # Check for annotable annotations and add if necessary
     if (!"description" %in% colnames(markers)) {
         message("Adding stashed Ensembl annotations")
-        annotable <- slot(object, "misc") %>%
-            .[["bcbio"]] %>%
-            .[["annotable"]] %>%
+        annotable <- bcbio(object)[["annotable"]] %>%
             # Drop the symbols from annotable before join to avoid mismatch
             mutate(symbol = NULL)
         markers <- left_join(markers, annotable, by = "ensgene")
