@@ -52,7 +52,7 @@ setMethod(
 
         # Prepare the metadata
         if (missing(interestingGroups)) {
-            interestingGroups <- metadata(object)[["interestingGroups"]]
+            interestingGroups <- basejump::interestingGroups(object)
         }
         metadata <- metadata(object)[["sampleMetadata"]] %>%
             as.data.frame() %>%
@@ -115,28 +115,14 @@ setMethod(
         object,
         interestingGroups) {
     if (missing(interestingGroups)) {
-        # Check to see if bcbio interestingGroups are stashed.
-        # Stop if they're not defined.
-        interestingGroups <- slot(object, "misc") %>%
-            .[["bcbio"]] %>%
-            .[["interestingGroups"]]
-        if (is.null(interestingGroups)) {
-            stop("'interestingGroups' is required", call. = FALSE)
-        }
+        interestingGroups <- basejump::interestingGroups(object)
     }
     # This slot was previously named `data.info` in earlier releases
     metrics <- slot(object, "meta.data") %>%
         as.data.frame() %>%
         camel(strict = FALSE) %>%
-        rownames_to_column("cellID")
-    # Check for required columns, and make sure they're factors
-    requiredCols <- c("description", "sampleID", "sampleName")
-    if (!all(requiredCols %in% colnames(metrics))) {
-        stop(paste(
-            "object@meta.data must contain these columns:",
-            toString(requiredCols)
-        ), call. = FALSE)
-    }
+        rownames_to_column("cellID") %>%
+        left_join(sampleMetadata(object), by = "origIdent")
     # Ensure all strings are factors
     metrics <- mutate_if(metrics, is.character, as.factor)
     # Create the `interestingGroups` column required for QC plots
