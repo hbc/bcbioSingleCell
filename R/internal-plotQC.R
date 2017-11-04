@@ -37,6 +37,8 @@ validQCGeomFlip <- c(
 #' @importFrom ggplot2 aes_string element_text geom_boxplot ggplot labs
 #'   scale_y_sqrt theme
 .plotQCBoxplot <- function(metrics, metricCol, min = 0, max = Inf) {
+    if (!is.numeric(min)) min <- 0
+    if (!is.numeric(max)) max <- Inf
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -64,6 +66,8 @@ validQCGeomFlip <- c(
 #' @importFrom ggplot2 aes_string element_text geom_histogram ggplot labs
 #'   scale_x_sqrt scale_y_sqrt theme
 .plotQCHistogram <- function(metrics, metricCol, min = 0, max = Inf) {
+    if (!is.numeric(min)) min <- 0
+    if (!is.numeric(max)) max <- Inf
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -92,6 +96,8 @@ validQCGeomFlip <- c(
 #'   scale_x_sqrt theme
 #' @importFrom ggridges geom_density_ridges
 .plotQCRidgeline <- function(metrics, metricCol, min = 0, max = Inf) {
+    if (!is.numeric(min)) min <- 0
+    if (!is.numeric(max)) max <- Inf
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -147,6 +153,8 @@ validQCGeomFlip <- c(
 #' @importFrom ggplot2 aes_string element_text geom_violin ggplot labs
 #'   scale_y_sqrt theme
 .plotQCViolin <- function(metrics, metricCol, min = 0, max = Inf) {
+    if (!is.numeric(min)) min <- 0
+    if (!is.numeric(max)) max <- Inf
     p <- ggplot(
         metrics,
         mapping = aes_string(
