@@ -40,20 +40,7 @@ NULL
 .selectSamples <- function(
     object,
     ...) {
-    .checkFilterCells(object)
-    # Subset the filtered cells and genes
-    cells <- intersect(
-        colnames(object),
-        metadata(object)[["filterCells"]])
-    if (!is.null(cells)) {
-        object <- object[, cells]
-    }
-    genes <- intersect(
-        rownames(object),
-        metadata(object)[["filterGenes"]])
-    if (!is.null(genes)) {
-        object <- object[genes, ]
-    }
+    object <- .applyFilterCutoffs(object)
 
     # Here the `arguments` are captured as a named character vector. The names
     # of the arguments represent the column names. The value of the arguments

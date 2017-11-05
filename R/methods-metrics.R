@@ -39,15 +39,7 @@ setMethod(
         filterCells = TRUE,
         aggregateReplicates = TRUE) {
         if (isTRUE(filterCells)) {
-            .checkFilterCells(object)
-            cells <- intersect(
-                colnames(object),
-                metadata(object)[["filterCells"]])
-            if (!is.null(cells)) {
-                object <- object[, cells]
-            }
-            # We don't need to check genes here, since we're only reporting
-            # column data on the calculated metrics
+            object <- .applyFilterCutoffs(object)
         }
 
         colData <- colData(object) %>%
