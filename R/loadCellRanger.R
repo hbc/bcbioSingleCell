@@ -46,6 +46,7 @@ loadCellRanger <- function(
 
     # Sample metadata ==========================================================
     if (missing(sampleMetadataFile)) {
+        sampleMetadataFile <- NULL
         message(paste(
             "'sampleMetadataFile' not specified.",
             "Generating minimal sample metadata."
