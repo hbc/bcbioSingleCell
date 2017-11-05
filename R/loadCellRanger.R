@@ -30,6 +30,7 @@ loadCellRanger <- function(
     interestingGroups = "sampleName",
     sampleMetadataFile,
     prefilter = TRUE,
+    annotable,
     ...) {
     pipeline <- "cellranger"
     umiType <- "chromium"
@@ -44,8 +45,19 @@ loadCellRanger <- function(
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sample metadata ====
-    sampleMetadataFile <- normalizePath(sampleMetadataFile)
-    sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
+    if (missing(sampleMetadataFile)) {
+        message(paste(
+            "'sampleMetadataFile' not specified.",
+            "Generating minimal sample metadata."
+        ))
+        sampleMetadata <- data.frame(row.names = names(sampleDirs))
+        for (i in seq_along(metadataPriorityCols)) {
+            sampleMetadata[, metadataPriorityCols[[i]]] <- names(sampleDirs)
+        }
+    } else {
+        sampleMetadataFile <- normalizePath(sampleMetadataFile)
+        sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
+    }
     # Check that `sampleID` matches `sampleDirs`
     if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
         stop("Sample directory names don't match the sample metadata file",
@@ -104,7 +116,14 @@ loadCellRanger <- function(
     gene2symbol <- gene2symbolFromGTF(gtf)
 
     # Row data =================================================================
-    annotable <- annotable(organism, release = ensemblVersion)
+    if (missing(annotable)) {
+        annotable <- basejump::annotable(
+            organism,
+            genomeBuild = genomeBuild,
+            release = ensemblVersion)
+    } else if (is.data.frame(annotable)) {
+        annotable <- annotable(annotable)
+    }
 
     # Assays ===================================================================
     message("Reading counts")
