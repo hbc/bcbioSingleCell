@@ -40,10 +40,19 @@ NULL
 .selectSamples <- function(
     object,
     ...) {
-    # Require `filterCells()` to have been run on the object
-    if (is.null(metadata(object)[["filterCells"]])) {
-        stop("Run 'filterCells()' on the object before selecting samples",
-             call. = FALSE)
+    .checkFilterCells(object)
+    # Subset the filtered cells and genes
+    cells <- intersect(
+        colnames(object),
+        metadata(object)[["filterCells"]])
+    if (!is.null(cells)) {
+        object <- object[, cells]
+    }
+    genes <- intersect(
+        rownames(object),
+        metadata(object)[["filterGenes"]])
+    if (!is.null(genes)) {
+        object <- object[genes, ]
     }
 
     # Here the `arguments` are captured as a named character vector. The names
@@ -89,13 +98,8 @@ NULL
     # Use the metrics data.frame to match the cellular barcodes
     metrics <- metrics(object, filterCells = TRUE) %>%
         .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
-    cells <- rownames(metrics)
-    message(paste(
-        length(cells), "cellular barcodes"
-    ))
 
-    # Now we can subset the original bcbioSingleCell object
-    bcb <- object[, cells]
+    message(paste(length(cells), "cellular barcodes"))
 
     # Update the bcbio slot
     # Drop the unfiltered cellular barcodes. Only keep this in the main object
@@ -103,8 +107,10 @@ NULL
     bcbio(bcb, "cellularBarcodes") <- NULL
 
     # Update the metadata slot
-    metadata(bcb)[["sampleMetadata"]] <- sampleMetadata
     metadata(bcb)[["allSamples"]] <- FALSE
+    metadata(bcb)[["filterCells"]] <- cells
+    metadata(bcb)[["filterGenes"]] <- genes
+    metadata(bcb)[["sampleMetadata"]] <- sampleMetadata
     metadata(bcb)[["selectSamples"]] <- TRUE
 
     bcb
