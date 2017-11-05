@@ -21,6 +21,7 @@
 #' @param pipeline Pipeline used to generate the MatrixMarket file. Defaults to
 #'   bcbio-nextgen (`bcbio`). Also supports 10X Chromium CellRanger
 #'   (`cellranger`).
+#' @param umiType UMI type.
 #'
 #' @seealso `help("dgCMatrix-class")`
 #'
@@ -28,7 +29,8 @@
 #' @noRd
 .readSparseCounts <- function(
     sampleDir,
-    pipeline = "bcbio") {
+    pipeline,
+    umiType) {
     sampleName <- names(sampleDir)
     if (is.null(sampleName)) {
         stop("Sample directory must be passed in as a named character vector",
@@ -94,7 +96,7 @@
     }
 
     # Cellular barcode sanitization =====
-    # CellRanger outputs unnecessary trailing `-1`.
+    # CellRanger outputs unnecessary trailing number for single samples.
     if (pipeline == "cellranger" &
         all(grepl(x = colnames(sparseCounts), pattern = "_1$"))) {
         colnames(sparseCounts) <-
@@ -102,14 +104,35 @@
                  pattern = "_1$",
                  replacement = "")
     }
+    # Now we can sanitize by UMI type
+    umiType <- metadata(object)[["umiType"]]
+    if (grepl(x = umiType,
+              pattern = "^harvard-indrop-v[0-9]$")) {
+        # `[ACGT]{16}` to `[ACGT]{8}_[ACGT]{8}`
+        colnames(sparseCounts) <- gsub(
+            x = colnames(sparseCounts),
+            pattern = "^([ACGT]{8})([ACGT]{8})$",
+            replacement = "\\1_\\2")
+    } else if (umiType == "chromium") {
+        # `[ACGT]{14}` to `[ACGT]{7}_[ACGT]{7}`
+        colnames(sparseCounts) <- gsub(
+            x = colnames(sparseCounts),
+            pattern = "^([ACGT]{7})([ACGT]{7})$",
+            replacement = "\\1_\\2")
+    }
+    if (umiType == "surecell") {
+        # `[ACGT]{18}` to `[ACGT]{6}_[ACGT]{6}_[ACGT]{6}`
+        colnames(sparseCounts) <- gsub(
+            x = colnames(sparseCounts),
+            pattern = "^([ACGT]{6})([ACGT]{6})([ACGT]{6})$",
+            replacement = "\\1_\\2_\\3")
+    }
 
     # Add sample name
-    if (all(grepl(x = colnames(sparseCounts), pattern = "^[ACGT]{6,}"))) {
-        colnames(sparseCounts) <- colnames(sparseCounts) %>%
-            paste(sampleName, ., sep = "_")
-    } else {
-        stop("Failed to add sample name", call. = FALSE)
-    }
+    colnames(sparseCounts) <- paste(
+            sampleName,
+            colnames(sparseCounts),
+            sep = "_")
 
     # Return as dgCMatrix, for improved memory overhead
     as(sparseCounts, "dgCMatrix")

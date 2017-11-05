@@ -263,7 +263,10 @@ loadSingleCell <- function(
     message("Reading counts")
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
-        .readSparseCounts(sampleDirs[a], pipeline = pipeline)
+        .readSparseCounts(
+            sampleDirs[a],
+            pipeline = pipeline,
+            umiType = umiType)
     }) %>%
         setNames(names(sampleDirs))
     # Combine the individual per-sample transcript-level sparse matrices into a
