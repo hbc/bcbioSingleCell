@@ -36,7 +36,7 @@ loadCellRanger <- function(
     umiType <- "chromium"
     multiplexedFASTQ <- FALSE
 
-    # Directory paths ====
+    # Directory paths ==========================================================
     # Check connection to final upload directory
     if (!dir.exists(uploadDir)) {
         stop("Final upload directory does not exist", call. = FALSE)
@@ -44,7 +44,7 @@ loadCellRanger <- function(
     uploadDir <- normalizePath(uploadDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
-    # Sample metadata ====
+    # Sample metadata ==========================================================
     if (missing(sampleMetadataFile)) {
         message(paste(
             "'sampleMetadataFile' not specified.",
@@ -64,7 +64,7 @@ loadCellRanger <- function(
              call. = FALSE)
     }
 
-    # Interesting groups ====
+    # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
     interestingGroups <- camel(interestingGroups, strict = FALSE)
     # Check to ensure interesting groups are defined
@@ -72,7 +72,7 @@ loadCellRanger <- function(
         stop("Interesting groups missing in sample metadata", call. = FALSE)
     }
 
-    # Subset sample directories by metadata ====
+    # Subset sample directories by metadata ====================================
     if (nrow(sampleMetadata) < length(sampleDirs)) {
         message("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
@@ -83,7 +83,7 @@ loadCellRanger <- function(
         allSamples <- TRUE
     }
 
-    # Reference data ====
+    # Reference data ===========================================================
     # JSON data
     refDataDir <- normalizePath(refDataDir)
     refJSONFile <- file.path(refDataDir, "reference.json")
@@ -105,17 +105,7 @@ loadCellRanger <- function(
     message(paste0("Genome: ", organism, " (", genomeBuild, ")"))
     message(paste("Ensembl release:", ensemblVersion))
 
-    # Cell Ranger uses reference GTF file
-    gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
-    if (!file.exists(gtfFile)) {
-        stop("Reference GTF file missing", call. = FALSE)
-    }
-    gtf <- readGTF(gtfFile)
-
-    # gene2symbol mappings
-    gene2symbol <- gene2symbolFromGTF(gtf)
-
-    # Row data =================================================================
+    # Gene annotations =========================================================
     if (missing(annotable)) {
         annotable <- basejump::annotable(
             organism,
@@ -124,8 +114,14 @@ loadCellRanger <- function(
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
     }
+    gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
+    if (!file.exists(gtfFile)) {
+        stop("Reference GTF file missing", call. = FALSE)
+    }
+    gtf <- readGTF(gtfFile)
+    gene2symbol <- gene2symbolFromGTF(gtf)
 
-    # Assays ===================================================================
+    # Counts ===================================================================
     message("Reading counts")
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
@@ -135,8 +131,7 @@ loadCellRanger <- function(
     # Cell Ranger outputs at gene-level
     counts <- do.call(Matrix::cBind, sparseList)
 
-    # Column data ==============================================================
-    # Calculate the cellular barcode metrics
+    # Metrics ==================================================================
     metrics <- calculateMetrics(
         counts,
         annotable = annotable,
@@ -174,7 +169,7 @@ loadCellRanger <- function(
         metadata <- c(metadata, dots)
     }
 
-    # Return `bcbioSingleCell` object ==========================================
+    # SummarizedExperiment =====================================================
     se <- prepareSummarizedExperiment(
         assays = list(assay = counts),
         rowData = annotable,

@@ -68,7 +68,7 @@ loadSingleCell <- function(
     ...) {
     pipeline <- "bcbio"
 
-    # Directory paths ====
+    # Directory paths ==========================================================
     # Check connection to final upload directory
     if (!dir.exists(uploadDir)) {
         stop("Final upload directory does not exist", call. = FALSE)
@@ -89,7 +89,7 @@ loadSingleCell <- function(
     projectDir <- file.path(uploadDir, projectDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
-    # Sequencing lanes ====
+    # Sequencing lanes =========================================================
     lanePattern <- "_L(\\d{3})"
     if (any(grepl(x = sampleDirs, pattern = lanePattern))) {
         lanes <- str_match(names(sampleDirs), lanePattern) %>%
@@ -102,11 +102,11 @@ loadSingleCell <- function(
         lanes <- 1
     }
 
-    # Project summary YAML ====
+    # Project summary YAML =====================================================
     yamlFile <- file.path(projectDir, "project-summary.yaml")
     yaml <- readYAML(yamlFile)
 
-    # Log files ====
+    # Log files ================================================================
     message("Reading log files")
     bcbioLog <- readLogFile(
         file.path(projectDir, "bcbio-nextgen.log"))
@@ -131,7 +131,7 @@ loadSingleCell <- function(
         countsLevel <- "transcript"
     }
 
-    # Data versions and programs ====
+    # Data versions and programs ===============================================
     dataVersions <- readDataVersions(
         file.path(projectDir, "data_versions.csv"))
     programs <- readProgramVersions(
@@ -160,7 +160,7 @@ loadSingleCell <- function(
     organism <- detectOrganism(genomeBuild)
     message(paste0("Genome: ", organism, " (", genomeBuild, ")"))
 
-    # Molecular barcode (UMI) type ====
+    # Molecular barcode (UMI) type =============================================
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
     if (any(grepl(x = bcbioCommandsLog, pattern = umiPattern))) {
         umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
@@ -175,7 +175,7 @@ loadSingleCell <- function(
         stop("Failed to detect UMI type from JSON file", call. = FALSE)
     }
 
-    # Multiplexed FASTQ ====
+    # Multiplexed FASTQ ========================================================
     # This value determines how we assign sampleIDs and downstream plot
     # appearance in the quality control analysis
     if (grepl(x = umiType, pattern = "indrop")) {
@@ -184,7 +184,7 @@ loadSingleCell <- function(
         multiplexedFASTQ <- FALSE
     }
 
-    # Sample metadata ====
+    # Sample metadata ==========================================================
     if (!is.null(sampleMetadataFile)) {
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
@@ -202,7 +202,7 @@ loadSingleCell <- function(
              call. = FALSE)
     }
 
-    # Interesting groups ====
+    # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
     interestingGroups <- camel(interestingGroups, strict = FALSE)
     # Check to ensure interesting groups are defined
@@ -210,7 +210,7 @@ loadSingleCell <- function(
         stop("Interesting groups missing in sample metadata", call. = FALSE)
     }
 
-    # Subset sample directories by metadata ====
+    # Subset sample directories by metadata ====================================
     # Check to see if a subset of samples is requested via the metadata file.
     # This matches by the reverse complement sequence of the index barcode.
     if (nrow(sampleMetadata) < length(sampleDirs)) {
@@ -223,7 +223,18 @@ loadSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Gene and transcript annotations ====
+    # Cellular barcodes ========================================================
+    cellularBarcodes <- .cellularBarcodesList(sampleDirs)
+
+    # Gene annotations =========================================================
+    if (missing(annotable)) {
+        annotable <- basejump::annotable(
+            organism,
+            genomeBuild = genomeBuild,
+            release = ensemblVersion)
+    } else if (is.data.frame(annotable)) {
+        annotable <- annotable(annotable)
+    }
     if (!is.null(gtfFile)) {
         gtfFile <- normalizePath(gtfFile)
         gtf <- readGTF(gtfFile)
@@ -248,20 +259,7 @@ loadSingleCell <- function(
             release = ensemblVersion)
     }
 
-    # Cellular barcodes ====
-    cellularBarcodes <- .cellularBarcodesList(sampleDirs)
-
-    # Row data =================================================================
-    if (missing(annotable)) {
-        annotable <- basejump::annotable(
-            organism,
-            genomeBuild = genomeBuild,
-            release = ensemblVersion)
-    } else if (is.data.frame(annotable)) {
-        annotable <- annotable(annotable)
-    }
-
-    # Assays ===================================================================
+    # Counts ===================================================================
     message("Reading counts")
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
@@ -276,8 +274,7 @@ loadSingleCell <- function(
         counts <- .sparseCountsTx2Gene(counts, tx2gene)
     }
 
-    # Column data ==============================================================
-    # Calculate the cellular barcode metrics
+    # Metrics ==================================================================
     metrics <- calculateMetrics(
         counts,
         annotable = annotable,
@@ -337,7 +334,7 @@ loadSingleCell <- function(
         metadata <- c(metadata, dots)
     }
 
-    # Return `bcbioSingleCell` object ==========================================
+    # SummarizedExperiment =====================================================
     # Use an internal `SummarizedExperiment()` function call to handle rowname
     # mismatches with the annotable. This can happen when newer Ensembl
     # annotations are requested than those used for count alignment, or when
