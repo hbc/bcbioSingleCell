@@ -253,7 +253,10 @@ loadSingleCell <- function(
 
     # Row data =================================================================
     if (missing(annotable)) {
-        annotable <- basejump::annotable(organism, release = ensemblVersion)
+        annotable <- basejump::annotable(
+            organism,
+            genomeBuild = genomeBuild,
+            release = ensemblVersion)
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
     }
