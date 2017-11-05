@@ -27,6 +27,7 @@ NULL
 #' @importFrom basejump uniteInterestingGroups
 #' @importFrom dplyr left_join mutate mutate_all
 #' @importFrom magrittr set_colnames
+#' @importFrom parallel mclapply
 #' @importFrom stringr str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
 #' @export
@@ -68,12 +69,13 @@ setMethod(
         # Check for existence of `sampleID` in the `cellID`
         sampleID <- metadata[["sampleID"]]
         cellID <- colData[["cellID"]]
-        cell2sample <- lapply(seq_along(sampleID), function(a) {
-            pattern <- paste0("^(", sampleID[a], ")_([ACGT_]{6,})(_[0-9]+)?$")
-            str_match(cellID, pattern = pattern) %>%
+        cell2sample <- mclapply(seq_along(sampleID), function(a) {
+            pattern <- paste0("^(", sampleID[[a]], ")_([ACGT_]{6,})(_[0-9]+)?$")
+            x <- str_match(cellID, pattern = pattern) %>%
                 as.data.frame() %>%
                 .[, 1:2] %>%
-                set_colnames(c("cellID", "sampleID"))
+                set_colnames(c("cellID", "sampleID")) %>%
+                filter(!is.na(.data[["sampleID"]]))
         }) %>%
             bind_rows() %>%
             mutate(sampleID = as.factor(.data[["sampleID"]]))
