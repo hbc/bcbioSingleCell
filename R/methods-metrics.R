@@ -70,13 +70,14 @@ setMethod(
         }
 
         # Check for presence of valid barcode in cell identifiers
+        cellIDPattern <- "^(.+)_([ACGT]{6,}.*)$"
         if (!all(grepl(x = colData[["cellID"]],
-                       pattern = paste0(barcode, "$")))) {
+                       pattern = cellIDPattern))) {
             stop("Failed to detect surecell barcodes", call. = FALSE)
         }
         # Match `sampleID` from the cellular barcode (rowname)
         match <- colData[["cellID"]] %>%
-            str_match(paste0("^(.+)_([ACGT]{6,}.*)$")) %>%
+            str_match(cellIDPattern) %>%
             as.data.frame() %>%
             set_colnames(c("cellID", "sampleID", "cellularBarcode")) %>%
             # Remove the unnecessary cellularBarcode column
