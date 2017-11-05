@@ -122,25 +122,39 @@ NULL
 #'
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
-    if (is.null(metadata(from)[["filterParams"]])) {
-        stop("'filterCells()' must be run prior to 'seurat' coercion",
-             call. = FALSE)
+    filterCells <- metadata(from)[["filterCells"]]
+    if (is.null(filterCells)) {
+        warning(paste(
+            "Performing quality control analysis",
+            "and identifying cells that pass cutoffs",
+            "with 'filterCells()' is recommended",
+            "prior to 'seurat' coercion"
+        ), call. = FALSE)
+    } else {
+        # Subset the object to contain only the cells that pass filtering
+        from <- from[, filterCells]
     }
 
     # Create the initial `seurat` object
     rawData <- counts(from, gene2symbol = TRUE)
+
+    # Define gene and cell cutoffs
     minGenes <- metadata(from)[["filterParams"]][["minGenes"]]
     if (is.null(minGenes)) {
         minGenes <- 0
     }
+    message(paste("Minimum number of genes per cell:", minGenes))
     minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
     if (is.null(minCells)) {
         minCells <- 0
     }
-    metadata <- metrics(
+    message(paste("Minimum number of cells per gene:", minCells))
+
+    metrics <- metrics(
         from,
         aggregateReplicates = FALSE,
         filterCells = FALSE)
+
     # Add a call to `aggregateReplicates()` here to combine the counts per
     # sample before passing to Seurat, if technical replicates are present?
     seurat <- CreateSeuratObject(
@@ -149,7 +163,7 @@ NULL
         min.cells = minCells,
         min.genes = minGenes,
         is.expr = 0,  # Default for UMI datasets
-        meta.data = metadata) %>%
+        meta.data = metrics) %>%
         NormalizeData(
             object = .,
             normalization.method = "LogNormalize",
