@@ -1,12 +1,30 @@
 .applyFilterCutoffs <- function(object) {
-    .checkFilterCells(object)
+    filterParams <- metadata(object)[["filterParams"]]
+    if (is.null(filterParams)) {
+        stop(paste(
+            "Run 'filterCells()' on the bcbioSingleCell dataset",
+            "before selecting samples"
+        ), call. = FALSE)
+    }
+
+    # Apply cell filtering cutoffs
+    filterCells <- metadata(object)[["filterCells"]]
+    if (is.null(filterCells)) {
+        stop("'filterCells' metadata is 'NULL'", call. = FALSE)
+    }
     cells <- intersect(
         colnames(object),
         metadata(object)[["filterCells"]])
     if (!is.null(cells)) {
-        object <- object[, cells]
-    } else {
-        warning("'NULL' cells passed filtering", call. = FALSE)
+        stop("'NULL' cells passed filtering", call. = FALSE)
+    }
+    object <- object[, cells]
+
+    # Apply gene filtering cutoffs
+    # Warn here instead of stop, since we didn't define in earlier versions
+    filterGenes <- metadata(object)[["filterGenes"]]
+    if (is.null(filterGenes)) {
+        warning("'filterGenes' metadata is 'NULL', call. = FALSE")
     }
     genes <- intersect(
         rownames(object),
