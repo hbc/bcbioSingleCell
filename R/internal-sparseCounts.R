@@ -103,18 +103,8 @@
                  replacement = "")
     }
 
-    # Reformat to `[ACGT]{8}_[ACGT]{8}` instead of `[ACGT]{16}`
-    if (all(grepl(x = colnames(sparseCounts), pattern = "^[ACGT]{16}$"))) {
-        colnames(sparseCounts) <- colnames(sparseCounts) %>%
-            gsub(x = .,
-                 pattern = "^([ACGT]{8})([ACGT]{8})$",
-                 replacement = "\\1_\\2")
-    }
-
     # Add sample name
-    # 8 nucleotides: inDrop, Chromium
-    # 6 nucleotides: SureCell
-    if (all(grepl(x = colnames(sparseCounts), pattern = "^[ACGT]+_"))) {
+    if (all(grepl(x = colnames(sparseCounts), pattern = "^[ACGT]{6,}"))) {
         colnames(sparseCounts) <- colnames(sparseCounts) %>%
             paste(sampleName, ., sep = "_")
     } else {
