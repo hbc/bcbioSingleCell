@@ -7,9 +7,9 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
-#'   prepareAnnotable prepareSummarizedExperiment readDataVersions readGTF
-#'   readLogFile readProgramVersions readSampleMetadataFile readYAML
-#'   sampleYAMLMetadata tx2geneFromGTF
+#'   prepareSummarizedExperiment readDataVersions readGTF readLogFile
+#'   readProgramVersions readSampleMetadataFile readYAML sampleYAMLMetadata
+#'   tx2geneFromGTF
 #' @importFrom dplyr everything filter left_join mutate pull select
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
@@ -254,8 +254,8 @@ loadSingleCell <- function(
     # Row data =================================================================
     if (missing(annotable)) {
         annotable <- basejump::annotable(organism, release = ensemblVersion)
-    } else if (!is.null(annotable)) {
-        annotable <- prepareAnnotable(annotable)
+    } else if (is.data.frame(annotable)) {
+        annotable <- annotable(annotable)
     }
 
     # Assays ===================================================================
