@@ -113,14 +113,7 @@
             x = colnames(sparseCounts),
             pattern = "^([ACGT]{8})([ACGT]{8})$",
             replacement = "\\1_\\2")
-    } else if (umiType == "chromium") {
-        # `[ACGT]{14}` to `[ACGT]{7}_[ACGT]{7}`
-        colnames(sparseCounts) <- gsub(
-            x = colnames(sparseCounts),
-            pattern = "^([ACGT]{7})([ACGT]{7})$",
-            replacement = "\\1_\\2")
-    }
-    if (umiType == "surecell") {
+    } else if (umiType == "surecell") {
         # `[ACGT]{18}` to `[ACGT]{6}_[ACGT]{6}_[ACGT]{6}`
         colnames(sparseCounts) <- gsub(
             x = colnames(sparseCounts),
