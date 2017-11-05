@@ -122,14 +122,23 @@ NULL
 #'
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
-    # Currently we're only allowing coercion on objects with quality control
-    # filtering applied
+    # Require filtered cells and genes only
     from <- .applyFilterCutoffs(from)
     filterParams <- metadata(from)[["filterParams"]]
     print(filterParams)
 
     # Create the initial `seurat` object
-    rawData <- counts(from, gene2symbol = TRUE)
+    rawData <- counts(
+        from,
+        gene2symbol = TRUE,
+        # Filtering already applied above
+        filterCells = FALSE)
+
+    metrics <- metrics(
+        from,
+        aggregateReplicates = FALSE,
+        # Filtering already applied above
+        filterCells = FALSE)
 
     # Define gene and cell cutoffs
     minGenes <- metadata(from)[["filterParams"]][["minGenes"]]
@@ -141,13 +150,11 @@ NULL
         minCells <- 0
     }
 
-    metrics <- metrics(
-        from,
-        aggregateReplicates = FALSE,
-        filterCells = TRUE)
-
-    # Add a call to `aggregateReplicates()` here to combine the counts per
-    # sample before passing to Seurat, if technical replicates are present?
+    # Note here that passing in the `minCells` argument will rescale the number
+    # of genes, since we calculated our genes that passed cutoffs based on
+    # detection in all cells in the dataset. It makes sense to see the gene
+    # count decrease here on a bcbioSingleCell object that has been subset from
+    # the main dataset (e.g. using `selectSamples()`).
     seurat <- CreateSeuratObject(
         raw.data = rawData,
         project = "bcbioSingleCell",
