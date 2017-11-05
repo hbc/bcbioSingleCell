@@ -122,6 +122,8 @@ NULL
 #'
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
+    # Currently we're only allowing coercion on objects with quality control
+    # filtering applied
     from <- .applyFilterCutoffs(from)
     filterParams <- metadata(from)[["filterParams"]]
     print(filterParams)
@@ -134,12 +136,10 @@ NULL
     if (is.null(minGenes)) {
         minGenes <- 0
     }
-    message(paste("Minimum number of genes per cell:", minGenes))
     minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
     if (is.null(minCells)) {
         minCells <- 0
     }
-    message(paste("Minimum number of cells per gene:", minCells))
 
     metrics <- metrics(
         from,
@@ -153,7 +153,8 @@ NULL
         project = "bcbioSingleCell",
         min.cells = minCells,
         min.genes = minGenes,
-        is.expr = 0,  # Default for UMI datasets
+        # Default for UMI datasets
+        is.expr = 0,
         meta.data = metrics) %>%
         NormalizeData(
             object = .,
