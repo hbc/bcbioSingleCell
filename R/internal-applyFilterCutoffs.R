@@ -15,7 +15,7 @@
     cells <- intersect(
         colnames(object),
         metadata(object)[["filterCells"]])
-    if (!is.null(cells)) {
+    if (is.null(cells)) {
         stop("'NULL' cells passed filtering", call. = FALSE)
     }
     object <- object[, cells]
@@ -29,10 +29,10 @@
     genes <- intersect(
         rownames(object),
         metadata(object)[["filterGenes"]])
-    if (!is.null(genes)) {
-        object <- object[genes, ]
-    } else {
+    if (is.null(genes)) {
         warning("'NULL' genes passed filtering", call. = FALSE)
+    } else {
+        object <- object[genes, ]
     }
     object
 }
