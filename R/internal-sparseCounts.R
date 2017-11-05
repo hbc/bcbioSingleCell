@@ -95,32 +95,6 @@
             pull("ensgene")
     }
 
-    # Cellular barcode sanitization =====
-    # CellRanger outputs unnecessary trailing number for single samples.
-    if (pipeline == "cellranger" &
-        all(grepl(x = colnames(sparseCounts), pattern = "_1$"))) {
-        colnames(sparseCounts) <-
-            gsub(x = colnames(sparseCounts),
-                 pattern = "_1$",
-                 replacement = "")
-    }
-    # Now we can sanitize by UMI type
-    umiType <- metadata(object)[["umiType"]]
-    if (grepl(x = umiType,
-              pattern = "^harvard-indrop-v[0-9]$")) {
-        # `[ACGT]{16}` to `[ACGT]{8}_[ACGT]{8}`
-        colnames(sparseCounts) <- gsub(
-            x = colnames(sparseCounts),
-            pattern = "^([ACGT]{8})([ACGT]{8})$",
-            replacement = "\\1_\\2")
-    } else if (umiType == "surecell") {
-        # `[ACGT]{18}` to `[ACGT]{6}_[ACGT]{6}_[ACGT]{6}`
-        colnames(sparseCounts) <- gsub(
-            x = colnames(sparseCounts),
-            pattern = "^([ACGT]{6})([ACGT]{6})([ACGT]{6})$",
-            replacement = "\\1_\\2_\\3")
-    }
-
     # Add sample name
     colnames(sparseCounts) <- paste(
             sampleName,
