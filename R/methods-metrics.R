@@ -65,29 +65,27 @@ setMethod(
             metadata[["sampleNameAggregate"]] <- NULL
         }
 
-        # Check for presence of valid barcode in cell identifiers
-        cellIDPattern <- "^(.+)_([ACGT]{6,}.*)$"
-        if (!all(grepl(x = colData[["cellID"]],
-                       pattern = cellIDPattern))) {
-            stop("Failed to detect surecell barcodes", call. = FALSE)
+        # Check for existence of `sampleID` in the `cellID`
+        sampleID <- metadata[["sampleID"]]
+        cellID <- colData[["cellID"]]
+        cell2sample <- lapply(seq_along(sampleID), function(a) {
+            pattern <- paste0("^(", sampleID[a], ")_([ACGT_]{6,})(_[0-9]+)?$")
+            str_match(cellID, pattern = pattern) %>%
+                as.data.frame() %>%
+                .[, 1:2] %>%
+                set_colnames(c("cellID", "sampleID"))
+        }) %>%
+            bind_rows() %>%
+            mutate(sampleID = as.factor(.data[["sampleID"]]))
+        if (!identical(length(cellID), nrow(cell2sample))) {
+            stop("Failed to correctly match sample IDs to cellular barcodes",
+                 call. = FALSE)
         }
-        # Match `sampleID` from the cellular barcode (rowname)
-        match <- colData[["cellID"]] %>%
-            str_match(cellIDPattern) %>%
-            as.data.frame() %>%
-            set_colnames(c("cellID", "sampleID", "cellularBarcode")) %>%
-            # Remove the unnecessary cellularBarcode column
-            mutate(
-                cellularBarcode = NULL,
-                sampleID = as.factor(.data[["sampleID"]])
-            )
-        # Join the sample metadata by `sampleID`, extracted from `cellID`
-        metrics <- colData %>%
-            left_join(match, by = "cellID") %>%
+
+        colData %>%
+            left_join(cell2sample, by = "cellID") %>%
             left_join(metadata, by = "sampleID") %>%
-            as.data.frame() %>%
             column_to_rownames("cellID")
-        metrics
     })
 
 
