@@ -58,7 +58,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        aggregateReplicates = TRUE) {
+        aggregateReplicates = FALSE) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }

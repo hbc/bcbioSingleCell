@@ -131,14 +131,12 @@ NULL
     rawData <- counts(
         from,
         gene2symbol = TRUE,
-        # Filtering already applied above
-        filterCells = FALSE)
+        filterCells = TRUE)
 
     metrics <- metrics(
         from,
         aggregateReplicates = FALSE,
-        # Filtering already applied above
-        filterCells = FALSE)
+        filterCells = TRUE)
 
     # Define gene and cell cutoffs
     minGenes <- metadata(from)[["filterParams"]][["minGenes"]]

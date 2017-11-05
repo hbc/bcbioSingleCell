@@ -46,7 +46,7 @@ NULL
 #' @importFrom tibble rownames_to_column
 .filterCells <- function(
     object,
-    aggregateReplicates = TRUE,
+    aggregateReplicates = FALSE,
     minUMIs = 1000,
     minGenes = 500,
     maxGenes = Inf,

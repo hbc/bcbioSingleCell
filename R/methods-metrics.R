@@ -36,8 +36,8 @@ setMethod(
     function(
         object,
         interestingGroups,
-        filterCells = TRUE,
-        aggregateReplicates = TRUE) {
+        filterCells = FALSE,
+        aggregateReplicates = FALSE) {
         if (isTRUE(filterCells)) {
             object <- .applyFilterCutoffs(object)
         }

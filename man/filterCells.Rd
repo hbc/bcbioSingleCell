@@ -9,7 +9,7 @@
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{bcbioSingleCell}(object, aggregateReplicates = TRUE,
+\S4method{filterCells}{bcbioSingleCell}(object, aggregateReplicates = FALSE,
   minUMIs = 1000, minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1,
   minNovelty = 0.8, minCellsPerGene = 3, showReport = TRUE,
   headerLevel = 2)

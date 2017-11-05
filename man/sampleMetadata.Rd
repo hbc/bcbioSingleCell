@@ -8,7 +8,7 @@
 \title{Sample Metadata}
 \usage{
 \S4method{sampleMetadata}{bcbioSingleCell}(object, interestingGroups,
-  aggregateReplicates = TRUE)
+  aggregateReplicates = FALSE)
 
 \S4method{sampleMetadata}{seurat}(object, interestingGroups)
 }

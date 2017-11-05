@@ -105,8 +105,8 @@ setMethod(
     function(
         object,
         interestingGroups,
-        filterCells = TRUE,
-        aggregateReplicates = TRUE,
+        filterCells = FALSE,
+        aggregateReplicates = FALSE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)

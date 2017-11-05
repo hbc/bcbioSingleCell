@@ -11,7 +11,7 @@
 plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = "boxplot", min,
-  interestingGroups, filterCells = TRUE, aggregateReplicates = TRUE,
+  interestingGroups, filterCells = FALSE, aggregateReplicates = FALSE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotUMIsPerCell}{data.frame}(object, geom = "boxplot", min = 0,

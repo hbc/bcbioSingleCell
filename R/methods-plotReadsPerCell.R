@@ -35,8 +35,8 @@ NULL
 #' @return [tibble] grouped by `sampleName` containing `log10Count` values.
 .rawCBTibble <- function(
     object,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
+    filterCells = FALSE,
+    aggregateReplicates = FALSE) {
     cellularBarcodes <- bcbio(object, "cellularBarcodes")
     if (is.null(cellularBarcodes)) {
         stop("Raw cellular barcode counts not saved in object")
@@ -133,7 +133,7 @@ NULL
     interestingGroups = "sampleName",
     cutoffLine = 0,
     multiplexed = FALSE,
-    aggregateReplicates = TRUE) {
+    aggregateReplicates = FALSE) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
     tibble <- tibble %>%
@@ -200,7 +200,7 @@ NULL
     interestingGroups = "sampleName",
     cutoffLine = 2,
     multiplexed = FALSE,
-    aggregateReplicates = TRUE) {
+    aggregateReplicates = FALSE) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
     tibble <- tibble %>%
@@ -267,7 +267,7 @@ NULL
     interestingGroups = "sampleName",
     cutoffLine = NULL,
     multiplexed = FALSE,
-    aggregateReplicates = TRUE) {
+    aggregateReplicates = FALSE) {
     p <- ggplot(
         tibble,
         mapping = aes_string(
@@ -324,8 +324,8 @@ NULL
     object,
     geom = "histogram",
     interestingGroups,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
+    filterCells = FALSE,
+    aggregateReplicates = FALSE) {
     # Currently only supported for `loadSingleCell()` return
     if (metadata(object)[["pipeline"]] != "bcbio") {
         return(warning(paste(

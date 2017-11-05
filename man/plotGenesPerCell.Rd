@@ -11,7 +11,7 @@
 plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "boxplot", min,
-  max, interestingGroups, filterCells = TRUE, aggregateReplicates = TRUE,
+  max, interestingGroups, filterCells = FALSE, aggregateReplicates = FALSE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotGenesPerCell}{data.frame}(object, geom = "boxplot", min = 0,

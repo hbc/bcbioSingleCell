@@ -11,7 +11,7 @@
 plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "boxplot", max,
-  interestingGroups, filterCells = TRUE, aggregateReplicates = TRUE,
+  interestingGroups, filterCells = FALSE, aggregateReplicates = FALSE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotMitoRatio}{data.frame}(object, geom = "boxplot", max = Inf,

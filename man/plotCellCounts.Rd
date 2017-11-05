@@ -11,7 +11,7 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{bcbioSingleCell}(object, interestingGroups,
-  filterCells = TRUE, aggregateReplicates = TRUE,
+  filterCells = FALSE, aggregateReplicates = FALSE,
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{data.frame}(object, metadata, interestingGroups,

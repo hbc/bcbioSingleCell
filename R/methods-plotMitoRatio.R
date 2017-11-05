@@ -94,8 +94,8 @@ setMethod(
         geom = "boxplot",
         max,
         interestingGroups,
-        filterCells = TRUE,
-        aggregateReplicates = TRUE,
+        filterCells = FALSE,
+        aggregateReplicates = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {

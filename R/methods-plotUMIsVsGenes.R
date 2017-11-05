@@ -83,8 +83,8 @@ setMethod(
     function(
         object,
         interestingGroups,
-        filterCells = TRUE,
-        aggregateReplicates = TRUE,
+        filterCells = FALSE,
+        aggregateReplicates = FALSE,
         samplesOnYAxis = TRUE,
         color = scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
