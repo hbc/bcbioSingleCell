@@ -153,7 +153,7 @@ NULL
     metrics <- metrics(
         from,
         aggregateReplicates = FALSE,
-        filterCells = FALSE)
+        filterCells = TRUE)
 
     # Add a call to `aggregateReplicates()` here to combine the counts per
     # sample before passing to Seurat, if technical replicates are present?
