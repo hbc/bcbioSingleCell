@@ -69,14 +69,6 @@ setMethod(
             metadata[["sampleNameAggregate"]] <- NULL
         }
 
-        # Join the sample metadata by maching against the cellular barcode
-        # Get the barcode format based on `umiType`
-        umiType <- metadata(object)[["umiType"]]
-        if (umiType == "surecell") {
-            barcode <- "[ACGT]{6}_[ACGT]{6}_[ACGT]{6}"
-        } else {
-            barcode <- "[ACGT]{8}_[ACGT]{8}"
-        }
         # Check for presence of valid barcode in cell identifiers
         if (!all(grepl(x = colData[["cellID"]],
                        pattern = paste0(barcode, "$")))) {
@@ -84,7 +76,7 @@ setMethod(
         }
         # Match `sampleID` from the cellular barcode (rowname)
         match <- colData[["cellID"]] %>%
-            str_match(paste0("^(.+)_(", barcode, ")$")) %>%
+            str_match(paste0("^(.+)_([ACGT]{6,}.*)$")) %>%
             as.data.frame() %>%
             set_colnames(c("cellID", "sampleID", "cellularBarcode")) %>%
             # Remove the unnecessary cellularBarcode column
