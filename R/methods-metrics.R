@@ -110,16 +110,13 @@ setMethod(
     if (missing(interestingGroups)) {
         interestingGroups <- basejump::interestingGroups(object)
     }
-    # This slot was previously named `data.info` in earlier releases
     metrics <- slot(object, "meta.data") %>%
         as.data.frame() %>%
         camel(strict = FALSE) %>%
         rownames_to_column("cellID") %>%
-        left_join(sampleMetadata(object), by = "origIdent")
-    # Ensure all strings are factors
-    metrics <- mutate_if(metrics, is.character, as.factor)
-    # Create the `interestingGroups` column required for QC plots
-    metrics <- uniteInterestingGroups(metrics, interestingGroups)
-    metrics <- column_to_rownames(metrics, "cellID")
-    metrics
+        mutate_if(is.character, as.factor)
+    metadata <- sampleMetadata(object)
+    suppressMessages(left_join(metrics, metadata)) %>%
+        uniteInterestingGroups(interestingGroups) %>%
+        column_to_rownames("cellID")
 })
