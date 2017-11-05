@@ -122,8 +122,8 @@ NULL
 #'
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
-    filterCells <- metadata(from)[["filterCells"]]
-    if (is.null(filterCells)) {
+    filterParams <- metadata(from)[["filterParams"]]
+    if (is.null(filterParams)) {
         warning(paste(
             "Performing quality control analysis",
             "and identifying cells that pass cutoffs",
@@ -131,8 +131,17 @@ NULL
             "prior to 'seurat' coercion"
         ), call. = FALSE)
     } else {
-        # Subset the object to contain only the cells that pass filtering
-        from <- from[, filterCells]
+        print(filterParams)
+        filterCells <- metadata(from)[["filterCells"]]
+        if (!is.null(filterCells)) {
+            filterCells <- intersect(filterCells, colnames(from))
+            from <- from[, filterCells]
+        }
+        filterGenes <- metadata(from)[["filterGenes"]]
+        if (!is.null(filterGenes)) {
+            filterGenes <- intersect(filterGenes, rownames(from))
+            from <- from[filterGenes, ]
+        }
     }
 
     # Create the initial `seurat` object
