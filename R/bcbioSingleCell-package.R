@@ -20,5 +20,7 @@ NULL
 
 globalVariables(".")
 
+# Trailing number is to match cellranger output
+barcodePattern <- ")_([ACGT_]{6,})(_[0-9]+)?$"
 projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
 metadataPriorityCols <- c("sampleID", "sampleName", "description")
