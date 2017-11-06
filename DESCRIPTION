@@ -1,6 +1,6 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.21
+Version: 0.0.22
 Authors@R: c(
     person("Michael", "Steinbaugh",
            email = "mike@steinbaugh.com",
