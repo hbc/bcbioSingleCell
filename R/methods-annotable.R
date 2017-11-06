@@ -22,4 +22,5 @@ setMethod(
     function(object) {
         annotable <- as.data.frame(rowData(object))
         rownames(annotable) <- slot(object, "NAMES")
+        annotable
     })
