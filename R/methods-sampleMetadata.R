@@ -62,11 +62,11 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
-        metadata <- metadata(object)[["sampleMetadata"]] %>%
-            as.data.frame()
+        metadata <- metadata(object)[["sampleMetadata"]]
+        metadata <- as.data.frame(metadata)
         # Aggregate replicates, if necessary
-        if (isTRUE(aggregateReplicates) &
-            "sampleNameAggregate" %in% colnames(metadata)) {
+        if (isTRUE(aggregateReplicates)) {
+            .checkAggregate(metadata, stop = TRUE)
             metadata <- metadata %>%
                 mutate(sampleName = .data[["sampleNameAggregate"]],
                        sampleID = make.names(
