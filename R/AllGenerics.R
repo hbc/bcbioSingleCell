@@ -15,14 +15,6 @@ NULL
 
 
 
-#' @rdname aggregateFeatures
-#' @export
-setGeneric("aggregateFeatures", function(object, ...) {
-    standardGeneric("aggregateFeatures")
-})
-
-
-
 #' @rdname calculateMetrics
 #' @export
 setGeneric("calculateMetrics", function(object, ...) {
