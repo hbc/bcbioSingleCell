@@ -20,10 +20,7 @@ NULL
 #' @importFrom tibble rownames_to_column
 .aggregateReplicates <- function(
     object) {
-    cells <- metrics(
-        object,
-        aggregateReplicates = TRUE,
-        filterCells = FALSE) %>%
+    cells <- metrics(object, aggregateReplicates = TRUE) %>%
         select(c("sampleID", "sampleName", "cellularBarcode")) %>%
         mutate(
             cells = paste(
@@ -56,7 +53,7 @@ NULL
 
     # Update the metadata slot
     metadata <- metadata(object)
-    sampleMetadata <- sampleMetadata(object)
+    sampleMetadata <- sampleMetadata(object, aggregateReplicates = TRUE)
     metadata[["sampleMetadata"]] <- sampleMetadata
 
     # Return bcbioSingleCell
