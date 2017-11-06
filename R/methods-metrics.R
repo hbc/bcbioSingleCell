@@ -71,7 +71,7 @@ setMethod(
         cellID <- colData[["cellID"]]
         cell2sample <- mclapply(seq_along(sampleID), function(a) {
             pattern <- paste0("^(", sampleID[[a]], ")_([ACGT_]{6,})(_[0-9]+)?$")
-            x <- str_match(cellID, pattern = pattern) %>%
+            str_match(cellID, pattern = pattern) %>%
                 as.data.frame() %>%
                 .[, 1:2] %>%
                 set_colnames(c("cellID", "sampleID")) %>%
