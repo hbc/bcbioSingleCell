@@ -30,7 +30,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="/index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -82,6 +82,162 @@
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"hbc/bcbioSingleCell"</span>)</code></pre></div>
 </div>
 </div>
+<div id="sample-metadata-examples" class="section level2">
+<h2 class="hasAnchor">
+<a href="#sample-metadata-examples" class="anchor"></a>Sample metadata examples</h2>
+<div id="fastq-files-with-samples-multiplexed-by-index-barcode" class="section level3">
+<h3 class="hasAnchor">
+<a href="#fastq-files-with-samples-multiplexed-by-index-barcode" class="anchor"></a>FASTQ files with samples multiplexed by index barcode</h3>
+<p>This is our current method for handling inDrop samples.</p>
+<table class="table">
+<thead><tr class="header">
+<th>fileName</th>
+<th>description</th>
+<th>index</th>
+<th>sequence</th>
+<th>sampleName</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>170201_R1.fastq.gz</td>
+<td>run1</td>
+<td>17</td>
+<td>GGAGGTAA</td>
+<td>sample1</td>
+</tr>
+<tr class="even">
+<td>170201_R1.fastq.gz</td>
+<td>run1</td>
+<td>18</td>
+<td>CATAACTG</td>
+<td>sample2</td>
+</tr>
+<tr class="odd">
+<td>170620_R1.fastq.gz</td>
+<td>run2</td>
+<td>12</td>
+<td>GCGTAAGA</td>
+<td>sample3</td>
+</tr>
+<tr class="even">
+<td>170620_R1.fastq.gz</td>
+<td>run2</td>
+<td>13</td>
+<td>CTATTAAG</td>
+<td>sample4</td>
+</tr>
+<tr class="odd">
+<td>170620_R1.fastq.gz</td>
+<td>run2</td>
+<td>14</td>
+<td>AAGGCTAT</td>
+<td>sample5</td>
+</tr>
+<tr class="even">
+<td>170620_R1.fastq.gz</td>
+<td>run2</td>
+<td>15</td>
+<td>GAGCCTTA</td>
+<td>sample6</td>
+</tr>
+<tr class="odd">
+<td>170620_R1.fastq.gz</td>
+<td>run2</td>
+<td>16</td>
+<td>TTATGCGA</td>
+<td>sample7</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fastq-files-demultiplexed-per-sample" class="section level3">
+<h3 class="hasAnchor">
+<a href="#fastq-files-demultiplexed-per-sample" class="anchor"></a>FASTQ files demultiplexed per sample</h3>
+<p>This is our current method for handling 10X and SureCell samples.</p>
+<table class="table">
+<thead><tr class="header">
+<th>fileName</th>
+<th>description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>sample1_170620_R1.fastq.gz</td>
+<td>sample1</td>
+</tr>
+<tr class="even">
+<td>sample2_170620_R1.fastq.gz</td>
+<td>sample2</td>
+</tr>
+<tr class="odd">
+<td>sample3_170620_R1.fastq.gz</td>
+<td>sample3</td>
+</tr>
+<tr class="even">
+<td>sample4_170620_R1.fastq.gz</td>
+<td>sample4</td>
+</tr>
+<tr class="odd">
+<td>sample5_170620_R1.fastq.gz</td>
+<td>sample5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="technical-replicates" class="section level3">
+<h3 class="hasAnchor">
+<a href="#technical-replicates" class="anchor"></a>Technical replicates</h3>
+<p>Use <code>sampleNameAggregate</code> to assign groupings for technical replicates:</p>
+<table class="table">
+<thead><tr class="header">
+<th>fileName</th>
+<th>description</th>
+<th>sampleNameAggregate</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>wildtype_L001_R1.fastq.gz</td>
+<td>wildtype_L001</td>
+<td>wildtype</td>
+</tr>
+<tr class="even">
+<td>wildtype_L002_R1.fastq.gz</td>
+<td>wildtype_L002</td>
+<td>wildtype</td>
+</tr>
+<tr class="odd">
+<td>wildtype_L003_R1.fastq.gz</td>
+<td>wildtype_L003</td>
+<td>wildtype</td>
+</tr>
+<tr class="even">
+<td>wildtype_L004_R1.fastq.gz</td>
+<td>wildtype_L004</td>
+<td>wildtype</td>
+</tr>
+<tr class="odd">
+<td>mutant_L001_R1.fastq.gz</td>
+<td>mutant_L001</td>
+<td>mutant</td>
+</tr>
+<tr class="even">
+<td>mutant_L002_R1.fastq.gz</td>
+<td>mutant_L002</td>
+<td>mutant</td>
+</tr>
+<tr class="odd">
+<td>mutant_L003_R1.fastq.gz</td>
+<td>mutant_L003</td>
+<td>mutant</td>
+</tr>
+<tr class="even">
+<td>mutant_L004_R1.fastq.gz</td>
+<td>mutant_L004</td>
+<td>mutant</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
   </div>
 
@@ -97,7 +253,8 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE.html">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Michael Steinbaugh <br><small class="roles"> Author, maintainer </small> </li>
+<li>
+<a href="http://steinbaugh.com">Michael Steinbaugh</a> <br><small class="roles"> Author, maintainer </small> </li>
 <li>
 <a href="https://github.com/roryk">Rory Kirchner</a> <br><small class="roles"> Author </small> </li>
 <li>
@@ -114,7 +271,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Steinbaugh, <a href="https://github.com/roryk">Rory Kirchner</a>, <a href="http://bioinformatics.sph.harvard.edu">Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href="http://steinbaugh.com">Michael Steinbaugh</a>, <a href="https://github.com/roryk">Rory Kirchner</a>, <a href="http://bioinformatics.sph.harvard.edu">Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">
