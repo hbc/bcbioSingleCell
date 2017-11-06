@@ -128,15 +128,8 @@ NULL
     print(filterParams)
 
     # Create the initial `seurat` object
-    rawData <- counts(
-        from,
-        gene2symbol = TRUE,
-        filterCells = TRUE)
-
-    metrics <- metrics(
-        from,
-        aggregateReplicates = FALSE,
-        filterCells = TRUE)
+    rawData <- counts(from, gene2symbol = TRUE)
+    metrics <- metrics(from)
 
     # Define gene and cell cutoffs
     minGenes <- metadata(from)[["filterParams"]][["minGenes"]]
