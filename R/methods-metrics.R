@@ -25,7 +25,7 @@ NULL
 # Methods ====
 #' @rdname metrics
 #' @importFrom basejump uniteInterestingGroups
-#' @importFrom dplyr left_join mutate mutate_all
+#' @importFrom dplyr bind_rows left_join mutate mutate_all
 #' @importFrom magrittr set_colnames
 #' @importFrom parallel mclapply
 #' @importFrom stringr str_match
@@ -70,12 +70,25 @@ setMethod(
         sampleID <- metadata[["sampleID"]]
         cellID <- colData[["cellID"]]
         cell2sample <- mclapply(seq_along(sampleID), function(a) {
-            pattern <- paste0("^(", sampleID[[a]], ")_([ACGT_]{6,})(_[0-9]+)?$")
-            str_match(cellID, pattern = pattern) %>%
+            pattern <- paste0("^(", sampleID[[a]], barcodePattern)
+            match <- str_match(cellID, pattern = pattern) %>%
                 as.data.frame() %>%
-                .[, 1:2] %>%
-                set_colnames(c("cellID", "sampleID")) %>%
-                filter(!is.na(.data[["sampleID"]]))
+                set_colnames(
+                    c("cellID",
+                      "sampleID",
+                      "cellularBarcode",
+                      # Trailing number is for matching cellranger
+                      "trailingNumber")
+                ) %>%
+                filter(!is.na(.data[["sampleID"]])) %>%
+                mutate(
+                    cellularBarcode = paste0(
+                        .data[["cellularBarcode"]],
+                        na.omit(.data[["trailingNumber"]])
+                    ),
+                    trailingNumber = NULL
+                )
+            match
         }) %>%
             bind_rows() %>%
             mutate(sampleID = as.factor(.data[["sampleID"]]))
