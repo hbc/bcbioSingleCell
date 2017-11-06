@@ -41,6 +41,8 @@ NULL
     object,
     ...) {
     object <- .applyFilterCutoffs(object)
+    cells <- colnames(object)
+    genes <- rownames(object)
 
     # Here the `arguments` are captured as a named character vector. The names
     # of the arguments represent the column names. The value of the arguments
