@@ -10,15 +10,15 @@
 \usage{
 plotUMIsPerCell(object, ...)
 
-\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = "boxplot", min,
+\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = "violin", min,
   interestingGroups, filterCells = FALSE, aggregateReplicates = FALSE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotUMIsPerCell}{data.frame}(object, geom = "boxplot", min = 0,
+\S4method{plotUMIsPerCell}{data.frame}(object, geom = "violin", min = 0,
   interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotUMIsPerCell}{seurat}(object, geom = "boxplot", min,
+\S4method{plotUMIsPerCell}{seurat}(object, geom = "violin", min,
   interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 }

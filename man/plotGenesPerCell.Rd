@@ -10,15 +10,15 @@
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "boxplot", min,
+\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "violin", min,
   max, interestingGroups, filterCells = FALSE, aggregateReplicates = FALSE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotGenesPerCell}{data.frame}(object, geom = "boxplot", min = 0,
+\S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0,
   max = Inf, interestingGroups, multiplexed = FALSE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotGenesPerCell}{seurat}(object, geom = "boxplot", min, max,
+\S4method{plotGenesPerCell}{seurat}(object, geom = "violin", min, max,
   interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 }

@@ -10,15 +10,15 @@
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "boxplot", max,
+\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "violin", max,
   interestingGroups, filterCells = FALSE, aggregateReplicates = FALSE,
   samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotMitoRatio}{data.frame}(object, geom = "boxplot", max = Inf,
+\S4method{plotMitoRatio}{data.frame}(object, geom = "violin", max = Inf,
   interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotMitoRatio}{seurat}(object, geom = "boxplot", max = Inf,
+\S4method{plotMitoRatio}{seurat}(object, geom = "violin", max = Inf,
   interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 }
