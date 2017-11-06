@@ -52,8 +52,7 @@ NULL
     }
     meta <- metadata(object)[["sampleMetadata"]] %>%
         as.data.frame()
-    if (isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(meta)) {
+    if (isTRUE(aggregateReplicates) & isTRUE(.checkAggregate(meta))) {
         meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
     }
     meta <- meta[, c("sampleID", "sampleName")]

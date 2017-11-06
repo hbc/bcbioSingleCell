@@ -54,8 +54,7 @@ NULL
     if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(object)) {
+    if (!isTRUE(aggregateReplicates) & isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (!is.null(facets)) {
