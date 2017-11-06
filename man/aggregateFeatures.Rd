@@ -8,6 +8,9 @@
 \usage{
 \S4method{aggregateFeatures}{bcbioSingleCell}(object)
 }
+\arguments{
+\item{object}{Object.}
+}
 \value{
 Object of same class with aggregated features (rows).
 }
