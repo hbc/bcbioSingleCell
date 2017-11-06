@@ -8,6 +8,7 @@
 #' @importFrom basejump aggregateReplicates
 #'
 #' @inherit basejump::aggregateReplicates
+#' @inheritParams AllGenerics
 NULL
 
 

@@ -8,6 +8,7 @@
 #' @importFrom basejump aggregateFeatures
 #'
 #' @inherit basejump::aggregateFeatures
+#' @inheritParams AllGenerics
 NULL
 
 
