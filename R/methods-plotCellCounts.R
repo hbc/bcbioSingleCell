@@ -83,8 +83,7 @@ NULL
         length(unique(object[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(object)) {
+    if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (!is.null(facets)) {
@@ -106,7 +105,6 @@ setMethod(
         object,
         interestingGroups,
         filterCells = FALSE,
-        aggregateReplicates = FALSE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
@@ -114,11 +112,8 @@ setMethod(
         metrics <- metrics(
             object,
             interestingGroups = interestingGroups,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates)
-        metadata <- sampleMetadata(
-            object,
-            aggregateReplicates = aggregateReplicates)
+            filterCells = filterCells)
+        metadata <- sampleMetadata(object)
         multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         .plotCellCounts(
             object = metrics,
