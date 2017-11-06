@@ -32,7 +32,7 @@ NULL
 #' @importFrom viridis scale_fill_viridis
 .plotUMIsPerCell <- function(
     object,
-    geom = "boxplot",
+    geom = "violin",
     min = 0,
     interestingGroups,
     multiplexed = FALSE,
@@ -92,7 +92,7 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        geom = "boxplot",
+        geom = "violin",
         min,
         interestingGroups,
         filterCells = FALSE,
@@ -139,7 +139,7 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        geom = "boxplot",
+        geom = "violin",
         min,
         interestingGroups,
         multiplexed = FALSE,

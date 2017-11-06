@@ -51,7 +51,7 @@ NULL
 #' @importFrom viridis scale_fill_viridis
 .plotGenesPerCell <- function(
     object,
-    geom = "boxplot",
+    geom = "violin",
     min = 0,
     max = Inf,
     interestingGroups,
@@ -113,7 +113,7 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        geom = "boxplot",
+        geom = "violin",
         min,
         max,
         interestingGroups,
@@ -165,7 +165,7 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        geom = "boxplot",
+        geom = "violin",
         min,
         max,
         interestingGroups,
