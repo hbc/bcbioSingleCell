@@ -11,8 +11,7 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{bcbioSingleCell}(object, interestingGroups,
-  filterCells = FALSE, aggregateReplicates = FALSE,
-  fill = scale_fill_viridis(discrete = TRUE))
+  filterCells = FALSE, fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{data.frame}(object, metadata, interestingGroups,
   multiplexed = FALSE, fill = scale_fill_viridis(discrete = TRUE))
@@ -28,10 +27,6 @@ plotCellCounts(object, ...)
 \item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
-
-\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
-function uses values assigned in the \code{sampleNameAggregate} column of the
-internal sample metadata \link{data.frame}.}
 
 \item{fill}{Desired ggplot fill scale. Defaults to
 \code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to

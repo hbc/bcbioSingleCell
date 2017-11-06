@@ -35,8 +35,7 @@ NULL
 #' @return [tibble] grouped by `sampleName` containing `log10Count` values.
 .rawCBTibble <- function(
     object,
-    filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    filterCells = FALSE) {
     cellularBarcodes <- bcbio(object, "cellularBarcodes")
     if (is.null(cellularBarcodes)) {
         stop("Raw cellular barcode counts not saved in object")
@@ -52,7 +51,7 @@ NULL
     }
     meta <- metadata(object)[["sampleMetadata"]] %>%
         as.data.frame()
-    if (isTRUE(aggregateReplicates) & isTRUE(.checkAggregate(meta))) {
+    if (isTRUE(.checkAggregate(meta))) {
         meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
     }
     meta <- meta[, c("sampleID", "sampleName")]
@@ -131,8 +130,7 @@ NULL
     tibble,
     interestingGroups = "sampleName",
     cutoffLine = 0,
-    multiplexed = FALSE,
-    aggregateReplicates = FALSE) {
+    multiplexed = FALSE) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
     tibble <- tibble %>%
@@ -165,17 +163,14 @@ NULL
         length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(tibble)) {
+    if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
         # Turn off the legend
-        p <- p +
-            theme(legend.position = "none")
+        p <- p + theme(legend.position = "none")
     }
     if (!is.null(facets)) {
-        p <- p +
-            # Use `free_y` here because of `coord_flip()`
-            facet_wrap(facets = facets, scales = "free_y")
+        # Use `free_y` here because of `coord_flip()`
+        p <- p + facet_wrap(facets = facets, scales = "free_y")
     }
 
     p
@@ -198,8 +193,7 @@ NULL
     tibble,
     interestingGroups = "sampleName",
     cutoffLine = 2,
-    multiplexed = FALSE,
-    aggregateReplicates = FALSE) {
+    multiplexed = FALSE) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
     tibble <- tibble %>%
@@ -233,16 +227,13 @@ NULL
         length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(tibble)) {
+    if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
         # Turn off the legend
-        p <- p +
-            theme(legend.position = "none")
+        p <- p + theme(legend.position = "none")
     }
     if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets)
+        p <- p + facet_wrap(facets = facets)
     }
 
     p
@@ -265,8 +256,7 @@ NULL
     tibble,
     interestingGroups = "sampleName",
     cutoffLine = NULL,
-    multiplexed = FALSE,
-    aggregateReplicates = FALSE) {
+    multiplexed = FALSE) {
     p <- ggplot(
         tibble,
         mapping = aes_string(
@@ -293,16 +283,13 @@ NULL
         length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(tibble)) {
+    if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
         # Turn off the legend
-        p <- p +
-            theme(legend.position = "none")
+        p <- p + theme(legend.position = "none")
     }
     if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets)
+        p <- p + facet_wrap(facets = facets)
     }
 
     p
@@ -323,8 +310,7 @@ NULL
     object,
     geom = "histogram",
     interestingGroups,
-    filterCells = FALSE,
-    aggregateReplicates = FALSE) {
+    filterCells = FALSE) {
     # Currently only supported for `loadSingleCell()` return
     if (metadata(object)[["pipeline"]] != "bcbio") {
         return(warning(paste(
@@ -339,8 +325,7 @@ NULL
     # Acquire the data required for plotting
     sampleMetadata <- sampleMetadata(
         object,
-        interestingGroups = interestingGroups,
-        aggregateReplicates = aggregateReplicates)
+        interestingGroups = interestingGroups)
     rawTibble <- .rawCBTibble(object, filterCells = filterCells)
     if (geom == "histogram") {
         proportionalTibble <- .proportionalCBTibble(
@@ -369,20 +354,17 @@ NULL
         p <- .plotProportionalCBHistogram(
             proportionalTibble,
             cutoffLine = cutoffLine,
-            multiplexed = multiplexed,
-            aggregateReplicates = aggregateReplicates)
+            multiplexed = multiplexed)
     } else if (geom == "ridgeline") {
         p <- .plotRawCBRidgeline(
             rawTibble,
             cutoffLine = cutoffLine,
-            multiplexed = multiplexed,
-            aggregateReplicates = aggregateReplicates)
+            multiplexed = multiplexed)
     } else if (geom == "violin") {
         p <- .plotRawCBViolin(
             rawTibble,
             cutoffLine = cutoffLine,
-            multiplexed = multiplexed,
-            aggregateReplicates = aggregateReplicates)
+            multiplexed = multiplexed)
     }
 
     p

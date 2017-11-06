@@ -22,10 +22,6 @@ plotReadsPerCell(object, ...)
 \item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
-
-\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
-function uses values assigned in the \code{sampleNameAggregate} column of the
-internal sample metadata \link{data.frame}.}
 }
 \value{
 \link{ggplot}.

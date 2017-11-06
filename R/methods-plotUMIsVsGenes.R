@@ -60,7 +60,7 @@ NULL
     if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
-    if (!isTRUE(aggregateReplicates) & isTRUE(.checkAggregate(object))) {
+    if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (!is.null(facets)) {
@@ -83,7 +83,6 @@ setMethod(
         object,
         interestingGroups,
         filterCells = FALSE,
-        aggregateReplicates = FALSE,
         samplesOnYAxis = TRUE,
         color = scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
@@ -93,8 +92,7 @@ setMethod(
         metrics <- metrics(
             object,
             interestingGroups = interestingGroups,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates)
+            filterCells = filterCells)
         .plotUMIsVsGenes(
             object = metrics,
             interestingGroups = interestingGroups,

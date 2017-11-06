@@ -11,8 +11,8 @@
 plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "violin", min,
-  max, interestingGroups, filterCells = FALSE, aggregateReplicates = FALSE,
-  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+  max, interestingGroups, filterCells = FALSE, samplesOnYAxis = TRUE,
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0,
   max = Inf, interestingGroups, multiplexed = FALSE,
@@ -37,10 +37,6 @@ plotGenesPerCell(object, ...)
 \item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
-
-\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
-function uses values assigned in the \code{sampleNameAggregate} column of the
-internal sample metadata \link{data.frame}.}
 
 \item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
 histogram.}

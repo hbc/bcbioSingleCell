@@ -46,7 +46,6 @@ NULL
 #' @importFrom tibble rownames_to_column
 .filterCells <- function(
     object,
-    aggregateReplicates = FALSE,
     minUMIs = 1000,
     minGenes = 500,
     maxGenes = Inf,
@@ -61,10 +60,7 @@ NULL
 
     # Cellular barcode filtering ====
     # Use the metrics `data.frame` to identify filtered cells
-    metrics <- metrics(
-        object,
-        filterCells = FALSE,
-        aggregateReplicates = aggregateReplicates) %>%
+    metrics <- metrics(object, filterCells = FALSE) %>%
         as.data.frame() %>%
         rownames_to_column("cellID")
 
@@ -141,10 +137,7 @@ NULL
                 "Reads per cell",
                 level = headerLevel + 1,
                 asis = TRUE)
-            plotReadsPerCell(
-                object,
-                filterCells = TRUE,
-                aggregateReplicates = aggregateReplicates) %>%
+            plotReadsPerCell(object, filterCells = TRUE) %>%
                 show()
         }
 
@@ -152,60 +145,42 @@ NULL
             "Cell counts",
             level = headerLevel + 1,
             asis = TRUE)
-        plotCellCounts(
-            object,
-            filterCells = TRUE,
-            aggregateReplicates = aggregateReplicates) %>%
+        plotCellCounts(object, filterCells = TRUE) %>%
             show()
 
         mdHeader(
             "UMI counts per cell",
             level = headerLevel + 1,
             asis = TRUE)
-        plotUMIsPerCell(
-            object,
-            filterCells = TRUE,
-            aggregateReplicates = aggregateReplicates) %>%
+        plotUMIsPerCell(object, filterCells = TRUE) %>%
             show()
 
         mdHeader(
             "Genes detected",
             level = headerLevel + 1,
             asis = TRUE)
-        plotGenesPerCell(
-            object,
-            filterCells = TRUE,
-            aggregateReplicates = aggregateReplicates) %>%
+        plotGenesPerCell(object, filterCells = TRUE) %>%
             show()
 
         mdHeader(
             "UMIs vs. genes",
             level = headerLevel + 1,
             asis = TRUE)
-        plotUMIsVsGenes(
-            object,
-            filterCells = TRUE,
-            aggregateReplicates = aggregateReplicates) %>%
+        plotUMIsVsGenes(object, filterCells = TRUE) %>%
             show()
 
         mdHeader(
             "Mitochondrial counts ratio",
             level = headerLevel + 1,
             asis = TRUE)
-        plotMitoRatio(
-            object,
-            filterCells = TRUE,
-            aggregateReplicates = aggregateReplicates) %>%
+        plotMitoRatio(object, filterCells = TRUE) %>%
             show()
 
         mdHeader(
             "Novelty",
             level = headerLevel + 1,
             asis = TRUE)
-        plotNovelty(
-            object,
-            filterCells = TRUE,
-            aggregateReplicates = aggregateReplicates) %>%
+        plotNovelty(object, filterCells = TRUE) %>%
             show()
     }
 

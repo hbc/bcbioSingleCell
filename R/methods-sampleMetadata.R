@@ -86,6 +86,7 @@ setMethod(
             select(c(metadataPriorityCols), everything()) %>%
             uniteInterestingGroups(interestingGroups) %>%
             # Ensure strings as factors
+            # FIXME This step is erroring out
             mutate_if(is.character, as.factor) %>%
             # Ensure the rownames are set
             set_rownames(.[["sampleID"]])
