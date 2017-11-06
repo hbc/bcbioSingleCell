@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -92,10 +92,9 @@
 
     <pre class="usage"><span class='fu'>plotReadsPerCell</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSingleCellANY</span>
-<span class='fu'>plotReadsPerCell</span>(<span class='no'>object</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>filterCells</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>plotReadsPerCell</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"histogram"</span>,
+  <span class='no'>interestingGroups</span>, <span class='kw'>filterCells</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -107,6 +106,11 @@
     <tr>
       <th>...</th>
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+    </tr>
+    <tr>
+      <th>geom</th>
+      <td><p>Plot type. Supported formats: proportional <code>histogram</code>
+(<em>recommended</em>), raw <code>ridgeline</code>, and raw <code>violin</code>.</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
@@ -126,13 +130,7 @@ internal sample metadata data.frame.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>ggplot.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>A violin plot is a comact display of a continuous distribution. It
-is a blend of <code>geom_boxplot()</code> and <code>geom_density()</code>: a violin plot is a
-mirrored density plot displayed in the same way as a boxplot.</p>
+    <p><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -140,13 +138,14 @@ mirrored density plot displayed in the same way as a boxplot.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Quality Control Metrics: <code>metrics</code>,
-  <code>plotCellCounts</code>,
-  <code>plotGenesPerCell</code>,
-  <code>plotMitoRatio</code>, <code>plotNovelty</code>,
-  <code>plotUMIsPerCell</code>,
-  <code>plotUMIsVsGenes</code>,
-  <code>plotZerosVsDepth</code></p>
+    <p>Other Quality Control Metrics: <code><a href='metrics.html'>metrics</a></code>,
+  <code><a href='plotCellCounts.html'>plotCellCounts</a></code>,
+  <code><a href='plotGenesPerCell.html'>plotGenesPerCell</a></code>,
+  <code><a href='plotMitoRatio.html'>plotMitoRatio</a></code>,
+  <code><a href='plotMitoVsCoding.html'>plotMitoVsCoding</a></code>,
+  <code><a href='plotNovelty.html'>plotNovelty</a></code>, <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code>,
+  <code><a href='plotUMIsVsGenes.html'>plotUMIsVsGenes</a></code>,
+  <code><a href='plotZerosVsDepth.html'>plotZerosVsDepth</a></code></p>
     
 
   </div>
@@ -156,8 +155,6 @@ mirrored density plot displayed in the same way as a boxplot.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
 
       <li><a href="#note">Note</a></li>
 
@@ -173,7 +170,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

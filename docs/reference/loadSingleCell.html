@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -91,8 +91,8 @@
     
 
     <pre class="usage"><span class='fu'>loadSingleCell</span>(<span class='no'>uploadDir</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
-  <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gffFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>wellMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ensemblVersion</span> <span class='kw'>=</span> <span class='st'>"current"</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gtfFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>annotable</span>,
+  <span class='kw'>ensemblVersion</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -113,24 +113,31 @@ is used for PCA and heatmap QC functions.</p></td>
       <td><p>Sample barcode metadata file.</p></td>
     </tr>
     <tr>
-      <th>gffFile</th>
-      <td><p><em>Optional</em>. GFF (General Feature Format) or GTF (Gene Transfer
-Format) file, which will be used for transcript-to-gene (<code>tx2gene</code>) and
-gene-to-symbol (<code>gene2symbol</code>) annotation mappings. A GTF file is GFF v2.</p></td>
-    </tr>
-    <tr>
-      <th>wellMetadataFile</th>
-      <td><p><em>Optional</em>. Well identifier metadata file.</p></td>
+      <th>gtfFile</th>
+      <td><p><em>Optional</em>. GTF (Gene Transfer Format) file, which will be
+used for transcript-to-gene (<code>tx2gene</code>) and gene-to-symbol (<code>gene2symbol</code>)
+annotation mappings.</p></td>
     </tr>
     <tr>
       <th>prefilter</th>
       <td><p>Prefilter counts prior to quality control analysis.</p></td>
     </tr>
     <tr>
+      <th>annotable</th>
+      <td><p><em>Optional</em>. User-defined gene annotations (a.k.a.
+"annotable"), which will be slotted into <code>rowData()</code>. Typically this should
+be left undefined. By default, the function will automatically generate an
+annotable from the annotations available on Ensembl. If set <code>NULL</code>, then
+<code>rowData()</code> inside the resulting <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object will be left
+empty. This is recommended for projects dealing with genes or transcripts
+that are poorly annotated.</p></td>
+    </tr>
+    <tr>
       <th>ensemblVersion</th>
-      <td><p>Ensembl release version. Defaults to current, and does
-not typically need to be user-defined. This parameter can be useful for
-matching Ensembl annotations against an outdated bcbio annotation build.</p></td>
+      <td><p><em>Optional</em>. Ensembl release version. If <code>NULL</code>,
+defaults to current release, and does not typically need to be
+user-defined. This parameter can be useful for matching Ensembl annotations
+against an outdated bcbio annotation build.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -140,7 +147,7 @@ matching Ensembl annotations against an outdated bcbio annotation build.</p></td
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>bcbioSingleCell.</p>
+    <p><a href='bcbioSingleCell-class.html'>bcbioSingleCell</a>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -157,7 +164,7 @@ run directory as a remote connection over
     <span class='kw'>uploadDir</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"indrop_rnaseq"</span>, <span class='st'>"final"</span>),
     <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"genotype"</span>, <span class='st'>"treatment"</span>),
     <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"meta"</span>, <span class='st'>"sample_metadata.xlsx"</span>),
-    <span class='kw'>gffFile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(
+    <span class='kw'>gtfFile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(
         <span class='st'>"annotations"</span>,
         <span class='st'>"Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"</span>),
     <span class='kw'>ensemblVersion</span> <span class='kw'>=</span> <span class='fl'>88</span>)
@@ -184,7 +191,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -90,12 +90,12 @@
     <p>Sample Metadata</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for bcbioSingleCellANY</span>
-<span class='fu'>sampleMetadata</span>(<span class='no'>object</span>,
-  <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>sampleMetadata</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
+  <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>sampleMetadata</span>(<span class='no'>object</span>)</pre>
+<span class='fu'>sampleMetadata</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -103,6 +103,10 @@
     <tr>
       <th>object</th>
       <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>interestingGroups</th>
+      <td><p>Interesting group, to use for colors.</p></td>
     </tr>
     <tr>
       <th>aggregateReplicates</th>
@@ -131,7 +135,7 @@ internal sample metadata data.frame.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

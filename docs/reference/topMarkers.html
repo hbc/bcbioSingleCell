@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -93,7 +93,8 @@
     <pre class="usage"><span class='fu'>topMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for grouped_df</span>
-<span class='fu'>topMarkers</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>coding</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>topMarkers</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"positive"</span>,
+  <span class='kw'>coding</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -111,6 +112,11 @@
       <td><p>Number of genes per cluster.</p></td>
     </tr>
     <tr>
+      <th>direction</th>
+      <td><p>Whether to include only <code>positive</code>, <code>negative</code>, or <code>both</code>
+directions of association per cluster. Defaults to <code>positive</code>.</p></td>
+    </tr>
+    <tr>
       <th>coding</th>
       <td><p>Only include protein coding genes.</p></td>
     </tr>
@@ -126,10 +132,10 @@
 <li><p><code><a href='http://dplyr.tidyverse.org/reference/slice.html'>dplyr::slice()</a></code></p></li>
 <li><p><code><a href='http://dplyr.tidyverse.org/reference/top_n.html'>dplyr::top_n()</a></code>.</p></li>
 </ul>
-    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
-  <code>pcCutoff</code>, <code>plotKnownMarkers</code>,
-  <code>plotMarkers</code>, <code>plotStressGenes</code>,
-  <code>plotTopMarkers</code>, <code>topBarcodes</code></p>
+    <p>Other Clustering Utilities: <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
+  <code><a href='pcCutoff.html'>pcCutoff</a></code>, <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
+  <code><a href='plotMarkers.html'>plotMarkers</a></code>, <code><a href='plotStressGenes.html'>plotStressGenes</a></code>,
+  <code><a href='plotTopMarkers.html'>plotTopMarkers</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code></p>
     
 
   </div>
@@ -152,7 +158,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

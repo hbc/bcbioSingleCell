@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -94,9 +94,10 @@ cellular barcodes.</p>
     <pre class="usage"><span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>showReport</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>showReport</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
 <span class='co'># S4 method for bcbioSCDataSet</span>
 <span class='fu'>filterCells</span>(<span class='no'>object</span>)</pre>
@@ -139,6 +140,11 @@ internal sample metadata data.frame.</p></td>
       <td><p>Minimum novelty score.</p></td>
     </tr>
     <tr>
+      <th>minCellsPerGene</th>
+      <td><p>Include genes with non-zero expression in at least
+this many cells.</p></td>
+    </tr>
+    <tr>
       <th>showReport</th>
       <td><p>Show summary statistics report and plots.</p></td>
     </tr>
@@ -150,20 +156,21 @@ internal sample metadata data.frame.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>bcbioSingleCell object, with filtering information slotted into
+    <p><a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object, with filtering information slotted into
 <code>metadata()</code> as <code>filterCells</code> and <code>filterParams</code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>This operation can be re-run on a bcbioSingleCell object that has
+    <p>This operation can be re-run on a <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object that has
 been previously filtered. This function simply saves <code>filterCells</code> and
 <code>filterParams</code> vectors into the <code>metadata()</code> slot.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Management Utilities: <code>aggregateFeatures</code>,
-  <code>aggregateReplicates</code>,
-  <code>readMarkers</code>, <code>subsetPerSample</code></p>
+    <p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/CreateSeuratObject'>Seurat::CreateSeuratObject()</a></code>.</p>
+<p>Other Data Management Utilities: <code><a href='aggregateFeatures.html'>aggregateFeatures</a></code>,
+  <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code><a href='readMarkers.html'>readMarkers</a></code>, <code><a href='subsetPerSample.html'>subsetPerSample</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -195,7 +202,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">
