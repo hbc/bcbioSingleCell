@@ -57,7 +57,6 @@ NULL
     metadata <- metadata(object)
     sampleMetadata <- sampleMetadata(object)
     metadata[["sampleMetadata"]] <- sampleMetadata
-    metadata[["allSamples"]] <- FALSE
 
     # Return bcbioSingleCell
     se <- SummarizedExperiment(
