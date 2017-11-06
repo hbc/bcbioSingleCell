@@ -60,8 +60,8 @@ setMethod(
             mutate_all(as.factor)
 
         # Rename `sampleName` when aggregating replicates
-        if (isTRUE(aggregateReplicates) &
-            "sampleNameAggregate" %in% colnames(metadata)) {
+        if (isTRUE(aggregateReplicates)) {
+            .checkAggregate(metadata, stop = TRUE)
             metadata[["sampleName"]] <- metadata[["sampleNameAggregate"]]
             metadata[["sampleNameAggregate"]] <- NULL
         }
