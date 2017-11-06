@@ -62,24 +62,28 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
-        metadata <- metadata(object)[["sampleMetadata"]]
-        metadata <- as.data.frame(metadata)
+        metadata <- metadata(object)[["sampleMetadata"]] %>%
+            as.data.frame()
         # Aggregate replicates, if necessary
         if (isTRUE(aggregateReplicates)) {
             .checkAggregate(metadata, stop = TRUE)
+            # Get the expected number of rows
+            expected <- length(unique(metadata[["sampleNameAggregate"]]))
             metadata <- metadata %>%
                 mutate(sampleName = .data[["sampleNameAggregate"]],
+                       description = .data[["sampleName"]],
                        sampleID = make.names(
                            .data[["sampleName"]], unique = FALSE),
                        sampleNameAggregate = NULL) %>%
                 select(unique(c(metadataPriorityCols, interestingGroups))) %>%
                 distinct()
-        } else {
-            # Put the priority columns first
-            metadata <- metadata %>%
-                select(c(metadataPriorityCols), everything())
+            if (!identical(nrow(metadata), expected)) {
+                stop("Failed to aggregate sample metadata uniquely",
+                     call. = FALSE)
+            }
         }
         metadata %>%
+            select(c(metadataPriorityCols), everything()) %>%
             uniteInterestingGroups(interestingGroups) %>%
             # Ensure strings as factors
             mutate_if(is.character, as.factor) %>%
