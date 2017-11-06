@@ -4,23 +4,15 @@
 \name{aggregateReplicates}
 \alias{aggregateReplicates}
 \alias{aggregateReplicates,bcbioSingleCell-method}
-\alias{aggregateReplicates,dgCMatrix-method}
 \title{Aggregate Replicates}
 \usage{
-\S4method{aggregateReplicates}{bcbioSingleCell}(object, cellids)
-
-\S4method{aggregateReplicates}{dgCMatrix}(object, cellids)
+\S4method{aggregateReplicates}{bcbioSingleCell}(object)
 }
 \arguments{
-\item{object}{Sparse counts matrix (e.g. \code{dgCMatrix}).}
-
-\item{cellids}{Cellular barcode identifiers.}
-}
-\value{
-\code{dgCMatrix}.
+\item{object}{Object.}
 }
 \description{
-Aggregate Replicates
+S4 Generics
 }
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},
@@ -28,7 +20,6 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{subsetPerSample}}
 }
 \author{
-Rory Kirchner, Michael Steinbaugh
+Michael Steinbaugh, Rory Kirchner
 }
 \concept{Data Management Utilities}
-\keyword{internal}
