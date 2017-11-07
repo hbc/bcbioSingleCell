@@ -146,13 +146,11 @@ NULL
     if (!is.numeric(minGenes)) {
         stop("'minGenes' is not defined", call. = FALSE)
     }
-    message(paste("Minimum genes per cell:", minGenes))
     minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
     # Check for NULL here
     if (!is.numeric(minCells)) {
         stop("'minCells' is not defined", call. = FALSE)
     }
-    message(paste("Minimum cells per gene:", minCells))
 
     # Note here that passing in the `minCells` argument will rescale the number
     # of genes, since we calculated our genes that passed cutoffs based on
