@@ -2,8 +2,7 @@
     filterParams <- metadata(object)[["filterParams"]]
     if (is.null(filterParams)) {
         stop(paste(
-            "Run 'filterCells()' on the bcbioSingleCell dataset",
-            "before selecting samples"
+            "'filterCells()' must be run on the object"
         ), call. = FALSE)
     }
 
