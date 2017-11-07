@@ -15,18 +15,18 @@ NULL
 
 
 
-#' @rdname aggregateFeatures
-#' @export
-setGeneric("aggregateFeatures", function(object, ...) {
-    standardGeneric("aggregateFeatures")
-})
-
-
-
 #' @rdname calculateMetrics
 #' @export
 setGeneric("calculateMetrics", function(object, ...) {
     standardGeneric("calculateMetrics")
+})
+
+
+
+#' @rdname cellTypesPerCluster
+#' @export
+setGeneric("cellTypesPerCluster", function(object, ...) {
+    standardGeneric("cellTypesPerCluster")
 })
 
 
@@ -87,6 +87,16 @@ setGeneric("plotCellCounts", function(object, ...) {
 
 
 
+#' @rdname plotCellTypesPerCluster
+#' @export
+setGeneric(
+    "plotCellTypesPerCluster",
+    function(object, cellTypesPerCluster, ...) {
+        standardGeneric("plotCellTypesPerCluster")
+    })
+
+
+
 #' @rdname plotDot
 #' @export
 setGeneric("plotDot", function(object, ...) {
@@ -139,6 +149,14 @@ setGeneric("plotMarkerTSNE", function(object, ...) {
 #' @export
 setGeneric("plotMitoRatio", function(object, ...) {
     standardGeneric("plotMitoRatio")
+})
+
+
+
+#' @rdname plotMitoVsCoding
+#' @export
+setGeneric("plotMitoVsCoding", function(object, ...) {
+    standardGeneric("plotMitoVsCoding")
 })
 
 

@@ -22,11 +22,34 @@ setMethod(
     "bcbio",
     signature("bcbioSingleCell"),
     function(object, type) {
+        bcbio <- slot(object, "bcbio")
         if (missing(type)) {
-            return(slot(object, "bcbio"))
+            return(bcbio)
         }
-        if (type %in% names(slot(object, "bcbio"))) {
-            slot(object, "bcbio")[[type]]
+        if (type %in% names(bcbio)) {
+            bcbio[[type]]
+        } else {
+            stop(paste(type, "not found"), call. = FALSE)
+        }
+    })
+
+
+
+#' @rdname bcbio
+#' @export
+setMethod(
+    "bcbio",
+    signature("seurat"),
+    function(object, type) {
+        if (!.hasSlot(object, "misc")) {
+            return(NULL)
+        }
+        bcbio <- slot(object, "misc")[["bcbio"]]
+        if (missing(type)) {
+            return(bcbio)
+        }
+        if (type %in% names(bcbio)) {
+            bcbio[[type]]
         } else {
             stop(paste(type, "not found"), call. = FALSE)
         }

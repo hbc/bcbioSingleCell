@@ -1,6 +1,6 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.20
+Version: 0.0.21
 Authors@R: c(
     person("Michael", "Steinbaugh",
            email = "mike@steinbaugh.com",
@@ -21,37 +21,37 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),
-    SummarizedExperiment (>= 1.6.5)
+    SummarizedExperiment (>= 1.8.0)
 Imports:
-    basejump (>= 0.1.0),
-    BiocGenerics,
-    cowplot,
-    dendsort,
-    devtools,
-    dplyr,
+    basejump (>= 0.1.1),
+    BiocGenerics (>= 0.24.0),
+    cowplot (>= 0.8.0),
+    dendsort (>= 0.3.3),
+    dplyr (>= 0.7.4),
     ggplot2 (>= 2.2.1),
     ggridges (>= 0.4.1),
     grid,
-    jsonlite,
-    magrittr,
-    Matrix,
-    Matrix.utils,
+    jsonlite (>= 1.5),
+    magrittr (>= 1.5),
+    Matrix (>= 1.2),
+    Matrix.utils (>= 0.9.6),
     methods,
     parallel,
-    pbapply,
-    pheatmap,
-    rlang,
-    S4Vectors,
+    pbapply (>= 1.3),
+    pheatmap (>= 1.0.8),
+    rlang (>= 0.1.2),
+    S4Vectors (>= 0.16.0),
     scales,
     Seurat (>= 2.1.0),
     stats,
-    stringr,
-    tibble,
-    tidyr,
+    stringr (>= 1.2.0),
+    tibble (>= 1.3.4),
+    tidyr (>= 0.7.2),
     utils,
-    viridis
+    viridis (>= 0.4.0)
 Suggests:
     BiocStyle,
+    devtools,
     googlesheets,
     lintr (>= 1.0.1),
     rmarkdown,

@@ -36,7 +36,15 @@
         matches <- dir.exists(file.path(
             subdirs, "outs", "filtered_gene_bc_matrices"))
         if (!any(matches)) {
-            stop("Failed to detect 'filtered_gene_bc_matrices'", call. = FALSE)
+            stop(paste(
+                "CellRanger output directory structure:",
+                file.path("cellranger_output",
+                          "[SAMPLE_NAME]",
+                          "outs",
+                          "filtered_gene_bc_matrices",
+                          "[GENOME_BUILD]"),
+                sep = "\n"
+            ), call. = FALSE)
         }
         sampleDirs <- subdirs[matches]
         names(sampleDirs) <- make.names(basename(sampleDirs), unique = TRUE)

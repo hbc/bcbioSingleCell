@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -92,31 +92,38 @@
 
     <pre class="usage"><span class='fu'>aggregateFeatures</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSingleCellANY</span>
-<span class='fu'>aggregateFeatures</span>(<span class='no'>object</span>)</pre>
+<span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>aggregateFeatures</span>(<span class='no'>object</span>, <span class='no'>featureids</span>)
+
+<span class='co'># S4 method for dgCMatrix</span>
+<span class='fu'>aggregateFeatures</span>(<span class='no'>object</span>, <span class='no'>featureids</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Object.</p></td>
+      <td><p>Sparse counts matrix (e.g. <code>dgCMatrix</code>).</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
+    <tr>
+      <th>featureids</th>
+      <td><p>Feature identifiers (e.g. gene or transcript IDs).</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>bcbioSingleCell.</p>
+    <p><code>dgCMatrix</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Management Utilities: <code>aggregateReplicates</code>,
-  <code>filterCells</code>, <code>readMarkers</code>,
-  <code>subsetPerSample</code></p>
+    <p>Other Data Management Utilities: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code><a href='filterCells.html'>filterCells</a></code>, <code><a href='readMarkers.html'>readMarkers</a></code>,
+  <code><a href='subsetPerSample.html'>subsetPerSample</a></code></p>
     
 
   </div>
@@ -139,7 +146,7 @@ Rory Kirchner, Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

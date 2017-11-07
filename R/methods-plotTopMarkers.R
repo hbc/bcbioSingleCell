@@ -1,5 +1,10 @@
 #' Plot Top Markers
 #'
+#' @note The number of markers to plot is determined by the output of the
+#' [topMarkers()] function. If you want to reduce the number of genes to plot,
+#' simply reassign first using that function. If necessary, we can add support
+#' for the number of genes to plot here in a future update.
+#'
 #' @rdname plotTopMarkers
 #' @name plotTopMarkers
 #' @family Clustering Utilities
@@ -18,12 +23,10 @@ NULL
     object,
     topMarkers,
     pointsAsNumbers = FALSE,
-    headerLevel = 2) {
-    # Fix for gene symbol mismatch
-    if ("gene" %in% colnames(topMarkers)) {
-        topMarkers <- rename(topMarkers, symbol = .data[["gene"]])
-    }
-    clusters <- topMarkers[["cluster"]] %>% levels
+    headerLevel = NULL) {
+    .checkSanitizedMarkers(topMarkers)
+    clusters <- topMarkers[["cluster"]] %>%
+        levels()
     pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
         genes <- topMarkers %>%
@@ -35,14 +38,19 @@ NULL
         if (length(genes) > 10) {
             warning("Maximum of 10 genes per cluster is recommended")
         }
-        mdHeader(paste("Cluster", cluster),
-                 level = headerLevel,
-                 tabset = TRUE,
-                 asis = TRUE)
-        plotMarkers(object,
-                    genes = genes,
-                    pointsAsNumbers = pointsAsNumbers,
-                    headerLevel = headerLevel + 1)
+        if (!is.null(headerLevel)) {
+            mdHeader(
+                paste("Cluster", cluster),
+                level = headerLevel,
+                tabset = TRUE,
+                asis = TRUE)
+        }
+        plotMarkers(
+            object,
+            genes = genes,
+            pointsAsNumbers = pointsAsNumbers,
+            headerLevel = headerLevel + 1)
+        # Don't show here, already defined in `plotMarkers()`
     }) %>%
         invisible()
 }

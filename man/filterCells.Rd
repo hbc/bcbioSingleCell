@@ -9,10 +9,9 @@
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{bcbioSingleCell}(object, aggregateReplicates = TRUE,
-  minUMIs = 1000, minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1,
-  minNovelty = 0.8, minCellsPerGene = 3, showReport = TRUE,
-  headerLevel = 2)
+\S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000,
+  minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.8,
+  minCellsPerGene = 3, showReport = TRUE, headerLevel = 2)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
 }
@@ -20,10 +19,6 @@ filterCells(object, ...)
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
-
-\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
-function uses values assigned in the \code{sampleNameAggregate} column of the
-internal sample metadata \link{data.frame}.}
 
 \item{minUMIs}{Minimum number of UMI disambiguated counts per cell.}
 

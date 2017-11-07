@@ -11,6 +11,7 @@
 #'
 #' @param interestingGroups Interesting group to use for plot colors.
 #' @param label Label the clusters on the plot.
+#' @param dark Enable dark mode.
 #'
 #' @return [ggplot].
 #'
@@ -19,60 +20,6 @@
 #' plotTSNE(seurat)
 #' }
 NULL
-
-
-
-# Constructors ====
-#' Plot t-SNE Constructor
-#'
-#' @author Rory Kirchner, Michael Steinbaugh
-#'
-#' @param object [data.frame] returned from [fetchTSNEExpressionData()].
-#'
-#' @return [ggplot].
-#' @noRd
-.plotDim <- function(
-    object,
-    axes,
-    interestingGroups = "ident",
-    label = TRUE) {
-    if (interestingGroups == "ident") {
-        # Seurat stores the ident from `FetchData()` as `object.ident`
-        color <- "ident"
-    } else {
-        color <- interestingGroups
-    }
-    p <- ggplot(
-        object,
-        mapping = aes_string(
-            x = axes[["x"]],
-            y = axes[["y"]],
-            color = color)
-    ) +
-        # Alpha transparency helps distinguish superimposed points
-        geom_point(alpha = 0.7) +
-        darkTheme() +
-        guides(color = guide_legend(
-            title.position = "left",
-            byrow = TRUE))
-    if (isTRUE(label)) {
-        p <- p +
-            geom_text(
-                mapping = aes_string(
-                    x = "centerX",
-                    y = "centerY",
-                    label = "ident"),
-                color = "white",
-                size = 6,
-                fontface = "bold")
-    }
-    if (interestingGroups == "ident") {
-        # Fix the cluster identity label
-        p <- p +
-            labs(color = "cluster")
-    }
-    p
-}
 
 
 
@@ -85,11 +32,13 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        label = TRUE) {
+        label = TRUE,
+        dark = TRUE) {
         tsne <- fetchTSNEData(object)
-        .plotDim(
+        .plotDimensionalityReduction(
             tsne,
             axes = c(x = "tSNE1", y = "tSNE2"),
             interestingGroups = interestingGroups,
-            label = label)
+            label = label,
+            dark = dark)
     })

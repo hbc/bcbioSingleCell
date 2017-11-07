@@ -7,6 +7,7 @@
 #' @importFrom BiocGenerics counts
 #'
 #' @inheritParams AllGenerics
+#' @inheritParams metrics
 #'
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.
@@ -24,11 +25,15 @@ NULL
 .counts <- function(
     object,
     gene2symbol = FALSE,
+    filterCells = FALSE,
     as = "dgCMatrix") {
     supportedClasses <- c("dgCMatrix", "dgTMatrix", "matrix")
     if (!as %in% supportedClasses) {
         stop(paste("Supported classes:", toString(supportedClasses)),
              call. = FALSE)
+    }
+    if (isTRUE(filterCells)) {
+        object <- .applyFilterCutoffs(object)
     }
     counts <- assay(object)
     if (isTRUE(gene2symbol)) {

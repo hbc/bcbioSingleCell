@@ -4,7 +4,7 @@
 #' @name interestingGroups
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump interestingGroups
+#' @importFrom basejump interestingGroups interestingGroups<-
 #'
 #' @inheritParams AllGenerics
 #'
@@ -21,4 +21,57 @@ setMethod(
     signature("bcbioSingleCell"),
     function(object) {
         metadata(object)[["interestingGroups"]]
+    })
+
+
+
+#' @rdname interestingGroups
+#' @export
+setMethod(
+    "interestingGroups",
+    signature("seurat"),
+    function(object) {
+        interestingGroups <- bcbio(object)[["interestingGroups"]]
+        if (is.null(interestingGroups)) {
+            interestingGroups <- "sampleName"
+        }
+        interestingGroups
+    })
+
+
+
+#' @rdname interestingGroups
+#' @importFrom basejump checkInterestingGroups
+#' @importFrom S4Vectors metadata
+#' @export
+setMethod(
+    "interestingGroups<-",
+    signature(object = "bcbioSingleCell", value = "character"),
+    function(object, value) {
+        sampleMetadata <- sampleMetadata(object)
+        interestingGroups <- checkInterestingGroups(
+            object = sampleMetadata,
+            interestingGroups = value)
+        metadata(object)[["interestingGroups"]] <- interestingGroups
+        validObject(object)
+        object
+    })
+
+
+
+#' @rdname interestingGroups
+#' @importFrom basejump checkInterestingGroups
+#' @importFrom S4Vectors metadata
+#' @export
+setMethod(
+    "interestingGroups<-",
+    signature(object = "seurat", value = "character"),
+    function(object, value) {
+        sampleMetadata <- sampleMetadata(object)
+        interestingGroups <- checkInterestingGroups(
+            object = sampleMetadata,
+            interestingGroups = value)
+        bcbio(object)[["interestingGroups"]] <- interestingGroups
+        validObject(object)
+        object
     })

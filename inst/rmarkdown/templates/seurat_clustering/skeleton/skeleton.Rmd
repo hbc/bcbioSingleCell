@@ -10,7 +10,6 @@ params:
     pcUse: FALSE
     varsToRegress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
     resolution: 0.8
-    markersFile: "meta/markers.xlsx"
     outputDir: "."
 ---
 
@@ -34,11 +33,11 @@ bcb <- get(bcbName, inherits = FALSE)
 
 # Seurat object names and file paths
 seuratFile <- file.path(dataDir, paste0(params$seuratName, ".rda"))
-seuratPreregressName <- paste0(params$seuratName, "Preregress")
+seuratPreregressName <- paste(params$seuratName, "preregress", sep = "_")
 seuratPreregressFile <- file.path(dataDir, paste0(seuratPreregressName, ".rda"))
 
 # Check to see if seurat objects exist
-if (exists(c("seurat", "seuratPregress"), inherits = FALSE)) {
+if (exists(c(params$seuratName, seuratPreregressName), inherits = FALSE)) {
     evalSeurat <- FALSE
 } else {
     if (all(file.exists(seuratFile, seuratPreregressFile))) {
@@ -52,7 +51,12 @@ if (exists(c("seurat", "seuratPregress"), inherits = FALSE)) {
 }
 
 # Vector to use for plot looping
-groupBy <- c("ident", "sampleName", "phase", metadata(bcb)$interestingGroups)
+if (length(unique(sampleMetadata(bcb)$sampleName)) == 1) {
+    groupBy <- "ident"
+} else {
+    groupBy <- c("ident", "sampleName", "phase",
+                 metadata(bcb)$interestingGroups)
+}
 
 # knitr arguments (for `rmarkdown::render()` looping)
 opts_chunk$set(
@@ -93,7 +97,7 @@ This workflow is adapted from the following sources:
 
 Let's coerce our `bcbioSingleCell` object into a `seurat` object, without applying any additional filtering. During this step, global-scaling normalization is applied to the raw counts with `NormalizeData()`, which (1) normalizes the gene expression measurements for each cell by the total expression, (2) multiplies this by a scale factor (10,000 by default), and (3) log-transforms the result. `FindVariableGenes()` is then called, which calculates the average expression and dispersion for each gene, places these genes into bins, and then calculates a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression. Finally, the genes are scaled and centered using the `ScaleData()` function.
 
-```{r seurat, eval=evalSeurat}
+```{r seurat, results="hide", eval=evalSeurat}
 # S4 object coercion method using `setAs()`, documented in `setAs.R` file.
 # getMethod("coerce", signature(from = "bcbioSingleCell", to = "seurat"))
 seurat <- as(bcb, "seurat")
@@ -156,7 +160,7 @@ RunPCA(
     seuratPreregress,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
-    plotPCA(interestingGroup = "phase")
+    plotPCA(interestingGroups = "phase", label = FALSE)
 ```
 
 
@@ -175,7 +179,7 @@ RunPCA(
     seurat,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
-    plotPCA(interestingGroup = "phase")
+    plotPCA(interestingGroups = "phase", label = FALSE)
 ```
 
 
@@ -316,12 +320,14 @@ lapply(seq_along(groupBy), function(a) {
     }
     plotTSNE(
         seurat,
-        interestingGroup = groupBy[[a]],
-        label = label)
+        interestingGroups = groupBy[[a]],
+        label = label) %>%
+        show()
     plotPCA(
         seurat,
-        interestingGroup = groupBy[[a]],
-        label = label)
+        interestingGroups = groupBy[[a]],
+        label = label) %>%
+        show()
 }) %>%
     invisible()
 ```

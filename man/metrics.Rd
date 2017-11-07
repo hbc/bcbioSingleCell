@@ -7,13 +7,15 @@
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{bcbioSingleCell}(object, filterCells = TRUE,
-  aggregateReplicates = TRUE)
+\S4method{metrics}{bcbioSingleCell}(object, interestingGroups,
+  filterCells = FALSE, aggregateReplicates = FALSE)
 
-\S4method{metrics}{seurat}(object)
+\S4method{metrics}{seurat}(object, interestingGroups)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
@@ -32,7 +34,9 @@ Sample Barcode Metrics
 
 Other Quality Control Metrics: \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}},

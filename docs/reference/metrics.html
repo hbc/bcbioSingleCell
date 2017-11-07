@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -91,11 +91,11 @@
     
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>filterCells</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
+  <span class='kw'>filterCells</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>)</pre>
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -103,6 +103,10 @@
     <tr>
       <th>object</th>
       <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>interestingGroups</th>
+      <td><p>Interesting group, to use for colors.</p></td>
     </tr>
     <tr>
       <th>filterCells</th>
@@ -122,14 +126,16 @@ internal sample metadata data.frame.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>sampleMetadata()</code>.</p>
-<p>Other Quality Control Metrics: <code>plotCellCounts</code>,
-  <code>plotGenesPerCell</code>,
-  <code>plotMitoRatio</code>, <code>plotNovelty</code>,
-  <code>plotReadsPerCell</code>,
-  <code>plotUMIsPerCell</code>,
-  <code>plotUMIsVsGenes</code>,
-  <code>plotZerosVsDepth</code></p>
+    <p><code><a href='sampleMetadata.html'>sampleMetadata()</a></code>.</p>
+<p>Other Quality Control Metrics: <code><a href='plotCellCounts.html'>plotCellCounts</a></code>,
+  <code><a href='plotGenesPerCell.html'>plotGenesPerCell</a></code>,
+  <code><a href='plotMitoRatio.html'>plotMitoRatio</a></code>,
+  <code><a href='plotMitoVsCoding.html'>plotMitoVsCoding</a></code>,
+  <code><a href='plotNovelty.html'>plotNovelty</a></code>,
+  <code><a href='plotReadsPerCell.html'>plotReadsPerCell</a></code>,
+  <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code>,
+  <code><a href='plotUMIsVsGenes.html'>plotUMIsVsGenes</a></code>,
+  <code><a href='plotZerosVsDepth.html'>plotZerosVsDepth</a></code></p>
     
 
   </div>
@@ -152,7 +158,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Steinbaugh, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

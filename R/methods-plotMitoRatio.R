@@ -6,284 +6,78 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell
+#'
+#' @examples
+#' # bcbioSingleCell
+#' \dontrun{
+#' plotMitoRatio(bcb)
+#' }
+#'
+#' # seurat
+#' \dontrun{
+#' plotMitoRatio(seurat)
+#' }
+#'
+#' # metrics data.frame
+#' \dontrun{
+#' metrics <- metrics(bcb)
+#' plotMitoRatio(metrics)
+#' }
 NULL
 
 
 
 # Constructors ====
-#' @importFrom dplyr left_join
 #' @importFrom viridis scale_fill_viridis
-.plotMitoRatioBoxplot <- function(
-    object,
-    interestingGroups = "sampleName",
-    max = 1,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(
-        object,
-        filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates)
-    p <- ggplot(
-        metrics,
-        mapping = aes_string(
-            x = "sampleName",
-            y = "mitoRatio",
-            fill = interestingGroups)
-    ) +
-        scale_y_sqrt() +
-        labs(x = "sample",
-             y = "mito ratio") +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroups == "sampleName") {
-        p <- p +
-            geom_boxplot(
-                color = lineColor,
-                fill = "white")
-    } else {
-        p <- p +
-            geom_boxplot(
-                alpha = qcPlotAlpha,
-                color = lineColor) +
-            scale_fill_viridis(discrete = TRUE)
-    }
-
-    # Median labels
-    if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
-        formula <- formula(paste("mitoRatio", "sampleName", sep = " ~ "))
-        meta <- sampleMetadata(
-            object,
-            aggregateReplicates = aggregateReplicates)
-        medianMitoRatio <-
-            aggregate(
-                formula = formula,
-                data = metrics,
-                FUN = median) %>%
-            left_join(meta, by = "sampleName")
-        p <- p +
-            geom_label(
-                data = medianMitoRatio,
-                mapping = aes_(label = ~round(mitoRatio, digits = 2)),
-                alpha = qcLabelAlpha,
-                color = qcLabelColor,
-                fill = qcLabelFill,
-                fontface = qcLabelFontface,
-                label.padding = qcLabelPadding,
-                label.size = qcLabelSize,
-                show.legend = FALSE)
-    }
-
-    # Cutoff lines
-    if (max < 1) {
-        p <- p +
-            .qcCutoffLine(yintercept = max)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
-        length(unique(metrics[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        facets <- c(facets, "sampleNameAggregate")
-        if (interestingGroups == "sampleName") {
-            p <- p + theme(legend.position = "none")
-        }
-    }
-    if (!is.null(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_x")
-    }
-
-    p
-}
-
-
-
-#' @importFrom ggridges geom_density_ridges
-.plotMitoRatioRidgeline <- function(
-    object,
-    interestingGroups = "sampleName",
-    max = 1,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(
-        object,
-        filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates)
-    p <- ggplot(
-        metrics,
-        mapping = aes_string(
-            x = "mitoRatio",
-            y = "sampleName",
-            fill = interestingGroups)
-    ) +
-        labs(x = "mito ratio",
-             y = "sample") +
-        geom_density_ridges(
-            alpha = qcPlotAlpha,
-            color = lineColor,
-            panel_scaling = TRUE,
-            scale = qcRidgeScale) +
-        scale_fill_viridis(discrete = TRUE) +
-        scale_x_sqrt() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-    # Cutoff lines
-    if (max < 1) {
-        p <- p +
-            .qcCutoffLine(xintercept = max)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
-        length(unique(metrics[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        facets <- c(facets, "sampleNameAggregate")
-        # Turn off the legend
-        p <- p +
-            theme(legend.position = "none")
-    }
-    if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets)
-    }
-
-    p
-}
-
-
-
-#' @importFrom dplyr filter pull
-#' @importFrom tibble rownames_to_column
-#' @importFrom viridis scale_color_viridis
-.plotMitoRatioScatterplot <- function(
-    object,
-    interestingGroups = "sampleName",
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(
-        object,
-        filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates) %>%
-        rownames_to_column("cellID")
-        # Drop cells with zeroes for both `nCoding` and `nMito`
-    dropCells <- filter(
-        metrics,
-        .data[["nCoding"]] == 0 &
-        .data[["nMito"]] == 0) %>%
-        pull("cellID")
-    metrics <- filter(metrics, !.data[["cellID"]] %in% dropCells)
-    if (nrow(metrics) == 0) {
-        stop(paste(
-            "No cells contain coding and mito counts.",
-            "Check that your organism is set correctly",
-            "and rerun 'calculateMetrics()'."
-            ), call. = FALSE)
-    }
-    p <- ggplot(
-        metrics,
-        mapping = aes_string(
-            x = "nCoding",
-            y = "nMito",
-            color = interestingGroups)
-    ) +
-        labs(x = "mito counts",
-             y = "coding counts") +
-        scale_x_sqrt() +
-        scale_y_sqrt()
-
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroups == "sampleName") {
-        p <- p +
-            geom_point(
-                color = "gray",
-                size = 0.8) +
-            geom_smooth(
-                color = "black",
-                method = "gam",
-                se = FALSE,
-                size = 1.5)
-    } else {
-        p <- p +
-            geom_point(
-                alpha = 0.25,
-                size = 0.8) +
-            geom_smooth(
-                method = "gam",
-                se = FALSE,
-                size = 1.5) +
-            scale_color_viridis(discrete = TRUE)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
-        length(unique(metrics[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        facets <- c(facets, "sampleNameAggregate")
-        # Turn off the legend
-        p <- p + theme(legend.position = "none")
-    }
-    if (!is.null(facets)) {
-        p <- p + facet_wrap(facets = facets)
-    }
-
-    p
-}
-
-
-
-#' @importFrom cowplot plot_grid
 .plotMitoRatio <- function(
     object,
+    geom = "violin",
+    max = Inf,
     interestingGroups,
-    max,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    if (missing(interestingGroups)) {
-        interestingGroups <-
-            metadata(object)[["interestingGroups"]][[1]]
+    multiplexed = FALSE,
+    samplesOnYAxis = TRUE,
+    fill = scale_fill_viridis(discrete = TRUE)) {
+    metricCol <- "mitoRatio"
+    p <- .plotQCGeom(
+            object,
+            geom = geom,
+            metricCol = metricCol,
+            max = max)
+
+    # Label interesting groups
+    if (!missing(interestingGroups)) {
+        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
+    } else {
+        p <- p + labs(color = NULL, fill = NULL)
     }
-    if (missing(max)) {
-        max <- metadata(object) %>%
-            .[["filterParams"]] %>%
-            .[["maxMitoRatio"]]
-        if (is.null(max)) {
-            max <- 1
+
+    # Color palette
+    if (!is.null(fill)) {
+        p <- p + fill
+    }
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
+        facets <- c(facets, "description")
+    }
+    if (isTRUE(.checkAggregate(object))) {
+        facets <- c(facets, "sampleNameAggregate")
+    }
+    if (!is.null(facets)) {
+        p <- p + facet_wrap(facets = facets, scales = "free_y")
+    } else {
+        # Add median labels
+        if (geom %in% validMedianGeom) {
+            p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
         }
     }
-    suppressMessages(plot_grid(
-        .plotMitoRatioRidgeline(
-            object,
-            interestingGroups = interestingGroups,
-            max = max,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates),
-        .plotMitoRatioBoxplot(
-            object,
-            interestingGroups = interestingGroups,
-            max = max,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates),
-        .plotMitoRatioScatterplot(
-            object,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates),
-        labels = "auto",
-        nrow = 3
-    ))
+
+    if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
+        p <- p + coord_flip()
+    }
+
+    p
 }
 
 
@@ -294,4 +88,69 @@ NULL
 setMethod(
     "plotMitoRatio",
     signature("bcbioSingleCell"),
+    function(
+        object,
+        geom = "violin",
+        max,
+        interestingGroups,
+        filterCells = FALSE,
+        samplesOnYAxis = TRUE,
+        fill = scale_fill_viridis(discrete = TRUE)) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- basejump::interestingGroups(object)
+        }
+        if (missing(max)) {
+            max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
+        }
+        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
+        metrics <- metrics(
+            object,
+            interestingGroups = interestingGroups,
+            filterCells = filterCells)
+        .plotMitoRatio(
+            object = metrics,
+            geom = geom,
+            max = max,
+            interestingGroups = interestingGroups,
+            samplesOnYAxis = samplesOnYAxis,
+            fill = fill,
+            multiplexed = multiplexed)
+    })
+
+
+
+#' @rdname plotMitoRatio
+#' @export
+setMethod(
+    "plotMitoRatio",
+    signature("data.frame"),
     .plotMitoRatio)
+
+
+
+#' @rdname plotMitoRatio
+#' @export
+setMethod(
+    "plotMitoRatio",
+    signature("seurat"),
+    function(
+        object,
+        geom = "violin",
+        max = Inf,
+        interestingGroups,
+        multiplexed = FALSE,
+        samplesOnYAxis = TRUE,
+        fill = scale_fill_viridis(discrete = TRUE)) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- basejump::interestingGroups(object)
+        }
+        metrics <- metrics(object, interestingGroups = interestingGroups)
+        .plotMitoRatio(
+            object = metrics,
+            geom = geom,
+            max = max,
+            interestingGroups = interestingGroups,
+            samplesOnYAxis = samplesOnYAxis,
+            fill = fill,
+            multiplexed = multiplexed)
+    })

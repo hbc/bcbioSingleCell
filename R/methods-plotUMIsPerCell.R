@@ -8,198 +8,77 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell
+#'
+#' @examples
+#' # bcbioSingleCell
+#' \dontrun{
+#' plotUMIsPerCell(bcb)
+#' }
+#'
+#' # seurat
+#' \dontrun{
+#' plotUMIsPerCell(seurat)}
+#'
+#' # data.frame
+#' \dontrun{
+#' metrics <- metrics(bcb)
+#' plotUMIsPerCell(metrics)
+#' }
 NULL
 
 
 
 # Constructors ====
 #' @importFrom viridis scale_fill_viridis
-.plotUMIsPerCellBoxplot <- function(
-    object,
-    interestingGroups = "sampleName",
-    min = 0,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(
-        object,
-        filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates)
-    p <- ggplot(
-        metrics,
-        mapping = aes_string(
-            x = "sampleName",
-            y = "nUMI",
-            fill = interestingGroups)
-    ) +
-        labs(x = "sample",
-             y = "umis per cell") +
-        scale_y_sqrt() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroups == "sampleName") {
-        p <- p +
-            geom_boxplot(
-                color = lineColor,
-                fill = "white")
-    } else {
-        p <- p +
-            geom_boxplot(
-                alpha = qcPlotAlpha,
-                color = lineColor) +
-            scale_fill_viridis(discrete = TRUE)
-    }
-
-    # Median labels
-    if (length(unique(metrics[["sampleName"]])) <= qcLabelMaxNum) {
-        formula <- formula(paste("nUMI", "sampleName", sep = " ~ "))
-        meta <- sampleMetadata(
-            object,
-            aggregateReplicates = aggregateReplicates)
-        medianUMIs <- aggregate(
-            formula = formula,
-            data = metrics,
-            FUN = median) %>%
-            left_join(meta, by = "sampleName")
-        p <- p +
-            geom_label(
-                data = medianUMIs,
-                mapping = aes_(label = ~round(nUMI)),
-                alpha = qcLabelAlpha,
-                color = qcLabelColor,
-                fill = qcLabelFill,
-                fontface = qcLabelFontface,
-                label.padding = qcLabelPadding,
-                label.size = qcLabelSize,
-                show.legend = FALSE)
-    }
-
-    # Cutoff lines
-    if (min > 0) {
-        p <- p +
-            .qcCutoffLine(yintercept = min)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
-        length(unique(metrics[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        facets <- c(facets, "sampleNameAggregate")
-        if (interestingGroups == "sampleName") {
-            p <- p +
-                theme(legend.position = "none")
-        }
-    }
-    if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets,
-                       scales = "free_x")
-    }
-
-    p
-}
-
-
-
-#' @importFrom ggridges geom_density_ridges
-.plotUMIsPerCellRidgeline <- function(
-    object,
-    interestingGroups = "sampleName",
-    min = 0,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(
-        object,
-        filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates)
-    p <- ggplot(
-        metrics,
-        mapping = aes_string(
-            x = "nUMI",
-            y = "sampleName",
-            fill = interestingGroups)
-    ) +
-        labs(x = "umis per cell",
-             y = "sample") +
-        geom_density_ridges(
-            alpha = qcPlotAlpha,
-            color = lineColor,
-            panel_scaling = TRUE,
-            scale = qcRidgeScale) +
-        scale_fill_viridis(discrete = TRUE) +
-        scale_x_sqrt() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-    # Cutoff lines
-    if (min > 0) {
-        p <- p +
-            .qcCutoffLine(xintercept = min)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
-        length(unique(metrics[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
-        facets <- c(facets, "sampleNameAggregate")
-        # Turn off the legend
-        p <- p +
-            theme(legend.position = "none")
-    }
-    if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets)
-    }
-
-    p
-}
-
-
-
-#' @importFrom cowplot plot_grid
 .plotUMIsPerCell <- function(
     object,
+    geom = "violin",
+    min = 0,
     interestingGroups,
-    min,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    if (missing(interestingGroups)) {
-        interestingGroups <-
-            metadata(object)[["interestingGroups"]][[1]]
+    multiplexed = FALSE,
+    samplesOnYAxis = TRUE,
+    fill = scale_fill_viridis(discrete = TRUE)) {
+    metricCol <- "nUMI"
+    p <- .plotQCGeom(
+        object,
+        geom = geom,
+        metricCol = metricCol,
+        min = min)
+
+    # Label interesting groups
+    if (!missing(interestingGroups)) {
+        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
+    } else {
+        p <- p + labs(fill = NULL)
     }
-    if (missing(min)) {
-        min <- object %>%
-            metadata() %>%
-            .[["filterParams"]] %>%
-            .[["minUMIs"]]
-        if (is.null(min)) {
-            min <- 0
+
+    # Color palette
+    if (!is.null(fill)) {
+        p <- p + fill
+    }
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
+        facets <- c(facets, "description")
+    }
+    if (isTRUE(.checkAggregate(object))) {
+        facets <- c(facets, "sampleNameAggregate")
+    }
+    if (!is.null(facets)) {
+        p <- p + facet_wrap(facets = facets, scales = "free_y")
+    } else {
+        # Add median labels
+        if (geom %in% validMedianGeom) {
+            p <- p + .medianLabels(object, medianCol = metricCol)
         }
     }
-    suppressMessages(plot_grid(
-        .plotUMIsPerCellRidgeline(
-            object,
-            interestingGroups = interestingGroups,
-            min = min,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates),
-        .plotUMIsPerCellBoxplot(
-            object,
-            interestingGroups = interestingGroups,
-            min = min,
-            filterCells = filterCells,
-            aggregateReplicates = aggregateReplicates),
-        labels = "auto",
-        nrow = 2
-    ))
+
+    if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
+        p <- p + coord_flip()
+    }
+
+    p
 }
 
 
@@ -210,4 +89,72 @@ NULL
 setMethod(
     "plotUMIsPerCell",
     signature("bcbioSingleCell"),
+    function(
+        object,
+        geom = "violin",
+        min,
+        interestingGroups,
+        filterCells = FALSE,
+        samplesOnYAxis = TRUE,
+        fill = scale_fill_viridis(discrete = TRUE)) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- basejump::interestingGroups(object)
+        }
+        if (missing(min)) {
+            min <- metadata(object)[["filterParams"]][["minUMIs"]]
+        }
+        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
+        metrics <- metrics(
+            object,
+            interestingGroups = interestingGroups,
+            filterCells = filterCells)
+        .plotUMIsPerCell(
+            object = metrics,
+            geom = geom,
+            min = min,
+            interestingGroups = interestingGroups,
+            samplesOnYAxis = samplesOnYAxis,
+            fill = fill,
+            multiplexed = multiplexed)
+    })
+
+
+
+#' @rdname plotUMIsPerCell
+#' @export
+setMethod(
+    "plotUMIsPerCell",
+    signature("data.frame"),
     .plotUMIsPerCell)
+
+
+
+#' @rdname plotUMIsPerCell
+#' @export
+setMethod(
+    "plotUMIsPerCell",
+    signature("seurat"),
+    function(
+        object,
+        geom = "violin",
+        min,
+        interestingGroups,
+        multiplexed = FALSE,
+        samplesOnYAxis = TRUE,
+        fill = scale_fill_viridis(discrete = TRUE)) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- basejump::interestingGroups(object)
+        }
+        if (missing(min)) {
+            min <- bcbio(object)[["filterParams"]][["minUMIs"]]
+        }
+        metrics <- metrics(object, interestingGroups = interestingGroups)
+        .plotUMIsPerCell(
+            object = metrics,
+            geom = geom,
+            min = min,
+            interestingGroups = interestingGroups,
+            samplesOnYAxis = samplesOnYAxis,
+            fill = fill,
+            multiplexed = multiplexed)
+    })

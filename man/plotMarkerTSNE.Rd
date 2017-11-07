@@ -9,25 +9,35 @@
 \usage{
 plotMarkerTSNE(object, ...)
 
-\S4method{plotMarkerTSNE}{grouped_df}(object, colorpoints = "geomean",
+\S4method{plotMarkerTSNE}{grouped_df}(object, colorPoints = "geomean",
+  color = scale_color_viridis(option = "inferno"), dark = TRUE,
   pointsAsNumbers = FALSE, label = TRUE)
 
-\S4method{plotMarkerTSNE}{seurat}(object, genes, colorpoints = "geomean",
-  pointsAsNumbers = FALSE, label = TRUE)
+\S4method{plotMarkerTSNE}{seurat}(object, genes, colorPoints = "geomean",
+  color = scale_color_viridis(option = "inferno"), dark = TRUE,
+  pointsAsNumbers = FALSE, label = TRUE, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{colorpoints}{Color points by geometric mean or expression of
-individual gene.}
+\item{colorPoints}{Color points by geometric mean (\code{geomean}) or expression
+of individual gene (\code{expression}).}
+
+\item{color}{Color palette to use for points. Defaults to the inferno
+palette from the viridis package. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}}
+to easily define your own low/high gradient.}
+
+\item{dark}{Enable dark mode.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{label}{Label the clusters on the plot.}
 
 \item{genes}{Genes (by symbol name) of which to get expression data.}
+
+\item{title}{Plot title.}
 }
 \value{
 \link{ggplot}.
@@ -50,10 +60,10 @@ dat <- fetchTSNEExpressionData(seurat, genes = genes)
 print(unique(dat$gene))
 
 # To make t-SNE plot colored by geometric mean of topGenes
-plotTSNE(dat, colorpoints = "geomean")
+plotTSNE(dat, colorPoints = "geomean")
 
 # To make faceted t-SNE plot of each gene (looks good at up to 6 genes)
-plotTSNE(dat, colorpoints = "expression") +
+plotTSNE(dat, colorPoints = "expression") +
     ggplot2::facet_wrap(~gene)
 }
 }

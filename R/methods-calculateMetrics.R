@@ -26,6 +26,7 @@ NULL
 #' @importFrom basejump pct
 #' @importFrom dplyr filter mutate pull
 #' @importFrom Matrix colSums
+#' @importFrom scales percent
 #' @importFrom tibble column_to_rownames tibble
 .calculateMetricsSparse <- function(
     object,
@@ -49,7 +50,7 @@ NULL
         warning(paste(
             length(missing),
             "genes missing in annotable used to calculate metrics",
-            paste0("(", pct(length(missing) / ncol(object)), ")")
+            paste0("(", percent(length(missing) / ncol(object)), ")")
         ), call. = FALSE)
     }
 
@@ -98,7 +99,7 @@ NULL
             .[!is.na(.[["log10GenesPerUMI"]]), ]
         message(paste(
             nrow(metrics), "cellular barcodes passed pre-filtering",
-            paste0("(", pct(nrow(metrics) / ncol(object)), ")")
+            paste0("(", percent(nrow(metrics) / ncol(object)), ")")
         ))
     }
 

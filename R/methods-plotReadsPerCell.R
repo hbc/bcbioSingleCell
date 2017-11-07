@@ -8,9 +8,8 @@
 #' @inheritParams AllGenerics
 #' @inheritParams plotGenesPerCell
 #'
-#' @details A violin plot is a comact display of a continuous distribution. It
-#'   is a blend of [geom_boxplot()] and [geom_density()]: a violin plot is a
-#'   mirrored density plot displayed in the same way as a boxplot.
+#' @param geom Plot type. Supported formats: proportional `histogram`
+#'   (*recommended*), raw `ridgeline`, and raw `violin`.
 #'
 #' @note Here by "cell" we mean "cellular barcode".
 #'
@@ -20,7 +19,9 @@ NULL
 
 
 # Constructors ====
-#' Raw Cellular Barcodes
+#' Raw Cellular Barcodes Tibble
+#'
+#' Used for `geom` parameter: `ridgeline` and `violin` arguments.
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
@@ -32,42 +33,19 @@ NULL
 #' @inheritParams plotReadsPerCell
 #'
 #' @return [tibble] grouped by `sampleName` containing `log10Count` values.
-.rawCBTibble <- function(
-    object,
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    cellularBarcodes <- bcbio(object, "cellularBarcodes")
-    if (is.null(cellularBarcodes)) {
-        stop("Raw cellular barcode counts not saved in object")
-    }
-    cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
-    # Keep only the cells that have passed filtering, if desired
-    if (isTRUE(filterCells)) {
-        cells <- metadata(object)[["filterCells"]]
-        if (!is.null(cells)) {
-            cellularBarcodes <- cellularBarcodes %>%
-                .[.[["cellID"]] %in% cells, , drop = FALSE]
-        }
-    }
-    meta <- metadata(object)[["sampleMetadata"]] %>%
-        as.data.frame()
-    if (isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(meta)) {
-        meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
-    }
-    meta <- meta[, c("sampleID", "sampleName")]
+.rawCBTibble <- function(cellularBarcodes, sampleMetadata) {
+    sampleMetadata <- sampleMetadata[, c("sampleID", "sampleName")]
     cellularBarcodes %>%
         mutate(log10Count = log10(.data[["nCount"]]),
                cellularBarcode = NULL,
                nCount = NULL) %>%
-        left_join(meta, by = "sampleID") %>%
-        mutate(sampleName = as.factor(.data[["sampleName"]])) %>%
+        left_join(sampleMetadata, by = "sampleID") %>%
         group_by(!!sym("sampleName"))
 }
 
 
 
-#' Proportional Cellular Barcodes
+#' Proportional Cellular Barcodes Tibble
 #'
 #' @author Rory Kirchner, Michael Steinbaugh
 #' @keywords internal
@@ -84,9 +62,7 @@ NULL
 #' @details Modified version of Allon Klein Lab MATLAB code.
 #'
 #' @return [tibble].
-.proportionalCBTibble <- function(
-    rawTibble,
-    sampleMetadata) {
+.proportionalCBTibble <- function(rawTibble, sampleMetadata) {
     # Ensure `sampleName` is set as factor across both data frames
     rawTibble[["sampleName"]] <-
         as.factor(rawTibble[["sampleName"]])
@@ -131,12 +107,10 @@ NULL
     tibble,
     interestingGroups = "sampleName",
     cutoffLine = 0,
-    multiplexedFASTQ = FALSE,
-    aggregateReplicates = TRUE) {
+    multiplexed = FALSE) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
-    tibble <- tibble %>%
-        .[.[["log10Count"]] >= 2, , drop = FALSE]
+    tibble <- tibble[tibble[["log10Count"]] >= 2, , drop = FALSE]
     p <- ggplot(
         tibble,
         mapping = aes_string(
@@ -161,21 +135,18 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexedFASTQ) &
+    if (isTRUE(multiplexed) &
         length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(tibble)) {
+    if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
         # Turn off the legend
-        p <- p +
-            theme(legend.position = "none")
+        p <- p + theme(legend.position = "none")
     }
     if (!is.null(facets)) {
-        p <- p +
-            # Use `free_y` here because of `coord_flip()`
-            facet_wrap(facets = facets, scales = "free_y")
+        # Use `free_y` here because of `coord_flip()`
+        p <- p + facet_wrap(facets = facets, scales = "free_y")
     }
 
     p
@@ -198,8 +169,7 @@ NULL
     tibble,
     interestingGroups = "sampleName",
     cutoffLine = 2,
-    multiplexedFASTQ = FALSE,
-    aggregateReplicates = TRUE) {
+    multiplexed = FALSE) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
     tibble <- tibble %>%
@@ -217,7 +187,7 @@ NULL
             alpha = qcPlotAlpha,
             color = lineColor,
             panel_scaling = TRUE,
-            scale = qcRidgeScale) +
+            scale = 10) +
         scale_fill_viridis(discrete = TRUE) +
         scale_x_sqrt()
 
@@ -229,20 +199,17 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexedFASTQ) &
+    if (isTRUE(multiplexed) &
         length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(tibble)) {
+    if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
         # Turn off the legend
-        p <- p +
-            theme(legend.position = "none")
+        p <- p + theme(legend.position = "none")
     }
     if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets)
+        p <- p + facet_wrap(facets = facets)
     }
 
     p
@@ -265,8 +232,7 @@ NULL
     tibble,
     interestingGroups = "sampleName",
     cutoffLine = NULL,
-    multiplexedFASTQ = FALSE,
-    aggregateReplicates = TRUE) {
+    multiplexed = FALSE) {
     p <- ggplot(
         tibble,
         mapping = aes_string(
@@ -289,20 +255,17 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexedFASTQ) &
+    if (isTRUE(multiplexed) &
         length(unique(tibble[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(tibble)) {
+    if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
         # Turn off the legend
-        p <- p +
-            theme(legend.position = "none")
+        p <- p + theme(legend.position = "none")
     }
     if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets)
+        p <- p + facet_wrap(facets = facets)
     }
 
     p
@@ -321,29 +284,43 @@ NULL
 #' @inherit plotReadsPerCell
 .plotReadsPerCell <- function(
     object,
-    interestingGroups = "sampleName",
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
+    geom = "histogram",
+    interestingGroups,
+    filterCells = FALSE) {
+    # Currently only supported for `loadSingleCell()` return
     if (metadata(object)[["pipeline"]] != "bcbio") {
-        warning(paste(
-            "'plotReadsPerCell()' currently only supports",
-            "bcbio pipeline output for 'bcbioSingleCell' class"),
-            call. = FALSE)
-        return(NULL)
-    }
-    if (missing(interestingGroups)) {
-        interestingGroups <-
-            metadata(object)[["interestingGroups"]][[1]]
+        return(warning(paste(
+            "'plotReadsPerCell()' currently only supports bcbio pipeline"
+        ), call. = FALSE))
     }
 
-    rawTibble <- .rawCBTibble(
-        object,
-        filterCells = filterCells)
+    if (isTRUE(filterCells)) {
+        object <- .applyFilterCutoffs(object)
+    }
+
+    if (missing(interestingGroups)) {
+        interestingGroups <- basejump::interestingGroups(object)
+    }
+
+    # Acquire the data required for plotting
+    cellularBarcodes <- bcbio(object, "cellularBarcodes")
+    if (is.null(cellularBarcodes)) {
+        stop("Raw cellular barcode counts not saved in object")
+    }
+    cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
+
     sampleMetadata <- sampleMetadata(
-        object, aggregateReplicates = aggregateReplicates)
-    proportionalTibble <- .proportionalCBTibble(
-        rawTibble = rawTibble,
+        object,
+        interestingGroups = interestingGroups)
+    rawTibble <- .rawCBTibble(
+        cellularBarcodes = cellularBarcodes,
         sampleMetadata = sampleMetadata)
+
+    if (geom == "histogram") {
+        proportionalTibble <- .proportionalCBTibble(
+            rawTibble = rawTibble,
+            sampleMetadata = sampleMetadata)
+    }
 
     # Need to set the cellular barcode cutoff in log10 to match the plots
     if (!is.null(metadata(object)[["cbCutoff"]])) {
@@ -353,50 +330,33 @@ NULL
     } else if (!is.null(metadata(object)[["cellularBarcodeCutoff"]])) {
         cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
     } else {
-        warning("Failed to detect cellular barcode cutoff")
+        warning("Failed to detect cellular barcode cutoff", call. = FALSE)
         cutoffLine <- 0
     }
     cutoffLine <- cutoffLine %>%
         as.numeric() %>%
         log10()
 
-    multiplexedFASTQ <- metadata(object)[["multiplexedFASTQ"]]
+    multiplexed <- metadata(object)[["multiplexedFASTQ"]]
 
-    violin <- .plotRawCBViolin(
-            rawTibble,
-            cutoffLine = cutoffLine,
-            multiplexedFASTQ = multiplexedFASTQ,
-            aggregateReplicates = aggregateReplicates)
-    ridgeline <- .plotRawCBRidgeline(
-            rawTibble,
-            cutoffLine = cutoffLine,
-            multiplexedFASTQ = multiplexedFASTQ,
-            aggregateReplicates = aggregateReplicates)
-    proportionalHistogram <- .plotProportionalCBHistogram(
+    if (geom == "histogram") {
+        p <- .plotProportionalCBHistogram(
             proportionalTibble,
             cutoffLine = cutoffLine,
-            multiplexedFASTQ = multiplexedFASTQ,
-            aggregateReplicates = aggregateReplicates)
+            multiplexed = multiplexed)
+    } else if (geom == "ridgeline") {
+        p <- .plotRawCBRidgeline(
+            rawTibble,
+            cutoffLine = cutoffLine,
+            multiplexed = multiplexed)
+    } else if (geom == "violin") {
+        p <- .plotRawCBViolin(
+            rawTibble,
+            cutoffLine = cutoffLine,
+            multiplexed = multiplexed)
+    }
 
-    ggdraw() +
-        # Coordinates are relative to lower left corner
-        draw_plot(
-            violin +
-                xlab("") +
-                theme(legend.position = "none"),
-            x = 0, y = 0.7, width = 0.5, height = 0.3) +
-        suppressMessages(draw_plot(
-            ridgeline +
-                ylab("") +
-                theme(axis.text.y = element_blank(),
-                      axis.ticks.y = element_blank(),
-                      legend.position = "none"),
-            x = 0.5, y = 0.7, width = 0.5, height = 0.3)) +
-        draw_plot(
-            proportionalHistogram +
-                theme(legend.justification = "center",
-                      legend.position = "bottom"),
-            x = 0, y = 0, width = 1, height = 0.7)
+    p
 }
 
 

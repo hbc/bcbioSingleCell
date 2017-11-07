@@ -18,4 +18,6 @@ bcb <- loadSingleCell(
         "annotations",
         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz")
 )
-saveData(bcb)
+# Back up all data inside bcbio object
+flatFiles <- flatFiles(bcb)
+saveData(bcb, flatFiles, dir = "data")

@@ -8,8 +8,9 @@
 \usage{
 plotMarkers(object, ...)
 
-\S4method{plotMarkers}{seurat}(object, genes, pointsAsNumbers = FALSE,
-  headerLevel = 2)
+\S4method{plotMarkers}{seurat}(object, genes,
+  color = scale_color_viridis(option = "inferno"), dark = TRUE,
+  pointsAsNumbers = FALSE, headerLevel = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -17,6 +18,12 @@ plotMarkers(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{genes}{Genes (by symbol name) of which to get expression data.}
+
+\item{color}{Color palette to use for points. Defaults to the inferno
+palette from the viridis package. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}}
+to easily define your own low/high gradient.}
+
+\item{dark}{Enable dark mode.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 

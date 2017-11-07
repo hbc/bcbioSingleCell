@@ -4,12 +4,23 @@
 \name{interestingGroups}
 \alias{interestingGroups}
 \alias{interestingGroups,bcbioSingleCell-method}
+\alias{interestingGroups,seurat-method}
+\alias{interestingGroups<-,bcbioSingleCell,character-method}
+\alias{interestingGroups<-,seurat,character-method}
 \title{Interesting Groups}
 \usage{
 \S4method{interestingGroups}{bcbioSingleCell}(object)
+
+\S4method{interestingGroups}{seurat}(object)
+
+\S4method{interestingGroups}{bcbioSingleCell,character}(object) <- value
+
+\S4method{interestingGroups}{seurat,character}(object) <- value
 }
 \arguments{
 \item{object}{Object.}
+
+\item{value}{Object to assign.}
 }
 \value{
 Character vector.

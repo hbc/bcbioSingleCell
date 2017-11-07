@@ -7,12 +7,15 @@
 \alias{sampleMetadata,seurat-method}
 \title{Sample Metadata}
 \usage{
-\S4method{sampleMetadata}{bcbioSingleCell}(object, aggregateReplicates = TRUE)
+\S4method{sampleMetadata}{bcbioSingleCell}(object, interestingGroups,
+  aggregateReplicates = FALSE)
 
-\S4method{sampleMetadata}{seurat}(object)
+\S4method{sampleMetadata}{seurat}(object, interestingGroups)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{aggregateReplicates}{Aggregate technical replicates, if specified. This
 function uses values assigned in the \code{sampleNameAggregate} column of the

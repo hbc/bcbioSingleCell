@@ -3,29 +3,67 @@
 #' @rdname aggregateReplicates
 #' @name aggregateReplicates
 #' @family Data Management Utilities
-#' @author Rory Kirchner, Michael Steinbaugh
-#' @keywords internal
+#' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @importFrom basejump aggregateReplicates
 #'
+#' @inherit basejump::aggregateReplicates
 #' @inheritParams AllGenerics
-#'
-#' @param object Sparse counts matrix (e.g. `dgCMatrix`).
-#' @param cellids Cellular barcode identifiers.
-#'
-#' @return `dgCMatrix`.
 NULL
 
 
 
 # Constructors ====
-#' @importFrom Matrix.utils aggregate.Matrix
-.aggregateSparseReplicates <- function(object, cellids) {
-    tsparse <- t(object)
-    rownames(tsparse) <- cellids
-    tsparse %>%
-        aggregate.Matrix(groupings = cellids, fun = "sum") %>%
-        t()
+#' @importFrom dplyr filter mutate select
+#' @importFrom parallel mclapply
+#' @importFrom stringr str_match
+#' @importFrom tibble rownames_to_column
+.aggregateReplicates <- function(
+    object) {
+    cells <- metrics(object, aggregateReplicates = TRUE) %>%
+        select(c("sampleID", "sampleName", "cellularBarcode")) %>%
+        mutate(
+            cells = paste(
+                .data[["sampleName"]],
+                .data[["cellularBarcode"]],
+                sep = "_"
+            )
+        ) %>%
+        pull("cells")
+
+    # Aggregate the counts
+    counts <- aggregateReplicates(assay(object), cells = cells)
+    # Check that the count number of counts matches
+    if (!identical(sum(assay(object)), sum(counts))) {
+        stop("Aggregated counts sum doens't match the original",
+             call. = FALSE)
+    }
+
+    # Recalculate cellular barcode metrics
+    annotable <- annotable(object)
+    prefilter <- metadata(object)[["prefilter"]]
+    metrics <- calculateMetrics(
+        counts,
+        annotable = annotable,
+        prefilter = prefilter)
+    if (isTRUE(prefilter)) {
+        # Subset the counts matrix to match the metrics
+        counts <- counts[, rownames(metrics)]
+    }
+
+    # Update the metadata slot
+    metadata <- metadata(object)
+    sampleMetadata <- sampleMetadata(object, aggregateReplicates = TRUE)
+    metadata[["sampleMetadata"]] <- sampleMetadata
+
+    # Return bcbioSingleCell
+    se <- SummarizedExperiment(
+        assays = list(assay = counts),
+        rowData = annotable,
+        colData = metrics,
+        metadata = metadata
+    )
+    new("bcbioSingleCell", se)
 }
 
 
@@ -36,22 +74,4 @@ NULL
 setMethod(
     "aggregateReplicates",
     signature("bcbioSingleCell"),
-    function(object, cellids) {
-        warning(paste(
-            "Draft function.",
-            "Returning an aggregated counts matrix."
-        ), call. = FALSE)
-        .aggregateSparseReplicates(
-            object = assay(object),
-            cellids = cellids
-        )
-    })
-
-
-
-#' @rdname aggregateReplicates
-#' @export
-setMethod(
-    "aggregateReplicates",
-    signature("dgCMatrix"),
-    .aggregateSparseReplicates)
+    .aggregateReplicates)

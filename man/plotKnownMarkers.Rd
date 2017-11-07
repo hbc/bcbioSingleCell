@@ -9,7 +9,8 @@
 plotKnownMarkers(object, knownMarkers, ...)
 
 \S4method{plotKnownMarkers}{seurat,grouped_df}(object, knownMarkers,
-  headerLevel = 2)
+  color = scale_color_viridis(option = "inferno"), dark = TRUE,
+  headerLevel = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -17,6 +18,12 @@ plotKnownMarkers(object, knownMarkers, ...)
 \item{knownMarkers}{\code{\link[=knownMarkersDetected]{knownMarkersDetected()}} \link{tibble} grouped by cluster.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{color}{Color palette to use for points. Defaults to the inferno
+palette from the viridis package. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}}
+to easily define your own low/high gradient.}
+
+\item{dark}{Enable dark mode.}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
 }

@@ -14,11 +14,13 @@ NULL
 
 # Constructors ====
 #' @importFrom basejump mdHeader
-#' @importFrom dplyr filter pull
+#' @importFrom dplyr pull
 .plotKnownMarkers <- function(
     object,
     knownMarkers,
-    headerLevel = 2) {
+    color = scale_color_viridis(option = "inferno"),
+    dark = TRUE,
+    headerLevel = NULL) {
     if (nrow(knownMarkers) == 0) {
         return(NULL)
     }
@@ -28,15 +30,24 @@ NULL
     pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
         genes <- knownMarkers %>%
-            filter(.data[["cell"]] == !!cellType) %>%
+            .[.[["cell"]] == cellType, ] %>%
             pull("symbol") %>%
-            unique() %>%
-            sort()
+            unique()
         if (!is.null(genes)) {
-            mdHeader(cellType, level = headerLevel, tabset = TRUE, asis = TRUE)
-            plotMarkers(object, genes = genes, headerLevel = headerLevel + 1)
-        } else {
-            NULL
+            if (!is.null(headerLevel)) {
+                mdHeader(
+                    cellType,
+                    level = headerLevel,
+                    tabset = TRUE,
+                    asis = TRUE)
+            }
+            plotMarkers(
+                object,
+                genes = genes,
+                color = color,
+                dark = dark,
+                headerLevel = headerLevel + 1)
+            # Show is already declared in `plotMarkers()`
         }
     }) %>%
         invisible()

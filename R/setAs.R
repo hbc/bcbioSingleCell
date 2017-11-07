@@ -122,34 +122,48 @@ NULL
 #'
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
-    if (is.null(metadata(from)[["filterParams"]])) {
-        stop("'filterCells()' must be run prior to 'seurat' coercion",
-             call. = FALSE)
+    # Require that technical replicates are aggregated
+    if (any(grepl(x = metadata(from)[["sampleMetadata"]][["sampleID"]],
+                  pattern = lanePattern)) |
+        "sampleNameAggregate" %in%
+        colnames(metadata(from)[["sampleMetadata"]])) {
+        stop(paste("'aggregateReplicates()' required",
+                   "to merge technical replicates prior to seurat coercion"
+        ), call. = FALSE)
     }
+
+    # Require filtered cells and genes only
+    from <- .applyFilterCutoffs(from)
+    filterParams <- metadata(from)[["filterParams"]]
+    print(filterParams)
 
     # Create the initial `seurat` object
     rawData <- counts(from, gene2symbol = TRUE)
+    metrics <- metrics(from)
+
+    # Ensure that cutoffs are defined
     minGenes <- metadata(from)[["filterParams"]][["minGenes"]]
-    if (is.null(minGenes)) {
-        minGenes <- 0
+    if (!is.numeric(minGenes)) {
+        stop("'minGenes' ", call. = FALSE)
     }
     minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
     if (is.null(minCells)) {
-        minCells <- 0
+        stop("'minCells' is NULL", call. = FALSE)
     }
-    metadata <- metrics(
-        from,
-        aggregateReplicates = FALSE,
-        filterCells = FALSE)
-    # Add a call to `aggregateReplicates()` here to combine the counts per
-    # sample before passing to Seurat, if technical replicates are present?
+
+    # Note here that passing in the `minCells` argument will rescale the number
+    # of genes, since we calculated our genes that passed cutoffs based on
+    # detection in all cells in the dataset. It makes sense to see the gene
+    # count decrease here on a bcbioSingleCell object that has been subset from
+    # the main dataset (e.g. using `selectSamples()`).
     seurat <- CreateSeuratObject(
         raw.data = rawData,
         project = "bcbioSingleCell",
         min.cells = minCells,
         min.genes = minGenes,
-        is.expr = 0,  # Default for UMI datasets
-        meta.data = metadata) %>%
+        # Default for UMI datasets
+        is.expr = 0,
+        meta.data = metrics) %>%
         NormalizeData(
             object = .,
             normalization.method = "LogNormalize",

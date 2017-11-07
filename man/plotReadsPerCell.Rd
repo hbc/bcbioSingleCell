@@ -8,33 +8,26 @@
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSingleCell}(object,
-  interestingGroups = "sampleName", filterCells = TRUE,
-  aggregateReplicates = TRUE)
+\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
+  interestingGroups, filterCells = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
+\item{geom}{Plot type. Supported formats: proportional \code{histogram}
+(\emph{recommended}), raw \code{ridgeline}, and raw \code{violin}.}
+
 \item{interestingGroups}{Interesting group, to use for colors.}
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
-
-\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
-function uses values assigned in the \code{sampleNameAggregate} column of the
-internal sample metadata \link{data.frame}.}
 }
 \value{
 \link{ggplot}.
 }
 \description{
 Plot Read Counts per Cell
-}
-\details{
-A violin plot is a comact display of a continuous distribution. It
-is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_density]{geom_density()}}: a violin plot is a
-mirrored density plot displayed in the same way as a boxplot.
 }
 \note{
 Here by "cell" we mean "cellular barcode".
@@ -43,8 +36,9 @@ Here by "cell" we mean "cellular barcode".
 Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
-  \code{\link{plotUMIsPerCell}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}}, \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}},
   \code{\link{plotZerosVsDepth}}
 }

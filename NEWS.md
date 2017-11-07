@@ -1,3 +1,40 @@
+# bcbioSingleCell 0.0.21
+
+- Updated package imports to match Bioconductor 3.6.
+- Initial support for `plotCellTypesPerCluster()`.
+- Initial support for `plotMitoVsCoding()`. I broke this code out from `plotMitoRatio()`. We could opt to keep this in `plotMitoRatio` with a `geom = "scatterplot"` argument.
+- Initial commit of `.applyFilterCutoffs()` internal function, used to subset the object to contain only cells and genes that have passed quailty control filtering.
+- Improved Seurat `FindAllMarkers()` sanitization.
+- Made the quality control plots more modular. Now they support multiple geoms, including `boxplot`, `histogram`, `ridgeline`, and `violin` (default). Median labels are applied with the internal `.medianLabels()` function.
+- Updated error message for CellRanger directory structure.
+- Cellular barcode columns are no longer split with an underscore. Instead, they are kept as a single ACGT string. We're now generating `cellID` to `sampleID` matching with a different method. In the future, we'll stash a cell2sample data.frame inside the object, that makes this operation faster than the current `mclapply()` code.
+- Updated annotable support in `loadSingleCell()` and `loadCellRanger()`.
+- Added support for handling both gene- and transcript-level counts. The updated release of the bcbio single-cell pipeline now outputs at gene level.
+- Initial quality control plot support for seurat objects.
+- Added support for return of only filtered cells and genes with the `counts(filterCells = TRUE)` function.
+- Added assignment support for `interestingGroups<-`.
+- Initial support for sample metadata generation from seurat object.
+- Improved internal code for `selectSamples()`.
+- Updated `topMarkers()` to match Seurat v2.1 update.
+- Improved `bcbioSingleCell` to `seurat` coercion method with `setAs()`.
+
+
+
+# bcbioSingleCell 0.0.20
+
+- Upgraded to basejump 0.1.0 and Seurat 2.1.0 dependencies.
+- Improved documentation of NAMESPACE imports per function.
+- Switched to base grep functions where applicable (`grepl()`, `gsub()`).
+- Use GTF in package documentation rather than GFF. Applies primarily to the `loadSingleCell()` import function.
+- Restrict class support in S4 methods to `bcbioSingleCell`. Legacy `bcbioSCDataSet` class can be upgraded to `bcbioSingleCell` class using `as(bcb, "bcbioSingleCell")` coercion.
+- Use filtered cell output for `metrics()` and quality control functions by default.
+- Updated the quality control R Markdown to include `filterCells = FALSE` where applicable.
+- Draft support for aggregated technical replicates in quality control functions using `sampleNameAggregate` column in sample metadata. This doesn't change the actual counts values. It only applies to visualization in the quality control plots currently.
+- Miscellaneous R Markdown template updates. Primarily improvements to the setup chunk object loading workflow.
+- Removed lintr checks from testthat. This is breaking `devtools::test()`.
+
+
+
 # bcbioSingleCell 0.0.19
 
 - Renamed main object class from `bcbioSCDataSet` to `bcbioSingleCell`.

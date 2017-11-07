@@ -6,77 +6,65 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell
+#'
+#' @param color *Only applies to scatterplot*. Desired ggplot color scale.
+#'   Defaults to [viridis::scale_color_viridis()]. Must supply discrete values.
+#'   When set to `NULL`, the default ggplot2 color palette will be used. If
+#'   manual color definitions are desired, we recommend using
+#'   [ggplot2::scale_color_manual()].
+#'
+#' @examples
+#' # bcbioSingleCell
+#' \dontrun{
+#' plotUMIsVsGenes(bcb)
+#' }
+#'
+#' # seurat
+#' \dontrun{
+#' plotUMIsVsGenes(seurat)
+#' }
+#'
+#' # data.frame
+#' \dontrun{
+#' metrics <- metrics(bcb)
+#' plotUMIsPerCell(metrics)
+#' }
 NULL
 
 
 
 # Constructors ====
+#' @importFrom ggplot2 facet_wrap labs
 #' @importFrom viridis scale_color_viridis
 .plotUMIsVsGenes <- function(
     object,
-    interestingGroups = "sampleName",
-    filterCells = TRUE,
-    aggregateReplicates = TRUE) {
-    metrics <- metrics(
-        object,
-        filterCells = filterCells,
-        aggregateReplicates = aggregateReplicates)
-    p <- ggplot(
-        metrics,
-        mapping = aes_string(
-            x = "nUMI",
-            y = "nGene",
-            color = interestingGroups,
-            fill = interestingGroups)
-    ) +
-        labs(x = "umis per cell",
-             y = "genes per cell") +
-        scale_x_log10() +
-        scale_y_log10() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    interestingGroups,
+    multiplexed = FALSE,
+    color = scale_color_viridis(discrete = TRUE)) {
+    p <- .plotQCScatterplot(object, xCol = "nUMI", yCol = "nGene")
 
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics) &
-        interestingGroups == "sampleName") {
-        p <- p +
-            geom_point(
-                color = "gray",
-                size = 0.8) +
-            geom_smooth(
-                color = "black",
-                method = "gam",
-                se = FALSE,
-                size = 1.5)
+    # Label interesting groups
+    if (!missing(interestingGroups)) {
+        p <- p + labs(color = paste(interestingGroups, collapse = ":\n"))
     } else {
-        p <- p +
-            geom_point(
-                alpha = 0.25,
-                size = 0.8) +
-            geom_smooth(
-                method = "gam",
-                se = FALSE,
-                size = 1.5) +
-            scale_color_viridis(discrete = TRUE)
+        p <- p + labs(color = NULL, fill = NULL)
+    }
+
+    # Color palette
+    if (!is.null(color)) {
+        p <- p + color
     }
 
     # Facets
     facets <- NULL
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
-        length(unique(metrics[["description"]])) > 1) {
+    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
         facets <- c(facets, "description")
     }
-    if (!isTRUE(aggregateReplicates) &
-        "sampleNameAggregate" %in% colnames(metrics)) {
+    if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
-        if (interestingGroups == "sampleName") {
-            p <- p +
-                theme(legend.position = "none")
-        }
     }
     if (!is.null(facets)) {
-        p <- p +
-            facet_wrap(facets = facets,
-                       scales = "free_x")
+        p <- p + facet_wrap(facets = facets, scales = "free")
     }
 
     p
@@ -86,8 +74,61 @@ NULL
 
 # Methods ====
 #' @rdname plotUMIsVsGenes
+#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotUMIsVsGenes",
     signature("bcbioSingleCell"),
+    function(
+        object,
+        interestingGroups,
+        filterCells = FALSE,
+        samplesOnYAxis = TRUE,
+        color = scale_color_viridis(discrete = TRUE)) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- basejump::interestingGroups(object)
+        }
+        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
+        metrics <- metrics(
+            object,
+            interestingGroups = interestingGroups,
+            filterCells = filterCells)
+        .plotUMIsVsGenes(
+            object = metrics,
+            interestingGroups = interestingGroups,
+            multiplexed = multiplexed,
+            color = color)
+    })
+
+
+
+#' @rdname plotUMIsVsGenes
+#' @export
+setMethod(
+    "plotUMIsVsGenes",
+    signature("data.frame"),
     .plotUMIsVsGenes)
+
+
+
+#' @rdname plotUMIsVsGenes
+#' @importFrom viridis scale_color_viridis
+#' @export
+setMethod(
+    "plotUMIsVsGenes",
+    signature("seurat"),
+    function(
+        object,
+        interestingGroups,
+        multiplexed = FALSE,
+        color = scale_color_viridis(discrete = TRUE)) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- basejump::interestingGroups(object)
+        }
+        metrics <- metrics(object, interestingGroups = interestingGroups)
+        .plotUMIsVsGenes(
+            object = metrics,
+            interestingGroups = interestingGroups,
+            multiplexed = multiplexed,
+            color = color)
+    })

@@ -23,11 +23,13 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        label = TRUE) {
+        label = TRUE,
+        dark = TRUE) {
         pca <- fetchPCAData(object)
-        .plotDim(
+        .plotDimensionalityReduction(
             pca,
             axes = c(x = "pc1", y = "pc2"),
             interestingGroups = interestingGroups,
-            label = label)
+            label = label,
+            dark = dark)
     })

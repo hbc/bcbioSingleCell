@@ -36,31 +36,33 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom cowplot draw_plot ggdraw
+#' @importFrom cowplot plot_grid
 #' @importFrom dplyr filter
-#' @importFrom ggplot2 aes_string element_blank geom_violin ggplot theme
-#' @importFrom ggridges geom_density_ridges
+#' @importFrom ggplot2 aes_string coord_flip element_blank geom_violin ggplot
+#'   theme
 #' @importFrom rlang is_string
-#' @importFrom Seurat JoyPlot VlnPlot
+#' @importFrom Seurat VlnPlot
 #' @importFrom viridis scale_fill_viridis viridis
 #'
 #' @param returnAsList Return the `gg` objects as a list.
 .plotMarkerSeurat <- function(
     object,
     gene,
+    color = scale_color_viridis(option = "inferno"),
+    dark = TRUE,
     pointsAsNumbers = FALSE,
     returnAsList = FALSE) {
     if (!is_string(gene)) {
         stop("gene must be a string", call. = FALSE)
     }
 
-    lowExpressionCutoff <- 0.1
-
     # tSNE marker expression plot
     tsne <- plotMarkerTSNE(
         object,
         genes = gene,
-        colorpoints = "expression",
+        colorPoints = "expression",
+        color = color,
+        dark = dark,
         pointsAsNumbers = pointsAsNumbers)
 
     # Violin plot
@@ -72,7 +74,7 @@ NULL
         .[[1]] %>%
         .[["data"]] %>%
         # Remove the low expression features
-        filter(.data[["feature"]] > lowExpressionCutoff) %>%
+        filter(.data[["feature"]] > 0.1) %>%
         ggplot(
             mapping = aes_string(
                 x = "ident",
@@ -80,59 +82,41 @@ NULL
                 fill = "ident")
         ) +
         geom_violin(
-            color = NA,
+            color = "black",
             scale = "width",
             adjust = 1,
             trim = TRUE) +
-        scale_fill_viridis(discrete = TRUE) +
-        theme(legend.position = "none")
-
-    # Ridgeline (joy) plot
-    ridges <- JoyPlot(
-        object,
-        features.plot = gene,
-        cols.use = viridis(length(levels(object@ident))),
-        do.return = TRUE,
-        return.plotlist = TRUE) %>%
-        .[[1]] %>%
-        .[["data"]] %>%
-        # Remove the low expression features
-        filter(.data[["feature"]] > lowExpressionCutoff) %>%
-        ggplot(
-            mapping = aes_string(
-                x = "feature",
-                y = "ident",
-                fill = "ident")
-        ) +
-        geom_density_ridges(color = NA, scale = 2) +
-        scale_fill_viridis(discrete = TRUE) +
-        theme(legend.position = "none")
+        scale_fill_viridis(discrete = TRUE)
 
     # Dot plot
-    dot <- plotDot(object, genes = gene) +
-        theme(axis.title.x = element_blank(),
-              legend.position = "none")
+    # We're transposing the dot plot here to align vertically with the
+    # violin and tSNE plots. The violin is preferable over the ridgeline
+    # here because it works better horizontally.
+    dot <- plotDot(object, genes = gene)
 
     if (isTRUE(returnAsList)) {
         list(tsne = tsne,
              dot = dot,
-             violin = violin,
-             ridges = ridges)
+             violin = violin)
     } else {
-        ggdraw() +
-            # Coordinates are relative to lower left corner
-            draw_plot(
-                tsne,
-                x = 0, y = 0.25, width = 1, height = 0.75) +
-            draw_plot(
-                dot,
-                x = 0, y = 0, width = 0.2, height = 0.25) +
-            draw_plot(
-                violin,
-                x = 0.2, y = 0, width = 0.45, height = 0.25) +
-            suppressMessages(draw_plot(
-                ridges,
-                x = 0.65, y = 0, width = 0.35, height = 0.25))
+        # Customize the plots before preparing the grid
+        violin <- violin +
+            labs(y = "log expression") +
+            theme(legend.position = "none")
+        dot <- dot +
+            labs(x = "") +
+            coord_flip() +
+            theme(axis.text.y = element_text(angle = 90, hjust = 0.5),
+                  legend.position = "none")
+        plot_grid(
+            tsne,
+            violin,
+            dot,
+            labels = NULL,
+            ncol = 1,
+            nrow = 3,
+            rel_heights = c(1, 0.3, 0.15)
+        )
     }
 }
 
@@ -145,14 +129,24 @@ NULL
 setMethod("plotMarkers", "seurat", function(
     object,
     genes,
+    color = scale_color_viridis(option = "inferno"),
+    dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = 2) {
+    headerLevel = NULL) {
     lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
-        mdHeader(gene, level = headerLevel, asis = TRUE)
+        # Skip and warn if gene is missing
+        if (!gene %in% rownames(slot(object, "data"))) {
+            return(warning(paste(gene, "missing"), call. = FALSE))
+        }
+        if (!is.null(headerLevel)) {
+            mdHeader(gene, level = headerLevel, asis = TRUE)
+        }
         .plotMarkerSeurat(
             object,
             gene = gene,
+            color = color,
+            dark = dark,
             pointsAsNumbers = pointsAsNumbers,
             returnAsList = FALSE) %>%
             show()

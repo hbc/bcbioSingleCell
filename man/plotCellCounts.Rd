@@ -4,12 +4,20 @@
 \name{plotCellCounts}
 \alias{plotCellCounts}
 \alias{plotCellCounts,bcbioSingleCell-method}
+\alias{plotCellCounts,data.frame-method}
+\alias{plotCellCounts,seurat-method}
 \title{Plot Cell Counts}
 \usage{
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{bcbioSingleCell}(object, interestingGroups,
-  filterCells = TRUE, aggregateReplicates = TRUE)
+  filterCells = FALSE, fill = scale_fill_viridis(discrete = TRUE))
+
+\S4method{plotCellCounts}{data.frame}(object, metadata, interestingGroups,
+  multiplexed = FALSE, fill = scale_fill_viridis(discrete = TRUE))
+
+\S4method{plotCellCounts}{seurat}(object, interestingGroups,
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -20,20 +28,51 @@ plotCellCounts(object, ...)
 
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
-\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
-function uses values assigned in the \code{sampleNameAggregate} column of the
-internal sample metadata \link{data.frame}.}
+\item{fill}{Desired ggplot fill scale. Defaults to
+\code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
+\code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{metadata}{Sample metadata \link{data.frame}.}
+
+\item{multiplexed}{Whether the FASTQ files are multiplexed. This is
+detected automatically for \link{bcbioSingleCell} objects.}
 }
 \value{
-\link{ggplot} grid.
+\link{ggplot}.
 }
 \description{
 Plot Cell Counts
 }
+\details{
+A violin plot is a comact display of a continuous distribution. It
+is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_density]{geom_density()}}: a violin plot is a
+mirrored density plot displayed in the same way as a boxplot.
+}
+\examples{
+# bcbioSingleCell
+\dontrun{
+plotCellCounts(bcb)
+}
+
+# seurat
+\dontrun{
+plotCellCounts(seurat)
+}
+
+# metrics data.frame
+\dontrun{
+metrics <- metrics(bcb)
+metadata <- sampleMetadata(bcb)
+plotCellCounts(metrics, metadata)
+}
+}
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}},

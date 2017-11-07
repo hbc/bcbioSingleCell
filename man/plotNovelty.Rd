@@ -4,42 +4,83 @@
 \name{plotNovelty}
 \alias{plotNovelty}
 \alias{plotNovelty,bcbioSingleCell-method}
+\alias{plotNovelty,data.frame-method}
+\alias{plotNovelty,seurat-method}
 \title{Plot Novelty Score}
 \usage{
 plotNovelty(object, ...)
 
-\S4method{plotNovelty}{bcbioSingleCell}(object, interestingGroups, min,
-  filterCells = TRUE, aggregateReplicates = TRUE)
+\S4method{plotNovelty}{bcbioSingleCell}(object, geom = "violin", min,
+  interestingGroups, filterCells = FALSE, samplesOnYAxis = TRUE,
+  fill = scale_fill_viridis(discrete = TRUE))
+
+\S4method{plotNovelty}{data.frame}(object, geom = "violin", min = 0,
+  interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
+  fill = scale_fill_viridis(discrete = TRUE))
+
+\S4method{plotNovelty}{seurat}(object, geom = "violin", min,
+  interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{geom}{Plot type. Supported formats: \code{boxplot}, \code{histogram},
+\code{ridgeline}, and \code{violin}.}
 
 \item{min}{Recommended minimum value cutoff.}
 
+\item{interestingGroups}{Interesting group, to use for colors.}
+
 \item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
-\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
-function uses values assigned in the \code{sampleNameAggregate} column of the
-internal sample metadata \link{data.frame}.}
+\item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
+histogram.}
+
+\item{fill}{Desired ggplot fill scale. Defaults to
+\code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
+\code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{multiplexed}{Whether the FASTQ files are multiplexed. This is
+detected automatically for \link{bcbioSingleCell} objects.}
 }
 \value{
-\link{ggplot} grid.
+\link{ggplot}.
 }
 \description{
-Plot Novelty Score
+"Novelty" refers to log10 genes detected per count.
 }
 \details{
-"Novelty" refers to log10 genes detected per count.
+A violin plot is a comact display of a continuous distribution. It
+is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_density]{geom_density()}}: a violin plot is a
+mirrored density plot displayed in the same way as a boxplot.
+}
+\examples{
+# bcbioSingleCell
+\dontrun{
+plotNovelty(bcb)
+}
+
+# seurat
+\dontrun{
+plotNovelty(seurat)
+}
+
+# data.frame
+\dontrun{
+metrics <- metrics(bcb)
+plotNovelty(metrics)
+}
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}},

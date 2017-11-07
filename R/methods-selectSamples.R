@@ -37,68 +37,72 @@ NULL
 #' @importFrom dplyr pull
 #' @importFrom magrittr set_rownames
 #' @importFrom rlang is_string
-.selectSamples <- function(object, ...) {
+.selectSamples <- function(
+    object,
+    ...) {
+    object <- .applyFilterCutoffs(object)
+    cells <- colnames(object)
+    genes <- rownames(object)
+
+    # Here the `arguments` are captured as a named character vector. The names
+    # of the arguments represent the column names. The value of the arguments
+    # should be a string that can be used for logical grep matching here
+    # internally.
+    arguments <- list(...)
     sampleMetadata <- sampleMetadata(object)
-    patterns <- list(...)
-    list <- lapply(seq_along(patterns), function(a) {
-        col <- names(patterns)[[a]]
-        pattern <- patterns[[a]]
+    list <- lapply(seq_along(arguments), function(a) {
+        column <- names(arguments)[[a]]
+        pattern <- arguments[[a]]
         if (is_string(pattern)) {
             # Use grep pattern matching on string
             match <- sampleMetadata %>%
-                .[grepl(x = .[[col]], pattern = pattern), , drop = FALSE]
+                .[grepl(x = .[[column]], pattern = pattern), , drop = FALSE]
         } else if (is.character(pattern)) {
             # Use exact matching if vector supplied
             match <- sampleMetadata %>%
-                .[.[[col]] %in% pattern, , drop = FALSE]
+                .[.[[column]] %in% pattern, , drop = FALSE]
         } else {
-            stop("Selection argument must be a character")
+            stop("Selection argument must be a character", call. = FALSE)
         }
         match %>%
             pull("sampleID") %>%
             unique() %>%
             sort()
     })
-    # Use `base::Reduce()` explicitly here instead? Warning about init missing
     sampleIDs <- Reduce(f = intersect, x = list) %>%
         sort()
     if (!length(sampleIDs)) {
-        stop("No samples matched")
+        stop("No samples matched", call. = FALSE)
     }
-    message(paste(length(sampleIDs), "samples matched:", toString(sampleIDs)))
+
+    # Filter the sample metadata data.frame to only contain matching samples
     sampleMetadata <- sampleMetadata %>%
         .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
 
-    # Match the sample ID prefix in the cellular barcode columns of the matrix.
-    # Here `cb` is short for "cellular barcodes".
-    cellularBarcodePattern <- sampleIDs %>%
-        paste0(collapse = "|") %>%
-        paste0("^(", ., ")_")
-    cellularBarcodeMatches <- colnames(object) %>%
-        .[grepl(x = ., pattern = cellularBarcodePattern)]
-    if (!length(cellularBarcodeMatches)) {
-        stop("No cellular barcodes matched")
-    }
-    message(paste(length(cellularBarcodeMatches), "cellular barcodes"))
+    message(paste(
+        length(sampleIDs), "sample(s) matched:",
+        toString(sort(sampleMetadata[["sampleName"]]))
+    ))
 
-    # Return the bcbioSingleCell object
-    sparseCounts <- assay(object) %>%
-        .[, cellularBarcodeMatches]
-    colData <- colData(object) %>%
-        .[cellularBarcodeMatches, ]
-    rowData <- rowData(object) %>%
-        set_rownames(rownames(object))
-    metadata <- metadata(object)
-    metadata[["sampleMetadata"]] <- sampleMetadata
-    # Stash that samples are a subset
-    metadata[["subset"]] <- TRUE
-    se <- prepareSummarizedExperiment(
-        assays = list(sparseCounts),
-        colData = colData,
-        rowData = rowData,
-        metadata = metadata)
-    new("bcbioSingleCell", se)
-    # This will drop the unfiltered cellular barcodes
+    # Use the metrics data.frame to match the cellular barcodes
+    metrics <- metrics(object, filterCells = TRUE) %>%
+        .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
+
+    message(paste(length(cells), "cellular barcodes"))
+
+    # Update the bcbio slot
+    # Drop the unfiltered cellular barcodes. Only keep this in the main object
+    # saved using `loadSingleCell()`.
+    bcbio(bcb, "cellularBarcodes") <- NULL
+
+    # Update the metadata slot
+    metadata(bcb)[["allSamples"]] <- FALSE
+    metadata(bcb)[["filterCells"]] <- cells
+    metadata(bcb)[["filterGenes"]] <- genes
+    metadata(bcb)[["sampleMetadata"]] <- sampleMetadata
+    metadata(bcb)[["selectSamples"]] <- TRUE
+
+    bcb
 }
 
 

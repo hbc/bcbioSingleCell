@@ -5,7 +5,7 @@
 \title{Load 10X Genomics CellRanger Data}
 \usage{
 loadCellRanger(uploadDir, refDataDir, interestingGroups = "sampleName",
-  sampleMetadataFile, prefilter = TRUE, ...)
+  sampleMetadataFile, prefilter = TRUE, annotable, ...)
 }
 \arguments{
 \item{uploadDir}{Path to CellRanger output directory. This directory path
@@ -20,6 +20,14 @@ is used for PCA and heatmap QC functions.}
 \item{sampleMetadataFile}{Sample barcode metadata file.}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
+
+\item{annotable}{\emph{Optional}. User-defined gene annotations (a.k.a.
+"annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
+be left undefined. By default, the function will automatically generate an
+annotable from the annotations available on Ensembl. If set \code{NULL}, then
+\code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
+empty. This is recommended for projects dealing with genes or transcripts
+that are poorly annotated.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }

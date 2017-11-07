@@ -21,6 +21,7 @@
 #' @param pipeline Pipeline used to generate the MatrixMarket file. Defaults to
 #'   bcbio-nextgen (`bcbio`). Also supports 10X Chromium CellRanger
 #'   (`cellranger`).
+#' @param umiType UMI type.
 #'
 #' @seealso `help("dgCMatrix-class")`
 #'
@@ -28,7 +29,8 @@
 #' @noRd
 .readSparseCounts <- function(
     sampleDir,
-    pipeline = "bcbio") {
+    pipeline,
+    umiType) {
     sampleName <- names(sampleDir)
     if (is.null(sampleName)) {
         stop("Sample directory must be passed in as a named character vector",
@@ -93,33 +95,11 @@
             pull("ensgene")
     }
 
-    # Cellular barcode sanitization =====
-    # CellRanger outputs unnecessary trailing `-1`.
-    if (pipeline == "cellranger" &
-        all(grepl(x = colnames(sparseCounts), pattern = "_1$"))) {
-        colnames(sparseCounts) <-
-            gsub(x = colnames(sparseCounts),
-                 pattern = "_1$",
-                 replacement = "")
-    }
-
-    # Reformat to `[ACGT]{8}_[ACGT]{8}` instead of `[ACGT]{16}`
-    if (all(grepl(x = colnames(sparseCounts), pattern = "^[ACGT]{16}$"))) {
-        colnames(sparseCounts) <- colnames(sparseCounts) %>%
-            gsub(x = .,
-                 pattern = "^([ACGT]{8})([ACGT]{8})$",
-                 replacement = "\\1_\\2")
-    }
-
     # Add sample name
-    # 8 nucleotides: inDrop, Chromium
-    # 6 nucleotides: SureCell
-    if (all(grepl(x = colnames(sparseCounts), pattern = "^[ACGT]+_"))) {
-        colnames(sparseCounts) <- colnames(sparseCounts) %>%
-            paste(sampleName, ., sep = "_")
-    } else {
-        stop("Failed to add sample name", call. = FALSE)
-    }
+    colnames(sparseCounts) <- paste(
+            sampleName,
+            colnames(sparseCounts),
+            sep = "_")
 
     # Return as dgCMatrix, for improved memory overhead
     as(sparseCounts, "dgCMatrix")
