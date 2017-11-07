@@ -11,7 +11,7 @@
 plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{bcbioSingleCell}(object, interestingGroups,
-  filterCells = FALSE, aggregateReplicates = FALSE, samplesOnYAxis = TRUE,
+  filterCells = FALSE, samplesOnYAxis = TRUE,
   color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotUMIsVsGenes}{data.frame}(object, interestingGroups,

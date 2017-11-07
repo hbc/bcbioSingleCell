@@ -11,8 +11,8 @@
 plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "violin", max,
-  interestingGroups, filterCells = FALSE, aggregateReplicates = FALSE,
-  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+  interestingGroups, filterCells = FALSE, samplesOnYAxis = TRUE,
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotMitoRatio}{data.frame}(object, geom = "violin", max = Inf,
   interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,

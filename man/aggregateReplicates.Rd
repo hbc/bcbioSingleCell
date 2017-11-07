@@ -11,8 +11,12 @@
 \arguments{
 \item{object}{Object.}
 }
+\value{
+Object of same class with aggregated counts per pooled sample
+(columns).
+}
 \description{
-S4 Generics
+Aggregate Replicates
 }
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},

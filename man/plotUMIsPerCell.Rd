@@ -11,8 +11,8 @@
 plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = "violin", min,
-  interestingGroups, filterCells = FALSE, aggregateReplicates = FALSE,
-  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+  interestingGroups, filterCells = FALSE, samplesOnYAxis = TRUE,
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotUMIsPerCell}{data.frame}(object, geom = "violin", min = 0,
   interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,

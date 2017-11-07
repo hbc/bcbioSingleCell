@@ -9,7 +9,7 @@
 plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
-  interestingGroups, filterCells = FALSE, aggregateReplicates = FALSE)
+  interestingGroups, filterCells = FALSE)
 }
 \arguments{
 \item{object}{Object.}
