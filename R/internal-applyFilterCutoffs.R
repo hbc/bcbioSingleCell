@@ -1,10 +1,5 @@
 .applyFilterCutoffs <- function(object) {
-    filterParams <- metadata(object)[["filterParams"]]
-    if (is.null(filterParams)) {
-        stop(paste(
-            "'filterCells()' must be run on the object"
-        ), call. = FALSE)
-    }
+    .checkFilterParams(object)
 
     # Apply cell filtering cutoffs
     filterCells <- metadata(object)[["filterCells"]]

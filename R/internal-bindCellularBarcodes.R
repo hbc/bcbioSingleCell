@@ -4,7 +4,7 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr bind_rows mutate
+#' @importFrom dplyr bind_rows mutate mutate_if
 #' @importFrom parallel mclapply
 #' @importFrom tibble as_tibble
 #'
@@ -19,7 +19,10 @@
     }) %>%
         bind_rows() %>%
         as_tibble() %>%
-        mutate(cellID = paste(.data[["sampleID"]],
-                              .data[["cellularBarcode"]],
-                              sep = "_"))
+        mutate(
+            cellID = paste(.data[["sampleID"]],
+                           .data[["cellularBarcode"]],
+                           sep = "_")
+        ) %>%
+        mutate_if(is.character, as.factor)
 }

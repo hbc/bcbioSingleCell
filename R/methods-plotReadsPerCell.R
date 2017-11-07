@@ -33,34 +33,13 @@ NULL
 #' @inheritParams plotReadsPerCell
 #'
 #' @return [tibble] grouped by `sampleName` containing `log10Count` values.
-.rawCBTibble <- function(
-    object,
-    filterCells = FALSE) {
-    cellularBarcodes <- bcbio(object, "cellularBarcodes")
-    if (is.null(cellularBarcodes)) {
-        stop("Raw cellular barcode counts not saved in object")
-    }
-    cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
-    # Keep only the cells that have passed filtering, if desired
-    if (isTRUE(filterCells)) {
-        cells <- metadata(object)[["filterCells"]]
-        if (!is.null(cells)) {
-            cellularBarcodes <- cellularBarcodes %>%
-                .[.[["cellID"]] %in% cells, , drop = FALSE]
-        }
-    }
-    meta <- metadata(object)[["sampleMetadata"]] %>%
-        as.data.frame()
-    if (isTRUE(.checkAggregate(meta))) {
-        meta[["sampleName"]] <- meta[["sampleNameAggregate"]]
-    }
-    meta <- meta[, c("sampleID", "sampleName")]
+.rawCBTibble <- function(cellularBarcodes, sampleMetadata) {
+    sampleMetadata <- sampleMetadata[, c("sampleID", "sampleName")]
     cellularBarcodes %>%
         mutate(log10Count = log10(.data[["nCount"]]),
                cellularBarcode = NULL,
                nCount = NULL) %>%
-        left_join(meta, by = "sampleID") %>%
-        mutate(sampleName = as.factor(.data[["sampleName"]])) %>%
+        left_join(sampleMetadata, by = "sampleID") %>%
         group_by(!!sym("sampleName"))
 }
 
@@ -83,9 +62,7 @@ NULL
 #' @details Modified version of Allon Klein Lab MATLAB code.
 #'
 #' @return [tibble].
-.proportionalCBTibble <- function(
-    rawTibble,
-    sampleMetadata) {
+.proportionalCBTibble <- function(rawTibble, sampleMetadata) {
     # Ensure `sampleName` is set as factor across both data frames
     rawTibble[["sampleName"]] <-
         as.factor(rawTibble[["sampleName"]])
@@ -133,8 +110,7 @@ NULL
     multiplexed = FALSE) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
-    tibble <- tibble %>%
-        .[.[["log10Count"]] >= 2, , drop = FALSE]
+    tibble <- tibble[tibble[["log10Count"]] >= 2, , drop = FALSE]
     p <- ggplot(
         tibble,
         mapping = aes_string(
@@ -318,15 +294,28 @@ NULL
         ), call. = FALSE))
     }
 
+    if (isTRUE(filterCells)) {
+        object <- .applyFilterCutoffs(object)
+    }
+
     if (missing(interestingGroups)) {
         interestingGroups <- basejump::interestingGroups(object)
     }
 
     # Acquire the data required for plotting
+    cellularBarcodes <- bcbio(object, "cellularBarcodes")
+    if (is.null(cellularBarcodes)) {
+        stop("Raw cellular barcode counts not saved in object")
+    }
+    cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
+
     sampleMetadata <- sampleMetadata(
         object,
         interestingGroups = interestingGroups)
-    rawTibble <- .rawCBTibble(object, filterCells = filterCells)
+    rawTibble <- .rawCBTibble(
+        cellularBarcodes = cellularBarcodes,
+        sampleMetadata = sampleMetadata)
+
     if (geom == "histogram") {
         proportionalTibble <- .proportionalCBTibble(
             rawTibble = rawTibble,
