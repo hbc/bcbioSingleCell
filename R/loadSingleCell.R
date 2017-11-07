@@ -90,7 +90,6 @@ loadSingleCell <- function(
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sequencing lanes =========================================================
-    lanePattern <- "_L(\\d{3})"
     if (any(grepl(x = sampleDirs, pattern = lanePattern))) {
         lanes <- str_match(names(sampleDirs), lanePattern) %>%
             .[, 2] %>%
