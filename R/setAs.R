@@ -122,6 +122,14 @@ NULL
 #'
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
+    # Require that technical replicates are aggregated
+    if ("sampleNameAggregate" %in%
+        colnames(metadata(from)[["sampleMetadata"]])) {
+        stop(paste("'aggregateReplicates()' required",
+                   "to merge technical replicates prior to seurat coercion"
+        ), call. = FALSE)
+    }
+
     # Require filtered cells and genes only
     from <- .applyFilterCutoffs(from)
     filterParams <- metadata(from)[["filterParams"]]
@@ -131,14 +139,14 @@ NULL
     rawData <- counts(from, gene2symbol = TRUE)
     metrics <- metrics(from)
 
-    # Define gene and cell cutoffs
+    # Ensure that cutoffs are defined
     minGenes <- metadata(from)[["filterParams"]][["minGenes"]]
-    if (is.null(minGenes)) {
-        minGenes <- 0
+    if (!is.numeric(minGenes)) {
+        stop("'minGenes' ", call. = FALSE)
     }
     minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
     if (is.null(minCells)) {
-        minCells <- 0
+        stop("'minCells' is NULL", call. = FALSE)
     }
 
     # Note here that passing in the `minCells` argument will rescale the number
