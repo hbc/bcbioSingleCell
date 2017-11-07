@@ -123,7 +123,9 @@ NULL
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
     # Require that technical replicates are aggregated
-    if ("sampleNameAggregate" %in%
+    if (any(grepl(x = metadata(from)[["sampleMetadata"]][["sampleID"]],
+                  pattern = lanePattern)) |
+        "sampleNameAggregate" %in%
         colnames(metadata(from)[["sampleMetadata"]])) {
         stop(paste("'aggregateReplicates()' required",
                    "to merge technical replicates prior to seurat coercion"
