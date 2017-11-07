@@ -7,7 +7,7 @@ params:
     bcbFile: "data/bcb.rda"
     minUMIs: 500
     minGenes: 500
-    maxGenes: 5000
+    maxGenes: !r Inf
     maxMitoRatio: 0.1
     minNovelty: 0.8
     minCellsPerGene: 3
