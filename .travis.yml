@@ -3,11 +3,12 @@ cache: packages
 sudo: false
 dist: trusty
 warnings_are_errors: false
+# Temporarily enable when caching Bioconductor packages
+# script: true
 r:
   - bioc-release
   - bioc-devel
 r_github_packages:
   - r-lib/covr
-script: true
 after_success:
   - Rscript -e 'covr::codecov()'
