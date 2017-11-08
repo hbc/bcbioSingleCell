@@ -112,9 +112,9 @@ NULL
     subset <- object[, cells]
 
     # Update the bcbio slot
-    cellularBarcodes <- bcbio(subset)[sampleIDs]
+    cellularBarcodes <- bcbio(subset, "cellularBarcodes")
     if (!is.null(cellularBarcodes)) {
-        bcbio(subset, "cellularBarcodes") <- cellularBarcodes
+        bcbio(subset, "cellularBarcodes") <- cellularBarcodes[sampleID]
     }
 
     # Update the metadata slot
