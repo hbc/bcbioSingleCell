@@ -176,7 +176,7 @@ assignAndSaveData(
     dir = dataDir)
 ```
 
-```{r plot_known_markers, results="asis"}
+```{r plot_known_markers, fig.height=14.5, fig.width=10, results="asis"}
 plotKnownMarkers(
     seurat,
     knownMarkers = knownMarkersDetected,
