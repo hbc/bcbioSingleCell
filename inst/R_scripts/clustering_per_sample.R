@@ -1,12 +1,9 @@
+library(bcbioSingleCell)
 library(pbapply)
 library(rmarkdown)
-source("setup.R")
 
-# Enforce caching
-opts_chunk[["set"]](
-    audodep = TRUE,
-    cache = TRUE,
-    cache.lazy = FALSE)
+prepareSingleCellTemplate()
+source("setup.R")
 
 loadData(bcb, dir = "data")
 
