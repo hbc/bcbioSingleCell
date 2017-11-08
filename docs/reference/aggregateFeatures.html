@@ -90,34 +90,26 @@
     <p>Aggregate Features</p>
     
 
-    <pre class="usage"><span class='fu'>aggregateFeatures</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>aggregateFeatures</span>(<span class='no'>object</span>, <span class='no'>featureids</span>)
-
-<span class='co'># S4 method for dgCMatrix</span>
-<span class='fu'>aggregateFeatures</span>(<span class='no'>object</span>, <span class='no'>featureids</span>)</pre>
+    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>aggregateFeatures</span>(<span class='no'>object</span>, <span class='no'>features</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Sparse counts matrix (e.g. <code>dgCMatrix</code>).</p></td>
+      <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
-    </tr>
-    <tr>
-      <th>featureids</th>
-      <td><p>Feature identifiers (e.g. gene or transcript IDs).</p></td>
+      <th>features</th>
+      <td><p>Feature identifiers (e.g. gene or transcript IDs). These are
+the rownames of the counts matrix.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>dgCMatrix</code>.</p>
+    <p>Object of same class with aggregated features (rows).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

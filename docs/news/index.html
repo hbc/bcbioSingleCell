@@ -88,9 +88,48 @@
     </div>
 
     <div class="contents">
-    <div id="bcbiosinglecell-0-0-19" class="section level1">
+    <div id="bcbiosinglecell-0-0-21-2017-11-08" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-19" class="anchor"></a>bcbioSingleCell 0.0.19</h1>
+<a href="#bcbiosinglecell-0-0-21-2017-11-08" class="anchor"></a>bcbioSingleCell 0.0.21 (2017-11-08)</h1>
+<ul>
+<li>Updated package imports to match Bioconductor 3.6.</li>
+<li>Initial support for <code><a href="../reference/plotCellTypesPerCluster.html">plotCellTypesPerCluster()</a></code>.</li>
+<li>Initial support for <code><a href="../reference/plotMitoVsCoding.html">plotMitoVsCoding()</a></code>. I broke this code out from <code><a href="../reference/plotMitoRatio.html">plotMitoRatio()</a></code>. We could opt to keep this in <code>plotMitoRatio</code> with a <code>geom = "scatterplot"</code> argument.</li>
+<li>Initial commit of <code>.applyFilterCutoffs()</code> internal function, used to subset the object to contain only cells and genes that have passed quailty control filtering.</li>
+<li>Improved Seurat <code>FindAllMarkers()</code> sanitization.</li>
+<li>Made the quality control plots more modular. Now they support multiple geoms, including <code>boxplot</code>, <code>histogram</code>, <code>ridgeline</code>, and <code>violin</code> (default). Median labels are applied with the internal <code>.medianLabels()</code> function.</li>
+<li>Updated error message for CellRanger directory structure.</li>
+<li>Cellular barcode columns are no longer split with an underscore. Instead, they are kept as a single ACGT string. We’re now generating <code>cellID</code> to <code>sampleID</code> matching with a different method. In the future, we’ll stash a cell2sample data.frame inside the object, that makes this operation faster than the current <code>mclapply()</code> code.</li>
+<li>Updated annotable support in <code><a href="../reference/loadSingleCell.html">loadSingleCell()</a></code> and <code><a href="../reference/loadCellRanger.html">loadCellRanger()</a></code>.</li>
+<li>Added support for handling both gene- and transcript-level counts. The updated release of the bcbio single-cell pipeline now outputs at gene level.</li>
+<li>Initial quality control plot support for seurat objects.</li>
+<li>Added support for return of only filtered cells and genes with the <code><a href="../reference/counts.html">counts(filterCells = TRUE)</a></code> function.</li>
+<li>Added assignment support for <code>interestingGroups&lt;-</code>.</li>
+<li>Initial support for sample metadata generation from seurat object.</li>
+<li>Improved internal code for <code><a href="../reference/selectSamples.html">selectSamples()</a></code>.</li>
+<li>Updated <code><a href="../reference/topMarkers.html">topMarkers()</a></code> to match Seurat v2.1 update.</li>
+<li>Improved <code>bcbioSingleCell</code> to <code>seurat</code> coercion method with <code>setAs()</code>.</li>
+</ul>
+</div>
+    <div id="bcbiosinglecell-0-0-20-2017-10-24" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-20-2017-10-24" class="anchor"></a>bcbioSingleCell 0.0.20 (2017-10-24)</h1>
+<ul>
+<li>Upgraded to basejump 0.1.0 and Seurat 2.1.0 dependencies.</li>
+<li>Improved documentation of NAMESPACE imports per function.</li>
+<li>Switched to base grep functions where applicable (<code>grepl()</code>, <code>gsub()</code>).</li>
+<li>Use GTF in package documentation rather than GFF. Applies primarily to the <code><a href="../reference/loadSingleCell.html">loadSingleCell()</a></code> import function.</li>
+<li>Restrict class support in S4 methods to <code>bcbioSingleCell</code>. Legacy <code>bcbioSCDataSet</code> class can be upgraded to <code>bcbioSingleCell</code> class using <code>as(bcb, "bcbioSingleCell")</code> coercion.</li>
+<li>Use filtered cell output for <code><a href="../reference/metrics.html">metrics()</a></code> and quality control functions by default.</li>
+<li>Updated the quality control R Markdown to include <code>filterCells = FALSE</code> where applicable.</li>
+<li>Draft support for aggregated technical replicates in quality control functions using <code>sampleNameAggregate</code> column in sample metadata. This doesn’t change the actual counts values. It only applies to visualization in the quality control plots currently.</li>
+<li>Miscellaneous R Markdown template updates. Primarily improvements to the setup chunk object loading workflow.</li>
+<li>Removed lintr checks from testthat. This is breaking <code><a href="http://www.rdocumentation.org/packages/devtools/topics/test">devtools::test()</a></code>.</li>
+</ul>
+</div>
+    <div id="bcbiosinglecell-0-0-19-2017-10-12" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-19-2017-10-12" class="anchor"></a>bcbioSingleCell 0.0.19 (2017-10-12)</h1>
 <ul>
 <li>Renamed main object class from <code>bcbioSCDataSet</code> to <code>bcbioSingleCell</code>.</li>
 <li>Cell filtering with <code><a href="../reference/filterCells.html">filterCells()</a></code> will now slot a named logical vector into <code>metadata(object)[["filteredCells"]]</code>, which will be used to dynamically subset the slotted internal <code>SummarizedExperiment</code> data. Now that we’re using this approach, we can return a modified <code>bcbioSingleCell</code> object rather than defining a separate <code>bcbioSCFiltered</code> class.</li>
@@ -108,9 +147,9 @@
 <li>Improved Ensembl release version support (<code>ensemblVersion</code>).</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-18" class="section level1">
+    <div id="bcbiosinglecell-0-0-18-2017-09-17" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-18" class="anchor"></a>bcbioSingleCell 0.0.18</h1>
+<a href="#bcbiosinglecell-0-0-18-2017-09-17" class="anchor"></a>bcbioSingleCell 0.0.18 (2017-09-17)</h1>
 <ul>
 <li>Renamed <code><a href="../reference/deprecated.html">plotClusters()</a></code> to <code><a href="../reference/plotMarkers.html">plotMarkers()</a></code>. Added soft deprecation.</li>
 <li>Added <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color support in tSNE plots and heatmaps.</li>
@@ -130,9 +169,9 @@
 <li>Improved <code>bcbioSCFiltered</code> to <code>seurat</code> coercion to slot relevant bcbio metadata.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-17" class="section level1">
+    <div id="bcbiosinglecell-0-0-17-2017-09-03" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-17" class="anchor"></a>bcbioSingleCell 0.0.17</h1>
+<a href="#bcbiosinglecell-0-0-17-2017-09-03" class="anchor"></a>bcbioSingleCell 0.0.17 (2017-09-03)</h1>
 <ul>
 <li>Renamed package from <code>bcbioSinglecell</code> to <code>bcbioSingleCell</code>.</li>
 <li>Added <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color palette support to quality control plots.</li>
@@ -143,9 +182,9 @@
 <li>Improved <a href="https://github.com/hadley/pkgdown">pkgdown</a> settings and website appearance.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-16" class="section level1">
+    <div id="bcbiosinglecell-0-0-16-2017-08-25" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-16" class="anchor"></a>bcbioSingleCell 0.0.16</h1>
+<a href="#bcbiosinglecell-0-0-16-2017-08-25" class="anchor"></a>bcbioSingleCell 0.0.16 (2017-08-25)</h1>
 <ul>
 <li>Support for CRAN release of <a href="http://satijalab.org/seurat">Seurat</a>.</li>
 <li>Improved documentation of package NAMESPACE in <code>bcbioSinglecell-package.R</code> file.</li>
@@ -170,9 +209,9 @@
 <li>Miscellaneous <a href="http://rmarkdown.rstudio.com">RMarkdown</a> template improvements.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-15" class="section level1">
+    <div id="bcbiosinglecell-0-0-15-2017-08-11" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-15" class="anchor"></a>bcbioSingleCell 0.0.15</h1>
+<a href="#bcbiosinglecell-0-0-15-2017-08-11" class="anchor"></a>bcbioSingleCell 0.0.15 (2017-08-11)</h1>
 <ul>
 <li>Renamed functions in <code>lowerCamelCase</code> from <code>snake_case</code>.</li>
 <li>Draft support for <a href="http://cole-trapnell-lab.github.io/monocle-release/">monocle</a>, <a href="http://bioconductor.org/packages/release/bioc/html/scater.html">scater</a>, and <a href="https://bioconductor.org/packages/release/bioc/html/scone.html">scone</a>.</li>
@@ -185,9 +224,9 @@
 <li>Miscellaneous documentation fixes.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-14" class="section level1">
+    <div id="bcbiosinglecell-0-0-14-2017-07-26" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-14" class="anchor"></a>bcbioSingleCell 0.0.14</h1>
+<a href="#bcbiosinglecell-0-0-14-2017-07-26" class="anchor"></a>bcbioSingleCell 0.0.14 (2017-07-26)</h1>
 <ul>
 <li>Migrated plotting functions to S4 methods.</li>
 <li>Improved sample metadata handling.</li>
@@ -198,104 +237,104 @@
 <li>Initial support for <a href="https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html">SureCell</a> UMIs.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-13" class="section level1">
+    <div id="bcbiosinglecell-0-0-13-2017-07-10" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-13" class="anchor"></a>bcbioSingleCell 0.0.13</h1>
+<a href="#bcbiosinglecell-0-0-13-2017-07-10" class="anchor"></a>bcbioSingleCell 0.0.13 (2017-07-10)</h1>
 <ul>
 <li>Integrated [bcbio][] and <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> workflows into <code>load_run()</code>.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-12" class="section level1">
+    <div id="bcbiosinglecell-0-0-12-2017-06-28" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-12" class="anchor"></a>bcbioSingleCell 0.0.12</h1>
+<a href="#bcbiosinglecell-0-0-12-2017-06-28" class="anchor"></a>bcbioSingleCell 0.0.12 (2017-06-28)</h1>
 <ul>
 <li>Initial support for S4 object creation using <a href="https://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">SummarizedExperiment</a>.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-11" class="section level1">
+    <div id="bcbiosinglecell-0-0-11-2017-06-24" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-11" class="anchor"></a>bcbioSingleCell 0.0.11</h1>
+<a href="#bcbiosinglecell-0-0-11-2017-06-24" class="anchor"></a>bcbioSingleCell 0.0.11 (2017-06-24)</h1>
 <ul>
 <li>Added <a href="https://github.com/hadley/testthat">testthat</a>, <a href="https://github.com/jimhester/lintr">lintr</a>, and <a href="https://github.com/jimhester/covr">covr</a> support for code coverage.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-10" class="section level1">
+    <div id="bcbiosinglecell-0-0-10-2017-06-15" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-10" class="anchor"></a>bcbioSingleCell 0.0.10</h1>
+<a href="#bcbiosinglecell-0-0-10-2017-06-15" class="anchor"></a>bcbioSingleCell 0.0.10 (2017-06-15)</h1>
 <ul>
 <li>Updated <a href="http://rmarkdown.rstudio.com">RMarkdown</a> templates.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-9" class="section level1">
+    <div id="bcbiosinglecell-0-0-9-2017-06-12" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-9" class="anchor"></a>bcbioSingleCell 0.0.9</h1>
+<a href="#bcbiosinglecell-0-0-9-2017-06-12" class="anchor"></a>bcbioSingleCell 0.0.9 (2017-06-12)</h1>
 <ul>
 <li>Compatibility update for basejump S4 NAMESPACE changes.</li>
 <li>Improved plots for quality control and filtering.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-8" class="section level1">
+    <div id="bcbiosinglecell-0-0-8-2017-05-28" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-8" class="anchor"></a>bcbioSingleCell 0.0.8</h1>
+<a href="#bcbiosinglecell-0-0-8-2017-05-28" class="anchor"></a>bcbioSingleCell 0.0.8 (2017-05-28)</h1>
 <ul>
 <li>Renamed mitochondrial plot functions.</li>
 <li>Changed presentation of mitochondrial abundance as ratio instead of percentage.</li>
 <li>Simplified NAMESPACE by offloading dependencies to basejump.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-7" class="section level1">
+    <div id="bcbiosinglecell-0-0-7-2017-05-13" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-7" class="anchor"></a>bcbioSingleCell 0.0.7</h1>
+<a href="#bcbiosinglecell-0-0-7-2017-05-13" class="anchor"></a>bcbioSingleCell 0.0.7 (2017-05-13)</h1>
 <ul>
 <li>Initial support for loading of 10x Genomics <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> output.</li>
 <li>Add detection of droplet method based on the metadata file.</li>
 <li>Draft support for import of <a href="https://1cell-bio.com">inDrop</a> i5 index barcode counts.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-6" class="section level1">
+    <div id="bcbiosinglecell-0-0-6-2017-05-10" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-6" class="anchor"></a>bcbioSingleCell 0.0.6</h1>
+<a href="#bcbiosinglecell-0-0-6-2017-05-10" class="anchor"></a>bcbioSingleCell 0.0.6 (2017-05-10)</h1>
 <ul>
 <li>Modified <code>load_run()</code> function for improved consistency with <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package.</li>
 <li>Initial incorporation of scater package into workflow.</li>
 <li>Initial commit of RMarkdown template skeletons.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-5" class="section level1">
+    <div id="bcbiosinglecell-0-0-5-2017-05-08" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-5" class="anchor"></a>bcbioSingleCell 0.0.5</h1>
+<a href="#bcbiosinglecell-0-0-5-2017-05-08" class="anchor"></a>bcbioSingleCell 0.0.5 (2017-05-08)</h1>
 <ul>
 <li>Improvements to run object based on code in <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package.</li>
 <li>Better handling in plots for datasets with many samples.</li>
 <li>Labeled quality control cutoffs on the plots.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-4" class="section level1">
+    <div id="bcbiosinglecell-0-0-4-2017-04-26" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-4" class="anchor"></a>bcbioSingleCell 0.0.4</h1>
+<a href="#bcbiosinglecell-0-0-4-2017-04-26" class="anchor"></a>bcbioSingleCell 0.0.4 (2017-04-26)</h1>
 <ul>
 <li>Prepared package for <a href="http://www.tidyverse.org">tidyverse</a> dependency updates.</li>
 <li>Updated HPC server detection.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-3" class="section level1">
+    <div id="bcbiosinglecell-0-0-3-2017-04-20" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-3" class="anchor"></a>bcbioSingleCell 0.0.3</h1>
+<a href="#bcbiosinglecell-0-0-3-2017-04-20" class="anchor"></a>bcbioSingleCell 0.0.3 (2017-04-20)</h1>
 <ul>
 <li>NAMESPACE consolidation and function cleanup.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-2" class="section level1">
+    <div id="bcbiosinglecell-0-0-2-2017-04-12" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-2" class="anchor"></a>bcbioSingleCell 0.0.2</h1>
+<a href="#bcbiosinglecell-0-0-2-2017-04-12" class="anchor"></a>bcbioSingleCell 0.0.2 (2017-04-12)</h1>
 <ul>
 <li>Added quality control plotting functions.</li>
 <li>Converted all functions to standard evaluation.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-1" class="section level1">
+    <div id="bcbiosinglecell-0-0-1-2017-03-01" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-1" class="anchor"></a>bcbioSingleCell 0.0.1</h1>
+<a href="#bcbiosinglecell-0-0-1-2017-03-01" class="anchor"></a>bcbioSingleCell 0.0.1 (2017-03-01)</h1>
 <ul>
 <li>Initial draft release.</li>
 </ul>
@@ -307,25 +346,27 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#bcbiosinglecell-0-0-19">0.0.19</a></li>
-        <li><a href="#bcbiosinglecell-0-0-18">0.0.18</a></li>
-        <li><a href="#bcbiosinglecell-0-0-17">0.0.17</a></li>
-        <li><a href="#bcbiosinglecell-0-0-16">0.0.16</a></li>
-        <li><a href="#bcbiosinglecell-0-0-15">0.0.15</a></li>
-        <li><a href="#bcbiosinglecell-0-0-14">0.0.14</a></li>
-        <li><a href="#bcbiosinglecell-0-0-13">0.0.13</a></li>
-        <li><a href="#bcbiosinglecell-0-0-12">0.0.12</a></li>
-        <li><a href="#bcbiosinglecell-0-0-11">0.0.11</a></li>
-        <li><a href="#bcbiosinglecell-0-0-10">0.0.10</a></li>
-        <li><a href="#bcbiosinglecell-0-0-9">0.0.9</a></li>
-        <li><a href="#bcbiosinglecell-0-0-8">0.0.8</a></li>
-        <li><a href="#bcbiosinglecell-0-0-7">0.0.7</a></li>
-        <li><a href="#bcbiosinglecell-0-0-6">0.0.6</a></li>
-        <li><a href="#bcbiosinglecell-0-0-5">0.0.5</a></li>
-        <li><a href="#bcbiosinglecell-0-0-4">0.0.4</a></li>
-        <li><a href="#bcbiosinglecell-0-0-3">0.0.3</a></li>
-        <li><a href="#bcbiosinglecell-0-0-2">0.0.2</a></li>
-        <li><a href="#bcbiosinglecell-0-0-1">0.0.1</a></li>
+        <li><a href="#bcbiosinglecell-0-0-21-2017-11-08">0.0.21</a></li>
+        <li><a href="#bcbiosinglecell-0-0-20-2017-10-24">0.0.20</a></li>
+        <li><a href="#bcbiosinglecell-0-0-19-2017-10-12">0.0.19</a></li>
+        <li><a href="#bcbiosinglecell-0-0-18-2017-09-17">0.0.18</a></li>
+        <li><a href="#bcbiosinglecell-0-0-17-2017-09-03">0.0.17</a></li>
+        <li><a href="#bcbiosinglecell-0-0-16-2017-08-25">0.0.16</a></li>
+        <li><a href="#bcbiosinglecell-0-0-15-2017-08-11">0.0.15</a></li>
+        <li><a href="#bcbiosinglecell-0-0-14-2017-07-26">0.0.14</a></li>
+        <li><a href="#bcbiosinglecell-0-0-13-2017-07-10">0.0.13</a></li>
+        <li><a href="#bcbiosinglecell-0-0-12-2017-06-28">0.0.12</a></li>
+        <li><a href="#bcbiosinglecell-0-0-11-2017-06-24">0.0.11</a></li>
+        <li><a href="#bcbiosinglecell-0-0-10-2017-06-15">0.0.10</a></li>
+        <li><a href="#bcbiosinglecell-0-0-9-2017-06-12">0.0.9</a></li>
+        <li><a href="#bcbiosinglecell-0-0-8-2017-05-28">0.0.8</a></li>
+        <li><a href="#bcbiosinglecell-0-0-7-2017-05-13">0.0.7</a></li>
+        <li><a href="#bcbiosinglecell-0-0-6-2017-05-10">0.0.6</a></li>
+        <li><a href="#bcbiosinglecell-0-0-5-2017-05-08">0.0.5</a></li>
+        <li><a href="#bcbiosinglecell-0-0-4-2017-04-26">0.0.4</a></li>
+        <li><a href="#bcbiosinglecell-0-0-3-2017-04-20">0.0.3</a></li>
+        <li><a href="#bcbiosinglecell-0-0-2-2017-04-12">0.0.2</a></li>
+        <li><a href="#bcbiosinglecell-0-0-1-2017-03-01">0.0.1</a></li>
       </ul>
     </div>
   </div>
