@@ -3,6 +3,10 @@ cache: packages
 sudo: false
 dist: trusty
 warnings_are_errors: false
+# Need to increase DLLs above default of 100
+env:
+  global:
+    - R_MAX_NUM_DLLS=150
 # Temporarily enable when caching Bioconductor packages
 # script: true
 r:
