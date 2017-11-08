@@ -16,7 +16,7 @@ sampleSubsets <- pblapply(seq_along(sampleIDs), function(a) {
     sampleID
 }) %>%
     unlist()
-saveData(sampleSubsets)
+saveData(sampleSubsets, dir = "data")
 
 # Render RMarkdown reports per bcbioSingleCell subset file
 pblapply(seq_along(sampleSubsets), function(a) {
