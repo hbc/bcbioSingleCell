@@ -105,17 +105,17 @@ NULL
     if (!nrow(metrics)) {
         stop("Failed to match metrics", call. = FALSE)
     }
-
     message(paste(nrow(metrics), "cellular barcodes"))
-
-    # Now subset the object
     cells <- rownames(metrics)
+
+    # Now subset the object to contain only the cell matches
     subset <- object[, cells]
 
     # Update the bcbio slot
-    # Drop the unfiltered cellular barcodes. Only keep this in the main object
-    # saved using `loadSingleCell()`.
-    bcbio(subset, "cellularBarcodes") <- NULL
+    cellularBarcodes <- bcbio(subset)[sampleIDs]
+    if (!is.null(cellularBarcodes)) {
+        bcbio(subset, "cellularBarcodes") <- cellularBarcodes
+    }
 
     # Update the metadata slot
     metadata(subset)[["sampleMetadata"]] <- sampleMetadata
