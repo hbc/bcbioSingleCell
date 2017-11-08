@@ -97,17 +97,19 @@ Seurat has four tests for differential expression which can be set with the `tes
 ```{r find_all_markers, results="hide", eval=evalMarkers}
 markers <- FindAllMarkers(seurat)
 assignAndSaveData(
-    name = paste0(markersName, "Unmodified"),
+    name = paste(seuratAllMarkersName, "unmodified", sep = "_"),
     object = markers,
     dir = dataDir)
 markers <- sanitizeMarkers(seurat, markers)
 assignAndSaveData(
-    name = markersName,
+    name = seuratAllMarkersName,
     object = markers,
     dir = dataDir)
-readr::write_csv(
+write_csv(
     markers,
-    path = file.path(markersDir, paste0(markersName, ".csv.gz")))
+    path = file.path(
+        markersDir,
+        paste0(seuratAllMarkersName, ".csv.gz")))
 ```
 
 
