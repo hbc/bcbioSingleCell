@@ -6,10 +6,13 @@
 \alias{aggregateFeatures,bcbioSingleCell-method}
 \title{Aggregate Features}
 \usage{
-\S4method{aggregateFeatures}{bcbioSingleCell}(object)
+\S4method{aggregateFeatures}{bcbioSingleCell}(object, features)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{features}{Feature identifiers (e.g. gene or transcript IDs). These are
+the rownames of the counts matrix.}
 }
 \value{
 Object of same class with aggregated features (rows).
