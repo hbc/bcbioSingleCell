@@ -1,7 +1,6 @@
 library(bcbioSingleCell)
-library(knitr)
 library(viridis)
-library(stringr)
+library(knitr)
 library(tidyverse)
 
 # Set seed for reproducibility
