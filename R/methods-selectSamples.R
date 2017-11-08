@@ -92,7 +92,8 @@ NULL
 
     # Filter the sample metadata data.frame to only contain matching samples
     sampleMetadata <- sampleMetadata %>%
-        .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
+        .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE] %>%
+        mutate_if(is.factor, droplevels)
 
     message(paste(
         length(sampleIDs), "sample(s) matched:",
