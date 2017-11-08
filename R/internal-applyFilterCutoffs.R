@@ -28,5 +28,6 @@
     } else {
         object <- object[genes, ]
     }
+
     object
 }
