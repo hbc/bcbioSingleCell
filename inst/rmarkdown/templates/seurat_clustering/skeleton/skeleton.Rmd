@@ -312,20 +312,15 @@ PrintTSNEParams(seurat)
 
 ```{r dim_reduction_plots}
 lapply(seq_along(groupBy), function(a) {
-    if (groupBy[[a]] == "ident") {
-        label <- TRUE
-    } else {
-        label <- FALSE
-    }
     plotTSNE(
         seurat,
         interestingGroups = groupBy[[a]],
-        label = label) %>%
+        label = TRUE) %>%
         show()
     plotPCA(
         seurat,
         interestingGroups = groupBy[[a]],
-        label = label) %>%
+        label = TRUE) %>%
         show()
 }) %>%
     invisible()
