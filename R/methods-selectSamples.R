@@ -34,7 +34,7 @@ NULL
 
 # Constructors ====
 #' @importFrom basejump prepareSummarizedExperiment
-#' @importFrom dplyr pull
+#' @importFrom dplyr mutate_if pull
 #' @importFrom magrittr set_rownames
 #' @importFrom rlang is_string
 .selectSamples <- function(
@@ -49,27 +49,42 @@ NULL
     # should be a string that can be used for logical grep matching here
     # internally.
     arguments <- list(...)
+    checkCharacter <- vapply(arguments, is.character, FUN.VALUE = logical(1))
+    checkCharacter <- as.logical(checkCharacter)
+    if (!all(isTRUE(checkCharacter))) {
+        stop("Arguments must be character", call. = FALSE)
+    }
+
+    # Convert all factors to strings for matching
     sampleMetadata <- sampleMetadata(object)
+
     list <- lapply(seq_along(arguments), function(a) {
         column <- names(arguments)[[a]]
-        pattern <- arguments[[a]]
-        if (is_string(pattern)) {
+        argument <- arguments[[a]]
+        if (is_string(argument)) {
             # Use grep pattern matching on string
             match <- sampleMetadata %>%
-                .[grepl(x = .[[column]], pattern = pattern), , drop = FALSE]
-        } else if (is.character(pattern)) {
+                .[grepl(x = .[[column]],
+                        pattern = argument,
+                        ignore.case = FALSE),
+                  , drop = FALSE]
+        } else {
             # Use exact matching if vector supplied
             match <- sampleMetadata %>%
-                .[.[[column]] %in% pattern, , drop = FALSE]
-        } else {
-            stop("Selection argument must be a character", call. = FALSE)
+                .[.[[column]] %in% argument, , drop = FALSE]
         }
-        match %>%
-            pull("sampleID") %>%
-            unique() %>%
-            sort()
+        # Check for match failure
+        if (!nrow(match)) {
+            stop(paste(
+                "Match failure:",
+                paste(column, "=", argument)
+            ), call. = FALSE)
+        }
+        pull(match, "sampleID")
     })
+
     sampleIDs <- Reduce(f = intersect, x = list) %>%
+        unique() %>%
         sort()
     if (!length(sampleIDs)) {
         stop("No samples matched", call. = FALSE)
@@ -87,22 +102,28 @@ NULL
     # Use the metrics data.frame to match the cellular barcodes
     metrics <- metrics(object, filterCells = TRUE) %>%
         .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
+    if (!nrow(metrics)) {
+        stop("Failed to match metrics", call. = FALSE)
+    }
 
-    message(paste(length(cells), "cellular barcodes"))
+    message(paste(nrow(metrics), "cellular barcodes"))
+
+    # Now subset the object
+    cells <- rownames(metrics)
+    subset <- object[, cells]
 
     # Update the bcbio slot
     # Drop the unfiltered cellular barcodes. Only keep this in the main object
     # saved using `loadSingleCell()`.
-    bcbio(bcb, "cellularBarcodes") <- NULL
+    bcbio(subset, "cellularBarcodes") <- NULL
 
     # Update the metadata slot
-    metadata(bcb)[["allSamples"]] <- FALSE
-    metadata(bcb)[["filterCells"]] <- cells
-    metadata(bcb)[["filterGenes"]] <- genes
-    metadata(bcb)[["sampleMetadata"]] <- sampleMetadata
-    metadata(bcb)[["selectSamples"]] <- TRUE
+    metadata(subset)[["sampleMetadata"]] <- sampleMetadata
+    metadata(subset)[["filterCells"]] <- cells
+    metadata(subset)[["allSamples"]] <- FALSE
+    metadata(subset)[["selectSamples"]] <- TRUE
 
-    bcb
+    subset
 }
 
 
