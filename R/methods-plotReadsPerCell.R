@@ -293,7 +293,7 @@ NULL
     if (isTRUE(filterCells)) {
         object <- .applyFilterCutoffs(object)
     }
-    cellularBarcodes <- slot(object, "bcbio")[["cellularBarcodes"]]
+    cellularBarcodes <- bcbio(object, "cellularBarcodes")
     if (is.null(cellularBarcodes)) {
         return(message(paste(
             "Raw cellular barcodes are not defined",
