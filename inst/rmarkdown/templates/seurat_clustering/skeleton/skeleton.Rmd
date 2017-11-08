@@ -54,8 +54,7 @@ if (exists(c(params$seuratName, seuratPreregressName), inherits = FALSE)) {
 if (length(unique(sampleMetadata(bcb)$sampleName)) == 1) {
     groupBy <- "ident"
 } else {
-    groupBy <- c("ident", "sampleName", "phase",
-                 metadata(bcb)$interestingGroups)
+    groupBy <- c("ident", "sampleName", "phase", interestingGroups(bcb))
 }
 
 # knitr arguments (for `rmarkdown::render()` looping)

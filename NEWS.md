@@ -1,4 +1,4 @@
-# bcbioSingleCell 0.0.21
+# bcbioSingleCell 0.0.21 (2017-11-08)
 
 - Updated package imports to match Bioconductor 3.6.
 - Initial support for `plotCellTypesPerCluster()`.
@@ -20,7 +20,7 @@
 
 
 
-# bcbioSingleCell 0.0.20
+# bcbioSingleCell 0.0.20 (2017-10-24)
 
 - Upgraded to basejump 0.1.0 and Seurat 2.1.0 dependencies.
 - Improved documentation of NAMESPACE imports per function.
@@ -35,7 +35,7 @@
 
 
 
-# bcbioSingleCell 0.0.19
+# bcbioSingleCell 0.0.19 (2017-10-12)
 
 - Renamed main object class from `bcbioSCDataSet` to `bcbioSingleCell`.
 - Cell filtering with `filterCells()` will now slot a named logical vector into `metadata(object)[["filteredCells"]]`, which will be used to dynamically subset the slotted internal `SummarizedExperiment` data. Now that we're using this approach, we can return a modified `bcbioSingleCell` object rather than defining a separate `bcbioSCFiltered` class.
@@ -54,7 +54,7 @@
 
 
 
-# bcbioSingleCell 0.0.18
+# bcbioSingleCell 0.0.18 (2017-09-17)
 
 - Renamed `plotClusters()` to `plotMarkers()`. Added soft deprecation.
 - Added [viridis][] color support in tSNE plots and heatmaps.
@@ -75,7 +75,7 @@
 
 
 
-# bcbioSingleCell 0.0.17
+# bcbioSingleCell 0.0.17 (2017-09-03)
 
 - Renamed package from `bcbioSinglecell` to `bcbioSingleCell`.
 - Added [viridis][] color palette support to quality control plots.
@@ -87,7 +87,7 @@
 
 
 
-# bcbioSingleCell 0.0.16
+# bcbioSingleCell 0.0.16 (2017-08-25)
 
 - Support for CRAN release of [Seurat][].
 - Improved documentation of package NAMESPACE in `bcbioSinglecell-package.R` file.
@@ -113,7 +113,7 @@
 
 
 
-# bcbioSingleCell 0.0.15
+# bcbioSingleCell 0.0.15 (2017-08-11)
 
 - Renamed functions in `lowerCamelCase` from `snake_case`.
 - Draft support for [monocle][], [scater][], and [scone][].
@@ -127,7 +127,7 @@
 
 
 
-# bcbioSingleCell 0.0.14
+# bcbioSingleCell 0.0.14 (2017-07-26)
 
 - Migrated plotting functions to S4 methods.
 - Improved sample metadata handling.
@@ -139,38 +139,38 @@
 
 
 
-# bcbioSingleCell 0.0.13
+# bcbioSingleCell 0.0.13 (2017-07-10)
 
 - Integrated [bcbio][] and [Cell Ranger][] workflows into `load_run()`.
 
 
 
-# bcbioSingleCell 0.0.12
+# bcbioSingleCell 0.0.12 (2017-06-28)
 
 - Initial support for S4 object creation using [SummarizedExperiment][].
 
 
 
-# bcbioSingleCell 0.0.11
+# bcbioSingleCell 0.0.11 (2017-06-24)
 
 - Added [testthat][], [lintr][], and [covr][] support for code coverage.
 
 
 
-# bcbioSingleCell 0.0.10
+# bcbioSingleCell 0.0.10 (2017-06-15)
 
 - Updated [RMarkdown][] templates.
 
 
 
-# bcbioSingleCell 0.0.9
+# bcbioSingleCell 0.0.9 (2017-06-12)
 
 - Compatibility update for basejump S4 NAMESPACE changes.
 - Improved plots for quality control and filtering.
 
 
 
-# bcbioSingleCell 0.0.8
+# bcbioSingleCell 0.0.8 (2017-05-28)
 
 - Renamed mitochondrial plot functions.
 - Changed presentation of mitochondrial abundance as ratio instead of percentage.
@@ -178,7 +178,7 @@
 
 
 
-# bcbioSingleCell 0.0.7
+# bcbioSingleCell 0.0.7 (2017-05-13)
 
 - Initial support for loading of 10x Genomics [Cell Ranger][] output.
 - Add detection of droplet method based on the metadata file.
@@ -186,7 +186,7 @@
 
 
 
-# bcbioSingleCell 0.0.6
+# bcbioSingleCell 0.0.6 (2017-05-10)
 
 - Modified `load_run()` function for improved consistency with [bcbioRNASeq][] package.
 - Initial incorporation of scater package into workflow.
@@ -194,7 +194,7 @@
 
 
 
-# bcbioSingleCell 0.0.5
+# bcbioSingleCell 0.0.5 (2017-05-08)
 
 - Improvements to run object based on code in [bcbioRNASeq][] package.
 - Better handling in plots for datasets with many samples.
@@ -202,27 +202,27 @@
 
 
 
-# bcbioSingleCell 0.0.4
+# bcbioSingleCell 0.0.4 (2017-04-26)
 
 - Prepared package for [tidyverse][] dependency updates.
 - Updated HPC server detection.
 
 
 
-# bcbioSingleCell 0.0.3
+# bcbioSingleCell 0.0.3 (2017-04-20)
 
  - NAMESPACE consolidation and function cleanup.
 
 
 
-# bcbioSingleCell 0.0.2
+# bcbioSingleCell 0.0.2 (2017-04-12)
 
 - Added quality control plotting functions.
 - Converted all functions to standard evaluation.
 
 
 
-# bcbioSingleCell 0.0.1
+# bcbioSingleCell 0.0.1 (2017-03-01)
 
 - Initial draft release.
 

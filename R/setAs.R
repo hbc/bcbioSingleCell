@@ -144,11 +144,12 @@ NULL
     # Ensure that cutoffs are defined
     minGenes <- metadata(from)[["filterParams"]][["minGenes"]]
     if (!is.numeric(minGenes)) {
-        stop("'minGenes' ", call. = FALSE)
+        stop("'minGenes' is not defined", call. = FALSE)
     }
     minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
-    if (is.null(minCells)) {
-        stop("'minCells' is NULL", call. = FALSE)
+    # Check for NULL here
+    if (!is.numeric(minCells)) {
+        stop("'minCells' is not defined", call. = FALSE)
     }
 
     # Note here that passing in the `minCells` argument will rescale the number

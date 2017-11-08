@@ -54,6 +54,19 @@ NULL
     minCellsPerGene = 3,
     showReport = TRUE,
     headerLevel = 2) {
+    # Ensure that all filter parameters are numeric
+    filterParams <- c(
+        minUMIs = minUMIs,
+        minGenes = minGenes,
+        maxGenes = maxGenes,
+        maxMitoRatio = maxMitoRatio,
+        minNovelty = minNovelty,
+        minCellsPerGene = minCellsPerGene
+    )
+    if (!is.numeric(filterParams)) {
+        stop("Filter parameters must all be numeric", call. = FALSE)
+    }
+
     ncol(object) %>%
         paste("unfiltered cellular barcodes") %>%
         message()
@@ -105,14 +118,7 @@ NULL
     # Metadata ====
     metadata(object)[["filterCells"]] <- metrics[["cellID"]]
     metadata(object)[["filterGenes"]] <- filterGenes
-    metadata(object)[["filterParams"]] <- c(
-        minUMIs = minUMIs,
-        minGenes = minGenes,
-        maxGenes = maxGenes,
-        maxMitoRatio = maxMitoRatio,
-        minNovelty = minNovelty,
-        minCellsPerGene = minCellsPerGene
-    )
+    metadata(object)[["filterParams"]] <- filterParams
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(showReport)) {

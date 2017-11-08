@@ -287,25 +287,18 @@ NULL
     geom = "histogram",
     interestingGroups,
     filterCells = FALSE) {
-    # Currently only supported for `loadSingleCell()` return
-    if (metadata(object)[["pipeline"]] != "bcbio") {
-        return(warning(paste(
-            "'plotReadsPerCell()' currently only supports bcbio pipeline"
-        ), call. = FALSE))
-    }
-
-    if (isTRUE(filterCells)) {
-        object <- .applyFilterCutoffs(object)
-    }
-
     if (missing(interestingGroups)) {
         interestingGroups <- basejump::interestingGroups(object)
     }
-
-    # Acquire the data required for plotting
+    if (isTRUE(filterCells)) {
+        object <- .applyFilterCutoffs(object)
+    }
     cellularBarcodes <- bcbio(object, "cellularBarcodes")
     if (is.null(cellularBarcodes)) {
-        stop("Raw cellular barcode counts not saved in object")
+        return(message(paste(
+            "Raw cellular barcodes are not defined",
+            "in 'object@bcbio' slot...skipping"
+        )))
     }
     cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
 

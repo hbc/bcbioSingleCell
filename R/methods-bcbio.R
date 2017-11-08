@@ -27,9 +27,9 @@ setMethod(
             return(bcbio)
         }
         if (type %in% names(bcbio)) {
-            bcbio[[type]]
+            return(bcbio[[type]])
         } else {
-            stop(paste(type, "not found"), call. = FALSE)
+            return(NULL)
         }
     })
 
@@ -49,9 +49,9 @@ setMethod(
             return(bcbio)
         }
         if (type %in% names(bcbio)) {
-            bcbio[[type]]
+            return(bcbio[[type]])
         } else {
-            stop(paste(type, "not found"), call. = FALSE)
+            return(NULL)
         }
     })
 
@@ -84,9 +84,9 @@ setMethod(
             return(slot(object, "callers"))
         }
         if (type %in% names(slot(object, "callers"))) {
-            slot(object, "callers")[[type]]
+            return(slot(object, "callers")[[type]])
         } else {
-            stop(paste(type, "not found"), call. = FALSE)
+            return(NULL)
         }
     })
 

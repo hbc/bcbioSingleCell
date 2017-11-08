@@ -19,10 +19,10 @@ NULL
 setMethod(
     "aggregateFeatures",
     signature("bcbioSingleCell"),
-    function(object) {
+    function(object, features) {
         warning(paste(
             "Draft function.",
-            "Returning an aggregated counts matrix."
+            "Returning a only the aggregated counts matrix."
         ), call. = FALSE)
         aggregateFeatures(assay(object), features = features)
     })

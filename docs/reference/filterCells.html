@@ -94,10 +94,9 @@ cellular barcodes.</p>
     <pre class="usage"><span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>aggregateReplicates</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>showReport</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+  <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>showReport</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
 <span class='co'># S4 method for bcbioSCDataSet</span>
 <span class='fu'>filterCells</span>(<span class='no'>object</span>)</pre>
@@ -112,12 +111,6 @@ cellular barcodes.</p>
     <tr>
       <th>...</th>
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
-    </tr>
-    <tr>
-      <th>aggregateReplicates</th>
-      <td><p>Aggregate technical replicates, if specified. This
-function uses values assigned in the <code>sampleNameAggregate</code> column of the
-internal sample metadata data.frame.</p></td>
     </tr>
     <tr>
       <th>minUMIs</th>

@@ -18,8 +18,7 @@ NULL
 #' @importFrom parallel mclapply
 #' @importFrom stringr str_match
 #' @importFrom tibble rownames_to_column
-.aggregateReplicates <- function(
-    object) {
+.aggregateReplicates <- function(object) {
     cells <- metrics(object, aggregateReplicates = TRUE) %>%
         select(c("sampleID", "sampleName", "cellularBarcode")) %>%
         mutate(
