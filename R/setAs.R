@@ -17,31 +17,6 @@ NULL
 
 
 # Constructors ====
-#' Essential Metadata
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @inheritParams coerce
-#'
-#' @return Metadata [list].
-.essentialMetadata <- function(from) {
-    metadata(from) %>%
-        .[c("version",
-            "uploadDir",
-            "sampleMetadata",
-            "interestingGroups",
-            "filterParams",
-            "organism",
-            "genomeBuild",
-            "ensemblVersion",
-            "annotable",
-            "gene2symbol")]
-}
-
-
-
 #' Coerce Legacy bcbio Object to `bcbioSingleCell` class
 #'
 #' Compatible with old versions created by bcbioSingleCell package.
@@ -164,8 +139,8 @@ NULL
             object = .,
             model.use = "linear")
 
-    # Stash useful bcbio run metadata into `misc` slot
-    slot(seurat, "misc")[["bcbio"]] <- .essentialMetadata(from)
+    # Stash bcbio run metadata into `misc` slot
+    slot(seurat, "misc")[["bcbio"]] <- metadata(from)
 
     print(seurat)
     seurat
