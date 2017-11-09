@@ -39,7 +39,7 @@ cellCycleMarkers <- lapply(seq_along(ws), function(a) {
         group_by(phase) %>%
         arrange(symbol, .by_group = TRUE)
 })
-names(cellCycleMarkers) <- names(ws)
+names(cellCycleMarkers) <- ws
 
 # Cell Type Markers ============================================================
 # Download the Google sheet (gs)
@@ -60,7 +60,7 @@ cellTypeMarkers <- lapply(seq_along(ws), function(a) {
         group_by(cell) %>%
         arrange(symbol, .by_group = TRUE)
 })
-names(cellTypeMarkers) <- names(ws)
+names(cellTypeMarkers) <- ws
 
 # Save RData ===================================================================
 use_data(
