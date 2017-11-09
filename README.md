@@ -70,8 +70,26 @@ Use `sampleNameAggregate` to assign groupings for technical replicates:
 | mutant_L004_R1.fastq.gz   | mutant_L004   | mutant              |
 
 
+## Troubleshooting
+
+### Maximal number of DLLs reached
+
+```r
+Error: package or namespace load failed for 'bcbioSingleCell' in dyn.load(file, DLLpath = DLLpath, ...):
+  maximal number of DLLs reached...
+```
+
+Depending on your operating system, you may encounter this error about hitting the DLL limit in [R][]. This issue is becoming more common as RNA-seq analysis packages grow increasingly complex. Luckily, we can configure [R][] to increase the DLL limit. Append this line to your `~/.Renviron` file:
+
+```
+R_MAX_NUM_DLLS=150
+```
+
+For more information on this issue, consult `help("dyn.load")` in the [R][] documentation. The number of loaded DLLs in an [R][] session can be obtained with `getLoadedDLLs()`.
+
+
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io
-[bioconductor]: https://bioconductor.org
+[Bioconductor]: https://bioconductor.org
 [devtools]: https://cran.r-project.org/package=devtools
-[r]: https://www.r-project.org
+[R]: https://www.r-project.org
