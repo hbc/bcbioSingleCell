@@ -187,6 +187,18 @@ NULL
 
 
 
+.coerceToSummarizedExperiment <- function(from) {
+    to <- new("SummarizedExperiment")
+    slot(to, "colData") <- slot(from, "colData")
+    slot(to, "assays") <- slot(from, "assays")
+    slot(to, "NAMES") <- slot(from, "NAMES")
+    slot(to, "elementMetadata") <- slot(from, "elementMetadata")
+    slot(to, "metadata") <- slot(from, "metadata")
+    to
+}
+
+
+
 # Methods ====
 #' @rdname coerce
 #' @name upgrade-bcbioSingleCell
@@ -197,8 +209,8 @@ NULL
 #' `bcbioSinglecell` (note case) will likely fail to load with newer versions of
 #' the package.
 setAs(
-    "bcbioSCDataSet",
-    signature("bcbioSingleCell"),
+    from = "bcbioSCDataSet",
+    to = "bcbioSingleCell",
     .coerceLegacy)
 
 
@@ -220,6 +232,19 @@ setAs(
 #' for the relationship between variability and average expression. Finally, the
 #' genes are scaled and centered using the [Seurat::ScaleData()] function.
 setAs(
-    "bcbioSingleCell",
-    signature("seurat"),
+    from = "bcbioSingleCell",
+    to = "seurat",
     .coerceToSeurat)
+
+
+
+#' @rdname coerce
+#' @name coerce-bcbioSingleCell-SummarizedExperiment
+#' @section [bcbioSingleCell] to [SummarizedExperiment]:
+#' Since [bcbioSingleCell] is an extension of [SummarizedExperiment], this
+#' coercion method is very simple. Here we're simply dropping our `@bcbio` slot,
+#' which contains raw cellular barcodes and other bcbio-specific metadata.
+setAs(
+    from = "bcbioSingleCell",
+    to = "SummarizedExperiment",
+    .coerceToSummarizedExperiment)

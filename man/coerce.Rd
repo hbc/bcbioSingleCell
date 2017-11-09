@@ -4,6 +4,7 @@
 \alias{coerce}
 \alias{upgrade-bcbioSingleCell}
 \alias{coerce-bcbioSingleCell-seurat}
+\alias{coerce-bcbioSingleCell-SummarizedExperiment}
 \title{Coerce Object}
 \arguments{
 \item{from}{Class for which the coerce method will perform coercion.}
@@ -35,6 +36,13 @@ expression and dispersion for each gene, places these genes into bins, and
 then calculates a z-score for dispersion within each bin. This helps control
 for the relationship between variability and average expression. Finally, the
 genes are scaled and centered using the \code{\link[Seurat:ScaleData]{Seurat::ScaleData()}} function.
+}
+
+\section{\link{bcbioSingleCell} to \link{SummarizedExperiment}}{
+
+Since \link{bcbioSingleCell} is an extension of \link{SummarizedExperiment}, this
+coercion method is very simple. Here we're simply dropping our \code{@bcbio} slot,
+which contains raw cellular barcodes and other bcbio-specific metadata.
 }
 
 \examples{
