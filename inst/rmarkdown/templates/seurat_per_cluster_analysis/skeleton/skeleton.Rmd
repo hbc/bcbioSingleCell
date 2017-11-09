@@ -4,12 +4,12 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seuratFile: "data/bcb_seurat.rda"
-    intgroup: "genotype"
+    seuratFile: "data/seurat.rda"
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
 library(bcbioSingleCell)
+library(cowplot)
 
 # Shared RMarkdown settings
 prepareSingleCellTemplate()
@@ -17,8 +17,11 @@ if (file.exists("setup.R")) {
     source("setup.R")
 }
 
-# Load the seurat object
-loadDataAsName(c(seurat = params$seuratFile))
+# Load seurat object
+seuratName <- load(params$seuratFile)
+seurat <- get(seuratName, inherits = FALSE)
+
+interestingGroups <- interestingGroups(seurat)
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
@@ -32,80 +35,68 @@ sampleMetadata(seurat)
 
 
 
-# t-SNE plots {.tabset}
+# tSNE (all clusters) {.tabset}
 
-```{r tsne}
-mdHeader("cluster")
-TSNEPlot(
-    seurat,
-    do.label = TRUE,
-    label.size = 6)
-
-mdHeader("sampleName")
-TSNEPlot(
-    seurat,
-    do.label = TRUE,
-    group.by = "sampleName",
-    label.size = 6)
-
-mdHeader(params$intgroup)
-TSNEPlot(
-    seurat,
-    do.label = FALSE,
-    group.by = params$intgroup)
+```{r plot_tsne_all_clusters, results="asis"}
+groups <- unique(c("ident", "sampleName", interestingGroups))
+lapply(seq_along(groups), function(a) {
+    mdHeader(groups[[a]], level = 2, asis = TRUE)
+    plotTSNE(seurat, interestingGroups = groups[[a]]) %>%
+        show()
+}) %>%
+    invisible()
+rm(groups)
 ```
 
 
 
-# Cells per cluster {.tabset}
+# tSNE per cluster {.tabset}
 
-```{r per_cluster, fig.height=12, fig.width=6, results="asis"}
+```{r}
 ident <- levels(seurat@ident)
+groups <- unique(c("sampleName", interestingGroups))
+```
+
+
+```{r plot_tsne_per_cluster, results="asis"}
 lapply(seq_along(ident), function(a) {
-    clusterID <- ident[[a]]
-    intgroup <- params$intgroup
-    title <- paste("cluster", clusterID)
-    mdHeader(title, level = 2, asis = TRUE)
-    object <- SubsetData(seurat, ident.use = clusterID)
-    n <- ncol(object@data)
-    
-    # Plots
-    p1 <- TSNEPlot(object,
-                   do.return = TRUE,
-                   group.by = "sampleName") +
-        labs(title = tolower(title),
-             subtitle = paste("n =", n)) +
-        theme(legend.position = "bottom")
-    p2 <- TSNEPlot(object,
-                   do.return = TRUE,
-                   group.by = intgroup) +
-        ggtitle(intgroup) +
-        theme(legend.position = "bottom")
-    plot_grid(p1, p2, labels = "auto", ncol = 1, nrow = 2) %>%
-        show()
-    
-    # Tables
-    master <- object@meta.data %>%
+    subset <- SubsetData(seurat, ident.use = ident[[a]])
+    mdHeader(ident[[a]], level = 2, asis = TRUE, tabset = TRUE)
+    lapply(seq_along(groups), function(a) {
+        mdHeader(groups[[a]], level = 3, asis = TRUE)
+        plotTSNE(subset, interestingGroups = groups[[a]]) %>%
+            show()
+    }) %>%
+        invisible()
+}) %>%
+    invisible()
+```
+
+
+
+# Cell counts per cluster {.tabset}
+
+```{r cell_counts_per_cluster, results="asis"}
+lapply(seq_along(ident), function(a) {
+    subset <- SubsetData(seurat, ident.use = ident[[a]])
+    mdHeader(ident[[a]], level = 2, asis = TRUE, tabset = TRUE)
+    master <- subset@meta.data %>%
         as.data.frame() %>%
-        .[, c("sampleName", intgroup)] %>%
-        rownames_to_column()
+        uniteInterestingGroups(interestingGroups) %>%
+        dplyr::select(sampleName, interestingGroups)
     sampleStats <- master %>%
-        arrange(.data[["sampleName"]]) %>%
-        group_by(.data[["sampleName"]]) %>%
+        arrange(sampleName) %>%
+        group_by(sampleName) %>%
         summarize(count = n()) %>%
-        mutate(pct = .data[["count"]] / sum(.data[["count"]]))
+        mutate(pct = count / sum(count))
     intgroupStats <- master %>%
-        arrange(.data[[intgroup]]) %>%
-        group_by(.data[[intgroup]]) %>%
+        arrange(interestingGroups) %>%
+        group_by(interestingGroups) %>%
         summarize(count = n()) %>%
-        mutate(pct = .data[["count"]] / sum(.data[["count"]]))
-    kable(sampleStats,
-          caption = paste0(title, ": sampleName"),
-          digits = 2L) %>%
+        mutate(pct = count / sum(count))
+    kable(sampleStats, digits = 2L) %>%
         show()
-    kable(intgroupStats,
-          caption = paste0(title, ": ", intgroup),
-          digits = 2L) %>%
+    kable(intgroupStats, digits = 2L) %>%
         show()
 }) %>%
     invisible()
@@ -113,19 +104,19 @@ lapply(seq_along(ident), function(a) {
 
 
 
-# Seurat diagnostics {.tabset}
+# Seurat parameters {.tabset}
 
 ```{r seurat_diagnostics}
-mdHeader("PrintPCAParams")
+mdHeader("PrintPCAParams", level = 2)
 PrintPCAParams(seurat)
 
-mdHeader("PrintFindClustersParams")
+mdHeader("PrintFindClustersParams", level = 2)
 PrintFindClustersParams(seurat)
 
-mdHeader("PrintTSNEParams")
+mdHeader("PrintTSNEParams", level = 2)
 PrintTSNEParams(seurat)
 
-mdHeader("PrintSNNParams")
+mdHeader("PrintSNNParams", level = 2)
 PrintSNNParams(seurat)
 ```
 
