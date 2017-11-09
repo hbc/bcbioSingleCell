@@ -188,12 +188,12 @@ NULL
 
 
 .coerceToSummarizedExperiment <- function(from) {
-    to <- new("SummarizedExperiment")
     slot(to, "colData") <- slot(from, "colData")
     slot(to, "assays") <- slot(from, "assays")
     slot(to, "NAMES") <- slot(from, "NAMES")
     slot(to, "elementMetadata") <- slot(from, "elementMetadata")
     slot(to, "metadata") <- slot(from, "metadata")
+    validObject(to)
     to
 }
 
