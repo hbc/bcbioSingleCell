@@ -72,6 +72,7 @@ setMethod(
                 samples = metadata[["sampleID"]]
             )
         }
+        cell2sample[["sampleID"]] <- as.factor(cell2sample[["sampleID"]])
 
         colData %>%
             left_join(cell2sample, by = "cellID") %>%

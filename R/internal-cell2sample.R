@@ -12,6 +12,8 @@
 #' @keywords internal
 #' @noRd
 .cell2sample <- function(cells, samples) {
+    cells <- as.character(cells)
+    samples <- as.character(samples)
     list <- mclapply(seq_along(samples), function(a) {
         pattern <- paste0("^(", samples[[a]], barcodePattern)
         match <- str_match(cells, pattern = pattern) %>%
@@ -23,17 +25,12 @@
                   # Trailing number is for matching cellranger
                   "trailingNumber")
             ) %>%
-            filter(!is.na(.data[["sampleID"]])) %>%
-            mutate(
-                cellularBarcode = paste0(
-                    .data[["cellularBarcode"]],
-                    na.omit(.data[["trailingNumber"]])
-                ),
-                trailingNumber = NULL
-            )
+            select(c("cellID", "sampleID")) %>%
+            filter(!is.na(.data[["sampleID"]]))
         match
     })
-    cell2sample <- bind_rows(list)
+    cell2sample <- bind_rows(list) %>%
+        mutate(sampleID = as.factor(.data[["sampleID"]]))
     if (!identical(length(cells), nrow(cell2sample))) {
         stop("Failed to correctly match sample IDs to cellular barcodes",
              call. = FALSE)
