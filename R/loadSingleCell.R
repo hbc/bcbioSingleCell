@@ -298,6 +298,12 @@ loadSingleCell <- function(
         select("nCount", everything()) %>%
         column_to_rownames("cellID")
 
+    # Cell to sample mappings ==================================================
+    cell2sample <- .cell2sample(
+        cells = rownames(metrics),
+        samples = rownames(sampleMetadata)
+    )
+
     # Metadata =================================================================
     metadata <- list(
         version = packageVersion("bcbioSingleCell"),
@@ -307,6 +313,7 @@ loadSingleCell <- function(
         sampleMetadataFile = sampleMetadataFile,
         sampleMetadata = sampleMetadata,
         interestingGroups = interestingGroups,
+        cell2sample = cell2sample,
         organism = organism,
         genomeBuild = genomeBuild,
         ensemblVersion = ensemblVersion,

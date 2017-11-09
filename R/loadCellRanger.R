@@ -145,6 +145,12 @@ loadCellRanger <- function(
         counts <- counts[, rownames(metrics)]
     }
 
+    # Cell to sample mappings ==================================================
+    cell2sample <- .cell2sample(
+        cells = rownames(metrics),
+        samples = rownames(sampleMetadata)
+    )
+
     # Metadata =================================================================
     metadata <- list(
         version = packageVersion("bcbioSingleCell"),
@@ -154,6 +160,7 @@ loadCellRanger <- function(
         sampleMetadataFile = sampleMetadataFile,
         sampleMetadata = sampleMetadata,
         interestingGroups = interestingGroups,
+        cell2sample = cell2sample,
         organism = organism,
         genomeBuild = genomeBuild,
         ensemblVersion = ensemblVersion,
