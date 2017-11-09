@@ -65,45 +65,31 @@ NULL
         ), call. = FALSE)
     }
     message(paste(
-        "Upgrading from", version, "to", packageVersion("bcbioSingleCell")
-    ))
-    message(paste(
-        "Existing metadata:", toString(names(metadata(from)))
+        paste("Upgrading from", version, "to",
+              packageVersion("bcbioSingleCell")),
+        paste("Existing metadata:", toString(names(metadata(from)))),
+        sep = "\n"
     ))
 
-    assays <- assays(from)
-    rowData <- rowData(from)
-    rownames(rowData) <- slot(from, "NAMES")
-
-    metadata <- metadata(from)
-    metadata[["originalVersion"]] <- metadata[["version"]]
-    metadata[["version"]] <- packageVersion("bcbioSingleCell")
-    metadata[["upgradeDate"]] <- Sys.Date()
+    se <- as(from, "SummarizedExperiment")
+    to <- new("bcbioSingleCell", se)
+    bcbio(to) <- bcbio(from)
+    validObject(to)
 
     # Recalculate the cellular barcode metrics
-    colData <- calculateMetrics(
-        assay(from),
-        metadata[["annotable"]])
+    colData(to) <- calculateMetrics(assay(to), annotable = annotable(to))
 
-    # Version-specific modifications ====
+    # Update the automatic metadata slots
+    metadata(to)[["version"]] <- packageVersion("bcbioSingleCell")
+    metadata(to)[["originalVersion"]] <- metadata(from)[["version"]]
+    metadata(to)[["upgradeDate"]] <- Sys.Date()
+
+    # Version-specific modifications
     if (version <= package_version("0.0.18")) {
-        bcbio <- slot(from, "callers")
         # Remove GTF file, if present (too large)
-        metadata[["gtf"]] <- NULL
-    } else {
-        bcbio <- slot(from, "bcbio")
+        metadata(to)[["gtf"]] <- NULL
     }
 
-    se <- SummarizedExperiment(
-        assays = assays,
-        rowData = rowData,
-        colData = colData,
-        metadata = metadata)
-
-    # Return updated object ====
-    to <- new("bcbioSingleCell", se)
-    slot(to, "bcbio") <- bcbio
-    validObject(to)
     to
 }
 
