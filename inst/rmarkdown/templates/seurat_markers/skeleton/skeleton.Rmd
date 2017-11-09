@@ -24,7 +24,7 @@ dataDir <- file.path(params$outputDir, "data")
 markersDir <- file.path(params$outputDir, "results", "markers")
 dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 
-# Load bcbioSingleCell object
+# Load seurat object
 seuratName <- load(params$seuratFile)
 seurat <- get(seuratName, inherits = FALSE)
 
@@ -54,7 +54,7 @@ if (!is.null(params$cellTypeMarkersFile)) {
         stop(paste("No internal markers for", organismShorthand))
     }
     cellTypeMarkers <- cellTypeMarkers[[organismShorthand]]
-    saveData(cellTypeMarkers, dir = dataDir, overwrite = FALSE)
+    saveData(cellTypeMarkers, dir = dataDir)
 }
 
 # Attempt to load all detected markers, if already saved. This step is
@@ -130,7 +130,7 @@ write_csv(
 # Top markers per cluster {.tabset}
 
 ```{r top_markers}
-topMarkers <- topMarkers(seuratAllMarkers, n = 5, coding = TRUE)
+topMarkers <- topMarkers(seuratAllMarkers, n = 10, coding = TRUE)
 topMarkers
 ```
 
