@@ -25,10 +25,7 @@ NULL
 # Methods ====
 #' @rdname metrics
 #' @importFrom basejump uniteInterestingGroups
-#' @importFrom dplyr bind_rows left_join mutate mutate_all
-#' @importFrom magrittr set_colnames
-#' @importFrom parallel mclapply
-#' @importFrom stringr str_match
+#' @importFrom dplyr left_join mutate_all
 #' @importFrom tibble column_to_rownames rownames_to_column
 #' @export
 setMethod(
@@ -66,35 +63,14 @@ setMethod(
             metadata[["sampleNameAggregate"]] <- NULL
         }
 
-        # Check for existence of `sampleID` in the `cellID`
-        sampleID <- metadata[["sampleID"]]
-        cellID <- colData[["cellID"]]
-        cell2sample <- mclapply(seq_along(sampleID), function(a) {
-            pattern <- paste0("^(", sampleID[[a]], barcodePattern)
-            match <- str_match(cellID, pattern = pattern) %>%
-                as.data.frame() %>%
-                set_colnames(
-                    c("cellID",
-                      "sampleID",
-                      "cellularBarcode",
-                      # Trailing number is for matching cellranger
-                      "trailingNumber")
-                ) %>%
-                filter(!is.na(.data[["sampleID"]])) %>%
-                mutate(
-                    cellularBarcode = paste0(
-                        .data[["cellularBarcode"]],
-                        na.omit(.data[["trailingNumber"]])
-                    ),
-                    trailingNumber = NULL
-                )
-            match
-        }) %>%
-            bind_rows() %>%
-            mutate(sampleID = as.factor(.data[["sampleID"]]))
-        if (!identical(length(cellID), nrow(cell2sample))) {
-            stop("Failed to correctly match sample IDs to cellular barcodes",
-                 call. = FALSE)
+        # Define the cell2sample mappings
+        # This uses a stashed `data.frame` as of v0.0.22, for better speed
+        cell2sample <- metadata(object)[["cell2sample"]]
+        if (is.null(cell2sample)) {
+            cell2sample <- .cell2sample(
+                cells = colData[["cellID"]],
+                samples = metadata[["sampleID"]]
+            )
         }
 
         colData %>%
