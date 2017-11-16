@@ -17,7 +17,10 @@ must contain \code{filtered_gene_bc_matrices/} as a child.}
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
-\item{sampleMetadataFile}{Sample barcode metadata file.}
+\item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
+with demultiplixed index barcodes (e.g. SureCell), but otherwise required
+for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
+inDrop). Consult the GitHub repo for examples and additional information.}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 
