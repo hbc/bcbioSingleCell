@@ -19,12 +19,12 @@ download.file(
 
 bcb <- loadSingleCell(
     uploadDir = file.path("data", "indrop_rnaseq"),
-    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
     interestingGroups = c("genotype", "treatment"),
-    ensemblVersion = 88,
-    gffFile = file.path(
+    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
+    gtfFile = file.path(
         "annotations",
-        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz")
+        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
+    ensemblVersion = 88
 )
 
 # Back up all data inside bcbio object
