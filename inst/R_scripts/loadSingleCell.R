@@ -9,13 +9,15 @@ library(bcbioSingleCell)
 
 dir.create("annotations", showWarnings = FALSE)
 download.file(
-    file.path("http://ftp.ensembl.org",
-              "pub",
-              "release-88",
-              "mus_musculus",
-              "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
-    file.path("annotations",
-              "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"))
+    url = file.path(
+        "http://ftp.ensembl.org",
+        "pub",
+        "release-88",
+        "mus_musculus",
+        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
+    destfile = file.path(
+        "annotations",
+        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"))
 
 bcb <- loadSingleCell(
     uploadDir = file.path("data", "indrop_rnaseq"),
@@ -24,8 +26,7 @@ bcb <- loadSingleCell(
     gtfFile = file.path(
         "annotations",
         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
-    ensemblVersion = 88
-)
+    ensemblVersion = 88)
 
 # Back up all data inside bcbio object
 flatFiles <- flatFiles(bcb)
