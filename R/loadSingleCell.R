@@ -10,7 +10,7 @@
 #'   prepareSummarizedExperiment readDataVersions readGTF readLogFile
 #'   readProgramVersions readSampleMetadataFile readYAML sampleYAMLMetadata
 #'   tx2geneFromGTF
-#' @importFrom dplyr everything filter left_join mutate pull select
+#' @importFrom dplyr everything filter left_join mutate mutate_if pull select
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
 #' @importFrom stats na.omit setNames
@@ -23,11 +23,14 @@
 #' @param interestingGroups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
-#' @param sampleMetadataFile Sample barcode metadata file.
-#' @param gtfFile *Optional*. GTF (Gene Transfer Format) file, which will be
-#'   used for transcript-to-gene (`tx2gene`) and gene-to-symbol (`gene2symbol`)
-#'   annotation mappings.
 #' @param prefilter Prefilter counts prior to quality control analysis.
+#' @param sampleMetadataFile Sample barcode metadata file. Optional for runs
+#'   with demultiplixed index barcodes (e.g. SureCell), but otherwise required
+#'   for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
+#'   inDrop). Consult the GitHub repo for examples and additional information.
+#' @param gtfFile *Optional but recommended*. GTF (Gene Transfer Format) file,
+#'   which will be used for gene-to-symbol (`gene2symbol`) and
+#'   transcript-to-gene (`tx2gene`) annotation mappings.
 #' @param annotable *Optional*. User-defined gene annotations (a.k.a.
 #'   "annotable"), which will be slotted into [rowData()]. Typically this should
 #'   be left undefined. By default, the function will automatically generate an
@@ -60,12 +63,15 @@
 loadSingleCell <- function(
     uploadDir,
     interestingGroups = "sampleName",
-    sampleMetadataFile = NULL,
-    gtfFile = NULL,
     prefilter = TRUE,
+    sampleMetadataFile,
+    gtfFile,
+    ensemblVersion,
     annotable,
-    ensemblVersion = NULL,
     ...) {
+    if (missing(sampleMetadataFile)) sampleMetadataFile <- NULL
+    if (missing(gtfFile)) gtfFile <- NULL
+    if (missing(ensemblVersion)) ensemblVersion <- NULL
     pipeline <- "bcbio"
 
     # Directory paths ==========================================================
@@ -80,7 +86,7 @@ loadSingleCell <- function(
         full.names = FALSE,
         recursive = FALSE)
     if (length(projectDir) != 1) {
-        stop("Uncertain about project directory location", call. = FALSE)
+        stop("Failed to detect project directory", call. = FALSE)
     }
     message(projectDir)
     match <- str_match(projectDir, projectDirPattern)
@@ -120,6 +126,10 @@ loadSingleCell <- function(
         na.omit() %>%
         unique() %>%
         as.numeric()
+    message(paste(
+        cellularBarcodeCutoff,
+        "reads per cellular barcode cutoff detected"
+    ))
 
     # Detect MatrixMarket output at transcript or gene level
     # This grep pattern may not be strict enough against the file path
@@ -131,6 +141,7 @@ loadSingleCell <- function(
     }
 
     # Data versions and programs ===============================================
+    message("Reading data and program versions")
     dataVersions <- readDataVersions(
         file.path(projectDir, "data_versions.csv"))
     programs <- readProgramVersions(
@@ -222,10 +233,8 @@ loadSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Cellular barcodes ========================================================
-    cellularBarcodes <- .cellularBarcodesList(sampleDirs)
-
     # Gene annotations =========================================================
+    # Ensembl annotations (gene annotable)
     if (missing(annotable)) {
         annotable <- basejump::annotable(
             organism,
@@ -233,41 +242,53 @@ loadSingleCell <- function(
             release = ensemblVersion)
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
+    } else {
+        warning("Loading run without gene annotable", call. = FALSE)
+        annotable <- NULL
     }
+
+    # GTF annotations
     if (!is.null(gtfFile)) {
         gtfFile <- normalizePath(gtfFile)
         gtf <- readGTF(gtfFile)
-        if (countsLevel == "transcript") {
-            tx2gene <- tx2geneFromGTF(gtf)
-        }
-        gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
-        warning(paste(
-            "GFF/GTF file matching transcriptome FASTA is advised.",
-            "Using tx2gene mappings from Ensembl as a fallback."
-        ), call. = FALSE)
-        if (countsLevel == "transcript") {
-            tx2gene <- annotable(
-                organism,
-                format = "tx2gene",
-                release = ensemblVersion)
+        gtf <- NULL
+    }
+
+    # Transcript-to-gene mappings
+    if (countsLevel == "transcript") {
+        if (is.null(gtf)) {
+            stop(paste(
+                "GTF required to convert transcript-level counts",
+                "to gene-level"
+            ), call. = FALSE)
         }
-        gene2symbol <- annotable(
-            organism,
-            format = "gene2symbol",
-            release = ensemblVersion)
+        tx2gene <- tx2geneFromGTF(gtf)
+    } else {
+        # Not applicable to gene-level bcbio output
+        tx2gene <- NA
+    }
+
+    # Gene-to-symbol mappings
+    if (!is.null(gtfFile)) {
+        gene2symbol <- gene2symbolFromGTF(gtf)
+    } else if (!is.null(annotable)) {
+        gene2symbol <- annotable[, c("ensgene", "symbol")]
+    } else {
+        warning("Loading run without gene-to-symbol mappings", call. = FALSE)
+        gene2symbol <- NULL
     }
 
     # Counts ===================================================================
-    message("Reading counts")
+    message(paste("Reading counts at", countsLevel, "level"))
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
         .readSparseCounts(
             sampleDirs[a],
             pipeline = pipeline,
             umiType = umiType)
-    }) %>%
-        setNames(names(sampleDirs))
+    })
+    names(sparseList) <- names(sampleDirs)
     # Combine the individual per-sample transcript-level sparse matrices into a
     # single sparse matrix
     counts <- do.call(Matrix::cBind, sparseList)
@@ -277,26 +298,28 @@ loadSingleCell <- function(
     }
 
     # Metrics ==================================================================
+    # Obtain the raw cellular barcode read distributions
+    cellularBarcodes <- .cellularBarcodesList(sampleDirs)
+    cellularBarcodesTibble <- cellularBarcodes %>%
+        .bindCellularBarcodes() %>%
+        mutate(cellularBarcode = NULL,
+               sampleID = NULL) %>%
+        mutate_if(is.factor, as.character)
+
     metrics <- calculateMetrics(
         counts,
         annotable = annotable,
-        prefilter = prefilter)
-    if (isTRUE(prefilter)) {
-        # Subset the counts matrix to match the cells that passed prefiltering
-        counts <- counts[, rownames(metrics)]
-    }
-
-    # Slot the cellular barcode metrics into colData
-    # Add reads per cellular barcode
-    cellularBarcodesTibble <- .bindCellularBarcodes(cellularBarcodes) %>%
-        mutate(cellularBarcode = NULL,
-               sampleID = NULL)
-    metrics <- metrics %>%
+        prefilter = prefilter) %>%
         as.data.frame() %>%
         rownames_to_column("cellID") %>%
         left_join(cellularBarcodesTibble, by = "cellID") %>%
         select("nCount", everything()) %>%
         column_to_rownames("cellID")
+
+    if (isTRUE(prefilter)) {
+        # Subset the counts matrix to match the cells that passed prefiltering
+        counts <- counts[, rownames(metrics)]
+    }
 
     # Cell to sample mappings ==================================================
     cell2sample <- .cell2sample(
