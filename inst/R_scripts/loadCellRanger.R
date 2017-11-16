@@ -1,3 +1,9 @@
+# Latest version of this script is available here:
+# script <- system.file(
+#     file.path("R_scripts", "loadCellRanger.R"),
+#     package = "bcbioSingleCell")
+# file.edit(script)
+
 # Example script for Mus musculus
 library(bcbioSingleCell)
 
@@ -24,6 +30,7 @@ bcb <- loadCellRanger(
     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
     interestingGroups = c("genotype", "age")
 )
+
 # Back up all data inside bcbio object
 flatFiles <- flatFiles(bcb)
 saveData(bcb, flatFiles, dir = "data")
