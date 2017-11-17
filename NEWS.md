@@ -1,3 +1,9 @@
+# bcbioSingleCell 0.0.23
+
+- Improved facet wrapping of aggregated samples (`sampleNameAggregate` present in sample metadata), but removing code support for wrapping by multiplexed FASTQ description.
+
+
+
 # bcbioSingleCell 0.0.22 (2017-11-17)
 
 - Now internally stashing a `cell2sample` data.frame, which helps speed up operations on cellular barcode metrics calculations for quality control plots.
