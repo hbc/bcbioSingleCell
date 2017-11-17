@@ -11,9 +11,6 @@
 #'
 #' @param interestingGroups Interesting group, to use for colors.
 #' @param filterCells Show only the cells that have passed filtering cutoffs.
-#' @param aggregateReplicates Aggregate technical replicates, if specified. This
-#'   function uses values assigned in the `sampleNameAggregate` column of the
-#'   internal sample metadata [data.frame].
 #'
 #' @seealso [sampleMetadata()].
 #'
@@ -34,8 +31,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        filterCells = FALSE,
-        aggregateReplicates = FALSE) {
+        filterCells = FALSE) {
         if (isTRUE(filterCells)) {
             object <- .applyFilterCutoffs(object)
         }
@@ -56,23 +52,7 @@ setMethod(
             # character vectors.
             mutate_all(as.factor)
 
-        # Rename `sampleName` when aggregating replicates
-        if (isTRUE(aggregateReplicates)) {
-            .checkAggregate(metadata, stop = TRUE)
-            metadata[["sampleName"]] <- metadata[["sampleNameAggregate"]]
-            metadata[["sampleNameAggregate"]] <- NULL
-        }
-
-        # Define the cell2sample mappings
-        # This uses a stashed `data.frame` as of v0.0.22, for better speed
-        cell2sample <- metadata(object)[["cell2sample"]]
-        if (is.null(cell2sample)) {
-            cell2sample <- .cell2sample(
-                cells = colData[["cellID"]],
-                samples = metadata[["sampleID"]]
-            )
-        }
-        cell2sample[["sampleID"]] <- as.factor(cell2sample[["sampleID"]])
+        cell2sample <- cell2sample(object)
 
         colData %>%
             left_join(cell2sample, by = "cellID") %>%
