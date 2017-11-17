@@ -55,18 +55,18 @@ NULL
         p <- p + fill
     }
 
+    # Median labels
+    if (geom %in% validMedianGeom) {
+        p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
+    }
+
     # Facets
     facets <- NULL
     if (isTRUE(.checkAggregate(object))) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- "sampleNameAggregate"
     }
     if (!is.null(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free_y")
-    } else {
-        # Add median labels
-        if (geom %in% validMedianGeom) {
-            p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
-        }
     }
 
     if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
