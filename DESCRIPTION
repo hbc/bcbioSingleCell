@@ -1,17 +1,13 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
-Version: 0.0.22
-Authors@R: c(
-    person("Michael", "Steinbaugh",
-           email = "mike@steinbaugh.com",
-           role = c("aut", "cre")),
-    person("Rory", "Kirchner",
-           email = "roryk@alum.mit.edu",
-           role = "aut"),
-    person("Harvard Chan Bioinformatics Core",
-           email = "bioinformatics@hsph.harvard.edu",
-           role = c("cph", "fnd")))
 Description: Import and analyze bcbio single-cell RNA-seq data.
+Version: 0.0.22
+Authors@R: as.person(c(
+    "Michael Steinbaugh <mike@steinbaugh.com> [aut, cre]",
+    "Rory Kirchner <roryk@alum.mit.edu> [aut]",
+    "Mary Piper <mary.piper@gmail.com> [aut]",
+    "Harvard Chan Bioinformatics Core <bioinformatics@hsph.harvard.edu> [cph, fnd]"
+  ))
 URL:
     http://bioinformatics.sph.harvard.edu/bcbioSingleCell,
     https://github.com/hbc/bcbioSingleCell
