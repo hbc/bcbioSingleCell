@@ -8,7 +8,7 @@ set.seed(1454944673)
 
 opts_chunk[["set"]](
     audodep = TRUE,
-    cache = FALSE,
+    cache = TRUE,
     cache.lazy = FALSE,
     error = FALSE,
     fig.height = 10,
