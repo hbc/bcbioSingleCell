@@ -106,8 +106,7 @@ NULL
 .plotRawCBViolin <- function(
     tibble,
     interestingGroups = "sampleName",
-    cutoffLine = 0,
-    multiplexed = FALSE) {
+    cutoffLine = 0) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
     tibble <- tibble[tibble[["log10Count"]] >= 2, , drop = FALSE]
@@ -135,14 +134,8 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) &
-        length(unique(tibble[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
-        # Turn off the legend
-        p <- p + theme(legend.position = "none")
     }
     if (!is.null(facets)) {
         # Use `free_y` here because of `coord_flip()`
@@ -168,8 +161,7 @@ NULL
 .plotRawCBRidgeline <- function(
     tibble,
     interestingGroups = "sampleName",
-    cutoffLine = 2,
-    multiplexed = FALSE) {
+    cutoffLine = 2) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
     tibble <- tibble %>%
@@ -199,14 +191,8 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) &
-        length(unique(tibble[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
-        # Turn off the legend
-        p <- p + theme(legend.position = "none")
     }
     if (!is.null(facets)) {
         p <- p + facet_wrap(facets = facets)
@@ -231,8 +217,7 @@ NULL
 .plotProportionalCBHistogram <- function(
     tibble,
     interestingGroups = "sampleName",
-    cutoffLine = NULL,
-    multiplexed = FALSE) {
+    cutoffLine = NULL) {
     p <- ggplot(
         tibble,
         mapping = aes_string(
@@ -255,14 +240,8 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) &
-        length(unique(tibble[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
-        # Turn off the legend
-        p <- p + theme(legend.position = "none")
     }
     if (!is.null(facets)) {
         p <- p + facet_wrap(facets = facets)
@@ -330,23 +309,21 @@ NULL
         as.numeric() %>%
         log10()
 
-    multiplexed <- metadata(object)[["multiplexedFASTQ"]]
-
     if (geom == "histogram") {
         p <- .plotProportionalCBHistogram(
             proportionalTibble,
-            cutoffLine = cutoffLine,
-            multiplexed = multiplexed)
+            interestingGroups = interestingGroups,
+            cutoffLine = cutoffLine)
     } else if (geom == "ridgeline") {
         p <- .plotRawCBRidgeline(
             rawTibble,
-            cutoffLine = cutoffLine,
-            multiplexed = multiplexed)
+            interestingGroups = interestingGroups,
+            cutoffLine = cutoffLine)
     } else if (geom == "violin") {
         p <- .plotRawCBViolin(
             rawTibble,
-            cutoffLine = cutoffLine,
-            multiplexed = multiplexed)
+            interestingGroups = interestingGroups,
+            cutoffLine = cutoffLine)
     }
 
     p
