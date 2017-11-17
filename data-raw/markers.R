@@ -1,6 +1,6 @@
 # Cell Markers
 #
-# Last updated: 2017-09-26
+# Last updated: 2017-11-09
 # Gene annotations: Ensembl Genes 90
 #
 # This code is derived from:
@@ -10,14 +10,10 @@
 library(basejump)
 library(devtools)
 library(googlesheets)
-library(stringr)
 library(tidyverse)
-
 load_all()
 
 # Ensembl release version
-# bioc-devel required for release 90 annotations (9/13/17)
-# Use `BiocInstaller::useDevel()` and then run `biocLite()`
 release <- 90
 
 # Here we're matching the stored Ensembl identifiers (`ensgene`) using
@@ -42,8 +38,8 @@ cellCycleMarkers <- lapply(seq_along(ws), function(a) {
             ensgene, organism = ws[[a]], release = release)) %>%
         group_by(phase) %>%
         arrange(symbol, .by_group = TRUE)
-}) %>%
-    set_names(ws)
+})
+names(cellCycleMarkers) <- ws
 
 # Cell Type Markers ============================================================
 # Download the Google sheet (gs)
@@ -63,8 +59,8 @@ cellTypeMarkers <- lapply(seq_along(ws), function(a) {
             ensgene, organism = ws[[a]], release = release)) %>%
         group_by(cell) %>%
         arrange(symbol, .by_group = TRUE)
-}) %>%
-    set_names(ws)
+})
+names(cellTypeMarkers) <- ws
 
 # Save RData ===================================================================
 use_data(

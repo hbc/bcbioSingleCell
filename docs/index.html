@@ -238,6 +238,19 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 </table>
 </div>
 </div>
+<div id="troubleshooting" class="section level2">
+<h2 class="hasAnchor">
+<a href="#troubleshooting" class="anchor"></a>Troubleshooting</h2>
+<div id="maximal-number-of-dlls-reached" class="section level3">
+<h3 class="hasAnchor">
+<a href="#maximal-number-of-dlls-reached" class="anchor"></a>Maximal number of DLLs reached</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Error<span class="op">:</span><span class="st"> </span>package or namespace load failed <span class="cf">for</span> <span class="st">'bcbioSingleCell'</span> <span class="cf">in</span> <span class="kw">dyn.load</span>(file, <span class="dt">DLLpath =</span> DLLpath, ...)<span class="op">:</span>
+<span class="st">  </span>maximal number of DLLs reached...</code></pre></div>
+<p>Depending on your operating system, you may encounter this error about hitting the DLL limit in <a href="https://www.r-project.org">R</a>. This issue is becoming more common as RNA-seq analysis packages grow increasingly complex. Luckily, we can configure <a href="https://www.r-project.org">R</a> to increase the DLL limit. Append this line to your <code>~/.Renviron</code> file:</p>
+<pre><code>R_MAX_NUM_DLLS=150</code></pre>
+<p>For more information on this issue, consult <code>help("dyn.load")</code> in the <a href="https://www.r-project.org">R</a> documentation. The number of loaded DLLs in an <a href="https://www.r-project.org">R</a> session can be obtained with <code>getLoadedDLLs()</code>.</p>
+</div>
+</div>
 </div>
   </div>
 
@@ -258,6 +271,8 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <li>
 <a href="https://github.com/roryk">Rory Kirchner</a> <br><small class="roles"> Author </small> </li>
 <li>
+<a href="https://github.com/marypiper">Mary Piper</a> <br><small class="roles"> Author </small> </li>
+<li>
 <a href="http://bioinformatics.sph.harvard.edu">Harvard Chan Bioinformatics Core</a> <br><small class="roles"> Copyright holder, funder </small> </li>
 </ul>
 <h2>Dev status</h2>
@@ -271,7 +286,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://steinbaugh.com">Michael Steinbaugh</a>, <a href="https://github.com/roryk">Rory Kirchner</a>, <a href="http://bioinformatics.sph.harvard.edu">Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href="http://steinbaugh.com">Michael Steinbaugh</a>, <a href="https://github.com/roryk">Rory Kirchner</a>, <a href="https://github.com/marypiper">Mary Piper</a>, <a href="http://bioinformatics.sph.harvard.edu">Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

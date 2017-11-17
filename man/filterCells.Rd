@@ -11,7 +11,8 @@ filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000,
   minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.8,
-  minCellsPerGene = 3, showReport = TRUE, headerLevel = 2)
+  minCellsPerGene = 3, showReport = TRUE, headerLevel = 2,
+  destructive = FALSE)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
 }
@@ -36,6 +37,8 @@ this many cells.}
 \item{showReport}{Show summary statistics report and plots.}
 
 \item{headerLevel}{RMarkdown header level, if \code{showReport = TRUE}.}
+
+\item{destructive}{Drop low quality cells from object after filtering.}
 }
 \value{
 \link{bcbioSingleCell} object, with filtering information slotted into

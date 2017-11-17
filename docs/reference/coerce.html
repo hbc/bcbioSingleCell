@@ -126,6 +126,13 @@ then calculates a z-score for dispersion within each bin. This helps control
 for the relationship between variability and average expression. Finally, the
 genes are scaled and centered using the <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/ScaleData'>Seurat::ScaleData()</a></code> function.</p>
     
+    <h2 class="hasAnchor" id="-a-href-bcbiosinglecell-class-html-bcbiosinglecell-a-to-summarizedexperiment"><a class="anchor" href="#-a-href-bcbiosinglecell-class-html-bcbiosinglecell-a-to-summarizedexperiment"></a>&lt;a href='bcbioSingleCell-class.html'&gt;bcbioSingleCell&lt;/a&gt; to SummarizedExperiment</h2>
+
+    
+    <p>Since <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> is an extension of SummarizedExperiment, this
+coercion method is very simple. Here we're simply dropping our <code>@bcbio</code> slot,
+which contains raw cellular barcodes and other bcbio-specific metadata.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code>help(topic = "coerce", package = "methods")</code>.</p>
@@ -145,6 +152,8 @@ genes are scaled and centered using the <code><a href='http://www.rdocumentation
 
       <li><a href="#-a-href-bcbiosinglecell-class-html-bcbiosinglecell-a-to-seurat">&lt;a href='bcbioSingleCell-class.html'&gt;bcbioSingleCell&lt;/a&gt; to seurat</a></li>
 
+      <li><a href="#-a-href-bcbiosinglecell-class-html-bcbiosinglecell-a-to-summarizedexperiment">&lt;a href='bcbioSingleCell-class.html'&gt;bcbioSingleCell&lt;/a&gt; to SummarizedExperiment</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
@@ -159,7 +168,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

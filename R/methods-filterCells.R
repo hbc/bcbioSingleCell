@@ -20,6 +20,7 @@
 #'   this many cells.
 #' @param showReport Show summary statistics report and plots.
 #' @param headerLevel RMarkdown header level, if `showReport = TRUE`.
+#' @param destructive Drop low quality cells from object after filtering.
 #'
 #' @note This operation can be re-run on a [bcbioSingleCell] object that has
 #'   been previously filtered. This function simply saves `filterCells` and
@@ -53,7 +54,8 @@ NULL
     minNovelty = 0.8,
     minCellsPerGene = 3,
     showReport = TRUE,
-    headerLevel = 2) {
+    headerLevel = 2,
+    destructive = FALSE) {
     # Ensure that all filter parameters are numeric
     filterParams <- c(
         minUMIs = minUMIs,
@@ -67,16 +69,11 @@ NULL
         stop("Filter parameters must all be numeric", call. = FALSE)
     }
 
-    ncol(object) %>%
-        paste("unfiltered cellular barcodes") %>%
-        message()
-
-    # Cellular barcode filtering ====
+    # Filter low quality cells ====
     # Use the metrics `data.frame` to identify filtered cells
     metrics <- metrics(object, filterCells = FALSE) %>%
         as.data.frame() %>%
         rownames_to_column("cellID")
-
     if (!is.null(minUMIs)) {
         metrics <- metrics %>%
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
@@ -98,12 +95,15 @@ NULL
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
     }
     if (!nrow(metrics)) {
-        stop("No cellular barcodes passed filtering", call. = FALSE)
+        stop("No cells passed filtering", call. = FALSE)
     }
+    filterCells <- metrics[["cellID"]]
     message(paste(
-        nrow(metrics),
-        "filtered cellular barcodes",
-        paste0("(", percent(nrow(metrics) / ncol(object)), ")")
+        length(filterCells),
+        "/",
+        ncol(object),
+        "cells passed filtering",
+        paste0("(", percent(length(filterCells) / ncol(object)), ")")
     ))
 
     # Filter low expression genes ====
@@ -111,14 +111,26 @@ NULL
         counts <- assay(object)
         numCells <- Matrix::rowSums(counts > 0)
         filterGenes <- names(numCells[which(numCells >= minCellsPerGene)])
+        message(paste(
+            length(filterGenes),
+            "/",
+            nrow(object),
+            "genes passed filtering",
+            paste0("(", percent(length(filterGenes) / nrow(object)), ")")
+        ))
     } else {
         filterGenes <- NULL
     }
 
     # Metadata ====
-    metadata(object)[["filterCells"]] <- metrics[["cellID"]]
+    metadata(object)[["filterCells"]] <- filterCells
     metadata(object)[["filterGenes"]] <- filterGenes
     metadata(object)[["filterParams"]] <- filterParams
+
+    # Destructive mode ====
+    if (isTRUE(destructive)) {
+        object <- .applyFilterCutoffs(object)
+    }
 
     # Show summary statistics report and plots, if desired
     if (isTRUE(showReport)) {

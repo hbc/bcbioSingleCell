@@ -5,8 +5,8 @@
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
 loadSingleCell(uploadDir, interestingGroups = "sampleName",
-  sampleMetadataFile = NULL, gtfFile = NULL, prefilter = TRUE, annotable,
-  ensemblVersion = NULL, ...)
+  prefilter = TRUE, sampleMetadataFile, gtfFile, ensemblVersion, annotable,
+  ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -16,13 +16,21 @@ running \code{bcbio_nextgen -w template}.}
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
-\item{sampleMetadataFile}{Sample barcode metadata file.}
-
-\item{gtfFile}{\emph{Optional}. GTF (Gene Transfer Format) file, which will be
-used for transcript-to-gene (\code{tx2gene}) and gene-to-symbol (\code{gene2symbol})
-annotation mappings.}
-
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
+
+\item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
+with demultiplixed index barcodes (e.g. SureCell), but otherwise required
+for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
+inDrop). Consult the GitHub repo for examples and additional information.}
+
+\item{gtfFile}{\emph{Optional but recommended}. GTF (Gene Transfer Format) file,
+which will be used for gene-to-symbol (\code{gene2symbol}) and
+transcript-to-gene (\code{tx2gene}) annotation mappings.}
+
+\item{ensemblVersion}{\emph{Optional}. Ensembl release version. If \code{NULL},
+defaults to current release, and does not typically need to be
+user-defined. This parameter can be useful for matching Ensembl annotations
+against an outdated bcbio annotation build.}
 
 \item{annotable}{\emph{Optional}. User-defined gene annotations (a.k.a.
 "annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
@@ -31,11 +39,6 @@ annotable from the annotations available on Ensembl. If set \code{NULL}, then
 \code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
 empty. This is recommended for projects dealing with genes or transcripts
 that are poorly annotated.}
-
-\item{ensemblVersion}{\emph{Optional}. Ensembl release version. If \code{NULL},
-defaults to current release, and does not typically need to be
-user-defined. This parameter can be useful for matching Ensembl annotations
-against an outdated bcbio annotation build.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }

@@ -28,10 +28,11 @@ loadCellRanger <- function(
     uploadDir,
     refDataDir,
     interestingGroups = "sampleName",
-    sampleMetadataFile,
     prefilter = TRUE,
+    sampleMetadataFile,
     annotable,
     ...) {
+    if (missing(sampleMetadataFile)) sampleMetadataFile <- NULL
     pipeline <- "cellranger"
     umiType <- "chromium"
     multiplexedFASTQ <- FALSE
@@ -45,8 +46,10 @@ loadCellRanger <- function(
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sample metadata ==========================================================
-    if (missing(sampleMetadataFile)) {
-        sampleMetadataFile <- NULL
+    if (!is.null(sampleMetadataFile)) {
+        sampleMetadataFile <- normalizePath(sampleMetadataFile)
+        sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
+    } else {
         message(paste(
             "'sampleMetadataFile' not specified.",
             "Generating minimal sample metadata."
@@ -55,9 +58,6 @@ loadCellRanger <- function(
         for (i in seq_along(metadataPriorityCols)) {
             sampleMetadata[, metadataPriorityCols[[i]]] <- names(sampleDirs)
         }
-    } else {
-        sampleMetadataFile <- normalizePath(sampleMetadataFile)
-        sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     }
     # Check that `sampleID` matches `sampleDirs`
     if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
@@ -114,6 +114,8 @@ loadCellRanger <- function(
             release = ensemblVersion)
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
+    } else {
+        annotable <- NULL
     }
     gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
     if (!file.exists(gtfFile)) {
@@ -130,8 +132,8 @@ loadCellRanger <- function(
             sampleDirs[a],
             pipeline = pipeline,
             umiType = umiType)
-    }) %>%
-        setNames(names(sampleDirs))
+    })
+    names(sparseList) <- names(sampleDirs)
     # Cell Ranger outputs at gene-level
     counts <- do.call(Matrix::cBind, sparseList)
 
@@ -145,6 +147,12 @@ loadCellRanger <- function(
         counts <- counts[, rownames(metrics)]
     }
 
+    # Cell to sample mappings ==================================================
+    cell2sample <- .cell2sample(
+        cells = rownames(metrics),
+        samples = rownames(sampleMetadata)
+    )
+
     # Metadata =================================================================
     metadata <- list(
         version = packageVersion("bcbioSingleCell"),
@@ -154,6 +162,7 @@ loadCellRanger <- function(
         sampleMetadataFile = sampleMetadataFile,
         sampleMetadata = sampleMetadata,
         interestingGroups = interestingGroups,
+        cell2sample = cell2sample,
         organism = organism,
         genomeBuild = genomeBuild,
         ensemblVersion = ensemblVersion,

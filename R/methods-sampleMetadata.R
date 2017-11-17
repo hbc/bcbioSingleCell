@@ -108,8 +108,8 @@ setMethod(
         if (!is.null(bcbio)) {
             metadata <- bcbio[["sampleMetadata"]]
             if (!identical(
-                unique(metadata[["sampleID"]]),
-                unique(slot(object, "meta.data")[["sampleID"]])
+                unique(as.character(metadata[["sampleID"]])),
+                unique(as.character(slot(object, "meta.data")[["sampleID"]]))
             )) {
                 warning(paste(
                     "Dimension mismatch with stashed metadata.",
@@ -143,9 +143,10 @@ setMethod(
                 interestingGroups <- "sampleName"
             }
         }
+        # Ensure strings as factors
         metadata %>%
-            # Ensure strings as factors
             mutate_if(is.character, as.factor) %>%
+            mutate_if(is.factor, droplevels) %>%
             uniteInterestingGroups(interestingGroups) %>%
             set_rownames(.[["sampleID"]])
     })

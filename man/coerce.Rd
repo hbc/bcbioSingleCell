@@ -4,6 +4,7 @@
 \alias{coerce}
 \alias{upgrade-bcbioSingleCell}
 \alias{coerce-bcbioSingleCell-seurat}
+\alias{coerce-bcbioSingleCell-SummarizedExperiment}
 \title{Coerce Object}
 \arguments{
 \item{from}{Class for which the coerce method will perform coercion.}
@@ -22,19 +23,18 @@ the package.
 
 \section{\link{bcbioSingleCell} to \link{seurat}}{
 
-Interally, this begins by calling \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}} without any
-additional filtering cutoffs, since we already applied them during our
+Interally \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}} is called without applying any
+additional filtering cutoffs, since we have already defined them during our
 quality control analysis. Here we are passing the raw gene-level counts of
 the filtered cells into a new \link{seurat} class object, using \code{\link[=as]{as()}} object
-coercion. Next, global-scaling normalization is applied to the raw counts
-with \code{\link[Seurat:NormalizeData]{Seurat::NormalizeData()}}, which (1) normalizes the gene expression
-measurements for each cell by the total expression, (2) multiplies this by a
-scale factor (10,000 by default), and (3) log-transforms the result.
-\code{\link[Seurat:FindVariableGenes]{Seurat::FindVariableGenes()}} is then called, which calculates the average
-expression and dispersion for each gene, places these genes into bins, and
-then calculates a z-score for dispersion within each bin. This helps control
-for the relationship between variability and average expression. Finally, the
-genes are scaled and centered using the \code{\link[Seurat:ScaleData]{Seurat::ScaleData()}} function.
+coercion.
+}
+
+\section{\link{bcbioSingleCell} to \link{SummarizedExperiment}}{
+
+Since \link{bcbioSingleCell} is an extension of \link{SummarizedExperiment}, this
+coercion method is very simple. Here we're simply dropping our \code{@bcbio} slot,
+which contains raw cellular barcodes and other bcbio-specific metadata.
 }
 
 \examples{
