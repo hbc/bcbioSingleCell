@@ -7,6 +7,7 @@
 - Improved handling of sample metadata columns as factors. In particular, levels should be correctly updated using `droplevels` in a `selectSamples()` call. The [bcbioRNASeq][] package has also been updated to work in a similar fashion, where all columns in the sample metadata data.frame are now defined as factors.
 - Simplified `bcbioSingleCell` to `seurat` object coercion to stash all of the bcbio metadata, and simply return the basic `seurat` object, rather than trying to also perform normalization and scaling. These steps have instead been added back to the Seurat R Markdown clustering template.
 - Updated cell cycle and cell type markers from our master copy on Google Sheets.
+- Added a troubleshooting section to the GitHub README, with a note on maximum DLLs.
 
 
 
