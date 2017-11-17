@@ -266,24 +266,40 @@ NULL
     geom = "histogram",
     interestingGroups,
     filterCells = FALSE) {
+    skipMessage <- paste(
+        "Raw cellular barcodes are not defined",
+        "in 'object@bcbio' slot...skipping"
+    )
+
     if (missing(interestingGroups)) {
         interestingGroups <- basejump::interestingGroups(object)
     }
-    if (isTRUE(filterCells)) {
-        object <- .applyFilterCutoffs(object)
-    }
-    cellularBarcodes <- bcbio(object, "cellularBarcodes")
-    if (is.null(cellularBarcodes)) {
-        return(message(paste(
-            "Raw cellular barcodes are not defined",
-            "in 'object@bcbio' slot...skipping"
-        )))
-    }
-    cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
 
+    # Obtain the cellular barcode distributions
+    if (isTRUE(filterCells)) {
+        # These will be defined in the metrics `nCount` column
+        metrics <- metrics(object, filterCells = TRUE)
+        if (!"nCount" %in% colnames(metrics)) {
+            return(message(skipMessage))
+        }
+        # cellID, sampleID, nCount
+        cellularBarcodes <- metrics %>%
+            rownames_to_column("cellID") %>%
+            .[, c("cellID", "sampleID", "nCount")]
+    } else {
+        cellularBarcodes <- bcbio(object, "cellularBarcodes")
+        if (is.null(cellularBarcodes)) {
+            return(message(skipMessage))
+        }
+        cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
+    }
+
+    # Obtain the sample metadata
     sampleMetadata <- sampleMetadata(
         object,
         interestingGroups = interestingGroups)
+
+    # Mutate cellular barcodes to log10 and set up grouping
     rawTibble <- .rawCBTibble(
         cellularBarcodes = cellularBarcodes,
         sampleMetadata = sampleMetadata)
@@ -294,7 +310,7 @@ NULL
             sampleMetadata = sampleMetadata)
     }
 
-    # Need to set the cellular barcode cutoff in log10 to match the plots
+    # Define the log10 cutoff line (to match plot axis)
     if (!is.null(metadata(object)[["cbCutoff"]])) {
         # This will be deprecated in a future release in favor of the longer
         # spelling variant

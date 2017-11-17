@@ -24,5 +24,6 @@
                            .data[["cellularBarcode"]],
                            sep = "_")
         ) %>%
+        .[, c("cellID", "sampleID", "nCount")] %>%
         mutate_if(is.character, as.factor)
 }
