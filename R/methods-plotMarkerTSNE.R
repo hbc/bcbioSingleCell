@@ -72,7 +72,7 @@ NULL
     # Use `expression` if we're only plotting a single gene. The `geomean`
     # argument for `colorPoints` is only informative for 2+ genes.
     if (length(genes) == 1) {
-        colorPoints = "expression"
+        colorPoints <- "expression"
     }
     # Limit to displaying the top 5, with an ellipsis if necessary
     if (length(genes) > 5) {
