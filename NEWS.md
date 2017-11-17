@@ -1,3 +1,15 @@
+# bcbioSingleCell 0.0.22 (2017-11-17)
+
+- Now internally stashing a `cell2sample` data.frame, which helps speed up operations on cellular barcode metrics calculations for quality control plots.
+- Improved support for optional `annotable`, `ensemblVersion`, `gtfFile`, and `sampleMetadataFile` arguments in `loadSingleCell()` function.
+- Simplified some of the messages shown during sample loading, in an attempt to make them clearer and more informative. Also improved messages shown to the user during a `filterCells()` function call.
+- The `metrics()` function will now look for a stashed `cell2sample` data.frame, which speeds up operations for quality control plots.
+- Improved handling of sample metadata columns as factors. In particular, levels should be correctly updated using `droplevels` in a `selectSamples()` call. The [bcbioRNASeq][] package has also been updated to work in a similar fashion, where all columns in the sample metadata data.frame are now defined as factors.
+- Simplified `bcbioSingleCell` to `seurat` object coercion to stash all of the bcbio metadata, and simply return the basic `seurat` object, rather than trying to also perform normalization and scaling. These steps have instead been added back to the Seurat R Markdown clustering template.
+- Updated cell cycle and cell type markers from our master copy on Google Sheets.
+
+
+
 # bcbioSingleCell 0.0.21 (2017-11-08)
 
 - Updated package imports to match Bioconductor 3.6.
