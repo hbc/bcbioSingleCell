@@ -23,6 +23,14 @@ setGeneric("calculateMetrics", function(object, ...) {
 
 
 
+#' @rdname cell2sample
+#' @export
+setGeneric("cell2sample", function(object, ...) {
+    standardGeneric("cell2sample")
+})
+
+
+
 #' @rdname cellTypesPerCluster
 #' @export
 setGeneric("cellTypesPerCluster", function(object, ...) {
