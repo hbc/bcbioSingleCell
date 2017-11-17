@@ -15,6 +15,14 @@
         data = metrics,
         FUN = median)
     data[["roundedMedian"]] <- round(data[[medianCol]], digits = digits)
+
+    # Add `sampleNameAggregate` column for facet wrapping, if necessary
+    if ("sampleNameAggregate" %in% colnames(metrics)) {
+        sampleFacet <- metrics[, c("sampleName", "sampleNameAggregate")] %>%
+        distinct()
+        data <- left_join(data, sampleFacet, by = "sampleName")
+    }
+
     geom_label(
         data = data,
         mapping = aes_string(label = "roundedMedian"),
