@@ -19,7 +19,7 @@ plotNovelty(object, ...)
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotNovelty}{seurat}(object, geom = "violin", min,
-  interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
+  interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
