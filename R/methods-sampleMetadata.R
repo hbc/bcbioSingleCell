@@ -8,6 +8,10 @@
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
 #'
+#' @param aggregateReplicates Aggregate technical replicates, if specified. This
+#'   function uses values assigned in the `sampleNameAggregate` column of the
+#'   internal sample metadata [data.frame].
+#'
 #' @return [data.frame].
 NULL
 
