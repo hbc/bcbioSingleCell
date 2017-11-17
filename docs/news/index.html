@@ -88,6 +88,20 @@
     </div>
 
     <div class="contents">
+    <div id="bcbiosinglecell-0-0-22-2017-11-17" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-22-2017-11-17" class="anchor"></a>bcbioSingleCell 0.0.22 (2017-11-17)</h1>
+<ul>
+<li>Now internally stashing a <code>cell2sample</code> data.frame, which helps speed up operations on cellular barcode metrics calculations for quality control plots.</li>
+<li>Improved support for optional <code>annotable</code>, <code>ensemblVersion</code>, <code>gtfFile</code>, and <code>sampleMetadataFile</code> arguments in <code><a href="../reference/loadSingleCell.html">loadSingleCell()</a></code> function.</li>
+<li>Simplified some of the messages shown during sample loading, in an attempt to make them clearer and more informative. Also improved messages shown to the user during a <code><a href="../reference/filterCells.html">filterCells()</a></code> function call.</li>
+<li>The <code><a href="../reference/metrics.html">metrics()</a></code> function will now look for a stashed <code>cell2sample</code> data.frame, which speeds up operations for quality control plots.</li>
+<li>Improved handling of sample metadata columns as factors. In particular, levels should be correctly updated using <code>droplevels</code> in a <code><a href="../reference/selectSamples.html">selectSamples()</a></code> call. The <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package has also been updated to work in a similar fashion, where all columns in the sample metadata data.frame are now defined as factors.</li>
+<li>Simplified <code>bcbioSingleCell</code> to <code>seurat</code> object coercion to stash all of the bcbio metadata, and simply return the basic <code>seurat</code> object, rather than trying to also perform normalization and scaling. These steps have instead been added back to the Seurat R Markdown clustering template.</li>
+<li>Updated cell cycle and cell type markers from our master copy on Google Sheets.</li>
+<li>Added a troubleshooting section to the GitHub README, with a note on maximum DLLs.</li>
+</ul>
+</div>
     <div id="bcbiosinglecell-0-0-21-2017-11-08" class="section level1">
 <h1 class="hasAnchor">
 <a href="#bcbiosinglecell-0-0-21-2017-11-08" class="anchor"></a>bcbioSingleCell 0.0.21 (2017-11-08)</h1>
@@ -346,6 +360,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bcbiosinglecell-0-0-22-2017-11-17">0.0.22</a></li>
         <li><a href="#bcbiosinglecell-0-0-21-2017-11-08">0.0.21</a></li>
         <li><a href="#bcbiosinglecell-0-0-20-2017-10-24">0.0.20</a></li>
         <li><a href="#bcbiosinglecell-0-0-19-2017-10-12">0.0.19</a></li>
@@ -375,7 +390,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

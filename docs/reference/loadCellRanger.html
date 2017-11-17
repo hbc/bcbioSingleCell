@@ -114,7 +114,10 @@ is used for PCA and heatmap QC functions.</p></td>
     </tr>
     <tr>
       <th>sampleMetadataFile</th>
-      <td><p>Sample barcode metadata file.</p></td>
+      <td><p>Sample barcode metadata file. Optional for runs
+with demultiplixed index barcodes (e.g. SureCell), but otherwise required
+for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
+inDrop). Consult the GitHub repo for examples and additional information.</p></td>
     </tr>
     <tr>
       <th>prefilter</th>
@@ -181,7 +184,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">
