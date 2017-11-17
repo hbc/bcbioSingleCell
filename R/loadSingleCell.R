@@ -302,8 +302,7 @@ loadSingleCell <- function(
     cellularBarcodes <- .cellularBarcodesList(sampleDirs)
     cellularBarcodesTibble <- cellularBarcodes %>%
         .bindCellularBarcodes() %>%
-        mutate(cellularBarcode = NULL,
-               sampleID = NULL) %>%
+        .[, c("cellID", "nCount")] %>%
         mutate_if(is.factor, as.character)
 
     metrics <- calculateMetrics(
