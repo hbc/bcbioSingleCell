@@ -2,7 +2,7 @@
     filterParams <- metadata(object)[["filterParams"]]
     if (is.null(filterParams)) {
         stop(paste(
-            "'filterCells()' must be run on the object"
+            "'filterCells()' hasn't been applied to this dataset"
         ), call. = FALSE)
     }
     if (!is.numeric(filterParams)) {
