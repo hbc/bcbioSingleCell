@@ -8,11 +8,13 @@
     }
     cells <- intersect(
         colnames(object),
-        metadata(object)[["filterCells"]])
+        metadata(object)[["filterCells"]]
+    )
     if (is.null(cells)) {
         stop("'NULL' cells passed filtering", call. = FALSE)
     }
     object <- object[, cells]
+    metadata(object)[["filterCells"]] <- cells
 
     # Apply gene filtering cutoffs
     # Warn here instead of stop, since we didn't define in earlier versions
@@ -22,11 +24,13 @@
     }
     genes <- intersect(
         rownames(object),
-        metadata(object)[["filterGenes"]])
+        metadata(object)[["filterGenes"]]
+    )
     if (is.null(genes)) {
         warning("'NULL' genes passed filtering", call. = FALSE)
     } else {
         object <- object[genes, ]
+        metadata(object)[["filterGenes"]] <- genes
     }
 
     object
