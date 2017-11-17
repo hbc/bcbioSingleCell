@@ -41,8 +41,6 @@ NULL
     object,
     ...) {
     object <- .applyFilterCutoffs(object)
-    cells <- colnames(object)
-    genes <- rownames(object)
 
     # Here the `arguments` are captured as a named character vector. The names
     # of the arguments represent the column names. The value of the arguments
@@ -55,9 +53,8 @@ NULL
         stop("Arguments must be character", call. = FALSE)
     }
 
-    # Convert all factors to strings for matching
+    # Match the arguments against the sample metadata
     sampleMetadata <- sampleMetadata(object)
-
     list <- lapply(seq_along(arguments), function(a) {
         column <- names(arguments)[[a]]
         argument <- arguments[[a]]
@@ -82,7 +79,6 @@ NULL
         }
         pull(match, "sampleID")
     })
-
     sampleIDs <- Reduce(f = intersect, x = list) %>%
         unique() %>%
         sort()
@@ -101,12 +97,12 @@ NULL
     ))
 
     # Use the metrics data.frame to match the cellular barcodes
-    metrics <- metrics(object, filterCells = TRUE) %>%
+    metrics <- metrics(object) %>%
         .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
     if (!nrow(metrics)) {
         stop("Failed to match metrics", call. = FALSE)
     }
-    message(paste(nrow(metrics), "cellular barcodes"))
+    message(paste(nrow(metrics), "cells matched"))
     cells <- rownames(metrics)
 
     # Now subset the object to contain only the cell matches
@@ -115,7 +111,7 @@ NULL
     # Update the bcbio slot
     cellularBarcodes <- bcbio(subset, "cellularBarcodes")
     if (!is.null(cellularBarcodes)) {
-        bcbio(subset, "cellularBarcodes") <- cellularBarcodes[sampleID]
+        bcbio(subset, "cellularBarcodes") <- cellularBarcodes[sampleIDs]
     }
 
     # Update the metadata slot
