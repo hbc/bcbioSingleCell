@@ -78,8 +78,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom Seurat CreateSeuratObject FindVariableGenes NormalizeData
-#'   ScaleData
+#' @importFrom Seurat CreateSeuratObject
 #'
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
@@ -121,21 +120,6 @@ NULL
     # Stash bcbio run metadata into `misc` slot
     slot(seurat, "misc")[["bcbio"]] <- metadata(from)
 
-    # Normalize and scale the seurat object
-    seurat <- seurat %>%
-        NormalizeData(
-            object = .,
-            normalization.method = "LogNormalize",
-            scale.factor = 10000) %>%
-        FindVariableGenes(
-            object = .,
-            mean.function = ExpMean,
-            dispersion.function = LogVMR,
-            do.plot = FALSE) %>%
-        ScaleData(
-            object = .,
-            model.use = "linear")
-
     print(seurat)
     seurat
 }
@@ -174,19 +158,11 @@ setAs(
 #' @rdname coerce
 #' @name coerce-bcbioSingleCell-seurat
 #' @section [bcbioSingleCell] to [seurat]:
-#' Interally, this begins by calling [Seurat::CreateSeuratObject()] without any
-#' additional filtering cutoffs, since we already applied them during our
+#' Interally [Seurat::CreateSeuratObject()] is called without applying any
+#' additional filtering cutoffs, since we have already defined them during our
 #' quality control analysis. Here we are passing the raw gene-level counts of
 #' the filtered cells into a new [seurat] class object, using [as()] object
-#' coercion. Next, global-scaling normalization is applied to the raw counts
-#' with [Seurat::NormalizeData()], which (1) normalizes the gene expression
-#' measurements for each cell by the total expression, (2) multiplies this by a
-#' scale factor (10,000 by default), and (3) log-transforms the result.
-#' [Seurat::FindVariableGenes()] is then called, which calculates the average
-#' expression and dispersion for each gene, places these genes into bins, and
-#' then calculates a z-score for dispersion within each bin. This helps control
-#' for the relationship between variability and average expression. Finally, the
-#' genes are scaled and centered using the [Seurat::ScaleData()] function.
+#' coercion.
 setAs(
     from = "bcbioSingleCell",
     to = "seurat",
