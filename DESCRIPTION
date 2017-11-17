@@ -7,7 +7,7 @@ Authors@R: as.person(c(
     "Rory Kirchner <roryk@alum.mit.edu> [aut]",
     "Mary Piper <mary.piper@gmail.com> [aut]",
     "Harvard Chan Bioinformatics Core <bioinformatics@hsph.harvard.edu> [cph, fnd]"
-  ))
+    ))
 URL:
     http://bioinformatics.sph.harvard.edu/bcbioSingleCell,
     https://github.com/hbc/bcbioSingleCell
