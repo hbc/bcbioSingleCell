@@ -5,7 +5,7 @@
 \title{Load 10X Genomics CellRanger Data}
 \usage{
 loadCellRanger(uploadDir, refDataDir, interestingGroups = "sampleName",
-  sampleMetadataFile, prefilter = TRUE, annotable, ...)
+  prefilter = TRUE, sampleMetadataFile, annotable, ...)
 }
 \arguments{
 \item{uploadDir}{Path to CellRanger output directory. This directory path
@@ -17,12 +17,12 @@ must contain \code{filtered_gene_bc_matrices/} as a child.}
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
+\item{prefilter}{Prefilter counts prior to quality control analysis.}
+
 \item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop). Consult the GitHub repo for examples and additional information.}
-
-\item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{annotable}{\emph{Optional}. User-defined gene annotations (a.k.a.
 "annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
