@@ -15,11 +15,11 @@ plotMitoRatio(object, ...)
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotMitoRatio}{data.frame}(object, geom = "violin", max = Inf,
-  interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
+  interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotMitoRatio}{seurat}(object, geom = "violin", max = Inf,
-  interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
+\S4method{plotMitoRatio}{seurat}(object, geom = "violin", max,
+  interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
@@ -43,9 +43,6 @@ histogram.}
 \code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
 \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
-
-\item{multiplexed}{Whether the FASTQ files are multiplexed. This is
-detected automatically for \link{bcbioSingleCell} objects.}
 }
 \value{
 \link{ggplot}.

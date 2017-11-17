@@ -53,7 +53,6 @@ NULL
     min = 0,
     max = Inf,
     interestingGroups,
-    multiplexed = FALSE,
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "nGene"
@@ -127,7 +126,6 @@ setMethod(
             object,
             interestingGroups = interestingGroups,
             filterCells = filterCells)
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         .plotGenesPerCell(
             object = metrics,
             geom = geom,
@@ -135,8 +133,7 @@ setMethod(
             max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })
 
 

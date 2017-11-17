@@ -34,7 +34,6 @@ NULL
     geom = "violin",
     max = Inf,
     interestingGroups,
-    multiplexed = FALSE,
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "mitoRatio"
@@ -58,9 +57,6 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
@@ -102,7 +98,6 @@ setMethod(
         if (missing(max)) {
             max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
         }
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(
             object,
             interestingGroups = interestingGroups,
@@ -113,8 +108,7 @@ setMethod(
             max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })
 
 
@@ -136,13 +130,15 @@ setMethod(
     function(
         object,
         geom = "violin",
-        max = Inf,
+        max,
         interestingGroups,
-        multiplexed = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
+        }
+        if (missing(max)) {
+            max <- bcbio(object)[["filterParams"]][["maxGenes"]]
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotMitoRatio(
@@ -151,6 +147,5 @@ setMethod(
             max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })

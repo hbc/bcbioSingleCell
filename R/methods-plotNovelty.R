@@ -36,7 +36,6 @@ NULL
     geom = "violin",
     min = 0,
     interestingGroups,
-    multiplexed = FALSE,
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "log10GenesPerUMI"
@@ -60,9 +59,6 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
@@ -104,7 +100,6 @@ setMethod(
         if (missing(min)) {
             min <- metadata(object)[["filterParams"]][["minNovelty"]]
         }
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(
             object,
             interestingGroups = interestingGroups,
@@ -115,8 +110,7 @@ setMethod(
             min = min,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })
 
 

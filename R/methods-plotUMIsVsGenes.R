@@ -39,7 +39,6 @@ NULL
 .plotUMIsVsGenes <- function(
     object,
     interestingGroups,
-    multiplexed = FALSE,
     color = scale_color_viridis(discrete = TRUE)) {
     p <- .plotQCScatterplot(object, xCol = "nUMI", yCol = "nGene")
 
@@ -57,9 +56,6 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
@@ -88,7 +84,6 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(
             object,
             interestingGroups = interestingGroups,
@@ -96,7 +91,6 @@ setMethod(
         .plotUMIsVsGenes(
             object = metrics,
             interestingGroups = interestingGroups,
-            multiplexed = multiplexed,
             color = color)
     })
 
@@ -120,7 +114,6 @@ setMethod(
     function(
         object,
         interestingGroups,
-        multiplexed = FALSE,
         color = scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
@@ -129,6 +122,5 @@ setMethod(
         .plotUMIsVsGenes(
             object = metrics,
             interestingGroups = interestingGroups,
-            multiplexed = multiplexed,
             color = color)
     })

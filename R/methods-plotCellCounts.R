@@ -40,7 +40,6 @@ NULL
     object,
     metadata,
     interestingGroups,
-    multiplexed = FALSE,
     fill = scale_fill_viridis(discrete = TRUE)) {
     data <- object %>%
         group_by(!!sym("sampleName")) %>%
@@ -79,10 +78,6 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) &
-        length(unique(object[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
@@ -114,12 +109,10 @@ setMethod(
             interestingGroups = interestingGroups,
             filterCells = filterCells)
         metadata <- sampleMetadata(object)
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         .plotCellCounts(
             object = metrics,
             metadata = metadata,
             interestingGroups = interestingGroups,
-            multiplexed = multiplexed,
             fill = fill)
     })
 
@@ -152,6 +145,5 @@ setMethod(
             object = metrics,
             metadata = metadata,
             interestingGroups = interestingGroups,
-            multiplexed = FALSE,
             fill = fill)
     })

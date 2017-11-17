@@ -14,7 +14,7 @@ plotCellCounts(object, ...)
   filterCells = FALSE, fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{data.frame}(object, metadata, interestingGroups,
-  multiplexed = FALSE, fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{seurat}(object, interestingGroups,
   fill = scale_fill_viridis(discrete = TRUE))
@@ -34,9 +34,6 @@ plotCellCounts(object, ...)
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 
 \item{metadata}{Sample metadata \link{data.frame}.}
-
-\item{multiplexed}{Whether the FASTQ files are multiplexed. This is
-detected automatically for \link{bcbioSingleCell} objects.}
 }
 \value{
 \link{ggplot}.
