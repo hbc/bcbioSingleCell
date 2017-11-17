@@ -8,10 +8,14 @@
     }
     cells <- intersect(
         colnames(object),
-        metadata(object)[["filterCells"]]
-    )
+        metadata(object)[["filterCells"]]) %>%
+        sort()
     if (is.null(cells)) {
-        stop("'NULL' cells passed filtering", call. = FALSE)
+        warning(paste(
+            "'NULL' cells passed filtering.",
+            "Resetting 'filterCells' metadata to all cells."
+        ), call. = FALSE)
+        cells <- colnames(object)
     }
     object <- object[, cells]
     metadata(object)[["filterCells"]] <- cells
@@ -24,14 +28,17 @@
     }
     genes <- intersect(
         rownames(object),
-        metadata(object)[["filterGenes"]]
-    )
+        metadata(object)[["filterGenes"]]) %>%
+        sort()
     if (is.null(genes)) {
-        warning("'NULL' genes passed filtering", call. = FALSE)
-    } else {
-        object <- object[genes, ]
-        metadata(object)[["filterGenes"]] <- genes
+        warning(paste(
+            "'NULL' genes passed filtering.",
+            "Resetting 'filterGenes' metadata to include all genes."
+        ), call. = FALSE)
+        genes <- rownames(object)
     }
+    object <- object[genes, ]
+    metadata(object)[["filterGenes"]] <- genes
 
     object
 }
