@@ -108,7 +108,9 @@ setMethod(
             object,
             interestingGroups = interestingGroups,
             filterCells = filterCells)
-        metadata <- sampleMetadata(object)
+        metadata <- sampleMetadata(
+            object,
+            interestingGroups = interestingGroups)
         .plotCellCounts(
             object = metrics,
             metadata = metadata,
@@ -139,8 +141,12 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
-        metrics <- metrics(object, interestingGroups = interestingGroups)
-        metadata <- sampleMetadata(object)
+        metrics <- metrics(
+            object,
+            interestingGroups = interestingGroups)
+        metadata <- sampleMetadata(
+            object,
+            interestingGroups = interestingGroups)
         .plotCellCounts(
             object = metrics,
             metadata = metadata,
