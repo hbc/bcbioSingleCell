@@ -19,16 +19,27 @@ NULL
 #' @importFrom stringr str_match
 #' @importFrom tibble rownames_to_column
 .aggregateReplicates <- function(object) {
-    cells <- metrics(object, aggregateReplicates = TRUE) %>%
-        select(c("sampleID", "sampleName", "cellularBarcode")) %>%
-        mutate(
-            cells = paste(
-                .data[["sampleName"]],
-                .data[["cellularBarcode"]],
-                sep = "_"
-            )
-        ) %>%
-        pull("cells")
+    metadata <- sampleMetadata(object)
+    if (!"sampleNameAggregate" %in% colnames(metadata)) {
+        stop("'sampleNameAggregate' not present in sample metadata")
+    }
+    metadata <- metadata[, c("sampleID", "sampleName", "sampleNameAggregate")]
+    metadata[["sampleIDAggregate"]] <- make.names(
+        metadata[["sampleNameAggregate"]],
+        unique = FALSE)
+    # We'll end up replacing `sampleID` and `sampleName` columns with the
+    # corresponding `*Aggregate` columns.
+
+    metrics <- metrics(object)
+    cell2sample <- cell2sample(object)
+
+    map <- left_join(cell2sample, metadata, by = "sampleID")
+    cells <- mapply(
+        FUN = gsub,
+        x = map[["cellID"]],
+        pattern = paste0("^", map[["sampleID"]]),
+        replacement = map[["sampleIDAggregate"]]
+    )
 
     # Aggregate the counts
     counts <- aggregateReplicates(assay(object), cells = cells)
