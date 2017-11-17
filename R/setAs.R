@@ -99,33 +99,30 @@ NULL
     print(filterParams)
 
     # Create the initial `seurat` object
-    rawData <- counts(from, gene2symbol = TRUE)
+    counts <- counts(from, gene2symbol = TRUE)
     metrics <- metrics(from)
 
-    # Ensure that cutoffs are defined
-    minGenes <- metadata(from)[["filterParams"]][["minGenes"]]
-    if (!is.numeric(minGenes)) {
-        stop("'minGenes' is not defined", call. = FALSE)
-    }
-    minCells <- metadata(from)[["filterParams"]][["minCellsPerGene"]]
-    # Check for NULL here
-    if (!is.numeric(minCells)) {
-        stop("'minCells' is not defined", call. = FALSE)
-    }
-
-    # Note here that passing in the `minCells` argument will rescale the number
-    # of genes, since we calculated our genes that passed cutoffs based on
-    # detection in all cells in the dataset. It makes sense to see the gene
-    # count decrease here on a bcbioSingleCell object that has been subset from
-    # the main dataset (e.g. using `selectSamples()`).
     seurat <- CreateSeuratObject(
-        raw.data = rawData,
+        raw.data = counts,
         project = "bcbioSingleCell",
-        min.cells = minCells,
-        min.genes = minGenes,
+        # Already applied filtering cutoffs for cells and genes
+        min.cells = 0,
+        min.genes = 0,
         # Default for UMI datasets
         is.expr = 0,
-        meta.data = metrics) %>%
+        meta.data = metrics)
+
+    # Check that the dimensions match exactly
+    if (!identical(dim(from), dim(slot(seurat, "raw.data")))) {
+        stop("Dimension mismatch between bcbioSingleCell and seurat objects",
+             call. = FALSE)
+    }
+
+    # Stash bcbio run metadata into `misc` slot
+    slot(seurat, "misc")[["bcbio"]] <- metadata(from)
+
+    # Normalize and scale the seurat object
+    seurat <- seurat %>%
         NormalizeData(
             object = .,
             normalization.method = "LogNormalize",
@@ -138,9 +135,6 @@ NULL
         ScaleData(
             object = .,
             model.use = "linear")
-
-    # Stash bcbio run metadata into `misc` slot
-    slot(seurat, "misc")[["bcbio"]] <- metadata(from)
 
     print(seurat)
     seurat
