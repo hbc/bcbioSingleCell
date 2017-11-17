@@ -20,8 +20,6 @@
 #'   [viridis::scale_fill_viridis()]. Must supply discrete values. When set to
 #'   `NULL`, the default ggplot2 color palette will be used. If manual color
 #'   definitions are desired, we recommend using [ggplot2::scale_fill_manual()].
-#' @param multiplexed Whether the FASTQ files are multiplexed. This is
-#'   detected automatically for [bcbioSingleCell] objects.
 #' @param samplesOnYAxis Plot the samples on the y axis. Doesn't apply to
 #'   histogram.
 #'
@@ -80,9 +78,6 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
@@ -166,7 +161,6 @@ setMethod(
         min,
         max,
         interestingGroups,
-        multiplexed = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
@@ -186,6 +180,5 @@ setMethod(
             max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })
