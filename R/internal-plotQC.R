@@ -163,7 +163,6 @@ validQCGeomFlip <- c(
             fill = "interestingGroups")
     ) +
         geom_violin(
-            alpha = qcPlotAlpha,
             color = lineColor,
             scale = "width",
             trim = TRUE) +
