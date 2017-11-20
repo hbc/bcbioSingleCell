@@ -83,12 +83,14 @@ NULL
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <-
         sampleMetadata(object, aggregateReplicates = TRUE)
-    # Need to update filterCells. We can use the named `cells` character vector
-    # defined above to remap.
-    filterCells <- metadata[["filterCells"]]
-    metadata[["filterCells"]] <- cells[filterCells]
     # Slot the named vector used to aggregate the replicates
     metadata[["aggregateReplicates"]] <- cells
+    # Update filtered cells. We can use the named `cells` character vector
+    # defined above to remap.
+    filterCells <- metadata[["filterCells"]]
+    if (!is.null(filterCells)) {
+        metadata[["filterCells"]] <- cells[filterCells]
+    }
 
     # Update the names in the raw cellular barcode distributions list
     message("Aggregating raw cellular barcode counts")
