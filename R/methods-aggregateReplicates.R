@@ -66,6 +66,11 @@ NULL
              call. = FALSE)
     }
 
+    # Update the cell2sample mappings
+    cell2sample <- cell2sample(
+        object = colnames(counts),
+        samples = newIDs)
+
     # Recalculate cellular barcode metrics
     annotable <- annotable(object)
     prefilter <- metadata(object)[["prefilter"]]
@@ -83,6 +88,7 @@ NULL
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <-
         sampleMetadata(object, aggregateReplicates = TRUE)
+    metadata[["cell2sample"]] <- cell2sample
     # Slot the named vector used to aggregate the replicates
     metadata[["aggregateReplicates"]] <- cells
     # Update filtered cells. We can use the named `cells` character vector
