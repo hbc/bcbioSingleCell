@@ -4,14 +4,14 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr bind_rows group_by mutate mutate_if
+#' @importFrom dplyr bind_rows group_by mutate
 #' @importFrom parallel mclapply
 #' @importFrom rlang !!
-#' @importFrom tibble as_tibble
+#' @importFrom tibble column_to_rownames
 #'
 #' @param list List of cellular barcodes.
 #'
-#' @return [tibble] grouped by `sampleID`.
+#' @return [data.frame].
 .bindCellularBarcodes <- function(list) {
     list <- mclapply(seq_along(list), function(a) {
         # Add the sampleID as a column
@@ -19,18 +19,18 @@
         list[[a]] %>%
             mutate(sampleID = !!sampleID)
     })
-    tbl <- list %>%
+    df <- list %>%
         bind_rows() %>%
-        as_tibble() %>%
+        as.data.frame() %>%
         mutate(
-            cellID = paste(.data[["sampleID"]],
-                           .data[["cellularBarcode"]],
-                           sep = "_")
+            rowname = paste(.data[["sampleID"]],
+                            .data[["cellularBarcode"]],
+                            sep = "_"),
+            sampleID = as.factor(.data[["sampleID"]])
         ) %>%
-        .[, c("sampleID", "cellularBarcode", "cellID", "nCount")] %>%
-        mutate_if(is.character, as.factor) %>%
-        group_by(.data[["sampleID"]])
-    tbl
+        column_to_rownames() %>%
+        .[, c("sampleID", "cellularBarcode", "nCount")]
+    df
 }
 
 
@@ -47,11 +47,10 @@
 #'
 #' @return [list].
 .cellularBarcodesList <- function(sampleDirs) {
-    files <- file.path(paste(
-        basename(sampleDirs),
-        "barcodes.tsv",
-        sep = "-"
-    ))
+    files <- file.path(
+        normalizePath(sampleDirs),
+        paste(basename(sampleDirs), "barcodes.tsv", sep = "-")
+    )
     names(files) <- names(sampleDirs)
     if (!all(file.exists(files))) {
         stop("Cellular barcode file missing", call. = FALSE)
