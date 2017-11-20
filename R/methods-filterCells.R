@@ -53,7 +53,7 @@ NULL
     maxMitoRatio = 0.1,
     minNovelty = 0.8,
     minCellsPerGene = 3,
-    showReport = TRUE,
+    showReport = FALSE,
     headerLevel = 2,
     destructive = FALSE) {
     # Ensure that all filter parameters are numeric
@@ -63,8 +63,7 @@ NULL
         maxGenes = maxGenes,
         maxMitoRatio = maxMitoRatio,
         minNovelty = minNovelty,
-        minCellsPerGene = minCellsPerGene
-    )
+        minCellsPerGene = minCellsPerGene)
     if (!is.numeric(filterParams)) {
         stop("Filter parameters must all be numeric", call. = FALSE)
     }
@@ -129,7 +128,19 @@ NULL
 
     # Destructive mode ====
     if (isTRUE(destructive)) {
+        message(paste(
+            "Destructive filtering applied.",
+            "Dropping low quality cells from the dataset."
+        ))
         object <- .applyFilterCutoffs(object)
+    } else {
+        message(paste(
+            "Non-destructive filtering applied.",
+            "  cutoffs: metadata(object)$filterParams",
+            "    cells: metadata(object)$filterCells",
+            "    genes: metadata(object)$filterGenes",
+            sep = "\n"
+        ))
     }
 
     # Show summary statistics report and plots, if desired
