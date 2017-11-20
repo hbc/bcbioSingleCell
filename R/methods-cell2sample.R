@@ -23,9 +23,11 @@ NULL
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
+#'
+#' @return Named character vector.
 .cell2sample <- function(cells, samples) {
     cells <- as.character(cells)
-    samples <- as.character(samples)
+    samples <- unique(as.character(samples))
     list <- mclapply(seq_along(samples), function(a) {
         pattern <- paste0("^(", samples[[a]], barcodePattern)
         match <- str_match(cells, pattern = pattern) %>%
@@ -39,15 +41,16 @@ NULL
             ) %>%
             select(c("cellID", "sampleID")) %>%
             filter(!is.na(.data[["sampleID"]]))
-        match
+        vec <- match[["sampleID"]]
+        names(vec) <- match[["cellID"]]
+        vec
     })
-    cell2sample <- bind_rows(list) %>%
-        mutate(sampleID = as.factor(.data[["sampleID"]]))
-    if (!identical(length(cells), nrow(cell2sample))) {
+    cell2sample <- unlist(list)
+    if (!identical(length(cells), length(cell2sample))) {
         stop("Failed to correctly match sample IDs to cellular barcodes",
              call. = FALSE)
     }
-    cell2sample
+    as.factor(cell2sample)
 }
 
 
@@ -74,15 +77,23 @@ setMethod(
     "cell2sample",
     signature("bcbioSingleCell"),
     function(object) {
-        # Define the cell2sample mappings
-        # This uses a stashed `data.frame` as of v0.0.22, for better speed
         cell2sample <- metadata(object)[["cell2sample"]]
         if (is.null(cell2sample)) {
-            cell2sample <- .cell2sample(
+            return(.cell2sample(
                 cells = colData[["cellID"]],
                 samples = metadata[["sampleID"]]
-            )
+            ))
         }
-        cell2sample[["sampleID"]] <- as.factor(cell2sample[["sampleID"]])
-        cell2sample
+        # Version-specific fixes
+        if (metadata(object)[["version"]] == "0.0.22") {
+            # v0.0.22 stashed this as a data.frame instead
+            if (is.data.frame(cell2sample)) {
+                cells <- as.character(cell2sample[["cellID"]])
+                samples <- as.factor(cell2sample[["sampleID"]])
+                cell2sample <- samples
+                names(cell2sample) <- cells
+            } else {
+                cell2sample <- NULL
+            }
+        }
     })
