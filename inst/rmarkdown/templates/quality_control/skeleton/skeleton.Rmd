@@ -122,11 +122,17 @@ bcb <- filterCells(
     maxGenes = params$maxGenes,
     maxMitoRatio = params$maxMitoRatio,
     minNovelty = params$minNovelty,
-    minCellsPerGene = params$minCellsPerGene)
+    minCellsPerGene = params$minCellsPerGene,
+    showReport = TRUE,
+    headerLevel = 2,
+    destructive = FALSE)
 ```
 
 ```{r resave}
-assignAndSaveData(name = bcbName, object = bcb, dir = dataDir)
+assignAndSaveData(
+    name = bcbName,
+    object = bcb,
+    dir = dataDir)
 ```
 
 
