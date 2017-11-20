@@ -35,29 +35,16 @@ setMethod(
         if (isTRUE(filterCells)) {
             object <- .applyFilterCutoffs(object)
         }
-
-        colData <- colData(object) %>%
-            as.data.frame() %>%
-            rownames_to_column("cellID")
-
-        # Prepare the metadata
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
-        metadata <- metadata(object)[["sampleMetadata"]] %>%
+        sampleID <- cell2sample(object)
+        sampleMetadata <- sampleMetadata(object)
+        colData(object) %>%
             as.data.frame() %>%
-            uniteInterestingGroups(interestingGroups) %>%
-            # Ensure all the columns are factors here. This will also sanitize
-            # any previously saved datasets, where the sample identifiers are
-            # character vectors.
-            mutate_all(as.factor)
-
-        cell2sample <- cell2sample(object)
-
-        colData %>%
-            left_join(cell2sample, by = "cellID") %>%
-            left_join(metadata, by = "sampleID") %>%
-            column_to_rownames("cellID")
+            cbind(sampleID) %>%
+            left_join(sampleMetadata, by = "sampleID") %>%
+            uniteInterestingGroups(interestingGroups)
     })
 
 
