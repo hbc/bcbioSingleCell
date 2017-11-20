@@ -41,9 +41,14 @@ NULL
     # We'll end up replacing `sampleID` and `sampleName` columns with the
     # corresponding `*Aggregate` columns.
 
-    metrics <- metrics(object)
-    cell2sample <- cell2sample(object)
+    # Message the new sample IDs
+    newIDs <- unique(sampleMetadata[["sampleIDAggregate"]])
+    message(paste(
+        "New sample IDs:", toString(newIDs)
+    ))
 
+    message("Remapping cellular barcodes to aggregate sample IDs")
+    cell2sample <- cell2sample(object)
     map <- left_join(cell2sample, sampleMetadata, by = "sampleID")
     cells <- mapply(
         FUN = gsub,
@@ -53,6 +58,7 @@ NULL
     )
 
     # Aggregate the counts
+    message("Aggregating the counts")
     counts <- aggregateReplicates(assay(object), cells = cells)
     # Check that the count number of counts matches
     if (!identical(sum(assay(object)), sum(counts))) {
@@ -73,6 +79,7 @@ NULL
     }
 
     # Update the metadata slot
+    message("Updating metadata")
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <-
         sampleMetadata(object, aggregateReplicates = TRUE)
@@ -84,6 +91,7 @@ NULL
     metadata[["aggregateReplicates"]] <- cells
 
     # Update the names in the raw cellular barcode distributions list
+    message("Aggregating raw cellular barcode counts")
     cbList <- bcbio(object, "cellularBarcodes")
     # Aggregate and split back out as a list? There's probably a more efficient
     # way to do this
@@ -106,16 +114,16 @@ NULL
         arrange(desc(.data[["nCount"]]), .by_group = TRUE)
     # Group and sum the counts
     # Now split this back out into a list to match the original data structure
-    aggregateIDs <- unique(sampleMetadata[["sampleIDAggregate"]])
-    cbListAggregate <- lapply(seq_along(aggregateIDs), function(a) {
+    cbListAggregate <- lapply(seq_along(newIDs), function(a) {
         cbRemap %>%
             ungroup() %>%
-            filter(sampleID == aggregateIDs[[a]]) %>%
+            filter(sampleID == newIDs[[a]]) %>%
             mutate(sampleID = NULL)
     })
-    names(cbListAggregate) <- as.character(aggregateIDs)
+    names(cbListAggregate) <- as.character(newIDs)
 
     # Return bcbioSingleCell
+    message("Regenerating bcbioSingleCell object")
     se <- SummarizedExperiment(
         assays = list(assay = counts),
         rowData = annotable,
