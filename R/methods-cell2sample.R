@@ -96,4 +96,5 @@ setMethod(
                 cell2sample <- NULL
             }
         }
+        cell2sample
     })
