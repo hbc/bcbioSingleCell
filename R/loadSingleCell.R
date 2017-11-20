@@ -10,7 +10,7 @@
 #'   prepareSummarizedExperiment readDataVersions readGTF readLogFile
 #'   readProgramVersions readSampleMetadataFile readYAML sampleYAMLMetadata
 #'   tx2geneFromGTF
-#' @importFrom dplyr everything filter left_join mutate mutate_if pull select
+#' @importFrom dplyr everything filter pull select
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
 #' @importFrom stats na.omit setNames
@@ -280,6 +280,10 @@ loadSingleCell <- function(
     }
 
     # Counts ===================================================================
+    # Raw cellular barcode reads
+    cbList <- .cellularBarcodesList(sampleDirs)
+    cbBind <- .bindCellularBarcodes(cbList)
+
     message(paste("Reading counts at", countsLevel, "level"))
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
@@ -298,22 +302,13 @@ loadSingleCell <- function(
     }
 
     # Metrics ==================================================================
-    # Obtain the raw cellular barcode read distributions
-    cellularBarcodes <- .cellularBarcodesList(sampleDirs)
-    cellularBarcodesTibble <- cellularBarcodes %>%
-        .bindCellularBarcodes() %>%
-        .[, c("cellID", "nCount")] %>%
-        mutate_if(is.factor, as.character)
-
     metrics <- calculateMetrics(
         counts,
         annotable = annotable,
         prefilter = prefilter) %>%
         as.data.frame() %>%
-        rownames_to_column("cellID") %>%
-        left_join(cellularBarcodesTibble, by = "cellID") %>%
-        select("nCount", everything()) %>%
-        column_to_rownames("cellID")
+        cbind(cbBind) %>%
+        select("nCount", everything())
 
     if (isTRUE(prefilter)) {
         # Subset the counts matrix to match the cells that passed prefiltering
@@ -321,8 +316,8 @@ loadSingleCell <- function(
     }
 
     # Cell to sample mappings ==================================================
-    cell2sample <- .cell2sample(
-        cells = rownames(metrics),
+    cell2sample <- cell2sample(
+        rownames(metrics),
         samples = rownames(sampleMetadata)
     )
 
@@ -379,6 +374,6 @@ loadSingleCell <- function(
     bcb <- new("bcbioSingleCell", se)
     # Keep these in the bcbio slot because they contain filtered cellular
     # barcodes not present in the main assay matrix.
-    bcbio(bcb, "cellularBarcodes") <- cellularBarcodes
+    bcbio(bcb, "cellularBarcodes") <- cbList
     bcb
 }
