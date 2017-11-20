@@ -279,11 +279,11 @@ loadSingleCell <- function(
         gene2symbol <- NULL
     }
 
-    # Counts ===================================================================
-    # Raw cellular barcode reads
+    # Cellular barcode distributions ===========================================
     cbList <- .cellularBarcodesList(sampleDirs)
     cbBind <- .bindCellularBarcodes(cbList)
 
+    # Counts ===================================================================
     message(paste("Reading counts at", countsLevel, "level"))
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
@@ -305,10 +305,9 @@ loadSingleCell <- function(
     metrics <- calculateMetrics(
         counts,
         annotable = annotable,
-        prefilter = prefilter) %>%
-        as.data.frame() %>%
-        cbind(cbBind) %>%
-        select("nCount", everything())
+        prefilter = prefilter)
+    cbPass <- cbBind[rownames(metrics), ]
+    metrics <- cbind(metrics, cbPass)
 
     if (isTRUE(prefilter)) {
         # Subset the counts matrix to match the cells that passed prefiltering
