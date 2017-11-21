@@ -11,8 +11,7 @@ filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000,
   minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.8,
-  minCellsPerGene = 3, showReport = FALSE, headerLevel = 2,
-  destructive = TRUE)
+  minCellsPerGene = 3, showReport = FALSE, headerLevel = 2, drop = TRUE)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
 }
@@ -38,7 +37,7 @@ this many cells.}
 
 \item{headerLevel}{RMarkdown header level, if \code{showReport = TRUE}.}
 
-\item{destructive}{Drop low quality cells from object after filtering.
+\item{drop}{Drop low quality cells from object after filtering.
 Enabled by default and generally recommended. If set \code{FALSE}, then the this
 function simply saves \code{filterCells}, \code{filterGenes}, and \code{filterParams} into
 the \code{\link[=metadata]{metadata()}} slot.}

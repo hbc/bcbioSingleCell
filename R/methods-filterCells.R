@@ -20,7 +20,7 @@
 #'   this many cells.
 #' @param showReport Show summary statistics report and plots.
 #' @param headerLevel RMarkdown header level, if `showReport = TRUE`.
-#' @param destructive Drop low quality cells from object after filtering.
+#' @param drop Drop low quality cells from object after filtering.
 #'   Enabled by default and generally recommended. If set `FALSE`, then the this
 #'   function simply saves `filterCells`, `filterGenes`, and `filterParams` into
 #'   the [metadata()] slot.
@@ -54,7 +54,7 @@ NULL
     minCellsPerGene = 3,
     showReport = FALSE,
     headerLevel = 2,
-    destructive = TRUE) {
+    drop = TRUE) {
     # Ensure that all filter parameters are numeric
     filterParams <- c(
         minUMIs = minUMIs,
@@ -125,8 +125,8 @@ NULL
     metadata(object)[["filterGenes"]] <- filterGenes
     metadata(object)[["filterParams"]] <- filterParams
 
-    # Destructive mode ====
-    if (isTRUE(destructive)) {
+    # Drop cells (destructive) ====
+    if (isTRUE(drop)) {
         message(paste(
             "Dropping low quality cells from the dataset"
         ))
