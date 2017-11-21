@@ -281,7 +281,7 @@ loadSingleCell <- function(
 
     # Cellular barcode distributions ===========================================
     cbList <- .cellularBarcodesList(sampleDirs)
-    cbBind <- .bindCellularBarcodes(cbList)
+    cbData <- .bindCellularBarcodes(cbList)
 
     # Counts ===================================================================
     message(paste("Reading counts at", countsLevel, "level"))
@@ -306,7 +306,8 @@ loadSingleCell <- function(
         counts,
         annotable = annotable,
         prefilter = prefilter)
-    cbPass <- cbBind[rownames(metrics), ]
+    # Bind the `nCount` column to the metrics
+    cbPass <- cbData[rownames(metrics), "nCount"]
     metrics <- cbind(metrics, cbPass)
 
     if (isTRUE(prefilter)) {
