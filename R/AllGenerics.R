@@ -177,6 +177,14 @@ setGeneric("plotNovelty", function(object, ...) {
 
 
 
+#' @rdname plotQC
+#' @export
+setGeneric("plotQC", function(object, ...) {
+    standardGeneric("plotQC")
+})
+
+
+
 #' @rdname plotReadsPerCell
 #' @export
 setGeneric("plotReadsPerCell", function(object, ...) {
@@ -225,18 +233,18 @@ setGeneric("plotUMIsVsGenes", function(object, ...) {
 
 
 
-#' @rdname prepareSingleCellTemplate
-#' @export
-setGeneric("prepareSingleCellTemplate", function(object, ...) {
-    standardGeneric("prepareSingleCellTemplate")
-})
-
-
-
 #' @rdname plotZerosVsDepth
 #' @export
 setGeneric("plotZerosVsDepth", function(object, ...) {
     standardGeneric("plotZerosVsDepth")
+})
+
+
+
+#' @rdname prepareSingleCellTemplate
+#' @export
+setGeneric("prepareSingleCellTemplate", function(object, ...) {
+    standardGeneric("prepareSingleCellTemplate")
 })
 
 

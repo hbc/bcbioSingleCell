@@ -11,9 +11,8 @@
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
+#' @inheritParams plotQC
 #'
-#' @param geom Plot type. Supported formats: `boxplot`, `histogram`,
-#'   `ridgeline`, and `violin`.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #' @param fill Desired ggplot fill scale. Defaults to
