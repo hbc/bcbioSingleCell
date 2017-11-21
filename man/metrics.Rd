@@ -7,8 +7,7 @@
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{bcbioSingleCell}(object, interestingGroups,
-  filterCells = FALSE)
+\S4method{metrics}{bcbioSingleCell}(object, interestingGroups)
 
 \S4method{metrics}{seurat}(object, interestingGroups)
 }
@@ -16,8 +15,6 @@
 \item{object}{Object.}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 }
 \value{
 \link{data.frame} with cellular barcodes as rows.
