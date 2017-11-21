@@ -117,8 +117,7 @@ NULL
             y = "log10Count",
             fill = interestingGroups)
     ) +
-        labs(title = "raw violin",
-             y = "log10 reads per cell") +
+        labs(y = "log10 reads per cell") +
         geom_violin(
             alpha = qcPlotAlpha,
             color = lineColor,
@@ -173,8 +172,7 @@ NULL
             y = "sampleName",
             fill = interestingGroups)
     ) +
-        labs(title = "raw ridgeline",
-             x = "log10 reads per cell") +
+        labs(x = "log10 reads per cell") +
         geom_density_ridges(
             alpha = qcPlotAlpha,
             color = lineColor,
@@ -227,8 +225,7 @@ NULL
     ) +
         geom_line(alpha = qcPlotAlpha,
                   size = 1.5) +
-        labs(title = "proportional histogram",
-             x = "log10 reads per cell",
+        labs(x = "log10 reads per cell",
              y = "proportion of cells") +
         scale_color_viridis(discrete = TRUE)
 
