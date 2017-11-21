@@ -63,36 +63,79 @@ NULL
         minNovelty = minNovelty,
         minCellsPerGene = minCellsPerGene)
     if (!is.numeric(filterParams)) {
-        stop("Filter parameters must all be numeric", call. = FALSE)
+        stop("Filter parameters must be numeric", call. = FALSE)
     }
+    # Add support `nCount` filtering in a future update
 
     # Filter low quality cells ====
     # Don't use `subset()` here. That function uses non-standard evaluation that
     # should only be used interactively in a script.
+
     colData <- colData(object)
-    if (!is.null(minUMIs)) {
+    message(paste(
+        nrow(colData), "cells before filtering"
+    ))
+
+    # minUMIs
+    if (!is.null(minUMIs) & minUMIs > 0) {
         colData <- colData %>%
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
+        message(paste(
+            nrow(colData), "cells after 'minUMIs' cutoff"
+        ))
+    } else {
+        message("'minUMIs' cutoff not applied")
     }
-    if (!is.null(minGenes)) {
+
+    # minGenes
+    if (!is.null(minGenes) & minGenes > 0) {
         colData <- colData %>%
             .[.[["nGene"]] >= minGenes, , drop = FALSE]
+        message(paste(
+            nrow(colData), "cells after 'minGenes' cutoff"
+        ))
+    } else {
+        message("'minGenes' cutoff not applied")
     }
-    if (!is.null(maxGenes)) {
+
+    # maxGenes
+    if (!is.null(maxGenes) & maxGenes < Inf) {
         colData <- colData %>%
             .[.[["nGene"]] <= maxGenes, , drop = FALSE]
+        message(paste(
+            nrow(colData), "cells after 'maxGenes' cutoff"
+        ))
+    } else {
+        message("'maxGenes' cutoff not applied")
     }
-    if (!is.null(maxMitoRatio)) {
+
+    # maxMitoRatio
+    if (!is.null(maxMitoRatio) & maxMitoRatio < 1) {
         colData <- colData %>%
             .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
+        message(paste(
+            nrow(colData), "cells after 'maxMitoRatio' cutoff"
+        ))
+    } else {
+        message("'maxMitoRatio' cutoff not applied")
     }
-    if (!is.null(minNovelty)) {
+
+    # minNovelty
+    if (!is.null(minNovelty) & minNovelty > 0) {
         colData <- colData %>%
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
+        message(paste(
+            nrow(colData), "cells after 'minNovelty' cutoff"
+        ))
+    } else {
+        message("'minNovelty' cutoff not applied")
     }
-    if (!nrow(metrics)) {
+
+    # Check for remaining cells
+    if (!nrow(colData)) {
         stop("No cells passed filtering", call. = FALSE)
     }
+
     filterCells <- rownames(colData)
     message(paste(
         length(filterCells),
@@ -126,7 +169,7 @@ NULL
     # Drop cells (destructive) ====
     if (isTRUE(drop)) {
         message(paste(
-            "Dropping low quality cells from the dataset"
+            "Dropping low quality cells and genes from the dataset"
         ))
         object <- .applyFilterCutoffs(object)
     } else {
