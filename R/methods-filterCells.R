@@ -165,8 +165,13 @@ NULL
     metadata(object)[["filterCells"]] <- cells
     metadata(object)[["filterGenes"]] <- genes
     metadata(object)[["filterParams"]] <- params
+    cell2sample <- cell2sample(
+        cells,
+        samples = sampleMetadata(object)[["sampleID"]]
+    )
+    metadata(object)[["cell2sample"]] <- cell2sample
 
-    # Drop cells (destructive) ====
+    # Drop cells and genes (destructive) ====
     if (isTRUE(drop)) {
         message(paste(
             "Dropping low quality cells and genes from the object"
