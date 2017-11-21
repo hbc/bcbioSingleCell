@@ -169,7 +169,7 @@ NULL
     # Drop cells (destructive) ====
     if (isTRUE(drop)) {
         message(paste(
-            "Dropping low quality cells and genes from the dataset"
+            "Dropping low quality cells and genes from the object"
         ))
         object <- .applyFilterCutoffs(object)
     } else {
