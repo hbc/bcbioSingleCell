@@ -72,7 +72,6 @@ setMethod(
     function(
         object,
         interestingGroups,
-        filterCells = FALSE,
         samplesOnYAxis = TRUE,
         color = scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
@@ -80,8 +79,7 @@ setMethod(
         }
         metrics <- metrics(
             object,
-            interestingGroups = interestingGroups,
-            filterCells = filterCells)
+            interestingGroups = interestingGroups)
         .plotMitoVsCoding(
             object = metrics,
             interestingGroups = interestingGroups,

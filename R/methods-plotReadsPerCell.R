@@ -264,8 +264,7 @@ NULL
 .plotReadsPerCell <- function(
     object,
     geom = "histogram",
-    interestingGroups,
-    filterCells = FALSE) {
+    interestingGroups) {
     skipMessage <- paste(
         "Raw cellular barcodes are not defined",
         "in 'object@bcbio' slot...skipping"
@@ -276,16 +275,15 @@ NULL
     }
 
     # Obtain the cellular barcode distributions
-    if (isTRUE(filterCells)) {
-        # These will be defined in the metrics `nCount` column
-        metrics <- metrics(object, filterCells = TRUE)
+    if (!is.null(metadata(object)[["filterParams"]])) {
+        # Check to see if the object has been filtered, and use the stashed
+        # metadata in the metrics for better performance. The read counts are
+        # defined in the metrics `nCount` column.
+        metrics <- metrics(object)
         if (!"nCount" %in% colnames(metrics)) {
             return(message(skipMessage))
         }
-        # cellID, sampleID, nCount
-        cellularBarcodes <- metrics %>%
-            rownames_to_column("cellID") %>%
-            .[, c("cellID", "sampleID", "nCount")]
+        cellularBarcodes <- metrics[, c("sampleID", "nCount")]
     } else {
         cellularBarcodes <- bcbio(object, "cellularBarcodes")
         if (is.null(cellularBarcodes)) {

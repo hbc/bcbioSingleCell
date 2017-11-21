@@ -110,7 +110,6 @@ setMethod(
         min,
         max,
         interestingGroups,
-        filterCells = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
@@ -124,8 +123,7 @@ setMethod(
         }
         metrics <- metrics(
             object,
-            interestingGroups = interestingGroups,
-            filterCells = filterCells)
+            interestingGroups = interestingGroups)
         .plotGenesPerCell(
             object = metrics,
             geom = geom,

@@ -99,15 +99,13 @@ setMethod(
     function(
         object,
         interestingGroups,
-        filterCells = FALSE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
         metrics <- metrics(
             object,
-            interestingGroups = interestingGroups,
-            filterCells = filterCells)
+            interestingGroups = interestingGroups)
         metadata <- sampleMetadata(
             object,
             interestingGroups = interestingGroups)
