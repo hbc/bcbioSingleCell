@@ -10,7 +10,6 @@
 #' @inheritParams AllGenerics
 #'
 #' @param interestingGroups Interesting group, to use for colors.
-#' @param filterCells Show only the cells that have passed filtering cutoffs.
 #'
 #' @seealso [sampleMetadata()].
 #'
@@ -30,21 +29,28 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        interestingGroups,
-        filterCells = FALSE) {
-        if (isTRUE(filterCells)) {
-            object <- .applyFilterCutoffs(object)
-        }
+        interestingGroups) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
+
+        colData <- colData(object)
+        # Check for malformed colData. Safe to remove in a future update.
+        if ("sampleID" %in% colnames(colData)) {
+            warning("Sample ID shouldn't be set in colData",
+                 call. = FALSE)
+            colData[["sampleID"]] <- NULL
+        }
+
         sampleID <- cell2sample(object)
-        sampleMetadata <- sampleMetadata(object)
-        colData(object) %>%
-            as.data.frame() %>%
+        sampleMetadata <- sampleMetadata(
+            object,
+            interestingGroups = interestingGroups)
+
+        metrics <- as.data.frame(colData) %>%
             cbind(sampleID) %>%
-            left_join(sampleMetadata, by = "sampleID") %>%
-            uniteInterestingGroups(interestingGroups)
+            left_join(sampleMetadata, by = "sampleID")
+        metrics
     })
 
 
@@ -68,8 +74,11 @@ setMethod(
         camel(strict = FALSE) %>%
         rownames_to_column("cellID") %>%
         mutate_if(is.character, as.factor)
-    metadata <- sampleMetadata(object)
-    suppressMessages(left_join(metrics, metadata)) %>%
+    metrics <- suppressMessages(left_join(
+        metrics,
+        sampleMetadata(object, interestingGroups = interestingGroups)
+    ))
+    metrics %>%
         uniteInterestingGroups(interestingGroups) %>%
         column_to_rownames("cellID")
 })
