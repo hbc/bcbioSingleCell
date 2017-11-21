@@ -9,7 +9,6 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
-#' @inheritParams metrics
 #'
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.
@@ -68,34 +67,33 @@ NULL
     }
 
     # Filter low quality cells ====
-    # Use the metrics `data.frame` to identify filtered cells
-    metrics <- metrics(object, filterCells = FALSE) %>%
-        as.data.frame() %>%
-        rownames_to_column("cellID")
+    # Don't use `subset()` here. That function uses non-standard evaluation that
+    # should only be used interactively in a script.
+    colData <- colData(object)
     if (!is.null(minUMIs)) {
-        metrics <- metrics %>%
+        colData <- colData %>%
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
     }
     if (!is.null(minGenes)) {
-        metrics <- metrics %>%
+        colData <- colData %>%
             .[.[["nGene"]] >= minGenes, , drop = FALSE]
     }
     if (!is.null(maxGenes)) {
-        metrics <- metrics %>%
+        colData <- colData %>%
             .[.[["nGene"]] <= maxGenes, , drop = FALSE]
     }
     if (!is.null(maxMitoRatio)) {
-        metrics <- metrics %>%
+        colData <- colData %>%
             .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
     }
     if (!is.null(minNovelty)) {
-        metrics <- metrics %>%
+        colData <- colData %>%
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
     }
     if (!nrow(metrics)) {
         stop("No cells passed filtering", call. = FALSE)
     }
-    filterCells <- metrics[["cellID"]]
+    filterCells <- rownames(colData)
     message(paste(
         length(filterCells),
         "/",
