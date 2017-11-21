@@ -47,10 +47,11 @@ setMethod(
             object,
             interestingGroups = interestingGroups)
 
-        metrics <- as.data.frame(colData) %>%
-            cbind(sampleID) %>%
+        cbind(
+            as.data.frame(sampleID),
+            as.data.frame(colData)
+        ) %>%
             left_join(sampleMetadata, by = "sampleID")
-        metrics
     })
 
 
