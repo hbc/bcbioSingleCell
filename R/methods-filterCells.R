@@ -128,13 +128,12 @@ NULL
     # Destructive mode ====
     if (isTRUE(destructive)) {
         message(paste(
-            "Destructive filtering applied.",
-            "Dropping low quality cells from the dataset."
+            "Dropping low quality cells from the dataset"
         ))
         object <- .applyFilterCutoffs(object)
     } else {
         message(paste(
-            "Non-destructive filtering applied.",
+            "Non-destructive mode",
             "  cutoffs: metadata(object)$filterParams",
             "    cells: metadata(object)$filterCells",
             "    genes: metadata(object)$filterGenes",
