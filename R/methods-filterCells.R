@@ -21,10 +21,9 @@
 #' @param showReport Show summary statistics report and plots.
 #' @param headerLevel RMarkdown header level, if `showReport = TRUE`.
 #' @param destructive Drop low quality cells from object after filtering.
-#'
-#' @note This operation can be re-run on a [bcbioSingleCell] object that has
-#'   been previously filtered. This function simply saves `filterCells` and
-#'   `filterParams` vectors into the [metadata()] slot.
+#'   Enabled by default and generally recommended. If set `FALSE`, then the this
+#'   function simply saves `filterCells`, `filterGenes`, and `filterParams` into
+#'   the [metadata()] slot.
 #'
 #' @seealso [Seurat::CreateSeuratObject()].
 #'
