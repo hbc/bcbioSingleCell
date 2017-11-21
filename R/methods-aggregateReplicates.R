@@ -25,8 +25,12 @@ NULL
     if (!"sampleNameAggregate" %in% colnames(sampleMetadata)) {
         stop("'sampleNameAggregate' not present in sample metadata")
     }
-    sampleMetadata <- sampleMetadata %>%
-        .[, c("sampleID", "sampleName", "sampleNameAggregate")] %>%
+    # We'll end up replacing `sampleID` and `sampleName` columns with the
+    # corresponding `*Aggregate` columns.
+    sampleMetadata <-
+        sampleMetadata[, c("sampleID",
+                           "sampleName",
+                           "sampleNameAggregate")] %>%
         mutate(sampleIDAggregate = make.names(
             .data[["sampleNameAggregate"]],
             unique = FALSE)
@@ -38,8 +42,6 @@ NULL
               "sampleName")] %>%
         arrange(.data[["sampleIDAggregate"]], .data[["sampleID"]]) %>%
         mutate_all(reorder)
-    # We'll end up replacing `sampleID` and `sampleName` columns with the
-    # corresponding `*Aggregate` columns.
 
     # Message the new sample IDs
     newIDs <- unique(sampleMetadata[["sampleIDAggregate"]])
@@ -49,10 +51,14 @@ NULL
 
     message("Remapping cellular barcodes to aggregate sample IDs")
     cell2sample <- cell2sample(object)
-    map <- left_join(cell2sample, sampleMetadata, by = "sampleID")
+    map <- left_join(
+        data.frame(sampleID = cell2sample),
+        sampleMetadata,
+        by = "sampleID")
+    rownames(map) <- names(cell2sample)
     cells <- mapply(
         FUN = gsub,
-        x = map[["cellID"]],
+        x = rownames(map),
         pattern = paste0("^", map[["sampleID"]]),
         replacement = map[["sampleIDAggregate"]]
     )
@@ -66,11 +72,6 @@ NULL
              call. = FALSE)
     }
 
-    # Update the cell2sample mappings
-    cell2sample <- cell2sample(
-        object = colnames(counts),
-        samples = newIDs)
-
     # Recalculate cellular barcode metrics
     annotable <- annotable(object)
     prefilter <- metadata(object)[["prefilter"]]
@@ -83,12 +84,13 @@ NULL
         counts <- counts[, rownames(metrics)]
     }
 
-    # Update the metadata slot
+    # Update metadata ==========================================================
     message("Updating metadata")
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <-
         sampleMetadata(object, aggregateReplicates = TRUE)
-    metadata[["cell2sample"]] <- cell2sample
+    metadata[["cell2sample"]] <-
+        cell2sample(colnames(counts), samples = newIDs)
     # Slot the named vector used to aggregate the replicates
     metadata[["aggregateReplicates"]] <- cells
     # Update filtered cells. We can use the named `cells` character vector
@@ -104,9 +106,9 @@ NULL
     # Aggregate and split back out as a list? There's probably a more efficient
     # way to do this
     colnames <- c("sampleID", colnames(cbList[[1]]))
-    cbBind <- .bindCellularBarcodes(cbList)
+    cbData <- .bindCellularBarcodes(cbList)
     # Now let's remap the cellular barcode counts for the aggregated samples
-    cbRemap <- cbBind[, colnames] %>%
+    cbRemap <- cbData[, colnames] %>%
         # Now we need to map the new sampleIDs
         left_join(sampleMetadata[, c("sampleID", "sampleIDAggregate")],
                   by = "sampleID") %>%
