@@ -55,14 +55,14 @@ NULL
     headerLevel = 2,
     drop = TRUE) {
     # Ensure that all filter parameters are numeric
-    filterParams <- c(
+    params <- c(
         minUMIs = minUMIs,
         minGenes = minGenes,
         maxGenes = maxGenes,
         maxMitoRatio = maxMitoRatio,
         minNovelty = minNovelty,
         minCellsPerGene = minCellsPerGene)
-    if (!is.numeric(filterParams)) {
+    if (!is.numeric(params)) {
         stop("Filter parameters must be numeric", call. = FALSE)
     }
     # Add support `nCount` filtering in a future update
@@ -136,35 +136,35 @@ NULL
         stop("No cells passed filtering", call. = FALSE)
     }
 
-    filterCells <- rownames(colData)
+    cells <- rownames(colData)
     message(paste(
-        length(filterCells),
+        length(cells),
         "/",
         ncol(object),
         "cells passed filtering",
-        paste0("(", percent(length(filterCells) / ncol(object)), ")")
+        paste0("(", percent(length(cells) / ncol(object)), ")")
     ))
 
     # Filter low expression genes ====
     if (minCellsPerGene > 0) {
         counts <- assay(object)
         numCells <- Matrix::rowSums(counts > 0)
-        filterGenes <- names(numCells[which(numCells >= minCellsPerGene)])
+        genes <- names(numCells[which(numCells >= minCellsPerGene)])
         message(paste(
-            length(filterGenes),
+            length(genes),
             "/",
             nrow(object),
             "genes passed filtering",
-            paste0("(", percent(length(filterGenes) / nrow(object)), ")")
+            paste0("(", percent(length(genes) / nrow(object)), ")")
         ))
     } else {
-        filterGenes <- NULL
+        genes <- NULL
     }
 
     # Metadata ====
-    metadata(object)[["filterCells"]] <- filterCells
-    metadata(object)[["filterGenes"]] <- filterGenes
-    metadata(object)[["filterParams"]] <- filterParams
+    metadata(object)[["filterCells"]] <- cells
+    metadata(object)[["filterGenes"]] <- genes
+    metadata(object)[["filterParams"]] <- params
 
     # Drop cells (destructive) ====
     if (isTRUE(drop)) {
@@ -205,7 +205,7 @@ NULL
                 "Reads per cell",
                 level = headerLevel + 1,
                 asis = TRUE)
-            plotReadsPerCell(object, filterCells = TRUE) %>%
+            plotReadsPerCell(object) %>%
                 show()
         }
 
@@ -213,42 +213,42 @@ NULL
             "Cell counts",
             level = headerLevel + 1,
             asis = TRUE)
-        plotCellCounts(object, filterCells = TRUE) %>%
+        plotCellCounts(object) %>%
             show()
 
         mdHeader(
             "UMI counts per cell",
             level = headerLevel + 1,
             asis = TRUE)
-        plotUMIsPerCell(object, filterCells = TRUE) %>%
+        plotUMIsPerCell(object) %>%
             show()
 
         mdHeader(
             "Genes detected",
             level = headerLevel + 1,
             asis = TRUE)
-        plotGenesPerCell(object, filterCells = TRUE) %>%
+        plotGenesPerCell(object) %>%
             show()
 
         mdHeader(
             "UMIs vs. genes",
             level = headerLevel + 1,
             asis = TRUE)
-        plotUMIsVsGenes(object, filterCells = TRUE) %>%
+        plotUMIsVsGenes(object) %>%
             show()
 
         mdHeader(
             "Mitochondrial counts ratio",
             level = headerLevel + 1,
             asis = TRUE)
-        plotMitoRatio(object, filterCells = TRUE) %>%
+        plotMitoRatio(object) %>%
             show()
 
         mdHeader(
             "Novelty",
             level = headerLevel + 1,
             asis = TRUE)
-        plotNovelty(object, filterCells = TRUE) %>%
+        plotNovelty(object) %>%
             show()
     }
 
