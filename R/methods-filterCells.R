@@ -55,7 +55,7 @@ NULL
     minCellsPerGene = 3,
     showReport = FALSE,
     headerLevel = 2,
-    destructive = FALSE) {
+    destructive = TRUE) {
     # Ensure that all filter parameters are numeric
     filterParams <- c(
         minUMIs = minUMIs,

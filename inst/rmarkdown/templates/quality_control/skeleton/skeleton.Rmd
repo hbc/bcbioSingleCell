@@ -115,7 +115,7 @@ plotNovelty(bcb, min = params$minNovelty)
 # Filter cells
 
 ```{r filter_cells, results="asis"}
-bcb <- filterCells(
+bcb_filtered <- filterCells(
     bcb,
     minUMIs = params$minUMIs,
     minGenes = params$minGenes,
@@ -124,14 +124,13 @@ bcb <- filterCells(
     minNovelty = params$minNovelty,
     minCellsPerGene = params$minCellsPerGene,
     showReport = TRUE,
-    headerLevel = 2,
-    destructive = FALSE)
+    headerLevel = 2)
 ```
 
 ```{r resave}
 assignAndSaveData(
-    name = bcbName,
-    object = bcb,
+    name = paste(bcbName, "filtered", sep = "_"),
+    object = bcb_filtered,
     dir = dataDir)
 ```
 
