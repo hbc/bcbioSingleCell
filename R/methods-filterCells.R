@@ -9,6 +9,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#' @inheritParams qualityControlPlots
 #'
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.
@@ -17,8 +18,7 @@
 #' @param minNovelty Minimum novelty score.
 #' @param minCellsPerGene Include genes with non-zero expression in at least
 #'   this many cells.
-#' @param showReport Show summary statistics report and plots.
-#' @param headerLevel RMarkdown header level, if `showReport = TRUE`.
+#' @param quiet If `TRUE`, don't show the filtering parameter summary.
 #' @param drop Drop low quality cells from object after filtering.
 #'   Enabled by default and generally recommended. If set `FALSE`, then the this
 #'   function simply saves `filterCells`, `filterGenes`, and `filterParams` into
@@ -51,9 +51,8 @@ NULL
     maxMitoRatio = 0.1,
     minNovelty = 0.8,
     minCellsPerGene = 3,
-    showReport = FALSE,
-    headerLevel = 2,
-    drop = TRUE) {
+    drop = TRUE,
+    quiet = FALSE) {
     # Ensure that all filter parameters are numeric
     params <- c(
         minUMIs = minUMIs,
@@ -188,7 +187,7 @@ NULL
     }
 
     # Show summary statistics report and plots, if desired
-    if (isTRUE(showReport)) {
+    if (!isTRUE(quiet)) {
         mdHeader("Filter parameters", level = headerLevel, asis = TRUE)
         mdList(c(
             paste0("`>= ", minUMIs, "` UMI counts per cell"),
@@ -197,64 +196,6 @@ NULL
             paste0("`<= ", maxMitoRatio, "` relative mitochondrial abundance"),
             paste0("`>= ", minNovelty, "` novelty score")),
             asis = TRUE)
-
-        mdHeader(
-            "Filtered metrics plots",
-            level = headerLevel,
-            tabset = TRUE,
-            asis = TRUE)
-
-        # Reads per cell currently only supported for bcbio runs
-        if (metadata(object)[["pipeline"]] == "bcbio") {
-            mdHeader(
-                "Reads per cell",
-                level = headerLevel + 1,
-                asis = TRUE)
-            plotReadsPerCell(object) %>%
-                show()
-        }
-
-        mdHeader(
-            "Cell counts",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotCellCounts(object) %>%
-            show()
-
-        mdHeader(
-            "UMI counts per cell",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotUMIsPerCell(object) %>%
-            show()
-
-        mdHeader(
-            "Genes detected",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotGenesPerCell(object) %>%
-            show()
-
-        mdHeader(
-            "UMIs vs. genes",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotUMIsVsGenes(object) %>%
-            show()
-
-        mdHeader(
-            "Mitochondrial counts ratio",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotMitoRatio(object) %>%
-            show()
-
-        mdHeader(
-            "Novelty",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotNovelty(object) %>%
-            show()
     }
 
     object
