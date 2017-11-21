@@ -11,7 +11,7 @@
 plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "violin", min,
-  max, interestingGroups, filterCells = FALSE, samplesOnYAxis = TRUE,
+  max, interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0,
@@ -35,8 +35,6 @@ plotGenesPerCell(object, ...)
 \item{max}{Recommended maximum value cutoff.}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
 \item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
 histogram.}

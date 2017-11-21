@@ -11,7 +11,7 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{bcbioSingleCell}(object, interestingGroups,
-  filterCells = FALSE, fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{data.frame}(object, metadata, interestingGroups,
   fill = scale_fill_viridis(discrete = TRUE))
@@ -25,8 +25,6 @@ plotCellCounts(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
 \item{fill}{Desired ggplot fill scale. Defaults to
 \code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to

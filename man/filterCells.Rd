@@ -38,7 +38,10 @@ this many cells.}
 
 \item{headerLevel}{RMarkdown header level, if \code{showReport = TRUE}.}
 
-\item{destructive}{Drop low quality cells from object after filtering.}
+\item{destructive}{Drop low quality cells from object after filtering.
+Enabled by default and generally recommended. If set \code{FALSE}, then the this
+function simply saves \code{filterCells}, \code{filterGenes}, and \code{filterParams} into
+the \code{\link[=metadata]{metadata()}} slot.}
 }
 \value{
 \link{bcbioSingleCell} object, with filtering information slotted into
@@ -47,11 +50,6 @@ this many cells.}
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.
-}
-\note{
-This operation can be re-run on a \link{bcbioSingleCell} object that has
-been previously filtered. This function simply saves \code{filterCells} and
-\code{filterParams} vectors into the \code{\link[=metadata]{metadata()}} slot.
 }
 \examples{
 \dontrun{

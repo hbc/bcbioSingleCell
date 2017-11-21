@@ -7,15 +7,13 @@
 \title{Counts Accessor}
 \usage{
 \S4method{counts}{bcbioSingleCell}(object, gene2symbol = FALSE,
-  filterCells = FALSE, as = "dgCMatrix")
+  as = "dgCMatrix")
 }
 \arguments{
 \item{object}{Object.}
 
 \item{gene2symbol}{Convert Ensembl gene identifiers (rownames) to gene
 symbols. Recommended for passing counts to Seurat.}
-
-\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
 \item{as}{Return class (\strong{recommended}; \code{dgCMatrix},
 \code{dgTMatrix}) or dense matrix (\code{matrix}).}

@@ -11,7 +11,7 @@
 plotNovelty(object, ...)
 
 \S4method{plotNovelty}{bcbioSingleCell}(object, geom = "violin", min,
-  interestingGroups, filterCells = FALSE, samplesOnYAxis = TRUE,
+  interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotNovelty}{data.frame}(object, geom = "violin", min = 0,
@@ -33,8 +33,6 @@ plotNovelty(object, ...)
 \item{min}{Recommended minimum value cutoff.}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
 \item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
 histogram.}

@@ -11,8 +11,7 @@
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{bcbioSingleCell}(object, interestingGroups,
-  filterCells = FALSE, samplesOnYAxis = TRUE,
-  color = scale_color_viridis(discrete = TRUE))
+  samplesOnYAxis = TRUE, color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotMitoVsCoding}{data.frame}(object, interestingGroups,
   color = scale_color_viridis(discrete = TRUE))
@@ -26,8 +25,6 @@ plotMitoVsCoding(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
 \item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
 histogram.}

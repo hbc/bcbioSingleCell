@@ -9,7 +9,7 @@
 plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
-  interestingGroups, filterCells = FALSE)
+  interestingGroups)
 }
 \arguments{
 \item{object}{Object.}
@@ -20,8 +20,6 @@ plotReadsPerCell(object, ...)
 (\emph{recommended}), raw \code{ridgeline}, and raw \code{violin}.}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 }
 \value{
 \link{ggplot}.
