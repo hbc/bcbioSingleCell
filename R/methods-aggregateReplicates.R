@@ -63,7 +63,7 @@ NULL
         replacement = map[["sampleIDAggregate"]]
     )
 
-    # Aggregate the counts
+    # Counts ===================================================================
     message("Aggregating the counts")
     counts <- aggregateReplicates(assay(object), cells = cells)
     # Check that the count number of counts matches
@@ -72,19 +72,71 @@ NULL
              call. = FALSE)
     }
 
-    # Recalculate cellular barcode metrics
+    # Cellular barcodes list ===================================================
+    message("Aggregating raw cellular barcode counts")
+    cbList <- bcbio(object, "cellularBarcodes")
+    if (!is.null(cbList)) {
+        # Aggregate and split back out as a list? There's probably a more efficient
+        # way to do this
+        colnames <- c("sampleID", colnames(cbList[[1]]))
+        cbData <- .bindCellularBarcodes(cbList)
+        # Now let's remap the cellular barcode counts for the aggregated samples
+        cbRemap <- cbData[, colnames] %>%
+            # Now we need to map the new sampleIDs
+            left_join(sampleMetadata[, c("sampleID", "sampleIDAggregate")],
+                      by = "sampleID") %>%
+            ungroup() %>%
+            mutate(sampleID = .data[["sampleIDAggregate"]],
+                   sampleIDAggregate = NULL) %>%
+            # Here we're grouping per cellular barcode
+            group_by(!!!syms(c("sampleID", "cellularBarcode"))) %>%
+            # Now sum the counts for each unique barcode
+            summarize(nCount = sum(.data[["nCount"]])) %>%
+            ungroup() %>%
+            group_by(.data[["sampleID"]]) %>%
+            arrange(desc(.data[["nCount"]]), .by_group = TRUE)
+        # Group and sum the counts
+        # Now split this back out into a list to match the original data structure
+        cbListAggregate <- lapply(seq_along(newIDs), function(a) {
+            cbRemap %>%
+                ungroup() %>%
+                filter(sampleID == newIDs[[a]]) %>%
+                mutate(sampleID = NULL)
+        })
+        names(cbListAggregate) <- as.character(newIDs)
+    } else {
+        cbListAggregate <- NULL
+    }
+
+    # Metrics ==================================================================
     annotable <- annotable(object)
     prefilter <- metadata(object)[["prefilter"]]
+
+    # Rather than recalculating, we need to just remap the rownames
     metrics <- calculateMetrics(
         counts,
         annotable = annotable,
         prefilter = prefilter)
+    # Add the raw read counts for objects with raw cellular barcodes list
+    if (!is.null(cbList)) {
+        nCount <- cbRemap %>%
+            as.data.frame() %>%
+            ungroup()
+        rownames(nCount) <- paste(
+            cbRemap[["sampleID"]],
+            cbRemap[["cellularBarcode"]],
+            sep = "_")
+        nCount <- nCount[rownames(metrics), "nCount", drop = FALSE]
+        metrics <- cbind(metrics, nCount)
+    }
+
+    # Prefilter very low quality cells, if desired
     if (isTRUE(prefilter)) {
         # Subset the counts matrix to match the metrics
         counts <- counts[, rownames(metrics)]
     }
 
-    # Update metadata ==========================================================
+    # Metadata =================================================================
     message("Updating metadata")
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <-
@@ -100,40 +152,8 @@ NULL
         metadata[["filterCells"]] <- cells[filterCells]
     }
 
-    # Update the names in the raw cellular barcode distributions list
-    message("Aggregating raw cellular barcode counts")
-    cbList <- bcbio(object, "cellularBarcodes")
-    # Aggregate and split back out as a list? There's probably a more efficient
-    # way to do this
-    colnames <- c("sampleID", colnames(cbList[[1]]))
-    cbData <- .bindCellularBarcodes(cbList)
-    # Now let's remap the cellular barcode counts for the aggregated samples
-    cbRemap <- cbData[, colnames] %>%
-        # Now we need to map the new sampleIDs
-        left_join(sampleMetadata[, c("sampleID", "sampleIDAggregate")],
-                  by = "sampleID") %>%
-        ungroup() %>%
-        mutate(sampleID = .data[["sampleIDAggregate"]],
-               sampleIDAggregate = NULL) %>%
-        # Here we're grouping per cellular barcode
-        group_by(!!!syms(c("sampleID", "cellularBarcode"))) %>%
-        # Now sum the counts for each unique barcode
-        summarize(nCount = sum(.data[["nCount"]])) %>%
-        ungroup() %>%
-        group_by(.data[["sampleID"]]) %>%
-        arrange(desc(.data[["nCount"]]), .by_group = TRUE)
-    # Group and sum the counts
-    # Now split this back out into a list to match the original data structure
-    cbListAggregate <- lapply(seq_along(newIDs), function(a) {
-        cbRemap %>%
-            ungroup() %>%
-            filter(sampleID == newIDs[[a]]) %>%
-            mutate(sampleID = NULL)
-    })
-    names(cbListAggregate) <- as.character(newIDs)
-
-    # Return bcbioSingleCell
-    message("Regenerating bcbioSingleCell object")
+    # bcbioSingleCell ==========================================================
+    message("Preparing aggregated bcbioSingleCell object")
     se <- SummarizedExperiment(
         assays = list(assay = counts),
         rowData = annotable,
