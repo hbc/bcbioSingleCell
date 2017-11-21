@@ -122,9 +122,11 @@ bcb_filtered <- filterCells(
     maxGenes = params$maxGenes,
     maxMitoRatio = params$maxMitoRatio,
     minNovelty = params$minNovelty,
-    minCellsPerGene = params$minCellsPerGene,
-    showReport = TRUE,
-    headerLevel = 2)
+    minCellsPerGene = params$minCellsPerGene)
+```
+
+```{r plot_filtered_qc}
+plotQC(bcb_filtered, return = "grid")
 ```
 
 ```{r resave}

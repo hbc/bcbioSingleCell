@@ -10,10 +10,10 @@
 plotQC(object, ...)
 
 \S4method{plotQC}{bcbioSingleCell}(object, interestingGroups, geom = "violin",
-  headerLevel = 1, return = "grid")
+  headerLevel = 2, return = "grid")
 
 \S4method{plotQC}{seurat}(object, interestingGroups, geom = "violin",
-  headerLevel = 1, return = "grid")
+  headerLevel = 2, return = "grid")
 }
 \arguments{
 \item{object}{Object.}

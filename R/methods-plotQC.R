@@ -40,7 +40,7 @@ validQCGeomFlip <- c(
     object,
     interestingGroups,
     geom = "violin",
-    headerLevel = 1,
+    headerLevel = 2,
     return = "grid") {
     if (missing(interestingGroups)) {
         interestingGroups <- basejump::interestingGroups(object)
