@@ -28,7 +28,8 @@ plotNovelty(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{geom}{Plot type. Supported formats: \code{boxplot}, \code{histogram},
-\code{ridgeline}, and \code{violin}.}
+\code{ridgeline}, and \code{violin}. Applies to \code{\link[=plotUMIsPerCell]{plotUMIsPerCell()}},
+\code{\link[=plotGenesPerCell]{plotGenesPerCell()}}, \code{\link[=plotMitoRatio]{plotMitoRatio()}}, and \code{\link[=plotNovelty]{plotNovelty()}} output.}
 
 \item{min}{Recommended minimum value cutoff.}
 

@@ -11,7 +11,7 @@ filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000,
   minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.8,
-  minCellsPerGene = 3, showReport = FALSE, headerLevel = 2, drop = TRUE)
+  minCellsPerGene = 3, drop = TRUE, quiet = FALSE)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
 }
@@ -33,14 +33,12 @@ filterCells(object, ...)
 \item{minCellsPerGene}{Include genes with non-zero expression in at least
 this many cells.}
 
-\item{showReport}{Show summary statistics report and plots.}
-
-\item{headerLevel}{RMarkdown header level, if \code{showReport = TRUE}.}
-
 \item{drop}{Drop low quality cells from object after filtering.
 Enabled by default and generally recommended. If set \code{FALSE}, then the this
 function simply saves \code{filterCells}, \code{filterGenes}, and \code{filterParams} into
 the \code{\link[=metadata]{metadata()}} slot.}
+
+\item{quiet}{If \code{TRUE}, don't show the filtering parameter summary.}
 }
 \value{
 \link{bcbioSingleCell} object, with filtering information slotted into
