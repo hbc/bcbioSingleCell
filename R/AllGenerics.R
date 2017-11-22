@@ -177,14 +177,6 @@ setGeneric("plotNovelty", function(object, ...) {
 
 
 
-#' @rdname plotQC
-#' @export
-setGeneric("plotQC", function(object, ...) {
-    standardGeneric("plotQC")
-})
-
-
-
 #' @rdname plotReadsPerCell
 #' @export
 setGeneric("plotReadsPerCell", function(object, ...) {
