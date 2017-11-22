@@ -114,7 +114,7 @@ plotNovelty(bcb, min = params$minNovelty)
 
 # Filter cells
 
-```{r filter_cells, results="asis"}
+```{r filter_cells}
 bcb_filtered <- filterCells(
     bcb,
     minUMIs = params$minUMIs,
@@ -123,17 +123,14 @@ bcb_filtered <- filterCells(
     maxMitoRatio = params$maxMitoRatio,
     minNovelty = params$minNovelty,
     minCellsPerGene = params$minCellsPerGene)
-```
-
-```{r plot_filtered_qc}
-plotQC(bcb_filtered, return = "grid")
-```
-
-```{r resave}
 assignAndSaveData(
     name = paste(bcbName, "filtered", sep = "_"),
     object = bcb_filtered,
     dir = dataDir)
+```
+
+```{r plot_filtered_qc}
+plotQC(bcb_filtered, return = "grid")
 ```
 
 
