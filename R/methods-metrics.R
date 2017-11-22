@@ -80,12 +80,14 @@ setMethod(
         as.data.frame() %>%
         camel(strict = FALSE) %>%
         rownames_to_column("cellID") %>%
-        mutate_if(is.character, as.factor)
+        mutate_if(is.character, as.factor) %>%
+        mutate_if(is.factor, droplevels)
+    # Join columns can vary here, so suppress message
     metrics <- suppressMessages(left_join(
         metrics,
         sampleMetadata(object, interestingGroups = interestingGroups)
-    ))
-    metrics %>%
-        uniteInterestingGroups(interestingGroups) %>%
-        column_to_rownames("cellID")
+    )) %>%
+        column_to_rownames("cellID") %>%
+        uniteInterestingGroups(interestingGroups)
+    metrics
 })
