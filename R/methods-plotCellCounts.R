@@ -73,7 +73,7 @@ NULL
             geom_text(
                 mapping = aes_string(label = "nCells"),
                 fontface = "bold",
-                vjust = -0.5)
+                vjust = 0)
     }
 
     # Facets
