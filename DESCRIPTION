@@ -49,11 +49,16 @@ Suggests:
     BiocStyle,
     devtools,
     googlesheets,
-    lintr (>= 1.0.1),
+    lintr,
+    pkgdown,
     rmarkdown,
+    roxygen2,
     testthat,
     tidyverse
 Remotes:
+    hadley/pkgdown,
+    jimhester/lintr,
+    klutometis/roxygen,
     steinbaugh/basejump
 biocViews:
     DataImport,
