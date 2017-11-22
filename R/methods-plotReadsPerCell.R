@@ -349,3 +349,16 @@ setMethod(
     "plotReadsPerCell",
     signature("bcbioSingleCell"),
     .plotReadsPerCell)
+
+
+
+#' @rdname plotReadsPerCell
+#' @export
+setMethod(
+    "plotReadsPerCell",
+    signature("seurat"),
+    function(object, ...) {
+        warning("Raw read counts aren't stored in seurat object",
+                call. = FALSE)
+        NULL
+    })
