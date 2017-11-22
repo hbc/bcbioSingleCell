@@ -92,7 +92,7 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
     
 
     <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>uploadDir</span>, <span class='no'>refDataDir</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
-  <span class='no'>sampleMetadataFile</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>annotable</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>sampleMetadataFile</span>, <span class='no'>annotable</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -113,15 +113,15 @@ is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.</p></td>
     </tr>
     <tr>
+      <th>prefilter</th>
+      <td><p>Prefilter counts prior to quality control analysis.</p></td>
+    </tr>
+    <tr>
       <th>sampleMetadataFile</th>
       <td><p>Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop). Consult the GitHub repo for examples and additional information.</p></td>
-    </tr>
-    <tr>
-      <th>prefilter</th>
-      <td><p>Prefilter counts prior to quality control analysis.</p></td>
     </tr>
     <tr>
       <th>annotable</th>
@@ -184,7 +184,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

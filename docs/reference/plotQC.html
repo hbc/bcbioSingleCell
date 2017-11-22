@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>S4 Generics — AllGenerics • bcbioSingleCell</title>
+<title>Quality Control Plots — plotQC • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,13 +83,21 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>S4 Generics</h1>
+    <h1>Quality Control Plots</h1>
     </div>
 
     
-    <p>S4 Generics</p>
+    <p>Utility function that loops our standard quality control plots, for easy
+visualization.</p>
     
 
+    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>plotQC</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>,
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotQC</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>,
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -99,26 +107,33 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>Primary object.</p></td>
+      <th>interestingGroups</th>
+      <td><p>Interesting group, to use for colors.</p></td>
     </tr>
     <tr>
-      <th>y</th>
-      <td><p>Secondary object.</p></td>
+      <th>geom</th>
+      <td><p>Plot type. Supported formats: <code>boxplot</code>, <code>histogram</code>,
+<code>ridgeline</code>, and <code>violin</code>. Applies to <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell()</a></code>,
+<code><a href='plotGenesPerCell.html'>plotGenesPerCell()</a></code>, <code><a href='plotMitoRatio.html'>plotMitoRatio()</a></code>, and <code><a href='plotNovelty.html'>plotNovelty()</a></code> output.</p></td>
     </tr>
     <tr>
-      <th>value</th>
-      <td><p>Object to assign.</p></td>
+      <th>headerLevel</th>
+      <td><p>R Markdown header level.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <th>return</th>
+      <td><ul>
+<li><p><code>grid</code>: <code><a href='http://www.rdocumentation.org/packages/cowplot/topics/plot_grid'>cowplot::plot_grid()</a></code> graphical output.</p><ul>
+<li><p><code>list</code>: <a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a> list.</p></li>
+<li><p><code>markdown</code>: R Markdown report, with reports separated by headers.</p></li>
+</ul></li>
+</ul></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>No value.</p>
+    <p>R Markdown template code for quality control analysis.</p>
     
 
   </div>
@@ -129,6 +144,10 @@
       
       <li><a href="#value">Value</a></li>
           </ul>
+
+    <h2>Author</h2>
+    
+Michael Steinbaugh
 
   </div>
 </div>
