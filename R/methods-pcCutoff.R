@@ -2,7 +2,7 @@
 #'
 #' Calculate the principal component (PC) with either a maximum SD percentage or
 #' minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
-#' PC cutoff for either 5% SD (`maxPct`) or 80% cumulative (`minCumsum`).
+#' PC cutoff for either 5% SD (`maxPct`) or 90% cumulative (`minCumsum`).
 #'
 #' @rdname pcCutoff
 #' @name pcCutoff
@@ -28,7 +28,11 @@ NULL
 #'   scale_y_continuous
 #' @importFrom scales percent
 #' @importFrom tibble tibble
-.pcCutoff <- function(sd, maxPct, minCumPct, plot) {
+.pcCutoff <- function(
+    sd,
+    maxPct,
+    minCumPct,
+    plot) {
     xlab <- "pc"
 
     # Principal component standard deviations
@@ -124,7 +128,7 @@ NULL
 setMethod("pcCutoff", "seurat", function(
     object,
     maxPct = 0.05,
-    minCumPct = 0.8,
+    minCumPct = 0.9,
     plot = TRUE) {
     # seurat slot descriptions
     # dr: dimensionality reduction
