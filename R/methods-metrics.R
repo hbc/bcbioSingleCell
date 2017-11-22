@@ -37,18 +37,16 @@ setMethod(
         colData <- colData(object)
         # Check for malformed colData. Safe to remove in a future update.
         if ("sampleID" %in% colnames(colData)) {
-            stop("Sample ID shouldn't be set in colData",
+            stop("'sampleID' shouldn't be set in 'colData'",
                  call. = FALSE)
         }
 
         sampleID <- cell2sample(object)
         # Check for cell ID dimension mismatch. This can happen if `cell2sample`
         # mapping isn't updated inside the metadata slot.
-        if (!identical(
-            rownames(colData),
-            names(sampleID)
-        )) {
-            stop("cellID mismatch between colData and cell2sample")
+        if (!identical(rownames(colData), names(sampleID))) {
+            stop("'cellID' mismatch between 'colData' and 'cell2sample'",
+                 call. = FALSE)
         }
 
         sampleMetadata <- sampleMetadata(
