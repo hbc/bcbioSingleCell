@@ -6,6 +6,7 @@ Authors@R: as.person(c(
     "Michael Steinbaugh <mike@steinbaugh.com> [aut, cre]",
     "Rory Kirchner <roryk@alum.mit.edu> [aut]",
     "Mary Piper <mary.piper@gmail.com> [aut]",
+    "Shannan Ho Sui <shosui@hsph.harvard.edu> [aut]",
     "Harvard Chan Bioinformatics Core <bioinformatics@hsph.harvard.edu> [cph, fnd]"
     ))
 URL:
