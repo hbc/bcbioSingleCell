@@ -187,14 +187,24 @@ NULL
 
     # Show summary statistics report and plots, if desired
     if (!isTRUE(quiet)) {
-        mdHeader("Filter parameters", level = headerLevel, asis = TRUE)
         mdList(c(
-            paste0("`>= ", minUMIs, "` UMI counts per cell"),
-            paste0("`>= ", minGenes, "` genes per cell"),
-            paste0("`<= ", maxGenes, "` genes per cell"),
-            paste0("`<= ", maxMitoRatio, "` relative mitochondrial abundance"),
-            paste0("`>= ", minNovelty, "` novelty score")),
-            asis = TRUE)
+            paste(">=", minUMIs, "UMI counts per cell"),
+            paste(">=", minGenes, "genes per cell"),
+            paste("<=", maxGenes, "genes per cell"),
+            paste("<=", maxMitoRatio, "relative mitochondrial abundance"),
+            paste(">=", minNovelty, "novelty score")
+        )) %>%
+            # Strip the line breaks
+            gsub(x = .,
+                 pattern = "\n",
+                 replacement = "") %>%
+            as.character() %>%
+            # Indent by 2 spaces
+            paste0("  ", .) %>%
+            # Add header
+            c("Filtering parameters:", .) %>%
+            # Print without line numbers
+            cat(sep = "\n")
     }
 
     object
