@@ -10,13 +10,13 @@ opts_chunk[["set"]](
     audodep = TRUE,
     cache = TRUE,
     cache.lazy = FALSE,
-    error = FALSE,
+    error = TRUE,
     fig.height = 10,
     fig.retina = 2,
     fig.width = 10,
     message = FALSE,
     tidy = TRUE,
-    warning = FALSE)
+    warning = TRUE)
 
 theme_set(
     theme_light(base_size = 14))
