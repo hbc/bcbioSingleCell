@@ -262,15 +262,15 @@ PC selection — identifying the true dimensionality of a dataset — is an impo
 We're using a heuristic approach here, by calculating where the principal components start to elbow. The plots below show where we have defined the principal compoment cutoff used downstream for dimensionality reduction. This is calculated automatically as the larger value of:
 
 1. The point where the principal components only contribute 5% of standard deviation (bottom left).
-2. The point where the principal components cumulatively contribute 80% of the standard deviation (bottom right).
+2. The point where the principal components cumulatively contribute 90% of the standard deviation (bottom right).
 
 This methodology is also commonly used for PC covariate analysis on bulk RNA-seq samples.
 
 ```{r pc_use}
 pcUse <- params$pcUse
 if (!is.numeric(params$pcUse)) {
-    pcUse <- pcCutoff(seurat) %>%
-        seq(from = 1, to = .)
+    pcUse <- pcCutoff(seurat, maxPct = 0.05, minCumPct = 0.9)
+    pcUse <- seq_len(pcUse)
 }
 ```
 
