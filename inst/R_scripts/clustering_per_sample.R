@@ -12,7 +12,7 @@ prepareSingleCellTemplate()
 source("setup.R")
 dataDir <- "data"
 
-loadDataAsName(bcb = "bcb_pool_filtered", dir = dataDir)
+loadDataAsName(bcb = "bcb_filtered", dir = dataDir)
 metadata(bcb)$filterParams
 
 sampleNames <- sampleMetadata(bcb) %>%
