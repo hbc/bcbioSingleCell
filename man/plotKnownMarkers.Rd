@@ -19,9 +19,9 @@ plotKnownMarkers(object, knownMarkers, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{color}{Color palette to use for points. Defaults to the inferno
-palette from the viridis package. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}}
-to easily define your own low/high gradient.}
+\item{color}{Color palette to use for points. Defaults to the viridis color
+palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
+low/high gradient.}
 
 \item{dark}{Enable dark mode.}
 

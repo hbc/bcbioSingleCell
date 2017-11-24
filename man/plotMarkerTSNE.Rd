@@ -10,12 +10,12 @@
 plotMarkerTSNE(object, ...)
 
 \S4method{plotMarkerTSNE}{grouped_df}(object, colorPoints = "geomean",
-  color = scale_color_viridis(option = "inferno"), dark = TRUE,
-  pointsAsNumbers = FALSE, label = TRUE)
+  color = scale_color_viridis(), dark = TRUE, pointsAsNumbers = FALSE,
+  label = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, colorPoints = "geomean",
-  color = scale_color_viridis(option = "inferno"), dark = TRUE,
-  pointsAsNumbers = FALSE, label = TRUE, title = NULL)
+  color = scale_color_viridis(), dark = TRUE, pointsAsNumbers = FALSE,
+  label = TRUE, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -25,9 +25,9 @@ plotMarkerTSNE(object, ...)
 \item{colorPoints}{Color points by geometric mean (\code{geomean}) or expression
 of individual gene (\code{expression}).}
 
-\item{color}{Color palette to use for points. Defaults to the inferno
-palette from the viridis package. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}}
-to easily define your own low/high gradient.}
+\item{color}{Color palette to use for points. Defaults to the viridis color
+palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
+low/high gradient.}
 
 \item{dark}{Enable dark mode.}
 
