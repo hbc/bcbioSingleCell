@@ -42,8 +42,9 @@ if (exists(c(params$seuratName, seuratPreregressName), inherits = FALSE)) {
 } else {
     if (all(file.exists(seuratFile, seuratPreregressFile))) {
         loadDataAsName(
-            c(seurat = seuratFile,
-              seuratPreregress = seuratPreregressFile))
+            seurat = seuratFile,
+            seuratPreregress = seuratPreregressFile
+        )
         evalSeurat <- FALSE
     } else {
         evalSeurat <- TRUE
