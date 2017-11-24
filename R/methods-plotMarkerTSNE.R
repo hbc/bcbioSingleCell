@@ -54,9 +54,9 @@ NULL
 #'   guide_colorbar
 #' @importFrom viridis scale_color_viridis
 #'
-#' @param fetchData Marker gene expression from [fetchTSNEExpressionData()].
+#' @param data Marker gene expression from [fetchTSNEExpressionData()].
 .plotMarkerTSNE <- function(
-    fetchData,
+    data,
     colorPoints = "geomean",
     color = scale_color_viridis(option = "inferno"),
     dark = TRUE,
@@ -67,7 +67,7 @@ NULL
         stop("colorPoints supports 'geomean' or 'expression'", call. = FALSE)
     }
     # Prepare a list of the genes used for the ggplot subtitle
-    genes <- pull(fetchData, "gene") %>%
+    genes <- pull(data, "gene") %>%
         unique()
     # Use `expression` if we're only plotting a single gene. The `geomean`
     # argument for `colorPoints` is only informative for 2+ genes.
@@ -79,13 +79,13 @@ NULL
         genes <- c(genes[1:5], "...")
     }
     genes <- toString(genes)
-    p <- fetchData %>%
-        ggplot(
-            mapping = aes_string(
-                x = "tSNE1",
-                y = "tSNE2",
-                color = colorPoints)
-        )
+    p <- ggplot(
+        data,
+        mapping = aes_string(
+            x = "tSNE1",
+            y = "tSNE2",
+            color = colorPoints)
+    )
     if (isTRUE(dark)) {
         p <- p + darkTheme()
     }
@@ -162,7 +162,7 @@ setMethod("plotMarkerTSNE", "grouped_df", function(
         ), call. = FALSE)
     }
     .plotMarkerTSNE(
-        fetchData = object,
+        data = object,
         colorPoints = colorPoints,
         color = color,
         dark = dark,
@@ -183,9 +183,9 @@ setMethod("plotMarkerTSNE", "seurat", function(
     pointsAsNumbers = FALSE,
     label = TRUE,
     title = NULL) {
-    fetchData <- fetchTSNEExpressionData(object, genes = genes)
+    data <- fetchTSNEExpressionData(object, genes = genes)
         .plotMarkerTSNE(
-            fetchData = fetchData,
+            data = data,
             colorPoints = colorPoints,
             color = color,
             dark = dark,
