@@ -43,7 +43,7 @@ loadSingleCellRun <- function(...) {
 # 0.0.23 ====
 #' @rdname deprecated
 #' @export
-plotFeatures <- function(object, features) {
-    .Deprecated("plotFeature")
-    plotFeature(object = object, feature = features)
+plotFeatures <- function(object, features, ...) {
+    .Deprecated("plotFeatureTSNE")
+    plotFeatureTSNE(object = object, feature = features, ...)
 }
