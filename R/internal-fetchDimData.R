@@ -5,8 +5,8 @@
 #' @noRd
 #'
 #' @importFrom basejump camel
-#' @importFrom dplyr group_by left_join mutate
-#' @importFrom magrittr set_colnames
+#' @importFrom dplyr left_join mutate mutate_if
+#' @importFrom magrittr set_colnames set_rownames
 #' @importFrom Seurat FetchData
 #' @importFrom stats median
 #' @importFrom tibble rownames_to_column
@@ -32,7 +32,10 @@
         rownames_to_column("cell") %>%
         left_join(meta, by = "cell") %>%
         left_join(ident, by = "cell") %>%
-        group_by(!!sym("ident")) %>%
-        mutate(centerX = median(.data[[camel(dimCode[[1]], strict = FALSE)]]),
-               centerY = median(.data[[camel(dimCode[[2]], strict = FALSE)]]))
+        mutate_if(is.factor, droplevels) %>%
+        mutate(
+            centerX = median(.data[[camel(dimCode[[1]], strict = FALSE)]]),
+            centerY = median(.data[[camel(dimCode[[2]], strict = FALSE)]])
+        ) %>%
+        set_rownames(.[["cell"]])
 }
