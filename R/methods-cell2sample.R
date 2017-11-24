@@ -96,5 +96,5 @@ setMethod(
                 cell2sample <- NULL
             }
         }
-        cell2sample
+        cell2sample[colnames(object)]
     })
