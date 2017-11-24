@@ -9,7 +9,8 @@
 plotTSNE(object, ...)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
-  label = TRUE, dark = TRUE)
+  color = scale_color_hue(), pointSize = 1, label = TRUE, labelSize = 6,
+  dark = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -18,7 +19,11 @@ plotTSNE(object, ...)
 
 \item{interestingGroups}{Interesting group to use for plot colors.}
 
-\item{label}{Label the clusters on the plot.}
+\item{pointSize}{Cell point size.}
+
+\item{label}{Overlay a cluster identitiy label on the plot.}
+
+\item{labelSize}{Size of the text label.}
 
 \item{dark}{Enable dark mode.}
 }

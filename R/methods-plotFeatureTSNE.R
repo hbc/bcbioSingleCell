@@ -5,6 +5,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#' @inheritParams plotMarkerTSNE
 #'
 #' @param feature Character vector of features (e.g. gene expression, PC
 #'   scores, number of genes detected).
@@ -29,6 +30,7 @@ setMethod(
     function(
         object,
         feature,
+        pointSize = 1,
         color = scale_color_gradient(low = "lightgray", high = "purple"),
         dark = FALSE,
         label = TRUE,
@@ -52,7 +54,7 @@ setMethod(
                 p <- p + darkTheme()
             }
             p <- p +
-                geom_point() +
+                geom_point(size = pointSize) +
                 labs(title = feature[[a]])
             if (isTRUE(label)) {
                 if (isTRUE(dark)) {
