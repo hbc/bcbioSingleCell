@@ -36,7 +36,6 @@ NULL
 #' @importFrom basejump prepareSummarizedExperiment
 #' @importFrom dplyr mutate_if pull
 #' @importFrom magrittr set_rownames
-#' @importFrom rlang is_string
 .selectSamples <- function(
     object,
     ...) {
@@ -58,18 +57,8 @@ NULL
     list <- lapply(seq_along(arguments), function(a) {
         column <- names(arguments)[[a]]
         argument <- arguments[[a]]
-        if (is_string(argument)) {
-            # Use grep pattern matching on string
-            match <- sampleMetadata %>%
-                .[grepl(x = .[[column]],
-                        pattern = argument,
-                        ignore.case = FALSE),
-                  , drop = FALSE]
-        } else {
-            # Use exact matching if vector supplied
-            match <- sampleMetadata %>%
+        match <- sampleMetadata %>%
                 .[.[[column]] %in% argument, , drop = FALSE]
-        }
         # Check for match failure
         if (!nrow(match)) {
             stop(paste(
