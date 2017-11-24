@@ -1,0 +1,86 @@
+#' Plot Feature t-SNE
+#'
+#' @rdname plotFeatureTSNE
+#' @name plotFeatureTSNE
+#' @author Michael Steinbaugh
+#'
+#' @inheritParams AllGenerics
+#'
+#' @param feature Character vector of features (e.g. gene expression, PC
+#'   scores, number of genes detected).
+#' @param returnAsList Return plots as a list.
+#'
+#' @seealso [Seurat::FeaturePlot()].
+#'
+#' @return No return, only graphical output.
+NULL
+
+
+
+# Methods ====
+#' @rdname plotFeatureTSNE
+#' @importFrom cowplot plot_grid
+#' @importFrom ggplot2 aes_string geom_point ggplot scale_color_gradient theme
+#' @importFrom Seurat FetchData
+#' @export
+setMethod(
+    "plotFeatureTSNE",
+    signature("seurat"),
+    function(
+        object,
+        feature,
+        color = scale_color_gradient(low = "lightgray", high = "purple"),
+        dark = FALSE,
+        label = TRUE,
+        legend = FALSE,
+        returnAsList = FALSE) {
+        data <- cbind(
+            fetchTSNEData(object),
+            FetchData(object, vars.all = feature)
+        )
+        # Remove duplicate columns
+        data <- data[, unique(colnames(data))]
+        plotlist <- lapply(seq_along(feature), function(a) {
+            p <- ggplot(
+                data,
+                mapping = aes_string(
+                    x = "tSNE1",
+                    y = "tSNE2",
+                    color = feature[[a]])
+            )
+            if (isTRUE(dark)) {
+                p <- p + darkTheme()
+            }
+            p <- p +
+                geom_point() +
+                labs(title = feature[[a]])
+            if (isTRUE(label)) {
+                if (isTRUE(dark)) {
+                    labelColor <- "white"
+                } else {
+                    labelColor <- "black"
+                }
+                p <- p +
+                    geom_text(
+                        mapping = aes_string(
+                            x = "centerX",
+                            y = "centerY",
+                            label = "ident"),
+                        color = labelColor,
+                        size = 6,
+                        fontface = "bold")
+            }
+            if (!is.null(color)) {
+                p <- p + color
+            }
+            if (!isTRUE(legend)) {
+                p <- p + theme(legend.position = "none")
+            }
+            p
+        })
+        if (isTRUE(returnAsList)) {
+            plotlist
+        } else {
+            plot_grid(plotlist = plotlist, labels = NULL)
+        }
+    })
