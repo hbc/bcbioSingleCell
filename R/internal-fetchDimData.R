@@ -33,9 +33,13 @@
         left_join(meta, by = "cell") %>%
         left_join(ident, by = "cell") %>%
         mutate_if(is.factor, droplevels) %>%
+        # Need to group by ident to perform center calculations
+        group_by(!!sym("ident")) %>%
         mutate(
             centerX = median(.data[[camel(dimCode[[1]], strict = FALSE)]]),
             centerY = median(.data[[camel(dimCode[[2]], strict = FALSE)]])
         ) %>%
+        ungroup() %>%
+        as.data.frame() %>%
         set_rownames(.[["cell"]])
 }
