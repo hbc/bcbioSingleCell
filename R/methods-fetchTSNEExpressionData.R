@@ -35,15 +35,14 @@ NULL
 #' @export
 setMethod(
     "fetchTSNEExpressionData",
-    signature("seurat"), function(
-        object, genes) {
-        dat <- FetchData(object, vars.all = genes) %>%
-            as.data.frame()
-        dat[["geomean"]] <- Matrix::colMeans(t(dat))
-        dat <- dat %>%
-            rownames_to_column("cell")
+    signature("seurat"),
+    function(object, genes) {
+        data <- FetchData(object, vars.all = genes)
+        data <- as.data.frame(data)
+        data[["geomean"]] <- Matrix::colMeans(t(data))
+        data <- rownames_to_column(data, "cell")
         fetchTSNEData(object) %>%
-            left_join(dat, by = "cell") %>%
+            left_join(data, by = "cell") %>%
             gather(key = "gene",
                    value = "expression",
                    !!genes)
