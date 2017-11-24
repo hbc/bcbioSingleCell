@@ -8,6 +8,10 @@
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
 #'
+#' @param aggregateReplicates Aggregate technical replicates, if specified. This
+#'   function uses values assigned in the `sampleNameAggregate` column of the
+#'   internal sample metadata [data.frame].
+#'
 #' @return [data.frame].
 NULL
 
@@ -46,10 +50,22 @@ NULL
 
 
 
+#' @importFrom dplyr everything mutate_if
+#' @importFrom magrittr set_rownames
+.returnSampleMetadata <- function(metadata, interestingGroups) {
+    metadata %>%
+        select(c(metadataPriorityCols), everything()) %>%
+        mutate_if(is.character, as.factor) %>%
+        mutate_if(is.factor, droplevels) %>%
+        uniteInterestingGroups(interestingGroups) %>%
+        set_rownames(.[["sampleID"]])
+}
+
+
+
 # Methods ====
 #' @rdname sampleMetadata
-#' @importFrom dplyr distinct everything mutate mutate_if select
-#' @importFrom magrittr set_rownames
+#' @importFrom dplyr distinct mutate select
 #' @importFrom stringr str_match
 #' @export
 setMethod(
@@ -82,18 +98,14 @@ setMethod(
                      call. = FALSE)
             }
         }
-        metadata %>%
-            select(c(metadataPriorityCols), everything()) %>%
-            uniteInterestingGroups(interestingGroups) %>%
-            mutate_if(is.character, as.factor) %>%
-            set_rownames(.[["sampleID"]])
+        .returnSampleMetadata(
+            metadata = metadata,
+            interestingGroups = interestingGroups)
     })
 
 
 
 #' @rdname sampleMetadata
-#' @importFrom dplyr mutate_if
-#' @importFrom magrittr set_rownames
 #' @export
 setMethod(
     "sampleMetadata",
@@ -143,10 +155,7 @@ setMethod(
                 interestingGroups <- "sampleName"
             }
         }
-        # Ensure strings as factors
-        metadata %>%
-            mutate_if(is.character, as.factor) %>%
-            mutate_if(is.factor, droplevels) %>%
-            uniteInterestingGroups(interestingGroups) %>%
-            set_rownames(.[["sampleID"]])
+        .returnSampleMetadata(
+            metadata = metadata,
+            interestingGroups = interestingGroups)
     })

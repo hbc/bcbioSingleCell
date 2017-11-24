@@ -32,7 +32,7 @@ NULL
 
 # Constructors ====
 #' @importFrom dplyr group_by left_join n summarize
-#' @importFrom ggplot2 aes_string element_text facet_wrap geom_bar geom_text
+#' @importFrom ggplot2 aes_string element_text facet_wrap geom_bar geom_label
 #'   ggplot labs theme
 #' @importFrom rlang !! sym
 #' @importFrom viridis scale_fill_viridis
@@ -40,7 +40,6 @@ NULL
     object,
     metadata,
     interestingGroups,
-    multiplexed = FALSE,
     fill = scale_fill_viridis(discrete = TRUE)) {
     data <- object %>%
         group_by(!!sym("sampleName")) %>%
@@ -70,19 +69,22 @@ NULL
 
     # Labels
     if (nrow(data) <= qcLabelMaxNum) {
-        p <- p +
-            geom_text(
-                mapping = aes_string(label = "nCells"),
-                fontface = "bold",
-                vjust = -0.5)
+        p <- p + geom_label(
+            data = data,
+            mapping = aes_string(label = "nCells"),
+            alpha = qcLabelAlpha,
+            color = qcLabelColor,
+            fill = qcLabelFill,
+            fontface = qcLabelFontface,
+            label.padding = qcLabelPadding,
+            label.size = qcLabelSize,
+            show.legend = FALSE,
+            # Align the label just under the top of the bar
+            vjust = 1.25)
     }
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) &
-        length(unique(object[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
@@ -104,22 +106,20 @@ setMethod(
     function(
         object,
         interestingGroups,
-        filterCells = FALSE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
         metrics <- metrics(
             object,
-            interestingGroups = interestingGroups,
-            filterCells = filterCells)
-        metadata <- sampleMetadata(object)
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
+            interestingGroups = interestingGroups)
+        metadata <- sampleMetadata(
+            object,
+            interestingGroups = interestingGroups)
         .plotCellCounts(
             object = metrics,
             metadata = metadata,
             interestingGroups = interestingGroups,
-            multiplexed = multiplexed,
             fill = fill)
     })
 
@@ -146,12 +146,15 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
-        metrics <- metrics(object, interestingGroups = interestingGroups)
-        metadata <- sampleMetadata(object)
+        metrics <- metrics(
+            object,
+            interestingGroups = interestingGroups)
+        metadata <- sampleMetadata(
+            object,
+            interestingGroups = interestingGroups)
         .plotCellCounts(
             object = metrics,
             metadata = metadata,
             interestingGroups = interestingGroups,
-            multiplexed = FALSE,
             fill = fill)
     })

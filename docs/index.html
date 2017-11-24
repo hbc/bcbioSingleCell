@@ -73,13 +73,11 @@
 <h3 class="hasAnchor">
 <a href="#bioconductor-method" class="anchor"></a><a href="https://bioconductor.org">Bioconductor</a> method</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)
-<span class="kw">biocLite</span>(<span class="st">"hbc/bcbioSingleCell"</span>)</code></pre></div>
-</div>
-<div id="devtools-method" class="section level3">
-<h3 class="hasAnchor">
-<a href="#devtools-method" class="anchor"></a><a href="https://cran.r-project.org/package=devtools">devtools</a> method</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"hbc/bcbioSingleCell"</span>)</code></pre></div>
+<span class="kw">biocLite</span>(<span class="st">"ensembldb"</span>)
+<span class="kw">biocLite</span>(
+    <span class="st">"hbc/bcbioSingleCell"</span>,
+    <span class="dt">dependencies =</span> <span class="kw">c</span>(<span class="st">"Depends"</span>, <span class="st">"Imports"</span>, <span class="st">"Suggests"</span>)
+)</code></pre></div>
 </div>
 </div>
 <div id="sample-metadata-examples" class="section level2">
@@ -273,6 +271,8 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <li>
 <a href="https://github.com/marypiper">Mary Piper</a> <br><small class="roles"> Author </small> </li>
 <li>
+<a href="https://github.com/sjhosui">Shannan Ho Sui</a> <br><small class="roles"> Author </small> </li>
+<li>
 <a href="http://bioinformatics.sph.harvard.edu">Harvard Chan Bioinformatics Core</a> <br><small class="roles"> Copyright holder, funder </small> </li>
 </ul>
 <h2>Dev status</h2>
@@ -286,7 +286,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://steinbaugh.com">Michael Steinbaugh</a>, <a href="https://github.com/roryk">Rory Kirchner</a>, <a href="https://github.com/marypiper">Mary Piper</a>, <a href="http://bioinformatics.sph.harvard.edu">Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href="http://steinbaugh.com">Michael Steinbaugh</a>, <a href="https://github.com/roryk">Rory Kirchner</a>, <a href="https://github.com/marypiper">Mary Piper</a>, <a href="https://github.com/sjhosui">Shannan Ho Sui</a>, <a href="http://bioinformatics.sph.harvard.edu">Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

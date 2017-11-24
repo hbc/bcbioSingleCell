@@ -11,17 +11,14 @@
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
+#' @inheritParams plotQC
 #'
-#' @param geom Plot type. Supported formats: `boxplot`, `histogram`,
-#'   `ridgeline`, and `violin`.
 #' @param min Recommended minimum value cutoff.
 #' @param max Recommended maximum value cutoff.
 #' @param fill Desired ggplot fill scale. Defaults to
 #'   [viridis::scale_fill_viridis()]. Must supply discrete values. When set to
 #'   `NULL`, the default ggplot2 color palette will be used. If manual color
 #'   definitions are desired, we recommend using [ggplot2::scale_fill_manual()].
-#' @param multiplexed Whether the FASTQ files are multiplexed. This is
-#'   detected automatically for [bcbioSingleCell] objects.
 #' @param samplesOnYAxis Plot the samples on the y axis. Doesn't apply to
 #'   histogram.
 #'
@@ -55,7 +52,6 @@ NULL
     min = 0,
     max = Inf,
     interestingGroups,
-    multiplexed = FALSE,
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "nGene"
@@ -78,21 +74,18 @@ NULL
         p <- p + fill
     }
 
+    # Median labels
+    if (geom %in% validMedianGeom) {
+        p <- p + .medianLabels(object, medianCol = metricCol)
+    }
+
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(object))) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- "sampleNameAggregate"
     }
     if (!is.null(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free_y")
-    } else {
-        # Add median labels
-        if (geom %in% validMedianGeom) {
-            p <- p + .medianLabels(object, medianCol = metricCol)
-        }
     }
 
     if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
@@ -116,7 +109,6 @@ setMethod(
         min,
         max,
         interestingGroups,
-        filterCells = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
@@ -130,9 +122,7 @@ setMethod(
         }
         metrics <- metrics(
             object,
-            interestingGroups = interestingGroups,
-            filterCells = filterCells)
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
+            interestingGroups = interestingGroups)
         .plotGenesPerCell(
             object = metrics,
             geom = geom,
@@ -140,8 +130,7 @@ setMethod(
             max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })
 
 
@@ -166,7 +155,6 @@ setMethod(
         min,
         max,
         interestingGroups,
-        multiplexed = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
@@ -186,6 +174,5 @@ setMethod(
             max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })

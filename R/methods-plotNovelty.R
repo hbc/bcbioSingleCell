@@ -36,7 +36,6 @@ NULL
     geom = "violin",
     min = 0,
     interestingGroups,
-    multiplexed = FALSE,
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "log10GenesPerUMI"
@@ -58,21 +57,18 @@ NULL
         p <- p + fill
     }
 
+    # Median labels
+    if (geom %in% validMedianGeom) {
+        p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
+    }
+
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(object))) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- "sampleNameAggregate"
     }
     if (!is.null(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free_y")
-    } else {
-        # Add median labels
-        if (geom %in% validMedianGeom) {
-            p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
-        }
     }
 
     if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
@@ -95,7 +91,6 @@ setMethod(
         geom = "violin",
         min,
         interestingGroups,
-        filterCells = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
@@ -104,19 +99,16 @@ setMethod(
         if (missing(min)) {
             min <- metadata(object)[["filterParams"]][["minNovelty"]]
         }
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(
             object,
-            interestingGroups = interestingGroups,
-            filterCells = filterCells)
+            interestingGroups = interestingGroups)
         .plotNovelty(
             object = metrics,
             geom = geom,
             min = min,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })
 
 
@@ -140,7 +132,6 @@ setMethod(
         geom = "violin",
         min,
         interestingGroups,
-        multiplexed = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
@@ -156,6 +147,5 @@ setMethod(
             min = min,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })

@@ -9,7 +9,6 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
-#' @inheritParams metrics
 #'
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.
@@ -18,13 +17,11 @@
 #' @param minNovelty Minimum novelty score.
 #' @param minCellsPerGene Include genes with non-zero expression in at least
 #'   this many cells.
-#' @param showReport Show summary statistics report and plots.
-#' @param headerLevel RMarkdown header level, if `showReport = TRUE`.
-#' @param destructive Drop low quality cells from object after filtering.
-#'
-#' @note This operation can be re-run on a [bcbioSingleCell] object that has
-#'   been previously filtered. This function simply saves `filterCells` and
-#'   `filterParams` vectors into the [metadata()] slot.
+#' @param quiet If `TRUE`, don't show the filtering parameter summary.
+#' @param drop Drop low quality cells from object after filtering.
+#'   Enabled by default and generally recommended. If set `FALSE`, then the this
+#'   function simply saves `filterCells`, `filterGenes`, and `filterParams` into
+#'   the [metadata()] slot.
 #'
 #' @seealso [Seurat::CreateSeuratObject()].
 #'
@@ -53,153 +50,161 @@ NULL
     maxMitoRatio = 0.1,
     minNovelty = 0.8,
     minCellsPerGene = 3,
-    showReport = TRUE,
-    headerLevel = 2,
-    destructive = FALSE) {
+    drop = TRUE,
+    quiet = FALSE) {
     # Ensure that all filter parameters are numeric
-    filterParams <- c(
+    params <- c(
         minUMIs = minUMIs,
         minGenes = minGenes,
         maxGenes = maxGenes,
         maxMitoRatio = maxMitoRatio,
         minNovelty = minNovelty,
-        minCellsPerGene = minCellsPerGene
-    )
-    if (!is.numeric(filterParams)) {
-        stop("Filter parameters must all be numeric", call. = FALSE)
+        minCellsPerGene = minCellsPerGene)
+    if (!is.numeric(params)) {
+        stop("Filter parameters must be numeric", call. = FALSE)
     }
+    # Add support `nCount` filtering in a future update
 
     # Filter low quality cells ====
-    # Use the metrics `data.frame` to identify filtered cells
-    metrics <- metrics(object, filterCells = FALSE) %>%
-        as.data.frame() %>%
-        rownames_to_column("cellID")
-    if (!is.null(minUMIs)) {
-        metrics <- metrics %>%
+    # Don't use `subset()` here. That function uses non-standard evaluation that
+    # should only be used interactively in a script.
+
+    colData <- colData(object)
+    message(paste(
+        nrow(colData), "cells before filtering"
+    ))
+
+    # minUMIs
+    if (!is.null(minUMIs) & minUMIs > 0) {
+        colData <- colData %>%
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
+        message(paste(
+            nrow(colData), "cells after 'minUMIs' cutoff"
+        ))
+    } else {
+        message("'minUMIs' cutoff not applied")
     }
-    if (!is.null(minGenes)) {
-        metrics <- metrics %>%
+
+    # minGenes
+    if (!is.null(minGenes) & minGenes > 0) {
+        colData <- colData %>%
             .[.[["nGene"]] >= minGenes, , drop = FALSE]
+        message(paste(
+            nrow(colData), "cells after 'minGenes' cutoff"
+        ))
+    } else {
+        message("'minGenes' cutoff not applied")
     }
-    if (!is.null(maxGenes)) {
-        metrics <- metrics %>%
+
+    # maxGenes
+    if (!is.null(maxGenes) & maxGenes < Inf) {
+        colData <- colData %>%
             .[.[["nGene"]] <= maxGenes, , drop = FALSE]
+        message(paste(
+            nrow(colData), "cells after 'maxGenes' cutoff"
+        ))
+    } else {
+        message("'maxGenes' cutoff not applied")
     }
-    if (!is.null(maxMitoRatio)) {
-        metrics <- metrics %>%
+
+    # maxMitoRatio
+    if (!is.null(maxMitoRatio) & maxMitoRatio < 1) {
+        colData <- colData %>%
             .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
+        message(paste(
+            nrow(colData), "cells after 'maxMitoRatio' cutoff"
+        ))
+    } else {
+        message("'maxMitoRatio' cutoff not applied")
     }
-    if (!is.null(minNovelty)) {
-        metrics <- metrics %>%
+
+    # minNovelty
+    if (!is.null(minNovelty) & minNovelty > 0) {
+        colData <- colData %>%
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
+        message(paste(
+            nrow(colData), "cells after 'minNovelty' cutoff"
+        ))
+    } else {
+        message("'minNovelty' cutoff not applied")
     }
-    if (!nrow(metrics)) {
+
+    # Check for remaining cells
+    if (!nrow(colData)) {
         stop("No cells passed filtering", call. = FALSE)
     }
-    filterCells <- metrics[["cellID"]]
+
+    cells <- rownames(colData)
     message(paste(
-        length(filterCells),
+        length(cells),
         "/",
         ncol(object),
         "cells passed filtering",
-        paste0("(", percent(length(filterCells) / ncol(object)), ")")
+        paste0("(", percent(length(cells) / ncol(object)), ")")
     ))
 
     # Filter low expression genes ====
     if (minCellsPerGene > 0) {
         counts <- assay(object)
         numCells <- Matrix::rowSums(counts > 0)
-        filterGenes <- names(numCells[which(numCells >= minCellsPerGene)])
+        genes <- names(numCells[which(numCells >= minCellsPerGene)])
         message(paste(
-            length(filterGenes),
+            length(genes),
             "/",
             nrow(object),
             "genes passed filtering",
-            paste0("(", percent(length(filterGenes) / nrow(object)), ")")
+            paste0("(", percent(length(genes) / nrow(object)), ")")
         ))
     } else {
-        filterGenes <- NULL
+        genes <- NULL
     }
 
     # Metadata ====
-    metadata(object)[["filterCells"]] <- filterCells
-    metadata(object)[["filterGenes"]] <- filterGenes
-    metadata(object)[["filterParams"]] <- filterParams
+    metadata(object)[["filterCells"]] <- cells
+    metadata(object)[["filterGenes"]] <- genes
+    metadata(object)[["filterParams"]] <- params
+    cell2sample <- cell2sample(
+        cells,
+        samples = sampleMetadata(object)[["sampleID"]]
+    )
+    metadata(object)[["cell2sample"]] <- cell2sample
 
-    # Destructive mode ====
-    if (isTRUE(destructive)) {
+    # Drop cells and genes (destructive) ====
+    if (isTRUE(drop)) {
+        message(paste(
+            "Dropping low quality cells and genes from the object"
+        ))
         object <- .applyFilterCutoffs(object)
+    } else {
+        message(paste(
+            "Non-destructive mode",
+            "  cutoffs: metadata(object)$filterParams",
+            "    cells: metadata(object)$filterCells",
+            "    genes: metadata(object)$filterGenes",
+            sep = "\n"
+        ))
     }
 
     # Show summary statistics report and plots, if desired
-    if (isTRUE(showReport)) {
-        mdHeader("Filter parameters", level = headerLevel, asis = TRUE)
+    if (!isTRUE(quiet)) {
         mdList(c(
-            paste0("`>= ", minUMIs, "` UMI counts per cell"),
-            paste0("`>= ", minGenes, "` genes per cell"),
-            paste0("`<= ", maxGenes, "` genes per cell"),
-            paste0("`<= ", maxMitoRatio, "` relative mitochondrial abundance"),
-            paste0("`>= ", minNovelty, "` novelty score")),
-            asis = TRUE)
-
-        mdHeader(
-            "Filtered metrics plots",
-            level = headerLevel,
-            tabset = TRUE,
-            asis = TRUE)
-
-        # Reads per cell currently only supported for bcbio runs
-        if (metadata(object)[["pipeline"]] == "bcbio") {
-            mdHeader(
-                "Reads per cell",
-                level = headerLevel + 1,
-                asis = TRUE)
-            plotReadsPerCell(object, filterCells = TRUE) %>%
-                show()
-        }
-
-        mdHeader(
-            "Cell counts",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotCellCounts(object, filterCells = TRUE) %>%
-            show()
-
-        mdHeader(
-            "UMI counts per cell",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotUMIsPerCell(object, filterCells = TRUE) %>%
-            show()
-
-        mdHeader(
-            "Genes detected",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotGenesPerCell(object, filterCells = TRUE) %>%
-            show()
-
-        mdHeader(
-            "UMIs vs. genes",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotUMIsVsGenes(object, filterCells = TRUE) %>%
-            show()
-
-        mdHeader(
-            "Mitochondrial counts ratio",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotMitoRatio(object, filterCells = TRUE) %>%
-            show()
-
-        mdHeader(
-            "Novelty",
-            level = headerLevel + 1,
-            asis = TRUE)
-        plotNovelty(object, filterCells = TRUE) %>%
-            show()
+            paste(">=", minUMIs, "UMI counts per cell"),
+            paste(">=", minGenes, "genes per cell"),
+            paste("<=", maxGenes, "genes per cell"),
+            paste("<=", maxMitoRatio, "relative mitochondrial abundance"),
+            paste(">=", minNovelty, "novelty score")
+        )) %>%
+            # Strip the line breaks
+            gsub(x = .,
+                 pattern = "\n",
+                 replacement = "") %>%
+            as.character() %>%
+            # Indent by 2 spaces
+            paste0("  ", .) %>%
+            # Add header
+            c("Filtering parameters:", .) %>%
+            # Print without line numbers
+            cat(sep = "\n")
     }
 
     object

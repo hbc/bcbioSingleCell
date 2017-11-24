@@ -34,7 +34,6 @@ NULL
     geom = "violin",
     max = Inf,
     interestingGroups,
-    multiplexed = FALSE,
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "mitoRatio"
@@ -56,21 +55,18 @@ NULL
         p <- p + fill
     }
 
+    # Median labels
+    if (geom %in% validMedianGeom) {
+        p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
+    }
+
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(object))) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- "sampleNameAggregate"
     }
     if (!is.null(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free_y")
-    } else {
-        # Add median labels
-        if (geom %in% validMedianGeom) {
-            p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
-        }
     }
 
     if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
@@ -93,7 +89,6 @@ setMethod(
         geom = "violin",
         max,
         interestingGroups,
-        filterCells = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
@@ -102,19 +97,16 @@ setMethod(
         if (missing(max)) {
             max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
         }
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(
             object,
-            interestingGroups = interestingGroups,
-            filterCells = filterCells)
+            interestingGroups = interestingGroups)
         .plotMitoRatio(
             object = metrics,
             geom = geom,
             max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })
 
 
@@ -136,13 +128,15 @@ setMethod(
     function(
         object,
         geom = "violin",
-        max = Inf,
+        max,
         interestingGroups,
-        multiplexed = FALSE,
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
+        }
+        if (missing(max)) {
+            max <- bcbio(object)[["filterParams"]][["maxGenes"]]
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotMitoRatio(
@@ -151,6 +145,5 @@ setMethod(
             max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill,
-            multiplexed = multiplexed)
+            fill = fill)
     })

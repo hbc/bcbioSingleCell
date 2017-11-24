@@ -1,11 +1,12 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Import and analyze bcbio single-cell RNA-seq data.
-Version: 0.0.22
+Version: 0.0.23
 Authors@R: as.person(c(
     "Michael Steinbaugh <mike@steinbaugh.com> [aut, cre]",
     "Rory Kirchner <roryk@alum.mit.edu> [aut]",
     "Mary Piper <mary.piper@gmail.com> [aut]",
+    "Shannan Ho Sui <shosui@hsph.harvard.edu> [aut]",
     "Harvard Chan Bioinformatics Core <bioinformatics@hsph.harvard.edu> [cph, fnd]"
     ))
 URL:
@@ -49,11 +50,16 @@ Suggests:
     BiocStyle,
     devtools,
     googlesheets,
-    lintr (>= 1.0.1),
+    lintr,
+    pkgdown,
     rmarkdown,
+    roxygen2,
     testthat,
     tidyverse
 Remotes:
+    hadley/pkgdown,
+    jimhester/lintr,
+    klutometis/roxygen,
     steinbaugh/basejump
 biocViews:
     DataImport,

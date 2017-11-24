@@ -10,10 +10,6 @@
 #' @inheritParams AllGenerics
 #'
 #' @param interestingGroups Interesting group, to use for colors.
-#' @param filterCells Show only the cells that have passed filtering cutoffs.
-#' @param aggregateReplicates Aggregate technical replicates, if specified. This
-#'   function uses values assigned in the `sampleNameAggregate` column of the
-#'   internal sample metadata [data.frame].
 #'
 #' @seealso [sampleMetadata()].
 #'
@@ -33,51 +29,35 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        interestingGroups,
-        filterCells = FALSE,
-        aggregateReplicates = FALSE) {
-        if (isTRUE(filterCells)) {
-            object <- .applyFilterCutoffs(object)
-        }
-
-        colData <- colData(object) %>%
-            as.data.frame() %>%
-            rownames_to_column("cellID")
-
-        # Prepare the metadata
+        interestingGroups) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
-        metadata <- metadata(object)[["sampleMetadata"]] %>%
-            as.data.frame() %>%
-            uniteInterestingGroups(interestingGroups) %>%
-            # Ensure all the columns are factors here. This will also sanitize
-            # any previously saved datasets, where the sample identifiers are
-            # character vectors.
-            mutate_all(as.factor)
 
-        # Rename `sampleName` when aggregating replicates
-        if (isTRUE(aggregateReplicates)) {
-            .checkAggregate(metadata, stop = TRUE)
-            metadata[["sampleName"]] <- metadata[["sampleNameAggregate"]]
-            metadata[["sampleNameAggregate"]] <- NULL
+        colData <- colData(object)
+        # Check for malformed colData. Safe to remove in a future update.
+        if ("sampleID" %in% colnames(colData)) {
+            stop("'sampleID' shouldn't be set in 'colData'",
+                 call. = FALSE)
         }
 
-        # Define the cell2sample mappings
-        # This uses a stashed `data.frame` as of v0.0.22, for better speed
-        cell2sample <- metadata(object)[["cell2sample"]]
-        if (is.null(cell2sample)) {
-            cell2sample <- .cell2sample(
-                cells = colData[["cellID"]],
-                samples = metadata[["sampleID"]]
-            )
+        sampleID <- cell2sample(object)
+        # Check for cell ID dimension mismatch. This can happen if `cell2sample`
+        # mapping isn't updated inside the metadata slot.
+        if (!identical(rownames(colData), names(sampleID))) {
+            stop("'cellID' mismatch between 'colData' and 'cell2sample'",
+                 call. = FALSE)
         }
-        cell2sample[["sampleID"]] <- as.factor(cell2sample[["sampleID"]])
 
-        colData %>%
-            left_join(cell2sample, by = "cellID") %>%
-            left_join(metadata, by = "sampleID") %>%
-            column_to_rownames("cellID")
+        sampleMetadata <- sampleMetadata(
+            object,
+            interestingGroups = interestingGroups)
+
+        cbind(
+            as.data.frame(sampleID),
+            as.data.frame(colData)
+        ) %>%
+            left_join(sampleMetadata, by = "sampleID")
     })
 
 
@@ -100,9 +80,14 @@ setMethod(
         as.data.frame() %>%
         camel(strict = FALSE) %>%
         rownames_to_column("cellID") %>%
-        mutate_if(is.character, as.factor)
-    metadata <- sampleMetadata(object)
-    suppressMessages(left_join(metrics, metadata)) %>%
-        uniteInterestingGroups(interestingGroups) %>%
-        column_to_rownames("cellID")
+        mutate_if(is.character, as.factor) %>%
+        mutate_if(is.factor, droplevels)
+    # Join columns can vary here, so suppress message
+    metrics <- suppressMessages(left_join(
+        metrics,
+        sampleMetadata(object, interestingGroups = interestingGroups)
+    )) %>%
+        column_to_rownames("cellID") %>%
+        uniteInterestingGroups(interestingGroups)
+    metrics
 })

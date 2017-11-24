@@ -4,12 +4,15 @@
 \name{plotReadsPerCell}
 \alias{plotReadsPerCell}
 \alias{plotReadsPerCell,bcbioSingleCell-method}
+\alias{plotReadsPerCell,seurat-method}
 \title{Plot Read Counts per Cell}
 \usage{
 plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
-  interestingGroups, filterCells = FALSE)
+  interestingGroups)
+
+\S4method{plotReadsPerCell}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -20,8 +23,6 @@ plotReadsPerCell(object, ...)
 (\emph{recommended}), raw \code{ridgeline}, and raw \code{violin}.}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 }
 \value{
 \link{ggplot}.

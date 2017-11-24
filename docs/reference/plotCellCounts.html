@@ -94,11 +94,11 @@
 
 <span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>plotCellCounts</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>filterCells</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
 
 <span class='co'># S4 method for data.frame</span>
 <span class='fu'>plotCellCounts</span>(<span class='no'>object</span>, <span class='no'>metadata</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>multiplexed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotCellCounts</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
@@ -120,10 +120,6 @@
       <td><p>Interesting group, to use for colors.</p></td>
     </tr>
     <tr>
-      <th>filterCells</th>
-      <td><p>Show only the cells that have passed filtering cutoffs.</p></td>
-    </tr>
-    <tr>
       <th>fill</th>
       <td><p>Desired ggplot fill scale. Defaults to
 <code><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>viridis::scale_fill_viridis()</a></code>. Must supply discrete values. When set to
@@ -133,11 +129,6 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
     <tr>
       <th>metadata</th>
       <td><p>Sample metadata data.frame.</p></td>
-    </tr>
-    <tr>
-      <th>multiplexed</th>
-      <td><p>Whether the FASTQ files are multiplexed. This is
-detected automatically for <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> objects.</p></td>
     </tr>
     </table>
     
@@ -203,7 +194,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

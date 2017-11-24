@@ -8,7 +8,7 @@
 \usage{
 pcCutoff(object, ...)
 
-\S4method{pcCutoff}{seurat}(object, maxPct = 0.05, minCumPct = 0.8,
+\S4method{pcCutoff}{seurat}(object, maxPct = 0.05, minCumPct = 0.9,
   plot = TRUE)
 }
 \arguments{
@@ -28,7 +28,7 @@ Numeric of maximum PC value to use for dimensionality reduction.
 \description{
 Calculate the principal component (PC) with either a maximum SD percentage or
 minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
-PC cutoff for either 5% SD (\code{maxPct}) or 80% cumulative (\code{minCumsum}).
+PC cutoff for either 5% SD (\code{maxPct}) or 90% cumulative (\code{minCumsum}).
 }
 \seealso{
 \link[Seurat:PCElbowPlot]{Seurat::PCElbowPlot}.

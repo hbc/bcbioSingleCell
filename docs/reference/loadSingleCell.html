@@ -91,7 +91,7 @@
     
 
     <pre class="usage"><span class='fu'>loadSingleCell</span>(<span class='no'>uploadDir</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
-  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>sampleMetadataFile</span>, <span class='no'>gtfFile</span>, <span class='no'>annotable</span>, <span class='no'>ensemblVersion</span>,
+  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>sampleMetadataFile</span>, <span class='no'>gtfFile</span>, <span class='no'>ensemblVersion</span>, <span class='no'>annotable</span>,
   <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -121,9 +121,16 @@ inDrop). Consult the GitHub repo for examples and additional information.</p></t
     </tr>
     <tr>
       <th>gtfFile</th>
-      <td><p><em>Optional</em>. GTF (Gene Transfer Format) file, which will be
-used for transcript-to-gene (<code>tx2gene</code>) and gene-to-symbol (<code>gene2symbol</code>)
-annotation mappings.</p></td>
+      <td><p><em>Optional but recommended</em>. GTF (Gene Transfer Format) file,
+which will be used for gene-to-symbol (<code>gene2symbol</code>) and
+transcript-to-gene (<code>tx2gene</code>) annotation mappings.</p></td>
+    </tr>
+    <tr>
+      <th>ensemblVersion</th>
+      <td><p><em>Optional</em>. Ensembl release version. If <code>NULL</code>,
+defaults to current release, and does not typically need to be
+user-defined. This parameter can be useful for matching Ensembl annotations
+against an outdated bcbio annotation build.</p></td>
     </tr>
     <tr>
       <th>annotable</th>
@@ -134,13 +141,6 @@ annotable from the annotations available on Ensembl. If set <code>NULL</code>, t
 <code>rowData()</code> inside the resulting <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object will be left
 empty. This is recommended for projects dealing with genes or transcripts
 that are poorly annotated.</p></td>
-    </tr>
-    <tr>
-      <th>ensemblVersion</th>
-      <td><p><em>Optional</em>. Ensembl release version. If <code>NULL</code>,
-defaults to current release, and does not typically need to be
-user-defined. This parameter can be useful for matching Ensembl annotations
-against an outdated bcbio annotation build.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -194,7 +194,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

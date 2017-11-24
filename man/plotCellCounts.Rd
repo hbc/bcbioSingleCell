@@ -11,10 +11,10 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{bcbioSingleCell}(object, interestingGroups,
-  filterCells = FALSE, fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{data.frame}(object, metadata, interestingGroups,
-  multiplexed = FALSE, fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{seurat}(object, interestingGroups,
   fill = scale_fill_viridis(discrete = TRUE))
@@ -26,17 +26,12 @@ plotCellCounts(object, ...)
 
 \item{interestingGroups}{Interesting group, to use for colors.}
 
-\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
-
 \item{fill}{Desired ggplot fill scale. Defaults to
 \code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
 \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 
 \item{metadata}{Sample metadata \link{data.frame}.}
-
-\item{multiplexed}{Whether the FASTQ files are multiplexed. This is
-detected automatically for \link{bcbioSingleCell} objects.}
 }
 \value{
 \link{ggplot}.

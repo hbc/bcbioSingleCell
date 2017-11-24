@@ -11,8 +11,7 @@ filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000,
   minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.8,
-  minCellsPerGene = 3, showReport = TRUE, headerLevel = 2,
-  destructive = FALSE)
+  minCellsPerGene = 3, drop = TRUE, quiet = FALSE)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
 }
@@ -34,11 +33,12 @@ filterCells(object, ...)
 \item{minCellsPerGene}{Include genes with non-zero expression in at least
 this many cells.}
 
-\item{showReport}{Show summary statistics report and plots.}
+\item{drop}{Drop low quality cells from object after filtering.
+Enabled by default and generally recommended. If set \code{FALSE}, then the this
+function simply saves \code{filterCells}, \code{filterGenes}, and \code{filterParams} into
+the \code{\link[=metadata]{metadata()}} slot.}
 
-\item{headerLevel}{RMarkdown header level, if \code{showReport = TRUE}.}
-
-\item{destructive}{Drop low quality cells from object after filtering.}
+\item{quiet}{If \code{TRUE}, don't show the filtering parameter summary.}
 }
 \value{
 \link{bcbioSingleCell} object, with filtering information slotted into
@@ -47,11 +47,6 @@ this many cells.}
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.
-}
-\note{
-This operation can be re-run on a \link{bcbioSingleCell} object that has
-been previously filtered. This function simply saves \code{filterCells} and
-\code{filterParams} vectors into the \code{\link[=metadata]{metadata()}} slot.
 }
 \examples{
 \dontrun{

@@ -11,15 +11,15 @@
 plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "violin", min,
-  max, interestingGroups, filterCells = FALSE, samplesOnYAxis = TRUE,
+  max, interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0,
-  max = Inf, interestingGroups, multiplexed = FALSE,
-  samplesOnYAxis = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+  max = Inf, interestingGroups, samplesOnYAxis = TRUE,
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotGenesPerCell}{seurat}(object, geom = "violin", min, max,
-  interestingGroups, multiplexed = FALSE, samplesOnYAxis = TRUE,
+  interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
@@ -28,15 +28,14 @@ plotGenesPerCell(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{geom}{Plot type. Supported formats: \code{boxplot}, \code{histogram},
-\code{ridgeline}, and \code{violin}.}
+\code{ridgeline}, and \code{violin}. Applies to \code{\link[=plotUMIsPerCell]{plotUMIsPerCell()}},
+\code{\link[=plotGenesPerCell]{plotGenesPerCell()}}, \code{\link[=plotMitoRatio]{plotMitoRatio()}}, and \code{\link[=plotNovelty]{plotNovelty()}} output.}
 
 \item{min}{Recommended minimum value cutoff.}
 
 \item{max}{Recommended maximum value cutoff.}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{filterCells}{Show only the cells that have passed filtering cutoffs.}
 
 \item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
 histogram.}
@@ -45,9 +44,6 @@ histogram.}
 \code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
 \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
-
-\item{multiplexed}{Whether the FASTQ files are multiplexed. This is
-detected automatically for \link{bcbioSingleCell} objects.}
 }
 \value{
 \link{ggplot}.

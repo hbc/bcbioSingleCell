@@ -33,7 +33,6 @@ NULL
 .plotMitoVsCoding <- function(
     object,
     interestingGroups,
-    multiplexed = FALSE,
     color = scale_color_viridis(discrete = TRUE)) {
     p <- .plotQCScatterplot(object, xCol = "nCoding", yCol = "nMito")
 
@@ -51,9 +50,6 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(multiplexed) & length(unique(object[["description"]])) > 1) {
-        facets <- c(facets, "description")
-    }
     if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
@@ -76,21 +72,17 @@ setMethod(
     function(
         object,
         interestingGroups,
-        filterCells = FALSE,
         samplesOnYAxis = TRUE,
         color = scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
-        multiplexed <- metadata(object)[["multiplexedFASTQ"]]
         metrics <- metrics(
             object,
-            interestingGroups = interestingGroups,
-            filterCells = filterCells)
+            interestingGroups = interestingGroups)
         .plotMitoVsCoding(
             object = metrics,
             interestingGroups = interestingGroups,
-            multiplexed = multiplexed,
             color = color)
     })
 
@@ -114,7 +106,6 @@ setMethod(
     function(
         object,
         interestingGroups,
-        multiplexed = FALSE,
         color = scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
@@ -123,6 +114,5 @@ setMethod(
         .plotMitoVsCoding(
             object = metrics,
             interestingGroups = interestingGroups,
-            multiplexed = multiplexed,
             color = color)
     })

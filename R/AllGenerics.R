@@ -23,6 +23,14 @@ setGeneric("calculateMetrics", function(object, ...) {
 
 
 
+#' @rdname cell2sample
+#' @export
+setGeneric("cell2sample", function(object, ...) {
+    standardGeneric("cell2sample")
+})
+
+
+
 #' @rdname cellTypesPerCluster
 #' @export
 setGeneric("cellTypesPerCluster", function(object, ...) {
@@ -217,18 +225,18 @@ setGeneric("plotUMIsVsGenes", function(object, ...) {
 
 
 
-#' @rdname prepareSingleCellTemplate
-#' @export
-setGeneric("prepareSingleCellTemplate", function(object, ...) {
-    standardGeneric("prepareSingleCellTemplate")
-})
-
-
-
 #' @rdname plotZerosVsDepth
 #' @export
 setGeneric("plotZerosVsDepth", function(object, ...) {
     standardGeneric("plotZerosVsDepth")
+})
+
+
+
+#' @rdname prepareSingleCellTemplate
+#' @export
+setGeneric("prepareSingleCellTemplate", function(object, ...) {
+    standardGeneric("prepareSingleCellTemplate")
 })
 
 
