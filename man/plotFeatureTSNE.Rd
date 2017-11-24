@@ -10,7 +10,8 @@ plotFeatureTSNE(object, ...)
 
 \S4method{plotFeatureTSNE}{seurat}(object, feature, pointSize = 1,
   color = scale_color_gradient(low = "lightgray", high = "purple"),
-  dark = FALSE, label = TRUE, legend = FALSE, returnAsList = FALSE)
+  dark = FALSE, label = TRUE, labelSize = 6, legend = FALSE,
+  returnAsList = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -20,13 +21,13 @@ plotFeatureTSNE(object, ...)
 \item{feature}{Character vector of features (e.g. gene expression, PC
 scores, number of genes detected).}
 
-\item{color}{Color palette to use for points. Defaults to the viridis color
-palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
-low/high gradient.}
+\item{pointSize}{Cell point size.}
 
 \item{dark}{Enable dark mode.}
 
 \item{label}{Overlay a cluster identitiy label on the plot.}
+
+\item{labelSize}{Size of the text label.}
 
 \item{returnAsList}{Return plots as a list.}
 }

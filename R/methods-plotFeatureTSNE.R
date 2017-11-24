@@ -5,7 +5,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
-#' @inheritParams plotMarkerTSNE
+#' @inheritParams plotTSNE
 #'
 #' @param feature Character vector of features (e.g. gene expression, PC
 #'   scores, number of genes detected).
@@ -34,6 +34,7 @@ setMethod(
         color = scale_color_gradient(low = "lightgray", high = "purple"),
         dark = FALSE,
         label = TRUE,
+        labelSize = 6,
         legend = FALSE,
         returnAsList = FALSE) {
         data <- cbind(
@@ -69,7 +70,7 @@ setMethod(
                             y = "centerY",
                             label = "ident"),
                         color = labelColor,
-                        size = 6,
+                        size = labelSize,
                         fontface = "bold")
             }
             if (!is.null(color)) {
