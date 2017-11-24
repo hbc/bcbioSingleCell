@@ -58,7 +58,7 @@ NULL
 .plotMarkerTSNE <- function(
     data,
     colorPoints = "geomean",
-    color = scale_color_viridis(),
+    color = scale_color_viridis(option = inferno),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     label = TRUE,
