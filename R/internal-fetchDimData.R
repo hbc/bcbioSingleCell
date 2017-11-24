@@ -6,7 +6,6 @@
 #'
 #' @importFrom basejump camel
 #' @importFrom dplyr group_by mutate mutate_if ungroup
-#' @importFrom magrittr set_colnames
 #' @importFrom Seurat FetchData
 #' @importFrom stats median
 #' @importFrom tibble rownames_to_column
@@ -19,15 +18,12 @@
 #'
 #' @return [data.frame].
 .fetchDimDataSeurat <- function(object, dimCode) {
-    meta <- slot(object, "meta.data") %>%
-        camel(strict = FALSE)
-    ident <- slot(object, "ident") %>%
-        as.data.frame() %>%
-        set_colnames("ident")
+    ident <- data.frame(ident = slot(object, "ident"))
+    metadata <- slot(object, "meta.data")
     FetchData(object, vars.all = dimCode) %>%
         as.data.frame() %>%
         camel(strict = FALSE) %>%
-        cbind(meta, ident) %>%
+        cbind(ident, metadata) %>%
         rownames_to_column() %>%
         mutate_if(is.factor, droplevels) %>%
         # Group by ident here for center calculations
