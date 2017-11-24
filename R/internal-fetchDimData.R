@@ -5,7 +5,7 @@
 #' @noRd
 #'
 #' @importFrom basejump camel
-#' @importFrom dplyr left_join mutate mutate_if
+#' @importFrom dplyr group_by left_join mutate mutate_if ungroup
 #' @importFrom magrittr set_colnames set_rownames
 #' @importFrom Seurat FetchData
 #' @importFrom stats median
