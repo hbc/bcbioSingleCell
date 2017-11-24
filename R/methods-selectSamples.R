@@ -104,9 +104,10 @@ NULL
     }
 
     # Update the metadata slot
-    metadata(subset)[["sampleMetadata"]] <- sampleMetadata
-    metadata(subset)[["filterCells"]] <- cells
     metadata(subset)[["allSamples"]] <- FALSE
+    metadata(subset)[["cell2sample"]] <- cell2sample(subset)
+    metadata(subset)[["filterCells"]] <- cells
+    metadata(subset)[["sampleMetadata"]] <- sampleMetadata
     metadata(subset)[["selectSamples"]] <- TRUE
 
     subset
