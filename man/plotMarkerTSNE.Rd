@@ -3,19 +3,20 @@
 \docType{methods}
 \name{plotMarkerTSNE}
 \alias{plotMarkerTSNE}
-\alias{plotMarkerTSNE,grouped_df-method}
+\alias{plotMarkerTSNE,data.frame-method}
 \alias{plotMarkerTSNE,seurat-method}
 \title{Plot Marker t-SNE}
 \usage{
 plotMarkerTSNE(object, ...)
 
-\S4method{plotMarkerTSNE}{grouped_df}(object, colorPoints = "geomean",
-  color = scale_color_viridis(), dark = TRUE, pointsAsNumbers = FALSE,
-  label = TRUE)
+\S4method{plotMarkerTSNE}{data.frame}(object, colorPoints = "geomean",
+  pointsAsNumbers = FALSE, pointSize = 1, label = TRUE, labelSize = 6,
+  color = scale_color_viridis(), dark = TRUE, legend = TRUE,
+  title = NULL)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, colorPoints = "geomean",
-  color = scale_color_viridis(), dark = TRUE, pointsAsNumbers = FALSE,
-  label = TRUE, title = NULL)
+  pointsAsNumbers = FALSE, pointSize = 1, label = TRUE, labelSize = 6,
+  color = scale_color_viridis(), dark = TRUE, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -25,19 +26,23 @@ plotMarkerTSNE(object, ...)
 \item{colorPoints}{Color points by geometric mean (\code{geomean}) or expression
 of individual gene (\code{expression}).}
 
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+
+\item{pointSize}{Cell point size.}
+
+\item{label}{Overlay a cluster identitiy label on the plot.}
+
+\item{labelSize}{Size of the text label.}
+
 \item{color}{Color palette to use for points. Defaults to the viridis color
 palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
 low/high gradient.}
 
 \item{dark}{Enable dark mode.}
 
-\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
-
-\item{label}{Overlay a cluster identitiy label on the plot.}
+\item{title}{Plot title.}
 
 \item{genes}{Genes (by symbol name) of which to get expression data.}
-
-\item{title}{Plot title.}
 }
 \value{
 \link{ggplot}.
@@ -47,7 +52,6 @@ Plot Marker t-SNE
 }
 \examples{
 \dontrun{
-data(markers, seurat)
 top <- topMarkers(markers)
 
 # Let's take the top markers specific to cluster 0, as an example
