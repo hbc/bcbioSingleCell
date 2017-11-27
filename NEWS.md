@@ -13,6 +13,13 @@
 - Improved appearance of `plotReadsPerCell()` labels and legends. Additionally, `plotReadsPerCell()` more efficiently handles the stashed values in the `nCount` column of `colData`, for faster plotting that having to rely on manipulation of the raw `cellularBarcodes` list stashed in `object@bcbio$cellularBarcodes`.
 - `sampleMetadata()` return is now consistently sanitized for `bcbioSingleCell` and `seurat` objects.
 - Minor tweaks to quality control template and setup.R files.
+- Added `plotFeatureTSNE()` utility function. This improves on `Seurat::FeaturePlot()` and enables the user to overlay the cluster identifiers on top of the tSNE plot. `plotFeatures()` is now deprecated in favor of this function.
+- Improved internal handling of Seurat data in the `.fetchDimDataSeurat()` function. This now keeps the cell ID as the rowname.
+- Allow the user to define the color palette (`color`), as well as `pointSize` and `labelSize` for `plotPCA()` and `plotTSNE()`.
+- Factors are now correctly releveled in `cell2sample()` return.
+- Improved internal code for `fetchTSNEExpressionData()`.
+- Bug fix for `metrics()` accessor not including the cell ID as rownames.
+- Clustering template fixes. Now uses `plotFeatureTSNE()` to assess quality control metrics on tSNE.
 
 
 
