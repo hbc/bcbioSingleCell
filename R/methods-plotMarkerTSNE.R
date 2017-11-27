@@ -9,13 +9,8 @@
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #'
-#' @param color Color palette to use for points. Defaults to the viridis color
-#'   palette. Use [ggplot2::scale_color_gradient()] to easily define your own
-#'   low/high gradient.
 #' @param colorPoints Color points by geometric mean (`geomean`) or expression
 #'   of individual gene (`expression`).
-#' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).
-#' @param title Plot title.
 #'
 #' @return [ggplot].
 #'
@@ -61,7 +56,9 @@ NULL
     color = scale_color_viridis(),
     dark = TRUE,
     pointsAsNumbers = FALSE,
+    pointSize = 1,
     label = TRUE,
+    labelSize = 6,
     legend = TRUE,
     title = NULL) {
     if (!colorPoints %in% c("expression", "geomean")) {
@@ -114,9 +111,9 @@ NULL
                     y = "tSNE2",
                     label = "ident",
                     color = colorPoints),
-                size = 2)
+                size = pointSize)
     } else {
-        p <- p + geom_point()
+        p <- p + geom_point(size = pointSize)
     }
     if (isTRUE(label)) {
         if (isTRUE(dark)) {
@@ -131,7 +128,7 @@ NULL
                     y = "centerY",
                     label = "ident"),
                 color = labelColor,
-                size = 6,
+                size = labelSize,
                 fontface = "bold")
     }
     if (!is.null(color)) {
