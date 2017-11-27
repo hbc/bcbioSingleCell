@@ -16,7 +16,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' data(markers, seurat)
 #' top <- topMarkers(markers)
 #'
 #' # Let's take the top markers specific to cluster 0, as an example
@@ -53,12 +52,12 @@ NULL
 .plotMarkerTSNE <- function(
     data,
     colorPoints = "geomean",
-    color = scale_color_viridis(),
-    dark = TRUE,
     pointsAsNumbers = FALSE,
     pointSize = 1,
     label = TRUE,
     labelSize = 6,
+    color = scale_color_viridis(),
+    dark = TRUE,
     legend = TRUE,
     title = NULL) {
     if (!colorPoints %in% c("expression", "geomean")) {
@@ -101,9 +100,7 @@ NULL
     } else {
         p <- p + theme(legend.position = "none")
     }
-
     if (isTRUE(pointsAsNumbers)) {
-        # This seems to take longer to plot than the points?
         p <- p +
             geom_text(
                 mapping = aes_string(
@@ -142,56 +139,74 @@ NULL
 # Methods ====
 #' @rdname plotMarkerTSNE
 #' @export
-setMethod("plotMarkerTSNE", "grouped_df", function(
-    object,
-    colorPoints = "geomean",
-    color = scale_color_viridis(),
-    dark = TRUE,
-    pointsAsNumbers = FALSE,
-    label = TRUE) {
-    requiredCols <- c(
-        "centerX",
-        "centerY",
-        "expression",
-        "gene",
-        "geomean",
-        "ident",
-        "tSNE1",
-        "tSNE2")
-    if (!all(requiredCols %in% colnames(object))) {
-        stop(paste(
-            "Required columns:", toString(requiredCols)
-        ), call. = FALSE)
-    }
-    .plotMarkerTSNE(
-        data = object,
-        colorPoints = colorPoints,
-        color = color,
-        dark = dark,
-        pointsAsNumbers = pointsAsNumbers,
-        label = label)
-})
+setMethod(
+    "plotMarkerTSNE",
+    signature("data.frame"),
+    function(
+        object,
+        colorPoints = "geomean",
+        pointsAsNumbers = FALSE,
+        pointSize = 1,
+        label = TRUE,
+        labelSize = 6,
+        color = scale_color_viridis(),
+        dark = TRUE,
+        legend = TRUE,
+        title = NULL) {
+        requiredCols <- c(
+            "centerX",
+            "centerY",
+            "expression",
+            "gene",
+            "geomean",
+            "ident",
+            "tSNE1",
+            "tSNE2")
+        if (!all(requiredCols %in% colnames(object))) {
+            stop(paste(
+                "Required columns:", toString(requiredCols)
+            ), call. = FALSE)
+        }
+        .plotMarkerTSNE(
+            data = object,
+            colorPoints = colorPoints,
+            pointsAsNumbers = pointsAsNumbers,
+            pointSize = pointSize,
+            label = label,
+            labelSize = labelSize,
+            color = color,
+            dark = dark,
+            legend = legend,
+            title = title)
+    })
 
 
 
 #' @rdname plotMarkerTSNE
 #' @export
-setMethod("plotMarkerTSNE", "seurat", function(
-    object,
-    genes,
-    colorPoints = "geomean",
-    color = scale_color_viridis(),
-    dark = TRUE,
-    pointsAsNumbers = FALSE,
-    label = TRUE,
-    title = NULL) {
-    data <- fetchTSNEExpressionData(object, genes = genes)
+setMethod(
+    "plotMarkerTSNE",
+    signature("seurat"),
+    function(
+        object,
+        genes,
+        colorPoints = "geomean",
+        pointsAsNumbers = FALSE,
+        pointSize = 1,
+        label = TRUE,
+        labelSize = 6,
+        color = scale_color_viridis(),
+        dark = TRUE,
+        title = NULL) {
+        data <- fetchTSNEExpressionData(object, genes = genes)
         .plotMarkerTSNE(
             data = data,
             colorPoints = colorPoints,
+            pointsAsNumbers = pointsAsNumbers,
+            pointSize = pointSize,
+            label = label,
+            labelSize = labelSize,
             color = color,
             dark = dark,
-            pointsAsNumbers = pointsAsNumbers,
-            label = label,
             title = title)
-})
+    })
