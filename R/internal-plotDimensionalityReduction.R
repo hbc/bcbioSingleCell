@@ -19,11 +19,11 @@
     object,
     axes,
     interestingGroups = "ident",
-    color = scale_colour_hue(),
     pointsAsNumbers = FALSE,
     pointSize = 1,
     label = TRUE,
     labelSize = 6,
+    color = scale_colour_hue(),
     dark = TRUE,
     title = NULL) {
     if (interestingGroups == "ident") {
