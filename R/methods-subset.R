@@ -30,7 +30,7 @@
 #'
 #' # Subset by both genes and cells
 #' \dontrun{
-#' bcb[genes, samples]
+#' bcb[genes, cells]
 #' }
 NULL
 
