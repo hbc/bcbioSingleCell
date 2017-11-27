@@ -47,8 +47,8 @@
         p <- p +
             geom_text(
                 mapping = aes_string(
-                    x = "tSNE1",
-                    y = "tSNE2",
+                    x = axes[["x"]],
+                    y = axes[["y"]],
                     label = "ident",
                     color = colorCol),
                 size = pointSize)
