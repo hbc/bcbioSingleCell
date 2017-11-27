@@ -16,7 +16,7 @@ params:
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
 library(bcbioSingleCell)
 
-# Shared RMarkdown settings
+# Shared R Markdown settings
 prepareSingleCellTemplate()
 if (file.exists("setup.R")) {
     source("setup.R")

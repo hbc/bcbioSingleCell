@@ -11,7 +11,7 @@ params:
 library(bcbioSingleCell)
 library(cowplot)
 
-# Shared RMarkdown settings
+# Shared R Markdown settings
 prepareSingleCellTemplate()
 if (file.exists("setup.R")) {
     source("setup.R")
