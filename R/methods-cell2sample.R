@@ -78,11 +78,13 @@ setMethod(
     signature("bcbioSingleCell"),
     function(object) {
         cell2sample <- metadata(object)[["cell2sample"]]
+        # Generate if no mappings are stashed
         if (is.null(cell2sample)) {
-            return(.cell2sample(
-                cells = colData[["cellID"]],
-                samples = metadata[["sampleID"]]
-            ))
+            cell2sample <- .cell2sample(
+                cells = rownames(colData(object)),
+                samples = rownames(sampleMetadata(object))
+            )
+            return(cell2sample)
         }
         # Version-specific fixes
         if (metadata(object)[["version"]] == "0.0.22") {
