@@ -8,10 +8,10 @@
 \title{Quality Control Plots}
 \usage{
 \S4method{plotQC}{bcbioSingleCell}(object, interestingGroups, geom = "violin",
-  headerLevel = 2, return = "grid")
+  headerLevel = 2, legend = TRUE, return = "grid")
 
 \S4method{plotQC}{seurat}(object, interestingGroups, geom = "violin",
-  headerLevel = 2, return = "grid")
+  headerLevel = 2, legend = TRUE, return = "grid")
 }
 \arguments{
 \item{object}{Object.}
@@ -23,6 +23,8 @@
 \code{\link[=plotGenesPerCell]{plotGenesPerCell()}}, \code{\link[=plotMitoRatio]{plotMitoRatio()}}, and \code{\link[=plotNovelty]{plotNovelty()}} output.}
 
 \item{headerLevel}{R Markdown header level.}
+
+\item{legend}{Include plot legend.}
 
 \item{return}{\itemize{
 \item \code{grid}: \code{\link[cowplot:plot_grid]{cowplot::plot_grid()}} graphical output.

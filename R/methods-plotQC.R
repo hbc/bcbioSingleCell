@@ -8,7 +8,6 @@
 #' @author Michael Steinbaugh
 #'
 #' @importFrom basejump plotQC
-#' @importFrom cowplot plot_grid
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
@@ -17,6 +16,7 @@
 #'   `ridgeline`, and `violin`. Applies to [plotUMIsPerCell()],
 #'   [plotGenesPerCell()], [plotMitoRatio()], and [plotNovelty()] output.
 #' @param headerLevel R Markdown header level.
+#' @param legend Include plot legend.
 #' @param return
 #'   - `grid`: [cowplot::plot_grid()] graphical output.
 #'   - `list`: [ggplot] [list].
@@ -38,11 +38,14 @@ validQCGeomFlip <- c(
 
 
 
+#' @importFrom cowplot plot_grid
+#' @importFrom ggplot2 theme
 .plotQC <- function(
     object,
     interestingGroups,
     geom = "violin",
     headerLevel = 2,
+    legend = TRUE,
     return = "grid") {
     if (missing(interestingGroups)) {
         interestingGroups <- basejump::interestingGroups(object)
@@ -74,6 +77,14 @@ validQCGeomFlip <- c(
             interestingGroups = interestingGroups,
             geom = geom)
     )
+
+    # Hide the legends, if desired
+    if (identical(legend, FALSE)) {
+        .hideLegend <- function(gg) {
+            gg + theme(legend.position = "none")
+        }
+        plotlist <- lapply(plotlist, .hideLegend)
+    }
 
     # Grid return mode
     if (return == "list") {
