@@ -113,10 +113,10 @@ setGeneric("plotDot", function(object, ...) {
 
 
 
-#' @rdname plotFeatures
+#' @rdname plotFeatureTSNE
 #' @export
-setGeneric("plotFeatures", function(object, ...) {
-    standardGeneric("plotFeatures")
+setGeneric("plotFeatureTSNE", function(object, ...) {
+    standardGeneric("plotFeatureTSNE")
 })
 
 

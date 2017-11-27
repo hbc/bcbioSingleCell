@@ -5,6 +5,7 @@
 \alias{plotClusters}
 \alias{plotTSNEExpressionData}
 \alias{loadSingleCellRun}
+\alias{plotFeatures}
 \title{Deprecated Functions}
 \usage{
 plotClusters(...)
@@ -12,9 +13,13 @@ plotClusters(...)
 plotTSNEExpressionData(...)
 
 loadSingleCellRun(...)
+
+plotFeatures(object, features, ...)
 }
 \arguments{
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{object}{Object.}
 }
 \value{
 Soft deprecation to new functions.

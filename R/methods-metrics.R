@@ -21,7 +21,7 @@ NULL
 # Methods ====
 #' @rdname metrics
 #' @importFrom basejump uniteInterestingGroups
-#' @importFrom dplyr left_join mutate_all
+#' @importFrom dplyr left_join
 #' @importFrom tibble column_to_rownames rownames_to_column
 #' @export
 setMethod(
@@ -57,7 +57,9 @@ setMethod(
             as.data.frame(sampleID),
             as.data.frame(colData)
         ) %>%
-            left_join(sampleMetadata, by = "sampleID")
+            rownames_to_column("cellID") %>%
+            left_join(sampleMetadata, by = "sampleID") %>%
+            column_to_rownames("cellID")
     })
 
 
