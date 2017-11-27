@@ -6,6 +6,8 @@
 #' @keywords internal
 #' @noRd
 #'
+#' @inheritParams plotTSNE
+#'
 #' @importFrom ggplot2 aes_string geom_point geom_text ggplot guide_legend
 #'   guides labs scale_color_hue
 #'
@@ -18,10 +20,12 @@
     axes,
     interestingGroups = "ident",
     color = scale_colour_hue(),
+    pointsAsNumbers = FALSE,
     pointSize = 1,
+    label = TRUE,
     labelSize = 6,
     dark = TRUE,
-    label = TRUE) {
+    title = NULL) {
     if (interestingGroups == "ident") {
         # Seurat stores the ident from `FetchData()` as `object.ident`
         colorCol <- "ident"
@@ -39,15 +43,20 @@
     if (isTRUE(dark)) {
         p <- p + darkTheme()
     }
-    p <- p +
-        # Alpha transparency helps distinguish superimposed points
-        geom_point(size = pointSize) +
-        guides(color = guide_legend(title.position = "left", byrow = TRUE))
-    if (!is.null(color)) {
-        p <- p + color
+    if (isTRUE(pointsAsNumbers)) {
+        p <- p +
+            geom_text(
+                mapping = aes_string(
+                    x = "tSNE1",
+                    y = "tSNE2",
+                    label = "ident",
+                    color = colorCol),
+                size = pointSize)
+    } else {
+        p <- p + geom_point(size = pointSize)
     }
     if (interestingGroups == "ident") {
-        # Change `ident` to `cluster` (more informative)
+        # Present `ident` as `cluster` (more informative)
         p <- p + labs(color = "cluster")
     }
     if (isTRUE(label)) {
@@ -64,8 +73,10 @@
                     label = "ident"),
                 color = labelColor,
                 size = labelSize,
-                # Hard-code this as bold (too hard to see otherwise)
                 fontface = "bold")
+    }
+    if (!is.null(color)) {
+        p <- p + color
     }
     p
 }
