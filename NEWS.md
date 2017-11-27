@@ -1,3 +1,10 @@
+# bcbioSingleCell 0.0.24 (2017-11-27)
+
+- Raw cellular barcodes are now slotted in `object@cellularBarcodes` as a `data.frame` instead of a per sample `list`. This makes downstream subsetting operations on the barcodes simpler.
+- Bug fixes for `cell2sample` mapping.
+
+
+
 # bcbioSingleCell 0.0.23 (2017-11-22)
 
 - Improved facet wrapping of aggregated samples (`sampleNameAggregate` present in sample metadata), but removing code support for wrapping by multiplexed FASTQ description.
