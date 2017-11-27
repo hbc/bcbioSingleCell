@@ -76,7 +76,7 @@ NULL
     message("Aggregating raw cellular barcode counts")
     cb <- bcbio(object, "cellularBarcodes")
     if (is.null(cb)) {
-        cbAggregate <- NULL
+        cbAggregateList <- NULL
     } else {
         if (is.list(cb)) {
             # Aggregate and split back out as a list?
