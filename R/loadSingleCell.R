@@ -280,8 +280,8 @@ loadSingleCell <- function(
     }
 
     # Cellular barcode distributions ===========================================
-    cellularBarcodes <- .cellularBarcodesList(sampleDirs)
-    cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
+    cbList <- .cellularBarcodesList(sampleDirs)
+    cbData <- .bindCellularBarcodes(cbList)
 
     # Counts ===================================================================
     message(paste("Reading counts at", countsLevel, "level"))
@@ -372,6 +372,6 @@ loadSingleCell <- function(
     bcb <- new("bcbioSingleCell", se)
     # Keep these in the bcbio slot because they contain filtered cellular
     # barcodes not present in the main assay matrix.
-    bcbio(bcb, "cellularBarcodes") <- cellularBarcodes
+    bcbio(bcb, "cellularBarcodes") <- cbList
     bcb
 }
