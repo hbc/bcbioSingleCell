@@ -77,6 +77,10 @@ validQCGeomFlip <- c(
             interestingGroups = interestingGroups,
             geom = geom)
     )
+    # Remove any `NULL`` plots. This is useful for nuking the
+    # `plotReadsPerCell()` return on an object that doesn't contain raw cellular
+    # barcode counts.
+    plotlist <- Filter(Negate(is.null), plotlist)
 
     # Hide the legends, if desired
     if (identical(legend, FALSE)) {
@@ -99,7 +103,7 @@ validQCGeomFlip <- c(
             asis = TRUE)
 
         # Reads per cell currently only supported for bcbio runs
-        if (metadata(object)[["pipeline"]] == "bcbio") {
+        if (!is.null(plotlist[["plotReadsPerCell"]])) {
             mdHeader(
                 "Reads per cell",
                 level = headerLevel + 1,
