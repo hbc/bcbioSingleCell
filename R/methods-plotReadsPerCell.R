@@ -359,7 +359,5 @@ setMethod(
     "plotReadsPerCell",
     signature("seurat"),
     function(object, ...) {
-        warning("Raw read counts aren't saved in seurat object",
-                call. = FALSE)
         NULL
     })
