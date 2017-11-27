@@ -94,17 +94,17 @@
 
 <span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>plotGenesPerCell</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>, <span class='no'>min</span>,
-  <span class='no'>max</span>, <span class='no'>interestingGroups</span>, <span class='kw'>filterCells</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>samplesOnYAxis</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>max</span>, <span class='no'>interestingGroups</span>, <span class='kw'>samplesOnYAxis</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
 
 <span class='co'># S4 method for data.frame</span>
 <span class='fu'>plotGenesPerCell</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='no'>interestingGroups</span>, <span class='kw'>multiplexed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>samplesOnYAxis</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='no'>interestingGroups</span>, <span class='kw'>samplesOnYAxis</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotGenesPerCell</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>, <span class='no'>min</span>, <span class='no'>max</span>,
-  <span class='no'>interestingGroups</span>, <span class='kw'>multiplexed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>samplesOnYAxis</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>interestingGroups</span>, <span class='kw'>samplesOnYAxis</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -121,7 +121,8 @@
     <tr>
       <th>geom</th>
       <td><p>Plot type. Supported formats: <code>boxplot</code>, <code>histogram</code>,
-<code>ridgeline</code>, and <code>violin</code>.</p></td>
+<code>ridgeline</code>, and <code>violin</code>. Applies to <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell()</a></code>,
+<code>plotGenesPerCell()</code>, <code><a href='plotMitoRatio.html'>plotMitoRatio()</a></code>, and <code><a href='plotNovelty.html'>plotNovelty()</a></code> output.</p></td>
     </tr>
     <tr>
       <th>min</th>
@@ -136,10 +137,6 @@
       <td><p>Interesting group, to use for colors.</p></td>
     </tr>
     <tr>
-      <th>filterCells</th>
-      <td><p>Show only the cells that have passed filtering cutoffs.</p></td>
-    </tr>
-    <tr>
       <th>samplesOnYAxis</th>
       <td><p>Plot the samples on the y axis. Doesn't apply to
 histogram.</p></td>
@@ -150,11 +147,6 @@ histogram.</p></td>
 <code><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>viridis::scale_fill_viridis()</a></code>. Must supply discrete values. When set to
 <code>NULL</code>, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>multiplexed</th>
-      <td><p>Whether the FASTQ files are multiplexed. This is
-detected automatically for <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> objects.</p></td>
     </tr>
     </table>
     
@@ -219,7 +211,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

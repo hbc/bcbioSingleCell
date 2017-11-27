@@ -64,7 +64,7 @@ NULL
     )
 
     # Counts ===================================================================
-    message("Aggregating the counts")
+    message("Aggregating counts")
     counts <- aggregateReplicates(assay(object), cells = cells)
     # Check that the count number of counts matches
     if (!identical(sum(assay(object)), sum(counts))) {

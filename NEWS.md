@@ -1,6 +1,19 @@
-# bcbioSingleCell 0.0.23
+# bcbioSingleCell 0.0.23 (2017-11-22)
 
 - Improved facet wrapping of aggregated samples (`sampleNameAggregate` present in sample metadata), but removing code support for wrapping by multiplexed FASTQ description.
+- Simplified handling of `bcbioSingleCell` objects with `filterCells()` applied. This information is stored in the `metadata()` slot as 3 variables: (1) `filterParams`, numeric vector of the parameters used to define the cell filtering cutoffs; (2) `filterCells`, character vector of the cellular barcode IDs that passed filtering; (3) `filterGenes`, character vector of the Ensembl gene identifiers that have passed filtering, as determined by the `minCellsPerGene` parameter.
+- For `filterCells()` return, we're now defaulting to a destructive operation, where the columns (cells) and rows (genes) of the object are adjusted to match the cells and genes that have passed filtering. Currently this can be adjusted with the `drop` argument for testing, but should generally be left as `drop = TRUE`.
+- We're now slotting a `cell2sample` named factor in the `metadata()` slot, which makes downstream quality control operations faster. This is generated on the fly for previously saved objects that don't have a stashed `cell2sample`.
+- Initial commit of `plotQC()` utility function, which plots multiple quality control functions for easy visualization. This defaults to output as a cowplot grid (`return = "grid"`), but can alternatively be set to return R Markdown code (`return = "markdown"`).
+- `aggregateReplicates()` operation has been improved to properly slot raw cellular barcodes in `object@bcbio$cellularBarcodes`. The `filterCells` vector is adjusted, and `sampleMetadata` factors should be properly releveled.
+- The `counts()` accessor simply returns the sparse matrix contained in the `assay()` slot. The `filterCells` argument has been removed.
+- Messages have been added to the `filterCells()` function, to help the user determine at which step the majority of cells are being filtered. We're keeping a non-destructive option using `drop = FALSE` for the time being, but this will likely be removed for improved simplicity in a future update.
+- Updated the internal code for `metrics()` to use a simpler join operation on the `colData`, `cell2sample` and `sampleMetadata`.
+- Updated facet wrap code in quality control plots to not facet multiplexed FASTQ descriptions and simply check for `sampleNameAggregate`.
+- Improved appearance of `plotReadsPerCell()` labels and legends. Additionally, `plotReadsPerCell()` more efficiently handles the stashed values in the `nCount` column of `colData`, for faster plotting that having to rely on manipulation of the raw `cellularBarcodes` list stashed in `object@bcbio$cellularBarcodes`.
+- `sampleMetadata()` return is now consistently sanitized for `bcbioSingleCell` and `seurat` objects.
+- Minor tweaks to quality control template and setup.R files.
+
 
 
 

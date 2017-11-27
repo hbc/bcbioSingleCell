@@ -7,8 +7,10 @@
 #' @name plotQC
 #' @author Michael Steinbaugh
 #'
+#' @importFrom basejump plotQC
 #' @importFrom cowplot plot_grid
 #'
+#' @inheritParams AllGenerics
 #' @inheritParams metrics
 #'
 #' @param geom Plot type. Supported formats: `boxplot`, `histogram`,

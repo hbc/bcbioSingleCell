@@ -88,6 +88,27 @@
     </div>
 
     <div class="contents">
+    <div id="bcbiosinglecell-0-0-23-2017-11-22" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-23-2017-11-22" class="anchor"></a>bcbioSingleCell 0.0.23 (2017-11-22)</h1>
+<ul>
+<li>Improved facet wrapping of aggregated samples (<code>sampleNameAggregate</code> present in sample metadata), but removing code support for wrapping by multiplexed FASTQ description.</li>
+<li>Simplified handling of <code>bcbioSingleCell</code> objects with <code><a href="../reference/filterCells.html">filterCells()</a></code> applied. This information is stored in the <code>metadata()</code> slot as 3 variables: (1) <code>filterParams</code>, numeric vector of the parameters used to define the cell filtering cutoffs; (2) <code>filterCells</code>, character vector of the cellular barcode IDs that passed filtering; (3) <code>filterGenes</code>, character vector of the Ensembl gene identifiers that have passed filtering, as determined by the <code>minCellsPerGene</code> parameter.</li>
+<li>For <code><a href="../reference/filterCells.html">filterCells()</a></code> return, we’re now defaulting to a destructive operation, where the columns (cells) and rows (genes) of the object are adjusted to match the cells and genes that have passed filtering. Currently this can be adjusted with the <code>drop</code> argument for testing, but should generally be left as <code>drop = TRUE</code>.</li>
+<li>We’re now slotting a <code>cell2sample</code> named factor in the <code>metadata()</code> slot, which makes downstream quality control operations faster. This is generated on the fly for previously saved objects that don’t have a stashed <code>cell2sample</code>.</li>
+<li>Initial commit of <code><a href="../reference/plotQC.html">plotQC()</a></code> utility function, which plots multiple quality control functions for easy visualization. This defaults to output as a cowplot grid (<code>return = "grid"</code>), but can alternatively be set to return R Markdown code (<code>return = "markdown"</code>).</li>
+<li>
+<code><a href="../reference/aggregateReplicates.html">aggregateReplicates()</a></code> operation has been improved to properly slot raw cellular barcodes in <code>object@bcbio$cellularBarcodes</code>. The <code>filterCells</code> vector is adjusted, and <code>sampleMetadata</code> factors should be properly releveled.</li>
+<li>The <code><a href="../reference/counts.html">counts()</a></code> accessor simply returns the sparse matrix contained in the <code>assay()</code> slot. The <code>filterCells</code> argument has been removed.</li>
+<li>Messages have been added to the <code><a href="../reference/filterCells.html">filterCells()</a></code> function, to help the user determine at which step the majority of cells are being filtered. We’re keeping a non-destructive option using <code>drop = FALSE</code> for the time being, but this will likely be removed for improved simplicity in a future update.</li>
+<li>Updated the internal code for <code><a href="../reference/metrics.html">metrics()</a></code> to use a simpler join operation on the <code>colData</code>, <code>cell2sample</code> and <code>sampleMetadata</code>.</li>
+<li>Updated facet wrap code in quality control plots to not facet multiplexed FASTQ descriptions and simply check for <code>sampleNameAggregate</code>.</li>
+<li>Improved appearance of <code><a href="../reference/plotReadsPerCell.html">plotReadsPerCell()</a></code> labels and legends. Additionally, <code><a href="../reference/plotReadsPerCell.html">plotReadsPerCell()</a></code> more efficiently handles the stashed values in the <code>nCount</code> column of <code>colData</code>, for faster plotting that having to rely on manipulation of the raw <code>cellularBarcodes</code> list stashed in <code>object@bcbio$cellularBarcodes</code>.</li>
+<li>
+<code><a href="../reference/sampleMetadata.html">sampleMetadata()</a></code> return is now consistently sanitized for <code>bcbioSingleCell</code> and <code>seurat</code> objects.</li>
+<li>Minor tweaks to quality control template and setup.R files.</li>
+</ul>
+</div>
     <div id="bcbiosinglecell-0-0-22-2017-11-17" class="section level1">
 <h1 class="hasAnchor">
 <a href="#bcbiosinglecell-0-0-22-2017-11-17" class="anchor"></a>bcbioSingleCell 0.0.22 (2017-11-17)</h1>
@@ -360,6 +381,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bcbiosinglecell-0-0-23-2017-11-22">0.0.23</a></li>
         <li><a href="#bcbiosinglecell-0-0-22-2017-11-17">0.0.22</a></li>
         <li><a href="#bcbiosinglecell-0-0-21-2017-11-08">0.0.21</a></li>
         <li><a href="#bcbiosinglecell-0-0-20-2017-10-24">0.0.20</a></li>
@@ -390,7 +412,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

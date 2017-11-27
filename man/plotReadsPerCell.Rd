@@ -4,12 +4,15 @@
 \name{plotReadsPerCell}
 \alias{plotReadsPerCell}
 \alias{plotReadsPerCell,bcbioSingleCell-method}
+\alias{plotReadsPerCell,seurat-method}
 \title{Plot Read Counts per Cell}
 \usage{
 plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
   interestingGroups)
+
+\S4method{plotReadsPerCell}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}

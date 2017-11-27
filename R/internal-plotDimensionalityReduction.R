@@ -6,6 +6,9 @@
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom ggplot2 aes_string geom_point geom_text ggplot guide_legend
+#'   guides labs scale_color_hue
+#'
 #' @param object [data.frame] returned from [fetchTSNEExpressionData()].
 #'
 #' @return [ggplot].
@@ -14,20 +17,23 @@
     object,
     axes,
     interestingGroups = "ident",
+    color = scale_colour_hue(),
+    pointSize = 1,
+    labelSize = 6,
     dark = TRUE,
     label = TRUE) {
     if (interestingGroups == "ident") {
         # Seurat stores the ident from `FetchData()` as `object.ident`
-        color <- "ident"
+        colorCol <- "ident"
     } else {
-        color <- interestingGroups
+        colorCol <- interestingGroups
     }
     p <- ggplot(
         object,
         mapping = aes_string(
             x = axes[["x"]],
             y = axes[["y"]],
-            color = color)
+            color = colorCol)
     )
     # Put the dark theme call before the other ggplot aesthetics
     if (isTRUE(dark)) {
@@ -35,8 +41,11 @@
     }
     p <- p +
         # Alpha transparency helps distinguish superimposed points
-        geom_point() +
+        geom_point(size = pointSize) +
         guides(color = guide_legend(title.position = "left", byrow = TRUE))
+    if (!is.null(color)) {
+        p <- p + color
+    }
     if (interestingGroups == "ident") {
         # Change `ident` to `cluster` (more informative)
         p <- p + labs(color = "cluster")
@@ -54,7 +63,8 @@
                     y = "centerY",
                     label = "ident"),
                 color = labelColor,
-                size = 6,
+                size = labelSize,
+                # Hard-code this as bold (too hard to see otherwise)
                 fontface = "bold")
     }
     p

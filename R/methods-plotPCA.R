@@ -16,6 +16,7 @@ NULL
 
 # Methods ====
 #' @rdname plotPCA
+#' @importFrom ggplot2 scale_color_hue
 #' @export
 setMethod(
     "plotPCA",
@@ -23,13 +24,19 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
+        color = scale_color_hue(),
+        pointSize = 1,
         label = TRUE,
+        labelSize = 6,
         dark = TRUE) {
         pca <- fetchPCAData(object)
         .plotDimensionalityReduction(
             pca,
             axes = c(x = "pc1", y = "pc2"),
             interestingGroups = interestingGroups,
+            color = color,
+            pointSize = pointSize,
             label = label,
+            labelSize = labelSize,
             dark = dark)
     })
