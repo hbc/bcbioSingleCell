@@ -80,11 +80,6 @@ NULL
     metadata[["sampleMetadata"]] <- sampleMetadata
     sampleIDs <- as.character(sampleMetadata[["sampleID"]])
 
-    # gene2symbol
-    gene2symbol <- metadata[["gene2symbol"]]
-    gene2symbol <- gene2symbol[genes, ]
-    metadata[["gene2symbol"]] <- gene2symbol
-
     # aggregateReplicates
     aggregateReplicates <- metadata[["aggregateReplicates"]]
     if (!is.null(aggregateReplicates)) {
