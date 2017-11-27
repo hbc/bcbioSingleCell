@@ -266,7 +266,6 @@ NULL
         "Raw cellular barcodes are not defined",
         "in 'object@bcbio' slot...skipping"
     )
-
     if (missing(interestingGroups)) {
         interestingGroups <- basejump::interestingGroups(object)
     }
@@ -286,7 +285,9 @@ NULL
         if (is.null(cellularBarcodes)) {
             return(message(skipMessage))
         }
-        cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
+        if (is.list(cellularBarcodes)) {
+            cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
+        }
     }
 
     # Obtain the sample metadata
@@ -358,7 +359,7 @@ setMethod(
     "plotReadsPerCell",
     signature("seurat"),
     function(object, ...) {
-        warning("Raw read counts aren't stored in seurat object",
+        warning("Raw read counts aren't saved in seurat object",
                 call. = FALSE)
         NULL
     })
