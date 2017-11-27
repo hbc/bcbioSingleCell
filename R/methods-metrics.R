@@ -33,14 +33,7 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
-
         colData <- colData(object)
-        # Check for malformed colData. Safe to remove in a future update.
-        if ("sampleID" %in% colnames(colData)) {
-            stop("'sampleID' shouldn't be set in 'colData'",
-                 call. = FALSE)
-        }
-
         sampleID <- cell2sample(object)
         # Check for cell ID dimension mismatch. This can happen if `cell2sample`
         # mapping isn't updated inside the metadata slot.
@@ -48,18 +41,17 @@ setMethod(
             stop("'cellID' mismatch between 'colData' and 'cell2sample'",
                  call. = FALSE)
         }
-
         sampleMetadata <- sampleMetadata(
             object,
             interestingGroups = interestingGroups)
-
-        cbind(
+        metrics <- cbind(
             as.data.frame(sampleID),
             as.data.frame(colData)
         ) %>%
             rownames_to_column("cellID") %>%
             left_join(sampleMetadata, by = "sampleID") %>%
             column_to_rownames("cellID")
+        metrics
     })
 
 
