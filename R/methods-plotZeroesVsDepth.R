@@ -34,11 +34,16 @@ NULL
         scale_x_log10() +
         labs(x = "library size",
              y = "% genes zero")
-    if (isTRUE(metadata(object)[["multiplexedFASTQ"]]) &
-        length(unique(df[["description"]])) > 1) {
-        p <- p +
-            facet_wrap(facets = "description")
+
+    # Facets
+    facets <- NULL
+    if (isTRUE(.checkAggregate(object))) {
+        facets <- c(facets, "sampleNameAggregate")
     }
+    if (!is.null(facets)) {
+        p <- p + facet_wrap(facets = facets, scales = "free")
+    }
+
     p
 }
 
