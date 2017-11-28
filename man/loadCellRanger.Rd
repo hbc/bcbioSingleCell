@@ -5,7 +5,7 @@
 \title{Load 10X Genomics CellRanger Data}
 \usage{
 loadCellRanger(uploadDir, refDataDir, interestingGroups = "sampleName",
-  prefilter = TRUE, sampleMetadataFile, annotable, ...)
+  sampleMetadataFile = NULL, annotable, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to CellRanger output directory. This directory path
@@ -16,8 +16,6 @@ must contain \code{filtered_gene_bc_matrices/} as a child.}
 \item{interestingGroups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
-
-\item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
@@ -31,6 +29,8 @@ annotable from the annotations available on Ensembl. If set \code{NULL}, then
 \code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
 empty. This is recommended for projects dealing with genes or transcripts
 that are poorly annotated.}
+
+\item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
