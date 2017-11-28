@@ -10,7 +10,9 @@
 #'
 #' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
 #'   prepareSummarizedExperiment readGTF readSampleMetadataFile
+#' @importFrom dplyr mutate
 #' @importFrom jsonlite read_json
+#' @importFrom magrittr set_colnames
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
 #' @importFrom stats setNames
@@ -28,14 +30,12 @@ loadCellRanger <- function(
     uploadDir,
     refDataDir,
     interestingGroups = "sampleName",
-    prefilter = TRUE,
-    sampleMetadataFile,
+    sampleMetadataFile = NULL,
     annotable,
+    prefilter = TRUE,
     ...) {
-    if (missing(sampleMetadataFile)) sampleMetadataFile <- NULL
     pipeline <- "cellranger"
     umiType <- "chromium"
-    multiplexedFASTQ <- FALSE
 
     # Directory paths ==========================================================
     # Check connection to final upload directory
@@ -50,18 +50,19 @@ loadCellRanger <- function(
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
-        message(paste(
+        warning(paste(
             "'sampleMetadataFile' not specified.",
             "Generating minimal sample metadata."
-        ))
+        ), call. = FALSE)
         sampleMetadata <- data.frame(row.names = names(sampleDirs))
         for (i in seq_along(metadataPriorityCols)) {
-            sampleMetadata[, metadataPriorityCols[[i]]] <- names(sampleDirs)
+            sampleMetadata[, metadataPriorityCols[[i]]] <-
+                as.factor(names(sampleDirs))
         }
     }
     # Check that `sampleID` matches `sampleDirs`
     if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
-        stop("Sample directory names don't match the sample metadata file",
+        warning("Sample directory names don't match the sample metadata file",
              call. = FALSE)
     }
 
@@ -148,10 +149,28 @@ loadCellRanger <- function(
     }
 
     # Cell to sample mappings ==================================================
+    # Check for multiplexed samples. CellRanger outputs these with a trailing
+    # number (e.g. `-2$`, which we're sanitizing to `_2$`).
+    if (any(grepl(x = colnames(counts), pattern = "_2$"))) {
+        map <- str_match(
+            string = colnames(counts),
+            pattern = "^(.+)_([ACGT]+)_(\\d+)$"
+        ) %>%
+            as.data.frame() %>%
+            set_colnames(
+                c("cellID",
+                  "description",
+                  "barcode",
+                  "sequence")) %>%
+            mutate_all(as.factor) %>%
+            left_join(sampleMetadata, by = c("description", "sequence"))
+        cell2sample <- map[["sampleID"]]
+        names(cell2sample) <- map[["cellID"]]
+    } else {
     cell2sample <- .cell2sample(
-        cells = rownames(metrics),
-        samples = rownames(sampleMetadata)
-    )
+        cells = colnames(counts),
+        samples = rownames(sampleMetadata))
+    }
 
     # Metadata =================================================================
     metadata <- list(
@@ -171,7 +190,6 @@ loadCellRanger <- function(
         gene2symbol = gene2symbol,
         umiType = umiType,
         allSamples = allSamples,
-        multiplexedFASTQ = multiplexedFASTQ,
         prefilter = prefilter,
         # cellranger pipeline-specific
         refDataDir = refDataDir,
