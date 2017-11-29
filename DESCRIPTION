@@ -51,13 +51,11 @@ Suggests:
     devtools,
     googlesheets,
     lintr,
-    pkgdown,
     rmarkdown,
     roxygen2,
     testthat,
     tidyverse
 Remotes:
-    hadley/pkgdown,
     jimhester/lintr,
     klutometis/roxygen,
     steinbaugh/basejump
