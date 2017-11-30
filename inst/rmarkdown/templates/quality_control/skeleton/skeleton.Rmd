@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
     bcbFile: "data/bcb.rda"
-    minUMIs: 500
+    minUMIs: 1000
     minGenes: 500
     maxGenes: !r Inf
     maxMitoRatio: 0.1
