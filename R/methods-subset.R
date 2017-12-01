@@ -110,7 +110,7 @@ NULL
     if (!is.null(bcbio)) {
         # Cellular barcodes
         cb <- bcbio[["cellularBarcodes"]]
-        # Bind the cellular barcodes into a single data.frame, which we can subset
+        # Bind barcodes into a single `data.frame`, which we can subset
         if (!is.null(cb)) {
             if (is.list(cb)) {
                 cb <- .bindCellularBarcodes(cb)

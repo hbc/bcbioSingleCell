@@ -1,10 +1,19 @@
+# nolint start
+#
+# Load bcbio single-cell RNA-seq data
+# Michael Steinbaugh
+# 2017-12-01
+#
+# Example script for *Mus musculus* with Ensembl 88 annotations
+#
 # Latest version of this script is available here:
 # script <- system.file(
 #     file.path("R_scripts", "loadSingleCell.R"),
 #     package = "bcbioSingleCell")
 # file.edit(script)
+#
+# nolint end
 
-# Example script for Mus musculus with Ensembl 88 annotations
 library(bcbioSingleCell)
 
 dir.create("annotations", showWarnings = FALSE)

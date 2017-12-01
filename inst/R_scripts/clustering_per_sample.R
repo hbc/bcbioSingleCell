@@ -1,8 +1,16 @@
+# nolint start
+#
+# Seurat clustering per sample
+# Michael Steinbaugh
+# 2017-12-01
+#
 # Latest version of this script is available here:
 # script <- system.file(
 #     file.path("R_scripts", "clustering_per_sample.R"),
 #     package = "bcbioSingleCell")
 # file.edit(script)
+#
+# nolint end
 
 library(bcbioSingleCell)
 library(pbapply)
