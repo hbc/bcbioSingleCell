@@ -89,13 +89,13 @@
     
     <p>Calculate the principal component (PC) with either a maximum SD percentage or
 minimum <!-- % SD cumulative sum cutoff value. This defaults to keeping the larger -->
-PC cutoff for either 5<!-- % SD (\code{maxPct}) or 80% cumulative (\code{minCumsum}). --></p>
+PC cutoff for either 5<!-- % SD (\code{maxPct}) or 90% cumulative (\code{minCumsum}). --></p>
     
 
     <pre class="usage"><span class='fu'>pcCutoff</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>pcCutoff</span>(<span class='no'>object</span>, <span class='kw'>maxPct</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>minCumPct</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+<span class='fu'>pcCutoff</span>(<span class='no'>object</span>, <span class='kw'>maxPct</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>minCumPct</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -130,11 +130,11 @@ PC cutoff for either 5<!-- % SD (\code{maxPct}) or 80% cumulative (\code{minCums
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><a href='http://www.rdocumentation.org/packages/Seurat/topics/PCElbowPlot'>Seurat::PCElbowPlot</a>.</p>
-<p>Other Clustering Utilities: <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
-  <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
-  <code><a href='plotMarkers.html'>plotMarkers</a></code>, <code><a href='plotStressGenes.html'>plotStressGenes</a></code>,
-  <code><a href='plotTopMarkers.html'>plotTopMarkers</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code>,
-  <code><a href='topMarkers.html'>topMarkers</a></code></p>
+<p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
+  <code>plotKnownMarkers</code>,
+  <code>plotMarkers</code>, <code>plotStressGenes</code>,
+  <code>plotTopMarkers</code>, <code>topBarcodes</code>,
+  <code>topMarkers</code></p>
     
 
   </div>

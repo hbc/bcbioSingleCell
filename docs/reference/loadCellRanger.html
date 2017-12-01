@@ -92,7 +92,7 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
     
 
     <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>uploadDir</span>, <span class='no'>refDataDir</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
-  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>sampleMetadataFile</span>, <span class='no'>annotable</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>annotable</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -113,10 +113,6 @@ is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.</p></td>
     </tr>
     <tr>
-      <th>prefilter</th>
-      <td><p>Prefilter counts prior to quality control analysis.</p></td>
-    </tr>
-    <tr>
       <th>sampleMetadataFile</th>
       <td><p>Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
@@ -134,6 +130,10 @@ empty. This is recommended for projects dealing with genes or transcripts
 that are poorly annotated.</p></td>
     </tr>
     <tr>
+      <th>prefilter</th>
+      <td><p>Prefilter counts prior to quality control analysis.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Additional arguments, to be stashed in the <code>metadata()</code> slot.</p></td>
     </tr>
@@ -149,19 +149,6 @@ that are poorly annotated.</p></td>
 optimized for handling CellRanger output.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Mus musculus</span>
-<span class='co'># Run with Ensembl 88 transcriptome FASTA and GTF files</span>
-<span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='loadSingleCell.html'>loadSingleCell</a></span>(
-    <span class='kw'>uploadDir</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"indrop_rnaseq"</span>, <span class='st'>"final"</span>),
-    <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"genotype"</span>, <span class='st'>"treatment"</span>),
-    <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"meta"</span>, <span class='st'>"sample_metadata.xlsx"</span>),
-    <span class='kw'>gtfFile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(
-        <span class='st'>"annotations"</span>,
-        <span class='st'>"Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"</span>),
-    <span class='kw'>ensemblVersion</span> <span class='kw'>=</span> <span class='fl'>88</span>)
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -171,9 +158,7 @@ optimized for handling CellRanger output.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
     <h2>Author</h2>
     

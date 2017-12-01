@@ -87,12 +87,13 @@
     </div>
 
     
-    <p>Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.</p>
+    <p>Plot Principal Component Analysis (PCA)</p>
     
 
     <pre class="usage"><span class='co'># S4 method for seurat</span>
 <span class='fu'>plotPCA</span>(<span class='no'>object</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"ident"</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>scale_color_hue</span>(), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -106,12 +107,34 @@
       <td><p>Interesting group to use for plot colors.</p></td>
     </tr>
     <tr>
+      <th>pointsAsNumbers</th>
+      <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>pointSize</th>
+      <td><p>Cell point size.</p></td>
+    </tr>
+    <tr>
       <th>label</th>
-      <td><p>Label the clusters on the plot.</p></td>
+      <td><p>Overlay a cluster identitiy label on the plot.</p></td>
+    </tr>
+    <tr>
+      <th>labelSize</th>
+      <td><p>Size of the text label.</p></td>
+    </tr>
+    <tr>
+      <th>color</th>
+      <td><p>Color palette to use for points. Defaults to the viridis color
+palette. Use <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>ggplot2::scale_color_gradient()</a></code> to easily define your own
+low/high gradient.</p></td>
     </tr>
     <tr>
       <th>dark</th>
       <td><p>Enable dark mode.</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>Plot title.</p></td>
     </tr>
     </table>
     
@@ -121,14 +144,10 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='plotTSNE.html'>plotTSNE()</a></code>.</p>
-<p>Other PCA Utilities: <code><a href='fetchPCAData.html'>fetchPCAData</a></code></p>
+    <p><code>plotTSNE()</code>.</p>
+<p>Other PCA Utilities: <code>fetchPCAData</code></p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='plotTSNE.html'>plotTSNE</a></span>(<span class='no'>seurat</span>)
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -138,9 +157,7 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
     <h2>Author</h2>
     
