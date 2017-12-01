@@ -56,8 +56,6 @@ Suggests:
     testthat,
     tidyverse
 Remotes:
-    jimhester/lintr,
-    klutometis/roxygen,
     steinbaugh/basejump
 biocViews:
     DataImport,
@@ -70,4 +68,4 @@ biocViews:
     SingleCell,
     Visualization
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.0.1

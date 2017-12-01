@@ -4,6 +4,7 @@
 \docType{methods}
 \name{fetchTSNEExpressionData}
 \alias{fetchTSNEExpressionData}
+\alias{fetchTSNEExpressionData}
 \alias{fetchTSNEExpressionData,seurat-method}
 \title{Fetch t-SNE Locations, Cellular Metadata and Expression of Genes}
 \usage{
@@ -40,4 +41,3 @@ Other t-SNE Utilities: \code{\link{fetchTSNEData}},
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
-\concept{t-SNE Utilities}

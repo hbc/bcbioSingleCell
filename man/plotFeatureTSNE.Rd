@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotFeatureTSNE}
 \alias{plotFeatureTSNE}
+\alias{plotFeatureTSNE}
 \alias{plotFeatureTSNE,seurat-method}
 \title{Plot Feature t-SNE}
 \usage{

@@ -3,6 +3,7 @@
 \docType{methods}
 \name{fetchPCAData}
 \alias{fetchPCAData}
+\alias{fetchPCAData}
 \alias{fetchPCAData,seurat-method}
 \title{Fetch PCA Dimensions and Cellular Metadata}
 \usage{
@@ -35,4 +36,3 @@ Other PCA Utilities: \code{\link{plotPCA}}
 \author{
 Michael Steinbaugh
 }
-\concept{PCA Utilities}

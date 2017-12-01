@@ -3,6 +3,7 @@
 \docType{methods}
 \name{topMarkers}
 \alias{topMarkers}
+\alias{topMarkers}
 \alias{topMarkers,grouped_df-method}
 \title{Top Markers}
 \usage{
@@ -43,4 +44,3 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

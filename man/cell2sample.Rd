@@ -3,6 +3,7 @@
 \docType{methods}
 \name{cell2sample}
 \alias{cell2sample}
+\alias{cell2sample}
 \alias{cell2sample,character-method}
 \alias{cell2sample,bcbioSingleCell-method}
 \title{Cell to Sample Mappings}

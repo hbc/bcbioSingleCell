@@ -3,6 +3,7 @@
 \docType{methods}
 \name{cellTypesPerCluster}
 \alias{cellTypesPerCluster}
+\alias{cellTypesPerCluster}
 \alias{cellTypesPerCluster,grouped_df-method}
 \title{Cell Types per Cluster}
 \usage{

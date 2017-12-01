@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotKnownMarkers}
 \alias{plotKnownMarkers}
+\alias{plotKnownMarkers}
 \alias{plotKnownMarkers,seurat,grouped_df-method}
 \title{Plot Known Markers}
 \usage{
@@ -31,20 +32,7 @@ low/high gradient.}
 No value, only graphical output.
 }
 \description{
-Plot gene expression per cell in multiple formats:
-\enumerate{
-\item t-SNE plot
-\item Violin plot
-\item Ridgeline plot
-\item Dot plot
-}
-}
-\examples{
-\dontrun{
-top <- topMarkers(markers)
-genes <- top$symbol[1:4]
-plotMarkers(seurat, genes = genes)
-}
+Plot Known Markers
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
@@ -56,4 +44,3 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

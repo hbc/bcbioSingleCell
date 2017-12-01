@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotCellCounts}
 \alias{plotCellCounts}
+\alias{plotCellCounts}
 \alias{plotCellCounts,bcbioSingleCell-method}
 \alias{plotCellCounts,data.frame-method}
 \alias{plotCellCounts,seurat-method}
@@ -76,4 +77,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

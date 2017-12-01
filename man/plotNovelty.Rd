@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotNovelty}
 \alias{plotNovelty}
+\alias{plotNovelty}
 \alias{plotNovelty,bcbioSingleCell-method}
 \alias{plotNovelty,data.frame-method}
 \alias{plotNovelty,seurat-method}
@@ -85,4 +86,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh
 }
-\concept{Quality Control Metrics}

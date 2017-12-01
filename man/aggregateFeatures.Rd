@@ -28,4 +28,3 @@ Other Data Management Utilities: \code{\link{aggregateReplicates}},
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
-\concept{Data Management Utilities}

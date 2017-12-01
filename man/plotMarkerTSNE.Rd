@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotMarkerTSNE}
 \alias{plotMarkerTSNE}
+\alias{plotMarkerTSNE}
 \alias{plotMarkerTSNE,data.frame-method}
 \alias{plotMarkerTSNE,seurat-method}
 \title{Plot Marker t-SNE}
@@ -79,4 +80,3 @@ Other t-SNE Utilities: \code{\link{fetchTSNEData}},
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
-\concept{t-SNE Utilities}

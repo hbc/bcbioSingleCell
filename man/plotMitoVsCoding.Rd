@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotMitoVsCoding}
 \alias{plotMitoVsCoding}
+\alias{plotMitoVsCoding}
 \alias{plotMitoVsCoding,bcbioSingleCell-method}
 \alias{plotMitoVsCoding,data.frame-method}
 \alias{plotMitoVsCoding,seurat-method}
@@ -76,4 +77,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

@@ -3,6 +3,7 @@
 \docType{methods}
 \name{topBarcodes}
 \alias{topBarcodes}
+\alias{topBarcodes}
 \alias{topBarcodes,bcbioSingleCell-method}
 \title{Top Barcodes}
 \usage{
@@ -38,4 +39,3 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

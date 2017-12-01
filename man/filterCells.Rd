@@ -3,6 +3,7 @@
 \docType{methods}
 \name{filterCells}
 \alias{filterCells}
+\alias{filterCells}
 \alias{filterCells,bcbioSingleCell-method}
 \alias{filterCells,bcbioSCDataSet-method}
 \title{Filter Cells}
@@ -64,4 +65,3 @@ Other Data Management Utilities: \code{\link{aggregateFeatures}},
 \author{
 Michael Steinbaugh
 }
-\concept{Data Management Utilities}

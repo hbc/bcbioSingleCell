@@ -4,6 +4,7 @@
 \docType{methods}
 \name{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster}
+\alias{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster,seurat,grouped_df-method}
 \title{Plot Cell Types per Cluster}
 \usage{

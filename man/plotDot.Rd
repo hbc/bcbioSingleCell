@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotDot}
 \alias{plotDot}
+\alias{plotDot}
 \alias{plotDot,seurat-method}
 \title{Plot Dot}
 \usage{

@@ -35,12 +35,7 @@ low/high gradient.}
 \link{ggplot}.
 }
 \description{
-Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.
-}
-\examples{
-\dontrun{
-plotTSNE(seurat)
-}
+Plot Principal Component Analysis (PCA)
 }
 \seealso{
 \code{\link[=plotTSNE]{plotTSNE()}}.
@@ -50,4 +45,3 @@ Other PCA Utilities: \code{\link{fetchPCAData}}
 \author{
 Michael Steinbaugh
 }
-\concept{PCA Utilities}

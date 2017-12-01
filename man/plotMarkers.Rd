@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotMarkers}
 \alias{plotMarkers}
+\alias{plotMarkers}
 \alias{plotMarkers,seurat-method}
 \title{Plot Cell-Type Gene Markers}
 \usage{
@@ -58,4 +59,3 @@ Other Clustering Utilities: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

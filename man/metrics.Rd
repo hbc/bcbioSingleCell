@@ -38,4 +38,3 @@ Other Quality Control Metrics: \code{\link{plotCellCounts}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

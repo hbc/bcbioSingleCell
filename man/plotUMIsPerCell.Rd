@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotUMIsPerCell}
 \alias{plotUMIsPerCell}
+\alias{plotUMIsPerCell}
 \alias{plotUMIsPerCell,bcbioSingleCell-method}
 \alias{plotUMIsPerCell,data.frame-method}
 \alias{plotUMIsPerCell,seurat-method}
@@ -84,4 +85,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

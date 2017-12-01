@@ -3,6 +3,7 @@
 \docType{methods}
 \name{quantileHeatmap}
 \alias{quantileHeatmap}
+\alias{quantileHeatmap}
 \alias{quantileHeatmap,dgCMatrix-method}
 \alias{quantileHeatmap,matrix-method}
 \alias{quantileHeatmap,seurat-method}

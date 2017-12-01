@@ -3,6 +3,7 @@
 \docType{methods}
 \name{knownMarkersDetected}
 \alias{knownMarkersDetected}
+\alias{knownMarkersDetected}
 \alias{knownMarkersDetected,grouped_df,tbl_df-method}
 \title{Known Markers Detected}
 \usage{
@@ -49,4 +50,3 @@ Other Clustering Utilities: \code{\link{pcCutoff}},
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

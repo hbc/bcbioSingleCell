@@ -45,20 +45,6 @@ counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 This function is a simplified version of \code{\link[=loadSingleCell]{loadSingleCell()}}
 optimized for handling CellRanger output.
 }
-\examples{
-\dontrun{
-# Mus musculus
-# Run with Ensembl 88 transcriptome FASTA and GTF files
-bcb <- loadSingleCell(
-    uploadDir = file.path("indrop_rnaseq", "final"),
-    interestingGroups = c("genotype", "treatment"),
-    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
-    gtfFile = file.path(
-        "annotations",
-        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
-    ensemblVersion = 88)
-}
-}
 \author{
 Michael Steinbaugh
 }

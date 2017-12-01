@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotTSNE}
 \alias{plotTSNE}
+\alias{plotTSNE}
 \alias{plotTSNE,seurat-method}
 \title{Plot t-SNE}
 \usage{
@@ -54,4 +55,3 @@ Other t-SNE Utilities: \code{\link{fetchTSNEData}},
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
-\concept{t-SNE Utilities}
