@@ -2,6 +2,21 @@
 
 - Raw cellular barcodes are now slotted in `object@cellularBarcodes` as a `data.frame` instead of a per sample `list`. This makes downstream subsetting operations on the barcodes simpler.
 - Bug fixes for `cell2sample` mapping.
+- Switched back to stable CRAN version of roxygen2 (6.0.1) for documentation.
+- Renamed `pcCutoff()` to `plotPCElbow()`. The function now returns a PC sequence from 1 to the cutoff (e.g. 1:10) instead of just the final PC cutoff value. The R Markdown clustering template has been updated to reflect this change.
+- Renamed `quantileHeatmap()` to `plotQuantileHeatmap()`, for consistency with other plotting functions.
+- Initial support for customized bracket based subsetting, which now acts upon the raw cellular barcode counts stashed in the `object@bcbio` slot.
+- Moved `darkTheme()` to [basejump][] package and reworked as `midnightTheme()`, with improved colors and axis appearance.
+- Added `pointsAsNumbers` parameter to `plotTSNE()` and `plotPCA()` functions, to match the functionality in `plotMarkerTSNE()`.
+- Overhauled `loadCellRanger()` to support multiplexed [CellRanger][] matrix output. [CellRanger][] adds a numeric suffix to the end of multiplexed barcodes (e.g. `AAACCTGGTTTACTCT-1` denotes cellular barcode `AAACCTGGTTTACTCT` is assigned to sample `1`).
+- Improved `cell2sample` mapping in `aggregateReplicates()` function, which uses the `sampleNameAggregate` column in sample metadata to define the aggregate sample pairings. The `summarize()` step at line 101 is slow for datasets with many samples and should be changed in the future to speed things up.
+- Improved internal `cell2sample()` code to handle `NULL` stashed mappings better.
+- Updated TNSE plotting functions to use `midnightTheme()` instead of `darkTheme()`.
+- Added user-defined point and label sizes for `plotMarkerTSNE()`.
+- Fixed typo in `plotMitoRatio()` where `maxGenes` cutoff was plotted instead of `maxMitoRatio`.
+- Added `legend` parameter argument to `plotQC()` function. Also improved handling of `NULL` return for `plotReadsPerCell()`, which can happen with cellranger output.
+- Updated facet wrapping in `plotZeroesVsDepth()` to match the behavior in the other plotting functions.
+- Initial methods support for custom bracket-based subsetting.
 
 
 
