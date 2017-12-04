@@ -24,7 +24,7 @@
     pointSize = 1,
     label = TRUE,
     labelSize = 6,
-    color = scale_colour_hue(),
+    color = ggplot2::scale_color_hue(),
     dark = TRUE,
     title = NULL) {
     if (interestingGroups == "ident") {

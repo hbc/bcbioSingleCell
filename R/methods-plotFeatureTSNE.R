@@ -9,6 +9,8 @@
 #'
 #' @param feature Character vector of features (e.g. gene expression, PC
 #'   scores, number of genes detected).
+#' @param legend Show legends in paneled plots. Defaults to `FALSE` because
+#'   typically these look too busy and the legends can get cut off.
 #' @param returnAsList Return plots as a list.
 #'
 #' @seealso [Seurat::FeaturePlot()].

@@ -8,7 +8,7 @@
 \usage{
 \S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
   pointsAsNumbers = FALSE, pointSize = 1, label = TRUE, labelSize = 6,
-  color = scale_color_hue(), dark = TRUE, title = NULL)
+  color = ggplot2::scale_color_hue(), dark = TRUE, title = NULL)
 }
 \arguments{
 \item{object}{Object.}

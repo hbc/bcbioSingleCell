@@ -34,6 +34,9 @@ low/high gradient.}
 
 \item{labelSize}{Size of the text label.}
 
+\item{legend}{Show legends in paneled plots. Defaults to \code{FALSE} because
+typically these look too busy and the legends can get cut off.}
+
 \item{returnAsList}{Return plots as a list.}
 }
 \value{

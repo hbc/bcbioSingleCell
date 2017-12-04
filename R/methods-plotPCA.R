@@ -28,7 +28,7 @@ setMethod(
         pointSize = 1,
         label = TRUE,
         labelSize = 6,
-        color = scale_color_hue(),
+        color = ggplot2::scale_color_hue(),
         dark = TRUE,
         title = NULL) {
         pca <- fetchPCAData(object)
