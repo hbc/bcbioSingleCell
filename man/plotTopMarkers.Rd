@@ -37,9 +37,10 @@ for the number of genes to plot here in a future update.
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
-  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
-  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+  \code{\link{plotKnownMarkers}},
+  \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
+  \code{\link{plotStressGenes}}, \code{\link{topBarcodes}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

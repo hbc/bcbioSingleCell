@@ -6,6 +6,7 @@
 \alias{plotTSNEExpressionData}
 \alias{loadSingleCellRun}
 \alias{plotFeatures}
+\alias{pcCutoff}
 \title{Deprecated Functions}
 \usage{
 plotClusters(...)
@@ -15,6 +16,8 @@ plotTSNEExpressionData(...)
 loadSingleCellRun(...)
 
 plotFeatures(object, features, ...)
+
+pcCutoff(...)
 }
 \arguments{
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}

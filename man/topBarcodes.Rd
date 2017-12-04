@@ -32,8 +32,9 @@ topBarcodes(bcb)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
-  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
+  \code{\link{plotKnownMarkers}},
+  \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
+  \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topMarkers}}
 }
 \author{
