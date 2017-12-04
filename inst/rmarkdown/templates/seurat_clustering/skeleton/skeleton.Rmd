@@ -65,6 +65,14 @@ This workflow is adapted from the following sources:
 - Satija Lab: [Seurat v2 Guided Clustering Tutorial](http://satijalab.org/seurat/pbmc3k_tutorial.html)
 - Paul Hoffman: [Cell-Cycle Scoring and Regression](http://satijalab.org/seurat/cell_cycle_vignette.html)
 
+To identify clusters, the following steps will be performed:
+
+1. Normalization and transformation of the raw gene counts per cell to account for differences in sequencing depth.
+2. Identification of high variance genes.
+3. Regression of sources of unwanted variation (e.g. number of UMIs per cell, mitochondrial transcript abundance, cell cycle phase).
+4. Identification of the primary sources of heterogeneity using principal component (PC) analysis and heatmaps.
+5. Clustering cells based on significant PCs (metagenes).
+
 
 
 * * *
@@ -73,7 +81,7 @@ This workflow is adapted from the following sources:
 
 # Initialize Seurat (`r bcbName`)
 
-First, let's coerce our `bcbioSingleCell` object into a `seurat` object, without applying any additional filtering. Next, global-scaling normalization is applied to the raw counts with `NormalizeData()`, which (1) normalizes the gene expression measurements for each cell by the total expression, (2) multiplies this by a scale factor (10,000 by default), and (3) log-transforms the result. `FindVariableGenes()` is then called, which calculates the average expression and dispersion for each gene, places these genes into bins, and then calculates a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression. Finally, the genes are scaled and centered using the `ScaleData()` function.
+First, let's create a `seurat` object using the raw counts from the cells that have passed our quality control filtering parameters. Next, the raw counts are normalized using global-scaling normalization with the `NormalizeData()` function. This (1) normalizes the gene expression measurements for each cell by the total expression; (2) multiplies this by a scale factor (10,000 by default); and (3) log-transforms the result. Following normalization, the `FindVariableGenes()` function is then called, which calculates the average expression and dispersion for each gene, places these genes into bins, and then calculates a z-score for dispersion within each bin. This helps control for the relationship between variability and average expression. Finally, the genes are scaled and centered using the `ScaleData()` function.
 
 ```{r seurat, results="hide"}
 # S4 object coercion method using `setAs()`, documented in `setAs.R` file. This
@@ -98,7 +106,7 @@ seurat <- as(bcb, "seurat") %>%
 
 # Plot variable genes
 
-Here we are looking at the dispersion of the variable genes in the dataset. `VariableGenePlot()` plots dispersion (a normalized measure of to cell-to-cell variation) as a function of average expression for each gene. Our goal is to identify a set of high-variance genes, and we recommend setting the cutoff parameters in this function by visually evaluating this plot to define outliers. However, particularly when using UMI data, we often obtain similar results including much larger gene sets, including the entire transcriptome.
+To better cluster our cells, we need to detect the genes that are most variable within our dataset. We can plot dispersion (a normalized measure of to cell-to-cell variation) as a function of average expression for each gene to identify a set of high-variance genes.
 
 ```{r variable_gene_plot}
 VariableGenePlot(seurat)
@@ -143,7 +151,7 @@ assignAndSaveData(
     dir = dataDir)
 ```
 
-Here we are checking to see if the cells are grouping by cell cycle. If we don't see clear grouping of the cells into `G1`, `G2M`, and `S` clusters on the PCA plot, then it is recommended that we don't regress out cell-cycle variation. When this is the case, remove `S.Score` and `G2M.Score` from the variables to regress (`varsToRegress`) in the RMarkdown YAML parameters.
+Here we are checking to see if the cells are grouping by cell cycle. If we don't see clear grouping of the cells into `G1`, `G2M`, and `S` clusters on the PCA plot, then it is recommended that we don't regress out cell-cycle variation. When this is the case, remove `S.Score` and `G2M.Score` from the variables to regress (`varsToRegress`) in the R Markdown YAML parameters.
 
 ```{r cell_cycle_pca_preregress}
 # colnames(seurat@meta.data)
@@ -157,7 +165,11 @@ RunPCA(
 
 ## Apply regression variables
 
-Here we are regressing out variables of uninteresting variation, using the `vars.to.regress` argument in the `ScaleData()` function. When variables are defined in the `vars.to.regress` argument, [Seurat][] regresses them individually against each gene, then rescales and centers the resulting residuals. We generally recommend minimizing the effects of variable read count depth (`nUMI`) and mitochondrial gene expression (`mitoRatio`) as a standard first-pass approach. If the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not passing in `mitoRatio` here. When regressing out the effects of cell-cycle variation, include `S.Score` and `G2M.Score` in the `vars.to.regress` argument. Cell-cycle regression is generally recommended but should be avoided for samples containing cells undergoing differentiation.
+Here we are regressing out variables of uninteresting variation, using the `vars.to.regress` argument in the `ScaleData()` function. When variables are defined in the `vars.to.regress` argument, [Seurat][] regresses them individually against each gene, then rescales and centers the resulting residuals.
+
+We generally recommend minimizing the effects of variable read count depth (`nUMI`) and mitochondrial gene expression (`mitoRatio`) as a standard first-pass approach. If the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not passing in `mitoRatio` here.
+
+When regressing out the effects of cell-cycle variation, include `S.Score` and `G2M.Score` in the `vars.to.regress` argument. Cell-cycle regression is generally recommended but should be avoided for samples containing cells undergoing differentiation.
 
 ```{r scale_data, results="hide"}
 seurat <- ScaleData(seurat, vars.to.regress = params$varsToRegress)
@@ -178,9 +190,7 @@ RunPCA(
 
 # Linear dimensionality reduction {.tabset}
 
-Next, we perform principal component analysis (PCA) on the scaled data with `RunPCA()`. By default, the genes in `seurat@var.genes` are used as input, but can be defined using the `pc.genes` argument. We have typically found that running dimensionality reduction on highly variable genes can improve performance. However, with UMI data — particularly after regressing out technical variables — we often see that PCA returns similar (albeit slower) results when run on much larger subsets of genes, including the whole transcriptome.
-
-`ProjectPCA()` scores each gene in the dataset (including genes not included in the PCA) based on their correlation with the calculated components. Though we don't use this further here, it can be used to identify markers that are strongly correlated with cellular heterogeneity, but may not have passed through variable gene selection.  The results of the projected PCA can be explored by setting `use.full = TRUE` for `PrintPCA()`.
+Next, we perform principal component analysis (PCA) on the scaled data with `RunPCA()`. By default, the genes in `seurat@var.genes` are used as input, but can be defined using the `pc.genes` argument. `ProjectPCA()` scores each gene in the dataset (including genes not included in the PCA) based on their correlation with the calculated components. Though we don't use this further here, it can be used to identify markers that are strongly correlated with cellular heterogeneity, but may not have passed through variable gene selection.  The results of the projected PCA can be explored by setting `use.full = TRUE` for `PrintPCA()`.
 
 ```{r run_pca}
 seurat <- seurat %>%
@@ -189,10 +199,9 @@ seurat <- seurat %>%
 ```
 
 
-In particular, `PCHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and genes are ordered according to their PCA scores. Setting `cells.use` to a number plots the "extreme" cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated gene sets.
-
-
 ## `PCHeatmap()`
+
+In particular, `PCHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and genes are ordered according to their PCA scores. Setting `cells.use` to a number plots the "extreme" cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated gene sets.
 
 ```{r pc_heatmap, fig.height=30, fig.width=10}
 PCHeatmap(
@@ -231,7 +240,7 @@ PrintPCA(
 
 # Determine statistically significant principal components
 
-To overcome the extensive technical noise in any single gene for scRNA-seq data, [Seurat][] clusters cells based on their PCA scores, with each PC essentially representing a "metagene" that combines information across a correlated gene set. Determining how many PCs to include downstream is therefore an important step. To accomplish this, we plot the standard deviation of each PC as an elbow plot with `PCElbowPlot()`.
+To overcome the extensive technical noise in any single gene for scRNA-seq data, [Seurat][] clusters cells based on their PCA scores, with each PC essentially representing a "metagene" that combines information across a correlated gene set. Determining how many PCs to include downstream is therefore an important step. To accomplish this, we plot the standard deviation of each PC as an elbow plot with our `plotPCElbow()` function.
 
 PC selection — identifying the true dimensionality of a dataset — is an important step for [Seurat][], but can be challenging/uncertain. We therefore suggest these three approaches to consider:
 
@@ -249,8 +258,7 @@ This methodology is also commonly used for PC covariate analysis on bulk RNA-seq
 ```{r pc_use}
 pcUse <- params$pcUse
 if (!is.numeric(params$pcUse)) {
-    pcUse <- pcCutoff(seurat, maxPct = 0.05, minCumPct = 0.9)
-    pcUse <- seq_len(pcUse)
+    pcUse <- plotPCElbow(seurat, maxPct = 0.05, minCumPct = 0.9)
 }
 ```
 
@@ -260,7 +268,7 @@ We are using `r length(pcUse)` principal components for dimensionality reduction
 
 # Cluster the cells
 
-Seurat now includes an graph-based clustering approach. Importantly, the *distance metric* which drives the clustering analysis (based on previously identified PCs) remains the same. However, our approach to partioning the cellular distance matrix into clusters has dramatically improved. Our approach was heavily inspired by recent manuscripts which applied graph-based clustering approaches to scRNA-seq data [SNN-Cliq, Xu and Su, Bioinformatics, 2015] and CyTOF data [PhenoGraph, Levine et al., Cell, 2015]. Briefly, these methods embed cells in a graph structure - for example a K-nearest neighbor (KNN) graph, with edges drawn between cells with similar gene expression patterns, and then attempt to partition this graph into highly interconnected ‘quasi-cliques’ or ‘communities’. As in PhenoGraph, we first construct a KNN graph based on the euclidean distance in PCA space, and refine the edge weights between any two cells based on the shared overlap in their local neighborhoods (Jaccard distance). To cluster the cells, we apply modularity optimization techniques [SLM, Blondel et al., Journal of Statistical Mechanics], to iteratively group cells together, with the goal of optimizing the standard modularity function.
+Seurat uses a graph-based clustering approach, inspired by SNN-Cliq [@Xu2015-je] and PhenoGraph [@Levine2015-hr]. This approach embeds cells in a graph structure, by default using a K-nearest neighbor (KNN) graph, with edges drawn between cells with similar gene expression patterns, and then attempt to partition this graph into highly interconnected ‘quasi-cliques’ or ‘communities’. As in PhenoGraph, [Seurat][] first constructs a KNN graph based on the euclidean distance in PCA space, and refines the edge weights between any two cells based on the shared overlap in their local neighborhoods (Jaccard distance). To cluster the cells, it then applies modularity optimization techniques [@Blondel2008-rf], to iteratively group cells together, with the goal of optimizing the standard modularity function.
 
 The `FindClusters()` function implements the procedure, and contains a `resolution` argument that sets the "granularity" of the downstream clustering, with increased values leading to a greater number of clusters. We find that setting this parameter between `0.6`-`1.2` typically returns good results for single cell datasets of around 3K cells. Optimal resolution often increases for larger datasets. The clusters are saved in the `seurat@ident` slot.
 
