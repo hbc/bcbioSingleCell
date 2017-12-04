@@ -35,7 +35,7 @@ sampleSubsets <- pblapply(seq_along(sampleNames), function(a) {
     unlist()
 saveData(sampleSubsets, dir = dataDir)
 
-# Render RMarkdown reports per bcbioSingleCell subset file
+# Render R Markdown reports per bcbioSingleCell subset file
 pblapply(seq_along(sampleSubsets), function(a) {
     bcbName <- sampleSubsets[[a]]
     bcbFile <- file.path("data", paste0(bcbName, ".rda"))
