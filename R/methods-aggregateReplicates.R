@@ -50,7 +50,7 @@ NULL
 
     message("Remapping cellular barcodes to aggregate sample IDs")
     cell2sample <- cell2sample(object)
-    sampleID <- data.frame(sampleID = cell2sample)
+    sampleID <- data.frame("sampleID" = cell2sample)
     remap <- left_join(
         x = sampleID,
         y = map,
