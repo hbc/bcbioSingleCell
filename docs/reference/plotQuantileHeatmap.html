@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Deprecated Functions — deprecated • bcbioSingleCell</title>
+<title>Plot Heatmap with Quantile Breaks — plotQuantileHeatmap • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,43 +83,59 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Deprecated Functions</h1>
+    <h1>Plot Heatmap with Quantile Breaks</h1>
     </div>
 
     
-    <p>Deprecated Functions</p>
+    <p>Plot Heatmap with Quantile Breaks</p>
     
 
-    <pre class="usage"><span class='fu'>plotClusters</span>(<span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='fu'>plotTSNEExpressionData</span>(<span class='no'>...</span>)
+<span class='co'># S4 method for dgCMatrix</span>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='fu'>loadSingleCellRun</span>(<span class='no'>...</span>)
+<span class='co'># S4 method for matrix</span>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>plotFeatures</span>(<span class='no'>object</span>, <span class='no'>features</span>, <span class='no'>...</span>)
-
-<span class='fu'>darkTheme</span>(<span class='no'>...</span>)
-
-<span class='fu'>pcCutoff</span>(<span class='no'>...</span>)
-
-<span class='fu'>quantileHeatmap</span>(<span class='no'>...</span>)</pre>
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>object</th>
+      <td><p>Matrix of data.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
     <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
+      <th>annotation</th>
+      <td><p>Column annotations.</p></td>
+    </tr>
+    <tr>
+      <th>clusterRows</th>
+      <td><p>Perform row clustering.</p></td>
+    </tr>
+    <tr>
+      <th>clusterCols</th>
+      <td><p>Perform column clustering.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Soft deprecation to new functions.</p>
+    <p><code><a href='http://www.rdocumentation.org/packages/pheatmap/topics/pheatmap'>pheatmap::pheatmap()</a></code>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This is helpful for more usefully visualizing single cell data.
+Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
     
 
   </div>
@@ -129,7 +145,13 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
+
+    <h2>Author</h2>
+    
+Rory Kirchner
 
   </div>
 </div>
