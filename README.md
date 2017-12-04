@@ -90,7 +90,6 @@ For more information on this issue, consult `help("dyn.load")` in the [R][] docu
 The papers and software cited in our workflows are available as a [shared library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
 
 
-
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [Bioconductor]: https://bioconductor.org
 [devtools]: https://cran.r-project.org/package=devtools
