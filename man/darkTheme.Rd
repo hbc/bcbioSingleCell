@@ -4,16 +4,24 @@
 \alias{darkTheme}
 \title{Dark Theme for \code{ggplot} Objects}
 \usage{
-darkTheme()
+darkTheme(...)
+}
+\arguments{
+\item{...}{Passthrough arguments to \code{\link[ggplot2:theme]{ggplot2::theme()}}.}
 }
 \value{
-No return.
+\link{ggplot} theme.
 }
 \description{
 Add this last to a ggplot2 customization chain operation.
 }
 \seealso{
 Modified version of \code{\link[Seurat:DarkTheme]{Seurat::DarkTheme()}}.
+
+\itemize{
+\item \code{\link[ggplot2:theme]{ggplot2::theme()}}.
+\item \code{\link[Seurat:DarkTheme]{Seurat::DarkTheme()}}.
+}
 }
 \author{
 Michael Steinbaugh
