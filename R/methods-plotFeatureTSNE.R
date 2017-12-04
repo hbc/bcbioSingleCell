@@ -20,6 +20,7 @@ NULL
 
 # Methods ====
 #' @rdname plotFeatureTSNE
+#' @importFrom basejump midnightTheme
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 aes_string geom_point ggplot scale_color_gradient theme
 #' @importFrom Seurat FetchData
@@ -52,7 +53,7 @@ setMethod(
                     color = feature[[a]])
             )
             if (isTRUE(dark)) {
-                p <- p + darkTheme()
+                p <- p + midnightTheme()
             }
             p <- p +
                 geom_point(size = pointSize) +

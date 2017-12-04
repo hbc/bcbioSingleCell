@@ -44,6 +44,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom basejump midnightTheme
 #' @importFrom ggplot2 aes_string geom_point geom_text ggplot labs guides
 #'   guide_colorbar theme
 #' @importFrom viridis scale_color_viridis
@@ -83,7 +84,7 @@ NULL
             color = colorPoints)
     )
     if (isTRUE(dark)) {
-        p <- p + darkTheme()
+        p <- p + midnightTheme()
     }
     if (isTRUE(legend)) {
         p <- p +
