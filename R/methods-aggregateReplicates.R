@@ -50,7 +50,7 @@ NULL
 
     message("Remapping cellular barcodes to aggregate sample IDs")
     cell2sample <- cell2sample(object)
-    sampleID <- data.frame("sampleID" = cell2sample)
+    sampleID <- data.frame(sampleID = cell2sample)
     remap <- left_join(
         x = sampleID,
         y = map,
@@ -108,7 +108,7 @@ NULL
         cbAggregateList <- lapply(seq_along(newIDs), function(a) {
             cbAggregateData %>%
                 ungroup() %>%
-                filter(sampleID == newIDs[[a]]) %>%
+                filter(.data[["sampleID"]] == newIDs[[a]]) %>%
                 mutate(sampleID = NULL)
         })
         names(cbAggregateList) <- as.character(newIDs)

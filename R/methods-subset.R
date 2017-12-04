@@ -119,7 +119,7 @@ NULL
             cbList <- lapply(seq_along(sampleIDs), function(a) {
                 cb %>%
                     ungroup() %>%
-                    filter(sampleID == sampleIDs[[a]]) %>%
+                    filter(.data[["sampleID"]] == sampleIDs[[a]]) %>%
                     mutate(sampleID = NULL)
             })
             names(cbList) <- sampleIDs
