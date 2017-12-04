@@ -65,3 +65,10 @@ pcCutoff <- function(...) {
     .Deprecated("plotPCElbow")
     plotPCElbow(...)
 }
+
+#' @rdname deprecated
+#' @export
+quantileHeatmap <- function(...) {
+    .Deprecated("plotQuantileHeatmap")
+    plotQuantileHeatmap(...)
+}

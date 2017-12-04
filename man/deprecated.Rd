@@ -8,6 +8,7 @@
 \alias{plotFeatures}
 \alias{darkTheme}
 \alias{pcCutoff}
+\alias{quantileHeatmap}
 \title{Deprecated Functions}
 \usage{
 plotClusters(...)
@@ -21,6 +22,8 @@ plotFeatures(object, features, ...)
 darkTheme(...)
 
 pcCutoff(...)
+
+quantileHeatmap(...)
 }
 \arguments{
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
