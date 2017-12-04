@@ -6,6 +6,7 @@
 \alias{plotTSNEExpressionData}
 \alias{loadSingleCellRun}
 \alias{plotFeatures}
+\alias{darkTheme}
 \alias{pcCutoff}
 \title{Deprecated Functions}
 \usage{
@@ -16,6 +17,8 @@ plotTSNEExpressionData(...)
 loadSingleCellRun(...)
 
 plotFeatures(object, features, ...)
+
+darkTheme(...)
 
 pcCutoff(...)
 }
