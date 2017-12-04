@@ -79,14 +79,6 @@ setGeneric("knownMarkersDetected", function(all, known, ...) {
 
 
 
-#' @rdname pcCutoff
-#' @export
-setGeneric("pcCutoff", function(object, ...) {
-    standardGeneric("pcCutoff")
-})
-
-
-
 #' @rdname plotCellCounts
 #' @export
 setGeneric("plotCellCounts", function(object, ...) {
@@ -173,6 +165,14 @@ setGeneric("plotMitoVsCoding", function(object, ...) {
 #' @export
 setGeneric("plotNovelty", function(object, ...) {
     standardGeneric("plotNovelty")
+})
+
+
+
+#' @rdname plotPCElbow
+#' @export
+setGeneric("plotPCElbow", function(object, ...) {
+    standardGeneric("plotPCElbow")
 })
 
 

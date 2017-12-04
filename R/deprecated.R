@@ -47,3 +47,12 @@ plotFeatures <- function(object, features, ...) {
     .Deprecated("plotFeatureTSNE")
     plotFeatureTSNE(object = object, feature = features, ...)
 }
+
+
+
+# 0.0.24 ====
+#' @rdname deprecated
+#' @export
+pcCutoff <- function(...) {
+    plotPCElbow(...)
+}
