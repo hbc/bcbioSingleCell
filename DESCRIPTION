@@ -18,10 +18,10 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),
-    SummarizedExperiment (>= 1.8.0)
+    SummarizedExperiment (>= 1.6.5)
 Imports:
     basejump (>= 0.1.5),
-    BiocGenerics (>= 0.24.0),
+    BiocGenerics (>= 0.22.1),
     cowplot (>= 0.8.0),
     dendsort (>= 0.3.3),
     dplyr (>= 0.7.4),
@@ -37,7 +37,7 @@ Imports:
     pbapply (>= 1.3),
     pheatmap (>= 1.0.8),
     rlang (>= 0.1.2),
-    S4Vectors (>= 0.16.0),
+    S4Vectors (>= 0.14.7),
     scales,
     Seurat (>= 2.1.0),
     stats,
