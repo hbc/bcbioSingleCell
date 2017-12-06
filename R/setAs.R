@@ -83,10 +83,7 @@ NULL
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
     # Require that technical replicates are aggregated
-    if (any(grepl(x = metadata(from)[["sampleMetadata"]][["sampleID"]],
-                  pattern = lanePattern)) |
-        "sampleNameAggregate" %in%
-        colnames(metadata(from)[["sampleMetadata"]])) {
+    if ("sampleNameAggregate" %in% colnames(sampleMetadata(from))) {
         stop(paste("'aggregateReplicates()' required",
                    "to merge technical replicates prior to seurat coercion"
         ), call. = FALSE)
@@ -94,8 +91,6 @@ NULL
 
     # Require filtered cells and genes only
     from <- .applyFilterCutoffs(from)
-    filterParams <- metadata(from)[["filterParams"]]
-    print(filterParams)
 
     # Create the initial `seurat` object
     counts <- counts(from, gene2symbol = TRUE)
