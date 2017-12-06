@@ -17,7 +17,6 @@
 #' @importFrom pbapply pblapply
 #' @importFrom stats setNames
 #' @importFrom stringr str_split
-#' @importFrom utils packageVersion
 #'
 #' @inherit loadSingleCell
 #'
@@ -174,7 +173,7 @@ loadCellRanger <- function(
 
     # Metadata =================================================================
     metadata <- list(
-        version = packageVersion("bcbioSingleCell"),
+        version = packageVersion,
         pipeline = pipeline,
         uploadDir = uploadDir,
         sampleDirs = sampleDirs,

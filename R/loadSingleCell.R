@@ -16,7 +16,6 @@
 #' @importFrom stats na.omit setNames
 #' @importFrom stringr str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
-#' @importFrom utils packageVersion
 #'
 #' @param uploadDir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
@@ -315,7 +314,7 @@ loadSingleCell <- function(
 
     # Metadata =================================================================
     metadata <- list(
-        version = packageVersion("bcbioSingleCell"),
+        version = packageVersion,
         pipeline = pipeline,
         uploadDir = uploadDir,
         sampleDirs = sampleDirs,

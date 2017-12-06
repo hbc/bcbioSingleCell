@@ -15,13 +15,16 @@
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @importFrom S4Vectors aggregate metadata
-#' @importFrom utils globalVariables
 NULL
 
+#' @importFrom utils globalVariables
 globalVariables(".")
+
+#' @importFrom utils packageVersion
+packageVersion <- packageVersion("bcbioSingleCell")
 
 # Trailing number is to match cellranger output
 barcodePattern <- ")_([ACGT_]{6,})(_[0-9]+)?$"
 lanePattern <- "_L(\\d{3})"
-projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
 metadataPriorityCols <- c("sampleID", "sampleName", "description")
+projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"

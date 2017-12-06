@@ -48,22 +48,37 @@ NULL
         j <- 1:ncol(x)
     }
 
-    # Prepare and subset SummarizedExperiment
+    # Early return if dimensions are unmodified
+    if (identical(dim(x), c(length(i), length(j)))) return(x)
+
+    # Regenerate and subset SummarizedExperiment
     se <- as(x, "SummarizedExperiment")
     se <- se[i, j, drop = drop]
 
     genes <- rownames(se)
     cells <- colnames(se)
 
+    # Assays ===================================================================
     assays <- assays(se)
+
+    # Row data =================================================================
     rowData <- rowData(se)
     if (!is.null(rowData)) {
         rownames(rowData) <- slot(se, "NAMES")
     }
+
+    # Column data ==============================================================
+    # Don't need to relevel factors here currently
     colData <- colData(se)
 
     # Metadata =================================================================
     metadata <- metadata(se)
+    metadata[["subset"]] <- TRUE
+    # Update version, if necessary
+    if (!identical(metadata[["version"]], packageVersion)) {
+        metadata[["oldVersion"]] <- metadata[["version"]]
+        metadata[["version"]] = packageVersion
+    }
 
     # cell2sample mappings
     cell2sample <- cell2sample(
@@ -103,9 +118,7 @@ NULL
         metadata[["filterGenes"]] <- filterGenes
     }
 
-    metadata[["subset"]] <- TRUE
-
-    # bcbio slot ===============================================================
+    # bcbio ====================================================================
     bcbio <- bcbio(x)
     if (!is.null(bcbio)) {
         # Cellular barcodes
@@ -130,7 +143,7 @@ NULL
             as("SimpleList")
     }
 
-    # bcbioSingleCell ====
+    # Return ===================================================================
     new("bcbioSingleCell",
         SummarizedExperiment(
             assays = assays,

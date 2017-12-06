@@ -27,8 +27,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom utils packageVersion
-#'
 #' @return [bcbioSingleCell] object.
 .coerceLegacy <- function(from) {
     # Check for version
@@ -40,8 +38,7 @@ NULL
         ), call. = FALSE)
     }
     message(paste(
-        paste("Upgrading from", version, "to",
-              packageVersion("bcbioSingleCell")),
+        paste("Upgrading from", version, "to", packageVersion),
         paste("Existing metadata:", toString(names(metadata(from)))),
         sep = "\n"
     ))
@@ -55,7 +52,7 @@ NULL
     colData(to) <- calculateMetrics(assay(to), annotable = annotable(to))
 
     # Update the automatic metadata slots
-    metadata(to)[["version"]] <- packageVersion("bcbioSingleCell")
+    metadata(to)[["version"]] <- packageVersion
     metadata(to)[["originalVersion"]] <- metadata(from)[["version"]]
     metadata(to)[["upgradeDate"]] <- Sys.Date()
 
