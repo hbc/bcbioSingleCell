@@ -41,15 +41,17 @@ NULL
     ...) {
     object <- .applyFilterCutoffs(object)
 
+    # Update the metadata
+    metadata(object)[["selectSamples"]] <- TRUE
+
     # Here the `arguments` are captured as a named character vector. The names
     # of the arguments represent the column names. The value of the arguments
     # should be a string that can be used for logical grep matching here
     # internally.
     arguments <- list(...)
     checkCharacter <- vapply(arguments, is.character, FUN.VALUE = logical(1))
-    checkCharacter <- as.logical(checkCharacter)
-    if (!all(isTRUE(checkCharacter))) {
-        stop("Arguments must be character", call. = FALSE)
+    if (!all(isTRUE(as.logical(checkCharacter)))) {
+        stop("'Arguments must be character")
     }
 
     # Match the arguments against the sample metadata
@@ -94,23 +96,7 @@ NULL
     message(paste(nrow(metrics), "cells matched"))
     cells <- rownames(metrics)
 
-    # Now subset the object to contain only the cell matches
-    subset <- object[, cells]
-
-    # Update the bcbio slot
-    cellularBarcodes <- bcbio(subset, "cellularBarcodes")
-    if (!is.null(cellularBarcodes)) {
-        bcbio(subset, "cellularBarcodes") <- cellularBarcodes[sampleIDs]
-    }
-
-    # Update the metadata slot
-    metadata(subset)[["allSamples"]] <- FALSE
-    metadata(subset)[["cell2sample"]] <- cell2sample(subset)
-    metadata(subset)[["filterCells"]] <- cells
-    metadata(subset)[["sampleMetadata"]] <- sampleMetadata
-    metadata(subset)[["selectSamples"]] <- TRUE
-
-    subset
+    object[, cells]
 }
 
 
