@@ -40,8 +40,6 @@ NULL
     object,
     ...) {
     object <- .applyFilterCutoffs(object)
-
-    # Update the metadata
     metadata(object)[["selectSamples"]] <- TRUE
 
     # Here the `arguments` are captured as a named character vector. The names
