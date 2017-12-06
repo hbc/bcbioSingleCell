@@ -76,8 +76,8 @@ NULL
     metadata[["subset"]] <- TRUE
     # Update version, if necessary
     if (!identical(metadata[["version"]], packageVersion)) {
-        metadata[["oldVersion"]] <- metadata[["version"]]
-        metadata[["version"]] = packageVersion
+        metadata[["originalVersion"]] <- metadata[["version"]]
+        metadata[["version"]] <- packageVersion
     }
 
     # cell2sample mappings
