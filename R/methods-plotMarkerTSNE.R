@@ -11,6 +11,7 @@
 #'
 #' @param colorPoints Color points by geometric mean (`geomean`) or expression
 #'   of individual gene (`expression`).
+#' @param legend Show plot legend.
 #'
 #' @return [ggplot].
 #'

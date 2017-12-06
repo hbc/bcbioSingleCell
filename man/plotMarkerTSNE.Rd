@@ -41,6 +41,8 @@ low/high gradient.}
 
 \item{dark}{Enable dark mode.}
 
+\item{legend}{Show plot legend.}
+
 \item{title}{Plot title.}
 
 \item{genes}{Genes (by symbol name) of which to get expression data.}
