@@ -18,10 +18,6 @@
 #' @param minCellsPerGene Include genes with non-zero expression in at least
 #'   this many cells.
 #' @param quiet If `TRUE`, don't show the filtering parameter summary.
-#' @param drop Drop low quality cells from object after filtering.
-#'   Enabled by default and generally recommended. If set `FALSE`, then the this
-#'   function simply saves `filterCells`, `filterGenes`, and `filterParams` into
-#'   the [metadata()] slot.
 #'
 #' @seealso [Seurat::CreateSeuratObject()].
 #'
@@ -50,7 +46,6 @@ NULL
     maxMitoRatio = 0.1,
     minNovelty = 0.8,
     minCellsPerGene = 3,
-    drop = TRUE,
     quiet = FALSE) {
     # Ensure that all filter parameters are numeric
     params <- c(
@@ -66,13 +61,8 @@ NULL
     # Add support `nCount` filtering in a future update
 
     # Filter low quality cells ====
-    # Don't use `subset()` here. That function uses non-standard evaluation that
-    # should only be used interactively in a script.
-
     colData <- colData(object)
-    message(paste(
-        nrow(colData), "cells before filtering"
-    ))
+    message(paste(nrow(colData), "cells before filtering"))
 
     # minUMIs
     if (!is.null(minUMIs) & minUMIs > 0) {
@@ -169,23 +159,7 @@ NULL
     )
     metadata(object)[["cell2sample"]] <- cell2sample
 
-    # Drop cells and genes (destructive) ====
-    if (isTRUE(drop)) {
-        message(paste(
-            "Dropping low quality cells and genes from the object"
-        ))
-        object <- .applyFilterCutoffs(object)
-    } else {
-        message(paste(
-            "Non-destructive mode",
-            "  cutoffs: metadata(object)$filterParams",
-            "    cells: metadata(object)$filterCells",
-            "    genes: metadata(object)$filterGenes",
-            sep = "\n"
-        ))
-    }
-
-    # Show summary statistics report and plots, if desired
+    # Show summary statistics, if desired
     if (!isTRUE(quiet)) {
         mdList(c(
             paste(">=", minUMIs, "UMI counts per cell"),
@@ -207,7 +181,7 @@ NULL
             cat(sep = "\n")
     }
 
-    object
+    .applyFilterCutoffs(object)
 }
 
 
