@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotMarkers}
 \alias{plotMarkers}
+\alias{plotMarkers}
 \alias{plotMarkers,seurat-method}
 \title{Plot Cell-Type Gene Markers}
 \usage{
@@ -50,12 +51,11 @@ plotMarkers(seurat, genes = genes)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
-  \code{\link{plotStressGenes}},
+  \code{\link{plotKnownMarkers}},
+  \code{\link{plotPCElbow}}, \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

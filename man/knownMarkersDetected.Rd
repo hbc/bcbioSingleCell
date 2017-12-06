@@ -3,6 +3,7 @@
 \docType{methods}
 \name{knownMarkersDetected}
 \alias{knownMarkersDetected}
+\alias{knownMarkersDetected}
 \alias{knownMarkersDetected,grouped_df,tbl_df-method}
 \title{Known Markers Detected}
 \usage{
@@ -40,13 +41,12 @@ based on the gene symbols, since these change often and can mismatch
 easily.
 }
 \seealso{
-Other Clustering Utilities: \code{\link{pcCutoff}},
-  \code{\link{plotKnownMarkers}},
-  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
+Other Clustering Utilities: \code{\link{plotKnownMarkers}},
+  \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
+  \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

@@ -1,10 +1,10 @@
-#' Heatmap with Quantile Breaks
+#' Plot Heatmap with Quantile Breaks
 #'
 #' @details This is helpful for more usefully visualizing single cell data.
 #'   Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 #'
-#' @rdname quantileHeatmap
-#' @name quantileHeatmap
+#' @rdname plotQuantileHeatmap
+#' @name plotQuantileHeatmap
 #' @author Rory Kirchner
 #'
 #' @inheritParams AllGenerics
@@ -48,7 +48,7 @@ NULL
 #' @importFrom pheatmap pheatmap
 #' @importFrom stats dist hclust
 #' @importFrom viridis inferno
-.quantileHeatmap <- function(
+.plotQuantileHeatmap <- function(
     object,
     annotation = NA,
     clusterRows = TRUE,
@@ -80,28 +80,28 @@ NULL
 
 
 # Methods ====
-#' @rdname quantileHeatmap
+#' @rdname plotQuantileHeatmap
 #' @export
 setMethod(
-    "quantileHeatmap",
+    "plotQuantileHeatmap",
     signature("dgCMatrix"),
-    quantileHeatmap)
+    plotQuantileHeatmap)
 
 
 
-#' @rdname quantileHeatmap
+#' @rdname plotQuantileHeatmap
 #' @export
 setMethod(
-    "quantileHeatmap",
+    "plotQuantileHeatmap",
     signature("matrix"),
-    .quantileHeatmap)
+    .plotQuantileHeatmap)
 
 
 
-#' @rdname quantileHeatmap
+#' @rdname plotQuantileHeatmap
 #' @export
 setMethod(
-    "quantileHeatmap",
+    "plotQuantileHeatmap",
     signature("seurat"),
     function(
         object,
@@ -109,7 +109,7 @@ setMethod(
         clusterRows = TRUE,
         clusterCols = TRUE) {
         # Use the raw counts
-        .quantileHeatmap(
+        .plotQuantileHeatmap(
             slot(object, "raw.data"),
             annotation = annotation,
             clusterRows = clusterRows,

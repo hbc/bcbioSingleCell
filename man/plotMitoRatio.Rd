@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotMitoRatio}
 \alias{plotMitoRatio}
+\alias{plotMitoRatio}
 \alias{plotMitoRatio,bcbioSingleCell-method}
 \alias{plotMitoRatio,data.frame-method}
 \alias{plotMitoRatio,seurat-method}
@@ -85,4 +86,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

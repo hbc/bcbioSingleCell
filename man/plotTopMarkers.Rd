@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotTopMarkers}
 \alias{plotTopMarkers}
+\alias{plotTopMarkers}
 \alias{plotTopMarkers,seurat,grouped_df-method}
 \title{Plot Top Markers}
 \usage{
@@ -26,13 +27,7 @@ plotTopMarkers(object, topMarkers, ...)
 No value, only graphical output.
 }
 \description{
-Plot gene expression per cell in multiple formats:
-\enumerate{
-\item t-SNE plot
-\item Violin plot
-\item Ridgeline plot
-\item Dot plot
-}
+Plot Top Markers
 }
 \note{
 The number of markers to plot is determined by the output of the
@@ -40,20 +35,13 @@ The number of markers to plot is determined by the output of the
 simply reassign first using that function. If necessary, we can add support
 for the number of genes to plot here in a future update.
 }
-\examples{
-\dontrun{
-top <- topMarkers(markers)
-genes <- top$symbol[1:4]
-plotMarkers(seurat, genes = genes)
-}
-}
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
-  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
-  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+  \code{\link{plotKnownMarkers}},
+  \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
+  \code{\link{plotStressGenes}}, \code{\link{topBarcodes}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}

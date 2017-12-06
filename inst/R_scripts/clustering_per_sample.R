@@ -1,8 +1,16 @@
+# nolint start
+#
+# Seurat clustering per sample
+# Michael Steinbaugh
+# 2017-12-01
+#
 # Latest version of this script is available here:
 # script <- system.file(
 #     file.path("R_scripts", "clustering_per_sample.R"),
 #     package = "bcbioSingleCell")
 # file.edit(script)
+#
+# nolint end
 
 library(bcbioSingleCell)
 library(pbapply)
@@ -27,7 +35,7 @@ sampleSubsets <- pblapply(seq_along(sampleNames), function(a) {
     unlist()
 saveData(sampleSubsets, dir = dataDir)
 
-# Render RMarkdown reports per bcbioSingleCell subset file
+# Render R Markdown reports per bcbioSingleCell subset file
 pblapply(seq_along(sampleSubsets), function(a) {
     bcbName <- sampleSubsets[[a]]
     bcbFile <- file.path("data", paste0(bcbName, ".rda"))

@@ -93,11 +93,11 @@ visualization.</p>
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>plotQC</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>,
-  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotQC</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>,
-  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)</pre>
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -113,12 +113,16 @@ visualization.</p>
     <tr>
       <th>geom</th>
       <td><p>Plot type. Supported formats: <code>boxplot</code>, <code>histogram</code>,
-<code>ridgeline</code>, and <code>violin</code>. Applies to <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell()</a></code>,
-<code><a href='plotGenesPerCell.html'>plotGenesPerCell()</a></code>, <code><a href='plotMitoRatio.html'>plotMitoRatio()</a></code>, and <code><a href='plotNovelty.html'>plotNovelty()</a></code> output.</p></td>
+<code>ridgeline</code>, and <code>violin</code>. Applies to <code>plotUMIsPerCell()</code>,
+<code>plotGenesPerCell()</code>, <code>plotMitoRatio()</code>, and <code>plotNovelty()</code> output.</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
       <td><p>R Markdown header level.</p></td>
+    </tr>
+    <tr>
+      <th>legend</th>
+      <td><p>Include plot legend.</p></td>
     </tr>
     <tr>
       <th>return</th>

@@ -1,11 +1,11 @@
-#' Determine PC Cutoff
+#' Plot PC Elbow
 #'
 #' Calculate the principal component (PC) with either a maximum SD percentage or
 #' minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
 #' PC cutoff for either 5% SD (`maxPct`) or 90% cumulative (`minCumsum`).
 #'
-#' @rdname pcCutoff
-#' @name pcCutoff
+#' @rdname plotPCElbow
+#' @name plotPCElbow
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
@@ -15,7 +15,10 @@
 #' @param minCumPct Minimum cumulative percent standard deviation.
 #' @param plot Plot the PC standard deviations.
 #'
-#' @return Numeric of maximum PC value to use for dimensionality reduction.
+#' @return
+#' - Show graphical output of elbow plots.
+#' - Return numeric sequence vector of PCs to include for dimensionality
+#'   reduction analysis.
 #'
 #' @seealso [Seurat::PCElbowPlot].
 NULL
@@ -28,7 +31,7 @@ NULL
 #'   scale_y_continuous
 #' @importFrom scales percent
 #' @importFrom tibble tibble
-.pcCutoff <- function(
+.plotPCElbow <- function(
     sd,
     maxPct,
     minCumPct,
@@ -117,15 +120,15 @@ NULL
             ggcumsum, x = 0.5, y = 0, width = 0.5, height = 0.5)
     show(p)
 
-    cutoff
+    seq_len(cutoff)
 }
 
 
 
 # Methods ====
-#' @rdname pcCutoff
+#' @rdname plotPCElbow
 #' @export
-setMethod("pcCutoff", "seurat", function(
+setMethod("plotPCElbow", "seurat", function(
     object,
     maxPct = 0.05,
     minCumPct = 0.9,
@@ -136,7 +139,7 @@ setMethod("pcCutoff", "seurat", function(
     sd <- slot(object, "dr") %>%
         .[["pca"]] %>%
         slot("sdev")
-    .pcCutoff(
+    .plotPCElbow(
         sd,
         maxPct = maxPct,
         minCumPct = minCumPct,

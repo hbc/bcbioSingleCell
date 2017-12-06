@@ -3,14 +3,15 @@
 \docType{methods}
 \name{plotTSNE}
 \alias{plotTSNE}
+\alias{plotTSNE}
 \alias{plotTSNE,seurat-method}
 \title{Plot t-SNE}
 \usage{
 plotTSNE(object, ...)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
-  color = scale_color_hue(), pointSize = 1, label = TRUE, labelSize = 6,
-  dark = TRUE)
+  pointsAsNumbers = FALSE, pointSize = 1, label = TRUE, labelSize = 6,
+  color = ggplot2::scale_color_hue(), dark = TRUE, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,13 +20,21 @@ plotTSNE(object, ...)
 
 \item{interestingGroups}{Interesting group to use for plot colors.}
 
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+
 \item{pointSize}{Cell point size.}
 
 \item{label}{Overlay a cluster identitiy label on the plot.}
 
 \item{labelSize}{Size of the text label.}
 
+\item{color}{Color palette to use for points. Defaults to the viridis color
+palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
+low/high gradient.}
+
 \item{dark}{Enable dark mode.}
+
+\item{title}{Plot title.}
 }
 \value{
 \link{ggplot}.
@@ -46,4 +55,3 @@ Other t-SNE Utilities: \code{\link{fetchTSNEData}},
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
-\concept{t-SNE Utilities}

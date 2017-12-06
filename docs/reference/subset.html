@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filter Cells — filterCells • bcbioSingleCell</title>
+<title>Bracket-Based Subsetting — subset • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,90 +83,100 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filter Cells</h1>
+    <h1>Bracket-Based Subsetting</h1>
     </div>
 
     
-    <p>Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
-cellular barcodes.</p>
+    <p>Extract genes by row and cells by column from a <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object.</p>
     
 
-    <pre class="usage"><span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>filterCells</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"># S4 method for bcbioSingleCell,ANY,ANY,ANY
+[(x, i, j, ..., drop = FALSE)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
+      <th>x</th>
+      <td><p>object from which to extract element(s) or in which to replace element(s).</p></td>
+    </tr>
+    <tr>
+      <th>i</th>
+      <td><p>indices specifying elements to extract or replace.  Indices are
+    <code>numeric</code> or <code>character</code> vectors or empty (missing) or
+    <code>NULL</code>.  Numeric values are coerced to integer as by
+    <code>as.integer</code> (and hence truncated towards zero).
+    Character vectors will be matched to the <code>names</code> of the
+    object (or for matrices/arrays, the <code>dimnames</code>):
+    see &#8216;Character indices&#8217; below for further details.</p>
+<p>For <code>[</code>-indexing only: <code>i</code>, <code>j</code>, <code>&#8230;</code> can be
+    logical vectors, indicating elements/slices to select.  Such vectors
+    are recycled if necessary to match the corresponding extent.
+    <code>i</code>, <code>j</code>, <code>&#8230;</code> can also be negative integers,
+    indicating elements/slices to leave out of the selection.</p>
+<p>When indexing arrays by <code>[</code> a single argument <code>i</code> can be a
+    matrix with as many columns as there are dimensions of <code>x</code>; the
+    result is then a vector with elements corresponding to the sets of
+    indices in each row of <code>i</code>.</p>
+<p>An index value of <code>NULL</code> is treated as if it were <code>integer(0)</code>.</p></td>
+    </tr>
+    <tr>
+      <th>j</th>
+      <td><p>indices specifying elements to extract or replace.  Indices are
+    <code>numeric</code> or <code>character</code> vectors or empty (missing) or
+    <code>NULL</code>.  Numeric values are coerced to integer as by
+    <code>as.integer</code> (and hence truncated towards zero).
+    Character vectors will be matched to the <code>names</code> of the
+    object (or for matrices/arrays, the <code>dimnames</code>):
+    see &#8216;Character indices&#8217; below for further details.</p>
+<p>For <code>[</code>-indexing only: <code>i</code>, <code>j</code>, <code>&#8230;</code> can be
+    logical vectors, indicating elements/slices to select.  Such vectors
+    are recycled if necessary to match the corresponding extent.
+    <code>i</code>, <code>j</code>, <code>&#8230;</code> can also be negative integers,
+    indicating elements/slices to leave out of the selection.</p>
+<p>When indexing arrays by <code>[</code> a single argument <code>i</code> can be a
+    matrix with as many columns as there are dimensions of <code>x</code>; the
+    result is then a vector with elements corresponding to the sets of
+    indices in each row of <code>i</code>.</p>
+<p>An index value of <code>NULL</code> is treated as if it were <code>integer(0)</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
-    </tr>
-    <tr>
-      <th>minUMIs</th>
-      <td><p>Minimum number of UMI disambiguated counts per cell.</p></td>
-    </tr>
-    <tr>
-      <th>minGenes</th>
-      <td><p>Minimum number of genes detected.</p></td>
-    </tr>
-    <tr>
-      <th>maxGenes</th>
-      <td><p>Maximum number of genes detected.</p></td>
-    </tr>
-    <tr>
-      <th>maxMitoRatio</th>
-      <td><p>Maximum relative mitochondrial abundance (<code>0-1</code> scale).</p></td>
-    </tr>
-    <tr>
-      <th>minNovelty</th>
-      <td><p>Minimum novelty score.</p></td>
-    </tr>
-    <tr>
-      <th>minCellsPerGene</th>
-      <td><p>Include genes with non-zero expression in at least
-this many cells.</p></td>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>drop</th>
-      <td><p>Drop low quality cells from object after filtering.
-Enabled by default and generally recommended. If set <code>FALSE</code>, then the this
-function simply saves <code>filterCells</code>, <code>filterGenes</code>, and <code>filterParams</code> into
-the <code>metadata()</code> slot.</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>If <code>TRUE</code>, don't show the filtering parameter summary.</p></td>
+      <td><p>For matrices and arrays.  If <code>TRUE</code> the result is
+    coerced to the lowest possible dimension (see the examples).  This
+    only works for extracting elements, not for the replacement.  See
+    <code>drop</code> for further details.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object, with filtering information slotted into
-<code>metadata()</code> as <code>filterCells</code> and <code>filterParams</code>.</p>
+    <p><a href='bcbioSingleCell-class.html'>bcbioSingleCell</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/CreateSeuratObject'>Seurat::CreateSeuratObject()</a></code>.</p>
-<p>Other Data Management Utilities: <code><a href='aggregateFeatures.html'>aggregateFeatures</a></code>,
-  <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code>readMarkers</code>, <code>subsetPerSample</code></p>
+    <ul>
+<li><p><code>help("[", "base")</code>.</p></li>
+<li><p><code><a href='selectSamples.html'>selectSamples()</a></code> for subsetting based on sample metadata.</p></li>
+</ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>data</span>(<span class='no'>bcb</span>)
-<span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>bcb</span>)
+    <pre class="examples"><div class='input'># Subset by cell identifiers
+</div><span class='co'># NOT RUN {</span>
+<span class='no'>bcb</span>[, <span class='no'>cells</span>]
+<span class='co'># }</span><div class='input'>
+# Subset by genes
+</div><span class='co'># NOT RUN {</span>
+<span class='no'>bcb</span>[<span class='no'>genes</span>, ]
+<span class='co'># }</span><div class='input'>
+# Subset by both genes and cells
+</div><span class='co'># NOT RUN {</span>
+<span class='no'>bcb</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

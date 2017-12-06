@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotGenesPerCell}
 \alias{plotGenesPerCell}
+\alias{plotGenesPerCell}
 \alias{plotGenesPerCell,bcbioSingleCell-method}
 \alias{plotGenesPerCell,data.frame-method}
 \alias{plotGenesPerCell,seurat-method}
@@ -87,4 +88,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

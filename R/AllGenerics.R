@@ -79,14 +79,6 @@ setGeneric("knownMarkersDetected", function(all, known, ...) {
 
 
 
-#' @rdname pcCutoff
-#' @export
-setGeneric("pcCutoff", function(object, ...) {
-    standardGeneric("pcCutoff")
-})
-
-
-
 #' @rdname plotCellCounts
 #' @export
 setGeneric("plotCellCounts", function(object, ...) {
@@ -177,6 +169,22 @@ setGeneric("plotNovelty", function(object, ...) {
 
 
 
+#' @rdname plotPCElbow
+#' @export
+setGeneric("plotPCElbow", function(object, ...) {
+    standardGeneric("plotPCElbow")
+})
+
+
+
+#' @rdname plotQuantileHeatmap
+#' @export
+setGeneric("plotQuantileHeatmap", function(object, ...) {
+    standardGeneric("plotQuantileHeatmap")
+})
+
+
+
 #' @rdname plotReadsPerCell
 #' @export
 setGeneric("plotReadsPerCell", function(object, ...) {
@@ -237,14 +245,6 @@ setGeneric("plotZerosVsDepth", function(object, ...) {
 #' @export
 setGeneric("prepareSingleCellTemplate", function(object, ...) {
     standardGeneric("prepareSingleCellTemplate")
-})
-
-
-
-#' @rdname quantileHeatmap
-#' @export
-setGeneric("quantileHeatmap", function(object, ...) {
-    standardGeneric("quantileHeatmap")
 })
 
 

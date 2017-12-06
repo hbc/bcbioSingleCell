@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotFeatureTSNE}
 \alias{plotFeatureTSNE}
+\alias{plotFeatureTSNE}
 \alias{plotFeatureTSNE,seurat-method}
 \title{Plot Feature t-SNE}
 \usage{
@@ -23,11 +24,18 @@ scores, number of genes detected).}
 
 \item{pointSize}{Cell point size.}
 
+\item{color}{Color palette to use for points. Defaults to the viridis color
+palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
+low/high gradient.}
+
 \item{dark}{Enable dark mode.}
 
 \item{label}{Overlay a cluster identitiy label on the plot.}
 
 \item{labelSize}{Size of the text label.}
+
+\item{legend}{Show legends in paneled plots. Defaults to \code{FALSE} because
+typically these look too busy and the legends can get cut off.}
 
 \item{returnAsList}{Return plots as a list.}
 }

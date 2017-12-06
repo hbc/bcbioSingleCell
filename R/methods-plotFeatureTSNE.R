@@ -9,6 +9,8 @@
 #'
 #' @param feature Character vector of features (e.g. gene expression, PC
 #'   scores, number of genes detected).
+#' @param legend Show legends in paneled plots. Defaults to `FALSE` because
+#'   typically these look too busy and the legends can get cut off.
 #' @param returnAsList Return plots as a list.
 #'
 #' @seealso [Seurat::FeaturePlot()].
@@ -20,6 +22,7 @@ NULL
 
 # Methods ====
 #' @rdname plotFeatureTSNE
+#' @importFrom basejump midnightTheme
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 aes_string geom_point ggplot scale_color_gradient theme
 #' @importFrom Seurat FetchData
@@ -52,7 +55,7 @@ setMethod(
                     color = feature[[a]])
             )
             if (isTRUE(dark)) {
-                p <- p + darkTheme()
+                p <- p + midnightTheme()
             }
             p <- p +
                 geom_point(size = pointSize) +

@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotZerosVsDepth}
 \alias{plotZerosVsDepth}
+\alias{plotZerosVsDepth}
 \alias{plotZerosVsDepth,bcbioSingleCell-method}
 \title{Plot Percentage of Zeros vs. Library Depth}
 \usage{
@@ -35,4 +36,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
-\concept{Quality Control Metrics}

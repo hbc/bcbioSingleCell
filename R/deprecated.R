@@ -47,3 +47,28 @@ plotFeatures <- function(object, features, ...) {
     .Deprecated("plotFeatureTSNE")
     plotFeatureTSNE(object = object, feature = features, ...)
 }
+
+
+
+# 0.0.24 ====
+#' @rdname deprecated
+#' @importFrom basejump midnightTheme
+#' @export
+darkTheme <- function(...) {
+    .Deprecated("midnightTheme")
+    midnightTheme(...)
+}
+
+#' @rdname deprecated
+#' @export
+pcCutoff <- function(...) {
+    .Deprecated("plotPCElbow")
+    plotPCElbow(...)
+}
+
+#' @rdname deprecated
+#' @export
+quantileHeatmap <- function(...) {
+    .Deprecated("plotQuantileHeatmap")
+    plotQuantileHeatmap(...)
+}

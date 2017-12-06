@@ -3,6 +3,7 @@
 \docType{methods}
 \name{calculateMetrics}
 \alias{calculateMetrics}
+\alias{calculateMetrics}
 \alias{calculateMetrics,dgCMatrix-method}
 \alias{calculateMetrics,bcbioSingleCell-method}
 \title{Calculate Cellular Barcode Metrics Summary}
@@ -34,4 +35,3 @@ This should only be performed during the initial run loading.
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
-\concept{QC Metrics Utilities}

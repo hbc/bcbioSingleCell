@@ -2,7 +2,7 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 
 
-#' `bcbioSingleCell`
+#' bcbioSingleCell Object Class
 #'
 #' `bcbioSingleCell` is an extension of `SummarizedExperiment` designed to store
 #' bcbio single-cell RNA-seq counts. This class contains read counts save as a

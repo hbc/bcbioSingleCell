@@ -1,10 +1,18 @@
+# nolint start
+#
+# Seurat markers per sample
+# Michael Steinbaugh
+# 2017-12-01
+#
+# Clustering must be performed before running this script!
+#
 # Latest version of this script is available here:
 # script <- system.file(
 #     file.path("R_scripts", "markers_per_sample.R"),
 #     package = "bcbioSingleCell")
 # file.edit(script)
-
-# Clustering must be performed before running this script!
+#
+# nolint end
 
 library(bcbioSingleCell)
 library(pbapply)

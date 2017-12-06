@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
+\alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes,bcbioSingleCell-method}
 \alias{plotUMIsVsGenes,data.frame-method}
 \alias{plotUMIsVsGenes,seurat-method}
@@ -77,4 +78,3 @@ Other Quality Control Metrics: \code{\link{metrics}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

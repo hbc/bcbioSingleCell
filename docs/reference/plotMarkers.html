@@ -119,9 +119,9 @@
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Color palette to use for points. Defaults to the inferno
-palette from the viridis package. Use <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>ggplot2::scale_color_gradient()</a></code>
-to easily define your own low/high gradient.</p></td>
+      <td><p>Color palette to use for points. Defaults to the viridis color
+palette. Use <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>ggplot2::scale_color_gradient()</a></code> to easily define your own
+low/high gradient.</p></td>
     </tr>
     <tr>
       <th>dark</th>
@@ -143,16 +143,16 @@ to easily define your own low/high gradient.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Clustering Utilities: <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
-  <code><a href='pcCutoff.html'>pcCutoff</a></code>, <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
-  <code><a href='plotStressGenes.html'>plotStressGenes</a></code>,
-  <code><a href='plotTopMarkers.html'>plotTopMarkers</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code>,
-  <code><a href='topMarkers.html'>topMarkers</a></code></p>
+    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
+  <code>plotKnownMarkers</code>,
+  <code>plotPCElbow</code>, <code>plotStressGenes</code>,
+  <code>plotTopMarkers</code>, <code>topBarcodes</code>,
+  <code>topMarkers</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='topMarkers.html'>topMarkers</a></span>(<span class='no'>markers</span>)
+<span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(<span class='no'>markers</span>)
 <span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='no'>top</span>$<span class='no'>symbol</span>[<span class='fl'>1</span>:<span class='fl'>4</span>]
 <span class='fu'>plotMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)
 <span class='co'># }</span></pre>

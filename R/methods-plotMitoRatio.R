@@ -136,7 +136,7 @@ setMethod(
             interestingGroups <- basejump::interestingGroups(object)
         }
         if (missing(max)) {
-            max <- bcbio(object)[["filterParams"]][["maxGenes"]]
+            max <- bcbio(object)[["filterParams"]][["maxMitoRatio"]]
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotMitoRatio(

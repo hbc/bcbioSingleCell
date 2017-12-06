@@ -1,10 +1,17 @@
+# nolint start
+#
+# CellRanger *Mus musculus* example
+# Michael Steinbaugh
+# 2017-12-01
+#
 # Latest version of this script is available here:
 # script <- system.file(
 #     file.path("R_scripts", "loadCellRanger.R"),
 #     package = "bcbioSingleCell")
 # file.edit(script)
+#
+# nolint end
 
-# Example script for Mus musculus
 library(bcbioSingleCell)
 
 # Cell Ranger reference datasets: https://goo.gl/3kqSu3

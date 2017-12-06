@@ -85,8 +85,13 @@ R_MAX_NUM_DLLS=150
 For more information on this issue, consult `help("dyn.load")` in the [R][] documentation. The number of loaded DLLs in an [R][] session can be obtained with `getLoadedDLLs()`.
 
 
+## References
+
+The papers and software cited in our workflows are available as a [shared library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
+
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [Bioconductor]: https://bioconductor.org
 [devtools]: https://cran.r-project.org/package=devtools
+[Paperpile]: https://paperpile.com
 [R]: https://www.r-project.org

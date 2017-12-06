@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filter Cells — filterCells • bcbioSingleCell</title>
+<title>Plot Heatmap with Quantile Breaks — plotQuantileHeatmap • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,91 +83,61 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filter Cells</h1>
+    <h1>Plot Heatmap with Quantile Breaks</h1>
     </div>
 
     
-    <p>Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
-cellular barcodes.</p>
+    <p>Plot Heatmap with Quantile Breaks</p>
     
 
-    <pre class="usage"><span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='co'># S4 method for dgCMatrix</span>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSCDataSet</span>
-<span class='fu'>filterCells</span>(<span class='no'>object</span>)</pre>
+<span class='co'># S4 method for matrix</span>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Object.</p></td>
+      <td><p>Matrix of data.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
     <tr>
-      <th>minUMIs</th>
-      <td><p>Minimum number of UMI disambiguated counts per cell.</p></td>
+      <th>annotation</th>
+      <td><p>Column annotations.</p></td>
     </tr>
     <tr>
-      <th>minGenes</th>
-      <td><p>Minimum number of genes detected.</p></td>
+      <th>clusterRows</th>
+      <td><p>Perform row clustering.</p></td>
     </tr>
     <tr>
-      <th>maxGenes</th>
-      <td><p>Maximum number of genes detected.</p></td>
-    </tr>
-    <tr>
-      <th>maxMitoRatio</th>
-      <td><p>Maximum relative mitochondrial abundance (<code>0-1</code> scale).</p></td>
-    </tr>
-    <tr>
-      <th>minNovelty</th>
-      <td><p>Minimum novelty score.</p></td>
-    </tr>
-    <tr>
-      <th>minCellsPerGene</th>
-      <td><p>Include genes with non-zero expression in at least
-this many cells.</p></td>
-    </tr>
-    <tr>
-      <th>drop</th>
-      <td><p>Drop low quality cells from object after filtering.
-Enabled by default and generally recommended. If set <code>FALSE</code>, then the this
-function simply saves <code>filterCells</code>, <code>filterGenes</code>, and <code>filterParams</code> into
-the <code>metadata()</code> slot.</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>If <code>TRUE</code>, don't show the filtering parameter summary.</p></td>
+      <th>clusterCols</th>
+      <td><p>Perform column clustering.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object, with filtering information slotted into
-<code>metadata()</code> as <code>filterCells</code> and <code>filterParams</code>.</p>
+    <p><code><a href='http://www.rdocumentation.org/packages/pheatmap/topics/pheatmap'>pheatmap::pheatmap()</a></code>.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/CreateSeuratObject'>Seurat::CreateSeuratObject()</a></code>.</p>
-<p>Other Data Management Utilities: <code><a href='aggregateFeatures.html'>aggregateFeatures</a></code>,
-  <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code>readMarkers</code>, <code>subsetPerSample</code></p>
+    <p>This is helpful for more usefully visualizing single cell data.
+Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>data</span>(<span class='no'>bcb</span>)
-<span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>bcb</span>)
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -176,14 +146,12 @@ the <code>metadata()</code> slot.</p></td>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#details">Details</a></li>
+          </ul>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Rory Kirchner
 
   </div>
 </div>

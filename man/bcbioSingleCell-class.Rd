@@ -4,7 +4,7 @@
 \name{bcbioSingleCell-class}
 \alias{bcbioSingleCell-class}
 \alias{bcbioSingleCell}
-\title{\code{bcbioSingleCell}}
+\title{bcbioSingleCell Object Class}
 \description{
 \code{bcbioSingleCell} is an extension of \code{SummarizedExperiment} designed to store
 bcbio single-cell RNA-seq counts. This class contains read counts save as a

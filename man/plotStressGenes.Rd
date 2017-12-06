@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plotStressGenes}
 \alias{plotStressGenes}
+\alias{plotStressGenes}
 \alias{plotStressGenes,ANY-method}
 \title{Plot Stress Genes}
 \usage{
@@ -23,12 +24,12 @@ Plot Stress Genes
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{pcCutoff}}, \code{\link{plotKnownMarkers}},
-  \code{\link{plotMarkers}}, \code{\link{plotTopMarkers}},
-  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+  \code{\link{plotKnownMarkers}},
+  \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh
 }
-\concept{Clustering Utilities}
 \keyword{internal}

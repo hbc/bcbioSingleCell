@@ -3,6 +3,7 @@
 \docType{methods}
 \name{sanitizeMarkers}
 \alias{sanitizeMarkers}
+\alias{sanitizeMarkers}
 \alias{sanitizeMarkers,seurat,data.frame-method}
 \title{Sanitize Markers Output}
 \usage{

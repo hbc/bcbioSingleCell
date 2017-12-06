@@ -185,23 +185,15 @@ loadSingleCell <- function(
         stop("Failed to detect UMI type from JSON file", call. = FALSE)
     }
 
-    # Multiplexed FASTQ ========================================================
-    # This value determines how we assign sampleIDs and downstream plot
-    # appearance in the quality control analysis
-    if (grepl(x = umiType, pattern = "indrop")) {
-        multiplexedFASTQ <- TRUE
-    } else {
-        multiplexedFASTQ <- FALSE
-    }
-
     # Sample metadata ==========================================================
     if (!is.null(sampleMetadataFile)) {
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
         if (grepl(x = umiType, pattern = "indrop")) {
-            # Enforce `sampleMetadataFile` for multiplexed samples
-            stop("'sampleMetadataFile' is required for multiplexed samples",
+            # Enforce `sampleMetadataFile` for multiplexed data containing
+            # index barcodes (e.g. inDrop)
+            stop("'sampleMetadataFile' is required for inDrop samples",
                  call. = FALSE)
         }
         sampleMetadata <- sampleYAMLMetadata(yaml)
@@ -339,7 +331,6 @@ loadSingleCell <- function(
         gene2symbol = gene2symbol,
         umiType = umiType,
         allSamples = allSamples,
-        multiplexedFASTQ = multiplexedFASTQ,
         prefilter = prefilter,
         # bcbio pipeline-specific
         projectDir = projectDir,
@@ -352,8 +343,7 @@ loadSingleCell <- function(
         programs = programs,
         bcbioLog = bcbioLog,
         bcbioCommandsLog = bcbioCommandsLog,
-        cellularBarcodeCutoff = cellularBarcodeCutoff
-    )
+        cellularBarcodeCutoff = cellularBarcodeCutoff)
     # Add user-defined custom metadata, if specified
     dots <- list(...)
     if (length(dots) > 0) {
@@ -369,8 +359,7 @@ loadSingleCell <- function(
         assays = list(assay = counts),
         rowData = annotable,
         colData = metrics,
-        metadata = metadata
-    )
+        metadata = metadata)
     bcb <- new("bcbioSingleCell", se)
     # Keep these in the bcbio slot because they contain filtered cellular
     # barcodes not present in the main assay matrix.

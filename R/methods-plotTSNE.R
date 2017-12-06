@@ -10,10 +10,15 @@
 #' @inheritParams AllGenerics
 #'
 #' @param interestingGroups Interesting group to use for plot colors.
+#' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).
 #' @param pointSize Cell point size.
 #' @param label Overlay a cluster identitiy label on the plot.
 #' @param labelSize Size of the text label.
+#' @param color Color palette to use for points. Defaults to the viridis color
+#'   palette. Use [ggplot2::scale_color_gradient()] to easily define your own
+#'   low/high gradient.
 #' @param dark Enable dark mode.
+#' @param title Plot title.
 #'
 #' @return [ggplot].
 #'
@@ -35,19 +40,23 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = scale_color_hue(),
+        pointsAsNumbers = FALSE,
         pointSize = 1,
         label = TRUE,
         labelSize = 6,
-        dark = TRUE) {
+        color = ggplot2::scale_color_hue(),
+        dark = TRUE,
+        title = NULL) {
         tsne <- fetchTSNEData(object)
         .plotDimensionalityReduction(
             tsne,
             axes = c(x = "tSNE1", y = "tSNE2"),
             interestingGroups = interestingGroups,
-            color = color,
+            pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             label = label,
             labelSize = labelSize,
-            dark = dark)
+            color = color,
+            dark = dark,
+            title = title)
     })

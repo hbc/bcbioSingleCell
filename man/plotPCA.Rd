@@ -7,13 +7,15 @@
 \title{Plot Principal Component Analysis (PCA)}
 \usage{
 \S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
-  color = scale_color_hue(), pointSize = 1, label = TRUE, labelSize = 6,
-  dark = TRUE)
+  pointsAsNumbers = FALSE, pointSize = 1, label = TRUE, labelSize = 6,
+  color = ggplot2::scale_color_hue(), dark = TRUE, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{interestingGroups}{Interesting group to use for plot colors.}
+
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{pointSize}{Cell point size.}
 
@@ -21,18 +23,19 @@
 
 \item{labelSize}{Size of the text label.}
 
+\item{color}{Color palette to use for points. Defaults to the viridis color
+palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
+low/high gradient.}
+
 \item{dark}{Enable dark mode.}
+
+\item{title}{Plot title.}
 }
 \value{
 \link{ggplot}.
 }
 \description{
-Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.
-}
-\examples{
-\dontrun{
-plotTSNE(seurat)
-}
+Plot Principal Component Analysis (PCA)
 }
 \seealso{
 \code{\link[=plotTSNE]{plotTSNE()}}.
@@ -42,4 +45,3 @@ Other PCA Utilities: \code{\link{fetchPCAData}}
 \author{
 Michael Steinbaugh
 }
-\concept{PCA Utilities}

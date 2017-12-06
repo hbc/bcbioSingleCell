@@ -1,4 +1,4 @@
-#' `bcbioSingleCell` Additional bcbio Run Data Accessor
+#' Additional bcbio Run Data Accessor
 #'
 #' @rdname bcbio
 #' @name bcbio

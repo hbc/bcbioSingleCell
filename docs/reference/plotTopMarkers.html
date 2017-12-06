@@ -87,12 +87,7 @@
     </div>
 
     
-    <p>Plot gene expression per cell in multiple formats:</p><ol>
-<li><p>t-SNE plot</p></li>
-<li><p>Violin plot</p></li>
-<li><p>Ridgeline plot</p></li>
-<li><p>Dot plot</p></li>
-</ol>
+    <p>Plot Top Markers</p>
     
 
     <pre class="usage"><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>, <span class='no'>...</span>)
@@ -110,7 +105,7 @@
     </tr>
     <tr>
       <th>topMarkers</th>
-      <td><p>Top markers grouped tibble returned by <code><a href='topMarkers.html'>topMarkers()</a></code>.</p></td>
+      <td><p>Top markers grouped tibble returned by <code>topMarkers()</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -133,24 +128,19 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The number of markers to plot is determined by the output of the
-<code><a href='topMarkers.html'>topMarkers()</a></code> function. If you want to reduce the number of genes to plot,
+<code>topMarkers()</code> function. If you want to reduce the number of genes to plot,
 simply reassign first using that function. If necessary, we can add support
 for the number of genes to plot here in a future update.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Clustering Utilities: <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
-  <code><a href='pcCutoff.html'>pcCutoff</a></code>, <code><a href='plotKnownMarkers.html'>plotKnownMarkers</a></code>,
-  <code><a href='plotMarkers.html'>plotMarkers</a></code>, <code><a href='plotStressGenes.html'>plotStressGenes</a></code>,
-  <code><a href='topBarcodes.html'>topBarcodes</a></code>, <code><a href='topMarkers.html'>topMarkers</a></code></p>
+    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
+  <code>plotKnownMarkers</code>,
+  <code>plotMarkers</code>, <code>plotPCElbow</code>,
+  <code>plotStressGenes</code>, <code>topBarcodes</code>,
+  <code>topMarkers</code></p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='topMarkers.html'>topMarkers</a></span>(<span class='no'>markers</span>)
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='no'>top</span>$<span class='no'>symbol</span>[<span class='fl'>1</span>:<span class='fl'>4</span>]
-<span class='fu'><a href='plotMarkers.html'>plotMarkers</a></span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -162,9 +152,7 @@ for the number of genes to plot here in a future update.</p>
       <li><a href="#note">Note</a></li>
 
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
     <h2>Author</h2>
     
