@@ -12,16 +12,11 @@ test_that("selectSamples", {
     )
     expect_identical(
         dim(subset),
-        c(22173L, 1616L)
+        c(21576L, 940L)
     )
     expect_identical(
         sampleMetadata(subset)[["sampleID"]],
-        factor(
-            c("run1_AGGCTTAG",
-              "run1_TATGCAGT",
-              "run2_AGGCTTAG",
-              "run2_TATGCAGT")
-        )
+        factor(c("M16R1", "M16R2"))
     )
     # Ensure that bcbio cellular barcodes get updated correctly
     cb <- bcbio(subset, "cellularBarcodes")
