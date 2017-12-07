@@ -1,5 +1,12 @@
 context("selectSamples")
 
+bcbFile <- system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell")
+load(bcbFile)
+
+filtered <- filterCells(bcb, quiet = TRUE)
+
 test_that("selectSamples", {
     # Add a quiet argument here in the future
     subset <- suppressMessages(
@@ -12,11 +19,14 @@ test_that("selectSamples", {
     )
     expect_identical(
         dim(subset),
-        c(21576L, 940L)
+        c(22173L, 1616L)
     )
     expect_identical(
         sampleMetadata(subset)[["sampleID"]],
-        factor(c("M16R1", "M16R2"))
+        factor(c("run1_AGGCTTAG",
+                 "run1_TATGCAGT",
+                 "run2_AGGCTTAG",
+                 "run2_TATGCAGT"))
     )
     # Ensure that bcbio cellular barcodes get updated correctly
     cb <- bcbio(subset, "cellularBarcodes")

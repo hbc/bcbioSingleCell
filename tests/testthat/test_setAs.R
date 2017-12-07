@@ -1,5 +1,16 @@
 context("setAs coercion")
 
+bcbFile <- system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell")
+load(bcbFile)
+
+# Pool the technical replicates
+pooled <- suppressMessages(aggregateReplicates(bcb))
+
+# Now apply default filtering cutoffs
+filtered <- filterCells(pooled, quiet = TRUE)
+
 test_that("Coerce bcbioSingleCell to seurat", {
     seurat <- as(filtered, "seurat")
     expect_is(seurat, "seurat")

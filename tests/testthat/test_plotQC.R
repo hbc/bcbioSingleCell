@@ -1,5 +1,10 @@
 context("plotQC")
 
+bcbFile <- system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell")
+load(bcbFile)
+
 test_that("plotQC", {
     p <- plotQC(bcb, return = "grid")
     expect_is(p, "ggplot")
