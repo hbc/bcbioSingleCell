@@ -9,5 +9,7 @@ loadRemoteData(
         "testthat",
         "bcb.rda"),
     quiet = TRUE)
+pooled <- aggregateReplicates(bcb)
+filtered <- filterCells(pooled, quiet = TRUE)
 
 test_check("bcbioSingleCell")
