@@ -25,6 +25,19 @@ test_that("selectSamples", {
               "run2_TATGCAGT")
         )
     )
+    # Ensure that bcbio cellular barcodes get updated correctly
+    cb <- bcbio(subset, "cellularBarcodes")
+    ids1 <- sampleMetadata(subset) %>%
+        .[["sampleID"]] %>%
+        as.character()
+    ids2 <- names(cb)
+    expect_identical(ids1, ids2)
+    expect_identical(
+        lapply(cb, class) %>%
+            unlist() %>%
+            unique(),
+        "data.frame"
+    )
 })
 
 test_that("Match failure", {
