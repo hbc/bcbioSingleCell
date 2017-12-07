@@ -9,7 +9,7 @@
 \usage{
 plotFeatureTSNE(object, ...)
 
-\S4method{plotFeatureTSNE}{seurat}(object, feature, pointSize = 1,
+\S4method{plotFeatureTSNE}{seurat}(object, features, pointSize = 1,
   color = scale_color_gradient(low = "lightgray", high = "purple"),
   dark = FALSE, label = TRUE, labelSize = 6, legend = FALSE,
   returnAsList = FALSE)
@@ -19,7 +19,7 @@ plotFeatureTSNE(object, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{feature}{Character vector of features (e.g. gene expression, PC
+\item{features}{Character vector of features (e.g. gene expression, PC
 scores, number of genes detected).}
 
 \item{pointSize}{Cell point size.}
@@ -44,6 +44,10 @@ No return, only graphical output.
 }
 \description{
 Plot Feature t-SNE
+}
+\examples{
+seurat <- examples[["seurat"]]
+plotFeatureTSNE(seurat, features = "PC1")
 }
 \seealso{
 \code{\link[Seurat:FeaturePlot]{Seurat::FeaturePlot()}}.

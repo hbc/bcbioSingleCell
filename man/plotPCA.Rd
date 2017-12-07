@@ -37,6 +37,10 @@ low/high gradient.}
 \description{
 Plot Principal Component Analysis (PCA)
 }
+\examples{
+seurat <- examples[["seurat"]]
+plotPCA(seurat)
+}
 \seealso{
 \code{\link[=plotTSNE]{plotTSNE()}}.
 

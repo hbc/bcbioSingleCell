@@ -35,8 +35,13 @@ Plot Read Counts per Cell
 Here by "cell" we mean "cellular barcode".
 }
 \examples{
+# bcbioSingleCell
 bcb <- examples[["bcb"]]
 plotReadsPerCell(bcb)
+
+# seurat
+seurat <- examples[["seurat"]]
+plotReadsPerCell(seurat)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

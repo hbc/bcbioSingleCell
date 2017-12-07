@@ -12,7 +12,7 @@
 \description{
 Coerce Object
 }
-\section{Upgrade \link{bcbioSingleCell} to current version}{
+\section{Upgrade bcbioSingleCell to current version}{
 
 This method adds support for upgrading \code{bcbioSCDataSet} objects to the latest
 \link{bcbioSingleCell} class version. This should be backwards compatible to
@@ -21,7 +21,7 @@ This method adds support for upgrading \code{bcbioSCDataSet} objects to the late
 the package.
 }
 
-\section{\link{bcbioSingleCell} to \link{seurat}}{
+\section{bcbioSingleCell to seurat}{
 
 Interally \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}} is called without applying any
 additional filtering cutoffs, since we have already defined them during our
@@ -30,7 +30,7 @@ the filtered cells into a new \link{seurat} class object, using \code{\link[=as]
 coercion.
 }
 
-\section{\link{bcbioSingleCell} to \link{SummarizedExperiment}}{
+\section{bcbioSingleCell to SummarizedExperiment}{
 
 Since \link{bcbioSingleCell} is an extension of \link{SummarizedExperiment}, this
 coercion method is very simple. Here we're simply dropping our \code{@bcbio} slot,

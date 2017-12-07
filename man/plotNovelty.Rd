@@ -61,15 +61,12 @@ bcb <- examples[["bcb"]]
 plotNovelty(bcb)
 
 # seurat
-\dontrun{
+seurat <- examples[["seurat"]]
 plotNovelty(seurat)
-}
 
 # data.frame
-\dontrun{
 metrics <- metrics(bcb)
 plotNovelty(metrics)
-}
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

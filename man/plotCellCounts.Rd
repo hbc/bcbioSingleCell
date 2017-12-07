@@ -51,16 +51,13 @@ bcb <- examples[["bcb"]]
 plotCellCounts(bcb)
 
 # seurat
-\dontrun{
+seurat <- examples[["seurat"]]
 plotCellCounts(seurat)
-}
 
-# metrics data.frame
-\dontrun{
+# data.frame
 metrics <- metrics(bcb)
 metadata <- sampleMetadata(bcb)
-plotCellCounts(metrics, metadata)
-}
+plotCellCounts(metrics, metadata = metadata)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

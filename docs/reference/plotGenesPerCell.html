@@ -174,19 +174,15 @@ mirrored density plot displayed in the same way as a boxplot.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># bcbioSingleCell
-</div><span class='co'># NOT RUN {</span>
-<span class='fu'>plotGenesPerCell</span>(<span class='no'>bcb</span>)
-<span class='co'># }</span><div class='input'>
-# seurat
-</div><span class='co'># NOT RUN {</span>
-<span class='fu'>plotGenesPerCell</span>(<span class='no'>seurat</span>)
-<span class='co'># }</span><div class='input'>
-# metrics data.frame
-</div><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell</span>
+<span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='no'>examples</span><span class='kw'>[[</span><span class='st'>"bcb"</span>]]
+<span class='fu'>plotGenesPerCell</span>(<span class='no'>bcb</span>)</div><div class='img'><img src='plotGenesPerCell-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># seurat</span>
+<span class='no'>seurat</span> <span class='kw'>&lt;-</span> <span class='no'>examples</span><span class='kw'>[[</span><span class='st'>"seurat"</span>]]
+<span class='fu'>plotGenesPerCell</span>(<span class='no'>seurat</span>)</div><div class='img'><img src='plotGenesPerCell-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># data.frame</span>
 <span class='no'>metrics</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics.html'>metrics</a></span>(<span class='no'>bcb</span>)
-<span class='fu'>plotGenesPerCell</span>(<span class='no'>metrics</span>)
-<span class='co'># }</span></pre>
+<span class='fu'>plotGenesPerCell</span>(<span class='no'>metrics</span>)</div><div class='img'><img src='plotGenesPerCell-4.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

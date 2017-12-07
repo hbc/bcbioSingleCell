@@ -5,11 +5,14 @@
 \alias{topBarcodes}
 \alias{topBarcodes}
 \alias{topBarcodes,bcbioSingleCell-method}
+\alias{topBarcodes,seurat-method}
 \title{Top Barcodes}
 \usage{
 topBarcodes(object, ...)
 
 \S4method{topBarcodes}{bcbioSingleCell}(object, n = 10)
+
+\S4method{topBarcodes}{seurat}(object, n = 10)
 }
 \arguments{
 \item{object}{Object.}
@@ -25,10 +28,12 @@ topBarcodes(object, ...)
 Top Barcodes
 }
 \examples{
-\dontrun{
-data(bcb)
-topBarcodes(bcb)
-}
+# bcbioSingleCell
+bcb <- examples[["bcb"]]
+topBarcodes(bcb) \%>\% glimpse()
+
+# seurat
+seurat <- examples[["seurat"]]
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},

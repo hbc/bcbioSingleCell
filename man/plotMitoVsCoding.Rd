@@ -53,15 +53,12 @@ bcb <- examples[["bcb"]]
 plotMitoVsCoding(bcb)
 
 # seurat
-\dontrun{
+seurat <- examples[["seurat"]]
 plotMitoVsCoding(seurat)
-}
 
 # data.frame
-\dontrun{
 metrics <- metrics(bcb)
 plotMitoVsCoding(metrics)
-}
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

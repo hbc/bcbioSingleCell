@@ -34,8 +34,13 @@
 Additional bcbio Run Data Accessor
 }
 \examples{
+# bcbioSingleCell
 bcb <- examples[["bcb"]]
 bcbio(bcb) \%>\% names()
+
+# seurat
+seurat <- examples[["seurat"]]
+bcbio(seurat) \%>\% names()
 }
 \author{
 Michael Steinbaugh

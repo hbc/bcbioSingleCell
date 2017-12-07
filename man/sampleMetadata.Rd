@@ -28,6 +28,11 @@ internal sample metadata \link{data.frame}.}
 Sample Metadata
 }
 \examples{
+# bcbioSingleCell
 bcb <- examples[["bcb"]]
 sampleMetadata(bcb) \%>\% glimpse()
+
+# seurat
+seurat <- examples[["seurat"]]
+sampleMetadata(seurat) \%>\% glimpse()
 }

@@ -128,8 +128,8 @@ PC cutoff for either 5<!-- % SD (\code{maxPct}) or 90% cumulative (\code{minCums
     
 <ul>
 <li><p>Show graphical output of elbow plots.</p></li>
-<li><p>Return numeric sequence vector of PCs to include for dimensionality
-reduction analysis.</p></li>
+<li><p>Invisibly return numeric sequence vector of PCs to include for
+dimensionality reduction analysis.</p></li>
 </ul>
 
     
@@ -143,6 +143,9 @@ reduction analysis.</p></li>
   <code>topMarkers</code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>seurat</span> <span class='kw'>&lt;-</span> <span class='no'>examples</span><span class='kw'>[[</span><span class='st'>"seurat"</span>]]
+<span class='no'>pcUse</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCElbow</span>(<span class='no'>seurat</span>)</div><div class='img'><img src='plotPCElbow-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>pcUse</span></div><div class='output co'>#&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -152,7 +155,9 @@ reduction analysis.</p></li>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

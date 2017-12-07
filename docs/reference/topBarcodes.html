@@ -93,6 +93,9 @@
     <pre class="usage"><span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
+<span class='co'># S4 method for seurat</span>
 <span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -126,10 +129,28 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>data</span>(<span class='no'>bcb</span>)
-<span class='fu'>topBarcodes</span>(<span class='no'>bcb</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell</span>
+<span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='no'>examples</span><span class='kw'>[[</span><span class='st'>"bcb"</span>]]
+<span class='fu'>topBarcodes</span>(<span class='no'>bcb</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
+#&gt; Variables: 16
+#&gt; $ sampleID            &lt;fctr&gt; run1_AGAGGATA, run1_AGAGGATA, run1_AGAGGATA, r...
+#&gt; $ nUMI                &lt;dbl&gt; 14095, 14053, 13083, 12909, 12660, 12541, 12359...
+#&gt; $ nGene               &lt;int&gt; 4230, 4146, 3623, 3916, 4275, 4108, 3891, 3991,...
+#&gt; $ nCoding             &lt;dbl&gt; 12405, 11895, 12101, 11533, 11627, 11527, 11261...
+#&gt; $ nMito               &lt;dbl&gt; 781, 1251, 324, 476, 410, 482, 338, 494, 239, 213
+#&gt; $ log10GenesPerUMI    &lt;dbl&gt; 0.8740139, 0.8721868, 0.8645425, 0.8739812, 0.8...
+#&gt; $ mitoRatio           &lt;dbl&gt; 0.05540972, 0.08902014, 0.02476496, 0.03687350,...
+#&gt; $ nCount              &lt;int&gt; 128690, 126962, 111183, 118717, 120160, 110058,...
+#&gt; $ sampleName          &lt;fctr&gt; M1_seq_rep_1, M1_seq_rep_1, M1_seq_rep_1, M1_s...
+#&gt; $ description         &lt;fctr&gt; run1, run1, run1, run1, run1, run1, run1, run1...
+#&gt; $ fileName            &lt;fctr&gt; 20170915_Pool_ZG4780-1_S1_R1_001.fastq.gz, 201...
+#&gt; $ index               &lt;fctr&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+#&gt; $ sequence            &lt;fctr&gt; TATCCTCT, TATCCTCT, TATCCTCT, TATCCTCT, TATCCT...
+#&gt; $ sampleNameAggregate &lt;fctr&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
+#&gt; $ revcomp             &lt;fctr&gt; AGAGGATA, AGAGGATA, AGAGGATA, AGAGGATA, AGAGGA...
+#&gt; $ interestingGroups   &lt;fctr&gt; M1_seq_rep_1, M1_seq_rep_1, M1_seq_rep_1, M1_s...</div><div class='input'>
+<span class='co'># seurat</span>
+<span class='no'>seurat</span> <span class='kw'>&lt;-</span> <span class='no'>examples</span><span class='kw'>[[</span><span class='st'>"seurat"</span>]]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

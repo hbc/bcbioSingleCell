@@ -23,8 +23,13 @@
 Sample Barcode Metrics
 }
 \examples{
+# bcbioSingleCell
 bcb <- examples[["bcb"]]
 metrics(bcb) \%>\% glimpse()
+
+# seurat
+seurat <- examples[["seurat"]]
+metrics(seurat) \%>\% glimpse()
 }
 \seealso{
 \code{\link[=sampleMetadata]{sampleMetadata()}}.

@@ -42,10 +42,10 @@ In the meantime, we've broken out the code into this generic to fix
 RMarkdown looping of our marker plots.
 }
 \examples{
-\dontrun{
-data(seurat)
-plotDot(seurat, genes = "Hspe1")
-}
+seurat <- examples[["seurat"]]
+genes <- slot(seurat, "data") \%>\% rownames() \%>\% .[1:2]
+genes
+plotDot(seurat, genes = genes)
 }
 \seealso{
 Modified version of \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}}.

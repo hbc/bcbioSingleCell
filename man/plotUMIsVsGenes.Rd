@@ -53,15 +53,12 @@ bcb <- examples[["bcb"]]
 plotUMIsVsGenes(bcb)
 
 # seurat
-\dontrun{
+seurat <- examples[["seurat"]]
 plotUMIsVsGenes(seurat)
-}
 
 # data.frame
-\dontrun{
 metrics <- metrics(bcb)
 plotUMIsPerCell(metrics)
-}
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

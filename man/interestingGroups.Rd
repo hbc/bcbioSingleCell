@@ -29,8 +29,13 @@ Character vector.
 Interesting Groups
 }
 \examples{
+# bcbioSingleCell
 bcb <- examples[["bcb"]]
 interestingGroups(bcb)
+
+# seurat
+seurat <- examples[["seurat"]]
+interestingGroups(seurat)
 }
 \author{
 Michael Steinbaugh
