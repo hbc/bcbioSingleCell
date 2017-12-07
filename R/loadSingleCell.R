@@ -309,7 +309,7 @@ loadSingleCell <- function(
         annotable = annotable,
         prefilter = prefilter)
     # Bind the `nCount` column to the metrics
-    cbPass <- cbData[rownames(metrics), "nCount"]
+    cbPass <- cbData[rownames(metrics), "nCount", drop = FALSE]
     metrics <- cbind(metrics, cbPass)
 
     if (isTRUE(prefilter)) {
