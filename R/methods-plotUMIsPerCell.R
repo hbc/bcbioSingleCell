@@ -11,9 +11,8 @@
 #'
 #' @examples
 #' # bcbioSingleCell
-#' \dontrun{
+#' bcb <- examples[["bcb"]]
 #' plotUMIsPerCell(bcb)
-#' }
 #'
 #' # seurat
 #' \dontrun{

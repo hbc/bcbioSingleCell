@@ -23,6 +23,10 @@
 #'   - `markdown`: R Markdown report, with reports separated by headers.
 #'
 #' @return R Markdown template code for quality control analysis.
+#'
+#' @examples
+#' bcb <- examples[["bcb"]]
+#' plotQC(bcb, return = "grid")
 NULL
 
 

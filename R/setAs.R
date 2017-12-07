@@ -9,9 +9,11 @@
 #' @seealso `help(topic = "coerce", package = "methods")`.
 #'
 #' @examples
-#' \dontrun{
-#' seurat <- as(bcb, "seurat")
-#' }
+#' bcb <- examples[["bcb"]]
+#' pooled <- aggregateReplicates(bcb)
+#' filtered <- filterCells(pooled)
+#' seurat <- as(filtered, "seurat")
+#' seurat
 NULL
 
 

@@ -32,6 +32,10 @@ Calculate Cellular Barcode Metrics Summary
 \note{
 This should only be performed during the initial run loading.
 }
+\examples{
+bcb <- examples[["bcb"]]
+calculateMetrics(bcb) \%>\% glimpse()
+}
 \author{
 Rory Kirchner, Michael Steinbaugh
 }

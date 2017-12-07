@@ -9,6 +9,10 @@
 #' @inheritParams AllGenerics
 #'
 #' @return [data.frame]
+#'
+#' @examples
+#' bcb <- examples[["bcb"]]
+#' annotable(bcb) %>% glimpse()
 NULL
 
 

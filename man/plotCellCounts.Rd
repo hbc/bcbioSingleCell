@@ -47,9 +47,8 @@ mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
 # bcbioSingleCell
-\dontrun{
+bcb <- examples[["bcb"]]
 plotCellCounts(bcb)
-}
 
 # seurat
 \dontrun{

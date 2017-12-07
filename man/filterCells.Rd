@@ -45,10 +45,8 @@ Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.
 }
 \examples{
-\dontrun{
-data(bcb)
-bcb <- filterCells(bcb)
-}
+bcb <- examples[["bcb"]]
+filterCells(bcb)
 }
 \seealso{
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.

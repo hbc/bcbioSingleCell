@@ -13,6 +13,10 @@
 #'   internal sample metadata [data.frame].
 #'
 #' @return [data.frame].
+#'
+#' @examples
+#' bcb <- examples[["bcb"]]
+#' sampleMetadata(bcb) %>% glimpse()
 NULL
 
 

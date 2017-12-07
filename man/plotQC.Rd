@@ -41,6 +41,10 @@ R Markdown template code for quality control analysis.
 Utility function that loops our standard quality control plots, for easy
 visualization.
 }
+\examples{
+bcb <- examples[["bcb"]]
+plotQC(bcb, return = "grid")
+}
 \author{
 Michael Steinbaugh
 }

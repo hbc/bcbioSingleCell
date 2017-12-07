@@ -15,9 +15,8 @@
 #'
 #' @examples
 #' # bcbioSingleCell
-#' \dontrun{
+#' bcb <- examples[["bcb"]]
 #' plotUMIsVsGenes(bcb)
-#' }
 #'
 #' # seurat
 #' \dontrun{

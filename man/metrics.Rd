@@ -22,6 +22,10 @@
 \description{
 Sample Barcode Metrics
 }
+\examples{
+bcb <- examples[["bcb"]]
+metrics(bcb) \%>\% glimpse()
+}
 \seealso{
 \code{\link[=sampleMetadata]{sampleMetadata()}}.
 

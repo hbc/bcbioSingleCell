@@ -18,20 +18,20 @@
 #' @return [bcbioSingleCell].
 #'
 #' @examples
+#' bcb <- examples[["bcb"]]
+#' cells <- colnames(bcb)[1:1000]
+#' head(cells)
+#' genes <- rownames(bcb)[1:1000]
+#' head(genes)
+#'
 #' # Subset by cell identifiers
-#' \dontrun{
 #' bcb[, cells]
-#' }
 #'
 #' # Subset by genes
-#' \dontrun{
 #' bcb[genes, ]
-#' }
 #'
 #' # Subset by both genes and cells
-#' \dontrun{
 #' bcb[genes, cells]
-#' }
 NULL
 
 

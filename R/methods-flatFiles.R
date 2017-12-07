@@ -12,6 +12,9 @@
 #' @inheritParams AllGenerics
 #'
 #' @return [list].
+#'
+#' bcb <- examples[["bcb"]]
+#' flatFiles(bcb) %>% names()
 NULL
 
 

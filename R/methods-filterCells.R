@@ -25,10 +25,8 @@
 #'   [metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples
-#' \dontrun{
-#' data(bcb)
-#' bcb <- filterCells(bcb)
-#' }
+#' bcb <- examples[["bcb"]]
+#' filterCells(bcb)
 NULL
 
 

@@ -11,6 +11,10 @@
 #' @param type Type of count data to retrieve.
 #'
 #' @return [bcbioSingleCell].
+#'
+#' @examples
+#' bcb <- examples[["bcb"]]
+#' bcbio(bcb) %>% names()
 NULL
 
 

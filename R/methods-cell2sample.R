@@ -5,6 +5,10 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
+#' @examples
+#' bcb <- examples[["bcb"]]
+#' cell2sample(bcb) %>% glimpse()
 NULL
 
 

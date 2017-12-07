@@ -1,9 +1,6 @@
 context("sampleMetadata")
 
-bcbFile <- system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell")
-load(bcbFile)
+bcb <- examples[["bcb"]]
 
 test_that("sampleMetadata", {
     data <- sampleMetadata(bcb)
@@ -18,10 +15,6 @@ test_that("sampleMetadata", {
             "index" = "factor",
             "sequence" = "factor",
             "sampleNameAggregate" = "factor",
-            "sequencingReplicate" = "factor",
-            "biologicalReplicate" = "factor",
-            "genotype" = "factor",
-            "concNgUl" = "factor",
             "revcomp" = "factor",
             "interestingGroups" = "factor"
         )

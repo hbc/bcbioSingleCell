@@ -14,6 +14,10 @@
 #' @seealso [sampleMetadata()].
 #'
 #' @return [data.frame] with cellular barcodes as rows.
+#'
+#' @examples
+#' bcb <- examples[["bcb"]]
+#' metrics(bcb) %>% glimpse()
 NULL
 
 

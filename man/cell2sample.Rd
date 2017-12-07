@@ -24,6 +24,10 @@ cell2sample(object, ...)
 \description{
 Cell to Sample Mappings
 }
+\examples{
+bcb <- examples[["bcb"]]
+cell2sample(bcb) \%>\% glimpse()
+}
 \author{
 Michael Steinbaugh
 }

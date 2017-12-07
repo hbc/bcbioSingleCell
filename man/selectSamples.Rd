@@ -32,12 +32,7 @@ and Ensembl gene identifiers for rows.
 [` also works on [bcbioSingleCell]: R:%60%20also%20works%20on%20[bcbioSingleCell
 }
 \examples{
-\dontrun{
-data(bcbFiltered)
-# grep pattern matching with string
-selectSamples(bcbFiltered, sampleName = "wt")
-
-# Exact name matching with character vector
-selectSamples(bcbFiltered, sampleName = c("wt1", "wt2"))
-}
+bcb <- examples[["bcb"]]
+filtered <- filterCells(bcb)
+selectSamples(filtered, sampleName = "M1_seq_rep_1")
 }

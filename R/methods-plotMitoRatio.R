@@ -9,9 +9,8 @@
 #'
 #' @examples
 #' # bcbioSingleCell
-#' \dontrun{
+#' bcb <- examples[["bcb"]]
 #' plotMitoRatio(bcb)
-#' }
 #'
 #' # seurat
 #' \dontrun{

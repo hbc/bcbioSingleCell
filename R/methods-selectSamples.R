@@ -20,14 +20,9 @@
 #' @return [bcbioSingleCell].
 #'
 #' @examples
-#' \dontrun{
-#' data(bcbFiltered)
-#' # grep pattern matching with string
-#' selectSamples(bcbFiltered, sampleName = "wt")
-#'
-#' # Exact name matching with character vector
-#' selectSamples(bcbFiltered, sampleName = c("wt1", "wt2"))
-#' }
+#' bcb <- examples[["bcb"]]
+#' filtered <- filterCells(bcb)
+#' selectSamples(filtered, sampleName = "M1_seq_rep_1")
 NULL
 
 

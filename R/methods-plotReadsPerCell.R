@@ -14,6 +14,10 @@
 #' @note Here by "cell" we mean "cellular barcode".
 #'
 #' @return [ggplot].
+#'
+#' @examples
+#' bcb <- examples[["bcb"]]
+#' plotReadsPerCell(bcb)
 NULL
 
 

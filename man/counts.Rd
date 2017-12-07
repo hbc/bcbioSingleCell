@@ -24,6 +24,10 @@ Matrix class object, depending on \code{as} argument.
 \description{
 Counts Accessor
 }
+\examples{
+bcb <- examples[["bcb"]]
+counts(bcb) \%>\% glimpse()
+}
 \author{
 Michael Steinbaugh
 }

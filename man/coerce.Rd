@@ -38,9 +38,11 @@ which contains raw cellular barcodes and other bcbio-specific metadata.
 }
 
 \examples{
-\dontrun{
-seurat <- as(bcb, "seurat")
-}
+bcb <- examples[["bcb"]]
+pooled <- aggregateReplicates(bcb)
+filtered <- filterCells(pooled)
+seurat <- as(filtered, "seurat")
+seurat
 }
 \seealso{
 \code{help(topic = "coerce", package = "methods")}.

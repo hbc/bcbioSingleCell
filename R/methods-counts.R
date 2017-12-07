@@ -14,6 +14,10 @@
 #'   `dgTMatrix`) or dense matrix (`matrix`).
 #'
 #' @return Matrix class object, depending on `as` argument.
+#'
+#' @examples
+#' bcb <- examples[["bcb"]]
+#' counts(bcb) %>% glimpse()
 NULL
 
 

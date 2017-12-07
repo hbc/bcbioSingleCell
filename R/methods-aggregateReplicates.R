@@ -9,6 +9,10 @@
 #'
 #' @inherit basejump::aggregateReplicates
 #' @inheritParams AllGenerics
+#'
+#' @examples
+#' bcb <- examples[["bcb"]]
+#' aggregateReplicates(bcb)
 NULL
 
 

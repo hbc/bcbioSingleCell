@@ -18,6 +18,10 @@ Object of same class with aggregated counts per pooled sample
 \description{
 Aggregate Replicates
 }
+\examples{
+bcb <- examples[["bcb"]]
+aggregateReplicates(bcb)
+}
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateFeatures}},
   \code{\link{filterCells}}, \code{\link{readMarkers}},

@@ -28,6 +28,10 @@ Character vector.
 \description{
 Interesting Groups
 }
+\examples{
+bcb <- examples[["bcb"]]
+interestingGroups(bcb)
+}
 \author{
 Michael Steinbaugh
 }

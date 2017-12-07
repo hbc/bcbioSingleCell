@@ -9,3 +9,10 @@
 #'
 #' @author Michael Steinbaugh
 "cellTypeMarkers"
+
+
+
+#' Example Data
+#'
+#' @author Michael Steinbaugh
+"examples"

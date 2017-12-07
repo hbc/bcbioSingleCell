@@ -27,3 +27,7 @@ internal sample metadata \link{data.frame}.}
 \description{
 Sample Metadata
 }
+\examples{
+bcb <- examples[["bcb"]]
+sampleMetadata(bcb) \%>\% glimpse()
+}

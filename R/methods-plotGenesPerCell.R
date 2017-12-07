@@ -26,9 +26,8 @@
 #'
 #' @examples
 #' # bcbioSingleCell
-#' \dontrun{
+#' bcb <- examples[["bcb"]]
 #' plotGenesPerCell(bcb)
-#' }
 #'
 #' # seurat
 #' \dontrun{

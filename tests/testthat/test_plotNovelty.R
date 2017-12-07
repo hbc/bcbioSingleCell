@@ -1,9 +1,6 @@
 context("plotNovelty")
 
-bcbFile <- system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell")
-load(bcbFile)
+bcb <- examples[["bcb"]]
 
 test_that("plotNovelty", {
     p <- plotNovelty(bcb)

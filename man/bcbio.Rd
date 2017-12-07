@@ -33,6 +33,10 @@
 \description{
 Additional bcbio Run Data Accessor
 }
+\examples{
+bcb <- examples[["bcb"]]
+bcbio(bcb) \%>\% names()
+}
 \author{
 Michael Steinbaugh
 }

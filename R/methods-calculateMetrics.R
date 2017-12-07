@@ -13,6 +13,10 @@
 #' @note This should only be performed during the initial run loading.
 #'
 #' @return [data.frame].
+#'
+#' @examples
+#' bcb <- examples[["bcb"]]
+#' calculateMetrics(bcb) %>% glimpse()
 NULL
 
 

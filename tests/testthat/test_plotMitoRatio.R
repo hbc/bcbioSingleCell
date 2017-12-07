@@ -1,9 +1,6 @@
 context("plotMitoRatio")
 
-bcbFile <- system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell")
-load(bcbFile)
+bcb <- examples[["bcb"]]
 
 test_that("plotMitoRatio", {
     p <- plotMitoRatio(bcb)
