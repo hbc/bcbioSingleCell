@@ -1,7 +1,5 @@
 context("selectSamples")
 
-filtered <- filterCells(bcb, quiet = TRUE)
-
 test_that("selectSamples", {
     # Add a quiet argument here in the future
     subset <- suppressMessages(
