@@ -61,19 +61,20 @@ NULL
                 .[.[[column]] %in% argument, , drop = FALSE]
         # Check for match failure
         if (!nrow(match)) {
-            stop(paste(
+            warning(paste(
                 "Match failure:",
                 paste(column, "=", argument)
             ), call. = FALSE)
+            return(NULL)
         }
         pull(match, "sampleID")
     })
-    sampleIDs <- Reduce(f = intersect, x = list) %>%
-        unique() %>%
-        sort()
+    sampleIDs <- Reduce(f = intersect, x = list)
     if (!length(sampleIDs)) {
-        stop("No samples matched", call. = FALSE)
+        warning("No samples matched", call. = FALSE)
+        return(NULL)
     }
+    sampleIDs <- sort(unique(sampleIDs))
 
     # Filter the sample metadata data.frame to only contain matching samples
     sampleMetadata <- sampleMetadata %>%
