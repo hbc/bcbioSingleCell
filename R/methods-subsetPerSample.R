@@ -26,7 +26,7 @@ setMethod(
     function(
         object,
         minCells = 200,
-        dir = "data") {
+        dir = getwd()) {
         dir.create(dir, recursive = TRUE, showWarnings = FALSE)
         sampleIDs <- sampleMetadata(object) %>%
             pull("sampleID")
@@ -40,7 +40,7 @@ setMethod(
                 warning(paste(
                     sampleID, "didn't pass minimum cell cutoff"
                     ), call. = FALSE)
-                return(NA)
+                return(NULL)
             }
             assign(sampleID, subset)
             save(list = sampleID,
