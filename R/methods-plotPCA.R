@@ -10,6 +10,10 @@
 #' @inherit plotTSNE
 #'
 #' @seealso [plotTSNE()].
+#'
+#' @examples
+#' seurat <- examples[["seurat"]]
+#' plotPCA(seurat)
 NULL
 
 

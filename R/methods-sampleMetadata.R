@@ -15,8 +15,13 @@
 #' @return [data.frame].
 #'
 #' @examples
+#' # bcbioSingleCell
 #' bcb <- examples[["bcb"]]
 #' sampleMetadata(bcb) %>% glimpse()
+#'
+#' # seurat
+#' seurat <- examples[["seurat"]]
+#' sampleMetadata(seurat) %>% glimpse()
 NULL
 
 

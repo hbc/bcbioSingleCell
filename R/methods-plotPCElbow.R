@@ -17,10 +17,15 @@
 #'
 #' @return
 #' - Show graphical output of elbow plots.
-#' - Return numeric sequence vector of PCs to include for dimensionality
-#'   reduction analysis.
+#' - Invisibly return numeric sequence vector of PCs to include for
+#'   dimensionality reduction analysis.
 #'
 #' @seealso [Seurat::PCElbowPlot].
+#'
+#' @examples
+#' seurat <- examples[["seurat"]]
+#' pcUse <- plotPCElbow(seurat)
+#' pcUse
 NULL
 
 
@@ -120,7 +125,7 @@ NULL
             ggcumsum, x = 0.5, y = 0, width = 0.5, height = 0.5)
     show(p)
 
-    seq_len(cutoff)
+    invisible(seq_len(cutoff))
 }
 
 

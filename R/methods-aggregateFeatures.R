@@ -1,3 +1,7 @@
+# FIXME This function needs to be updated
+
+
+
 #' Aggregate Features
 #'
 #' @rdname aggregateFeatures

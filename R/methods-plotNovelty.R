@@ -15,15 +15,12 @@
 #' plotNovelty(bcb)
 #'
 #' # seurat
-#' \dontrun{
+#' seurat <- examples[["seurat"]]
 #' plotNovelty(seurat)
-#' }
 #'
 #' # data.frame
-#' \dontrun{
 #' metrics <- metrics(bcb)
 #' plotNovelty(metrics)
-#' }
 NULL
 
 

@@ -25,10 +25,10 @@
 #' @seealso Modified version of [Seurat::DotPlot()].
 #'
 #' @examples
-#' \dontrun{
-#' data(seurat)
-#' plotDot(seurat, genes = "Hspe1")
-#' }
+#' seurat <- examples[["seurat"]]
+#' genes <- slot(seurat, "data") %>% rownames() %>% .[1:2]
+#' genes
+#' plotDot(seurat, genes = genes)
 NULL
 
 

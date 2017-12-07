@@ -25,8 +25,13 @@
 #' @return R Markdown template code for quality control analysis.
 #'
 #' @examples
+#' # bcbioSingleCell
 #' bcb <- examples[["bcb"]]
 #' plotQC(bcb, return = "grid")
+#'
+#' # seurat
+#' seurat <- examples[["seurat"]]
+#' plotQC(seurat, return = "grid")
 NULL
 
 

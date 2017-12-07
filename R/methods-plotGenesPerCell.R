@@ -30,15 +30,12 @@
 #' plotGenesPerCell(bcb)
 #'
 #' # seurat
-#' \dontrun{
+#' seurat <- examples[["seurat"]]
 #' plotGenesPerCell(seurat)
-#' }
 #'
-#' # metrics data.frame
-#' \dontrun{
+#' # data.frame
 #' metrics <- metrics(bcb)
 #' plotGenesPerCell(metrics)
-#' }
 NULL
 
 

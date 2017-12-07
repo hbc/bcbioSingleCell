@@ -19,15 +19,12 @@
 #' plotUMIsVsGenes(bcb)
 #'
 #' # seurat
-#' \dontrun{
+#' seurat <- examples[["seurat"]]
 #' plotUMIsVsGenes(seurat)
-#' }
 #'
 #' # data.frame
-#' \dontrun{
 #' metrics <- metrics(bcb)
 #' plotUMIsPerCell(metrics)
-#' }
 NULL
 
 

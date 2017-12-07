@@ -16,8 +16,13 @@
 #' @return [ggplot].
 #'
 #' @examples
+#' # bcbioSingleCell
 #' bcb <- examples[["bcb"]]
 #' plotReadsPerCell(bcb)
+#'
+#' # seurat
+#' seurat <- examples[["seurat"]]
+#' plotReadsPerCell(seurat)
 NULL
 
 

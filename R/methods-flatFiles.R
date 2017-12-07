@@ -13,6 +13,7 @@
 #'
 #' @return [list].
 #'
+#' @examples
 #' bcb <- examples[["bcb"]]
 #' flatFiles(bcb) %>% names()
 NULL

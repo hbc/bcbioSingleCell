@@ -15,14 +15,12 @@
 #' plotUMIsPerCell(bcb)
 #'
 #' # seurat
-#' \dontrun{
-#' plotUMIsPerCell(seurat)}
+#' seurat <- examples[["seurat"]]
+#' plotUMIsPerCell(seurat)
 #'
 #' # data.frame
-#' \dontrun{
 #' metrics <- metrics(bcb)
 #' plotUMIsPerCell(metrics)
-#' }
 NULL
 
 

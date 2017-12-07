@@ -13,15 +13,12 @@
 #' plotMitoRatio(bcb)
 #'
 #' # seurat
-#' \dontrun{
+#' seurat <- examples[["seurat"]]
 #' plotMitoRatio(seurat)
-#' }
 #'
-#' # metrics data.frame
-#' \dontrun{
+#' # data.frame
 #' metrics <- metrics(bcb)
 #' plotMitoRatio(metrics)
-#' }
 NULL
 
 

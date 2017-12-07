@@ -16,8 +16,13 @@
 #' @return [data.frame] with cellular barcodes as rows.
 #'
 #' @examples
+#' # bcbioSingleCell
 #' bcb <- examples[["bcb"]]
 #' metrics(bcb) %>% glimpse()
+#'
+#' # seurat
+#' seurat <- examples[["seurat"]]
+#' metrics(seurat) %>% glimpse()
 NULL
 
 

@@ -11,8 +11,13 @@
 #' @return Character vector.
 #'
 #' @examples
+#' # bcbioSingleCell
 #' bcb <- examples[["bcb"]]
 #' interestingGroups(bcb)
+#'
+#' # seurat
+#' seurat <- examples[["seurat"]]
+#' interestingGroups(seurat)
 NULL
 
 

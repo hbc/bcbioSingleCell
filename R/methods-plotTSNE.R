@@ -23,9 +23,8 @@
 #' @return [ggplot].
 #'
 #' @examples
-#' \dontrun{
+#' seurat <- examples[["seurat"]]
 #' plotTSNE(seurat)
-#' }
 NULL
 
 

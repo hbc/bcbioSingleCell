@@ -7,7 +7,7 @@
 #' @inheritParams AllGenerics
 #' @inheritParams plotTSNE
 #'
-#' @param feature Character vector of features (e.g. gene expression, PC
+#' @param features Character vector of features (e.g. gene expression, PC
 #'   scores, number of genes detected).
 #' @param legend Show legends in paneled plots. Defaults to `FALSE` because
 #'   typically these look too busy and the legends can get cut off.
@@ -16,6 +16,10 @@
 #' @seealso [Seurat::FeaturePlot()].
 #'
 #' @return No return, only graphical output.
+#'
+#' @examples
+#' seurat <- examples[["seurat"]]
+#' plotFeatureTSNE(seurat, features = "PC1")
 NULL
 
 
@@ -32,7 +36,7 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        feature,
+        features,
         pointSize = 1,
         color = scale_color_gradient(low = "lightgray", high = "purple"),
         dark = FALSE,
@@ -42,24 +46,24 @@ setMethod(
         returnAsList = FALSE) {
         data <- cbind(
             fetchTSNEData(object),
-            FetchData(object, vars.all = feature)
+            FetchData(object, vars.all = features)
         )
         # Remove duplicate columns
         data <- data[, unique(colnames(data))]
-        plotlist <- lapply(seq_along(feature), function(a) {
+        plotlist <- lapply(seq_along(features), function(a) {
             p <- ggplot(
                 data,
                 mapping = aes_string(
                     x = "tSNE1",
                     y = "tSNE2",
-                    color = feature[[a]])
+                    color = features[[a]])
             )
             if (isTRUE(dark)) {
                 p <- p + midnightTheme()
             }
             p <- p +
                 geom_point(size = pointSize) +
-                labs(title = feature[[a]])
+                labs(title = features[[a]])
             if (isTRUE(label)) {
                 if (isTRUE(dark)) {
                     labelColor <- "white"
