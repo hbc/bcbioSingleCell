@@ -19,7 +19,7 @@ NULL
 
 
 # Constructors ====
-#' Coerce Legacy bcbio Object to `bcbioSingleCell` class
+#' Coerce Legacy bcbio Object to bcbioSingleCell class
 #'
 #' Compatible with old versions created by bcbioSingleCell package.
 #' The previous bcbioSinglecell package (note lowercase "c") must be reinstalled
@@ -69,7 +69,7 @@ NULL
 
 
 
-#' Coerce `bcbioSingleCell` to `seurat`
+#' Coerce bcbioSingleCell to seurat
 #'
 #' Last tested against CRAN version 2.0.1
 #'
@@ -135,7 +135,7 @@ NULL
 # Methods ====
 #' @rdname coerce
 #' @name upgrade-bcbioSingleCell
-#' @section Upgrade [bcbioSingleCell] to current version:
+#' @section Upgrade bcbioSingleCell to current version:
 #' This method adds support for upgrading `bcbioSCDataSet` objects to the latest
 #' [bcbioSingleCell] class version. This should be backwards compatible to
 #' [bcbioSingleCell] version 0.0.17. Previous objects saved using
@@ -150,7 +150,7 @@ setAs(
 
 #' @rdname coerce
 #' @name coerce-bcbioSingleCell-seurat
-#' @section [bcbioSingleCell] to [seurat]:
+#' @section bcbioSingleCell to seurat:
 #' Interally [Seurat::CreateSeuratObject()] is called without applying any
 #' additional filtering cutoffs, since we have already defined them during our
 #' quality control analysis. Here we are passing the raw gene-level counts of
@@ -165,7 +165,7 @@ setAs(
 
 #' @rdname coerce
 #' @name coerce-bcbioSingleCell-SummarizedExperiment
-#' @section [bcbioSingleCell] to [SummarizedExperiment]:
+#' @section bcbioSingleCell to SummarizedExperiment:
 #' Since [bcbioSingleCell] is an extension of [SummarizedExperiment], this
 #' coercion method is very simple. Here we're simply dropping our `@bcbio` slot,
 #' which contains raw cellular barcodes and other bcbio-specific metadata.
