@@ -62,91 +62,103 @@ NULL
 
     # Filter low quality cells ====
     colData <- colData(object)
-    message(paste(nrow(colData), "cells before filtering"))
+    if (!isTRUE(quiet)) {
+        message(paste(
+            paste(ncol(object), "cells before filtering"),
+            paste(nrow(object), "genes before filtering"),
+            sep = "\n"
+        ))
+    }
 
     # minUMIs
     if (!is.null(minUMIs) & minUMIs > 0) {
         colData <- colData %>%
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
+    }
+    if (!isTRUE(quiet)) {
         message(paste(
-            nrow(colData), "cells after 'minUMIs' cutoff"
+            paste(.paddedCount(nrow(colData)), "cells"),
+            "|",
+            paste("minUMIs", ">=", as.character(minUMIs))
         ))
-    } else {
-        message("'minUMIs' cutoff not applied")
     }
 
     # minGenes
     if (!is.null(minGenes) & minGenes > 0) {
         colData <- colData %>%
             .[.[["nGene"]] >= minGenes, , drop = FALSE]
+    }
+    if (!isTRUE(quiet)) {
         message(paste(
-            nrow(colData), "cells after 'minGenes' cutoff"
+            paste(.paddedCount(nrow(colData)), "cells"),
+            "|",
+            paste("minGenes", ">=", as.character(minGenes))
         ))
-    } else {
-        message("'minGenes' cutoff not applied")
     }
 
     # maxGenes
     if (!is.null(maxGenes) & maxGenes < Inf) {
         colData <- colData %>%
             .[.[["nGene"]] <= maxGenes, , drop = FALSE]
+    }
+    if (!isTRUE(quiet)) {
         message(paste(
-            nrow(colData), "cells after 'maxGenes' cutoff"
+            paste(.paddedCount(nrow(colData)), "cells"),
+            "|",
+            paste("maxGenes", "<=", as.character(maxGenes))
         ))
-    } else {
-        message("'maxGenes' cutoff not applied")
     }
 
     # maxMitoRatio
     if (!is.null(maxMitoRatio) & maxMitoRatio < 1) {
         colData <- colData %>%
             .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
+    }
+    if (!isTRUE(quiet)) {
         message(paste(
-            nrow(colData), "cells after 'maxMitoRatio' cutoff"
+            paste(.paddedCount(nrow(colData)), "cells"),
+            "|",
+            paste("maxMitoRatio", "<=", as.character(maxMitoRatio))
         ))
-    } else {
-        message("'maxMitoRatio' cutoff not applied")
     }
 
     # minNovelty
     if (!is.null(minNovelty) & minNovelty > 0) {
         colData <- colData %>%
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
-        message(paste(
-            nrow(colData), "cells after 'minNovelty' cutoff"
-        ))
-    } else {
-        message("'minNovelty' cutoff not applied")
     }
-
-    # Check for remaining cells
-    if (!nrow(colData)) {
-        stop("No cells passed filtering", call. = FALSE)
+    if (!isTRUE(quiet)) {
+        message(paste(
+            paste(.paddedCount(nrow(colData)), "cells"),
+            "|",
+            paste("minNovelty", "<=", as.character(minNovelty))
+        ))
     }
 
     cells <- rownames(colData)
-    message(paste(
-        length(cells),
-        "/",
-        ncol(object),
-        "cells passed filtering",
-        paste0("(", percent(length(cells) / ncol(object)), ")")
-    ))
+    if (!length(cells)) {
+        warning("No cells passed filtering", call. = FALSE)
+        return(NULL)
+    }
 
-    # Filter low expression genes ====
+    # Filter low quality genes ====
     if (minCellsPerGene > 0) {
         counts <- assay(object)
         numCells <- Matrix::rowSums(counts > 0)
         genes <- names(numCells[which(numCells >= minCellsPerGene)])
-        message(paste(
-            length(genes),
-            "/",
-            nrow(object),
-            "genes passed filtering",
-            paste0("(", percent(length(genes) / nrow(object)), ")")
-        ))
     } else {
-        genes <- NULL
+        genes <- rownames(object)
+    }
+    if (!isTRUE(quiet)) {
+        message(paste(
+            paste(.paddedCount(length(genes)), "genes"),
+            "|",
+            paste("minCellsPerGene", "<=", as.character(minCellsPerGene))
+        ))
+    }
+    if (!length(genes)) {
+        warning("No genes passed filtering", call. = FALSE)
+        return(NULL)
     }
 
     # Metadata ====
@@ -159,14 +171,26 @@ NULL
     )
     metadata(object)[["cell2sample"]] <- cell2sample
 
-    # Show summary statistics, if desired
+    # Summary ====
     if (!isTRUE(quiet)) {
+        message(paste(
+            paste(
+                length(cells), "/", ncol(object), "cells passed filtering",
+                paste0("(", percent(length(cells) / ncol(object)), ")")
+            ),
+            paste(
+                length(genes), "/", nrow(object), "genes passed filtering",
+                paste0("(", percent(length(genes) / nrow(object)), ")")
+            ),
+            sep = "\n"
+        ))
         mdList(c(
-            paste(">=", minUMIs, "UMI counts per cell"),
-            paste(">=", minGenes, "genes per cell"),
-            paste("<=", maxGenes, "genes per cell"),
-            paste("<=", maxMitoRatio, "relative mitochondrial abundance"),
-            paste(">=", minNovelty, "novelty score")
+            paste(">=", as.character(minUMIs), "UMI counts per cell"),
+            paste(">=", as.character(minGenes), "genes per cell"),
+            paste("<=", as.character(maxGenes), "genes per cell"),
+            paste("<=", as.character(maxMitoRatio), "mitochondrial abundance"),
+            paste(">=", as.character(minNovelty), "novelty score"),
+            paste(">=", as.character(minCellsPerGene), "cells per gene")
         )) %>%
             # Strip the line breaks
             gsub(x = .,
@@ -182,6 +206,13 @@ NULL
     }
 
     .applyFilterCutoffs(object)
+}
+
+
+
+#' @importFrom stringr str_pad
+.paddedCount <- function(x, width = 8) {
+    str_pad(x, width = width, pad = " ")
 }
 
 
