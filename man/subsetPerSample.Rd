@@ -10,7 +10,7 @@
 subsetPerSample(object, ...)
 
 \S4method{subsetPerSample}{bcbioSingleCell}(object, minCells = 200,
-  dir = "data")
+  dir = getwd())
 }
 \arguments{
 \item{object}{Object.}
