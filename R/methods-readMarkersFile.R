@@ -1,7 +1,7 @@
-#' Read Known Markers
+#' Read Known Markers File
 #'
-#' @rdname readMarkers
-#' @name readMarkers
+#' @rdname readMarkersFile
+#' @name readMarkersFile
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
@@ -19,7 +19,7 @@ NULL
 #' @importFrom basejump camel readFileByExtension
 #' @importFrom dplyr arrange distinct left_join pull
 #' @importFrom rlang syms !!!
-.readMarkers <- function(object, gene2symbol) {
+.readMarkersFile <- function(object, gene2symbol) {
     if (!is.data.frame(gene2symbol)) {
         stop("gene2symbol must be data.frame")
     }
@@ -80,9 +80,9 @@ NULL
 
 
 # Methods ====
-#' @rdname readMarkers
+#' @rdname readMarkersFile
 #' @export
 setMethod(
-    "readMarkers",
+    "readMarkersFile",
     signature("character"),
-    .readMarkers)
+    .readMarkersFile)
