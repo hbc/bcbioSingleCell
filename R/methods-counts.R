@@ -16,8 +16,20 @@
 #' @return Matrix class object, depending on `as` argument.
 #'
 #' @examples
-#' bcb <- examples[["bcb"]]
-#' counts(bcb) %>% glimpse()
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' counts(bcb, gene2symbol = FALSE) %>% glimpse()
+#' counts(bcb, gene2symbol = TRUE) %>% glimpse()
+#'
+#' # seurat
+#' counts(seurat, normalized = FALSE) %>% glimpse()
+#' counts(seurat, normalized = TRUE) %>% glimpse()
 NULL
 
 
@@ -70,3 +82,24 @@ setMethod(
     "counts",
     signature("bcbioSingleCell"),
     .counts)
+
+
+
+#' @rdname counts
+#' @export
+setMethod(
+    "counts",
+    signature("seurat"),
+    function(object, normalized = FALSE) {
+        if (identical(normalized, FALSE)) {
+            slot(seurat, "raw.data")
+        } else if (identical(normalized, TRUE)) {
+            slot(seurat, "data")
+        } else if (normalized == "scaled") {
+            slot(seurat, "scale.data")
+        } else {
+            warning("Unsupported 'normalized' argument")
+            return(NULL)
+        }
+    }
+)
