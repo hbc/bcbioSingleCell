@@ -13,12 +13,17 @@
 #' @return [bcbioSingleCell].
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' bcb <- examples[["bcb"]]
 #' bcbio(bcb) %>% names()
 #'
 #' # seurat
-#' seurat <- examples[["seurat"]]
 #' bcbio(seurat) %>% names()
 NULL
 
