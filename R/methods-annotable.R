@@ -11,8 +11,18 @@
 #' @return [data.frame]
 #'
 #' @examples
-#' bcb <- examples[["bcb"]]
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
 #' annotable(bcb) %>% glimpse()
+#'
+#' # seurat
+#' annotable(seurat) %>% glimpse()
 NULL
 
 
@@ -26,5 +36,22 @@ setMethod(
     function(object) {
         annotable <- as.data.frame(rowData(object))
         rownames(annotable) <- slot(object, "NAMES")
+        annotable
+    })
+
+
+
+#' @rdname annotable
+#' @export
+setMethod(
+    "annotable",
+    signature("seurat"),
+    function(object) {
+        annotable <- bcbio(seurat, "annotable")
+        if (is.null(annotable)) return(NULL)
+        rownames <- slot(seurat, "data") %>% rownames() %>% names()
+        if (is.null(rownames)) return(NULL)
+        annotable <- annotable[rownames, ]
+        rownames(annotable) <- rownames
         annotable
     })
