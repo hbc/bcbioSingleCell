@@ -11,18 +11,31 @@
 #' @return Character vector.
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' bcb <- examples[["bcb"]]
+#' interestingGroups(bcb)
+#'
+#' # Assignment method support
+#' interestingGroups(bcb) <- "sampleID"
 #' interestingGroups(bcb)
 #'
 #' # seurat
-#' seurat <- examples[["seurat"]]
+#' interestingGroups(seurat)
+#'
+#' # Assignment method support
+#' interestingGroups(seurat) <- "sampleID"
 #' interestingGroups(seurat)
 NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname interestingGroups
 #' @export
 setMethod(
@@ -49,13 +62,15 @@ setMethod(
 
 
 
+# Assignment methods ===========================================================
 #' @rdname interestingGroups
 #' @importFrom basejump checkInterestingGroups
 #' @importFrom S4Vectors metadata
 #' @export
 setMethod(
     "interestingGroups<-",
-    signature(object = "bcbioSingleCell", value = "character"),
+    signature(object = "bcbioSingleCell",
+              value = "character"),
     function(object, value) {
         sampleMetadata <- sampleMetadata(object)
         interestingGroups <- checkInterestingGroups(
@@ -74,13 +89,14 @@ setMethod(
 #' @export
 setMethod(
     "interestingGroups<-",
-    signature(object = "seurat", value = "character"),
+    signature(object = "seurat",
+              value = "character"),
     function(object, value) {
         sampleMetadata <- sampleMetadata(object)
         interestingGroups <- checkInterestingGroups(
             object = sampleMetadata,
             interestingGroups = value)
-        bcbio(object)[["interestingGroups"]] <- interestingGroups
+        bcbio(object, "interestingGroups") <- interestingGroups
         validObject(object)
         object
     })
