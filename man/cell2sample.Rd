@@ -29,10 +29,10 @@ Cell to Sample Mappings
 }
 \examples{
 load(system.file(
-    file.path("inst", "extdata", "bcb.rda"),
+    file.path("extdata", "bcb.rda"),
     package = "bcbioSingleCell"))
 load(system.file(
-    file.path("inst", "extdata", "seurat.rda"),
+    file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
 # bcbioSingleCell

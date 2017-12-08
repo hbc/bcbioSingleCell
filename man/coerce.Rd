@@ -39,7 +39,7 @@ which contains raw cellular barcodes and other bcbio-specific metadata.
 
 \examples{
 load(system.file(
-    file.path("inst", "extdata", "filtered.rda"),
+    file.path("extdata", "filtered.rda"),
     package = "bcbioSingleCell"))
 
 # Coerce bcbioSingleCell to seurat

@@ -39,7 +39,7 @@ Plot Principal Component Analysis (PCA)
 }
 \examples{
 load(system.file(
-    file.path("inst", "extdata", "seurat.rda"),
+    file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
 # seurat

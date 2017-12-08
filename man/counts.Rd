@@ -20,6 +20,8 @@ symbols. Recommended for passing counts to Seurat.}
 
 \item{as}{Return class (\strong{recommended}; \code{dgCMatrix},
 \code{dgTMatrix}) or dense matrix (\code{matrix}).}
+
+\item{normalized}{Normalized (\code{TRUE}) or raw (\code{FALSE}) counts.}
 }
 \value{
 Matrix class object, depending on \code{as} argument.
@@ -29,10 +31,10 @@ Counts Accessor
 }
 \examples{
 load(system.file(
-    file.path("inst", "extdata", "bcb.rda"),
+    file.path("extdata", "bcb.rda"),
     package = "bcbioSingleCell"))
 load(system.file(
-    file.path("inst", "extdata", "seurat.rda"),
+    file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
 # bcbioSingleCell

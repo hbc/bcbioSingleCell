@@ -44,7 +44,7 @@ Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.
 }
 \examples{
 load(system.file(
-    file.path("inst", "extdata", "seurat.rda"),
+    file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
 # seurat

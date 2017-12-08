@@ -52,7 +52,7 @@ Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 }
 \examples{
 load(system.file(
-    file.path("inst", "extdata", "filtered.rda"),
+    file.path("extdata", "filtered.rda"),
     package = "bcbioSingleCell"))
 
 # Reduce the number of counts to speed up the working example

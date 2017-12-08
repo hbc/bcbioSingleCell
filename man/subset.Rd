@@ -75,7 +75,7 @@ Extract genes by row and cells by column from a \link{bcbioSingleCell} object.
 }
 \examples{
 load(system.file(
-    file.path("inst", "extdata", "bcb.rda"),
+    file.path("extdata", "bcb.rda"),
     package = "bcbioSingleCell"))
 
 cells <- colnames(bcb)[1:1000]

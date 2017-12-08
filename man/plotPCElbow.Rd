@@ -37,7 +37,7 @@ PC cutoff for either 5% SD (\code{maxPct}) or 90% cumulative (\code{minCumsum}).
 }
 \examples{
 load(system.file(
-    file.path("inst", "extdata", "seurat.rda"),
+    file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
 # seurat
