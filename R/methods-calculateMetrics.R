@@ -15,8 +15,17 @@
 #' @return [data.frame].
 #'
 #' @examples
-#' bcb <- examples[["bcb"]]
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
 #' calculateMetrics(bcb) %>% glimpse()
+#'
+#' # dgCMatrix
+#' counts <- counts(bcb)
+#' annotable <- annotable(bcb)
+#' calculateMetrics(counts, annotable = annotable) %>% glimpse()
 NULL
 
 
@@ -34,15 +43,21 @@ NULL
 #' @importFrom tibble column_to_rownames tibble
 .calculateMetricsSparse <- function(
     object,
-    annotable,
+    annotable = TRUE,
     prefilter = TRUE) {
     message("Calculating barcode metrics")
     message(paste(ncol(object), "cellular barcodes detected"))
 
+    if (isTRUE(annotable)) {
+        organism <- rownames(object) %>%
+            .[[1]] %>%
+            detectOrganism()
+        annotable <- annotable(organism)
+    }
+
     # Check that all genes are in annotable
     missing <- rownames(object) %>%
         .[!rownames(object) %in% annotable[["ensgene"]]]
-
     if (identical(length(missing), nrow(object))) {
         stop(paste(
             "No genes in the counts matrix matched the annotable.",
