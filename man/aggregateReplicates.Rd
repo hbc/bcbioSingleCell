@@ -19,7 +19,11 @@ Object of same class with aggregated counts per pooled sample
 Aggregate Replicates
 }
 \examples{
-bcb <- examples[["bcb"]]
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
 aggregateReplicates(bcb)
 }
 \seealso{

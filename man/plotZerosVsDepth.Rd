@@ -21,6 +21,8 @@ plotZerosVsDepth(object, ...)
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{metrics}{Metrics \link{data.frame}.}
 }
 \value{
 \link{ggplot}.
