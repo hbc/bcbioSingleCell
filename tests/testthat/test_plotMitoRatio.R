@@ -1,8 +1,18 @@
 context("plotMitoRatio")
 
-bcb <- examples[["bcb"]]
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
 
-test_that("plotMitoRatio", {
+test_that("bcbioSingleCell", {
     p <- plotMitoRatio(bcb)
+    expect_is(p, "ggplot")
+})
+
+test_that("seurat", {
+    p <- plotMitoRatio(seurat)
     expect_is(p, "ggplot")
 })

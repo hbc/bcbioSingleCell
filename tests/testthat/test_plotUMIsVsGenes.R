@@ -1,11 +1,18 @@
 context("plotUMIsVsGenes")
 
-bcbFile <- system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell")
-load(bcbFile)
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
 
-test_that("plotUMIsVsGenes", {
+test_that("bcbioSingleCell", {
     p <- plotUMIsVsGenes(bcb)
+    expect_is(p, "ggplot")
+})
+
+test_that("seurat", {
+    p <- plotUMIsVsGenes(seurat)
     expect_is(p, "ggplot")
 })

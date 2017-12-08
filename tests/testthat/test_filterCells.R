@@ -1,6 +1,8 @@
 context("filterCells")
 
-bcb <- examples[["bcb"]]
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
 
 test_that("Default parameters", {
     filtered <- filterCells(bcb, quiet = TRUE)

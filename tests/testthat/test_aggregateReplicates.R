@@ -1,6 +1,8 @@
 context("aggregateReplicates")
 
-bcb <- examples[["bcb"]]
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
 
 test_that("aggregateReplicates", {
     pooled <- suppressMessages(aggregateReplicates(bcb))

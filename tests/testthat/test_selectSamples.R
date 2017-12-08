@@ -1,7 +1,11 @@
 context("selectSamples")
 
-bcb <- examples[["bcb"]]
-filtered <- filterCells(bcb, quiet = TRUE)
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("inst", "extdata", "filtered.rda"),
+    package = "bcbioSingleCell"))
 
 test_that("selectSamples", {
     # Add a quiet argument here in the future
