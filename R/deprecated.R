@@ -72,3 +72,13 @@ quantileHeatmap <- function(...) {
     .Deprecated("plotQuantileHeatmap")
     plotQuantileHeatmap(...)
 }
+
+
+
+# v0.0.25 ====
+#' @rdname deprecated
+#' @export
+readMarkers <- function(...) {
+    .Deprecated("readMarkersFile")
+    readMarkersFile(...)
+}
