@@ -23,13 +23,21 @@
 #' # bcbioSingleCell
 #' bcbio(bcb) %>% names()
 #'
+#' # Assignment method support
+#' bcbio(bcb, "stash") <- "testing"
+#' bcbio(bcb, "stash")
+#'
 #' # seurat
 #' bcbio(seurat) %>% names()
+#'
+#' # Assignment method support
+#' bcbio(seurat, "stash") <- "testing"
+#' bcbio(seurat, "stash")
 NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname bcbio
 #' @export
 setMethod(
@@ -37,9 +45,7 @@ setMethod(
     signature("bcbioSingleCell"),
     function(object, type) {
         bcbio <- slot(object, "bcbio")
-        if (missing(type)) {
-            return(bcbio)
-        }
+        if (missing(type)) return(bcbio)
         if (type %in% names(bcbio)) {
             return(bcbio[[type]])
         } else {
@@ -55,13 +61,9 @@ setMethod(
     "bcbio",
     signature("seurat"),
     function(object, type) {
-        if (!.hasSlot(object, "misc")) {
-            return(NULL)
-        }
+        if (!.hasSlot(object, "misc")) return(NULL)
         bcbio <- slot(object, "misc")[["bcbio"]]
-        if (missing(type)) {
-            return(bcbio)
-        }
+        if (missing(type)) return(bcbio)
         if (type %in% names(bcbio)) {
             return(bcbio[[type]])
         } else {
@@ -71,6 +73,7 @@ setMethod(
 
 
 
+# Assignment methods ===========================================================
 #' @rdname bcbio
 #' @export
 setMethod(
@@ -85,7 +88,26 @@ setMethod(
 
 
 
-# Legacy class support ====
+#' @rdname bcbio
+#' @export
+setMethod(
+    "bcbio<-",
+    signature(object = "seurat",
+              value = "ANY"),
+    function(object, type, value) {
+        if (!.hasSlot(object, "misc")) return(NULL)
+        if (is.null(slot(object, "misc")[["bcbio"]])) {
+            stop("seurat object was not generated with bcbioSingleCell",
+                 call. = FALSE)
+        }
+        slot(object, "misc")[["bcbio"]][[type]] <- value
+        validObject(object)
+        object
+    })
+
+
+
+# Legacy class support =========================================================
 # Package versions prior to 0.0.19 used `callers` to define the extra bcbio
 # slot. The structure of the object is otherwise the same.
 #' @rdname bcbio
@@ -94,9 +116,7 @@ setMethod(
     "bcbio",
     signature("bcbioSCDataSet"),
     function(object, type) {
-        if (missing(type)) {
-            return(slot(object, "callers"))
-        }
+        if (missing(type)) return(slot(object, "callers"))
         if (type %in% names(slot(object, "callers"))) {
             return(slot(object, "callers")[[type]])
         } else {
