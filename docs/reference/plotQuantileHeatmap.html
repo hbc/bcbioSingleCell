@@ -92,16 +92,22 @@
 
     <pre class="usage"><span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
+<span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='co'># S4 method for dgCMatrix</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>)
 
 <span class='co'># S4 method for matrix</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -115,8 +121,12 @@
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
     <tr>
-      <th>annotation</th>
-      <td><p>Column annotations.</p></td>
+      <th>n</th>
+      <td><p>The number of breaks to create.</p></td>
+    </tr>
+    <tr>
+      <th>annotationCol</th>
+      <td><p>Column annotations data.frame.</p></td>
     </tr>
     <tr>
       <th>clusterRows</th>
@@ -125,6 +135,10 @@
     <tr>
       <th>clusterCols</th>
       <td><p>Perform column clustering.</p></td>
+    </tr>
+    <tr>
+      <th>color</th>
+      <td><p>Color palette function.</p></td>
     </tr>
     </table>
     
@@ -138,6 +152,20 @@
 Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"filtered.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+
+<span class='co'># Reduce the number of counts to speed up the working example</span>
+<span class='no'>subset</span> <span class='kw'>&lt;-</span> <span class='no'>filtered</span>[<span class='fl'>1</span>:<span class='fl'>250</span>, <span class='fl'>1</span>:<span class='fl'>250</span>]
+
+<span class='co'># bcbioSingleCell</span>
+<span class='fu'>plotQuantileHeatmap</span>(
+    <span class='no'>subset</span>,
+    <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+    <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotQuantileHeatmap-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -147,7 +175,9 @@ Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

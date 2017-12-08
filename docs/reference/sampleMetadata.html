@@ -122,8 +122,14 @@ internal sample metadata data.frame.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell</span>
-<span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='no'>examples</span><span class='kw'>[[</span><span class='st'>"bcb"</span>]]
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"bcb.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+
+<span class='co'># bcbioSingleCell</span>
 <span class='fu'>sampleMetadata</span>(<span class='no'>bcb</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 2
 #&gt; Variables: 9
 #&gt; $ sampleID            &lt;fctr&gt; run1_AGAGGATA, run2_AGAGGATA
@@ -136,7 +142,6 @@ internal sample metadata data.frame.</p></td>
 #&gt; $ revcomp             &lt;fctr&gt; AGAGGATA, AGAGGATA
 #&gt; $ interestingGroups   &lt;fctr&gt; M1_seq_rep_1, M1_seq_rep_2</div><div class='input'>
 <span class='co'># seurat</span>
-<span class='no'>seurat</span> <span class='kw'>&lt;-</span> <span class='no'>examples</span><span class='kw'>[[</span><span class='st'>"seurat"</span>]]
 <span class='fu'>sampleMetadata</span>(<span class='no'>seurat</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1
 #&gt; Variables: 4
 #&gt; $ sampleID          &lt;fctr&gt; M1

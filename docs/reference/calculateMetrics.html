@@ -93,7 +93,8 @@
     <pre class="usage"><span class='fu'>calculateMetrics</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for dgCMatrix</span>
-<span class='fu'>calculateMetrics</span>(<span class='no'>object</span>, <span class='no'>annotable</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>calculateMetrics</span>(<span class='no'>object</span>, <span class='kw'>annotable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>calculateMetrics</span>(<span class='no'>object</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
@@ -129,8 +130,23 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='no'>examples</span><span class='kw'>[[</span><span class='st'>"bcb"</span>]]
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"bcb.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+
+<span class='co'># bcbioSingleCell</span>
 <span class='fu'>calculateMetrics</span>(<span class='no'>bcb</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; <span class='message'>Recalculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>Calculating barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>18240 cellular barcodes detected</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>18240 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; Observations: 18,240
+#&gt; Variables: 6
+#&gt; $ nUMI             &lt;dbl&gt; 9659, 14095, 14053, 10666, 12359, 12660, 12909, 80...
+#&gt; $ nGene            &lt;int&gt; 3223, 4230, 4146, 3178, 3891, 4275, 3916, 2998, 37...
+#&gt; $ nCoding          &lt;dbl&gt; 8732, 12405, 11895, 9926, 11261, 11627, 11533, 687...
+#&gt; $ nMito            &lt;dbl&gt; 290, 781, 1251, 190, 338, 410, 476, 843, 479, 324,...
+#&gt; $ log10GenesPerUMI &lt;dbl&gt; 0.8803814, 0.8740139, 0.8721868, 0.8694520, 0.8773...
+#&gt; $ mitoRatio        &lt;dbl&gt; 0.03002381, 0.05540972, 0.08902014, 0.01781361, 0....</div><div class='input'>
+<span class='co'># dgCMatrix</span>
+<span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>bcb</span>)
+<span class='no'>annotable</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='annotable.html'>annotable</a></span>(<span class='no'>bcb</span>)
+<span class='fu'>calculateMetrics</span>(<span class='no'>counts</span>, <span class='kw'>annotable</span> <span class='kw'>=</span> <span class='no'>annotable</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; <span class='message'>Calculating barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>18240 cellular barcodes detected</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>18240 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; Observations: 18,240
 #&gt; Variables: 6
 #&gt; $ nUMI             &lt;dbl&gt; 9659, 14095, 14053, 10666, 12359, 12660, 12909, 80...
 #&gt; $ nGene            &lt;int&gt; 3223, 4230, 4146, 3178, 3891, 4275, 3916, 2998, 37...

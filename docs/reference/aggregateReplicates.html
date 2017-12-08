@@ -109,13 +109,17 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Management Utilities: <code><a href='aggregateFeatures.html'>aggregateFeatures</a></code>,
-  <code>filterCells</code>, <code>readMarkers</code>,
+    <p>Other Data Management Utilities: <code>filterCells</code>,
+  <code>readMarkersFile</code>,
   <code>subsetPerSample</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='no'>examples</span><span class='kw'>[[</span><span class='st'>"bcb"</span>]]
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"bcb.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+
+<span class='co'># bcbioSingleCell</span>
 <span class='fu'>aggregateReplicates</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; <span class='message'>New sample IDs: M1</span></div><div class='output co'>#&gt; <span class='message'>Remapping cellular barcodes to aggregate sample IDs</span></div><div class='output co'>#&gt; <span class='message'>Aggregating counts</span></div><div class='output co'>#&gt; <span class='message'>Aggregating raw cellular barcode counts</span></div><div class='output co'>#&gt; <span class='message'>Calculating barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>10874 cellular barcodes detected</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>10874 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; <span class='message'>Updating metadata</span></div><div class='output co'>#&gt; <span class='message'>Preparing aggregated bcbioSingleCell object</span></div><div class='output co'>#&gt; class: bcbioSingleCell 
 #&gt; dim: 39297 10874 
 #&gt; metadata(33): version pipeline ... devtoolsSessionInfo

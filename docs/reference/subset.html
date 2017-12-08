@@ -166,7 +166,10 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='no'>examples</span><span class='kw'>[[</span><span class='st'>"bcb"</span>]]
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"bcb.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+
 <span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>bcb</span>)[<span class='fl'>1</span>:<span class='fl'>1000</span>]
 <span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "run1_AGAGGATA_CCGATACG_CAAGAGGG" "run1_AGAGGATA_TGCTTCAT_GCAGGGTA"
 #&gt; [3] "run1_AGAGGATA_GGTTGAGA_GAGAGTAT" "run1_AGAGGATA_TCAGCCTC_TGCAAGGG"
@@ -176,7 +179,7 @@
 <span class='co'># Subset by cell identifiers</span>
 <span class='no'>bcb</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; class: bcbioSingleCell 
 #&gt; dim: 39297 1000 
-#&gt; metadata(33): version pipeline ... devtoolsSessionInfo subset
+#&gt; metadata(34): version pipeline ... subset originalVersion
 #&gt; assays(1): assay
 #&gt; rownames(39297): ENSG00000000003 ENSG00000000005 ... ENSG00000284742
 #&gt;   ENSG00000284746
@@ -188,7 +191,7 @@
 <span class='co'># Subset by genes</span>
 <span class='no'>bcb</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; class: bcbioSingleCell 
 #&gt; dim: 1000 18240 
-#&gt; metadata(33): version pipeline ... devtoolsSessionInfo subset
+#&gt; metadata(34): version pipeline ... subset originalVersion
 #&gt; assays(1): assay
 #&gt; rownames(1000): ENSG00000000003 ENSG00000000005 ... ENSG00000067141
 #&gt;   ENSG00000067167
@@ -200,7 +203,7 @@
 <span class='co'># Subset by both genes and cells</span>
 <span class='no'>bcb</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; class: bcbioSingleCell 
 #&gt; dim: 1000 1000 
-#&gt; metadata(33): version pipeline ... devtoolsSessionInfo subset
+#&gt; metadata(34): version pipeline ... subset originalVersion
 #&gt; assays(1): assay
 #&gt; rownames(1000): ENSG00000000003 ENSG00000000005 ... ENSG00000067141
 #&gt;   ENSG00000067167
