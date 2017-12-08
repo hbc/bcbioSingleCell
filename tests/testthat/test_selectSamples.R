@@ -1,16 +1,16 @@
 context("selectSamples")
 
 load(system.file(
-    file.path("inst", "extdata", "bcb.rda"),
+    file.path("extdata", "bcb.rda"),
     package = "bcbioSingleCell"))
 load(system.file(
-    file.path("inst", "extdata", "filtered.rda"),
+    file.path("extdata", "filtered.rda"),
     package = "bcbioSingleCell"))
 
 test_that("selectSamples", {
     # Add a quiet argument here in the future
     subset <- suppressMessages(
-        selectSamples(filtered, sampleName = "M1_seq_rep_1")
+        selectSamples(filtered, sampleName = "M1")
     )
     expect_is(subset, "bcbioSingleCell")
     expect_identical(
@@ -19,11 +19,11 @@ test_that("selectSamples", {
     )
     expect_identical(
         dim(subset),
-        c(19525L, 470L)
+        c(18893L, 591L)
     )
     expect_identical(
         sampleMetadata(subset)[["sampleID"]],
-        factor(c("run1_AGAGGATA"))
+        factor("M1")
     )
     # Ensure that bcbio cellular barcodes get updated correctly
     cb <- bcbio(subset, "cellularBarcodes")
@@ -63,3 +63,4 @@ test_that("Stop on unfiltered object", {
         "'filterCells\\(\\)' hasn't been applied to this dataset"
     )
 })
+

@@ -1,13 +1,13 @@
 context("setAs coercion")
 
 load(system.file(
-    file.path("inst", "extdata", "bcb.rda"),
+    file.path("extdata", "bcb.rda"),
     package = "bcbioSingleCell"))
 load(system.file(
-    file.path("inst", "extdata", "filtered.rda"),
+    file.path("extdata", "filtered.rda"),
     package = "bcbioSingleCell"))
 load(system.file(
-    file.path("inst", "extdata", "pooled.rda"),
+    file.path("extdata", "pooled.rda"),
     package = "bcbioSingleCell"))
 
 test_that("Coerce bcbioSingleCell to seurat", {

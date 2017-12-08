@@ -1,7 +1,7 @@
 context("aggregateReplicates")
 
 load(system.file(
-    file.path("inst", "extdata", "bcb.rda"),
+    file.path("extdata", "bcb.rda"),
     package = "bcbioSingleCell"))
 
 test_that("aggregateReplicates", {

@@ -1,14 +1,14 @@
 context("plotQC")
 
 load(system.file(
-    file.path("inst", "extdata", "bcb.rda"),
+    file.path("extdata", "bcb.rda"),
     package = "bcbioSingleCell"))
 load(system.file(
-    file.path("inst", "extdata", "seurat.rda"),
+    file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
 test_that("bcbioSingleCell", {
-    p <- plotQC(bcb, return = "grid")
+    p <- plotQC(bcb)
     expect_is(p, "ggplot")
     list <- plotQC(bcb, return = "list")
     expect_is(list, "list")
@@ -17,6 +17,6 @@ test_that("bcbioSingleCell", {
 })
 
 test_that("seurat", {
-    p <- plotQC(seurat, return = "grid")
+    p <- plotQC(seurat)
     expect_is(p, "ggplot")
 })
