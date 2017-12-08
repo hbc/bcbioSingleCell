@@ -193,14 +193,6 @@ setGeneric("plotReadsPerCell", function(object, ...) {
 
 
 
-#' @rdname plotStressGenes
-#' @export
-setGeneric("plotStressGenes", function(object, ...) {
-    standardGeneric("plotStressGenes")
-})
-
-
-
 #' @rdname plotTopMarkers
 #' @export
 setGeneric("plotTopMarkers", function(object, topMarkers, ...) {
