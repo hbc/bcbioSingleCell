@@ -16,12 +16,18 @@
 #' @return [data.frame]
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' bcb <- examples[["bcb"]]
 #' topBarcodes(bcb) %>% glimpse()
 #'
 #' # seurat
-#' seurat <- examples[["seurat"]]
+#' topBarcodes(seurat) %>% glimpse()
 NULL
 
 
