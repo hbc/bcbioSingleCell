@@ -42,13 +42,18 @@ Utility function that loops our standard quality control plots, for easy
 visualization.
 }
 \examples{
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
 # bcbioSingleCell
-bcb <- examples[["bcb"]]
-plotQC(bcb, return = "grid")
+plotQC(bcb)
 
 # seurat
-seurat <- examples[["seurat"]]
-plotQC(seurat, return = "grid")
+plotQC(seurat)
 }
 \author{
 Michael Steinbaugh

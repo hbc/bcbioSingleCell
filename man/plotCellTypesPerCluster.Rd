@@ -47,9 +47,8 @@ plotCellTypesPerCluster(cellTypes)
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
   \code{\link{plotKnownMarkers}},
-  \code{\link{plotPCElbow}}, \code{\link{plotStressGenes}},
-  \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{plotPCElbow}}, \code{\link{plotTopMarkers}},
+  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

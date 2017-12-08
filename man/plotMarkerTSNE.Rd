@@ -54,9 +54,14 @@ low/high gradient.}
 Plot Marker t-SNE
 }
 \examples{
-seurat <- examples[["seurat"]]
-genes <- slot(seurat, "data") \%>\% rownames() \%>\% .[[1]]
-genes
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+genes <- counts(seurat) \%>\% rownames() \%>\% .[[1]]
+print(genes)
+
+# seurat
 plotMarkerTSNE(seurat, genes = genes)
 }
 \seealso{

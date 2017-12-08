@@ -29,12 +29,25 @@ Character vector.
 Interesting Groups
 }
 \examples{
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
 # bcbioSingleCell
-bcb <- examples[["bcb"]]
+interestingGroups(bcb)
+
+# Assignment method support
+interestingGroups(bcb) <- "sampleID"
 interestingGroups(bcb)
 
 # seurat
-seurat <- examples[["seurat"]]
+interestingGroups(seurat)
+
+# Assignment method support
+interestingGroups(seurat) <- "sampleID"
 interestingGroups(seurat)
 }
 \author{

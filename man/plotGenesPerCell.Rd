@@ -58,17 +58,22 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
 # bcbioSingleCell
-bcb <- examples[["bcb"]]
 plotGenesPerCell(bcb)
 
 # seurat
-seurat <- examples[["seurat"]]
 plotGenesPerCell(seurat)
 
 # data.frame
-metrics <- metrics(bcb)
-plotGenesPerCell(metrics)
+df <- metrics(bcb)
+plotGenesPerCell(df)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

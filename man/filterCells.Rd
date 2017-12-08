@@ -45,15 +45,19 @@ Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.
 }
 \examples{
-bcb <- examples[["bcb"]]
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
 filterCells(bcb)
 }
 \seealso{
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
 
-Other Data Management Utilities: \code{\link{aggregateFeatures}},
-  \code{\link{aggregateReplicates}},
-  \code{\link{readMarkers}}, \code{\link{subsetPerSample}}
+Other Data Management Utilities: \code{\link{aggregateReplicates}},
+  \code{\link{readMarkersFile}},
+  \code{\link{subsetPerSample}}
 }
 \author{
 Michael Steinbaugh

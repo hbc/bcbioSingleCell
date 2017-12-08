@@ -4,10 +4,13 @@
 \name{counts}
 \alias{counts}
 \alias{counts,bcbioSingleCell-method}
+\alias{counts,seurat-method}
 \title{Counts Accessor}
 \usage{
 \S4method{counts}{bcbioSingleCell}(object, gene2symbol = FALSE,
   as = "dgCMatrix")
+
+\S4method{counts}{seurat}(object, normalized = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -25,8 +28,20 @@ Matrix class object, depending on \code{as} argument.
 Counts Accessor
 }
 \examples{
-bcb <- examples[["bcb"]]
-counts(bcb) \%>\% glimpse()
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+counts(bcb, gene2symbol = FALSE) \%>\% glimpse()
+counts(bcb, gene2symbol = TRUE) \%>\% glimpse()
+
+# seurat
+counts(seurat, normalized = FALSE) \%>\% glimpse()
+counts(seurat, normalized = TRUE) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

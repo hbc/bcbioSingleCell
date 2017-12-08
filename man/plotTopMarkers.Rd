@@ -15,7 +15,8 @@ plotTopMarkers(object, topMarkers, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{topMarkers}{Top markers grouped \link{tibble} returned by \code{\link[=topMarkers]{topMarkers()}}.}
+\item{topMarkers}{Top markers \link{tibble} grouped by cluster, returned by
+\code{\link[=topMarkers]{topMarkers()}}.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
@@ -39,8 +40,7 @@ for the number of genes to plot here in a future update.
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
   \code{\link{plotKnownMarkers}},
   \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
-  \code{\link{plotStressGenes}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

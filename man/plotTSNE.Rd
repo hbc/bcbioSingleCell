@@ -43,7 +43,11 @@ low/high gradient.}
 Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.
 }
 \examples{
-seurat <- examples[["seurat"]]
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# seurat
 plotTSNE(seurat)
 }
 \seealso{

@@ -38,11 +38,12 @@ which contains raw cellular barcodes and other bcbio-specific metadata.
 }
 
 \examples{
-bcb <- examples[["bcb"]]
-pooled <- aggregateReplicates(bcb)
-filtered <- filterCells(pooled)
-seurat <- as(filtered, "seurat")
-seurat
+load(system.file(
+    file.path("inst", "extdata", "filtered.rda"),
+    package = "bcbioSingleCell"))
+
+# Coerce bcbioSingleCell to seurat
+as(filtered, "seurat")
 }
 \seealso{
 \code{help(topic = "coerce", package = "methods")}.

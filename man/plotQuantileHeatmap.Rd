@@ -4,6 +4,7 @@
 \name{plotQuantileHeatmap}
 \alias{plotQuantileHeatmap}
 \alias{plotQuantileHeatmap}
+\alias{plotQuantileHeatmap,bcbioSingleCell-method}
 \alias{plotQuantileHeatmap,dgCMatrix-method}
 \alias{plotQuantileHeatmap,matrix-method}
 \alias{plotQuantileHeatmap,seurat-method}
@@ -11,24 +12,33 @@
 \usage{
 plotQuantileHeatmap(object, ...)
 
-\S4method{plotQuantileHeatmap}{dgCMatrix}(object, ...)
+\S4method{plotQuantileHeatmap}{bcbioSingleCell}(object, n = 10,
+  annotationCol = NA, clusterRows = FALSE, clusterCols = FALSE)
 
-\S4method{plotQuantileHeatmap}{matrix}(object, annotation = NA,
-  clusterRows = TRUE, clusterCols = TRUE)
+\S4method{plotQuantileHeatmap}{dgCMatrix}(object, n = 10,
+  annotationCol = NA, clusterRows = FALSE, clusterCols = FALSE,
+  color = viridis::viridis)
 
-\S4method{plotQuantileHeatmap}{seurat}(object, annotation = NA,
-  clusterRows = TRUE, clusterCols = TRUE)
+\S4method{plotQuantileHeatmap}{matrix}(object, n = 10, annotationCol = NA,
+  clusterRows = FALSE, clusterCols = FALSE, color = viridis::viridis)
+
+\S4method{plotQuantileHeatmap}{seurat}(object, n = 10, annotationCol = NA,
+  clusterRows = FALSE, clusterCols = FALSE)
 }
 \arguments{
 \item{object}{Matrix of data.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{annotation}{Column annotations.}
+\item{n}{The number of breaks to create.}
+
+\item{annotationCol}{Column annotations \link{data.frame}.}
 
 \item{clusterRows}{Perform row clustering.}
 
 \item{clusterCols}{Perform column clustering.}
+
+\item{color}{Color palette function.}
 }
 \value{
 \code{\link[pheatmap:pheatmap]{pheatmap::pheatmap()}}.
@@ -39,6 +49,21 @@ Plot Heatmap with Quantile Breaks
 \details{
 This is helpful for more usefully visualizing single cell data.
 Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
+}
+\examples{
+load(system.file(
+    file.path("inst", "extdata", "filtered.rda"),
+    package = "bcbioSingleCell"))
+
+# Reduce the number of counts to speed up the working example
+subset <- filtered[1:250, 1:250]
+
+# bcbioSingleCell
+plotQuantileHeatmap(
+    subset,
+    n = 20,
+    clusterRows = FALSE,
+    clusterCols = FALSE)
 }
 \author{
 Rory Kirchner

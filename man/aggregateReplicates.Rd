@@ -23,8 +23,8 @@ bcb <- examples[["bcb"]]
 aggregateReplicates(bcb)
 }
 \seealso{
-Other Data Management Utilities: \code{\link{aggregateFeatures}},
-  \code{\link{filterCells}}, \code{\link{readMarkers}},
+Other Data Management Utilities: \code{\link{filterCells}},
+  \code{\link{readMarkersFile}},
   \code{\link{subsetPerSample}}
 }
 \author{

@@ -35,12 +35,17 @@ Plot Read Counts per Cell
 Here by "cell" we mean "cellular barcode".
 }
 \examples{
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
 # bcbioSingleCell
-bcb <- examples[["bcb"]]
 plotReadsPerCell(bcb)
 
 # seurat
-seurat <- examples[["seurat"]]
 plotReadsPerCell(seurat)
 }
 \seealso{

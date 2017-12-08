@@ -46,7 +46,11 @@ No return, only graphical output.
 Plot Feature t-SNE
 }
 \examples{
-seurat <- examples[["seurat"]]
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# seurat
 plotFeatureTSNE(seurat, features = "PC1")
 }
 \seealso{

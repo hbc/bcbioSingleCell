@@ -32,7 +32,11 @@ and Ensembl gene identifiers for rows.
 [` also works on [bcbioSingleCell]: R:%60%20also%20works%20on%20[bcbioSingleCell
 }
 \examples{
-bcb <- examples[["bcb"]]
-filtered <- filterCells(bcb)
+load(system.file(
+    file.path("inst", "extdata", "filtered.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+# Quality control filtering must be applied first!
 selectSamples(filtered, sampleName = "M1_seq_rep_1")
 }

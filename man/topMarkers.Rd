@@ -39,7 +39,6 @@ Top Markers
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
   \code{\link{plotKnownMarkers}},
   \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
-  \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}}
 }
 \author{

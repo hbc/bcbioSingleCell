@@ -56,17 +56,22 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
+load(system.file(
+    file.path("inst", "extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
 # bcbioSingleCell
-bcb <- examples[["bcb"]]
 plotNovelty(bcb)
 
 # seurat
-seurat <- examples[["seurat"]]
 plotNovelty(seurat)
 
 # data.frame
-metrics <- metrics(bcb)
-plotNovelty(metrics)
+df <- metrics(bcb)
+plotNovelty(df)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

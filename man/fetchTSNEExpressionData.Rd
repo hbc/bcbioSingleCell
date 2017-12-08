@@ -20,19 +20,22 @@ fetchTSNEExpressionData(object, ...)
 \item{genes}{Genes (by symbol name) of which to get expression data.}
 }
 \value{
-tidy \link{data.frame} of t-SNE points, cellular metadata, and gene
-expression.
+\link{tibble} grouped by \code{gene}, containing t-SNE points, cellular
+metadata, and gene expression.
 }
 \description{
 This gets t-SNE locations, cellular metadata, expression of genes and
 the geometric mean of the gene expression from a \link{seurat} object.
 }
 \examples{
-\dontrun{
-data(seurat)
-genes <- head(rownames(seurat@raw.data))
-tsne <- fetchTSNEExpressionData(seurat, genes)
-}
+load(system.file(
+    file.path("inst", "extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+genes <- counts(seurat) \%>\% rownames() \%>\% head()
+print(genes)
+
+fetchTSNEExpressionData(seurat, genes = genes) \%>\% glimpse()
 }
 \seealso{
 Other t-SNE Utilities: \code{\link{fetchTSNEData}},
