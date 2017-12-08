@@ -12,10 +12,12 @@
 #' @seealso [Seurat::TSNEPlot()].
 #'
 #' @examples
-#' \dontrun{
-#' data(seurat)
-#' tsne <- fetchTSNEData(seurat)
-#' }
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat
+#' fetchTSNEData(seurat) %>% glimpse()
 NULL
 
 

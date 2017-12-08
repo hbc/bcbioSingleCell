@@ -12,10 +12,12 @@
 #' @seealso [Seurat::PCAPlot()].
 #'
 #' @examples
-#' \dontrun{
-#' data(seurat)
-#' pca <- fetchPCAData(seurat)
-#' }
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat
+#' fetchPCAData(seurat) %>% glimpse()
 NULL
 
 
