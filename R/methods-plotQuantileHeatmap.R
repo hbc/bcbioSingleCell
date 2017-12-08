@@ -160,7 +160,7 @@ setMethod(
         clusterRows = FALSE,
         clusterCols = FALSE) {
         # Use the raw counts
-        counts <- counts(seurat, normalized = FALSE)
+        counts <- counts(object, normalized = FALSE)
         .plotQuantileHeatmap(
             object = counts,
             n = n,

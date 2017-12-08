@@ -47,9 +47,9 @@ setMethod(
     "annotable",
     signature("seurat"),
     function(object) {
-        annotable <- bcbio(seurat, "annotable")
+        annotable <- bcbio(object, "annotable")
         if (is.null(annotable)) return(NULL)
-        rownames <- slot(seurat, "data") %>% rownames() %>% names()
+        rownames <- slot(object, "data") %>% rownames() %>% names()
         if (is.null(rownames)) return(NULL)
         annotable <- annotable[rownames, ]
         rownames(annotable) <- rownames

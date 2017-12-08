@@ -129,7 +129,7 @@ setMethod(
         # Generate if no mappings are stashed
         if (is.null(cell2sample)) {
             cell2sample <- .cell2sample(
-                cells = colnames(slot(seurat, "data")),
+                cells = colnames(slot(object, "data")),
                 samples = rownames(sampleMetadata(object))
             )
             return(cell2sample)

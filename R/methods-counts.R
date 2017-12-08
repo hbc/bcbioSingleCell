@@ -92,11 +92,11 @@ setMethod(
     signature("seurat"),
     function(object, normalized = FALSE) {
         if (identical(normalized, FALSE)) {
-            slot(seurat, "raw.data")
+            slot(object, "raw.data")
         } else if (identical(normalized, TRUE)) {
-            slot(seurat, "data")
+            slot(object, "data")
         } else if (normalized == "scaled") {
-            slot(seurat, "scale.data")
+            slot(object, "scale.data")
         } else {
             warning("Unsupported 'normalized' argument")
             return(NULL)
