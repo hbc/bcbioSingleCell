@@ -11,7 +11,11 @@
 #' @inheritParams AllGenerics
 #'
 #' @examples
-#' bcb <- examples[["bcb"]]
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
 #' aggregateReplicates(bcb)
 NULL
 
