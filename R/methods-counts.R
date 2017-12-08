@@ -12,15 +12,16 @@
 #'   symbols. Recommended for passing counts to Seurat.
 #' @param as Return class (**recommended**; `dgCMatrix`,
 #'   `dgTMatrix`) or dense matrix (`matrix`).
+#' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
 #'
 #' @return Matrix class object, depending on `as` argument.
 #'
 #' @examples
 #' load(system.file(
-#'     file.path("inst", "extdata", "bcb.rda"),
+#'     file.path("extdata", "bcb.rda"),
 #'     package = "bcbioSingleCell"))
 #' load(system.file(
-#'     file.path("inst", "extdata", "seurat.rda"),
+#'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell

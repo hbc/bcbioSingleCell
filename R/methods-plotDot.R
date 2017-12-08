@@ -26,7 +26,7 @@
 #'
 #' @examples
 #' load(system.file(
-#'     file.path("inst", "extdata", "seurat.rda"),
+#'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
 #'
 #' genes <- slot(seurat, "data") %>% rownames() %>% .[1:2]
