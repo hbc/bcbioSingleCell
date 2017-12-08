@@ -10,17 +10,22 @@
 #' @inherit plotGenesPerCell
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' bcb <- examples[["bcb"]]
 #' plotNovelty(bcb)
 #'
 #' # seurat
-#' seurat <- examples[["seurat"]]
 #' plotNovelty(seurat)
 #'
 #' # data.frame
-#' metrics <- metrics(bcb)
-#' plotNovelty(metrics)
+#' df <- metrics(bcb)
+#' plotNovelty(df)
 NULL
 
 

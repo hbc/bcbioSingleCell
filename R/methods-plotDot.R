@@ -25,15 +25,20 @@
 #' @seealso Modified version of [Seurat::DotPlot()].
 #'
 #' @examples
-#' seurat <- examples[["seurat"]]
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' genes <- slot(seurat, "data") %>% rownames() %>% .[1:2]
-#' genes
+#' print(genes)
+#'
+#' # seurat
 #' plotDot(seurat, genes = genes)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Min Max
 #' @seealso `Seurat:::MinMax()`
 #' @noRd
@@ -55,7 +60,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotDot
 #' @importFrom dplyr group_by mutate summarize ungroup
 #' @importFrom ggplot2 aes_string geom_point labs scale_color_gradient

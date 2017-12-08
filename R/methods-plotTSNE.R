@@ -23,7 +23,11 @@
 #' @return [ggplot].
 #'
 #' @examples
-#' seurat <- examples[["seurat"]]
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat
 #' plotTSNE(seurat)
 NULL
 

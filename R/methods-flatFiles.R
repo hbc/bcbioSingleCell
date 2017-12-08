@@ -14,7 +14,11 @@
 #' @return [list].
 #'
 #' @examples
-#' bcb <- examples[["bcb"]]
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
 #' flatFiles(bcb) %>% names()
 NULL
 

@@ -9,11 +9,12 @@
 #' @seealso `help(topic = "coerce", package = "methods")`.
 #'
 #' @examples
-#' bcb <- examples[["bcb"]]
-#' pooled <- aggregateReplicates(bcb)
-#' filtered <- filterCells(pooled)
-#' seurat <- as(filtered, "seurat")
-#' seurat
+#' load(system.file(
+#'     file.path("inst", "extdata", "filtered.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # Coerce bcbioSingleCell to seurat
+#' as(filtered, "seurat")
 NULL
 
 

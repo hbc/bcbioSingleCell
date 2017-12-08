@@ -25,13 +25,18 @@
 #' @return R Markdown template code for quality control analysis.
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' bcb <- examples[["bcb"]]
-#' plotQC(bcb, return = "grid")
+#' plotQC(bcb)
 #'
 #' # seurat
-#' seurat <- examples[["seurat"]]
-#' plotQC(seurat, return = "grid")
+#' plotQC(seurat)
 NULL
 
 

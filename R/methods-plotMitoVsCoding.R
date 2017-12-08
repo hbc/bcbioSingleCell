@@ -8,17 +8,22 @@
 #' @inherit plotUMIsVsGenes
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' bcb <- examples[["bcb"]]
 #' plotMitoVsCoding(bcb)
 #'
 #' # seurat
-#' seurat <- examples[["seurat"]]
 #' plotMitoVsCoding(seurat)
 #'
 #' # data.frame
-#' metrics <- metrics(bcb)
-#' plotMitoVsCoding(metrics)
+#' df <- metrics(bcb)
+#' plotMitoVsCoding(df)
 NULL
 
 

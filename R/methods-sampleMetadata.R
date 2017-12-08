@@ -15,12 +15,17 @@
 #' @return [data.frame].
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' bcb <- examples[["bcb"]]
 #' sampleMetadata(bcb) %>% glimpse()
 #'
 #' # seurat
-#' seurat <- examples[["seurat"]]
 #' sampleMetadata(seurat) %>% glimpse()
 NULL
 

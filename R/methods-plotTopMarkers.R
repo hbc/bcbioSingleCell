@@ -12,7 +12,8 @@
 #'
 #' @inherit plotMarkers
 #'
-#' @param topMarkers Top markers grouped [tibble] returned by [topMarkers()].
+#' @param topMarkers Top markers [tibble] grouped by cluster, returned by
+#'   [topMarkers()].
 NULL
 
 

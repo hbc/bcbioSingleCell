@@ -20,8 +20,12 @@
 #' @return [bcbioSingleCell].
 #'
 #' @examples
-#' bcb <- examples[["bcb"]]
-#' filtered <- filterCells(bcb)
+#' load(system.file(
+#'     file.path("inst", "extdata", "filtered.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' # Quality control filtering must be applied first!
 #' selectSamples(filtered, sampleName = "M1_seq_rep_1")
 NULL
 

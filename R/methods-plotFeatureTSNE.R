@@ -18,7 +18,11 @@
 #' @return No return, only graphical output.
 #'
 #' @examples
-#' seurat <- examples[["seurat"]]
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat
 #' plotFeatureTSNE(seurat, features = "PC1")
 NULL
 

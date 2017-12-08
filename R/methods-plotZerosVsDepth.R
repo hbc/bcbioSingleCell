@@ -1,5 +1,7 @@
 #' Plot Percentage of Zeros vs. Library Depth
 #'
+#' This function helps us visualize the dropout rate.
+#'
 #' @rdname plotZerosVsDepth
 #' @name plotZerosVsDepth
 #' @family Quality Control Metrics

@@ -10,17 +10,22 @@
 #' @inherit plotGenesPerCell
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' bcb <- examples[["bcb"]]
 #' plotUMIsPerCell(bcb)
 #'
 #' # seurat
-#' seurat <- examples[["seurat"]]
 #' plotUMIsPerCell(seurat)
 #'
 #' # data.frame
-#' metrics <- metrics(bcb)
-#' plotUMIsPerCell(metrics)
+#' df <- metrics(bcb)
+#' plotUMIsPerCell(df)
 NULL
 
 

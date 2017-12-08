@@ -23,7 +23,11 @@
 #' @seealso [Seurat::PCElbowPlot].
 #'
 #' @examples
-#' seurat <- examples[["seurat"]]
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat
 #' pcUse <- plotPCElbow(seurat)
 #' pcUse
 NULL

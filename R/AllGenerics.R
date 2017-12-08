@@ -241,10 +241,10 @@ setGeneric("prepareSingleCellTemplate", function(object, ...) {
 
 
 
-#' @rdname readMarkers
+#' @rdname readMarkersFile
 #' @export
-setGeneric("readMarkers", function(object, ...) {
-    standardGeneric("readMarkers")
+setGeneric("readMarkersFile", function(object, ...) {
+    standardGeneric("readMarkersFile")
 })
 
 

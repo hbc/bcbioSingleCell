@@ -10,18 +10,23 @@
 #' @param metadata Sample metadata [data.frame].
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' bcb <- examples[["bcb"]]
 #' plotCellCounts(bcb)
 #'
 #' # seurat
-#' seurat <- examples[["seurat"]]
 #' plotCellCounts(seurat)
 #'
 #' # data.frame
-#' metrics <- metrics(bcb)
+#' df <- metrics(bcb)
 #' metadata <- sampleMetadata(bcb)
-#' plotCellCounts(metrics, metadata = metadata)
+#' plotCellCounts(df, metadata = metadata)
 NULL
 
 

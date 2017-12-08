@@ -8,17 +8,22 @@
 #' @inherit plotGenesPerCell
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("inst", "extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' bcb <- examples[["bcb"]]
 #' plotMitoRatio(bcb)
 #'
 #' # seurat
-#' seurat <- examples[["seurat"]]
 #' plotMitoRatio(seurat)
 #'
 #' # data.frame
-#' metrics <- metrics(bcb)
-#' plotMitoRatio(metrics)
+#' df <- metrics(bcb)
+#' plotMitoRatio(df)
 NULL
 
 

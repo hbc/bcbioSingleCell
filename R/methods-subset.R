@@ -18,7 +18,10 @@
 #' @return [bcbioSingleCell].
 #'
 #' @examples
-#' bcb <- examples[["bcb"]]
+#' load(system.file(
+#'     file.path("inst", "extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' cells <- colnames(bcb)[1:1000]
 #' head(cells)
 #' genes <- rownames(bcb)[1:1000]
