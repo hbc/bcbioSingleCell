@@ -38,5 +38,5 @@ load(system.file(
 
 # bcbioSingleCell
 # Quality control filtering must be applied first!
-selectSamples(filtered, sampleName = "M1_seq_rep_1")
+selectSamples(filtered, sampleName = "M1")
 }
