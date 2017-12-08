@@ -1,7 +1,3 @@
-# FIXME Add Seurat support
-
-
-
 #' Top Barcodes
 #'
 #' @rdname topBarcodes
