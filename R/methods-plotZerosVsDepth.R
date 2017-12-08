@@ -9,6 +9,8 @@
 #'
 #' @inheritParams AllGenerics
 #'
+#' @param metrics Metrics [data.frame].
+#'
 #' @return [ggplot].
 #'
 #' @examples
