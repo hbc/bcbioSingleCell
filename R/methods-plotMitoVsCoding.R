@@ -1,8 +1,3 @@
-# FIXME The working examples are causing build checks to error because of
-# missing mgcv package. Not sure why this is happening but they run fine.
-
-
-
 #' Plot Mitochondrial Counts vs. Coding Counts
 #'
 #' @rdname plotMitoVsCoding
@@ -21,20 +16,14 @@
 #'     package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
-#' \dontrun{
 #' plotMitoVsCoding(bcb)
-#' }
 #'
 #' # seurat
-#' \dontrun{
 #' plotMitoVsCoding(seurat)
-#' }
 #'
 #' # data.frame
-#' \dontrun{
 #' df <- metrics(bcb)
 #' plotMitoVsCoding(df)
-#' }
 NULL
 
 

@@ -56,20 +56,14 @@ load(system.file(
     package = "bcbioSingleCell"))
 
 # bcbioSingleCell
-\dontrun{
 plotMitoVsCoding(bcb)
-}
 
 # seurat
-\dontrun{
 plotMitoVsCoding(seurat)
-}
 
 # data.frame
-\dontrun{
 df <- metrics(bcb)
 plotMitoVsCoding(df)
-}
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

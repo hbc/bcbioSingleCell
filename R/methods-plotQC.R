@@ -1,7 +1,3 @@
-# FIXME Working examples are breaking build checks
-
-
-
 #' Quality Control Plots
 #'
 #' Utility function that loops our standard quality control plots, for easy
@@ -37,14 +33,10 @@
 #'     package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
-#' \dontrun{
 #' plotQC(bcb)
-#' }
 #'
 #' # seurat
-#' \dontrun{
 #' plotQC(seurat)
-#' }
 NULL
 
 
@@ -300,7 +292,12 @@ validQCGeomFlip <- c(
             color = "interestingGroups")
     ) +
         geom_point(alpha = 0.25, size = 0.8) +
-        geom_smooth(se = FALSE, size = 1.5) +
+        # If `method = "gam"`, `mgcv` package is required.
+        # Otherwise build checks will error.
+        geom_smooth(
+            method = "glm",
+            se = FALSE,
+            size = 1.5) +
         scale_x_sqrt() +
         scale_y_sqrt()
 }
