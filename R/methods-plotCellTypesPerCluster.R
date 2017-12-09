@@ -16,10 +16,21 @@
 #' @return [ggplot].
 #'
 #' @examples
-#' \dontrun{
-#' cellTypes <- cellTypesPerCluster(knownMakersDetected)
-#' plotCellTypesPerCluster(cellTypes)
-#' }
+#' load(system.file(
+#'     file.path("extdata", "knownMarkersDetected.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+
+#' cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
+#' glimpse(cellTypesPerCluster)
+#'
+#' # seurat
+#' # Let's plot the first 2 cell types, as a quick example
+#' plotCellTypesPerCluster(
+#'     seurat,
+#'     cellTypesPerCluster = cellTypesPerCluster[1:2, ])
 NULL
 
 
