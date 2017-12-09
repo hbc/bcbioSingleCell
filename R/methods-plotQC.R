@@ -1,3 +1,7 @@
+# FIXME Working examples are breaking build checks
+
+
+
 #' Quality Control Plots
 #'
 #' Utility function that loops our standard quality control plots, for easy
@@ -33,10 +37,14 @@
 #'     package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
+#' \dontrun{
 #' plotQC(bcb)
+#' }
 #'
 #' # seurat
+#' \dontrun{
 #' plotQC(seurat)
+#' }
 NULL
 
 

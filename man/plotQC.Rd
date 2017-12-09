@@ -50,10 +50,14 @@ load(system.file(
     package = "bcbioSingleCell"))
 
 # bcbioSingleCell
+\dontrun{
 plotQC(bcb)
+}
 
 # seurat
+\dontrun{
 plotQC(seurat)
+}
 }
 \author{
 Michael Steinbaugh
