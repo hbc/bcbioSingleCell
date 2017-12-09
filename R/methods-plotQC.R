@@ -295,7 +295,6 @@ validQCGeomFlip <- c(
             alpha = 0.25,
             size = 0.8) +
         geom_smooth(
-            method = "gam",
             se = FALSE,
             size = 1.5) +
         scale_x_sqrt() +
