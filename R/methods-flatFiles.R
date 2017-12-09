@@ -24,7 +24,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname flatFiles
 #' @export
 setMethod(

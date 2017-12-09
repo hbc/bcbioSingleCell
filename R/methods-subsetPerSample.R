@@ -19,7 +19,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname subsetPerSample
 #' @importFrom dplyr pull
 #' @importFrom pbapply pblapply

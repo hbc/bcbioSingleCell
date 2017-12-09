@@ -21,7 +21,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr arrange group_by filter mutate mutate_all select ungroup
 #' @importFrom parallel mclapply
 #' @importFrom rlang !!! syms
@@ -182,7 +182,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname aggregateReplicates
 #' @export
 setMethod(

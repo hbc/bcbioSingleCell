@@ -26,7 +26,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr everything filter group_by left_join n pull select
 #'   summarize
 #' @importFrom rlang !! !!! quo sym syms
@@ -81,7 +81,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname knownMarkersDetected
 #' @export
 setMethod(

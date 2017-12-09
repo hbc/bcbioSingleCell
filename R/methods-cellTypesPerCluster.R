@@ -23,7 +23,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr desc everything group_by select ungroup
 #' @importFrom rlang !!! quos
 .cellTypesPerCluster <- function(

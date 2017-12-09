@@ -33,7 +33,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotTSNE
 #' @importFrom ggplot2 scale_color_hue
 #' @export

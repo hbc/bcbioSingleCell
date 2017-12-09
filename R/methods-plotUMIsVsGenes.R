@@ -34,7 +34,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom ggplot2 facet_wrap labs
 #' @importFrom viridis scale_color_viridis
 .plotUMIsVsGenes <- function(
@@ -69,7 +69,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotUMIsVsGenes
 #' @importFrom viridis scale_color_viridis
 #' @export

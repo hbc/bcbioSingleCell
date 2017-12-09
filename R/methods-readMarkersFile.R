@@ -15,7 +15,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom basejump camel readFileByExtension
 #' @importFrom dplyr arrange distinct left_join pull
 #' @importFrom rlang syms !!!
@@ -79,7 +79,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname readMarkersFile
 #' @export
 setMethod(

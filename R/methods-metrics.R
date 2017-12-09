@@ -32,7 +32,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname metrics
 #' @importFrom basejump uniteInterestingGroups
 #' @importFrom dplyr left_join

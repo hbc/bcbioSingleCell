@@ -39,7 +39,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr mutate_if
 #' @importFrom magrittr set_rownames
 #' @importFrom S4Vectors metadata SimpleList
@@ -158,7 +158,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname subset
 #' @export
 setMethod(

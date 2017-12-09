@@ -45,7 +45,7 @@ labelSep <- ": "
 
 
 
-# Internal functions ====
+# Internal functions ===========================================================
 #' @importFrom ggplot2 geom_hline geom_vline
 .qcCutoffLine <- function(xintercept, yintercept) {
     if (!missing(xintercept)) {

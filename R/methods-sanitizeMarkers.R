@@ -12,7 +12,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom basejump camel
 #' @importFrom dplyr arrange everything group_by left_join mutate rename select
 #' @importFrom rlang !! sym
@@ -140,7 +140,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname sanitizeMarkers
 #' @export
 setMethod(

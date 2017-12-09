@@ -35,7 +35,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom basejump mdHeader mdList
 #' @importFrom Matrix rowSums
 #' @importFrom scales percent
@@ -62,7 +62,7 @@ NULL
     }
     # Add support `nCount` filtering in a future update
 
-    # Filter low quality cells ====
+    # Filter low quality cells =================================================
     colData <- colData(object)
     if (!isTRUE(quiet)) {
         message(paste(
@@ -143,7 +143,7 @@ NULL
         return(NULL)
     }
 
-    # Filter low quality genes ====
+    # Filter low quality genes =================================================
     if (minCellsPerGene > 0) {
         counts <- assay(object)
         numCells <- Matrix::rowSums(counts > 0)
@@ -163,7 +163,7 @@ NULL
         return(NULL)
     }
 
-    # Metadata ====
+    # Metadata =================================================================
     metadata(object)[["filterCells"]] <- cells
     metadata(object)[["filterGenes"]] <- genes
     metadata(object)[["filterParams"]] <- params
@@ -173,7 +173,7 @@ NULL
     )
     metadata(object)[["cell2sample"]] <- cell2sample
 
-    # Summary ====
+    # Summary ==================================================================
     if (!isTRUE(quiet)) {
         message(paste(
             paste(
@@ -219,7 +219,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname filterCells
 #' @export
 setMethod(

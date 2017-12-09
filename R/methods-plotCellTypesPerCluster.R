@@ -24,7 +24,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr pull
 #' @importFrom pbapply pblapply
 .plotCellTypesPerCluster <- function(
@@ -81,7 +81,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotCellTypesPerCluster
 #' @export
 setMethod(

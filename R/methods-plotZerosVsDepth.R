@@ -29,7 +29,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom ggplot2 aes_string facet_wrap geom_point ggplot labs
 #'   scale_x_log10
 #' @importFrom Matrix colSums
@@ -65,7 +65,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotZerosVsDepth
 #' @export
 setMethod(

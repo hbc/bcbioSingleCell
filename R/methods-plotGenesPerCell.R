@@ -45,7 +45,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom viridis scale_fill_viridis
 .plotGenesPerCell <- function(
     object,
@@ -98,7 +98,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotGenesPerCell
 #' @export
 setMethod(

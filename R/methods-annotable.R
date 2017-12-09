@@ -27,7 +27,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname annotable
 #' @export
 setMethod(

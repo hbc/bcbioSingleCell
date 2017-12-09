@@ -28,7 +28,7 @@ setValidity("bcbioSingleCell", function(object) TRUE)
 
 
 
-# Legacy class support ====
+# Legacy classes ===============================================================
 #' `bcbioSCDataSet`
 #'
 #' This class will be deprecated in favor of [bcbioSingleCell] in a future

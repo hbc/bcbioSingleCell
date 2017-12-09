@@ -31,7 +31,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom basejump prepareSummarizedExperiment
 #' @importFrom dplyr mutate_if pull
 #' @importFrom magrittr set_rownames
@@ -99,7 +99,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname selectSamples
 #' @export
 setMethod(

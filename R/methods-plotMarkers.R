@@ -30,7 +30,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Plot Marker Seurat Constructor
 #'
 #' @keywords internal
@@ -122,7 +122,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotMarkers
 #' @importFrom basejump mdHeader
 #' @export

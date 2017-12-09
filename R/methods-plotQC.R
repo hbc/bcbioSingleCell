@@ -41,7 +41,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 validMedianGeom <- c(
     "boxplot",
     "ridgeline",
@@ -291,12 +291,8 @@ validQCGeomFlip <- c(
             y = yCol,
             color = "interestingGroups")
     ) +
-        geom_point(
-            alpha = 0.25,
-            size = 0.8) +
-        geom_smooth(
-            se = FALSE,
-            size = 1.5) +
+        geom_point(alpha = 0.25, size = 0.8) +
+        geom_smooth(se = FALSE, size = 1.5) +
         scale_x_sqrt() +
         scale_y_sqrt()
 }
@@ -335,7 +331,7 @@ validQCGeomFlip <- c(
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotQC
 #' @export
 setMethod(

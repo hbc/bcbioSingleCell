@@ -28,7 +28,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotFeatureTSNE
 #' @importFrom basejump midnightTheme
 #' @importFrom cowplot plot_grid

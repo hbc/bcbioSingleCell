@@ -23,7 +23,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Define Cell to Sample Mappings
 #'
 #' This function extracts `sampleID` from the `cellID` column using grep
@@ -69,7 +69,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname cell2sample
 #' @param samples Sample identifiers.
 #' @export

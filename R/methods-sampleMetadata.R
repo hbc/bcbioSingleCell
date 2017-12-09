@@ -31,7 +31,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Prepare Sample Metadata from Seurat
 #'
 #' @author Michael Steinbaugh
@@ -77,7 +77,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname sampleMetadata
 #' @importFrom dplyr distinct mutate select
 #' @importFrom stringr str_match

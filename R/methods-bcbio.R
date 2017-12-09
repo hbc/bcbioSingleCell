@@ -107,7 +107,7 @@ setMethod(
 
 
 
-# Legacy class support =========================================================
+# Legacy methods ===============================================================
 # Package versions prior to 0.0.19 used `callers` to define the extra bcbio
 # slot. The structure of the object is otherwise the same.
 #' @rdname bcbio

@@ -30,7 +30,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom viridis scale_fill_viridis
 .plotNovelty <- function(
     object,
@@ -81,7 +81,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotNovelty
 #' @export
 setMethod(

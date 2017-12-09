@@ -17,7 +17,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname prepareSingleCellTemplate
 #' @export
 setMethod(

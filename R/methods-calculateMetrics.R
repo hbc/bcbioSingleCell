@@ -30,7 +30,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Calculate Metrics from Sparse Counts Matrix
 #'
 #' @keywords internal
@@ -129,7 +129,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname calculateMetrics
 #' @export
 setMethod(

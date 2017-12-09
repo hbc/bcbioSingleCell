@@ -30,7 +30,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom viridis scale_fill_viridis
 .plotUMIsPerCell <- function(
     object,
@@ -81,7 +81,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotUMIsPerCell
 #' @export
 setMethod(

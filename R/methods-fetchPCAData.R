@@ -22,7 +22,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname fetchPCAData
 #' @export
 setMethod(

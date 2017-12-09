@@ -29,7 +29,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Plot Marker tSNE Constructor
 #'
 #' @keywords internal
@@ -128,7 +128,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotMarkerTSNE
 #' @export
 setMethod(

@@ -28,7 +28,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom viridis scale_fill_viridis
 .plotMitoRatio <- function(
     object,
@@ -79,7 +79,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotMitoRatio
 #' @export
 setMethod(

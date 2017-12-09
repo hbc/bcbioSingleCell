@@ -28,7 +28,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname fetchTSNEExpressionData
 #' @importFrom dplyr everything group_by select
 #' @importFrom Matrix colMeans

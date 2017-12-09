@@ -22,7 +22,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname fetchTSNEData
 #' @export
 setMethod(

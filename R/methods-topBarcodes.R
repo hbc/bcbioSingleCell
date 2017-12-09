@@ -28,7 +28,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr slice
 #' @importFrom tibble as_tibble column_to_rownames rownames_to_column
 .topBarcodes <- function(object, n = 10) {
@@ -52,7 +52,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname topBarcodes
 #' @export
 setMethod(

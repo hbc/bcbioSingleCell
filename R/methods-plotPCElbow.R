@@ -34,7 +34,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom cowplot draw_plot ggdraw
 #' @importFrom ggplot2 aes_string geom_hline geom_line geom_point ggplot labs
 #'   scale_y_continuous
@@ -134,7 +134,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotPCElbow
 #' @export
 setMethod("plotPCElbow", "seurat", function(

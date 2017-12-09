@@ -36,7 +36,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Create Breaks Based on Quantiles of the Data
 #'
 #' @keywords internal
@@ -107,7 +107,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotQuantileHeatmap
 #' @export
 setMethod(

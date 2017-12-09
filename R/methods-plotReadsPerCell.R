@@ -32,7 +32,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Raw Cellular Barcodes Tibble
 #'
 #' Used for `geom` parameter: `ridgeline` and `violin` arguments.
@@ -357,7 +357,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotReadsPerCell
 #' @export
 setMethod(

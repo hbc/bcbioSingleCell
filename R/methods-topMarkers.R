@@ -22,7 +22,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr arrange filter slice
 #' @importFrom rlang !! sym
 .topMarkers <- function(
@@ -66,7 +66,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname topMarkers
 #' @export
 setMethod(

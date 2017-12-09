@@ -18,7 +18,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr pull rename
 .plotTopMarkers <- function(
     object,
@@ -58,7 +58,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotTopMarkers
 #' @export
 setMethod(

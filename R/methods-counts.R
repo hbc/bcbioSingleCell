@@ -35,7 +35,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr pull
 #' @importFrom magrittr set_rownames
 .counts <- function(
@@ -76,7 +76,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname counts
 #' @export
 setMethod(

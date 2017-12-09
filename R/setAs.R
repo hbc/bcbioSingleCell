@@ -19,7 +19,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Coerce Legacy bcbio Object to bcbioSingleCell class
 #'
 #' Compatible with old versions created by bcbioSingleCell package.
@@ -133,7 +133,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname coerce
 #' @name upgrade-bcbioSingleCell
 #' @section Upgrade bcbioSingleCell to current version:

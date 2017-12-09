@@ -31,7 +31,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr group_by left_join n summarize
 #' @importFrom ggplot2 aes_string element_text facet_wrap geom_bar geom_label
 #'   ggplot labs theme
@@ -98,7 +98,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotCellCounts
 #' @export
 setMethod(

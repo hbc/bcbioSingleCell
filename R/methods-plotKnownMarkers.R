@@ -12,7 +12,7 @@ NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom basejump mdHeader
 #' @importFrom dplyr pull
 .plotKnownMarkers <- function(
@@ -55,7 +55,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotKnownMarkers
 #' @export
 setMethod(
