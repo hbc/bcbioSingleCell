@@ -121,11 +121,13 @@ setGeneric("plotGenesPerCell", function(object, ...) {
 
 
 
-#' @rdname plotKnownMarkers
+#' @rdname plotKnownMarkersDetected
 #' @export
-setGeneric("plotKnownMarkers", function(object, knownMarkers, ...) {
-    standardGeneric("plotKnownMarkers")
-})
+setGeneric(
+    "plotKnownMarkersDetected",
+    function(object, knownMarkersDetected, ...) {
+        standardGeneric("plotKnownMarkersDetected")
+    })
 
 
 

@@ -82,3 +82,16 @@ readMarkers <- function(...) {
     .Deprecated("readMarkersFile")
     readMarkersFile(...)
 }
+
+#' @rdname deprecated
+#' @export
+plotKnownMarkers <- function(
+    object,
+    knownMarkers,
+    ...) {
+    .Deprecated("plotKnownMarkersDetected")
+    plotKnownMarkersDetected(
+        object,
+        knownMarkersDetected = knownMarkers,
+        ...)
+}
