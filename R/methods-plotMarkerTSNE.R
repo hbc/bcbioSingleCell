@@ -52,23 +52,39 @@ NULL
 #'   guide_colorbar theme
 #' @importFrom viridis scale_color_viridis
 #'
-#' @param data Marker gene expression from [fetchTSNEExpressionData()].
+#' @param object Marker gene expression [data.frame] returned from
+#'   [fetchTSNEExpressionData()].
 .plotMarkerTSNE <- function(
-    data,
+    object,
     colorPoints = "geomean",
     pointsAsNumbers = FALSE,
     pointSize = 1,
     label = TRUE,
     labelSize = 6,
-    color = scale_color_viridis(),
+    color = viridis::scale_color_viridis(),
     dark = TRUE,
     legend = TRUE,
     title = NULL) {
+    requiredCols <- c(
+        "centerX",
+        "centerY",
+        "expression",
+        "gene",
+        "geomean",
+        "ident",
+        "tSNE1",
+        "tSNE2")
+    if (!all(requiredCols %in% colnames(object))) {
+        stop(paste(
+            "Required columns:", toString(requiredCols)
+        ), call. = FALSE)
+    }
+
     if (!colorPoints %in% c("expression", "geomean")) {
         stop("colorPoints supports 'geomean' or 'expression'", call. = FALSE)
     }
     # Prepare a list of the genes used for the ggplot subtitle
-    genes <- unique(pull(data, "gene"))
+    genes <- unique(pull(object, "gene"))
     # Use `expression` if we're only plotting a single gene. The `geomean`
     # argument for `colorPoints` is only informative for 2+ genes.
     if (length(genes) == 1) {
@@ -80,7 +96,7 @@ NULL
     }
     genes <- toString(genes)
     p <- ggplot(
-        data,
+        object,
         mapping = aes_string(
             x = "tSNE1",
             y = "tSNE2",
@@ -132,7 +148,7 @@ NULL
                 size = labelSize,
                 fontface = "bold")
     }
-    if (!is.null(color)) {
+    if (is(color, "ScaleContinuous")) {
         p <- p + color
     }
     p
@@ -146,43 +162,7 @@ NULL
 setMethod(
     "plotMarkerTSNE",
     signature("data.frame"),
-    function(
-        object,
-        colorPoints = "geomean",
-        pointsAsNumbers = FALSE,
-        pointSize = 1,
-        label = TRUE,
-        labelSize = 6,
-        color = scale_color_viridis(),
-        dark = TRUE,
-        legend = TRUE,
-        title = NULL) {
-        requiredCols <- c(
-            "centerX",
-            "centerY",
-            "expression",
-            "gene",
-            "geomean",
-            "ident",
-            "tSNE1",
-            "tSNE2")
-        if (!all(requiredCols %in% colnames(object))) {
-            stop(paste(
-                "Required columns:", toString(requiredCols)
-            ), call. = FALSE)
-        }
-        .plotMarkerTSNE(
-            data = object,
-            colorPoints = colorPoints,
-            pointsAsNumbers = pointsAsNumbers,
-            pointSize = pointSize,
-            label = label,
-            labelSize = labelSize,
-            color = color,
-            dark = dark,
-            legend = legend,
-            title = title)
-    })
+    .plotMarkerTSNE)
 
 
 
@@ -200,31 +180,16 @@ setMethod(
         pointSize = 1,
         label = TRUE,
         labelSize = 6,
-        color = scale_color_viridis(),
+        color = viridis::scale_color_viridis(),
         dark = TRUE,
         title = NULL) {
-        validFormat <- c("ensgene", "symbol")
-        if (!format %in% validFormat) {
-            stop(paste(
-                "'format' must contain:", toString(validFormat)
-            ), call. = FALSE)
-        }
-        rownames <- rownames(slot(object, "data"))
+        .checkFormat(format)
         if (format == "ensgene") {
-            ensgene <- genes
-            gene2symbol <- bcbio(object, "gene2symbol")
-            if (is.null(gene2symbol)) {
-                stop(paste(
-                    "seurat object doesn't contain",
-                    "Ensembl gene to symbol mappings"
-                ), call. = FALSE)
-            }
-            genes <- gene2symbol %>%
-                .[which(.[["ensgene"]] %in% ensgene), "symbol", drop = TRUE]
+            genes <- .convertGenesToSymbols(object, genes = genes)
         }
         data <- fetchTSNEExpressionData(object, genes = genes)
         .plotMarkerTSNE(
-            data = data,
+            object = data,
             colorPoints = colorPoints,
             pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
