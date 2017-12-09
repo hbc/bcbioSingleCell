@@ -20,10 +20,22 @@
 #'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
 #'
-#' genes <- counts(seurat) %>% rownames() %>% head()
-#' print(genes)
+#' symbol <- counts(seurat) %>% rownames() %>% head()
+#' print(symbol)
 #'
-#' fetchTSNEExpressionData(seurat, genes = genes) %>% glimpse()
+#' ensgene <- bcbio(seurat, "gene2symbol") %>%
+#'     .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
+#'
+#' fetchTSNEExpressionData(
+#'     seurat,
+#'     genes = symbol,
+#'     format = "symbol") %>%
+#'     glimpse()
+#' fetchTSNEExpressionData(
+#'     seurat,
+#'     genes = ensgene,
+#'     format = "ensgene") %>%
+#'     glimpse()
 NULL
 
 
@@ -40,19 +52,24 @@ NULL
 setMethod(
     "fetchTSNEExpressionData",
     signature("seurat"),
-    function(object, genes) {
-        tsne <- fetchTSNEData(object)
-        data <- FetchData(object, vars.all = genes) %>%
-            as.data.frame()
+    function(
+        object,
+        genes,
+        format = "symbol") {
+        priorityCols <- c("symbol", "cellID", "expression", "geomean")
+        .checkFormat(format)
+        if (format == "ensgene") {
+            genes <- .convertGenesToSymbols(object, genes = genes)
+        }
+        data <- .fetchGeneDataSeurat(object, genes = genes)
         data[["geomean"]] <- Matrix::colMeans(t(data))
-        data <- cbind(tsne, data)
-        priorityCols <- c("gene", "cellID", "expression", "geomean")
-        data %>%
+        tsne <- fetchTSNEData(object)
+        cbind(tsne, data) %>%
             rownames_to_column("cellID") %>%
-            gather(key = "gene",
+            gather(key = "symbol",
                    value = "expression",
                    !!genes) %>%
-            group_by(!!sym("gene")) %>%
+            group_by(!!sym("symbol")) %>%
             select(!!!syms(priorityCols), everything()) %>%
             arrange(!!!syms(priorityCols))
     })
