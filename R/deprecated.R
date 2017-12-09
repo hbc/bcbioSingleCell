@@ -59,12 +59,16 @@ darkTheme <- function(...) {
     midnightTheme(...)
 }
 
+
+
 #' @rdname deprecated
 #' @export
 pcCutoff <- function(...) {
     .Deprecated("plotPCElbow")
     plotPCElbow(...)
 }
+
+
 
 #' @rdname deprecated
 #' @export
@@ -78,13 +82,6 @@ quantileHeatmap <- function(...) {
 # v0.0.25 ======================================================================
 #' @rdname deprecated
 #' @export
-readMarkers <- function(...) {
-    .Deprecated("readMarkersFile")
-    readMarkersFile(...)
-}
-
-#' @rdname deprecated
-#' @export
 plotKnownMarkers <- function(
     object,
     knownMarkers,
@@ -94,4 +91,13 @@ plotKnownMarkers <- function(
         object,
         knownMarkersDetected = knownMarkers,
         ...)
+}
+
+
+
+#' @rdname deprecated
+#' @export
+readMarkers <- function(...) {
+    .Deprecated("readMarkersFile")
+    readMarkersFile(...)
 }
