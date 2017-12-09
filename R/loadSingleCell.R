@@ -360,7 +360,7 @@ loadSingleCell <- function(
         metadata <- c(metadata, dots)
     }
 
-    # SummarizedExperiment =====================================================
+    # Return ===================================================================
     # Use an internal `SummarizedExperiment()` function call to handle rowname
     # mismatches with the annotable. This can happen when newer Ensembl
     # annotations are requested than those used for count alignment, or when
@@ -370,9 +370,9 @@ loadSingleCell <- function(
         rowData = annotable,
         colData = metrics,
         metadata = metadata)
-    bcb <- new("bcbioSingleCell", se)
-    # Keep these in the bcbio slot because they contain filtered cellular
-    # barcodes not present in the main assay matrix.
-    bcbio(bcb, "cellularBarcodes") <- cbList
-    bcb
+    bcbio <- list(
+        cellularBarcodes = cbList
+    ) %>%
+        as("SimpleList")
+    new("bcbioSingleCell", se, bcbio = bcbio)
 }
