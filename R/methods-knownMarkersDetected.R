@@ -22,6 +22,17 @@
 #'   gene marker promiscuous.
 #'
 #' @return Grouped [tibble].
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "seuratAllMarkers.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # grouped_df
+#' knownMarkersDetected(
+#'     all = seuratAllMarkers,
+#'     known = cellTypeMarkers[["hsapiens"]]) %>%
+#'     glimpse()
 NULL
 
 
