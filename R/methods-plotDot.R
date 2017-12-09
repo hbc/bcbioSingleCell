@@ -73,6 +73,7 @@ NULL
 #' @importFrom Seurat FetchData
 #' @importFrom tibble rownames_to_column
 #' @importFrom rlang !! !!! sym syms
+#' @importFrom tibble as_tibble
 #' @importFrom tidyr gather
 .plotDot <- function(
     object,
@@ -89,21 +90,21 @@ NULL
     if (format == "ensgene") {
         genes <- .convertGenesToSymbols(object, genes = genes)
     }
-    data <- .fetchGeneDataSeurat(object, genes = genes)
-    data <- data %>%
+    data <- .fetchGeneDataSeurat(object, genes = genes) %>%
         rownames_to_column("cell") %>%
+        as_tibble() %>%
         mutate(ident = object@ident) %>%
         gather(
-            key = "symbol",
+            key = "gene",
             value = "expression",
             !!genes) %>%
-        group_by(!!!syms(c("ident", "symbol"))) %>%
+        group_by(!!!syms(c("ident", "gene"))) %>%
         summarize(
             avgExp = mean(expm1(.data[["expression"]])),
             pctExp = .percentAbove(.data[["expression"]], threshold = 0)
         ) %>%
         ungroup() %>%
-        group_by(!!sym("symbol")) %>%
+        group_by(!!sym("gene")) %>%
         mutate(
             avgExpScale = scale(.data[["avgExp"]]),
             avgExpScale = .minMax(
@@ -116,7 +117,7 @@ NULL
     p <- ggplot(
         data = data,
         mapping = aes_string(
-            x = "symbol",
+            x = "gene",
             y = "ident")
     ) +
         geom_point(
