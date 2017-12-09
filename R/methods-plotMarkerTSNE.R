@@ -9,6 +9,9 @@
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #'
+#' @param format Gene identifier format. Defaults to `symbol` but `ensgene`
+#'   is also supported, as long as Ensembl gene to symbol identifier mappings
+#'   are defined.
 #' @param colorPoints Color points by geometric mean (`geomean`) or expression
 #'   of individual gene (`expression`).
 #' @param legend Show plot legend.
@@ -20,11 +23,20 @@
 #'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
 #'
-#' genes <- counts(seurat) %>% rownames() %>% .[[1]]
-#' print(genes)
+#' symbol <- counts(seurat) %>% rownames() %>% .[[1]]
+#' print(symbol)
+#'
+#' ensgene <- bcbio(seurat, "gene2symbol") %>%
+#'     .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
+#' print(ensgene)
 #'
 #' # seurat
-#' plotMarkerTSNE(seurat, genes = genes)
+#' plotMarkerTSNE(seurat, genes = symbol, format = "symbol")
+#' plotMarkerTSNE(seurat, genes = ensgene, format = "ensgene")
+#'
+#' # data.frame
+#' df <- fetchTSNEExpressionData(seurat, genes = symbol)
+#' plotMarkerTSNE(df)
 NULL
 
 
@@ -182,6 +194,7 @@ setMethod(
     function(
         object,
         genes,
+        format = "symbol",
         colorPoints = "geomean",
         pointsAsNumbers = FALSE,
         pointSize = 1,
@@ -190,6 +203,25 @@ setMethod(
         color = scale_color_viridis(),
         dark = TRUE,
         title = NULL) {
+        validFormat <- c("ensgene", "symbol")
+        if (!format %in% validFormat) {
+            stop(paste(
+                "'format' must contain:", toString(validFormat)
+            ), call. = FALSE)
+        }
+        rownames <- rownames(slot(object, "data"))
+        if (format == "ensgene") {
+            ensgene <- genes
+            gene2symbol <- bcbio(object, "gene2symbol")
+            if (is.null(gene2symbol)) {
+                stop(paste(
+                    "seurat object doesn't contain",
+                    "Ensembl gene to symbol mappings"
+                ), call. = FALSE)
+            }
+            genes <- gene2symbol %>%
+                .[which(.[["ensgene"]] %in% ensgene), "symbol", drop = TRUE]
+        }
         data <- fetchTSNEExpressionData(object, genes = genes)
         .plotMarkerTSNE(
             data = data,
