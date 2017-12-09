@@ -56,7 +56,7 @@ setMethod(
         object,
         genes,
         format = "symbol") {
-        priorityCols <- c("symbol", "cellID", "expression", "geomean")
+        priorityCols <- c("gene", "cellID", "expression", "geomean")
         .checkFormat(format)
         if (format == "ensgene") {
             genes <- .convertGenesToSymbols(object, genes = genes)
@@ -66,10 +66,10 @@ setMethod(
         tsne <- fetchTSNEData(object)
         cbind(tsne, data) %>%
             rownames_to_column("cellID") %>%
-            gather(key = "symbol",
+            gather(key = "gene",
                    value = "expression",
                    !!genes) %>%
-            group_by(!!sym("symbol")) %>%
+            group_by(!!sym("gene")) %>%
             select(!!!syms(priorityCols), everything()) %>%
             arrange(!!!syms(priorityCols))
     })
