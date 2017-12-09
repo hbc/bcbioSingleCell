@@ -14,19 +14,32 @@ pooled <- aggregateReplicates(bcb)
 filtered <- filterCells(pooled)
 
 # Minimal simple Seurat working example
+dimsUse <- 1:20
 seurat <- as(filtered, "seurat") %>%
     NormalizeData() %>%
     FindVariableGenes(do.plot = FALSE) %>%
     ScaleData() %>%
     RunPCA(do.print = FALSE) %>%
-    FindClusters(dims.use = 1:20) %>%
-    RunTSNE(dims.use = 1:20, do.fast = TRUE)
+    FindClusters(dims.use = dimsUse) %>%
+    RunTSNE(dims.use = dimsUse, do.fast = TRUE)
+
+seuratAllMarkersOriginal <- FindAllMarkers(seurat)
+seuratAllMarkers <- sanitizeMarkers(
+    seurat,
+    markers = seuratAllMarkersOriginal)
+
+knownMarkersDetected <- knownMarkersDetected(
+    all = seuratAllMarkers,
+    known = cellTypeMarkers[["hsapiens"]])
 
 saveData(
     bcb,
     pooled,
     filtered,
+    knownMarkersDetected,
     seurat,
+    seuratAllMarkers,
+    seuratAllMarkersOriginal,
     dir = extdataDir,
     compress = "xz",
     overwrite = TRUE)
