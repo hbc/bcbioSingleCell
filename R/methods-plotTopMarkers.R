@@ -14,30 +14,41 @@
 #'
 #' @param topMarkers Top markers [tibble] grouped by cluster, returned by
 #'   [topMarkers()].
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "topMarkers.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat, grouped_df
+#' # Let's plot the top 2 markers from cluster 0, as a quick example
+#' plotTopMarkers(seurat, topMarkers[1:2, ])
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom dplyr pull rename
+#' @importFrom dplyr rename
 .plotTopMarkers <- function(
     object,
     topMarkers,
     pointsAsNumbers = FALSE,
     headerLevel = NULL) {
     .checkSanitizedMarkers(topMarkers)
-    clusters <- topMarkers[["cluster"]] %>%
-        levels()
+    clusters <- levels(topMarkers[["cluster"]])
     pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
+        # We're matching against the `symbol` column here
         genes <- topMarkers %>%
-            .[.[["cluster"]] == cluster, ] %>%
-            pull("symbol")
-        if (is.null(genes)) {
-            return(NULL)
-        }
+            as.data.frame() %>%
+            .[.[["cluster"]] == cluster, "symbol", drop = TRUE]
+        if (is.null(genes)) return(NULL)
         if (length(genes) > 10) {
-            warning("Maximum of 10 genes per cluster is recommended")
+            warning("Maximum of 10 genes per cluster is recommended",
+                    call. = FALSE)
         }
         if (!is.null(headerLevel)) {
             mdHeader(
@@ -45,12 +56,16 @@ NULL
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE)
+            subheaderLevel <- headerLevel + 1
+        } else {
+            subheaderLevel <- NULL
         }
         plotMarkers(
             object,
             genes = genes,
+            format = "symbol",
             pointsAsNumbers = pointsAsNumbers,
-            headerLevel = headerLevel + 1)
+            headerLevel = subheaderLevel)
         # Don't show here, already defined in `plotMarkers()`
     }) %>%
         invisible()
