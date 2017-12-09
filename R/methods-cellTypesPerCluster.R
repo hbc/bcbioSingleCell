@@ -13,12 +13,11 @@
 #'   significant known makers per cell type.
 #'
 #' @examples
-#' \dontrun{
-#' knownMarkers <- knownMarkersDetected(
-#'     all = seuratAllMarkers,
-#'     known = cellTypeMarkers)
-#' cellTypesPerCluster(knownMarkers)
-#' }
+#' load(system.file(
+#'     file.path("extdata", "knownMarkersDetected.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' cellTypesPerCluster(knownMarkersDetected) %>% glimpse()
 NULL
 
 
