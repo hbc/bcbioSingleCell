@@ -21,11 +21,20 @@
 #' @return No value, only graphical output.
 #'
 #' @examples
-#' \dontrun{
-#' top <- topMarkers(markers)
-#' genes <- top$symbol[1:4]
-#' plotMarkers(seurat, genes = genes)
-#' }
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "topMarkers.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' symbol <- topMarkers$symbol[1:4]
+#' print(symbol)
+#' ensgene <- topMarkers$ensgene[1:4]
+#' print(ensgene)
+#'
+#' plotMarkers(seurat, genes = symbol, format = "symbol")
+#' plotMarkers(seurat, genes = ensgene, format = "ensgene")
 NULL
 
 
@@ -48,7 +57,7 @@ NULL
 .plotMarkerSeurat <- function(
     object,
     gene,
-    color = scale_color_viridis(option = "inferno"),
+    color = viridis::scale_color_viridis(option = "inferno"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     returnAsList = FALSE) {
@@ -60,6 +69,7 @@ NULL
     tsne <- plotMarkerTSNE(
         object,
         genes = gene,
+        format = "symbol",
         colorPoints = "expression",
         color = color,
         dark = dark,
@@ -92,7 +102,7 @@ NULL
     # We're transposing the dot plot here to align vertically with the
     # violin and tSNE plots. The violin is preferable over the ridgeline
     # here because it works better horizontally.
-    dot <- plotDot(object, genes = gene)
+    dot <- plotDot(object, genes = gene, format = "symbol")
 
     if (isTRUE(returnAsList)) {
         list(tsne = tsne,
@@ -129,10 +139,15 @@ NULL
 setMethod("plotMarkers", "seurat", function(
     object,
     genes,
-    color = scale_color_viridis(option = "inferno"),
+    format = "symbol",
+    color = viridis::scale_color_viridis(option = "inferno"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     headerLevel = NULL) {
+    .checkFormat(format)
+    if (format == "ensgene") {
+        genes <- .convertGenesToSymbols(object, genes = genes)
+    }
     lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
         # Skip and warn if gene is missing
