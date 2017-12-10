@@ -24,3 +24,17 @@ sanitizeMarkers(object, markers, ...)
 \description{
 Sanitize Markers Output
 }
+\examples{
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seuratAllMarkersOriginal.rda"),
+    package = "bcbioSingleCell"))
+
+# seurat
+sanitizeMarkers(
+    seurat,
+    markers = seuratAllMarkersOriginal) \%>\%
+    glimpse()
+}

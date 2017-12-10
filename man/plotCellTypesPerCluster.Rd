@@ -39,14 +39,24 @@ type (per unbiased cluster). Cell types with too few (\code{min} cutoff) or too
 many (\code{max} cutoff) marker genes will be skipped.
 }
 \examples{
-\dontrun{
-cellTypes <- cellTypesPerCluster(knownMakersDetected)
-plotCellTypesPerCluster(cellTypes)
-}
+load(system.file(
+    file.path("extdata", "knownMarkersDetected.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
+glimpse(cellTypesPerCluster)
+
+# seurat
+# Let's plot the first 2 cell types, as a quick example
+plotCellTypesPerCluster(
+    seurat,
+    cellTypesPerCluster = cellTypesPerCluster[1:2, ])
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotKnownMarkers}},
+  \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}}, \code{\link{plotTopMarkers}},
   \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }

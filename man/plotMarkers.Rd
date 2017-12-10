@@ -9,8 +9,8 @@
 \usage{
 plotMarkers(object, ...)
 
-\S4method{plotMarkers}{seurat}(object, genes,
-  color = scale_color_viridis(option = "inferno"), dark = TRUE,
+\S4method{plotMarkers}{seurat}(object, genes, format = "symbol",
+  color = viridis::scale_color_viridis(option = "inferno"), dark = TRUE,
   pointsAsNumbers = FALSE, headerLevel = NULL)
 }
 \arguments{
@@ -19,6 +19,10 @@ plotMarkers(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{genes}{Genes (by symbol name) of which to get expression data.}
+
+\item{format}{Gene identifier format. Defaults to \code{symbol} but \code{ensgene}
+is also supported, as long as Ensembl gene to symbol identifier mappings
+are defined.}
 
 \item{color}{Color palette to use for points. Defaults to the viridis color
 palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
@@ -43,15 +47,24 @@ Plot gene expression per cell in multiple formats:
 }
 }
 \examples{
-\dontrun{
-top <- topMarkers(markers)
-genes <- top$symbol[1:4]
-plotMarkers(seurat, genes = genes)
-}
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "topMarkers.rda"),
+    package = "bcbioSingleCell"))
+
+symbol <- topMarkers$symbol[1:4]
+print(symbol)
+ensgene <- topMarkers$ensgene[1:4]
+print(ensgene)
+
+plotMarkers(seurat, genes = symbol, format = "symbol")
+plotMarkers(seurat, genes = ensgene, format = "ensgene")
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotKnownMarkers}},
+  \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}}, \code{\link{plotTopMarkers}},
   \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }

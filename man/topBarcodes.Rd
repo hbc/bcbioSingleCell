@@ -43,7 +43,7 @@ topBarcodes(seurat) \%>\% glimpse()
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotKnownMarkers}},
+  \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
   \code{\link{plotTopMarkers}}, \code{\link{topMarkers}}
 }

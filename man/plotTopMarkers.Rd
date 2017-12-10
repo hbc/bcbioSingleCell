@@ -36,9 +36,21 @@ The number of markers to plot is determined by the output of the
 simply reassign first using that function. If necessary, we can add support
 for the number of genes to plot here in a future update.
 }
+\examples{
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "topMarkers.rda"),
+    package = "bcbioSingleCell"))
+
+# seurat, grouped_df
+# Let's plot the top 2 markers from cluster 0, as a quick example
+plotTopMarkers(seurat, topMarkers[1:2, ])
+}
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotKnownMarkers}},
+  \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
   \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }

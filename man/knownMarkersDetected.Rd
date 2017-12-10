@@ -40,8 +40,19 @@ identifiers in the \code{ensgene} column. We must avoid any matching operations
 based on the gene symbols, since these change often and can mismatch
 easily.
 }
+\examples{
+load(system.file(
+    file.path("extdata", "seuratAllMarkers.rda"),
+    package = "bcbioSingleCell"))
+
+# grouped_df
+knownMarkersDetected(
+    all = seuratAllMarkers,
+    known = cellTypeMarkers[["hsapiens"]]) \%>\%
+    glimpse()
+}
 \seealso{
-Other Clustering Utilities: \code{\link{plotKnownMarkers}},
+Other Clustering Utilities: \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}

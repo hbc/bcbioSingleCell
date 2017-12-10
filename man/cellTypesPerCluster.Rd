@@ -28,12 +28,11 @@ significant known makers per cell type.
 Cell Types per Cluster
 }
 \examples{
-\dontrun{
-knownMarkers <- knownMarkersDetected(
-    all = seuratAllMarkers,
-    known = cellTypeMarkers)
-cellTypesPerCluster(knownMarkers)
-}
+load(system.file(
+    file.path("extdata", "knownMarkersDetected.rda"),
+    package = "bcbioSingleCell"))
+
+cellTypesPerCluster(knownMarkersDetected) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

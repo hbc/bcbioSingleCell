@@ -9,6 +9,7 @@
 \alias{darkTheme}
 \alias{pcCutoff}
 \alias{quantileHeatmap}
+\alias{plotKnownMarkers}
 \alias{readMarkers}
 \title{Deprecated Functions}
 \usage{
@@ -25,6 +26,8 @@ darkTheme(...)
 pcCutoff(...)
 
 quantileHeatmap(...)
+
+plotKnownMarkers(object, knownMarkers, ...)
 
 readMarkers(...)
 }

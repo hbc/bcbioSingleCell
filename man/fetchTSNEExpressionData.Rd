@@ -10,7 +10,7 @@
 \usage{
 fetchTSNEExpressionData(object, ...)
 
-\S4method{fetchTSNEExpressionData}{seurat}(object, genes)
+\S4method{fetchTSNEExpressionData}{seurat}(object, genes, format = "symbol")
 }
 \arguments{
 \item{object}{Object.}
@@ -32,10 +32,22 @@ load(system.file(
     file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
-genes <- counts(seurat) \%>\% rownames() \%>\% head()
-print(genes)
+symbol <- counts(seurat) \%>\% rownames() \%>\% head()
+print(symbol)
 
-fetchTSNEExpressionData(seurat, genes = genes) \%>\% glimpse()
+ensgene <- bcbio(seurat, "gene2symbol") \%>\%
+    .[which(.[["symbol"]] \%in\% symbol), "ensgene", drop = TRUE]
+
+fetchTSNEExpressionData(
+    seurat,
+    genes = symbol,
+    format = "symbol") \%>\%
+    glimpse()
+fetchTSNEExpressionData(
+    seurat,
+    genes = ensgene,
+    format = "ensgene") \%>\%
+    glimpse()
 }
 \seealso{
 Other t-SNE Utilities: \code{\link{fetchTSNEData}},
