@@ -14,11 +14,25 @@
 #' @seealso [sampleMetadata()].
 #'
 #' @return [data.frame] with cellular barcodes as rows.
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' metrics(bcb) %>% glimpse()
+#'
+#' # seurat
+#' metrics(seurat) %>% glimpse()
 NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname metrics
 #' @importFrom basejump uniteInterestingGroups
 #' @importFrom dplyr left_join

@@ -1,3 +1,7 @@
+# FIXME Improve the column order here
+
+
+
 #' Fetch t-SNE Locations and Cellular Metadata
 #'
 #' @rdname fetchTSNEData
@@ -12,15 +16,17 @@
 #' @seealso [Seurat::TSNEPlot()].
 #'
 #' @examples
-#' \dontrun{
-#' data(seurat)
-#' tsne <- fetchTSNEData(seurat)
-#' }
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat
+#' fetchTSNEData(seurat) %>% glimpse()
 NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname fetchTSNEData
 #' @export
 setMethod(

@@ -24,9 +24,12 @@ No value.
 Prepare Single-Cell RNA-Seq RMarkdown Template
 }
 \examples{
-\dontrun{
+files <- c(
+    "_footer.Rmd", "_header.Rmd", "_output.yaml",
+    "bibliography.bib", "setup.R")
 prepareSingleCellTemplate()
-}
+all(file.exists(files))
+unlink(files)
 }
 \author{
 Michael Steinbaugh

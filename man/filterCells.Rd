@@ -12,7 +12,7 @@ filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000,
   minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.8,
-  minCellsPerGene = 3, drop = TRUE, quiet = FALSE)
+  minCellsPerGene = 3, quiet = FALSE)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
 }
@@ -34,11 +34,6 @@ filterCells(object, ...)
 \item{minCellsPerGene}{Include genes with non-zero expression in at least
 this many cells.}
 
-\item{drop}{Drop low quality cells from object after filtering.
-Enabled by default and generally recommended. If set \code{FALSE}, then the this
-function simply saves \code{filterCells}, \code{filterGenes}, and \code{filterParams} into
-the \code{\link[=metadata]{metadata()}} slot.}
-
 \item{quiet}{If \code{TRUE}, don't show the filtering parameter summary.}
 }
 \value{
@@ -50,17 +45,20 @@ Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.
 }
 \examples{
-\dontrun{
-data(bcb)
-bcb <- filterCells(bcb)
-}
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+print(bcb)
+filterCells(bcb)
 }
 \seealso{
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
 
-Other Data Management Utilities: \code{\link{aggregateFeatures}},
-  \code{\link{aggregateReplicates}},
-  \code{\link{readMarkers}}, \code{\link{subsetPerSample}}
+Other Data Management Utilities: \code{\link{aggregateReplicates}},
+  \code{\link{readMarkersFile}},
+  \code{\link{subsetPerSample}}
 }
 \author{
 Michael Steinbaugh

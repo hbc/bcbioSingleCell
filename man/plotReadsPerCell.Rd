@@ -34,6 +34,20 @@ Plot Read Counts per Cell
 \note{
 Here by "cell" we mean "cellular barcode".
 }
+\examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+plotReadsPerCell(bcb)
+
+# seurat
+plotReadsPerCell(seurat)
+}
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},
   \code{\link{plotCellCounts}},

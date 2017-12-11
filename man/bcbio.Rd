@@ -6,6 +6,7 @@
 \alias{bcbio,bcbioSingleCell-method}
 \alias{bcbio,seurat-method}
 \alias{bcbio<-,bcbioSingleCell-method}
+\alias{bcbio<-,seurat-method}
 \alias{bcbio,bcbioSCDataSet-method}
 \alias{bcbio<-,bcbioSCDataSet-method}
 \title{Additional bcbio Run Data Accessor}
@@ -15,6 +16,8 @@
 \S4method{bcbio}{seurat}(object, type)
 
 \S4method{bcbio}{bcbioSingleCell}(object, type) <- value
+
+\S4method{bcbio}{seurat}(object, type) <- value
 
 \S4method{bcbio}{bcbioSCDataSet}(object, type)
 
@@ -32,6 +35,28 @@
 }
 \description{
 Additional bcbio Run Data Accessor
+}
+\examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+bcbio(bcb) \%>\% names()
+
+# Assignment method support
+bcbio(bcb, "stash") <- "testing"
+bcbio(bcb, "stash")
+
+# seurat
+bcbio(seurat) \%>\% names()
+
+# Assignment method support
+bcbio(seurat, "stash") <- "testing"
+bcbio(seurat, "stash")
 }
 \author{
 Michael Steinbaugh

@@ -5,10 +5,13 @@
 #'
 #' @author Michael Steinbaugh
 #'
+#' @importFrom basejump plotDot
+#'
 #' @inheritParams AllGenerics
 #'
-#' @param genes Character vector of gene symbols.
-#' @param colors Named character vector (`low`, `high`) for plot colors.
+#' @param genes Gene identifiers to plot.
+#' @param format Gene identifier format. Supports `ensgene` or `symbol`.
+#' @param color Color palette. If `NULL`, uses default ggplot2 colors.
 #' @param colMin Minimum scaled average expression threshold. Everything
 #'   smaller will be set to this.
 #' @param colMax Maximum scaled average expression threshold. Everything larger
@@ -25,15 +28,24 @@
 #' @seealso Modified version of [Seurat::DotPlot()].
 #'
 #' @examples
-#' \dontrun{
-#' data(seurat)
-#' plotDot(seurat, genes = "Hspe1")
-#' }
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' symbol <- slot(seurat, "data") %>% rownames() %>% .[1:2]
+#' print(symbol)
+#'
+#' ensgene <- bcbio(seurat, "gene2symbol") %>%
+#'     .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
+#'
+#' # seurat
+#' plotDot(seurat, genes = symbol, format = "symbol")
+#' plotDot(seurat, genes = ensgene, format = "ensgene")
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Min Max
 #' @seealso `Seurat:::MinMax()`
 #' @noRd
@@ -55,51 +67,57 @@ NULL
 
 
 
-# Methods ====
-#' @rdname plotDot
 #' @importFrom dplyr group_by mutate summarize ungroup
 #' @importFrom ggplot2 aes_string geom_point labs scale_color_gradient
 #'   scale_radius
 #' @importFrom Seurat FetchData
 #' @importFrom tibble rownames_to_column
 #' @importFrom rlang !! !!! sym syms
+#' @importFrom tibble as_tibble
 #' @importFrom tidyr gather
-#' @export
-setMethod("plotDot", "seurat", function(
+.plotDot <- function(
     object,
     genes,
-    colors = c(low = "lightgray", high = "purple"),
+    format = "symbol",
+    color = ggplot2::scale_color_gradient(
+        low = "lightgray",
+        high = "purple"),
     colMin = -2.5,
     colMax = 2.5,
     dotMin = 0,
     dotScale = 6) {
-    data <- FetchData(object, vars.all = genes) %>%
-        as.data.frame() %>%
+    .checkFormat(format)
+    if (format == "ensgene") {
+        genes <- .convertGenesToSymbols(object, genes = genes)
+    }
+    data <- .fetchGeneDataSeurat(object, genes = genes) %>%
         rownames_to_column("cell") %>%
+        as_tibble() %>%
         mutate(ident = object@ident) %>%
         gather(
-            key = "symbol",
+            key = "gene",
             value = "expression",
             !!genes) %>%
-        group_by(!!!syms(c("ident", "symbol"))) %>%
+        group_by(!!!syms(c("ident", "gene"))) %>%
         summarize(
             avgExp = mean(expm1(.data[["expression"]])),
             pctExp = .percentAbove(.data[["expression"]], threshold = 0)
         ) %>%
         ungroup() %>%
-        group_by(!!sym("symbol")) %>%
-        mutate(avgExpScale = scale(.data[["avgExp"]])) %>%
+        group_by(!!sym("gene")) %>%
         mutate(
+            avgExpScale = scale(.data[["avgExp"]]),
             avgExpScale = .minMax(
                 .data[["avgExpScale"]],
                 max = colMax,
                 min = colMin)
         )
     data[["pctExp"]][data[["pctExp"]] < dotMin] <- NA
-    ggplot(
+
+    p <- ggplot(
         data = data,
         mapping = aes_string(
-            x = "symbol",
+            x = "gene",
             y = "ident")
     ) +
         geom_point(
@@ -108,9 +126,22 @@ setMethod("plotDot", "seurat", function(
                 size = "pctExp")
         ) +
         scale_radius(range = c(0, dotScale)) +
-        scale_color_gradient(
-            low = colors[["low"]],
-            high = colors[["high"]]) +
         labs(x = "gene",
              y = "ident")
-})
+    if (is(color, "ScaleContinuous")) {
+        p <- p + color
+    }
+
+    p
+}
+
+
+
+
+# Methods ======================================================================
+#' @rdname plotDot
+#' @export
+setMethod(
+    "plotDot",
+    signature("seurat"),
+    .plotDot)

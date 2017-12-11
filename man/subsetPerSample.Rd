@@ -10,7 +10,7 @@
 subsetPerSample(object, ...)
 
 \S4method{subsetPerSample}{bcbioSingleCell}(object, minCells = 200,
-  dir = "data")
+  dir = getwd())
 }
 \arguments{
 \item{object}{Object.}
@@ -28,9 +28,8 @@ Character vector of saved \link{bcbioSingleCell} subsets.
 Subset Per Sample
 }
 \seealso{
-Other Data Management Utilities: \code{\link{aggregateFeatures}},
-  \code{\link{aggregateReplicates}},
-  \code{\link{filterCells}}, \code{\link{readMarkers}}
+Other Data Management Utilities: \code{\link{aggregateReplicates}},
+  \code{\link{filterCells}}, \code{\link{readMarkersFile}}
 }
 \author{
 Michael Steinbaugh

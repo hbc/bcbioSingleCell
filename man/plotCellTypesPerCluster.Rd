@@ -11,8 +11,8 @@
 plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat,grouped_df}(object,
-  cellTypesPerCluster, color = scale_color_viridis(option = "inferno"),
-  dark = TRUE, headerLevel = NULL)
+  cellTypesPerCluster, color = viridis::scale_color_viridis(), dark = TRUE,
+  headerLevel = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -39,17 +39,28 @@ type (per unbiased cluster). Cell types with too few (\code{min} cutoff) or too
 many (\code{max} cutoff) marker genes will be skipped.
 }
 \examples{
-\dontrun{
-cellTypes <- cellTypesPerCluster(knownMakersDetected)
-plotCellTypesPerCluster(cellTypes)
-}
+load(system.file(
+    file.path("extdata", "knownMarkersDetected.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
+glimpse(cellTypesPerCluster)
+
+# seurat
+# Let's plot the first row, as an example
+cellTypesPerCluster <- cellTypesPerCluster[1, , drop = FALSE]
+plotCellTypesPerCluster(
+    seurat,
+    cellTypesPerCluster = cellTypesPerCluster)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotKnownMarkers}},
-  \code{\link{plotPCElbow}}, \code{\link{plotStressGenes}},
-  \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotPCElbow}}, \code{\link{plotTopMarkers}},
+  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

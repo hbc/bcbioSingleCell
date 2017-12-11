@@ -10,11 +10,19 @@
 #' @inherit plotTSNE
 #'
 #' @seealso [plotTSNE()].
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat
+#' plotPCA(seurat)
 NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotPCA
 #' @importFrom ggplot2 scale_color_hue
 #' @export

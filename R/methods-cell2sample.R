@@ -5,11 +5,25 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams AllGenerics
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' cell2sample(bcb) %>% glimpse()
+#'
+#' # seurat
+#' cell2sample(seurat) %>% glimpse()
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Define Cell to Sample Mappings
 #'
 #' This function extracts `sampleID` from the `cellID` column using grep
@@ -55,7 +69,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname cell2sample
 #' @param samples Sample identifiers.
 #' @export
@@ -81,7 +95,7 @@ setMethod(
         # Generate if no mappings are stashed
         if (is.null(cell2sample)) {
             cell2sample <- .cell2sample(
-                cells = rownames(colData(object)),
+                cells = colnames(object),
                 samples = rownames(sampleMetadata(object))
             )
             return(cell2sample)
@@ -100,5 +114,25 @@ setMethod(
         }
         cell2sample <- cell2sample[colnames(object)]
         cell2sample <- droplevels(cell2sample)
+        cell2sample
+    })
+
+
+
+#' @rdname cell2sample
+#' @export
+setMethod(
+    "cell2sample",
+    signature("seurat"),
+    function(object) {
+        cell2sample <- bcbio(object, "cell2sample")
+        # Generate if no mappings are stashed
+        if (is.null(cell2sample)) {
+            cell2sample <- .cell2sample(
+                cells = colnames(slot(object, "data")),
+                samples = rownames(sampleMetadata(object))
+            )
+            return(cell2sample)
+        }
         cell2sample
     })

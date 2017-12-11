@@ -14,7 +14,7 @@
     object,
     package = "Seurat",
     stop = FALSE) {
-    # General checks ====
+    # General checks ===========================================================
     if (!is(object, "grouped_df")) {
         if (isTRUE(stop)) {
             stop("Object must be 'grouped_df' class", call. = FALSE)
@@ -38,7 +38,7 @@
         }
     }
 
-    # Package-specific checks ====
+    # Package-specific checks ==================================================
     if (package == "Seurat") {
         # Check for `Seurat::FindAllMarkers()` return.
         # These columns are output in an inconsistent format, so we'll sanitize

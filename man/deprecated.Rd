@@ -9,6 +9,8 @@
 \alias{darkTheme}
 \alias{pcCutoff}
 \alias{quantileHeatmap}
+\alias{plotKnownMarkers}
+\alias{readMarkers}
 \title{Deprecated Functions}
 \usage{
 plotClusters(...)
@@ -24,6 +26,10 @@ darkTheme(...)
 pcCutoff(...)
 
 quantileHeatmap(...)
+
+plotKnownMarkers(object, knownMarkers, ...)
+
+readMarkers(...)
 }
 \arguments{
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}

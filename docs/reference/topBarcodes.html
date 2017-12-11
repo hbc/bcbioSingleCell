@@ -93,6 +93,9 @@
     <pre class="usage"><span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
+<span class='co'># S4 method for seurat</span>
 <span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -119,17 +122,54 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
-  <code>plotKnownMarkers</code>,
+  <code>plotKnownMarkersDetected</code>,
   <code>plotMarkers</code>, <code>plotPCElbow</code>,
-  <code>plotStressGenes</code>,
   <code>plotTopMarkers</code>, <code>topMarkers</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>data</span>(<span class='no'>bcb</span>)
-<span class='fu'>topBarcodes</span>(<span class='no'>bcb</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"bcb.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+
+<span class='co'># bcbioSingleCell</span>
+<span class='fu'>topBarcodes</span>(<span class='no'>bcb</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
+#&gt; Variables: 16
+#&gt; $ sampleID            &lt;fctr&gt; run1_AGAGGATA, run1_AGAGGATA, run1_AGAGGATA, r...
+#&gt; $ nUMI                &lt;dbl&gt; 14095, 14053, 13083, 12909, 12660, 12541, 12359...
+#&gt; $ nGene               &lt;int&gt; 4230, 4146, 3623, 3916, 4275, 4108, 3891, 3991,...
+#&gt; $ nCoding             &lt;dbl&gt; 12405, 11895, 12101, 11533, 11627, 11527, 11261...
+#&gt; $ nMito               &lt;dbl&gt; 781, 1251, 324, 476, 410, 482, 338, 494, 239, 213
+#&gt; $ log10GenesPerUMI    &lt;dbl&gt; 0.8740139, 0.8721868, 0.8645425, 0.8739812, 0.8...
+#&gt; $ mitoRatio           &lt;dbl&gt; 0.05540972, 0.08902014, 0.02476496, 0.03687350,...
+#&gt; $ nCount              &lt;int&gt; 128690, 126962, 111183, 118717, 120160, 110058,...
+#&gt; $ sampleName          &lt;fctr&gt; M1_seq_rep_1, M1_seq_rep_1, M1_seq_rep_1, M1_s...
+#&gt; $ description         &lt;fctr&gt; run1, run1, run1, run1, run1, run1, run1, run1...
+#&gt; $ fileName            &lt;fctr&gt; 20170915_Pool_ZG4780-1_S1_R1_001.fastq.gz, 201...
+#&gt; $ index               &lt;fctr&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+#&gt; $ sequence            &lt;fctr&gt; TATCCTCT, TATCCTCT, TATCCTCT, TATCCTCT, TATCCT...
+#&gt; $ sampleNameAggregate &lt;fctr&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
+#&gt; $ revcomp             &lt;fctr&gt; AGAGGATA, AGAGGATA, AGAGGATA, AGAGGATA, AGAGGA...
+#&gt; $ interestingGroups   &lt;fctr&gt; M1_seq_rep_1, M1_seq_rep_1, M1_seq_rep_1, M1_s...</div><div class='input'>
+<span class='co'># seurat</span>
+<span class='fu'>topBarcodes</span>(<span class='no'>seurat</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
+#&gt; Variables: 13
+#&gt; $ nGene             &lt;int&gt; 866, 841, 849, 854, 815, 846, 852, 815, 871, 854
+#&gt; $ nUMI              &lt;dbl&gt; 15210, 14600, 14395, 13512, 13511, 13094, 13077, ...
+#&gt; $ sampleID          &lt;fctr&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
+#&gt; $ nCoding           &lt;dbl&gt; 12617, 13258, 10832, 11505, 12323, 11888, 11618, ...
+#&gt; $ nMito             &lt;dbl&gt; 1430, 584, 2334, 889, 444, 396, 624, 279, 771, 885
+#&gt; $ log10GenesPerUMI  &lt;dbl&gt; 0.7023977, 0.7023411, 0.7043671, 0.7096724, 0.704...
+#&gt; $ mitoRatio         &lt;dbl&gt; 0.09401709, 0.04000000, 0.16213963, 0.06579337, 0...
+#&gt; $ nCount            &lt;int&gt; 224684, 191688, 219262, 206429, 193003, 173779, 2...
+#&gt; $ sampleName        &lt;fctr&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
+#&gt; $ description       &lt;fctr&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
+#&gt; $ origIdent         &lt;fctr&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
+#&gt; $ res08             &lt;fctr&gt; 1, 0, 1, 1, 0, 0, 0, 0, 1, 0
+#&gt; $ interestingGroups &lt;fctr&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

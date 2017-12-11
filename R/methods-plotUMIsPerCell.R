@@ -10,25 +10,27 @@
 #' @inherit plotGenesPerCell
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' \dontrun{
 #' plotUMIsPerCell(bcb)
-#' }
 #'
 #' # seurat
-#' \dontrun{
-#' plotUMIsPerCell(seurat)}
+#' plotUMIsPerCell(seurat)
 #'
 #' # data.frame
-#' \dontrun{
-#' metrics <- metrics(bcb)
-#' plotUMIsPerCell(metrics)
-#' }
+#' df <- metrics(bcb)
+#' plotUMIsPerCell(df)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom viridis scale_fill_viridis
 .plotUMIsPerCell <- function(
     object,
@@ -79,7 +81,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotUMIsPerCell
 #' @export
 setMethod(

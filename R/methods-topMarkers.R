@@ -18,11 +18,19 @@
 #'
 #' @return [tibble].
 #' @export
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "seuratAllMarkers.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # grouped_df
+#' topMarkers(seuratAllMarkers) %>% glimpse()
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr arrange filter slice
 #' @importFrom rlang !! sym
 .topMarkers <- function(
@@ -66,7 +74,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname topMarkers
 #' @export
 setMethod(

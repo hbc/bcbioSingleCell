@@ -9,11 +9,20 @@
 #'
 #' @inherit basejump::aggregateReplicates
 #' @inheritParams AllGenerics
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' print(bcb)
+#' aggregateReplicates(bcb)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr arrange group_by filter mutate mutate_all select ungroup
 #' @importFrom parallel mclapply
 #' @importFrom rlang !!! syms
@@ -174,7 +183,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname aggregateReplicates
 #' @export
 setMethod(

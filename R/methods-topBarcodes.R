@@ -12,28 +12,38 @@
 #' @return [data.frame]
 #'
 #' @examples
-#' \dontrun{
-#' data(bcb)
-#' topBarcodes(bcb)
-#' }
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' topBarcodes(bcb) %>% glimpse()
+#'
+#' # seurat
+#' topBarcodes(seurat) %>% glimpse()
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr slice
 #' @importFrom tibble as_tibble column_to_rownames rownames_to_column
 .topBarcodes <- function(object, n = 10) {
-    metrics <- metrics(object) %>%
-        rownames_to_column() %>%
-        as_tibble()
-    # Check for unfiltered barcode counts in `nCount`
-    if (!"nCount" %in% colnames(metrics)) {
-        warning("'nCount' missing from 'metrics()'", call. = FALSE)
+    col <- "nUMI"
+    metrics <- metrics(object)
+    if (!col %in% colnames(metrics)) {
+        warning(paste0(
+            "'", col, "' missing from 'metrics()'"
+        ), call. = FALSE)
         return(NULL)
     }
     metrics %>%
-        .[order(.[["nCount"]], decreasing = TRUE), , drop = FALSE] %>%
+        rownames_to_column() %>%
+        as_tibble() %>%
+        .[order(.[[col]], decreasing = TRUE), , drop = FALSE] %>%
         # Take the top rows by using slice
         slice(1:n) %>%
         as.data.frame() %>%
@@ -42,10 +52,20 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname topBarcodes
 #' @export
 setMethod(
     "topBarcodes",
     signature("bcbioSingleCell"),
+    .topBarcodes)
+
+
+
+
+#' @rdname topBarcodes
+#' @export
+setMethod(
+    "topBarcodes",
+    signature("seurat"),
     .topBarcodes)

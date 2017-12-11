@@ -48,21 +48,22 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
 # bcbioSingleCell
-\dontrun{
 plotUMIsVsGenes(bcb)
-}
 
 # seurat
-\dontrun{
 plotUMIsVsGenes(seurat)
-}
 
 # data.frame
-\dontrun{
-metrics <- metrics(bcb)
-plotUMIsPerCell(metrics)
-}
+df <- metrics(bcb)
+plotUMIsPerCell(df)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

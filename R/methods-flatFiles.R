@@ -12,11 +12,19 @@
 #' @inheritParams AllGenerics
 #'
 #' @return [list].
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' flatFiles(bcb) %>% names()
 NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname flatFiles
 #' @export
 setMethod(

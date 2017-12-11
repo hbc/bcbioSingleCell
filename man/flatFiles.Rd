@@ -18,6 +18,14 @@
 Prepare an unstructured list of information saved in the S4 object,
 for improved archival data storage.
 }
+\examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+flatFiles(bcb) \%>\% names()
+}
 \author{
 Michael Steinbaugh, Rory Kirchner
 }

@@ -17,15 +17,24 @@
 #'
 #' @return
 #' - Show graphical output of elbow plots.
-#' - Return numeric sequence vector of PCs to include for dimensionality
-#'   reduction analysis.
+#' - Invisibly return numeric sequence vector of PCs to include for
+#'   dimensionality reduction analysis.
 #'
 #' @seealso [Seurat::PCElbowPlot].
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat
+#' pcUse <- plotPCElbow(seurat)
+#' pcUse
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom cowplot draw_plot ggdraw
 #' @importFrom ggplot2 aes_string geom_hline geom_line geom_point ggplot labs
 #'   scale_y_continuous
@@ -120,12 +129,12 @@ NULL
             ggcumsum, x = 0.5, y = 0, width = 0.5, height = 0.5)
     show(p)
 
-    seq_len(cutoff)
+    invisible(seq_len(cutoff))
 }
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotPCElbow
 #' @export
 setMethod("plotPCElbow", "seurat", function(

@@ -1,3 +1,7 @@
+# FIXME Improve error messages for invalid i and j ranges
+
+
+
 #' Bracket-Based Subsetting
 #'
 #' Extract genes by row and cells by column from a [bcbioSingleCell] object.
@@ -18,25 +22,28 @@
 #' @return [bcbioSingleCell].
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' cells <- colnames(bcb)[1:100]
+#' head(cells)
+#' genes <- rownames(bcb)[1:100]
+#' head(genes)
+#'
 #' # Subset by cell identifiers
-#' \dontrun{
 #' bcb[, cells]
-#' }
 #'
 #' # Subset by genes
-#' \dontrun{
 #' bcb[genes, ]
-#' }
 #'
 #' # Subset by both genes and cells
-#' \dontrun{
 #' bcb[genes, cells]
-#' }
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr mutate_if
 #' @importFrom magrittr set_rownames
 #' @importFrom S4Vectors metadata SimpleList
@@ -48,22 +55,37 @@ NULL
         j <- 1:ncol(x)
     }
 
-    # Prepare and subset SummarizedExperiment
+    # Early return if dimensions are unmodified
+    if (identical(dim(x), c(length(i), length(j)))) return(x)
+
+    # Regenerate and subset SummarizedExperiment
     se <- as(x, "SummarizedExperiment")
     se <- se[i, j, drop = drop]
 
     genes <- rownames(se)
     cells <- colnames(se)
 
+    # Assays ===================================================================
     assays <- assays(se)
+
+    # Row data =================================================================
     rowData <- rowData(se)
     if (!is.null(rowData)) {
         rownames(rowData) <- slot(se, "NAMES")
     }
+
+    # Column data ==============================================================
+    # Don't need to relevel factors here currently
     colData <- colData(se)
 
     # Metadata =================================================================
     metadata <- metadata(se)
+    metadata[["subset"]] <- TRUE
+    # Update version, if necessary
+    if (!identical(metadata[["version"]], packageVersion)) {
+        metadata[["originalVersion"]] <- metadata[["version"]]
+        metadata[["version"]] <- packageVersion
+    }
 
     # cell2sample mappings
     cell2sample <- cell2sample(
@@ -103,9 +125,7 @@ NULL
         metadata[["filterGenes"]] <- filterGenes
     }
 
-    metadata[["subset"]] <- TRUE
-
-    # bcbio slot ===============================================================
+    # bcbio ====================================================================
     bcbio <- bcbio(x)
     if (!is.null(bcbio)) {
         # Cellular barcodes
@@ -130,7 +150,7 @@ NULL
             as("SimpleList")
     }
 
-    # bcbioSingleCell ====
+    # Return ===================================================================
     new("bcbioSingleCell",
         SummarizedExperiment(
             assays = assays,
@@ -142,7 +162,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname subset
 #' @export
 setMethod(

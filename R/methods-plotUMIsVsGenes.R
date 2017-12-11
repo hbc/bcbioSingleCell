@@ -14,26 +14,27 @@
 #'   [ggplot2::scale_color_manual()].
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' \dontrun{
 #' plotUMIsVsGenes(bcb)
-#' }
 #'
 #' # seurat
-#' \dontrun{
 #' plotUMIsVsGenes(seurat)
-#' }
 #'
 #' # data.frame
-#' \dontrun{
-#' metrics <- metrics(bcb)
-#' plotUMIsPerCell(metrics)
-#' }
+#' df <- metrics(bcb)
+#' plotUMIsPerCell(df)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom ggplot2 facet_wrap labs
 #' @importFrom viridis scale_color_viridis
 .plotUMIsVsGenes <- function(
@@ -68,7 +69,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotUMIsVsGenes
 #' @importFrom viridis scale_color_viridis
 #' @export

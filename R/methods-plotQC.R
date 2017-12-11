@@ -23,11 +23,25 @@
 #'   - `markdown`: R Markdown report, with reports separated by headers.
 #'
 #' @return R Markdown template code for quality control analysis.
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' plotQC(bcb)
+#'
+#' # seurat
+#' plotQC(seurat)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 validMedianGeom <- c(
     "boxplot",
     "ridgeline",
@@ -45,7 +59,7 @@ validQCGeomFlip <- c(
     interestingGroups,
     geom = "violin",
     headerLevel = 2,
-    legend = TRUE,
+    legend = FALSE,
     return = "grid") {
     if (missing(interestingGroups)) {
         interestingGroups <- basejump::interestingGroups(object)
@@ -277,11 +291,11 @@ validQCGeomFlip <- c(
             y = yCol,
             color = "interestingGroups")
     ) +
-        geom_point(
-            alpha = 0.25,
-            size = 0.8) +
+        geom_point(alpha = 0.25, size = 0.8) +
+        # If `method = "gam"`, `mgcv` package is required.
+        # Otherwise build checks will error.
         geom_smooth(
-            method = "gam",
+            method = "glm",
             se = FALSE,
             size = 1.5) +
         scale_x_sqrt() +
@@ -322,7 +336,7 @@ validQCGeomFlip <- c(
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotQC
 #' @export
 setMethod(

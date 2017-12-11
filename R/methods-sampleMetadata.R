@@ -13,11 +13,25 @@
 #'   internal sample metadata [data.frame].
 #'
 #' @return [data.frame].
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' sampleMetadata(bcb) %>% glimpse()
+#'
+#' # seurat
+#' sampleMetadata(seurat) %>% glimpse()
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Prepare Sample Metadata from Seurat
 #'
 #' @author Michael Steinbaugh
@@ -63,7 +77,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname sampleMetadata
 #' @importFrom dplyr distinct mutate select
 #' @importFrom stringr str_match

@@ -26,8 +26,8 @@ plotPCElbow(object, ...)
 \value{
 \itemize{
 \item Show graphical output of elbow plots.
-\item Return numeric sequence vector of PCs to include for dimensionality
-reduction analysis.
+\item Invisibly return numeric sequence vector of PCs to include for
+dimensionality reduction analysis.
 }
 }
 \description{
@@ -35,14 +35,22 @@ Calculate the principal component (PC) with either a maximum SD percentage or
 minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
 PC cutoff for either 5% SD (\code{maxPct}) or 90% cumulative (\code{minCumsum}).
 }
+\examples{
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# seurat
+pcUse <- plotPCElbow(seurat)
+pcUse
+}
 \seealso{
 \link[Seurat:PCElbowPlot]{Seurat::PCElbowPlot}.
 
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotKnownMarkers}},
-  \code{\link{plotMarkers}}, \code{\link{plotStressGenes}},
-  \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotMarkers}}, \code{\link{plotTopMarkers}},
+  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

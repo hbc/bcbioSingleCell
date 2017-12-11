@@ -54,9 +54,20 @@ run directory as a remote connection over
 \href{https://github.com/osxfuse/osxfuse/wiki/SSHFS}{sshfs}.
 }
 \examples{
-\dontrun{
+# Homo sapiens
+# Minimal working example dataset
+extdataDir <- system.file("extdata", package = "bcbioSingleCell")
+uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
+sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
+annotable <- annotable("Homo sapiens", release = 90)
+bcb <- loadSingleCell(
+    uploadDir = uploadDir,
+    sampleMetadataFile = sampleMetadataFile,
+    annotable = annotable)
+
 # Mus musculus
 # Run with Ensembl 88 transcriptome FASTA and GTF files
+\dontrun{
 bcb <- loadSingleCell(
     uploadDir = file.path("indrop_rnaseq", "final"),
     interestingGroups = c("genotype", "treatment"),

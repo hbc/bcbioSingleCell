@@ -10,16 +10,26 @@
 #' @inheritParams AllGenerics
 #'
 #' @param object Matrix of data.
-#' @param annotation Column annotations.
+#' @param n The number of breaks to create.
+#' @param annotationCol Column annotations [data.frame].
 #' @param clusterRows Perform row clustering.
 #' @param clusterCols Perform column clustering.
+#' @param color Color palette function.
 #'
 #' @return [pheatmap::pheatmap()].
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "filtered.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' plotQuantileHeatmap(filtered)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Create Breaks Based on Quantiles of the Data
 #'
 #' @keywords internal
@@ -27,14 +37,17 @@ NULL
 #'
 #' @importFrom stats quantile
 #'
-#' @param xs Numeric vector.
+#' @param x Numeric vector.
 #' @param n The number of breaks to create.
+#' @param unique Only return unique quantiles.
 #'
 #' @return A vector of `n` quantile breaks.
-.quantileBreaks <- function(xs, n = 10) {
-    xs %>%
-        quantile(probs = seq(0, 1, length.out = n)) %>%
-        .[!duplicated(.)]
+.quantileBreaks <- function(x, n = 10, unique = TRUE) {
+    q <- quantile(x, probs = seq(0, 1, length.out = n))
+    if (isTRUE(unique)) {
+        q <- q[!duplicated(q)]
+    }
+    q
 }
 
 
@@ -47,45 +60,78 @@ NULL
 #' @importFrom dendsort dendsort
 #' @importFrom pheatmap pheatmap
 #' @importFrom stats dist hclust
-#' @importFrom viridis inferno
+#' @importFrom viridis viridis
 .plotQuantileHeatmap <- function(
     object,
-    annotation = NA,
-    clusterRows = TRUE,
-    clusterCols = TRUE) {
+    n = 10,
+    annotationCol = NA,
+    clusterRows = FALSE,
+    clusterCols = FALSE,
+    color = viridis::viridis) {
+    if (!is.function(color)) {
+        stop("'color' argument must contain a color palette function",
+             call. = FALSE)
+    }
     mat <- as.matrix(object)
-    matBreaks <- .quantileBreaks(mat)
+    breaks <- .quantileBreaks(mat, n = n)
+
     # Dendrogram sorting can take a long time on large datasets
     if (isTRUE(clusterRows)) {
-        matClusterRows <- dendsort(hclust(dist(mat)))
+        clusterRows <- dendsort(hclust(dist(mat)))
     } else {
-        matClusterRows <- FALSE
+        clusterRows <- FALSE
     }
     if (isTRUE(clusterCols)) {
-        matClusterCols <- dendsort(hclust(dist(t(mat))))
+        clusterCols <- dendsort(hclust(dist(t(mat))))
     } else {
-        matClusterCols <- FALSE
+        clusterCols <- FALSE
     }
+
     pheatmap(
         mat,
-        annotation_col = annotation,
-        cluster_cols = matClusterCols,
-        cluster_rows = matClusterRows,
-        breaks = matBreaks,
-        color = inferno(length(matBreaks) - 1),
+        annotation_col = annotationCol,
+        cluster_cols = clusterCols,
+        cluster_rows = clusterRows,
+        breaks = breaks,
+        color = color(length(breaks)),
         show_colnames = FALSE,
         show_rownames = FALSE)
 }
 
 
 
-# Methods ====
+# Methods ======================================================================
+#' @rdname plotQuantileHeatmap
+#' @importFrom viridis viridis
+#' @export
+setMethod(
+    "plotQuantileHeatmap",
+    signature("bcbioSingleCell"),
+    function(
+        object,
+        n = 10,
+        annotationCol = NA,
+        clusterRows = FALSE,
+        clusterCols = FALSE,
+        color = viridis::viridis) {
+        counts <- counts(object)
+        .plotQuantileHeatmap(
+            object = counts,
+            n = n,
+            annotationCol = annotationCol,
+            clusterRows = clusterRows,
+            clusterCols = clusterCols,
+            color = color)
+    })
+
+
+
 #' @rdname plotQuantileHeatmap
 #' @export
 setMethod(
     "plotQuantileHeatmap",
     signature("dgCMatrix"),
-    plotQuantileHeatmap)
+    .plotQuantileHeatmap)
 
 
 
@@ -99,19 +145,25 @@ setMethod(
 
 
 #' @rdname plotQuantileHeatmap
+#' @importFrom viridis viridis
 #' @export
 setMethod(
     "plotQuantileHeatmap",
     signature("seurat"),
     function(
         object,
-        annotation = NA,
-        clusterRows = TRUE,
-        clusterCols = TRUE) {
+        n = 10,
+        annotationCol = NA,
+        clusterRows = FALSE,
+        clusterCols = FALSE,
+        color = viridis::viridis) {
         # Use the raw counts
+        counts <- counts(object, normalized = FALSE)
         .plotQuantileHeatmap(
-            slot(object, "raw.data"),
-            annotation = annotation,
+            object = counts,
+            n = n,
+            annotationCol = annotationCol,
             clusterRows = clusterRows,
-            clusterCols = clusterCols)
+            clusterCols = clusterCols,
+            color = color)
     })

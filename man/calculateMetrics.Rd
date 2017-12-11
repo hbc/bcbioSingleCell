@@ -10,7 +10,8 @@
 \usage{
 calculateMetrics(object, ...)
 
-\S4method{calculateMetrics}{dgCMatrix}(object, annotable, prefilter = TRUE)
+\S4method{calculateMetrics}{dgCMatrix}(object, annotable = TRUE,
+  prefilter = TRUE)
 
 \S4method{calculateMetrics}{bcbioSingleCell}(object, prefilter = TRUE)
 }
@@ -31,6 +32,19 @@ Calculate Cellular Barcode Metrics Summary
 }
 \note{
 This should only be performed during the initial run loading.
+}
+\examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+calculateMetrics(bcb) \%>\% glimpse()
+
+# dgCMatrix
+counts <- counts(bcb)
+annotable <- annotable(bcb)
+calculateMetrics(counts, annotable = annotable) \%>\% glimpse()
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

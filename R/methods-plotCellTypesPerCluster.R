@@ -16,21 +16,33 @@
 #' @return [ggplot].
 #'
 #' @examples
-#' \dontrun{
-#' cellTypes <- cellTypesPerCluster(knownMakersDetected)
-#' plotCellTypesPerCluster(cellTypes)
-#' }
+#' load(system.file(
+#'     file.path("extdata", "knownMarkersDetected.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
+#' glimpse(cellTypesPerCluster)
+#'
+#' # seurat
+#' # Let's plot the first row, as an example
+#' cellTypesPerCluster <- cellTypesPerCluster[1, , drop = FALSE]
+#' plotCellTypesPerCluster(
+#'     seurat,
+#'     cellTypesPerCluster = cellTypesPerCluster)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr pull
 #' @importFrom pbapply pblapply
 .plotCellTypesPerCluster <- function(
     object,
     cellTypesPerCluster,
-    color = scale_color_viridis(option = "inferno"),
+    color = viridis::scale_color_viridis(),
     dark = TRUE,
     headerLevel = NULL) {
     # Output Markdown headers per cluster
@@ -81,7 +93,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotCellTypesPerCluster
 #' @export
 setMethod(

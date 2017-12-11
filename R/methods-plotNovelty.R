@@ -10,26 +10,27 @@
 #' @inherit plotGenesPerCell
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' \dontrun{
 #' plotNovelty(bcb)
-#' }
 #'
 #' # seurat
-#' \dontrun{
 #' plotNovelty(seurat)
-#' }
 #'
 #' # data.frame
-#' \dontrun{
-#' metrics <- metrics(bcb)
-#' plotNovelty(metrics)
-#' }
+#' df <- metrics(bcb)
+#' plotNovelty(df)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom viridis scale_fill_viridis
 .plotNovelty <- function(
     object,
@@ -80,7 +81,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotNovelty
 #' @export
 setMethod(

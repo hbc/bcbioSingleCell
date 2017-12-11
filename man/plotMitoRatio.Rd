@@ -56,21 +56,22 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
 # bcbioSingleCell
-\dontrun{
 plotMitoRatio(bcb)
-}
 
 # seurat
-\dontrun{
 plotMitoRatio(seurat)
-}
 
-# metrics data.frame
-\dontrun{
-metrics <- metrics(bcb)
-plotMitoRatio(metrics)
-}
+# data.frame
+df <- metrics(bcb)
+plotMitoRatio(df)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

@@ -14,11 +14,25 @@
 #' @note Here by "cell" we mean "cellular barcode".
 #'
 #' @return [ggplot].
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' plotReadsPerCell(bcb)
+#'
+#' # seurat
+#' plotReadsPerCell(seurat)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Raw Cellular Barcodes Tibble
 #'
 #' Used for `geom` parameter: `ridgeline` and `violin` arguments.
@@ -343,7 +357,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotReadsPerCell
 #' @export
 setMethod(

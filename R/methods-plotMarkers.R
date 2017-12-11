@@ -17,20 +17,30 @@
 #' @inheritParams plotMarkerTSNE
 #'
 #' @param headerLevel Include a Markdown header for each gene.
+#' @param title Plot title.
 #'
 #' @return No value, only graphical output.
 #'
 #' @examples
-#' \dontrun{
-#' top <- topMarkers(markers)
-#' genes <- top$symbol[1:4]
-#' plotMarkers(seurat, genes = genes)
-#' }
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "topMarkers.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' symbol <- topMarkers$symbol[[1]]
+#' print(symbol)
+#' ensgene <- topMarkers$ensgene[[1]]
+#' print(ensgene)
+#'
+#' plotMarkers(seurat, genes = symbol, format = "symbol")
+#' plotMarkers(seurat, genes = ensgene, format = "ensgene")
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' Plot Marker Seurat Constructor
 #'
 #' @keywords internal
@@ -48,9 +58,10 @@ NULL
 .plotMarkerSeurat <- function(
     object,
     gene,
-    color = scale_color_viridis(option = "inferno"),
+    color = viridis::scale_color_viridis(option = "inferno"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
+    title = NULL,
     returnAsList = FALSE) {
     if (!is_string(gene)) {
         stop("gene must be a string", call. = FALSE)
@@ -60,13 +71,16 @@ NULL
     tsne <- plotMarkerTSNE(
         object,
         genes = gene,
+        format = "symbol",
         colorPoints = "expression",
         color = color,
         dark = dark,
-        pointsAsNumbers = pointsAsNumbers)
+        pointsAsNumbers = pointsAsNumbers,
+        title = title)
 
     # Violin plot
-    violin <- VlnPlot(
+    # FIXME Create our own `plotViolin()` function in a future update
+    violin <- Seurat::VlnPlot(
         object,
         features.plot = gene,
         do.return = TRUE,
@@ -92,7 +106,7 @@ NULL
     # We're transposing the dot plot here to align vertically with the
     # violin and tSNE plots. The violin is preferable over the ridgeline
     # here because it works better horizontally.
-    dot <- plotDot(object, genes = gene)
+    dot <- plotDot(object, genes = gene, format = "symbol")
 
     if (isTRUE(returnAsList)) {
         list(tsne = tsne,
@@ -122,17 +136,23 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotMarkers
 #' @importFrom basejump mdHeader
 #' @export
 setMethod("plotMarkers", "seurat", function(
     object,
     genes,
-    color = scale_color_viridis(option = "inferno"),
+    format = "symbol",
+    color = viridis::scale_color_viridis(option = "inferno"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = NULL) {
+    headerLevel = NULL,
+    title = NULL) {
+    .checkFormat(format)
+    if (format == "ensgene") {
+        genes <- .convertGenesToSymbols(object, genes = genes)
+    }
     lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
         # Skip and warn if gene is missing
@@ -148,6 +168,7 @@ setMethod("plotMarkers", "seurat", function(
             color = color,
             dark = dark,
             pointsAsNumbers = pointsAsNumbers,
+            title = title,
             returnAsList = FALSE) %>%
             show()
     }) %>%

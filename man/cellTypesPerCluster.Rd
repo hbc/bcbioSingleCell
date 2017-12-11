@@ -9,7 +9,7 @@
 \usage{
 cellTypesPerCluster(object, ...)
 
-\S4method{cellTypesPerCluster}{grouped_df}(object, min = 2, max = Inf)
+\S4method{cellTypesPerCluster}{grouped_df}(object, min = 1, max = Inf)
 }
 \arguments{
 \item{object}{Object.}
@@ -27,13 +27,15 @@ significant known makers per cell type.
 \description{
 Cell Types per Cluster
 }
-\examples{
-\dontrun{
-knownMarkers <- knownMarkersDetected(
-    all = seuratAllMarkers,
-    known = cellTypeMarkers)
-cellTypesPerCluster(knownMarkers)
+\note{
+This function only returns the positive markers per cluster.
 }
+\examples{
+load(system.file(
+    file.path("extdata", "knownMarkersDetected.rda"),
+    package = "bcbioSingleCell"))
+
+cellTypesPerCluster(knownMarkersDetected) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

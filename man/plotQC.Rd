@@ -8,10 +8,10 @@
 \title{Quality Control Plots}
 \usage{
 \S4method{plotQC}{bcbioSingleCell}(object, interestingGroups, geom = "violin",
-  headerLevel = 2, legend = TRUE, return = "grid")
+  headerLevel = 2, legend = FALSE, return = "grid")
 
 \S4method{plotQC}{seurat}(object, interestingGroups, geom = "violin",
-  headerLevel = 2, legend = TRUE, return = "grid")
+  headerLevel = 2, legend = FALSE, return = "grid")
 }
 \arguments{
 \item{object}{Object.}
@@ -40,6 +40,20 @@ R Markdown template code for quality control analysis.
 \description{
 Utility function that loops our standard quality control plots, for easy
 visualization.
+}
+\examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+plotQC(bcb)
+
+# seurat
+plotQC(seurat)
 }
 \author{
 Michael Steinbaugh

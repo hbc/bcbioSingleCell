@@ -12,12 +12,13 @@ plotMarkerTSNE(object, ...)
 
 \S4method{plotMarkerTSNE}{data.frame}(object, colorPoints = "geomean",
   pointsAsNumbers = FALSE, pointSize = 1, label = TRUE, labelSize = 6,
-  color = scale_color_viridis(), dark = TRUE, legend = TRUE,
+  color = viridis::scale_color_viridis(), dark = TRUE, legend = TRUE,
   title = NULL)
 
-\S4method{plotMarkerTSNE}{seurat}(object, genes, colorPoints = "geomean",
-  pointsAsNumbers = FALSE, pointSize = 1, label = TRUE, labelSize = 6,
-  color = scale_color_viridis(), dark = TRUE, title = NULL)
+\S4method{plotMarkerTSNE}{seurat}(object, genes, format = "symbol",
+  colorPoints = "geomean", pointsAsNumbers = FALSE, pointSize = 1,
+  label = TRUE, labelSize = 6, color = viridis::scale_color_viridis(),
+  dark = TRUE, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -46,6 +47,10 @@ low/high gradient.}
 \item{title}{Plot title.}
 
 \item{genes}{Genes (by symbol name) of which to get expression data.}
+
+\item{format}{Gene identifier format. Defaults to \code{symbol} but \code{ensgene}
+is also supported, as long as Ensembl gene to symbol identifier mappings
+are defined.}
 }
 \value{
 \link{ggplot}.
@@ -54,25 +59,24 @@ low/high gradient.}
 Plot Marker t-SNE
 }
 \examples{
-\dontrun{
-top <- topMarkers(markers)
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
 
-# Let's take the top markers specific to cluster 0, as an example
-genes <- top \%>\%
-    dplyr::filter(cluster == 0) \%>\%
-    dplyr::pull(symbol)
+symbol <- counts(seurat) \%>\% rownames() \%>\% .[[1]]
+print(symbol)
 
-# Fetch the t-SNE expression data for the desired gene symbols
-dat <- fetchTSNEExpressionData(seurat, genes = genes)
-print(unique(dat$gene))
+ensgene <- bcbio(seurat, "gene2symbol") \%>\%
+    .[which(.[["symbol"]] \%in\% symbol), "ensgene", drop = TRUE]
+print(ensgene)
 
-# To make t-SNE plot colored by geometric mean of topGenes
-plotTSNE(dat, colorPoints = "geomean")
+# seurat
+plotMarkerTSNE(seurat, genes = symbol, format = "symbol")
+plotMarkerTSNE(seurat, genes = ensgene, format = "ensgene")
 
-# To make faceted t-SNE plot of each gene (looks good at up to 6 genes)
-plotTSNE(dat, colorPoints = "expression") +
-    ggplot2::facet_wrap(~gene)
-}
+# data.frame
+df <- fetchTSNEExpressionData(seurat, genes = symbol)
+plotMarkerTSNE(df)
 }
 \seealso{
 Other t-SNE Utilities: \code{\link{fetchTSNEData}},

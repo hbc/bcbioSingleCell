@@ -12,13 +12,30 @@
 #'   symbols. Recommended for passing counts to Seurat.
 #' @param as Return class (**recommended**; `dgCMatrix`,
 #'   `dgTMatrix`) or dense matrix (`matrix`).
+#' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
 #'
 #' @return Matrix class object, depending on `as` argument.
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell
+#' counts(bcb, gene2symbol = FALSE) %>% glimpse()
+#' counts(bcb, gene2symbol = TRUE) %>% glimpse()
+#'
+#' # seurat
+#' counts(seurat, normalized = FALSE) %>% glimpse()
+#' counts(seurat, normalized = TRUE) %>% glimpse()
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr pull
 #' @importFrom magrittr set_rownames
 .counts <- function(
@@ -59,10 +76,31 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname counts
 #' @export
 setMethod(
     "counts",
     signature("bcbioSingleCell"),
     .counts)
+
+
+
+#' @rdname counts
+#' @export
+setMethod(
+    "counts",
+    signature("seurat"),
+    function(object, normalized = FALSE) {
+        if (identical(normalized, FALSE)) {
+            slot(object, "raw.data")
+        } else if (identical(normalized, TRUE)) {
+            slot(object, "data")
+        } else if (normalized == "scaled") {
+            slot(object, "scale.data")
+        } else {
+            warning("Unsupported 'normalized' argument")
+            return(NULL)
+        }
+    }
+)

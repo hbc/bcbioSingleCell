@@ -16,7 +16,6 @@
 #' @importFrom stats na.omit setNames
 #' @importFrom stringr str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
-#' @importFrom utils packageVersion
 #'
 #' @param uploadDir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
@@ -48,9 +47,20 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' # Homo sapiens
+#' # Minimal working example dataset
+#' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
+#' uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
+#' sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
+#' annotable <- annotable("Homo sapiens", release = 90)
+#' bcb <- loadSingleCell(
+#'     uploadDir = uploadDir,
+#'     sampleMetadataFile = sampleMetadataFile,
+#'     annotable = annotable)
+#'
 #' # Mus musculus
 #' # Run with Ensembl 88 transcriptome FASTA and GTF files
+#' \dontrun{
 #' bcb <- loadSingleCell(
 #'     uploadDir = file.path("indrop_rnaseq", "final"),
 #'     interestingGroups = c("genotype", "treatment"),
@@ -299,7 +309,7 @@ loadSingleCell <- function(
         annotable = annotable,
         prefilter = prefilter)
     # Bind the `nCount` column to the metrics
-    cbPass <- cbData[rownames(metrics), "nCount"]
+    cbPass <- cbData[rownames(metrics), "nCount", drop = FALSE]
     metrics <- cbind(metrics, cbPass)
 
     if (isTRUE(prefilter)) {
@@ -315,7 +325,7 @@ loadSingleCell <- function(
 
     # Metadata =================================================================
     metadata <- list(
-        version = packageVersion("bcbioSingleCell"),
+        version = packageVersion,
         pipeline = pipeline,
         uploadDir = uploadDir,
         sampleDirs = sampleDirs,
@@ -350,7 +360,7 @@ loadSingleCell <- function(
         metadata <- c(metadata, dots)
     }
 
-    # SummarizedExperiment =====================================================
+    # Return ===================================================================
     # Use an internal `SummarizedExperiment()` function call to handle rowname
     # mismatches with the annotable. This can happen when newer Ensembl
     # annotations are requested than those used for count alignment, or when
@@ -360,9 +370,9 @@ loadSingleCell <- function(
         rowData = annotable,
         colData = metrics,
         metadata = metadata)
-    bcb <- new("bcbioSingleCell", se)
-    # Keep these in the bcbio slot because they contain filtered cellular
-    # barcodes not present in the main assay matrix.
-    bcbio(bcb, "cellularBarcodes") <- cbList
-    bcb
+    bcbio <- list(
+        cellularBarcodes = cbList
+    ) %>%
+        as("SimpleList")
+    new("bcbioSingleCell", se, bcbio = bcbio)
 }

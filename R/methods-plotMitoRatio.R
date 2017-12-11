@@ -8,26 +8,27 @@
 #' @inherit plotGenesPerCell
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' \dontrun{
 #' plotMitoRatio(bcb)
-#' }
 #'
 #' # seurat
-#' \dontrun{
 #' plotMitoRatio(seurat)
-#' }
 #'
-#' # metrics data.frame
-#' \dontrun{
-#' metrics <- metrics(bcb)
-#' plotMitoRatio(metrics)
-#' }
+#' # data.frame
+#' df <- metrics(bcb)
+#' plotMitoRatio(df)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom viridis scale_fill_viridis
 .plotMitoRatio <- function(
     object,
@@ -78,7 +79,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotMitoRatio
 #' @export
 setMethod(

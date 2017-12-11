@@ -37,6 +37,14 @@ low/high gradient.}
 \description{
 Plot Principal Component Analysis (PCA)
 }
+\examples{
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# seurat
+plotPCA(seurat)
+}
 \seealso{
 \code{\link[=plotTSNE]{plotTSNE()}}.
 

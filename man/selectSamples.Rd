@@ -32,12 +32,11 @@ and Ensembl gene identifiers for rows.
 [` also works on [bcbioSingleCell]: R:%60%20also%20works%20on%20[bcbioSingleCell
 }
 \examples{
-\dontrun{
-data(bcbFiltered)
-# grep pattern matching with string
-selectSamples(bcbFiltered, sampleName = "wt")
+load(system.file(
+    file.path("extdata", "filtered.rda"),
+    package = "bcbioSingleCell"))
 
-# Exact name matching with character vector
-selectSamples(bcbFiltered, sampleName = c("wt1", "wt2"))
-}
+# bcbioSingleCell
+# Quality control filtering must be applied first!
+selectSamples(filtered, sampleName = "M1")
 }

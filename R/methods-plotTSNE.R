@@ -23,14 +23,17 @@
 #' @return [ggplot].
 #'
 #' @examples
-#' \dontrun{
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat
 #' plotTSNE(seurat)
-#' }
 NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotTSNE
 #' @importFrom ggplot2 scale_color_hue
 #' @export

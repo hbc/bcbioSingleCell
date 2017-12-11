@@ -18,9 +18,18 @@ Object of same class with aggregated counts per pooled sample
 \description{
 Aggregate Replicates
 }
+\examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+print(bcb)
+aggregateReplicates(bcb)
+}
 \seealso{
-Other Data Management Utilities: \code{\link{aggregateFeatures}},
-  \code{\link{filterCells}}, \code{\link{readMarkers}},
+Other Data Management Utilities: \code{\link{filterCells}},
+  \code{\link{readMarkersFile}},
   \code{\link{subsetPerSample}}
 }
 \author{

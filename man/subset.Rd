@@ -74,20 +74,23 @@
 Extract genes by row and cells by column from a \link{bcbioSingleCell} object.
 }
 \examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+
+cells <- colnames(bcb)[1:100]
+head(cells)
+genes <- rownames(bcb)[1:100]
+head(genes)
+
 # Subset by cell identifiers
-\dontrun{
 bcb[, cells]
-}
 
 # Subset by genes
-\dontrun{
 bcb[genes, ]
-}
 
 # Subset by both genes and cells
-\dontrun{
 bcb[genes, cells]
-}
 }
 \seealso{
 \itemize{

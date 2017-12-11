@@ -30,6 +30,14 @@ directions of association per cluster. Defaults to \code{positive}.}
 \description{
 Top Markers
 }
+\examples{
+load(system.file(
+    file.path("extdata", "seuratAllMarkers.rda"),
+    package = "bcbioSingleCell"))
+
+# grouped_df
+topMarkers(seuratAllMarkers) \%>\% glimpse()
+}
 \seealso{
 \itemize{
 \item \code{\link[dplyr:slice]{dplyr::slice()}}
@@ -37,9 +45,8 @@ Top Markers
 }
 
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotKnownMarkers}},
+  \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
-  \code{\link{plotStressGenes}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}}
 }
 \author{

@@ -20,7 +20,7 @@
 .fetchDimDataSeurat <- function(object, dimCode) {
     ident <- data.frame(ident = slot(object, "ident"))
     metadata <- slot(object, "meta.data")
-    FetchData(object, vars.all = dimCode) %>%
+    Seurat::FetchData(object, vars.all = dimCode) %>%
         as.data.frame() %>%
         camel(strict = FALSE) %>%
         cbind(ident, metadata) %>%

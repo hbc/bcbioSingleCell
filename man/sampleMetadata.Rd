@@ -27,3 +27,17 @@ internal sample metadata \link{data.frame}.}
 \description{
 Sample Metadata
 }
+\examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+sampleMetadata(bcb) \%>\% glimpse()
+
+# seurat
+sampleMetadata(seurat) \%>\% glimpse()
+}

@@ -23,9 +23,10 @@
         bind_rows() %>%
         as.data.frame() %>%
         mutate(
-            rowname = paste(.data[["sampleID"]],
-                            .data[["cellularBarcode"]],
-                            sep = "_"),
+            rowname = paste(
+                .data[["sampleID"]],
+                .data[["cellularBarcode"]],
+                sep = "_"),
             sampleID = as.factor(.data[["sampleID"]])
         ) %>%
         column_to_rownames() %>%

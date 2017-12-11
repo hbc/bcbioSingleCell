@@ -20,19 +20,18 @@
 #' @return [bcbioSingleCell].
 #'
 #' @examples
-#' \dontrun{
-#' data(bcbFiltered)
-#' # grep pattern matching with string
-#' selectSamples(bcbFiltered, sampleName = "wt")
+#' load(system.file(
+#'     file.path("extdata", "filtered.rda"),
+#'     package = "bcbioSingleCell"))
 #'
-#' # Exact name matching with character vector
-#' selectSamples(bcbFiltered, sampleName = c("wt1", "wt2"))
-#' }
+#' # bcbioSingleCell
+#' # Quality control filtering must be applied first!
+#' selectSamples(filtered, sampleName = "M1")
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom basejump prepareSummarizedExperiment
 #' @importFrom dplyr mutate_if pull
 #' @importFrom magrittr set_rownames
@@ -40,6 +39,7 @@ NULL
     object,
     ...) {
     object <- .applyFilterCutoffs(object)
+    metadata(object)[["selectSamples"]] <- TRUE
 
     # Here the `arguments` are captured as a named character vector. The names
     # of the arguments represent the column names. The value of the arguments
@@ -47,9 +47,8 @@ NULL
     # internally.
     arguments <- list(...)
     checkCharacter <- vapply(arguments, is.character, FUN.VALUE = logical(1))
-    checkCharacter <- as.logical(checkCharacter)
-    if (!all(isTRUE(checkCharacter))) {
-        stop("Arguments must be character", call. = FALSE)
+    if (!all(isTRUE(as.logical(checkCharacter)))) {
+        stop("'Arguments must be character")
     }
 
     # Match the arguments against the sample metadata
@@ -61,19 +60,20 @@ NULL
                 .[.[[column]] %in% argument, , drop = FALSE]
         # Check for match failure
         if (!nrow(match)) {
-            stop(paste(
+            warning(paste(
                 "Match failure:",
                 paste(column, "=", argument)
             ), call. = FALSE)
+            return(NULL)
         }
         pull(match, "sampleID")
     })
-    sampleIDs <- Reduce(f = intersect, x = list) %>%
-        unique() %>%
-        sort()
+    sampleIDs <- Reduce(f = intersect, x = list)
     if (!length(sampleIDs)) {
-        stop("No samples matched", call. = FALSE)
+        warning("No samples matched", call. = FALSE)
+        return(NULL)
     }
+    sampleIDs <- sort(unique(sampleIDs))
 
     # Filter the sample metadata data.frame to only contain matching samples
     sampleMetadata <- sampleMetadata %>%
@@ -94,28 +94,12 @@ NULL
     message(paste(nrow(metrics), "cells matched"))
     cells <- rownames(metrics)
 
-    # Now subset the object to contain only the cell matches
-    subset <- object[, cells]
-
-    # Update the bcbio slot
-    cellularBarcodes <- bcbio(subset, "cellularBarcodes")
-    if (!is.null(cellularBarcodes)) {
-        bcbio(subset, "cellularBarcodes") <- cellularBarcodes[sampleIDs]
-    }
-
-    # Update the metadata slot
-    metadata(subset)[["allSamples"]] <- FALSE
-    metadata(subset)[["cell2sample"]] <- cell2sample(subset)
-    metadata(subset)[["filterCells"]] <- cells
-    metadata(subset)[["sampleMetadata"]] <- sampleMetadata
-    metadata(subset)[["selectSamples"]] <- TRUE
-
-    subset
+    object[, cells]
 }
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname selectSamples
 #' @export
 setMethod(

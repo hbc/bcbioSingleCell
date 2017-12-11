@@ -1,3 +1,7 @@
+# FIXME This needs a working example
+
+
+
 #' Load 10X Genomics CellRanger Data
 #'
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
@@ -17,7 +21,6 @@
 #' @importFrom pbapply pblapply
 #' @importFrom stats setNames
 #' @importFrom stringr str_split
-#' @importFrom utils packageVersion
 #'
 #' @inherit loadSingleCell
 #'
@@ -174,7 +177,7 @@ loadCellRanger <- function(
 
     # Metadata =================================================================
     metadata <- list(
-        version = packageVersion("bcbioSingleCell"),
+        version = packageVersion,
         pipeline = pipeline,
         uploadDir = uploadDir,
         sampleDirs = sampleDirs,

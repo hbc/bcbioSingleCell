@@ -1,5 +1,7 @@
 #' Cell Types per Cluster
 #'
+#' @note This function only returns the positive markers per cluster.
+#'
 #' @rdname cellTypesPerCluster
 #' @name cellTypesPerCluster
 #' @author Michael Steinbaugh
@@ -13,22 +15,21 @@
 #'   significant known makers per cell type.
 #'
 #' @examples
-#' \dontrun{
-#' knownMarkers <- knownMarkersDetected(
-#'     all = seuratAllMarkers,
-#'     known = cellTypeMarkers)
-#' cellTypesPerCluster(knownMarkers)
-#' }
+#' load(system.file(
+#'     file.path("extdata", "knownMarkersDetected.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' cellTypesPerCluster(knownMarkersDetected) %>% glimpse()
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom dplyr desc everything group_by select ungroup
 #' @importFrom rlang !!! quos
 .cellTypesPerCluster <- function(
     object,
-    min = 2,
+    min = 1,
     max = Inf) {
     if (attr(object, "vars") != "cell") {
         stop("Markers tibble should be grouped by cell", call. = FALSE)
@@ -47,6 +48,7 @@ NULL
         ), call. = FALSE)
     }
     groupCols <- syms(c("cluster", "cell"))
+
     tbl <- object %>%
         ungroup() %>%
         # Use only positive markers for this approach
@@ -62,6 +64,7 @@ NULL
         ) %>%
         group_by(!!sym("cluster")) %>%
         arrange(desc(.data[["n"]]), .by_group = TRUE)
+
     # Apply minimum and maximum gene cutoffs
     if (is.numeric(min) & min > 1) {
         tbl <- filter(tbl, .data[["n"]] >= min)
@@ -70,6 +73,8 @@ NULL
         tbl <- filter(tbl, .data[["n"]] <= max)
 
     }
+    if (!nrow(tbl)) return(NULL)
+
     tbl
 }
 

@@ -97,14 +97,6 @@ setGeneric(
 
 
 
-#' @rdname plotDot
-#' @export
-setGeneric("plotDot", function(object, ...) {
-    standardGeneric("plotDot")
-})
-
-
-
 #' @rdname plotFeatureTSNE
 #' @export
 setGeneric("plotFeatureTSNE", function(object, ...) {
@@ -121,11 +113,13 @@ setGeneric("plotGenesPerCell", function(object, ...) {
 
 
 
-#' @rdname plotKnownMarkers
+#' @rdname plotKnownMarkersDetected
 #' @export
-setGeneric("plotKnownMarkers", function(object, knownMarkers, ...) {
-    standardGeneric("plotKnownMarkers")
-})
+setGeneric(
+    "plotKnownMarkersDetected",
+    function(object, knownMarkersDetected, ...) {
+        standardGeneric("plotKnownMarkersDetected")
+    })
 
 
 
@@ -193,14 +187,6 @@ setGeneric("plotReadsPerCell", function(object, ...) {
 
 
 
-#' @rdname plotStressGenes
-#' @export
-setGeneric("plotStressGenes", function(object, ...) {
-    standardGeneric("plotStressGenes")
-})
-
-
-
 #' @rdname plotTopMarkers
 #' @export
 setGeneric("plotTopMarkers", function(object, topMarkers, ...) {
@@ -249,10 +235,10 @@ setGeneric("prepareSingleCellTemplate", function(object, ...) {
 
 
 
-#' @rdname readMarkers
+#' @rdname readMarkersFile
 #' @export
-setGeneric("readMarkers", function(object, ...) {
-    standardGeneric("readMarkers")
+setGeneric("readMarkersFile", function(object, ...) {
+    standardGeneric("readMarkersFile")
 })
 
 

@@ -8,26 +8,27 @@
 #' @inherit plotUMIsVsGenes
 #'
 #' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell
-#' \dontrun{
 #' plotMitoVsCoding(bcb)
-#' }
 #'
 #' # seurat
-#' \dontrun{
 #' plotMitoVsCoding(seurat)
-#' }
 #'
 #' # data.frame
-#' \dontrun{
-#' metrics <- metrics(bcb)
-#' plotMitoVsCoding(metrics)
-#' }
+#' df <- metrics(bcb)
+#' plotMitoVsCoding(df)
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom ggplot2 facet_wrap labs
 #' @importFrom viridis scale_color_viridis
 .plotMitoVsCoding <- function(
@@ -62,7 +63,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname plotMitoVsCoding
 #' @importFrom viridis scale_color_viridis
 #' @export

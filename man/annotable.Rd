@@ -4,9 +4,12 @@
 \name{annotable}
 \alias{annotable}
 \alias{annotable,bcbioSingleCell-method}
+\alias{annotable,seurat-method}
 \title{Ensembl Annotations}
 \usage{
 \S4method{annotable}{bcbioSingleCell}(object)
+
+\S4method{annotable}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
@@ -16,6 +19,20 @@
 }
 \description{
 Ensembl Annotations
+}
+\examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+annotable(bcb) \%>\% glimpse()
+
+# seurat
+annotable(seurat) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

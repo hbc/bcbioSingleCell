@@ -28,6 +28,28 @@ Character vector.
 \description{
 Interesting Groups
 }
+\examples{
+load(system.file(
+    file.path("extdata", "bcb.rda"),
+    package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
+
+# bcbioSingleCell
+interestingGroups(bcb)
+
+# Assignment method support
+interestingGroups(bcb) <- "sampleID"
+interestingGroups(bcb)
+
+# seurat
+interestingGroups(seurat)
+
+# Assignment method support
+interestingGroups(seurat) <- "sampleID"
+interestingGroups(seurat)
+}
 \author{
 Michael Steinbaugh
 }

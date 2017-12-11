@@ -8,11 +8,25 @@
 #' @param markers [Seurat::FindAllMarkers()] return.
 #'
 #' @return [grouped_df], grouped by cluster ident.
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seuratAllMarkersOriginal.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' # seurat
+#' sanitizeMarkers(
+#'     seurat,
+#'     markers = seuratAllMarkersOriginal) %>%
+#'     glimpse()
 NULL
 
 
 
-# Constructors ====
+# Constructors =================================================================
 #' @importFrom basejump camel
 #' @importFrom dplyr arrange everything group_by left_join mutate rename select
 #' @importFrom rlang !! sym
@@ -71,8 +85,8 @@ NULL
         # (`names()`) of the rowname.
         gene2symbol <- data.frame(
             ensgene = names(rownames(slot(object, "raw.data"))),
-            symbol = rownames(slot(object, "raw.data"))
-        )
+            symbol = rownames(slot(object, "raw.data")),
+            stringsAsFactors = FALSE)
 
         # Check to make sure these values are unique
         if (any(duplicated(gene2symbol[["ensgene"]]))) {
@@ -140,7 +154,7 @@ NULL
 
 
 
-# Methods ====
+# Methods ======================================================================
 #' @rdname sanitizeMarkers
 #' @export
 setMethod(
