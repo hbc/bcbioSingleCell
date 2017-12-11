@@ -22,15 +22,16 @@
 #' load(system.file(
 #'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
-
+#'
 #' cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
 #' glimpse(cellTypesPerCluster)
 #'
 #' # seurat
-#' # Let's plot the first 2 cell types, as a quick example
+#' # Let's plot the first row, as an example
+#' cellTypesPerCluster <- cellTypesPerCluster[1, , drop = FALSE]
 #' plotCellTypesPerCluster(
 #'     seurat,
-#'     cellTypesPerCluster = cellTypesPerCluster[1:2, ])
+#'     cellTypesPerCluster = cellTypesPerCluster)
 NULL
 
 
@@ -41,7 +42,7 @@ NULL
 .plotCellTypesPerCluster <- function(
     object,
     cellTypesPerCluster,
-    color = scale_color_viridis(option = "inferno"),
+    color = viridis::scale_color_viridis(),
     dark = TRUE,
     headerLevel = NULL) {
     # Output Markdown headers per cluster
