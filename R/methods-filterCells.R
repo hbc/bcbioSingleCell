@@ -30,6 +30,7 @@
 #'     package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
+#' print(bcb)
 #' filterCells(bcb)
 NULL
 
