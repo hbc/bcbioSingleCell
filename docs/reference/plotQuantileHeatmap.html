@@ -157,15 +157,8 @@ Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
     <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"filtered.rda"</span>),
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='co'># Reduce the number of counts to speed up the working example</span>
-<span class='no'>subset</span> <span class='kw'>&lt;-</span> <span class='no'>filtered</span>[<span class='fl'>1</span>:<span class='fl'>250</span>, <span class='fl'>1</span>:<span class='fl'>250</span>]
-
 <span class='co'># bcbioSingleCell</span>
-<span class='fu'>plotQuantileHeatmap</span>(
-    <span class='no'>subset</span>,
-    <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-    <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotQuantileHeatmap-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>filtered</span>)</div><div class='img'><img src='plotQuantileHeatmap-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

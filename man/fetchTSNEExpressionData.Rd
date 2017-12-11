@@ -18,6 +18,8 @@ fetchTSNEExpressionData(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{genes}{Genes (by symbol name) of which to get expression data.}
+
+\item{format}{Gene identifier format. Supports \code{ensgene} or \code{symbol}.}
 }
 \value{
 \link{tibble} grouped by \code{gene}, containing t-SNE points, cellular
@@ -37,6 +39,7 @@ print(symbol)
 
 ensgene <- bcbio(seurat, "gene2symbol") \%>\%
     .[which(.[["symbol"]] \%in\% symbol), "ensgene", drop = TRUE]
+print(ensgene)
 
 fetchTSNEExpressionData(
     seurat,

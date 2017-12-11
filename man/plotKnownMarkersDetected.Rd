@@ -11,8 +11,8 @@
 plotKnownMarkersDetected(object, knownMarkersDetected, ...)
 
 \S4method{plotKnownMarkersDetected}{seurat,grouped_df}(object,
-  knownMarkersDetected, color = scale_color_viridis(option = "inferno"),
-  dark = TRUE, headerLevel = NULL)
+  knownMarkersDetected, color = viridis::scale_color_viridis(), dark = TRUE,
+  headerLevel = NULL)
 }
 \arguments{
 \item{object}{Object.}

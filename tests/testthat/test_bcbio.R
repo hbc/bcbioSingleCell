@@ -65,11 +65,11 @@ test_that("seurat", {
              "wd" = "character",
              "utilsSessionInfo" = "sessionInfo",
              "devtoolsSessionInfo" = "session_info",
+             "subset" = "logical",
              "aggregateReplicates" = "factor",
              "filterCells" = "character",
              "filterGenes" = "character",
-             "filterParams" = "numeric",
-             "subset" = "logical")
+             "filterParams" = "numeric")
     )
 })
 

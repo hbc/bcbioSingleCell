@@ -120,16 +120,25 @@
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
 <span class='co'># bcbioSingleCell</span>
-<span class='fu'>aggregateReplicates</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; <span class='message'>New sample IDs: M1</span></div><div class='output co'>#&gt; <span class='message'>Remapping cellular barcodes to aggregate sample IDs</span></div><div class='output co'>#&gt; <span class='message'>Aggregating counts</span></div><div class='output co'>#&gt; <span class='message'>Aggregating raw cellular barcode counts</span></div><div class='output co'>#&gt; <span class='message'>Calculating barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>10874 cellular barcodes detected</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>10874 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; <span class='message'>Updating metadata</span></div><div class='output co'>#&gt; <span class='message'>Preparing aggregated bcbioSingleCell object</span></div><div class='output co'>#&gt; class: bcbioSingleCell 
-#&gt; dim: 39297 10874 
-#&gt; metadata(33): version pipeline ... devtoolsSessionInfo
-#&gt;   aggregateReplicates
+<span class='fu'>print</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; class: bcbioSingleCell 
+#&gt; dim: 1000 500 
+#&gt; metadata(33): version pipeline ... devtoolsSessionInfo subset
 #&gt; assays(1): assay
-#&gt; rownames(39297): ENSG00000000003 ENSG00000000005 ... ENSG00000284742
-#&gt;   ENSG00000284746
+#&gt; rownames(1000): ENSG00000000457 ENSG00000002586 ... ENSG00000283957
+#&gt;   ENSG00000284526
 #&gt; rowData names(11): ensgene symbol ... seqCoordSystem entrez
-#&gt; colnames(10874): M1_AAACAAAC_AATTCCCA M1_AAACAAAC_ACCTTGCC ...
-#&gt;   M1_TGTTATCA_TTATCTGT M1_TGTTATCA_TTGGCGTT
+#&gt; colnames(500): run1_AGAGGATA_AAACACTA_CTTAGGTA
+#&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run2_AGAGGATA_TGTTATCA_ACGCAGAG
+#&gt;   run2_AGAGGATA_TGTTATCA_CAAGTCAT
+#&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div><div class='input'><span class='fu'>aggregateReplicates</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; <span class='message'>New sample IDs: M1</span></div><div class='output co'>#&gt; <span class='message'>Remapping cellular barcodes to aggregate sample IDs</span></div><div class='output co'>#&gt; <span class='message'>Aggregating counts</span></div><div class='output co'>#&gt; <span class='message'>Aggregating raw cellular barcode counts</span></div><div class='output co'>#&gt; <span class='message'>Calculating barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>286 cellular barcodes detected</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>286 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; <span class='message'>Updating metadata</span></div><div class='output co'>#&gt; <span class='message'>Preparing aggregated bcbioSingleCell object</span></div><div class='output co'>#&gt; class: bcbioSingleCell 
+#&gt; dim: 1000 286 
+#&gt; metadata(34): version pipeline ... subset aggregateReplicates
+#&gt; assays(1): assay
+#&gt; rownames(1000): ENSG00000000457 ENSG00000002586 ... ENSG00000283957
+#&gt;   ENSG00000284526
+#&gt; rowData names(11): ensgene symbol ... seqCoordSystem entrez
+#&gt; colnames(286): M1_AAACACTA_CTTAGGTA M1_AAACACTA_CTTCGATT ...
+#&gt;   M1_TGTTATCA_ACGCAGAG M1_TGTTATCA_CAAGTCAT
 #&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

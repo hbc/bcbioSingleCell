@@ -13,7 +13,8 @@
 plotQuantileHeatmap(object, ...)
 
 \S4method{plotQuantileHeatmap}{bcbioSingleCell}(object, n = 10,
-  annotationCol = NA, clusterRows = FALSE, clusterCols = FALSE)
+  annotationCol = NA, clusterRows = FALSE, clusterCols = FALSE,
+  color = viridis::viridis)
 
 \S4method{plotQuantileHeatmap}{dgCMatrix}(object, n = 10,
   annotationCol = NA, clusterRows = FALSE, clusterCols = FALSE,
@@ -23,7 +24,7 @@ plotQuantileHeatmap(object, ...)
   clusterRows = FALSE, clusterCols = FALSE, color = viridis::viridis)
 
 \S4method{plotQuantileHeatmap}{seurat}(object, n = 10, annotationCol = NA,
-  clusterRows = FALSE, clusterCols = FALSE)
+  clusterRows = FALSE, clusterCols = FALSE, color = viridis::viridis)
 }
 \arguments{
 \item{object}{Matrix of data.}
@@ -55,15 +56,8 @@ load(system.file(
     file.path("extdata", "filtered.rda"),
     package = "bcbioSingleCell"))
 
-# Reduce the number of counts to speed up the working example
-subset <- filtered[1:250, 1:250]
-
 # bcbioSingleCell
-plotQuantileHeatmap(
-    subset,
-    n = 20,
-    clusterRows = FALSE,
-    clusterCols = FALSE)
+plotQuantileHeatmap(filtered)
 }
 \author{
 Rory Kirchner

@@ -9,16 +9,10 @@ test_that("aggregateReplicates", {
     expect_is(pooled, "bcbioSingleCell")
     expect_identical(
         dim(pooled),
-        c(39297L, 10874L)
+        c(1000L, 286L)
     )
     map <- metadata(pooled)[["aggregateReplicates"]]
     expect_is(map, "factor")
-    expect_identical(
-        length(map),
-        18240L
-    )
-    expect_identical(
-        length(levels(map)),
-        10874L
-    )
+    expect_identical(length(map), 500L)
+    expect_identical(length(levels(map)), 286L)
 })

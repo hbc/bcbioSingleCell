@@ -11,6 +11,7 @@
 #' @inheritParams AllGenerics
 #'
 #' @param genes Genes (by symbol name) of which to get expression data.
+#' @param format Gene identifier format. Supports `ensgene` or `symbol`.
 #'
 #' @return [tibble] grouped by `gene`, containing t-SNE points, cellular
 #'   metadata, and gene expression.
@@ -25,6 +26,7 @@
 #'
 #' ensgene <- bcbio(seurat, "gene2symbol") %>%
 #'     .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
+#' print(ensgene)
 #'
 #' fetchTSNEExpressionData(
 #'     seurat,

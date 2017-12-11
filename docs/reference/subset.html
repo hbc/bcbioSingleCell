@@ -170,47 +170,47 @@
     <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"bcb.rda"</span>),
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>bcb</span>)[<span class='fl'>1</span>:<span class='fl'>1000</span>]
-<span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "run1_AGAGGATA_CCGATACG_CAAGAGGG" "run1_AGAGGATA_TGCTTCAT_GCAGGGTA"
-#&gt; [3] "run1_AGAGGATA_GGTTGAGA_GAGAGTAT" "run1_AGAGGATA_TCAGCCTC_TGCAAGGG"
-#&gt; [5] "run1_AGAGGATA_CGTGTGTT_AGGAAGAC" "run1_AGAGGATA_TCCGACAC_GGGAGGTA"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>bcb</span>)[<span class='fl'>1</span>:<span class='fl'>1000</span>]
-<span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000003" "ENSG00000000005" "ENSG00000000419" "ENSG00000000457"
-#&gt; [5] "ENSG00000000460" "ENSG00000000938"</div><div class='input'>
+<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>bcb</span>)[<span class='fl'>1</span>:<span class='fl'>100</span>]
+<span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "run1_AGAGGATA_AAACACTA_CTTAGGTA" "run1_AGAGGATA_AAACACTA_CTTCGATT"
+#&gt; [3] "run1_AGAGGATA_AAACCGCC_GAGTTTCG" "run1_AGAGGATA_AAACCGCC_TAGCCTCG"
+#&gt; [5] "run1_AGAGGATA_AAACGATC_TTTACCCT" "run1_AGAGGATA_AAACTACA_CCACATTA"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>bcb</span>)[<span class='fl'>1</span>:<span class='fl'>100</span>]
+<span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457" "ENSG00000002586" "ENSG00000002933" "ENSG00000004939"
+#&gt; [5] "ENSG00000005022" "ENSG00000005100"</div><div class='input'>
 <span class='co'># Subset by cell identifiers</span>
 <span class='no'>bcb</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; class: bcbioSingleCell 
-#&gt; dim: 39297 1000 
-#&gt; metadata(34): version pipeline ... subset originalVersion
+#&gt; dim: 1000 100 
+#&gt; metadata(33): version pipeline ... devtoolsSessionInfo subset
 #&gt; assays(1): assay
-#&gt; rownames(39297): ENSG00000000003 ENSG00000000005 ... ENSG00000284742
-#&gt;   ENSG00000284746
+#&gt; rownames(1000): ENSG00000000457 ENSG00000002586 ... ENSG00000283957
+#&gt;   ENSG00000284526
 #&gt; rowData names(11): ensgene symbol ... seqCoordSystem entrez
-#&gt; colnames(1000): run1_AGAGGATA_CCGATACG_CAAGAGGG
-#&gt;   run1_AGAGGATA_TGCTTCAT_GCAGGGTA ... run1_AGAGGATA_GCAAACTG_TGACCCTC
-#&gt;   run1_AGAGGATA_TGCTTCAT_CTTAGGTA
+#&gt; colnames(100): run1_AGAGGATA_AAACACTA_CTTAGGTA
+#&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run1_AGAGGATA_CCTATTTA_TGCAAGGG
+#&gt;   run1_AGAGGATA_CGATGGCA_TCCCGTAG
 #&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div><div class='input'>
 <span class='co'># Subset by genes</span>
 <span class='no'>bcb</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; class: bcbioSingleCell 
-#&gt; dim: 1000 18240 
-#&gt; metadata(34): version pipeline ... subset originalVersion
+#&gt; dim: 100 500 
+#&gt; metadata(33): version pipeline ... devtoolsSessionInfo subset
 #&gt; assays(1): assay
-#&gt; rownames(1000): ENSG00000000003 ENSG00000000005 ... ENSG00000067141
-#&gt;   ENSG00000067167
+#&gt; rownames(100): ENSG00000000457 ENSG00000002586 ... ENSG00000091136
+#&gt;   ENSG00000091436
 #&gt; rowData names(11): ensgene symbol ... seqCoordSystem entrez
-#&gt; colnames(18240): run1_AGAGGATA_CCGATACG_CAAGAGGG
-#&gt;   run1_AGAGGATA_TGCTTCAT_GCAGGGTA ... run2_AGAGGATA_ATGGTCTG_ATATAGGA
-#&gt;   run2_AGAGGATA_TGACGTCG_AGGATTCA
+#&gt; colnames(500): run1_AGAGGATA_AAACACTA_CTTAGGTA
+#&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run2_AGAGGATA_TGTTATCA_ACGCAGAG
+#&gt;   run2_AGAGGATA_TGTTATCA_CAAGTCAT
 #&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div><div class='input'>
 <span class='co'># Subset by both genes and cells</span>
 <span class='no'>bcb</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; class: bcbioSingleCell 
-#&gt; dim: 1000 1000 
-#&gt; metadata(34): version pipeline ... subset originalVersion
+#&gt; dim: 100 100 
+#&gt; metadata(33): version pipeline ... devtoolsSessionInfo subset
 #&gt; assays(1): assay
-#&gt; rownames(1000): ENSG00000000003 ENSG00000000005 ... ENSG00000067141
-#&gt;   ENSG00000067167
+#&gt; rownames(100): ENSG00000000457 ENSG00000002586 ... ENSG00000091136
+#&gt;   ENSG00000091436
 #&gt; rowData names(11): ensgene symbol ... seqCoordSystem entrez
-#&gt; colnames(1000): run1_AGAGGATA_CCGATACG_CAAGAGGG
-#&gt;   run1_AGAGGATA_TGCTTCAT_GCAGGGTA ... run1_AGAGGATA_GCAAACTG_TGACCCTC
-#&gt;   run1_AGAGGATA_TGCTTCAT_CTTAGGTA
+#&gt; colnames(100): run1_AGAGGATA_AAACACTA_CTTAGGTA
+#&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run1_AGAGGATA_CCTATTTA_TGCAAGGG
+#&gt;   run1_AGAGGATA_CGATGGCA_TCCCGTAG
 #&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

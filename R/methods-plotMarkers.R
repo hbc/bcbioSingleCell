@@ -17,6 +17,7 @@
 #' @inheritParams plotMarkerTSNE
 #'
 #' @param headerLevel Include a Markdown header for each gene.
+#' @param title Plot title.
 #'
 #' @return No value, only graphical output.
 #'
@@ -28,9 +29,9 @@
 #'     file.path("extdata", "topMarkers.rda"),
 #'     package = "bcbioSingleCell"))
 #'
-#' symbol <- topMarkers$symbol[1:4]
+#' symbol <- topMarkers$symbol[[1]]
 #' print(symbol)
-#' ensgene <- topMarkers$ensgene[1:4]
+#' ensgene <- topMarkers$ensgene[[1]]
 #' print(ensgene)
 #'
 #' plotMarkers(seurat, genes = symbol, format = "symbol")
@@ -60,6 +61,7 @@ NULL
     color = viridis::scale_color_viridis(option = "inferno"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
+    title = NULL,
     returnAsList = FALSE) {
     if (!is_string(gene)) {
         stop("gene must be a string", call. = FALSE)
@@ -73,10 +75,12 @@ NULL
         colorPoints = "expression",
         color = color,
         dark = dark,
-        pointsAsNumbers = pointsAsNumbers)
+        pointsAsNumbers = pointsAsNumbers,
+        title = title)
 
     # Violin plot
-    violin <- VlnPlot(
+    # FIXME Create our own `plotViolin()` function in a future update
+    violin <- Seurat::VlnPlot(
         object,
         features.plot = gene,
         do.return = TRUE,
@@ -143,7 +147,8 @@ setMethod("plotMarkers", "seurat", function(
     color = viridis::scale_color_viridis(option = "inferno"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = NULL) {
+    headerLevel = NULL,
+    title = NULL) {
     .checkFormat(format)
     if (format == "ensgene") {
         genes <- .convertGenesToSymbols(object, genes = genes)
@@ -163,6 +168,7 @@ setMethod("plotMarkers", "seurat", function(
             color = color,
             dark = dark,
             pointsAsNumbers = pointsAsNumbers,
+            title = title,
             returnAsList = FALSE) %>%
             show()
     }) %>%

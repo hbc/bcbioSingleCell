@@ -9,7 +9,7 @@
 \usage{
 cellTypesPerCluster(object, ...)
 
-\S4method{cellTypesPerCluster}{grouped_df}(object, min = 2, max = Inf)
+\S4method{cellTypesPerCluster}{grouped_df}(object, min = 1, max = Inf)
 }
 \arguments{
 \item{object}{Object.}
@@ -26,6 +26,9 @@ significant known makers per cell type.
 }
 \description{
 Cell Types per Cluster
+}
+\note{
+This function only returns the positive markers per cluster.
 }
 \examples{
 load(system.file(

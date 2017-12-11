@@ -1,3 +1,7 @@
+# FIXME Improve the column order here
+
+
+
 #' Fetch t-SNE Locations and Cellular Metadata
 #'
 #' @rdname fetchTSNEData

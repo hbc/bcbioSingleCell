@@ -95,13 +95,14 @@
 <span class='co'># S4 method for data.frame</span>
 <span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='kw'>colorPoints</span> <span class='kw'>=</span> <span class='st'>"geomean"</span>,
   <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>colorPoints</span> <span class='kw'>=</span> <span class='st'>"geomean"</span>,
-  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"symbol"</span>,
+  <span class='kw'>colorPoints</span> <span class='kw'>=</span> <span class='st'>"geomean"</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -157,6 +158,12 @@ low/high gradient.</p></td>
       <th>genes</th>
       <td><p>Genes (by symbol name) of which to get expression data.</p></td>
     </tr>
+    <tr>
+      <th>format</th>
+      <td><p>Gene identifier format. Defaults to <code>symbol</code> but <code>ensgene</code>
+is also supported, as long as Ensembl gene to symbol identifier mappings
+are defined.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -175,10 +182,16 @@ low/high gradient.</p></td>
     <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>seurat</span>) <span class='kw'>%&gt;%</span> <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span> <span class='no'>.</span><span class='kw'>[[</span><span class='fl'>1</span>]]
-<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "TSPAN6"</div><div class='input'>
+<span class='no'>symbol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>seurat</span>) <span class='kw'>%&gt;%</span> <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span> <span class='no'>.</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+<span class='fu'>print</span>(<span class='no'>symbol</span>)</div><div class='output co'>#&gt; [1] "SCYL3"</div><div class='input'>
+<span class='no'>ensgene</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bcbio.html'>bcbio</a></span>(<span class='no'>seurat</span>, <span class='st'>"gene2symbol"</span>) <span class='kw'>%&gt;%</span>
+    <span class='no'>.</span>[<span class='fu'>which</span>(<span class='no'>.</span><span class='kw'>[[</span><span class='st'>"symbol"</span>]] <span class='kw'>%in%</span> <span class='no'>symbol</span>), <span class='st'>"ensgene"</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>]
+<span class='fu'>print</span>(<span class='no'>ensgene</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457"</div><div class='input'>
 <span class='co'># seurat</span>
-<span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>symbol</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"symbol"</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>ensgene</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"ensgene"</span>)</div><div class='img'><img src='plotMarkerTSNE-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># data.frame</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>fetchTSNEExpressionData</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>symbol</span>)
+<span class='fu'>plotMarkerTSNE</span>(<span class='no'>df</span>)</div><div class='img'><img src='plotMarkerTSNE-3.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

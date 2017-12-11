@@ -16,6 +16,7 @@
 #'     package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
+#' print(bcb)
 #' aggregateReplicates(bcb)
 NULL
 

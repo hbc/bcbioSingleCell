@@ -24,6 +24,7 @@ load(system.file(
     package = "bcbioSingleCell"))
 
 # bcbioSingleCell
+print(bcb)
 aggregateReplicates(bcb)
 }
 \seealso{

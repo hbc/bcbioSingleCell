@@ -30,29 +30,36 @@ NULL
 # Constructors =================================================================
 #' @importFrom basejump mdHeader
 #' @importFrom dplyr pull
+#' @importFrom stats na.omit
+#' @importFrom viridis scale_color_viridis
 .plotKnownMarkersDetected <- function(
     object,
     knownMarkersDetected,
-    color = scale_color_viridis(option = "inferno"),
+    color = viridis::scale_color_viridis(),
     dark = TRUE,
     headerLevel = NULL) {
     if (!nrow(knownMarkersDetected)) return(NULL)
     cellTypes <- knownMarkersDetected %>%
         pull("cell") %>%
-        unique()
+        unique() %>%
+        na.omit()
     pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
-        ensgene <- knownMarkersDetected %>%
+        genes <- knownMarkersDetected %>%
             .[.[["cell"]] == cellType, ] %>%
             pull("ensgene") %>%
-            unique()
-        if (is.null(ensgene)) return(NULL)
+            unique() %>%
+            na.omit()
+        if (is.null(genes)) return(NULL)
         if (!is.null(headerLevel)) {
             mdHeader(
                 cellType,
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE)
+            subheaderLevel <- headerLevel + 1
+        } else {
+            subheaderLevel <- NULL
         }
         plotMarkers(
             object,
@@ -60,7 +67,8 @@ NULL
             format = "ensgene",
             color = color,
             dark = dark,
-            headerLevel = headerLevel + 1)
+            headerLevel = subheaderLevel,
+            title = cellType)
         # `show()` is already declared in `plotMarkers()`
     }) %>%
         invisible()
