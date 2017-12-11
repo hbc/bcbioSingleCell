@@ -85,8 +85,8 @@ NULL
         # (`names()`) of the rowname.
         gene2symbol <- data.frame(
             ensgene = names(rownames(slot(object, "raw.data"))),
-            symbol = rownames(slot(object, "raw.data"))
-        )
+            symbol = rownames(slot(object, "raw.data")),
+            stringsAsFactors = FALSE)
 
         # Check to make sure these values are unique
         if (any(duplicated(gene2symbol[["ensgene"]]))) {
