@@ -1,3 +1,44 @@
+# bcbioSingleCell 0.0.25 (2017-12-11)
+
+- Prepared a minimal working example dataset.
+- Added some initial unit tests.
+- Renamed `plotKnownMarkers()` to `plotKnownMarkersDetected()`.
+- Renamed `readMarkers()` to `readMarkersFile()`.
+- Added `gene2symbol()` method support.
+- Moved `plotDot()` generic to basejump package.
+- Added internal `.checkFormat()` function, which will check for `ensgene` or `symbol` input.
+- Added internal `.convertGenesToSymbols()` utility function, for mapping Ensembl gene identifiers to gene symbols.
+- Use explicit calls to Seurat functions interally, for clarity.
+- Simplified bcbioSingleCell object return in `loadSingleCell()` function.
+- Added seurat class method support for `annotable()` function.
+- Added `bcbio<-` assignment method support for seurat class objects.
+- `calculateMetrics()` function now uses `annotable = TRUE` as default, instead of using `missing()` method.
+- Added method support for `cell2sample()` for seurat class objects.
+- `cellTypesPerCluster()` now uses `min` and `max` default arguments that don't remove any rows.
+- Added method support for seurat class objects to `counts()` function. This defaults to returning the raw counts (`normalized = FALSE`), but can also return log-normalized (`normalized = TRUE`) and scaled (`normalized = "scaled"`) counts.
+- Added Ensembl gene identifier mapping support to `fetchTSNEExpressionData()`.
+- `filterCells()` now simply works in a destructive manner. We've removed the `drop` parameter. The messages displayed to the user during this function call have been improved, and now include more statistics on the step where the majority of cells are filtered.
+- Initial commit of `gene2symbol()` method support for bcbioSingleCell and seurat class objects.
+- Improved `interestingGroups<-` assignment method support for seurat class objects.
+- Color palettes now default to viridis instead of inferno palette, where applicable.
+- Added Ensembl gene identifier support for `plotDot()` function.
+- `plotFeatureTSNE()` now uses a plural `features` parameter instead of `feature`, which is consistent with the syntax used in the other functions.
+- Added Ensembl gene identifier support to `plotMarkerTSNE()`. The `format` argument still defaults to "symbol", for consistency with previous behavior. However, in the future we recommend that users pass in stable Ensembl gene identifiers here if possible, for better reproducibility.
+- `plotMarkers()` now supports Ensembl gene identifiers.
+- `plotPCElbow()` now silently returns the sequence of principal components (PCs) that we recommend to use for dimensionality reduction.
+- We're now using "glm" instead of "gam" for `geom_smooth()` plotting, where applicable. See the `plotQC()` function code.
+- Improved the defaults for `plotQuantileHeatmap()` to enable faster plotting. Now the dendrogram calculations are skipped by default, which take a long time for large datasets.
+- Removed the draft `plotStressGenes()` function for now. Will try to add this in a future update.
+- Fixed Markdown header handling for `plotTopMarkers()` if `headerLevel = NULL`.
+- Simplified `selectSamples()` code to rely upon output of our bracket-based subsetting method. See `subset.R` file for more details.
+- Improved metadata update in bracket-based subsetting method.
+- `subsetPerSample()` function now defaults to saving in the working directory.
+- Updated `topBarcodes()` function to rank by `nUMI` instead of `nCount` column, so it works with data from either bcbioSingleCell or seurat objects.
+- Minor tweaks to seurat coercion from bcbioSingleCell object. Here we've improved the metadata slotting.
+- Initial commit of example data script in the `data-raw/` directory!
+
+
+
 # bcbioSingleCell 0.0.24 (2017-11-27)
 
 - Raw cellular barcodes are now slotted in `object@cellularBarcodes` as a `data.frame` instead of a per sample `list`. This makes downstream subsetting operations on the barcodes simpler.
