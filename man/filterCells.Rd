@@ -50,6 +50,7 @@ load(system.file(
     package = "bcbioSingleCell"))
 
 # bcbioSingleCell
+print(bcb)
 filterCells(bcb)
 }
 \seealso{

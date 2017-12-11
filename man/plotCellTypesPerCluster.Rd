@@ -11,8 +11,8 @@
 plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat,grouped_df}(object,
-  cellTypesPerCluster, color = scale_color_viridis(option = "inferno"),
-  dark = TRUE, headerLevel = NULL)
+  cellTypesPerCluster, color = viridis::scale_color_viridis(), dark = TRUE,
+  headerLevel = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -45,14 +45,16 @@ load(system.file(
 load(system.file(
     file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
+
 cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
 glimpse(cellTypesPerCluster)
 
 # seurat
-# Let's plot the first 2 cell types, as a quick example
+# Let's plot the first row, as an example
+cellTypesPerCluster <- cellTypesPerCluster[1, , drop = FALSE]
 plotCellTypesPerCluster(
     seurat,
-    cellTypesPerCluster = cellTypesPerCluster[1:2, ])
+    cellTypesPerCluster = cellTypesPerCluster)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},

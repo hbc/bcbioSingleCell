@@ -11,7 +11,7 @@ plotMarkers(object, ...)
 
 \S4method{plotMarkers}{seurat}(object, genes, format = "symbol",
   color = viridis::scale_color_viridis(option = "inferno"), dark = TRUE,
-  pointsAsNumbers = FALSE, headerLevel = NULL)
+  pointsAsNumbers = FALSE, headerLevel = NULL, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -33,6 +33,8 @@ low/high gradient.}
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
+
+\item{title}{Plot title.}
 }
 \value{
 No value, only graphical output.
@@ -54,9 +56,9 @@ load(system.file(
     file.path("extdata", "topMarkers.rda"),
     package = "bcbioSingleCell"))
 
-symbol <- topMarkers$symbol[1:4]
+symbol <- topMarkers$symbol[[1]]
 print(symbol)
-ensgene <- topMarkers$ensgene[1:4]
+ensgene <- topMarkers$ensgene[[1]]
 print(ensgene)
 
 plotMarkers(seurat, genes = symbol, format = "symbol")

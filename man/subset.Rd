@@ -78,9 +78,9 @@ load(system.file(
     file.path("extdata", "bcb.rda"),
     package = "bcbioSingleCell"))
 
-cells <- colnames(bcb)[1:1000]
+cells <- colnames(bcb)[1:100]
 head(cells)
-genes <- rownames(bcb)[1:1000]
+genes <- rownames(bcb)[1:100]
 head(genes)
 
 # Subset by cell identifiers
