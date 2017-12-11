@@ -19,7 +19,7 @@ test_that("Coerce bcbioSingleCell to seurat", {
     expect_is(counts, "dgCMatrix")
     expect_identical(
         dim(counts),
-        c(18893L, 591L)
+        c(1000L, 243L)
     )
 
     # Check to make sure our Seurat coercion step isn't dropping data

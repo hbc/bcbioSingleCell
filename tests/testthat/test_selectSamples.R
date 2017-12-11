@@ -19,7 +19,7 @@ test_that("selectSamples", {
     )
     expect_identical(
         dim(subset),
-        c(18893L, 591L)
+        c(1000L, 243L)
     )
     expect_identical(
         sampleMetadata(subset)[["sampleID"]],
