@@ -57,7 +57,7 @@ filtered <- filterCells(
     minNovelty = 0.7)
 filtered
 
-# Minimal simple Seurat working example
+# Minimal simple Seurat working example that supports tSNE
 seurat <- as(filtered, "seurat") %>%
     NormalizeData() %>%
     FindVariableGenes(do.plot = FALSE) %>%
@@ -66,6 +66,8 @@ seurat <- as(filtered, "seurat") %>%
     FindClusters(dims.use = 1:20) %>%
     RunTSNE(dims.use = 1:20, do.fast = TRUE)
 seurat
+
+# FIXME Need to save example markers
 
 saveData(
     bcb,
