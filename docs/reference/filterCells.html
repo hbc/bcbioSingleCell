@@ -162,23 +162,33 @@ this many cells.</p></td>
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
 <span class='co'># bcbioSingleCell</span>
-<span class='fu'>filterCells</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; <span class='message'>18240 cells before filtering</span>
-#&gt; <span class='message'>39297 genes before filtering</span></div><div class='output co'>#&gt; <span class='message'>    1654 cells | minUMIs &gt;= 1000</span></div><div class='output co'>#&gt; <span class='message'>    1485 cells | minGenes &gt;= 500</span></div><div class='output co'>#&gt; <span class='message'>    1485 cells | maxGenes &lt;= Inf</span></div><div class='output co'>#&gt; <span class='message'>     882 cells | maxMitoRatio &lt;= 0.1</span></div><div class='output co'>#&gt; <span class='message'>     882 cells | minNovelty &lt;= 0.8</span></div><div class='output co'>#&gt; <span class='message'>   19525 genes | minCellsPerGene &lt;= 3</span></div><div class='output co'>#&gt; <span class='message'>882 / 18240 cells passed filtering (4.84%)</span>
-#&gt; <span class='message'>19525 / 39297 genes passed filtering (49.7%)</span></div><div class='output co'>#&gt; Filtering parameters:
+<span class='fu'>print</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; class: bcbioSingleCell 
+#&gt; dim: 1000 500 
+#&gt; metadata(33): version pipeline ... devtoolsSessionInfo subset
+#&gt; assays(1): assay
+#&gt; rownames(1000): ENSG00000000457 ENSG00000002586 ... ENSG00000283957
+#&gt;   ENSG00000284526
+#&gt; rowData names(11): ensgene symbol ... seqCoordSystem entrez
+#&gt; colnames(500): run1_AGAGGATA_AAACACTA_CTTAGGTA
+#&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run2_AGAGGATA_TGTTATCA_ACGCAGAG
+#&gt;   run2_AGAGGATA_TGTTATCA_CAAGTCAT
+#&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div><div class='input'><span class='fu'>filterCells</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; <span class='message'>500 cells before filtering</span>
+#&gt; <span class='message'>1000 genes before filtering</span></div><div class='output co'>#&gt; <span class='message'>     500 cells | minUMIs &gt;= 1000</span></div><div class='output co'>#&gt; <span class='message'>     499 cells | minGenes &gt;= 500</span></div><div class='output co'>#&gt; <span class='message'>     499 cells | maxGenes &lt;= Inf</span></div><div class='output co'>#&gt; <span class='message'>     421 cells | maxMitoRatio &lt;= 0.1</span></div><div class='output co'>#&gt; <span class='message'>     421 cells | minNovelty &lt;= 0.8</span></div><div class='output co'>#&gt; <span class='message'>    1000 genes | minCellsPerGene &lt;= 3</span></div><div class='output co'>#&gt; <span class='message'>421 / 500 cells passed filtering (84.2%)</span>
+#&gt; <span class='message'>1000 / 1000 genes passed filtering (100%)</span></div><div class='output co'>#&gt; Filtering parameters:
 #&gt;   - &gt;= 1000 UMI counts per cell
 #&gt;   - &gt;= 500 genes per cell
 #&gt;   - &lt;= Inf genes per cell
 #&gt;   - &lt;= 0.1 mitochondrial abundance
 #&gt;   - &gt;= 0.8 novelty score
 #&gt;   - &gt;= 3 cells per gene</div><div class='output co'>#&gt; class: bcbioSingleCell 
-#&gt; dim: 19525 882 
-#&gt; metadata(37): version pipeline ... subset originalVersion
+#&gt; dim: 1000 421 
+#&gt; metadata(36): version pipeline ... filterGenes filterParams
 #&gt; assays(1): assay
-#&gt; rownames(19525): ENSG00000000003 ENSG00000000005 ... ENSG00000284727
-#&gt;   ENSG00000284737
+#&gt; rownames(1000): ENSG00000000457 ENSG00000002586 ... ENSG00000283957
+#&gt;   ENSG00000284526
 #&gt; rowData names(11): ensgene symbol ... seqCoordSystem entrez
-#&gt; colnames(882): run1_AGAGGATA_AAACACGG_GTGGAGCT
-#&gt;   run1_AGAGGATA_AAACACTA_ATCCCACG ... run2_AGAGGATA_TGTTATCA_ACGCAGAG
+#&gt; colnames(421): run1_AGAGGATA_AAACACTA_CTTAGGTA
+#&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run2_AGAGGATA_TGTTATCA_ACGCAGAG
 #&gt;   run2_AGAGGATA_TGTTATCA_CAAGTCAT
 #&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div></pre>
   </div>

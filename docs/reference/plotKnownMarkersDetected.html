@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Known Markers — plotKnownMarkers • bcbioSingleCell</title>
+<title>Plot Known Markers Detected — plotKnownMarkersDetected • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,18 +83,18 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Known Markers</h1>
+    <h1>Plot Known Markers Detected</h1>
     </div>
 
     
-    <p>Plot Known Markers</p>
+    <p>Plot Known Markers Detected</p>
     
 
-    <pre class="usage"><span class='fu'>plotKnownMarkers</span>(<span class='no'>object</span>, <span class='no'>knownMarkers</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>knownMarkersDetected</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat,grouped_df</span>
-<span class='fu'>plotKnownMarkers</span>(<span class='no'>object</span>, <span class='no'>knownMarkers</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"inferno"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+<span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>,
+  <span class='no'>knownMarkersDetected</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -105,8 +105,9 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>knownMarkers</th>
-      <td><p><code>knownMarkersDetected()</code> tibble grouped by cluster.</p></td>
+      <th>knownMarkersDetected</th>
+      <td><p><code>knownMarkersDetected()</code> return tibble grouped
+by cluster.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -140,6 +141,19 @@ low/high gradient.</p></td>
   <code>topMarkers</code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"knownMarkersDetected.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+
+<span class='co'># seurat</span>
+<span class='co'># Let's plot the first 2 markers, as a quick example</span>
+<span class='fu'>plotKnownMarkersDetected</span>(
+    <span class='no'>seurat</span>,
+    <span class='kw'>knownMarkersDetected</span> <span class='kw'>=</span> <span class='no'>knownMarkersDetected</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ])</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='img'><img src='plotKnownMarkersDetected-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 02s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -149,7 +163,9 @@ low/high gradient.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     
