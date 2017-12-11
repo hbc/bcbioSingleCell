@@ -23,15 +23,8 @@
 #'     file.path("extdata", "filtered.rda"),
 #'     package = "bcbioSingleCell"))
 #'
-#' # Reduce the number of counts to speed up the working example
-#' subset <- filtered[1:250, 1:250]
-#'
 #' # bcbioSingleCell
-#' plotQuantileHeatmap(
-#'     subset,
-#'     n = 20,
-#'     clusterRows = FALSE,
-#'     clusterCols = FALSE)
+#' plotQuantileHeatmap(filtered)
 NULL
 
 
@@ -109,6 +102,7 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotQuantileHeatmap
+#' @importFrom viridis viridis
 #' @export
 setMethod(
     "plotQuantileHeatmap",
@@ -118,14 +112,16 @@ setMethod(
         n = 10,
         annotationCol = NA,
         clusterRows = FALSE,
-        clusterCols = FALSE) {
+        clusterCols = FALSE,
+        color = viridis::viridis) {
         counts <- counts(object)
         .plotQuantileHeatmap(
             object = counts,
             n = n,
             annotationCol = annotationCol,
             clusterRows = clusterRows,
-            clusterCols = clusterCols)
+            clusterCols = clusterCols,
+            color = color)
     })
 
 
@@ -149,6 +145,7 @@ setMethod(
 
 
 #' @rdname plotQuantileHeatmap
+#' @importFrom viridis viridis
 #' @export
 setMethod(
     "plotQuantileHeatmap",
@@ -158,7 +155,8 @@ setMethod(
         n = 10,
         annotationCol = NA,
         clusterRows = FALSE,
-        clusterCols = FALSE) {
+        clusterCols = FALSE,
+        color = viridis::viridis) {
         # Use the raw counts
         counts <- counts(object, normalized = FALSE)
         .plotQuantileHeatmap(
@@ -166,5 +164,6 @@ setMethod(
             n = n,
             annotationCol = annotationCol,
             clusterRows = clusterRows,
-            clusterCols = clusterCols)
+            clusterCols = clusterCols,
+            color = color)
     })
