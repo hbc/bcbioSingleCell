@@ -35,9 +35,7 @@ NULL
 #' @importFrom basejump prepareSummarizedExperiment
 #' @importFrom dplyr mutate_if pull
 #' @importFrom magrittr set_rownames
-.selectSamples <- function(
-    object,
-    ...) {
+.selectSamples <- function(object, ...) {
     object <- .applyFilterCutoffs(object)
     metadata(object)[["selectSamples"]] <- TRUE
 
