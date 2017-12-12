@@ -45,9 +45,7 @@ NULL
     color = viridis::scale_color_viridis(),
     dark = TRUE,
     headerLevel = NULL) {
-    if (!is(cellTypesPerCluster, "grouped_df")) {
-        stop("Invalid cellTypesPerCluster")
-    }
+    if (!nrow(cellTypesPerCluster)) return(NULL)
     if (group_vars(cellTypesPerCluster) != "cluster") {
         stop("cellTypesPerCluster must be grouped by 'cluster'")
     }
