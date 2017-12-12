@@ -27,6 +27,11 @@ NULL
 
 # Constructors =================================================================
 .gene2symbol <- function(object) {
+    # Use slotted gene2symbol in metadata, if set
+    gene2symbol <- metadata(object)[["gene2symbol"]]
+    if (is.data.frame(gene2symbol)) return(gene2symbol)
+
+    # Otherwise, attempt to prepare from annotable
     annotable <- annotable(object)
     if (is.null(annotable)) return(NULL)
     cols <- c("ensgene", "symbol")
