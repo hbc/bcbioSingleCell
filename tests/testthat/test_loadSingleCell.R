@@ -1,8 +1,6 @@
 context("loadSingleCell")
 
 test_that("Homo sapiens", {
-    # Homo sapiens
-    # Minimal working example dataset
     extdataDir <- system.file("extdata", package = "bcbioSingleCell")
     uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
     sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
