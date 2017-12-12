@@ -59,11 +59,9 @@ run directory as a remote connection over
 extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
 sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
-annotable <- annotable("Homo sapiens", release = 90)
 bcb <- loadSingleCell(
     uploadDir = uploadDir,
-    sampleMetadataFile = sampleMetadataFile,
-    annotable = annotable)
+    sampleMetadataFile = sampleMetadataFile)
 
 # Mus musculus
 # Run with Ensembl 88 transcriptome FASTA and GTF files
