@@ -26,14 +26,11 @@ NULL
 
 
 # Constructors =================================================================
-.gene2symbol <- function(object) {
-    # Use slotted gene2symbol in metadata, if set
-    gene2symbol <- metadata(object)[["gene2symbol"]]
-    if (is.data.frame(gene2symbol)) return(gene2symbol)
-
-    # Otherwise, attempt to prepare from annotable
+.gene2symbolFromAnnotable <- function(object) {
     annotable <- annotable(object)
-    if (is.null(annotable)) return(NULL)
+    if (is.null(annotable)) {
+        stop("Object does not contain internal annotable")
+    }
     cols <- c("ensgene", "symbol")
     if (!all(cols %in% colnames(annotable))) {
         stop(paste(
@@ -51,7 +48,13 @@ NULL
 setMethod(
     "gene2symbol",
     signature("bcbioSingleCell"),
-    .gene2symbol)
+    function(object) {
+        gene2symbol <- metadata(object)[["gene2symbol"]]
+        if (is.data.frame(gene2symbol)) return(gene2symbol)
+
+        # Fall back to generating from annotable
+        .gene2symbolFromAnnotable(object)
+    })
 
 
 
@@ -60,4 +63,28 @@ setMethod(
 setMethod(
     "gene2symbol",
     signature("seurat"),
-    .gene2symbol)
+    function(object) {
+        gene2symbol <- bcbio(object, "gene2symbol")
+        if (is.data.frame(gene2symbol)) return(gene2symbol)
+
+        gene2symbol <- .gene2symbolFromAnnotable(object)
+        if (is.data.frame(gene2symbol)) return(gene2symbol)
+
+        rownames <- slot(object, "data") %>% rownames()
+        if (!is.null(names(rownames))) {
+            ensgene <- names(rownames)
+            symbol <- rownames
+            gene2symbol <- data.frame(
+                "ensgene" = ensgene,
+                "symbol" = symbol,
+                row.names = ensgene,
+                stringsAsFactors = FALSE
+            )
+            return(gene2symbol)
+        }
+
+        warning(paste(
+            "seurat object doesn't appear to contain",
+            "Ensembl gene to symbol mappings"
+        ))
+    })
