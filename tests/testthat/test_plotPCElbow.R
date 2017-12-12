@@ -8,7 +8,7 @@ test_that("seurat", {
     pcUse <- plotPCElbow(seurat)
     expect_identical(
         pcUse,
-        seq_len(16)
+        seq_len(14)
     )
 })
 
