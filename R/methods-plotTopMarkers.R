@@ -39,7 +39,7 @@ NULL
     headerLevel = NULL) {
     .checkSanitizedMarkers(topMarkers)
     clusters <- levels(topMarkers[["cluster"]])
-    pblapply(seq_along(clusters), function(a) {
+    return <- pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
         # We're matching against the `symbol` column here
         genes <- topMarkers %>%
@@ -60,15 +60,16 @@ NULL
         } else {
             subheaderLevel <- NULL
         }
-        plotMarkers(
+        p <- plotMarkers(
             object,
             genes = genes,
             format = "symbol",
             pointsAsNumbers = pointsAsNumbers,
             headerLevel = subheaderLevel)
-        # Don't show here, already defined in `plotMarkers()`
-    }) %>%
-        invisible()
+        show(p)
+        p
+    })
+    invisible(return)
 }
 
 
