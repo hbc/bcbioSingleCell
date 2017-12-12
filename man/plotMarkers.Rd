@@ -10,7 +10,8 @@
 plotMarkers(object, ...)
 
 \S4method{plotMarkers}{seurat}(object, genes, format = "symbol",
-  color = viridis::scale_color_viridis(option = "inferno"), dark = TRUE,
+  color = viridis::scale_color_viridis(),
+  fill = viridis::scale_fill_viridis(discrete = TRUE), dark = TRUE,
   pointsAsNumbers = FALSE, headerLevel = NULL, title = NULL)
 }
 \arguments{
@@ -27,6 +28,8 @@ are defined.}
 \item{color}{Color palette to use for points. Defaults to the viridis color
 palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
 low/high gradient.}
+
+\item{fill}{Color palette to use for violin plot fill. Defaults to viridis.}
 
 \item{dark}{Enable dark mode.}
 
