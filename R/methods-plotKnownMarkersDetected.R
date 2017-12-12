@@ -43,7 +43,8 @@ NULL
         pull("cell") %>%
         unique() %>%
         na.omit()
-    pblapply(seq_along(cellTypes), function(a) {
+    if (is.null(cellTypes)) return(NULL)
+    return <- pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
         genes <- knownMarkersDetected %>%
             .[.[["cell"]] == cellType, ] %>%
@@ -69,9 +70,8 @@ NULL
             dark = dark,
             headerLevel = subheaderLevel,
             title = cellType)
-        # `show()` is already declared in `plotMarkers()`
-    }) %>%
-        invisible()
+    })
+    invisible(return)
 }
 
 
