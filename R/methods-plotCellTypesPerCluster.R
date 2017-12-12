@@ -13,7 +13,7 @@
 #' @param cellTypesPerCluster Cell types per cluster grouped [tibble]. This must
 #'   be the return from [cellTypesPerCluster()].
 #'
-#' @return [ggplot].
+#' @return Show graphical output. Invisibly return [ggplot] plotlist.
 #'
 #' @examples
 #' load(system.file(
@@ -37,7 +37,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr pull
+#' @importFrom dplyr group_vars mutate_if pull
 #' @importFrom pbapply pblapply
 .plotCellTypesPerCluster <- function(
     object,
@@ -45,9 +45,19 @@ NULL
     color = viridis::scale_color_viridis(),
     dark = TRUE,
     headerLevel = NULL) {
+    if (!is(cellTypesPerCluster, "grouped_df")) {
+        stop("Invalid cellTypesPerCluster")
+    }
+    if (group_vars(cellTypesPerCluster) != "cluster") {
+        stop("cellTypesPerCluster must be grouped by 'cluster'")
+    }
+    cellTypesPerCluster <- cellTypesPerCluster %>%
+        ungroup() %>%
+        mutate_if(is.factor, droplevels)
     # Output Markdown headers per cluster
-    clusters <- unique(cellTypesPerCluster[["cluster"]])
-    pblapply(seq_along(clusters), function(a) {
+    clusters <- levels(cellTypesPerCluster[["cluster"]])
+    if (is.null(clusters)) return(NULL)
+    return <- pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
         if (!is.null(headerLevel)) {
             mdHeader(
@@ -57,25 +67,23 @@ NULL
                 asis = TRUE)
         }
         subset <- cellTypesPerCluster %>%
-                .[.[["cluster"]] == cluster, ]
+                .[.[["cluster"]] == cluster, , drop = FALSE]
         lapply(seq_len(nrow(subset)), function(b) {
-            cellType <- subset[b, ]
+            cellType <- subset[b, , drop = FALSE]
             genes <- pull(cellType, "symbol") %>%
                 strsplit(", ") %>%
                 .[[1]]
             title <- pull(cellType, "cell")
             if (!is.null(headerLevel)) {
-                if (!is.null(headerLevel)) {
-                    mdHeader(
-                        title,
-                        level = headerLevel + 1,
-                        tabset = TRUE,
-                        asis = TRUE)
-                }
+                mdHeader(
+                    title,
+                    level = headerLevel + 1,
+                    tabset = TRUE,
+                    asis = TRUE)
             }
             # Modify the title by adding the cluster number (for the plot)
             title <- paste(paste0("Cluster ", cluster, ":"), title)
-            plotMarkerTSNE(
+            p <- plotMarkerTSNE(
                 object = object,
                 genes = genes,
                 colorPoints = "geomean",
@@ -83,12 +91,12 @@ NULL
                 dark = dark,
                 pointsAsNumbers = FALSE,
                 label = TRUE,
-                title = title) %>%
-                show()
-        }) %>%
-            invisible()
-    }) %>%
-        invisible()
+                title = title)
+            show(p)
+            p
+        })
+    })
+    invisible(return)
 }
 
 
