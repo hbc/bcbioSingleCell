@@ -16,6 +16,7 @@
 #' @inheritParams AllGenerics
 #' @inheritParams plotMarkerTSNE
 #'
+#' @param fill Color palette to use for violin plot fill. Defaults to viridis.
 #' @param headerLevel Include a Markdown header for each gene.
 #' @param title Plot title.
 #'
@@ -58,7 +59,8 @@ NULL
 .plotMarkerSeurat <- function(
     object,
     gene,
-    color = viridis::scale_color_viridis(option = "inferno"),
+    color = viridis::scale_color_viridis(),
+    fill = viridis::scale_fill_viridis(discrete = TRUE),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     title = NULL,
@@ -99,13 +101,17 @@ NULL
             color = "black",
             scale = "width",
             adjust = 1,
-            trim = TRUE) +
-        scale_fill_viridis(discrete = TRUE)
+            trim = TRUE)
+    if (is(fill, "ScaleDiscrete")) {
+        violin <- violin + fill
+    }
+
 
     # Dot plot
     # We're transposing the dot plot here to align vertically with the
     # violin and tSNE plots. The violin is preferable over the ridgeline
     # here because it works better horizontally.
+    # FIXME Need to allow for user-defined color pass in here
     dot <- plotDot(object, genes = gene, format = "symbol")
 
     if (isTRUE(returnAsList)) {
@@ -139,12 +145,14 @@ NULL
 # Methods ======================================================================
 #' @rdname plotMarkers
 #' @importFrom basejump mdHeader
+#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod("plotMarkers", "seurat", function(
     object,
     genes,
     format = "symbol",
-    color = viridis::scale_color_viridis(option = "inferno"),
+    color = viridis::scale_color_viridis(),
+    fill = viridis::scale_fill_viridis(discrete = TRUE),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     headerLevel = NULL,
@@ -153,7 +161,7 @@ setMethod("plotMarkers", "seurat", function(
     if (format == "ensgene") {
         genes <- .convertGenesToSymbols(object, genes = genes)
     }
-    lapply(seq_along(genes), function(a) {
+    return <- lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
         # Skip and warn if gene is missing
         if (!gene %in% rownames(slot(object, "data"))) {
@@ -162,15 +170,17 @@ setMethod("plotMarkers", "seurat", function(
         if (!is.null(headerLevel)) {
             mdHeader(gene, level = headerLevel, asis = TRUE)
         }
-        .plotMarkerSeurat(
+        p <- .plotMarkerSeurat(
             object,
             gene = gene,
             color = color,
+            fill = fill,
             dark = dark,
             pointsAsNumbers = pointsAsNumbers,
             title = title,
-            returnAsList = FALSE) %>%
-            show()
-    }) %>%
-        invisible()
+            returnAsList = FALSE)
+        show(p)
+        p
+    })
+    invisible(return)
 })
