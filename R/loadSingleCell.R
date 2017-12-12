@@ -52,11 +52,9 @@
 #' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 #' uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
 #' sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
-#' annotable <- annotable("Homo sapiens", release = 90)
 #' bcb <- loadSingleCell(
 #'     uploadDir = uploadDir,
-#'     sampleMetadataFile = sampleMetadataFile,
-#'     annotable = annotable)
+#'     sampleMetadataFile = sampleMetadataFile)
 #'
 #' # Mus musculus
 #' # Run with Ensembl 88 transcriptome FASTA and GTF files
@@ -130,24 +128,38 @@ loadSingleCell <- function(
 
     # Cellular barcode cutoff
     cellularBarcodeCutoffPattern <- "--cb_cutoff (\\d+)"
-    cellularBarcodeCutoff <-
-        str_match(bcbioCommandsLog, cellularBarcodeCutoffPattern) %>%
-        .[, 2] %>%
-        na.omit() %>%
-        unique() %>%
-        as.numeric()
-    message(paste(
-        cellularBarcodeCutoff,
-        "reads per cellular barcode cutoff detected"
-    ))
+    if (length(bcbioCommandsLog)) {
+        match <- str_match(
+            string = bcbioCommandsLog,
+            pattern = cellularBarcodeCutoffPattern)
+        cellularBarcodeCutoff <- match %>%
+            .[, 2L] %>%
+            na.omit() %>%
+            unique() %>%
+            as.numeric()
+    } else {
+        cellularBarcodeCutoff <- NULL
+    }
+    if (!is.null(cellularBarcodeCutoff)) {
+        message(paste(
+            cellularBarcodeCutoff,
+            "reads per cellular barcode cutoff detected"
+        ))
+    }
 
     # Detect MatrixMarket output at transcript or gene level
-    # This grep pattern may not be strict enough against the file path
-    genemapPattern <- "--genemap (.+)-tx2gene.tsv"
-    if (any(grepl(x = bcbioCommandsLog, pattern = genemapPattern))) {
-        countsLevel <- "gene"
+    if (length(bcbioCommandsLog)) {
+        # This grep pattern may not be strict enough against the file path
+        genemapPattern <- "--genemap (.+)-tx2gene.tsv"
+        if (any(grepl(x = bcbioCommandsLog, pattern = genemapPattern))) {
+            countsLevel <- "gene"
+        } else {
+            countsLevel <- "transcript"
+        }
     } else {
-        countsLevel <- "transcript"
+        # The pipeline now defaults to gene level. If there's no log file,
+        # let's assume the counts are genes.
+        countsLevel <- "gene"
     }
 
     # Data versions and programs ===============================================
@@ -171,7 +183,9 @@ loadSingleCell <- function(
                 na.omit() %>%
                 unique()
         } else {
-            stop("Genome detection from bcbio commands failed", call. = FALSE)
+            warning("Genome detection from bcbio commands failed",
+                    call. = FALSE)
+            genomeBuild <- NULL
         }
     }
     if (length(genomeBuild) > 1) {
@@ -181,18 +195,30 @@ loadSingleCell <- function(
     message(paste0("Genome: ", organism, " (", genomeBuild, ")"))
 
     # Molecular barcode (UMI) type =============================================
-    umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
-    if (any(grepl(x = bcbioCommandsLog, pattern = umiPattern))) {
-        umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
-            .[, 2] %>%
-            na.omit() %>%
-            unique() %>%
-            gsub(x = .,
-                 pattern = "-transform",
-                 replacement = "")
-        message(paste("UMI type:", umiType))
+    if (length(bcbioCommandsLog)) {
+        umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
+        if (any(grepl(x = bcbioCommandsLog, pattern = umiPattern))) {
+            umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
+                .[, 2] %>%
+                na.omit() %>%
+                unique() %>%
+                gsub(x = .,
+                     pattern = "-transform",
+                     replacement = "")
+            message(paste("UMI type:", umiType))
+        } else {
+            warning("Failed to detect UMI type from commands log",
+                    call. = FALSE)
+            umiType <- NULL
+        }
     } else {
-        stop("Failed to detect UMI type from JSON file", call. = FALSE)
+        umiType <- NULL
+    }
+    # Assume samples are inDrop platform, by default
+    if (is.null(umiType)) {
+        warning("Assuming unknown UMI type is 'indrop' (default)",
+                call. = FALSE)
+        umiType <- "indrop"
     }
 
     # Sample metadata ==========================================================
