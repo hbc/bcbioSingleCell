@@ -343,9 +343,9 @@ Let's look at the variance in the number of UMI counts (`nUMI`), gene detection 
 # support labeling the clusters
 plotFeatureTSNE(
     seurat,
-    feature = c("nUMI", "nGene",
-                "log10GenesPerUMI", "mitoRatio",
-                "S.Score", "G2M.Score"),
+    features = c("nUMI", "nGene",
+                 "log10GenesPerUMI", "mitoRatio",
+                 "S.Score", "G2M.Score"),
     pointSize = 1,
     labelSize = 4.5
 )
@@ -355,7 +355,7 @@ plotFeatureTSNE(
 ```{r plot_feature_pc}
 plotFeatureTSNE(
     seurat,
-    feature = paste0("PC", pcUse),
+    features = paste0("PC", pcUse),
     pointSize = 0.8,
     labelSize = 4
 )
