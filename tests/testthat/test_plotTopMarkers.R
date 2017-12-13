@@ -8,8 +8,6 @@ load(system.file(
     package = "bcbioSingleCell"))
 topMarkers <- topMarkers[1:2, ]
 
-
-
 test_that("seurat", {
     expect_is(topMarkers, "grouped_df")
     plotlist <- plotTopMarkers(seurat, topMarkers)
