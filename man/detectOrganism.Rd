@@ -26,6 +26,7 @@ Currently supported organisms:
 \item \emph{Homo sapiens} (human)
 \item \emph{Mus musculus} (mouse)
 \item \emph{Rattus norvegicus} (rat)
+\item \emph{Danio rerio} (zebrafish)
 \item \emph{Drosophila melanogaster} (fruitfly)
 \item \emph{Caenorhabditis elegans} (roundworm)
 \item \emph{Saccharomyces cerevisiae} (yeast)
@@ -42,8 +43,10 @@ load(system.file(
     package = "bcbioSingleCell"))
 
 # bcbioSingleCell
+detectOrganism(bcb)
 
 # seurat
+detectOrganism(seurat)
 }
 \seealso{
 Other Gene Annotation Utilities: \code{\link{annotable}},
