@@ -32,15 +32,13 @@ seurat <- get(seuratName, inherits = FALSE)
 # File on issue on the bcbioSingleCell GitHub repo if this list needs to get
 # updated or the desired organism isn't yet supported.
 if (!is.null(params$cellTypeMarkersFile)) {
-    cellTypeMarkers <- readFileByExtension(params$cellTypeMarkersFile)
+    gene2symbol <- gene2symbol(seurat)
+    cellTypeMarkers <- readCellTypeMarkersFile(
+        params$cellTypeMarkersFile,
+        gene2symbol = gene2symbol)
 } else {
     # Detect the organism from the seurat object
-    organism <- slot(seurat, "misc") %>%
-        .[["bcbio"]] %>%
-        .[["organism"]]
-    if (is.null(organism)) {
-        stop("Organism is not slotted in 'seurat@misc$bcbio$organism'")
-    }
+    organism <- detectOrganism(seurat)
     # Reformat organism name to match internal list (e.g. "mmusculus")
     organismShorthand <- organism %>%
         gsub(x = .,
@@ -54,19 +52,8 @@ if (!is.null(params$cellTypeMarkersFile)) {
         stop(paste("No internal markers for", organismShorthand))
     }
     cellTypeMarkers <- cellTypeMarkers[[organismShorthand]]
-    saveData(cellTypeMarkers, dir = dataDir)
 }
-
-# Attempt to load all detected markers, if already saved. This step is
-# useful for regenerating the report when caching is disabled.
-seuratAllMarkersName <- paste(seuratName, "markers", sep = "_")
-seuratAllMarkersFile <- file.path(dataDir, paste0(seuratAllMarkersName, ".rda"))
-if (file.exists(seuratAllMarkersFile)) {
-    loadDataAsName(c(seuratAllMarkers = seuratAllMarkersFile))
-    evalMarkers <- FALSE
-} else {
-    evalMarkers <- TRUE
-}
+saveData(cellTypeMarkers, dir = dataDir)
 
 # knitr arguments (for `rmarkdown::render()` looping)
 opts_chunk$set(
@@ -107,7 +94,7 @@ The `min.pct` argument requires a gene to be detected at a minimum percentage in
 
 Seurat has four tests for differential expression which can be set with the `test.use` parameter: LRT test based on zero-inflated data (`bimod`, default), ROC test (`roc`), t-test (`t`), LRT test based on tobit-censoring models (`tobit`) The ROC test returns the 'classification power' for any individual marker (ranging from 0 - random, to 1 - perfect).
 
-```{r find_all_markers, results="hide", eval=evalMarkers}
+```{r find_all_markers, results="hide"}
 seuratAllMarkers <- FindAllMarkers(seurat)
 # Save the original, unmodified data.frame as a backup, since this step is
 # CPU-intensive for large datasets
