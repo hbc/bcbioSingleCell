@@ -30,7 +30,6 @@ cellTypeMarkersFile <- system.file(
     file.path("extdata", "cellTypeMarkers.csv"),
     package = "bcbioSingleCell")
 gene2symbol <- annotable("Mus musculus", format = "gene2symbol")
-
 readCellTypeMarkersFile(cellTypeMarkersFile, gene2symbol = gene2symbol)
 }
 \seealso{
