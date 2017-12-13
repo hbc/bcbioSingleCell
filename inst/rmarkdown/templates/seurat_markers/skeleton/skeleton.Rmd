@@ -27,6 +27,7 @@ dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 # Load seurat object
 seuratName <- load(params$seuratFile)
 seurat <- get(seuratName, inherits = FALSE)
+seuratAllMarkersName <- paste(seuratName, "markers", sep = "_")
 
 # Default to using our internal cell type markers, managed on Google Sheets.
 # File on issue on the bcbioSingleCell GitHub repo if this list needs to get
@@ -53,7 +54,10 @@ if (!is.null(params$cellTypeMarkersFile)) {
     }
     cellTypeMarkers <- cellTypeMarkers[[organismShorthand]]
 }
-saveData(cellTypeMarkers, dir = dataDir)
+assignAndSaveData(
+    name = paste(seuratAllMarkersName, "cellTypeMarkers", sep = "_"),
+    object = cellTypeMarkers,
+    dir = dataDir)
 
 # knitr arguments (for `rmarkdown::render()` looping)
 opts_chunk$set(
