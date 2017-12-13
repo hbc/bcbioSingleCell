@@ -11,7 +11,7 @@ NULL
 
 
 
-# 0.0.18 =======================================================================
+# v0.0.18 ======================================================================
 #' @rdname deprecated
 #' @export
 plotClusters <- function(...) {
@@ -30,7 +30,7 @@ plotTSNEExpressionData <- function(...) {
 
 
 
-# 0.0.19 =======================================================================
+# v0.0.19 ======================================================================
 #' @rdname deprecated
 #' @export
 loadSingleCellRun <- function(...) {
@@ -40,7 +40,7 @@ loadSingleCellRun <- function(...) {
 
 
 
-# 0.0.23 =======================================================================
+# v0.0.23 ======================================================================
 #' @rdname deprecated
 #' @export
 plotFeatures <- function(object, features, ...) {
@@ -50,7 +50,7 @@ plotFeatures <- function(object, features, ...) {
 
 
 
-# 0.0.24 =======================================================================
+# v0.0.24 ======================================================================
 #' @rdname deprecated
 #' @importFrom basejump midnightTheme
 #' @export
@@ -98,6 +98,14 @@ plotKnownMarkers <- function(
 #' @rdname deprecated
 #' @export
 readMarkers <- function(...) {
-    .Deprecated("readMarkersFile")
-    readMarkersFile(...)
+    .Deprecated("readCellTypeMarkersFile")
+    readCellTypeMarkersFile(...)
+}
+
+
+
+# v0.0.26 ======================================================================
+readMarkersFile <- function(...) {
+    .Deprecated("readCellTypeMarkersFile")
+    readCellTypeMarkersFile(...)
 }

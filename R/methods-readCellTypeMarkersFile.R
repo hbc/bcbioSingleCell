@@ -1,11 +1,7 @@
-# FIXME Need to add working example
-
-
-
-#' Read Known Markers File
+#' Read Cell Type Markers File
 #'
-#' @rdname readMarkersFile
-#' @name readMarkersFile
+#' @rdname readCellTypeMarkersFile
+#' @name readCellTypeMarkersFile
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
@@ -14,7 +10,14 @@
 #' @param object Gene markers file (CSV or Excel).
 #' @param gene2symbol Gene-to-symbol annotation [data.frame].
 #'
-#' @return [tibble].
+#' @return [tibble], gropued by `cell` column.
+#'
+#' @examples
+#' cellTypeMarkersFile <- system.file(
+#'     file.path("extdata", "cellTypeMarkers.csv"),
+#'     package = "bcbioSingleCell")
+#' gene2symbol <- annotable("Mus musculus", format = "gene2symbol")
+#' readCellTypeMarkersFile(cellTypeMarkersFile, gene2symbol = gene2symbol)
 NULL
 
 
@@ -23,7 +26,7 @@ NULL
 #' @importFrom basejump camel readFileByExtension
 #' @importFrom dplyr arrange distinct left_join pull
 #' @importFrom rlang syms !!!
-.readMarkersFile <- function(object, gene2symbol) {
+.readCellTypeMarkersFile <- function(object, gene2symbol) {
     if (!is.data.frame(gene2symbol)) {
         stop("gene2symbol must be data.frame")
     }
@@ -84,9 +87,9 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname readMarkersFile
+#' @rdname readCellTypeMarkersFile
 #' @export
 setMethod(
-    "readMarkersFile",
+    "readCellTypeMarkersFile",
     signature("character"),
-    .readMarkersFile)
+    .readCellTypeMarkersFile)

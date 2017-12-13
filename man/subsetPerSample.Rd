@@ -29,7 +29,8 @@ Subset Per Sample
 }
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateReplicates}},
-  \code{\link{filterCells}}, \code{\link{readMarkersFile}}
+  \code{\link{filterCells}},
+  \code{\link{readCellTypeMarkersFile}}
 }
 \author{
 Michael Steinbaugh

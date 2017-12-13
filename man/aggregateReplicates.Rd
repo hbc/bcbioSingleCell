@@ -29,7 +29,7 @@ aggregateReplicates(bcb)
 }
 \seealso{
 Other Data Management Utilities: \code{\link{filterCells}},
-  \code{\link{readMarkersFile}},
+  \code{\link{readCellTypeMarkersFile}},
   \code{\link{subsetPerSample}}
 }
 \author{
