@@ -23,23 +23,12 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump camel readFileByExtension
-#' @importFrom dplyr arrange distinct left_join pull
+#' @importFrom basejump camel checkGene2symbol readFileByExtension
+#' @importFrom dplyr arrange distinct left_join
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom tibble as_tibble
 .readCellTypeMarkersFile <- function(object, gene2symbol) {
-    if (!is.data.frame(gene2symbol)) {
-        stop("gene2symbol must be data.frame")
-    }
-    if (length(dimnames(gene2symbol)[[2]]) != 2) {
-        stop("gene2symbol must only contain two columns")
-    }
-    if (!identical(
-        colnames(gene2symbol),
-        c("ensgene", "symbol"))) {
-        stop("gene2symbol colnames must be 'ensgene', 'symbol'")
-    }
-
+    checkGene2symbol(gene2symbol)
     markers <- readFileByExtension(object) %>%
         camel(strict = FALSE)
 
@@ -48,13 +37,12 @@ NULL
         message("Matching by gene identifier")
         markers <- markers %>%
             .[, c("cell", "ensgene")] %>%
-            .[!is.na(.[["ensgene"]]), ] %>%
+            .[!is.na(.[["ensgene"]]), , drop = FALSE] %>%
             left_join(gene2symbol, by = "ensgene")
         # Check for bad identifiers
         if (any(is.na(markers[["symbol"]]))) {
             missing <- markers %>%
-                .[is.na(.[["symbol"]]), ] %>%
-                pull("ensgene") %>%
+                .[is.na(.[["symbol"]]), "ensgene", drop = TRUE] %>%
                 sort() %>%
                 unique()
             stop(paste("Bad genes:", toString(missing)))
@@ -68,8 +56,7 @@ NULL
         # Check for bad identifiers
         if (any(is.na(markers[["ensgene"]]))) {
             missing <- markers %>%
-                .[is.na(.[["ensgene"]]), ] %>%
-                pull("symbol") %>%
+                .[is.na(.[["ensgene"]]), "symbol", drop = TRUE] %>%
                 sort() %>%
                 unique()
             stop(paste("Bad symbols:", toString(missing)))
