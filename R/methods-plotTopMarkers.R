@@ -32,6 +32,7 @@ NULL
 
 # Constructors =================================================================
 #' @importFrom dplyr rename
+#' @importFrom pbapply pblapply
 .plotTopMarkers <- function(
     object,
     topMarkers,
@@ -60,14 +61,12 @@ NULL
         } else {
             subheaderLevel <- NULL
         }
-        p <- plotMarkers(
+        plotMarkers(
             object,
             genes = genes,
             format = "symbol",
             pointsAsNumbers = pointsAsNumbers,
             headerLevel = subheaderLevel)
-        show(p)
-        p
     })
     invisible(return)
 }
