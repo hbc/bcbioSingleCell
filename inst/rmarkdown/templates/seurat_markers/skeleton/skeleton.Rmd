@@ -55,7 +55,7 @@ if (!is.null(params$cellTypeMarkersFile)) {
     cellTypeMarkers <- cellTypeMarkers[[organismShorthand]]
 }
 assignAndSaveData(
-    name = paste(seuratAllMarkersName, "cellTypeMarkers", sep = "_"),
+    name = paste(seuratName, "cellTypeMarkers", sep = "_"),
     object = cellTypeMarkers,
     dir = dataDir)
 
@@ -167,8 +167,8 @@ assignAndSaveData(
     dir = dataDir)
 ```
 
-```{r plot_known_markers, fig.height=14.5, fig.width=10, results="asis"}
-plotKnownMarkers(
+```{r plot_known_markers_detected, fig.height=14.5, fig.width=10, results="asis"}
+plotKnownMarkersDetected(
     seurat,
     knownMarkers = knownMarkersDetected,
     headerLevel = 2)
