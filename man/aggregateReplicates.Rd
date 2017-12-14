@@ -12,8 +12,7 @@
 \item{object}{Object.}
 }
 \value{
-Object of same class with aggregated counts per pooled sample
-(columns).
+Object with aggregated counts per pooled sample (columns).
 }
 \description{
 Aggregate Replicates
