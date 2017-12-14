@@ -7,11 +7,9 @@
 #   - Tirosh et al, 2015
 #   - http://satijalab.org/seurat/cell_cycle_vignette.html
 
-library(basejump)
-library(devtools)
+devtools::load_all()
 library(googlesheets)
 library(tidyverse)
-load_all()
 
 # Ensembl release version
 release <- 90
@@ -39,7 +37,7 @@ cellCycleMarkers <- lapply(seq_along(ws), function(a) {
         group_by(phase) %>%
         arrange(symbol, .by_group = TRUE)
 })
-names(cellCycleMarkers) <- ws
+names(cellCycleMarkers) <- camel(ws)
 
 # Cell Type Markers ============================================================
 # Download the Google sheet (gs)
@@ -60,10 +58,10 @@ cellTypeMarkers <- lapply(seq_along(ws), function(a) {
         group_by(cell) %>%
         arrange(symbol, .by_group = TRUE)
 })
-names(cellTypeMarkers) <- ws
+names(cellTypeMarkers) <- camel(ws)
 
 # Save RData ===================================================================
-use_data(
+devtools::use_data(
     cellCycleMarkers,
     cellTypeMarkers,
     compress = "xz",
