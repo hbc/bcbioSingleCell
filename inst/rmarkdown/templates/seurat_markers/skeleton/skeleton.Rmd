@@ -10,6 +10,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
+# Last modified 2017-12-14
 library(bcbioSingleCell)
 library(Seurat)
 
@@ -21,6 +22,7 @@ if (file.exists("setup.R")) {
 
 # Directory paths
 dataDir <- file.path(params$outputDir, "data")
+dir.create(dataDir, recursive = TRUE, showWarnings = FALSE)
 markersDir <- file.path(params$outputDir, "results", "markers")
 dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
 
@@ -40,19 +42,13 @@ if (!is.null(params$cellTypeMarkersFile)) {
 } else {
     # Detect the organism from the seurat object
     organism <- detectOrganism(seurat)
-    # Reformat organism name to match internal list (e.g. "mmusculus")
-    organismShorthand <- organism %>%
-        gsub(x = .,
-             pattern = "^([A-Z])[a-z]+\\s([a-z]+)$",
-             replacement = "\\L\\1\\2",
-             perl = TRUE)
     # Load our internal cell type markers
-    cellTypeMarkers = get("cellTypeMarkers", asNamespace("bcbioSingleCell"))
+    cellTypeMarkers <- bcbioSingleCell::cellTypeMarkers
     # Check whether the organism is supported
-    if (!organismShorthand %in% names(cellTypeMarkers)) {
-        stop(paste("No internal markers for", organismShorthand))
+    if (!camel(organism) %in% names(cellTypeMarkers)) {
+        stop(paste("No internal markers for", organism))
     }
-    cellTypeMarkers <- cellTypeMarkers[[organismShorthand]]
+    cellTypeMarkers <- cellTypeMarkers[[camel(organism)]]
 }
 assignAndSaveData(
     name = paste(seuratName, "cellTypeMarkers", sep = "_"),

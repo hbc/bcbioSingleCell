@@ -14,6 +14,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
+# Last modified 2017-12-14
 library(bcbioSingleCell)
 
 # Shared R Markdown settings
