@@ -17,6 +17,9 @@
 #' load(system.file(
 #'     file.path("extdata", "bcb.rda"),
 #'     package = "bcbioSingleCell"))
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' plotZerosVsDepth(bcb)
@@ -25,6 +28,9 @@
 #' counts <- counts(bcb)
 #' metrics <- metrics(bcb)
 #' plotZerosVsDepth(counts, metrics = metrics)
+#'
+#' # seurat
+#' plotZerosVsDepth(seurat)
 NULL
 
 
@@ -73,7 +79,7 @@ setMethod(
     signature("bcbioSingleCell"),
     function(object) {
         .plotZerosVsDepth(
-            object = assay(object),
+            object = counts(object),
             metrics = metrics(object)
         )
     })
@@ -95,3 +101,18 @@ setMethod(
     "plotZerosVsDepth",
     signature("matrix"),
     .plotZerosVsDepth)
+
+
+
+#' @rdname plotZerosVsDepth
+#' @export
+setMethod(
+    "plotZerosVsDepth",
+    signature("seurat"),
+    function(object) {
+        .plotZerosVsDepth(
+            object = counts(object),
+            metrics = metrics(object)
+        )
+    }
+)
