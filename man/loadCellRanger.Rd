@@ -45,6 +45,16 @@ counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 This function is a simplified version of \code{\link[=loadSingleCell]{loadSingleCell()}}
 optimized for handling CellRanger output.
 }
+\examples{
+extdataDir <- system.file("extdata", package = "bcbioSingleCell")
+uploadDir <- file.path(extdataDir, "cellranger")
+refDataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
+sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
+loadCellRanger(
+    uploadDir = uploadDir,
+    refDataDir = refDataDir,
+    sampleMetadataFile = sampleMetadataFile)
+}
 \author{
 Michael Steinbaugh
 }

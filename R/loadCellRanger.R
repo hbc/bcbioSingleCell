@@ -33,7 +33,8 @@
 #' sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
 #' loadCellRanger(
 #'     uploadDir = uploadDir,
-#'     refDataDir = refDataDir)
+#'     refDataDir = refDataDir,
+#'     sampleMetadataFile = sampleMetadataFile)
 loadCellRanger <- function(
     uploadDir,
     refDataDir,
