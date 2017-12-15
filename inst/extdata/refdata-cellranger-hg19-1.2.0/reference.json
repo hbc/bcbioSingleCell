@@ -1,0 +1,17 @@
+{
+    "fasta_hash": "e66214369635d20d3030cfe41278eaba12325d55", 
+    "genomes": [
+        "hg19"
+    ], 
+    "gtf_hash": "0471670f68584505ea10cf3fb30192bc2f9538d3", 
+    "input_fasta_files": [
+        "Homo_sapiens.GRCh37.dna.primary_assembly.fa"
+    ], 
+    "input_gtf_files": [
+        "Homo_sapiens.GRCh37.82.filtered.gtf"
+    ], 
+    "mem_gb": 16, 
+    "mkref_version": "", 
+    "threads": 2, 
+    "version": "1.2.0"
+}
