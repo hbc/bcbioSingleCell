@@ -1,7 +1,3 @@
-# FIXME This needs a working example
-
-
-
 #' Load 10X Genomics CellRanger Data
 #'
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
@@ -29,6 +25,14 @@
 #' @param refDataDir Directory path to cellranger reference annotation data.
 #'
 #' @export
+#'
+#' @examples
+#' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
+#' uploadDir <- file.path(extdataDir, "cellranger")
+#' refDataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
+#' loadCellRanger(
+#'     uploadDir = uploadDir,
+#'     refDataDir = refDataDir)
 loadCellRanger <- function(
     uploadDir,
     refDataDir,
@@ -123,10 +127,16 @@ loadCellRanger <- function(
     }
     gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
     if (!file.exists(gtfFile)) {
-        stop("Reference GTF file missing", call. = FALSE)
+        # Provide a fallback (for minimal unit testing)
+        warning("Reference GTF file missing", call. = FALSE)
+        gene2symbol <- annotable(
+            organism,
+            genomeBuild = genomeBuild,
+            format = "gene2symbol")
+    } else {
+        gtf <- readGTF(gtfFile)
+        gene2symbol <- gene2symbolFromGTF(gtf)
     }
-    gtf <- readGTF(gtfFile)
-    gene2symbol <- gene2symbolFromGTF(gtf)
 
     # Counts ===================================================================
     message("Reading counts")
