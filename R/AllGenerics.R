@@ -171,14 +171,6 @@ setGeneric("plotPCElbow", function(object, ...) {
 
 
 
-#' @rdname plotQuantileHeatmap
-#' @export
-setGeneric("plotQuantileHeatmap", function(object, ...) {
-    standardGeneric("plotQuantileHeatmap")
-})
-
-
-
 #' @rdname plotReadsPerCell
 #' @export
 setGeneric("plotReadsPerCell", function(object, ...) {
