@@ -42,7 +42,9 @@ setMethod(
         object,
         features,
         pointSize = 1,
-        color = scale_color_gradient(low = "lightgray", high = "purple"),
+        color = ggplot2::scale_color_gradient(
+            low = "lightgray",
+            high = "purple"),
         dark = FALSE,
         label = TRUE,
         labelSize = 6,
@@ -84,7 +86,7 @@ setMethod(
                         size = labelSize,
                         fontface = "bold")
             }
-            if (!is.null(color)) {
+            if (is(color, "ScaleContinuous")) {
                 p <- p + color
             }
             if (!isTRUE(legend)) {
