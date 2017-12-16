@@ -41,7 +41,7 @@ bcb <- get(bcbName, inherits = FALSE)
 sampleMetadata(bcb)
 ```
 
-[bcbio][] run data was imported from **`r metadata(bcb)[["uploadDir"]]`**.
+[bcbio][] run data was imported from **`r metadata(bcb)$uploadDir`**.
 
 
 
