@@ -61,7 +61,6 @@ setMethod(
         clusterRows = FALSE,
         clusterCols = FALSE,
         color = viridis::viridis) {
-        # Use the raw counts
         counts <- counts(object, normalized = FALSE)
         plotQuantileHeatmap(
             object = counts,
