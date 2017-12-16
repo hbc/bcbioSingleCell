@@ -10,7 +10,7 @@
 plotFeatureTSNE(object, ...)
 
 \S4method{plotFeatureTSNE}{seurat}(object, features, pointSize = 1,
-  color = scale_color_gradient(low = "lightgray", high = "purple"),
+  color = ggplot2::scale_color_gradient(low = "lightgray", high = "purple"),
   dark = FALSE, label = TRUE, labelSize = 6, legend = FALSE,
   returnAsList = FALSE)
 }
