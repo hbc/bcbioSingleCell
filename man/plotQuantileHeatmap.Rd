@@ -8,27 +8,32 @@
 \title{Plot Heatmap with Quantile Breaks}
 \usage{
 \S4method{plotQuantileHeatmap}{bcbioSingleCell}(object, n = 10,
-  annotationCol = NA, clusterRows = FALSE, clusterCols = FALSE,
-  color = viridis::viridis)
+  annotationCol = NA, clusterCols = FALSE, clusterRows = FALSE,
+  color = viridis::viridis, legendColor = viridis::viridis, title = NULL)
 
 \S4method{plotQuantileHeatmap}{seurat}(object, n = 10, annotationCol = NA,
-  clusterRows = FALSE, clusterCols = FALSE, color = viridis::viridis)
+  clusterCols = FALSE, clusterRows = FALSE, color = viridis::viridis,
+  legendColor = viridis::viridis, title = NULL)
 }
 \arguments{
-\item{object}{Matrix of data.}
+\item{object}{Object.}
 
 \item{n}{The number of breaks to create.}
 
-\item{annotationCol}{Column annotations \link{data.frame}.}
+\item{annotationCol}{\emph{Optional}. \link{data.frame} that defines annotation
+mappings for the columns.}
 
-\item{clusterRows}{Perform row clustering.}
+\item{color}{Colors to use for plot. Defaults to the \code{\link[viridis:viridis]{viridis::viridis()}}
+palette.}
 
-\item{clusterCols}{Perform column clustering.}
+\item{legendColor}{Colors to use for legend labels. Defaults to the
+\code{\link[viridis:viridis]{viridis::viridis()}} palette.}
 
-\item{color}{Color palette function.}
+\item{title}{\emph{Optional}. Plot title.}
 }
 \value{
-\code{\link[pheatmap:pheatmap]{pheatmap::pheatmap()}}.
+Show heatmap. Invisibly return \link{list} containing breaks and
+\code{\link[pheatmap:pheatmap]{pheatmap::pheatmap()}} \code{gtable}.
 }
 \description{
 Plot Heatmap with Quantile Breaks
