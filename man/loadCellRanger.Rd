@@ -46,6 +46,7 @@ This function is a simplified version of \code{\link[=loadSingleCell]{loadSingle
 optimized for handling CellRanger output.
 }
 \examples{
+\dontrun{
 extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 uploadDir <- file.path(extdataDir, "cellranger")
 refDataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
@@ -54,6 +55,7 @@ loadCellRanger(
     uploadDir = uploadDir,
     refDataDir = refDataDir,
     sampleMetadataFile = sampleMetadataFile)
+}
 }
 \author{
 Michael Steinbaugh

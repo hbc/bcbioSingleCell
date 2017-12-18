@@ -27,6 +27,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 #' uploadDir <- file.path(extdataDir, "cellranger")
 #' refDataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
@@ -35,6 +36,7 @@
 #'     uploadDir = uploadDir,
 #'     refDataDir = refDataDir,
 #'     sampleMetadataFile = sampleMetadataFile)
+#' }
 loadCellRanger <- function(
     uploadDir,
     refDataDir,
