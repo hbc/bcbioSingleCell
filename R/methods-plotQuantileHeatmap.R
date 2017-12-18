@@ -75,6 +75,6 @@ setMethod(
             clusterCols = clusterCols,
             clusterRows = clusterRows,
             color = color,
-            legendColor = color,
+            legendColor = legendColor,
             title = title)
     })
