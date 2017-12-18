@@ -31,19 +31,23 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        n = 10,
+        n = 5,
         annotationCol = NA,
-        clusterRows = FALSE,
         clusterCols = FALSE,
-        color = viridis::viridis) {
+        clusterRows = FALSE,
+        color = viridis::viridis,
+        legendColor = viridis::viridis,
+        title = NULL) {
         counts <- counts(object)
         plotQuantileHeatmap(
             object = counts,
             n = n,
             annotationCol = annotationCol,
-            clusterRows = clusterRows,
             clusterCols = clusterCols,
-            color = color)
+            clusterRows = clusterRows,
+            color = color,
+            legendColor = legendColor,
+            title = title)
     })
 
 
@@ -56,17 +60,21 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        n = 10,
+        n = 5,
         annotationCol = NA,
-        clusterRows = FALSE,
         clusterCols = FALSE,
-        color = viridis::viridis) {
+        clusterRows = FALSE,
+        color = viridis::viridis,
+        legendColor = viridis::viridis,
+        title = NULL) {
         counts <- counts(object, normalized = FALSE)
         plotQuantileHeatmap(
             object = counts,
             n = n,
             annotationCol = annotationCol,
-            clusterRows = clusterRows,
             clusterCols = clusterCols,
-            color = color)
+            clusterRows = clusterRows,
+            color = color,
+            legendColor = color,
+            title = title)
     })
