@@ -187,25 +187,14 @@ NULL
             ),
             sep = "\n"
         ))
-        # FIXME Simplify this return in the `mdList()` code
-        mdList(c(
-            paste(">=", minUMIs, "UMI counts per cell"),
-            paste(">=", minGenes, "genes per cell"),
-            paste("<=", maxGenes, "genes per cell"),
-            paste("<=", maxMitoRatio, "mitochondrial abundance"),
-            paste(">=", minNovelty, "novelty score"),
-            paste(">=", minCellsPerGene, "cells per gene")
-        )) %>%
-            # Strip the line breaks
-            gsub(x = .,
-                 pattern = "\n",
-                 replacement = "") %>%
-            as.character() %>%
-            # Indent by 2 spaces
-            paste0("  ", .) %>%
-            # Add header
+        c(paste(">=", minUMIs, "UMI counts per cell"),
+          paste(">=", minGenes, "genes per cell"),
+          paste("<=", maxGenes, "genes per cell"),
+          paste("<=", maxMitoRatio, "mitochondrial abundance"),
+          paste(">=", minNovelty, "novelty score"),
+          paste(">=", minCellsPerGene, "cells per gene")) %>%
+            paste("  -", .) %>%
             c("Filtering parameters:", .) %>%
-            # Print without line numbers
             cat(sep = "\n")
     }
 
