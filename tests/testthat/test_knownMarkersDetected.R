@@ -6,7 +6,7 @@ load(system.file(
 load(system.file(
     file.path("extdata", "seuratAllMarkers.rda"),
     package = "bcbioSingleCell"))
-knownMarkers <- cellTypeMarkers[["hsapiens"]]
+knownMarkers <- cellTypeMarkers[["homoSapiens"]]
 
 test_that("knownMarkersDetected", {
     data <- knownMarkersDetected(
