@@ -187,13 +187,14 @@ NULL
             ),
             sep = "\n"
         ))
+        # FIXME Simplify this return in the `mdList()` code
         mdList(c(
-            paste(">=", as.character(minUMIs), "UMI counts per cell"),
-            paste(">=", as.character(minGenes), "genes per cell"),
-            paste("<=", as.character(maxGenes), "genes per cell"),
-            paste("<=", as.character(maxMitoRatio), "mitochondrial abundance"),
-            paste(">=", as.character(minNovelty), "novelty score"),
-            paste(">=", as.character(minCellsPerGene), "cells per gene")
+            paste(">=", minUMIs, "UMI counts per cell"),
+            paste(">=", minGenes, "genes per cell"),
+            paste("<=", maxGenes, "genes per cell"),
+            paste("<=", maxMitoRatio, "mitochondrial abundance"),
+            paste(">=", minNovelty, "novelty score"),
+            paste(">=", minCellsPerGene, "cells per gene")
         )) %>%
             # Strip the line breaks
             gsub(x = .,
