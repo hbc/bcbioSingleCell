@@ -1,3 +1,20 @@
+# bcbioSingleCell 0.0.26 (2017-12-18)
+
+- Renamed `readMarkersFile()` to `readCellTypeMarkersFile()`.
+- Improved internal handling of multiplexed CellRanger samples. These are count matrices with cellular barcodes ending in `-2`, for example.
+- Updated `aggregateReplicates()` code to work with basejump generic, which uses `groupings` instead of `cells` as the grouping parameter.
+- Added method support for `detectOrganism()`.
+- Improved filtering parameter output in `filterCells()`.
+- Updated `gene2symbol()` method support for bcbioSingleCell and seurat objects.
+- Fixed working example in `knownMarkersDetected()`.
+- Reworked internal code for `plotCellTypesPerCluster()`.
+- Improved internal checks for facet wrapping and color palette parameter arguments, where applicable.
+- Offloaded base `plotQuantileHeatmap()` functionality into basejump, for use in bcbioRNASeq package.
+- Added unit test data for `loadSingleCell().
+- Added additional unit tests to improve code coverage.
+
+
+
 # bcbioSingleCell 0.0.25 (2017-12-11)
 
 - Prepared a minimal working example dataset.
