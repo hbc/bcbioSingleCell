@@ -13,6 +13,7 @@
 #' @importFrom dplyr everything filter pull select
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
+#' @importFrom rlang is_string
 #' @importFrom stats na.omit setNames
 #' @importFrom stringr str_extract str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
@@ -30,17 +31,28 @@
 #' @param gtfFile *Optional but recommended*. GTF (Gene Transfer Format) file,
 #'   which will be used for gene-to-symbol (`gene2symbol`) and
 #'   transcript-to-gene (`tx2gene`) annotation mappings.
-#' @param annotable *Optional*. User-defined gene annotations (a.k.a.
+#' @param annotable. User-defined gene annotations (a.k.a.
 #'   "annotable"), which will be slotted into [rowData()]. Typically this should
-#'   be left undefined. By default, the function will automatically generate an
-#'   annotable from the annotations available on Ensembl. If set `NULL`, then
-#'   [rowData()] inside the resulting [bcbioSingleCell] object will be left
+#'   be left set to `TRUE`. By default, the function will automatically generate
+#'   an annotable from the annotations available on Ensembl. If set `FALSE`,
+#'   then [rowData()] inside the resulting [bcbioSingleCell] object will be left
 #'   empty. This is recommended for projects dealing with genes or transcripts
-#'   that are poorly annotated.
+#'   that are poorly annotated. Additionally, a manually constructed annotable
+#'   can be passed in as a [data.frame], but this isn't generally recommended.
+#' @param organism *Optional*. Organism name. Use the full latin name (e.g.
+#'   "Homo sapiens"), since this will be input downstream to
+#'   AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
+#'   Normally this can be left `NULL`, and the function will attempt to detect
+#'   the organism automatically using [basejump::detectOrganism()].
 #' @param ensemblVersion *Optional*. Ensembl release version. If `NULL`,
 #'   defaults to current release, and does not typically need to be
 #'   user-defined. This parameter can be useful for matching Ensembl annotations
 #'   against an outdated bcbio annotation build.
+#' @param genomeBuild *Optional*. Genome build. Normally this can be left `NULL`
+#'   and the build will be detected from the bcbio run data. This can be set
+#'   manually (e.g. "hg19" for the older *Homo sapiens* reference genome). Note
+#'   that this must match the genome build identifier on Ensembl for annotations
+#'   to download correctly.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return [bcbioSingleCell].
@@ -74,12 +86,71 @@ loadSingleCell <- function(
     interestingGroups = "sampleName",
     prefilter = TRUE,
     gtfFile = NULL,
-    annotable,
+    annotable = TRUE,
+    organism = NULL,
     ensemblVersion = NULL,
+    genomeBuild = NULL,
     ...) {
-    if (missing(sampleMetadataFile)) sampleMetadataFile <- NULL
-    if (missing(annotable)) annotable <- TRUE
     pipeline <- "bcbio"
+
+    # Parameter integrity checks ===============================================
+    # uploadDir
+    if (!is_string(uploadDir)) {
+        stop("'uploadDir' must be string")
+    }
+    # sampleMetadataFile
+    if (missing(sampleMetadataFile)) {
+        sampleMetadataFile <- NULL
+    }
+    if (!any(
+        is_string(sampleMetadataFile),
+        is.null(sampleMetadataFile)
+    )) {
+        stop("'sampleMetadataFile' must be string or NULL")
+    }
+    # interestingGroups
+    if (!is.character(interestingGroups)) {
+        stop("'interestingGroups' must be character")
+    }
+    # prefilter
+    if (!is.logical(prefilter)) {
+        stop("'prefilter' must be logical")
+    }
+    # gtfFile
+    if (!any(
+        is_string(gtfFile),
+        is.null(gtfFile)
+    )) {
+        stop("'gtfFile' must be string or NULL")
+    }
+    # annotable
+    if (!any(
+        is.logical(annotable),
+        is.data.frame(annotable)
+    )) {
+        stop("'annotable' must be logical or data.frame")
+    }
+    # organism
+    if (!any(
+        is_string(organism),
+        is.null(organism)
+    )) {
+        stop("'organism' must be string or NULL")
+    }
+    # ensemblVersion
+    if (!any(
+        is.null(ensemblVersion),
+        is.numeric(ensemblVersion) && length(ensemblVersion) == 1
+    )) {
+        stop("'ensemblVersion' must be single numeric or NULL")
+    }
+    # genomeBuild
+    if (!any(
+        is_string(genomeBuild),
+        is.null(genomeBuild)
+    )) {
+        stop("'genomeBuild' must be string or NULL")
+    }
 
     # Directory paths ==========================================================
     # Check connection to final upload directory
