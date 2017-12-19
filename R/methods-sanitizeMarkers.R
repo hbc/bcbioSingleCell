@@ -107,9 +107,16 @@ NULL
     # Check for annotable annotations and add if necessary
     if (!"description" %in% colnames(markers)) {
         message("Adding stashed Ensembl annotations")
-        annotable <- bcbio(object)[["annotable"]] %>%
-            # Drop the symbols from annotable before join to avoid mismatch
-            mutate(symbol = NULL)
+        annotable <- bcbio(object)[["annotable"]]
+        # Drop the symbols from annotable before join to avoid mismatch
+        annotable[["symbol"]] <- NULL
+        # Ensure Entrez IDs nested as a list get sanitized to string
+        if (is.list(annotable[["entrez"]])) {
+            annotable[["entrez"]] <- vapply(
+                annotable[["entrez"]],
+                FUN = toString,
+                FUN.VALUE = character(1))
+        }
         markers <- left_join(markers, annotable, by = "ensgene")
     }
 

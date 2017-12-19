@@ -12,9 +12,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -66,9 +66,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -120,9 +120,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -174,9 +174,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -228,9 +228,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -282,9 +282,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -336,9 +336,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -390,9 +390,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -444,9 +444,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -498,9 +498,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -552,9 +552,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions
@@ -606,9 +606,9 @@ samples:
   genome_build: hg19
   genome_resources:
     aliases:
-      ensembl: homo_sapiens_merged_vep_89_GRCh37
+      ensembl: homo_sapiens_merged_vep_89_GRCh38
       human: true
-      snpeff: GRCh37.75
+      snpeff: GRCh38.75
     coverage:
       MIG: /n/app/bcbio/dev/genomes/Hsapiens/hg19/prioritization/MIG.bed
       coverage_problem_dir: /n/app/bcbio/dev/genomes/Hsapiens/hg19/coverage/problem_regions

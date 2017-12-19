@@ -31,7 +31,7 @@ low/high gradient.}
 \item{headerLevel}{Include a Markdown header for each gene.}
 }
 \value{
-\link{ggplot}.
+Show graphical output. Invisibly return \link{ggplot} plotlist.
 }
 \description{
 Plot the geometric mean of the significant marker genes for every known cell

@@ -3,12 +3,10 @@ devtools::load_all()
 extdataDir <- file.path("inst", "extdata")
 uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
 sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
-annotable <- annotable("Homo sapiens", release = 90)
 
 bcb <- loadSingleCell(
     uploadDir = uploadDir,
-    sampleMetadataFile = sampleMetadataFile,
-    annotable = annotable)
+    sampleMetadataFile = sampleMetadataFile)
 
 # Make the example bcbioSingleCell object more minimal to save disk space
 # First, let's pick only the top 250 genes that have the most robust expression.
@@ -71,7 +69,6 @@ seuratAllMarkersOriginal <- FindAllMarkers(seurat)
 seuratAllMarkers <- sanitizeMarkers(
     seurat,
     markers = seuratAllMarkersOriginal)
-
 knownMarkersDetected <- knownMarkersDetected(
     all = seuratAllMarkers,
     known = cellTypeMarkers[["hsapiens"]])

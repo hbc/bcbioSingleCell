@@ -7,6 +7,7 @@
 \alias{plotZerosVsDepth,bcbioSingleCell-method}
 \alias{plotZerosVsDepth,dgCMatrix-method}
 \alias{plotZerosVsDepth,matrix-method}
+\alias{plotZerosVsDepth,seurat-method}
 \title{Plot Percentage of Zeros vs. Library Depth}
 \usage{
 plotZerosVsDepth(object, ...)
@@ -16,6 +17,8 @@ plotZerosVsDepth(object, ...)
 \S4method{plotZerosVsDepth}{dgCMatrix}(object, metrics)
 
 \S4method{plotZerosVsDepth}{matrix}(object, metrics)
+
+\S4method{plotZerosVsDepth}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
@@ -34,6 +37,9 @@ This function helps us visualize the dropout rate.
 load(system.file(
     file.path("extdata", "bcb.rda"),
     package = "bcbioSingleCell"))
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
 
 # bcbioSingleCell
 plotZerosVsDepth(bcb)
@@ -42,6 +48,9 @@ plotZerosVsDepth(bcb)
 counts <- counts(bcb)
 metrics <- metrics(bcb)
 plotZerosVsDepth(counts, metrics = metrics)
+
+# seurat
+plotZerosVsDepth(seurat)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

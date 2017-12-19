@@ -12,13 +12,13 @@
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{bcbioSingleCell}(object, interestingGroups,
-  samplesOnYAxis = TRUE, color = scale_color_viridis(discrete = TRUE))
+  color = viridis::scale_color_viridis(discrete = TRUE))
 
 \S4method{plotMitoVsCoding}{data.frame}(object, interestingGroups,
-  color = scale_color_viridis(discrete = TRUE))
+  color = viridis::scale_color_viridis(discrete = TRUE))
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
-  color = scale_color_viridis(discrete = TRUE))
+  color = viridis::scale_color_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -26,9 +26,6 @@ plotMitoVsCoding(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
-histogram.}
 
 \item{color}{\emph{Only applies to scatterplot}. Desired ggplot color scale.
 Defaults to \code{\link[viridis:scale_color_viridis]{viridis::scale_color_viridis()}}. Must supply discrete values.

@@ -15,6 +15,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
+# Last modified 2017-12-14
 library(bcbioSingleCell)
 
 # Shared R Markdown settings
@@ -40,7 +41,7 @@ bcb <- get(bcbName, inherits = FALSE)
 sampleMetadata(bcb)
 ```
 
-[bcbio][] run data was imported from **`r metadata(bcb)[["uploadDir"]]`**.
+[bcbio][] run data was imported from **`r metadata(bcb)$uploadDir`**.
 
 
 

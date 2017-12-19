@@ -1,11 +1,7 @@
-# FIXME Need to add working example
-
-
-
-#' Read Known Markers File
+#' Read Cell Type Markers File
 #'
-#' @rdname readMarkersFile
-#' @name readMarkersFile
+#' @rdname readCellTypeMarkersFile
+#' @name readCellTypeMarkersFile
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
@@ -14,28 +10,25 @@
 #' @param object Gene markers file (CSV or Excel).
 #' @param gene2symbol Gene-to-symbol annotation [data.frame].
 #'
-#' @return [tibble].
+#' @return [tibble], gropued by `cell` column.
+#'
+#' @examples
+#' cellTypeMarkersFile <- system.file(
+#'     file.path("extdata", "cellTypeMarkers.csv"),
+#'     package = "bcbioSingleCell")
+#' gene2symbol <- annotable("Mus musculus", format = "gene2symbol")
+#' readCellTypeMarkersFile(cellTypeMarkersFile, gene2symbol = gene2symbol)
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom basejump camel readFileByExtension
-#' @importFrom dplyr arrange distinct left_join pull
-#' @importFrom rlang syms !!!
-.readMarkersFile <- function(object, gene2symbol) {
-    if (!is.data.frame(gene2symbol)) {
-        stop("gene2symbol must be data.frame")
-    }
-    if (length(dimnames(gene2symbol)[[2]]) != 2) {
-        stop("gene2symbol must only contain two columns")
-    }
-    if (!identical(
-        colnames(gene2symbol),
-        c("ensgene", "symbol"))) {
-        stop("gene2symbol colnames must be 'ensgene', 'symbol'")
-    }
-
+#' @importFrom basejump camel checkGene2symbol readFileByExtension
+#' @importFrom dplyr arrange distinct left_join
+#' @importFrom rlang !!! !! sym syms
+#' @importFrom tibble as_tibble
+.readCellTypeMarkersFile <- function(object, gene2symbol) {
+    checkGene2symbol(gene2symbol)
     markers <- readFileByExtension(object) %>%
         camel(strict = FALSE)
 
@@ -44,13 +37,12 @@ NULL
         message("Matching by gene identifier")
         markers <- markers %>%
             .[, c("cell", "ensgene")] %>%
-            .[!is.na(.[["ensgene"]]), ] %>%
+            .[!is.na(.[["ensgene"]]), , drop = FALSE] %>%
             left_join(gene2symbol, by = "ensgene")
         # Check for bad identifiers
         if (any(is.na(markers[["symbol"]]))) {
             missing <- markers %>%
-                .[is.na(.[["symbol"]]), ] %>%
-                pull("ensgene") %>%
+                .[is.na(.[["symbol"]]), "ensgene", drop = TRUE] %>%
                 sort() %>%
                 unique()
             stop(paste("Bad genes:", toString(missing)))
@@ -64,8 +56,7 @@ NULL
         # Check for bad identifiers
         if (any(is.na(markers[["ensgene"]]))) {
             missing <- markers %>%
-                .[is.na(.[["ensgene"]]), ] %>%
-                pull("symbol") %>%
+                .[is.na(.[["ensgene"]]), "symbol", drop = TRUE] %>%
                 sort() %>%
                 unique()
             stop(paste("Bad symbols:", toString(missing)))
@@ -75,18 +66,20 @@ NULL
     }
 
     markers %>%
+        as_tibble() %>%
         .[!is.na(.[["ensgene"]]), ] %>%
         .[, c("cell", "symbol", "ensgene")] %>%
-        arrange(!!!syms(c("cell", "symbol"))) %>%
-        distinct()
+        distinct() %>%
+        group_by(!!sym("cell")) %>%
+        arrange(!!!syms(c("cell", "symbol")))
 }
 
 
 
 # Methods ======================================================================
-#' @rdname readMarkersFile
+#' @rdname readCellTypeMarkersFile
 #' @export
 setMethod(
-    "readMarkersFile",
+    "readCellTypeMarkersFile",
     signature("character"),
-    .readMarkersFile)
+    .readCellTypeMarkersFile)

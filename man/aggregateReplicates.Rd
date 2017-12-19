@@ -12,8 +12,7 @@
 \item{object}{Object.}
 }
 \value{
-Object of same class with aggregated counts per pooled sample
-(columns).
+Object with aggregated counts per pooled sample (columns).
 }
 \description{
 Aggregate Replicates
@@ -29,7 +28,7 @@ aggregateReplicates(bcb)
 }
 \seealso{
 Other Data Management Utilities: \code{\link{filterCells}},
-  \code{\link{readMarkersFile}},
+  \code{\link{readCellTypeMarkersFile}},
   \code{\link{subsetPerSample}}
 }
 \author{

@@ -65,7 +65,7 @@ NULL
         y = map,
         by = "sampleID")
     rownames(remap) <- names(cell2sample)
-    cells <- mapply(
+    groupings <- mapply(
         x = rownames(remap),
         FUN = gsub,
         pattern = paste0("^", remap[["sampleID"]]),
@@ -75,7 +75,7 @@ NULL
 
     # Counts ===================================================================
     message("Aggregating counts")
-    counts <- aggregateReplicates(assay(object), cells = cells)
+    counts <- aggregateReplicates(assay(object), groupings = groupings)
     # Check that the count number of counts matches
     if (!identical(sum(assay(object)), sum(counts))) {
         stop("Aggregated counts sum doens't match the original",
@@ -160,12 +160,11 @@ NULL
     metadata[["cell2sample"]] <-
         cell2sample(colnames(counts), samples = newIDs)
     # Slot the named vector used to aggregate the replicates
-    metadata[["aggregateReplicates"]] <- cells
-    # Update filtered cells. We can use the named `cells` character vector
-    # defined above to remap.
+    metadata[["aggregateReplicates"]] <- groupings
+    # Update filtered cells
     filterCells <- metadata[["filterCells"]]
     if (!is.null(filterCells)) {
-        metadata[["filterCells"]] <- cells[filterCells]
+        metadata[["filterCells"]] <- groupings[filterCells]
     }
 
     # bcbioSingleCell ==========================================================

@@ -68,7 +68,7 @@ NULL
     if (isTRUE(.checkAggregate(object))) {
         facets <- "sampleNameAggregate"
     }
-    if (!is.null(facets)) {
+    if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free_y")
     }
 

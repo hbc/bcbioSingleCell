@@ -34,7 +34,7 @@ NULL
 .plotMitoVsCoding <- function(
     object,
     interestingGroups,
-    color = scale_color_viridis(discrete = TRUE)) {
+    color = viridis::scale_color_viridis(discrete = TRUE)) {
     p <- .plotQCScatterplot(object, xCol = "nCoding", yCol = "nMito")
 
     # Label interesting groups
@@ -45,7 +45,7 @@ NULL
     }
 
     # Color palette
-    if (!is.null(color)) {
+    if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
 
@@ -54,7 +54,7 @@ NULL
     if (isTRUE(.checkAggregate(object))) {
         facets <- c(facets, "sampleNameAggregate")
     }
-    if (!is.null(facets)) {
+    if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
     }
 
@@ -73,8 +73,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        samplesOnYAxis = TRUE,
-        color = scale_color_viridis(discrete = TRUE)) {
+        color = viridis::scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
@@ -107,7 +106,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        color = scale_color_viridis(discrete = TRUE)) {
+        color = viridis::scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }

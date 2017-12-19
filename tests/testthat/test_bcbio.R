@@ -58,9 +58,9 @@ test_that("seurat", {
              "tx2gene" = "logical",
              "dataVersions" = tibble,
              "programs" = tibble,
-             "bcbioLog" = "character",
-             "bcbioCommandsLog" = "character",
-             "cellularBarcodeCutoff" = "numeric",
+             "bcbioLog" = "NULL",  # character
+             "bcbioCommandsLog" = "NULL",  # character
+             "cellularBarcodeCutoff" = "NULL",  # numeric
              "date" = "Date",
              "wd" = "character",
              "utilsSessionInfo" = "sessionInfo",

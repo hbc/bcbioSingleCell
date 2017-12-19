@@ -150,7 +150,7 @@ NULL
     if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
     }
-    if (!is.null(facets)) {
+    if (is.character(facets)) {
         # Use `free_y` here because of `coord_flip()`
         p <- p + facet_wrap(facets = facets, scales = "free_y")
     }
@@ -206,7 +206,7 @@ NULL
     if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
     }
-    if (!is.null(facets)) {
+    if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets)
     }
 
@@ -254,7 +254,7 @@ NULL
     if (isTRUE(.checkAggregate(tibble))) {
         facets <- c(facets, "sampleNameAggregate")
     }
-    if (!is.null(facets)) {
+    if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets)
     }
 

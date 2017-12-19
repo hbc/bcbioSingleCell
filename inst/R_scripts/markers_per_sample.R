@@ -2,7 +2,7 @@
 #
 # Seurat markers per sample
 # Michael Steinbaugh
-# 2017-12-01
+# 2017-12-14
 #
 # Clustering must be performed before running this script!
 #
@@ -18,18 +18,16 @@ library(bcbioSingleCell)
 library(pbapply)
 library(rmarkdown)
 
-prepareSingleCellTemplate()
-source("setup.R")
 dataDir <- "data"
 
 # sampleSubsets was saved in clustering_per_sample.R
-loadData(sampleSubsets, dir = "data")
+loadData(sampleSubsets, dir = dataDir)
 
-# Render RMarkdown reports per bcbioSingleCell subset file
+# Render R Markdown reports per bcbioSingleCell subset file
 pblapply(seq_along(sampleSubsets), function(a) {
     bcbName <- sampleSubsets[[a]]
     seuratName <- paste(bcbName, "seurat", sep = "_")
-    seuratFile <- file.path("data", paste0(seuratName, ".rda"))
+    seuratFile <- file.path(dataDir, paste0(seuratName, ".rda"))
     if (!file.exists(seuratFile)) {
         stop(paste(
             "Seurat file missing:", seuratFile

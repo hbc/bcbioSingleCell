@@ -57,7 +57,7 @@ filterCells(bcb)
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
 
 Other Data Management Utilities: \code{\link{aggregateReplicates}},
-  \code{\link{readMarkersFile}},
+  \code{\link{readCellTypeMarkersFile}},
   \code{\link{subsetPerSample}}
 }
 \author{

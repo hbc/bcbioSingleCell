@@ -1,7 +1,3 @@
-# FIXME This needs a working example
-
-
-
 #' Load 10X Genomics CellRanger Data
 #'
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
@@ -29,6 +25,18 @@
 #' @param refDataDir Directory path to cellranger reference annotation data.
 #'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
+#' uploadDir <- file.path(extdataDir, "cellranger")
+#' refDataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
+#' sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
+#' loadCellRanger(
+#'     uploadDir = uploadDir,
+#'     refDataDir = refDataDir,
+#'     sampleMetadataFile = sampleMetadataFile)
+#' }
 loadCellRanger <- function(
     uploadDir,
     refDataDir,
@@ -63,8 +71,8 @@ loadCellRanger <- function(
                 as.factor(names(sampleDirs))
         }
     }
-    # Check that `sampleID` matches `sampleDirs`
-    if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
+    # Check that `description` matches `sampleDirs`
+    if (!all(sampleMetadata[["description"]] %in% basename(sampleDirs))) {
         warning("Sample directory names don't match the sample metadata file",
              call. = FALSE)
     }
@@ -123,10 +131,16 @@ loadCellRanger <- function(
     }
     gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
     if (!file.exists(gtfFile)) {
-        stop("Reference GTF file missing", call. = FALSE)
+        # Provide a fallback (for minimal unit testing)
+        warning("Reference GTF file missing", call. = FALSE)
+        gene2symbol <- annotable(
+            organism,
+            genomeBuild = genomeBuild,
+            format = "gene2symbol")
+    } else {
+        gtf <- readGTF(gtfFile)
+        gene2symbol <- gene2symbolFromGTF(gtf)
     }
-    gtf <- readGTF(gtfFile)
-    gene2symbol <- gene2symbolFromGTF(gtf)
 
     # Counts ===================================================================
     message("Reading counts")
@@ -155,6 +169,13 @@ loadCellRanger <- function(
     # Check for multiplexed samples. CellRanger outputs these with a trailing
     # number (e.g. `-2$`, which we're sanitizing to `_2$`).
     if (any(grepl(x = colnames(counts), pattern = "_2$"))) {
+        if (!"sequence" %in% colnames(sampleMetadata)) {
+            stop(paste(
+                "'sequence' column must be defined using",
+                "'sampleMetadataFile' for multiplexed samples"
+            ), call. = FALSE)
+        }
+        # in the metadata
         map <- str_match(
             string = colnames(counts),
             pattern = "^(.+)_([ACGT]+)_(\\d+)$"
@@ -166,6 +187,7 @@ loadCellRanger <- function(
                   "barcode",
                   "sequence")) %>%
             mutate_all(as.factor) %>%
+            # Note that we can't use minimal sample metadata here
             left_join(sampleMetadata, by = c("description", "sequence"))
         cell2sample <- map[["sampleID"]]
         names(cell2sample) <- map[["cellID"]]

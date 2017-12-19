@@ -171,14 +171,6 @@ setGeneric("plotPCElbow", function(object, ...) {
 
 
 
-#' @rdname plotQuantileHeatmap
-#' @export
-setGeneric("plotQuantileHeatmap", function(object, ...) {
-    standardGeneric("plotQuantileHeatmap")
-})
-
-
-
 #' @rdname plotReadsPerCell
 #' @export
 setGeneric("plotReadsPerCell", function(object, ...) {
@@ -235,10 +227,10 @@ setGeneric("prepareSingleCellTemplate", function(object, ...) {
 
 
 
-#' @rdname readMarkersFile
+#' @rdname readCellTypeMarkersFile
 #' @export
-setGeneric("readMarkersFile", function(object, ...) {
-    standardGeneric("readMarkersFile")
+setGeneric("readCellTypeMarkersFile", function(object, ...) {
+    standardGeneric("readCellTypeMarkersFile")
 })
 
 

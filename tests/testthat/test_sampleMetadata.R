@@ -39,3 +39,20 @@ test_that("seurat", {
         )
     )
 })
+
+test_that("prepareSampleMetadataFromSeurat", {
+    meta <- slot(seurat, "meta.data")
+    expect_is(meta, "data.frame")
+    data <- .prepareSampleMetadataFromSeurat(meta)
+    expect_is(data, "data.frame")
+    expect_identical(
+        data,
+        data.frame(
+            "sampleID" = "M1",
+            "sampleName" = "M1",
+            "description" = "M1",
+            "interestingGroups" = "M1",
+            "origIdent" = "M1",
+            stringsAsFactors = TRUE)
+    )
+})

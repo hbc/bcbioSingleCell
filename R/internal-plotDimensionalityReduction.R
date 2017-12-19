@@ -76,7 +76,7 @@
                 size = labelSize,
                 fontface = "bold")
     }
-    if (!is.null(color)) {
+    if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
     p
