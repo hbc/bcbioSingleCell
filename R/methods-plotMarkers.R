@@ -16,7 +16,10 @@
 #' @inheritParams AllGenerics
 #' @inheritParams plotMarkerTSNE
 #'
-#' @param fill Color palette to use for violin plot fill. Defaults to viridis.
+#' @param tSNEColor Color palette to use for tSNE plot.
+#' @param violinFill Color palette to use for violin plot.
+#' @param dotColor Color palette to use for dot plot.
+#' @param dark Plot the TSNE against a dark background.
 #' @param headerLevel Include a Markdown header for each gene.
 #' @param title Plot title.
 #'
@@ -52,73 +55,54 @@ NULL
 #' @importFrom ggplot2 aes_string coord_flip element_blank geom_violin ggplot
 #'   theme
 #' @importFrom rlang is_string
-#' @importFrom Seurat VlnPlot
 #' @importFrom viridis scale_fill_viridis viridis
 #'
 #' @param returnAsList Return the `gg` objects as a list.
-.plotMarkerSeurat <- function(
+.plotMarker.seurat <- function(
     object,
     gene,
-    color = viridis::scale_color_viridis(),
-    fill = viridis::scale_fill_viridis(discrete = TRUE),
+    tSNEColor = viridis::scale_color_viridis(),
+    violinFill = viridis::scale_fill_viridis(discrete = TRUE),
+    dotColor = ggplot2::scale_color_gradient(
+        low = "lightgray",
+        high = "purple"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     title = NULL,
-    returnAsList = FALSE) {
+    return = "grid") {
+    # Parameter integrity ======================================================
     if (!is_string(gene)) {
         stop("gene must be a string", call. = FALSE)
     }
+    # return
+    validReturn <- c("grid", "list")
+    if (return %in% validReturn) {
+        stop(paste("'return' must contain:", toString(validReturn)))
+    }
 
-    # tSNE marker expression plot
+    # Plots ====================================================================
     tsne <- plotMarkerTSNE(
         object,
         genes = gene,
         format = "symbol",
         colorPoints = "expression",
-        color = color,
+        color = tSNEColor,
         dark = dark,
         pointsAsNumbers = pointsAsNumbers,
         title = title)
-
-    # Violin plot
-    # FIXME Create our own `plotViolin()` function in a future update
-    violin <- Seurat::VlnPlot(
+    violin <- plotViolin(
         object,
-        features.plot = gene,
-        do.return = TRUE,
-        return.plotlist = TRUE) %>%
-        .[[1]] %>%
-        .[["data"]] %>%
-        # Remove the low expression features
-        filter(.data[["feature"]] > 0.1) %>%
-        ggplot(
-            mapping = aes_string(
-                x = "ident",
-                y = "feature",
-                fill = "ident")
-        ) +
-        geom_violin(
-            color = "black",
-            scale = "width",
-            adjust = 1,
-            trim = TRUE)
-    if (is(fill, "ScaleDiscrete")) {
-        violin <- violin + fill
-    }
+        genes = gene,
+        format = "symbol",
+        color = violinColor)
+    dot <- plotDot(
+        object,
+        genes = gene,
+        format = "symbol",
+        color = dotColor)
 
-
-    # Dot plot
-    # We're transposing the dot plot here to align vertically with the
-    # violin and tSNE plots. The violin is preferable over the ridgeline
-    # here because it works better horizontally.
-    # FIXME Need to allow for user-defined color pass in here
-    dot <- plotDot(object, genes = gene, format = "symbol")
-
-    if (isTRUE(returnAsList)) {
-        list(tsne = tsne,
-             dot = dot,
-             violin = violin)
-    } else {
+    # Return ===================================================================
+    if (return == "grid") {
         # Customize the plots before preparing the grid
         violin <- violin +
             labs(y = "log expression") +
@@ -137,26 +121,30 @@ NULL
             nrow = 3,
             rel_heights = c(1, 0.3, 0.15)
         )
+    } else if (return == "list") {
+        list("tsne" = tsne,
+             "dot" = dot,
+             "violin" = violin)
     }
 }
 
 
 
-# Methods ======================================================================
-#' @rdname plotMarkers
-#' @importFrom basejump mdHeader
-#' @importFrom viridis scale_color_viridis
-#' @export
-setMethod("plotMarkers", "seurat", function(
+# Note the plural version here. This is the gene looping code.
+.plotMarkers.seurat <- function(
     object,
     genes,
     format = "symbol",
-    color = viridis::scale_color_viridis(),
-    fill = viridis::scale_fill_viridis(discrete = TRUE),
+    tSNEColor = viridis::scale_color_viridis(),
+    violinFill = viridis::scale_fill_viridis(discrete = TRUE),
+    dotColor = ggplot2::scale_color_gradient(
+        low = "lightgray",
+        high = "purple"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     headerLevel = NULL,
-    title = NULL) {
+    title = NULL,
+    return = "markdown") {
     .checkFormat(format)
     if (format == "ensgene") {
         genes <- .convertGenesToSymbols(object, genes = genes)
@@ -170,17 +158,30 @@ setMethod("plotMarkers", "seurat", function(
         if (!is.null(headerLevel)) {
             mdHeader(gene, level = headerLevel, asis = TRUE)
         }
-        p <- .plotMarkerSeurat(
+        p <- .plotMarker.seurat(
             object,
             gene = gene,
-            color = color,
-            fill = fill,
+            tSNEColor = tSNEColor,
+            violinFill = violinFill,
+            dotColor = dotColor,
             dark = dark,
             pointsAsNumbers = pointsAsNumbers,
             title = title,
-            returnAsList = FALSE)
+            return = return)
         show(p)
         p
     })
     invisible(return)
-})
+}
+
+
+
+# Methods ======================================================================
+#' @rdname plotMarkers
+#' @importFrom basejump mdHeader
+#' @importFrom viridis scale_color_viridis
+#' @export
+setMethod(
+    "plotMarkers",
+    signature("seurat"),
+    .plotMarkers.seurat)
