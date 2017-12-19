@@ -69,7 +69,7 @@ NULL
         warning(paste(
             length(missing),
             "genes missing in annotable used to calculate metrics",
-            paste0("(", percent(length(missing) / ncol(object)), ")")
+            paste0("(", percent(length(missing) / nrow(object)), ")")
         ), call. = FALSE)
     }
 
