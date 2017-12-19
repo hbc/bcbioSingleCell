@@ -14,19 +14,19 @@
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
 #' @importFrom stats na.omit setNames
-#' @importFrom stringr str_match
+#' @importFrom stringr str_extract str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
 #'
 #' @param uploadDir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
-#' @param interestingGroups Character vector of interesting groups. First entry
-#'   is used for plot colors during quality control (QC) analysis. Entire vector
-#'   is used for PCA and heatmap QC functions.
-#' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param sampleMetadataFile Sample barcode metadata file. Optional for runs
 #'   with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 #'   for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 #'   inDrop). Consult the GitHub repo for examples and additional information.
+#' @param interestingGroups Character vector of interesting groups. First entry
+#'   is used for plot colors during quality control (QC) analysis. Entire vector
+#'   is used for PCA and heatmap QC functions.
+#' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param gtfFile *Optional but recommended*. GTF (Gene Transfer Format) file,
 #'   which will be used for gene-to-symbol (`gene2symbol`) and
 #'   transcript-to-gene (`tx2gene`) annotation mappings.
@@ -70,16 +70,15 @@
 #' }
 loadSingleCell <- function(
     uploadDir,
+    sampleMetadataFile,
     interestingGroups = "sampleName",
     prefilter = TRUE,
-    sampleMetadataFile,
-    gtfFile,
-    ensemblVersion,
+    gtfFile = NULL,
     annotable,
+    ensemblVersion = NULL,
     ...) {
     if (missing(sampleMetadataFile)) sampleMetadataFile <- NULL
-    if (missing(gtfFile)) gtfFile <- NULL
-    if (missing(ensemblVersion)) ensemblVersion <- NULL
+    if (missing(annotable)) annotable <- TRUE
     pipeline <- "bcbio"
 
     # Directory paths ==========================================================
@@ -207,8 +206,9 @@ loadSingleCell <- function(
                      replacement = "")
             message(paste("UMI type:", umiType))
         } else {
-            warning("Failed to detect UMI type from commands log",
-                    call. = FALSE)
+            warning(paste(
+                "Failed to detect UMI type from commands log JSON file grep"
+            ), call. = FALSE)
             umiType <- NULL
         }
     } else {
@@ -216,9 +216,10 @@ loadSingleCell <- function(
     }
     # Assume samples are inDrop platform, by default
     if (is.null(umiType)) {
-        warning("Assuming unknown UMI type is 'indrop' (default)",
-                call. = FALSE)
-        umiType <- "indrop"
+        warning(paste(
+            "Assuming unknown UMI is 'harvard-indrop-v3' (default)"
+        ), call. = FALSE)
+        umiType <- "harvard-indrop-v3"
     }
 
     # Sample metadata ==========================================================
@@ -235,7 +236,27 @@ loadSingleCell <- function(
         sampleMetadata <- sampleYAMLMetadata(yaml)
     }
     # Check that `sampleID` matches `sampleDirs`
-    if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
+    if (!all(rownames(sampleMetadata) %in% names(sampleDirs))) {
+        # Check for flipped index sequence. Sample metadata should use the
+        # forward sequence (`sequence`), whereas bcbio names the sample
+        # directories with the reverse complement (`revcomp`).
+        if ("sequence" %in% colnames(sampleMetadata)) {
+            sampleDirSequence <- str_extract(
+                string = names(sampleDirs),
+                pattern = "[ACGT]+$")
+            if (identical(
+                sort(sampleDirSequence),
+                sort(as.character(sampleMetadata[["sequence"]]))
+            )) {
+                warning(paste(
+                    "It appears that the reverse complement sequence of the",
+                    "i5 index barcode(s) was input into the sample metadata",
+                    "'sequence' column. bcbio outputs the revcomp into the",
+                    "sample directories, but the forward sequence should be",
+                    "used in the R package."
+                ), call. = FALSE)
+            }
+        }
         stop("Sample directory names don't match the sample metadata file",
              call. = FALSE)
     }
@@ -263,7 +284,7 @@ loadSingleCell <- function(
 
     # Gene annotations =========================================================
     # Ensembl annotations (gene annotable)
-    if (missing(annotable)) {
+    if (isTRUE(annotable)) {
         annotable <- basejump::annotable(
             organism,
             genomeBuild = genomeBuild,
