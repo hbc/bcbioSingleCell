@@ -63,7 +63,7 @@ setMethod(
         if (format == "ensgene") {
             genes <- .convertGenesToSymbols(object, genes = genes)
         }
-        data <- .fetchGeneDataSeurat(object, genes = genes)
+        data <- .fetchGeneData.seurat(object, genes = genes)
         data[["geomean"]] <- Matrix::colMeans(t(data))
         tsne <- fetchTSNEData(object)
         cbind(tsne, data) %>%
