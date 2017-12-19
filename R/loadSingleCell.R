@@ -131,6 +131,9 @@ loadSingleCell <- function(
         stop("'annotable' must be logical or data.frame")
     }
     # organism
+    # TODO Add support for multiple genomes, passed in as a character vector.
+    # We can loop the annotable call. We can add a unit test with both human
+    # and mouse genes for this in the future.
     if (!any(
         is_string(organism),
         is.null(organism)
@@ -265,6 +268,7 @@ loadSingleCell <- function(
     message(paste0("Genome: ", organism, " (", genomeBuild, ")"))
 
     # Molecular barcode (UMI) type =============================================
+    # FIXME Improve this check step if user has passed in custom barcodes
     if (length(bcbioCommandsLog)) {
         umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
         if (any(grepl(x = bcbioCommandsLog, pattern = umiPattern))) {
@@ -356,7 +360,7 @@ loadSingleCell <- function(
     # Gene annotations =========================================================
     # Ensembl annotations (gene annotable)
     if (isTRUE(annotable)) {
-        annotable <- basejump::annotable(
+        annotable <- annotable(
             organism,
             genomeBuild = genomeBuild,
             release = ensemblVersion)
@@ -379,8 +383,7 @@ loadSingleCell <- function(
     if (countsLevel == "transcript") {
         if (is.null(gtf)) {
             stop(paste(
-                "GTF required to convert transcript-level counts",
-                "to gene-level"
+                "GTF required to convert transcript-level counts to gene-level"
             ), call. = FALSE)
         }
         tx2gene <- tx2geneFromGTF(gtf)
