@@ -7,8 +7,7 @@
 \alias{counts,seurat-method}
 \title{Counts Accessor}
 \usage{
-\S4method{counts}{bcbioSingleCell}(object, gene2symbol = FALSE,
-  as = "dgCMatrix")
+\S4method{counts}{bcbioSingleCell}(object, gene2symbol = FALSE)
 
 \S4method{counts}{seurat}(object, normalized = FALSE)
 }
@@ -18,13 +17,10 @@
 \item{gene2symbol}{Convert Ensembl gene identifiers (rownames) to gene
 symbols. Recommended for passing counts to Seurat.}
 
-\item{as}{Return class (\strong{recommended}; \code{dgCMatrix},
-\code{dgTMatrix}) or dense matrix (\code{matrix}).}
-
 \item{normalized}{Normalized (\code{TRUE}) or raw (\code{FALSE}) counts.}
 }
 \value{
-Matrix class object, depending on \code{as} argument.
+Counts matrix.
 }
 \description{
 Counts Accessor
