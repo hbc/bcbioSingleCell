@@ -6,8 +6,12 @@
 #'
 #' @importFrom basejump plotViolin
 #'
+#' @inherit basejump::dynamicPlotlist
+#'
 #' @inheritParams AllGenerics
 #' @inheritParams plotDot
+#'
+#' @param fill Fill color palette. Defaults to viridis.
 #'
 #' @examples
 # load(system.file(
@@ -31,6 +35,7 @@ NULL
 
 
 # Constructors =================================================================
+#' @importFrom basejump dynamicPlotlist
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 aes_string geom_violin ggplot
 #' @importFrom rlang !! sym
