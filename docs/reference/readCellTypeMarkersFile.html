@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read Known Markers File — readMarkersFile • bcbioSingleCell</title>
+<title>Read Cell Type Markers File — readCellTypeMarkersFile • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,17 +83,17 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read Known Markers File</h1>
+    <h1>Read Cell Type Markers File</h1>
     </div>
 
     
-    <p>Read Known Markers File</p>
+    <p>Read Cell Type Markers File</p>
     
 
-    <pre class="usage"><span class='fu'>readMarkersFile</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>readCellTypeMarkersFile</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for character</span>
-<span class='fu'>readMarkersFile</span>(<span class='no'>object</span>, <span class='no'>gene2symbol</span>)</pre>
+<span class='fu'>readCellTypeMarkersFile</span>(<span class='no'>object</span>, <span class='no'>gene2symbol</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -114,7 +114,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>tibble.</p>
+    <p>tibble, gropued by <code>cell</code> column.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -122,6 +122,26 @@
   <code>filterCells</code>, <code>subsetPerSample</code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>cellTypeMarkersFile</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"cellTypeMarkers.csv"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
+<span class='no'>gene2symbol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='annotable.html'>annotable</a></span>(<span class='st'>"Mus musculus"</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"gene2symbol"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading Ensembl annotations from AnnotationHub</span>
+#&gt; <span class='message'>2017-10-27</span></div><div class='output co'>#&gt; <span class='message'>EnsDB AH57770: Mus musculus Ensembl 90</span></div><div class='input'><span class='fu'>readCellTypeMarkersFile</span>(<span class='no'>cellTypeMarkersFile</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='no'>gene2symbol</span>)</div><div class='output co'>#&gt; <span class='message'>Reading cellTypeMarkers.csv</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+#&gt; <span class='message'>cols(</span>
+#&gt; <span class='message'>  cell = col_character(),</span>
+#&gt; <span class='message'>  ensgene = col_character(),</span>
+#&gt; <span class='message'>  symbol = col_character()</span>
+#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>Matching by gene identifier</span></div><div class='output co'>#&gt; # A tibble: 6 x 3
+#&gt; # Groups:   cell [1]
+#&gt;     cell symbol            ensgene
+#&gt;    &lt;chr&gt;  &lt;chr&gt;              &lt;chr&gt;
+#&gt; 1 B Cell   Blnk ENSMUSG00000061132
+#&gt; 2 B Cell   Cd19 ENSMUSG00000030724
+#&gt; 3 B Cell   Cd37 ENSMUSG00000030798
+#&gt; 4 B Cell  Cd79a ENSMUSG00000003379
+#&gt; 5 B Cell  Cd79b ENSMUSG00000040592
+#&gt; 6 B Cell   Igha ENSMUSG00000095079</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -131,7 +151,9 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

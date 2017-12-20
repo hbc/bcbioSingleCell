@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Heatmap with Quantile Breaks — plotQuantileHeatmap • bcbioSingleCell</title>
+<title>Detect Organism — detectOrganism • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,22 +83,18 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Heatmap with Quantile Breaks</h1>
+    <h1>Detect Organism</h1>
     </div>
 
     
-    <p>Plot Heatmap with Quantile Breaks</p>
+    <p>Detect Organism</p>
     
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>, <span class='kw'>legendColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>detectOrganism</span>(<span class='no'>object</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>,
-  <span class='kw'>legendColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>detectOrganism</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -107,60 +103,48 @@
       <th>object</th>
       <td><p>Object.</p></td>
     </tr>
-    <tr>
-      <th>n</th>
-      <td><p>The number of breaks to create.</p></td>
-    </tr>
-    <tr>
-      <th>annotationCol</th>
-      <td><p><em>Optional</em>. data.frame that defines annotation
-mappings for the columns.</p></td>
-    </tr>
-    <tr>
-      <th>clusterCols</th>
-      <td><p>Logical determining if columns should be arranged with
-hierarchical clustering. Alternatively, can define an <code>hclust</code> object.</p></td>
-    </tr>
-    <tr>
-      <th>clusterRows</th>
-      <td><p>Logical determining if rows should be arranged with
-hierarchical clustering. Alternatively, can define an <code>hclust</code> object.</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>Colors to use for plot. Defaults to the <code><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis::viridis()</a></code>
-palette.</p></td>
-    </tr>
-    <tr>
-      <th>legendColor</th>
-      <td><p>Colors to use for legend labels. Defaults to the
-<code><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis::viridis()</a></code> palette.</p></td>
-    </tr>
-    <tr>
-      <th>title</th>
-      <td><p><em>Optional</em>. Plot title.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Show heatmap. Invisibly return list containing breaks and
-<code><a href='http://www.rdocumentation.org/packages/pheatmap/topics/pheatmap'>pheatmap::pheatmap()</a></code> <code>gtable</code>.</p>
+    <p>Full latin organism name.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This is helpful for more usefully visualizing single cell data.
-Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
+    <p>Currently supported organisms:</p><ul>
+<li><p><em>Homo sapiens</em> (human)</p></li>
+<li><p><em>Mus musculus</em> (mouse)</p></li>
+<li><p><em>Rattus norvegicus</em> (rat)</p></li>
+<li><p><em>Danio rerio</em> (zebrafish)</p></li>
+<li><p><em>Drosophila melanogaster</em> (fruitfly)</p></li>
+<li><p><em>Caenorhabditis elegans</em> (roundworm)</p></li>
+<li><p><em>Saccharomyces cerevisiae</em> (yeast)</p></li>
+<li><p><em>Gallus gallus</em> (chicken)</p></li>
+<li><p><em>Ovis aries</em> (sheep)</p></li>
+</ul>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p>Other Gene Annotation Utilities: <code><a href='annotable.html'>annotable</a></code>,
+  <code>gene2symbolFromGFF</code>,
+  <code><a href='gene2symbol.html'>gene2symbol</a></code>, <code>symbol2gene</code>,
+  <code>tx2geneFromGFF</code>, <code>tx2gene</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"filtered.rda"</span>),
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"bcb.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
 <span class='co'># bcbioSingleCell</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>filtered</span>)</div><div class='output co'>#&gt;     0%    50%    75%   100% 
-#&gt; "   0" "   2" "   6" "1162" </div><div class='img'><img src='plotQuantileHeatmap-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>detectOrganism</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt;          human 
+#&gt; "Homo sapiens" </div><div class='input'>
+<span class='co'># seurat</span>
+<span class='fu'>detectOrganism</span>(<span class='no'>seurat</span>)</div><div class='output co'>#&gt;          human 
+#&gt; "Homo sapiens" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -170,13 +154,15 @@ Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
     
-Rory Kirchner, Michael Steinbaugh
+Michael Steinbaugh
 
   </div>
 </div>

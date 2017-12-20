@@ -94,8 +94,10 @@
 
 <span class='co'># S4 method for seurat,grouped_df</span>
 <span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>,
-  <span class='no'>knownMarkersDetected</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='no'>knownMarkersDetected</span>, <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(),
+  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span>
+  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -114,14 +116,24 @@ by cluster.</p></td>
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
     </tr>
     <tr>
-      <th>color</th>
-      <td><p>Color palette to use for points. Defaults to the viridis color
-palette. Use <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>ggplot2::scale_color_gradient()</a></code> to easily define your own
-low/high gradient.</p></td>
+      <th>tsneColor</th>
+      <td><p>Color palette to use for tSNE plot.</p></td>
+    </tr>
+    <tr>
+      <th>violinFill</th>
+      <td><p>Color palette to use for violin plot.</p></td>
+    </tr>
+    <tr>
+      <th>dotColor</th>
+      <td><p>Color palette to use for dot plot.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Enable dark mode.</p></td>
+      <td><p>Plot the TSNE against a dark background.</p></td>
+    </tr>
+    <tr>
+      <th>pointsAsNumbers</th>
+      <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
@@ -153,7 +165,14 @@ low/high gradient.</p></td>
 <span class='co'># Let's plot the first 2 markers, as a quick example</span>
 <span class='fu'>plotKnownMarkersDetected</span>(
     <span class='no'>seurat</span>,
-    <span class='kw'>knownMarkersDetected</span> <span class='kw'>=</span> <span class='no'>knownMarkersDetected</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ])</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='img'><img src='plotKnownMarkersDetected-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 02s</div></pre>
+    <span class='kw'>knownMarkersDetected</span> <span class='kw'>=</span> <span class='no'>knownMarkersDetected</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ])</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
+#&gt; 
+#&gt; ## Natural Killer Cell {.tabset}
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; ### NCAM1
+#&gt; </div><div class='img'><img src='plotKnownMarkersDetected-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 02s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

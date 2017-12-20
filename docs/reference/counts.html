@@ -91,8 +91,7 @@
     
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>as</span> <span class='kw'>=</span> <span class='st'>"dgCMatrix"</span>)
+<span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>normalized</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -110,11 +109,6 @@
 symbols. Recommended for passing counts to Seurat.</p></td>
     </tr>
     <tr>
-      <th>as</th>
-      <td><p>Return class (<strong>recommended</strong>; <code>dgCMatrix</code>,
-<code>dgTMatrix</code>) or dense matrix (<code>matrix</code>).</p></td>
-    </tr>
-    <tr>
       <th>normalized</th>
       <td><p>Normalized (<code>TRUE</code>) or raw (<code>FALSE</code>) counts.</p></td>
     </tr>
@@ -122,7 +116,7 @@ symbols. Recommended for passing counts to Seurat.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Matrix class object, depending on <code>as</code> argument.</p>
+    <p>Counts matrix.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
