@@ -28,6 +28,15 @@ is used for PCA and heatmap QC functions.}
 which will be used for gene-to-symbol (\code{gene2symbol}) and
 transcript-to-gene (\code{tx2gene}) annotation mappings.}
 
+\item{annotable}{User-defined gene annotations (a.k.a.
+"annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
+be left set to \code{TRUE}. By default, the function will automatically generate
+an annotable from the annotations available on Ensembl. If set \code{FALSE},
+then \code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
+empty. This is recommended for projects dealing with genes or transcripts
+that are poorly annotated. Additionally, a manually constructed annotable
+can be passed in as a \link{data.frame}, but this isn't generally recommended.}
+
 \item{organism}{\emph{Optional}. Organism name. Use the full latin name (e.g.
 "Homo sapiens"), since this will be input downstream to
 AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
@@ -46,15 +55,6 @@ that this must match the genome build identifier on Ensembl for annotations
 to download correctly.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
-
-\item{annotable.}{User-defined gene annotations (a.k.a.
-"annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
-be left set to \code{TRUE}. By default, the function will automatically generate
-an annotable from the annotations available on Ensembl. If set \code{FALSE},
-then \code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
-empty. This is recommended for projects dealing with genes or transcripts
-that are poorly annotated. Additionally, a manually constructed annotable
-can be passed in as a \link{data.frame}, but this isn't generally recommended.}
 }
 \value{
 \link{bcbioSingleCell}.
