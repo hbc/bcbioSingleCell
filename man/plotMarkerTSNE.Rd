@@ -13,12 +13,12 @@ plotMarkerTSNE(object, ...)
 \S4method{plotMarkerTSNE}{data.frame}(object, colorPoints = "geomean",
   pointsAsNumbers = FALSE, pointSize = 1, label = TRUE, labelSize = 6,
   color = viridis::scale_color_viridis(), dark = TRUE, legend = TRUE,
-  title = NULL)
+  title = NULL, subtitle = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, format = "symbol",
   colorPoints = "geomean", pointsAsNumbers = FALSE, pointSize = 1,
   label = TRUE, labelSize = 6, color = viridis::scale_color_viridis(),
-  dark = TRUE, title = NULL)
+  dark = TRUE, title = NULL, subtitle = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -45,6 +45,8 @@ low/high gradient.}
 \item{legend}{Show plot legend.}
 
 \item{title}{Plot title.}
+
+\item{subtitle}{Include gene(s) in the subtitle.}
 
 \item{genes}{Genes (by symbol name) of which to get expression data.}
 

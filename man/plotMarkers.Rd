@@ -14,7 +14,7 @@ plotMarkers(object, ...)
   violinFill = viridis::scale_fill_viridis(discrete = TRUE),
   dotColor = ggplot2::scale_color_gradient(low = "lightgray", high =
   "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = NULL,
-  title = NULL, return = "markdown")
+  title = NULL)
 }
 \arguments{
 \item{object}{Object.}
