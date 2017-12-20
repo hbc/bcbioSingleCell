@@ -40,7 +40,7 @@ NULL
     headerLevel = 2) {
     .checkSanitizedMarkers(topMarkers)
     clusters <- levels(topMarkers[["cluster"]])
-    return <- pblapply(seq_along(clusters), function(a) {
+    list <- pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
         # We're matching against the `symbol` column here
         genes <- topMarkers %>%
@@ -69,7 +69,7 @@ NULL
             pointsAsNumbers = pointsAsNumbers,
             headerLevel = subheaderLevel)
     })
-    invisible(return)
+    invisible(list)
 }
 
 
