@@ -104,10 +104,6 @@ NULL
 
     # Return ===================================================================
     if (return == "grid") {
-        # Customize the plots before preparing the grid
-        violin <- violin +
-            labs(y = "log expression") +
-            theme(legend.position = "none")
         dot <- dot +
             labs(x = "") +
             coord_flip() +
