@@ -31,7 +31,7 @@
 #' @param gtfFile *Optional but recommended*. GTF (Gene Transfer Format) file,
 #'   which will be used for gene-to-symbol (`gene2symbol`) and
 #'   transcript-to-gene (`tx2gene`) annotation mappings.
-#' @param annotable. User-defined gene annotations (a.k.a.
+#' @param annotable User-defined gene annotations (a.k.a.
 #'   "annotable"), which will be slotted into [rowData()]. Typically this should
 #'   be left set to `TRUE`. By default, the function will automatically generate
 #'   an annotable from the annotations available on Ensembl. If set `FALSE`,
