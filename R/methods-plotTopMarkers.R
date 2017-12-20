@@ -46,7 +46,7 @@ NULL
         genes <- topMarkers %>%
             as.data.frame() %>%
             .[.[["cluster"]] == cluster, "symbol", drop = TRUE]
-        if (is.null(genes)) return(NULL)
+        if (!length(genes)) return(invisible())
         if (length(genes) > 10) {
             warning(
                 "Maximum of 10 genes per cluster is recommended",
