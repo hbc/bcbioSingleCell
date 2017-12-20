@@ -16,7 +16,7 @@
 #' @inheritParams AllGenerics
 #' @inheritParams plotMarkerTSNE
 #'
-#' @param tSNEColor Color palette to use for tSNE plot.
+#' @param tsneColor Color palette to use for tSNE plot.
 #' @param violinFill Color palette to use for violin plot.
 #' @param dotColor Color palette to use for dot plot.
 #' @param dark Plot the TSNE against a dark background.
@@ -61,7 +61,7 @@ NULL
 .plotMarker.seurat <- function(
     object,
     gene,
-    tSNEColor = viridis::scale_color_viridis(),
+    tsneColor = viridis::scale_color_viridis(),
     violinFill = viridis::scale_fill_viridis(discrete = TRUE),
     dotColor = ggplot2::scale_color_gradient(
         low = "lightgray",
@@ -86,7 +86,7 @@ NULL
         genes = gene,
         format = "symbol",
         colorPoints = "expression",
-        color = tSNEColor,
+        color = tsneColor,
         dark = dark,
         pointsAsNumbers = pointsAsNumbers,
         title = gene,
@@ -132,14 +132,14 @@ NULL
     object,
     genes,
     format = "symbol",
-    tSNEColor = viridis::scale_color_viridis(),
+    tsneColor = viridis::scale_color_viridis(),
     violinFill = viridis::scale_fill_viridis(discrete = TRUE),
     dotColor = ggplot2::scale_color_gradient(
         low = "lightgray",
         high = "purple"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = NULL,
+    headerLevel = 2,
     title = NULL) {
     .checkFormat(format)
     if (format == "ensgene") {
@@ -157,7 +157,7 @@ NULL
         p <- .plotMarker.seurat(
             object,
             gene = gene,
-            tSNEColor = tSNEColor,
+            tsneColor = tsneColor,
             violinFill = violinFill,
             dotColor = dotColor,
             dark = dark,
