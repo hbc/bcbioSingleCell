@@ -76,7 +76,7 @@ NULL
     }
     # return
     validReturn <- c("grid", "list")
-    if (return %in% validReturn) {
+    if (!return %in% validReturn) {
         stop(paste("'return' must contain:", toString(validReturn)))
     }
 
@@ -89,12 +89,13 @@ NULL
         color = tSNEColor,
         dark = dark,
         pointsAsNumbers = pointsAsNumbers,
-        title = title)
+        title = gene,
+        subtitle = FALSE)
     violin <- plotViolin(
         object,
         genes = gene,
         format = "symbol",
-        color = violinColor)
+        fill = violinFill)
     dot <- plotDot(
         object,
         genes = gene,
@@ -143,13 +144,12 @@ NULL
     dark = TRUE,
     pointsAsNumbers = FALSE,
     headerLevel = NULL,
-    title = NULL,
-    return = "markdown") {
+    title = NULL) {
     .checkFormat(format)
     if (format == "ensgene") {
         genes <- .convertGenesToSymbols(object, genes = genes)
     }
-    return <- lapply(seq_along(genes), function(a) {
+    list <- lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
         # Skip and warn if gene is missing
         if (!gene %in% rownames(slot(object, "data"))) {
@@ -167,11 +167,11 @@ NULL
             dark = dark,
             pointsAsNumbers = pointsAsNumbers,
             title = title,
-            return = return)
+            return = "grid")
         show(p)
         p
     })
-    invisible(return)
+    invisible(list)
 }
 
 
