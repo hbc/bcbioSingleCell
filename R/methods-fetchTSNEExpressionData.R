@@ -63,10 +63,10 @@ setMethod(
         if (format == "ensgene") {
             genes <- .convertGenesToSymbols(object, genes = genes)
         }
-        data <- .fetchGeneData.seurat(object, genes = genes)
-        data[["geomean"]] <- Matrix::colMeans(t(data))
         tsne <- fetchTSNEData(object)
-        cbind(tsne, data) %>%
+        data <- .fetchGeneData.seurat(object, genes = genes)
+        geomean <- Matrix::colMeans(t(data))
+        cbind(tsne, data, geomean) %>%
             rownames_to_column("cellID") %>%
             gather(key = "gene",
                    value = "expression",
