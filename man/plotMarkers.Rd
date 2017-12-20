@@ -10,10 +10,10 @@
 plotMarkers(object, ...)
 
 \S4method{plotMarkers}{seurat}(object, genes, format = "symbol",
-  tSNEColor = viridis::scale_color_viridis(),
+  tsneColor = viridis::scale_color_viridis(),
   violinFill = viridis::scale_fill_viridis(discrete = TRUE),
   dotColor = ggplot2::scale_color_gradient(low = "lightgray", high =
-  "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = NULL,
+  "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2,
   title = NULL)
 }
 \arguments{
@@ -27,7 +27,7 @@ plotMarkers(object, ...)
 is also supported, as long as Ensembl gene to symbol identifier mappings
 are defined.}
 
-\item{tSNEColor}{Color palette to use for tSNE plot.}
+\item{tsneColor}{Color palette to use for tSNE plot.}
 
 \item{violinFill}{Color palette to use for violin plot.}
 

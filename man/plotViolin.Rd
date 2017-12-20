@@ -16,6 +16,18 @@
 \item{genes}{Gene identifiers to plot.}
 
 \item{format}{Gene identifier format. Supports \code{ensgene} or \code{symbol}.}
+
+\item{fill}{Fill color palette. Defaults to viridis.}
+
+\item{headerLevel}{Markdown header level. Only applicable when
+\code{return = "markdown"}.}
+}
+\value{
+\itemize{
+\item \code{grid}: \code{\link[cowplot:plot_grid]{cowplot::plot_grid()}}.
+\item \code{list}: \link{list}.
+\item \code{markdown}: Markdown output, with headers for each plot.
+}
 }
 \description{
 Plot Violin
