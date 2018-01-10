@@ -53,7 +53,7 @@
     }
 
     if (!identical(rownames(counts), map[["enstxp"]])) {
-        stop("Transcript to gene mappings don't match counts matrix",
+        stop("Transcript to gene mappings don't match counts matrix rows",
              call. = FALSE)
     }
 
