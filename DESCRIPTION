@@ -21,7 +21,7 @@ Depends:
     R (>= 3.4.0),
     SummarizedExperiment (>= 1.6.5)
 Imports:
-    basejump (>= 0.1.8),
+    basejump (>= 0.1.11),
     BiocGenerics (>= 0.22.1),
     cowplot (>= 0.8.0),
     dendsort (>= 0.3.3),
