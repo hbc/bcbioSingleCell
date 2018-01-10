@@ -19,38 +19,46 @@
     counts <- .stripTranscriptVersions(counts)
 
     # Subset the tx2gene to keep only identifiers present in the matrix
-    txMap <- tx2gene %>%
-        .[.[["enstxp"]] %in% rownames(counts), , drop = FALSE]
+    map <- tx2gene[rownames(counts), , drop = FALSE]
+    rownames(map) <- rownames(counts)
 
     # Detect and handle missing transcript identifiers. These are typically
     # deprecated transcripts in the current Ensembl release, or FASTA
     # spike-in sequences (e.g. EGFP, GAL4). We don't want to simply trash here.
-    if (!all(rownames(counts) %in% tx2gene[["enstxp"]])) {
-        missing <- rownames(counts) %>%
-            .[!. %in% tx2gene[["enstxp"]]] %>%
-            sort()
-        if (length(missing) <= 200L) {
-            # Warn and append unmatched transcripts as genes
-            fxn <- warning
-            txMap <- data.frame(
-                enstxp = missing,
-                ensgene = missing,
-                row.names = missing,
-                stringsAsFactors = FALSE) %>%
-                rbind(txMap)
-        } else {
-            # Stop if there are too many transcript match failures
-            fxn <- stop
+    if (!all(rownames(map) %in% map[["enstxp"]])) {
+        match <- map %>%
+            .[!is.na(.[["enstxp"]]), , drop = FALSE]
+        missing <- map %>%
+            .[is.na(.[["enstxp"]]), , drop = FALSE] %>%
+            rownames()
+        if (length(missing) > 200L) {
+            stop(paste(
+                length(missing), "missing transcripts in tx2gene."
+            ), call. = FALSE)
         }
-        fxn(paste(
-            length(missing),
-            "rows missing from tx2gene:",
+        warning(paste(
+            length(missing), "missing transcripts in tx2gene.",
+            "These will be kept but converted to genes:",
             toString(missing)
         ), call. = FALSE)
+        # Warn and append unmatched transcripts as genes
+        remap <- data.frame(
+            enstxp = missing,
+            ensgene = missing,
+            row.names = missing,
+            stringsAsFactors = FALSE) %>%
+            rbind(match) %>%
+            .[rownames(map), , drop = FALSE]
+        map <- remap
+    }
+
+    if (!identical(rownames(counts), map[["enstxp"]])) {
+        stop("Transcript to gene mappings don't match counts matrix",
+             call. = FALSE)
     }
 
     message("Converting transcript-level counts to gene-level")
-    rownames(counts) <- txMap[["ensgene"]]
+    rownames(counts) <- map[["ensgene"]]
     aggregate.Matrix(
         x = counts,
         groupings = rownames(counts),
