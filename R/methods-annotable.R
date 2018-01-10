@@ -34,7 +34,8 @@ setMethod(
     "annotable",
     signature("bcbioSingleCell"),
     function(object) {
-        annotable <- as.data.frame(rowData(object))
+        annotable <- rowData(object) %>%
+            as.data.frame()
         rownames(annotable) <- slot(object, "NAMES")
         annotable
     })
@@ -49,7 +50,9 @@ setMethod(
     function(object) {
         annotable <- bcbio(object, "annotable")
         if (is.null(annotable)) return(NULL)
-        rownames <- slot(object, "data") %>% rownames() %>% names()
+        rownames <- slot(object, "data") %>%
+            rownames() %>%
+            names()
         if (is.null(rownames)) return(NULL)
         annotable <- annotable[rownames, ]
         rownames(annotable) <- rownames
