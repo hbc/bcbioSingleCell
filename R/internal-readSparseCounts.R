@@ -97,96 +97,10 @@
 
     # Add sample name
     colnames(sparseCounts) <- paste(
-            sampleName,
-            colnames(sparseCounts),
-            sep = "_")
+        sampleName,
+        colnames(sparseCounts),
+        sep = "_")
 
     # Return as dgCMatrix, for improved memory overhead
     as(sparseCounts, "dgCMatrix")
-}
-
-
-
-#' Transcript To Gene-Level Sparse Counts
-#'
-#' @author Michael Steinbaugh, Rory Kirchner
-#'
-#' @importFrom dplyr bind_rows
-#' @importFrom Matrix.utils aggregate.Matrix
-#' @importFrom magrittr set_rownames
-#' @importFrom tibble remove_rownames
-#'
-#' @param txlevel Transcript-level sparse counts matrix (`dgCMatrix`).
-#' @param tx2gene Transcript to gene identifier mappings.
-#'
-#' @return `dgCMatrix`.
-#' @noRd
-.sparseCountsTx2Gene <- function(txlevel, tx2gene) {
-    if (!is(txlevel, "dgCMatrix")) {
-        stop("txlevel must be dgCMatrix class object", call. = FALSE)
-    }
-    mat <- .stripTranscriptVersions(txlevel)
-
-    # Subset the tx2gene to keep only identifiers present in the matrix
-    t2g <- tx2gene %>%
-        as.data.frame() %>%
-        remove_rownames() %>%
-        .[.[["enstxp"]] %in% rownames(mat), , drop = FALSE]
-
-    # Detect and handle missing transcript identifiers. These are typically
-    # deprecated transcripts in the current Ensembl release, or FASTA
-    # spike-in sequences (e.g. EGFP, GAL4). We don't want to simply trash here.
-    if (!all(rownames(mat) %in% tx2gene[["enstxp"]])) {
-        missing <- rownames(mat) %>%
-            .[!. %in% tx2gene[["enstxp"]]]
-        if (length(missing) > 200) {
-            # Stop if there are too many transcript match failures
-            fxn <- stop
-        } else {
-            # Otherwise warn and append the t2g match tibble
-            fxn <- warning
-            t2g <- data.frame(enstxp = missing,
-                              ensgene = missing) %>%
-                bind_rows(t2g)
-         }
-        fxn(paste(
-            length(missing),
-            "rows missing from tx2gene:",
-            toString(missing)
-        ), call. = FALSE)
-    }
-
-    message("Converting transcript-level counts to gene-level")
-    mat %>%
-        set_rownames(t2g[["ensgene"]]) %>%
-        aggregate.Matrix(rownames(.), fun = "sum")
-}
-
-
-
-#' Strip Transcript Versions
-#'
-#' @author Michael Steinbaugh
-#'
-#' @param sparseCounts Sparse counts matrix (`dgCMatrix`).
-#'
-#' @return `dgCMatrix`.
-#' @noRd
-.stripTranscriptVersions <- function(sparseCounts) {
-    transcripts <- rownames(sparseCounts)
-    # Pattern matching against Ensembl transcript IDs
-    # http://www.ensembl.org/info/genome/stable_ids/index.html
-    # Examples: ENST (human); ENSMUST (mouse)
-    enstxpPattern <- "^(ENS.*T\\d{11})\\.\\d+$"
-    if (any(grepl(x = transcripts, pattern = enstxpPattern))) {
-        transcripts <- gsub(
-            x = transcripts,
-            pattern = enstxpPattern,
-            replacement = "\\1")
-        rownames(sparseCounts) <- transcripts
-    }
-    if (any(grepl(x = transcripts, pattern = "\\.\\d+$"))) {
-        stop("Incomplete transcript version removal", call. = FALSE)
-    }
-    sparseCounts
 }
