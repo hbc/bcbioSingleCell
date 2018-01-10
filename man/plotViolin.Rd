@@ -19,6 +19,8 @@
 
 \item{fill}{Fill color palette. Defaults to viridis.}
 
+\item{return}{Return type. "grid", "list", and "markdown" are supported.}
+
 \item{headerLevel}{Markdown header level. Only applicable when
 \code{return = "markdown"}.}
 }
