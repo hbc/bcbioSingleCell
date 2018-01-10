@@ -10,7 +10,6 @@
 #'   prepareSummarizedExperiment readDataVersions readGTF readLogFile
 #'   readProgramVersions readSampleMetadataFile readYAML sampleYAMLMetadata
 #'   tx2geneFromGTF
-#' @importFrom dplyr everything filter pull select
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
 #' @importFrom rlang is_string
@@ -221,7 +220,7 @@ loadSingleCell <- function(
     }
 
     # Detect MatrixMarket output at transcript or gene level
-    if (length(bcbioCommandsLog)) {
+    if (is.character(bcbioCommandsLog)) {
         # This grep pattern may not be strict enough against the file path
         genemapPattern <- "--genemap (.+)-tx2gene.tsv"
         if (any(grepl(x = bcbioCommandsLog, pattern = genemapPattern))) {
@@ -241,35 +240,48 @@ loadSingleCell <- function(
         file.path(projectDir, "data_versions.csv"))
     programs <- readProgramVersions(
         file.path(projectDir, "programs.txt"))
-    if (!is.null(dataVersions)) {
-        genomeBuild <- dataVersions %>%
-            filter(.data[["resource"]] == "transcripts") %>%
-            pull("genome")
-    } else {
-        # Data versions aren't saved when using a custom FASTA
-        # Remove this in a future update
-        genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
-        if (any(grepl(x = bcbioCommandsLog, pattern = genomePattern))) {
-            genomeBuild <-
-                str_match(bcbioCommandsLog, genomePattern) %>%
-                .[, 2] %>%
-                na.omit() %>%
-                unique()
+
+    # Detect genome build
+    if (!is_string(genomeBuild)) {
+        if (is.data.frame(dataVersions)) {
+            genomeBuild <- dataVersions %>%
+                .[.[["resource"]] == "transcripts", "genome", drop = TRUE]
         } else {
-            warning("Genome detection from bcbio commands failed",
-                    call. = FALSE)
-            genomeBuild <- NULL
+            # Data versions aren't saved when using a custom FASTA
+            # Remove this in a future update
+            genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
+            if (any(grepl(x = bcbioCommandsLog, pattern = genomePattern))) {
+                genomeBuild <-
+                    str_match(bcbioCommandsLog, genomePattern) %>%
+                    .[, 2] %>%
+                    na.omit() %>%
+                    unique()
+            } else {
+                warning("Genome detection from bcbio commands failed",
+                        call. = FALSE)
+                genomeBuild <- NULL
+            }
         }
     }
-    if (length(genomeBuild) > 1) {
-        stop("Multiple genomes detected", call. = FALSE)
+
+    # Detect organism
+    if (!is_string(organism)) {
+        if (!is_string(genomeBuild)) {
+            stop("Organism detection by genome build failed", call. = FALSE)
+        }
+        organism <- detectOrganism(genomeBuild)
     }
-    organism <- detectOrganism(genomeBuild)
-    message(paste0("Genome: ", organism, " (", genomeBuild, ")"))
+    if (!is_string(organism)) {
+        stop("Invalid organism", call. = FALSE)
+    }
+    message(paste(
+        paste("Organism:", organism),
+        paste("Genome build:", genomeBuild),
+        sep = "\n"
+    ))
 
     # Molecular barcode (UMI) type =============================================
-    # FIXME Improve this check step if user has passed in custom barcodes
-    if (length(bcbioCommandsLog)) {
+    if (is.character(bcbioCommandsLog)) {
         umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
         if (any(grepl(x = bcbioCommandsLog, pattern = umiPattern))) {
             umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
@@ -298,7 +310,7 @@ loadSingleCell <- function(
     }
 
     # Sample metadata ==========================================================
-    if (!is.null(sampleMetadataFile)) {
+    if (is_string(sampleMetadataFile)) {
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
@@ -363,16 +375,17 @@ loadSingleCell <- function(
         annotable <- annotable(
             organism,
             genomeBuild = genomeBuild,
-            release = ensemblVersion)
+            release = ensemblVersion,
+            uniqueSymbol = FALSE)
     } else if (is.data.frame(annotable)) {
-        annotable <- annotable(annotable)
+        annotable <- annotable(annotable, uniqueSymbol = FALSE)
     } else {
         warning("Loading run without gene annotable", call. = FALSE)
         annotable <- NULL
     }
 
     # GTF annotations
-    if (!is.null(gtfFile)) {
+    if (is_string(gtfFile)) {
         gtfFile <- normalizePath(gtfFile)
         gtf <- readGTF(gtfFile)
     } else {
@@ -381,7 +394,7 @@ loadSingleCell <- function(
 
     # Transcript-to-gene mappings
     if (countsLevel == "transcript") {
-        if (is.null(gtf)) {
+        if (!is.data.frame(gtf)) {
             stop(paste(
                 "GTF required to convert transcript-level counts to gene-level"
             ), call. = FALSE)
@@ -393,9 +406,9 @@ loadSingleCell <- function(
     }
 
     # Gene-to-symbol mappings
-    if (!is.null(gtfFile)) {
+    if (is_string(gtfFile)) {
         gene2symbol <- gene2symbolFromGTF(gtf)
-    } else if (!is.null(annotable)) {
+    } else if (is.data.frame(annotable)) {
         gene2symbol <- annotable[, c("ensgene", "symbol")]
     } else {
         warning("Loading run without gene-to-symbol mappings", call. = FALSE)
@@ -421,7 +434,7 @@ loadSingleCell <- function(
     counts <- do.call(Matrix::cBind, sparseList)
     # Convert counts from transcript-level to gene-level, if necessary
     if (countsLevel == "transcript") {
-        counts <- .sparseCountsTx2Gene(counts, tx2gene)
+        counts <- .transcriptToGeneLevelCounts(counts, tx2gene)
     }
 
     # Metrics ==================================================================
@@ -491,9 +504,8 @@ loadSingleCell <- function(
         rowData = annotable,
         colData = metrics,
         metadata = metadata)
-    bcbio <- list(
-        cellularBarcodes = cbList
-    ) %>%
-        as("SimpleList")
-    new("bcbioSingleCell", se, bcbio = bcbio)
+    bcbio <- list(cellularBarcodes = cbList)
+    new("bcbioSingleCell",
+        se,
+        bcbio = as(bcbio, "SimpleList"))
 }
