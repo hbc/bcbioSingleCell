@@ -9,6 +9,7 @@ Authors@R: as.person(c(
     "Shannan Ho Sui <shosui@hsph.harvard.edu> [aut]",
     "Harvard Chan Bioinformatics Core <bioinformatics@hsph.harvard.edu> [cph, fnd]"
     ))
+Maintainer: Michael Steinbaugh <mike@steinbaugh.com>
 URL:
     http://bioinformatics.sph.harvard.edu/bcbioSingleCell,
     https://github.com/hbc/bcbioSingleCell
@@ -51,12 +52,13 @@ Suggests:
     devtools,
     googlesheets,
     lintr,
+    magrittr,
     rmarkdown,
     roxygen2,
     testthat,
     tidyverse
 Remotes:
-    steinbaugh/basejump@develop
+    steinbaugh/basejump
 biocViews:
     DataImport,
     DataRepresentation,
