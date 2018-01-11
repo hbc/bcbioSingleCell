@@ -5,7 +5,7 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump plotDot
+#' @importFrom bcbioBase plotDot
 #'
 #' @inheritParams AllGenerics
 #'

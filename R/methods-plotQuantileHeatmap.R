@@ -7,9 +7,9 @@
 #' @name plotQuantileHeatmap
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @importFrom basejump plotQuantileHeatmap
+#' @importFrom bcbioBase plotQuantileHeatmap
 #'
-#' @inherit basejump::plotQuantileHeatmap
+#' @inherit bcbioBase::plotQuantileHeatmap
 #'
 #' @examples
 #' load(system.file(

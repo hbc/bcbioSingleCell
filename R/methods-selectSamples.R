@@ -3,7 +3,7 @@
 #' @rdname selectSamples
 #' @name selectSamples
 #'
-#' @importFrom basejump selectSamples
+#' @importFrom bcbioBase selectSamples
 #'
 #' @details Internally, pattern matching against sample and file names is
 #'   applied using logical grep matching.
@@ -32,7 +32,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump prepareSummarizedExperiment
+#' @importFrom bcbioBase prepareSummarizedExperiment
 #' @importFrom dplyr mutate_if pull
 #' @importFrom magrittr set_rownames
 .selectSamples <- function(object, ...) {

@@ -28,7 +28,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump mdHeader
+#' @importFrom bcbioBase mdHeader
 #' @importFrom dplyr pull
 #' @importFrom stats na.omit
 #' @importFrom viridis scale_color_viridis

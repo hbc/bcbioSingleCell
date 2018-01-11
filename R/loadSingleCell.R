@@ -6,7 +6,7 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
+#' @importFrom bcbioBase annotable camel detectOrganism gene2symbolFromGTF
 #'   prepareSummarizedExperiment readDataVersions readGTF readLogFile
 #'   readProgramVersions readSampleMetadataFile readYAML sampleYAMLMetadata
 #'   tx2geneFromGTF
@@ -42,7 +42,7 @@
 #'   "Homo sapiens"), since this will be input downstream to
 #'   AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
 #'   Normally this can be left `NULL`, and the function will attempt to detect
-#'   the organism automatically using [basejump::detectOrganism()].
+#'   the organism automatically using [detectOrganism()].
 #' @param ensemblVersion *Optional*. Ensembl release version. If `NULL`,
 #'   defaults to current release, and does not typically need to be
 #'   user-defined. This parameter can be useful for matching Ensembl annotations

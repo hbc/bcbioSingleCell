@@ -36,7 +36,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom basejump pct
 #' @importFrom dplyr filter mutate pull
 #' @importFrom Matrix colSums
 #' @importFrom scales percent

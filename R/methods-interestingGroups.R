@@ -4,7 +4,7 @@
 #' @name interestingGroups
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump interestingGroups interestingGroups<-
+#' @importFrom bcbioBase interestingGroups interestingGroups<-
 #'
 #' @inheritParams AllGenerics
 #'
@@ -64,7 +64,7 @@ setMethod(
 
 # Assignment methods ===========================================================
 #' @rdname interestingGroups
-#' @importFrom basejump checkInterestingGroups
+#' @importFrom bcbioBase checkInterestingGroups
 #' @importFrom S4Vectors metadata
 #' @export
 setMethod(
@@ -84,7 +84,7 @@ setMethod(
 
 
 #' @rdname interestingGroups
-#' @importFrom basejump checkInterestingGroups
+#' @importFrom bcbioBase checkInterestingGroups
 #' @importFrom S4Vectors metadata
 #' @export
 setMethod(

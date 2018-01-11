@@ -281,7 +281,7 @@ NULL
         "in 'object@bcbio' slot...skipping"
     )
     if (missing(interestingGroups)) {
-        interestingGroups <- basejump::interestingGroups(object)
+        interestingGroups <- bcbioBase::interestingGroups(object)
     }
 
     # Obtain the cellular barcode distributions

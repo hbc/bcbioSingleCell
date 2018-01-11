@@ -174,7 +174,7 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotMarkers
-#' @importFrom basejump mdHeader
+#' @importFrom bcbioBase mdHeader
 #' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(

@@ -8,7 +8,7 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
+#' @importFrom bcbioBase annotable camel detectOrganism gene2symbolFromGTF
 #'   prepareSummarizedExperiment readGTF readSampleMetadataFile
 #' @importFrom dplyr mutate
 #' @importFrom jsonlite read_json
@@ -120,7 +120,7 @@ loadCellRanger <- function(
 
     # Gene annotations =========================================================
     if (missing(annotable)) {
-        annotable <- basejump::annotable(
+        annotable <- bcbioBase::annotable(
             organism,
             genomeBuild = genomeBuild,
             release = ensemblVersion)

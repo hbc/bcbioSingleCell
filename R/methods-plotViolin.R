@@ -4,9 +4,9 @@
 #' @name plotViolin
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump plotViolin
+#' @importFrom bcbioBase plotViolin
 #'
-#' @inherit basejump::dynamicPlotlist
+#' @inherit bcbioBase::dynamicPlotlist
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams plotDot
@@ -35,7 +35,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump dynamicPlotlist
+#' @importFrom bcbioBase dynamicPlotlist
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 aes_string geom_violin ggplot
 #' @importFrom rlang !! sym

@@ -7,7 +7,7 @@
 #' @name plotQC
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump plotQC
+#' @importFrom bcbioBase plotQC
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
@@ -62,7 +62,7 @@ validQCGeomFlip <- c(
     legend = FALSE,
     return = "grid") {
     if (missing(interestingGroups)) {
-        interestingGroups <- basejump::interestingGroups(object)
+        interestingGroups <- bcbioBase::interestingGroups(object)
     }
     plotlist <- list(
         plotReadsPerCell = plotReadsPerCell(

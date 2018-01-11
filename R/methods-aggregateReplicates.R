@@ -5,9 +5,9 @@
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump aggregateReplicates
+#' @importFrom bcbioBase aggregateReplicates
 #'
-#' @inherit basejump::aggregateReplicates
+#' @inherit bcbioBase::aggregateReplicates
 #' @inheritParams AllGenerics
 #'
 #' @examples

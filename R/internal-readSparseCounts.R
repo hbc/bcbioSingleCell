@@ -11,7 +11,7 @@
 #' @note bcbio-nextgen outputs counts at transcript level. 10X Chromium
 #'   CellRanger outputs counts at gene level.
 #'
-#' @importFrom basejump readFileByExtension
+#' @importFrom bcbioBase readFileByExtension
 #' @importFrom dplyr pull
 #'
 #' @author Michael Steinbaugh
