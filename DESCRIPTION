@@ -58,8 +58,7 @@ Suggests:
     testthat,
     tidyverse
 Remotes:
-    hbc/bcbioBase,
-    steinbaugh/basejump
+    hbc/bcbioBase@develop
 biocViews:
     DataImport,
     DataRepresentation,
