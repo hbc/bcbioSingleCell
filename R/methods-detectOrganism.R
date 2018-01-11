@@ -6,7 +6,7 @@
 #'
 #' @importFrom bcbioBase detectOrganism
 #'
-#' @inherit bcbioBase::detectOrganism
+#' @inheritParams AllGenerics
 #'
 #' @examples
 #' load(system.file(
