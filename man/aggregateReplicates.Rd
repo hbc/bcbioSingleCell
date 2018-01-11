@@ -10,9 +10,10 @@
 }
 \arguments{
 \item{object}{Object.}
-}
-\value{
-Object with aggregated counts per pooled sample (columns).
+
+\item{groupings}{Factor that defines the aggregation groupings. The new
+aggregation names are defined as the factor levels, and the original
+replicates are defined as the names of the factor.}
 }
 \description{
 Aggregate Replicates

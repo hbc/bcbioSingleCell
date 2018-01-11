@@ -16,8 +16,6 @@
   legendColor = viridis::viridis, title = NULL)
 }
 \arguments{
-\item{object}{Object.}
-
 \item{n}{The number of breaks to create.}
 
 \item{annotationCol}{\emph{Optional}. \link{data.frame} that defines annotation
@@ -36,10 +34,6 @@ palette.}
 \code{\link[viridis:viridis]{viridis::viridis()}} palette.}
 
 \item{title}{\emph{Optional}. Plot title.}
-}
-\value{
-Show heatmap. Invisibly return \link{list} containing breaks and
-\code{\link[pheatmap:pheatmap]{pheatmap::pheatmap()}} \code{gtable}.
 }
 \description{
 Plot Heatmap with Quantile Breaks

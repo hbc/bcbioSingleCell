@@ -41,7 +41,7 @@ can be passed in as a \link{data.frame}, but this isn't generally recommended.}
 "Homo sapiens"), since this will be input downstream to
 AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
 Normally this can be left \code{NULL}, and the function will attempt to detect
-the organism automatically using \code{\link[basejump:detectOrganism]{basejump::detectOrganism()}}.}
+the organism automatically using \code{\link[=detectOrganism]{detectOrganism()}}.}
 
 \item{ensemblVersion}{\emph{Optional}. Ensembl release version. If \code{NULL},
 defaults to current release, and does not typically need to be
