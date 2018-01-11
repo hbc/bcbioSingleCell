@@ -19,6 +19,7 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),
+    bcbioBase (>= 0.0.1),
     SummarizedExperiment (>= 1.6.5)
 Imports:
     basejump (>= 0.1.11),
@@ -58,6 +59,7 @@ Suggests:
     testthat,
     tidyverse
 Remotes:
+    hbc/bcbioBase,
     steinbaugh/basejump
 biocViews:
     DataImport,
