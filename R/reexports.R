@@ -1,10 +1,20 @@
+#' @importFrom dplyr funs
+#' @export
+dplyr::funs
+
+
+
 #' @importFrom ggplot2 ggplot
 #' @export
 ggplot2::ggplot
 
+
+
 #' @importFrom tibble glimpse
 #' @export
 tibble::glimpse
+
+
 
 #' @importFrom viridis inferno
 #' @export
