@@ -9,10 +9,6 @@
 #'
 #' @inheritParams AllGenerics
 #'
-#' @param groupings Factor that defines the aggregation groupings. The new
-#'   aggregation names are defined as the factor levels, and the original
-#'   replicates are defined as the names of the factor.
-#'
 #' @examples
 #' load(system.file(
 #'     file.path("extdata", "bcb.rda"),
