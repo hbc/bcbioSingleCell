@@ -9,6 +9,8 @@
 #'
 #' @importFrom bcbioBase plotQuantileHeatmap
 #'
+#' @inheritParams AllGenerics
+#'
 #' @param n The number of breaks to create.
 #' @param annotationCol *Optional*. [data.frame] that defines annotation
 #'   mappings for the columns.

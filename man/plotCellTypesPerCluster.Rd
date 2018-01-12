@@ -22,6 +22,8 @@ be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
+\item{color}{Color palette.}
+
 \item{dark}{Plot the TSNE against a dark background.}
 
 \item{headerLevel}{Include a Markdown header for each gene.}

@@ -16,6 +16,8 @@
   legendColor = viridis::viridis, title = NULL)
 }
 \arguments{
+\item{object}{Object.}
+
 \item{n}{The number of breaks to create.}
 
 \item{annotationCol}{\emph{Optional}. \link{data.frame} that defines annotation
