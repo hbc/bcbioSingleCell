@@ -52,7 +52,6 @@ Suggests:
     devtools,
     googlesheets,
     lintr,
-    magrittr,
     rmarkdown,
     roxygen2,
     testthat,
