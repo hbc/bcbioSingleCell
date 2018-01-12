@@ -28,6 +28,9 @@
 Plot Violin
 }
 \examples{
+load(system.file(
+    file.path("extdata", "seurat.rda"),
+    package = "bcbioSingleCell"))
 
 genes <- slot(seurat, "raw.data") \%>\% rownames() \%>\% .[1:2]
 print(genes)
