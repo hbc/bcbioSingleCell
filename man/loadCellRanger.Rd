@@ -5,7 +5,7 @@
 \title{Load 10X Genomics CellRanger Data}
 \usage{
 loadCellRanger(uploadDir, refDataDir, interestingGroups = "sampleName",
-  sampleMetadataFile = NULL, annotable, prefilter = TRUE, ...)
+  sampleMetadataFile = NULL, annotable = TRUE, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to CellRanger output directory. This directory path
@@ -46,8 +46,12 @@ counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 This function is a simplified version of \code{\link[=loadSingleCell]{loadSingleCell()}}
 optimized for handling CellRanger output.
 }
+\note{
+Unlike \code{\link[=loadSingleCell]{loadSingleCell()}}, the \code{organism}, \code{ensemblVersion}, and
+\code{genomeBuild} are always detected automatically, based on the \code{refDataDir}
+YAML metadata. Therefore, these parameters cannot be set by the user.
+}
 \examples{
-\dontrun{
 extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 uploadDir <- file.path(extdataDir, "cellranger")
 refDataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
@@ -56,7 +60,6 @@ loadCellRanger(
     uploadDir = uploadDir,
     refDataDir = refDataDir,
     sampleMetadataFile = sampleMetadataFile)
-}
 }
 \author{
 Michael Steinbaugh

@@ -4,10 +4,10 @@
 \alias{loadSingleCell}
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
-loadSingleCell(uploadDir, sampleMetadataFile,
-  interestingGroups = "sampleName", prefilter = TRUE, gtfFile = NULL,
-  annotable = TRUE, organism = NULL, ensemblVersion = NULL,
-  genomeBuild = NULL, ...)
+loadSingleCell(uploadDir, sampleMetadataFile = NULL,
+  interestingGroups = "sampleName", gtfFile = NULL, annotable = TRUE,
+  organism = NULL, ensemblVersion = NULL, genomeBuild = NULL,
+  prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -21,8 +21,6 @@ inDrop). Consult the GitHub repo for examples and additional information.}
 \item{interestingGroups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
-
-\item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{gtfFile}{\emph{Optional but recommended}. GTF (Gene Transfer Format) file,
 which will be used for gene-to-symbol (\code{gene2symbol}) and
@@ -53,6 +51,8 @@ and the build will be detected from the bcbio run data. This can be set
 manually (e.g. "hg19" for the older \emph{Homo sapiens} reference genome). Note
 that this must match the genome build identifier on Ensembl for annotations
 to download correctly.}
+
+\item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
