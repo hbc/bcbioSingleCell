@@ -130,9 +130,6 @@ loadSingleCell <- function(
         stop("'annotable' must be logical or data.frame")
     }
     # organism
-    # TODO Add support for multiple genomes, passed in as a character vector.
-    # We can loop the annotable call. We can add a unit test with both human
-    # and mouse genes for this in the future.
     if (!any(
         is_string(organism),
         is.null(organism)
