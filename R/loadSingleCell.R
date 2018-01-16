@@ -81,14 +81,14 @@
 #' }
 loadSingleCell <- function(
     uploadDir,
-    sampleMetadataFile,
+    sampleMetadataFile = NULL,
     interestingGroups = "sampleName",
-    prefilter = TRUE,
     gtfFile = NULL,
     annotable = TRUE,
     organism = NULL,
     ensemblVersion = NULL,
     genomeBuild = NULL,
+    prefilter = TRUE,
     ...) {
     pipeline <- "bcbio"
 
@@ -98,9 +98,6 @@ loadSingleCell <- function(
         stop("'uploadDir' must be string")
     }
     # sampleMetadataFile
-    if (missing(sampleMetadataFile)) {
-        sampleMetadataFile <- NULL
-    }
     if (!any(
         is_string(sampleMetadataFile),
         is.null(sampleMetadataFile)
@@ -110,10 +107,6 @@ loadSingleCell <- function(
     # interestingGroups
     if (!is.character(interestingGroups)) {
         stop("'interestingGroups' must be character")
-    }
-    # prefilter
-    if (!is.logical(prefilter)) {
-        stop("'prefilter' must be logical")
     }
     # gtfFile
     if (!any(
@@ -149,6 +142,10 @@ loadSingleCell <- function(
         is.null(genomeBuild)
     )) {
         stop("'genomeBuild' must be string or NULL")
+    }
+    # prefilter
+    if (!is.logical(prefilter)) {
+        stop("'prefilter' must be logical")
     }
 
     # Directory paths ==========================================================
