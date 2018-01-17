@@ -64,6 +64,8 @@ NULL
 
     genes <- rownames(se)
     cells <- colnames(se)
+    samples <- sampleMetadata(x) %>%
+        rownames()
 
     # Assays ===================================================================
     assays <- assays(se)
@@ -87,12 +89,20 @@ NULL
         metadata[["version"]] <- packageVersion
     }
 
-    # cell2sample mappings
-    cell2sample <- cell2sample(
-        colnames(se),
-        samples = rownames(sampleMetadata(x))
-    )
-    metadata[["cell2sample"]] <- cell2sample
+    # cell2sample
+    cell2sample <- metadata(object)[["cell2sample"]]
+    if (is.null(cell2sample)) {
+        warning(paste(
+            "cell2sample missing in metadata.",
+            "Attempting to define using 'cell2sample()'."
+        ))
+        cell2sample <- cell2sample(
+            cells = cells,
+            samples = samples)
+    } else {
+        cell2sample <- cell2sample[cells]
+    }
+    metadata(object)[["cell2sample"]] <- cell2sample
 
     # sampleMetadata
     sampleMetadata <- sampleMetadata(x) %>%

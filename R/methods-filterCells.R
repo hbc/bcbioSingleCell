@@ -168,10 +168,6 @@ NULL
     metadata(object)[["filterCells"]] <- cells
     metadata(object)[["filterGenes"]] <- genes
     metadata(object)[["filterParams"]] <- params
-    # cell2sample
-    cell2sample <- metadata(object)[["cell2sample"]]
-    if (is.null(cell2sample)) stop("cell2sample missing in metadata")
-    metadata(object)[["cell2sample"]] <- cell2sample[cells]
 
     # Summary ==================================================================
     if (!isTRUE(quiet)) {
