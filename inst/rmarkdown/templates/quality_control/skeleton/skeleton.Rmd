@@ -9,7 +9,7 @@ params:
     minGenes: 500
     maxGenes: !r Inf
     maxMitoRatio: 0.1
-    minNovelty: 0.8
+    minNovelty: 0.75
     minCellsPerGene: 3
     outputDir: "."
 ---
