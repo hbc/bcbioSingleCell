@@ -47,7 +47,7 @@ NULL
     minGenes = 500,
     maxGenes = Inf,
     maxMitoRatio = 0.1,
-    minNovelty = 0.8,
+    minNovelty = 0.75,
     minCellsPerGene = 3,
     quiet = FALSE) {
     # Ensure that all filter parameters are numeric
@@ -61,7 +61,7 @@ NULL
     if (!is.numeric(params)) {
         stop("Filter parameters must be numeric", call. = FALSE)
     }
-    # Add support `nCount` filtering in a future update
+    # TODO Add support `nCount` filtering in a future update
 
     # Filter low quality cells =================================================
     colData <- colData(object)
@@ -168,11 +168,10 @@ NULL
     metadata(object)[["filterCells"]] <- cells
     metadata(object)[["filterGenes"]] <- genes
     metadata(object)[["filterParams"]] <- params
-    cell2sample <- cell2sample(
-        cells,
-        samples = sampleMetadata(object)[["sampleID"]]
-    )
-    metadata(object)[["cell2sample"]] <- cell2sample
+    # cell2sample
+    cell2sample <- metadata(object)[["cell2sample"]]
+    if (is.null(cell2sample)) stop("cell2sample missing in metadata")
+    metadata(object)[["cell2sample"]] <- cell2sample[cells]
 
     # Summary ==================================================================
     if (!isTRUE(quiet)) {
