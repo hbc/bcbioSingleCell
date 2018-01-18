@@ -67,7 +67,9 @@
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
     # names are gene/transcript identifiers (depending on pipeline).
-    sparseCounts <- readFileByExtension(matrixFile)
+    sparseCounts <- readFileByExtension(matrixFile) %>%
+        # Ensure standardized dgCMatrix
+        as("dgCMatrix")
     if (pipeline == "bcbio") {
         colnames(sparseCounts) <-
             readFileByExtension(colFile) %>%
