@@ -4,14 +4,14 @@
 \alias{loadCellRanger}
 \title{Load 10X Genomics CellRanger Data}
 \usage{
-loadCellRanger(uploadDir, refDataDir, interestingGroups = "sampleName",
+loadCellRanger(uploadDir, refdataDir, interestingGroups = "sampleName",
   sampleMetadataFile = NULL, annotable = TRUE, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to CellRanger output directory. This directory path
 must contain \code{filtered_gene_bc_matrices/} as a child.}
 
-\item{refDataDir}{Directory path to cellranger reference annotation data.}
+\item{refdataDir}{Directory path to cellranger reference annotation data.}
 
 \item{interestingGroups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
@@ -48,17 +48,17 @@ optimized for handling CellRanger output.
 }
 \note{
 Unlike \code{\link[=loadSingleCell]{loadSingleCell()}}, the \code{organism}, \code{ensemblVersion}, and
-\code{genomeBuild} are always detected automatically, based on the \code{refDataDir}
+\code{genomeBuild} are always detected automatically, based on the \code{refdataDir}
 YAML metadata. Therefore, these parameters cannot be set by the user.
 }
 \examples{
 extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 uploadDir <- file.path(extdataDir, "cellranger")
-refDataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
+refdataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
 sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
 loadCellRanger(
     uploadDir = uploadDir,
-    refDataDir = refDataDir,
+    refdataDir = refdataDir,
     sampleMetadataFile = sampleMetadataFile)
 }
 \author{
