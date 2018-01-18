@@ -3,7 +3,7 @@
 #' @rdname sampleMetadata
 #' @name sampleMetadata
 #'
-#' @importFrom basejump sampleMetadata
+#' @importFrom bcbioBase sampleMetadata
 #'
 #' @inheritParams AllGenerics
 #' @inheritParams metrics
@@ -42,7 +42,7 @@ NULL
 #'   this is slotted in `object@meta.data` but older versions used
 #'   `object@data.info`.
 #'
-#' @importFrom basejump camel
+#' @importFrom bcbioBase camel
 #' @importFrom dplyr distinct mutate_if select_if
 #' @importFrom tibble remove_rownames
 .prepareSampleMetadataFromSeurat <- function(metadata) {
@@ -90,7 +90,7 @@ setMethod(
         interestingGroups,
         aggregateReplicates = FALSE) {
         if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
+            interestingGroups <- bcbioBase::interestingGroups(object)
         }
         metadata <- metadata(object)[["sampleMetadata"]] %>%
             as.data.frame()

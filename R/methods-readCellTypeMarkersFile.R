@@ -23,7 +23,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump camel checkGene2symbol readFileByExtension
+#' @importFrom bcbioBase camel checkGene2symbol readFileByExtension
 #' @importFrom dplyr arrange distinct left_join
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom tibble as_tibble

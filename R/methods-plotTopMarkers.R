@@ -36,20 +36,27 @@ NULL
 .plotTopMarkers <- function(
     object,
     topMarkers,
+    tsneColor = viridis::scale_color_viridis(),
+    violinFill = viridis::scale_fill_viridis(discrete = TRUE),
+    dotColor = ggplot2::scale_color_gradient(
+        low = "lightgray",
+        high = "purple"),
+    dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = NULL) {
+    headerLevel = 2) {
     .checkSanitizedMarkers(topMarkers)
     clusters <- levels(topMarkers[["cluster"]])
-    return <- pblapply(seq_along(clusters), function(a) {
+    list <- pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
         # We're matching against the `symbol` column here
         genes <- topMarkers %>%
             as.data.frame() %>%
             .[.[["cluster"]] == cluster, "symbol", drop = TRUE]
-        if (is.null(genes)) return(NULL)
+        if (!length(genes)) return(invisible())
         if (length(genes) > 10) {
-            warning("Maximum of 10 genes per cluster is recommended",
-                    call. = FALSE)
+            warning(
+                "Maximum of 10 genes per cluster is recommended",
+                call. = FALSE)
         }
         if (!is.null(headerLevel)) {
             mdHeader(
@@ -65,10 +72,14 @@ NULL
             object,
             genes = genes,
             format = "symbol",
+            tsneColor = tsneColor,
+            violinFill = violinFill,
+            dotColor = dotColor,
+            dark = dark,
             pointsAsNumbers = pointsAsNumbers,
             headerLevel = subheaderLevel)
     })
-    invisible(return)
+    invisible(list)
 }
 
 

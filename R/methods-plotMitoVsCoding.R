@@ -75,7 +75,7 @@ setMethod(
         interestingGroups,
         color = viridis::scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
+            interestingGroups <- bcbioBase::interestingGroups(object)
         }
         metrics <- metrics(
             object,
@@ -108,7 +108,7 @@ setMethod(
         interestingGroups,
         color = viridis::scale_color_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
+            interestingGroups <- bcbioBase::interestingGroups(object)
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotMitoVsCoding(

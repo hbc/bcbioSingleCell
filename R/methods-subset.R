@@ -64,6 +64,8 @@ NULL
 
     genes <- rownames(se)
     cells <- colnames(se)
+    samples <- sampleMetadata(x) %>%
+        rownames()
 
     # Assays ===================================================================
     assays <- assays(se)
@@ -87,11 +89,19 @@ NULL
         metadata[["version"]] <- packageVersion
     }
 
-    # cell2sample mappings
-    cell2sample <- cell2sample(
-        colnames(se),
-        samples = rownames(sampleMetadata(x))
-    )
+    # cell2sample
+    cell2sample <- metadata[["cell2sample"]]
+    if (is.null(cell2sample)) {
+        warning(paste(
+            "cell2sample missing in metadata.",
+            "Attempting to define using 'cell2sample()'."
+        ))
+        cell2sample <- cell2sample(
+            cells = cells,
+            samples = samples)
+    } else {
+        cell2sample <- cell2sample[cells]
+    }
     metadata[["cell2sample"]] <- cell2sample
 
     # sampleMetadata
@@ -127,7 +137,7 @@ NULL
 
     # bcbio ====================================================================
     bcbio <- bcbio(x)
-    if (!is.null(bcbio)) {
+    if (is(bcbio, "SimpleList") & length(bcbio)) {
         # Cellular barcodes
         cb <- bcbio[["cellularBarcodes"]]
         # Bind barcodes into a single `data.frame`, which we can subset

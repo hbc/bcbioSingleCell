@@ -99,8 +99,11 @@
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"symbol"</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"inferno"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(),
+  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span>
+  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -124,14 +127,20 @@ is also supported, as long as Ensembl gene to symbol identifier mappings
 are defined.</p></td>
     </tr>
     <tr>
-      <th>color</th>
-      <td><p>Color palette to use for points. Defaults to the viridis color
-palette. Use <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>ggplot2::scale_color_gradient()</a></code> to easily define your own
-low/high gradient.</p></td>
+      <th>tsneColor</th>
+      <td><p>Color palette to use for tSNE plot.</p></td>
+    </tr>
+    <tr>
+      <th>violinFill</th>
+      <td><p>Color palette to use for violin plot.</p></td>
+    </tr>
+    <tr>
+      <th>dotColor</th>
+      <td><p>Color palette to use for dot plot.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Enable dark mode.</p></td>
+      <td><p>Plot the TSNE against a dark background.</p></td>
     </tr>
     <tr>
       <th>pointsAsNumbers</th>
@@ -170,7 +179,13 @@ low/high gradient.</p></td>
 <span class='no'>symbol</span> <span class='kw'>&lt;-</span> <span class='no'>topMarkers</span>$<span class='no'>symbol</span><span class='kw'>[[</span><span class='fl'>1</span>]]
 <span class='fu'>print</span>(<span class='no'>symbol</span>)</div><div class='output co'>#&gt; [1] "ACTC1"</div><div class='input'><span class='no'>ensgene</span> <span class='kw'>&lt;-</span> <span class='no'>topMarkers</span>$<span class='no'>ensgene</span><span class='kw'>[[</span><span class='fl'>1</span>]]
 <span class='fu'>print</span>(<span class='no'>ensgene</span>)</div><div class='output co'>#&gt; [1] "ENSG00000159251"</div><div class='input'>
-<span class='fu'>plotMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>symbol</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"symbol"</span>)</div><div class='img'><img src='plotMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plotMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>ensgene</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"ensgene"</span>)</div><div class='img'><img src='plotMarkers-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plotMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>symbol</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"symbol"</span>)</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; ## ACTC1
+#&gt; </div><div class='img'><img src='plotMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plotMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>ensgene</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"ensgene"</span>)</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; ## ACTC1
+#&gt; </div><div class='img'><img src='plotMarkers-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -197,7 +212,7 @@ Michael Steinbaugh
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

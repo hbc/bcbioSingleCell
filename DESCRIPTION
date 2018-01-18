@@ -1,14 +1,29 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Import and analyze bcbio single-cell RNA-seq data.
-Version: 0.0.26
-Authors@R: as.person(c(
-    "Michael Steinbaugh <mike@steinbaugh.com> [aut, cre]",
-    "Rory Kirchner <roryk@alum.mit.edu> [aut]",
-    "Mary Piper <mary.piper@gmail.com> [aut]",
-    "Shannan Ho Sui <shosui@hsph.harvard.edu> [aut]",
-    "Harvard Chan Bioinformatics Core <bioinformatics@hsph.harvard.edu> [cph, fnd]"
-    ))
+Version: 0.0.27
+Authors@R: c(
+    person(given = "Michael",
+           family = "Steinbaugh",
+           email = "mike@steinbaugh.com",
+           role = c("aut", "cre")),
+    person(given = "Rory",
+           family = "Kirchner",
+           email = "roryk@alum.mit.edu",
+           role = "aut"),
+    person(given = "Mary",
+           family = "Piper",
+           email = "mary.piper@gmail.com",
+           role = "aut"),
+    person(given = "Shannan",
+           family = "Ho Sui",
+           email = "shosui@hsph.harvard.edu",
+           role = "aut"),
+    person(given = "Harvard Chan Bioinformatics Core",
+           email = "bioinformatics@hsph.harvard.edu",
+           role = c("cph", "fnd"))
+    )
+Maintainer: Michael Steinbaugh <mike@steinbaugh.com>
 URL:
     http://bioinformatics.sph.harvard.edu/bcbioSingleCell,
     https://github.com/hbc/bcbioSingleCell
@@ -18,9 +33,9 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),
+    bcbioBase (>= 0.0.1),
     SummarizedExperiment (>= 1.6.5)
 Imports:
-    basejump (>= 0.1.8),
     BiocGenerics (>= 0.22.1),
     cowplot (>= 0.8.0),
     dendsort (>= 0.3.3),
@@ -56,7 +71,7 @@ Suggests:
     testthat,
     tidyverse
 Remotes:
-    steinbaugh/basejump
+    hbc/bcbioBase
 biocViews:
     DataImport,
     DataRepresentation,

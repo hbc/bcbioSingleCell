@@ -12,6 +12,7 @@
 #'
 #' @param cellTypesPerCluster Cell types per cluster grouped [tibble]. This must
 #'   be the return from [cellTypesPerCluster()].
+#' @param color Color palette.
 #'
 #' @return Show graphical output. Invisibly return [ggplot] plotlist.
 #'

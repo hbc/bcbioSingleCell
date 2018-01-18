@@ -88,6 +88,94 @@
     </div>
 
     <div class="contents">
+    <div id="bcbiosinglecell-0-0-27-2018-01-18" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-27-2018-01-18" class="anchor"></a>bcbioSingleCell 0.0.27 (2018-01-18)</h1>
+<ul>
+<li>Migrated core dependency imports from <a href="http://steinbaugh.com/basejump">basejump</a> to <a href="http://bioinformatics.sph.harvard.edu/bcbioBase">bcbioBase</a>.</li>
+<li>Improved <code>colnames</code> and <code>rownames</code> handling for internal <code>.readSparseCounts()</code> function.</li>
+<li>Reworked <code><a href="../reference/loadCellRanger.html">loadCellRanger()</a></code> function. <code>refDataDir</code> parameter has been renamed to <code>refdataDir</code>.</li>
+<li>Added <code>organism</code> and <code>genomeBuild</code> options to <code><a href="../reference/loadSingleCell.html">loadSingleCell()</a></code>, to override the metadata set in the bcbio run, if necessary.</li>
+<li>Improved if statement data class checks, where applicable.</li>
+<li>Renamed internal <code>.sparseCountsTx2Gene()</code> to <code>.transcriptToGeneLevelCounts()</code>.</li>
+<li>Updated <code>geomean</code> bind method in <code>fetchTSNEExpressionData()</code>.</li>
+<li>Changed <code>minNovelty</code> default from 0.8 to 0.75.</li>
+<li>Improved seurat class support for <code><a href="../reference/plotDot.html">plotDot()</a></code>.</li>
+<li>Improved parameter names for <code>plotKnownMarkersDetected()</code>. Now uses <code>tsneColor</code>, <code>violinFill</code>, and <code>dotColor</code>. Also added <code>pointsAsNumbers</code> parameter.</li>
+<li>Added <code>subtitle</code> parameter for <code>plotMarkerTSNE()</code>.</li>
+<li>Added <code>tsneColor</code>, <code>violinFill</code>, <code>dotColor</code>, and <code>dark</code> parameters for <code>plotMarkers()</code>.</li>
+<li>Improved looping method for <code>plotTopMarkers()</code> so that it renders correctly in R Markdown calls.</li>
+<li>Added method support for <code><a href="../reference/plotViolin.html">plotViolin()</a></code>.</li>
+<li>Improved internal <code>cell2sample</code> handling in subset method code.</li>
+</ul>
+</div>
+    <div id="bcbiosinglecell-0-0-26-2017-12-18" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-26-2017-12-18" class="anchor"></a>bcbioSingleCell 0.0.26 (2017-12-18)</h1>
+<ul>
+<li>Renamed <code>readMarkersFile()</code> to <code>readCellTypeMarkersFile()</code>.</li>
+<li>Improved internal handling of multiplexed CellRanger samples. These are count matrices with cellular barcodes ending in <code>-2</code>, for example.</li>
+<li>Updated <code><a href="../reference/aggregateReplicates.html">aggregateReplicates()</a></code> code to work with basejump generic, which uses <code>groupings</code> instead of <code>cells</code> as the grouping parameter.</li>
+<li>Added method support for <code><a href="../reference/detectOrganism.html">detectOrganism()</a></code>.</li>
+<li>Improved filtering parameter output in <code>filterCells()</code>.</li>
+<li>Updated <code><a href="../reference/gene2symbol.html">gene2symbol()</a></code> method support for bcbioSingleCell and seurat objects.</li>
+<li>Fixed working example in <code>knownMarkersDetected()</code>.</li>
+<li>Reworked internal code for <code>plotCellTypesPerCluster()</code>.</li>
+<li>Improved internal checks for facet wrapping and color palette parameter arguments, where applicable.</li>
+<li>Offloaded base <code><a href="../reference/plotQuantileHeatmap.html">plotQuantileHeatmap()</a></code> functionality into basejump, for use in bcbioRNASeq package.</li>
+<li>Added unit test data for `loadSingleCell().</li>
+<li>Added additional unit tests to improve code coverage.</li>
+</ul>
+</div>
+    <div id="bcbiosinglecell-0-0-25-2017-12-11" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-25-2017-12-11" class="anchor"></a>bcbioSingleCell 0.0.25 (2017-12-11)</h1>
+<ul>
+<li>Prepared a minimal working example dataset.</li>
+<li>Added some initial unit tests.</li>
+<li>Renamed <code><a href="../reference/deprecated.html">plotKnownMarkers()</a></code> to <code>plotKnownMarkersDetected()</code>.</li>
+<li>Renamed <code><a href="../reference/deprecated.html">readMarkers()</a></code> to <code>readMarkersFile()</code>.</li>
+<li>Added <code><a href="../reference/gene2symbol.html">gene2symbol()</a></code> method support.</li>
+<li>Moved <code><a href="../reference/plotDot.html">plotDot()</a></code> generic to basejump package.</li>
+<li>Added internal <code>.checkFormat()</code> function, which will check for <code>ensgene</code> or <code>symbol</code> input.</li>
+<li>Added internal <code>.convertGenesToSymbols()</code> utility function, for mapping Ensembl gene identifiers to gene symbols.</li>
+<li>Use explicit calls to Seurat functions interally, for clarity.</li>
+<li>Simplified bcbioSingleCell object return in <code><a href="../reference/loadSingleCell.html">loadSingleCell()</a></code> function.</li>
+<li>Added seurat class method support for <code><a href="../reference/annotable.html">annotable()</a></code> function.</li>
+<li>Added <code>bcbio&lt;-</code> assignment method support for seurat class objects.</li>
+<li>
+<code>calculateMetrics()</code> function now uses <code>annotable = TRUE</code> as default, instead of using <code>missing()</code> method.</li>
+<li>Added method support for <code>cell2sample()</code> for seurat class objects.</li>
+<li>
+<code>cellTypesPerCluster()</code> now uses <code>min</code> and <code>max</code> default arguments that don’t remove any rows.</li>
+<li>Added method support for seurat class objects to <code><a href="../reference/counts.html">counts()</a></code> function. This defaults to returning the raw counts (<code>normalized = FALSE</code>), but can also return log-normalized (<code>normalized = TRUE</code>) and scaled (<code>normalized = "scaled"</code>) counts.</li>
+<li>Added Ensembl gene identifier mapping support to <code>fetchTSNEExpressionData()</code>.</li>
+<li>
+<code>filterCells()</code> now simply works in a destructive manner. We’ve removed the <code>drop</code> parameter. The messages displayed to the user during this function call have been improved, and now include more statistics on the step where the majority of cells are filtered.</li>
+<li>Initial commit of <code><a href="../reference/gene2symbol.html">gene2symbol()</a></code> method support for bcbioSingleCell and seurat class objects.</li>
+<li>Improved <code>interestingGroups&lt;-</code> assignment method support for seurat class objects.</li>
+<li>Color palettes now default to viridis instead of inferno palette, where applicable.</li>
+<li>Added Ensembl gene identifier support for <code><a href="../reference/plotDot.html">plotDot()</a></code> function.</li>
+<li>
+<code>plotFeatureTSNE()</code> now uses a plural <code>features</code> parameter instead of <code>feature</code>, which is consistent with the syntax used in the other functions.</li>
+<li>Added Ensembl gene identifier support to <code>plotMarkerTSNE()</code>. The <code>format</code> argument still defaults to “symbol”, for consistency with previous behavior. However, in the future we recommend that users pass in stable Ensembl gene identifiers here if possible, for better reproducibility.</li>
+<li>
+<code>plotMarkers()</code> now supports Ensembl gene identifiers.</li>
+<li>
+<code>plotPCElbow()</code> now silently returns the sequence of principal components (PCs) that we recommend to use for dimensionality reduction.</li>
+<li>We’re now using “glm” instead of “gam” for <code>geom_smooth()</code> plotting, where applicable. See the <code><a href="../reference/plotQC.html">plotQC()</a></code> function code.</li>
+<li>Improved the defaults for <code><a href="../reference/plotQuantileHeatmap.html">plotQuantileHeatmap()</a></code> to enable faster plotting. Now the dendrogram calculations are skipped by default, which take a long time for large datasets.</li>
+<li>Removed the draft <code>plotStressGenes()</code> function for now. Will try to add this in a future update.</li>
+<li>Fixed Markdown header handling for <code>plotTopMarkers()</code> if <code>headerLevel = NULL</code>.</li>
+<li>Simplified <code><a href="../reference/selectSamples.html">selectSamples()</a></code> code to rely upon output of our bracket-based subsetting method. See <code>subset.R</code> file for more details.</li>
+<li>Improved metadata update in bracket-based subsetting method.</li>
+<li>
+<code>subsetPerSample()</code> function now defaults to saving in the working directory.</li>
+<li>Updated <code>topBarcodes()</code> function to rank by <code>nUMI</code> instead of <code>nCount</code> column, so it works with data from either bcbioSingleCell or seurat objects.</li>
+<li>Minor tweaks to seurat coercion from bcbioSingleCell object. Here we’ve improved the metadata slotting.</li>
+<li>Initial commit of example data script in the <code>data-raw/</code> directory!</li>
+</ul>
+</div>
     <div id="bcbiosinglecell-0-0-24-2017-11-27" class="section level1">
 <h1 class="hasAnchor">
 <a href="#bcbiosinglecell-0-0-24-2017-11-27" class="anchor"></a>bcbioSingleCell 0.0.24 (2017-11-27)</h1>
@@ -96,7 +184,7 @@
 <li>Bug fixes for <code>cell2sample</code> mapping.</li>
 <li>Switched back to stable CRAN version of roxygen2 (6.0.1) for documentation.</li>
 <li>Renamed <code><a href="../reference/deprecated.html">pcCutoff()</a></code> to <code>plotPCElbow()</code>. The function now returns a PC sequence from 1 to the cutoff (e.g. 1:10) instead of just the final PC cutoff value. The R Markdown clustering template has been updated to reflect this change.</li>
-<li>Renamed <code><a href="../reference/deprecated.html">quantileHeatmap()</a></code> to <code>plotQuantileHeatmap()</code>, for consistency with other plotting functions.</li>
+<li>Renamed <code><a href="../reference/deprecated.html">quantileHeatmap()</a></code> to <code><a href="../reference/plotQuantileHeatmap.html">plotQuantileHeatmap()</a></code>, for consistency with other plotting functions.</li>
 <li>Initial support for customized bracket based subsetting, which now acts upon the raw cellular barcode counts stashed in the <code>object@bcbio</code> slot.</li>
 <li>Moved <code><a href="../reference/deprecated.html">darkTheme()</a></code> to <a href="http://steinbaugh.com/basejump">basejump</a> package and reworked as <code>midnightTheme()</code>, with improved colors and axis appearance.</li>
 <li>Added <code>pointsAsNumbers</code> parameter to <code>plotTSNE()</code> and <code><a href="../reference/plotPCA.html">plotPCA()</a></code> functions, to match the functionality in <code>plotMarkerTSNE()</code>.</li>
@@ -411,6 +499,9 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bcbiosinglecell-0-0-27-2018-01-18">0.0.27</a></li>
+        <li><a href="#bcbiosinglecell-0-0-26-2017-12-18">0.0.26</a></li>
+        <li><a href="#bcbiosinglecell-0-0-25-2017-12-11">0.0.25</a></li>
         <li><a href="#bcbiosinglecell-0-0-24-2017-11-27">0.0.24</a></li>
         <li><a href="#bcbiosinglecell-0-0-23-2017-11-22">0.0.23</a></li>
         <li><a href="#bcbiosinglecell-0-0-22-2017-11-17">0.0.22</a></li>
@@ -447,7 +538,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

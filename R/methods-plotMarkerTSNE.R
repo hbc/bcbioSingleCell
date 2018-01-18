@@ -15,6 +15,7 @@
 #' @param colorPoints Color points by geometric mean (`geomean`) or expression
 #'   of individual gene (`expression`).
 #' @param legend Show plot legend.
+#' @param subtitle Include gene(s) in the subtitle.
 #'
 #' @return [ggplot].
 #'
@@ -47,7 +48,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom basejump midnightTheme
+#' @importFrom bcbioBase midnightTheme
 #' @importFrom ggplot2 aes_string geom_point geom_text ggplot labs guides
 #'   guide_colorbar theme
 #' @importFrom viridis scale_color_viridis
@@ -64,7 +65,8 @@ NULL
     color = viridis::scale_color_viridis(),
     dark = TRUE,
     legend = TRUE,
-    title = NULL) {
+    title = NULL,
+    subtitle = TRUE) {
     requiredCols <- c(
         "centerX",
         "centerY",
@@ -79,10 +81,10 @@ NULL
             "Required columns:", toString(requiredCols)
         ), call. = FALSE)
     }
-
     if (!colorPoints %in% c("expression", "geomean")) {
         stop("colorPoints supports 'geomean' or 'expression'", call. = FALSE)
     }
+
     # Prepare a list of the genes used for the ggplot subtitle
     genes <- unique(pull(object, "gene"))
     # Use `expression` if we're only plotting a single gene. The `geomean`
@@ -95,6 +97,7 @@ NULL
         genes <- c(genes[1:5], "...")
     }
     genes <- toString(genes)
+
     p <- ggplot(
         object,
         mapping = aes_string(
@@ -102,13 +105,29 @@ NULL
             y = "tSNE2",
             color = colorPoints)
     )
+
     if (isTRUE(dark)) {
         p <- p + midnightTheme()
     }
+
+    # Labels
+    if (!is.character(title)) {
+        title <- NULL
+    }
+    # TODO We may be able to improve the dynamic title/subtitle handling here
+    # for single genes
+    if (isTRUE(subtitle)) {
+        subtitle <- genes
+    } else {
+        subtitle <- NULL
+    }
+    p <- p +
+        labs(title = title,
+             subtitle = subtitle)
+
+    # Customize legend
     if (isTRUE(legend)) {
         p <- p +
-            labs(title = title,
-                 subtitle = genes) +
             # Make the guide longer than normal, to improve appearance of values
             # containing a decimal point
             guides(color = guide_colorbar(
@@ -120,6 +139,7 @@ NULL
     } else {
         p <- p + theme(legend.position = "none")
     }
+
     if (isTRUE(pointsAsNumbers)) {
         p <- p +
             geom_text(
@@ -132,6 +152,7 @@ NULL
     } else {
         p <- p + geom_point(size = pointSize)
     }
+
     if (isTRUE(label)) {
         if (isTRUE(dark)) {
             labelColor <- "white"
@@ -148,9 +169,11 @@ NULL
                 size = labelSize,
                 fontface = "bold")
     }
+
     if (is(color, "ScaleContinuous")) {
         p <- p + color
     }
+
     p
 }
 
@@ -182,7 +205,8 @@ setMethod(
         labelSize = 6,
         color = viridis::scale_color_viridis(),
         dark = TRUE,
-        title = NULL) {
+        title = NULL,
+        subtitle = TRUE) {
         .checkFormat(format)
         if (format == "ensgene") {
             genes <- .convertGenesToSymbols(object, genes = genes)
@@ -197,5 +221,6 @@ setMethod(
             labelSize = labelSize,
             color = color,
             dark = dark,
-            title = title)
+            title = title,
+            subtitle = subtitle)
     })

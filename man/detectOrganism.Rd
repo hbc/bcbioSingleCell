@@ -14,25 +14,8 @@
 \arguments{
 \item{object}{Object.}
 }
-\value{
-Full latin organism name.
-}
 \description{
 Detect Organism
-}
-\details{
-Currently supported organisms:
-\itemize{
-\item \emph{Homo sapiens} (human)
-\item \emph{Mus musculus} (mouse)
-\item \emph{Rattus norvegicus} (rat)
-\item \emph{Danio rerio} (zebrafish)
-\item \emph{Drosophila melanogaster} (fruitfly)
-\item \emph{Caenorhabditis elegans} (roundworm)
-\item \emph{Saccharomyces cerevisiae} (yeast)
-\item \emph{Gallus gallus} (chicken)
-\item \emph{Ovis aries} (sheep)
-}
 }
 \examples{
 load(system.file(
@@ -47,12 +30,6 @@ detectOrganism(bcb)
 
 # seurat
 detectOrganism(seurat)
-}
-\seealso{
-Other Gene Annotation Utilities: \code{\link{annotable}},
-  \code{\link{gene2symbolFromGFF}},
-  \code{\link{gene2symbol}}, \code{\link{symbol2gene}},
-  \code{\link{tx2geneFromGFF}}, \code{\link{tx2gene}}
 }
 \author{
 Michael Steinbaugh

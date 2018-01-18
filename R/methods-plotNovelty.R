@@ -95,7 +95,7 @@ setMethod(
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
+            interestingGroups <- bcbioBase::interestingGroups(object)
         }
         if (missing(min)) {
             min <- metadata(object)[["filterParams"]][["minNovelty"]]
@@ -136,7 +136,7 @@ setMethod(
         samplesOnYAxis = TRUE,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
+            interestingGroups <- bcbioBase::interestingGroups(object)
         }
         if (missing(min)) {
             min <- bcbio(object)[["filterParams"]][["minNovelty"]]

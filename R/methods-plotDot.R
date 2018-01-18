@@ -5,7 +5,7 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump plotDot
+#' @importFrom bcbioBase plotDot
 #'
 #' @inheritParams AllGenerics
 #'
@@ -70,12 +70,11 @@ NULL
 #' @importFrom dplyr group_by mutate summarize ungroup
 #' @importFrom ggplot2 aes_string geom_point labs scale_color_gradient
 #'   scale_radius
-#' @importFrom Seurat FetchData
 #' @importFrom tibble rownames_to_column
 #' @importFrom rlang !! !!! sym syms
 #' @importFrom tibble as_tibble
 #' @importFrom tidyr gather
-.plotDot <- function(
+.plotDot.seurat <- function(
     object,
     genes,
     format = "symbol",
@@ -90,10 +89,12 @@ NULL
     if (format == "ensgene") {
         genes <- .convertGenesToSymbols(object, genes = genes)
     }
-    data <- .fetchGeneDataSeurat(object, genes = genes) %>%
+    ident <- slot(object, "ident")
+    data <- .fetchGeneData.seurat(object, genes = genes) %>%
+        as.data.frame() %>%
+        cbind(ident) %>%
         rownames_to_column("cell") %>%
         as_tibble() %>%
-        mutate(ident = object@ident) %>%
         gather(
             key = "gene",
             value = "expression",
@@ -144,4 +145,4 @@ NULL
 setMethod(
     "plotDot",
     signature("seurat"),
-    .plotDot)
+    .plotDot.seurat)

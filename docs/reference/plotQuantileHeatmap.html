@@ -90,35 +90,22 @@
     <p>Plot Heatmap with Quantile Breaks</p>
     
 
-    <pre class="usage"><span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S4 method for dgCMatrix</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>)
-
-<span class='co'># S4 method for matrix</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>)
+    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>, <span class='kw'>legendColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>annotationCol</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>clusterCols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clusterRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>,
+  <span class='kw'>legendColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Matrix of data.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <td><p>Object.</p></td>
     </tr>
     <tr>
       <th>n</th>
@@ -126,25 +113,34 @@
     </tr>
     <tr>
       <th>annotationCol</th>
-      <td><p>Column annotations data.frame.</p></td>
-    </tr>
-    <tr>
-      <th>clusterRows</th>
-      <td><p>Perform row clustering.</p></td>
+      <td><p><em>Optional</em>. data.frame that defines annotation
+mappings for the columns.</p></td>
     </tr>
     <tr>
       <th>clusterCols</th>
-      <td><p>Perform column clustering.</p></td>
+      <td><p>Logical determining if columns should be arranged with
+hierarchical clustering. Alternatively, can define an <code>hclust</code> object.</p></td>
+    </tr>
+    <tr>
+      <th>clusterRows</th>
+      <td><p>Logical determining if rows should be arranged with
+hierarchical clustering. Alternatively, can define an <code>hclust</code> object.</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Color palette function.</p></td>
+      <td><p>Colors to use for plot. Defaults to the <code><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis::viridis()</a></code>
+palette.</p></td>
+    </tr>
+    <tr>
+      <th>legendColor</th>
+      <td><p>Colors to use for legend labels. Defaults to the
+<code><a href='http://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis::viridis()</a></code> palette.</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p><em>Optional</em>. Plot title.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code><a href='http://www.rdocumentation.org/packages/pheatmap/topics/pheatmap'>pheatmap::pheatmap()</a></code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -158,15 +154,14 @@ Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
 <span class='co'># bcbioSingleCell</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>filtered</span>)</div><div class='img'><img src='plotQuantileHeatmap-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>filtered</span>)</div><div class='output co'>#&gt;     0%    50%    75%   100% 
+#&gt; "   0" "   2" "   6" "1162" </div><div class='img'><img src='plotQuantileHeatmap-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
@@ -174,7 +169,7 @@ Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
 
     <h2>Author</h2>
     
-Rory Kirchner
+Rory Kirchner, Michael Steinbaugh
 
   </div>
 </div>
@@ -185,7 +180,7 @@ Rory Kirchner
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

@@ -90,9 +90,10 @@
     <p>Load bcbio Single-Cell RNA-Seq Data</p>
     
 
-    <pre class="usage"><span class='fu'>loadSingleCell</span>(<span class='no'>uploadDir</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
-  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>sampleMetadataFile</span>, <span class='no'>gtfFile</span>, <span class='no'>ensemblVersion</span>, <span class='no'>annotable</span>,
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>loadSingleCell</span>(<span class='no'>uploadDir</span>, <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>gtfFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>annotable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>organism</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ensemblVersion</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genomeBuild</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -103,16 +104,6 @@
 running <code>bcbio_nextgen -w template</code>.</p></td>
     </tr>
     <tr>
-      <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. First entry
-is used for plot colors during quality control (QC) analysis. Entire vector
-is used for PCA and heatmap QC functions.</p></td>
-    </tr>
-    <tr>
-      <th>prefilter</th>
-      <td><p>Prefilter counts prior to quality control analysis.</p></td>
-    </tr>
-    <tr>
       <th>sampleMetadataFile</th>
       <td><p>Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
@@ -120,10 +111,35 @@ for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop). Consult the GitHub repo for examples and additional information.</p></td>
     </tr>
     <tr>
+      <th>interestingGroups</th>
+      <td><p>Character vector of interesting groups. First entry
+is used for plot colors during quality control (QC) analysis. Entire vector
+is used for PCA and heatmap QC functions.</p></td>
+    </tr>
+    <tr>
       <th>gtfFile</th>
       <td><p><em>Optional but recommended</em>. GTF (Gene Transfer Format) file,
 which will be used for gene-to-symbol (<code>gene2symbol</code>) and
 transcript-to-gene (<code>tx2gene</code>) annotation mappings.</p></td>
+    </tr>
+    <tr>
+      <th>annotable</th>
+      <td><p>User-defined gene annotations (a.k.a.
+"annotable"), which will be slotted into <code>rowData()</code>. Typically this should
+be left set to <code>TRUE</code>. By default, the function will automatically generate
+an annotable from the annotations available on Ensembl. If set <code>FALSE</code>,
+then <code>rowData()</code> inside the resulting <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object will be left
+empty. This is recommended for projects dealing with genes or transcripts
+that are poorly annotated. Additionally, a manually constructed annotable
+can be passed in as a data.frame, but this isn't generally recommended.</p></td>
+    </tr>
+    <tr>
+      <th>organism</th>
+      <td><p><em>Optional</em>. Organism name. Use the full latin name (e.g.
+"Homo sapiens"), since this will be input downstream to
+AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
+Normally this can be left <code>NULL</code>, and the function will attempt to detect
+the organism automatically using <code><a href='detectOrganism.html'>detectOrganism()</a></code>.</p></td>
     </tr>
     <tr>
       <th>ensemblVersion</th>
@@ -133,14 +149,16 @@ user-defined. This parameter can be useful for matching Ensembl annotations
 against an outdated bcbio annotation build.</p></td>
     </tr>
     <tr>
-      <th>annotable</th>
-      <td><p><em>Optional</em>. User-defined gene annotations (a.k.a.
-"annotable"), which will be slotted into <code>rowData()</code>. Typically this should
-be left undefined. By default, the function will automatically generate an
-annotable from the annotations available on Ensembl. If set <code>NULL</code>, then
-<code>rowData()</code> inside the resulting <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object will be left
-empty. This is recommended for projects dealing with genes or transcripts
-that are poorly annotated.</p></td>
+      <th>genomeBuild</th>
+      <td><p><em>Optional</em>. Genome build. Normally this can be left <code>NULL</code>
+and the build will be detected from the bcbio run data. This can be set
+manually (e.g. "hg19" for the older <em>Homo sapiens</em> reference genome). Note
+that this must match the genome build identifier on Ensembl for annotations
+to download correctly.</p></td>
+    </tr>
+    <tr>
+      <th>prefilter</th>
+      <td><p>Prefilter counts prior to quality control analysis.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -165,16 +183,16 @@ run directory as a remote connection over
 <span class='no'>extdataDir</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
 <span class='no'>uploadDir</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>extdataDir</span>, <span class='st'>"harvard_indrop_v3"</span>)
 <span class='no'>sampleMetadataFile</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>extdataDir</span>, <span class='st'>"harvard_indrop_v3.xlsx"</span>)
-<span class='no'>annotable</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='annotable.html'>annotable</a></span>(<span class='st'>"Homo sapiens"</span>, <span class='kw'>release</span> <span class='kw'>=</span> <span class='fl'>90</span>)</div><div class='output co'>#&gt; <span class='message'>Loading Ensembl annotations from AnnotationHub</span>
-#&gt; <span class='message'>2017-10-27</span></div><div class='output co'>#&gt; <span class='message'>EnsDB AH57757: Homo sapiens Ensembl 90</span></div><div class='input'><span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='fu'>loadSingleCell</span>(
+<span class='no'>bcb</span> <span class='kw'>&lt;-</span> <span class='fu'>loadSingleCell</span>(
     <span class='kw'>uploadDir</span> <span class='kw'>=</span> <span class='no'>uploadDir</span>,
-    <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='no'>sampleMetadataFile</span>,
-    <span class='kw'>annotable</span> <span class='kw'>=</span> <span class='no'>annotable</span>)</div><div class='output co'>#&gt; <span class='message'>2017-11-10_bcbio</span></div><div class='output co'>#&gt; <span class='message'>2 samples detected</span></div><div class='output co'>#&gt; <span class='message'>Reading project-summary.yaml</span></div><div class='output co'>#&gt; <span class='message'>Reading log files</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected</span></div><div class='output co'>#&gt; <span class='message'>Reading data and program versions</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+    <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='no'>sampleMetadataFile</span>)</div><div class='output co'>#&gt; <span class='message'>2017-11-10_bcbio</span></div><div class='output co'>#&gt; <span class='message'>2 samples detected</span></div><div class='output co'>#&gt; <span class='message'>Reading project-summary.yaml</span></div><div class='output co'>#&gt; <span class='message'>Reading log files</span></div><div class='output co'>#&gt; <span class='warning'>Warning: bcbio-nextgen.log missing</span></div><div class='output co'>#&gt; <span class='warning'>Warning: bcbio-nextgen-commands.log missing</span></div><div class='output co'>#&gt; <span class='message'>Reading data and program versions</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
 #&gt; <span class='message'>cols(</span>
 #&gt; <span class='message'>  genome = col_character(),</span>
 #&gt; <span class='message'>  resource = col_character(),</span>
 #&gt; <span class='message'>  version = col_character()</span>
-#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>Genome: Homo sapiens (hg19)</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Reading harvard_indrop_v3.xlsx</span></div><div class='output co'>#&gt; <span class='message'>Reading cellular barcode distributions</span></div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='output co'>#&gt; <span class='message'>Reading run1-AGAGGATA-barcodes.tsv</span></div><div class='output co'>#&gt;    |+++++++++++++++++++++++++                         | 50% ~01s          </div><div class='output co'>#&gt; <span class='message'>Reading run2-AGAGGATA-barcodes.tsv</span></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 02s</div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='output co'>#&gt; <span class='message'>run1_AGAGGATA</span></div><div class='output co'>#&gt; <span class='message'>Reading run1-AGAGGATA.mtx</span></div><div class='output co'>#&gt; <span class='message'>Reading run1-AGAGGATA.mtx.colnames</span></div><div class='output co'>#&gt; <span class='message'>Reading run1-AGAGGATA.mtx.rownames</span></div><div class='output co'>#&gt;    |+++++++++++++++++++++++++                         | 50% ~05s          </div><div class='output co'>#&gt; <span class='message'>run2_AGAGGATA</span></div><div class='output co'>#&gt; <span class='message'>Reading run2-AGAGGATA.mtx</span></div><div class='output co'>#&gt; <span class='message'>Reading run2-AGAGGATA.mtx.colnames</span></div><div class='output co'>#&gt; <span class='message'>Reading run2-AGAGGATA.mtx.rownames</span></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 09s</div><div class='output co'>#&gt; <span class='message'>Calculating barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>18244 cellular barcodes detected</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>18240 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'>
+#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>Organism: Homo sapiens</span>
+#&gt; <span class='message'>Genome build: hg38</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Assuming unknown UMI is 'harvard-indrop-v3' (default)</span></div><div class='output co'>#&gt; <span class='message'>Reading harvard_indrop_v3.xlsx</span></div><div class='output co'>#&gt; <span class='message'>Loading Ensembl annotations from AnnotationHub</span>
+#&gt; <span class='message'>2017-10-27</span></div><div class='output co'>#&gt; <span class='message'>Unmasking 'select()'</span></div><div class='output co'>#&gt; <span class='message'>EnsDB AH57757: Homo sapiens Ensembl 90</span></div><div class='output co'>#&gt; <span class='message'>Reading cellular barcode distributions</span></div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='output co'>#&gt; <span class='message'>Reading run1-AGAGGATA-barcodes.tsv</span></div><div class='output co'>#&gt;    |+++++++++++++++++++++++++                         | 50% ~01s          </div><div class='output co'>#&gt; <span class='message'>Reading run2-AGAGGATA-barcodes.tsv</span></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 01s</div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='output co'>#&gt; <span class='message'>run1_AGAGGATA</span></div><div class='output co'>#&gt; <span class='message'>Reading run1-AGAGGATA.mtx</span></div><div class='output co'>#&gt; <span class='message'>Reading run1-AGAGGATA.mtx.colnames</span></div><div class='output co'>#&gt; <span class='message'>Reading run1-AGAGGATA.mtx.rownames</span></div><div class='output co'>#&gt;    |+++++++++++++++++++++++++                         | 50% ~05s          </div><div class='output co'>#&gt; <span class='message'>run2_AGAGGATA</span></div><div class='output co'>#&gt; <span class='message'>Reading run2-AGAGGATA.mtx</span></div><div class='output co'>#&gt; <span class='message'>Reading run2-AGAGGATA.mtx.colnames</span></div><div class='output co'>#&gt; <span class='message'>Reading run2-AGAGGATA.mtx.rownames</span></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 09s</div><div class='output co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("dgCMatrix", package = "Matrix")), structure(function (object,     ...) {    standardGeneric("calculateMetrics")}, generic = structure("calculateMetrics", package = "bcbioSingleCell"), package = "bcbioSingleCell", group = list(), valueClass = character(0), signature = "object", default = `\001NULL\001`, skeleton = (function (object,     ...) stop("invalid call in method dispatch to 'calculateMetrics' (no default method)",     domain = NA))(object, ...), class = structure("nonstandardGenericFunction", package = "methods")),     &lt;environment&gt;): unable to find an inherited method for function 'calculateMetrics' for signature '"dgCMatrix"'</span></div><div class='input'>
 # Mus musculus
 # Run with Ensembl 88 transcriptome FASTA and GTF files
 </div><span class='co'># NOT RUN {</span>
@@ -213,7 +231,7 @@ Michael Steinbaugh, Rory Kirchner
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

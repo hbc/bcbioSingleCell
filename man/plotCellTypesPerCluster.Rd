@@ -22,11 +22,9 @@ be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{color}{Color palette to use for points. Defaults to the viridis color
-palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
-low/high gradient.}
+\item{color}{Color palette.}
 
-\item{dark}{Enable dark mode.}
+\item{dark}{Plot the TSNE against a dark background.}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
 }

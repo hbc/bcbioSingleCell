@@ -6,15 +6,13 @@
 #'   scale_x_log10 scale_x_sqrt scale_y_continuous scale_y_log10 scale_y_sqrt
 #'   theme xlab xlim ylab
 
-
-
 #' @importFrom grid unit
 #' @importFrom viridis inferno
 
 bins <- 200
 
 lineColor <- "black"
-qcColors <- inferno(3)
+qcColors <- viridis::inferno(3)
 
 # Quality control plot colors
 qcPassColor <- qcColors[[1]]
@@ -29,7 +27,7 @@ qcLabelAlpha <- 0.75
 qcLabelColor <- "white"
 qcLabelFill <- "black"
 qcLabelFontface <- "bold"
-qcLabelPadding <- unit(0.2, "lines")
+qcLabelPadding <- grid::unit(0.2, "lines")
 qcLabelSize <- NA
 
 # Maximum number of samples to label in a bar or boxplot

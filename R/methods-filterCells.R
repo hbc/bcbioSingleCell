@@ -37,7 +37,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump mdHeader mdList
+#' @importFrom bcbioBase mdHeader mdList
 #' @importFrom Matrix rowSums
 #' @importFrom scales percent
 #' @importFrom tibble rownames_to_column
@@ -47,7 +47,7 @@ NULL
     minGenes = 500,
     maxGenes = Inf,
     maxMitoRatio = 0.1,
-    minNovelty = 0.8,
+    minNovelty = 0.75,
     minCellsPerGene = 3,
     quiet = FALSE) {
     # Ensure that all filter parameters are numeric
@@ -61,7 +61,7 @@ NULL
     if (!is.numeric(params)) {
         stop("Filter parameters must be numeric", call. = FALSE)
     }
-    # Add support `nCount` filtering in a future update
+    # TODO Add support `nCount` filtering in a future update
 
     # Filter low quality cells =================================================
     colData <- colData(object)
@@ -168,11 +168,6 @@ NULL
     metadata(object)[["filterCells"]] <- cells
     metadata(object)[["filterGenes"]] <- genes
     metadata(object)[["filterParams"]] <- params
-    cell2sample <- cell2sample(
-        cells,
-        samples = sampleMetadata(object)[["sampleID"]]
-    )
-    metadata(object)[["cell2sample"]] <- cell2sample
 
     # Summary ==================================================================
     if (!isTRUE(quiet)) {

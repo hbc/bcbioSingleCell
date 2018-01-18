@@ -1,3 +1,23 @@
+# bcbioSingleCell 0.0.27 (2018-01-18)
+
+- Migrated core dependency imports from [basejump][] to [bcbioBase][].
+- Improved `colnames` and `rownames` handling for internal `.readSparseCounts()` function.
+- Reworked `loadCellRanger()` function. `refDataDir` parameter has been renamed to `refdataDir`.
+- Added `organism` and `genomeBuild` options to `loadSingleCell()`, to override the metadata set in the bcbio run, if necessary.
+- Improved if statement data class checks, where applicable.
+- Renamed internal `.sparseCountsTx2Gene()` to `.transcriptToGeneLevelCounts()`.
+- Updated `geomean` bind method in `fetchTSNEExpressionData()`.
+- Changed `minNovelty` default from 0.8 to 0.75.
+- Improved seurat class support for `plotDot()`.
+- Improved parameter names for `plotKnownMarkersDetected()`. Now uses `tsneColor`, `violinFill`, and `dotColor`. Also added `pointsAsNumbers` parameter.
+- Added `subtitle` parameter for `plotMarkerTSNE()`.
+- Added `tsneColor`, `violinFill`, `dotColor`, and `dark` parameters for `plotMarkers()`.
+- Improved looping method for `plotTopMarkers()` so that it renders correctly in R Markdown calls.
+- Added method support for `plotViolin()`.
+- Improved internal `cell2sample` handling in subset method code.
+
+
+
 # bcbioSingleCell 0.0.26 (2017-12-18)
 
 - Renamed `readMarkersFile()` to `readCellTypeMarkersFile()`.
@@ -347,6 +367,7 @@
 
 
 
+[bcbioBase]: http://bioinformatics.sph.harvard.edu/bcbioBase
 [bcbioRNASeq]: http://bioinformatics.sph.harvard.edu/bcbioRNASeq
 [Cell Ranger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
 [inDrop]: https://1cell-bio.com

@@ -7,9 +7,22 @@
 #' @name plotQuantileHeatmap
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @importFrom basejump plotQuantileHeatmap
+#' @importFrom bcbioBase plotQuantileHeatmap
 #'
-#' @inherit basejump::plotQuantileHeatmap
+#' @inheritParams AllGenerics
+#'
+#' @param n The number of breaks to create.
+#' @param annotationCol *Optional*. [data.frame] that defines annotation
+#'   mappings for the columns.
+#' @param clusterCols Logical determining if columns should be arranged with
+#'   hierarchical clustering. Alternatively, can define an `hclust` object.
+#' @param clusterRows Logical determining if rows should be arranged with
+#'   hierarchical clustering. Alternatively, can define an `hclust` object.
+#' @param color Colors to use for plot. Defaults to the [viridis::viridis()]
+#'   palette.
+#' @param legendColor Colors to use for legend labels. Defaults to the
+#'   [viridis::viridis()] palette.
+#' @param title *Optional*. Plot title.
 #'
 #' @examples
 #' load(system.file(

@@ -10,11 +10,9 @@
 #'
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.
-#' @param as Return class (**recommended**; `dgCMatrix`,
-#'   `dgTMatrix`) or dense matrix (`matrix`).
 #' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
 #'
-#' @return Matrix class object, depending on `as` argument.
+#' @return Counts matrix.
 #'
 #' @examples
 #' load(system.file(
@@ -40,13 +38,7 @@ NULL
 #' @importFrom magrittr set_rownames
 .counts <- function(
     object,
-    gene2symbol = FALSE,
-    as = "dgCMatrix") {
-    supportedClasses <- c("dgCMatrix", "dgTMatrix", "matrix")
-    if (!as %in% supportedClasses) {
-        stop(paste("Supported classes:", toString(supportedClasses)),
-             call. = FALSE)
-    }
+    gene2symbol = FALSE) {
     counts <- assay(object)
     if (isTRUE(gene2symbol)) {
         g2s <- metadata(object)[["gene2symbol"]]
@@ -71,7 +63,7 @@ NULL
         names(rows) <- rownames(g2s)
         rownames(counts) <- rows
     }
-    as(counts, as)
+    counts
 }
 
 
@@ -99,7 +91,7 @@ setMethod(
         } else if (normalized == "scaled") {
             slot(object, "scale.data")
         } else {
-            warning("Unsupported 'normalized' argument")
+            warning("Unsupported 'normalized' argument", call. = FALSE)
             return(NULL)
         }
     }

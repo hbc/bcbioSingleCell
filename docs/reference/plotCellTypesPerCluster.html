@@ -117,13 +117,11 @@ be the return from <code>cellTypesPerCluster()</code>.</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Color palette to use for points. Defaults to the viridis color
-palette. Use <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>ggplot2::scale_color_gradient()</a></code> to easily define your own
-low/high gradient.</p></td>
+      <td><p>Color palette.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Enable dark mode.</p></td>
+      <td><p>Plot the TSNE against a dark background.</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
@@ -133,7 +131,7 @@ low/high gradient.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a>.</p>
+    <p>Show graphical output. Invisibly return <a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a> plotlist.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -154,7 +152,7 @@ low/high gradient.</p></td>
 <span class='no'>cellTypesPerCluster</span> <span class='kw'>&lt;-</span> <span class='fu'>cellTypesPerCluster</span>(<span class='no'>knownMarkersDetected</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>cellTypesPerCluster</span>)</div><div class='output co'>#&gt; Observations: 1
 #&gt; Variables: 5
-#&gt; $ cluster &lt;fctr&gt; 2
+#&gt; $ cluster &lt;fct&gt; 2
 #&gt; $ cell    &lt;chr&gt; "Natural Killer Cell"
 #&gt; $ n       &lt;int&gt; 1
 #&gt; $ symbol  &lt;chr&gt; "NCAM1"
@@ -191,7 +189,7 @@ Michael Steinbaugh
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

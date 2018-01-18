@@ -11,7 +11,7 @@
 filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000,
-  minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.8,
+  minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.75,
   minCellsPerGene = 3, quiet = FALSE)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)

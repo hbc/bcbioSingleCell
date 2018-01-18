@@ -10,9 +10,11 @@
 plotMarkers(object, ...)
 
 \S4method{plotMarkers}{seurat}(object, genes, format = "symbol",
-  color = viridis::scale_color_viridis(),
-  fill = viridis::scale_fill_viridis(discrete = TRUE), dark = TRUE,
-  pointsAsNumbers = FALSE, headerLevel = NULL, title = NULL)
+  tsneColor = viridis::scale_color_viridis(),
+  violinFill = viridis::scale_fill_viridis(discrete = TRUE),
+  dotColor = ggplot2::scale_color_gradient(low = "lightgray", high =
+  "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2,
+  title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -25,13 +27,13 @@ plotMarkers(object, ...)
 is also supported, as long as Ensembl gene to symbol identifier mappings
 are defined.}
 
-\item{color}{Color palette to use for points. Defaults to the viridis color
-palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
-low/high gradient.}
+\item{tsneColor}{Color palette to use for tSNE plot.}
 
-\item{fill}{Color palette to use for violin plot fill. Defaults to viridis.}
+\item{violinFill}{Color palette to use for violin plot.}
 
-\item{dark}{Enable dark mode.}
+\item{dotColor}{Color palette to use for dot plot.}
+
+\item{dark}{Plot the TSNE against a dark background.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 

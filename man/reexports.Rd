@@ -3,6 +3,8 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{funs}
+\alias{reexports}
 \alias{ggplot}
 \alias{reexports}
 \alias{glimpse}
@@ -21,6 +23,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{dplyr}{\code{\link[dplyr]{funs}}}
+
   \item{ggplot2}{\code{\link[ggplot2]{ggplot}}}
 
   \item{tibble}{\code{\link[tibble]{glimpse}}}

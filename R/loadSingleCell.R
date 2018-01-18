@@ -6,41 +6,52 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
+#' @importFrom bcbioBase annotable camel detectOrganism gene2symbolFromGTF
 #'   prepareSummarizedExperiment readDataVersions readGTF readLogFile
 #'   readProgramVersions readSampleMetadataFile readYAML sampleYAMLMetadata
 #'   tx2geneFromGTF
-#' @importFrom dplyr everything filter pull select
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
+#' @importFrom rlang is_string
 #' @importFrom stats na.omit setNames
-#' @importFrom stringr str_match
+#' @importFrom stringr str_extract str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
 #'
 #' @param uploadDir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
-#' @param interestingGroups Character vector of interesting groups. First entry
-#'   is used for plot colors during quality control (QC) analysis. Entire vector
-#'   is used for PCA and heatmap QC functions.
-#' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param sampleMetadataFile Sample barcode metadata file. Optional for runs
 #'   with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 #'   for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 #'   inDrop). Consult the GitHub repo for examples and additional information.
+#' @param interestingGroups Character vector of interesting groups. First entry
+#'   is used for plot colors during quality control (QC) analysis. Entire vector
+#'   is used for PCA and heatmap QC functions.
+#' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param gtfFile *Optional but recommended*. GTF (Gene Transfer Format) file,
 #'   which will be used for gene-to-symbol (`gene2symbol`) and
 #'   transcript-to-gene (`tx2gene`) annotation mappings.
-#' @param annotable *Optional*. User-defined gene annotations (a.k.a.
+#' @param annotable User-defined gene annotations (a.k.a.
 #'   "annotable"), which will be slotted into [rowData()]. Typically this should
-#'   be left undefined. By default, the function will automatically generate an
-#'   annotable from the annotations available on Ensembl. If set `NULL`, then
-#'   [rowData()] inside the resulting [bcbioSingleCell] object will be left
+#'   be left set to `TRUE`. By default, the function will automatically generate
+#'   an annotable from the annotations available on Ensembl. If set `FALSE`,
+#'   then [rowData()] inside the resulting [bcbioSingleCell] object will be left
 #'   empty. This is recommended for projects dealing with genes or transcripts
-#'   that are poorly annotated.
+#'   that are poorly annotated. Additionally, a manually constructed annotable
+#'   can be passed in as a [data.frame], but this isn't generally recommended.
+#' @param organism *Optional*. Organism name. Use the full latin name (e.g.
+#'   "Homo sapiens"), since this will be input downstream to
+#'   AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
+#'   Normally this can be left `NULL`, and the function will attempt to detect
+#'   the organism automatically using [detectOrganism()].
 #' @param ensemblVersion *Optional*. Ensembl release version. If `NULL`,
 #'   defaults to current release, and does not typically need to be
 #'   user-defined. This parameter can be useful for matching Ensembl annotations
 #'   against an outdated bcbio annotation build.
+#' @param genomeBuild *Optional*. Genome build. Normally this can be left `NULL`
+#'   and the build will be detected from the bcbio run data. This can be set
+#'   manually (e.g. "hg19" for the older *Homo sapiens* reference genome). Note
+#'   that this must match the genome build identifier on Ensembl for annotations
+#'   to download correctly.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return [bcbioSingleCell].
@@ -70,17 +81,72 @@
 #' }
 loadSingleCell <- function(
     uploadDir,
+    sampleMetadataFile = NULL,
     interestingGroups = "sampleName",
+    gtfFile = NULL,
+    annotable = TRUE,
+    organism = NULL,
+    ensemblVersion = NULL,
+    genomeBuild = NULL,
     prefilter = TRUE,
-    sampleMetadataFile,
-    gtfFile,
-    ensemblVersion,
-    annotable,
     ...) {
-    if (missing(sampleMetadataFile)) sampleMetadataFile <- NULL
-    if (missing(gtfFile)) gtfFile <- NULL
-    if (missing(ensemblVersion)) ensemblVersion <- NULL
     pipeline <- "bcbio"
+
+    # Parameter integrity checks ===============================================
+    # uploadDir
+    if (!is_string(uploadDir)) {
+        stop("'uploadDir' must be string")
+    }
+    # sampleMetadataFile
+    if (!any(
+        is_string(sampleMetadataFile),
+        is.null(sampleMetadataFile)
+    )) {
+        stop("'sampleMetadataFile' must be string or NULL")
+    }
+    # interestingGroups
+    if (!is.character(interestingGroups)) {
+        stop("'interestingGroups' must be character")
+    }
+    # gtfFile
+    if (!any(
+        is_string(gtfFile),
+        is.null(gtfFile)
+    )) {
+        stop("'gtfFile' must be string or NULL")
+    }
+    # annotable
+    if (!any(
+        is.logical(annotable),
+        is.data.frame(annotable)
+    )) {
+        stop("'annotable' must be logical or data.frame")
+    }
+    # organism
+    if (!any(
+        is_string(organism),
+        is.null(organism)
+    )) {
+        stop("'organism' must be string or NULL")
+    }
+    # ensemblVersion
+    if (!any(
+        is.null(ensemblVersion),
+        is.numeric(ensemblVersion) && length(ensemblVersion) == 1
+    )) {
+        stop("'ensemblVersion' must be single numeric or NULL")
+    }
+    # genomeBuild
+    if (!any(
+        is_string(genomeBuild),
+        is.null(genomeBuild)
+    )) {
+        stop("'genomeBuild' must be string or NULL")
+    }
+    # prefilter
+    if (!is.logical(prefilter)) {
+        stop("'prefilter' must be logical")
+    }
 
     # Directory paths ==========================================================
     # Check connection to final upload directory
@@ -148,7 +214,7 @@ loadSingleCell <- function(
     }
 
     # Detect MatrixMarket output at transcript or gene level
-    if (length(bcbioCommandsLog)) {
+    if (is.character(bcbioCommandsLog)) {
         # This grep pattern may not be strict enough against the file path
         genemapPattern <- "--genemap (.+)-tx2gene.tsv"
         if (any(grepl(x = bcbioCommandsLog, pattern = genemapPattern))) {
@@ -168,34 +234,48 @@ loadSingleCell <- function(
         file.path(projectDir, "data_versions.csv"))
     programs <- readProgramVersions(
         file.path(projectDir, "programs.txt"))
-    if (!is.null(dataVersions)) {
-        genomeBuild <- dataVersions %>%
-            filter(.data[["resource"]] == "transcripts") %>%
-            pull("genome")
-    } else {
-        # Data versions aren't saved when using a custom FASTA
-        # Remove this in a future update
-        genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
-        if (any(grepl(x = bcbioCommandsLog, pattern = genomePattern))) {
-            genomeBuild <-
-                str_match(bcbioCommandsLog, genomePattern) %>%
-                .[, 2] %>%
-                na.omit() %>%
-                unique()
+
+    # Detect genome build
+    if (!is_string(genomeBuild)) {
+        if (is.data.frame(dataVersions)) {
+            genomeBuild <- dataVersions %>%
+                .[.[["resource"]] == "transcripts", "genome", drop = TRUE]
         } else {
-            warning("Genome detection from bcbio commands failed",
-                    call. = FALSE)
-            genomeBuild <- NULL
+            # Data versions aren't saved when using a custom FASTA
+            # Remove this in a future update
+            genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
+            if (any(grepl(x = bcbioCommandsLog, pattern = genomePattern))) {
+                genomeBuild <-
+                    str_match(bcbioCommandsLog, genomePattern) %>%
+                    .[, 2] %>%
+                    na.omit() %>%
+                    unique()
+            } else {
+                warning("Genome detection from bcbio commands failed",
+                        call. = FALSE)
+                genomeBuild <- NULL
+            }
         }
     }
-    if (length(genomeBuild) > 1) {
-        stop("Multiple genomes detected", call. = FALSE)
+
+    # Detect organism
+    if (!is_string(organism)) {
+        if (!is_string(genomeBuild)) {
+            stop("Organism detection by genome build failed", call. = FALSE)
+        }
+        organism <- detectOrganism(genomeBuild)
     }
-    organism <- detectOrganism(genomeBuild)
-    message(paste0("Genome: ", organism, " (", genomeBuild, ")"))
+    if (!is_string(organism)) {
+        stop("Invalid organism", call. = FALSE)
+    }
+    message(paste(
+        paste("Organism:", organism),
+        paste("Genome build:", genomeBuild),
+        sep = "\n"
+    ))
 
     # Molecular barcode (UMI) type =============================================
-    if (length(bcbioCommandsLog)) {
+    if (is.character(bcbioCommandsLog)) {
         umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
         if (any(grepl(x = bcbioCommandsLog, pattern = umiPattern))) {
             umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
@@ -207,8 +287,9 @@ loadSingleCell <- function(
                      replacement = "")
             message(paste("UMI type:", umiType))
         } else {
-            warning("Failed to detect UMI type from commands log",
-                    call. = FALSE)
+            warning(paste(
+                "Failed to detect UMI type from commands log JSON file grep"
+            ), call. = FALSE)
             umiType <- NULL
         }
     } else {
@@ -216,13 +297,14 @@ loadSingleCell <- function(
     }
     # Assume samples are inDrop platform, by default
     if (is.null(umiType)) {
-        warning("Assuming unknown UMI type is 'indrop' (default)",
-                call. = FALSE)
-        umiType <- "indrop"
+        warning(paste(
+            "Assuming unknown UMI is 'harvard-indrop-v3' (default)"
+        ), call. = FALSE)
+        umiType <- "harvard-indrop-v3"
     }
 
     # Sample metadata ==========================================================
-    if (!is.null(sampleMetadataFile)) {
+    if (is_string(sampleMetadataFile)) {
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
@@ -235,7 +317,27 @@ loadSingleCell <- function(
         sampleMetadata <- sampleYAMLMetadata(yaml)
     }
     # Check that `sampleID` matches `sampleDirs`
-    if (!all(sampleMetadata[["sampleID"]] %in% names(sampleDirs))) {
+    if (!all(rownames(sampleMetadata) %in% names(sampleDirs))) {
+        # Check for flipped index sequence. Sample metadata should use the
+        # forward sequence (`sequence`), whereas bcbio names the sample
+        # directories with the reverse complement (`revcomp`).
+        if ("sequence" %in% colnames(sampleMetadata)) {
+            sampleDirSequence <- str_extract(
+                string = names(sampleDirs),
+                pattern = "[ACGT]+$")
+            if (identical(
+                sort(sampleDirSequence),
+                sort(as.character(sampleMetadata[["sequence"]]))
+            )) {
+                warning(paste(
+                    "It appears that the reverse complement sequence of the",
+                    "i5 index barcode(s) was input into the sample metadata",
+                    "'sequence' column. bcbio outputs the revcomp into the",
+                    "sample directories, but the forward sequence should be",
+                    "used in the R package."
+                ), call. = FALSE)
+            }
+        }
         stop("Sample directory names don't match the sample metadata file",
              call. = FALSE)
     }
@@ -263,20 +365,21 @@ loadSingleCell <- function(
 
     # Gene annotations =========================================================
     # Ensembl annotations (gene annotable)
-    if (missing(annotable)) {
-        annotable <- basejump::annotable(
+    if (isTRUE(annotable)) {
+        annotable <- annotable(
             organism,
             genomeBuild = genomeBuild,
-            release = ensemblVersion)
+            release = ensemblVersion,
+            uniqueSymbol = FALSE)
     } else if (is.data.frame(annotable)) {
-        annotable <- annotable(annotable)
+        annotable <- annotable(annotable, uniqueSymbol = FALSE)
     } else {
         warning("Loading run without gene annotable", call. = FALSE)
         annotable <- NULL
     }
 
     # GTF annotations
-    if (!is.null(gtfFile)) {
+    if (is_string(gtfFile)) {
         gtfFile <- normalizePath(gtfFile)
         gtf <- readGTF(gtfFile)
     } else {
@@ -285,10 +388,9 @@ loadSingleCell <- function(
 
     # Transcript-to-gene mappings
     if (countsLevel == "transcript") {
-        if (is.null(gtf)) {
+        if (!is.data.frame(gtf)) {
             stop(paste(
-                "GTF required to convert transcript-level counts",
-                "to gene-level"
+                "GTF required to convert transcript-level counts to gene-level"
             ), call. = FALSE)
         }
         tx2gene <- tx2geneFromGTF(gtf)
@@ -298,9 +400,9 @@ loadSingleCell <- function(
     }
 
     # Gene-to-symbol mappings
-    if (!is.null(gtfFile)) {
+    if (is_string(gtfFile)) {
         gene2symbol <- gene2symbolFromGTF(gtf)
-    } else if (!is.null(annotable)) {
+    } else if (is.data.frame(annotable)) {
         gene2symbol <- annotable[, c("ensgene", "symbol")]
     } else {
         warning("Loading run without gene-to-symbol mappings", call. = FALSE)
@@ -326,7 +428,7 @@ loadSingleCell <- function(
     counts <- do.call(Matrix::cBind, sparseList)
     # Convert counts from transcript-level to gene-level, if necessary
     if (countsLevel == "transcript") {
-        counts <- .sparseCountsTx2Gene(counts, tx2gene)
+        counts <- .transcriptToGeneLevelCounts(counts, tx2gene)
     }
 
     # Metrics ==================================================================
@@ -396,9 +498,8 @@ loadSingleCell <- function(
         rowData = annotable,
         colData = metrics,
         metadata = metadata)
-    bcbio <- list(
-        cellularBarcodes = cbList
-    ) %>%
-        as("SimpleList")
-    new("bcbioSingleCell", se, bcbio = bcbio)
+    bcbio <- list(cellularBarcodes = cbList)
+    new("bcbioSingleCell",
+        se,
+        bcbio = as(bcbio, "SimpleList"))
 }

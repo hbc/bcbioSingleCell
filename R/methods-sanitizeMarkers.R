@@ -27,7 +27,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump camel
+#' @importFrom bcbioBase camel
 #' @importFrom dplyr arrange everything group_by left_join mutate rename select
 #' @importFrom rlang !! sym
 #' @importFrom tibble as_tibble remove_rownames

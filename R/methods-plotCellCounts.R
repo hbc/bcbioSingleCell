@@ -109,7 +109,7 @@ setMethod(
         interestingGroups,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
+            interestingGroups <- bcbioBase::interestingGroups(object)
         }
         metrics <- metrics(
             object,
@@ -145,7 +145,7 @@ setMethod(
         interestingGroups,
         fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
+            interestingGroups <- bcbioBase::interestingGroups(object)
         }
         metrics <- metrics(
             object,

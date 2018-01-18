@@ -99,7 +99,10 @@
 <span class='fu'>plotZerosVsDepth</span>(<span class='no'>object</span>, <span class='no'>metrics</span>)
 
 <span class='co'># S4 method for matrix</span>
-<span class='fu'>plotZerosVsDepth</span>(<span class='no'>object</span>, <span class='no'>metrics</span>)</pre>
+<span class='fu'>plotZerosVsDepth</span>(<span class='no'>object</span>, <span class='no'>metrics</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotZerosVsDepth</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -139,13 +142,18 @@
     <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
     <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"bcb.rda"</span>),
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
 <span class='co'># bcbioSingleCell</span>
 <span class='fu'>plotZerosVsDepth</span>(<span class='no'>bcb</span>)</div><div class='img'><img src='plotZerosVsDepth-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># dgCMatrix</span>
 <span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>bcb</span>)
 <span class='no'>metrics</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics.html'>metrics</a></span>(<span class='no'>bcb</span>)
-<span class='fu'>plotZerosVsDepth</span>(<span class='no'>counts</span>, <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='no'>metrics</span>)</div><div class='img'><img src='plotZerosVsDepth-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plotZerosVsDepth</span>(<span class='no'>counts</span>, <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='no'>metrics</span>)</div><div class='img'><img src='plotZerosVsDepth-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># seurat</span>
+<span class='fu'>plotZerosVsDepth</span>(<span class='no'>seurat</span>)</div><div class='img'><img src='plotZerosVsDepth-3.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -172,7 +180,7 @@ Rory Kirchner, Michael Steinbaugh
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

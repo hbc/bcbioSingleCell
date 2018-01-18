@@ -5,7 +5,7 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump metrics
+#' @importFrom bcbioBase metrics
 #'
 #' @inheritParams AllGenerics
 #'
@@ -34,7 +34,7 @@ NULL
 
 # Methods ======================================================================
 #' @rdname metrics
-#' @importFrom basejump uniteInterestingGroups
+#' @importFrom bcbioBase uniteInterestingGroups
 #' @importFrom dplyr left_join
 #' @importFrom tibble column_to_rownames rownames_to_column
 #' @export
@@ -45,7 +45,7 @@ setMethod(
         object,
         interestingGroups) {
         if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
+            interestingGroups <- bcbioBase::interestingGroups(object)
         }
         colData <- colData(object)
         sampleID <- cell2sample(object)
@@ -71,7 +71,7 @@ setMethod(
 
 
 #' @rdname metrics
-#' @importFrom basejump camel
+#' @importFrom bcbioBase camel
 #' @importFrom dplyr mutate_if
 #' @importFrom tibble column_to_rownames rownames_to_column
 #' @export
@@ -82,7 +82,7 @@ setMethod(
         object,
         interestingGroups) {
     if (missing(interestingGroups)) {
-        interestingGroups <- basejump::interestingGroups(object)
+        interestingGroups <- bcbioBase::interestingGroups(object)
     }
     metrics <- slot(object, "meta.data") %>%
         as.data.frame() %>%

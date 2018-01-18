@@ -4,41 +4,55 @@
 \alias{loadSingleCell}
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
-loadSingleCell(uploadDir, interestingGroups = "sampleName",
-  prefilter = TRUE, sampleMetadataFile, gtfFile, ensemblVersion, annotable,
-  ...)
+loadSingleCell(uploadDir, sampleMetadataFile = NULL,
+  interestingGroups = "sampleName", gtfFile = NULL, annotable = TRUE,
+  organism = NULL, ensemblVersion = NULL, genomeBuild = NULL,
+  prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
 running \code{bcbio_nextgen -w template}.}
-
-\item{interestingGroups}{Character vector of interesting groups. First entry
-is used for plot colors during quality control (QC) analysis. Entire vector
-is used for PCA and heatmap QC functions.}
-
-\item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop). Consult the GitHub repo for examples and additional information.}
 
+\item{interestingGroups}{Character vector of interesting groups. First entry
+is used for plot colors during quality control (QC) analysis. Entire vector
+is used for PCA and heatmap QC functions.}
+
 \item{gtfFile}{\emph{Optional but recommended}. GTF (Gene Transfer Format) file,
 which will be used for gene-to-symbol (\code{gene2symbol}) and
 transcript-to-gene (\code{tx2gene}) annotation mappings.}
+
+\item{annotable}{User-defined gene annotations (a.k.a.
+"annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
+be left set to \code{TRUE}. By default, the function will automatically generate
+an annotable from the annotations available on Ensembl. If set \code{FALSE},
+then \code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
+empty. This is recommended for projects dealing with genes or transcripts
+that are poorly annotated. Additionally, a manually constructed annotable
+can be passed in as a \link{data.frame}, but this isn't generally recommended.}
+
+\item{organism}{\emph{Optional}. Organism name. Use the full latin name (e.g.
+"Homo sapiens"), since this will be input downstream to
+AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
+Normally this can be left \code{NULL}, and the function will attempt to detect
+the organism automatically using \code{\link[=detectOrganism]{detectOrganism()}}.}
 
 \item{ensemblVersion}{\emph{Optional}. Ensembl release version. If \code{NULL},
 defaults to current release, and does not typically need to be
 user-defined. This parameter can be useful for matching Ensembl annotations
 against an outdated bcbio annotation build.}
 
-\item{annotable}{\emph{Optional}. User-defined gene annotations (a.k.a.
-"annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
-be left undefined. By default, the function will automatically generate an
-annotable from the annotations available on Ensembl. If set \code{NULL}, then
-\code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
-empty. This is recommended for projects dealing with genes or transcripts
-that are poorly annotated.}
+\item{genomeBuild}{\emph{Optional}. Genome build. Normally this can be left \code{NULL}
+and the build will be detected from the bcbio run data. This can be set
+manually (e.g. "hg19" for the older \emph{Homo sapiens} reference genome). Note
+that this must match the genome build identifier on Ensembl for annotations
+to download correctly.}
+
+\item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }

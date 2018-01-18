@@ -11,8 +11,10 @@
 plotKnownMarkersDetected(object, knownMarkersDetected, ...)
 
 \S4method{plotKnownMarkersDetected}{seurat,grouped_df}(object,
-  knownMarkersDetected, color = viridis::scale_color_viridis(), dark = TRUE,
-  headerLevel = NULL)
+  knownMarkersDetected, tsneColor = viridis::scale_color_viridis(),
+  violinFill = viridis::scale_fill_viridis(discrete = TRUE),
+  dotColor = ggplot2::scale_color_gradient(low = "lightgray", high =
+  "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2)
 }
 \arguments{
 \item{object}{Object.}
@@ -22,11 +24,15 @@ by cluster.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{color}{Color palette to use for points. Defaults to the viridis color
-palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
-low/high gradient.}
+\item{tsneColor}{Color palette to use for tSNE plot.}
 
-\item{dark}{Enable dark mode.}
+\item{violinFill}{Color palette to use for violin plot.}
+
+\item{dotColor}{Color palette to use for dot plot.}
+
+\item{dark}{Plot the TSNE against a dark background.}
+
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{headerLevel}{Include a Markdown header for each gene.}
 }

@@ -37,10 +37,6 @@ palette.}
 
 \item{title}{\emph{Optional}. Plot title.}
 }
-\value{
-Show heatmap. Invisibly return \link{list} containing breaks and
-\code{\link[pheatmap:pheatmap]{pheatmap::pheatmap()}} \code{gtable}.
-}
 \description{
 Plot Heatmap with Quantile Breaks
 }

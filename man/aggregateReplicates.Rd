@@ -11,9 +11,6 @@
 \arguments{
 \item{object}{Object.}
 }
-\value{
-Object with aggregated counts per pooled sample (columns).
-}
 \description{
 Aggregate Replicates
 }

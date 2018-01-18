@@ -4,8 +4,9 @@
 #' @name detectOrganism
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump detectOrganism
-#' @inherit basejump::detectOrganism
+#' @importFrom bcbioBase detectOrganism
+#'
+#' @inheritParams AllGenerics
 #'
 #' @examples
 #' load(system.file(

@@ -94,7 +94,10 @@
 
 <span class='co'># S4 method for seurat,grouped_df</span>
 <span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>,
-  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(),
+  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span>
+  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -111,6 +114,22 @@
     <tr>
       <th>...</th>
       <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+    </tr>
+    <tr>
+      <th>tsneColor</th>
+      <td><p>Color palette to use for tSNE plot.</p></td>
+    </tr>
+    <tr>
+      <th>violinFill</th>
+      <td><p>Color palette to use for violin plot.</p></td>
+    </tr>
+    <tr>
+      <th>dotColor</th>
+      <td><p>Color palette to use for dot plot.</p></td>
+    </tr>
+    <tr>
+      <th>dark</th>
+      <td><p>Plot the TSNE against a dark background.</p></td>
     </tr>
     <tr>
       <th>pointsAsNumbers</th>
@@ -151,7 +170,17 @@ for the number of genes to plot here in a future update.</p>
 
 <span class='co'># seurat, grouped_df</span>
 <span class='co'># Let's plot the top 2 markers from cluster 0, as a quick example</span>
-<span class='fu'>plotTopMarkers</span>(<span class='no'>seurat</span>, <span class='no'>topMarkers</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ])</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |+++++++++                                         | 17% ~18s             |+++++++++++++++++                                 | 33% ~07s             |+++++++++++++++++++++++++                         | 50% ~04s             |++++++++++++++++++++++++++++++++++                | 67% ~02s             |++++++++++++++++++++++++++++++++++++++++++        | 83% ~01s             |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 04s</div></pre>
+<span class='fu'>plotTopMarkers</span>(<span class='no'>seurat</span>, <span class='no'>topMarkers</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ])</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
+#&gt; 
+#&gt; ## Cluster 0 {.tabset}
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; ### ACTC1
+#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; ### MYL7
+#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |+++++++++                                         | 17% ~23s             |+++++++++++++++++                                 | 33% ~09s             |+++++++++++++++++++++++++                         | 50% ~05s             |++++++++++++++++++++++++++++++++++                | 67% ~02s             |++++++++++++++++++++++++++++++++++++++++++        | 83% ~01s             |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 05s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -180,7 +209,7 @@ Michael Steinbaugh
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
