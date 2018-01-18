@@ -67,42 +67,40 @@
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
     # names are gene/transcript identifiers (depending on pipeline).
-    sparseCounts <- readFileByExtension(matrixFile) %>%
-        # Ensure standardized dgCMatrix
-        as("dgCMatrix")
+    counts <- readFileByExtension(matrixFile)
+
     if (pipeline == "bcbio") {
-        colnames(sparseCounts) <-
-            readFileByExtension(colFile) %>%
-            gsub(x = .,
-                 pattern = "-",
-                 replacement = "_")
-        rownames(sparseCounts) <-
-            readFileByExtension(rowFile)
+        colnames <- readFileByExtension(colFile)
+        rownames <- readFileByExtension(rowFile)
     } else if (pipeline == "cellranger") {
         # Named `barcodes.tsv` but not actually tab delimited
-        colnames(sparseCounts) <-
-            readFileByExtension(
+        colnames <- readFileByExtension(
                 colFile,
-                col_names = "cellularBarcode",
+                col_names = "barcode",
                 col_types = "c") %>%
-            pull("cellularBarcode") %>%
-            gsub(x = .,
-                 pattern = "-",
-                 replacement = "_")
-        rownames(sparseCounts) <-
-            readFileByExtension(
+            pull("barcode")
+        rownames <- readFileByExtension(
                 rowFile,
                 col_names = c("ensgene", "symbol"),
                 col_types = "cc") %>%
             pull("ensgene")
     }
 
+    # Ensure dgCMatrix, for improved memory overhead
+    counts <- as(counts, "dgCMatrix")
+
+    colnames(counts) <- colnames %>%
+        gsub(x = .,
+             pattern = "-",
+             replacement = "_") %>%
+        make.names(unique = TRUE)
+    rownames(counts) <- make.names(rownames, unique = TRUE)
+
     # Add sample name
-    colnames(sparseCounts) <- paste(
+    colnames(counts) <- paste(
         sampleName,
-        colnames(sparseCounts),
+        colnames(counts),
         sep = "_")
 
-    # Return as dgCMatrix, for improved memory overhead
-    as(sparseCounts, "dgCMatrix")
+
 }
