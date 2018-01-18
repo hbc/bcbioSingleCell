@@ -7,7 +7,7 @@
 #'   optimized for handling CellRanger output.
 #'
 #' @note Unlike [loadSingleCell()], the `organism`, `ensemblVersion`, and
-#'   `genomeBuild` are always detected automatically, based on the `refDataDir`
+#'   `genomeBuild` are always detected automatically, based on the `refdataDir`
 #'   YAML metadata. Therefore, these parameters cannot be set by the user.
 #'
 #' @author Michael Steinbaugh
@@ -27,7 +27,7 @@
 #'
 #' @param uploadDir Path to CellRanger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices/` as a child.
-#' @param refDataDir Directory path to cellranger reference annotation data.
+#' @param refdataDir Directory path to cellranger reference annotation data.
 #'
 #' @return [bcbioSingleCell].
 #' @export
@@ -35,15 +35,15 @@
 #' @examples
 #' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 #' uploadDir <- file.path(extdataDir, "cellranger")
-#' refDataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
+#' refdataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
 #' sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
 #' loadCellRanger(
 #'     uploadDir = uploadDir,
-#'     refDataDir = refDataDir,
+#'     refdataDir = refdataDir,
 #'     sampleMetadataFile = sampleMetadataFile)
 loadCellRanger <- function(
     uploadDir,
-    refDataDir,
+    refdataDir,
     interestingGroups = "sampleName",
     sampleMetadataFile = NULL,
     annotable = TRUE,
@@ -129,12 +129,12 @@ loadCellRanger <- function(
     }
 
     # Reference data ===========================================================
-    if (!dir.exists(refDataDir)) {
+    if (!dir.exists(refdataDir)) {
         stop("Reference data directory does not exist", call. = FALSE)
     }
     # JSON data
-    refDataDir <- normalizePath(refDataDir)
-    refJSONFile <- file.path(refDataDir, "reference.json")
+    refdataDir <- normalizePath(refdataDir)
+    refJSONFile <- file.path(refdataDir, "reference.json")
     if (!file.exists(refJSONFile)) {
         stop("'reference.json' file missing", call. = FALSE)
     }
@@ -169,7 +169,7 @@ loadCellRanger <- function(
         warning("Loading run without gene annotable", call. = FALSE)
         annotable <- NULL
     }
-    gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
+    gtfFile <- file.path(refdataDir, "genes", "genes.gtf")
     if (file.exists(gtfFile)) {
         gtf <- readGTF(gtfFile)
         gene2symbol <- gene2symbolFromGTF(gtf)
@@ -260,7 +260,7 @@ loadCellRanger <- function(
         allSamples = allSamples,
         prefilter = prefilter,
         # cellranger pipeline-specific
-        refDataDir = refDataDir,
+        refdataDir = refdataDir,
         refJSON = refJSON)
     # Add user-defined custom metadata, if specified
     dots <- list(...)
