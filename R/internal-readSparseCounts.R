@@ -86,21 +86,34 @@
             pull("ensgene")
     }
 
+    # Integrity checks
+    if (!identical(length(colnames), ncol(counts))) {
+        stop("Barcodes file doesn't match counts matrix rows")
+    }
+    if (!identical(length(rownames), nrow(counts))) {
+        stop("Genes file doesn't match counts matrix columns")
+    }
+
     # Ensure dgCMatrix, for improved memory overhead
     counts <- as(counts, "dgCMatrix")
 
     colnames(counts) <- colnames %>%
+        # Append sample name
+        paste(
+            sampleName,
+            colnames(counts),
+            sep = "_") %>%
+        # Convert dashes to underscores
         gsub(x = .,
              pattern = "-",
              replacement = "_") %>%
         make.names(unique = TRUE)
-    rownames(counts) <- make.names(rownames, unique = TRUE)
+    rownames(counts) <- rownames %>%
+        # Convert dashes to underscores
+        gsub(x = .,
+             pattern = "-",
+             replacement = "_") %>%
+        make.names(unique = TRUE)
 
-    # Add sample name
-    colnames(counts) <- paste(
-        sampleName,
-        colnames(counts),
-        sep = "_")
-
-
+    counts
 }
