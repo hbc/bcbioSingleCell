@@ -99,10 +99,7 @@
 
     colnames(counts) <- colnames %>%
         # Append sample name
-        paste(
-            sampleName,
-            colnames(counts),
-            sep = "_") %>%
+        paste(sampleName, ., sep = "_") %>%
         # Convert dashes to underscores
         gsub(x = .,
              pattern = "-",
