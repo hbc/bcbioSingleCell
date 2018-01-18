@@ -115,25 +115,22 @@
       <td><p>Fill color palette. Defaults to viridis.</p></td>
     </tr>
     <tr>
+      <th>return</th>
+      <td><p>Return type. "grid", "list", and "markdown" are supported.</p></td>
+    </tr>
+    <tr>
       <th>headerLevel</th>
       <td><p>Markdown header level. Only applicable when
 <code>return = "markdown"</code>.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    
-<ul>
-<li><p><code>grid</code>: <code><a href='http://www.rdocumentation.org/packages/cowplot/topics/plot_grid'>cowplot::plot_grid()</a></code>.</p></li>
-<li><p><code>list</code>: list.</p></li>
-<li><p><code>markdown</code>: Markdown output, with headers for each plot.</p></li>
-</ul>
-
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+
 <span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>slot</span>(<span class='no'>seurat</span>, <span class='st'>"raw.data"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span> <span class='no'>.</span>[<span class='fl'>1</span>:<span class='fl'>2</span>]
 <span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; ENSG00000000457 ENSG00000002586 
 #&gt;         "SCYL3"          "CD99" </div><div class='input'>
@@ -269,7 +266,7 @@
 #&gt;     train_scales: function
 #&gt;     vars: function
 #&gt;     super:  &lt;ggproto object: Class FacetNull, Facet&gt; 
-#&gt;   ..$ plot_env   :&lt;environment: 0x134c65d58&gt; 
+#&gt;   ..$ plot_env   :&lt;environment: 0x12d73cc98&gt; 
 #&gt;   ..$ labels     :List of 4
 #&gt;   .. ..$ title: chr "SCYL3"
 #&gt;   .. ..$ fill : chr "ident"
@@ -405,7 +402,7 @@
 #&gt;     train_scales: function
 #&gt;     vars: function
 #&gt;     super:  &lt;ggproto object: Class FacetNull, Facet&gt; 
-#&gt;   ..$ plot_env   :&lt;environment: 0x133baae60&gt; 
+#&gt;   ..$ plot_env   :&lt;environment: 0x12e6ba400&gt; 
 #&gt;   ..$ labels     :List of 4
 #&gt;   .. ..$ title: chr "CD99"
 #&gt;   .. ..$ fill : chr "ident"
@@ -427,9 +424,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -446,7 +441,7 @@ Michael Steinbaugh
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

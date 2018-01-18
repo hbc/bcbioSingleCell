@@ -91,8 +91,8 @@
 counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.mtx</code> files.</p>
     
 
-    <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>uploadDir</span>, <span class='no'>refDataDir</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
-  <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>annotable</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>uploadDir</span>, <span class='no'>refdataDir</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
+  <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>annotable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -103,7 +103,7 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
 must contain <code>filtered_gene_bc_matrices/</code> as a child.</p></td>
     </tr>
     <tr>
-      <th>refDataDir</th>
+      <th>refdataDir</th>
       <td><p>Directory path to cellranger reference annotation data.</p></td>
     </tr>
     <tr>
@@ -149,18 +149,40 @@ can be passed in as a data.frame, but this isn't generally recommended.</p></td>
     <p>This function is a simplified version of <code><a href='loadSingleCell.html'>loadSingleCell()</a></code>
 optimized for handling CellRanger output.</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Unlike <code><a href='loadSingleCell.html'>loadSingleCell()</a></code>, the <code>organism</code>, <code>ensemblVersion</code>, and
+<code>genomeBuild</code> are always detected automatically, based on the <code>refdataDir</code>
+YAML metadata. Therefore, these parameters cannot be set by the user.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>extdataDir</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
+    <pre class="examples"><div class='input'><span class='no'>extdataDir</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
 <span class='no'>uploadDir</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>extdataDir</span>, <span class='st'>"cellranger"</span>)
-<span class='no'>refDataDir</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>extdataDir</span>, <span class='st'>"refdata-cellranger-hg19-1.2.0"</span>)
+<span class='no'>refdataDir</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>extdataDir</span>, <span class='st'>"refdata-cellranger-hg19-1.2.0"</span>)
 <span class='no'>sampleMetadataFile</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>extdataDir</span>, <span class='st'>"cellranger.csv"</span>)
 <span class='fu'>loadCellRanger</span>(
     <span class='kw'>uploadDir</span> <span class='kw'>=</span> <span class='no'>uploadDir</span>,
-    <span class='kw'>refDataDir</span> <span class='kw'>=</span> <span class='no'>refDataDir</span>,
-    <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='no'>sampleMetadataFile</span>)
-<span class='co'># }</span></pre>
+    <span class='kw'>refdataDir</span> <span class='kw'>=</span> <span class='no'>refdataDir</span>,
+    <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='no'>sampleMetadataFile</span>)</div><div class='output co'>#&gt; <span class='message'>1 samples detected</span></div><div class='output co'>#&gt; <span class='message'>Reading cellranger.csv</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+#&gt; <span class='message'>cols(</span>
+#&gt; <span class='message'>  fileName = col_character(),</span>
+#&gt; <span class='message'>  description = col_character(),</span>
+#&gt; <span class='message'>  sampleName = col_character(),</span>
+#&gt; <span class='message'>  index = col_integer()</span>
+#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>Organism: Homo sapiens</span>
+#&gt; <span class='message'>Genome build: hg19</span>
+#&gt; <span class='message'>Ensembl release: 82</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Reference GTF file missing. Generating gene2symbol using 'annotable()' instead.</span></div><div class='output co'>#&gt; <span class='message'>Reading counts</span></div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='output co'>#&gt; <span class='message'>multiplexed</span></div><div class='output co'>#&gt; <span class='message'>Reading matrix.mtx</span></div><div class='output co'>#&gt; <span class='message'>Reading barcodes.tsv</span></div><div class='output co'>#&gt; <span class='message'>Reading genes.tsv</span></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 00s</div><div class='output co'>#&gt; <span class='message'>Calculating barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cellular barcodes detected</span></div><div class='output co'>#&gt; <span class='message'>11 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>500 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; class: bcbioSingleCell 
+#&gt; dim: 500 500 
+#&gt; metadata(23): version pipeline ... utilsSessionInfo devtoolsSessionInfo
+#&gt; assays(1): assay
+#&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
+#&gt;   ENSG00000269893
+#&gt; rowData names(10): ensgene symbol ... strand entrez
+#&gt; colnames(500): multiplexed_AAACCTGGTTTACTCT_1
+#&gt;   multiplexed_AAACGGGGTATCTGCA_1 ... multiplexed_TTTGTCACACAACGTT_2
+#&gt;   multiplexed_TTTGTCACACTCGACG_2
+#&gt; colData names(6): nUMI nGene ... log10GenesPerUMI mitoRatio</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -170,6 +192,8 @@ optimized for handling CellRanger output.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
@@ -187,7 +211,7 @@ Michael Steinbaugh
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

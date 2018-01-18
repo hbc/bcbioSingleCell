@@ -95,7 +95,7 @@ cellular barcodes.</p>
 
 <span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+  <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.75</span>,
   <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for bcbioSCDataSet</span>
@@ -173,13 +173,13 @@ this many cells.</p></td>
 #&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run2_AGAGGATA_TGTTATCA_ACGCAGAG
 #&gt;   run2_AGAGGATA_TGTTATCA_CAAGTCAT
 #&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div><div class='input'><span class='fu'>filterCells</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; <span class='message'>500 cells before filtering</span>
-#&gt; <span class='message'>1000 genes before filtering</span></div><div class='output co'>#&gt; <span class='message'>     500 cells | minUMIs &gt;= 1000</span></div><div class='output co'>#&gt; <span class='message'>     499 cells | minGenes &gt;= 500</span></div><div class='output co'>#&gt; <span class='message'>     499 cells | maxGenes &lt;= Inf</span></div><div class='output co'>#&gt; <span class='message'>     421 cells | maxMitoRatio &lt;= 0.1</span></div><div class='output co'>#&gt; <span class='message'>     421 cells | minNovelty &lt;= 0.8</span></div><div class='output co'>#&gt; <span class='message'>    1000 genes | minCellsPerGene &lt;= 3</span></div><div class='output co'>#&gt; <span class='message'>421 / 500 cells passed filtering (84.2%)</span>
+#&gt; <span class='message'>1000 genes before filtering</span></div><div class='output co'>#&gt; <span class='message'>     500 cells | minUMIs &gt;= 1000</span></div><div class='output co'>#&gt; <span class='message'>     499 cells | minGenes &gt;= 500</span></div><div class='output co'>#&gt; <span class='message'>     499 cells | maxGenes &lt;= Inf</span></div><div class='output co'>#&gt; <span class='message'>     421 cells | maxMitoRatio &lt;= 0.1</span></div><div class='output co'>#&gt; <span class='message'>     421 cells | minNovelty &lt;= 0.75</span></div><div class='output co'>#&gt; <span class='message'>    1000 genes | minCellsPerGene &lt;= 3</span></div><div class='output co'>#&gt; <span class='message'>421 / 500 cells passed filtering (84.2%)</span>
 #&gt; <span class='message'>1000 / 1000 genes passed filtering (100%)</span></div><div class='output co'>#&gt; Filtering parameters:
 #&gt;   - &gt;= 1000 UMI counts per cell
 #&gt;   - &gt;= 500 genes per cell
 #&gt;   - &lt;= Inf genes per cell
 #&gt;   - &lt;= 0.1 mitochondrial abundance
-#&gt;   - &gt;= 0.8 novelty score
+#&gt;   - &gt;= 0.75 novelty score
 #&gt;   - &gt;= 3 cells per gene</div><div class='output co'>#&gt; class: bcbioSingleCell 
 #&gt; dim: 1000 421 
 #&gt; metadata(37): version pipeline ... filterParams originalVersion
@@ -217,7 +217,7 @@ Michael Steinbaugh
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
