@@ -190,7 +190,7 @@ loadCellRanger <- function(
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
         .readSparseCounts(
-            sampleDirs[a],
+            sampleDir = sampleDirs[a],
             pipeline = pipeline,
             umiType = umiType)
     })
