@@ -15,7 +15,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2017-12-14
+# Last modified 2018-01-19
 library(bcbioSingleCell)
 
 # Shared R Markdown settings
@@ -25,7 +25,7 @@ if (file.exists("setup.R")) {
 }
 
 # Directory paths
-dataDir <- file.path(params$outputDir, "data")
+dataDir <- file.path(params$outputDir, "data", Sys.Date())
 
 # Load bcbioSingleCell object
 bcbName <- load(params$bcbFile)
