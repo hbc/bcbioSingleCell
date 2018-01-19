@@ -44,19 +44,21 @@
         colFile <- paste0(matrixFile, ".colnames")  # barcodes
         rowFile <- paste0(matrixFile, ".rownames")  # transcripts
     } else if (pipeline == "cellranger") {
-        filteredDir <- file.path(
-            sampleDir,
-            "outs",
-            "filtered_gene_bc_matrices")
         matrixFile <- list.files(
-            filteredDir,
+            sampleDir,
             pattern = "matrix.mtx",
             full.names = TRUE,
             recursive = TRUE)
-        colFile <- dirname(matrixFile) %>%
-            file.path("barcodes.tsv")
-        rowFile <- dirname(matrixFile) %>%
-            file.path("genes.tsv")
+        # Ensure we're using the filtered matrix
+        matrixFile <- matrixFile[grepl(
+            x = matrixFile,
+            pattern = "filtered_gene_bc_matrices"
+        )]
+        if (length(matrixFile) != 1L) {
+            stop("Failed to detect filtered matrix file")
+        }
+        colFile <- file.path(dirname(matrixFile), "barcodes.tsv")
+        rowFile <- file.path(dirname(matrixFile), "genes.tsv")
     } else {
         stop("Unsupported pipeline", call. = FALSE)
     }

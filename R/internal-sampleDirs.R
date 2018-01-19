@@ -58,7 +58,7 @@
         # Subset to only include `filtered_gene_bc_matrices*`. Note that
         # aggregation output is labeled `filtered_gene_bc_matrices_mex` by
         # default.
-        grepl <- grepl(
+        matrixFiles <- matrixFiles[grepl(
             x = matrixFiles,
             pattern = file.path(
                 paste0("^", uploadDir),
@@ -66,10 +66,8 @@
                 "outs",
                 "filtered_gene_bc_matrices[^/]+?",
                 "[^/]+", # genomeBuild
-                paste0("matrix.mtx", "$")
-            )
-        )
-        matrixFiles <- matrixFiles[grepl]
+                paste0("matrix.mtx", "$"))
+            )]
 
         # Check to ensure that matrices match standardized cellranger export
         if (length(matrixFiles) == 0) {
