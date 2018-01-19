@@ -72,8 +72,9 @@
         matrixFiles <- matrixFiles[grepl]
 
         # Check to ensure that matrices match standardized cellranger export
-        if (!any(matrixFiles)) {
-            stop("Failed to match any filtered count matrices", call. = FALSE)
+        if (length(matrixFiles) == 0) {
+            stop("Failed to detect any sample directories",
+                 call. = FALSE)
         }
 
         # Sample directories nest the matrix files 4 levels deep
