@@ -73,14 +73,16 @@ NULL
     }
     sampleIDs <- sort(unique(sampleIDs))
 
-    # Filter the sample metadata data.frame to only contain matching samples
-    sampleMetadata <- sampleMetadata %>%
-        .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE] %>%
-        mutate_if(is.factor, droplevels)
-
+    # Output to the user which samples matched, using the `sampleName` metadata
+    # column, which is more descriptive than `sampleID`
+    sampleNames <- sampleMetadata %>%
+        .[.[["sampleID"]] %in% sampleIDs, "sampleName", drop = TRUE] %>%
+        as.character() %>%
+        sort() %>%
+        unique()
     message(paste(
-        length(sampleIDs), "sample(s) matched:",
-        toString(sort(sampleMetadata[["sampleName"]]))
+        length(sampleNames), "sample(s) matched:",
+        toString(sampleNames)
     ))
 
     # Use the metrics data.frame to match the cellular barcodes
