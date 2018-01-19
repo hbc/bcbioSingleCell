@@ -130,11 +130,7 @@ First, we assign each cell a score, based on its expression of G2/M and S phase 
 
 ```{r cell_cycle_markers}
 ccm <- metadata(bcb)$organism %>%
-    str_match("^([A-Z])[a-z]+ ([a-z]+)$") %>%
-    .[, 2:3] %>%
-    as.character() %>%
-    paste0(collapse = "") %>%
-    tolower() %>%
+    camel() %>%
     cellCycleMarkers[[.]]
 sGenes <- ccm %>%
     dplyr::filter(phase == "S") %>%
