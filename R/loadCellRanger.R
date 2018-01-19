@@ -90,6 +90,9 @@ loadCellRanger <- function(
 
     # Sample metadata ==========================================================
     if (is_string(sampleMetadataFile)) {
+        if (!file.exists(sampleMetadataFile)) {
+            stop("'sampleMetadataFile' missing", call. = FALSE)
+        }
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
