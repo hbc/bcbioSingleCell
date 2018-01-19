@@ -9,7 +9,7 @@ loadCellRanger(uploadDir, refdataDir, interestingGroups = "sampleName",
 }
 \arguments{
 \item{uploadDir}{Path to CellRanger output directory. This directory path
-must contain \code{filtered_gene_bc_matrices/} as a child.}
+must contain \code{filtered_gene_bc_matrices*} as a child directory.}
 
 \item{refdataDir}{Directory path to cellranger reference annotation data.}
 

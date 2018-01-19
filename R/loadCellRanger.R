@@ -26,7 +26,7 @@
 #' @inherit loadSingleCell
 #'
 #' @param uploadDir Path to CellRanger output directory. This directory path
-#'   must contain `filtered_gene_bc_matrices/` as a child.
+#'   must contain `filtered_gene_bc_matrices*` as a child directory.
 #' @param refdataDir Directory path to cellranger reference annotation data.
 #'
 #' @return [bcbioSingleCell].
