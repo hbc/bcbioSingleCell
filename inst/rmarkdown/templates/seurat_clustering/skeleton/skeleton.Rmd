@@ -132,12 +132,18 @@ First, we assign each cell a score, based on its expression of G2/M and S phase 
 ccm <- metadata(bcb)$organism %>%
     camel() %>%
     cellCycleMarkers[[.]]
+
+mdHeader("S phase markers", level = 3)
 sGenes <- ccm %>%
     dplyr::filter(phase == "S") %>%
     pull("symbol")
+print(sGenes)
+
+mdHeader("G2/M phase markers", level = 3)
 g2mGenes <- ccm %>%
     dplyr::filter(phase == "G2/M") %>%
     pull("symbol")
+print(g2mGenes)
 ```
 
 ```{r cell_cycle_scoring}
