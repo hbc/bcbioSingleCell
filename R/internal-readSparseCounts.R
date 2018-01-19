@@ -11,8 +11,9 @@
 #' @note bcbio-nextgen outputs counts at transcript level. 10X Chromium
 #'   CellRanger outputs counts at gene level.
 #'
-#' @importFrom bcbioBase readFileByExtension
 #' @importFrom dplyr pull
+#' @importFrom Matrix readMM
+#' @importFrom readr read_lines read_tsv
 #'
 #' @author Michael Steinbaugh
 #'
@@ -67,20 +68,22 @@
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
     # names are gene/transcript identifiers (depending on pipeline).
-    counts <- readFileByExtension(matrixFile)
+    counts <- readMM(matrixFile) %>%
+        # Ensure dgCMatrix, for improved memory overhead
+        as("dgCMatrix")
 
     if (pipeline == "bcbio") {
-        colnames <- readFileByExtension(colFile)
-        rownames <- readFileByExtension(rowFile)
+        colnames <- read_lines(colFile)
+        rownames <- read_lines(rowFile)
     } else if (pipeline == "cellranger") {
         # Named `barcodes.tsv` but not actually tab delimited
-        colnames <- readFileByExtension(
-                colFile,
+        colnames <- read_tsv(
+                file = colFile,
                 col_names = "barcode",
                 col_types = "c") %>%
             pull("barcode")
-        rownames <- readFileByExtension(
-                rowFile,
+        rownames <- read_tsv(
+                file = rowFile,
                 col_names = c("ensgene", "symbol"),
                 col_types = "cc") %>%
             pull("ensgene")
@@ -93,9 +96,6 @@
     if (!identical(length(rownames), nrow(counts))) {
         stop("Genes file doesn't match counts matrix columns")
     }
-
-    # Ensure dgCMatrix, for improved memory overhead
-    counts <- as(counts, "dgCMatrix")
 
     colnames(counts) <- colnames %>%
         # Append sample name
