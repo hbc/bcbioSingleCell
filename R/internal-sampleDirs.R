@@ -64,7 +64,7 @@
                 paste0("^", uploadDir),
                 "[^/]+", # sampleName
                 "outs",
-                "filtered_gene_bc_matrices[^/]+?",
+                "filtered_gene_bc_matrices([^/]+)?",
                 "[^/]+", # genomeBuild
                 paste0("matrix.mtx", "$"))
             )]
