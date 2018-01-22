@@ -10,7 +10,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2017-12-14
+# Last modified 2018-01-19
 library(bcbioSingleCell)
 library(Seurat)
 
@@ -21,10 +21,13 @@ if (file.exists("setup.R")) {
 }
 
 # Directory paths
-dataDir <- file.path(params$outputDir, "data")
-dir.create(dataDir, recursive = TRUE, showWarnings = FALSE)
-markersDir <- file.path(params$outputDir, "results", "markers")
-dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
+dataDir <- file.path(params$outputDir, "data", Sys.Date())
+markersDir <- file.path(params$outputDir, "results", Sys.Date(), "markers")
+invisible(mapply(
+    list(dataDir, markersDir),
+    FUN = dir.create,
+    MoreArgs = list(recursive = TRUE, showWarnings = FALSE)
+))
 
 # Load seurat object
 seuratName <- load(params$seuratFile)

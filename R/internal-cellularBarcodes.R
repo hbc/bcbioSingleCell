@@ -43,6 +43,7 @@
 #' @noRd
 #'
 #' @importFrom pbapply pblapply
+#' @importFrom readr read_tsv
 #'
 #' @param sampleDirs Sample directories.
 #'
@@ -58,8 +59,8 @@
     }
     message("Reading cellular barcode distributions")
     list <- pblapply(seq_along(files), function(a) {
-        readFileByExtension(
-            files[[a]],
+        read_tsv(
+            file = files[[a]],
             col_names = c("cellularBarcode", "nCount"),
             col_types = "ci") %>%
             mutate(cellularBarcode = gsub(

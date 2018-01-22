@@ -9,12 +9,12 @@ params:
     pcCompute: 20
     pcUse: FALSE
     varsToRegress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
-    resolution: 0.8
+    resolution: 0.75
     outputDir: "."
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2017-12-14
+# Last modified 2018-01-19
 library(bcbioSingleCell)
 
 # Shared R Markdown settings
@@ -24,9 +24,13 @@ if (file.exists("setup.R")) {
 }
 
 # Directory paths
-dataDir <- file.path(params$outputDir, "data")
-markersDir <- file.path(params$outputDir, "results", "markers")
-dir.create(markersDir, recursive = TRUE, showWarnings = FALSE)
+dataDir <- file.path(params$outputDir, "data", Sys.Date())
+markersDir <- file.path(params$outputDir, "results", Sys.Date(), "markers")
+invisible(mapply(
+    list(dataDir, markersDir),
+    FUN = dir.create,
+    MoreArgs = list(recursive = TRUE, showWarnings = FALSE)
+))
 
 # Load bcbioSingleCell object
 bcbName <- load(params$bcbFile)
@@ -126,18 +130,20 @@ First, we assign each cell a score, based on its expression of G2/M and S phase 
 
 ```{r cell_cycle_markers}
 ccm <- metadata(bcb)$organism %>%
-    str_match("^([A-Z])[a-z]+ ([a-z]+)$") %>%
-    .[, 2:3] %>%
-    as.character() %>%
-    paste0(collapse = "") %>%
-    tolower() %>%
+    camel() %>%
     cellCycleMarkers[[.]]
+
+mdHeader("S phase markers", level = 3)
 sGenes <- ccm %>%
     dplyr::filter(phase == "S") %>%
     pull("symbol")
+print(sGenes)
+
+mdHeader("G2/M phase markers", level = 3)
 g2mGenes <- ccm %>%
     dplyr::filter(phase == "G2/M") %>%
     pull("symbol")
+print(g2mGenes)
 ```
 
 ```{r cell_cycle_scoring}

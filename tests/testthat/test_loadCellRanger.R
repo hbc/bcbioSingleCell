@@ -18,8 +18,8 @@ test_that("Homo sapiens", {
     )
     expect_identical(
         colnames(bcb)[1L:2L],
-        c("multiplexed_AAACCTGGTTTACTCT_1",
-          "multiplexed_AAACGGGGTATCTGCA_1")
+        c("aggregation_AAACCTGGTTTACTCT_1",
+          "aggregation_AAACGGGGTATCTGCA_1")
     )
     expect_identical(
         rownames(bcb)[1L:2L],

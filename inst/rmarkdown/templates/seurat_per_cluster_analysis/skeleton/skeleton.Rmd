@@ -8,9 +8,8 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2017-12-14
+# Last modified 2018-01-19
 library(bcbioSingleCell)
-library(cowplot)
 
 # Shared R Markdown settings
 prepareSingleCellTemplate()

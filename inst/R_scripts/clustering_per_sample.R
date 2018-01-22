@@ -20,8 +20,10 @@ prepareSingleCellTemplate()
 source("setup.R")
 dataDir <- "data"
 
-loadDataAsName(bcb = "bcb_filtered", dir = dataDir)
+loadDataAsName(bcb = "bcb_filtered", dir = "data")
 metadata(bcb)$filterParams
+
+dataDir <- file.path("data", Sys.Date())
 
 sampleNames <- sampleMetadata(bcb) %>%
     pull(sampleName)
@@ -38,7 +40,7 @@ saveData(sampleSubsets, dir = dataDir)
 # Render R Markdown reports per bcbioSingleCell subset file
 pblapply(seq_along(sampleSubsets), function(a) {
     bcbName <- sampleSubsets[[a]]
-    bcbFile <- file.path("data", paste0(bcbName, ".rda"))
+    bcbFile <- file.path(dataDir, paste0(bcbName, ".rda"))
     seuratName <- paste(bcbName, "seurat", sep = "_")
     render(input = "clustering.Rmd",
            output_file = paste0(bcbName, ".html"),

@@ -64,8 +64,6 @@ NULL
 
     genes <- rownames(se)
     cells <- colnames(se)
-    samples <- sampleMetadata(x) %>%
-        rownames()
 
     # Assays ===================================================================
     assays <- assays(se)
@@ -91,17 +89,14 @@ NULL
 
     # cell2sample
     cell2sample <- metadata[["cell2sample"]]
-    if (is.null(cell2sample)) {
-        warning(paste(
-            "cell2sample missing in metadata.",
-            "Attempting to define using 'cell2sample()'."
-        ))
-        cell2sample <- cell2sample(
-            cells = cells,
-            samples = samples)
-    } else {
-        cell2sample <- cell2sample[cells]
+    if (!is.factor(cell2sample)) {
+        stop("'cell2sample' factor missing in 'metadata()'", call. = FALSE)
     }
+    cell2sample <- cell2sample %>%
+        .[cells] %>%
+        # Note that we're subsetting `sampleMetadata` by the factor levels
+        # in `cell2sample`, so this must come first
+        droplevels()
     metadata[["cell2sample"]] <- cell2sample
 
     # sampleMetadata

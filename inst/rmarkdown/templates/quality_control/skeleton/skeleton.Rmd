@@ -15,7 +15,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2017-12-14
+# Last modified 2018-01-19
 library(bcbioSingleCell)
 
 # Shared R Markdown settings
@@ -25,7 +25,7 @@ if (file.exists("setup.R")) {
 }
 
 # Directory paths
-dataDir <- file.path(params$outputDir, "data")
+dataDir <- file.path(params$outputDir, "data", Sys.Date())
 
 # Load bcbioSingleCell object
 bcbName <- load(params$bcbFile)
@@ -69,19 +69,54 @@ plotCellCounts(bcb)
 ```
 
 
-## UMI counts per cell
+## UMI counts per cell {.tabset}
 
 ```{r plot_umis_per_cell}
-plotUMIsPerCell(bcb, min = params$minUMIs)
+mdHeader("histogram", level = 3)
+plotUMIsPerCell(
+    bcb,
+    geom = "histogram",
+    min = params$minUMIs)
+    
+mdHeader("violin", level = 3)
+plotUMIsPerCell(
+    bcb,
+    geom = "violin",
+    min = params$minUMIs)
+
+mdHeader("boxplot", level = 3)
+plotUMIsPerCell(
+    bcb,
+    geom = "boxplot",
+    min = params$minUMIs)
 ```
 
 
-## Genes detected per cell
+## Genes detected per cell {.tabset}
 
-Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for [inDrop][] analysis.
+Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for most single-cell experiments.
 
 ```{r plot_genes_per_cell}
-plotGenesPerCell(bcb, min = params$minGenes, max = params$maxGenes)
+mdHeader("histogram", level = 3)
+plotGenesPerCell(
+    bcb,
+    geom = "histogram",
+    min = params$minGenes,
+    max = params$maxGenes)
+
+mdHeader("violin", level = 3)
+plotGenesPerCell(
+    bcb,
+    geom = "violin",
+    min = params$minGenes,
+    max = params$maxGenes)
+
+mdHeader("boxplot", level = 3)
+plotGenesPerCell(
+    bcb,
+    geom = "boxplot",
+    min = params$minGenes,
+    max = params$maxGenes)
 ```
 
 
@@ -94,21 +129,53 @@ plotUMIsVsGenes(bcb, interestingGroups = "sampleName")
 ```
 
 
-## Mitochondrial counts ratio
+## Mitochondrial counts ratio {.tabset}
 
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
 
 ```{r plot_mito_ratio}
-plotMitoRatio(bcb, max = params$maxMitoRatio)
+mdHeader("histogram", level = 3)
+plotMitoRatio(
+    bcb,
+    geom = "histogram",
+    max = params$maxMitoRatio)
+
+mdHeader("violin", level = 3)
+plotMitoRatio(
+    bcb,
+    geom = "violin",
+    max = params$maxMitoRatio)
+
+mdHeader("boxplot", level = 3)
+plotMitoRatio(
+    bcb,
+    geom = "boxplot",
+    max = params$maxMitoRatio)
 ```
 
 
-## Novelty
+## Novelty {.tabset}
 
 Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
 
 ```{r plot_novelty}
-plotNovelty(bcb, min = params$minNovelty)
+mdHeader("histogram", level = 3)
+plotNovelty(
+    bcb,
+    geom = "histogram",
+    min = params$minNovelty)
+
+mdHeader("violin", level = 3)
+plotNovelty(
+    bcb,
+    geom = "violin",
+    min = params$minNovelty)
+
+mdHeader("boxplot", level = 3)
+plotNovelty(
+    bcb,
+    geom = "boxplot",
+    min = params$minNovelty)
 ```
 
 
