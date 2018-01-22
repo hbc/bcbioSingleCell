@@ -116,6 +116,7 @@ loadSingleCell <- function(
         stop("'gtfFile' must be string or NULL")
     }
     # annotable
+    # FIXME Allow `NULL` input of annotable for unsupported genome
     if (!any(
         is.logical(annotable),
         is.data.frame(annotable)
