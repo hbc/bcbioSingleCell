@@ -41,15 +41,15 @@ NULL
     .checkSanitizedMarkers(object, stop = TRUE)
     # Check to make sure `avgLogFC` column exists
     if (!"avgLogFC" %in% colnames(object)) {
-        stop("'avgLogFC' column is required")
+        abort("`avgLogFC` column is missing")
     }
     # Check for valid direction
     directionArgs <- c("positive", "negative", "both")
     if (!direction %in% directionArgs) {
-        stop(paste(
+        abort(paste(
             "Valid 'direction':",
             toString(directionArgs)
-        ), call. = FALSE)
+        ))
     }
     if (isTRUE(coding)) {
         object <- object %>%

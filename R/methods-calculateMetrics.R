@@ -44,8 +44,8 @@ NULL
     object,
     annotable = TRUE,
     prefilter = TRUE) {
-    message("Calculating barcode metrics")
-    message(paste(ncol(object), "cellular barcodes detected"))
+    inform("Calculating barcode metrics")
+    inform(paste(ncol(object), "cellular barcodes detected"))
 
     if (isTRUE(annotable)) {
         organism <- rownames(object) %>%
@@ -58,18 +58,18 @@ NULL
     missing <- rownames(object) %>%
         .[!rownames(object) %in% annotable[["ensgene"]]]
     if (identical(length(missing), nrow(object))) {
-        stop(paste(
+        abort(paste(
             "No genes in the counts matrix matched the annotable.",
             "Check to ensure 'organism' is correct."
-        ), call. = FALSE)
+        ))
     }
 
     if (length(missing) > 0) {
-        warning(paste(
+        warn(paste(
             length(missing),
             "genes missing in annotable used to calculate metrics",
             paste0("(", percent(length(missing) / nrow(object)), ")")
-        ), call. = FALSE)
+        ))
     }
 
     # Obtain detected coding and mitochondrial genes, using annotable
@@ -78,16 +78,16 @@ NULL
         pull("ensgene") %>%
         .[. %in% rownames(object)]
     if (length(codingGenesDetected) == 0) {
-        stop("No coding genes detected", call. = FALSE)
+        abort("No coding genes detected")
     }
     mitoGenesDetected <- annotable %>%
         filter(.data[["broadClass"]] == "mito") %>%
         pull("ensgene") %>%
         .[. %in% rownames(object)]
     if (length(mitoGenesDetected) == 0) {
-        warning("No mitochondrial genes detected", call. = FALSE)
+        warn("No mitochondrial genes detected")
     } else {
-        message(paste(
+        inform(paste(
             length(mitoGenesDetected),
             "mitochondrial genes detected"
         ))
@@ -115,7 +115,7 @@ NULL
             .[.[["nUMI"]] > 0, ] %>%
             .[.[["nGene"]] > 0, ] %>%
             .[!is.na(.[["log10GenesPerUMI"]]), ]
-        message(paste(
+        inform(paste(
             nrow(metrics), "cellular barcodes passed pre-filtering",
             paste0("(", percent(nrow(metrics) / ncol(object)), ")")
         ))
@@ -146,7 +146,7 @@ setMethod(
     function(
         object,
         prefilter = TRUE) {
-        message("Recalculating cellular barcode metrics")
+        inform("Recalculating cellular barcode metrics")
         .calculateMetricsSparse(
             assay(object),
             annotable = metadata(object)[["annotable"]],

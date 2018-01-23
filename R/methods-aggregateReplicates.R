@@ -31,8 +31,7 @@ NULL
 .aggregateReplicates <- function(object) {
     sampleMetadata <- sampleMetadata(object)
     if (!"sampleNameAggregate" %in% colnames(sampleMetadata)) {
-        stop("'sampleNameAggregate' not present in sample metadata",
-             call. = FALSE)
+        abort("`sampleNameAggregate` not present in sample metadata")
     }
     # We'll end up replacing `sampleID` and `sampleName` columns with the
     # corresponding `*Aggregate` columns.
@@ -52,11 +51,11 @@ NULL
 
     # Message the new sample IDs
     newIDs <- unique(map[["sampleIDAggregate"]])
-    message(paste(
+    inform(paste(
         "New sample IDs:", toString(newIDs)
     ))
 
-    message("Remapping cellular barcodes to aggregate sample IDs")
+    inform("Remapping cellular barcodes to aggregate sample IDs")
     cell2sample <- cell2sample(object)
     sampleID <- data.frame(sampleID = cell2sample)
     remap <- left_join(
@@ -73,16 +72,15 @@ NULL
         as.factor()
 
     # Counts ===================================================================
-    message("Aggregating counts")
+    inform("Aggregating counts")
     counts <- aggregateReplicates(assay(object), groupings = groupings)
     # Check that the count number of counts matches
     if (!identical(sum(assay(object)), sum(counts))) {
-        stop("Aggregated counts sum doens't match the original",
-             call. = FALSE)
+        abort("Aggregated counts sum doens't match the original")
     }
 
     # Cellular barcodes list ===================================================
-    message("Aggregating raw cellular barcode counts")
+    inform("Aggregating raw cellular barcode counts")
     cb <- bcbio(object, "cellularBarcodes")
     if (is.null(cb)) {
         cbAggregateList <- NULL
@@ -152,7 +150,7 @@ NULL
     }
 
     # Metadata =================================================================
-    message("Updating metadata")
+    inform("Updating metadata")
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <-
         sampleMetadata(object, aggregateReplicates = TRUE)
@@ -167,7 +165,7 @@ NULL
     }
 
     # bcbioSingleCell ==========================================================
-    message("Preparing aggregated bcbioSingleCell object")
+    inform("Preparing aggregated bcbioSingleCell object")
     se <- SummarizedExperiment(
         assays = list(assay = counts),
         rowData = annotable,

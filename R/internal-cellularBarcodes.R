@@ -55,9 +55,9 @@
     )
     names(files) <- names(sampleDirs)
     if (!all(file.exists(files))) {
-        stop("Cellular barcode file missing", call. = FALSE)
+        abort("Cellular barcode file missing")
     }
-    message("Reading cellular barcode distributions")
+    inform("Reading cellular barcode distributions")
     list <- pblapply(seq_along(files), function(a) {
         read_tsv(
             file = files[[a]],

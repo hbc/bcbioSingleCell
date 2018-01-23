@@ -61,8 +61,7 @@ NULL
     })
     cell2sample <- unlist(list)
     if (!identical(length(cells), length(cell2sample))) {
-        stop("Failed to correctly match sample IDs to cellular barcodes",
-             call. = FALSE)
+        abort("Failed to correctly match sample IDs to cellular barcodes")
     }
     as.factor(cell2sample)
 }

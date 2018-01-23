@@ -54,9 +54,7 @@ NULL
             .[.[["cluster"]] == cluster, "symbol", drop = TRUE]
         if (!length(genes)) return(invisible())
         if (length(genes) > 10) {
-            warning(
-                "Maximum of 10 genes per cluster is recommended",
-                call. = FALSE)
+            warn("Maximum of 10 genes per cluster is recommended")
         }
         if (!is.null(headerLevel)) {
             mdHeader(

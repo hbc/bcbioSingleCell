@@ -32,7 +32,7 @@ NULL
     min = 1,
     max = Inf) {
     if (attr(object, "vars") != "cell") {
-        stop("Markers tibble should be grouped by cell", call. = FALSE)
+        abort("Markers tibble should be grouped by cell")
     }
     requiredCols <- c(
         "avgLogFC",  # Seurat v2.1
@@ -43,9 +43,9 @@ NULL
         "symbol"     # bcbio
     )
     if (!all(requiredCols %in% colnames(object))) {
-        stop(paste(
+        abort(paste(
             "Required columns:", toString(sort(requiredCols))
-        ), call. = FALSE)
+        ))
     }
     groupCols <- syms(c("cluster", "cell"))
 

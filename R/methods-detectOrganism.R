@@ -36,11 +36,11 @@ setMethod(
         if (is.character(organism)) {
             detectOrganism(organism)
         } else {
-            warning(paste(
+            warn(paste(
                 "'organism' is not slotted in metadata(object)",
                 "Attempting to match by the first gene identifier row",
                 "in the counts matrix instead."
-            ), call. = FALSE)
+            ))
             assay(object) %>%
                 rownames() %>%
                 .[[1L]] %>%
@@ -62,11 +62,11 @@ setMethod(
         if (is.character(organism)) {
             detectOrganism(organism)
         } else {
-            warning(paste(
+            warn(paste(
                 "'organism' is not slotted in 'bcbio(object)'.",
                 "Attempting to match by the first gene identifier row",
                 "in the counts matrix instead."
-                ), call. = FALSE)
+                ))
             slot(object, "data") %>%
                 rownames() %>%
                 .[[1]] %>%

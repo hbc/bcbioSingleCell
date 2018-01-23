@@ -291,13 +291,13 @@ NULL
         # defined in the metrics `nCount` column.
         metrics <- metrics(object)
         if (!"nCount" %in% colnames(metrics)) {
-            return(message(skipMessage))
+            return(inform(skipMessage))
         }
         cellularBarcodes <- metrics[, c("sampleID", "nCount")]
     } else {
         cellularBarcodes <- bcbio(object, "cellularBarcodes")
         if (is.null(cellularBarcodes)) {
-            return(message(skipMessage))
+            return(inform(skipMessage))
         }
         if (is.list(cellularBarcodes)) {
             cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
@@ -328,7 +328,7 @@ NULL
     } else if (!is.null(metadata(object)[["cellularBarcodeCutoff"]])) {
         cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
     } else {
-        warning("Failed to detect cellular barcode cutoff", call. = FALSE)
+        warn("Failed to detect cellular barcode cutoff")
         cutoffLine <- 0
     }
     cutoffLine <- cutoffLine %>%

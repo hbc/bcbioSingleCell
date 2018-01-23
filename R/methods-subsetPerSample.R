@@ -41,9 +41,7 @@ setMethod(
                 sampleID = sampleID)
             # Skip if subset doesn't have enough cells
             if (dim(subset)[[2]] < minCells) {
-                warning(paste(
-                    sampleID, "didn't pass minimum cell cutoff"
-                    ), call. = FALSE)
+                warn(paste(sampleID, "didn't pass minimum cell cutoff"))
                 return(NULL)
             }
             assign(sampleID, subset)

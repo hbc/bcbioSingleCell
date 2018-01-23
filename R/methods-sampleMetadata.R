@@ -108,8 +108,7 @@ setMethod(
                 select(unique(c(metadataPriorityCols, interestingGroups))) %>%
                 distinct()
             if (!identical(nrow(metadata), expected)) {
-                stop("Failed to aggregate sample metadata uniquely",
-                     call. = FALSE)
+                abort("Failed to aggregate sample metadata uniquely")
             }
         }
         .returnSampleMetadata(
@@ -137,10 +136,10 @@ setMethod(
                 unique(as.character(metadata[["sampleID"]])),
                 unique(as.character(slot(object, "meta.data")[["sampleID"]]))
             )) {
-                warning(paste(
+                warn(paste(
                     "Dimension mismatch with stashed metadata.",
                     "Using Seurat cellular barcode metadata instead"
-                ), call. = FALSE)
+                ))
                 metadata <- NULL
             }
             # Define interesting groups
@@ -151,7 +150,7 @@ setMethod(
         # Fall back to constructing metadata from cellular barcode info
         if (is.null(metadata)) {
             if (!.hasSlot(object, "version")) {
-                warning("Failed to detect seurat version", call. = FALSE)
+                warn("Failed to detect seurat version")
             }
             if (.hasSlot(object, "meta.data")) {
                 metadata <- slot(object, "meta.data") %>%
@@ -161,8 +160,7 @@ setMethod(
                 metadata <- slot(object, "data.info") %>%
                     .prepareSampleMetadataFromSeurat()
             } else {
-                stop("Failed to detect metadata in seurat object",
-                     call. = FALSE)
+                abort("Failed to detect metadata in seurat object")
             }
             # Define interesting groups
             if (missing(interestingGroups)) {

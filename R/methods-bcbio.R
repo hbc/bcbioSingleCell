@@ -97,8 +97,7 @@ setMethod(
     function(object, type, value) {
         if (!.hasSlot(object, "misc")) return(NULL)
         if (is.null(slot(object, "misc")[["bcbio"]])) {
-            stop("seurat object was not generated with bcbioSingleCell",
-                 call. = FALSE)
+            abort("seurat object was not generated with bcbioSingleCell")
         }
         slot(object, "misc")[["bcbio"]][[type]] <- value
         validObject(object)

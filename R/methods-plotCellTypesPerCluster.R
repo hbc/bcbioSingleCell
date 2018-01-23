@@ -48,7 +48,7 @@ NULL
     headerLevel = NULL) {
     if (!nrow(cellTypesPerCluster)) return(NULL)
     if (group_vars(cellTypesPerCluster) != "cluster") {
-        stop("cellTypesPerCluster must be grouped by 'cluster'")
+        abort("cellTypesPerCluster must be grouped by `cluster` column")
     }
     cellTypesPerCluster <- cellTypesPerCluster %>%
         ungroup() %>%

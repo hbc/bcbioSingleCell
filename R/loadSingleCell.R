@@ -95,63 +95,63 @@ loadSingleCell <- function(
     # Parameter integrity checks ===============================================
     # uploadDir
     if (!is_string(uploadDir)) {
-        stop("'uploadDir' must be string")
+        abort("`uploadDir` must be string")
     }
     # sampleMetadataFile
     if (!any(
         is_string(sampleMetadataFile),
         is.null(sampleMetadataFile)
     )) {
-        stop("'sampleMetadataFile' must be string or NULL")
+        abort("`sampleMetadataFile` must be string or NULL")
     }
     # interestingGroups
     if (!is.character(interestingGroups)) {
-        stop("'interestingGroups' must be character")
+        abort("`interestingGroups` must be character")
     }
     # gtfFile
     if (!any(
         is_string(gtfFile),
         is.null(gtfFile)
     )) {
-        stop("'gtfFile' must be string or NULL")
+        abort("`gtfFile` must be string or NULL")
     }
     # annotable
     if (!any(
         is.logical(annotable),
         is.data.frame(annotable)
     )) {
-        stop("'annotable' must be logical or data.frame")
+        abort("`annotable` must be logical or data.frame")
     }
     # organism
     if (!any(
         is_string(organism),
         is.null(organism)
     )) {
-        stop("'organism' must be string or NULL")
+        abort("`organism` must be string or NULL")
     }
     # ensemblVersion
     if (!any(
         is.null(ensemblVersion),
         is.numeric(ensemblVersion) && length(ensemblVersion) == 1
     )) {
-        stop("'ensemblVersion' must be single numeric or NULL")
+        abort("`ensemblVersion` must be single numeric or NULL")
     }
     # genomeBuild
     if (!any(
         is_string(genomeBuild),
         is.null(genomeBuild)
     )) {
-        stop("'genomeBuild' must be string or NULL")
+        abort("`genomeBuild` must be string or NULL")
     }
     # prefilter
     if (!is.logical(prefilter)) {
-        stop("'prefilter' must be logical")
+        abort("`prefilter` must be logical")
     }
 
     # Directory paths ==========================================================
     # Check connection to final upload directory
     if (!dir.exists(uploadDir)) {
-        stop("Final upload directory does not exist", call. = FALSE)
+        abort("Final upload directory does not exist")
     }
     uploadDir <- normalizePath(uploadDir)
     projectDir <- dir(
@@ -160,9 +160,9 @@ loadSingleCell <- function(
         full.names = FALSE,
         recursive = FALSE)
     if (length(projectDir) != 1) {
-        stop("Failed to detect project directory", call. = FALSE)
+        abort("Failed to detect project directory")
     }
-    message(projectDir)
+    inform(projectDir)
     match <- str_match(projectDir, projectDirPattern)
     runDate <- as.Date(match[[2]])
     template <- match[[3]]
@@ -175,7 +175,7 @@ loadSingleCell <- function(
             .[, 2] %>%
             unique() %>%
             length()
-        message(paste(
+        inform(paste(
             lanes, "sequencing lane detected", "(technical replicates)"))
     } else {
         lanes <- 1
@@ -186,7 +186,7 @@ loadSingleCell <- function(
     yaml <- readYAML(yamlFile)
 
     # Log files ================================================================
-    message("Reading log files")
+    inform("Reading log files")
     bcbioLog <- readLogFile(
         file.path(projectDir, "bcbio-nextgen.log"))
     bcbioCommandsLog <- readLogFile(
@@ -207,7 +207,7 @@ loadSingleCell <- function(
         cellularBarcodeCutoff <- NULL
     }
     if (!is.null(cellularBarcodeCutoff)) {
-        message(paste(
+        inform(paste(
             cellularBarcodeCutoff,
             "reads per cellular barcode cutoff detected"
         ))
@@ -229,7 +229,7 @@ loadSingleCell <- function(
     }
 
     # Data versions and programs ===============================================
-    message("Reading data and program versions")
+    inform("Reading data and program versions")
     dataVersions <- readDataVersions(
         file.path(projectDir, "data_versions.csv"))
     programs <- readProgramVersions(
@@ -251,8 +251,7 @@ loadSingleCell <- function(
                     na.omit() %>%
                     unique()
             } else {
-                warning("Genome detection from bcbio commands failed",
-                        call. = FALSE)
+                warn("Genome detection from bcbio commands failed")
                 genomeBuild <- NULL
             }
         }
@@ -261,14 +260,14 @@ loadSingleCell <- function(
     # Detect organism
     if (!is_string(organism)) {
         if (!is_string(genomeBuild)) {
-            stop("Organism detection by genome build failed", call. = FALSE)
+            abort("Organism detection by genome build failed")
         }
         organism <- detectOrganism(genomeBuild)
     }
     if (!is_string(organism)) {
-        stop("Invalid organism", call. = FALSE)
+        abort("Invalid organism")
     }
-    message(paste(
+    inform(paste(
         paste("Organism:", organism),
         paste("Genome build:", genomeBuild),
         sep = "\n"
@@ -285,11 +284,11 @@ loadSingleCell <- function(
                 gsub(x = .,
                      pattern = "-transform",
                      replacement = "")
-            message(paste("UMI type:", umiType))
+            inform(paste("UMI type:", umiType))
         } else {
-            warning(paste(
+            warn(paste(
                 "Failed to detect UMI type from commands log JSON file grep"
-            ), call. = FALSE)
+            ))
             umiType <- NULL
         }
     } else {
@@ -297,16 +296,16 @@ loadSingleCell <- function(
     }
     # Assume samples are inDrop platform, by default
     if (is.null(umiType)) {
-        warning(paste(
+        warn(paste(
             "Assuming unknown UMI is 'harvard-indrop-v3' (default)"
-        ), call. = FALSE)
+        ))
         umiType <- "harvard-indrop-v3"
     }
 
     # Sample metadata ==========================================================
     if (is_string(sampleMetadataFile)) {
         if (!file.exists(sampleMetadataFile)) {
-            stop("'sampleMetadataFile missing", call. = FALSE)
+            abort("'sampleMetadataFile missing")
         }
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
@@ -314,8 +313,7 @@ loadSingleCell <- function(
         if (grepl(x = umiType, pattern = "indrop")) {
             # Enforce `sampleMetadataFile` for multiplexed data containing
             # index barcodes (e.g. inDrop)
-            stop("'sampleMetadataFile' is required for inDrop samples",
-                 call. = FALSE)
+            abort("`sampleMetadataFile` is required for inDrop samples")
         }
         sampleMetadata <- sampleYAMLMetadata(yaml)
     }
@@ -332,17 +330,16 @@ loadSingleCell <- function(
                 sort(sampleDirSequence),
                 sort(as.character(sampleMetadata[["sequence"]]))
             )) {
-                warning(paste(
+                warn(paste(
                     "It appears that the reverse complement sequence of the",
                     "i5 index barcode(s) was input into the sample metadata",
                     "'sequence' column. bcbio outputs the revcomp into the",
                     "sample directories, but the forward sequence should be",
                     "used in the R package."
-                ), call. = FALSE)
+                ))
             }
         }
-        stop("Sample directory names don't match the sample metadata file",
-             call. = FALSE)
+        abort("Sample directory names don't match the sample metadata file")
     }
 
     # Interesting groups =======================================================
@@ -350,18 +347,18 @@ loadSingleCell <- function(
     interestingGroups <- camel(interestingGroups, strict = FALSE)
     # Check to ensure interesting groups are defined
     if (!all(interestingGroups %in% colnames(sampleMetadata))) {
-        stop("Interesting groups missing in sample metadata", call. = FALSE)
+        abort("Interesting groups missing in sample metadata")
     }
 
     # Subset sample directories by metadata ====================================
     # Check to see if a subset of samples is requested via the metadata file.
     # This matches by the reverse complement sequence of the index barcode.
     if (nrow(sampleMetadata) < length(sampleDirs)) {
-        message("Loading a subset of samples, defined by the metadata file")
+        inform("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
         sampleDirs <- sampleDirs %>%
             .[names(sampleDirs) %in% rownames(sampleMetadata)]
-        message(paste(length(sampleDirs), "samples matched by metadata"))
+        inform(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
     }
@@ -377,7 +374,7 @@ loadSingleCell <- function(
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable, uniqueSymbol = FALSE)
     } else {
-        warning("Loading run without gene annotable", call. = FALSE)
+        warn("Loading run without gene annotable")
         annotable <- NULL
     }
 
@@ -392,9 +389,9 @@ loadSingleCell <- function(
     # Transcript-to-gene mappings
     if (countsLevel == "transcript") {
         if (!is.data.frame(gtf)) {
-            stop(paste(
+            abort(paste(
                 "GTF required to convert transcript-level counts to gene-level"
-            ), call. = FALSE)
+            ))
         }
         tx2gene <- tx2geneFromGTF(gtf)
     } else {
@@ -408,7 +405,7 @@ loadSingleCell <- function(
     } else if (is.data.frame(annotable)) {
         gene2symbol <- annotable[, c("ensgene", "symbol")]
     } else {
-        warning("Loading run without gene-to-symbol mappings", call. = FALSE)
+        warn("Loading run without gene-to-symbol mappings")
         gene2symbol <- NULL
     }
 
@@ -417,7 +414,7 @@ loadSingleCell <- function(
     cbData <- .bindCellularBarcodes(cbList)
 
     # Counts ===================================================================
-    message(paste("Reading counts at", countsLevel, "level"))
+    inform(paste("Reading counts at", countsLevel, "level"))
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
         .readSparseCounts(

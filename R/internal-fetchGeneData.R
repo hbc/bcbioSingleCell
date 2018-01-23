@@ -13,7 +13,7 @@
         as.character(genes),
         as.character(colnames(data))
     )) {
-        stop("'Seurat::FetchData()' return doesn't match 'genes' input")
+        abort("`Seurat::FetchData()` return doesn't match `genes` input")
     }
     data
 }

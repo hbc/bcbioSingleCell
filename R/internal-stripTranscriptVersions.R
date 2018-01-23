@@ -20,7 +20,7 @@
         rownames(sparseCounts) <- transcripts
     }
     if (any(grepl(x = transcripts, pattern = "\\.\\d+$"))) {
-        stop("Incomplete transcript version removal", call. = FALSE)
+        abort("Incomplete transcript version removal")
     }
     sparseCounts
 }

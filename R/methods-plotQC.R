@@ -180,9 +180,7 @@ validQCGeomFlip <- c(
     } else if (geom == "violin") {
         .plotQCViolin(...)
     } else {
-        stop(paste(
-            "Valid formats:", toString(validGeom)
-        ), call. = FALSE)
+        abort(paste("Valid formats:", toString(validGeom)))
     }
 }
 

@@ -90,7 +90,7 @@ NULL
     # cell2sample
     cell2sample <- metadata[["cell2sample"]]
     if (!is.factor(cell2sample)) {
-        stop("'cell2sample' factor missing in 'metadata()'", call. = FALSE)
+        abort("'cell2sample' factor missing in 'metadata()'")
     }
     cell2sample <- cell2sample %>%
         .[cells] %>%

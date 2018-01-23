@@ -72,12 +72,12 @@ NULL
     return = "grid") {
     # Parameter integrity ======================================================
     if (!is_string(gene)) {
-        stop("gene must be a string", call. = FALSE)
+        abort("`gene` must be a string")
     }
     # return
     validReturn <- c("grid", "list")
     if (!return %in% validReturn) {
-        stop(paste("'return' must contain:", toString(validReturn)))
+        abort(paste("`return` must contain:", toString(validReturn)))
     }
 
     # Plots ====================================================================
@@ -149,7 +149,7 @@ NULL
         gene <- genes[[a]]
         # Skip and warn if gene is missing
         if (!gene %in% rownames(slot(object, "data"))) {
-            return(warning(paste(gene, "missing"), call. = FALSE))
+            return(warn(paste(gene, "missing")))
         }
         if (!is.null(headerLevel)) {
             mdHeader(gene, level = headerLevel, asis = TRUE)

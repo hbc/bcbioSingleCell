@@ -52,7 +52,7 @@ NULL
     headerLevel = 2) {
     validReturn <- c("grid", "list", "markdown")
     if (!return %in% validReturn) {
-        stop(paste("'return' must contain:", toString(validReturn)))
+        abort(paste("`return` must contain:", toString(validReturn)))
     }
     .checkFormat(format)
     if (format == "ensgene") {
@@ -75,7 +75,7 @@ NULL
     # Loop across genes ====================================================
     plotlist <- lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
-        data <- data[data[["gene"]] == gene, ]
+        data <- data[data[["gene"]] == gene, , drop = FALSE]
         p <- ggplot(
             data,
             mapping = aes_string(

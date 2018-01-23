@@ -77,12 +77,16 @@ NULL
         "tSNE1",
         "tSNE2")
     if (!all(requiredCols %in% colnames(object))) {
-        stop(paste(
+        abort(paste(
             "Required columns:", toString(requiredCols)
-        ), call. = FALSE)
+        ))
     }
-    if (!colorPoints %in% c("expression", "geomean")) {
-        stop("colorPoints supports 'geomean' or 'expression'", call. = FALSE)
+    validColorPoints <- c("expression", "geomean")
+    if (!colorPoints %in% validColorPoints) {
+        abort(paste(
+            "`colorPoints` must contain:",
+            toString(validColorPoints)
+        ))
     }
 
     # Prepare a list of the genes used for the ggplot subtitle

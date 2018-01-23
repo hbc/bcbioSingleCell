@@ -2,8 +2,7 @@
     logical <- "sampleNameAggregate" %in% colnames(object)
     if (identical(logical, FALSE) &
         identical(stop, TRUE)) {
-        stop("'sampleNameAggregate' column is required",
-             call. = FALSE)
+        abort("`sampleNameAggregate` column is required")
     }
     logical
 }

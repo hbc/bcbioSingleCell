@@ -54,18 +54,15 @@ NULL
     .checkSanitizedMarkers(all, stop = TRUE)
     # Check for `ensgene` column in both `all` and `known`
     if (!"ensgene" %in% colnames(all) & "ensgene" %in% colnames(known)) {
-        stop("'all' and 'known' objects must contain 'ensgene' column",
-             call. = FALSE)
+        abort("`all` and `known` objects must contain `ensgene` column")
     }
     # Check for `ensgene` overlap; avoid accidental organism mismatch
     if (!any(known[["ensgene"]] %in% all[["ensgene"]])) {
-        stop("No 'ensgene' intersect between 'all' and 'known'",
-             call. = FALSE)
+        abort("No intersect between `all` and `known` genes")
     }
     # Check for valid promiscuous cutoff
     if (!is.numeric(promiscuousCutoff) | promiscuousCutoff < 2) {
-        stop("'promiscuousCutoff' requires a minimum of >= 2 clusters",
-             call. = FALSE)
+        abort("`promiscuousCutoff` requires a minimum of >= 2 clusters")
     }
     # Group by cell type and arrange by P value
     markers <- all %>%
@@ -84,7 +81,7 @@ NULL
             filter(n >= !!quo(promiscuousCutoff)) %>%
             pull("ensgene")
         if (length(promiscuous) > 0) {
-            message(paste(
+            inform(paste(
                 "Promiscuous markers:", toString(promiscuous)
             ))
             markers <- markers %>%

@@ -59,14 +59,14 @@ NULL
         minNovelty = minNovelty,
         minCellsPerGene = minCellsPerGene)
     if (!is.numeric(params)) {
-        stop("Filter parameters must be numeric", call. = FALSE)
+        abort("Filter parameters must be numeric")
     }
     # TODO Add support `nCount` filtering in a future update
 
     # Filter low quality cells =================================================
     colData <- colData(object)
     if (!isTRUE(quiet)) {
-        message(paste(
+        inform(paste(
             paste(ncol(object), "cells before filtering"),
             paste(nrow(object), "genes before filtering"),
             sep = "\n"
@@ -79,7 +79,7 @@ NULL
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
     }
     if (!isTRUE(quiet)) {
-        message(paste(
+        inform(paste(
             paste(.paddedCount(nrow(colData)), "cells"),
             "|",
             paste("minUMIs", ">=", as.character(minUMIs))
@@ -92,7 +92,7 @@ NULL
             .[.[["nGene"]] >= minGenes, , drop = FALSE]
     }
     if (!isTRUE(quiet)) {
-        message(paste(
+        inform(paste(
             paste(.paddedCount(nrow(colData)), "cells"),
             "|",
             paste("minGenes", ">=", as.character(minGenes))
@@ -105,7 +105,7 @@ NULL
             .[.[["nGene"]] <= maxGenes, , drop = FALSE]
     }
     if (!isTRUE(quiet)) {
-        message(paste(
+        inform(paste(
             paste(.paddedCount(nrow(colData)), "cells"),
             "|",
             paste("maxGenes", "<=", as.character(maxGenes))
@@ -118,7 +118,7 @@ NULL
             .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
     }
     if (!isTRUE(quiet)) {
-        message(paste(
+        inform(paste(
             paste(.paddedCount(nrow(colData)), "cells"),
             "|",
             paste("maxMitoRatio", "<=", as.character(maxMitoRatio))
@@ -131,7 +131,7 @@ NULL
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
     }
     if (!isTRUE(quiet)) {
-        message(paste(
+        inform(paste(
             paste(.paddedCount(nrow(colData)), "cells"),
             "|",
             paste("minNovelty", "<=", as.character(minNovelty))
@@ -140,7 +140,7 @@ NULL
 
     cells <- rownames(colData)
     if (!length(cells)) {
-        warning("No cells passed filtering", call. = FALSE)
+        warn("No cells passed filtering")
         return(NULL)
     }
 
@@ -153,14 +153,14 @@ NULL
         genes <- rownames(object)
     }
     if (!isTRUE(quiet)) {
-        message(paste(
+        inform(paste(
             paste(.paddedCount(length(genes)), "genes"),
             "|",
             paste("minCellsPerGene", "<=", as.character(minCellsPerGene))
         ))
     }
     if (!length(genes)) {
-        warning("No genes passed filtering", call. = FALSE)
+        warn("No genes passed filtering")
         return(NULL)
     }
 
@@ -171,7 +171,7 @@ NULL
 
     # Summary ==================================================================
     if (!isTRUE(quiet)) {
-        message(paste(
+        inform(paste(
             paste(
                 length(cells), "/", ncol(object), "cells passed filtering",
                 paste0("(", percent(length(cells) / ncol(object)), ")")
@@ -221,8 +221,8 @@ setMethod(
     "filterCells",
     signature("bcbioSCDataSet"),
     function(object) {
-        stop(paste(
+        abort(paste(
             "Convert 'bcbioSCDataSet' to 'bcbioSingleCell' class.\n",
             "Run this code: bcb <- as(bcb, \"bcbioSingleCell\")"
-        ), call. = FALSE)
+        ))
 })

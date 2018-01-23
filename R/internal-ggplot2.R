@@ -61,6 +61,6 @@ labelSep <- ": "
             size = qcLineSize,
             yintercept = yintercept)
     } else {
-        stop("xintercept or yintercept required", call. = FALSE)
+        abort("`xintercept` or `yintercept` value required")
     }
 }
