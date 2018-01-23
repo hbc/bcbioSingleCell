@@ -13,7 +13,7 @@
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #'
 #' @importFrom magrittr %>%
-#' @importFrom rlang .data
+#' @importFrom rlang .data abort inform warn
 #' @importFrom S4Vectors aggregate metadata
 NULL
 
