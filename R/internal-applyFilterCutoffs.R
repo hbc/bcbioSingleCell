@@ -10,9 +10,9 @@
         colnames(object),
         metadata(object)[["filterCells"]]) %>%
         sort()
-    if (is.null(cells)) {
+    if (!length(cells)) {
         warn(paste(
-            "'NULL' cells passed filtering.",
+            "No cells passed filtering.",
             "Resetting `filterCells` metadata to all cells."
         ))
         cells <- colnames(object)
