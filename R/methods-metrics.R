@@ -64,6 +64,12 @@ setMethod(
             rownames_to_column("cellID") %>%
             left_join(sampleMetadata, by = "sampleID") %>%
             column_to_rownames("cellID")
+        if (!identical(colnames(object), rownames(metrics))) {
+            abort(paste(
+                "`cellID` mismatch between object colnames",
+                "and metrics rownames"
+            ))
+        }
         metrics
     })
 
