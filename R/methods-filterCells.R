@@ -44,7 +44,6 @@ NULL
 
 # Constructors =================================================================
 #' @importFrom bcbioBase mdHeader mdList
-#' @importFrom dplyr bind_rows
 #' @importFrom Matrix rowSums
 #' @importFrom scales percent
 #' @importFrom tibble rownames_to_column
@@ -108,7 +107,7 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["nUMI"]] >= cutoff, , drop = FALSE]
         })
-        metrics <- bind_rows(list)
+        metrics <- do.call(rbind, list)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
@@ -118,7 +117,7 @@ NULL
         inform(paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
             "|",
-            paste("minUMIs", ">=", as.character(minUMIs))
+            paste("minUMIs", ">=", toString(minUMIs))
         ))
     }
 
@@ -135,7 +134,7 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["nUMI"]] <= cutoff, , drop = FALSE]
         })
-        metrics <- bind_rows(list)
+        metrics <- do.call(rbind, metrics)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
@@ -145,7 +144,7 @@ NULL
         inform(paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
             "|",
-            paste("maxUMIs", "<=", as.character(maxGenes))
+            paste("maxUMIs", "<=", toString(maxUMIs))
         ))
     }
 
@@ -162,7 +161,7 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["nGene"]] >= cutoff, , drop = FALSE]
         })
-        metrics <- bind_rows(list)
+        metrics <- do.call(rbind, metrics)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
@@ -172,7 +171,7 @@ NULL
         inform(paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
             "|",
-            paste("minGenes", ">=", as.character(minGenes))
+            paste("minGenes", ">=", toString(minGenes))
         ))
     }
 
@@ -189,7 +188,7 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["nGene"]] <= cutoff, , drop = FALSE]
         })
-        metrics <- bind_rows(list)
+        metrics <- do.call(rbind, metrics)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
@@ -199,7 +198,7 @@ NULL
         inform(paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
             "|",
-            paste("maxGenes", "<=", as.character(maxGenes))
+            paste("maxGenes", "<=", toString(maxGenes))
         ))
     }
 
@@ -216,7 +215,7 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["mitoRatio"]] >= cutoff, , drop = FALSE]
         })
-        metrics <- bind_rows(list)
+        metrics <- do.call(rbind, metrics)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
@@ -226,7 +225,7 @@ NULL
         inform(paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
             "|",
-            paste("maxMitoRatio", "<=", as.character(maxMitoRatio))
+            paste("maxMitoRatio", "<=", toString(maxMitoRatio))
         ))
     }
 
@@ -243,7 +242,7 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["log10GenesPerUMI"]] >= cutoff, , drop = FALSE]
         })
-        metrics <- bind_rows(list)
+        metrics <- do.call(rbind, metrics)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
@@ -253,7 +252,7 @@ NULL
         inform(paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
             "|",
-            paste("minNovelty", "<=", as.character(minNovelty))
+            paste("minNovelty", "<=", toString(minNovelty))
         ))
     }
 
@@ -261,6 +260,12 @@ NULL
     if (!length(cells)) {
         warn("No cells passed filtering cutoffs")
         return(NULL)
+    }
+    # Check to make sure the cells are valid
+    if (!all(cells %in% colnames(object))) {
+        # The tidyverse chain of tools has a tendency to drop rownames. Be
+        # sure to use base R methods above for our filtering cutoffs.
+        abort("Cell vector unexpectedly doens't match IDs in object colnames")
     }
 
     # Filter low quality genes =================================================
@@ -301,13 +306,13 @@ NULL
             ),
             sep = "\n"
         ))
-        c(paste(">=", minUMIs, "UMI counts per cell"),
-          paste("<=", maxUMIs, "UMI counts per cell"),
-          paste(">=", minGenes, "genes per cell"),
-          paste("<=", maxGenes, "genes per cell"),
-          paste("<=", maxMitoRatio, "mitochondrial abundance"),
-          paste(">=", minNovelty, "novelty score"),
-          paste(">=", minCellsPerGene, "cells per gene")) %>%
+        c(paste(">=", toString(minUMIs), "UMI counts per cell"),
+          paste("<=", toString(maxUMIs), "UMI counts per cell"),
+          paste(">=", toString(minGenes), "genes per cell"),
+          paste("<=", toString(maxGenes), "genes per cell"),
+          paste("<=", toString(maxMitoRatio), "mitochondrial abundance"),
+          paste(">=", toString(minNovelty), "novelty score"),
+          paste(">=", toString(minCellsPerGene), "cells per gene")) %>%
             paste("  -", .) %>%
             c("Filtering parameters:", .) %>%
             cat(sep = "\n")
