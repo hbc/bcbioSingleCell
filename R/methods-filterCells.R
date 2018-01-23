@@ -274,6 +274,7 @@ NULL
     }
 
     # Filter low quality genes =================================================
+    # TODO Add per sample filtering here also?
     if (minCellsPerGene > 0) {
         counts <- assay(object)
         numCells <- Matrix::rowSums(counts > 0)
