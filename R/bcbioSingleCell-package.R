@@ -28,3 +28,5 @@ barcodePattern <- ")_([ACGT_]{6,})(_[0-9]+)?$"
 lanePattern <- "_L(\\d{3})"
 metadataPriorityCols <- c("sampleID", "sampleName", "description")
 projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
+
+sepBar <- "============================================================"

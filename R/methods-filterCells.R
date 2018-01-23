@@ -86,13 +86,13 @@ NULL
     }
 
     # Filter low quality cells =================================================
-    if (!isTRUE(quiet)) {
-        inform(paste(
-            paste(ncol(object), "cells before filtering"),
-            paste(nrow(object), "genes before filtering"),
-            sep = "\n"
-        ))
-    }
+    summary <- list()
+    summary[["prefilter"]] <- paste(
+        nrow(object), "genes",
+        "/",
+        ncol(object), "cells"
+    )
+
 
     # minUMIs ====
     if (!is.null(names(minUMIs))) {
@@ -113,13 +113,11 @@ NULL
         metrics <- metrics %>%
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
     }
-    if (!isTRUE(quiet)) {
-        inform(paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("minUMIs", ">=", toString(minUMIs))
-        ))
-    }
+    summary[["minUMIs"]] <- paste(
+        paste(.paddedCount(nrow(metrics)), "cells"),
+        "|",
+        paste("minUMIs", ">=", toString(minUMIs))
+    )
 
     # maxUMIs ====
     if (!is.null(names(maxUMIs))) {
@@ -140,13 +138,11 @@ NULL
         metrics <- metrics %>%
             .[.[["nUMI"]] <= maxUMIs, , drop = FALSE]
     }
-    if (!isTRUE(quiet)) {
-        inform(paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("maxUMIs", "<=", toString(maxUMIs))
-        ))
-    }
+    summary[["maxUMIs"]] <- paste(
+        paste(.paddedCount(nrow(metrics)), "cells"),
+        "|",
+        paste("maxUMIs", "<=", toString(maxUMIs))
+    )
 
     # minGenes ====
     if (!is.null(names(minGenes))) {
@@ -167,13 +163,11 @@ NULL
         metrics <- metrics %>%
             .[.[["nGene"]] >= minGenes, , drop = FALSE]
     }
-    if (!isTRUE(quiet)) {
-        inform(paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("minGenes", ">=", toString(minGenes))
-        ))
-    }
+    summary[["minGenes"]] <- paste(
+        paste(.paddedCount(nrow(metrics)), "cells"),
+        "|",
+        paste("minGenes", ">=", toString(minGenes))
+    )
 
     # maxGenes ====
     if (!is.null(names(maxGenes))) {
@@ -194,13 +188,11 @@ NULL
         metrics <- metrics %>%
             .[.[["nGene"]] <= maxGenes, , drop = FALSE]
     }
-    if (!isTRUE(quiet)) {
-        inform(paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("maxGenes", "<=", toString(maxGenes))
-        ))
-    }
+    summary[["maxGenes"]] <- paste(
+        paste(.paddedCount(nrow(metrics)), "cells"),
+        "|",
+        paste("maxGenes", "<=", toString(maxGenes))
+    )
 
     # maxMitoRatio ====
     if (!is.null(names(maxMitoRatio))) {
@@ -221,13 +213,11 @@ NULL
         metrics <- metrics %>%
             .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
     }
-    if (!isTRUE(quiet)) {
-        inform(paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("maxMitoRatio", "<=", toString(maxMitoRatio))
-        ))
-    }
+    summary[["maxMitoRatio"]] <- paste(
+        paste(.paddedCount(nrow(metrics)), "cells"),
+        "|",
+        paste("maxMitoRatio", "<=", toString(maxMitoRatio))
+    )
 
     # minNovelty ====
     if (!is.null(names(minNovelty))) {
@@ -248,13 +238,11 @@ NULL
         metrics <- metrics %>%
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
     }
-    if (!isTRUE(quiet)) {
-        inform(paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("minNovelty", "<=", toString(minNovelty))
-        ))
-    }
+    summary[["minNovelty"]] <- paste(
+        paste(.paddedCount(nrow(metrics)), "cells"),
+        "|",
+        paste("minNovelty", "<=", toString(minNovelty))
+    )
 
     cells <- sort(rownames(metrics))
     if (!length(cells)) {
@@ -276,26 +264,33 @@ NULL
     } else {
         genes <- sort(rownames(object))
     }
-    if (!isTRUE(quiet)) {
-        inform(paste(
-            paste(.paddedCount(length(genes)), "genes"),
-            "|",
-            paste("minCellsPerGene", "<=", as.character(minCellsPerGene))
-        ))
-    }
+    summary[["minCellsPerGene"]] <- paste(
+        paste(.paddedCount(length(genes)), "genes"),
+        "|",
+        paste("minCellsPerGene", "<=", as.character(minCellsPerGene))
+    )
     if (!length(genes)) {
         warn("No genes passed filtering")
         return(NULL)
     }
 
-    # Metadata =================================================================
-    metadata(object)[["filterCells"]] <- cells
-    metadata(object)[["filterGenes"]] <- genes
-    metadata(object)[["filterParams"]] <- params
-
     # Summary ==================================================================
     if (!isTRUE(quiet)) {
-        inform(paste(
+        printParams <- c(
+            paste(">=", toString(minUMIs), "UMI counts per cell"),
+            paste("<=", toString(maxUMIs), "UMI counts per cell"),
+            paste(">=", toString(minGenes), "genes per cell"),
+            paste("<=", toString(maxGenes), "genes per cell"),
+            paste("<=", toString(maxMitoRatio), "mitochondrial abundance"),
+            paste(">=", toString(minNovelty), "novelty score"),
+            paste(">=", toString(minCellsPerGene), "cells per gene")
+        )
+        cat(c(
+            "Filtering parameters:",
+            paste("  -", printParams),
+            sepBar,
+            as.character(summary),
+            sepBar,
             paste(
                 length(cells), "/", ncol(object), "cells passed filtering",
                 paste0("(", percent(length(cells) / ncol(object)), ")")
@@ -303,20 +298,15 @@ NULL
             paste(
                 length(genes), "/", nrow(object), "genes passed filtering",
                 paste0("(", percent(length(genes) / nrow(object)), ")")
-            ),
-            sep = "\n"
-        ))
-        c(paste(">=", toString(minUMIs), "UMI counts per cell"),
-          paste("<=", toString(maxUMIs), "UMI counts per cell"),
-          paste(">=", toString(minGenes), "genes per cell"),
-          paste("<=", toString(maxGenes), "genes per cell"),
-          paste("<=", toString(maxMitoRatio), "mitochondrial abundance"),
-          paste(">=", toString(minNovelty), "novelty score"),
-          paste(">=", toString(minCellsPerGene), "cells per gene")) %>%
-            paste("  -", .) %>%
-            c("Filtering parameters:", .) %>%
-            cat(sep = "\n")
+            )
+        ), sep = "\n")
     }
+
+    # Metadata =================================================================
+    metadata(object)[["filterCells"]] <- cells
+    metadata(object)[["filterGenes"]] <- genes
+    metadata(object)[["filterParams"]] <- params
+    metadata(object)[["filterSummary"]] <- summary
 
     .applyFilterCutoffs(object)
 }
