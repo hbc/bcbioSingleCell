@@ -256,7 +256,7 @@ NULL
         ))
     }
 
-    cells <- rownames(metrics)
+    cells <- sort(rownames(metrics))
     if (!length(cells)) {
         warn("No cells passed filtering cutoffs")
         return(NULL)
@@ -274,7 +274,7 @@ NULL
         numCells <- Matrix::rowSums(counts > 0)
         genes <- names(numCells[which(numCells >= minCellsPerGene)])
     } else {
-        genes <- rownames(object)
+        genes <- sort(rownames(object))
     }
     if (!isTRUE(quiet)) {
         inform(paste(
