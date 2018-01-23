@@ -113,6 +113,9 @@ NULL
         metrics <- metrics %>%
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
     }
+    if (!nrow(metrics)) {
+        abort("No cells passed `minUMIs` cutoff")
+    }
     summary[["minUMIs"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
         "|",
@@ -132,11 +135,14 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["nUMI"]] <= cutoff, , drop = FALSE]
         })
-        metrics <- do.call(rbind, metrics)
+        metrics <- do.call(rbind, list)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
             .[.[["nUMI"]] <= maxUMIs, , drop = FALSE]
+    }
+    if (!nrow(metrics)) {
+        abort("No cells passed `maxUMIs` cutoff")
     }
     summary[["maxUMIs"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
@@ -157,11 +163,15 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["nGene"]] >= cutoff, , drop = FALSE]
         })
-        metrics <- do.call(rbind, metrics)
+        # FIXME This is dropping to a numeric
+        metrics <- do.call(rbind, list)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
             .[.[["nGene"]] >= minGenes, , drop = FALSE]
+    }
+    if (!nrow(metrics)) {
+        abort("No cells passed `minGenes` cutoff")
     }
     summary[["minGenes"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
@@ -182,11 +192,14 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["nGene"]] <= cutoff, , drop = FALSE]
         })
-        metrics <- do.call(rbind, metrics)
+        metrics <- do.call(rbind, list)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
             .[.[["nGene"]] <= maxGenes, , drop = FALSE]
+    }
+    if (!nrow(metrics)) {
+        abort("No cells passed `maxGenes` cutoff")
     }
     summary[["maxGenes"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
@@ -207,11 +220,14 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["mitoRatio"]] >= cutoff, , drop = FALSE]
         })
-        metrics <- do.call(rbind, metrics)
+        metrics <- do.call(rbind, list)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
             .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
+    }
+    if (!nrow(metrics)) {
+        abort("No cells passed `maxMitoRatio` cutoff")
     }
     summary[["maxMitoRatio"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
@@ -232,11 +248,14 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["log10GenesPerUMI"]] >= cutoff, , drop = FALSE]
         })
-        metrics <- do.call(rbind, metrics)
+        metrics <- do.call(rbind, list)
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
+    }
+    if (!nrow(metrics)) {
+        abort("No cells passed `minNovelty` cutoff")
     }
     summary[["minNovelty"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
@@ -245,10 +264,7 @@ NULL
     )
 
     cells <- sort(rownames(metrics))
-    if (!length(cells)) {
-        warn("No cells passed filtering cutoffs")
-        return(NULL)
-    }
+
     # Check to make sure the cells are valid
     if (!all(cells %in% colnames(object))) {
         # The tidyverse chain of tools has a tendency to drop rownames. Be
