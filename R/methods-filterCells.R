@@ -58,6 +58,7 @@ NULL
     minCellsPerGene = 3,
     quiet = FALSE) {
     metrics <- metrics(object)
+    sampleIDs <- levels(metrics[["sampleID"]])
 
     # Parameter integrity checks ===============================================
     params <- list(
@@ -97,7 +98,7 @@ NULL
     # minUMIs ====
     if (!is.null(names(minUMIs))) {
         # Per sample mode
-        if (!all(names(minUMIs) %in% metrics[["sampleID"]])) {
+        if (!all(names(minUMIs) %in% sampleIDs)) {
             abort("`minUMIs` names don't match sample IDs")
         }
         list <- lapply(seq_along(names(minUMIs)), function(a) {
@@ -125,7 +126,7 @@ NULL
     # maxUMIs ====
     if (!is.null(names(maxUMIs))) {
         # Per sample mode
-        if (!all(names(maxUMIs) %in% metrics[["sampleID"]])) {
+        if (!all(names(maxUMIs) %in% sampleIDs)) {
             abort("`maxUMIs` names don't match sample IDs")
         }
         list <- lapply(seq_along(names(maxUMIs)), function(a) {
@@ -153,7 +154,7 @@ NULL
     # minGenes ====
     if (!is.null(names(minGenes))) {
         # Per sample mode
-        if (!all(names(minGenes) %in% metrics[["sampleID"]])) {
+        if (!all(names(minGenes) %in% sampleIDs)) {
             abort("`minGenes` names don't match sample IDs")
         }
         list <- lapply(seq_along(names(minGenes)), function(a) {
@@ -182,7 +183,7 @@ NULL
     # maxGenes ====
     if (!is.null(names(maxGenes))) {
         # Per sample mode
-        if (!all(names(maxGenes) %in% metrics[["sampleID"]])) {
+        if (!all(names(maxGenes) %in% sampleIDs)) {
             abort("`maxGenes` names don't match sample IDs")
         }
         list <- lapply(seq_along(names(maxGenes)), function(a) {
@@ -210,7 +211,7 @@ NULL
     # maxMitoRatio ====
     if (!is.null(names(maxMitoRatio))) {
         # Per sample mode
-        if (!all(names(maxMitoRatio) %in% metrics[["sampleID"]])) {
+        if (!all(names(maxMitoRatio) %in% sampleIDs)) {
             abort("`maxMitoRatio` names don't match sample IDs")
         }
         list <- lapply(seq_along(names(maxMitoRatio)), function(a) {
@@ -238,7 +239,7 @@ NULL
     # minNovelty ====
     if (!is.null(names(minNovelty))) {
         # Per sample mode
-        if (!all(names(minNovelty) %in% metrics[["sampleID"]])) {
+        if (!all(names(minNovelty) %in% sampleIDs)) {
             abort("`minNovelty` names don't match sample IDs")
         }
         list <- lapply(seq_along(names(minNovelty)), function(a) {
@@ -279,6 +280,9 @@ NULL
         genes <- names(numCells[which(numCells >= minCellsPerGene)])
     } else {
         genes <- sort(rownames(object))
+    }
+    if (!length(genes)) {
+        abort("No genes passed `minCellsPerGene` cutoff")
     }
     summary[["minCellsPerGene"]] <- paste(
         paste(.paddedCount(length(genes)), "genes"),
