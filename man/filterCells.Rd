@@ -11,8 +11,8 @@
 filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000,
-  minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.75,
-  minCellsPerGene = 3, quiet = FALSE)
+  maxUMIs = Inf, minGenes = 500, maxGenes = Inf, maxMitoRatio = 0.1,
+  minNovelty = 0.75, minCellsPerGene = 3, quiet = FALSE)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
 }
@@ -22,6 +22,8 @@ filterCells(object, ...)
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
 \item{minUMIs}{Minimum number of UMI disambiguated counts per cell.}
+
+\item{maxUMIs}{Maximum number of UMI disambiguated counts per cell.}
 
 \item{minGenes}{Minimum number of genes detected.}
 
@@ -43,6 +45,12 @@ this many cells.}
 \description{
 Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.
+}
+\details{
+The filtering cutoff values now support a named numeric vector. By
+default we recommend applying the same filtering cutoff to all samples.
+When matching the samples, be sure to use \code{sampleID} column (i.e. the
+rownames of \code{\link[=sampleMetadata]{sampleMetadata()}}).
 }
 \examples{
 load(system.file(
