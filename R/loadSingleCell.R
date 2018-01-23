@@ -118,9 +118,10 @@ loadSingleCell <- function(
     # annotable
     if (!any(
         is.logical(annotable),
-        is.data.frame(annotable)
+        is.data.frame(annotable),
+        is.null(annotable)
     )) {
-        abort("`annotable` must be logical or data.frame")
+        abort("`annotable` must be logical, data.frame, or NULL")
     }
     # organism
     if (!any(
