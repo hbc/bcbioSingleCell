@@ -47,11 +47,7 @@
         camel() %>%
         # Move rownames before performing tidyverse operations
         rownames_to_column() %>%
-        # Enforce count columns as integers (e.g. `nUMI`)
-        mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
-        # Coerce character vectors to factors, and drop levels
-        mutate_if(is.character, as.factor) %>%
-        mutate_if(is.factor, droplevels) %>%
+        .sanitizeMetrics() %>%
         # Group by ident here for center calculations
         group_by(!!sym("ident")) %>%
         mutate(
