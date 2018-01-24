@@ -92,7 +92,8 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
-        metadata <- metadata(object)[["sampleMetadata"]] %>%
+        metadata <- metadata(object) %>%
+            .[["sampleMetadata"]] %>%
             as.data.frame()
         # Aggregate replicates, if necessary
         if (isTRUE(aggregateReplicates)) {
