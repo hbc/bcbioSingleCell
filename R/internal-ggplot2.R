@@ -9,15 +9,15 @@
 #' @importFrom grid unit
 #' @importFrom viridis inferno
 
-bins <- 200
+bins <- 200L
 
 lineColor <- "black"
-qcColors <- viridis::inferno(3)
+qcColors <- viridis::inferno(3L)
 
 # Quality control plot colors
-qcPassColor <- qcColors[[1]]
-qcWarnColor <- qcColors[[2]]
-qcFailColor <- qcColors[[3]]
+qcPassColor <- qcColors[[1L]]
+qcWarnColor <- qcColors[[2L]]
+qcFailColor <- qcColors[[3L]]
 qcCutoffColor <- qcPassColor
 
 qcPlotAlpha <- 0.85
@@ -31,11 +31,11 @@ qcLabelPadding <- grid::unit(0.2, "lines")
 qcLabelSize <- NA
 
 # Maximum number of samples to label in a bar or boxplot
-qcLabelMaxNum <- 16
+qcLabelMaxNum <- 16L
 
 # Quality control line appearance
 qcLineAlpha <- 0.75
-qcLineSize <- 1
+qcLineSize <- 1L
 qcLineType <- "dashed"
 
 # Plot label separator

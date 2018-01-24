@@ -31,7 +31,7 @@ test_that("knownMarkersDetected", {
         pct1 = 0.613,
         pct2 = 0.862,
         avgLogFC = -1.018,
-        pvalue = 0,
-        padj = 0
+        pvalue = 0L,
+        padj = 0L
     )
 })

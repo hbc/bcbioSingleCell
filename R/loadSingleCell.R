@@ -133,7 +133,7 @@ loadSingleCell <- function(
     # ensemblVersion
     if (!any(
         is.null(ensemblVersion),
-        is.numeric(ensemblVersion) && length(ensemblVersion) == 1
+        is.numeric(ensemblVersion) && length(ensemblVersion) == 1L
     )) {
         abort("`ensemblVersion` must be single numeric or NULL")
     }
@@ -160,26 +160,26 @@ loadSingleCell <- function(
         pattern = projectDirPattern,
         full.names = FALSE,
         recursive = FALSE)
-    if (length(projectDir) != 1) {
+    if (length(projectDir) != 1L) {
         abort("Failed to detect project directory")
     }
     inform(projectDir)
     match <- str_match(projectDir, projectDirPattern)
-    runDate <- as.Date(match[[2]])
-    template <- match[[3]]
+    runDate <- as.Date(match[[2L]])
+    template <- match[[3L]]
     projectDir <- file.path(uploadDir, projectDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sequencing lanes =========================================================
     if (any(grepl(x = sampleDirs, pattern = lanePattern))) {
         lanes <- str_match(names(sampleDirs), lanePattern) %>%
-            .[, 2] %>%
+            .[, 2L] %>%
             unique() %>%
             length()
         inform(paste(
             lanes, "sequencing lane detected", "(technical replicates)"))
     } else {
-        lanes <- 1
+        lanes <- 1L
     }
 
     # Project summary YAML =====================================================
@@ -248,7 +248,7 @@ loadSingleCell <- function(
             if (any(grepl(x = bcbioCommandsLog, pattern = genomePattern))) {
                 genomeBuild <-
                     str_match(bcbioCommandsLog, genomePattern) %>%
-                    .[, 2] %>%
+                    .[, 2L] %>%
                     na.omit() %>%
                     unique()
             } else {
@@ -279,7 +279,7 @@ loadSingleCell <- function(
         umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
         if (any(grepl(x = bcbioCommandsLog, pattern = umiPattern))) {
             umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
-                .[, 2] %>%
+                .[, 2L] %>%
                 na.omit() %>%
                 unique() %>%
                 gsub(x = .,
@@ -485,7 +485,7 @@ loadSingleCell <- function(
         cellularBarcodeCutoff = cellularBarcodeCutoff)
     # Add user-defined custom metadata, if specified
     dots <- list(...)
-    if (length(dots) > 0) {
+    if (length(dots) > 0L) {
         metadata <- c(metadata, dots)
     }
 

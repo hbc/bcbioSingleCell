@@ -27,7 +27,7 @@
                          pattern = projectDirPattern)]
         }
 
-        if (length(sampleDirs) == 0) {
+        if (length(sampleDirs) == 0L) {
             abort("Failed to detect any sample directories")
         }
 
@@ -69,7 +69,7 @@
             )]
 
         # Check to ensure that matrices match standardized cellranger export
-        if (length(matrixFiles) == 0) {
+        if (length(matrixFiles) == 0L) {
             abort("Failed to detect any sample directories")
         }
 

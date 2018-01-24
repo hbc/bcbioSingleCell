@@ -50,7 +50,7 @@ NULL
     known,
     alpha = 0.05,
     filterPromiscuous = FALSE,
-    promiscuousCutoff = 5) {
+    promiscuousCutoff = 5L) {
     .checkSanitizedMarkers(all, stop = TRUE)
     # Check for `ensgene` column in both `all` and `known`
     if (!"ensgene" %in% colnames(all) & "ensgene" %in% colnames(known)) {
@@ -61,7 +61,7 @@ NULL
         abort("No intersect between `all` and `known` genes")
     }
     # Check for valid promiscuous cutoff
-    if (!is.numeric(promiscuousCutoff) | promiscuousCutoff < 2) {
+    if (!is.numeric(promiscuousCutoff) | promiscuousCutoff < 2L) {
         abort("`promiscuousCutoff` requires a minimum of >= 2 clusters")
     }
     # Group by cell type and arrange by P value
@@ -80,7 +80,7 @@ NULL
             summarize(n = n()) %>%
             filter(n >= !!quo(promiscuousCutoff)) %>%
             pull("ensgene")
-        if (length(promiscuous) > 0) {
+        if (length(promiscuous) > 0L) {
             inform(paste(
                 "Promiscuous markers:", toString(promiscuous)
             ))

@@ -11,7 +11,7 @@ test_that("Mus musculus", {
     group <- group_vars(data)
     expect_identical(group, "cell")
     expect_identical(
-        data[1, ],
+        data[1L, ],
         tibble(
             "cell" = "B Cell",
             "symbol" = "Blnk",
@@ -20,4 +20,3 @@ test_that("Mus musculus", {
             group_by(.data[["cell"]])
     )
 })
-

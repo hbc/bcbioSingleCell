@@ -115,7 +115,7 @@ NULL
             annotable[["entrez"]] <- vapply(
                 annotable[["entrez"]],
                 FUN = toString,
-                FUN.VALUE = character(1))
+                FUN.VALUE = character(1L))
         }
         markers <- left_join(markers, annotable, by = "ensgene")
     }

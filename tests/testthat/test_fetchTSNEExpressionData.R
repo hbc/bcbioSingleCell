@@ -24,18 +24,18 @@ test_that("symbol", {
             "tSNE2" = "numeric",
             "ident" = "factor",
             "nGene" = "integer",
-            "nUMI" = "numeric",  # FIXME integer
+            "nUMI" = "integer",
             "sampleID" = "factor",
-            "nCoding" = "numeric",  # FIXME integer
-            "nMito" = "numeric",  # FIXME integer
+            "nCoding" = "integer",
+            "nMito" = "integer",
             "log10GenesPerUMI" = "numeric",
             "mitoRatio" = "numeric",
             "nCount" = "integer",
             "sampleName" = "factor",
             "description" = "factor",
             "interestingGroups" = "factor",
-            "orig.ident" = "factor",  # camel?
-            "res.0.8" = "character",  # camel?
+            "orig.ident" = "factor",
+            "res.0.8" = "factor",
             "centerX" = "numeric",
             "centerY" = "numeric"
         )
@@ -50,21 +50,21 @@ test_that("symbol", {
         "tSNE1" = -3.056,
         "tSNE2" = -4.304,
         "ident" = factor("0", levels = c("0", "1", "2", "3")),
-        "nGene" = 734,  # numeric here
-        "nUMI" = 6220,
+        "nGene" = 734L,
+        "nUMI" = 6220L,
         "sampleID" = factor("M1"),
-        "nCoding" = 5495,
-        "nMito" = 442,
+        "nCoding" = 5495L,
+        "nMito" = 442L,
         "log10GenesPerUMI" = 0.755,
         "mitoRatio" = 0.071,
-        "nCount" = 95155,  # numeric here
+        "nCount" = 95155L,
         "sampleName" = factor("M1"),
         "description" = factor("M1"),
         "interestingGroups" = factor("M1"),
         "orig.ident" = factor("M1"),
-        "res.0.8" = "0",
-        "centerX" = -6.651,  # reorder
-        "centerY" = -4.226  # reorder
+        "res.0.8" = factor("0"),
+        "centerX" = -6.651,
+        "centerY" = -4.226
     ) %>%
         group_by(!!sym(group))
     expect_equal(subset, target)

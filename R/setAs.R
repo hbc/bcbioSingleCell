@@ -100,10 +100,10 @@ NULL
         raw.data = counts,
         project = "bcbioSingleCell",
         # Already applied filtering cutoffs for cells and genes
-        min.cells = 0,
-        min.genes = 0,
+        min.cells = 0L,
+        min.genes = 0L,
         # Default for UMI datasets
-        is.expr = 0,
+        is.expr = 0L,
         meta.data = metrics)
 
     # Check that the dimensions match exactly

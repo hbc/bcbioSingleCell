@@ -49,7 +49,7 @@ NULL
 
     if (isTRUE(annotable)) {
         organism <- rownames(object) %>%
-            .[[1]] %>%
+            .[[1L]] %>%
             detectOrganism()
         annotable <- annotable(organism)
     }
@@ -64,7 +64,7 @@ NULL
         ))
     }
 
-    if (length(missing) > 0) {
+    if (length(missing) > 0L) {
         warn(paste(
             length(missing),
             "genes missing in annotable used to calculate metrics",
@@ -77,14 +77,14 @@ NULL
         filter(.data[["broadClass"]] == "coding") %>%
         pull("ensgene") %>%
         .[. %in% rownames(object)]
-    if (length(codingGenesDetected) == 0) {
+    if (length(codingGenesDetected) == 0L) {
         abort("No coding genes detected")
     }
     mitoGenesDetected <- annotable %>%
         filter(.data[["broadClass"]] == "mito") %>%
         pull("ensgene") %>%
         .[. %in% rownames(object)]
-    if (length(mitoGenesDetected) == 0) {
+    if (length(mitoGenesDetected) == 0L) {
         warn("No mitochondrial genes detected")
     } else {
         inform(paste(
@@ -97,7 +97,7 @@ NULL
         rowname = colnames(object),
         # Follow the Seurat `seurat@data.info` conventions
         nUMI = Matrix::colSums(object),
-        nGene = Matrix::colSums(object > 0),
+        nGene = Matrix::colSums(object > 0L),
         nCoding = Matrix::colSums(
             object[codingGenesDetected, , drop = FALSE]),
         nMito = Matrix::colSums(
@@ -112,9 +112,9 @@ NULL
     if (isTRUE(prefilter)) {
         # Here we're only keeping cellular barcodes that have a gene detected
         metrics <- metrics %>%
-            .[.[["nUMI"]] > 0, ] %>%
-            .[.[["nGene"]] > 0, ] %>%
-            .[!is.na(.[["log10GenesPerUMI"]]), ]
+            .[.[["nUMI"]] > 0L, , drop = FALSE] %>%
+            .[.[["nGene"]] > 0L, , drop = FALSE] %>%
+            .[!is.na(.[["log10GenesPerUMI"]]), , drop = FALSE]
         inform(paste(
             nrow(metrics), "cellular barcodes passed pre-filtering",
             paste0("(", percent(nrow(metrics) / ncol(object)), ")")

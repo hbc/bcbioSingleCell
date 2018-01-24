@@ -87,7 +87,7 @@ NULL
     } else {
         if (is.list(cb)) {
             # Aggregate and split back out as a list?
-            colnames <- c("sampleID", colnames(cb[[1]]))
+            colnames <- c("sampleID", colnames(cb[[1L]]))
             cb <- .bindCellularBarcodes(cb)
             cb <- cb[, colnames]
         }

@@ -4,7 +4,9 @@ load(system.file(
     file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
-symbol <- counts(seurat) %>% rownames() %>% .[[1]]
+symbol <- counts(seurat) %>%
+    rownames() %>%
+    .[[1L]]
 ensgene <- bcbio(seurat, "gene2symbol") %>%
     .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
 

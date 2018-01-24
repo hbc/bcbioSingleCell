@@ -87,7 +87,7 @@ NULL
             sampleName <- levels(rawTibble[["sampleName"]])[[a]]
             cb <- rawTibble %>%
                 .[.[["sampleName"]] == sampleName, , drop = FALSE]
-            cbHist <- hist(cb[["log10Count"]], n = 100, plot = FALSE)
+            cbHist <- hist(cb[["log10Count"]], n = 100L, plot = FALSE)
             # `counts = fLog` in MATLAB version
             counts <- cbHist[["counts"]]
             # `mids = xLog` in MATLAB version
@@ -97,7 +97,7 @@ NULL
                 # log10 reads per cell
                 log10Count = mids,
                 # Proportion of cells
-                proportion = counts * (10 ^ mids) / sum(counts * (10 ^ mids)))
+                proportion = counts * (10L ^ mids) / sum(counts * (10L ^ mids)))
         }) %>%
         bind_rows() %>%
         mutate(sampleName = as.factor(.data[["sampleName"]])) %>%
@@ -120,10 +120,10 @@ NULL
 .plotRawCBViolin <- function(
     tibble,
     interestingGroups = "sampleName",
-    cutoffLine = 0) {
+    cutoffLine = 0L) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
-    tibble <- tibble[tibble[["log10Count"]] >= 2, , drop = FALSE]
+    tibble <- tibble[tibble[["log10Count"]] >= 2L, , drop = FALSE]
     p <- ggplot(
         tibble,
         mapping = aes_string(
@@ -140,7 +140,7 @@ NULL
         scale_fill_viridis(discrete = TRUE)
 
     # Cutoff lines
-    if (cutoffLine > 0 & length(cutoffLine)) {
+    if (cutoffLine > 0L & length(cutoffLine)) {
         p <- p +
             .qcCutoffLine(yintercept = cutoffLine)
     }
@@ -174,11 +174,11 @@ NULL
 .plotRawCBRidgeline <- function(
     tibble,
     interestingGroups = "sampleName",
-    cutoffLine = 2) {
+    cutoffLine = 2L) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
     tibble <- tibble %>%
-        .[.[["log10Count"]] >= 2, , drop = FALSE]
+        .[.[["log10Count"]] >= 2L, , drop = FALSE]
     p <- ggplot(
         tibble,
         mapping = aes_string(
@@ -191,12 +191,12 @@ NULL
             alpha = qcPlotAlpha,
             color = lineColor,
             panel_scaling = TRUE,
-            scale = 10) +
+            scale = 10L) +
         scale_fill_viridis(discrete = TRUE) +
         scale_x_sqrt()
 
     # Cutoff lines
-    if (cutoffLine > 0 & length(cutoffLine)) {
+    if (cutoffLine > 0L & length(cutoffLine)) {
         p <- p +
             .qcCutoffLine(xintercept = cutoffLine)
     }
@@ -278,7 +278,7 @@ NULL
     interestingGroups) {
     skipMessage <- paste(
         "Raw cellular barcodes are not defined",
-        "in 'object@bcbio' slot...skipping"
+        "in `object@bcbio` slot...skipping"
     )
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
@@ -329,7 +329,7 @@ NULL
         cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
     } else {
         warn("Failed to detect cellular barcode cutoff")
-        cutoffLine <- 0
+        cutoffLine <- 0L
     }
     cutoffLine <- cutoffLine %>%
         as.numeric() %>%

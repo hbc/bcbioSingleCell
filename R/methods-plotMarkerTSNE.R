@@ -59,9 +59,9 @@ NULL
     object,
     colorPoints = "geomean",
     pointsAsNumbers = FALSE,
-    pointSize = 1,
+    pointSize = 1L,
     label = TRUE,
-    labelSize = 6,
+    labelSize = 6L,
     color = viridis::scale_color_viridis(),
     dark = TRUE,
     legend = TRUE,
@@ -93,12 +93,12 @@ NULL
     genes <- unique(pull(object, "gene"))
     # Use `expression` if we're only plotting a single gene. The `geomean`
     # argument for `colorPoints` is only informative for 2+ genes.
-    if (length(genes) == 1) {
+    if (length(genes) == 1L) {
         colorPoints <- "expression"
     }
     # Limit to displaying the top 5, with an ellipsis if necessary
-    if (length(genes) > 5) {
-        genes <- c(genes[1:5], "...")
+    if (length(genes) > 5L) {
+        genes <- c(genes[1L:5L], "...")
     }
     genes <- toString(genes)
 
@@ -118,8 +118,6 @@ NULL
     if (!is.character(title)) {
         title <- NULL
     }
-    # TODO We may be able to improve the dynamic title/subtitle handling here
-    # for single genes
     if (isTRUE(subtitle)) {
         subtitle <- genes
     } else {
@@ -135,8 +133,8 @@ NULL
             # Make the guide longer than normal, to improve appearance of values
             # containing a decimal point
             guides(color = guide_colorbar(
-                barwidth = 20,
-                barheight = 1,
+                barwidth = 20L,
+                barheight = 1L,
                 direction = "horizontal")) +
             theme(legend.justification = "center",
                   legend.position = "bottom")
@@ -204,9 +202,9 @@ setMethod(
         format = "symbol",
         colorPoints = "geomean",
         pointsAsNumbers = FALSE,
-        pointSize = 1,
+        pointSize = 1L,
         label = TRUE,
-        labelSize = 6,
+        labelSize = 6L,
         color = viridis::scale_color_viridis(),
         dark = TRUE,
         title = NULL,

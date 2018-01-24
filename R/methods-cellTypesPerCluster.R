@@ -29,7 +29,7 @@ NULL
 #' @importFrom rlang !!! quos
 .cellTypesPerCluster <- function(
     object,
-    min = 1,
+    min = 1L,
     max = Inf) {
     if (attr(object, "vars") != "cell") {
         abort("Markers tibble should be grouped by cell")
@@ -52,7 +52,7 @@ NULL
     tbl <- object %>%
         ungroup() %>%
         # Use only positive markers for this approach
-        filter(.data[["avgLogFC"]] > 0) %>%
+        filter(.data[["avgLogFC"]] > 0L) %>%
         select(!!!groupCols, everything()) %>%
         group_by(!!!groupCols) %>%
         arrange(.data[["padj"]], .by_group = TRUE) %>%
@@ -66,10 +66,10 @@ NULL
         arrange(desc(.data[["n"]]), .by_group = TRUE)
 
     # Apply minimum and maximum gene cutoffs
-    if (is.numeric(min) & min > 1) {
+    if (is.numeric(min) & min > 1L) {
         tbl <- filter(tbl, .data[["n"]] >= min)
     }
-    if (is.numeric(max) & max > 1) {
+    if (is.numeric(max) & max > 1L) {
         tbl <- filter(tbl, .data[["n"]] <= max)
 
     }

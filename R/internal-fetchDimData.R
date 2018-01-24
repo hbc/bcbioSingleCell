@@ -29,8 +29,8 @@
         # Group by ident here for center calculations
         group_by(!!sym("ident")) %>%
         mutate(
-            centerX = median(.data[[camel(dimCode[[1]], strict = FALSE)]]),
-            centerY = median(.data[[camel(dimCode[[2]], strict = FALSE)]])
+            centerX = median(.data[[camel(dimCode[[1L]], strict = FALSE)]]),
+            centerY = median(.data[[camel(dimCode[[2L]], strict = FALSE)]])
         ) %>%
         ungroup() %>%
         as.data.frame() %>%

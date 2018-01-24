@@ -44,7 +44,7 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        n = 5,
+        n = 5L,
         annotationCol = NA,
         clusterCols = FALSE,
         clusterRows = FALSE,
@@ -73,7 +73,7 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        n = 5,
+        n = 5L,
         annotationCol = NA,
         clusterCols = FALSE,
         clusterRows = FALSE,

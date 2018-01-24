@@ -1,7 +1,3 @@
-# FIXME Improve error messages for invalid i and j ranges
-
-
-
 #' Bracket-Based Subsetting
 #'
 #' Extract genes by row and cells by column from a [bcbioSingleCell] object.

@@ -54,7 +54,7 @@ NULL
             fill = "interestingGroups")
     ) +
         geom_bar(stat = "identity") +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
     # Label interesting groups
     if (!missing(interestingGroups)) {

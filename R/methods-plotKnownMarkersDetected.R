@@ -42,7 +42,7 @@ NULL
         high = "purple"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = 2) {
+    headerLevel = 2L) {
     if (!nrow(knownMarkersDetected)) return(NULL)
     cellTypes <- knownMarkersDetected %>%
         pull("cell") %>%
@@ -63,7 +63,7 @@ NULL
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE)
-            subheaderLevel <- headerLevel + 1
+            subheaderLevel <- headerLevel + 1L
         } else {
             subheaderLevel <- NULL
         }

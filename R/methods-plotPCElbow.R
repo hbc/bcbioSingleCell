@@ -48,7 +48,7 @@ NULL
     xlab <- "pc"
 
     # Principal component standard deviations
-    pct <- sd ^ 2 / sum(sd ^ 2)
+    pct <- sd ^ 2L / sum(sd ^ 2L)
     cumsum <- cumsum(pct)
     tbl <- tibble(
         pc = seq_along(sd),
@@ -121,12 +121,12 @@ NULL
         # Coordinates are relative to lower left corner
         draw_plot(
             ggelbow,
-            x = 0, y = 0.5, width = 1, height = 0.5) +
+            x = 0L, y = 0.5, width = 1L, height = 0.5) +
         draw_plot(
             ggpct,
-            x = 0, y = 0, width = 0.5, height = 0.5) +
+            x = 0L, y = 0L, width = 0.5, height = 0.5) +
         draw_plot(
-            ggcumsum, x = 0.5, y = 0, width = 0.5, height = 0.5)
+            ggcumsum, x = 0.5, y = 0L, width = 0.5, height = 0.5)
     show(p)
 
     invisible(seq_len(cutoff))

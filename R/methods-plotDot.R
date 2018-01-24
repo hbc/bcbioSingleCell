@@ -74,7 +74,7 @@ NULL
 #' @importFrom rlang !! !!! sym syms
 #' @importFrom tibble as_tibble
 #' @importFrom tidyr gather
-.plotDot.seurat <- function(
+.plotDot.seurat <- function(  # nolint
     object,
     genes,
     format = "symbol",
@@ -83,8 +83,8 @@ NULL
         high = "purple"),
     colMin = -2.5,
     colMax = 2.5,
-    dotMin = 0,
-    dotScale = 6) {
+    dotMin = 0L,
+    dotScale = 6L) {
     .checkFormat(format)
     if (format == "ensgene") {
         genes <- .convertGenesToSymbols(object, genes = genes)
@@ -102,7 +102,7 @@ NULL
         group_by(!!!syms(c("ident", "gene"))) %>%
         summarize(
             avgExp = mean(expm1(.data[["expression"]])),
-            pctExp = .percentAbove(.data[["expression"]], threshold = 0)
+            pctExp = .percentAbove(.data[["expression"]], threshold = 0L)
         ) %>%
         ungroup() %>%
         group_by(!!sym("gene")) %>%
@@ -126,7 +126,7 @@ NULL
                 color = "avgExpScale",
                 size = "pctExp")
         ) +
-        scale_radius(range = c(0, dotScale)) +
+        scale_radius(range = c(0L, dotScale)) +
         labs(x = "gene",
              y = "ident")
     if (is(color, "ScaleContinuous")) {

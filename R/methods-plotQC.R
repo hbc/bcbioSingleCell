@@ -58,7 +58,7 @@ validQCGeomFlip <- c(
     object,
     interestingGroups,
     geom = "violin",
-    headerLevel = 2,
+    headerLevel = 2L,
     legend = FALSE,
     return = "grid") {
     if (missing(interestingGroups)) {
@@ -120,44 +120,44 @@ validQCGeomFlip <- c(
         if (!is.null(plotlist[["plotReadsPerCell"]])) {
             mdHeader(
                 "Reads per cell",
-                level = headerLevel + 1,
+                level = headerLevel + 1L,
                 asis = TRUE)
             show(plotlist[["plotReadsPerCell"]])
         }
 
         mdHeader(
             "Cell counts",
-            level = headerLevel + 1,
+            level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotCellCounts"]])
 
         mdHeader(
             "UMI counts per cell",
-            level = headerLevel + 1,
+            level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotUMIsPerCell"]])
 
         mdHeader(
             "Genes detected",
-            level = headerLevel + 1,
+            level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotGenesPerCell"]])
 
         mdHeader(
             "UMIs vs. genes",
-            level = headerLevel + 1,
+            level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotUMIsVsGenes"]])
 
         mdHeader(
             "Mitochondrial counts ratio",
-            level = headerLevel + 1,
+            level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotMitoRatio"]])
 
         mdHeader(
             "Novelty",
-            level = headerLevel + 1,
+            level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotNovelty"]])
     }
@@ -188,8 +188,8 @@ validQCGeomFlip <- c(
 
 #' @importFrom ggplot2 aes_string element_text geom_boxplot ggplot labs
 #'   scale_y_sqrt theme
-.plotQCBoxplot <- function(metrics, metricCol, min = 0, max = Inf) {
-    if (!is.numeric(min)) min <- 0
+.plotQCBoxplot <- function(metrics, metricCol, min = 0L, max = Inf) {
+    if (!is.numeric(min)) min <- 0L
     if (!is.numeric(max)) max <- Inf
     p <- ggplot(
         metrics,
@@ -200,10 +200,10 @@ validQCGeomFlip <- c(
     ) +
         geom_boxplot(color = lineColor, outlier.shape = NA) +
         scale_y_sqrt() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
     # Cutoff lines
-    if (min > 0) {
+    if (min > 0L) {
         p <- p + .qcCutoffLine(yintercept = min)
     }
     if (max < Inf) {
@@ -217,8 +217,8 @@ validQCGeomFlip <- c(
 
 #' @importFrom ggplot2 aes_string element_text geom_histogram ggplot labs
 #'   scale_x_sqrt scale_y_sqrt theme
-.plotQCHistogram <- function(metrics, metricCol, min = 0, max = Inf) {
-    if (!is.numeric(min)) min <- 0
+.plotQCHistogram <- function(metrics, metricCol, min = 0L, max = Inf) {
+    if (!is.numeric(min)) min <- 0L
     if (!is.numeric(max)) max <- Inf
     p <- ggplot(
         metrics,
@@ -229,10 +229,10 @@ validQCGeomFlip <- c(
         geom_histogram(bins = bins) +
         scale_x_sqrt() +
         scale_y_sqrt() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
     # Cutoff lines
-    if (min > 0) {
+    if (min > 0L) {
         p <- p + .qcCutoffLine(xintercept = min)
     }
     if (max < Inf) {
@@ -247,8 +247,8 @@ validQCGeomFlip <- c(
 #' @importFrom ggplot2 aes_string element_text geom_boxplot ggplot labs
 #'   scale_x_sqrt theme
 #' @importFrom ggridges geom_density_ridges
-.plotQCRidgeline <- function(metrics, metricCol, min = 0, max = Inf) {
-    if (!is.numeric(min)) min <- 0
+.plotQCRidgeline <- function(metrics, metricCol, min = 0L, max = Inf) {
+    if (!is.numeric(min)) min <- 0L
     if (!is.numeric(max)) max <- Inf
     p <- ggplot(
         metrics,
@@ -261,12 +261,12 @@ validQCGeomFlip <- c(
             alpha = qcPlotAlpha,
             color = lineColor,
             panel_scaling = TRUE,
-            scale = 10) +
+            scale = 10L) +
         scale_x_sqrt() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
     # Cutoff lines
-    if (min > 0) {
+    if (min > 0L) {
         p <- p + .qcCutoffLine(xintercept = min)
     }
     if (max < Inf) {
@@ -304,8 +304,8 @@ validQCGeomFlip <- c(
 
 #' @importFrom ggplot2 aes_string element_text geom_violin ggplot labs
 #'   scale_y_sqrt theme
-.plotQCViolin <- function(metrics, metricCol, min = 0, max = Inf) {
-    if (!is.numeric(min)) min <- 0
+.plotQCViolin <- function(metrics, metricCol, min = 0L, max = Inf) {
+    if (!is.numeric(min)) min <- 0L
     if (!is.numeric(max)) max <- Inf
     p <- ggplot(
         metrics,
@@ -319,10 +319,10 @@ validQCGeomFlip <- c(
             scale = "width",
             trim = TRUE) +
         scale_y_sqrt() +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
     # Cutoff lines
-    if (min > 0) {
+    if (min > 0L) {
         p <- p + .qcCutoffLine(yintercept = min)
     }
     if (max < Inf) {

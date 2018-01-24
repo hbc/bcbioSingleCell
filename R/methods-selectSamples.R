@@ -47,7 +47,7 @@ NULL
     checkCharacter <- vapply(
         X = arguments,
         FUN = is.character,
-        FUN.VALUE = logical(1)
+        FUN.VALUE = logical(1L)
     )
     if (!all(isTRUE(as.logical(checkCharacter)))) {
         abort("Arguments must be character vectors")

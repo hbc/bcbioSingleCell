@@ -69,7 +69,7 @@ setMethod(
                 ))
             slot(object, "data") %>%
                 rownames() %>%
-                .[[1]] %>%
+                .[[1L]] %>%
                 detectOrganism()
         }
     }

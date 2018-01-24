@@ -49,13 +49,13 @@ NULL
 #' @importFrom tibble rownames_to_column
 .filterCells <- function(
     object,
-    minUMIs = 1000,
+    minUMIs = 1000L,
     maxUMIs = Inf,
-    minGenes = 500,
+    minGenes = 500L,
     maxGenes = Inf,
     maxMitoRatio = 0.1,
     minNovelty = 0.75,
-    minCellsPerGene = 3,
+    minCellsPerGene = 3L,
     quiet = FALSE) {
     metrics <- metrics(object)
     sampleIDs <- levels(metrics[["sampleID"]])
@@ -164,7 +164,6 @@ NULL
                 .[.[["sampleID"]] == sampleID, , drop = FALSE] %>%
                 .[.[["nGene"]] >= cutoff, , drop = FALSE]
         })
-        # FIXME This is dropping to a numeric
         metrics <- do.call(rbind, list)
     } else {
         # Fixed cutoff value
@@ -274,10 +273,9 @@ NULL
     }
 
     # Filter low quality genes =================================================
-    # TODO Add per sample filtering here also?
-    if (minCellsPerGene > 0) {
+    if (minCellsPerGene > 0L) {
         counts <- assay(object)
-        numCells <- Matrix::rowSums(counts > 0)
+        numCells <- Matrix::rowSums(counts > 0L)
         genes <- names(numCells[which(numCells >= minCellsPerGene)])
     } else {
         genes <- sort(rownames(object))
@@ -335,7 +333,7 @@ NULL
 
 
 #' @importFrom stringr str_pad
-.paddedCount <- function(x, width = 8) {
+.paddedCount <- function(x, width = 8L) {
     str_pad(x, width = width, pad = " ")
 }
 

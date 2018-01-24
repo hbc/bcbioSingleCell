@@ -35,7 +35,7 @@ NULL
 .plotNovelty <- function(
     object,
     geom = "violin",
-    min = 0,
+    min = 0L,
     interestingGroups,
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)) {
@@ -60,7 +60,7 @@ NULL
 
     # Median labels
     if (geom %in% validMedianGeom) {
-        p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
+        p <- p + .medianLabels(object, medianCol = metricCol, digits = 2L)
     }
 
     # Facets

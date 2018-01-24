@@ -71,12 +71,12 @@ NULL
             cellType <- subset[b, , drop = FALSE]
             genes <- pull(cellType, "symbol") %>%
                 strsplit(", ") %>%
-                .[[1]]
+                .[[1L]]
             title <- pull(cellType, "cell")
             if (!is.null(headerLevel)) {
                 mdHeader(
                     title,
-                    level = headerLevel + 1,
+                    level = headerLevel + 1L,
                     tabset = TRUE,
                     asis = TRUE)
             }

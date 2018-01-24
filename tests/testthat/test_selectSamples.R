@@ -63,4 +63,3 @@ test_that("Stop on unfiltered object", {
         "`filterCells\\(\\)` hasn't been applied to this dataset"
     )
 })
-

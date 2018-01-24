@@ -50,7 +50,7 @@ NULL
 .plotGenesPerCell <- function(
     object,
     geom = "violin",
-    min = 0,
+    min = 0L,
     max = Inf,
     interestingGroups,
     samplesOnYAxis = TRUE,
