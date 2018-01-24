@@ -30,14 +30,16 @@ test_that("fetchPCAData", {
             "centerY" = "numeric"
         )
     )
+
     subset <- data[1L, ] %>%
         rownames_to_column() %>%
         mutate_if(is.numeric, funs(round(., digits = 3L))) %>%
         column_to_rownames()
+    identLevels <- c("0", "1", "2", "3")
     target <- data.frame(
         "pc1" = 3.947,
         "pc2" = 1.596,
-        "ident" = factor("0", levels = c("0", "1", "2", "3")),
+        "ident" = factor("0", levels = identLevels),
         "nGene" = 734L,
         "nUMI" = 6220L,
         "sampleID" = factor("M1"),
@@ -50,7 +52,7 @@ test_that("fetchPCAData", {
         "description" = factor("M1"),
         "interestingGroups" = factor("M1"),
         "origIdent" = factor("M1"),
-        "res08" = factor("0"),
+        "res08" = factor("0", levels = identLevels),
         "centerX" = 3.581,
         "centerY" = 3.17,
         row.names = "M1_AAACACTA_CTTAGGTA",
