@@ -45,7 +45,7 @@ NULL
 #' @importFrom bcbioBase camel
 #' @importFrom dplyr distinct mutate_if select_if
 #' @importFrom tibble remove_rownames
-.prepareSampleMetadataFromSeurat <- function(metadata) {
+.sampleMetadata.seurat <- function(metadata) {  # nolint
     # Assign the required metadata columns from `orig.ident`, if necessary
     if (!all(metadataPriorityCols %in% colnames(metadata))) {
         for (i in seq_len(ncol(metadata))) {
@@ -66,7 +66,7 @@ NULL
 
 #' @importFrom dplyr everything mutate_if
 #' @importFrom magrittr set_rownames
-.returnSampleMetadata <- function(metadata, interestingGroups) {
+.sanitizeSampleMetadata <- function(metadata, interestingGroups) {
     metadata %>%
         select(c(metadataPriorityCols), everything()) %>%
         mutate_if(is.character, as.factor) %>%
@@ -111,7 +111,7 @@ setMethod(
                 abort("Failed to aggregate sample metadata uniquely")
             }
         }
-        .returnSampleMetadata(
+        .sanitizeSampleMetadata(
             metadata = metadata,
             interestingGroups = interestingGroups)
     })
@@ -154,11 +154,11 @@ setMethod(
             }
             if (.hasSlot(object, "meta.data")) {
                 metadata <- slot(object, "meta.data") %>%
-                    .prepareSampleMetadataFromSeurat()
+                    .sampleMetadata.seurat()
             } else if (.hasSlot(object, "data.info")) {
                 # Legacy support for older seurat objects (e.g. pbmc33k)
                 metadata <- slot(object, "data.info") %>%
-                    .prepareSampleMetadataFromSeurat()
+                    .sampleMetadata.seurat()
             } else {
                 abort("Failed to detect metadata in seurat object")
             }
@@ -167,7 +167,7 @@ setMethod(
                 interestingGroups <- "sampleName"
             }
         }
-        .returnSampleMetadata(
+        .sanitizeSampleMetadata(
             metadata = metadata,
             interestingGroups = interestingGroups)
     })
