@@ -24,8 +24,8 @@ test_that("fetchTSNEData", {
             "sampleName" = "factor",
             "description" = "factor",
             "interestingGroups" = "factor",
-            "orig.ident" = "factor",
-            "res.0.8" = "factor",
+            "origIdent" = "factor",
+            "res08" = "factor",
             "centerX" = "numeric",
             "centerY" = "numeric"
         )
@@ -49,8 +49,8 @@ test_that("fetchTSNEData", {
         "sampleName" = factor("M1"),
         "description" = factor("M1"),
         "interestingGroups" = factor("M1"),
-        "orig.ident" = factor("M1"),
-        "res.0.8" = factor("0"),
+        "origIdent" = factor("M1"),
+        "res08" = factor("0"),
         "centerX" = -6.651,
         "centerY" = -4.226,
         row.names = "M1_AAACACTA_CTTAGGTA",
