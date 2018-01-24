@@ -15,7 +15,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-01-19
+# Last modified 2018-01-23
 library(bcbioSingleCell)
 
 # Shared R Markdown settings
@@ -42,12 +42,6 @@ sampleMetadata(bcb)
 ```
 
 [bcbio][] run data was imported from **`r metadata(bcb)$uploadDir`**.
-
-
-
-# Count alignment
-
-We aligned the counts using the latest transcriptome FASTA from [Ensembl][].
 
 
 
