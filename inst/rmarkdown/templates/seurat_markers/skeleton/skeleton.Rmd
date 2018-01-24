@@ -10,8 +10,8 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-01-19
-library(bcbioSingleCell)
+# Last modified 2018-01-24
+suppressPackageStartupMessages(library(bcbioSingleCell))
 library(Seurat)
 
 # Shared R Markdown settings
