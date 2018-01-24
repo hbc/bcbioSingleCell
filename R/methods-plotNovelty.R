@@ -38,7 +38,7 @@ NULL
     min = 0L,
     interestingGroups,
     samplesOnYAxis = TRUE,
-    fill = scale_fill_viridis(discrete = TRUE)) {
+    fill = viridis::scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "log10GenesPerUMI"
     p <- .plotQCGeom(
         object,
@@ -83,6 +83,8 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotNovelty
+#' @importFrom bcbioBase interestingGroups
+#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotNovelty",
@@ -93,7 +95,7 @@ setMethod(
         min,
         interestingGroups,
         samplesOnYAxis = TRUE,
-        fill = scale_fill_viridis(discrete = TRUE)) {
+        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
@@ -124,6 +126,8 @@ setMethod(
 
 
 #' @rdname plotNovelty
+#' @importFrom bcbioBase interestingGroups
+#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotNovelty",
@@ -134,7 +138,7 @@ setMethod(
         min,
         interestingGroups,
         samplesOnYAxis = TRUE,
-        fill = scale_fill_viridis(discrete = TRUE)) {
+        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }

@@ -12,13 +12,13 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{bcbioSingleCell}(object, interestingGroups,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = viridis::scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{data.frame}(object, metadata, interestingGroups,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = viridis::scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{seurat}(object, interestingGroups,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = viridis::scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}

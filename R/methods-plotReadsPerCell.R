@@ -269,6 +269,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom bcbioBase interestingGroups
 #' @importFrom cowplot draw_plot ggdraw
 #'
 #' @inherit plotReadsPerCell

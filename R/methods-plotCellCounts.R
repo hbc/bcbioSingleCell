@@ -41,7 +41,7 @@ NULL
     object,
     metadata,
     interestingGroups,
-    fill = scale_fill_viridis(discrete = TRUE)) {
+    fill = viridis::scale_fill_viridis(discrete = TRUE)) {
     data <- object %>%
         group_by(!!sym("sampleName")) %>%
         summarize(nCells = n()) %>%
@@ -100,6 +100,8 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotCellCounts
+#' @importFrom bcbioBase interestingGroups
+#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotCellCounts",
@@ -107,7 +109,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        fill = scale_fill_viridis(discrete = TRUE)) {
+        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
@@ -136,6 +138,8 @@ setMethod(
 
 
 #' @rdname plotCellCounts
+#' @importFrom bcbioBase interestingGroups
+#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotCellCounts",
@@ -143,7 +147,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        fill = scale_fill_viridis(discrete = TRUE)) {
+        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
