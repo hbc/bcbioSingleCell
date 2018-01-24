@@ -127,32 +127,30 @@ setMethod(
     function(
         object,
         interestingGroups) {
-        metadata <- NULL
-        # Attempt to use stashed metadata at `object@misc$bcbio`. This will
-        # only exist for seurat class objects created from bcbioSingleCell.
-        bcbio <- bcbio(object)
-        if (!is.null(bcbio)) {
-            metadata <- bcbio[["sampleMetadata"]]
+        # Attempt to use stashed metadata. This will only exist for seurat
+        # objects created with bcbioSingleCell.
+        metadata <- bcbio(object, "sampleMetadata")
+        if (!is.null(metadata)) {
+            inform("Using bcbio stashed metadata")
             if (!identical(
                 unique(as.character(metadata[["sampleID"]])),
                 unique(as.character(slot(object, "meta.data")[["sampleID"]]))
             )) {
-                warn(paste(
-                    "Dimension mismatch with stashed metadata.",
+                abort(paste(
+                    "`sampleID` mismatch with `seurat@meta.data`",
                     "Using Seurat cellular barcode metadata instead"
                 ))
-                metadata <- NULL
             }
             # Define interesting groups
             if (missing(interestingGroups)) {
                 interestingGroups <- bcbio[["interestingGroups"]]
             }
-        }
-        # Fall back to constructing metadata from cellular barcode info
-        if (is.null(metadata)) {
+        } else {
+            # Fall back to constructing metadata from cellular barcode info
             if (!.hasSlot(object, "version")) {
-                warn("Failed to detect seurat version")
+                abort("Failed to detect seurat version")
             }
+            # Access the metadata
             if (.hasSlot(object, "meta.data")) {
                 metadata <- slot(object, "meta.data") %>%
                     .sampleMetadata.seurat()
@@ -161,7 +159,7 @@ setMethod(
                 metadata <- slot(object, "data.info") %>%
                     .sampleMetadata.seurat()
             } else {
-                abort("Failed to detect metadata in seurat object")
+                abort("Failed to locate metadata in seurat object")
             }
             # Define interesting groups
             if (missing(interestingGroups)) {
