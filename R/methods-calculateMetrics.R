@@ -36,7 +36,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr filter mutate pull
+#' @importFrom dplyr filter mutate mutate_if pull
 #' @importFrom Matrix colSums
 #' @importFrom scales percent
 #' @importFrom tibble column_to_rownames tibble
