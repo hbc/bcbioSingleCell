@@ -29,7 +29,7 @@ setMethod(
     "fetchTSNEData",
     signature("seurat"),
     function(object) {
-        .fetchDimDataSeurat(
+        .fetchDimData.seurat(
             object,
             dimCode = c(x = "tSNE_1", y = "tSNE_2")
         )
