@@ -52,7 +52,11 @@ NULL
             metadata[[metadataPriorityCols[[i]]]] <- metadata[["orig.ident"]]
         }
     }
-    blacklist <- paste(c("Phase", "res\\."), collapse = "|")
+    blacklist <- paste(c(
+        "orig.ident",
+        "Phase",
+        "^res\\.[0-9]"
+    ), collapse = "|")
     metadata %>%
         remove_rownames() %>%
         .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
@@ -143,9 +147,10 @@ setMethod(
             }
             # Define interesting groups
             if (missing(interestingGroups)) {
-                interestingGroups <- bcbio[["interestingGroups"]]
+                interestingGroups <- bcbioBase::interestingGroups(object)
             }
         } else {
+            inform("Generating sample metadata from `meta.data` slot")
             # Fall back to constructing metadata from cellular barcode info
             if (!.hasSlot(object, "version")) {
                 abort("Failed to detect seurat version")

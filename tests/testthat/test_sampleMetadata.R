@@ -26,33 +26,23 @@ test_that("bcbioSingleCell", {
     )
 })
 
+seuratdata <- data.frame(
+    "sampleID" = "M1",
+    "sampleName" = "M1",
+    "description" = "M1",
+    "interestingGroups" = "M1",
+    row.names = "M1",
+    stringsAsFactors = TRUE)
+
 test_that("seurat", {
     data <- sampleMetadata(seurat)
     expect_is(data, "data.frame")
-    expect_identical(
-        lapply(data, class),
-        list(
-            "sampleID" = "factor",
-            "sampleName"  = "factor",
-            "description" = "factor",
-            "interestingGroups" = "factor"
-        )
-    )
+    expect_identical(data, seuratdata)
 })
 
-test_that("prepareSampleMetadataFromSeurat", {
-    meta <- slot(seurat, "meta.data")
-    expect_is(meta, "data.frame")
-    data <- .prepareSampleMetadataFromSeurat(meta)
+test_that("seurat without stashed metadata", {
+    bcbio(seurat, "sampleMetadata") <- NULL
+    data <- sampleMetadata(seurat)
     expect_is(data, "data.frame")
-    expect_identical(
-        data,
-        data.frame(
-            "sampleID" = "M1",
-            "sampleName" = "M1",
-            "description" = "M1",
-            "interestingGroups" = "M1",
-            "origIdent" = "M1",
-            stringsAsFactors = TRUE)
-    )
+    expect_identical(data, seuratdata)
 })
