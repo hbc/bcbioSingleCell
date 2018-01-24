@@ -35,7 +35,7 @@ test_that("symbol", {
             "description" = "factor",
             "interestingGroups" = "factor",
             "origIdent" = "factor",
-            "res08" = "factor",
+            "res0x8" = "factor",
             "centerX" = "numeric",
             "centerY" = "numeric"
         )
@@ -66,7 +66,7 @@ test_that("symbol", {
         "description" = factor("M1"),
         "interestingGroups" = factor("M1"),
         "origIdent" = factor("M1"),
-        "res08" = factor("0", levels = identLevels),
+        "res0x8" = factor("0", levels = identLevels),
         "centerX" = -6.651,
         "centerY" = -4.226
     ) %>%
