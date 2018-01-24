@@ -1,7 +1,3 @@
-# FIXME Improve error messages for invalid i and j ranges
-
-
-
 #' Bracket-Based Subsetting
 #'
 #' Extract genes by row and cells by column from a [bcbioSingleCell] object.
@@ -49,10 +45,10 @@ NULL
 #' @importFrom S4Vectors metadata SimpleList
 .subset <- function(x, i, j, ..., drop = FALSE) {
     if (missing(i)) {
-        i <- 1:nrow(x)
+        i <- 1L:nrow(x)
     }
     if (missing(j)) {
-        j <- 1:ncol(x)
+        j <- 1L:ncol(x)
     }
 
     # Early return if dimensions are unmodified
@@ -90,7 +86,7 @@ NULL
     # cell2sample
     cell2sample <- metadata[["cell2sample"]]
     if (!is.factor(cell2sample)) {
-        stop("'cell2sample' factor missing in 'metadata()'", call. = FALSE)
+        abort("`cell2sample` factor missing in `metadata()` slot")
     }
     cell2sample <- cell2sample %>%
         .[cells] %>%

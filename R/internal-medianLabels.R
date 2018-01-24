@@ -6,7 +6,7 @@
 #'
 #' @importFrom ggplot2 aes_string geom_label
 #' @importFrom S4Vectors aggregate
-.medianLabels <- function(metrics, medianCol, digits = 0) {
+.medianLabels <- function(metrics, medianCol, digits = 0L) {
     # For example, `medianCol` can be `nGene`.
     # Median values are always calculated by sample (`sampleName`).
     formula <- formula(paste(medianCol, "sampleName", sep = " ~ "))

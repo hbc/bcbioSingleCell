@@ -41,13 +41,13 @@ setMethod(
     function(
         object,
         features,
-        pointSize = 1,
+        pointSize = 1L,
         color = ggplot2::scale_color_gradient(
             low = "lightgray",
             high = "purple"),
         dark = FALSE,
         label = TRUE,
-        labelSize = 6,
+        labelSize = 6L,
         legend = FALSE,
         returnAsList = FALSE) {
         data <- cbind(

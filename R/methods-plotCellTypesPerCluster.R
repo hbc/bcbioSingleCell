@@ -48,7 +48,7 @@ NULL
     headerLevel = NULL) {
     if (!nrow(cellTypesPerCluster)) return(NULL)
     if (group_vars(cellTypesPerCluster) != "cluster") {
-        stop("cellTypesPerCluster must be grouped by 'cluster'")
+        abort("cellTypesPerCluster must be grouped by `cluster` column")
     }
     cellTypesPerCluster <- cellTypesPerCluster %>%
         ungroup() %>%
@@ -71,12 +71,12 @@ NULL
             cellType <- subset[b, , drop = FALSE]
             genes <- pull(cellType, "symbol") %>%
                 strsplit(", ") %>%
-                .[[1]]
+                .[[1L]]
             title <- pull(cellType, "cell")
             if (!is.null(headerLevel)) {
                 mdHeader(
                     title,
-                    level = headerLevel + 1,
+                    level = headerLevel + 1L,
                     tabset = TRUE,
                     asis = TRUE)
             }

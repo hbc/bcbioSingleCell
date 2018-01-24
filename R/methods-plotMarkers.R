@@ -58,7 +58,7 @@ NULL
 #' @importFrom viridis scale_fill_viridis viridis
 #'
 #' @param returnAsList Return the `gg` objects as a list.
-.plotMarker.seurat <- function(
+.plotMarker.seurat <- function(  # nolint
     object,
     gene,
     tsneColor = viridis::scale_color_viridis(),
@@ -72,12 +72,12 @@ NULL
     return = "grid") {
     # Parameter integrity ======================================================
     if (!is_string(gene)) {
-        stop("gene must be a string", call. = FALSE)
+        abort("`gene` must be a string")
     }
     # return
     validReturn <- c("grid", "list")
     if (!return %in% validReturn) {
-        stop(paste("'return' must contain:", toString(validReturn)))
+        abort(paste("`return` must contain:", toString(validReturn)))
     }
 
     # Plots ====================================================================
@@ -107,16 +107,16 @@ NULL
         dot <- dot +
             labs(x = "") +
             coord_flip() +
-            theme(axis.text.y = element_text(angle = 90, hjust = 0.5),
+            theme(axis.text.y = element_text(angle = 90L, hjust = 0.5),
                   legend.position = "none")
         plot_grid(
             tsne,
             violin,
             dot,
             labels = NULL,
-            ncol = 1,
-            nrow = 3,
-            rel_heights = c(1, 0.3, 0.15)
+            ncol = 1L,
+            nrow = 3L,
+            rel_heights = c(1L, 0.3, 0.15)
         )
     } else if (return == "list") {
         list("tsne" = tsne,
@@ -128,7 +128,7 @@ NULL
 
 
 # Note the plural version here. This is the gene looping code.
-.plotMarkers.seurat <- function(
+.plotMarkers.seurat <- function(  # nolint
     object,
     genes,
     format = "symbol",
@@ -139,7 +139,7 @@ NULL
         high = "purple"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = 2,
+    headerLevel = 2L,
     title = NULL) {
     .checkFormat(format)
     if (format == "ensgene") {
@@ -149,7 +149,7 @@ NULL
         gene <- genes[[a]]
         # Skip and warn if gene is missing
         if (!gene %in% rownames(slot(object, "data"))) {
-            return(warning(paste(gene, "missing"), call. = FALSE))
+            return(warn(paste(gene, "missing")))
         }
         if (!is.null(headerLevel)) {
             mdHeader(gene, level = headerLevel, asis = TRUE)

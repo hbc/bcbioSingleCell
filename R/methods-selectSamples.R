@@ -44,9 +44,13 @@ NULL
     # should be a string that can be used for logical grep matching here
     # internally.
     arguments <- list(...)
-    checkCharacter <- vapply(arguments, is.character, FUN.VALUE = logical(1))
+    checkCharacter <- vapply(
+        X = arguments,
+        FUN = is.character,
+        FUN.VALUE = logical(1L)
+    )
     if (!all(isTRUE(as.logical(checkCharacter)))) {
-        stop("'Arguments must be character")
+        abort("Arguments must be character vectors")
     }
 
     # Match the arguments against the sample metadata
@@ -58,17 +62,14 @@ NULL
                 .[.[[column]] %in% argument, , drop = FALSE]
         # Check for match failure
         if (!nrow(match)) {
-            warning(paste(
-                "Match failure:",
-                paste(column, "=", argument)
-            ), call. = FALSE)
+            warn(paste("Match failure:", paste(column, "=", argument)))
             return(NULL)
         }
         pull(match, "sampleID")
     })
     sampleIDs <- Reduce(f = intersect, x = list)
     if (!length(sampleIDs)) {
-        warning("No samples matched", call. = FALSE)
+        warn("No samples matched")
         return(NULL)
     }
     sampleIDs <- sort(unique(sampleIDs))
@@ -80,7 +81,7 @@ NULL
         as.character() %>%
         sort() %>%
         unique()
-    message(paste(
+    inform(paste(
         length(sampleNames), "sample(s) matched:",
         toString(sampleNames)
     ))
@@ -89,9 +90,9 @@ NULL
     metrics <- metrics(object) %>%
         .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
     if (!nrow(metrics)) {
-        stop("Failed to match metrics", call. = FALSE)
+        abort("Failed to match metrics")
     }
-    message(paste(nrow(metrics), "cells matched"))
+    inform(paste(nrow(metrics), "cells matched"))
     cells <- rownames(metrics)
 
     object[, cells]

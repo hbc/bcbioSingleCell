@@ -31,13 +31,11 @@ NULL
 # Constructors =================================================================
 #' @importFrom dplyr slice
 #' @importFrom tibble as_tibble column_to_rownames rownames_to_column
-.topBarcodes <- function(object, n = 10) {
+.topBarcodes <- function(object, n = 10L) {
     col <- "nUMI"
     metrics <- metrics(object)
     if (!col %in% colnames(metrics)) {
-        warning(paste0(
-            "'", col, "' missing from 'metrics()'"
-        ), call. = FALSE)
+        warn(paste0("`", col, "` column missing from metrics"))
         return(NULL)
     }
     metrics %>%
@@ -45,7 +43,7 @@ NULL
         as_tibble() %>%
         .[order(.[[col]], decreasing = TRUE), , drop = FALSE] %>%
         # Take the top rows by using slice
-        slice(1:n) %>%
+        slice(1L:n) %>%
         as.data.frame() %>%
         column_to_rownames()
 }

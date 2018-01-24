@@ -51,9 +51,10 @@ NULL
                 .[!is.na(.[["symbol"]]), , drop = FALSE]
             unmatched <- g2s %>%
                 .[is.na(.[["symbol"]]), , drop = FALSE]
-            warning(paste(
+            warn(paste(
                 "Unmatched in gene2symbol:",
-                toString(rownames(unmatched))), call. = FALSE)
+                toString(rownames(unmatched))
+            ))
             unmatched[["ensgene"]] <- rownames(unmatched)
             unmatched[["symbol"]] <- rownames(unmatched)
             g2s <- rbind(matched, unmatched)
@@ -91,7 +92,7 @@ setMethod(
         } else if (normalized == "scaled") {
             slot(object, "scale.data")
         } else {
-            warning("Unsupported 'normalized' argument", call. = FALSE)
+            warn("Unsupported `normalized` argument")
             return(NULL)
         }
     }

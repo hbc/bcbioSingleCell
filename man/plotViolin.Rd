@@ -8,7 +8,7 @@
 \usage{
 \S4method{plotViolin}{seurat}(object, genes, format = "symbol",
   fill = viridis::scale_fill_viridis(discrete = TRUE), return = "grid",
-  headerLevel = 2)
+  headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}

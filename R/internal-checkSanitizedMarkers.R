@@ -17,7 +17,7 @@
     # General checks ===========================================================
     if (!is(object, "grouped_df")) {
         if (isTRUE(stop)) {
-            stop("Object must be 'grouped_df' class", call. = FALSE)
+            abort("Object must be `grouped_df` class")
         } else {
             return(FALSE)
         }
@@ -25,14 +25,14 @@
     if (is.null(attr(object, "vars")) |
         attr(object, "vars") != "cluster") {
         if (isTRUE(stop)) {
-            stop("Object must be grouped by 'cluster'", call. = FALSE)
+            abort("Object must be grouped by `cluster` column")
         } else {
             return(FALSE)
         }
     }
     if (!"ensgene" %in% colnames(object)) {
         if (isTRUE(stop)) {
-            stop("Object missing 'ensgene' column", call. = FALSE)
+            abort("Object missing `ensgene` column")
         } else {
             return(FALSE)
         }
@@ -59,7 +59,7 @@
             sanitized <- TRUE
         }
     } else {
-        stop("Unsupported package")
+        abort("Unsupported package")
     }
 
     # Return or stop
@@ -68,9 +68,9 @@
         sanitized
     } else if (identical(stop, TRUE) &
                identical(sanitized, FALSE)) {
-        stop(paste(
+        abort(paste(
             "Markers table doesn't pass sanitization checks.",
-            "Ensure that 'sanitizeMarkers()' has been run."
-        ), call. = FALSE)
+            "Ensure that `sanitizeMarkers()` has been run."
+        ))
     }
 }

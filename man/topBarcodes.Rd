@@ -10,9 +10,9 @@
 \usage{
 topBarcodes(object, ...)
 
-\S4method{topBarcodes}{bcbioSingleCell}(object, n = 10)
+\S4method{topBarcodes}{bcbioSingleCell}(object, n = 10L)
 
-\S4method{topBarcodes}{seurat}(object, n = 10)
+\S4method{topBarcodes}{seurat}(object, n = 10L)
 }
 \arguments{
 \item{object}{Object.}

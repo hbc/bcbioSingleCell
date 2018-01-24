@@ -2,6 +2,7 @@
     packages <-
         c("bcbioBase",
           "SummarizedExperiment",
+          "viridis",
           "Seurat")
     lapply(seq_along(packages), function(a) {
         if (!packages[[a]] %in% (.packages())) {

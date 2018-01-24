@@ -43,16 +43,16 @@ NULL
 #' @importFrom tibble as_tibble
 #' @importFrom tidyr gather
 #' @importFrom viridis scale_fill_viridis
-.plotViolin.seurat <- function(
+.plotViolin.seurat <- function(  # nolint
     object,
     genes,
     format = "symbol",
     fill = viridis::scale_fill_viridis(discrete = TRUE),
     return = "grid",
-    headerLevel = 2) {
+    headerLevel = 2L) {
     validReturn <- c("grid", "list", "markdown")
     if (!return %in% validReturn) {
-        stop(paste("'return' must contain:", toString(validReturn)))
+        abort(paste("`return` must contain:", toString(validReturn)))
     }
     .checkFormat(format)
     if (format == "ensgene") {
@@ -75,7 +75,7 @@ NULL
     # Loop across genes ====================================================
     plotlist <- lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
-        data <- data[data[["gene"]] == gene, ]
+        data <- data[data[["gene"]] == gene, , drop = FALSE]
         p <- ggplot(
             data,
             mapping = aes_string(
@@ -86,7 +86,7 @@ NULL
             geom_violin(
                 color = "black",
                 scale = "width",
-                adjust = 1,
+                adjust = 1L,
                 trim = TRUE) +
             labs(title = gene) +
             guides(fill = FALSE)

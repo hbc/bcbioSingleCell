@@ -1,3 +1,12 @@
+# bcbioSingleCell 0.0.28
+
+- Manually define functions used to read barcodes and matrices. This improves the functionality of the internal `.readSparseCounts()` function.
+- Improved sample directory matching for cellranger output.
+- Fixed sample metadata subsetting based on cell2sample factor levels in the internal subset code.
+- Added tabbed histogram, violin, and barplots for appropriate quality control functions in the R Markdown code.
+
+
+
 # bcbioSingleCell 0.0.27 (2018-01-18)
 
 - Migrated core dependency imports from [basejump][] to [bcbioBase][].

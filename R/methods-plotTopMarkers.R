@@ -43,7 +43,7 @@ NULL
         high = "purple"),
     dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = 2) {
+    headerLevel = 2L) {
     .checkSanitizedMarkers(topMarkers)
     clusters <- levels(topMarkers[["cluster"]])
     list <- pblapply(seq_along(clusters), function(a) {
@@ -53,10 +53,8 @@ NULL
             as.data.frame() %>%
             .[.[["cluster"]] == cluster, "symbol", drop = TRUE]
         if (!length(genes)) return(invisible())
-        if (length(genes) > 10) {
-            warning(
-                "Maximum of 10 genes per cluster is recommended",
-                call. = FALSE)
+        if (length(genes) > 10L) {
+            warn("Maximum of 10 genes per cluster is recommended")
         }
         if (!is.null(headerLevel)) {
             mdHeader(
@@ -64,7 +62,7 @@ NULL
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE)
-            subheaderLevel <- headerLevel + 1
+            subheaderLevel <- headerLevel + 1L
         } else {
             subheaderLevel <- NULL
         }

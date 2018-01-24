@@ -35,21 +35,21 @@ NULL
 #' @importFrom rlang !! sym
 .topMarkers <- function(
     object,
-    n = 10,
+    n = 10L,
     direction = "positive",
     coding = TRUE) {
     .checkSanitizedMarkers(object, stop = TRUE)
     # Check to make sure `avgLogFC` column exists
     if (!"avgLogFC" %in% colnames(object)) {
-        stop("'avgLogFC' column is required")
+        abort("`avgLogFC` column is missing")
     }
     # Check for valid direction
     directionArgs <- c("positive", "negative", "both")
     if (!direction %in% directionArgs) {
-        stop(paste(
-            "Valid 'direction':",
+        abort(paste(
+            "Valid `direction`:",
             toString(directionArgs)
-        ), call. = FALSE)
+        ))
     }
     if (isTRUE(coding)) {
         object <- object %>%
@@ -61,15 +61,15 @@ NULL
     # Subset to positive or negative correlation, if desired ("direction")
     # Note that `avgDiff` has been renamed to `avgLogFC` in Seurat v2.1
     if (direction == "positive") {
-        object <- filter(object, .data[["avgLogFC"]] > 0)
+        object <- filter(object, .data[["avgLogFC"]] > 0L)
     } else if (direction == "negative") {
-        object <- filter(object, .data[["avgLogFC"]] < 0)
+        object <- filter(object, .data[["avgLogFC"]] < 0L)
     }
     object %>%
         # Arrange by P value
         arrange(!!sym("pvalue")) %>%
         # Take the top rows by using slice
-        slice(1:n)
+        slice(1L:n)
 }
 
 

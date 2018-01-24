@@ -45,14 +45,18 @@ NULL
 #' @importFrom bcbioBase camel
 #' @importFrom dplyr distinct mutate_if select_if
 #' @importFrom tibble remove_rownames
-.prepareSampleMetadataFromSeurat <- function(metadata) {
+.sampleMetadata.seurat <- function(metadata) {  # nolint
     # Assign the required metadata columns from `orig.ident`, if necessary
     if (!all(metadataPriorityCols %in% colnames(metadata))) {
         for (i in seq_len(ncol(metadata))) {
             metadata[[metadataPriorityCols[[i]]]] <- metadata[["orig.ident"]]
         }
     }
-    blacklist <- paste(c("Phase", "res\\."), collapse = "|")
+    blacklist <- paste(c(
+        "orig.ident",
+        "Phase",
+        "^res\\.[0-9]"
+    ), collapse = "|")
     metadata %>%
         remove_rownames() %>%
         .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
@@ -66,7 +70,7 @@ NULL
 
 #' @importFrom dplyr everything mutate_if
 #' @importFrom magrittr set_rownames
-.returnSampleMetadata <- function(metadata, interestingGroups) {
+.sanitizeSampleMetadata <- function(metadata, interestingGroups) {
     metadata %>%
         select(c(metadataPriorityCols), everything()) %>%
         mutate_if(is.character, as.factor) %>%
@@ -92,7 +96,8 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
-        metadata <- metadata(object)[["sampleMetadata"]] %>%
+        metadata <- metadata(object) %>%
+            .[["sampleMetadata"]] %>%
             as.data.frame()
         # Aggregate replicates, if necessary
         if (isTRUE(aggregateReplicates)) {
@@ -108,11 +113,10 @@ setMethod(
                 select(unique(c(metadataPriorityCols, interestingGroups))) %>%
                 distinct()
             if (!identical(nrow(metadata), expected)) {
-                stop("Failed to aggregate sample metadata uniquely",
-                     call. = FALSE)
+                abort("Failed to aggregate sample metadata uniquely")
             }
         }
-        .returnSampleMetadata(
+        .sanitizeSampleMetadata(
             metadata = metadata,
             interestingGroups = interestingGroups)
     })
@@ -127,49 +131,47 @@ setMethod(
     function(
         object,
         interestingGroups) {
-        metadata <- NULL
-        # Attempt to use stashed metadata at `object@misc$bcbio`. This will
-        # only exist for seurat class objects created from bcbioSingleCell.
-        bcbio <- bcbio(object)
-        if (!is.null(bcbio)) {
-            metadata <- bcbio[["sampleMetadata"]]
+        # Attempt to use stashed metadata. This will only exist for seurat
+        # objects created with bcbioSingleCell.
+        metadata <- bcbio(object, "sampleMetadata")
+        if (!is.null(metadata)) {
+            inform("Using bcbio stashed metadata")
             if (!identical(
                 unique(as.character(metadata[["sampleID"]])),
                 unique(as.character(slot(object, "meta.data")[["sampleID"]]))
             )) {
-                warning(paste(
-                    "Dimension mismatch with stashed metadata.",
+                abort(paste(
+                    "`sampleID` mismatch with `seurat@meta.data`",
                     "Using Seurat cellular barcode metadata instead"
-                ), call. = FALSE)
-                metadata <- NULL
+                ))
             }
             # Define interesting groups
             if (missing(interestingGroups)) {
-                interestingGroups <- bcbio[["interestingGroups"]]
+                interestingGroups <- bcbioBase::interestingGroups(object)
             }
-        }
-        # Fall back to constructing metadata from cellular barcode info
-        if (is.null(metadata)) {
+        } else {
+            inform("Generating sample metadata from `meta.data` slot")
+            # Fall back to constructing metadata from cellular barcode info
             if (!.hasSlot(object, "version")) {
-                warning("Failed to detect seurat version", call. = FALSE)
+                abort("Failed to detect seurat version")
             }
+            # Access the metadata
             if (.hasSlot(object, "meta.data")) {
                 metadata <- slot(object, "meta.data") %>%
-                    .prepareSampleMetadataFromSeurat()
+                    .sampleMetadata.seurat()
             } else if (.hasSlot(object, "data.info")) {
                 # Legacy support for older seurat objects (e.g. pbmc33k)
                 metadata <- slot(object, "data.info") %>%
-                    .prepareSampleMetadataFromSeurat()
+                    .sampleMetadata.seurat()
             } else {
-                stop("Failed to detect metadata in seurat object",
-                     call. = FALSE)
+                abort("Failed to locate metadata in seurat object")
             }
             # Define interesting groups
             if (missing(interestingGroups)) {
                 interestingGroups <- "sampleName"
             }
         }
-        .returnSampleMetadata(
+        .sanitizeSampleMetadata(
             metadata = metadata,
             interestingGroups = interestingGroups)
     })

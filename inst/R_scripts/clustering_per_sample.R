@@ -2,7 +2,7 @@
 #
 # Seurat clustering per sample
 # Michael Steinbaugh
-# 2017-12-01
+# 2018-01-23
 #
 # Latest version of this script is available here:
 # script <- system.file(
@@ -21,7 +21,7 @@ source("setup.R")
 dataDir <- "data"
 
 loadDataAsName(bcb = "bcb_filtered", dir = "data")
-metadata(bcb)$filterParams
+metadata(bcb)[["filterParams"]]
 
 dataDir <- file.path("data", Sys.Date())
 

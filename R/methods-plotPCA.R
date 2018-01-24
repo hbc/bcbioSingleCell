@@ -33,9 +33,9 @@ setMethod(
         object,
         interestingGroups = "ident",
         pointsAsNumbers = FALSE,
-        pointSize = 1,
+        pointSize = 1L,
         label = TRUE,
-        labelSize = 6,
+        labelSize = 6L,
         color = ggplot2::scale_color_hue(),
         dark = TRUE,
         title = NULL) {

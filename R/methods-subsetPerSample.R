@@ -1,7 +1,3 @@
-# FIXME This function needs to be updated
-
-
-
 #' Subset Per Sample
 #'
 #' @rdname subsetPerSample
@@ -29,7 +25,7 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        minCells = 200,
+        minCells = 200L,
         dir = getwd()) {
         dir.create(dir, recursive = TRUE, showWarnings = FALSE)
         sampleIDs <- sampleMetadata(object) %>%
@@ -40,10 +36,8 @@ setMethod(
                 object,
                 sampleID = sampleID)
             # Skip if subset doesn't have enough cells
-            if (dim(subset)[[2]] < minCells) {
-                warning(paste(
-                    sampleID, "didn't pass minimum cell cutoff"
-                    ), call. = FALSE)
+            if (dim(subset)[[2L]] < minCells) {
+                warn(paste(sampleID, "didn't pass minimum cell cutoff"))
                 return(NULL)
             }
             assign(sampleID, subset)

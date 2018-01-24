@@ -6,14 +6,14 @@
 #' @param pipeline Pipeline used to generate the samples.
 #'
 #' @return Named character vector containing sample directory paths. Function
-#'   will [stop()] if no complete sample directories match.
+#'   will [abort()] if no complete sample directories match.
 #' @noRd
 .sampleDirs <- function(
     uploadDir,
     pipeline = "bcbio") {
     # Check that uploadDir exists
     if (!dir.exists(uploadDir)) {
-        stop("'uploadDir' does not exist")
+        abort("`uploadDir` does not exist")
     }
     uploadDir <- normalizePath(uploadDir)
     if (pipeline == "bcbio") {
@@ -27,9 +27,8 @@
                          pattern = projectDirPattern)]
         }
 
-        if (length(sampleDirs) == 0) {
-            stop("Failed to detect any sample directories",
-                 call. = FALSE)
+        if (length(sampleDirs) == 0L) {
+            abort("Failed to detect any sample directories")
         }
 
         names(sampleDirs) <- basename(sampleDirs) %>%
@@ -38,7 +37,7 @@
                  replacement = "_") %>%
             make.names(unique = TRUE)
     } else if (pipeline == "cellranger") {
-        message(paste(
+        inform(paste(
             "CellRanger output directory structure:",
             file.path("<uploadDir>",
                       "<sampleName>",
@@ -70,9 +69,8 @@
             )]
 
         # Check to ensure that matrices match standardized cellranger export
-        if (length(matrixFiles) == 0) {
-            stop("Failed to detect any sample directories",
-                 call. = FALSE)
+        if (length(matrixFiles) == 0L) {
+            abort("Failed to detect any sample directories")
         }
 
         # Sample directories nest the matrix files 4 levels deep
@@ -83,9 +81,9 @@
             dirname()
         names(sampleDirs) <- make.names(basename(sampleDirs), unique = TRUE)
     } else {
-        stop("Unsupported pipeline", call. = FALSE)
+        abort("Unsupported pipeline")
     }
 
-    message(paste(length(sampleDirs), "samples detected"))
+    inform(paste(length(sampleDirs), "samples detected"))
     sampleDirs
 }

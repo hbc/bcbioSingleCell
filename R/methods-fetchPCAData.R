@@ -29,7 +29,7 @@ setMethod(
     "fetchPCAData",
     signature("seurat"),
     function(object) {
-        .fetchDimDataSeurat(
+        .fetchDimData.seurat(
             object,
             dimCode = c(x = "PC1", y = "PC2")
         )

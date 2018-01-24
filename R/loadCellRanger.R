@@ -55,35 +55,35 @@ loadCellRanger <- function(
     # Parameter integrity checks ===============================================
     # uploadDir
     if (!is_string(uploadDir)) {
-        stop("'uploadDir' must be string")
+        abort("`uploadDir` must be a directory path")
     }
     # sampleMetadataFile
     if (!any(
         is_string(sampleMetadataFile),
         is.null(sampleMetadataFile)
     )) {
-        stop("'sampleMetadataFile' must be string or NULL")
+        abort("`sampleMetadataFile` must be string or NULL")
     }
     # interestingGroups
     if (!is.character(interestingGroups)) {
-        stop("'interestingGroups' must be character")
+        abort("`interestingGroups` must be character")
     }
     # annotable
     if (!any(
         is.logical(annotable),
         is.data.frame(annotable)
     )) {
-        stop("'annotable' must be logical or data.frame")
+        abort("`annotable` must be logical or data.frame")
     }
     # prefilter
     if (!is.logical(prefilter)) {
-        stop("'prefilter' must be logical")
+        abort("`prefilter` must be logical")
     }
 
     # Directory paths ==========================================================
     # Check connection to final upload directory
     if (!dir.exists(uploadDir)) {
-        stop("Final upload directory does not exist", call. = FALSE)
+        abort("Final upload directory does not exist")
     }
     uploadDir <- normalizePath(uploadDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
@@ -91,15 +91,15 @@ loadCellRanger <- function(
     # Sample metadata ==========================================================
     if (is_string(sampleMetadataFile)) {
         if (!file.exists(sampleMetadataFile)) {
-            stop("'sampleMetadataFile' missing", call. = FALSE)
+            abort("`sampleMetadataFile` missing")
         }
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
-        warning(paste(
-            "'sampleMetadataFile' not specified.",
+        warn(paste(
+            "`sampleMetadataFile` not specified.",
             "Generating minimal sample metadata."
-        ), call. = FALSE)
+        ))
         sampleMetadata <- data.frame(row.names = names(sampleDirs))
         for (i in seq_along(metadataPriorityCols)) {
             sampleMetadata[, metadataPriorityCols[[i]]] <-
@@ -108,8 +108,7 @@ loadCellRanger <- function(
     }
     # Check that `description` matches `sampleDirs`
     if (!all(sampleMetadata[["description"]] %in% basename(sampleDirs))) {
-        warning("Sample directory names don't match the sample metadata file",
-             call. = FALSE)
+        warn("Sample directory names don't match the sample metadata file")
     }
 
     # Interesting groups =======================================================
@@ -117,43 +116,43 @@ loadCellRanger <- function(
     interestingGroups <- camel(interestingGroups, strict = FALSE)
     # Check to ensure interesting groups are defined
     if (!all(interestingGroups %in% colnames(sampleMetadata))) {
-        stop("Interesting groups missing in sample metadata", call. = FALSE)
+        abort("Interesting groups missing in sample metadata")
     }
 
     # Subset sample directories by metadata ====================================
     if (nrow(sampleMetadata) < length(sampleDirs)) {
-        message("Loading a subset of samples, defined by the metadata file")
+        inform("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
         sampleDirs <- sampleDirs %>%
             .[names(sampleDirs) %in% rownames(sampleMetadata)]
-        message(paste(length(sampleDirs), "samples matched by metadata"))
+        inform(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
     }
 
     # Reference data ===========================================================
     if (!dir.exists(refdataDir)) {
-        stop("Reference data directory does not exist", call. = FALSE)
+        abort("Reference data directory does not exist")
     }
     # JSON data
     refdataDir <- normalizePath(refdataDir)
     refJSONFile <- file.path(refdataDir, "reference.json")
     if (!file.exists(refJSONFile)) {
-        stop("'reference.json' file missing", call. = FALSE)
+        abort("`reference.json` file missing")
     }
     refJSON <- read_json(refJSONFile)
     genomeBuild <- refJSON %>%
         .[["genomes"]] %>%
-        .[[1]]
+        .[[1L]]
     organism <- detectOrganism(genomeBuild)
     # Get the Ensembl version from the JSON reference file (via GTF)
     ensemblVersion <- refJSON %>%
         .[["input_gtf_files"]] %>%
-        .[[1]] %>%
+        .[[1L]] %>%
         str_split("\\.", simplify = TRUE) %>%
-        .[1, 3] %>%
+        .[1L, 3L] %>%
         as.integer()
-    message(paste(
+    inform(paste(
         paste("Organism:", organism),
         paste("Genome build:", genomeBuild),
         paste("Ensembl release:", ensemblVersion),
@@ -169,7 +168,7 @@ loadCellRanger <- function(
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
     } else {
-        warning("Loading run without gene annotable", call. = FALSE)
+        warn("Loading run without gene annotable")
         annotable <- NULL
     }
     gtfFile <- file.path(refdataDir, "genes", "genes.gtf")
@@ -178,10 +177,10 @@ loadCellRanger <- function(
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else {
         # Provide a fallback (for minimal unit testing)
-        warning(paste(
+        warn(paste(
             "Reference GTF file missing.",
-            "Generating gene2symbol using 'annotable()' instead."
-        ), call. = FALSE)
+            "Generating gene2symbol using `annotable()` instead."
+        ))
         gene2symbol <- annotable(
             organism,
             genomeBuild = genomeBuild,
@@ -189,7 +188,7 @@ loadCellRanger <- function(
     }
 
     # Counts ===================================================================
-    message("Reading counts")
+    inform("Reading counts")
     # Migrate this to `mapply()` method in future update
     sparseList <- pblapply(seq_along(sampleDirs), function(a) {
         .readSparseCounts(
@@ -216,10 +215,10 @@ loadCellRanger <- function(
     # number (e.g. `-2$`, which we're sanitizing to `_2$`).
     if (any(grepl(x = colnames(counts), pattern = "_2$"))) {
         if (!"index" %in% colnames(sampleMetadata)) {
-            stop(paste(
-                "'index' column must be defined using",
-                "'sampleMetadataFile' for multiplexed samples"
-            ), call. = FALSE)
+            abort(paste(
+                "`index` column must be defined using",
+                "`sampleMetadataFile` for multiplexed samples"
+            ))
         }
         # Prepare data.frame of barcode mappings
         map <- str_match(
@@ -267,7 +266,7 @@ loadCellRanger <- function(
         refJSON = refJSON)
     # Add user-defined custom metadata, if specified
     dots <- list(...)
-    if (length(dots) > 0) {
+    if (length(dots) > 0L) {
         metadata <- c(metadata, dots)
     }
 

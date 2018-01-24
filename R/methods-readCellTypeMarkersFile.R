@@ -34,7 +34,7 @@ NULL
 
     # Match the markers file by Ensembl gene identifier, otherwise symbol
     if ("ensgene" %in% colnames(markers)) {
-        message("Matching by gene identifier")
+        inform("Matching by gene identifier")
         markers <- markers %>%
             .[, c("cell", "ensgene")] %>%
             .[!is.na(.[["ensgene"]]), , drop = FALSE] %>%
@@ -45,10 +45,10 @@ NULL
                 .[is.na(.[["symbol"]]), "ensgene", drop = TRUE] %>%
                 sort() %>%
                 unique()
-            stop(paste("Bad genes:", toString(missing)))
+            abort(paste("Invalid genes:", toString(missing)))
         }
     } else if ("symbol" %in% colnames(markers)) {
-        message("Matching by gene symbol")
+        inform("Matching by gene symbol")
         markers <- markers %>%
             .[, c("cell", "symbol")] %>%
             .[!is.na(.[["symbol"]]), ] %>%
@@ -59,10 +59,10 @@ NULL
                 .[is.na(.[["ensgene"]]), "symbol", drop = TRUE] %>%
                 sort() %>%
                 unique()
-            stop(paste("Bad symbols:", toString(missing)))
+            abort(paste("Invalid genes:", toString(missing)))
         }
     } else {
-        stop("Marker file must contain 'ensgene' or 'symbol'", call. = FALSE)
+        abort("Marker file must contain: ensgene, symbol")
     }
 
     markers %>%

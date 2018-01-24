@@ -36,20 +36,20 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr filter mutate pull
+#' @importFrom dplyr filter mutate mutate_if pull
 #' @importFrom Matrix colSums
 #' @importFrom scales percent
 #' @importFrom tibble column_to_rownames tibble
-.calculateMetricsSparse <- function(
+.calculateMetrics.dgCMatrix <- function(  # nolint
     object,
     annotable = TRUE,
     prefilter = TRUE) {
-    message("Calculating barcode metrics")
-    message(paste(ncol(object), "cellular barcodes detected"))
+    inform("Calculating barcode metrics")
+    inform(paste(ncol(object), "cellular barcodes detected"))
 
     if (isTRUE(annotable)) {
         organism <- rownames(object) %>%
-            .[[1]] %>%
+            .[[1L]] %>%
             detectOrganism()
         annotable <- annotable(organism)
     }
@@ -58,18 +58,18 @@ NULL
     missing <- rownames(object) %>%
         .[!rownames(object) %in% annotable[["ensgene"]]]
     if (identical(length(missing), nrow(object))) {
-        stop(paste(
+        abort(paste(
             "No genes in the counts matrix matched the annotable.",
-            "Check to ensure 'organism' is correct."
-        ), call. = FALSE)
+            "Check to ensure `organism` argument is correct."
+        ))
     }
 
-    if (length(missing) > 0) {
-        warning(paste(
+    if (length(missing) > 0L) {
+        warn(paste(
             length(missing),
             "genes missing in annotable used to calculate metrics",
             paste0("(", percent(length(missing) / nrow(object)), ")")
-        ), call. = FALSE)
+        ))
     }
 
     # Obtain detected coding and mitochondrial genes, using annotable
@@ -77,17 +77,17 @@ NULL
         filter(.data[["broadClass"]] == "coding") %>%
         pull("ensgene") %>%
         .[. %in% rownames(object)]
-    if (length(codingGenesDetected) == 0) {
-        stop("No coding genes detected", call. = FALSE)
+    if (length(codingGenesDetected) == 0L) {
+        abort("No coding genes detected")
     }
     mitoGenesDetected <- annotable %>%
         filter(.data[["broadClass"]] == "mito") %>%
         pull("ensgene") %>%
         .[. %in% rownames(object)]
-    if (length(mitoGenesDetected) == 0) {
-        warning("No mitochondrial genes detected", call. = FALSE)
+    if (length(mitoGenesDetected) == 0L) {
+        warn("No mitochondrial genes detected")
     } else {
-        message(paste(
+        inform(paste(
             length(mitoGenesDetected),
             "mitochondrial genes detected"
         ))
@@ -97,7 +97,7 @@ NULL
         rowname = colnames(object),
         # Follow the Seurat `seurat@data.info` conventions
         nUMI = Matrix::colSums(object),
-        nGene = Matrix::colSums(object > 0),
+        nGene = Matrix::colSums(object > 0L),
         nCoding = Matrix::colSums(
             object[codingGenesDetected, , drop = FALSE]),
         nMito = Matrix::colSums(
@@ -106,16 +106,18 @@ NULL
                    log10(.data[["nGene"]]) / log10(.data[["nUMI"]]),
                # Using `nUMI` here like in Seurat example
                mitoRatio =
-                   .data[["nMito"]] / .data[["nUMI"]])
+                   .data[["nMito"]] / .data[["nUMI"]]) %>%
+        # Ensure count columns are integer. `colSums()` outputs as numeric.
+        mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer)
 
     # Apply low stringency cellular barcode pre-filtering, if desired
     if (isTRUE(prefilter)) {
         # Here we're only keeping cellular barcodes that have a gene detected
         metrics <- metrics %>%
-            .[.[["nUMI"]] > 0, ] %>%
-            .[.[["nGene"]] > 0, ] %>%
-            .[!is.na(.[["log10GenesPerUMI"]]), ]
-        message(paste(
+            .[.[["nUMI"]] > 0L, , drop = FALSE] %>%
+            .[.[["nGene"]] > 0L, , drop = FALSE] %>%
+            .[!is.na(.[["log10GenesPerUMI"]]), , drop = FALSE]
+        inform(paste(
             nrow(metrics), "cellular barcodes passed pre-filtering",
             paste0("(", percent(nrow(metrics) / ncol(object)), ")")
         ))
@@ -134,7 +136,7 @@ NULL
 setMethod(
     "calculateMetrics",
     signature("dgCMatrix"),
-    .calculateMetricsSparse)
+    .calculateMetrics.dgCMatrix)
 
 
 
@@ -146,8 +148,8 @@ setMethod(
     function(
         object,
         prefilter = TRUE) {
-        message("Recalculating cellular barcode metrics")
-        .calculateMetricsSparse(
+        inform("Recalculating cellular barcode metrics")
+        .calculateMetrics.dgCMatrix(
             assay(object),
             annotable = metadata(object)[["annotable"]],
             prefilter = prefilter)

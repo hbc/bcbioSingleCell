@@ -33,7 +33,7 @@ test_that("Coerce bcbioSingleCell to seurat", {
 test_that("Require technical replicate aggregation", {
     expect_error(
         as(bcb, "seurat"),
-        paste("'aggregateReplicates\\(\\)' required to merge",
+        paste("`aggregateReplicates\\(\\)` required to merge",
               "technical replicates prior to seurat coercion")
     )
 })
@@ -41,6 +41,6 @@ test_that("Require technical replicate aggregation", {
 test_that("Require filtered counts", {
     expect_error(
         as(pooled, "seurat"),
-        "'filterCells\\(\\)' hasn't been applied to this dataset"
+        "`filterCells\\(\\)` hasn't been applied to this dataset"
     )
 })

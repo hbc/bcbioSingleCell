@@ -35,12 +35,12 @@ NULL
     # Check for version
     version <- metadata(from)[["version"]]
     if (is.null(version)) {
-        stop(paste(
+        abort(paste(
             "Unknown bcbio object version.",
-            "Please reload with 'loadSingleCell()'."
-        ), call. = FALSE)
+            "Please reload dataset with `loadSingleCell()`."
+        ))
     }
-    message(paste(
+    inform(paste(
         paste("Upgrading from", version, "to", packageVersion),
         paste("Existing metadata:", toString(names(metadata(from)))),
         sep = "\n"
@@ -84,9 +84,9 @@ NULL
 .coerceToSeurat <- function(from) {
     # Require that technical replicates are aggregated
     if ("sampleNameAggregate" %in% colnames(sampleMetadata(from))) {
-        stop(paste("'aggregateReplicates()' required",
+        abort(paste("`aggregateReplicates()` required",
                    "to merge technical replicates prior to seurat coercion"
-        ), call. = FALSE)
+        ))
     }
 
     # Require filtered cells and genes only
@@ -100,16 +100,15 @@ NULL
         raw.data = counts,
         project = "bcbioSingleCell",
         # Already applied filtering cutoffs for cells and genes
-        min.cells = 0,
-        min.genes = 0,
+        min.cells = 0L,
+        min.genes = 0L,
         # Default for UMI datasets
-        is.expr = 0,
+        is.expr = 0L,
         meta.data = metrics)
 
     # Check that the dimensions match exactly
     if (!identical(dim(from), dim(slot(seurat, "raw.data")))) {
-        stop("Dimension mismatch between bcbioSingleCell and seurat objects",
-             call. = FALSE)
+        abort("Dimension mismatch between bcbioSingleCell and seurat objects")
     }
 
     # Stash bcbio run metadata into `misc` slot

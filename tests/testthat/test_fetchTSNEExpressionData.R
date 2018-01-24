@@ -24,24 +24,28 @@ test_that("symbol", {
             "tSNE2" = "numeric",
             "ident" = "factor",
             "nGene" = "integer",
-            "nUMI" = "numeric",  # FIXME integer
+            "nUMI" = "integer",
             "sampleID" = "factor",
-            "nCoding" = "numeric",  # FIXME integer
-            "nMito" = "numeric",  # FIXME integer
+            "nCoding" = "integer",
+            "nMito" = "integer",
             "log10GenesPerUMI" = "numeric",
             "mitoRatio" = "numeric",
             "nCount" = "integer",
             "sampleName" = "factor",
             "description" = "factor",
             "interestingGroups" = "factor",
-            "orig.ident" = "factor",  # camel?
-            "res.0.8" = "character",  # camel?
+            "origIdent" = "factor",
+            "res08" = "factor",
             "centerX" = "numeric",
             "centerY" = "numeric"
         )
     )
+
     subset <- data[1L, ] %>%
         mutate_if(is.numeric, funs(round(., digits = 3L)))
+    # The round function will coerce integers to numerics. This is the rationale
+    # for the `as.numeric()` usage below.
+    identLevels <- c("0", "1", "2", "3")
     target <- tibble(
         "gene" = "CD99",
         "cellID" = "M1_AAACACTA_CTTAGGTA",
@@ -49,22 +53,22 @@ test_that("symbol", {
         "geomean" = 1.165,
         "tSNE1" = -3.056,
         "tSNE2" = -4.304,
-        "ident" = factor("0", levels = c("0", "1", "2", "3")),
-        "nGene" = 734,  # numeric here
-        "nUMI" = 6220,
+        "ident" = factor("0", levels = identLevels),
+        "nGene" = as.numeric(734L),
+        "nUMI" = as.numeric(6220L),
         "sampleID" = factor("M1"),
-        "nCoding" = 5495,
-        "nMito" = 442,
+        "nCoding" = as.numeric(5495L),
+        "nMito" = as.numeric(442L),
         "log10GenesPerUMI" = 0.755,
         "mitoRatio" = 0.071,
-        "nCount" = 95155,  # numeric here
+        "nCount" = as.numeric(95155L),
         "sampleName" = factor("M1"),
         "description" = factor("M1"),
         "interestingGroups" = factor("M1"),
-        "orig.ident" = factor("M1"),
-        "res.0.8" = "0",
-        "centerX" = -6.651,  # reorder
-        "centerY" = -4.226  # reorder
+        "origIdent" = factor("M1"),
+        "res08" = factor("0", levels = identLevels),
+        "centerX" = -6.651,
+        "centerY" = -4.226
     ) %>%
         group_by(!!sym(group))
     expect_equal(subset, target)

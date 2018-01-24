@@ -58,7 +58,7 @@ NULL
 
     # Median labels
     if (geom %in% validMedianGeom) {
-        p <- p + .medianLabels(object, medianCol = metricCol, digits = 2)
+        p <- p + .medianLabels(object, medianCol = metricCol, digits = 2L)
     }
 
     # Facets

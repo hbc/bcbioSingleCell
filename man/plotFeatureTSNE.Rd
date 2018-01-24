@@ -9,9 +9,9 @@
 \usage{
 plotFeatureTSNE(object, ...)
 
-\S4method{plotFeatureTSNE}{seurat}(object, features, pointSize = 1,
+\S4method{plotFeatureTSNE}{seurat}(object, features, pointSize = 1L,
   color = ggplot2::scale_color_gradient(low = "lightgray", high = "purple"),
-  dark = FALSE, label = TRUE, labelSize = 6, legend = FALSE,
+  dark = FALSE, label = TRUE, labelSize = 6L, legend = FALSE,
   returnAsList = FALSE)
 }
 \arguments{

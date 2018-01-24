@@ -29,14 +29,14 @@ NULL
 .gene2symbolFromAnnotable <- function(object) {
     annotable <- annotable(object)
     if (is.null(annotable)) {
-        stop("Object does not contain internal annotable")
+        abort("Object does not contain internal annotable")
     }
     cols <- c("ensgene", "symbol")
     if (!all(cols %in% colnames(annotable))) {
-        stop(paste(
+        abort(paste(
             toString(cols),
             "missing from internal annotable"
-        ), call. = FALSE)
+        ))
     }
     annotable[, cols]
 }
@@ -83,7 +83,7 @@ setMethod(
             return(gene2symbol)
         }
 
-        warning(paste(
+        warn(paste(
             "seurat object doesn't appear to contain",
             "Ensembl gene to symbol mappings"
         ))

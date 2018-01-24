@@ -13,7 +13,7 @@
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #'
 #' @importFrom magrittr %>%
-#' @importFrom rlang .data
+#' @importFrom rlang .data abort inform warn
 #' @importFrom S4Vectors aggregate metadata
 NULL
 
@@ -28,3 +28,5 @@ barcodePattern <- ")_([ACGT_]{6,})(_[0-9]+)?$"
 lanePattern <- "_L(\\d{3})"
 metadataPriorityCols <- c("sampleID", "sampleName", "description")
 projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
+
+sepBar <- "============================================================"

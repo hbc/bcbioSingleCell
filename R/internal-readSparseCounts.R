@@ -34,10 +34,9 @@
     umiType) {
     sampleName <- names(sampleDir)
     if (is.null(sampleName)) {
-        stop("Sample directory must be passed in as a named character vector",
-             call. = FALSE)
+        abort("Sample directory must be passed in as a named character vector")
     }
-    message(sampleName)
+    inform(sampleName)
     if (pipeline == "bcbio") {
         sampleStem <- basename(sampleDir)
         matrixFile <- file.path(sampleDir, paste0(sampleStem, ".mtx"))
@@ -55,17 +54,17 @@
             pattern = "filtered_gene_bc_matrices"
         )]
         if (length(matrixFile) != 1L) {
-            stop("Failed to detect filtered matrix file")
+            abort("Failed to detect filtered matrix file")
         }
         colFile <- file.path(dirname(matrixFile), "barcodes.tsv")
         rowFile <- file.path(dirname(matrixFile), "genes.tsv")
     } else {
-        stop("Unsupported pipeline", call. = FALSE)
+        abort("Unsupported pipeline")
     }
 
     # Check that all files exist
     if (!all(file.exists(matrixFile, colFile, rowFile))) {
-        stop("Missing MatrixMarket file", call. = FALSE)
+        abort("Missing MatrixMarket file")
     }
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
@@ -93,10 +92,10 @@
 
     # Integrity checks
     if (!identical(length(colnames), ncol(counts))) {
-        stop("Barcodes file doesn't match counts matrix rows")
+        abort("Barcodes file doesn't match counts matrix rows")
     }
     if (!identical(length(rownames), nrow(counts))) {
-        stop("Genes file doesn't match counts matrix columns")
+        abort("Genes file doesn't match counts matrix columns")
     }
 
     colnames(counts) <- colnames %>%

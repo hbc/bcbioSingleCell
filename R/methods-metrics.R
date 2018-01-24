@@ -52,8 +52,7 @@ setMethod(
         # Check for cell ID dimension mismatch. This can happen if `cell2sample`
         # mapping isn't updated inside the metadata slot.
         if (!identical(rownames(colData), names(sampleID))) {
-            stop("'cellID' mismatch between 'colData' and 'cell2sample'",
-                 call. = FALSE)
+            abort("`cellID` mismatch between `colData` and `cell2sample`")
         }
         sampleMetadata <- sampleMetadata(
             object,
@@ -62,9 +61,18 @@ setMethod(
             as.data.frame(sampleID),
             as.data.frame(colData)
         ) %>%
+            # Need to use `cellID` column for rownames, because that is the
+            # column set in `sampleMetadata`
             rownames_to_column("cellID") %>%
             left_join(sampleMetadata, by = "sampleID") %>%
+            .sanitizeMetrics() %>%
             column_to_rownames("cellID")
+        if (!identical(colnames(object), rownames(metrics))) {
+            abort(paste(
+                "`cellID` mismatch between object colnames",
+                "and metrics rownames"
+            ))
+        }
         metrics
     })
 
@@ -87,14 +95,13 @@ setMethod(
     metrics <- slot(object, "meta.data") %>%
         as.data.frame() %>%
         camel(strict = FALSE) %>%
-        rownames_to_column("cellID") %>%
-        mutate_if(is.character, as.factor) %>%
-        mutate_if(is.factor, droplevels)
+        rownames_to_column("cellID")
     # Join columns can vary here, so suppress message
     metrics <- suppressMessages(left_join(
         metrics,
         sampleMetadata(object, interestingGroups = interestingGroups)
     )) %>%
+        .sanitizeMetrics() %>%
         column_to_rownames("cellID") %>%
         uniteInterestingGroups(interestingGroups)
     metrics

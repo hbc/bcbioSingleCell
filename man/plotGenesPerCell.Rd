@@ -15,7 +15,7 @@ plotGenesPerCell(object, ...)
   max, interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0,
+\S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0L,
   max = Inf, interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 

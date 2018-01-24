@@ -11,13 +11,13 @@
 plotMarkerTSNE(object, ...)
 
 \S4method{plotMarkerTSNE}{data.frame}(object, colorPoints = "geomean",
-  pointsAsNumbers = FALSE, pointSize = 1, label = TRUE, labelSize = 6,
+  pointsAsNumbers = FALSE, pointSize = 1L, label = TRUE, labelSize = 6L,
   color = viridis::scale_color_viridis(), dark = TRUE, legend = TRUE,
   title = NULL, subtitle = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, format = "symbol",
-  colorPoints = "geomean", pointsAsNumbers = FALSE, pointSize = 1,
-  label = TRUE, labelSize = 6, color = viridis::scale_color_viridis(),
+  colorPoints = "geomean", pointsAsNumbers = FALSE, pointSize = 1L,
+  label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
   dark = TRUE, title = NULL, subtitle = TRUE)
 }
 \arguments{

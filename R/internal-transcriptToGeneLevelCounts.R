@@ -14,7 +14,7 @@
 #' @noRd
 .transcriptToGeneLevelCounts <- function(counts, tx2gene) {
     if (!is(counts, "dgCMatrix")) {
-        stop("counts matrix must be dgCMatrix class object", call. = FALSE)
+        abort("Counts matrix must be dgCMatrix")
     }
     counts <- .stripTranscriptVersions(counts)
 
@@ -32,15 +32,13 @@
             .[is.na(.[["enstxp"]]), , drop = FALSE] %>%
             rownames()
         if (length(missing) > 200L) {
-            stop(paste(
-                length(missing), "missing transcripts in tx2gene."
-            ), call. = FALSE)
+            abort(paste(length(missing), "missing transcripts in tx2gene."))
         }
-        warning(paste(
+        warn(paste(
             length(missing), "missing transcripts in tx2gene.",
             "These will be kept but converted to genes:",
             toString(missing)
-        ), call. = FALSE)
+        ))
         # Warn and append unmatched transcripts as genes
         remap <- data.frame(
             enstxp = missing,
@@ -53,11 +51,10 @@
     }
 
     if (!identical(rownames(counts), map[["enstxp"]])) {
-        stop("Transcript to gene mappings don't match counts matrix rows",
-             call. = FALSE)
+        abort("Transcript to gene mappings don't match counts matrix rows")
     }
 
-    message("Converting transcript-level counts to gene-level")
+    inform("Converting transcript-level counts to gene-level")
     rownames(counts) <- map[["ensgene"]]
     aggregate.Matrix(
         x = counts,
