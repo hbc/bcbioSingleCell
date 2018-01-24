@@ -22,7 +22,9 @@
 #' load(system.file(
 #'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
-#' data <- .fetchDimDataSeurat(seurat, dimCode = c(x = "tSNE_1", y = "tSNE_2"))
+#'
+#' .fetchDimDataSeurat(seurat, dimCode = c(x = "tSNE_1", y = "tSNE_2")) %>%
+#'     glimpse()
 .fetchDimData.seurat <- function(object, dimCode) {  # nolint
     fetch <- Seurat::FetchData(object, vars.all = dimCode)
     ident <- slot(object, "ident")

@@ -7,6 +7,20 @@
 #'
 #' @param object [seurat].
 #' @param genes Gene identifiers (matrix rownames).
+#'
+#' @return [matrix].
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "seurat.rda"),
+#'     package = "bcbioSingleCell"))
+#'
+#' genes <- slot(seurat, "data") %>%
+#'     rownames() %>%
+#'     head()
+#'
+#' .fetchGeneData.seurat(seurat, genes = genes) %>%
+#'     glimpse()
 .fetchGeneData.seurat <- function(object, genes) {  # nolint
     data <- Seurat::FetchData(object, vars.all = genes)
     if (!identical(
