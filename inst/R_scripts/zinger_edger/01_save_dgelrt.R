@@ -1,6 +1,6 @@
 # Differential expression using zingeR + edgeR
 # Michael Steinbaugh
-# 2017-09-19
+# 2018-01-23
 
 library(pbapply)
 library(bcbioSingleCell)
@@ -40,7 +40,7 @@ library(zingeR)
 # ==============================================================================
 
 loadData(bcb, seurat)
-intgroup <- interestingGroups(bcb)[[1]]
+intgroup <- interestingGroups(bcb)[[1L]]
 
 # Get the cell cluster identities from the final Seurat object
 ident <- levels(seurat@ident)
@@ -69,14 +69,14 @@ pblapply(seq_along(ident), function(a) {
     # For comparing `mut` vs. `wt`, define `wt` as the reference level
     design <- model.matrix(~group)
     levels(group)  # wt, mut
-    table(design[, 2])
+    table(design[, 2L])
 
     # This is the zingeR step that is computationally expensive
     weights <- zeroWeightsLS(
         dge[["counts"]],
         design = design,
         # The `maxit` default of 200 is too low
-        maxit = 1000,
+        maxit = 1000L,
         normalization = "TMM")
 
     dge[["weights"]] <- weights
@@ -85,7 +85,7 @@ pblapply(seq_along(ident), function(a) {
     plotBCV(dge)
 
     fit <- glmFit(dge, design)
-    lrt <- glmWeightedF(fit, coef = 2, independentFiltering = TRUE)
+    lrt <- glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
 
     # Save the DGELRT to disk
     name <- paste0("zinger_edger_lrt_cluster_", ident[[a]])

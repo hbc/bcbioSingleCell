@@ -28,7 +28,7 @@ pblapply(seq_along(csv), function(a) {
     message(basename(file))
     # Get the cluster ident from the file name
     ident <- str_match(file, "cluster_([0-9]+)\\.csv") %>%
-        .[, 2]
+        .[, 2L]
 
     # Subset the original seurat object by the ident
     # We need to fetch the counts by cluster
@@ -50,7 +50,7 @@ pblapply(seq_along(csv), function(a) {
         rownames(counts) <- names(rownames(counts))
         # Calculate the mean expression across the cells. If there is only
         # 1 cell present, then just return the values.
-        if (ncol(counts) == 1) {
+        if (ncol(counts) == 1L) {
             as.numeric(counts)
         } else {
             Matrix::rowMeans(counts)
