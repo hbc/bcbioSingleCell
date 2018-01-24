@@ -70,7 +70,7 @@
                identical(sanitized, FALSE)) {
         abort(paste(
             "Markers table doesn't pass sanitization checks.",
-            "Ensure that 'sanitizeMarkers()' has been run."
+            "Ensure that `sanitizeMarkers()` has been run."
         ))
     }
 }

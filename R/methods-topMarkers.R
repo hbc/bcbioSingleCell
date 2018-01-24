@@ -47,7 +47,7 @@ NULL
     directionArgs <- c("positive", "negative", "both")
     if (!direction %in% directionArgs) {
         abort(paste(
-            "Valid 'direction':",
+            "Valid `direction`:",
             toString(directionArgs)
         ))
     }

@@ -92,7 +92,7 @@ setMethod(
         } else if (normalized == "scaled") {
             slot(object, "scale.data")
         } else {
-            warn("Unsupported 'normalized' argument")
+            warn("Unsupported `normalized` argument")
             return(NULL)
         }
     }

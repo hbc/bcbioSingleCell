@@ -37,7 +37,7 @@ setMethod(
             detectOrganism(organism)
         } else {
             warn(paste(
-                "'organism' is not slotted in metadata(object)",
+                "`organism` is not defined in metadata() slot.",
                 "Attempting to match by the first gene identifier row",
                 "in the counts matrix instead."
             ))
@@ -63,10 +63,10 @@ setMethod(
             detectOrganism(organism)
         } else {
             warn(paste(
-                "'organism' is not slotted in 'bcbio(object)'.",
+                "`organism` is not defined in `bcbio() slot`.",
                 "Attempting to match by the first gene identifier row",
                 "in the counts matrix instead."
-                ))
+            ))
             slot(object, "data") %>%
                 rownames() %>%
                 .[[1L]] %>%

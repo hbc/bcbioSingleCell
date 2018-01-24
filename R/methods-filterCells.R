@@ -356,7 +356,7 @@ setMethod(
     signature("bcbioSCDataSet"),
     function(object) {
         abort(paste(
-            "Convert 'bcbioSCDataSet' to 'bcbioSingleCell' class.\n",
+            "Convert `bcbioSCDataSet` to `bcbioSingleCell` class.",
             "Run this code: bcb <- as(bcb, \"bcbioSingleCell\")"
         ))
     })

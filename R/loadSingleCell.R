@@ -298,7 +298,7 @@ loadSingleCell <- function(
     # Assume samples are inDrop platform, by default
     if (is.null(umiType)) {
         warn(paste(
-            "Assuming unknown UMI is 'harvard-indrop-v3' (default)"
+            "Assuming unknown UMI is harvard-indrop-v3 (default)"
         ))
         umiType <- "harvard-indrop-v3"
     }
@@ -306,7 +306,7 @@ loadSingleCell <- function(
     # Sample metadata ==========================================================
     if (is_string(sampleMetadataFile)) {
         if (!file.exists(sampleMetadataFile)) {
-            abort("'sampleMetadataFile missing")
+            abort("`sampleMetadataFile` file missing")
         }
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
@@ -334,7 +334,7 @@ loadSingleCell <- function(
                 warn(paste(
                     "It appears that the reverse complement sequence of the",
                     "i5 index barcode(s) was input into the sample metadata",
-                    "'sequence' column. bcbio outputs the revcomp into the",
+                    "`sequence` column. bcbio outputs the revcomp into the",
                     "sample directories, but the forward sequence should be",
                     "used in the R package."
                 ))

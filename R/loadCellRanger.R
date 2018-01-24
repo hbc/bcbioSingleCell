@@ -179,7 +179,7 @@ loadCellRanger <- function(
         # Provide a fallback (for minimal unit testing)
         warn(paste(
             "Reference GTF file missing.",
-            "Generating gene2symbol using 'annotable()' instead."
+            "Generating gene2symbol using `annotable()` instead."
         ))
         gene2symbol <- annotable(
             organism,

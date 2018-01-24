@@ -60,7 +60,7 @@ NULL
     if (identical(length(missing), nrow(object))) {
         abort(paste(
             "No genes in the counts matrix matched the annotable.",
-            "Check to ensure 'organism' is correct."
+            "Check to ensure `organism` argument is correct."
         ))
     }
 
