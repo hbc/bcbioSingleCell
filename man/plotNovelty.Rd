@@ -15,7 +15,7 @@ plotNovelty(object, ...)
   interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotNovelty}{data.frame}(object, geom = "violin", min = 0,
+\S4method{plotNovelty}{data.frame}(object, geom = "violin", min = 0L,
   interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 

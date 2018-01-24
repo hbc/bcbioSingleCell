@@ -7,11 +7,11 @@
 \alias{plotQuantileHeatmap,seurat-method}
 \title{Plot Heatmap with Quantile Breaks}
 \usage{
-\S4method{plotQuantileHeatmap}{bcbioSingleCell}(object, n = 5,
+\S4method{plotQuantileHeatmap}{bcbioSingleCell}(object, n = 5L,
   annotationCol = NA, clusterCols = FALSE, clusterRows = FALSE,
   color = viridis::viridis, legendColor = viridis::viridis, title = NULL)
 
-\S4method{plotQuantileHeatmap}{seurat}(object, n = 5, annotationCol = NA,
+\S4method{plotQuantileHeatmap}{seurat}(object, n = 5L, annotationCol = NA,
   clusterCols = FALSE, clusterRows = FALSE, color = viridis::viridis,
   legendColor = viridis::viridis, title = NULL)
 }

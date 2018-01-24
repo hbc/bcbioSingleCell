@@ -13,7 +13,7 @@ plotMarkers(object, ...)
   tsneColor = viridis::scale_color_viridis(),
   violinFill = viridis::scale_fill_viridis(discrete = TRUE),
   dotColor = ggplot2::scale_color_gradient(low = "lightgray", high =
-  "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2,
+  "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L,
   title = NULL)
 }
 \arguments{

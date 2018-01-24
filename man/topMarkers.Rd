@@ -9,7 +9,7 @@
 \usage{
 topMarkers(object, ...)
 
-\S4method{topMarkers}{grouped_df}(object, n = 10, direction = "positive",
+\S4method{topMarkers}{grouped_df}(object, n = 10L, direction = "positive",
   coding = TRUE)
 }
 \arguments{

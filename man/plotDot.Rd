@@ -8,7 +8,7 @@
 \usage{
 \S4method{plotDot}{seurat}(object, genes, format = "symbol",
   color = ggplot2::scale_color_gradient(low = "lightgray", high = "purple"),
-  colMin = -2.5, colMax = 2.5, dotMin = 0, dotScale = 6)
+  colMin = -2.5, colMax = 2.5, dotMin = 0L, dotScale = 6L)
 }
 \arguments{
 \item{object}{Object.}

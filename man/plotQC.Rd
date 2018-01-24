@@ -8,10 +8,10 @@
 \title{Quality Control Plots}
 \usage{
 \S4method{plotQC}{bcbioSingleCell}(object, interestingGroups, geom = "violin",
-  headerLevel = 2, legend = FALSE, return = "grid")
+  headerLevel = 2L, legend = FALSE, return = "grid")
 
 \S4method{plotQC}{seurat}(object, interestingGroups, geom = "violin",
-  headerLevel = 2, legend = FALSE, return = "grid")
+  headerLevel = 2L, legend = FALSE, return = "grid")
 }
 \arguments{
 \item{object}{Object.}

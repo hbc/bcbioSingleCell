@@ -10,7 +10,7 @@
 plotTSNE(object, ...)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
-  pointsAsNumbers = FALSE, pointSize = 1, label = TRUE, labelSize = 6,
+  pointsAsNumbers = FALSE, pointSize = 1L, label = TRUE, labelSize = 6L,
   color = ggplot2::scale_color_hue(), dark = TRUE, title = NULL)
 }
 \arguments{

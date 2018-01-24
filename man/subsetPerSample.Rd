@@ -9,7 +9,7 @@
 \usage{
 subsetPerSample(object, ...)
 
-\S4method{subsetPerSample}{bcbioSingleCell}(object, minCells = 200,
+\S4method{subsetPerSample}{bcbioSingleCell}(object, minCells = 200L,
   dir = getwd())
 }
 \arguments{
