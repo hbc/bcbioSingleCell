@@ -40,7 +40,7 @@ NULL
 #' @importFrom Matrix colSums
 #' @importFrom scales percent
 #' @importFrom tibble column_to_rownames tibble
-.calculateMetricsSparse <- function(
+.calculateMetrics.dgCMatrix <- function(  # nolint
     object,
     annotable = TRUE,
     prefilter = TRUE) {
@@ -106,7 +106,9 @@ NULL
                    log10(.data[["nGene"]]) / log10(.data[["nUMI"]]),
                # Using `nUMI` here like in Seurat example
                mitoRatio =
-                   .data[["nMito"]] / .data[["nUMI"]])
+                   .data[["nMito"]] / .data[["nUMI"]]) %>%
+        # Ensure count columns are integer. `colSums()` outputs as numeric.
+        mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer)
 
     # Apply low stringency cellular barcode pre-filtering, if desired
     if (isTRUE(prefilter)) {
@@ -134,7 +136,7 @@ NULL
 setMethod(
     "calculateMetrics",
     signature("dgCMatrix"),
-    .calculateMetricsSparse)
+    .calculateMetrics.dgCMatrix)
 
 
 
@@ -147,7 +149,7 @@ setMethod(
         object,
         prefilter = TRUE) {
         inform("Recalculating cellular barcode metrics")
-        .calculateMetricsSparse(
+        .calculateMetrics.dgCMatrix(
             assay(object),
             annotable = metadata(object)[["annotable"]],
             prefilter = prefilter)
