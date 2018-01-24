@@ -1,7 +1,3 @@
-# FIXME This function needs to be updated
-
-
-
 #' Subset Per Sample
 #'
 #' @rdname subsetPerSample

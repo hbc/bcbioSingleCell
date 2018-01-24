@@ -7,7 +7,7 @@
 #'
 #' @param object [seurat].
 #' @param genes Gene identifiers (matrix rownames).
-.fetchGeneData.seurat <- function(object, genes) {
+.fetchGeneData.seurat <- function(object, genes) {  # nolint
     data <- Seurat::FetchData(object, vars.all = genes)
     if (!identical(
         as.character(genes),

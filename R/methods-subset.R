@@ -45,10 +45,10 @@ NULL
 #' @importFrom S4Vectors metadata SimpleList
 .subset <- function(x, i, j, ..., drop = FALSE) {
     if (missing(i)) {
-        i <- 1:nrow(x)
+        i <- 1L:nrow(x)
     }
     if (missing(j)) {
-        j <- 1:ncol(x)
+        j <- 1L:ncol(x)
     }
 
     # Early return if dimensions are unmodified

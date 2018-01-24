@@ -25,7 +25,7 @@ test_that("fetchPCAData", {
             "description" = "factor",
             "interestingGroups" = "factor",
             "orig.ident" = "factor",
-            "res.0.8" = "character",  # FIXME coerce to factor?
+            "res.0.8" = "factor",
             "centerX" = "numeric",
             "centerY" = "numeric"
         )
