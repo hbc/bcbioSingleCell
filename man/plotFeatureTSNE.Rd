@@ -9,10 +9,10 @@
 \usage{
 plotFeatureTSNE(object, ...)
 
-\S4method{plotFeatureTSNE}{seurat}(object, features, pointSize = 1L,
-  color = ggplot2::scale_color_gradient(low = "lightgray", high = "purple"),
-  dark = FALSE, label = TRUE, labelSize = 6L, legend = FALSE,
-  returnAsList = FALSE)
+\S4method{plotFeatureTSNE}{seurat}(object, features, pointSize = 0.5,
+  pointAlpha = 0.8, color = ggplot2::scale_color_gradient(low = "lightgray",
+  high = "purple"), dark = FALSE, label = TRUE, labelSize = 6L,
+  legend = FALSE, returnAsList = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -23,6 +23,9 @@ plotFeatureTSNE(object, ...)
 scores, number of genes detected).}
 
 \item{pointSize}{Cell point size.}
+
+\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
+the dataset, and some cells can be masked.}
 
 \item{color}{Color palette to use for points. Defaults to the viridis color
 palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own

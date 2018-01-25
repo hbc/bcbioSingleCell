@@ -21,7 +21,8 @@
     axes,
     interestingGroups = "ident",
     pointsAsNumbers = FALSE,
-    pointSize = 1L,
+    pointSize = 0.5,
+    pointAlpha = 0.8,
     label = TRUE,
     labelSize = 6L,
     color = ggplot2::scale_color_hue(),
@@ -52,9 +53,13 @@
                     y = axes[["y"]],
                     label = "ident",
                     color = colorCol),
+                alpha = pointAlpha,
                 size = pointSize)
     } else {
-        p <- p + geom_point(size = pointSize)
+        p <- p +
+            geom_point(
+                alpha = pointAlpha,
+                size = pointSize)
     }
     if (interestingGroups == "ident") {
         # Present `ident` as `cluster` (more informative)

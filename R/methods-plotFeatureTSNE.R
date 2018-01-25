@@ -41,7 +41,8 @@ setMethod(
     function(
         object,
         features,
-        pointSize = 1L,
+        pointSize = 0.5,
+        pointAlpha = 0.8,
         color = ggplot2::scale_color_gradient(
             low = "lightgray",
             high = "purple"),
@@ -68,7 +69,9 @@ setMethod(
                 p <- p + midnightTheme()
             }
             p <- p +
-                geom_point(size = pointSize) +
+                geom_point(
+                    alpha = pointAlpha,
+                    size = pointSize) +
                 labs(title = features[[a]])
             if (isTRUE(label)) {
                 if (isTRUE(dark)) {

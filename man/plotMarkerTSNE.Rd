@@ -11,14 +11,15 @@
 plotMarkerTSNE(object, ...)
 
 \S4method{plotMarkerTSNE}{data.frame}(object, colorPoints = "geomean",
-  pointsAsNumbers = FALSE, pointSize = 1L, label = TRUE, labelSize = 6L,
-  color = viridis::scale_color_viridis(), dark = TRUE, legend = TRUE,
-  title = NULL, subtitle = TRUE)
+  pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
+  label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
+  dark = TRUE, legend = TRUE, title = NULL, subtitle = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, format = "symbol",
-  colorPoints = "geomean", pointsAsNumbers = FALSE, pointSize = 1L,
-  label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
-  dark = TRUE, title = NULL, subtitle = TRUE)
+  colorPoints = "geomean", pointsAsNumbers = FALSE, pointSize = 0.5,
+  pointAlpha = 0.8, label = TRUE, labelSize = 6L,
+  color = viridis::scale_color_viridis(), dark = TRUE, title = NULL,
+  subtitle = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -31,6 +32,9 @@ of individual gene (\code{expression}).}
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{pointSize}{Cell point size.}
+
+\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
+the dataset, and some cells can be masked.}
 
 \item{label}{Overlay a cluster identitiy label on the plot.}
 

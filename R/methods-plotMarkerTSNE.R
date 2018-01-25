@@ -59,7 +59,8 @@ NULL
     object,
     colorPoints = "geomean",
     pointsAsNumbers = FALSE,
-    pointSize = 1L,
+    pointSize = 0.5,
+    pointAlpha = 0.8,
     label = TRUE,
     labelSize = 6L,
     color = viridis::scale_color_viridis(),
@@ -150,9 +151,13 @@ NULL
                     y = "tSNE2",
                     label = "ident",
                     color = colorPoints),
+                alpha = pointAlpha,
                 size = pointSize)
     } else {
-        p <- p + geom_point(size = pointSize)
+        p <- p +
+            geom_point(
+                alpha = pointAlpha,
+                size = pointSize)
     }
 
     if (isTRUE(label)) {
@@ -202,7 +207,8 @@ setMethod(
         format = "symbol",
         colorPoints = "geomean",
         pointsAsNumbers = FALSE,
-        pointSize = 1L,
+        pointSize = 0.5,
+        pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
         color = viridis::scale_color_viridis(),
@@ -219,6 +225,7 @@ setMethod(
             colorPoints = colorPoints,
             pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
+            pointAlpha = pointAlpha,
             label = label,
             labelSize = labelSize,
             color = color,
