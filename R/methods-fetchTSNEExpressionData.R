@@ -39,18 +39,15 @@ NULL
 .fetchTSNEExpressionData.seurat <- function(  # nolint
     object,
     genes) {
-    priorityCols <- c("gene", "cellID", "expression", "geomean")
     tsne <- fetchTSNEData(object)
+
+    # Gene aggregate math
     data <- fetchGeneData(object, genes = genes)
-    geomean <- rowMeans(data)
-    cbind(tsne, data, geomean) %>%
-        rownames_to_column("cellID") %>%
-        gather(key = "gene",
-               value = "expression",
-               !!genes) %>%
-        group_by(!!sym("gene")) %>%
-        select(!!!syms(priorityCols), everything()) %>%
-        arrange(!!!syms(priorityCols))
+    mean <- rowMeans(data)
+    median <- rowMedians(data)
+    sum <- rowSums(data)
+
+    cbind(tsne, mean, median, sum)
 }
 
 
