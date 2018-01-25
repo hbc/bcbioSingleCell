@@ -42,9 +42,9 @@ NULL
 #' @importFrom tibble tibble
 .plotPCElbow <- function(
     sd,
-    maxPct,
-    minCumPct,
-    plot) {
+    maxPct = 0.05,
+    minCumPct = 0.8,
+    plot = TRUE) {
     xlab <- "pc"
 
     # Principal component standard deviations
@@ -140,7 +140,7 @@ NULL
 setMethod("plotPCElbow", "seurat", function(
     object,
     maxPct = 0.05,
-    minCumPct = 0.9,
+    minCumPct = 0.8,
     plot = TRUE) {
     # seurat slot descriptions
     # dr: dimensionality reduction
