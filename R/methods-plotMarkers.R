@@ -81,7 +81,7 @@ NULL
     tsne <- plotMarkerTSNE(
         object,
         genes = gene,
-        colorPoints = "expression",
+        fun = "sum",
         color = tsneColor,
         dark = dark,
         pointsAsNumbers = pointsAsNumbers,

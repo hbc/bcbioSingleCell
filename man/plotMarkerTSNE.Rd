@@ -10,7 +10,7 @@
 \usage{
 plotMarkerTSNE(object, ...)
 
-\S4method{plotMarkerTSNE}{data.frame}(object, fun = "mean",
+\S4method{plotMarkerTSNE}{data.frame}(object, genes, fun = "mean",
   pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
   label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
   dark = TRUE, legend = TRUE, title = NULL, subtitle = TRUE)
@@ -24,6 +24,9 @@ plotMarkerTSNE(object, ...)
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+
+\item{genes}{Genes identifiers (matching the rownames in the object),
+of which to get expression data.}
 
 \item{fun}{Function to apply on aggregate marker expression. Currently
 supports \code{mean}, \code{median}, or \code{sum}.}
@@ -50,9 +53,6 @@ low/high gradient.}
 \item{title}{Plot title.}
 
 \item{subtitle}{Include gene(s) in the subtitle.}
-
-\item{genes}{Genes identifiers (matching the rownames in the object),
-of which to get expression data.}
 }
 \value{
 \link{ggplot}.
