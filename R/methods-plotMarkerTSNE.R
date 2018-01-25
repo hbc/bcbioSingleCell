@@ -9,8 +9,8 @@
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #'
-#' @param colorPoints Color points by geometric mean (`geomean`) or expression
-#'   of individual gene (`expression`).
+#' @param fun Function to apply on aggregate marker expression. Currently
+#'   supports `mean`, `median`, or `sum`.
 #' @param legend Show plot legend.
 #' @param subtitle Include gene(s) in the subtitle.
 #'
@@ -49,7 +49,8 @@ NULL
 #'   [fetchTSNEExpressionData()].
 .plotMarkerTSNE <- function(
     object,
-    colorPoints = "geomean",
+    genes,
+    fun = "mean",
     pointsAsNumbers = FALSE,
     pointSize = 0.5,
     pointAlpha = 0.8,
@@ -63,10 +64,10 @@ NULL
     requiredCols <- c(
         "centerX",
         "centerY",
-        "expression",
-        "gene",
-        "geomean",
+        "mean",
+        "median",
         "ident",
+        "sum",
         "tSNE1",
         "tSNE2")
     if (!all(requiredCols %in% colnames(object))) {
@@ -74,33 +75,36 @@ NULL
             "Required columns:", toString(requiredCols)
         ))
     }
-    validColorPoints <- c("expression", "geomean")
-    if (!colorPoints %in% validColorPoints) {
+    validFun <- c("mean", "median", "sum")
+    if (!fun %in% validFun) {
         abort(paste(
-            "`colorPoints` must contain:",
-            toString(validColorPoints)
+            "`fun` must contain:",
+            toString(validFun)
         ))
     }
 
-    # Prepare a list of the genes used for the ggplot subtitle
-    genes <- unique(pull(object, "gene"))
-    # Use `expression` if we're only plotting a single gene. The `geomean`
-    # argument for `colorPoints` is only informative for 2+ genes.
+    # Use `sum` if we're only plotting a single gene. The `mean` and `mean`
+    # arguments for `fun` is only informative for 2+ genes.
     if (length(genes) == 1L) {
-        colorPoints <- "expression"
+        fun <- "sum"
     }
-    # Limit to displaying the top 5, with an ellipsis if necessary
-    if (length(genes) > 5L) {
-        genes <- c(genes[1L:5L], "...")
+
+    # Automatic subtitle containing list of marker genes
+    if (isTRUE(subtitle)) {
+        subtitle <- genes
+        # Limit to the first 10 markers
+        if (length(subtitle) > 10L) {
+            subtitle <- c(subtitle[1L:10L], "...")
+        }
+        subtitle <- toString(subtitle)
     }
-    genes <- toString(genes)
 
     p <- ggplot(
         object,
         mapping = aes_string(
             x = "tSNE1",
             y = "tSNE2",
-            color = colorPoints)
+            color = fun)
     )
 
     if (isTRUE(dark)) {
@@ -142,7 +146,7 @@ NULL
                     x = "tSNE1",
                     y = "tSNE2",
                     label = "ident",
-                    color = colorPoints),
+                    color = fun),
                 alpha = pointAlpha,
                 size = pointSize)
     } else {
@@ -196,7 +200,7 @@ setMethod(
     function(
         object,
         genes,
-        colorPoints = "geomean",
+        fun = "mean",
         pointsAsNumbers = FALSE,
         pointSize = 0.5,
         pointAlpha = 0.8,
@@ -209,7 +213,8 @@ setMethod(
         data <- fetchTSNEExpressionData(object, genes = genes)
         .plotMarkerTSNE(
             object = data,
-            colorPoints = colorPoints,
+            genes = genes,
+            fun = fun,
             pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             pointAlpha = pointAlpha,

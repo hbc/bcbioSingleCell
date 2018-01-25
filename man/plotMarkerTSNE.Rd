@@ -10,12 +10,12 @@
 \usage{
 plotMarkerTSNE(object, ...)
 
-\S4method{plotMarkerTSNE}{data.frame}(object, colorPoints = "geomean",
+\S4method{plotMarkerTSNE}{data.frame}(object, fun = "mean",
   pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
   label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
   dark = TRUE, legend = TRUE, title = NULL, subtitle = TRUE)
 
-\S4method{plotMarkerTSNE}{seurat}(object, genes, colorPoints = "geomean",
+\S4method{plotMarkerTSNE}{seurat}(object, genes, fun = "mean",
   pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
   label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
   dark = TRUE, title = NULL, subtitle = TRUE)
@@ -25,8 +25,8 @@ plotMarkerTSNE(object, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{colorPoints}{Color points by geometric mean (\code{geomean}) or expression
-of individual gene (\code{expression}).}
+\item{fun}{Function to apply on aggregate marker expression. Currently
+supports \code{mean}, \code{median}, or \code{sum}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
