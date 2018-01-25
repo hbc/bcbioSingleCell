@@ -58,7 +58,7 @@ NULL
         genes <- .convertGenesToSymbols(object, genes = genes)
     }
     tsne <- fetchTSNEData(object)
-    data <- .fetchGeneData.seurat(object, genes = genes)
+    data <- fetchGeneData(object, genes = genes)
     geomean <- rowMeans(data)
     cbind(tsne, data, geomean) %>%
         rownames_to_column("cellID") %>%

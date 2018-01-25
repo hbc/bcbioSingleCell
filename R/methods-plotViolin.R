@@ -61,7 +61,7 @@ NULL
 
     # Fetch Seurat data ====================================================
     ident <- slot(object, "ident")
-    data <- .fetchGeneData.seurat(object, genes = genes) %>%
+    data <- fetchGeneData(object, genes = genes) %>%
         as.data.frame() %>%
         cbind(ident) %>%
         rownames_to_column("cell") %>%
