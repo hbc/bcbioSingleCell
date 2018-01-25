@@ -111,7 +111,7 @@ validQCGeomFlip <- c(
         plot_grid(plotlist = plotlist, labels = "AUTO")
     } else {
         mdHeader(
-            "Quality control plots",
+            "Filtered quality control metrics",
             level = headerLevel,
             tabset = TRUE,
             asis = TRUE)
