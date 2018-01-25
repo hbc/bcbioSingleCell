@@ -70,7 +70,6 @@ NULL
         plotMarkers(
             object,
             genes = genes,
-            format = "symbol",
             tsneColor = tsneColor,
             violinFill = violinFill,
             dotColor = dotColor,
