@@ -16,7 +16,7 @@ test_that("seurat", {
 
 test_that("data.frame", {
     df <- fetchTSNEExpressionData(seurat, genes = genes)
-    expect_is(df, "grouped_df")
-    p <- plotMarkerTSNE(df)
+    expect_is(df, "data.frame")
+    p <- plotMarkerTSNE(df, genes = genes)
     expect_is(p, "ggplot")
 })
