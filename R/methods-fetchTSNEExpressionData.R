@@ -45,7 +45,6 @@ NULL
 # Methods ======================================================================
 #' @rdname fetchTSNEExpressionData
 #' @importFrom dplyr everything group_by select
-#' @importFrom Matrix colMeans
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom Seurat FetchData
 #' @importFrom tibble column_to_rownames rownames_to_column
@@ -65,7 +64,7 @@ setMethod(
         }
         tsne <- fetchTSNEData(object)
         data <- .fetchGeneData.seurat(object, genes = genes)
-        geomean <- Matrix::colMeans(t(data))
+        geomean <- colMeans(t(data))
         cbind(tsne, data, geomean) %>%
             rownames_to_column("cellID") %>%
             gather(key = "gene",
