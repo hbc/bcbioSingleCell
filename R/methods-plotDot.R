@@ -10,7 +10,6 @@
 #' @inheritParams AllGenerics
 #'
 #' @param genes Gene identifiers to plot.
-#' @param format Gene identifier format. Supports `ensgene` or `symbol`.
 #' @param color Color palette. If `NULL`, uses default ggplot2 colors.
 #' @param colMin Minimum scaled average expression threshold. Everything
 #'   smaller will be set to this.
@@ -32,15 +31,9 @@
 #'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
 #'
-#' symbol <- slot(seurat, "data") %>% rownames() %>% .[1:2]
-#' print(symbol)
-#'
-#' ensgene <- bcbio(seurat, "gene2symbol") %>%
-#'     .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
-#'
 #' # seurat
-#' plotDot(seurat, genes = symbol, format = "symbol")
-#' plotDot(seurat, genes = ensgene, format = "ensgene")
+#' genes <- slot(seurat, "data") %>% rownames() %>% head()
+#' plotDot(seurat, genes = genes)
 NULL
 
 
@@ -77,7 +70,6 @@ NULL
 .plotDot.seurat <- function(  # nolint
     object,
     genes,
-    format = "symbol",
     color = ggplot2::scale_color_gradient(
         low = "lightgray",
         high = "purple"),
@@ -85,10 +77,6 @@ NULL
     colMax = 2.5,
     dotMin = 0L,
     dotScale = 6L) {
-    .checkFormat(format)
-    if (format == "ensgene") {
-        genes <- .convertGenesToSymbols(object, genes = genes)
-    }
     ident <- slot(object, "ident")
     data <- fetchGeneData(object, genes = genes) %>%
         as.data.frame() %>%

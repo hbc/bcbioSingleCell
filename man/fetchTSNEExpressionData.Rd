@@ -10,16 +10,15 @@
 \usage{
 fetchTSNEExpressionData(object, ...)
 
-\S4method{fetchTSNEExpressionData}{seurat}(object, genes, format = "symbol")
+\S4method{fetchTSNEExpressionData}{seurat}(object, genes)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{genes}{Genes (by symbol name) of which to get expression data.}
-
-\item{format}{Gene identifier format. Supports \code{ensgene} or \code{symbol}.}
+\item{genes}{Genes identifiers (matching the rownames in the object),
+of which to get expression data.}
 }
 \value{
 \link{tibble} grouped by \code{gene}, containing t-SNE points, cellular
@@ -34,22 +33,10 @@ load(system.file(
     file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
-symbol <- counts(seurat) \%>\% rownames() \%>\% head()
-print(symbol)
+genes <- counts(seurat) \%>\% rownames() \%>\% head()
+print(genes)
 
-ensgene <- bcbio(seurat, "gene2symbol") \%>\%
-    .[which(.[["symbol"]] \%in\% symbol), "ensgene", drop = TRUE]
-print(ensgene)
-
-fetchTSNEExpressionData(
-    seurat,
-    genes = symbol,
-    format = "symbol") \%>\%
-    glimpse()
-fetchTSNEExpressionData(
-    seurat,
-    genes = ensgene,
-    format = "ensgene") \%>\%
+fetchTSNEExpressionData(seurat, genes = genes) \%>\%
     glimpse()
 }
 \seealso{

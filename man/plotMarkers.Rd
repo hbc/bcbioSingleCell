@@ -9,7 +9,7 @@
 \usage{
 plotMarkers(object, ...)
 
-\S4method{plotMarkers}{seurat}(object, genes, format = "symbol",
+\S4method{plotMarkers}{seurat}(object, genes,
   tsneColor = viridis::scale_color_viridis(),
   violinFill = viridis::scale_fill_viridis(discrete = TRUE),
   dotColor = ggplot2::scale_color_gradient(low = "lightgray", high =
@@ -21,11 +21,8 @@ plotMarkers(object, ...)
 
 \item{...}{\emph{Additional arguments (for the S4 generic definition).}}
 
-\item{genes}{Genes (by symbol name) of which to get expression data.}
-
-\item{format}{Gene identifier format. Defaults to \code{symbol} but \code{ensgene}
-is also supported, as long as Ensembl gene to symbol identifier mappings
-are defined.}
+\item{genes}{Genes identifiers (matching the rownames in the object),
+of which to get expression data.}
 
 \item{tsneColor}{Color palette to use for tSNE plot.}
 
@@ -61,13 +58,10 @@ load(system.file(
     file.path("extdata", "topMarkers.rda"),
     package = "bcbioSingleCell"))
 
-symbol <- topMarkers$symbol[[1]]
-print(symbol)
-ensgene <- topMarkers$ensgene[[1]]
-print(ensgene)
-
-plotMarkers(seurat, genes = symbol, format = "symbol")
-plotMarkers(seurat, genes = ensgene, format = "ensgene")
+# seurat
+genes <- pull(topMarkers, "symbol")
+print(genes)
+plotMarkers(seurat, genes = genes)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},

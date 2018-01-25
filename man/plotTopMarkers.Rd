@@ -57,7 +57,7 @@ load(system.file(
 
 # seurat, grouped_df
 # Let's plot the top 2 markers from cluster 0, as a quick example
-plotTopMarkers(seurat, topMarkers[1:2, ])
+plotTopMarkers(seurat, topMarkers = topMarkers[1:2, ])
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},

@@ -9,9 +9,6 @@
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #'
-#' @param format Gene identifier format. Defaults to `symbol` but `ensgene`
-#'   is also supported, as long as Ensembl gene to symbol identifier mappings
-#'   are defined.
 #' @param colorPoints Color points by geometric mean (`geomean`) or expression
 #'   of individual gene (`expression`).
 #' @param legend Show plot legend.
@@ -24,19 +21,14 @@
 #'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
 #'
-#' symbol <- counts(seurat) %>% rownames() %>% .[[1]]
-#' print(symbol)
-#'
-#' ensgene <- bcbio(seurat, "gene2symbol") %>%
-#'     .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
-#' print(ensgene)
+#' genes <- counts(seurat) %>% rownames() %>% head()
+#' print(genes)
 #'
 #' # seurat
-#' plotMarkerTSNE(seurat, genes = symbol, format = "symbol")
-#' plotMarkerTSNE(seurat, genes = ensgene, format = "ensgene")
+#' plotMarkerTSNE(seurat, genes = genes)
 #'
 #' # data.frame
-#' df <- fetchTSNEExpressionData(seurat, genes = symbol)
+#' df <- fetchTSNEExpressionData(seurat, genes = genes)
 #' plotMarkerTSNE(df)
 NULL
 
@@ -204,7 +196,6 @@ setMethod(
     function(
         object,
         genes,
-        format = "symbol",
         colorPoints = "geomean",
         pointsAsNumbers = FALSE,
         pointSize = 0.5,
@@ -215,10 +206,6 @@ setMethod(
         dark = TRUE,
         title = NULL,
         subtitle = TRUE) {
-        .checkFormat(format)
-        if (format == "ensgene") {
-            genes <- .convertGenesToSymbols(object, genes = genes)
-        }
         data <- fetchTSNEExpressionData(object, genes = genes)
         .plotMarkerTSNE(
             object = data,

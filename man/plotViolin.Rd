@@ -6,7 +6,7 @@
 \alias{plotViolin,seurat-method}
 \title{Plot Violin}
 \usage{
-\S4method{plotViolin}{seurat}(object, genes, format = "symbol",
+\S4method{plotViolin}{seurat}(object, genes,
   fill = viridis::scale_fill_viridis(discrete = TRUE), return = "grid",
   headerLevel = 2L)
 }
@@ -14,8 +14,6 @@
 \item{object}{Object.}
 
 \item{genes}{Gene identifiers to plot.}
-
-\item{format}{Gene identifier format. Supports \code{ensgene} or \code{symbol}.}
 
 \item{fill}{Fill color palette. Defaults to viridis.}
 

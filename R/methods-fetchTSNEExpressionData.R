@@ -10,8 +10,8 @@
 #'
 #' @inheritParams AllGenerics
 #'
-#' @param genes Genes (by symbol name) of which to get expression data.
-#' @param format Gene identifier format. Supports `ensgene` or `symbol`.
+#' @param genes Genes identifiers (matching the rownames in the object),
+#'   of which to get expression data.
 #'
 #' @return [tibble] grouped by `gene`, containing t-SNE points, cellular
 #'   metadata, and gene expression.
@@ -21,22 +21,10 @@
 #'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
 #'
-#' symbol <- counts(seurat) %>% rownames() %>% head()
-#' print(symbol)
+#' genes <- counts(seurat) %>% rownames() %>% head()
+#' print(genes)
 #'
-#' ensgene <- bcbio(seurat, "gene2symbol") %>%
-#'     .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
-#' print(ensgene)
-#'
-#' fetchTSNEExpressionData(
-#'     seurat,
-#'     genes = symbol,
-#'     format = "symbol") %>%
-#'     glimpse()
-#' fetchTSNEExpressionData(
-#'     seurat,
-#'     genes = ensgene,
-#'     format = "ensgene") %>%
+#' fetchTSNEExpressionData(seurat, genes = genes) %>%
 #'     glimpse()
 NULL
 
@@ -50,13 +38,8 @@ NULL
 #' @importFrom tidyr gather
 .fetchTSNEExpressionData.seurat <- function(  # nolint
     object,
-    genes,
-    format = "symbol") {
+    genes) {
     priorityCols <- c("gene", "cellID", "expression", "geomean")
-    .checkFormat(format)
-    if (format == "ensgene") {
-        genes <- .convertGenesToSymbols(object, genes = genes)
-    }
     tsne <- fetchTSNEData(object)
     data <- fetchGeneData(object, genes = genes)
     geomean <- rowMeans(data)

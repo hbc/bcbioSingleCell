@@ -4,12 +4,10 @@ load(system.file(
     file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
-symbol <- counts(seurat) %>% rownames() %>% head()
-ensgene <- bcbio(seurat, "gene2symbol") %>%
-    .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
+genes <- counts(seurat) %>% rownames() %>% head()
 
 test_that("symbol", {
-    data <- fetchTSNEExpressionData(seurat, genes = symbol, format = "symbol")
+    data <- fetchTSNEExpressionData(seurat, genes = genes)
     expect_is(data, "grouped_df")
     group <- group_vars(data)
     expect_identical(group, "gene")
