@@ -16,7 +16,7 @@
 #'
 #' @return [ggplot].
 #' @noRd
-.plotDimensionalityReduction <- function(
+.plotDR <- function(
     object,
     axes,
     interestingGroups = "ident",

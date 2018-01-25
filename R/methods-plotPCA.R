@@ -41,7 +41,7 @@ setMethod(
         dark = TRUE,
         title = NULL) {
         pca <- fetchPCAData(object)
-        .plotDimensionalityReduction(
+        .plotDR(
             pca,
             axes = c(x = "pc1", y = "pc2"),
             interestingGroups = interestingGroups,
