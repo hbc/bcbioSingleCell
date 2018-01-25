@@ -64,7 +64,7 @@ setMethod(
         }
         tsne <- fetchTSNEData(object)
         data <- .fetchGeneData.seurat(object, genes = genes)
-        geomean <- colMeans(t(data))
+        geomean <- rowMeans(data)
         cbind(tsne, data, geomean) %>%
             rownames_to_column("cellID") %>%
             gather(key = "gene",
