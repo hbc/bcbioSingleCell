@@ -42,35 +42,40 @@ NULL
 
 
 
-# Methods ======================================================================
-#' @rdname fetchTSNEExpressionData
+# Constructors =================================================================
 #' @importFrom dplyr everything group_by select
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom Seurat FetchData
 #' @importFrom tibble column_to_rownames rownames_to_column
 #' @importFrom tidyr gather
+.fetchTSNEExpressionData.seurat <- function(  # nolint
+    object,
+    genes,
+    format = "symbol") {
+    priorityCols <- c("gene", "cellID", "expression", "geomean")
+    .checkFormat(format)
+    if (format == "ensgene") {
+        genes <- .convertGenesToSymbols(object, genes = genes)
+    }
+    tsne <- fetchTSNEData(object)
+    data <- .fetchGeneData.seurat(object, genes = genes)
+    geomean <- rowMeans(data)
+    cbind(tsne, data, geomean) %>%
+        rownames_to_column("cellID") %>%
+        gather(key = "gene",
+               value = "expression",
+               !!genes) %>%
+        group_by(!!sym("gene")) %>%
+        select(!!!syms(priorityCols), everything()) %>%
+        arrange(!!!syms(priorityCols))
+}
+
+
+
+# Methods ======================================================================
+#' @rdname fetchTSNEExpressionData
 #' @export
 setMethod(
     "fetchTSNEExpressionData",
     signature("seurat"),
-    function(
-        object,
-        genes,
-        format = "symbol") {
-        priorityCols <- c("gene", "cellID", "expression", "geomean")
-        .checkFormat(format)
-        if (format == "ensgene") {
-            genes <- .convertGenesToSymbols(object, genes = genes)
-        }
-        tsne <- fetchTSNEData(object)
-        data <- .fetchGeneData.seurat(object, genes = genes)
-        geomean <- rowMeans(data)
-        cbind(tsne, data, geomean) %>%
-            rownames_to_column("cellID") %>%
-            gather(key = "gene",
-                   value = "expression",
-                   !!genes) %>%
-            group_by(!!sym("gene")) %>%
-            select(!!!syms(priorityCols), everything()) %>%
-            arrange(!!!syms(priorityCols))
-    })
+    .fetchTSNEExpressionData.seurat)
