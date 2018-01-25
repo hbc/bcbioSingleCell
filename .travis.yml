@@ -20,6 +20,9 @@ r:
 r_packages:
   - covr
   - rlang
+r_github_packages:
+  - hbc/bcbioBase@develop
+  - steinbaugh/basejump@develop
 
 after_success:
   - Rscript -e 'covr::codecov()'
