@@ -10,8 +10,22 @@ genes <- counts(seurat) %>%
 
 test_that("seurat", {
     expect_identical(genes, "SCYL3")
-    p <- plotMarkerTSNE(seurat, genes = genes)
-    expect_is(p, "ggplot")
+    mean <- plotMarkerTSNE(seurat, genes = genes, expression = "mean")
+    median <- plotMarkerTSNE(seurat, genes = genes, expression = "median")
+    sum <- plotMarkerTSNE(seurat, genes = genes, expression = "sum")
+    invisible(lapply(
+        X = list(mean, median, sum),
+        FUN = function(p) {
+            expect_is(p, "ggplot")
+        }
+    ))
+})
+
+test_that("Invalid expression", {
+    expect_error(
+        plotMarkerTSNE(seurat, genes = genes, expression = "XXX"),
+        "`expression` must contain: mean, median, sum"
+    )
 })
 
 test_that("data.frame", {
