@@ -9,8 +9,8 @@
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #'
-#' @param fun Function to apply on aggregate marker expression. Currently
-#'   supports `mean`, `median`, or `sum`.
+#' @param expression Calculation to apply on the aggregate marker expression.
+#'   Supports `mean` (default), `median`, or `sum`.
 #' @param legend Show plot legend.
 #' @param subtitle Include gene(s) in the subtitle.
 #'
@@ -50,7 +50,7 @@ NULL
 .plotMarkerTSNE <- function(
     object,
     genes,
-    fun = "mean",
+    expression = "mean",
     pointsAsNumbers = FALSE,
     pointSize = 0.5,
     pointAlpha = 0.8,
@@ -75,18 +75,12 @@ NULL
             "Required columns:", toString(requiredCols)
         ))
     }
-    validFun <- c("mean", "median", "sum")
-    if (!fun %in% validFun) {
+    validExpression <- c("mean", "median", "sum")
+    if (!expression %in% validExpression) {
         abort(paste(
-            "`fun` must contain:",
-            toString(validFun)
+            "`expression` must contain:",
+            toString(validExpression)
         ))
-    }
-
-    # Use `sum` if we're only plotting a single gene. The `mean` and `mean`
-    # arguments for `fun` is only informative for 2+ genes.
-    if (length(genes) == 1L) {
-        fun <- "sum"
     }
 
     # Automatic subtitle containing list of marker genes
@@ -104,7 +98,7 @@ NULL
         mapping = aes_string(
             x = "tSNE1",
             y = "tSNE2",
-            color = fun)
+            color = expression)
     )
 
     if (isTRUE(dark)) {
@@ -146,7 +140,7 @@ NULL
                     x = "tSNE1",
                     y = "tSNE2",
                     label = "ident",
-                    color = fun),
+                    color = expression),
                 alpha = pointAlpha,
                 size = pointSize)
     } else {
@@ -200,7 +194,7 @@ setMethod(
     function(
         object,
         genes,
-        fun = "mean",
+        expression = "mean",
         pointsAsNumbers = FALSE,
         pointSize = 0.5,
         pointAlpha = 0.8,
@@ -214,7 +208,7 @@ setMethod(
         .plotMarkerTSNE(
             object = data,
             genes = genes,
-            fun = fun,
+            expression = expression,
             pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             pointAlpha = pointAlpha,
