@@ -91,9 +91,9 @@
     
 
     <pre class="usage"><span class='co'># S4 method for seurat</span>
-<span class='fu'>plotViolin</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"symbol"</span>,
+<span class='fu'>plotViolin</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>,
-  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -105,10 +105,6 @@
     <tr>
       <th>genes</th>
       <td><p>Gene identifiers to plot.</p></td>
-    </tr>
-    <tr>
-      <th>format</th>
-      <td><p>Gene identifier format. Supports <code>ensgene</code> or <code>symbol</code>.</p></td>
     </tr>
     <tr>
       <th>fill</th>
@@ -266,7 +262,7 @@
 #&gt;     train_scales: function
 #&gt;     vars: function
 #&gt;     super:  &lt;ggproto object: Class FacetNull, Facet&gt; 
-#&gt;   ..$ plot_env   :&lt;environment: 0x12d73cc98&gt; 
+#&gt;   ..$ plot_env   :&lt;environment: 0x1323520e8&gt; 
 #&gt;   ..$ labels     :List of 4
 #&gt;   .. ..$ title: chr "SCYL3"
 #&gt;   .. ..$ fill : chr "ident"
@@ -402,7 +398,7 @@
 #&gt;     train_scales: function
 #&gt;     vars: function
 #&gt;     super:  &lt;ggproto object: Class FacetNull, Facet&gt; 
-#&gt;   ..$ plot_env   :&lt;environment: 0x12e6ba400&gt; 
+#&gt;   ..$ plot_env   :&lt;environment: 0x1352d35b8&gt; 
 #&gt;   ..$ labels     :List of 4
 #&gt;   .. ..$ title: chr "CD99"
 #&gt;   .. ..$ fill : chr "ident"

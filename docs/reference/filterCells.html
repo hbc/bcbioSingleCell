@@ -94,9 +94,9 @@ cellular barcodes.</p>
     <pre class="usage"><span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.75</span>,
-  <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000L</span>,
+  <span class='kw'>maxUMIs</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500L</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>3L</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for bcbioSCDataSet</span>
 <span class='fu'>filterCells</span>(<span class='no'>object</span>)</pre>
@@ -115,6 +115,10 @@ cellular barcodes.</p>
     <tr>
       <th>minUMIs</th>
       <td><p>Minimum number of UMI disambiguated counts per cell.</p></td>
+    </tr>
+    <tr>
+      <th>maxUMIs</th>
+      <td><p>Maximum number of UMI disambiguated counts per cell.</p></td>
     </tr>
     <tr>
       <th>minGenes</th>
@@ -148,6 +152,13 @@ this many cells.</p></td>
     <p><a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object, with filtering information slotted into
 <code>metadata()</code> as <code>filterCells</code> and <code>filterParams</code>.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The filtering cutoff values now support a named numeric vector. By
+default we recommend applying the same filtering cutoff to all samples.
+When matching the samples, be sure to use <code>sampleID</code> column (i.e. the
+rownames of <code><a href='sampleMetadata.html'>sampleMetadata()</a></code>).</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/CreateSeuratObject'>Seurat::CreateSeuratObject()</a></code>.</p>
@@ -172,17 +183,28 @@ this many cells.</p></td>
 #&gt; colnames(500): run1_AGAGGATA_AAACACTA_CTTAGGTA
 #&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run2_AGAGGATA_TGTTATCA_ACGCAGAG
 #&gt;   run2_AGAGGATA_TGTTATCA_CAAGTCAT
-#&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div><div class='input'><span class='fu'>filterCells</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; <span class='message'>500 cells before filtering</span>
-#&gt; <span class='message'>1000 genes before filtering</span></div><div class='output co'>#&gt; <span class='message'>     500 cells | minUMIs &gt;= 1000</span></div><div class='output co'>#&gt; <span class='message'>     499 cells | minGenes &gt;= 500</span></div><div class='output co'>#&gt; <span class='message'>     499 cells | maxGenes &lt;= Inf</span></div><div class='output co'>#&gt; <span class='message'>     421 cells | maxMitoRatio &lt;= 0.1</span></div><div class='output co'>#&gt; <span class='message'>     421 cells | minNovelty &lt;= 0.75</span></div><div class='output co'>#&gt; <span class='message'>    1000 genes | minCellsPerGene &lt;= 3</span></div><div class='output co'>#&gt; <span class='message'>421 / 500 cells passed filtering (84.2%)</span>
-#&gt; <span class='message'>1000 / 1000 genes passed filtering (100%)</span></div><div class='output co'>#&gt; Filtering parameters:
+#&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div><div class='input'><span class='fu'>filterCells</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; Filtering parameters:
 #&gt;   - &gt;= 1000 UMI counts per cell
+#&gt;   - &lt;= Inf UMI counts per cell
 #&gt;   - &gt;= 500 genes per cell
 #&gt;   - &lt;= Inf genes per cell
 #&gt;   - &lt;= 0.1 mitochondrial abundance
 #&gt;   - &gt;= 0.75 novelty score
-#&gt;   - &gt;= 3 cells per gene</div><div class='output co'>#&gt; class: bcbioSingleCell 
+#&gt;   - &gt;= 3 cells per gene
+#&gt; ============================================================
+#&gt; 1000 genes / 500 cells
+#&gt;      500 cells | minUMIs &gt;= 1000
+#&gt;      500 cells | maxUMIs &lt;= Inf
+#&gt;      499 cells | minGenes &gt;= 500
+#&gt;      499 cells | maxGenes &lt;= Inf
+#&gt;      421 cells | maxMitoRatio &lt;= 0.1
+#&gt;      421 cells | minNovelty &lt;= 0.75
+#&gt;     1000 genes | minCellsPerGene &lt;= 3
+#&gt; ============================================================
+#&gt; 421 / 500 cells passed filtering (84.2%)
+#&gt; 1000 / 1000 genes passed filtering (100%)</div><div class='output co'>#&gt; class: bcbioSingleCell 
 #&gt; dim: 1000 421 
-#&gt; metadata(37): version pipeline ... filterParams originalVersion
+#&gt; metadata(38): version pipeline ... filterSummary originalVersion
 #&gt; assays(1): assay
 #&gt; rownames(1000): ENSG00000000457 ENSG00000002586 ... ENSG00000283957
 #&gt;   ENSG00000284526
@@ -198,6 +220,8 @@ this many cells.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

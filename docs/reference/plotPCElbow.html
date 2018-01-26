@@ -95,7 +95,7 @@ PC cutoff for either 5<!-- % SD (\code{maxPct}) or 90% cumulative (\code{minCums
     <pre class="usage"><span class='fu'>plotPCElbow</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotPCElbow</span>(<span class='no'>object</span>, <span class='kw'>maxPct</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>minCumPct</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+<span class='fu'>plotPCElbow</span>(<span class='no'>object</span>, <span class='kw'>maxPct</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>minCumPct</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
   <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -148,7 +148,7 @@ dimensionality reduction analysis.</p></li>
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
 <span class='co'># seurat</span>
-<span class='no'>pcUse</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCElbow</span>(<span class='no'>seurat</span>)</div><div class='img'><img src='plotPCElbow-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>pcUse</span></div><div class='output co'>#&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14</div></pre>
+<span class='no'>pcUse</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCElbow</span>(<span class='no'>seurat</span>)</div><div class='img'><img src='plotPCElbow-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>pcUse</span></div><div class='output co'>#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

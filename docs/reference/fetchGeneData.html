@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Fetch t-SNE Locations, Cellular Metadata and Expression of Genes — fetchTSNEExpressionData • bcbioSingleCell</title>
+<title>Fetch Gene Expression Data — fetchGeneData • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,18 +83,17 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Fetch t-SNE Locations, Cellular Metadata and Expression of Genes</h1>
+    <h1>Fetch Gene Expression Data</h1>
     </div>
 
     
-    <p>This gets t-SNE locations, cellular metadata, expression of genes and
-the geometric mean of the gene expression from a seurat object.</p>
+    <p>Fetch Gene Expression Data</p>
     
 
-    <pre class="usage"><span class='fu'>fetchTSNEExpressionData</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>fetchGeneData</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>fetchTSNEExpressionData</span>(<span class='no'>object</span>, <span class='no'>genes</span>)</pre>
+<span class='fu'>fetchGeneData</span>(<span class='no'>object</span>, <span class='no'>genes</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -109,20 +108,13 @@ the geometric mean of the gene expression from a seurat object.</p>
     </tr>
     <tr>
       <th>genes</th>
-      <td><p>Genes identifiers (matching the rownames in the object),
-of which to get expression data.</p></td>
+      <td><p>Gene identifiers (matrix rownames).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data.frame containing tSNE coordinates, sample metadata, and
-aggregate marker expression values (<code>mean</code>, <code>median</code>, and <code>sum</code>).</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <p>Other t-SNE Utilities: <code>fetchTSNEData</code>,
-  <code>plotMarkerTSNE</code>, <code>plotTSNE</code></p>
+    <p>matrix.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -130,35 +122,18 @@ aggregate marker expression values (<code>mean</code>, <code>median</code>, and 
     <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>seurat</span>) <span class='kw'>%&gt;%</span> <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span> <span class='fu'>head</span>()
-<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; ENSG00000000457 ENSG00000002586 ENSG00000002933 ENSG00000004939 ENSG00000005022 
-#&gt;         "SCYL3"          "CD99"      "TMEM176A"        "SLC4A1"       "SLC25A5" 
-#&gt; ENSG00000005100 
-#&gt;         "DHX33" </div><div class='input'>
-<span class='fu'>fetchTSNEExpressionData</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 243
-#&gt; Variables: 21
-#&gt; $ tSNE1             &lt;dbl&gt; -3.055881, 13.310006, 13.533313, 3.831661, -8.180...
-#&gt; $ tSNE2             &lt;dbl&gt; -4.30397137, -1.86121673, 2.32827003, 1.36239831,...
-#&gt; $ ident             &lt;fct&gt; 0, 1, 1, 3, 2, 1, 3, 0, 1, 2, 3, 0, 1, 2, 1, 0, 3...
-#&gt; $ nGene             &lt;int&gt; 734, 774, 541, 545, 653, 816, 525, 725, 614, 566,...
-#&gt; $ nUMI              &lt;int&gt; 6220, 9622, 1896, 2137, 4918, 9247, 1891, 6031, 4...
-#&gt; $ sampleID          &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M...
-#&gt; $ nCoding           &lt;int&gt; 5495, 8536, 1682, 1908, 3770, 8336, 1484, 5280, 3...
-#&gt; $ nMito             &lt;int&gt; 442, 438, 103, 83, 830, 423, 246, 436, 543, 208, ...
-#&gt; $ log10GenesPerUMI  &lt;dbl&gt; 0.7553649, 0.7252193, 0.8338414, 0.8217889, 0.762...
-#&gt; $ mitoRatio         &lt;dbl&gt; 0.07106109, 0.04552068, 0.05432489, 0.03883949, 0...
-#&gt; $ nCount            &lt;int&gt; 95155, 124786, 34607, 34005, 77663, 132228, 41090...
-#&gt; $ sampleName        &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M...
-#&gt; $ description       &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M...
-#&gt; $ interestingGroups &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M...
-#&gt; $ origIdent         &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M1, M...
-#&gt; $ res0x8            &lt;fct&gt; 0, 1, 1, 3, 2, 1, 3, 0, 1, 2, 3, 0, 1, 2, 1, 0, 3...
-#&gt; $ centerX           &lt;dbl&gt; -6.650639, 13.494614, 13.494614, 2.638557, -6.678...
-#&gt; $ centerY           &lt;dbl&gt; -4.2258378, -1.0635274, -1.0635274, 0.8535128, 9....
-#&gt; $ mean              &lt;dbl&gt; 1.164669, 1.402145, 1.388684, 1.420361, 2.096435,...
-#&gt; $ median            &lt;dbl&gt; 1.360158, 1.474219, 1.836456, 1.736856, 2.186520,...
-#&gt; $ sum               &lt;dbl&gt; 6.988012, 8.412870, 8.332102, 8.522164, 12.578611...</div></pre>
+<span class='co'># seurat</span>
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>slot</span>(<span class='no'>seurat</span>, <span class='st'>"data"</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span>
+    <span class='fu'>head</span>()
+<span class='fu'>fetchGeneData</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>head</span>()</div><div class='output co'>#&gt;                          SCYL3      CD99 TMEM176A   SLC4A1  SLC25A5    DHX33
+#&gt; M1_AAACACTA_CTTAGGTA 0.9584751 1.7618415 0.000000 2.505854 0.000000 1.761842
+#&gt; M1_AAACACTA_CTTCGATT 2.5202846 0.7125992 2.231549 1.124465 1.823972 0.000000
+#&gt; M1_AAACCGCC_GAGTTTCG 2.8227342 0.0000000 1.836456 1.836456 1.836456 0.000000
+#&gt; M1_AAACCGCC_TAGCCTCG 2.7106050 1.7368557 0.000000 0.000000 1.736856 2.337847
+#&gt; M1_AAACGATC_TTTACCCT 2.4129392 1.9601005 1.622688 1.109667 2.412939 3.060277
+#&gt; M1_AAACTACA_CCACATTA 2.2671086 2.1482704 1.857416 1.445576 2.148270 1.672549</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -166,15 +141,9 @@ aggregate marker expression values (<code>mean</code>, <code>median</code>, and 
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
-
-    <h2>Author</h2>
-    
-Rory Kirchner, Michael Steinbaugh
 
   </div>
 </div>
