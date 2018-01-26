@@ -29,7 +29,7 @@
 #'
 #' # data.frame
 #' df <- fetchTSNEExpressionData(seurat, genes = genes)
-#' plotMarkerTSNE(df)
+#' plotMarkerTSNE(df, genes = genes)
 NULL
 
 

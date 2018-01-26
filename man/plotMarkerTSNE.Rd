@@ -73,7 +73,7 @@ plotMarkerTSNE(seurat, genes = genes)
 
 # data.frame
 df <- fetchTSNEExpressionData(seurat, genes = genes)
-plotMarkerTSNE(df)
+plotMarkerTSNE(df, genes = genes)
 }
 \seealso{
 Other t-SNE Utilities: \code{\link{fetchTSNEData}},
