@@ -21,8 +21,8 @@ fetchTSNEExpressionData(object, ...)
 of which to get expression data.}
 }
 \value{
-\link{tibble} grouped by \code{gene}, containing t-SNE points, cellular
-metadata, and gene expression.
+\link{data.frame} containing tSNE coordinates, sample metadata, and
+aggregate marker expression values (\code{mean}, \code{median}, and \code{sum}).
 }
 \description{
 This gets t-SNE locations, cellular metadata, expression of genes and

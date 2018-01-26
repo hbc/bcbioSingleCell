@@ -13,8 +13,8 @@
 #' @param genes Genes identifiers (matching the rownames in the object),
 #'   of which to get expression data.
 #'
-#' @return [tibble] grouped by `gene`, containing t-SNE points, cellular
-#'   metadata, and gene expression.
+#' @return [data.frame] containing tSNE coordinates, sample metadata, and
+#'   aggregate marker expression values (`mean`, `median`, and `sum`).
 #'
 #' @examples
 #' load(system.file(
