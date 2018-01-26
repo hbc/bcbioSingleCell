@@ -11,6 +11,11 @@
 #' @param dir Output directory where to save the subset data.
 #'
 #' @return Character vector of saved [bcbioSingleCell] subsets.
+#'
+#' @examples
+#' load(system.file(
+#'     file.path("extdata", "bcb.rda"),
+#'     package = "bcbioSingleCell"))
 NULL
 
 
@@ -29,7 +34,8 @@ setMethod(
         dir = getwd()) {
         dir.create(dir, recursive = TRUE, showWarnings = FALSE)
         sampleIDs <- sampleMetadata(object) %>%
-            pull("sampleID")
+            pull("sampleID") %>%
+            as.character()
         pblapply(seq_along(sampleIDs), function(a) {
             sampleID <- sampleIDs[[a]]
             subset <- selectSamples(
