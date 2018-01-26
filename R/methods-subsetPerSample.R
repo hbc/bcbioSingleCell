@@ -14,8 +14,15 @@
 #'
 #' @examples
 #' load(system.file(
-#'     file.path("extdata", "bcb.rda"),
+#'     file.path("extdata", "filtered.rda"),
 #'     package = "bcbioSingleCell"))
+#'
+#' # This will save the subsets per sample to disk
+#' subsetPerSample(filtered, dir = "subsetPerSample")
+#' dir("subsetPerSample")
+#'
+#' # Cleanup
+#' unlink("subsetPerSample", recursive = TRUE)
 NULL
 
 
