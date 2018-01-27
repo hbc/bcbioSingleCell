@@ -97,7 +97,7 @@
   <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(),
   <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
   <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span>
-  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -170,7 +170,7 @@ for the number of genes to plot here in a future update.</p>
 
 <span class='co'># seurat, grouped_df</span>
 <span class='co'># Let's plot the top 2 markers from cluster 0, as a quick example</span>
-<span class='fu'>plotTopMarkers</span>(<span class='no'>seurat</span>, <span class='no'>topMarkers</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ])</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
+<span class='fu'>plotTopMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>topMarkers</span> <span class='kw'>=</span> <span class='no'>topMarkers</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ])</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
 #&gt; 
 #&gt; ## Cluster 0 {.tabset}
 #&gt; 
@@ -180,7 +180,7 @@ for the number of genes to plot here in a future update.</p>
 #&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ### MYL7
-#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |+++++++++                                         | 17% ~23s             |+++++++++++++++++                                 | 33% ~09s             |+++++++++++++++++++++++++                         | 50% ~05s             |++++++++++++++++++++++++++++++++++                | 67% ~02s             |++++++++++++++++++++++++++++++++++++++++++        | 83% ~01s             |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 05s</div></pre>
+#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |+++++++++                                         | 17% ~22s             |+++++++++++++++++                                 | 33% ~09s             |+++++++++++++++++++++++++                         | 50% ~04s             |++++++++++++++++++++++++++++++++++                | 67% ~02s             |++++++++++++++++++++++++++++++++++++++++++        | 83% ~01s             |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 04s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

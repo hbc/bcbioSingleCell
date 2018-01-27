@@ -27,6 +27,18 @@ Character vector of saved \link{bcbioSingleCell} subsets.
 \description{
 Subset Per Sample
 }
+\examples{
+load(system.file(
+    file.path("extdata", "filtered.rda"),
+    package = "bcbioSingleCell"))
+
+# This will save the subsets per sample to disk
+subsetPerSample(filtered, dir = "subsetPerSample")
+dir("subsetPerSample")
+
+# Cleanup
+unlink("subsetPerSample", recursive = TRUE)
+}
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateReplicates}},
   \code{\link{filterCells}},

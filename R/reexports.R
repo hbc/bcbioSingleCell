@@ -1,3 +1,7 @@
+#' @importFrom dplyr pull
+#' @export
+dplyr::pull
+
 #' @importFrom dplyr funs
 #' @export
 dplyr::funs

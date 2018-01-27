@@ -87,7 +87,7 @@ NULL
             p <- plotMarkerTSNE(
                 object = object,
                 genes = genes,
-                fun = "mean",
+                expression = "mean",
                 color = color,
                 dark = dark,
                 pointsAsNumbers = FALSE,

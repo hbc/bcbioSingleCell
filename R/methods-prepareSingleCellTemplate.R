@@ -22,6 +22,7 @@ NULL
 
 # Methods ======================================================================
 #' @rdname prepareSingleCellTemplate
+#' @importFrom bcbioBase prepareTemplate
 #' @export
 setMethod(
     "prepareSingleCellTemplate",

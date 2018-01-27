@@ -3,6 +3,8 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{pull}
+\alias{reexports}
 \alias{funs}
 \alias{reexports}
 \alias{ggplot}
@@ -23,7 +25,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{funs}}}
+  \item{dplyr}{\code{\link[dplyr]{pull}}, \code{\link[dplyr]{funs}}}
 
   \item{ggplot2}{\code{\link[ggplot2]{ggplot}}}
 

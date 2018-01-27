@@ -10,12 +10,12 @@
 \usage{
 plotMarkerTSNE(object, ...)
 
-\S4method{plotMarkerTSNE}{data.frame}(object, genes, fun = "mean",
+\S4method{plotMarkerTSNE}{data.frame}(object, genes, expression = "mean",
   pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
   label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
   dark = TRUE, legend = TRUE, title = NULL, subtitle = TRUE)
 
-\S4method{plotMarkerTSNE}{seurat}(object, genes, fun = "mean",
+\S4method{plotMarkerTSNE}{seurat}(object, genes, expression = "mean",
   pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
   label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
   dark = TRUE, title = NULL, subtitle = TRUE)
@@ -28,8 +28,8 @@ plotMarkerTSNE(object, ...)
 \item{genes}{Genes identifiers (matching the rownames in the object),
 of which to get expression data.}
 
-\item{fun}{Function to apply on aggregate marker expression. Currently
-supports \code{mean}, \code{median}, or \code{sum}.}
+\item{expression}{Calculation to apply on the aggregate marker expression.
+Supports \code{mean} (default), \code{median}, or \code{sum}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
