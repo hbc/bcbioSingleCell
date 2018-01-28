@@ -45,17 +45,15 @@ NULL
     df <- data.frame(
         dropout = (nrow(present) - Matrix::colSums(present)) / nrow(present),
         depth = Matrix::colSums(object),
-        description = metrics[["description"]])
+        description = metrics[["description"]]
+    )
     p <- ggplot(
         df,
-        mapping = aes_string(
-            x = "depth",
-            y = "dropout")
+        mapping = aes_string(x = "depth", y = "dropout")
     ) +
         geom_point(size = 0.8, alpha = 0.3) +
         scale_x_log10() +
-        labs(x = "library size (depth)",
-             y = "dropout rate")
+        labs(x = "library size (depth)", y = "dropout rate")
 
     # Facets
     facets <- NULL

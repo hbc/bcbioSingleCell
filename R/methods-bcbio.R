@@ -78,8 +78,9 @@ setMethod(
 #' @export
 setMethod(
     "bcbio<-",
-    signature(object = "bcbioSingleCell",
-              value = "ANY"),
+    signature(
+        object = "bcbioSingleCell",
+        value = "ANY"),
     function(object, type, value) {
         slot(object, "bcbio")[[type]] <- value
         validObject(object)
@@ -92,8 +93,9 @@ setMethod(
 #' @export
 setMethod(
     "bcbio<-",
-    signature(object = "seurat",
-              value = "ANY"),
+    signature(
+        object = "seurat",
+        value = "ANY"),
     function(object, type, value) {
         if (!.hasSlot(object, "misc")) return(NULL)
         if (is.null(slot(object, "misc")[["bcbio"]])) {
@@ -129,8 +131,9 @@ setMethod(
 #' @export
 setMethod(
     "bcbio<-",
-    signature(object = "bcbioSCDataSet",
-              value = "ANY"),
+    signature(
+        object = "bcbioSCDataSet",
+        value = "ANY"),
     function(object, type, value) {
         slot(object, "callers")[[type]] <- value
         validObject(object)

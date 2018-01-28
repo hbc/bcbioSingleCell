@@ -102,15 +102,17 @@
         # Append sample name
         paste(sampleName, ., sep = "_") %>%
         # Convert dashes to underscores
-        gsub(x = .,
-             pattern = "-",
-             replacement = "_") %>%
+        gsub(
+            x = .,
+            pattern = "-",
+            replacement = "_") %>%
         make.names(unique = TRUE)
     rownames(counts) <- rownames %>%
         # Convert dashes to underscores
-        gsub(x = .,
-             pattern = "-",
-             replacement = "_") %>%
+        gsub(
+            x = .,
+            pattern = "-",
+            replacement = "_") %>%
         make.names(unique = TRUE)
 
     counts

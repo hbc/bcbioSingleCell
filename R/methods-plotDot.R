@@ -105,18 +105,13 @@ NULL
 
     p <- ggplot(
         data = data,
-        mapping = aes_string(
-            x = "gene",
-            y = "ident")
+        mapping = aes_string(x = "gene", y = "ident")
     ) +
         geom_point(
-            mapping = aes_string(
-                color = "avgExpScale",
-                size = "pctExp")
+            mapping = aes_string(color = "avgExpScale", size = "pctExp")
         ) +
         scale_radius(range = c(0L, dotScale)) +
-        labs(x = "gene",
-             y = "ident")
+        labs(x = "gene", y = "ident")
     if (is(color, "ScaleContinuous")) {
         p <- p + color
     }

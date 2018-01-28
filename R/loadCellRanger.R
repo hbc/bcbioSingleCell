@@ -226,11 +226,12 @@ loadCellRanger <- function(
             pattern = "^(.+)_([ACGT]+)_(\\d+)$"
         ) %>%
             as.data.frame() %>%
-            set_colnames(
-                c("cellID",
-                  "description",
-                  "barcode",
-                  "index")) %>%
+            set_colnames(c(
+                "cellID",
+                "description",
+                "barcode",
+                "index"
+            )) %>%
             mutate_all(as.factor) %>%
             # Note that we can't use minimal sample metadata here
             left_join(sampleMetadata, by = c("description", "index"))

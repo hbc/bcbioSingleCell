@@ -69,8 +69,9 @@ setMethod(
 #' @export
 setMethod(
     "interestingGroups<-",
-    signature(object = "bcbioSingleCell",
-              value = "character"),
+    signature(
+        object = "bcbioSingleCell",
+        value = "character"),
     function(object, value) {
         sampleMetadata <- sampleMetadata(object)
         interestingGroups <- checkInterestingGroups(
@@ -89,8 +90,9 @@ setMethod(
 #' @export
 setMethod(
     "interestingGroups<-",
-    signature(object = "seurat",
-              value = "character"),
+    signature(
+        object = "seurat",
+        value = "character"),
     function(object, value) {
         sampleMetadata <- sampleMetadata(object)
         interestingGroups <- checkInterestingGroups(

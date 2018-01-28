@@ -107,6 +107,7 @@ NULL
 #' @export
 setMethod(
     "plotCellTypesPerCluster",
-    signature(object = "seurat",
-              cellTypesPerCluster = "grouped_df"),
+    signature(
+        object = "seurat",
+        cellTypesPerCluster = "grouped_df"),
     .plotCellTypesPerCluster)

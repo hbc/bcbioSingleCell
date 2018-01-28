@@ -101,8 +101,9 @@ NULL
         dot <- dot +
             labs(x = "") +
             coord_flip() +
-            theme(axis.text.y = element_text(angle = 90L, hjust = 0.5),
-                  legend.position = "none")
+            theme(
+                axis.text.y = element_text(angle = 90L, hjust = 0.5),
+                legend.position = "none")
         plot_grid(
             tsne,
             violin,
@@ -113,9 +114,11 @@ NULL
             rel_heights = c(1L, 0.3, 0.15)
         )
     } else if (return == "list") {
-        list("tsne" = tsne,
-             "dot" = dot,
-             "violin" = violin)
+        list(
+            "tsne" = tsne,
+            "dot" = dot,
+            "violin" = violin
+        )
     }
 }
 

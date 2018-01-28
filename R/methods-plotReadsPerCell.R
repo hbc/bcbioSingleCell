@@ -50,9 +50,11 @@ NULL
 .rawCBTibble <- function(cellularBarcodes, sampleMetadata) {
     sampleMetadata <- sampleMetadata[, c("sampleID", "sampleName")]
     cellularBarcodes %>%
-        mutate(log10Count = log10(.data[["nCount"]]),
-               cellularBarcode = NULL,
-               nCount = NULL) %>%
+        mutate(
+            log10Count = log10(.data[["nCount"]]),
+            cellularBarcode = NULL,
+            nCount = NULL
+        ) %>%
         left_join(sampleMetadata, by = "sampleID") %>%
         group_by(!!sym("sampleName"))
 }
@@ -237,10 +239,12 @@ NULL
             y = "proportion",
             color = interestingGroups)
     ) +
-        geom_line(alpha = qcPlotAlpha,
-                  size = 1.5) +
-        labs(x = "log10 reads per cell",
-             y = "proportion of cells") +
+        geom_line(
+            alpha = qcPlotAlpha,
+            size = 1.5) +
+        labs(
+            x = "log10 reads per cell",
+            y = "proportion of cells") +
         scale_color_viridis(discrete = TRUE)
 
     # Cutoff lines
