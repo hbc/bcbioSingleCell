@@ -1,11 +1,10 @@
-#' Fetch Gene Expression Data from Seurat
+#' Fetch Gene Expression Data
 #'
-#' @keywords internal
-#' @noRd
+#' @rdname fetchGeneData
+#' @name fetchGeneData
 #'
-#' @importFrom Seurat FetchData
+#' @inheritParams AllGenerics
 #'
-#' @param object [seurat].
 #' @param genes Gene identifiers (matrix rownames).
 #'
 #' @return [matrix].
@@ -15,12 +14,18 @@
 #'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
 #'
+#' # seurat
 #' genes <- slot(seurat, "data") %>%
 #'     rownames() %>%
 #'     head()
-#'
-#' .fetchGeneData.seurat(seurat, genes = genes) %>%
-#'     glimpse()
+#' fetchGeneData(seurat, genes = genes) %>%
+#'     head()
+NULL
+
+
+
+# Constructors =================================================================
+#' @importFrom Seurat FetchData
 .fetchGeneData.seurat <- function(object, genes) {  # nolint
     data <- Seurat::FetchData(object, vars.all = genes)
     if (!identical(
@@ -31,3 +36,13 @@
     }
     data
 }
+
+
+
+# Methods ======================================================================
+#' @rdname fetchGeneData
+#' @export
+setMethod(
+    "fetchGeneData",
+    signature("seurat"),
+    .fetchGeneData.seurat)

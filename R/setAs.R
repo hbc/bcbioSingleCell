@@ -84,8 +84,9 @@ NULL
 .coerceToSeurat <- function(from) {
     # Require that technical replicates are aggregated
     if ("sampleNameAggregate" %in% colnames(sampleMetadata(from))) {
-        abort(paste("`aggregateReplicates()` required",
-                   "to merge technical replicates prior to seurat coercion"
+        abort(paste(
+            "`aggregateReplicates()` required",
+            "to merge technical replicates prior to seurat coercion"
         ))
     }
 

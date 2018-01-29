@@ -282,9 +282,10 @@ loadSingleCell <- function(
                 .[, 2L] %>%
                 na.omit() %>%
                 unique() %>%
-                gsub(x = .,
-                     pattern = "-transform",
-                     replacement = "")
+                gsub(
+                    x = .,
+                    pattern = "-transform",
+                    replacement = "")
             inform(paste("UMI type:", umiType))
         } else {
             warn(paste(

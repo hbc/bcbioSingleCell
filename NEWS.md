@@ -1,4 +1,32 @@
-# bcbioSingleCell 0.0.28
+# bcbioSingleCell 0.0.30 (2018-01-26)
+
+- Fixes for QC plot labeling of bcbioSingleCell object with different per sample filtering cutoffs applied.
+- Added new `fetchGeneData()` function, that wraps the functionality of `Seurat::FetchData()` for specific genes.
+- Improved internal dimensionality reduction plotting code. The main function has been renamed to `.plotDR()` internally.
+- Simplified the code for `fetchTSNEExpressionData()` to return a standard data.frame with the cellular barcodes as rows, instead of the previously grouped tibble method. Now this function returns aggregate gene marker calculations in the `mean`, `median`, and `sum` columns. Since this method has way fewer rows than the grouped tibble, the ggplot code for `plotMarkerTSNE()` now runs faster.
+- Explicitly declare `viridis::` for color palettes, where applicable.
+- `colorPoints` argument has been renamed to `expression` for `plotMarkerTSNE()`.
+- Dynamic gene symbol to ensgene conversion has been removed from the plotting functions, for greater simplicity. Now the `genes` argument simply matches against the rownames in the counts matrix of the object.
+- Decreased the default `minCumPct` argument for `plotPCElbow()` from 0.9 to 0.8. This is more conservative and will return slightly fewer principal components for dimensionality reduction, by default.
+- `plotTSNE()`, `plotPCA()`, and the other dimensionality reduction-related plotting functions now default to a smaller point size (0.5) and slight alpha transparency (0.8), to make super imposed points more obvious for large datasets with many cells.
+- Added a working example for `subsetPerSample()`.
+- Internally switched from `.onLoad()` to `.onAttach()` method for automatically loading required dependency packages.
+- `plotPCA()` now uses `phase` instead of `Phase` plotting cell cycle regression as an interestingGroup (see Seurat clustering template). Previously some of the Seurat metadata columns were not consistently sanitized to lowerCamelCase (e.g. `Phase`, `res.0.8`, `orig.ident`).
+- Suppress package startup messages in R Markdown templates.
+
+
+
+# bcbioSingleCell 0.0.29 (2018-01-24)
+
+- Switched to rlang methods for errors, messages, and warnings: `abort()`, `inform()`, and `warn()`.
+- Updated `filterCells()` function to enable per sample filtering cutoffs. This works by passing in a named numeric vector, where the names must match the internal `sampleID` metadata column (not `sampleName`).
+- Improved internal sanitization of metrics available with the `metrics()` accessor. Now all count columns (e.g. `nUMI`) are consistently integers, and all character vector columns are consistently coerced to factors.
+- Seurat metadata available through the bcbioSingleCell generics are now consistently sanitized in lowerCamelCase. This applies to `orig.ident` and the `res.*` metadata columns.
+- Explicit integers are now consistently used in all of the function parameter arguments.
+
+
+
+# bcbioSingleCell 0.0.28 (2018-01-22)
 
 - Manually define functions used to read barcodes and matrices. This improves the functionality of the internal `.readSparseCounts()` function.
 - Improved sample directory matching for cellranger output.

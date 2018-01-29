@@ -13,15 +13,15 @@ plotNovelty(object, ...)
 
 \S4method{plotNovelty}{bcbioSingleCell}(object, geom = "violin", min,
   interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = viridis::scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotNovelty}{data.frame}(object, geom = "violin", min = 0L,
   interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = viridis::scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotNovelty}{seurat}(object, geom = "violin", min,
   interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = viridis::scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}

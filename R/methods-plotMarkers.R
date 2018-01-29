@@ -33,13 +33,10 @@
 #'     file.path("extdata", "topMarkers.rda"),
 #'     package = "bcbioSingleCell"))
 #'
-#' symbol <- topMarkers$symbol[[1]]
-#' print(symbol)
-#' ensgene <- topMarkers$ensgene[[1]]
-#' print(ensgene)
-#'
-#' plotMarkers(seurat, genes = symbol, format = "symbol")
-#' plotMarkers(seurat, genes = ensgene, format = "ensgene")
+#' # seurat
+#' genes <- pull(topMarkers, "symbol")
+#' print(genes)
+#' plotMarkers(seurat, genes = genes)
 NULL
 
 
@@ -84,8 +81,7 @@ NULL
     tsne <- plotMarkerTSNE(
         object,
         genes = gene,
-        format = "symbol",
-        colorPoints = "expression",
+        expression = "sum",
         color = tsneColor,
         dark = dark,
         pointsAsNumbers = pointsAsNumbers,
@@ -94,12 +90,10 @@ NULL
     violin <- plotViolin(
         object,
         genes = gene,
-        format = "symbol",
         fill = violinFill)
     dot <- plotDot(
         object,
         genes = gene,
-        format = "symbol",
         color = dotColor)
 
     # Return ===================================================================
@@ -107,8 +101,9 @@ NULL
         dot <- dot +
             labs(x = "") +
             coord_flip() +
-            theme(axis.text.y = element_text(angle = 90L, hjust = 0.5),
-                  legend.position = "none")
+            theme(
+                axis.text.y = element_text(angle = 90L, hjust = 0.5),
+                legend.position = "none")
         plot_grid(
             tsne,
             violin,
@@ -119,9 +114,11 @@ NULL
             rel_heights = c(1L, 0.3, 0.15)
         )
     } else if (return == "list") {
-        list("tsne" = tsne,
-             "dot" = dot,
-             "violin" = violin)
+        list(
+            "tsne" = tsne,
+            "dot" = dot,
+            "violin" = violin
+        )
     }
 }
 
@@ -131,7 +128,6 @@ NULL
 .plotMarkers.seurat <- function(  # nolint
     object,
     genes,
-    format = "symbol",
     tsneColor = viridis::scale_color_viridis(),
     violinFill = viridis::scale_fill_viridis(discrete = TRUE),
     dotColor = ggplot2::scale_color_gradient(
@@ -141,10 +137,6 @@ NULL
     pointsAsNumbers = FALSE,
     headerLevel = 2L,
     title = NULL) {
-    .checkFormat(format)
-    if (format == "ensgene") {
-        genes <- .convertGenesToSymbols(object, genes = genes)
-    }
     list <- lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
         # Skip and warn if gene is missing

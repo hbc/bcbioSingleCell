@@ -39,6 +39,14 @@ setGeneric("cellTypesPerCluster", function(object, ...) {
 
 
 
+#' @rdname fetchGeneData
+#' @export
+setGeneric("fetchGeneData", function(object, ...) {
+    standardGeneric("fetchGeneData")
+})
+
+
+
 #' @rdname fetchPCAData
 #' @export
 setGeneric("fetchPCAData", function(object, ...) {

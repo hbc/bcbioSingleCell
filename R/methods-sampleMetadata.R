@@ -105,11 +105,13 @@ setMethod(
             # Get the expected number of rows
             expected <- length(unique(metadata[["sampleNameAggregate"]]))
             metadata <- metadata %>%
-                mutate(sampleName = .data[["sampleNameAggregate"]],
-                       description = .data[["sampleName"]],
-                       sampleID = make.names(
-                           .data[["sampleName"]], unique = FALSE),
-                       sampleNameAggregate = NULL) %>%
+                mutate(
+                    sampleName = .data[["sampleNameAggregate"]],
+                    description = .data[["sampleName"]],
+                    sampleID = make.names(
+                        .data[["sampleName"]], unique = FALSE),
+                    sampleNameAggregate = NULL
+                ) %>%
                 select(unique(c(metadataPriorityCols, interestingGroups))) %>%
                 distinct()
             if (!identical(nrow(metadata), expected)) {

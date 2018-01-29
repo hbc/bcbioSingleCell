@@ -127,13 +127,13 @@
     <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"cellTypeMarkers.csv"</span>),
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
 <span class='no'>gene2symbol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='annotable.html'>annotable</a></span>(<span class='st'>"Mus musculus"</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"gene2symbol"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading Ensembl annotations from AnnotationHub</span>
-#&gt; <span class='message'>2017-10-27</span></div><div class='output co'>#&gt; <span class='message'>Unmasking 'select()'</span></div><div class='output co'>#&gt; <span class='message'>EnsDB AH57770: Mus musculus Ensembl 90</span></div><div class='input'><span class='fu'>readCellTypeMarkersFile</span>(<span class='no'>cellTypeMarkersFile</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='no'>gene2symbol</span>)</div><div class='output co'>#&gt; <span class='message'>Reading cellTypeMarkers.csv</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+#&gt; <span class='message'>2017-10-27</span></div><div class='output co'>#&gt; <span class='message'>EnsDB AH57770: Mus musculus Ensembl 90</span></div><div class='input'><span class='fu'>readCellTypeMarkersFile</span>(<span class='no'>cellTypeMarkersFile</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='no'>gene2symbol</span>)</div><div class='output co'>#&gt; <span class='message'>Reading cellTypeMarkers.csv</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
 #&gt; <span class='message'>cols(</span>
 #&gt; <span class='message'>  cell = col_character(),</span>
 #&gt; <span class='message'>  ensgene = col_character(),</span>
 #&gt; <span class='message'>  symbol = col_character()</span>
 #&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>Matching by gene identifier</span></div><div class='output co'>#&gt; # A tibble: 6 x 3
-#&gt; # Groups: cell [1]
+#&gt; # Groups:   cell [1]
 #&gt;   cell   symbol ensgene           
 #&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;             
 #&gt; 1 B Cell Blnk   ENSMUSG00000061132

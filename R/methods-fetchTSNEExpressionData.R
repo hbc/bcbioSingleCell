@@ -10,68 +10,52 @@
 #'
 #' @inheritParams AllGenerics
 #'
-#' @param genes Genes (by symbol name) of which to get expression data.
-#' @param format Gene identifier format. Supports `ensgene` or `symbol`.
+#' @param genes Genes identifiers (matching the rownames in the object),
+#'   of which to get expression data.
 #'
-#' @return [tibble] grouped by `gene`, containing t-SNE points, cellular
-#'   metadata, and gene expression.
+#' @return [data.frame] containing tSNE coordinates, sample metadata, and
+#'   aggregate marker expression values (`mean`, `median`, and `sum`).
 #'
 #' @examples
 #' load(system.file(
 #'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
 #'
-#' symbol <- counts(seurat) %>% rownames() %>% head()
-#' print(symbol)
+#' genes <- counts(seurat) %>% rownames() %>% head()
+#' print(genes)
 #'
-#' ensgene <- bcbio(seurat, "gene2symbol") %>%
-#'     .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
-#' print(ensgene)
-#'
-#' fetchTSNEExpressionData(
-#'     seurat,
-#'     genes = symbol,
-#'     format = "symbol") %>%
-#'     glimpse()
-#' fetchTSNEExpressionData(
-#'     seurat,
-#'     genes = ensgene,
-#'     format = "ensgene") %>%
+#' fetchTSNEExpressionData(seurat, genes = genes) %>%
 #'     glimpse()
 NULL
 
 
 
-# Methods ======================================================================
-#' @rdname fetchTSNEExpressionData
+# Constructors =================================================================
 #' @importFrom dplyr everything group_by select
-#' @importFrom Matrix colMeans
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom Seurat FetchData
 #' @importFrom tibble column_to_rownames rownames_to_column
 #' @importFrom tidyr gather
+.fetchTSNEExpressionData.seurat <- function(  # nolint
+    object,
+    genes) {
+    tsne <- fetchTSNEData(object)
+
+    # Gene aggregate math
+    data <- fetchGeneData(object, genes = genes)
+    mean <- rowMeans(data)
+    median <- rowMedians(data)
+    sum <- rowSums(data)
+
+    cbind(tsne, mean, median, sum)
+}
+
+
+
+# Methods ======================================================================
+#' @rdname fetchTSNEExpressionData
 #' @export
 setMethod(
     "fetchTSNEExpressionData",
     signature("seurat"),
-    function(
-        object,
-        genes,
-        format = "symbol") {
-        priorityCols <- c("gene", "cellID", "expression", "geomean")
-        .checkFormat(format)
-        if (format == "ensgene") {
-            genes <- .convertGenesToSymbols(object, genes = genes)
-        }
-        tsne <- fetchTSNEData(object)
-        data <- .fetchGeneData.seurat(object, genes = genes)
-        geomean <- Matrix::colMeans(t(data))
-        cbind(tsne, data, geomean) %>%
-            rownames_to_column("cellID") %>%
-            gather(key = "gene",
-                   value = "expression",
-                   !!genes) %>%
-            group_by(!!sym("gene")) %>%
-            select(!!!syms(priorityCols), everything()) %>%
-            arrange(!!!syms(priorityCols))
-    })
+    .fetchTSNEExpressionData.seurat)

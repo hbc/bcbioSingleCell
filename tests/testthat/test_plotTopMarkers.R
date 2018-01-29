@@ -6,6 +6,7 @@ load(system.file(
 load(system.file(
     file.path("extdata", "topMarkers.rda"),
     package = "bcbioSingleCell"))
+
 topMarkers <- topMarkers[1L:2L, ]
 
 test_that("seurat", {

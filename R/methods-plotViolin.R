@@ -46,7 +46,6 @@ NULL
 .plotViolin.seurat <- function(  # nolint
     object,
     genes,
-    format = "symbol",
     fill = viridis::scale_fill_viridis(discrete = TRUE),
     return = "grid",
     headerLevel = 2L) {
@@ -54,14 +53,10 @@ NULL
     if (!return %in% validReturn) {
         abort(paste("`return` must contain:", toString(validReturn)))
     }
-    .checkFormat(format)
-    if (format == "ensgene") {
-        genes <- .convertGenesToSymbols(object, genes = genes)
-    }
 
-    # Fetch Seurat data ====================================================
+    # Fetch data ===============================================================
     ident <- slot(object, "ident")
-    data <- .fetchGeneData.seurat(object, genes = genes) %>%
+    data <- fetchGeneData(object, genes = genes) %>%
         as.data.frame() %>%
         cbind(ident) %>%
         rownames_to_column("cell") %>%

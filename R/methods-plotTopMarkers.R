@@ -25,7 +25,7 @@
 #'
 #' # seurat, grouped_df
 #' # Let's plot the top 2 markers from cluster 0, as a quick example
-#' plotTopMarkers(seurat, topMarkers[1:2, ])
+#' plotTopMarkers(seurat, topMarkers = topMarkers[1:2, ])
 NULL
 
 
@@ -69,7 +69,6 @@ NULL
         plotMarkers(
             object,
             genes = genes,
-            format = "symbol",
             tsneColor = tsneColor,
             violinFill = violinFill,
             dotColor = dotColor,
@@ -87,6 +86,7 @@ NULL
 #' @export
 setMethod(
     "plotTopMarkers",
-    signature(object = "seurat",
-              topMarkers = "grouped_df"),
+    signature(
+        object = "seurat",
+        topMarkers = "grouped_df"),
     .plotTopMarkers)

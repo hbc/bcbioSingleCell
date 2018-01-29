@@ -65,6 +65,7 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotMitoVsCoding
+#' @importFrom bcbioBase interestingGroups
 #' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
@@ -98,6 +99,7 @@ setMethod(
 
 
 #' @rdname plotMitoVsCoding
+#' @importFrom bcbioBase interestingGroups
 #' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(

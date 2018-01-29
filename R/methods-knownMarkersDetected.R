@@ -98,6 +98,7 @@ NULL
 #' @export
 setMethod(
     "knownMarkersDetected",
-    signature(all = "grouped_df",
-              known = "tbl_df"),
+    signature(
+        all = "grouped_df",
+        known = "tbl_df"),
     .knownMarkersDetected)

@@ -4,27 +4,33 @@ load(system.file(
     file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
-symbol <- counts(seurat) %>%
+genes <- counts(seurat) %>%
     rownames() %>%
     .[[1L]]
-ensgene <- bcbio(seurat, "gene2symbol") %>%
-    .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
 
-test_that("symbol", {
-    expect_identical(symbol, "SCYL3")
-    p <- plotMarkerTSNE(seurat, genes = symbol, format = "symbol")
-    expect_is(p, "ggplot")
+test_that("seurat", {
+    expect_identical(genes, "SCYL3")
+    mean <- plotMarkerTSNE(seurat, genes = genes, expression = "mean")
+    median <- plotMarkerTSNE(seurat, genes = genes, expression = "median")
+    sum <- plotMarkerTSNE(seurat, genes = genes, expression = "sum")
+    invisible(lapply(
+        X = list(mean, median, sum),
+        FUN = function(p) {
+            expect_is(p, "ggplot")
+        }
+    ))
 })
 
-test_that("ensgene", {
-    expect_identical(ensgene, "ENSG00000000457")
-    p <- plotMarkerTSNE(seurat, genes = ensgene, format = "ensgene")
-    expect_is(p, "ggplot")
+test_that("Invalid expression", {
+    expect_error(
+        plotMarkerTSNE(seurat, genes = genes, expression = "XXX"),
+        "`expression` must contain: mean, median, sum"
+    )
 })
 
 test_that("data.frame", {
-    df <- fetchTSNEExpressionData(seurat, genes = symbol)
-    expect_is(df, "grouped_df")
-    p <- plotMarkerTSNE(df)
+    df <- fetchTSNEExpressionData(seurat, genes = genes)
+    expect_is(df, "data.frame")
+    p <- plotMarkerTSNE(df, genes = genes)
     expect_is(p, "ggplot")
 })

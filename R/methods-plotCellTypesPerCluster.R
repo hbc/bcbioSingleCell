@@ -1,3 +1,5 @@
+# FIXME Need to update arguments to match `plotMarkerTSNE()`
+
 #' Plot Cell Types per Cluster
 #'
 #' Plot the geometric mean of the significant marker genes for every known cell
@@ -85,7 +87,7 @@ NULL
             p <- plotMarkerTSNE(
                 object = object,
                 genes = genes,
-                colorPoints = "geomean",
+                expression = "mean",
                 color = color,
                 dark = dark,
                 pointsAsNumbers = FALSE,
@@ -105,6 +107,7 @@ NULL
 #' @export
 setMethod(
     "plotCellTypesPerCluster",
-    signature(object = "seurat",
-              cellTypesPerCluster = "grouped_df"),
+    signature(
+        object = "seurat",
+        cellTypesPerCluster = "grouped_df"),
     .plotCellTypesPerCluster)

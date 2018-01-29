@@ -42,9 +42,9 @@ NULL
 #' @importFrom tibble tibble
 .plotPCElbow <- function(
     sd,
-    maxPct,
-    minCumPct,
-    plot) {
+    maxPct = 0.05,
+    minCumPct = 0.8,
+    plot = TRUE) {
     xlab <- "pc"
 
     # Principal component standard deviations
@@ -69,22 +69,17 @@ NULL
     # Elbow plot
     ggelbow <- ggplot(
         tbl,
-        mapping = aes_string(
-            x = "pc",
-            y = "sd")
+        mapping = aes_string(x = "pc", y = "sd")
     ) +
         geom_point() +
         geom_line() +
         .qcCutoffLine(xintercept = cutoff) +
-        labs(x = xlab,
-             y = "std dev")
+        labs(x = xlab, y = "std dev")
 
     # Percentage plot
     ggpct <- ggplot(
         tbl,
-        mapping = aes_string(
-            x = "pc",
-            y = "pct")
+        mapping = aes_string(x = "pc", y = "pct")
     ) +
         geom_point() +
         geom_line() +
@@ -94,16 +89,13 @@ NULL
             size = 1.5,
             yintercept = maxPct) +
         .qcCutoffLine(xintercept = cutoff) +
-        labs(x = xlab,
-             y = "% std dev") +
+        labs(x = xlab, y = "% std dev") +
         scale_y_continuous(labels = scales::percent)
 
     # Cumulative plot
     ggcumsum <- ggplot(
         tbl,
-        mapping = aes_string(
-            x = "pc",
-            y = "cumsum")
+        mapping = aes_string(x = "pc", y = "cumsum")
     ) +
         geom_point() +
         geom_line() +
@@ -113,8 +105,7 @@ NULL
             size = 1.5,
             yintercept = minCumPct) +
         .qcCutoffLine(xintercept = cutoff) +
-        labs(x = xlab,
-             y = "cumulative % std dev") +
+        labs(x = xlab, y = "cumulative % std dev") +
         scale_y_continuous(labels = scales::percent)
 
     p <- ggdraw() +
@@ -137,20 +128,23 @@ NULL
 # Methods ======================================================================
 #' @rdname plotPCElbow
 #' @export
-setMethod("plotPCElbow", "seurat", function(
-    object,
-    maxPct = 0.05,
-    minCumPct = 0.9,
-    plot = TRUE) {
-    # seurat slot descriptions
-    # dr: dimensionality reduction
-    # sdev: standard deviation
-    sd <- slot(object, "dr") %>%
-        .[["pca"]] %>%
-        slot("sdev")
-    .plotPCElbow(
-        sd,
-        maxPct = maxPct,
-        minCumPct = minCumPct,
-        plot = plot)
-})
+setMethod(
+    "plotPCElbow",
+    signature("seurat"),
+    function(
+        object,
+        maxPct = 0.05,
+        minCumPct = 0.8,
+        plot = TRUE) {
+        # seurat slot descriptions
+        # dr: dimensionality reduction
+        # sdev: standard deviation
+        sd <- slot(object, "dr") %>%
+            .[["pca"]] %>%
+            slot("sdev")
+        .plotPCElbow(
+            sd,
+            maxPct = maxPct,
+            minCumPct = minCumPct,
+            plot = plot)
+    })

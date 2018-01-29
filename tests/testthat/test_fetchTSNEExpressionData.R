@@ -4,22 +4,14 @@ load(system.file(
     file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
-symbol <- counts(seurat) %>% rownames() %>% head()
-ensgene <- bcbio(seurat, "gene2symbol") %>%
-    .[which(.[["symbol"]] %in% symbol), "ensgene", drop = TRUE]
+genes <- counts(seurat) %>% rownames() %>% head()
 
-test_that("symbol", {
-    data <- fetchTSNEExpressionData(seurat, genes = symbol, format = "symbol")
-    expect_is(data, "grouped_df")
-    group <- group_vars(data)
-    expect_identical(group, "gene")
+test_that("seurat", {
+    data <- fetchTSNEExpressionData(seurat, genes = genes)
+    expect_is(data, "data.frame")
     expect_identical(
         lapply(data, class),
         list(
-            "gene" = "character",
-            "cellID" = "character",
-            "expression" = "numeric",
-            "geomean" = "numeric",
             "tSNE1" = "numeric",
             "tSNE2" = "numeric",
             "ident" = "factor",
@@ -35,22 +27,23 @@ test_that("symbol", {
             "description" = "factor",
             "interestingGroups" = "factor",
             "origIdent" = "factor",
-            "res08" = "factor",
+            "res0x8" = "factor",
             "centerX" = "numeric",
-            "centerY" = "numeric"
+            "centerY" = "numeric",
+            "mean" = "numeric",
+            "median" = "numeric",
+            "sum" = "numeric"  # FIXME coerce to integer
         )
     )
 
     subset <- data[1L, ] %>%
-        mutate_if(is.numeric, funs(round(., digits = 3L)))
+        rownames_to_column() %>%
+        mutate_if(is.numeric, funs(round(., digits = 3L))) %>%
+        column_to_rownames()
     # The round function will coerce integers to numerics. This is the rationale
     # for the `as.numeric()` usage below.
     identLevels <- c("0", "1", "2", "3")
-    target <- tibble(
-        "gene" = "CD99",
-        "cellID" = "M1_AAACACTA_CTTAGGTA",
-        "expression" = 1.762,
-        "geomean" = 1.165,
+    target <- data.frame(
         "tSNE1" = -3.056,
         "tSNE2" = -4.304,
         "ident" = factor("0", levels = identLevels),
@@ -66,10 +59,14 @@ test_that("symbol", {
         "description" = factor("M1"),
         "interestingGroups" = factor("M1"),
         "origIdent" = factor("M1"),
-        "res08" = factor("0", levels = identLevels),
+        "res0x8" = factor("0", levels = identLevels),
         "centerX" = -6.651,
-        "centerY" = -4.226
-    ) %>%
-        group_by(!!sym(group))
-    expect_equal(subset, target)
+        "centerY" = -4.226,
+        "mean" = 1.165,
+        "median" = 1.36,
+        "sum" = 6.988,
+        row.names = "M1_AAACACTA_CTTAGGTA",
+        stringsAsFactors = TRUE
+    )
+    expect_identical(subset, target)
 })

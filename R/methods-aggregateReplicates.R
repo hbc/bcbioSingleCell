@@ -42,10 +42,11 @@ NULL
             unique = FALSE)
         ) %>%
         mutate_all(as.factor) %>%
-        .[, c("sampleIDAggregate",
-              "sampleID",
-              "sampleNameAggregate",
-              "sampleName")] %>%
+        .[, c(
+            "sampleIDAggregate", "sampleID",
+            "sampleNameAggregate",
+            "sampleName"
+        )] %>%
         arrange(.data[["sampleIDAggregate"]], .data[["sampleID"]]) %>%
         mutate_all(reorder)
 
@@ -94,11 +95,13 @@ NULL
         # Now let's remap the cellular barcode counts for the aggregated samples
         cbAggregateData <- cb %>%
             # Now we need to map the new sampleIDs
-            left_join(map[, c("sampleID", "sampleIDAggregate")],
-                      by = "sampleID") %>%
+            left_join(
+                map[, c("sampleID", "sampleIDAggregate")],
+                by = "sampleID") %>%
             ungroup() %>%
-            mutate(sampleID = .data[["sampleIDAggregate"]],
-                   sampleIDAggregate = NULL) %>%
+            mutate(
+                sampleID = .data[["sampleIDAggregate"]],
+                sampleIDAggregate = NULL) %>%
             # Here we're grouping per cellular barcode
             group_by(!!!syms(c("sampleID", "cellularBarcode"))) %>%
             # Now sum the counts for each unique barcode.

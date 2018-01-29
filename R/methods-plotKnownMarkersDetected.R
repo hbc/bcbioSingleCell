@@ -70,7 +70,6 @@ NULL
         plotMarkers(
             object,
             genes = genes,
-            format = "symbol",
             tsneColor = tsneColor,
             violinFill = violinFill,
             dotColor = dotColor,
@@ -89,6 +88,7 @@ NULL
 #' @export
 setMethod(
     "plotKnownMarkersDetected",
-    signature(object = "seurat",
-              knownMarkersDetected = "grouped_df"),
+    signature(
+        object = "seurat",
+        knownMarkersDetected = "grouped_df"),
     .plotKnownMarkersDetected)

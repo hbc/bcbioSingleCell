@@ -9,13 +9,13 @@ params:
     pcCompute: 20
     pcUse: FALSE
     varsToRegress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
-    resolution: 0.75
+    resolution: 1
     outputDir: "."
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-01-19
-library(bcbioSingleCell)
+# Last modified 2018-01-24
+suppressPackageStartupMessages(library(bcbioSingleCell))
 
 # Shared R Markdown settings
 prepareSingleCellTemplate()
@@ -38,7 +38,7 @@ bcb <- get(bcbName, inherits = FALSE)
 
 # Vector to use for plot looping
 groupBy <- unique(c(
-    "ident", "sampleName", "Phase", interestingGroups(bcb)
+    "ident", "sampleName", "phase", interestingGroups(bcb)
 ))
 
 # knitr arguments (for `rmarkdown::render()` looping)
@@ -166,7 +166,7 @@ RunPCA(
     seurat,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
-    plotPCA(interestingGroups = "Phase", label = FALSE)
+    plotPCA(interestingGroups = "phase", label = FALSE)
 ```
 
 
@@ -179,6 +179,7 @@ We generally recommend minimizing the effects of variable read count depth (`nUM
 When regressing out the effects of cell-cycle variation, include `S.Score` and `G2M.Score` in the `vars.to.regress` argument. Cell-cycle regression is generally recommended but should be avoided for samples containing cells undergoing differentiation.
 
 ```{r scale_data, results="hide"}
+print(params$varsToRegress)
 seurat <- ScaleData(seurat, vars.to.regress = params$varsToRegress)
 ```
 
@@ -190,7 +191,7 @@ RunPCA(
     seurat,
     pc.genes = c(sGenes, g2mGenes),
     do.print = FALSE) %>%
-    plotPCA(interestingGroups = "Phase", label = FALSE)
+    plotPCA(interestingGroups = "phase", label = FALSE)
 ```
 
 

@@ -3,25 +3,30 @@ Title: Single-Cell RNA-Seq Utilities
 Description: Import and analyze bcbio single-cell RNA-seq data.
 Version: 0.0.29
 Authors@R: c(
-    person(given = "Michael",
-           family = "Steinbaugh",
-           email = "mike@steinbaugh.com",
-           role = c("aut", "cre")),
-    person(given = "Rory",
-           family = "Kirchner",
-           email = "roryk@alum.mit.edu",
-           role = "aut"),
-    person(given = "Mary",
-           family = "Piper",
-           email = "mary.piper@gmail.com",
-           role = "aut"),
-    person(given = "Shannan",
-           family = "Ho Sui",
-           email = "shosui@hsph.harvard.edu",
-           role = "aut"),
-    person(given = "Harvard Chan Bioinformatics Core",
-           email = "bioinformatics@hsph.harvard.edu",
-           role = c("cph", "fnd"))
+    person(
+        given = "Michael",
+        family = "Steinbaugh",
+        email = "mike@steinbaugh.com",
+        role = c("aut", "cre")),
+    person(
+        given = "Rory",
+        family = "Kirchner",
+        email = "roryk@alum.mit.edu",
+        role = "aut"),
+    person(
+        given = "Mary",
+        family = "Piper",
+        email = "mary.piper@gmail.com",
+        role = "aut"),
+    person(
+        given = "Shannan",
+        family = "Ho Sui",
+        email = "shosui@hsph.harvard.edu",
+        role = "aut"),
+    person(
+        given = "Harvard Chan Bioinformatics Core",
+        email = "bioinformatics@hsph.harvard.edu",
+        role = c("cph", "fnd"))
     )
 Maintainer: Michael Steinbaugh <mike@steinbaugh.com>
 URL:
@@ -33,8 +38,9 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),
+    SummarizedExperiment (>= 1.6.5),
     bcbioBase (>= 0.0.3),
-    SummarizedExperiment (>= 1.6.5)
+    Seurat (>= 2.1.0)
 Imports:
     BiocGenerics (>= 0.22.1),
     cowplot (>= 0.8.0),
@@ -55,7 +61,6 @@ Imports:
     rlang (>= 0.1.2),
     S4Vectors (>= 0.14.7),
     scales,
-    Seurat (>= 2.1.0),
     stats,
     stringr (>= 1.2.0),
     tibble (>= 1.3.4),

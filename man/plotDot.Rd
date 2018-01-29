@@ -6,7 +6,7 @@
 \alias{plotDot,seurat-method}
 \title{Plot Dot}
 \usage{
-\S4method{plotDot}{seurat}(object, genes, format = "symbol",
+\S4method{plotDot}{seurat}(object, genes,
   color = ggplot2::scale_color_gradient(low = "lightgray", high = "purple"),
   colMin = -2.5, colMax = 2.5, dotMin = 0L, dotScale = 6L)
 }
@@ -14,8 +14,6 @@
 \item{object}{Object.}
 
 \item{genes}{Gene identifiers to plot.}
-
-\item{format}{Gene identifier format. Supports \code{ensgene} or \code{symbol}.}
 
 \item{color}{Color palette. If \code{NULL}, uses default ggplot2 colors.}
 
@@ -44,15 +42,9 @@ load(system.file(
     file.path("extdata", "seurat.rda"),
     package = "bcbioSingleCell"))
 
-symbol <- slot(seurat, "data") \%>\% rownames() \%>\% .[1:2]
-print(symbol)
-
-ensgene <- bcbio(seurat, "gene2symbol") \%>\%
-    .[which(.[["symbol"]] \%in\% symbol), "ensgene", drop = TRUE]
-
 # seurat
-plotDot(seurat, genes = symbol, format = "symbol")
-plotDot(seurat, genes = ensgene, format = "ensgene")
+genes <- slot(seurat, "data") \%>\% rownames() \%>\% head()
+plotDot(seurat, genes = genes)
 }
 \seealso{
 Modified version of \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}}.

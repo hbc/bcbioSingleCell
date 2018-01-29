@@ -81,6 +81,8 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotMitoRatio
+#' @importFrom bcbioBase interestingGroups
+#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotMitoRatio",
@@ -91,7 +93,7 @@ setMethod(
         max,
         interestingGroups,
         samplesOnYAxis = TRUE,
-        fill = scale_fill_viridis(discrete = TRUE)) {
+        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
@@ -122,6 +124,8 @@ setMethod(
 
 
 #' @rdname plotMitoRatio
+#' @importFrom bcbioBase interestingGroups
+#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotMitoRatio",
@@ -132,7 +136,7 @@ setMethod(
         max,
         interestingGroups,
         samplesOnYAxis = TRUE,
-        fill = scale_fill_viridis(discrete = TRUE)) {
+        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }

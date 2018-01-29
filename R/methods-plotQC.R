@@ -111,7 +111,7 @@ validQCGeomFlip <- c(
         plot_grid(plotlist = plotlist, labels = "AUTO")
     } else {
         mdHeader(
-            "Quality control plots",
+            "Filtered quality control metrics",
             level = headerLevel,
             tabset = TRUE,
             asis = TRUE)
@@ -190,7 +190,10 @@ validQCGeomFlip <- c(
 #'   scale_y_sqrt theme
 .plotQCBoxplot <- function(metrics, metricCol, min = 0L, max = Inf) {
     if (!is.numeric(min)) min <- 0L
+    min <- min(min)
     if (!is.numeric(max)) max <- Inf
+    max <- max(max)
+
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -219,7 +222,10 @@ validQCGeomFlip <- c(
 #'   scale_x_sqrt scale_y_sqrt theme
 .plotQCHistogram <- function(metrics, metricCol, min = 0L, max = Inf) {
     if (!is.numeric(min)) min <- 0L
+    min <- min(min)
     if (!is.numeric(max)) max <- Inf
+    max <- max(max)
+
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -249,7 +255,10 @@ validQCGeomFlip <- c(
 #' @importFrom ggridges geom_density_ridges
 .plotQCRidgeline <- function(metrics, metricCol, min = 0L, max = Inf) {
     if (!is.numeric(min)) min <- 0L
+    min <- min(min)
     if (!is.numeric(max)) max <- Inf
+    max <- max(max)
+
     p <- ggplot(
         metrics,
         mapping = aes_string(
@@ -306,7 +315,10 @@ validQCGeomFlip <- c(
 #'   scale_y_sqrt theme
 .plotQCViolin <- function(metrics, metricCol, min = 0L, max = Inf) {
     if (!is.numeric(min)) min <- 0L
+    min <- min(min)
     if (!is.numeric(max)) max <- Inf
+    max <- max(max)
+
     p <- ggplot(
         metrics,
         mapping = aes_string(

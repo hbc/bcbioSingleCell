@@ -1,4 +1,4 @@
-#' Fetch Data
+#' Fetch Dimensionality Reduction Data
 #'
 #' @author Rory Kirchner, Michael Steinbaugh
 #' @keywords internal
@@ -23,9 +23,11 @@
 #'     file.path("extdata", "seurat.rda"),
 #'     package = "bcbioSingleCell"))
 #'
-#' .fetchDimDataSeurat(seurat, dimCode = c(x = "tSNE_1", y = "tSNE_2")) %>%
+#' .fetchDRData.seurat(
+#'     seurat,
+#'     dimCode = c(x = "tSNE_1", y = "tSNE_2")) %>%
 #'     glimpse()
-.fetchDimData.seurat <- function(object, dimCode) {  # nolint
+.fetchDRData.seurat <- function(object, dimCode) {  # nolint
     fetch <- Seurat::FetchData(object, vars.all = dimCode)
     ident <- slot(object, "ident")
     metadata <- slot(object, "meta.data")

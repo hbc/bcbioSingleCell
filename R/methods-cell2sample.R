@@ -46,13 +46,13 @@ NULL
         pattern <- paste0("^(", samples[[a]], barcodePattern)
         match <- str_match(cells, pattern = pattern) %>%
             as.data.frame() %>%
-            set_colnames(
-                c("cellID",
-                  "sampleID",
-                  "cellularBarcode",
-                  # Trailing number is for matching cellranger
-                  "trailingNumber")
-            ) %>%
+            set_colnames(c(
+                "cellID",
+                "sampleID",
+                "cellularBarcode",
+                # Trailing number is for matching cellranger
+                "trailingNumber"
+            )) %>%
             select(c("cellID", "sampleID")) %>%
             filter(!is.na(.data[["sampleID"]]))
         vec <- match[["sampleID"]]

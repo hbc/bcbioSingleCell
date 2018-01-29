@@ -33,19 +33,21 @@ setMethod(
         object,
         interestingGroups = "ident",
         pointsAsNumbers = FALSE,
-        pointSize = 1L,
+        pointSize = 0.5,
+        pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
         color = ggplot2::scale_color_hue(),
         dark = TRUE,
         title = NULL) {
         pca <- fetchPCAData(object)
-        .plotDimensionalityReduction(
+        .plotDR(
             pca,
             axes = c(x = "pc1", y = "pc2"),
             interestingGroups = interestingGroups,
             pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
+            pointAlpha = pointAlpha,
             label = label,
             labelSize = labelSize,
             color = color,
