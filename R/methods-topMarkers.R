@@ -55,8 +55,9 @@ NULL
         object <- object %>%
             filter(.data[["biotype"]] == "protein_coding") %>%
             # Remove additional genes annotated as "predicted" in description
-            filter(!grepl(x = .data[["description"]],
-                          pattern = "^predicted\\s"))
+            filter(!grepl(
+                x = .data[["description"]], pattern = "^predicted\\s"
+            ))
     }
     # Subset to positive or negative correlation, if desired ("direction")
     # Note that `avgDiff` has been renamed to `avgLogFC` in Seurat v2.1

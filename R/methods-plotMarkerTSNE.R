@@ -114,21 +114,22 @@ NULL
     } else {
         subtitle <- NULL
     }
-    p <- p +
-        labs(title = title,
-             subtitle = subtitle)
+    p <- p + labs(title = title, subtitle = subtitle)
 
     # Customize legend
     if (isTRUE(legend)) {
         p <- p +
             # Make the guide longer than normal, to improve appearance of values
             # containing a decimal point
-            guides(color = guide_colorbar(
-                barwidth = 20L,
-                barheight = 1L,
-                direction = "horizontal")) +
-            theme(legend.justification = "center",
-                  legend.position = "bottom")
+            guides(
+                color = guide_colorbar(
+                    barwidth = 20L,
+                    barheight = 1L,
+                    direction = "horizontal")
+            ) +
+            theme(
+                legend.justification = "center",
+                legend.position = "bottom")
     } else {
         p <- p + theme(legend.position = "none")
     }

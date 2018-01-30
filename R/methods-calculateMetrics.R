@@ -102,11 +102,12 @@ NULL
             object[codingGenesDetected, , drop = FALSE]),
         nMito = Matrix::colSums(
             object[mitoGenesDetected, , drop = FALSE])) %>%
-        mutate(log10GenesPerUMI =
-                   log10(.data[["nGene"]]) / log10(.data[["nUMI"]]),
-               # Using `nUMI` here like in Seurat example
-               mitoRatio =
-                   .data[["nMito"]] / .data[["nUMI"]]) %>%
+        mutate(
+            log10GenesPerUMI = log10(.data[["nGene"]]) /
+                log10(.data[["nUMI"]]),
+            # Using `nUMI` here like in Seurat example
+            mitoRatio = .data[["nMito"]] / .data[["nUMI"]]
+        ) %>%
         # Ensure count columns are integer. `colSums()` outputs as numeric.
         mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer)
 

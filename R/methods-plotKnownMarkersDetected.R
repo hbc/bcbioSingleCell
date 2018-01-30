@@ -88,6 +88,7 @@ NULL
 #' @export
 setMethod(
     "plotKnownMarkersDetected",
-    signature(object = "seurat",
-              knownMarkersDetected = "grouped_df"),
+    signature(
+        object = "seurat",
+        knownMarkersDetected = "grouped_df"),
     .plotKnownMarkersDetected)

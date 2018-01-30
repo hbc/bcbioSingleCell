@@ -145,15 +145,16 @@ NULL
         as_tibble() %>%
         # Ensure all the annotations added are camelCase
         camel(strict = FALSE) %>%
-        select(c("cluster",
-                 "ensgene",
-                 "symbol",
-                 "pct1",
-                 "pct2",
-                 "avgLogFC",
-                 "pvalue"),
-               # `padj` should come after this, but isn't in legacy output
-               everything()) %>%
+        # `padj` should come at the end, but isn't in legacy output
+        select(c(
+            "cluster",
+            "ensgene",
+            "symbol",
+            "pct1",
+            "pct2",
+            "avgLogFC",
+            "pvalue"
+        ), everything()) %>%
         group_by(.data[["cluster"]]) %>%
         # Arrange by P value
         arrange(!!sym("pvalue"), .by_group = TRUE)
@@ -166,6 +167,7 @@ NULL
 #' @export
 setMethod(
     "sanitizeMarkers",
-    signature(object = "seurat",
-              markers = "data.frame"),
+    signature(
+        object = "seurat",
+        markers = "data.frame"),
     .sanitizeMarkersSeurat)

@@ -20,11 +20,9 @@
         sampleDirs <- list.dirs(uploadDir, full.names = TRUE, recursive = FALSE)
 
         # Remove the nested `projectDir`
-        if (any(grepl(x = basename(sampleDirs),
-                      pattern = projectDirPattern))) {
+        if (any(grepl(projectDirPattern, basename(sampleDirs)))) {
             sampleDirs <- sampleDirs %>%
-                .[!grepl(x = basename(.),
-                         pattern = projectDirPattern)]
+                .[!grepl(projectDirPattern, basename(.))]
         }
 
         if (length(sampleDirs) == 0L) {
@@ -32,19 +30,19 @@
         }
 
         names(sampleDirs) <- basename(sampleDirs) %>%
-            gsub(x = .,
-                 pattern = "-",
-                 replacement = "_") %>%
+            gsub("-", "_", .) %>%
             make.names(unique = TRUE)
     } else if (pipeline == "cellranger") {
         inform(paste(
             "CellRanger output directory structure:",
-            file.path("<uploadDir>",
-                      "<sampleName>",
-                      "outs",
-                      "filtered_gene_bc_matrices*",
-                      "<genomeBuild>",
-                      "matrix.mtx"),
+            file.path(
+                "<uploadDir>",
+                "<sampleName>",
+                "outs",
+                "filtered_gene_bc_matrices*",
+                "<genomeBuild>",
+                "matrix.mtx"
+            ),
             sep = "\n"
         ))
 
