@@ -24,8 +24,8 @@ if (file.exists("setup.R")) {
 dataDir <- file.path(params$outputDir, "data", Sys.Date())
 markersDir <- file.path(params$outputDir, "results", Sys.Date(), "markers")
 invisible(mapply(
-    list(dataDir, markersDir),
     FUN = dir.create,
+    list(dataDir, markersDir),
     MoreArgs = list(recursive = TRUE, showWarnings = FALSE)
 ))
 
