@@ -134,7 +134,7 @@ setMethod(
     function(
         object,
         maxPct = 0.05,
-        minCumPct = 0.8,
+        minCumPct = 0.9,
         plot = TRUE) {
         # seurat slot descriptions
         # dr: dimensionality reduction
