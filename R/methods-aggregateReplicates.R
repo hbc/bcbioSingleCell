@@ -65,8 +65,8 @@ NULL
         by = "sampleID")
     rownames(remap) <- names(cell2sample)
     groupings <- mapply(
-        x = rownames(remap),
         FUN = gsub,
+        x = rownames(remap),
         pattern = paste0("^", remap[["sampleID"]]),
         replacement = remap[["sampleIDAggregate"]]
     ) %>%

@@ -14,8 +14,8 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-01-24
-suppressPackageStartupMessages(library(bcbioSingleCell))
+# Last modified 2018-02-01
+library(bcbioSingleCell)
 
 # Shared R Markdown settings
 prepareSingleCellTemplate()
@@ -94,17 +94,13 @@ First, let's create a `seurat` object using the raw counts from the cells that h
 # getMethod("coerce", signature(from = "bcbioSingleCell", to = "seurat"))
 seurat <- as(bcb, "seurat") %>%
     NormalizeData(
-        object = .,
         normalization.method = "LogNormalize",
         scale.factor = 10000) %>%
     FindVariableGenes(
-        object = .,
         mean.function = ExpMean,
         dispersion.function = LogVMR,
         do.plot = FALSE) %>%
-    ScaleData(
-        object = .,
-        model.use = "linear")
+    ScaleData(model.use = "linear")
 ```
 
 
@@ -351,9 +347,14 @@ Let's look at the variance in the number of UMI counts (`nUMI`), gene detection 
 # support labeling the clusters
 plotFeatureTSNE(
     seurat,
-    features = c("nUMI", "nGene",
-                 "log10GenesPerUMI", "mitoRatio",
-                 "S.Score", "G2M.Score"),
+    features = c(
+        "nUMI",
+        "nGene",
+        "log10GenesPerUMI",
+        "mitoRatio",
+        "S.Score",
+        "G2M.Score"
+    ),
     pointSize = 1,
     labelSize = 4.5
 )

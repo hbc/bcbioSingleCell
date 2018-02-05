@@ -87,6 +87,14 @@ setGeneric("knownMarkersDetected", function(all, known, ...) {
 
 
 
+#' @rdname metricsPerSample
+#' @export
+setGeneric("metricsPerSample", function(object, ...) {
+    standardGeneric("metricsPerSample")
+})
+
+
+
 #' @rdname plotCellCounts
 #' @export
 setGeneric("plotCellCounts", function(object, ...) {
