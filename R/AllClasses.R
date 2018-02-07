@@ -4,10 +4,13 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 #' bcbioSingleCell Object Class
 #'
-#' `bcbioSingleCell` is an extension of `SummarizedExperiment` designed to store
+#' `bcbioSingleCell` is an extension of `SingleCellExperiment` designed to store
 #' bcbio single-cell RNA-seq counts. This class contains read counts save as a
 #' sparse matrix (`dgCMatrix`), sample barcodes, run metadata, and barcode
 #' summary statistics for each sample analyzed.
+#'
+#' @note `bcbioSingleCell` extended `SummarizedExperiment` until v0.0.31 of
+#' this package, when we migrated over to using `SingleCellExperiment`.
 #'
 #' @author Michael Steinbaugh
 #'
@@ -22,7 +25,7 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 #' @export
 bcbioSingleCell <- setClass(
     "bcbioSingleCell",
-    contains = "SummarizedExperiment",
+    contains = "SingleCellExperiment",
     slots = c(bcbio = "SimpleList"))
 setValidity("bcbioSingleCell", function(object) TRUE)
 
