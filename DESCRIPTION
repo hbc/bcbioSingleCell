@@ -39,7 +39,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4.0),
     SummarizedExperiment (>= 1.6.5),
-    bcbioBase (>= 0.0.3),
+    bcbioBase (>= 0.0.4),
     Seurat (>= 2.1.0)
 Imports:
     BiocGenerics (>= 0.22.1),
