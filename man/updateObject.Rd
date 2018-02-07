@@ -18,19 +18,16 @@ Update Object
 SingleCellExperiment migration started in v0.0.31.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
+loadRemoteData("http://bcbiosinglecell.seq.cloud/v0.0.26/bcb.rda")
 
-# bcbioSingleCell up to v0.0.30
-# Extended from SummarizedExperiment instead of SingleCellExperiment
+# bcbioSingleCell prior to v0.0.31 extended from SummarizedExperiment instead
+of SingleCellExperiment
+metadata(bcb)[["version"]]
 error <- tryCatch(
     validObject(bcb),
     error = function(e) e
 )
 print(error)
-
-# Update object to SingleCellExperiment class extension
 bcbSCE <- updateObject(bcb)
 validObject(bcbSCE)
 is(bcbSCE, "SingleCellExperiment")
