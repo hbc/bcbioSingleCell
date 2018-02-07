@@ -503,7 +503,5 @@ loadSingleCell <- function(
     # Now extending `SingleCellExperiment` class, as of v0.0.31
     sce <- as(se, "SingleCellExperiment")
     bcbio <- list(cellularBarcodes = cbList)
-    new("bcbioSingleCell",
-        sce,
-        bcbio = as(bcbio, "SimpleList"))
+    new("bcbioSingleCell",sce, bcbio = as(bcbio, "SimpleList"))
 }
