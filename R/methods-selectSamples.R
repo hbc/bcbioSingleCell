@@ -33,7 +33,7 @@ NULL
 
 # Constructors =================================================================
 #' @importFrom bcbioBase prepareSummarizedExperiment
-#' @importFrom dplyr mutate_if pull
+#' @importFrom dplyr mutate_if
 #' @importFrom magrittr set_rownames
 .selectSamples <- function(object, ...) {
     object <- .applyFilterCutoffs(object)
@@ -57,22 +57,24 @@ NULL
     sampleMetadata <- sampleMetadata(object)
     list <- lapply(seq_along(arguments), function(a) {
         column <- names(arguments)[[a]]
-        argument <- arguments[[a]]
-        match <- sampleMetadata %>%
-                .[.[[column]] %in% argument, , drop = FALSE]
-        # Check for match failure
-        if (!nrow(match)) {
-            warn(paste("Match failure:", paste(column, "=", argument)))
-            return(NULL)
+        # Check that column is present
+        if (!column %in% colnames(sampleMetadata)) {
+            abort(paste(column, "isn't present in metadata colnames"))
         }
-        pull(match, "sampleID")
+        argument <- arguments[[a]]
+        # Check that all items in argument are present
+        if (!all(argument %in% sampleMetadata[[column]])) {
+            missing <- argument[which(!argument %in% sampleMetadata[[column]])]
+            abort(paste(
+                column,
+                "metadata column doesn't contain",
+                toString(missing)
+            ))
+        }
+        sampleMetadata %>%
+            .[.[[column]] %in% argument, "sampleID", drop = TRUE]
     })
     sampleIDs <- Reduce(f = intersect, x = list)
-    if (!length(sampleIDs)) {
-        warn("No samples matched")
-        return(NULL)
-    }
-    sampleIDs <- sort(unique(sampleIDs))
 
     # Output to the user which samples matched, using the `sampleName` metadata
     # column, which is more descriptive than `sampleID`
