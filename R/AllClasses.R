@@ -27,7 +27,20 @@ bcbioSingleCell <- setClass(
     "bcbioSingleCell",
     contains = "SingleCellExperiment",
     slots = c(bcbio = "SimpleList"))
-setValidity("bcbioSingleCell", function(object) TRUE)
+setValidity("bcbioSingleCell", function(object) {
+    slotCheck <- vapply(
+        X = slotNames(object),
+        FUN = function(slot) {
+            .hasSlot(object, slot)
+        },
+        FUN.VALUE = logical(1L))
+    missingSlots <- names(slotCheck)[!slotCheck]
+    if (length(missingSlots)) {
+        FALSE
+    } else {
+        TRUE
+    }
+})
 
 
 
