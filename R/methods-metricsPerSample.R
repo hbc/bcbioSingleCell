@@ -2,8 +2,9 @@
 #'
 #' @rdname metricsPerSample
 #' @name metricsPerSample
-#'
 #' @author Michael Steinbaugh
+#'
+#' @inheritParams AllGenerics
 #'
 #' @return [tibble] containing summary statistics.
 #'

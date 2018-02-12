@@ -48,22 +48,33 @@ NULL
 .sampleMetadata.seurat <- function(metadata) {  # nolint
     # Assign the required metadata columns from `orig.ident`, if necessary
     if (!all(metadataPriorityCols %in% colnames(metadata))) {
-        for (i in seq_len(ncol(metadata))) {
-            metadata[[metadataPriorityCols[[i]]]] <- metadata[["orig.ident"]]
+        missing <- setdiff(metadataPriorityCols, colnames(metadata))
+        for (i in seq_along(missing)) {
+            metadata[[missing[[i]]]] <- metadata[["orig.ident"]]
         }
     }
+
     blacklist <- paste(c(
+        "cellularBarcode",
         "orig.ident",
         "Phase",
         "^res\\.[0-9]"
     ), collapse = "|")
-    metadata %>%
+
+    metadata <- metadata %>%
         remove_rownames() %>%
         .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
         mutate_if(is.character, as.factor) %>%
         select_if(is.factor) %>%
         distinct() %>%
         camel(strict = FALSE)
+
+    # Check for failure to make rows distinct (by `sampleName`)
+    if (any(duplicated(metadata[["sampleName"]]))) {
+        abort("Failed to make `sampleName` column unique")
+    }
+
+    metadata
 }
 
 
