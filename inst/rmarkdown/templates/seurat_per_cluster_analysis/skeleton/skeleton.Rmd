@@ -4,24 +4,21 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seuratFile: "data/seurat.rda"
+    seurat_file: "data/seurat.rda"
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-02-01
-library(bcbioSingleCell)
-
-# Shared R Markdown settings
-prepareSingleCellTemplate()
-if (file.exists("setup.R")) {
-    source("setup.R")
-}
+# Last modified 2018-02-12
+bcbioSingleCell::prepareSingleCellTemplate()
+source("setup.R")
 
 # Load seurat object
-seuratName <- load(params$seuratFile)
+seuratName <- load(params$seurat_file)
 seurat <- get(seuratName, inherits = FALSE)
+assert_is_all_of(bcb, "seurat")
 
-interestingGroups <- interestingGroups(seurat)
+idents <- levels(seurat@ident)
+interesting_groups <- interestingGroups(seurat)
 ```
 
 ```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
@@ -38,13 +35,12 @@ sampleMetadata(seurat)
 # tSNE (all clusters) {.tabset}
 
 ```{r plot_tsne_all_clusters, results="asis"}
-groups <- unique(c("ident", "sampleName", interestingGroups))
-lapply(seq_along(groups), function(a) {
-    mdHeader(groups[[a]], level = 2, asis = TRUE)
-    plotTSNE(seurat, interestingGroups = groups[[a]]) %>%
+groups <- unique(c("ident", "sampleName", interesting_groups))
+invisible(lapply(groups, function(group) {
+    mdHeader(group, level = 2, asis = TRUE)
+    plotTSNE(seurat, interestingGroups = group) %>%
         show()
-}) %>%
-    invisible()
+}))
 rm(groups)
 ```
 
@@ -52,24 +48,18 @@ rm(groups)
 
 # tSNE per cluster {.tabset}
 
-```{r}
-ident <- levels(seurat@ident)
-groups <- unique(c("sampleName", interestingGroups))
-```
-
-
 ```{r plot_tsne_per_cluster, results="asis"}
-lapply(seq_along(ident), function(a) {
-    subset <- SubsetData(seurat, ident.use = ident[[a]])
-    mdHeader(ident[[a]], level = 2, asis = TRUE, tabset = TRUE)
-    lapply(seq_along(groups), function(a) {
-        mdHeader(groups[[a]], level = 3, asis = TRUE)
-        plotTSNE(subset, interestingGroups = groups[[a]]) %>%
+groups <- unique(c("sampleName", interesting_groups))
+invisible(lapply(idents, function(ident) {
+    subset <- SubsetData(seurat, ident.use = ident)
+    mdHeader(ident, level = 2, asis = TRUE, tabset = TRUE)
+    invisible(lapply(groups, function(group) {
+        mdHeader(group, level = 3, asis = TRUE)
+        plotTSNE(subset, interestingGroups = group) %>%
             show()
-    }) %>%
-        invisible()
-}) %>%
-    invisible()
+    }))
+}))
+rm(groups)
 ```
 
 
@@ -77,13 +67,12 @@ lapply(seq_along(ident), function(a) {
 # Cell counts per cluster {.tabset}
 
 ```{r cell_counts_per_cluster, results="asis"}
-lapply(seq_along(ident), function(a) {
-    subset <- SubsetData(seurat, ident.use = ident[[a]])
-    mdHeader(ident[[a]], level = 2, asis = TRUE, tabset = TRUE)
+invisible(lapply(idents, function(ident) {
+    subset <- SubsetData(seurat, ident.use = ident)
+    mdHeader(ident, level = 2, asis = TRUE, tabset = TRUE)
     master <- subset@meta.data %>%
-        as.data.frame() %>%
         uniteInterestingGroups(interestingGroups) %>%
-        dplyr::select(sampleName, interestingGroups)
+        select(sampleName, interestingGroups)
     sampleStats <- master %>%
         arrange(sampleName) %>%
         group_by(sampleName) %>%
@@ -94,12 +83,11 @@ lapply(seq_along(ident), function(a) {
         group_by(interestingGroups) %>%
         summarize(count = n()) %>%
         mutate(pct = count / sum(count))
-    kable(sampleStats, digits = 2L) %>%
+    kable(sampleStats, digits = 2) %>%
         show()
-    kable(intgroupStats, digits = 2L) %>%
+    kable(intgroupStats, digits = 2) %>%
         show()
-}) %>%
-    invisible()
+}))
 ```
 
 
