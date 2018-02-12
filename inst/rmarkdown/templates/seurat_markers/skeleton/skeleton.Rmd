@@ -4,74 +4,67 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seuratFile: "data/seurat.rda"
-    cellTypeMarkersFile: NULL
-    outputDir: "."
+    seurat_file: "data/seurat.rda"
+    cell_type_markers_file: NULL
+    organism: NULL
+    output_dir: "."
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-02-01
-library(bcbioSingleCell)
-library(Seurat)
-
-# Shared R Markdown settings
-prepareSingleCellTemplate()
-if (file.exists("setup.R")) {
-    source("setup.R")
-}
+# Last modified 2018-02-12
+bcbioSingleCell::prepareSingleCellTemplate()
+source("setup.R")
 
 # Directory paths
-dataDir <- file.path(params$outputDir, "data", Sys.Date())
-markersDir <- file.path(params$outputDir, "results", Sys.Date(), "markers")
+data_dir <- file.path(params$output_dir, "data", Sys.Date())
+results_dir <- file.path(params$output_dir, "results", Sys.Date(), "markers")
 invisible(mapply(
     FUN = dir.create,
-    list(dataDir, markersDir),
+    list(data_dir, results_dir),
     MoreArgs = list(recursive = TRUE, showWarnings = FALSE)
 ))
 
 # Load seurat object
-seuratName <- load(params$seuratFile)
-seurat <- get(seuratName, inherits = FALSE)
-seuratAllMarkersName <- paste(seuratName, "markers", sep = "_")
+seurat_name <- load(params$seurat_file)
+seurat <- get(seurat_name, inherits = FALSE)
+assert_is_all_of(seurat, "seurat")
+
+seurat_all_markers_name <- paste(seurat_name, "markers", sep = "_")
 
 # Default to using our internal cell type markers, managed on Google Sheets.
 # File on issue on the bcbioSingleCell GitHub repo if this list needs to get
 # updated or the desired organism isn't yet supported.
-if (!is.null(params$cellTypeMarkersFile)) {
+if (!is.null(params$cell_type_markers_file)) {
     gene2symbol <- gene2symbol(seurat)
-    cellTypeMarkers <- readCellTypeMarkersFile(
-        params$cellTypeMarkersFile,
+    cell_type_markers <- readCellTypeMarkersFile(
+        params$cell_type_markers_file,
         gene2symbol = gene2symbol)
 } else {
-    # Detect the organism from the seurat object
-    organism <- detectOrganism(seurat)
-    # Load our internal cell type markers
-    cellTypeMarkers <- bcbioSingleCell::cellTypeMarkers
-    # Check whether the organism is supported
-    if (!camel(organism) %in% names(cellTypeMarkers)) {
-        stop(paste("No internal markers for", organism))
+    if (is.null(params$organism)) {
+        organism <- detectOrganism(seurat)
     }
-    cellTypeMarkers <- cellTypeMarkers[[camel(organism)]]
+    cell_type_markers <- bcbioSingleCell::cellTypeMarkers[[camel(organism)]]
 }
+assert_is_data.frame(cell_type_markers)
 assignAndSaveData(
-    name = paste(seuratName, "cellTypeMarkers", sep = "_"),
-    object = cellTypeMarkers,
-    dir = dataDir)
+    name = paste(seurat_name, "cell_type_markers", sep = "_"),
+    object = cell_type_markers,
+    dir = data_dir)
 
 # knitr arguments (for `rmarkdown::render()` looping)
 opts_chunk$set(
     cache.path = paste(
-        seuratAllMarkersName,
+        seurat_all_markers_name,
         "cache/",
         sep = "_"),
     fig.path = paste(
-        seuratAllMarkersName,
+        seurat_all_markers_name,
         "files/",
         sep = "_")
 )
 ```
 
-```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
+```{r header, child="_header.Rmd"}
 ```
 
 
@@ -98,21 +91,21 @@ The `min.pct` argument requires a gene to be detected at a minimum percentage in
 Seurat has four tests for differential expression which can be set with the `test.use` parameter: LRT test based on zero-inflated data (`bimod`, default), ROC test (`roc`), t-test (`t`), LRT test based on tobit-censoring models (`tobit`) The ROC test returns the 'classification power' for any individual marker (ranging from 0 - random, to 1 - perfect).
 
 ```{r find_all_markers, results="hide"}
-seuratAllMarkers <- FindAllMarkers(seurat)
+seurat_all_markers <- FindAllMarkers(seurat)
 # Save the original, unmodified data.frame as a backup, since this step is
 # CPU-intensive for large datasets
 assignAndSaveData(
-    name = paste(seuratAllMarkersName, "original", sep = "_"),
-    object = seuratAllMarkers,
-    dir = dataDir)
-seuratAllMarkers <- sanitizeMarkers(seurat, markers = seuratAllMarkers)
+    name = paste(seurat_all_markers_name, "original", sep = "_"),
+    object = seurat_all_markers,
+    dir = data_dir)
+seurat_all_markers <- sanitizeMarkers(seurat, markers = seurat_all_markers)
 assignAndSaveData(
-    name = seuratAllMarkersName,
-    object = seuratAllMarkers,
-    dir = dataDir)
+    name = seurat_all_markers_name,
+    object = seurat_all_markers,
+    dir = data_dir)
 write_csv(
-    seuratAllMarkers,
-    path = file.path(markersDir, paste0(seuratAllMarkersName, ".csv.gz")))
+    seurat_all_markers,
+    path = file.path(results_dir, paste0(seurat_all_markers_name, ".csv.gz")))
 ```
 
 
@@ -120,14 +113,14 @@ write_csv(
 # Top markers per cluster {.tabset}
 
 ```{r top_markers}
-topMarkers <- topMarkers(seuratAllMarkers, n = 10, coding = TRUE)
-topMarkers
+top_markers <- topMarkers(seurat_all_markers, n = 10, coding = TRUE)
+top_markers
 ```
 
 ```{r plot_top_markers, fig.height=14.5, fig.width=10, results="asis"}
 plotTopMarkers(
     seurat,
-    topMarkers = topMarkers,
+    topMarkers = top_markers,
     headerLevel = 2)
 ```
 
@@ -142,7 +135,7 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 # doesn't appear to be working in Seurat v2.1 (updated 2017-11-25).
 DoHeatmap(
     seurat,
-    genes.use = topMarkers$symbol,
+    genes.use = top_markers$symbol,
     col.low = viridis(3)[[1]],
     col.mid = viridis(3)[[2]],
     col.high = viridis(3)[[3]],
@@ -156,20 +149,20 @@ DoHeatmap(
 # Known cell type markers {.tabset}
 
 ```{r known_markers_detected, fig.height=14.5, fig.width=10, results="asis"}
-knownMarkersDetected <- knownMarkersDetected(
-    all = seuratAllMarkers,
-    known = cellTypeMarkers)
-knownMarkersDetected
+known_markers_detected <- knownMarkersDetected(
+    all = seurat_all_markers,
+    known = cell_type_markers)
+known_markers_detected
 assignAndSaveData(
-    name = paste(seuratAllMarkersName, "by_cell_type", sep = "_"),
-    object = knownMarkersDetected,
-    dir = dataDir)
+    name = paste(seurat_all_markers_name, "by_cell_type", sep = "_"),
+    object = known_markers_detected,
+    dir = data_dir)
 ```
 
 ```{r plot_known_markers_detected, fig.height=14.5, fig.width=10, results="asis"}
 plotKnownMarkersDetected(
     seurat,
-    knownMarkers = knownMarkersDetected,
+    knownMarkers = known_markers_detected,
     headerLevel = 2)
 ```
 
@@ -178,22 +171,22 @@ plotKnownMarkersDetected(
 # Cell types per cluster {.tabset}
 
 ```{r cell_types_per_cluster}
-cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
-cellTypesPerCluster
+cell_types_per_cluster <- cellTypesPerCluster(known_markers_detected)
+cell_types_per_cluster
 assignAndSaveData(
-    name = paste(seuratAllMarkersName, "cell_types_per_cluster", sep = "_"),
-    object = cellTypesPerCluster,
-    dir = dataDir)
+    name = paste(seurat_all_markers_name, "cell_types_per_cluster", sep = "_"),
+    object = cell_types_per_cluster,
+    dir = data_dir)
 ```
 
 ```{r plot_cell_types_per_cluster, results="asis"}
 plotCellTypesPerCluster(
     seurat,
-    cellTypesPerCluster = cellTypesPerCluster,
+    cellTypesPerCluster = cell_types_per_cluster,
     headerLevel = 2)
 ```
 
 
 
-```{r footer, child="_footer.Rmd", eval=file.exists("_footer.Rmd")}
+```{r footer, child="_footer.Rmd"}
 ```

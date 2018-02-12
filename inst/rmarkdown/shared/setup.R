@@ -1,5 +1,6 @@
-suppressPackageStartupMessages(library(bcbioSingleCell))
+library(assertive)
 library(knitr)
+library(bcbioSingleCell)
 library(tidyverse)
 
 # Set seed for reproducibility

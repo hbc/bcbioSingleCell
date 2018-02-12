@@ -42,6 +42,7 @@ Depends:
     bcbioBase (>= 0.0.4),
     Seurat (>= 2.1.0)
 Imports:
+    assertive (>= 0.3),
     BiocGenerics (>= 0.24.0),
     cowplot (>= 0.9.2),
     dendsort (>= 0.3.3),
