@@ -27,7 +27,7 @@ invisible(mapply(
 # Load seurat object
 seurat_name <- load(params$seurat_file)
 seurat <- get(seurat_name, inherits = FALSE)
-assert_is_all_of(seurat, "seurat")
+stopifnot(is(seurat, "seurat"))
 
 seurat_all_markers_name <- paste(seurat_name, "markers", sep = "_")
 
@@ -45,7 +45,7 @@ if (!is.null(params$cell_type_markers_file)) {
     }
     cell_type_markers <- bcbioSingleCell::cellTypeMarkers[[camel(organism)]]
 }
-assert_is_data.frame(cell_type_markers)
+stopifnot(is.data.frame(cell_type_markers))
 assignAndSaveData(
     name = paste(seurat_name, "cell_type_markers", sep = "_"),
     object = cell_type_markers,

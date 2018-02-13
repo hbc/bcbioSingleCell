@@ -26,7 +26,7 @@ data_dir <- file.path(params$output_dir, "data", Sys.Date())
 # Load bcbioSingleCell object
 bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
-assert_is_all_of(bcb, "bcbioSingleCell")
+stopifnot(is(bcb, "bcbioSingleCell"))
 ```
 
 ```{r header, child="_header.Rmd"}

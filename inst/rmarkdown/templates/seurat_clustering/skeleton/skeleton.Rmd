@@ -25,7 +25,7 @@ dir.create(data_dir, recursive = TRUE, showWarnings = FALSE)
 # Load bcbioSingleCell object
 bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
-assert_is_all_of(bcb, "bcbioSingleCell")
+stopifnot(is(bcb, "bcbioSingleCell"))
 
 # Vector to use for plot looping
 group_by <- unique(c(
@@ -118,7 +118,7 @@ First, we assign each cell a score, based on its expression of G2/M and S phase 
 ```{r cell_cycle_markers}
 organism <- metadata(bcb)$organism
 cell_cycle_markers <- bcbioSingleCell::cellCycleMarkers[[camel(organism)]]
-assert_is_data.frame(cell_type_markers)
+stopifnot(is.data.frame(cell_cycle_markers))
 
 mdHeader("S phase markers", level = 3)
 s_genes <- cell_cycle_markers %>%

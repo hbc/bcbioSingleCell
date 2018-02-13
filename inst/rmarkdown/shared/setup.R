@@ -1,4 +1,3 @@
-library(assertive)
 library(knitr)
 library(bcbioSingleCell)
 library(tidyverse)

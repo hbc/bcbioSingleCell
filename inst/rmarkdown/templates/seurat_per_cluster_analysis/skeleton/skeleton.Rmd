@@ -13,9 +13,9 @@ bcbioSingleCell::prepareSingleCellTemplate()
 source("setup.R")
 
 # Load seurat object
-seuratName <- load(params$seurat_file)
-seurat <- get(seuratName, inherits = FALSE)
-assert_is_all_of(bcb, "seurat")
+seurat_name <- load(params$seurat_file)
+seurat <- get(seurat_name, inherits = FALSE)
+stopifnot(is(seurat, "seurat"))
 
 idents <- levels(seurat@ident)
 interesting_groups <- interestingGroups(seurat)
