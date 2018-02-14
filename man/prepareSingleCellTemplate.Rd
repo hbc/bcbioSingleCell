@@ -28,7 +28,7 @@ files <- c(
     "_footer.Rmd",
     "_header.Rmd",
     "_output.yaml",
-    "_setup.R"
+    "_setup.R",
     "bibliography.bib"
 )
 prepareSingleCellTemplate()
