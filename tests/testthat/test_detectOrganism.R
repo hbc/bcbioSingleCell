@@ -8,17 +8,15 @@ load(system.file(
     package = "bcbioSingleCell"))
 
 test_that("bcbioSingleCell", {
-    organism <- detectOrganism(bcb)
     expect_identical(
-        organism,
-        c("human" = "Homo sapiens")
+        detectOrganism(bcb),
+        "Homo sapiens"
     )
 })
 
 test_that("seurat", {
-    organism <- detectOrganism(seurat)
     expect_identical(
-        organism,
-        c("human" = "Homo sapiens")
+        detectOrganism(seurat),
+        "Homo sapiens"
     )
 })
