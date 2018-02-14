@@ -25,9 +25,14 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 #' @export
 bcbioSingleCell <- setClass(
     "bcbioSingleCell",
-    contains = "SingleCellExperiment",
-    slots = c(bcbio = "SimpleList"))
-setValidity("bcbioSingleCell", function(object) TRUE)
+    contains = "SummarizedExperiment",
+    slots = c(bcbio = "SimpleList")
+)
+setValidity(
+    "bcbioSingleCell", function(object) {
+        TRUE
+    }
+)
 
 
 

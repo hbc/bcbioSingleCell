@@ -278,7 +278,5 @@ loadCellRanger <- function(
         rowData = annotable,
         colData = metrics,
         metadata = metadata)
-    # Now extending `SingleCellExperiment` class, as of v0.0.31
-    sce <- as(se, "SingleCellExperiment")
-    new("bcbioSingleCell", sce)
+    new("bcbioSingleCell", se)
 }

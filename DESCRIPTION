@@ -38,11 +38,12 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),
-    SingleCellExperiment (>= 1.0.0),
-    bcbioBase (>= 0.0.4),
-    Seurat (>= 2.1.0)
+    SummarizedExperiment (>= 1.8.0),
+    bcbioBase (>= 0.1.0),
+    Seurat (>= 2.0.0)
 Imports:
     assertive (>= 0.3),
+    basejump (>= 0.3.0),
     BiocGenerics (>= 0.24.0),
     cowplot (>= 0.9.2),
     dendsort (>= 0.3.3),

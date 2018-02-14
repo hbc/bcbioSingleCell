@@ -500,8 +500,6 @@ loadSingleCell <- function(
         rowData = annotable,
         colData = metrics,
         metadata = metadata)
-    # Now extending `SingleCellExperiment` class, as of v0.0.31
-    sce <- as(se, "SingleCellExperiment")
     bcbio <- list(cellularBarcodes = cbList)
-    new("bcbioSingleCell",sce, bcbio = as(bcbio, "SimpleList"))
+    new("bcbioSingleCell", se, bcbio = as(bcbio, "SimpleList"))
 }
