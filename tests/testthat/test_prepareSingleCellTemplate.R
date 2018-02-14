@@ -5,8 +5,9 @@ test_that("prepareSingleCellTemplate", {
         "_footer.Rmd",
         "_header.Rmd",
         "_output.yaml",
-        "bibliography.bib",
-        "setup.R")
+        "_setup.R",
+        "bibliography.bib"
+    )
     expect_silent(prepareSingleCellTemplate())
     expect_true(all(file.exists(files)))
     unlink(files)
