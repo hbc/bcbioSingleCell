@@ -11,12 +11,35 @@
 #'
 #' @examples
 #' files <- c(
-#'     "_footer.Rmd", "_header.Rmd", "_output.yaml",
-#'     "bibliography.bib", "setup.R")
+#'     "_footer.Rmd",
+#'     "_header.Rmd",
+#'     "_output.yaml",
+#'     "_setup.R",
+#'     "bibliography.bib"
+#' )
 #' prepareSingleCellTemplate()
 #' all(file.exists(files))
 #' unlink(files)
 NULL
+
+
+
+# Constructors =================================================================
+.prepareSingleCellTemplate <- function(object) {
+    prepareTemplate(
+        c(
+            "_footer.Rmd",
+            "_header.Rmd",
+            "_output.yaml",
+            "_setup.R",
+            "bibliography.bib"
+        ),
+        sourceDir = system.file(
+            "rmarkdown/shared",
+            package = "bcbioSingleCell"
+        )
+    )
+}
 
 
 
@@ -27,9 +50,4 @@ NULL
 setMethod(
     "prepareSingleCellTemplate",
     signature("missing"),
-    function(object) {
-        prepareTemplate(
-            sourceDir = system.file(
-                "rmarkdown/shared",
-                package = "bcbioSingleCell"))
-    })
+    .prepareSingleCellTemplate)

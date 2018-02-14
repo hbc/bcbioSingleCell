@@ -10,7 +10,7 @@ params:
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
 # Last modified 2018-02-12
 bcbioSingleCell::prepareSingleCellTemplate()
-source("setup.R")
+source("_setup.R")
 
 # Load seurat object
 seurat_name <- load(params$seurat_file)

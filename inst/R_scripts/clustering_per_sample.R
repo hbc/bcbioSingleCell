@@ -17,7 +17,7 @@ library(pbapply)
 library(rmarkdown)
 
 prepareSingleCellTemplate()
-source("setup.R")
+source("_setup.R")
 dataDir <- "data"
 
 loadDataAsName(bcb = "bcb_filtered", dir = "data")
