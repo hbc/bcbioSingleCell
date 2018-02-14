@@ -168,7 +168,9 @@ loadCellRanger <- function(
                 "is not supported in AnnotationHub.",
                 "Obtaining annotable with current release annotations instead."
             ))
-            ensemblVersion <- NULL
+            release <- NULL
+        } else {
+            release <- ensemblVersion
         }
         annotable <- annotable(
             organism,
