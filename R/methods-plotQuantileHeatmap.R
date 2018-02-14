@@ -12,7 +12,7 @@
 #' @inheritParams AllGenerics
 #'
 #' @param n The number of breaks to create.
-#' @param annotationCol *Optional*. [data.frame] that defines annotation
+#' @param annotationCol *Optional.* [data.frame] that defines annotation
 #'   mappings for the columns.
 #' @param clusterCols Logical determining if columns should be arranged with
 #'   hierarchical clustering. Alternatively, can define an `hclust` object.
@@ -22,7 +22,7 @@
 #'   palette.
 #' @param legendColor Colors to use for legend labels. Defaults to the
 #'   [viridis::viridis()] palette.
-#' @param title *Optional*. Plot title.
+#' @param title *Optional.* Plot title.
 #'
 #' @examples
 #' load(system.file(
