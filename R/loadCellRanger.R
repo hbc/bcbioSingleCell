@@ -175,7 +175,7 @@ loadCellRanger <- function(
         annotable <- annotable(
             organism,
             genomeBuild = genomeBuild,
-            release = ensemblVersion)
+            release = release)
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
     } else {
