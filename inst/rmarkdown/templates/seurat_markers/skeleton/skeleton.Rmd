@@ -10,15 +10,9 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-01-24
-suppressPackageStartupMessages(library(bcbioSingleCell))
-library(Seurat)
-
-# Shared R Markdown settings
-prepareSingleCellTemplate()
-if (file.exists("setup.R")) {
-    source("setup.R")
-}
+# Last modified 2018-02-14
+bcbioSingleCell::prepareSingleCellTemplate()
+source("_setup.R")
 
 # Directory paths
 dataDir <- file.path(params$outputDir, "data", Sys.Date())
@@ -71,7 +65,7 @@ opts_chunk$set(
 )
 ```
 
-```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
+```{r header, child="_header.Rmd"}
 ```
 
 
@@ -195,5 +189,5 @@ plotCellTypesPerCluster(
 
 
 
-```{r footer, child="_footer.Rmd", eval=file.exists("_footer.Rmd")}
+```{r footer, child="_footer.Rmd"}
 ```

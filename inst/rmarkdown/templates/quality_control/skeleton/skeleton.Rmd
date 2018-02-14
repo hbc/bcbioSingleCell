@@ -4,7 +4,7 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    bcbFile: "data/bcb.rda"
+    bcbFile: "data/YYYY-MM-DD/bcb.rda"
     minUMIs: 1000
     maxUMIs: !r Inf
     minGenes: 500
@@ -16,14 +16,9 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-01-24
-suppressPackageStartupMessages(library(bcbioSingleCell))
-
-# Shared R Markdown settings
-prepareSingleCellTemplate()
-if (file.exists("setup.R")) {
-    source("setup.R")
-}
+# Last modified 2018-02-14
+bcbioSingleCell::prepareSingleCellTemplate()
+source("_setup.R")
 
 # Directory paths
 dataDir <- file.path(params$outputDir, "data", Sys.Date())
@@ -33,7 +28,7 @@ bcbName <- load(params$bcbFile)
 bcb <- get(bcbName, inherits = FALSE)
 ```
 
-```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
+```{r header, child="_header.Rmd"}
 ```
 
 
@@ -215,5 +210,5 @@ plotQC(
 
 
 
-```{r footer, child="_footer.Rmd", eval=file.exists("_footer.Rmd")}
+```{r footer, child="_footer.Rmd"}
 ```
