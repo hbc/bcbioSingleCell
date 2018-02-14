@@ -1,4 +1,4 @@
-suppressPackageStartupMessages(library(bcbioSingleCell))
+library(bcbioSingleCell)
 library(knitr)
 library(tidyverse)
 

@@ -4,36 +4,32 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    bcbFile: "data/bcb.rda"
-    minUMIs: 1000
-    maxUMIs: !r Inf
-    minGenes: 500
-    maxGenes: !r Inf
-    maxMitoRatio: 0.1
-    minNovelty: 0.75
-    minCellsPerGene: 3
-    outputDir: "."
+    bcb_file: "data/YYYY-MM-DD/bcb.rda"
+    min_umis: 1000
+    max_umis: !r Inf
+    min_genes: 500
+    max_genes: !r Inf
+    max_mito_ratio: 0.1
+    min_novelty: 0.75
+    min_cells_per_gene: 3
+    output_dir: "."
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-01-24
-suppressPackageStartupMessages(library(bcbioSingleCell))
-
-# Shared R Markdown settings
-prepareSingleCellTemplate()
-if (file.exists("setup.R")) {
-    source("setup.R")
-}
+# Last modified 2018-02-12
+bcbioSingleCell::prepareSingleCellTemplate()
+source("_setup.R")
 
 # Directory paths
-dataDir <- file.path(params$outputDir, "data", Sys.Date())
+data_dir <- file.path(params$output_dir, "data", Sys.Date())
 
 # Load bcbioSingleCell object
-bcbName <- load(params$bcbFile)
-bcb <- get(bcbName, inherits = FALSE)
+bcb_name <- load(params$bcb_file)
+bcb <- get(bcb_name, inherits = FALSE)
+stopifnot(is(bcb, "bcbioSingleCell"))
 ```
 
-```{r header, child="_header.Rmd", eval=file.exists("_header.Rmd")}
+```{r header, child="_header.Rmd"}
 ```
 
 
@@ -71,21 +67,21 @@ mdHeader("histogram", level = 3)
 plotUMIsPerCell(
     bcb,
     geom = "histogram",
-    min = min(params$minUMIs)
+    min = min(params$min_umis)
 )
     
 mdHeader("violin", level = 3)
 plotUMIsPerCell(
     bcb,
     geom = "violin",
-    min = min(params$minUMIs)
+    min = min(params$min_umis)
 )
 
 mdHeader("boxplot", level = 3)
 plotUMIsPerCell(
     bcb,
     geom = "boxplot",
-    min = min(params$minUMIs)
+    min = min(params$min_umis)
 )
 ```
 
@@ -99,24 +95,24 @@ mdHeader("histogram", level = 3)
 plotGenesPerCell(
     bcb,
     geom = "histogram",
-    min = min(params$minGenes),
-    max = max(params$maxGenes)
+    min = min(params$min_genes),
+    max = max(params$max_genes)
 )
 
 mdHeader("violin", level = 3)
 plotGenesPerCell(
     bcb,
     geom = "violin",
-    min = min(params$minGenes),
-    max = max(params$maxGenes)
+    min = min(params$min_genes),
+    max = max(params$max_genes)
 )
 
 mdHeader("boxplot", level = 3)
 plotGenesPerCell(
     bcb,
     geom = "boxplot",
-    min = min(params$minGenes),
-    max = max(params$maxGenes)
+    min = min(params$min_genes),
+    max = max(params$max_genes)
 )
 ```
 
@@ -139,21 +135,21 @@ mdHeader("histogram", level = 3)
 plotMitoRatio(
     bcb,
     geom = "histogram",
-    max = max(params$maxMitoRatio)
+    max = max(params$max_mito_ratio)
 )
 
 mdHeader("violin", level = 3)
 plotMitoRatio(
     bcb,
     geom = "violin",
-    max = max(params$maxMitoRatio)
+    max = max(params$max_mito_ratio)
 )
 
 mdHeader("boxplot", level = 3)
 plotMitoRatio(
     bcb,
     geom = "boxplot",
-    max = max(params$maxMitoRatio)
+    max = max(params$max_mito_ratio)
 )
 ```
 
@@ -167,21 +163,21 @@ mdHeader("histogram", level = 3)
 plotNovelty(
     bcb,
     geom = "histogram",
-    min = min(params$minNovelty)
+    min = min(params$min_novelty)
 )
 
 mdHeader("violin", level = 3)
 plotNovelty(
     bcb,
     geom = "violin",
-    min = min(params$minNovelty)
+    min = min(params$min_novelty)
 )
 
 mdHeader("boxplot", level = 3)
 plotNovelty(
     bcb,
     geom = "boxplot",
-    min = min(params$minNovelty)
+    min = min(params$min_novelty)
 )
 ```
 
@@ -192,17 +188,17 @@ plotNovelty(
 ```{r filter_cells}
 bcb_filtered <- filterCells(
     bcb,
-    minUMIs = params$minUMIs,
-    maxUMIs = params$maxUMIs,
-    minGenes = params$minGenes,
-    maxGenes = params$maxGenes,
-    maxMitoRatio = params$maxMitoRatio,
-    minNovelty = params$minNovelty,
-    minCellsPerGene = params$minCellsPerGene)
+    minUMIs = params$min_umis,
+    maxUMIs = params$max_umis,
+    minGenes = params$min_genes,
+    maxGenes = params$max_genes,
+    maxMitoRatio = params$max_mito_ratio,
+    minNovelty = params$min_novelty,
+    minCellsPerGene = params$min_cells_per_gene)
 assignAndSaveData(
-    name = paste(bcbName, "filtered", sep = "_"),
+    name = paste(bcb_name, "filtered", sep = "_"),
     object = bcb_filtered,
-    dir = dataDir)
+    dir = data_dir)
 ```
 
 ```{r plot_filtered_qc}
@@ -215,5 +211,5 @@ plotQC(
 
 
 
-```{r footer, child="_footer.Rmd", eval=file.exists("_footer.Rmd")}
+```{r footer, child="_footer.Rmd"}
 ```

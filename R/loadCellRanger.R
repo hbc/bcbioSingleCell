@@ -161,10 +161,21 @@ loadCellRanger <- function(
 
     # Gene annotations =========================================================
     if (isTRUE(annotable)) {
+        # AnnotationHub only supports release 87 and above
+        if (ensemblVersion < 87L) {
+            warn(paste(
+                "Ensembl release", ensemblVersion,
+                "is not supported in AnnotationHub.",
+                "Obtaining annotable with current release annotations instead."
+            ))
+            release <- NULL
+        } else {
+            release <- ensemblVersion
+        }
         annotable <- annotable(
             organism,
             genomeBuild = genomeBuild,
-            release = ensemblVersion)
+            release = release)
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
     } else {

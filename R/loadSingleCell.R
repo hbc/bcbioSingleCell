@@ -374,7 +374,7 @@ loadSingleCell <- function(
             release = ensemblVersion,
             uniqueSymbol = FALSE)
     } else if (is.data.frame(annotable)) {
-        annotable <- annotable(annotable, uniqueSymbol = FALSE)
+        annotable <- annotable(annotable)
     } else {
         warn("Loading run without gene annotable")
         annotable <- NULL
