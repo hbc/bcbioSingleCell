@@ -4,7 +4,7 @@
 #' @name annotable
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase annotable
+#' @importFrom basejump annotable
 #'
 #' @inheritParams AllGenerics
 #'

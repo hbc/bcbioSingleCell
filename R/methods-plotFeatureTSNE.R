@@ -30,7 +30,7 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotFeatureTSNE
-#' @importFrom bcbioBase midnightTheme
+#' @importFrom basejump midnightTheme
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 aes_string geom_point ggplot scale_color_gradient theme
 #' @importFrom Seurat FetchData

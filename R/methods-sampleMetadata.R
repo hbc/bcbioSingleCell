@@ -42,7 +42,7 @@ NULL
 #'   this is slotted in `object@meta.data` but older versions used
 #'   `object@data.info`.
 #'
-#' @importFrom bcbioBase camel
+#' @importFrom basejump camel
 #' @importFrom dplyr distinct mutate_if select_if
 #' @importFrom tibble remove_rownames
 .sampleMetadata.seurat <- function(metadata) {  # nolint

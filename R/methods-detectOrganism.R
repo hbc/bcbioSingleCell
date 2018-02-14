@@ -4,7 +4,7 @@
 #' @name detectOrganism
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase detectOrganism
+#' @importFrom basejump detectOrganism
 #'
 #' @inheritParams AllGenerics
 #'

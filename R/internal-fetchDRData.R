@@ -4,7 +4,7 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom bcbioBase camel
+#' @importFrom basejump camel
 #' @importFrom dplyr group_by mutate mutate_if ungroup
 #' @importFrom Seurat FetchData
 #' @importFrom stats median

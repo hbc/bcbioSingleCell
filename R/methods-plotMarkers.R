@@ -124,7 +124,8 @@ NULL
 
 
 
-# Note the plural version here. This is the gene looping code.
+#' @importFrom basejump markdownHeader
+#' @importFrom viridis scale_color_viridis
 .plotMarkers.seurat <- function(  # nolint
     object,
     genes,
@@ -144,7 +145,7 @@ NULL
             return(warn(paste(gene, "missing")))
         }
         if (!is.null(headerLevel)) {
-            mdHeader(gene, level = headerLevel, asis = TRUE)
+            markdownHeader(gene, level = headerLevel, asis = TRUE)
         }
         p <- .plotMarker.seurat(
             object,
@@ -166,8 +167,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotMarkers
-#' @importFrom bcbioBase mdHeader
-#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotMarkers",

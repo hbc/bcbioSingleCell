@@ -36,7 +36,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase dynamicPlotlist
+#' @importFrom basejump dynamicPlotlist
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 aes_string geom_violin ggplot
 #' @importFrom rlang !! sym

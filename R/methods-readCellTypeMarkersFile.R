@@ -23,12 +23,12 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase camel checkGene2symbol readFileByExtension
+#' @importFrom basejump camel readFileByExtension
 #' @importFrom dplyr arrange distinct left_join
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom tibble as_tibble
 .readCellTypeMarkersFile <- function(object, gene2symbol) {
-    checkGene2symbol(gene2symbol)
+    assert_is_gene2symbol(gene2symbol)
     markers <- readFileByExtension(object) %>%
         camel(strict = FALSE)
 

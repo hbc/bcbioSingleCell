@@ -31,6 +31,7 @@ NULL
 
 
 # Constructors =================================================================
+#' @importFrom basejump markdownHeader
 #' @importFrom dplyr rename
 #' @importFrom pbapply pblapply
 .plotTopMarkers <- function(
@@ -57,7 +58,7 @@ NULL
             warn("Maximum of 10 genes per cluster is recommended")
         }
         if (!is.null(headerLevel)) {
-            mdHeader(
+            markdownHeader(
                 paste("Cluster", cluster),
                 level = headerLevel,
                 tabset = TRUE,

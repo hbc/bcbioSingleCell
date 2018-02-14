@@ -28,7 +28,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase mdHeader
+#' @importFrom basejump markdownHeader
 #' @importFrom dplyr pull
 #' @importFrom stats na.omit
 #' @importFrom viridis scale_color_viridis
@@ -58,7 +58,7 @@ NULL
             na.omit()
         if (is.null(genes)) return(NULL)
         if (!is.null(headerLevel)) {
-            mdHeader(
+            markdownHeader(
                 cellType,
                 level = headerLevel,
                 tabset = TRUE,

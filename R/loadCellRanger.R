@@ -12,8 +12,9 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase annotable camel detectOrganism gene2symbolFromGTF
-#'   prepareSummarizedExperiment readGTF readSampleMetadataFile
+#' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
+#'   readGTF
+#' @importFrom bcbioBase prepareSummarizedExperiment readSampleMetadataFile
 #' @importFrom dplyr mutate
 #' @importFrom jsonlite read_json
 #' @importFrom magrittr set_colnames

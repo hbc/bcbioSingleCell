@@ -43,7 +43,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase mdHeader mdList
 #' @importFrom Matrix rowSums
 #' @importFrom scales percent
 #' @importFrom tibble rownames_to_column

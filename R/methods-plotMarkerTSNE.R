@@ -40,7 +40,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom bcbioBase midnightTheme
+#' @importFrom basejump midnightTheme
 #' @importFrom ggplot2 aes_string geom_point geom_text ggplot labs guides
 #'   guide_colorbar theme
 #' @importFrom viridis scale_color_viridis

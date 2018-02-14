@@ -6,10 +6,10 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom bcbioBase annotable camel detectOrganism gene2symbolFromGTF
-#'   prepareSummarizedExperiment readDataVersions readGTF readLogFile
-#'   readProgramVersions readSampleMetadataFile readYAML sampleYAMLMetadata
-#'   tx2geneFromGTF
+#' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
+#'   readGTF readYAML tx2geneFromGTF
+#' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
+#'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
 #' @importFrom rlang is_string

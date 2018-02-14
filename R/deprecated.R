@@ -52,7 +52,7 @@ plotFeatures <- function(object, features, ...) {
 
 # v0.0.24 ======================================================================
 #' @rdname deprecated
-#' @importFrom bcbioBase midnightTheme
+#' @importFrom basejump midnightTheme
 #' @export
 darkTheme <- function(...) {
     .Deprecated("midnightTheme")

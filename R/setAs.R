@@ -20,6 +20,7 @@ NULL
 
 
 # Constructors =================================================================
+# FIXME Migrate to `updateObject()` method
 #' Coerce Legacy bcbio Object to bcbioSingleCell class
 #'
 #' Compatible with old versions created by bcbioSingleCell package.
