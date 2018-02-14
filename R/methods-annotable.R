@@ -4,7 +4,7 @@
 #' @name annotable
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase annotable
+#' @importFrom basejump annotable
 #'
 #' @inheritParams AllGenerics
 #'
@@ -27,18 +27,40 @@ NULL
 
 
 
+# Constructors =================================================================
+.annotable.bcbioSingleCell <- function(object) {  # nolint
+    data <- rowData(object)
+    rownames(data) <- slot(object, "NAMES")
+    as.data.frame(data)
+}
+
+
+
+.annotable.seurat <- function(object) {  # nolint
+    data <- bcbio(object, "annotable")
+    assert_is_data.frame(data, severity = "warning")
+    if (is.null(data)) {
+        return(invisible())
+    }
+    # See if the gene identifiers are stashed as the names of the rownames
+    genes <- slot(object, "data") %>%
+        rownames() %>%
+        names()
+    assert_is_character(genes)
+    data <- data[genes, , drop = FALSE]
+    rownames(data) <- genes
+    data
+}
+
+
+
 # Methods ======================================================================
 #' @rdname annotable
 #' @export
 setMethod(
     "annotable",
     signature("bcbioSingleCell"),
-    function(object) {
-        annotable <- rowData(object) %>%
-            as.data.frame()
-        rownames(annotable) <- slot(object, "NAMES")
-        annotable
-    })
+    .annotable.bcbioSingleCell)
 
 
 
@@ -47,14 +69,4 @@ setMethod(
 setMethod(
     "annotable",
     signature("seurat"),
-    function(object) {
-        annotable <- bcbio(object, "annotable")
-        if (is.null(annotable)) return(NULL)
-        rownames <- slot(object, "data") %>%
-            rownames() %>%
-            names()
-        if (is.null(rownames)) return(NULL)
-        annotable <- annotable[rownames, ]
-        rownames(annotable) <- rownames
-        annotable
-    })
+    .annotable.seurat)
