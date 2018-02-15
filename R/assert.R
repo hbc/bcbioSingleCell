@@ -6,6 +6,7 @@
 #' @importFrom assertive assert_all_are_dirs
 #' @importFrom assertive assert_all_are_existing_files
 #' @importFrom assertive assert_is_a_string
+#' @importFrom assertive assert_is_character
 #' @importFrom assertive assert_is_data.frame
 #' @importFrom assertive assert_is_of_length
 #' @importFrom assertive is_a_string
