@@ -1,20 +1,3 @@
-#' S4 Generics
-#'
-#' @rdname AllGenerics
-#' @name AllGenerics
-#' @keywords internal
-#'
-#' @param object Object.
-#' @param x Primary object.
-#' @param y Secondary object.
-#' @param value Object to assign.
-#' @param ... *Additional arguments (for the S4 generic definition).*
-#'
-#' @return No value.
-NULL
-
-
-
 #' @rdname calculateMetrics
 #' @export
 setGeneric("calculateMetrics", function(object, ...) {
