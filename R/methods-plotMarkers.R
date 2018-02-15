@@ -51,7 +51,6 @@ NULL
 #' @importFrom dplyr filter
 #' @importFrom ggplot2 aes_string coord_flip element_blank geom_violin ggplot
 #'   theme
-#' @importFrom rlang is_string
 #' @importFrom viridis scale_fill_viridis viridis
 #'
 #' @param returnAsList Return the `gg` objects as a list.
@@ -68,7 +67,7 @@ NULL
     title = NULL,
     return = "grid") {
     # Parameter integrity ======================================================
-    if (!is_string(gene)) {
+    if (!is_a_string(gene)) {
         abort("`gene` must be a string")
     }
     # return

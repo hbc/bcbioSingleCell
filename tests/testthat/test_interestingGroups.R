@@ -8,12 +8,17 @@ load(system.file(
     package = "bcbioSingleCell"))
 
 test_that("bcbioSingleCell", {
-    x <- interestingGroups(bcb)
-    expect_identical(x, "sampleName")
+    expect_identical(
+        interestingGroups(bcb),
+        "sampleName"
+    )
 })
 
 test_that("Assignment of undefined interesting group", {
-    error <- "Interesting groups not defined in metadata: XXX"
+    error <- paste(
+        "is_subset : The element 'XXX' in interestingGroups is not",
+        "in colnames\\(object\\)"
+    )
     expect_error(
         interestingGroups(bcb) <- "XXX",
         error
@@ -25,8 +30,10 @@ test_that("Assignment of undefined interesting group", {
 })
 
 test_that("seurat", {
-    x <- interestingGroups(seurat)
-    expect_identical(x, "sampleName")
+    expect_identical(
+        interestingGroups(seurat),
+        "sampleName"
+    )
 })
 
 test_that("seurat without bcbio metadata", {
@@ -47,7 +54,6 @@ test_that("Assignment method", {
         interestingGroups(bcb),
         "sampleName"
     )
-
     interestingGroups(seurat) <- "sampleName"
     expect_identical(
         interestingGroups(seurat),

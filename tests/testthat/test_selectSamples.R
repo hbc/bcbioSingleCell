@@ -40,20 +40,11 @@ test_that("selectSamples", {
     )
 })
 
+# FIXME Use assertive for error
 test_that("Match failure", {
-    expect_equal(
-        suppressWarnings(
-            selectSamples(filtered, sampleID = "XXX")
-        ),
-        NULL
-    )
-    expect_warning(
+    expect_error(
         selectSamples(filtered, sampleID = "XXX"),
-        "Match failure: sampleID = XXX"
-    )
-    expect_warning(
-        selectSamples(filtered, sampleID = "XXX"),
-        "No samples matched"
+        "sampleID metadata column doesn't contain XXX"
     )
 })
 
