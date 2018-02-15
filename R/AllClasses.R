@@ -29,7 +29,8 @@ bcbioSingleCell <- setClass(
     slots = c(bcbio = "SimpleList")
 )
 setValidity(
-    "bcbioSingleCell", function(object) {
+    "bcbioSingleCell",
+    function(object) {
         TRUE
     }
 )
