@@ -12,15 +12,14 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
-#'   readGTF
+#' @importFrom basejump annotable camel detectOrganism gene2symbol
+#'   gene2symbolFromGTF readGTF
 #' @importFrom bcbioBase prepareSummarizedExperiment readSampleMetadataFile
 #' @importFrom dplyr mutate
 #' @importFrom jsonlite read_json
 #' @importFrom magrittr set_colnames
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
-#' @importFrom rlang is_string
 #' @importFrom stats setNames
 #' @importFrom stringr str_split
 #'
@@ -50,50 +49,30 @@ loadCellRanger <- function(
     annotable = TRUE,
     prefilter = TRUE,
     ...) {
+    assert_is_a_string(uploadDir)
+    assert_all_are_dirs(uploadDir)
+    assert_is_a_string(refdataDir)
+    assert_all_are_dirs(refdataDir)
+    assert_is_character(interestingGroups)
+    assert_is_a_string_or_null(sampleMetadataFile)
+    if (is_a_string(sampleMetadataFile)) {
+        assert_all_are_existing_files(sampleMetadataFile)
+    }
+    assert_is_any_of(annotable, c("data.frame", "logical", "NULL"))
+    if (is.data.frame(annotable)) {
+        assert_is_annotable(annotable)
+    }
+    assert_is_a_bool(prefilter)
+
     pipeline <- "cellranger"
     umiType <- "chromium"
 
-    # Parameter integrity checks ===============================================
-    # uploadDir
-    if (!is_string(uploadDir)) {
-        abort("`uploadDir` must be a directory path")
-    }
-    # sampleMetadataFile
-    if (!any(
-        is_string(sampleMetadataFile),
-        is.null(sampleMetadataFile)
-    )) {
-        abort("`sampleMetadataFile` must be string or NULL")
-    }
-    # interestingGroups
-    if (!is.character(interestingGroups)) {
-        abort("`interestingGroups` must be character")
-    }
-    # annotable
-    if (!any(
-        is.logical(annotable),
-        is.data.frame(annotable)
-    )) {
-        abort("`annotable` must be logical or data.frame")
-    }
-    # prefilter
-    if (!is.logical(prefilter)) {
-        abort("`prefilter` must be logical")
-    }
-
     # Directory paths ==========================================================
-    # Check connection to final upload directory
-    if (!dir.exists(uploadDir)) {
-        abort("Final upload directory does not exist")
-    }
     uploadDir <- normalizePath(uploadDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sample metadata ==========================================================
-    if (is_string(sampleMetadataFile)) {
-        if (!file.exists(sampleMetadataFile)) {
-            abort("`sampleMetadataFile` missing")
-        }
+    if (is_a_string(sampleMetadataFile)) {
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
@@ -109,6 +88,7 @@ loadCellRanger <- function(
     }
     # Check that `description` matches `sampleDirs`
     if (!all(sampleMetadata[["description"]] %in% basename(sampleDirs))) {
+        # FIXME Abort here instead?
         warn("Sample directory names don't match the sample metadata file")
     }
 
@@ -132,9 +112,6 @@ loadCellRanger <- function(
     }
 
     # Reference data ===========================================================
-    if (!dir.exists(refdataDir)) {
-        abort("Reference data directory does not exist")
-    }
     # JSON data
     refdataDir <- normalizePath(refdataDir)
     refJSONFile <- file.path(refdataDir, "reference.json")
@@ -153,6 +130,11 @@ loadCellRanger <- function(
         str_split("\\.", simplify = TRUE) %>%
         .[1L, 3L] %>%
         as.integer()
+    if (ensemblVersion < 87L) {
+        release <- NULL
+    } else {
+        release <- ensemblVersion
+    }
     inform(paste(
         paste("Organism:", organism),
         paste("Genome build:", genomeBuild),
@@ -165,7 +147,7 @@ loadCellRanger <- function(
         annotable <- annotable(
             organism,
             genomeBuild = genomeBuild,
-            release = ensemblVersion)
+            release = release)
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
     } else {
@@ -182,10 +164,10 @@ loadCellRanger <- function(
             "Reference GTF file missing.",
             "Generating gene2symbol using `annotable()` instead."
         ))
-        gene2symbol <- annotable(
+        gene2symbol <- gene2symbol(
             organism,
             genomeBuild = genomeBuild,
-            format = "gene2symbol")
+            release = release)
     }
 
     # Counts ===================================================================
