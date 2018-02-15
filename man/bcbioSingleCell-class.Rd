@@ -6,7 +6,7 @@
 \alias{bcbioSingleCell}
 \title{bcbioSingleCell Object Class}
 \description{
-\code{bcbioSingleCell} is an extension of \code{SingleCellExperiment} designed to store
+\code{bcbioSingleCell} is an extension of \code{SummarizedExperiment} designed to store
 bcbio single-cell RNA-seq counts. This class contains read counts save as a
 sparse matrix (\code{dgCMatrix}), sample barcodes, run metadata, and barcode
 summary statistics for each sample analyzed.
