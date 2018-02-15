@@ -5,7 +5,7 @@
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @return [data.frame] of t-SNE points and metadata for each cell.
 #'

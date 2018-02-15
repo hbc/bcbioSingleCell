@@ -9,7 +9,7 @@
 #'
 #' @importFrom basejump plotQuantileHeatmap
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param n The number of breaks to create.
 #' @param annotationCol *Optional.* [data.frame] that defines annotation

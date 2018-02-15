@@ -7,7 +7,7 @@
 #'
 #' @importFrom bcbioBase metrics
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param interestingGroups Interesting group, to use for colors.
 #'

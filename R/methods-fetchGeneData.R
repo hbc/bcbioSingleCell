@@ -3,7 +3,7 @@
 #' @rdname fetchGeneData
 #' @name fetchGeneData
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param genes Gene identifiers (matrix rownames).
 #'

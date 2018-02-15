@@ -13,7 +13,7 @@
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param maxUMIs Maximum number of UMI disambiguated counts per cell.

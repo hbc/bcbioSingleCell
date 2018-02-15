@@ -9,7 +9,7 @@
 #'
 #' @importFrom bcbioBase plotQC
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams metrics
 #'
 #' @param geom Plot type. Supported formats: `boxplot`, `histogram`,

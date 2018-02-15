@@ -20,7 +20,7 @@ plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 \item{cellTypesPerCluster}{Cell types per cluster grouped \link{tibble}. This must
 be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{color}{Color palette.}
 

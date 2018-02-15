@@ -19,7 +19,7 @@ knownMarkersDetected(all, known, ...)
 \code{\link[=readCellTypeMarkersFile]{readCellTypeMarkersFile()}} or pulled from internal \link{cellCycleMarkers}
 data.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{alpha}{Alpha cutoff (adjusted P value; false discovery rate).}
 

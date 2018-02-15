@@ -5,7 +5,7 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param n Number of barcodes to return per sample.
 #'

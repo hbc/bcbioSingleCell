@@ -6,7 +6,7 @@
 #'
 #' @importFrom basejump detectOrganism
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @examples
 #' load(system.file(

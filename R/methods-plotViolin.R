@@ -6,7 +6,7 @@
 #'
 #' @importFrom bcbioBase plotViolin
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams plotDot
 #'
 #' @param fill Fill color palette. Defaults to viridis.

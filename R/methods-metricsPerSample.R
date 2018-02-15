@@ -4,7 +4,7 @@
 #' @name metricsPerSample
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @return [tibble] containing summary statistics.
 #'

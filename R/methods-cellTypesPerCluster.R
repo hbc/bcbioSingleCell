@@ -6,7 +6,7 @@
 #' @name cellTypesPerCluster
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param min Minimum number of marker genes per cluster.
 #' @param max Maximum number of marker genes per cluster.

@@ -5,7 +5,7 @@
 #' @family PCA Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @return [data.frame] of PCA points and metadata for each cell.
 #'

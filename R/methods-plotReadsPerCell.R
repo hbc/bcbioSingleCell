@@ -5,7 +5,7 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams plotGenesPerCell
 #'
 #' @param geom Plot type. Supported formats: proportional `histogram`
@@ -68,6 +68,7 @@ NULL
 #' @noRd
 #'
 #' @importFrom dplyr bind_rows left_join mutate
+#' @importFrom graphics hist
 #' @importFrom parallel mclapply
 #' @importFrom tibble tibble
 #'

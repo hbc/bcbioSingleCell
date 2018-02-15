@@ -18,7 +18,7 @@ plotReadsPerCell(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{geom}{Plot type. Supported formats: proportional \code{histogram}
 (\emph{recommended}), raw \code{ridgeline}, and raw \code{violin}.}

@@ -9,7 +9,7 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams metrics
 #' @inheritParams plotQC
 #'

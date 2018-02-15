@@ -3,7 +3,7 @@
 #' @rdname sanitizeMarkers
 #' @name sanitizeMarkers
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param markers [Seurat::FindAllMarkers()] return.
 #'

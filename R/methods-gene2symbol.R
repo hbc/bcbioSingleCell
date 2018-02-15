@@ -6,7 +6,7 @@
 #'
 #' @importFrom basejump gene2symbol
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @examples
 #' load(system.file(

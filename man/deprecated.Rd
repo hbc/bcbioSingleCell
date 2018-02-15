@@ -32,7 +32,7 @@ plotKnownMarkers(object, knownMarkers, ...)
 readMarkers(...)
 }
 \arguments{
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{object}{Object.}
 }

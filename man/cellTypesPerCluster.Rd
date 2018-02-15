@@ -14,7 +14,7 @@ cellTypesPerCluster(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{min}{Minimum number of marker genes per cluster.}
 

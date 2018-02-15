@@ -5,7 +5,7 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param n Number of genes per cluster.
 #' @param direction Whether to include only `positive`, `negative`, or `both`

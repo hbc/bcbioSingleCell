@@ -21,7 +21,7 @@ plotTopMarkers(object, topMarkers, ...)
 \item{topMarkers}{Top markers \link{tibble} grouped by cluster, returned by
 \code{\link[=topMarkers]{topMarkers()}}.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{tsneColor}{Color palette to use for tSNE plot.}
 

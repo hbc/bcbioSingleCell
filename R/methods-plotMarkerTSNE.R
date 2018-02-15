@@ -5,7 +5,7 @@
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #'

@@ -4,7 +4,7 @@
 #' @name deprecated
 #' @keywords internal
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @return Soft deprecation to new functions.
 NULL

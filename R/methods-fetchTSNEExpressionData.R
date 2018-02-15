@@ -8,7 +8,7 @@
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param genes Genes identifiers (matching the rownames in the object),
 #'   of which to get expression data.
@@ -31,6 +31,7 @@ NULL
 
 
 # Constructors =================================================================
+#' @importFrom Biobase rowMedians
 #' @importFrom dplyr everything group_by select
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom Seurat FetchData

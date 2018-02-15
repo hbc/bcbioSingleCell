@@ -13,7 +13,7 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams plotMarkerTSNE
 #'
 #' @param tsneColor Color palette to use for tSNE plot.

@@ -7,7 +7,7 @@
 #'
 #' @importFrom bcbioBase plotDot
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param genes Gene identifiers to plot.
 #' @param color Color palette. If `NULL`, uses default ggplot2 colors.

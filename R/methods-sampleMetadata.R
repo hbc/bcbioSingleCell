@@ -5,7 +5,7 @@
 #'
 #' @importFrom bcbioBase sampleMetadata
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams metrics
 #'
 #' @param aggregateReplicates Aggregate technical replicates, if specified. This

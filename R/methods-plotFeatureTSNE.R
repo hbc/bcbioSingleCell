@@ -4,7 +4,7 @@
 #' @name plotFeatureTSNE
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams plotTSNE
 #'
 #' @param features Character vector of features (e.g. gene expression, PC

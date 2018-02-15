@@ -7,7 +7,7 @@
 #' @family Quality Control Metrics
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param metrics Metrics [data.frame].
 #'

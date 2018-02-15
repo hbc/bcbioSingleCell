@@ -22,7 +22,7 @@ plotKnownMarkersDetected(object, knownMarkersDetected, ...)
 \item{knownMarkersDetected}{\code{\link[=knownMarkersDetected]{knownMarkersDetected()}} return \link{tibble} grouped
 by cluster.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{tsneColor}{Color palette to use for tSNE plot.}
 

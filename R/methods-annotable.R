@@ -6,7 +6,7 @@
 #'
 #' @importFrom basejump annotable
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @return [data.frame]
 #'

@@ -15,7 +15,7 @@ readCellTypeMarkersFile(object, ...)
 \arguments{
 \item{object}{Gene markers file (CSV or Excel).}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{gene2symbol}{Gene-to-symbol annotation \link{data.frame}.}
 }

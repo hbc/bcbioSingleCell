@@ -16,7 +16,7 @@ sanitizeMarkers(object, markers, ...)
 
 \item{markers}{\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 }
 \value{
 \link{grouped_df}, grouped by cluster ident.

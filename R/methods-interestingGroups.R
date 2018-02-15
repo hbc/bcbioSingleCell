@@ -6,7 +6,7 @@
 #'
 #' @importFrom bcbioBase interestingGroups interestingGroups<-
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @return Character vector.
 #'

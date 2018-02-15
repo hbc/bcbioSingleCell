@@ -6,7 +6,7 @@
 #'
 #' @importFrom BiocGenerics counts
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.

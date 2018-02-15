@@ -6,7 +6,7 @@
 #'
 #' @importFrom bcbioBase bcbio bcbio<-
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param type Type of count data to retrieve.
 #'

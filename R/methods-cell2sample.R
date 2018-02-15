@@ -4,7 +4,7 @@
 #' @name cell2sample
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @examples
 #' load(system.file(

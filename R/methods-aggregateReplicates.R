@@ -7,7 +7,7 @@
 #'
 #' @importFrom basejump aggregateReplicates
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @examples
 #' load(system.file(
