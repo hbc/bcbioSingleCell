@@ -12,7 +12,6 @@
 #'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
-#' @importFrom rlang is_string
 #' @importFrom stats na.omit setNames
 #' @importFrom stringr str_extract str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
@@ -90,79 +89,40 @@ loadSingleCell <- function(
     genomeBuild = NULL,
     prefilter = TRUE,
     ...) {
+    assert_is_a_string(uploadDir)
+    assert_all_are_dirs(uploadDir)
+    assert_is_a_string_or_null(sampleMetadataFile)
+    if (is_a_string(sampleMetadataFile)) {
+        assert_all_are_existing_files(sampleMetadataFile)
+    }
+    assert_is_character(interestingGroups)
+    assert_is_a_string_or_null(gtfFile)
+    if (is_a_string(gtfFile)) {
+        assert_all_are_existing_files(gtfFile)
+    }
+    assert_is_any_of(annotable, c("data.frame", "logical", "NULL"))
+    if (is.data.frame(annotable)) {
+        assert_is_annotable(annotable)
+    }
+    assert_is_a_string_or_null(organism)
+    # TODO Replace with assert_is_implicit_integer_or_null
+    assert_is_numeric_scalar_or_null(ensemblVersion)
+    if (is.numeric(ensemblVersion)) {
+        assert_is_implicit_integer(ensemblVersion)
+    }
+    assert_is_a_string_or_null(genomeBuild)
+    assert_is_a_bool(prefilter)
+
     pipeline <- "bcbio"
 
-    # Parameter integrity checks ===============================================
-    # uploadDir
-    if (!is_string(uploadDir)) {
-        abort("`uploadDir` must be string")
-    }
-    # sampleMetadataFile
-    if (!any(
-        is_string(sampleMetadataFile),
-        is.null(sampleMetadataFile)
-    )) {
-        abort("`sampleMetadataFile` must be string or NULL")
-    }
-    # interestingGroups
-    if (!is.character(interestingGroups)) {
-        abort("`interestingGroups` must be character")
-    }
-    # gtfFile
-    if (!any(
-        is_string(gtfFile),
-        is.null(gtfFile)
-    )) {
-        abort("`gtfFile` must be string or NULL")
-    }
-    # annotable
-    if (!any(
-        is.logical(annotable),
-        is.data.frame(annotable),
-        is.null(annotable)
-    )) {
-        abort("`annotable` must be logical, data.frame, or NULL")
-    }
-    # organism
-    if (!any(
-        is_string(organism),
-        is.null(organism)
-    )) {
-        abort("`organism` must be string or NULL")
-    }
-    # ensemblVersion
-    if (!any(
-        is.null(ensemblVersion),
-        is.numeric(ensemblVersion) && length(ensemblVersion) == 1L
-    )) {
-        abort("`ensemblVersion` must be single numeric or NULL")
-    }
-    # genomeBuild
-    if (!any(
-        is_string(genomeBuild),
-        is.null(genomeBuild)
-    )) {
-        abort("`genomeBuild` must be string or NULL")
-    }
-    # prefilter
-    if (!is.logical(prefilter)) {
-        abort("`prefilter` must be logical")
-    }
-
     # Directory paths ==========================================================
-    # Check connection to final upload directory
-    if (!dir.exists(uploadDir)) {
-        abort("Final upload directory does not exist")
-    }
     uploadDir <- normalizePath(uploadDir)
     projectDir <- dir(
         uploadDir,
         pattern = projectDirPattern,
         full.names = FALSE,
         recursive = FALSE)
-    if (length(projectDir) != 1L) {
-        abort("Failed to detect project directory")
-    }
+    assert_is_of_length(projectDir, 1L)
     inform(projectDir)
     match <- str_match(projectDir, projectDirPattern)
     runDate <- as.Date(match[[2L]])
@@ -177,7 +137,8 @@ loadSingleCell <- function(
             unique() %>%
             length()
         inform(paste(
-            lanes, "sequencing lane detected", "(technical replicates)"))
+            lanes, "sequencing lane detected", "(technical replicates)"
+        ))
     } else {
         lanes <- 1L
     }
@@ -189,9 +150,11 @@ loadSingleCell <- function(
     # Log files ================================================================
     inform("Reading log files")
     bcbioLog <- readLogFile(
-        file.path(projectDir, "bcbio-nextgen.log"))
+        file.path(projectDir, "bcbio-nextgen.log")
+    )
     bcbioCommandsLog <- readLogFile(
-        file.path(projectDir, "bcbio-nextgen-commands.log"))
+        file.path(projectDir, "bcbio-nextgen-commands.log")
+    )
 
     # Cellular barcode cutoff
     cellularBarcodeCutoffPattern <- "--cb_cutoff (\\d+)"
@@ -232,12 +195,14 @@ loadSingleCell <- function(
     # Data versions and programs ===============================================
     inform("Reading data and program versions")
     dataVersions <- readDataVersions(
-        file.path(projectDir, "data_versions.csv"))
+        file.path(projectDir, "data_versions.csv")
+    )
     programs <- readProgramVersions(
-        file.path(projectDir, "programs.txt"))
+        file.path(projectDir, "programs.txt")
+    )
 
     # Detect genome build
-    if (!is_string(genomeBuild)) {
+    if (!is_a_string(genomeBuild)) {
         if (is.data.frame(dataVersions)) {
             genomeBuild <- dataVersions %>%
                 .[.[["resource"]] == "transcripts", "genome", drop = TRUE]
@@ -259,15 +224,11 @@ loadSingleCell <- function(
     }
 
     # Detect organism
-    if (!is_string(organism)) {
-        if (!is_string(genomeBuild)) {
-            abort("Organism detection by genome build failed")
-        }
+    if (!is_a_string(organism)) {
+        assert_is_a_string(genomeBuild)
         organism <- detectOrganism(genomeBuild)
     }
-    if (!is_string(organism)) {
-        abort("Invalid organism")
-    }
+    assert_is_a_string(organism)
     inform(paste(
         paste("Organism:", organism),
         paste("Genome build:", genomeBuild),
@@ -305,10 +266,7 @@ loadSingleCell <- function(
     }
 
     # Sample metadata ==========================================================
-    if (is_string(sampleMetadataFile)) {
-        if (!file.exists(sampleMetadataFile)) {
-            abort("`sampleMetadataFile` file missing")
-        }
+    if (is_a_string(sampleMetadataFile)) {
         sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
@@ -381,7 +339,7 @@ loadSingleCell <- function(
     }
 
     # GTF annotations
-    if (is_string(gtfFile)) {
+    if (is_a_string(gtfFile)) {
         gtfFile <- normalizePath(gtfFile)
         gtf <- readGTF(gtfFile)
     } else {
@@ -390,11 +348,7 @@ loadSingleCell <- function(
 
     # Transcript-to-gene mappings
     if (countsLevel == "transcript") {
-        if (!is.data.frame(gtf)) {
-            abort(paste(
-                "GTF required to convert transcript-level counts to gene-level"
-            ))
-        }
+        assert_is_data.frame(gtf)
         tx2gene <- tx2geneFromGTF(gtf)
     } else {
         # Not applicable to gene-level bcbio output
@@ -402,7 +356,7 @@ loadSingleCell <- function(
     }
 
     # Gene-to-symbol mappings
-    if (is_string(gtfFile)) {
+    if (is_a_string(gtfFile)) {
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else if (is.data.frame(annotable)) {
         gene2symbol <- annotable[, c("ensgene", "symbol")]
@@ -444,7 +398,7 @@ loadSingleCell <- function(
 
     if (isTRUE(prefilter)) {
         # Subset the counts matrix to match the cells that passed prefiltering
-        counts <- counts[, rownames(metrics)]
+        counts <- counts[, rownames(metrics), drop = FALSE]
     }
 
     # Cell to sample mappings ==================================================
