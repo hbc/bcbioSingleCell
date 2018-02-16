@@ -330,9 +330,9 @@ loadSingleCell <- function(
         },
         sampleID = names(sampleDirs),
         sampleDir = sampleDirs,
-        MoreArgs = list(pipeline = pipeline, umiType = umiType)
-    )
-    names(sparseList) <- names(sampleDirs)
+        MoreArgs = list(pipeline = pipeline, umiType = umiType),
+        SIMPLIFY = FALSE,
+        USE.NAMES = TRUE)
     # Combine the individual per-sample transcript-level sparse matrices into a
     # single sparse matrix
     counts <- do.call(Matrix::cBind, sparseList)
@@ -343,7 +343,7 @@ loadSingleCell <- function(
 
     # Metrics ==================================================================
     metrics <- calculateMetrics(
-        counts,
+        object = counts,
         annotable = annotable,
         prefilter = prefilter)
     # Bind the `nCount` column to the metrics
@@ -356,10 +356,9 @@ loadSingleCell <- function(
     }
 
     # Cell to sample mappings ==================================================
-    cell2sample <- cell2sample(
-        rownames(metrics),
-        samples = rownames(sampleMetadata)
-    )
+    cell2sample <- mapCellsToSamples(
+        cells = rownames(metrics),
+        samples = rownames(sampleMetadata))
 
     # Metadata =================================================================
     metadata <- list(

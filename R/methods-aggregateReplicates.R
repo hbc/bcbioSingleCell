@@ -157,8 +157,9 @@ NULL
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <-
         sampleMetadata(object, aggregateReplicates = TRUE)
-    metadata[["cell2sample"]] <-
-        cell2sample(colnames(counts), samples = newIDs)
+    metadata[["cell2sample"]] <- mapCellsToSamples(
+        cells = colnames(counts),
+        samples = newIDs)
     # Slot the named vector used to aggregate the replicates
     metadata[["aggregateReplicates"]] <- groupings
     # Update filtered cells
