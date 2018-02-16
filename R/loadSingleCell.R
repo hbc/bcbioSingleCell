@@ -58,26 +58,12 @@
 #'
 #' @examples
 #' # Homo sapiens
-#' # Minimal working example dataset
 #' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 #' uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
 #' sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
 #' bcb <- loadSingleCell(
 #'     uploadDir = uploadDir,
 #'     sampleMetadataFile = sampleMetadataFile)
-#'
-#' # Mus musculus
-#' # Run with Ensembl 88 transcriptome FASTA and GTF files
-#' \dontrun{
-#' bcb <- loadSingleCell(
-#'     uploadDir = file.path("indrop_rnaseq", "final"),
-#'     interestingGroups = c("genotype", "treatment"),
-#'     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
-#'     gtfFile = file.path(
-#'         "annotations",
-#'         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
-#'     ensemblVersion = 88)
-#' }
 loadSingleCell <- function(
     uploadDir,
     sampleMetadataFile = NULL,
@@ -105,11 +91,7 @@ loadSingleCell <- function(
         assert_is_annotable(annotable)
     }
     assert_is_a_string_or_null(organism)
-    # TODO Replace with assert_is_implicit_integer_or_null
-    assert_is_numeric_scalar_or_null(ensemblVersion)
-    if (is.numeric(ensemblVersion)) {
-        assert_is_implicit_integer(ensemblVersion)
-    }
+    assert_is_an_implicit_integer_or_null(ensemblVersion)
     assert_is_a_string_or_null(genomeBuild)
     assert_is_a_bool(prefilter)
 

@@ -69,26 +69,12 @@ run directory as a remote connection over
 }
 \examples{
 # Homo sapiens
-# Minimal working example dataset
 extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
 sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
 bcb <- loadSingleCell(
     uploadDir = uploadDir,
     sampleMetadataFile = sampleMetadataFile)
-
-# Mus musculus
-# Run with Ensembl 88 transcriptome FASTA and GTF files
-\dontrun{
-bcb <- loadSingleCell(
-    uploadDir = file.path("indrop_rnaseq", "final"),
-    interestingGroups = c("genotype", "treatment"),
-    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
-    gtfFile = file.path(
-        "annotations",
-        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
-    ensemblVersion = 88)
-}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

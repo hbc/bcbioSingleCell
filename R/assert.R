@@ -15,8 +15,7 @@
 #' @importFrom assertive is_character
 #'
 #' @importFrom basejump assert_is_a_string_or_null
+#' @importFrom basejump assert_is_an_implicit_integer_or_null
 #' @importFrom basejump assert_is_annotable
 #' @importFrom basejump assert_is_gene2symbol
-#' @importFrom basejump assert_is_implicit_integer
-#' @importFrom basejump assert_is_numeric_scalar_or_null
 NULL
