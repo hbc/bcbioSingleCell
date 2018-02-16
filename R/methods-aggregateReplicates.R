@@ -30,9 +30,7 @@ NULL
 #' @importFrom tibble column_to_rownames rownames_to_column
 .aggregateReplicates <- function(object) {
     sampleMetadata <- sampleMetadata(object)
-    if (!"sampleNameAggregate" %in% colnames(sampleMetadata)) {
-        abort("`sampleNameAggregate` not present in sample metadata")
-    }
+    assert_is_subset("sampleNameAggregate", colnames(sampleMetadata))
     # We'll end up replacing `sampleID` and `sampleName` columns with the
     # corresponding `*Aggregate` columns.
     map <- sampleMetadata %>%
