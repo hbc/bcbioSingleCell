@@ -30,9 +30,7 @@ NULL
 #' @importFrom tibble column_to_rownames rownames_to_column
 .aggregateReplicates <- function(object) {
     sampleMetadata <- sampleMetadata(object)
-    if (!"sampleNameAggregate" %in% colnames(sampleMetadata)) {
-        abort("`sampleNameAggregate` not present in sample metadata")
-    }
+    assert_is_subset("sampleNameAggregate", colnames(sampleMetadata))
     # We'll end up replacing `sampleID` and `sampleName` columns with the
     # corresponding `*Aggregate` columns.
     map <- sampleMetadata %>%
@@ -157,8 +155,9 @@ NULL
     metadata <- metadata(object)
     metadata[["sampleMetadata"]] <-
         sampleMetadata(object, aggregateReplicates = TRUE)
-    metadata[["cell2sample"]] <-
-        cell2sample(colnames(counts), samples = newIDs)
+    metadata[["cell2sample"]] <- mapCellsToSamples(
+        cells = colnames(counts),
+        samples = newIDs)
     # Slot the named vector used to aggregate the replicates
     metadata[["aggregateReplicates"]] <- groupings
     # Update filtered cells

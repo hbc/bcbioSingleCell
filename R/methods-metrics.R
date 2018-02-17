@@ -49,11 +49,7 @@ setMethod(
         }
         colData <- colData(object)
         sampleID <- cell2sample(object)
-        # Check for cell ID dimension mismatch. This can happen if `cell2sample`
-        # mapping isn't updated inside the metadata slot.
-        if (!identical(rownames(colData), names(sampleID))) {
-            abort("`cellID` mismatch between `colData` and `cell2sample`")
-        }
+        assert_are_identical(rownames(colData), names(sampleID))
         sampleMetadata <- sampleMetadata(
             object,
             interestingGroups = interestingGroups)
@@ -67,12 +63,7 @@ setMethod(
             left_join(sampleMetadata, by = "sampleID") %>%
             .sanitizeMetrics() %>%
             column_to_rownames("cellID")
-        if (!identical(colnames(object), rownames(metrics))) {
-            abort(paste(
-                "`cellID` mismatch between object colnames",
-                "and metrics rownames"
-            ))
-        }
+        assert_are_identical(colnames(object), rownames(metrics))
         metrics
     })
 

@@ -221,8 +221,8 @@ loadCellRanger <- function(
         cell2sample <- map[["sampleID"]]
         names(cell2sample) <- map[["cellID"]]
     } else {
-        cell2sample <- cell2sample(
-            colnames(counts),
+        cell2sample <- mapCellsToSamples(
+            cells = colnames(counts),
             samples = rownames(sampleMetadata))
     }
 

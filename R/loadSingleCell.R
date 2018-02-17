@@ -10,6 +10,7 @@
 #'   readGTF readYAML tx2geneFromGTF
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
 #'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
+#' @importFrom BiocParallel bpmapply
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
 #' @importFrom stats na.omit setNames
@@ -58,26 +59,12 @@
 #'
 #' @examples
 #' # Homo sapiens
-#' # Minimal working example dataset
 #' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 #' uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
 #' sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
 #' bcb <- loadSingleCell(
 #'     uploadDir = uploadDir,
 #'     sampleMetadataFile = sampleMetadataFile)
-#'
-#' # Mus musculus
-#' # Run with Ensembl 88 transcriptome FASTA and GTF files
-#' \dontrun{
-#' bcb <- loadSingleCell(
-#'     uploadDir = file.path("indrop_rnaseq", "final"),
-#'     interestingGroups = c("genotype", "treatment"),
-#'     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
-#'     gtfFile = file.path(
-#'         "annotations",
-#'         "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
-#'     ensemblVersion = 88)
-#' }
 loadSingleCell <- function(
     uploadDir,
     sampleMetadataFile = NULL,
@@ -92,9 +79,6 @@ loadSingleCell <- function(
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
     assert_is_a_string_or_null(sampleMetadataFile)
-    if (is_a_string(sampleMetadataFile)) {
-        assert_all_are_existing_files(sampleMetadataFile)
-    }
     assert_is_character(interestingGroups)
     assert_is_a_string_or_null(gtfFile)
     if (is_a_string(gtfFile)) {
@@ -105,11 +89,7 @@ loadSingleCell <- function(
         assert_is_annotable(annotable)
     }
     assert_is_a_string_or_null(organism)
-    # TODO Replace with assert_is_implicit_integer_or_null
-    assert_is_numeric_scalar_or_null(ensemblVersion)
-    if (is.numeric(ensemblVersion)) {
-        assert_is_implicit_integer(ensemblVersion)
-    }
+    assert_is_an_implicit_integer_or_null(ensemblVersion)
     assert_is_a_string_or_null(genomeBuild)
     assert_is_a_bool(prefilter)
 
@@ -131,7 +111,7 @@ loadSingleCell <- function(
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sequencing lanes =========================================================
-    if (any(grepl(x = sampleDirs, pattern = lanePattern))) {
+    if (any(grepl(lanePattern, sampleDirs))) {
         lanes <- str_match(names(sampleDirs), lanePattern) %>%
             .[, 2L] %>%
             unique() %>%
@@ -149,57 +129,60 @@ loadSingleCell <- function(
 
     # Log files ================================================================
     inform("Reading log files")
-    bcbioLog <- readLogFile(
-        file.path(projectDir, "bcbio-nextgen.log")
-    )
-    bcbioCommandsLog <- readLogFile(
-        file.path(projectDir, "bcbio-nextgen-commands.log")
-    )
+    bcbioLogFile <- list.files(
+        path = projectDir,
+        pattern = "bcbio-nextgen.log",
+        full.names = TRUE,
+        recursive = FALSE)
+    assert_is_a_string(bcbioLogFile)
+    inform(basename(bcbioLogFile))
+    bcbioLog <- readLogFile(bcbioLogFile)
+    assert_is_character(bcbioLog)
+
+    bcbioCommandsLogFile <- list.files(
+        path = projectDir,
+        pattern = "bcbio-nextgen-commands.log",
+        full.names = TRUE,
+        recursive = FALSE)
+    assert_is_a_string(bcbioCommandsLogFile)
+    inform(basename(bcbioCommandsLogFile))
+    bcbioCommandsLog <- readLogFile(bcbioCommandsLogFile)
+    assert_is_character(bcbioCommandsLog)
 
     # Cellular barcode cutoff
     cellularBarcodeCutoffPattern <- "--cb_cutoff (\\d+)"
-    if (length(bcbioCommandsLog)) {
-        match <- str_match(
-            string = bcbioCommandsLog,
-            pattern = cellularBarcodeCutoffPattern)
-        cellularBarcodeCutoff <- match %>%
-            .[, 2L] %>%
-            na.omit() %>%
-            unique() %>%
-            as.numeric()
-    } else {
-        cellularBarcodeCutoff <- NULL
-    }
-    if (!is.null(cellularBarcodeCutoff)) {
-        inform(paste(
-            cellularBarcodeCutoff,
-            "reads per cellular barcode cutoff detected"
-        ))
-    }
+    assert_any_are_matching_regex(
+        x = bcbioCommandsLog,
+        pattern = cellularBarcodeCutoffPattern)
+    match <- str_match(
+        string = bcbioCommandsLog,
+        pattern = cellularBarcodeCutoffPattern)
+    cellularBarcodeCutoff <- match %>%
+        .[, 2L] %>%
+        na.omit() %>%
+        unique() %>%
+        as.integer()
+    assert_is_an_integer(cellularBarcodeCutoff)
+
+    inform(paste(
+        cellularBarcodeCutoff,
+        "reads per cellular barcode cutoff detected"
+    ))
 
     # Detect MatrixMarket output at transcript or gene level
-    if (is.character(bcbioCommandsLog)) {
-        # This grep pattern may not be strict enough against the file path
-        genemapPattern <- "--genemap (.+)-tx2gene.tsv"
-        if (any(grepl(x = bcbioCommandsLog, pattern = genemapPattern))) {
-            countsLevel <- "gene"
-        } else {
-            countsLevel <- "transcript"
-        }
-    } else {
-        # The pipeline now defaults to gene level. If there's no log file,
-        # let's assume the counts are genes.
+    genemapPattern <- "--genemap (.+)-tx2gene.tsv"
+    if (any(grepl(genemapPattern, bcbioCommandsLog))) {
         countsLevel <- "gene"
+    } else {
+        countsLevel <- "transcript"
     }
 
     # Data and program versions ================================================
     inform("Reading data and program versions")
     dataVersions <- readDataVersions(
-        file.path(projectDir, "data_versions.csv")
-    )
+        file.path(projectDir, "data_versions.csv"))
     programVersions <- readProgramVersions(
-        file.path(projectDir, "programs.txt")
-    )
+        file.path(projectDir, "programs.txt"))
 
     # Detect genome build
     if (!is_a_string(genomeBuild)) {
@@ -208,20 +191,16 @@ loadSingleCell <- function(
                 .[.[["resource"]] == "transcripts", "genome", drop = TRUE]
         } else {
             # Data versions aren't saved when using a custom FASTA
-            # Remove this in a future update
             genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
-            if (any(grepl(x = bcbioCommandsLog, pattern = genomePattern))) {
-                genomeBuild <-
-                    str_match(bcbioCommandsLog, genomePattern) %>%
-                    .[, 2L] %>%
-                    na.omit() %>%
-                    unique()
-            } else {
-                warn("Genome detection from bcbio commands failed")
-                genomeBuild <- NULL
-            }
+            assert_any_are_matching_regex(bcbioCommandsLog, genomePattern)
+            genomeBuild <- str_match(
+                bcbioCommandsLog, genomePattern) %>%
+                .[, 2L] %>%
+                na.omit() %>%
+                unique()
         }
     }
+    assert_is_a_string(genomeBuild)
 
     # Detect organism
     if (!is_a_string(organism)) {
@@ -229,6 +208,7 @@ loadSingleCell <- function(
         organism <- detectOrganism(genomeBuild)
     }
     assert_is_a_string(organism)
+
     inform(paste(
         paste("Organism:", organism),
         paste("Genome build:", genomeBuild),
@@ -236,79 +216,48 @@ loadSingleCell <- function(
     ))
 
     # Molecular barcode (UMI) type =============================================
-    if (is.character(bcbioCommandsLog)) {
-        umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
-        if (any(grepl(x = bcbioCommandsLog, pattern = umiPattern))) {
-            umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
-                .[, 2L] %>%
-                na.omit() %>%
-                unique() %>%
-                gsub(
-                    x = .,
-                    pattern = "-transform",
-                    replacement = "")
-            inform(paste("UMI type:", umiType))
-        } else {
-            warn(paste(
-                "Failed to detect UMI type from commands log JSON file grep"
-            ))
-            umiType <- NULL
-        }
-    } else {
-        umiType <- NULL
-    }
-    # Assume samples are inDrop platform, by default
-    if (is.null(umiType)) {
-        warn(paste(
-            "Assuming unknown UMI is harvard-indrop-v3 (default)"
-        ))
-        umiType <- "harvard-indrop-v3"
-    }
+    umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
+    assert_any_are_matching_regex(bcbioCommandsLog, umiPattern)
+    umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
+        .[, 2L] %>%
+        na.omit() %>%
+        unique() %>%
+        gsub(
+            x = .,
+            pattern = "-transform",
+            replacement = "")
+    assert_is_a_string(umiType)
+    inform(paste("UMI type:", umiType))
 
     # Sample metadata ==========================================================
     if (is_a_string(sampleMetadataFile)) {
-        sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
-        if (grepl(x = umiType, pattern = "indrop")) {
-            # Enforce `sampleMetadataFile` for multiplexed data containing
-            # index barcodes (e.g. inDrop)
-            abort("`sampleMetadataFile` is required for inDrop samples")
-        }
+        assert_all_are_matching_regex(umiType, "indrop")
         sampleMetadata <- sampleYAMLMetadata(yaml)
     }
-    # Check that `sampleID` matches `sampleDirs`
-    if (!all(rownames(sampleMetadata) %in% names(sampleDirs))) {
-        # Check for flipped index sequence. Sample metadata should use the
-        # forward sequence (`sequence`), whereas bcbio names the sample
-        # directories with the reverse complement (`revcomp`).
-        if ("sequence" %in% colnames(sampleMetadata)) {
-            sampleDirSequence <- str_extract(
-                string = names(sampleDirs),
-                pattern = "[ACGT]+$")
-            if (identical(
-                sort(sampleDirSequence),
-                sort(as.character(sampleMetadata[["sequence"]]))
-            )) {
-                warn(paste(
-                    "It appears that the reverse complement sequence of the",
-                    "i5 index barcode(s) was input into the sample metadata",
-                    "`sequence` column. bcbio outputs the revcomp into the",
-                    "sample directories, but the forward sequence should be",
-                    "used in the R package."
-                ))
-            }
+
+    if ("sequence" %in% colnames(sampleMetadata)) {
+        sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
+        if (identical(
+            sort(sampleDirSequence),
+            sort(as.character(sampleMetadata[["sequence"]]))
+        )) {
+            warn(paste(
+                "It appears that the reverse complement sequence of the",
+                "i5 index barcode(s) was input into the sample metadata",
+                "`sequence` column. bcbio outputs the revcomp into the",
+                "sample directories, but the forward sequence should be",
+                "used in the R package."
+            ))
         }
-        abort("Sample directory names don't match the sample metadata file")
     }
+    assert_are_identical(rownames(sampleMetadata), names(sampleDirs))
 
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
     interestingGroups <- camel(interestingGroups, strict = FALSE)
-    # Check to ensure interesting groups are defined
-    if (!all(interestingGroups %in% colnames(sampleMetadata))) {
-        abort("Interesting groups missing in sample metadata")
-    }
+    assert_is_subset(interestingGroups, colnames(sampleMetadata))
 
     # Subset sample directories by metadata ====================================
     # Check to see if a subset of samples is requested via the metadata file.
@@ -334,7 +283,7 @@ loadSingleCell <- function(
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
     } else {
-        warn("Loading run without gene annotable")
+        warn("Loading run without gene annotable (not recommended")
         annotable <- NULL
     }
 
@@ -361,7 +310,7 @@ loadSingleCell <- function(
     } else if (is.data.frame(annotable)) {
         gene2symbol <- annotable[, c("ensgene", "symbol")]
     } else {
-        warn("Loading run without gene-to-symbol mappings")
+        abort("Loading run without gene-to-symbol mappings (not recommended)")
         gene2symbol <- NULL
     }
 
@@ -371,14 +320,19 @@ loadSingleCell <- function(
 
     # Counts ===================================================================
     inform(paste("Reading counts at", countsLevel, "level"))
-    # Migrate this to `mapply()` method in future update
-    sparseList <- pblapply(seq_along(sampleDirs), function(a) {
-        .readSparseCounts(
-            sampleDirs[a],
-            pipeline = pipeline,
-            umiType = umiType)
-    })
-    names(sparseList) <- names(sampleDirs)
+    sparseList <- bpmapply(
+        FUN = function(sampleID, sampleDir, pipeline, umiType) {
+            .readSparseCounts(
+                sampleID = sampleID,
+                sampleDir = sampleDir,
+                pipeline = pipeline,
+                umiType = umiType)
+        },
+        sampleID = names(sampleDirs),
+        sampleDir = sampleDirs,
+        MoreArgs = list(pipeline = pipeline, umiType = umiType),
+        SIMPLIFY = FALSE,
+        USE.NAMES = TRUE)
     # Combine the individual per-sample transcript-level sparse matrices into a
     # single sparse matrix
     counts <- do.call(Matrix::cBind, sparseList)
@@ -389,7 +343,7 @@ loadSingleCell <- function(
 
     # Metrics ==================================================================
     metrics <- calculateMetrics(
-        counts,
+        object = counts,
         annotable = annotable,
         prefilter = prefilter)
     # Bind the `nCount` column to the metrics
@@ -402,10 +356,9 @@ loadSingleCell <- function(
     }
 
     # Cell to sample mappings ==================================================
-    cell2sample <- cell2sample(
-        rownames(metrics),
-        samples = rownames(sampleMetadata)
-    )
+    cell2sample <- mapCellsToSamples(
+        cells = rownames(metrics),
+        samples = rownames(sampleMetadata))
 
     # Metadata =================================================================
     metadata <- list(

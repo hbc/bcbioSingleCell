@@ -46,6 +46,7 @@ Imports:
     basejump (>= 0.3.0),
     Biobase,
     BiocGenerics (>= 0.24.0),
+    BiocParallel,
     cowplot (>= 0.9.2),
     dendsort (>= 0.3.3),
     dplyr (>= 0.7.4),

@@ -85,14 +85,10 @@ NULL
 
     # cell2sample
     cell2sample <- metadata[["cell2sample"]]
-    if (!is.factor(cell2sample)) {
-        abort("`cell2sample` factor missing in `metadata()` slot")
-    }
-    cell2sample <- cell2sample %>%
-        .[cells] %>%
-        # Note that we're subsetting `sampleMetadata` by the factor levels
-        # in `cell2sample`, so this must come first
-        droplevels()
+    assert_is_factor(cell2sample)
+    # Note that we're subsetting `sampleMetadata` by the factor levels in
+    # `cell2sample`, so this must come first
+    cell2sample <- droplevels(cell2sample[cells])
     metadata[["cell2sample"]] <- cell2sample
 
     # sampleMetadata
@@ -136,7 +132,7 @@ NULL
             if (is.list(cb)) {
                 cb <- .bindCellularBarcodes(cb)
             }
-            cb <- cb[cells, ]
+            cb <- cb[cells, , drop = FALSE]
             cbList <- lapply(seq_along(sampleIDs), function(a) {
                 cb %>%
                     ungroup() %>%
