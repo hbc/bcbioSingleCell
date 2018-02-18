@@ -79,13 +79,13 @@ NULL
 
 
 
-#' @importFrom dplyr everything mutate_if
+#' @importFrom dplyr everything mutate_all
 #' @importFrom magrittr set_rownames
 .sanitizeSampleMetadata <- function(metadata, interestingGroups) {
     metadata %>%
         select(c(metadataPriorityCols), everything()) %>%
-        mutate_if(is.character, as.factor) %>%
-        mutate_if(is.factor, droplevels) %>%
+        mutate_all(as.factor) %>%
+        mutate_all(droplevels) %>%
         uniteInterestingGroups(interestingGroups) %>%
         set_rownames(.[["sampleID"]])
 }

@@ -40,7 +40,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr mutate_if
+#' @importFrom dplyr mutate_all
 #' @importFrom magrittr set_rownames
 #' @importFrom S4Vectors metadata SimpleList
 .subset <- function(x, i, j, ..., drop = FALSE) {
@@ -93,8 +93,9 @@ NULL
 
     # sampleMetadata
     sampleMetadata <- sampleMetadata(x) %>%
-        .[levels(cell2sample), ] %>%
-        mutate_if(is.factor, droplevels) %>%
+        .[levels(cell2sample), , drop = FALSE] %>%
+        mutate_all(as.factor) %>%
+        mutate_all(droplevels) %>%
         set_rownames(.[["sampleID"]])
     metadata[["sampleMetadata"]] <- sampleMetadata
     sampleIDs <- as.character(sampleMetadata[["sampleID"]])
