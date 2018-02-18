@@ -42,12 +42,8 @@ Utility function that loops our standard quality control plots, for easy
 visualization.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell
 plotQC(bcb)

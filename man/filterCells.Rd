@@ -53,9 +53,7 @@ When matching the samples, be sure to use \code{sampleID} column (i.e. the
 rownames of \code{\link[=sampleMetadata]{sampleMetadata()}}).
 }
 \examples{
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell
 print(bcb)

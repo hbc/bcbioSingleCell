@@ -26,12 +26,8 @@
 #' @return No value, only graphical output.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "topMarkers.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/topMarkers.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' genes <- pull(topMarkers, "symbol")

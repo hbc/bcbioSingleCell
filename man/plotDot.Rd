@@ -38,9 +38,7 @@ In the meantime, we've broken out the code into this generic to fix
 RMarkdown looping of our marker plots.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 genes <- slot(seurat, "data") \%>\% rownames() \%>\% head()

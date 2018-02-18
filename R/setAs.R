@@ -9,9 +9,7 @@
 #' @seealso `help(topic = "coerce", package = "methods")`.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "filtered.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 #'
 #' # Coerce bcbioSingleCell to seurat
 #' as(filtered, "seurat")

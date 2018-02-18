@@ -37,12 +37,8 @@ type (per unbiased cluster). Cell types with too few (\code{min} cutoff) or too
 many (\code{max} cutoff) marker genes will be skipped.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "knownMarkersDetected.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
 glimpse(cellTypesPerCluster)

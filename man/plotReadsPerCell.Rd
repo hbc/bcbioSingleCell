@@ -35,12 +35,8 @@ Plot Read Counts per Cell
 Here by "cell" we mean "cellular barcode".
 }
 \examples{
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell
 plotReadsPerCell(bcb)

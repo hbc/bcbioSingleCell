@@ -25,9 +25,7 @@
 #' @return [ggplot].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' plotTSNE(seurat)
