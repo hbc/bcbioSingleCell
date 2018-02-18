@@ -1,12 +1,12 @@
 # nolint start
 #
-# CellRanger *Mus musculus* example
+# CellRanger *Mus musculus* Example
 # Michael Steinbaugh
-# 2017-12-01
+# 2018-02-18
 #
 # Latest version of this script is available here:
 # script <- system.file(
-#     file.path("R_scripts", "loadCellRanger.R"),
+#     "R_scripts/loadCellRanger.R",
 #     package = "bcbioSingleCell")
 # file.edit(script)
 #
@@ -40,4 +40,5 @@ bcb <- loadCellRanger(
 
 # Back up all data inside bcbio object
 flatFiles <- flatFiles(bcb)
+
 saveData(bcb, flatFiles, dir = "data")
