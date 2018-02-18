@@ -1,8 +1,6 @@
 context("cellTypesPerCluster")
 
-load(system.file(
-    file.path("extdata", "knownMarkersDetected.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
 
 test_that("cellTypesPerCluster", {
     data <- cellTypesPerCluster(knownMarkersDetected)

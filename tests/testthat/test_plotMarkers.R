@@ -1,11 +1,7 @@
 context("plotMarkers")
 
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "topMarkers.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/topMarkers.rda", package = "bcbioSingleCell"))
 
 test_that("symbol", {
     genes <- pull(topMarkers, "symbol") %>%

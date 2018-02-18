@@ -1,8 +1,6 @@
 context("topMarkers")
 
-load(system.file(
-    file.path("extdata", "seuratAllMarkers.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
 
 test_that("data.frame", {
     data <- topMarkers(seuratAllMarkers)

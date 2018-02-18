@@ -1,11 +1,7 @@
 context("selectSamples")
 
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "filtered.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 
 test_that("selectSamples", {
     # Add a quiet argument here in the future
