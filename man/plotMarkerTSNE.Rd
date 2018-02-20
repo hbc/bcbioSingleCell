@@ -61,9 +61,7 @@ low/high gradient.}
 Plot Marker t-SNE
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 genes <- counts(seurat) \%>\% rownames() \%>\% head()
 print(genes)

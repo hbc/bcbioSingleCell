@@ -23,9 +23,7 @@ fetchTSNEData(object, ...)
 Fetch t-SNE Locations and Cellular Metadata
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 fetchTSNEData(seurat) \%>\% glimpse()

@@ -31,9 +31,7 @@ Cell Types per Cluster
 This function only returns the positive markers per cluster.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "knownMarkersDetected.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
 
 cellTypesPerCluster(knownMarkersDetected) \%>\% glimpse()
 }

@@ -42,9 +42,7 @@ based on the gene symbols, since these change often and can mismatch
 easily.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seuratAllMarkers.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
 
 # Use internal known markers for Homo sapiens
 knownMarkers <- cellTypeMarkers[["homoSapiens"]]

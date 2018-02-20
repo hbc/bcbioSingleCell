@@ -25,12 +25,8 @@ sanitizeMarkers(object, markers, ...)
 Sanitize Markers Output
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seuratAllMarkersOriginal.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seuratAllMarkersOriginal.rda", package = "bcbioSingleCell"))
 
 # seurat
 sanitizeMarkers(

@@ -36,9 +36,7 @@ minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
 PC cutoff for either 5% SD (\code{maxPct}) or 90% cumulative (\code{minCumsum}).
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 pcUse <- plotPCElbow(seurat)
