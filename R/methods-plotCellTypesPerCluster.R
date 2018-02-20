@@ -19,12 +19,8 @@
 #' @return Show graphical output. Invisibly return [ggplot] plotlist.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "knownMarkersDetected.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
 #' glimpse(cellTypesPerCluster)

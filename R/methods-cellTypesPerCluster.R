@@ -15,9 +15,7 @@
 #'   significant known makers per cell type.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "knownMarkersDetected.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
 #'
 #' cellTypesPerCluster(knownMarkersDetected) %>% glimpse()
 NULL

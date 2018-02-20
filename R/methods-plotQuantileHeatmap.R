@@ -25,9 +25,7 @@
 #' @param title *Optional.* Plot title.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "filtered.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' plotQuantileHeatmap(filtered)

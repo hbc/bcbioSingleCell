@@ -12,9 +12,7 @@
 #' @seealso [Seurat::TSNEPlot()].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' fetchTSNEData(seurat) %>% glimpse()

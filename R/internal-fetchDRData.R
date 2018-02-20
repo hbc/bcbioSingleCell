@@ -19,9 +19,7 @@
 #' @return [data.frame].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' .fetchDRData.seurat(
 #'     seurat,

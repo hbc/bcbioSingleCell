@@ -25,9 +25,7 @@
 #' @return Grouped [tibble].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seuratAllMarkers.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
 #'
 #' # Use internal known markers for Homo sapiens
 #' knownMarkers <- cellTypeMarkers[["homoSapiens"]]
