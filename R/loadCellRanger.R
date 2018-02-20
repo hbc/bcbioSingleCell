@@ -37,10 +37,11 @@
 #' uploadDir <- file.path(extdataDir, "cellranger")
 #' refdataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
 #' sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
-#' loadCellRanger(
+#' bcb <- loadCellRanger(
 #'     uploadDir = uploadDir,
 #'     refdataDir = refdataDir,
 #'     sampleMetadataFile = sampleMetadataFile)
+#' print(bcb)
 loadCellRanger <- function(
     uploadDir,
     refdataDir,
@@ -51,16 +52,15 @@ loadCellRanger <- function(
     ...) {
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
+    uploadDir <- normalizePath(uploadDir)
     assert_is_a_string(refdataDir)
     assert_all_are_dirs(refdataDir)
+    refdataDir <- normalizePath(refdataDir)
     assert_is_character(interestingGroups)
-    assert_is_a_string_or_null(sampleMetadataFile)
-    if (is_a_string(sampleMetadataFile)) {
-        assert_all_are_existing_files(sampleMetadataFile)
-    }
+    assertIsAStringOrNULL(sampleMetadataFile)
     assert_is_any_of(annotable, c("data.frame", "logical", "NULL"))
     if (is.data.frame(annotable)) {
-        assert_is_annotable(annotable)
+        assertIsAnnotable(annotable)
     }
     assert_is_a_bool(prefilter)
 
@@ -68,12 +68,10 @@ loadCellRanger <- function(
     umiType <- "chromium"
 
     # Directory paths ==========================================================
-    uploadDir <- normalizePath(uploadDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sample metadata ==========================================================
     if (is_a_string(sampleMetadataFile)) {
-        sampleMetadataFile <- normalizePath(sampleMetadataFile)
         sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
     } else {
         warn(paste(
@@ -86,19 +84,12 @@ loadCellRanger <- function(
                 as.factor(names(sampleDirs))
         }
     }
-    # Check that `description` matches `sampleDirs`
-    if (!all(sampleMetadata[["description"]] %in% basename(sampleDirs))) {
-        # FIXME Abort here instead?
-        warn("Sample directory names don't match the sample metadata file")
-    }
+    assert_is_subset(sampleMetadata[["description"]], basename(sampleDirs))
 
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
     interestingGroups <- camel(interestingGroups, strict = FALSE)
-    # Check to ensure interesting groups are defined
-    if (!all(interestingGroups %in% colnames(sampleMetadata))) {
-        abort("Interesting groups missing in sample metadata")
-    }
+    assertFormalInterestingGroups(sampleMetadata, interestingGroups)
 
     # Subset sample directories by metadata ====================================
     if (nrow(sampleMetadata) < length(sampleDirs)) {
@@ -113,16 +104,16 @@ loadCellRanger <- function(
 
     # Reference data ===========================================================
     # JSON data
-    refdataDir <- normalizePath(refdataDir)
     refJSONFile <- file.path(refdataDir, "reference.json")
-    if (!file.exists(refJSONFile)) {
-        abort("`reference.json` file missing")
-    }
+    assert_all_are_existing_files(refJSONFile)
     refJSON <- read_json(refJSONFile)
     genomeBuild <- refJSON %>%
         .[["genomes"]] %>%
         .[[1L]]
+    # Only a single genome is currently supported
+    assert_is_a_string(genomeBuild)
     organism <- detectOrganism(genomeBuild)
+    assert_is_a_string(organism)
     # Get the Ensembl version from the JSON reference file (via GTF)
     ensemblVersion <- refJSON %>%
         .[["input_gtf_files"]] %>%
@@ -130,6 +121,8 @@ loadCellRanger <- function(
         str_split("\\.", simplify = TRUE) %>%
         .[1L, 3L] %>%
         as.integer()
+    assert_is_an_integer(ensemblVersion)
+    assert_all_are_positive(ensemblVersion)
     if (ensemblVersion < 87L) {
         release <- NULL
     } else {
@@ -147,50 +140,55 @@ loadCellRanger <- function(
         annotable <- annotable(
             organism,
             genomeBuild = genomeBuild,
-            release = release)
+            release = release,
+            uniqueSymbol = FALSE)
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
     } else {
-        warn("Loading run without gene annotable")
+        warn("Loading run without gene annotations")
         annotable <- NULL
     }
+
+    # GTF annotations
     gtfFile <- file.path(refdataDir, "genes", "genes.gtf")
-    if (file.exists(gtfFile)) {
-        gtf <- readGTF(gtfFile)
-        gene2symbol <- gene2symbolFromGTF(gtf)
-    } else {
-        # Provide a fallback (for minimal unit testing)
-        warn(paste(
-            "Reference GTF file missing.",
-            "Generating gene2symbol using `annotable()` instead."
-        ))
+    if (identical(
+        x = refdataDir,
+        y = system.file(
+            "extdata/refdata-cellranger-hg19-1.2.0",
+            package = "bcbioSingleCell")
+    )) {
+        inform("Minimal working example doesn't contain a GTF file")
+        gtf <- NULL
+        inform("Obtaining gene2symbol from Ensembl")
         gene2symbol <- gene2symbol(
             organism,
             genomeBuild = genomeBuild,
             release = release)
+    } else {
+        assert_all_are_existing_files(gtfFile)
+        gtf <- readGTF(gtfFile)
+        gene2symbol <- gene2symbolFromGTF(gtf)
     }
 
     # Counts ===================================================================
-    inform("Reading counts")
-    # Migrate this to `mapply()` method in future update
-    sparseList <- pblapply(seq_along(sampleDirs), function(a) {
-        .readSparseCounts(
-            sampleDir = sampleDirs[a],
-            pipeline = pipeline,
-            umiType = umiType)
-    })
-    names(sparseList) <- names(sampleDirs)
+    inform("Reading counts at gene level")
+    sparseCountsList <- .sparseCountsList(
+        sampleDirs = sampleDirs,
+        pipeline = pipeline,
+        umiType = umiType)
+
     # Cell Ranger always outputs at gene level
-    counts <- do.call(Matrix::cBind, sparseList)
+    counts <- do.call(Matrix::cBind, sparseCountsList)
 
     # Metrics ==================================================================
     metrics <- calculateMetrics(
-        counts,
+        object = counts,
         annotable = annotable,
         prefilter = prefilter)
+
     if (isTRUE(prefilter)) {
         # Subset the counts matrix to match the metrics
-        counts <- counts[, rownames(metrics)]
+        counts <- counts[, rownames(metrics), drop = FALSE]
     }
 
     # Cell to sample mappings ==================================================

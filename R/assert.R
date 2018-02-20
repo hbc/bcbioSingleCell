@@ -5,6 +5,7 @@
 #'
 #' @importFrom assertive assert_all_are_dirs
 #' @importFrom assertive assert_all_are_existing_files
+#' @importFrom assertive assert_all_are_positive
 #' @importFrom assertive assert_any_are_matching_regex
 #' @importFrom assertive assert_are_identical
 #' @importFrom assertive assert_has_no_duplicates
@@ -20,8 +21,10 @@
 #' @importFrom assertive is_a_string
 #' @importFrom assertive is_character
 #'
-#' @importFrom basejump assert_is_a_string_or_null
-#' @importFrom basejump assert_is_an_implicit_integer_or_null
-#' @importFrom basejump assert_is_annotable
-#' @importFrom basejump assert_is_gene2symbol
+#' @importFrom basejump assertIsAStringOrNULL
+#' @importFrom basejump assertIsAnImplicitIntegerOrNULL
+#' @importFrom basejump assertIsAnnotable
+#' @importFrom basejump assertIsGene2symbol
+#'
+#' @importFrom bcbioBase assertFormalInterestingGroups
 NULL

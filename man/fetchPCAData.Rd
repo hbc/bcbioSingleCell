@@ -23,9 +23,7 @@ fetchPCAData(object, ...)
 Fetch PCA Dimensions and Cellular Metadata
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 fetchPCAData(seurat) \%>\% glimpse()

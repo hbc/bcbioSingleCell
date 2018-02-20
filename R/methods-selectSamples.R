@@ -20,9 +20,7 @@
 #' @return [bcbioSingleCell].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "filtered.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' # Quality control filtering must be applied first!

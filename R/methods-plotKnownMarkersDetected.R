@@ -11,12 +11,8 @@
 #'   by cluster.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "knownMarkersDetected.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' # Let's plot the first 2 markers, as a quick example
