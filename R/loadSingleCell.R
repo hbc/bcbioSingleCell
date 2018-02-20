@@ -10,7 +10,6 @@
 #'   readGTF readYAML tx2geneFromGTF
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
 #'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
-#' @importFrom BiocParallel bpmapply
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
 #' @importFrom stats na.omit setNames
@@ -78,6 +77,7 @@ loadSingleCell <- function(
     ...) {
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
+    uploadDir <- normalizePath(uploadDir)
     assertIsAStringOrNULL(sampleMetadataFile)
     assert_is_character(interestingGroups)
     assertIsAStringOrNULL(gtfFile)
@@ -96,7 +96,6 @@ loadSingleCell <- function(
     pipeline <- "bcbio"
 
     # Directory paths ==========================================================
-    uploadDir <- normalizePath(uploadDir)
     projectDir <- dir(
         uploadDir,
         pattern = projectDirPattern,
@@ -257,7 +256,7 @@ loadSingleCell <- function(
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
     interestingGroups <- camel(interestingGroups, strict = FALSE)
-    assert_is_subset(interestingGroups, colnames(sampleMetadata))
+    assertFormalInterestingGroups(sampleMetadata, interestingGroups)
 
     # Subset sample directories by metadata ====================================
     # Check to see if a subset of samples is requested via the metadata file.
@@ -283,13 +282,12 @@ loadSingleCell <- function(
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
     } else {
-        warn("Loading run without gene annotable (not recommended")
+        warn("Loading run without gene annotations")
         annotable <- NULL
     }
 
     # GTF annotations
     if (is_a_string(gtfFile)) {
-        gtfFile <- normalizePath(gtfFile)
         gtf <- readGTF(gtfFile)
     } else {
         gtf <- NULL
@@ -320,22 +318,13 @@ loadSingleCell <- function(
 
     # Counts ===================================================================
     inform(paste("Reading counts at", countsLevel, "level"))
-    sparseList <- bpmapply(
-        FUN = function(sampleID, sampleDir, pipeline, umiType) {
-            .readSparseCounts(
-                sampleID = sampleID,
-                sampleDir = sampleDir,
-                pipeline = pipeline,
-                umiType = umiType)
-        },
-        sampleID = names(sampleDirs),
-        sampleDir = sampleDirs,
-        MoreArgs = list(pipeline = pipeline, umiType = umiType),
-        SIMPLIFY = FALSE,
-        USE.NAMES = TRUE)
+    sparseCountsList <- .sparseCountsList(
+        sampleDirs = sampleDirs,
+        pipeline = pipeline,
+        umiType = umiType)
     # Combine the individual per-sample transcript-level sparse matrices into a
     # single sparse matrix
-    counts <- do.call(Matrix::cBind, sparseList)
+    counts <- do.call(Matrix::cBind, sparseCountsList)
     # Convert counts from transcript-level to gene-level, if necessary
     if (countsLevel == "transcript") {
         counts <- .transcriptToGeneLevelCounts(counts, tx2gene)
