@@ -64,6 +64,7 @@
 #' bcb <- loadSingleCell(
 #'     uploadDir = uploadDir,
 #'     sampleMetadataFile = sampleMetadataFile)
+#' print(bcb)
 loadSingleCell <- function(
     uploadDir,
     sampleMetadataFile = NULL,
