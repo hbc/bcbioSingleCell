@@ -64,7 +64,7 @@ setMethod(
 
 # Assignment methods ===========================================================
 #' @rdname interestingGroups
-#' @importFrom bcbioBase checkInterestingGroups
+#' @importFrom bcbioBase assert_formal_interesting_groups
 #' @importFrom S4Vectors metadata
 #' @export
 setMethod(
@@ -73,11 +73,10 @@ setMethod(
         object = "bcbioSingleCell",
         value = "character"),
     function(object, value) {
-        sampleMetadata <- sampleMetadata(object)
-        interestingGroups <- checkInterestingGroups(
-            object = sampleMetadata,
+        assert_formal_interesting_groups(
+            object = sampleMetadata(object),
             interestingGroups = value)
-        metadata(object)[["interestingGroups"]] <- interestingGroups
+        metadata(object)[["interestingGroups"]] <- value
         validObject(object)
         object
     })
@@ -85,7 +84,7 @@ setMethod(
 
 
 #' @rdname interestingGroups
-#' @importFrom bcbioBase checkInterestingGroups
+#' @importFrom bcbioBase assert_formal_interesting_groups
 #' @importFrom S4Vectors metadata
 #' @export
 setMethod(
@@ -94,11 +93,10 @@ setMethod(
         object = "seurat",
         value = "character"),
     function(object, value) {
-        sampleMetadata <- sampleMetadata(object)
-        interestingGroups <- checkInterestingGroups(
-            object = sampleMetadata,
+        assert_formal_interesting_groups(
+            object = sampleMetadata(object),
             interestingGroups = value)
-        bcbio(object, "interestingGroups") <- interestingGroups
+        bcbio(object, "interestingGroups") <- value
         validObject(object)
         object
     })
