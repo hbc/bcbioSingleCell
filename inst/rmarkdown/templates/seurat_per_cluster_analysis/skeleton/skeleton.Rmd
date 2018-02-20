@@ -37,7 +37,7 @@ sampleMetadata(seurat)
 ```{r plot_tsne_all_clusters, results="asis"}
 groups <- unique(c("ident", "sampleName", interesting_groups))
 invisible(lapply(groups, function(group) {
-    mdHeader(group, level = 2, asis = TRUE)
+    markdownHeader(group, level = 2, asis = TRUE)
     plotTSNE(seurat, interestingGroups = group) %>%
         show()
 }))
@@ -52,9 +52,9 @@ rm(groups)
 groups <- unique(c("sampleName", interesting_groups))
 invisible(lapply(idents, function(ident) {
     subset <- SubsetData(seurat, ident.use = ident)
-    mdHeader(ident, level = 2, asis = TRUE, tabset = TRUE)
+    markdownHeader(ident, level = 2, asis = TRUE, tabset = TRUE)
     invisible(lapply(groups, function(group) {
-        mdHeader(group, level = 3, asis = TRUE)
+        markdownHeader(group, level = 3, asis = TRUE)
         plotTSNE(subset, interestingGroups = group) %>%
             show()
     }))
@@ -69,7 +69,7 @@ rm(groups)
 ```{r cell_counts_per_cluster, results="asis"}
 invisible(lapply(idents, function(ident) {
     subset <- SubsetData(seurat, ident.use = ident)
-    mdHeader(ident, level = 2, asis = TRUE, tabset = TRUE)
+    markdownHeader(ident, level = 2, asis = TRUE, tabset = TRUE)
     master <- subset@meta.data %>%
         uniteInterestingGroups(interestingGroups) %>%
         select(sampleName, interestingGroups)
@@ -95,16 +95,16 @@ invisible(lapply(idents, function(ident) {
 # Seurat parameters {.tabset}
 
 ```{r seurat_diagnostics}
-mdHeader("PrintPCAParams", level = 2)
+markdownHeader("PrintPCAParams", level = 2)
 PrintPCAParams(seurat)
 
-mdHeader("PrintFindClustersParams", level = 2)
+markdownHeader("PrintFindClustersParams", level = 2)
 PrintFindClustersParams(seurat)
 
-mdHeader("PrintTSNEParams", level = 2)
+markdownHeader("PrintTSNEParams", level = 2)
 PrintTSNEParams(seurat)
 
-mdHeader("PrintSNNParams", level = 2)
+markdownHeader("PrintSNNParams", level = 2)
 PrintSNNParams(seurat)
 ```
 

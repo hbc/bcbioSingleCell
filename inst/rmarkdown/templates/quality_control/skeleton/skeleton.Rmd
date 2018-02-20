@@ -63,21 +63,21 @@ plotCellCounts(bcb)
 ## UMI counts per cell {.tabset}
 
 ```{r plot_umis_per_cell}
-mdHeader("histogram", level = 3)
+markdownHeader("histogram", level = 3)
 plotUMIsPerCell(
     bcb,
     geom = "histogram",
     min = min(params$min_umis)
 )
     
-mdHeader("violin", level = 3)
+markdownHeader("violin", level = 3)
 plotUMIsPerCell(
     bcb,
     geom = "violin",
     min = min(params$min_umis)
 )
 
-mdHeader("boxplot", level = 3)
+markdownHeader("boxplot", level = 3)
 plotUMIsPerCell(
     bcb,
     geom = "boxplot",
@@ -91,7 +91,7 @@ plotUMIsPerCell(
 Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for most single-cell experiments.
 
 ```{r plot_genes_per_cell}
-mdHeader("histogram", level = 3)
+markdownHeader("histogram", level = 3)
 plotGenesPerCell(
     bcb,
     geom = "histogram",
@@ -99,7 +99,7 @@ plotGenesPerCell(
     max = max(params$max_genes)
 )
 
-mdHeader("violin", level = 3)
+markdownHeader("violin", level = 3)
 plotGenesPerCell(
     bcb,
     geom = "violin",
@@ -107,7 +107,7 @@ plotGenesPerCell(
     max = max(params$max_genes)
 )
 
-mdHeader("boxplot", level = 3)
+markdownHeader("boxplot", level = 3)
 plotGenesPerCell(
     bcb,
     geom = "boxplot",
@@ -131,21 +131,21 @@ plotUMIsVsGenes(bcb, interestingGroups = "sampleName")
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
 
 ```{r plot_mito_ratio}
-mdHeader("histogram", level = 3)
+markdownHeader("histogram", level = 3)
 plotMitoRatio(
     bcb,
     geom = "histogram",
     max = max(params$max_mito_ratio)
 )
 
-mdHeader("violin", level = 3)
+markdownHeader("violin", level = 3)
 plotMitoRatio(
     bcb,
     geom = "violin",
     max = max(params$max_mito_ratio)
 )
 
-mdHeader("boxplot", level = 3)
+markdownHeader("boxplot", level = 3)
 plotMitoRatio(
     bcb,
     geom = "boxplot",
@@ -159,21 +159,21 @@ plotMitoRatio(
 Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
 
 ```{r plot_novelty}
-mdHeader("histogram", level = 3)
+markdownHeader("histogram", level = 3)
 plotNovelty(
     bcb,
     geom = "histogram",
     min = min(params$min_novelty)
 )
 
-mdHeader("violin", level = 3)
+markdownHeader("violin", level = 3)
 plotNovelty(
     bcb,
     geom = "violin",
     min = min(params$min_novelty)
 )
 
-mdHeader("boxplot", level = 3)
+markdownHeader("boxplot", level = 3)
 plotNovelty(
     bcb,
     geom = "boxplot",
