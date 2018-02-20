@@ -78,19 +78,19 @@ loadSingleCell <- function(
     ...) {
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
-    assert_is_a_string_or_null(sampleMetadataFile)
+    assertIsAStringOrNULL(sampleMetadataFile)
     assert_is_character(interestingGroups)
-    assert_is_a_string_or_null(gtfFile)
+    assertIsAStringOrNULL(gtfFile)
     if (is_a_string(gtfFile)) {
         assert_all_are_existing_files(gtfFile)
     }
     assert_is_any_of(annotable, c("data.frame", "logical", "NULL"))
     if (is.data.frame(annotable)) {
-        assert_is_annotable(annotable)
+        assertIsAnnotable(annotable)
     }
-    assert_is_a_string_or_null(organism)
-    assert_is_an_implicit_integer_or_null(ensemblVersion)
-    assert_is_a_string_or_null(genomeBuild)
+    assertIsAStringOrNULL(organism)
+    assertIsAnImplicitIntegerOrNULL(ensemblVersion)
+    assertIsAStringOrNULL(genomeBuild)
     assert_is_a_bool(prefilter)
 
     pipeline <- "bcbio"

@@ -20,8 +20,10 @@
 #' @importFrom assertive is_a_string
 #' @importFrom assertive is_character
 #'
-#' @importFrom basejump assert_is_a_string_or_null
-#' @importFrom basejump assert_is_an_implicit_integer_or_null
-#' @importFrom basejump assert_is_annotable
-#' @importFrom basejump assert_is_gene2symbol
+#' @importFrom basejump assertIsAStringOrNULL
+#' @importFrom basejump assertIsAnImplicitIntegerOrNULL
+#' @importFrom basejump assertIsAnnotable
+#' @importFrom basejump assertIsGene2symbol
+#'
+#' @importFrom bcbioBase assertFormalInterestingGroups
 NULL

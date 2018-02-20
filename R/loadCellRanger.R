@@ -54,13 +54,13 @@ loadCellRanger <- function(
     assert_is_a_string(refdataDir)
     assert_all_are_dirs(refdataDir)
     assert_is_character(interestingGroups)
-    assert_is_a_string_or_null(sampleMetadataFile)
+    assertIsAStringOrNULL(sampleMetadataFile)
     if (is_a_string(sampleMetadataFile)) {
         assert_all_are_existing_files(sampleMetadataFile)
     }
     assert_is_any_of(annotable, c("data.frame", "logical", "NULL"))
     if (is.data.frame(annotable)) {
-        assert_is_annotable(annotable)
+        assertIsAnnotable(annotable)
     }
     assert_is_a_bool(prefilter)
 

@@ -28,7 +28,7 @@ NULL
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom tibble as_tibble
 .readCellTypeMarkersFile <- function(object, gene2symbol) {
-    assert_is_gene2symbol(gene2symbol)
+    assertIsGene2symbol(gene2symbol)
     markers <- readFileByExtension(object) %>%
         camel(strict = FALSE)
 
