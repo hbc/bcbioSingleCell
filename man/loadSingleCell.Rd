@@ -75,6 +75,7 @@ sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
 bcb <- loadSingleCell(
     uploadDir = uploadDir,
     sampleMetadataFile = sampleMetadataFile)
+print(bcb)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

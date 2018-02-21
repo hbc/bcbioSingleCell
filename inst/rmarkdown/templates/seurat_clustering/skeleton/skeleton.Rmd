@@ -120,13 +120,13 @@ organism <- metadata(bcb)$organism
 cell_cycle_markers <- bcbioSingleCell::cellCycleMarkers[[camel(organism)]]
 stopifnot(is.data.frame(cell_cycle_markers))
 
-mdHeader("S phase markers", level = 3)
+markdownHeader("S phase markers", level = 3)
 s_genes <- cell_cycle_markers %>%
     filter(phase == "S") %>%
     pull("symbol")
 print(s_genes)
 
-mdHeader("G2/M phase markers", level = 3)
+markdownHeader("G2/M phase markers", level = 3)
 g2m_genes <- cell_cycle_markers %>%
     filter(phase == "G2/M") %>%
     pull("symbol")
@@ -309,14 +309,14 @@ PrintTSNEParams(seurat)
 
 ```{r dim_reduction_plots, results="asis"}
 lapply(seq_along(group_by), function(a) {
-    mdHeader(group_by[[a]], level = 2, asis = TRUE, tabset = TRUE)
-    mdHeader("tSNE", level = 3, asis = TRUE)
+    markdownHeader(group_by[[a]], level = 2, asis = TRUE, tabset = TRUE)
+    markdownHeader("tSNE", level = 3, asis = TRUE)
     plotTSNE(
         seurat,
         interestingGroups = group_by[[a]],
         label = TRUE) %>%
         show()
-    mdHeader("PCA", level = 3, asis = TRUE)
+    markdownHeader("PCA", level = 3, asis = TRUE)
     plotPCA(
         seurat,
         interestingGroups = group_by[[a]],

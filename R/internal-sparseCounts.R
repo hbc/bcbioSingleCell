@@ -114,3 +114,22 @@
 
     counts
 }
+
+
+
+#' @importFrom BiocParallel bpmapply
+.sparseCountsList <- function(sampleDirs, pipeline, umiType) {
+    bpmapply(
+        FUN = function(sampleID, sampleDir, pipeline, umiType) {
+            .readSparseCounts(
+                sampleID = sampleID,
+                sampleDir = sampleDir,
+                pipeline = pipeline,
+                umiType = umiType)
+        },
+        sampleID = names(sampleDirs),
+        sampleDir = sampleDirs,
+        MoreArgs = list(pipeline = pipeline, umiType = umiType),
+        SIMPLIFY = FALSE,
+        USE.NAMES = TRUE)
+}

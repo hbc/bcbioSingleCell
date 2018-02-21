@@ -56,10 +56,11 @@ extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 uploadDir <- file.path(extdataDir, "cellranger")
 refdataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
 sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
-loadCellRanger(
+bcb <- loadCellRanger(
     uploadDir = uploadDir,
     refdataDir = refdataDir,
     sampleMetadataFile = sampleMetadataFile)
+print(bcb)
 }
 \author{
 Michael Steinbaugh

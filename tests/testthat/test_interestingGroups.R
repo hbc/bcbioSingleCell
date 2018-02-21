@@ -13,7 +13,7 @@ test_that("bcbioSingleCell", {
 test_that("Assignment of undefined interesting group", {
     error <- paste(
         "is_subset : The element 'XXX' in interestingGroups is not",
-        "in colnames\\(object\\)"
+        "in colnames\\(x\\)"
     )
     expect_error(
         interestingGroups(bcb) <- "XXX",
