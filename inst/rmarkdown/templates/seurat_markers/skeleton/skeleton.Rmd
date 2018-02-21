@@ -12,7 +12,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-02-12
+# Last modified 2018-02-21
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
