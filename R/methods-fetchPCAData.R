@@ -5,16 +5,14 @@
 #' @family PCA Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @return [data.frame] of PCA points and metadata for each cell.
 #'
 #' @seealso [Seurat::PCAPlot()].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' fetchPCAData(seurat) %>% glimpse()

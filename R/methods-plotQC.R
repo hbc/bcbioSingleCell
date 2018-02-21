@@ -9,7 +9,7 @@
 #'
 #' @importFrom bcbioBase plotQC
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams metrics
 #'
 #' @param geom Plot type. Supported formats: `boxplot`, `histogram`,
@@ -25,12 +25,8 @@
 #' @return R Markdown template code for quality control analysis.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "bcb.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' plotQC(bcb)
@@ -52,6 +48,7 @@ validQCGeomFlip <- c(
 
 
 
+#' @importFrom basejump markdownHeader
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 theme
 .plotQC <- function(
@@ -110,7 +107,7 @@ validQCGeomFlip <- c(
     } else if (return == "grid") {
         plot_grid(plotlist = plotlist, labels = "AUTO")
     } else {
-        mdHeader(
+        markdownHeader(
             "Filtered quality control metrics",
             level = headerLevel,
             tabset = TRUE,
@@ -118,44 +115,44 @@ validQCGeomFlip <- c(
 
         # Reads per cell currently only supported for bcbio runs
         if (!is.null(plotlist[["plotReadsPerCell"]])) {
-            mdHeader(
+            markdownHeader(
                 "Reads per cell",
                 level = headerLevel + 1L,
                 asis = TRUE)
             show(plotlist[["plotReadsPerCell"]])
         }
 
-        mdHeader(
+        markdownHeader(
             "Cell counts",
             level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotCellCounts"]])
 
-        mdHeader(
+        markdownHeader(
             "UMI counts per cell",
             level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotUMIsPerCell"]])
 
-        mdHeader(
+        markdownHeader(
             "Genes detected",
             level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotGenesPerCell"]])
 
-        mdHeader(
+        markdownHeader(
             "UMIs vs. genes",
             level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotUMIsVsGenes"]])
 
-        mdHeader(
+        markdownHeader(
             "Mitochondrial counts ratio",
             level = headerLevel + 1L,
             asis = TRUE)
         show(plotlist[["plotMitoRatio"]])
 
-        mdHeader(
+        markdownHeader(
             "Novelty",
             level = headerLevel + 1L,
             asis = TRUE)

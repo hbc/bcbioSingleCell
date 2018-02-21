@@ -3,19 +3,15 @@
 #' @rdname sanitizeMarkers
 #' @name sanitizeMarkers
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param markers [Seurat::FindAllMarkers()] return.
 #'
 #' @return [grouped_df], grouped by cluster ident.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seuratAllMarkersOriginal.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seuratAllMarkersOriginal.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' sanitizeMarkers(
@@ -27,7 +23,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase camel
+#' @importFrom basejump camel
 #' @importFrom dplyr arrange everything group_by left_join mutate rename select
 #' @importFrom rlang !! sym
 #' @importFrom tibble as_tibble remove_rownames

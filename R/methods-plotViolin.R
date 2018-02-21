@@ -6,7 +6,7 @@
 #'
 #' @importFrom bcbioBase plotViolin
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams plotDot
 #'
 #' @param fill Fill color palette. Defaults to viridis.
@@ -15,9 +15,7 @@
 #'   `return = "markdown"`.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' genes <- slot(seurat, "raw.data") %>% rownames() %>% .[1:2]
 #' print(genes)
@@ -36,7 +34,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase dynamicPlotlist
+#' @importFrom basejump dynamicPlotlist
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 aes_string geom_violin ggplot
 #' @importFrom rlang !! sym

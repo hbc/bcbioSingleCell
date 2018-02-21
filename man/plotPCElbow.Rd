@@ -9,13 +9,13 @@
 \usage{
 plotPCElbow(object, ...)
 
-\S4method{plotPCElbow}{seurat}(object, maxPct = 0.05, minCumPct = 0.8,
+\S4method{plotPCElbow}{seurat}(object, maxPct = 0.05, minCumPct = 0.9,
   plot = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{maxPct}{Maximum percent standard deviation.}
 
@@ -36,9 +36,7 @@ minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
 PC cutoff for either 5% SD (\code{maxPct}) or 90% cumulative (\code{minCumsum}).
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 pcUse <- plotPCElbow(seurat)

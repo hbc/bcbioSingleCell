@@ -11,12 +11,8 @@
 #'   by cluster.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "knownMarkersDetected.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' # Let's plot the first 2 markers, as a quick example
@@ -28,7 +24,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase mdHeader
+#' @importFrom basejump markdownHeader
 #' @importFrom dplyr pull
 #' @importFrom stats na.omit
 #' @importFrom viridis scale_color_viridis
@@ -58,7 +54,7 @@ NULL
             na.omit()
         if (is.null(genes)) return(NULL)
         if (!is.null(headerLevel)) {
-            mdHeader(
+            markdownHeader(
                 cellType,
                 level = headerLevel,
                 tabset = TRUE,

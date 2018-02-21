@@ -17,6 +17,8 @@
 #'
 #' @author Michael Steinbaugh
 #'
+#' @param sampleID Sample identifier. Must match the `sampleID` column of the
+#'   sample metadata [data.frame].
 #' @param sampleDir Named character vector of sample directory containing the
 #'   MatrixMart file.
 #' @param pipeline Pipeline used to generate the MatrixMarket file. Defaults to
@@ -29,14 +31,17 @@
 #' @return `dgCMatrix`.
 #' @noRd
 .readSparseCounts <- function(
+    sampleID,
     sampleDir,
     pipeline,
     umiType) {
-    sampleName <- names(sampleDir)
-    if (is.null(sampleName)) {
-        abort("Sample directory must be passed in as a named character vector")
-    }
-    inform(sampleName)
+    assert_is_a_string(sampleID)
+    assert_is_a_string(sampleDir)
+    assert_all_are_dirs(sampleDir)
+    assert_is_a_string(pipeline)
+    assert_is_subset(pipeline, c("bcbio", "cellranger"))
+    assert_is_a_string(umiType)
+
     if (pipeline == "bcbio") {
         sampleStem <- basename(sampleDir)
         matrixFile <- file.path(sampleDir, paste0(sampleStem, ".mtx"))
@@ -58,14 +63,10 @@
         }
         colFile <- file.path(dirname(matrixFile), "barcodes.tsv")
         rowFile <- file.path(dirname(matrixFile), "genes.tsv")
-    } else {
-        abort("Unsupported pipeline")
     }
 
     # Check that all files exist
-    if (!all(file.exists(matrixFile, colFile, rowFile))) {
-        abort("Missing MatrixMarket file")
-    }
+    assert_all_are_existing_files(c(matrixFile, colFile, rowFile))
 
     # Read the MatrixMarket file. Column names are molecular identifiers. Row
     # names are gene/transcript identifiers (depending on pipeline).
@@ -91,16 +92,12 @@
     }
 
     # Integrity checks
-    if (!identical(length(colnames), ncol(counts))) {
-        abort("Barcodes file doesn't match counts matrix rows")
-    }
-    if (!identical(length(rownames), nrow(counts))) {
-        abort("Genes file doesn't match counts matrix columns")
-    }
+    assert_are_identical(length(colnames), ncol(counts))
+    assert_are_identical(length(rownames), nrow(counts))
 
     colnames(counts) <- colnames %>%
         # Append sample name
-        paste(sampleName, ., sep = "_") %>%
+        paste(sampleID, ., sep = "_") %>%
         # Convert dashes to underscores
         gsub(
             x = .,
@@ -116,4 +113,23 @@
         make.names(unique = TRUE)
 
     counts
+}
+
+
+
+#' @importFrom BiocParallel bpmapply
+.sparseCountsList <- function(sampleDirs, pipeline, umiType) {
+    bpmapply(
+        FUN = function(sampleID, sampleDir, pipeline, umiType) {
+            .readSparseCounts(
+                sampleID = sampleID,
+                sampleDir = sampleDir,
+                pipeline = pipeline,
+                umiType = umiType)
+        },
+        sampleID = names(sampleDirs),
+        sampleDir = sampleDirs,
+        MoreArgs = list(pipeline = pipeline, umiType = umiType),
+        SIMPLIFY = FALSE,
+        USE.NAMES = TRUE)
 }

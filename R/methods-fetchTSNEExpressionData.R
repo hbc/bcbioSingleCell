@@ -8,7 +8,7 @@
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param genes Genes identifiers (matching the rownames in the object),
 #'   of which to get expression data.
@@ -17,9 +17,7 @@
 #'   aggregate marker expression values (`mean`, `median`, and `sum`).
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' genes <- counts(seurat) %>% rownames() %>% head()
 #' print(genes)
@@ -31,6 +29,7 @@ NULL
 
 
 # Constructors =================================================================
+#' @importFrom Biobase rowMedians
 #' @importFrom dplyr everything group_by select
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom Seurat FetchData

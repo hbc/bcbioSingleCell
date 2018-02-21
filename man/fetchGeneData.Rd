@@ -14,7 +14,7 @@ fetchGeneData(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{genes}{Gene identifiers (matrix rownames).}
 }
@@ -25,9 +25,7 @@ fetchGeneData(object, ...)
 Fetch Gene Expression Data
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 genes <- slot(seurat, "data") \%>\%

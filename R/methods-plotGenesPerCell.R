@@ -9,7 +9,7 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams metrics
 #' @inheritParams plotQC
 #'
@@ -25,12 +25,8 @@
 #' @return [ggplot].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "bcb.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' plotGenesPerCell(bcb)

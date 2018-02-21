@@ -14,7 +14,7 @@ fetchPCAData(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 }
 \value{
 \link{data.frame} of PCA points and metadata for each cell.
@@ -23,9 +23,7 @@ fetchPCAData(object, ...)
 Fetch PCA Dimensions and Cellular Metadata
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 fetchPCAData(seurat) \%>\% glimpse()

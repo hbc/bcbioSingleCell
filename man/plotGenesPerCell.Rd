@@ -26,7 +26,7 @@ plotGenesPerCell(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{geom}{Plot type. Supported formats: \code{boxplot}, \code{histogram},
 \code{ridgeline}, and \code{violin}. Applies to \code{\link[=plotUMIsPerCell]{plotUMIsPerCell()}},
@@ -58,12 +58,8 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell
 plotGenesPerCell(bcb)

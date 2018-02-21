@@ -5,7 +5,7 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams plotGenesPerCell
 #'
 #' @param geom Plot type. Supported formats: proportional `histogram`
@@ -16,12 +16,8 @@
 #' @return [ggplot].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "bcb.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' plotReadsPerCell(bcb)
@@ -68,6 +64,7 @@ NULL
 #' @noRd
 #'
 #' @importFrom dplyr bind_rows left_join mutate
+#' @importFrom graphics hist
 #' @importFrom parallel mclapply
 #' @importFrom tibble tibble
 #'

@@ -17,7 +17,7 @@ plotTSNE(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{interestingGroups}{Interesting group to use for plot colors.}
 
@@ -47,9 +47,7 @@ low/high gradient.}
 Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 plotTSNE(seurat)

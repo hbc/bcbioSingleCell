@@ -4,7 +4,7 @@
 #' @name plotFeatureTSNE
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams plotTSNE
 #'
 #' @param features Character vector of features (e.g. gene expression, PC
@@ -18,9 +18,7 @@
 #' @return No return, only graphical output.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' plotFeatureTSNE(seurat, features = "PC1")
@@ -30,7 +28,7 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotFeatureTSNE
-#' @importFrom bcbioBase midnightTheme
+#' @importFrom basejump midnightTheme
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 aes_string geom_point ggplot scale_color_gradient theme
 #' @importFrom Seurat FetchData

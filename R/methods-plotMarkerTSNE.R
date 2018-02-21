@@ -5,7 +5,7 @@
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #'
@@ -17,9 +17,7 @@
 #' @return [ggplot].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' genes <- counts(seurat) %>% rownames() %>% head()
 #' print(genes)
@@ -40,7 +38,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom bcbioBase midnightTheme
+#' @importFrom basejump midnightTheme
 #' @importFrom ggplot2 aes_string geom_point geom_text ggplot labs guides
 #'   guide_colorbar theme
 #' @importFrom viridis scale_color_viridis

@@ -13,7 +13,7 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #' @inheritParams plotMarkerTSNE
 #'
 #' @param tsneColor Color palette to use for tSNE plot.
@@ -26,12 +26,8 @@
 #' @return No value, only graphical output.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "topMarkers.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/topMarkers.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' genes <- pull(topMarkers, "symbol")
@@ -51,7 +47,6 @@ NULL
 #' @importFrom dplyr filter
 #' @importFrom ggplot2 aes_string coord_flip element_blank geom_violin ggplot
 #'   theme
-#' @importFrom rlang is_string
 #' @importFrom viridis scale_fill_viridis viridis
 #'
 #' @param returnAsList Return the `gg` objects as a list.
@@ -68,7 +63,7 @@ NULL
     title = NULL,
     return = "grid") {
     # Parameter integrity ======================================================
-    if (!is_string(gene)) {
+    if (!is_a_string(gene)) {
         abort("`gene` must be a string")
     }
     # return
@@ -124,7 +119,8 @@ NULL
 
 
 
-# Note the plural version here. This is the gene looping code.
+#' @importFrom basejump markdownHeader
+#' @importFrom viridis scale_color_viridis
 .plotMarkers.seurat <- function(  # nolint
     object,
     genes,
@@ -144,7 +140,7 @@ NULL
             return(warn(paste(gene, "missing")))
         }
         if (!is.null(headerLevel)) {
-            mdHeader(gene, level = headerLevel, asis = TRUE)
+            markdownHeader(gene, level = headerLevel, asis = TRUE)
         }
         p <- .plotMarker.seurat(
             object,
@@ -166,8 +162,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotMarkers
-#' @importFrom bcbioBase mdHeader
-#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotMarkers",

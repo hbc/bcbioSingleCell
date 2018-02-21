@@ -5,7 +5,7 @@
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param minCells Minimum number of cells required per sample.
 #' @param dir Output directory where to save the subset data.
@@ -13,9 +13,7 @@
 #' @return Character vector of saved [bcbioSingleCell] subsets.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "filtered.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 #'
 #' # This will save the subsets per sample to disk
 #' subsetPerSample(filtered, dir = "subsetPerSample")

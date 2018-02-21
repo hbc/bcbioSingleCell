@@ -6,7 +6,7 @@
 #' @name cellTypesPerCluster
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param min Minimum number of marker genes per cluster.
 #' @param max Maximum number of marker genes per cluster.
@@ -15,9 +15,7 @@
 #'   significant known makers per cell type.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "knownMarkersDetected.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
 #'
 #' cellTypesPerCluster(knownMarkersDetected) %>% glimpse()
 NULL

@@ -7,12 +7,12 @@
 #' @name plotQuantileHeatmap
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @importFrom bcbioBase plotQuantileHeatmap
+#' @importFrom basejump plotQuantileHeatmap
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param n The number of breaks to create.
-#' @param annotationCol *Optional*. [data.frame] that defines annotation
+#' @param annotationCol *Optional.* [data.frame] that defines annotation
 #'   mappings for the columns.
 #' @param clusterCols Logical determining if columns should be arranged with
 #'   hierarchical clustering. Alternatively, can define an `hclust` object.
@@ -22,12 +22,10 @@
 #'   palette.
 #' @param legendColor Colors to use for legend labels. Defaults to the
 #'   [viridis::viridis()] palette.
-#' @param title *Optional*. Plot title.
+#' @param title *Optional.* Plot title.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "filtered.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' plotQuantileHeatmap(filtered)

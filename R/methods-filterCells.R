@@ -13,7 +13,7 @@
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param maxUMIs Maximum number of UMI disambiguated counts per cell.
@@ -31,9 +31,7 @@
 #'   [metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "bcb.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' print(bcb)
@@ -43,7 +41,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase mdHeader mdList
 #' @importFrom Matrix rowSums
 #' @importFrom scales percent
 #' @importFrom tibble rownames_to_column

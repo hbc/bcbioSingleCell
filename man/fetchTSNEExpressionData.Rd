@@ -15,7 +15,7 @@ fetchTSNEExpressionData(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{genes}{Genes identifiers (matching the rownames in the object),
 of which to get expression data.}
@@ -29,9 +29,7 @@ This gets t-SNE locations, cellular metadata, expression of genes and
 the geometric mean of the gene expression from a \link{seurat} object.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 genes <- counts(seurat) \%>\% rownames() \%>\% head()
 print(genes)

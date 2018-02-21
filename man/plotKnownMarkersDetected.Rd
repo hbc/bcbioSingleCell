@@ -22,7 +22,7 @@ plotKnownMarkersDetected(object, knownMarkersDetected, ...)
 \item{knownMarkersDetected}{\code{\link[=knownMarkersDetected]{knownMarkersDetected()}} return \link{tibble} grouped
 by cluster.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{tsneColor}{Color palette to use for tSNE plot.}
 
@@ -43,12 +43,8 @@ No value, only graphical output.
 Plot Known Markers Detected
 }
 \examples{
-load(system.file(
-    file.path("extdata", "knownMarkersDetected.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 # Let's plot the first 2 markers, as a quick example

@@ -14,7 +14,7 @@ cellTypesPerCluster(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{min}{Minimum number of marker genes per cluster.}
 
@@ -31,9 +31,7 @@ Cell Types per Cluster
 This function only returns the positive markers per cluster.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "knownMarkersDetected.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
 
 cellTypesPerCluster(knownMarkersDetected) \%>\% glimpse()
 }

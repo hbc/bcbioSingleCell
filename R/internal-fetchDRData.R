@@ -4,7 +4,7 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom bcbioBase camel
+#' @importFrom basejump camel
 #' @importFrom dplyr group_by mutate mutate_if ungroup
 #' @importFrom Seurat FetchData
 #' @importFrom stats median
@@ -19,9 +19,7 @@
 #' @return [data.frame].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' .fetchDRData.seurat(
 #'     seurat,

@@ -6,7 +6,7 @@
 #'
 #' @importFrom BiocGenerics counts
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
 #'   symbols. Recommended for passing counts to Seurat.
@@ -15,12 +15,8 @@
 #' @return Counts matrix.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "bcb.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' counts(bcb, gene2symbol = FALSE) %>% glimpse()

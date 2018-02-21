@@ -35,18 +35,18 @@ empty. This is recommended for projects dealing with genes or transcripts
 that are poorly annotated. Additionally, a manually constructed annotable
 can be passed in as a \link{data.frame}, but this isn't generally recommended.}
 
-\item{organism}{\emph{Optional}. Organism name. Use the full latin name (e.g.
+\item{organism}{\emph{Optional.} Organism name. Use the full latin name (e.g.
 "Homo sapiens"), since this will be input downstream to
 AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
 Normally this can be left \code{NULL}, and the function will attempt to detect
 the organism automatically using \code{\link[=detectOrganism]{detectOrganism()}}.}
 
-\item{ensemblVersion}{\emph{Optional}. Ensembl release version. If \code{NULL},
+\item{ensemblVersion}{\emph{Optional.} Ensembl release version. If \code{NULL},
 defaults to current release, and does not typically need to be
 user-defined. This parameter can be useful for matching Ensembl annotations
 against an outdated bcbio annotation build.}
 
-\item{genomeBuild}{\emph{Optional}. Genome build. Normally this can be left \code{NULL}
+\item{genomeBuild}{\emph{Optional.} Genome build. Normally this can be left \code{NULL}
 and the build will be detected from the bcbio run data. This can be set
 manually (e.g. "hg19" for the older \emph{Homo sapiens} reference genome). Note
 that this must match the genome build identifier on Ensembl for annotations
@@ -69,26 +69,13 @@ run directory as a remote connection over
 }
 \examples{
 # Homo sapiens
-# Minimal working example dataset
 extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
 sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
 bcb <- loadSingleCell(
     uploadDir = uploadDir,
     sampleMetadataFile = sampleMetadataFile)
-
-# Mus musculus
-# Run with Ensembl 88 transcriptome FASTA and GTF files
-\dontrun{
-bcb <- loadSingleCell(
-    uploadDir = file.path("indrop_rnaseq", "final"),
-    interestingGroups = c("genotype", "treatment"),
-    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
-    gtfFile = file.path(
-        "annotations",
-        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
-    ensemblVersion = 88)
-}
+print(bcb)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

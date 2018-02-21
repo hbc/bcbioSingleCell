@@ -15,7 +15,7 @@ subsetPerSample(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{minCells}{Minimum number of cells required per sample.}
 
@@ -28,9 +28,7 @@ Character vector of saved \link{bcbioSingleCell} subsets.
 Subset Per Sample
 }
 \examples{
-load(system.file(
-    file.path("extdata", "filtered.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 
 # This will save the subsets per sample to disk
 subsetPerSample(filtered, dir = "subsetPerSample")

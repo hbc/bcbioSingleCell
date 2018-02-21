@@ -5,7 +5,7 @@
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param object Gene markers file (CSV or Excel).
 #' @param gene2symbol Gene-to-symbol annotation [data.frame].
@@ -23,12 +23,12 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase camel checkGene2symbol readFileByExtension
+#' @importFrom basejump camel readFileByExtension
 #' @importFrom dplyr arrange distinct left_join
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom tibble as_tibble
 .readCellTypeMarkersFile <- function(object, gene2symbol) {
-    checkGene2symbol(gene2symbol)
+    assertIsGene2symbol(gene2symbol)
     markers <- readFileByExtension(object) %>%
         camel(strict = FALSE)
 

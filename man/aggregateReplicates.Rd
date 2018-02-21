@@ -15,9 +15,7 @@
 Aggregate Replicates
 }
 \examples{
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell
 print(bcb)

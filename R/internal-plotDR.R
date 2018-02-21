@@ -8,7 +8,7 @@
 #'
 #' @inheritParams plotTSNE
 #'
-#' @importFrom bcbioBase midnightTheme
+#' @importFrom basejump midnightTheme
 #' @importFrom ggplot2 aes_string geom_point geom_text ggplot guide_legend
 #'   guides labs scale_color_hue
 #'

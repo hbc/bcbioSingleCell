@@ -19,12 +19,8 @@
 #' @return Show graphical output. Invisibly return [ggplot] plotlist.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "knownMarkersDetected.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
 #' glimpse(cellTypesPerCluster)
@@ -40,6 +36,7 @@ NULL
 
 
 # Constructors =================================================================
+#' @importFrom basejump markdownHeader
 #' @importFrom dplyr group_vars mutate_if pull
 #' @importFrom pbapply pblapply
 .plotCellTypesPerCluster <- function(
@@ -61,7 +58,7 @@ NULL
     return <- pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
         if (!is.null(headerLevel)) {
-            mdHeader(
+            markdownHeader(
                 paste("Cluster", cluster),
                 level = headerLevel,
                 tabset = TRUE,
@@ -76,7 +73,7 @@ NULL
                 .[[1L]]
             title <- pull(cellType, "cell")
             if (!is.null(headerLevel)) {
-                mdHeader(
+                markdownHeader(
                     title,
                     level = headerLevel + 1L,
                     tabset = TRUE,

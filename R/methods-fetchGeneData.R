@@ -3,16 +3,14 @@
 #' @rdname fetchGeneData
 #' @name fetchGeneData
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param genes Gene identifiers (matrix rownames).
 #'
 #' @return [matrix].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' genes <- slot(seurat, "data") %>%

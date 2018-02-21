@@ -42,9 +42,7 @@ low/high gradient.}
 Plot Principal Component Analysis (PCA)
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 plotPCA(seurat)

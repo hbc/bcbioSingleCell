@@ -9,6 +9,9 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 #' sparse matrix (`dgCMatrix`), sample barcodes, run metadata, and barcode
 #' summary statistics for each sample analyzed.
 #'
+#' @note `bcbioSingleCell` extended `SummarizedExperiment` until v0.0.31 of
+#' this package, when we migrated over to using `SingleCellExperiment`.
+#'
 #' @author Michael Steinbaugh
 #'
 #' @slot bcbio `SimpleList` containing additional bcbio run data with dimensions
@@ -23,8 +26,14 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 bcbioSingleCell <- setClass(
     "bcbioSingleCell",
     contains = "SummarizedExperiment",
-    slots = c(bcbio = "SimpleList"))
-setValidity("bcbioSingleCell", function(object) TRUE)
+    slots = c(bcbio = "SimpleList")
+)
+setValidity(
+    "bcbioSingleCell",
+    function(object) {
+        TRUE
+    }
+)
 
 
 

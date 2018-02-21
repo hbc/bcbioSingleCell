@@ -19,6 +19,10 @@ that don't match the count matrix. This is currently used to store all
 unfiltered cellular barcodes for quality control analysis.}
 }}
 
+\note{
+\code{bcbioSingleCell} extended \code{SummarizedExperiment} until v0.0.31 of
+this package, when we migrated over to using \code{SingleCellExperiment}.
+}
 \seealso{
 \itemize{
 \item \code{\link[SummarizedExperiment:SummarizedExperiment]{SummarizedExperiment::SummarizedExperiment()}}.

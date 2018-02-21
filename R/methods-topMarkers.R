@@ -5,7 +5,7 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param n Number of genes per cluster.
 #' @param direction Whether to include only `positive`, `negative`, or `both`
@@ -20,9 +20,7 @@
 #' @export
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seuratAllMarkers.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
 #'
 #' # grouped_df
 #' topMarkers(seuratAllMarkers) %>% glimpse()

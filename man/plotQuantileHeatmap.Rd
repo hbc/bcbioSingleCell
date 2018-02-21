@@ -20,7 +20,7 @@
 
 \item{n}{The number of breaks to create.}
 
-\item{annotationCol}{\emph{Optional}. \link{data.frame} that defines annotation
+\item{annotationCol}{\emph{Optional.} \link{data.frame} that defines annotation
 mappings for the columns.}
 
 \item{clusterCols}{Logical determining if columns should be arranged with
@@ -35,7 +35,7 @@ palette.}
 \item{legendColor}{Colors to use for legend labels. Defaults to the
 \code{\link[viridis:viridis]{viridis::viridis()}} palette.}
 
-\item{title}{\emph{Optional}. Plot title.}
+\item{title}{\emph{Optional.} Plot title.}
 }
 \description{
 Plot Heatmap with Quantile Breaks
@@ -45,9 +45,7 @@ This is helpful for more usefully visualizing single cell data.
 Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 }
 \examples{
-load(system.file(
-    file.path("extdata", "filtered.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell
 plotQuantileHeatmap(filtered)

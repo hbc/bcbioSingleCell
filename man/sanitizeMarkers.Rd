@@ -16,7 +16,7 @@ sanitizeMarkers(object, markers, ...)
 
 \item{markers}{\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 }
 \value{
 \link{grouped_df}, grouped by cluster ident.
@@ -25,12 +25,8 @@ sanitizeMarkers(object, markers, ...)
 Sanitize Markers Output
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seuratAllMarkersOriginal.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seuratAllMarkersOriginal.rda", package = "bcbioSingleCell"))
 
 # seurat
 sanitizeMarkers(

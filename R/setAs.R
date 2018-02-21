@@ -9,9 +9,7 @@
 #' @seealso `help(topic = "coerce", package = "methods")`.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "filtered.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 #'
 #' # Coerce bcbioSingleCell to seurat
 #' as(filtered, "seurat")
@@ -20,6 +18,7 @@ NULL
 
 
 # Constructors =================================================================
+# FIXME Migrate to `updateObject()` method
 #' Coerce Legacy bcbio Object to bcbioSingleCell class
 #'
 #' Compatible with old versions created by bcbioSingleCell package.

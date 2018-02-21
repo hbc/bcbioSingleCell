@@ -9,7 +9,7 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param maxPct Maximum percent standard deviation.
 #' @param minCumPct Minimum cumulative percent standard deviation.
@@ -23,9 +23,7 @@
 #' @seealso [Seurat::PCElbowPlot].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
 #' pcUse <- plotPCElbow(seurat)
@@ -134,7 +132,7 @@ setMethod(
     function(
         object,
         maxPct = 0.05,
-        minCumPct = 0.8,
+        minCumPct = 0.9,
         plot = TRUE) {
         # seurat slot descriptions
         # dr: dimensionality reduction

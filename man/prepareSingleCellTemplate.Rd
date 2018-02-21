@@ -15,7 +15,7 @@ prepareSingleCellTemplate(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 }
 \value{
 No value.
@@ -25,8 +25,12 @@ Prepare Single-Cell RNA-Seq RMarkdown Template
 }
 \examples{
 files <- c(
-    "_footer.Rmd", "_header.Rmd", "_output.yaml",
-    "bibliography.bib", "setup.R")
+    "_footer.Rmd",
+    "_header.Rmd",
+    "_output.yaml",
+    "_setup.R",
+    "bibliography.bib"
+)
 prepareSingleCellTemplate()
 all(file.exists(files))
 unlink(files)

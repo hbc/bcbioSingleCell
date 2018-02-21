@@ -16,12 +16,8 @@
 #'   [topMarkers()].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "topMarkers.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/topMarkers.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat, grouped_df
 #' # Let's plot the top 2 markers from cluster 0, as a quick example
@@ -31,6 +27,7 @@ NULL
 
 
 # Constructors =================================================================
+#' @importFrom basejump markdownHeader
 #' @importFrom dplyr rename
 #' @importFrom pbapply pblapply
 .plotTopMarkers <- function(
@@ -57,7 +54,7 @@ NULL
             warn("Maximum of 10 genes per cluster is recommended")
         }
         if (!is.null(headerLevel)) {
-            mdHeader(
+            markdownHeader(
                 paste("Cluster", cluster),
                 level = headerLevel,
                 tabset = TRUE,

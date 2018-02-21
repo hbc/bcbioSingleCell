@@ -20,7 +20,7 @@ plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 \item{cellTypesPerCluster}{Cell types per cluster grouped \link{tibble}. This must
 be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{color}{Color palette.}
 
@@ -37,12 +37,8 @@ type (per unbiased cluster). Cell types with too few (\code{min} cutoff) or too
 many (\code{max} cutoff) marker genes will be skipped.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "knownMarkersDetected.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
 glimpse(cellTypesPerCluster)

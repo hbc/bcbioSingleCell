@@ -4,14 +4,11 @@
 \name{cell2sample}
 \alias{cell2sample}
 \alias{cell2sample}
-\alias{cell2sample,character-method}
 \alias{cell2sample,bcbioSingleCell-method}
 \alias{cell2sample,seurat-method}
 \title{Cell to Sample Mappings}
 \usage{
 cell2sample(object, ...)
-
-\S4method{cell2sample}{character}(object, samples)
 
 \S4method{cell2sample}{bcbioSingleCell}(object)
 
@@ -20,27 +17,8 @@ cell2sample(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
-
-\item{samples}{Sample identifiers.}
+\item{...}{Additional arguments.}
 }
 \description{
 Cell to Sample Mappings
-}
-\examples{
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
-
-# bcbioSingleCell
-cell2sample(bcb) \%>\% glimpse()
-
-# seurat
-cell2sample(seurat) \%>\% glimpse()
-}
-\author{
-Michael Steinbaugh
 }

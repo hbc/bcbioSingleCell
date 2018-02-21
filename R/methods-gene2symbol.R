@@ -4,17 +4,13 @@
 #' @name gene2symbol
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase gene2symbol
+#' @importFrom basejump gene2symbol
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "bcb.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioRNASeq
 #' gene2symbol(bcb) %>% glimpse()

@@ -17,7 +17,7 @@ plotFeatureTSNE(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{features}{Character vector of features (e.g. gene expression, PC
 scores, number of genes detected).}
@@ -49,9 +49,7 @@ No return, only graphical output.
 Plot Feature t-SNE
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 plotFeatureTSNE(seurat, features = "PC1")

@@ -18,7 +18,7 @@ calculateMetrics(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 
 \item{annotable}{Annotable.}
 
@@ -34,9 +34,7 @@ Calculate Cellular Barcode Metrics Summary
 This should only be performed during the initial run loading.
 }
 \examples{
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell
 calculateMetrics(bcb) \%>\% glimpse()

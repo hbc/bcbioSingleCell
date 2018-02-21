@@ -14,7 +14,7 @@ fetchTSNEData(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{\emph{Additional arguments (for the S4 generic definition).}}
+\item{...}{Additional arguments.}
 }
 \value{
 \link{data.frame} of t-SNE points and metadata for each cell.
@@ -23,9 +23,7 @@ fetchTSNEData(object, ...)
 Fetch t-SNE Locations and Cellular Metadata
 }
 \examples{
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # seurat
 fetchTSNEData(seurat) \%>\% glimpse()

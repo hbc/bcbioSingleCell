@@ -8,11 +8,22 @@ bcb <- loadSingleCell(
     uploadDir = uploadDir,
     sampleMetadataFile = sampleMetadataFile)
 
+slotNames(bcb)
+names(assay(bcb))
+
 # Make the example bcbioSingleCell object more minimal to save disk space
 # First, let's pick only the top 250 genes that have the most robust expression.
 counts <- counts(bcb)
 if (!is(counts, "dgCMatrix")) {
     stop("counts should be sparse dgCMatrix")
+}
+if (is.null(colnames(counts))) {
+    stop("colnames are NULL")
+}
+# FIXME Migration to SingleCellExperiment uses rowRanges rather than rowData.
+# We may need to convert our object to use GenomicRanges...
+if (is.null(rownames(counts))) {
+    stop("rownames are NULL")
 }
 
 nGenes <- 1000L

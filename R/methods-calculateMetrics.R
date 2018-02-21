@@ -5,7 +5,7 @@
 #' @family QC Metrics Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param annotable Annotable.
 #' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
@@ -15,9 +15,7 @@
 #' @return [data.frame].
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "bcb.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' calculateMetrics(bcb) %>% glimpse()

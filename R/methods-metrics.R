@@ -7,7 +7,7 @@
 #'
 #' @importFrom bcbioBase metrics
 #'
-#' @inheritParams AllGenerics
+#' @inheritParams general
 #'
 #' @param interestingGroups Interesting group, to use for colors.
 #'
@@ -16,12 +16,8 @@
 #' @return [data.frame] with cellular barcodes as rows.
 #'
 #' @examples
-#' load(system.file(
-#'     file.path("extdata", "bcb.rda"),
-#'     package = "bcbioSingleCell"))
-#' load(system.file(
-#'     file.path("extdata", "seurat.rda"),
-#'     package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
 #' metrics(bcb) %>% glimpse()
@@ -49,11 +45,7 @@ setMethod(
         }
         colData <- colData(object)
         sampleID <- cell2sample(object)
-        # Check for cell ID dimension mismatch. This can happen if `cell2sample`
-        # mapping isn't updated inside the metadata slot.
-        if (!identical(rownames(colData), names(sampleID))) {
-            abort("`cellID` mismatch between `colData` and `cell2sample`")
-        }
+        assert_are_identical(rownames(colData), names(sampleID))
         sampleMetadata <- sampleMetadata(
             object,
             interestingGroups = interestingGroups)
@@ -67,19 +59,14 @@ setMethod(
             left_join(sampleMetadata, by = "sampleID") %>%
             .sanitizeMetrics() %>%
             column_to_rownames("cellID")
-        if (!identical(colnames(object), rownames(metrics))) {
-            abort(paste(
-                "`cellID` mismatch between object colnames",
-                "and metrics rownames"
-            ))
-        }
+        assert_are_identical(colnames(object), rownames(metrics))
         metrics
     })
 
 
 
 #' @rdname metrics
-#' @importFrom bcbioBase camel
+#' @importFrom basejump camel
 #' @importFrom dplyr mutate_if
 #' @importFrom tibble column_to_rownames rownames_to_column
 #' @export
