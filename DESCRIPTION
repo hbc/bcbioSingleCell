@@ -38,7 +38,7 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),
-    SummarizedExperiment (>= 1.8.0),
+    SummarizedExperiment (>= 1.6.5),
     bcbioBase (>= 0.1.4),
     Seurat (>= 2.2.1)
 Imports:
