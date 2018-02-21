@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ensembl Annotations — annotable • bcbioSingleCell</title>
+<title>Define Cell to Sample Mappings — mapCellsToSamples • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,65 +83,49 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Ensembl Annotations</h1>
+    <h1>Define Cell to Sample Mappings</h1>
     </div>
 
     
-    <p>Ensembl Annotations</p>
+    <p>This function extracts <code>sampleID</code> from the <code>cellID</code> column using grep
+matching.</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>annotable</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>annotable</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>mapCellsToSamples</span>(<span class='no'>cells</span>, <span class='no'>samples</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
+      <th>cells</th>
+      <td><p>Cell identifiers.</p></td>
+    </tr>
+    <tr>
+      <th>samples</th>
+      <td><p>Sample identifiers.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data.frame</p>
+    <p>Named factor containing cell IDs as the names, and samples as the
+factor levels.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='co'># bcbioSingleCell</span>
-<span class='fu'>annotable</span>(<span class='no'>bcb</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1,000
-#&gt; Variables: 11
-#&gt; $ ensgene        &lt;chr&gt; "ENSG00000000457", "ENSG00000002586", "ENSG000000029...
-#&gt; $ symbol         &lt;chr&gt; "SCYL3", "CD99", "TMEM176A", "SLC4A1", "SLC25A5", "D...
-#&gt; $ description    &lt;chr&gt; "SCY1 like pseudokinase 3 [Source:HGNC Symbol;Acc:HG...
-#&gt; $ biotype        &lt;chr&gt; "protein_coding", "protein_coding", "protein_coding"...
-#&gt; $ broadClass     &lt;chr&gt; "coding", "coding", "coding", "coding", "coding", "c...
-#&gt; $ geneSeqStart   &lt;int&gt; 169849631, 2691179, 150800403, 44248385, 119468400, ...
-#&gt; $ geneSeqEnd     &lt;int&gt; 169894267, 2741309, 150805120, 44268141, 119471319, ...
-#&gt; $ seqName        &lt;chr&gt; "1", "X", "7", "17", "X", "17", "19", "8", "1", "17"...
-#&gt; $ seqStrand      &lt;int&gt; -1, 1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, 1, 1, 1...
-#&gt; $ seqCoordSystem &lt;chr&gt; "chromosome", "chromosome", "chromosome", "chromosom...
-#&gt; $ entrez         &lt;I(list)&gt;  57147,   4267,  55365,   6521,    292,  56919, ...</div><div class='input'>
-<span class='co'># seurat</span>
-<span class='fu'>annotable</span>(<span class='no'>seurat</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1,000
-#&gt; Variables: 11
-#&gt; $ ensgene        &lt;chr&gt; "ENSG00000000457", "ENSG00000002586", "ENSG000000029...
-#&gt; $ symbol         &lt;chr&gt; "SCYL3", "CD99", "TMEM176A", "SLC4A1", "SLC25A5", "D...
-#&gt; $ description    &lt;chr&gt; "SCY1 like pseudokinase 3 [Source:HGNC Symbol;Acc:HG...
-#&gt; $ biotype        &lt;chr&gt; "protein_coding", "protein_coding", "protein_coding"...
-#&gt; $ broadClass     &lt;chr&gt; "coding", "coding", "coding", "coding", "coding", "c...
-#&gt; $ geneSeqStart   &lt;int&gt; 169849631, 2691179, 150800403, 44248385, 119468400, ...
-#&gt; $ geneSeqEnd     &lt;int&gt; 169894267, 2741309, 150805120, 44268141, 119471319, ...
-#&gt; $ seqName        &lt;chr&gt; "1", "X", "7", "17", "X", "17", "19", "8", "1", "17"...
-#&gt; $ seqStrand      &lt;int&gt; -1, 1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, 1, 1, 1...
-#&gt; $ seqCoordSystem &lt;chr&gt; "chromosome", "chromosome", "chromosome", "chromosom...
-#&gt; $ entrez         &lt;list&gt; [57147, 4267, 55365, 6521, 292, 56919, 55049, 6224,...</div></pre>
+<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>bcb</span>)
+<span class='no'>samples</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sampleMetadata.html'>sampleMetadata</a></span>(<span class='no'>bcb</span>)<span class='kw'>[[</span><span class='st'>"sampleID"</span>]]
+
+<span class='no'>map</span> <span class='kw'>&lt;-</span> <span class='fu'>mapCellsToSamples</span>(<span class='no'>cells</span>, <span class='no'>samples</span>)
+<span class='fu'>head</span>(<span class='no'>map</span>)</div><div class='output co'>#&gt; run1_AGAGGATA_AAACACTA_CTTAGGTA run1_AGAGGATA_AAACACTA_CTTCGATT 
+#&gt;                   run1_AGAGGATA                   run1_AGAGGATA 
+#&gt; run1_AGAGGATA_AAACCGCC_GAGTTTCG run1_AGAGGATA_AAACCGCC_TAGCCTCG 
+#&gt;                   run1_AGAGGATA                   run1_AGAGGATA 
+#&gt; run1_AGAGGATA_AAACGATC_TTTACCCT run1_AGAGGATA_AAACTACA_CCACATTA 
+#&gt;                   run1_AGAGGATA                   run1_AGAGGATA 
+#&gt; Levels: run1_AGAGGATA run2_AGAGGATA</div><div class='input'><span class='fu'>levels</span>(<span class='no'>map</span>)</div><div class='output co'>#&gt; [1] "run1_AGAGGATA" "run2_AGAGGATA"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

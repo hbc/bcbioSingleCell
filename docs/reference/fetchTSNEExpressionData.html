@@ -105,7 +105,7 @@ the geometric mean of the gene expression from a seurat object.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>genes</th>
@@ -126,9 +126,7 @@ aggregate marker expression values (<code>mean</code>, <code>median</code>, and 
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
 <span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>seurat</span>) <span class='kw'>%&gt;%</span> <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span> <span class='fu'>head</span>()
 <span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; ENSG00000000457 ENSG00000002586 ENSG00000002933 ENSG00000004939 ENSG00000005022 

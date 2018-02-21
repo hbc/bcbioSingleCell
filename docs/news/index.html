@@ -88,9 +88,34 @@
     </div>
 
     <div class="contents">
-    <div id="bcbiosinglecell-0-0-30-2018-01-26" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-30-2018-01-26" class="anchor"></a>bcbioSingleCell 0.0.30 (2018-01-26)</h1>
+    <div id="bcbiosinglecell-0-0-31-2018-02-21" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-31-2018-02-21" class="anchor"></a>bcbioSingleCell 0.0.31 (2018-02-21)</h2>
+<ul>
+<li>Improved handling of old Ensembl release version for CellRanger output.</li>
+<li>Switched R Markdown templates to consistent snake_case formatting for variables and file names.</li>
+<li>
+<code>prepareSingleCellTemplate()</code> now uses <code>_setup.R</code> instead of <code>setup.R</code>.</li>
+<li>Updated unit tests to work with new assert checks.</li>
+<li>Export <code><a href="../reference/mapCellsToSamples.html">mapCellsToSamples()</a></code> instead of <code>cell2sample()</code>. <code>cell2sample()</code> now simply acts as an accessor function, returning the internally stored cell2sample mappings rather than trying to calculate. <code><a href="../reference/mapCellsToSamples.html">mapCellsToSamples()</a></code> performs the actual mapping from cellular barcodes to sample identifiers.</li>
+<li>Export <code>metricsPerSample()</code>
+</li>
+<li>Now using BiocParallel bpmapply to loop across the sparse matrix files per sample internally in the <code>.sparseCountsList()</code> function, which is shared between <code><a href="../reference/loadSingleCell.html">loadSingleCell()</a></code> and <code><a href="../reference/loadCellRanger.html">loadCellRanger()</a></code>.</li>
+<li>Updated assert checks.</li>
+<li>Updated <code>prepareSingleCellTemplate()</code> to explicitly state which files to include for each R Markdown template, rather than inheriting from <code><a href="http://www.rdocumentation.org/packages/bcbioBase/topics/prepareTemplate">bcbioBase::prepareTemplate()</a></code>.</li>
+<li>
+<code><a href="../reference/selectSamples.html">selectSamples()</a></code> now fails on a sample mismatch, rather than warning.</li>
+<li>Improved internal code for subset method, adding a <code>drop = FALSE</code> argument to the cellular barcode matching call.</li>
+<li>Made all file loads in working examples a single line.</li>
+<li>Simplified R Markdown directory paths.</li>
+<li>Made all loads in unit tests a single line.</li>
+<li>Renamed <code>programs</code> metadata slot to <code>programVersions</code>, to improve consistency with bcbioRNASeq package.</li>
+<li>Updated internal sample metadata sanitization to ensure all columns are factors.</li>
+</ul>
+</div>
+    <div id="bcbiosinglecell-0-0-30-2018-01-26" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-30-2018-01-26" class="anchor"></a>bcbioSingleCell 0.0.30 (2018-01-26)</h2>
 <ul>
 <li>Fixes for QC plot labeling of bcbioSingleCell object with different per sample filtering cutoffs applied.</li>
 <li>Added new <code>fetchGeneData()</code> function, that wraps the functionality of <code><a href="http://www.rdocumentation.org/packages/Seurat/topics/FetchData">Seurat::FetchData()</a></code> for specific genes.</li>
@@ -110,9 +135,9 @@
 <li>Suppress package startup messages in R Markdown templates.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-29-2018-01-24" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-29-2018-01-24" class="anchor"></a>bcbioSingleCell 0.0.29 (2018-01-24)</h1>
+    <div id="bcbiosinglecell-0-0-29-2018-01-24" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-29-2018-01-24" class="anchor"></a>bcbioSingleCell 0.0.29 (2018-01-24)</h2>
 <ul>
 <li>Switched to rlang methods for errors, messages, and warnings: <code>abort()</code>, <code>inform()</code>, and <code>warn()</code>.</li>
 <li>Updated <code>filterCells()</code> function to enable per sample filtering cutoffs. This works by passing in a named numeric vector, where the names must match the internal <code>sampleID</code> metadata column (not <code>sampleName</code>).</li>
@@ -121,9 +146,9 @@
 <li>Explicit integers are now consistently used in all of the function parameter arguments.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-28-2018-01-22" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-28-2018-01-22" class="anchor"></a>bcbioSingleCell 0.0.28 (2018-01-22)</h1>
+    <div id="bcbiosinglecell-0-0-28-2018-01-22" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-28-2018-01-22" class="anchor"></a>bcbioSingleCell 0.0.28 (2018-01-22)</h2>
 <ul>
 <li>Manually define functions used to read barcodes and matrices. This improves the functionality of the internal <code>.readSparseCounts()</code> function.</li>
 <li>Improved sample directory matching for cellranger output.</li>
@@ -131,9 +156,9 @@
 <li>Added tabbed histogram, violin, and barplots for appropriate quality control functions in the R Markdown code.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-27-2018-01-18" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-27-2018-01-18" class="anchor"></a>bcbioSingleCell 0.0.27 (2018-01-18)</h1>
+    <div id="bcbiosinglecell-0-0-27-2018-01-18" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-27-2018-01-18" class="anchor"></a>bcbioSingleCell 0.0.27 (2018-01-18)</h2>
 <ul>
 <li>Migrated core dependency imports from <a href="http://steinbaugh.com/basejump">basejump</a> to <a href="http://bioinformatics.sph.harvard.edu/bcbioBase">bcbioBase</a>.</li>
 <li>Improved <code>colnames</code> and <code>rownames</code> handling for internal <code>.readSparseCounts()</code> function.</li>
@@ -152,9 +177,9 @@
 <li>Improved internal <code>cell2sample</code> handling in subset method code.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-26-2017-12-18" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-26-2017-12-18" class="anchor"></a>bcbioSingleCell 0.0.26 (2017-12-18)</h1>
+    <div id="bcbiosinglecell-0-0-26-2017-12-18" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-26-2017-12-18" class="anchor"></a>bcbioSingleCell 0.0.26 (2017-12-18)</h2>
 <ul>
 <li>Renamed <code>readMarkersFile()</code> to <code>readCellTypeMarkersFile()</code>.</li>
 <li>Improved internal handling of multiplexed CellRanger samples. These are count matrices with cellular barcodes ending in <code>-2</code>, for example.</li>
@@ -170,9 +195,9 @@
 <li>Added additional unit tests to improve code coverage.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-25-2017-12-11" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-25-2017-12-11" class="anchor"></a>bcbioSingleCell 0.0.25 (2017-12-11)</h1>
+    <div id="bcbiosinglecell-0-0-25-2017-12-11" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-25-2017-12-11" class="anchor"></a>bcbioSingleCell 0.0.25 (2017-12-11)</h2>
 <ul>
 <li>Prepared a minimal working example dataset.</li>
 <li>Added some initial unit tests.</li>
@@ -219,9 +244,9 @@
 <li>Initial commit of example data script in the <code>data-raw/</code> directory!</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-24-2017-11-27" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-24-2017-11-27" class="anchor"></a>bcbioSingleCell 0.0.24 (2017-11-27)</h1>
+    <div id="bcbiosinglecell-0-0-24-2017-11-27" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-24-2017-11-27" class="anchor"></a>bcbioSingleCell 0.0.24 (2017-11-27)</h2>
 <ul>
 <li>Raw cellular barcodes are now slotted in <code>object@cellularBarcodes</code> as a <code>data.frame</code> instead of a per sample <code>list</code>. This makes downstream subsetting operations on the barcodes simpler.</li>
 <li>Bug fixes for <code>cell2sample</code> mapping.</li>
@@ -242,9 +267,9 @@
 <li>Initial methods support for custom bracket-based subsetting.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-23-2017-11-22" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-23-2017-11-22" class="anchor"></a>bcbioSingleCell 0.0.23 (2017-11-22)</h1>
+    <div id="bcbiosinglecell-0-0-23-2017-11-22" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-23-2017-11-22" class="anchor"></a>bcbioSingleCell 0.0.23 (2017-11-22)</h2>
 <ul>
 <li>Improved facet wrapping of aggregated samples (<code>sampleNameAggregate</code> present in sample metadata), but removing code support for wrapping by multiplexed FASTQ description.</li>
 <li>Simplified handling of <code>bcbioSingleCell</code> objects with <code>filterCells()</code> applied. This information is stored in the <code>metadata()</code> slot as 3 variables: (1) <code>filterParams</code>, numeric vector of the parameters used to define the cell filtering cutoffs; (2) <code>filterCells</code>, character vector of the cellular barcode IDs that passed filtering; (3) <code>filterGenes</code>, character vector of the Ensembl gene identifiers that have passed filtering, as determined by the <code>minCellsPerGene</code> parameter.</li>
@@ -270,9 +295,9 @@
 <li>Clustering template fixes. Now uses <code>plotFeatureTSNE()</code> to assess quality control metrics on tSNE.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-22-2017-11-17" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-22-2017-11-17" class="anchor"></a>bcbioSingleCell 0.0.22 (2017-11-17)</h1>
+    <div id="bcbiosinglecell-0-0-22-2017-11-17" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-22-2017-11-17" class="anchor"></a>bcbioSingleCell 0.0.22 (2017-11-17)</h2>
 <ul>
 <li>Now internally stashing a <code>cell2sample</code> data.frame, which helps speed up operations on cellular barcode metrics calculations for quality control plots.</li>
 <li>Improved support for optional <code>annotable</code>, <code>ensemblVersion</code>, <code>gtfFile</code>, and <code>sampleMetadataFile</code> arguments in <code><a href="../reference/loadSingleCell.html">loadSingleCell()</a></code> function.</li>
@@ -284,9 +309,9 @@
 <li>Added a troubleshooting section to the GitHub README, with a note on maximum DLLs.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-21-2017-11-08" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-21-2017-11-08" class="anchor"></a>bcbioSingleCell 0.0.21 (2017-11-08)</h1>
+    <div id="bcbiosinglecell-0-0-21-2017-11-08" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-21-2017-11-08" class="anchor"></a>bcbioSingleCell 0.0.21 (2017-11-08)</h2>
 <ul>
 <li>Updated package imports to match Bioconductor 3.6.</li>
 <li>Initial support for <code>plotCellTypesPerCluster()</code>.</li>
@@ -307,9 +332,9 @@
 <li>Improved <code>bcbioSingleCell</code> to <code>seurat</code> coercion method with <code>setAs()</code>.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-20-2017-10-24" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-20-2017-10-24" class="anchor"></a>bcbioSingleCell 0.0.20 (2017-10-24)</h1>
+    <div id="bcbiosinglecell-0-0-20-2017-10-24" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-20-2017-10-24" class="anchor"></a>bcbioSingleCell 0.0.20 (2017-10-24)</h2>
 <ul>
 <li>Upgraded to basejump 0.1.0 and Seurat 2.1.0 dependencies.</li>
 <li>Improved documentation of NAMESPACE imports per function.</li>
@@ -323,9 +348,9 @@
 <li>Removed lintr checks from testthat. This is breaking <code><a href="http://www.rdocumentation.org/packages/devtools/topics/test">devtools::test()</a></code>.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-19-2017-10-12" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-19-2017-10-12" class="anchor"></a>bcbioSingleCell 0.0.19 (2017-10-12)</h1>
+    <div id="bcbiosinglecell-0-0-19-2017-10-12" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-19-2017-10-12" class="anchor"></a>bcbioSingleCell 0.0.19 (2017-10-12)</h2>
 <ul>
 <li>Renamed main object class from <code>bcbioSCDataSet</code> to <code>bcbioSingleCell</code>.</li>
 <li>Cell filtering with <code>filterCells()</code> will now slot a named logical vector into <code>metadata(object)[["filteredCells"]]</code>, which will be used to dynamically subset the slotted internal <code>SummarizedExperiment</code> data. Now that we’re using this approach, we can return a modified <code>bcbioSingleCell</code> object rather than defining a separate <code>bcbioSCFiltered</code> class.</li>
@@ -343,9 +368,9 @@
 <li>Improved Ensembl release version support (<code>ensemblVersion</code>).</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-18-2017-09-17" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-18-2017-09-17" class="anchor"></a>bcbioSingleCell 0.0.18 (2017-09-17)</h1>
+    <div id="bcbiosinglecell-0-0-18-2017-09-17" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-18-2017-09-17" class="anchor"></a>bcbioSingleCell 0.0.18 (2017-09-17)</h2>
 <ul>
 <li>Renamed <code><a href="../reference/deprecated.html">plotClusters()</a></code> to <code>plotMarkers()</code>. Added soft deprecation.</li>
 <li>Added <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color support in tSNE plots and heatmaps.</li>
@@ -365,9 +390,9 @@
 <li>Improved <code>bcbioSCFiltered</code> to <code>seurat</code> coercion to slot relevant bcbio metadata.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-17-2017-09-03" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-17-2017-09-03" class="anchor"></a>bcbioSingleCell 0.0.17 (2017-09-03)</h1>
+    <div id="bcbiosinglecell-0-0-17-2017-09-03" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-17-2017-09-03" class="anchor"></a>bcbioSingleCell 0.0.17 (2017-09-03)</h2>
 <ul>
 <li>Renamed package from <code>bcbioSinglecell</code> to <code>bcbioSingleCell</code>.</li>
 <li>Added <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color palette support to quality control plots.</li>
@@ -378,9 +403,9 @@
 <li>Improved <a href="https://github.com/hadley/pkgdown">pkgdown</a> settings and website appearance.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-16-2017-08-25" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-16-2017-08-25" class="anchor"></a>bcbioSingleCell 0.0.16 (2017-08-25)</h1>
+    <div id="bcbiosinglecell-0-0-16-2017-08-25" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-16-2017-08-25" class="anchor"></a>bcbioSingleCell 0.0.16 (2017-08-25)</h2>
 <ul>
 <li>Support for CRAN release of <a href="http://satijalab.org/seurat">Seurat</a>.</li>
 <li>Improved documentation of package NAMESPACE in <code>bcbioSinglecell-package.R</code> file.</li>
@@ -405,9 +430,9 @@
 <li>Miscellaneous <a href="http://rmarkdown.rstudio.com">RMarkdown</a> template improvements.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-15-2017-08-11" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-15-2017-08-11" class="anchor"></a>bcbioSingleCell 0.0.15 (2017-08-11)</h1>
+    <div id="bcbiosinglecell-0-0-15-2017-08-11" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-15-2017-08-11" class="anchor"></a>bcbioSingleCell 0.0.15 (2017-08-11)</h2>
 <ul>
 <li>Renamed functions in <code>lowerCamelCase</code> from <code>snake_case</code>.</li>
 <li>Draft support for <a href="http://cole-trapnell-lab.github.io/monocle-release/">monocle</a>, <a href="http://bioconductor.org/packages/release/bioc/html/scater.html">scater</a>, and <a href="https://bioconductor.org/packages/release/bioc/html/scone.html">scone</a>.</li>
@@ -420,9 +445,9 @@
 <li>Miscellaneous documentation fixes.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-14-2017-07-26" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-14-2017-07-26" class="anchor"></a>bcbioSingleCell 0.0.14 (2017-07-26)</h1>
+    <div id="bcbiosinglecell-0-0-14-2017-07-26" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-14-2017-07-26" class="anchor"></a>bcbioSingleCell 0.0.14 (2017-07-26)</h2>
 <ul>
 <li>Migrated plotting functions to S4 methods.</li>
 <li>Improved sample metadata handling.</li>
@@ -433,104 +458,104 @@
 <li>Initial support for <a href="https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html">SureCell</a> UMIs.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-13-2017-07-10" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-13-2017-07-10" class="anchor"></a>bcbioSingleCell 0.0.13 (2017-07-10)</h1>
+    <div id="bcbiosinglecell-0-0-13-2017-07-10" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-13-2017-07-10" class="anchor"></a>bcbioSingleCell 0.0.13 (2017-07-10)</h2>
 <ul>
 <li>Integrated [bcbio][] and <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> workflows into <code>load_run()</code>.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-12-2017-06-28" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-12-2017-06-28" class="anchor"></a>bcbioSingleCell 0.0.12 (2017-06-28)</h1>
+    <div id="bcbiosinglecell-0-0-12-2017-06-28" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-12-2017-06-28" class="anchor"></a>bcbioSingleCell 0.0.12 (2017-06-28)</h2>
 <ul>
 <li>Initial support for S4 object creation using <a href="https://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">SummarizedExperiment</a>.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-11-2017-06-24" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-11-2017-06-24" class="anchor"></a>bcbioSingleCell 0.0.11 (2017-06-24)</h1>
+    <div id="bcbiosinglecell-0-0-11-2017-06-24" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-11-2017-06-24" class="anchor"></a>bcbioSingleCell 0.0.11 (2017-06-24)</h2>
 <ul>
 <li>Added <a href="https://github.com/hadley/testthat">testthat</a>, <a href="https://github.com/jimhester/lintr">lintr</a>, and <a href="https://github.com/jimhester/covr">covr</a> support for code coverage.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-10-2017-06-15" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-10-2017-06-15" class="anchor"></a>bcbioSingleCell 0.0.10 (2017-06-15)</h1>
+    <div id="bcbiosinglecell-0-0-10-2017-06-15" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-10-2017-06-15" class="anchor"></a>bcbioSingleCell 0.0.10 (2017-06-15)</h2>
 <ul>
 <li>Updated <a href="http://rmarkdown.rstudio.com">RMarkdown</a> templates.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-9-2017-06-12" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-9-2017-06-12" class="anchor"></a>bcbioSingleCell 0.0.9 (2017-06-12)</h1>
+    <div id="bcbiosinglecell-0-0-9-2017-06-12" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-9-2017-06-12" class="anchor"></a>bcbioSingleCell 0.0.9 (2017-06-12)</h2>
 <ul>
 <li>Compatibility update for basejump S4 NAMESPACE changes.</li>
 <li>Improved plots for quality control and filtering.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-8-2017-05-28" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-8-2017-05-28" class="anchor"></a>bcbioSingleCell 0.0.8 (2017-05-28)</h1>
+    <div id="bcbiosinglecell-0-0-8-2017-05-28" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-8-2017-05-28" class="anchor"></a>bcbioSingleCell 0.0.8 (2017-05-28)</h2>
 <ul>
 <li>Renamed mitochondrial plot functions.</li>
 <li>Changed presentation of mitochondrial abundance as ratio instead of percentage.</li>
 <li>Simplified NAMESPACE by offloading dependencies to basejump.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-7-2017-05-13" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-7-2017-05-13" class="anchor"></a>bcbioSingleCell 0.0.7 (2017-05-13)</h1>
+    <div id="bcbiosinglecell-0-0-7-2017-05-13" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-7-2017-05-13" class="anchor"></a>bcbioSingleCell 0.0.7 (2017-05-13)</h2>
 <ul>
 <li>Initial support for loading of 10x Genomics <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> output.</li>
 <li>Add detection of droplet method based on the metadata file.</li>
 <li>Draft support for import of <a href="https://1cell-bio.com">inDrop</a> i5 index barcode counts.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-6-2017-05-10" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-6-2017-05-10" class="anchor"></a>bcbioSingleCell 0.0.6 (2017-05-10)</h1>
+    <div id="bcbiosinglecell-0-0-6-2017-05-10" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-6-2017-05-10" class="anchor"></a>bcbioSingleCell 0.0.6 (2017-05-10)</h2>
 <ul>
 <li>Modified <code>load_run()</code> function for improved consistency with <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package.</li>
 <li>Initial incorporation of scater package into workflow.</li>
 <li>Initial commit of RMarkdown template skeletons.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-5-2017-05-08" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-5-2017-05-08" class="anchor"></a>bcbioSingleCell 0.0.5 (2017-05-08)</h1>
+    <div id="bcbiosinglecell-0-0-5-2017-05-08" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-5-2017-05-08" class="anchor"></a>bcbioSingleCell 0.0.5 (2017-05-08)</h2>
 <ul>
 <li>Improvements to run object based on code in <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package.</li>
 <li>Better handling in plots for datasets with many samples.</li>
 <li>Labeled quality control cutoffs on the plots.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-4-2017-04-26" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-4-2017-04-26" class="anchor"></a>bcbioSingleCell 0.0.4 (2017-04-26)</h1>
+    <div id="bcbiosinglecell-0-0-4-2017-04-26" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-4-2017-04-26" class="anchor"></a>bcbioSingleCell 0.0.4 (2017-04-26)</h2>
 <ul>
 <li>Prepared package for <a href="http://www.tidyverse.org">tidyverse</a> dependency updates.</li>
 <li>Updated HPC server detection.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-3-2017-04-20" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-3-2017-04-20" class="anchor"></a>bcbioSingleCell 0.0.3 (2017-04-20)</h1>
+    <div id="bcbiosinglecell-0-0-3-2017-04-20" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-3-2017-04-20" class="anchor"></a>bcbioSingleCell 0.0.3 (2017-04-20)</h2>
 <ul>
 <li>NAMESPACE consolidation and function cleanup.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-2-2017-04-12" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-2-2017-04-12" class="anchor"></a>bcbioSingleCell 0.0.2 (2017-04-12)</h1>
+    <div id="bcbiosinglecell-0-0-2-2017-04-12" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-2-2017-04-12" class="anchor"></a>bcbioSingleCell 0.0.2 (2017-04-12)</h2>
 <ul>
 <li>Added quality control plotting functions.</li>
 <li>Converted all functions to standard evaluation.</li>
 </ul>
 </div>
-    <div id="bcbiosinglecell-0-0-1-2017-03-01" class="section level1">
-<h1 class="hasAnchor">
-<a href="#bcbiosinglecell-0-0-1-2017-03-01" class="anchor"></a>bcbioSingleCell 0.0.1 (2017-03-01)</h1>
+    <div id="bcbiosinglecell-0-0-1-2017-03-01" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-0-1-2017-03-01" class="anchor"></a>bcbioSingleCell 0.0.1 (2017-03-01)</h2>
 <ul>
 <li>Initial draft release.</li>
 </ul>
@@ -542,6 +567,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bcbiosinglecell-0-0-31-2018-02-21">0.0.31</a></li>
         <li><a href="#bcbiosinglecell-0-0-30-2018-01-26">0.0.30</a></li>
         <li><a href="#bcbiosinglecell-0-0-29-2018-01-24">0.0.29</a></li>
         <li><a href="#bcbiosinglecell-0-0-28-2018-01-22">0.0.28</a></li>

@@ -105,7 +105,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>minCells</th>
@@ -129,12 +129,10 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"filtered.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/filtered.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
 <span class='co'># This will save the subsets per sample to disk</span>
-<span class='fu'>subsetPerSample</span>(<span class='no'>filtered</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='output co'>#&gt; <span class='error'>Error: Arguments must be character vectors</span></div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>dir</span>(<span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt; character(0)</div><div class='input'>
+<span class='fu'>subsetPerSample</span>(<span class='no'>filtered</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: M1</span></div><div class='output co'>#&gt; <span class='message'>243 cells matched</span></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 01s</div><div class='output co'>#&gt; [1] "M1"</div><div class='input'><span class='fu'>dir</span>(<span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt; [1] "M1.rda"</div><div class='input'>
 <span class='co'># Cleanup</span>
 <span class='fu'>unlink</span>(<span class='st'>"subsetPerSample"</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>

@@ -113,7 +113,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>tsneColor</th>
@@ -161,12 +161,8 @@ for the number of genes to plot here in a future update.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"topMarkers.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/topMarkers.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
 <span class='co'># seurat, grouped_df</span>
 <span class='co'># Let's plot the top 2 markers from cluster 0, as a quick example</span>
@@ -180,7 +176,7 @@ for the number of genes to plot here in a future update.</p>
 #&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ### MYL7
-#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |+++++++++                                         | 17% ~22s             |+++++++++++++++++                                 | 33% ~09s             |+++++++++++++++++++++++++                         | 50% ~04s             |++++++++++++++++++++++++++++++++++                | 67% ~02s             |++++++++++++++++++++++++++++++++++++++++++        | 83% ~01s             |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 04s</div></pre>
+#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |+++++++++                                         | 17% ~20s             |+++++++++++++++++                                 | 33% ~08s             |+++++++++++++++++++++++++                         | 50% ~04s             |++++++++++++++++++++++++++++++++++                | 67% ~02s             |++++++++++++++++++++++++++++++++++++++++++        | 83% ~01s             |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 04s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -2,6 +2,7 @@
 #'
 #' @rdname assert
 #' @name assert
+#' @keywords internal
 #'
 #' @importFrom assertive assert_all_are_dirs
 #' @importFrom assertive assert_all_are_existing_files
