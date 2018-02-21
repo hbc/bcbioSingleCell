@@ -4,23 +4,19 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    bcb_file: "data/YYYY-MM-DD/bcb_filtered.rda"
+    bcb_file: "bcb_filtered.rda"
     seurat_name: "seurat"
     pc_compute: 20
     pc_use: FALSE
     vars_to_regress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
     resolution: 1
-    output_dir: "."
+    data_dir: "."
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
 # Last modified 2018-02-12
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
-
-# Directory paths
-data_dir <- file.path(params$output_dir, "data", Sys.Date())
-dir.create(data_dir, recursive = TRUE, showWarnings = FALSE)
 
 # Load bcbioSingleCell object
 bcb_name <- load(params$bcb_file)
@@ -132,7 +128,7 @@ g2m_genes <- cell_cycle_markers %>%
     pull("symbol")
 print(g2m_genes)
 
-saveData(cell_cycle_markers, s_genes, g2m_genes, dir = data_dir)
+saveData(cell_cycle_markers, s_genes, g2m_genes, dir = params$data_dir)
 ```
 
 ```{r cell_cycle_scoring}
@@ -144,7 +140,7 @@ seurat <- CellCycleScoring(
 assignAndSaveData(
     name = paste(params$seurat_name, "preregress", sep = "_"),
     object = seurat,
-    dir = data_dir)
+    dir = params$data_dir)
 ```
 
 Here we are checking to see if the cells are grouping by cell cycle. If we don't see clear grouping of the cells into `G1`, `G2M`, and `S` clusters on the PCA plot, then it is recommended that we don't regress out cell-cycle variation. When this is the case, remove `S.Score` and `G2M.Score` from the variables to regress (`vars_to_regress`) in the R Markdown YAML parameters.
@@ -300,7 +296,7 @@ seurat <- RunTSNE(
 assignAndSaveData(
     name = params$seurat_name,
     object = seurat,
-    dir = data_dir)
+    dir = params$data_dir)
 ```
 
 ```{r print_tsne_params}
