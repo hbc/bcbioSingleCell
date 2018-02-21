@@ -1,4 +1,24 @@
-# bcbioSingleCell 0.0.30 (2018-01-26)
+## bcbioSingleCell 0.0.31 (2018-02-21)
+
+- Improved handling of old Ensembl release version for CellRanger output.
+- Switched R Markdown templates to consistent snake_case formatting for variables and file names.
+- `prepareSingleCellTemplate()` now uses `_setup.R` instead of `setup.R`.
+- Updated unit tests to work with new assert checks.
+- Export `mapCellsToSamples()` instead of `cell2sample()`. `cell2sample()` now simply acts as an accessor function, returning the internally stored cell2sample mappings rather than trying to calculate. `mapCellsToSamples()` performs the actual mapping from cellular barcodes to sample identifiers.
+- Export `metricsPerSample()` 
+- Now using BiocParallel bpmapply to loop across the sparse matrix files per sample internally in the `.sparseCountsList()` function, which is shared between `loadSingleCell()` and `loadCellRanger()`.
+- Updated assert checks.
+- Updated `prepareSingleCellTemplate()` to explicitly state which files to include for each R Markdown template, rather than inheriting from `bcbioBase::prepareTemplate()`.
+- `selectSamples()` now fails on a sample mismatch, rather than warning.
+- Improved internal code for subset method, adding a `drop = FALSE` argument to the cellular barcode matching call.
+- Made all file loads in working examples a single line.
+- Simplified R Markdown directory paths.
+- Made all loads in unit tests a single line.
+- Renamed `programs` metadata slot to `programVersions`, to improve consistency with bcbioRNASeq package.
+- Updated internal sample metadata sanitization to ensure all columns are factors.
+
+
+## bcbioSingleCell 0.0.30 (2018-01-26)
 
 - Fixes for QC plot labeling of bcbioSingleCell object with different per sample filtering cutoffs applied.
 - Added new `fetchGeneData()` function, that wraps the functionality of `Seurat::FetchData()` for specific genes.
@@ -15,8 +35,7 @@
 - Suppress package startup messages in R Markdown templates.
 
 
-
-# bcbioSingleCell 0.0.29 (2018-01-24)
+## bcbioSingleCell 0.0.29 (2018-01-24)
 
 - Switched to rlang methods for errors, messages, and warnings: `abort()`, `inform()`, and `warn()`.
 - Updated `filterCells()` function to enable per sample filtering cutoffs. This works by passing in a named numeric vector, where the names must match the internal `sampleID` metadata column (not `sampleName`).
@@ -25,8 +44,7 @@
 - Explicit integers are now consistently used in all of the function parameter arguments.
 
 
-
-# bcbioSingleCell 0.0.28 (2018-01-22)
+## bcbioSingleCell 0.0.28 (2018-01-22)
 
 - Manually define functions used to read barcodes and matrices. This improves the functionality of the internal `.readSparseCounts()` function.
 - Improved sample directory matching for cellranger output.
@@ -34,8 +52,7 @@
 - Added tabbed histogram, violin, and barplots for appropriate quality control functions in the R Markdown code.
 
 
-
-# bcbioSingleCell 0.0.27 (2018-01-18)
+## bcbioSingleCell 0.0.27 (2018-01-18)
 
 - Migrated core dependency imports from [basejump][] to [bcbioBase][].
 - Improved `colnames` and `rownames` handling for internal `.readSparseCounts()` function.
@@ -54,8 +71,7 @@
 - Improved internal `cell2sample` handling in subset method code.
 
 
-
-# bcbioSingleCell 0.0.26 (2017-12-18)
+## bcbioSingleCell 0.0.26 (2017-12-18)
 
 - Renamed `readMarkersFile()` to `readCellTypeMarkersFile()`.
 - Improved internal handling of multiplexed CellRanger samples. These are count matrices with cellular barcodes ending in `-2`, for example.
@@ -71,8 +87,7 @@
 - Added additional unit tests to improve code coverage.
 
 
-
-# bcbioSingleCell 0.0.25 (2017-12-11)
+## bcbioSingleCell 0.0.25 (2017-12-11)
 
 - Prepared a minimal working example dataset.
 - Added some initial unit tests.
@@ -112,8 +127,7 @@
 - Initial commit of example data script in the `data-raw/` directory!
 
 
-
-# bcbioSingleCell 0.0.24 (2017-11-27)
+## bcbioSingleCell 0.0.24 (2017-11-27)
 
 - Raw cellular barcodes are now slotted in `object@cellularBarcodes` as a `data.frame` instead of a per sample `list`. This makes downstream subsetting operations on the barcodes simpler.
 - Bug fixes for `cell2sample` mapping.
@@ -134,8 +148,7 @@
 - Initial methods support for custom bracket-based subsetting.
 
 
-
-# bcbioSingleCell 0.0.23 (2017-11-22)
+## bcbioSingleCell 0.0.23 (2017-11-22)
 
 - Improved facet wrapping of aggregated samples (`sampleNameAggregate` present in sample metadata), but removing code support for wrapping by multiplexed FASTQ description.
 - Simplified handling of `bcbioSingleCell` objects with `filterCells()` applied. This information is stored in the `metadata()` slot as 3 variables: (1) `filterParams`, numeric vector of the parameters used to define the cell filtering cutoffs; (2) `filterCells`, character vector of the cellular barcode IDs that passed filtering; (3) `filterGenes`, character vector of the Ensembl gene identifiers that have passed filtering, as determined by the `minCellsPerGene` parameter.
@@ -160,8 +173,7 @@
 
 
 
-
-# bcbioSingleCell 0.0.22 (2017-11-17)
+## bcbioSingleCell 0.0.22 (2017-11-17)
 
 - Now internally stashing a `cell2sample` data.frame, which helps speed up operations on cellular barcode metrics calculations for quality control plots.
 - Improved support for optional `annotable`, `ensemblVersion`, `gtfFile`, and `sampleMetadataFile` arguments in `loadSingleCell()` function.
@@ -173,8 +185,7 @@
 - Added a troubleshooting section to the GitHub README, with a note on maximum DLLs.
 
 
-
-# bcbioSingleCell 0.0.21 (2017-11-08)
+## bcbioSingleCell 0.0.21 (2017-11-08)
 
 - Updated package imports to match Bioconductor 3.6.
 - Initial support for `plotCellTypesPerCluster()`.
@@ -195,8 +206,7 @@
 - Improved `bcbioSingleCell` to `seurat` coercion method with `setAs()`.
 
 
-
-# bcbioSingleCell 0.0.20 (2017-10-24)
+## bcbioSingleCell 0.0.20 (2017-10-24)
 
 - Upgraded to basejump 0.1.0 and Seurat 2.1.0 dependencies.
 - Improved documentation of NAMESPACE imports per function.
@@ -210,8 +220,7 @@
 - Removed lintr checks from testthat. This is breaking `devtools::test()`.
 
 
-
-# bcbioSingleCell 0.0.19 (2017-10-12)
+## bcbioSingleCell 0.0.19 (2017-10-12)
 
 - Renamed main object class from `bcbioSCDataSet` to `bcbioSingleCell`.
 - Cell filtering with `filterCells()` will now slot a named logical vector into `metadata(object)[["filteredCells"]]`, which will be used to dynamically subset the slotted internal `SummarizedExperiment` data. Now that we're using this approach, we can return a modified `bcbioSingleCell` object rather than defining a separate `bcbioSCFiltered` class.
@@ -229,8 +238,7 @@
 - Improved Ensembl release version support (`ensemblVersion`).
 
 
-
-# bcbioSingleCell 0.0.18 (2017-09-17)
+## bcbioSingleCell 0.0.18 (2017-09-17)
 
 - Renamed `plotClusters()` to `plotMarkers()`. Added soft deprecation.
 - Added [viridis][] color support in tSNE plots and heatmaps.
@@ -250,8 +258,7 @@
 - Improved `bcbioSCFiltered` to `seurat` coercion to slot relevant bcbio metadata.
 
 
-
-# bcbioSingleCell 0.0.17 (2017-09-03)
+## bcbioSingleCell 0.0.17 (2017-09-03)
 
 - Renamed package from `bcbioSinglecell` to `bcbioSingleCell`.
 - Added [viridis][] color palette support to quality control plots.
@@ -262,8 +269,7 @@
 - Improved [pkgdown][] settings and website appearance.
 
 
-
-# bcbioSingleCell 0.0.16 (2017-08-25)
+## bcbioSingleCell 0.0.16 (2017-08-25)
 
 - Support for CRAN release of [Seurat][].
 - Improved documentation of package NAMESPACE in `bcbioSinglecell-package.R` file.
@@ -288,8 +294,7 @@
 - Miscellaneous [RMarkdown][] template improvements.
 
 
-
-# bcbioSingleCell 0.0.15 (2017-08-11)
+## bcbioSingleCell 0.0.15 (2017-08-11)
 
 - Renamed functions in `lowerCamelCase` from `snake_case`.
 - Draft support for [monocle][], [scater][], and [scone][].
@@ -302,8 +307,7 @@
 - Miscellaneous documentation fixes.
 
 
-
-# bcbioSingleCell 0.0.14 (2017-07-26)
+## bcbioSingleCell 0.0.14 (2017-07-26)
 
 - Migrated plotting functions to S4 methods.
 - Improved sample metadata handling.
@@ -314,94 +318,80 @@
 - Initial support for [SureCell][] UMIs.
 
 
-
-# bcbioSingleCell 0.0.13 (2017-07-10)
+## bcbioSingleCell 0.0.13 (2017-07-10)
 
 - Integrated [bcbio][] and [Cell Ranger][] workflows into `load_run()`.
 
 
-
-# bcbioSingleCell 0.0.12 (2017-06-28)
+## bcbioSingleCell 0.0.12 (2017-06-28)
 
 - Initial support for S4 object creation using [SummarizedExperiment][].
 
 
-
-# bcbioSingleCell 0.0.11 (2017-06-24)
+## bcbioSingleCell 0.0.11 (2017-06-24)
 
 - Added [testthat][], [lintr][], and [covr][] support for code coverage.
 
 
-
-# bcbioSingleCell 0.0.10 (2017-06-15)
+## bcbioSingleCell 0.0.10 (2017-06-15)
 
 - Updated [RMarkdown][] templates.
 
 
-
-# bcbioSingleCell 0.0.9 (2017-06-12)
+## bcbioSingleCell 0.0.9 (2017-06-12)
 
 - Compatibility update for basejump S4 NAMESPACE changes.
 - Improved plots for quality control and filtering.
 
 
-
-# bcbioSingleCell 0.0.8 (2017-05-28)
+## bcbioSingleCell 0.0.8 (2017-05-28)
 
 - Renamed mitochondrial plot functions.
 - Changed presentation of mitochondrial abundance as ratio instead of percentage.
 - Simplified NAMESPACE by offloading dependencies to basejump.
 
 
-
-# bcbioSingleCell 0.0.7 (2017-05-13)
+## bcbioSingleCell 0.0.7 (2017-05-13)
 
 - Initial support for loading of 10x Genomics [Cell Ranger][] output.
 - Add detection of droplet method based on the metadata file.
 - Draft support for import of [inDrop][] i5 index barcode counts.
 
 
-
-# bcbioSingleCell 0.0.6 (2017-05-10)
+## bcbioSingleCell 0.0.6 (2017-05-10)
 
 - Modified `load_run()` function for improved consistency with [bcbioRNASeq][] package.
 - Initial incorporation of scater package into workflow.
 - Initial commit of RMarkdown template skeletons.
 
 
-
-# bcbioSingleCell 0.0.5 (2017-05-08)
+## bcbioSingleCell 0.0.5 (2017-05-08)
 
 - Improvements to run object based on code in [bcbioRNASeq][] package.
 - Better handling in plots for datasets with many samples.
 - Labeled quality control cutoffs on the plots.
 
 
-
-# bcbioSingleCell 0.0.4 (2017-04-26)
+## bcbioSingleCell 0.0.4 (2017-04-26)
 
 - Prepared package for [tidyverse][] dependency updates.
 - Updated HPC server detection.
 
 
-
-# bcbioSingleCell 0.0.3 (2017-04-20)
+## bcbioSingleCell 0.0.3 (2017-04-20)
 
  - NAMESPACE consolidation and function cleanup.
 
 
-
-# bcbioSingleCell 0.0.2 (2017-04-12)
+## bcbioSingleCell 0.0.2 (2017-04-12)
 
 - Added quality control plotting functions.
 - Converted all functions to standard evaluation.
 
 
-
-# bcbioSingleCell 0.0.1 (2017-03-01)
+## bcbioSingleCell 0.0.1 (2017-03-01)
 
 - Initial draft release.
-
 
 
 [bcbioBase]: http://bioinformatics.sph.harvard.edu/bcbioBase
