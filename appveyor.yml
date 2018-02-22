@@ -18,6 +18,7 @@ cache:
 environment:
   global:
     R_ARCH: x64
+    R_MAX_NUM_DLLS: 150
 
 build_script:
   - travis-tool.sh bioc_install GenomeInfoDbData
