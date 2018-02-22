@@ -15,9 +15,14 @@ cache:
 
 # Adapt as necessary starting from here
 
+environment:
+  global:
+    R_ARCH: x64
+    USE_RTOOLS: true
+
 build_script:
-  - travis-tool.sh install_github Bioconductor/GenomeInfoDbData
   - travis-tool.sh install_deps
+  - travis-tool.sh bioc_install GenomeInfoDbData
 
 test_script:
   - travis-tool.sh run_tests
