@@ -79,7 +79,6 @@ Suggests:
     rmarkdown,
     roxygen2,
     testthat,
-    tidyr,
     tidyverse
 Remotes:
     hbc/bcbioBase
