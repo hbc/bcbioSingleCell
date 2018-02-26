@@ -12,7 +12,7 @@ filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000L,
   maxUMIs = Inf, minGenes = 500L, maxGenes = Inf, maxMitoRatio = 0.1,
-  minNovelty = 0.75, minCellsPerGene = 3L, quiet = FALSE)
+  minNovelty = 0.75, minCellsPerGene = 3L)
 
 \S4method{filterCells}{bcbioSCDataSet}(object)
 }
@@ -35,8 +35,6 @@ filterCells(object, ...)
 
 \item{minCellsPerGene}{Include genes with non-zero expression in at least
 this many cells.}
-
-\item{quiet}{If \code{TRUE}, don't show the filtering parameter summary.}
 }
 \value{
 \link{bcbioSingleCell} object, with filtering information slotted into
