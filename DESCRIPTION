@@ -80,9 +80,11 @@ Suggests:
     roxygen2,
     sessioninfo,
     testthat,
-    tidyverse
+    tidyverse,
+    zingeR
 Remotes:
-    hbc/bcbioBase
+    hbc/bcbioBase,
+    statOmics/zingeR
 biocViews:
     DataImport,
     DataRepresentation,
