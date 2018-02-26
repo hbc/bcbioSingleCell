@@ -14,6 +14,10 @@ ggplot2::ggplot
 
 
 
+#' @importFrom fs dir_create
+#' @export
+fs::dir_create
+
 #' @importFrom fs dir_delete
 #' @export
 fs::dir_delete
@@ -21,6 +25,14 @@ fs::dir_delete
 #' @importFrom fs dir_ls
 #' @export
 fs::dir_ls
+
+#' @importFrom fs file_exists
+#' @export
+fs::file_exists
+
+#' @importFrom fs path
+#' @export
+fs::path
 
 
 
