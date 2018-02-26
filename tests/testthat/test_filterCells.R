@@ -3,7 +3,7 @@ context("filterCells")
 load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 
 test_that("Default parameters", {
-    filtered <- filterCells(bcb, quiet = TRUE)
+    filtered <- filterCells(bcb)
     expect_is(filtered, "bcbioSingleCell")
     expect_identical(
         dim(filtered),
@@ -29,7 +29,7 @@ test_that("Default parameters", {
 
 test_that("Capture output", {
     output <- capture.output(suppressMessages(
-        filterCells(bcb, quiet = FALSE)
+        filterCells(bcb)
     ))
     expect_is(output, "character")
     expect_identical(
@@ -48,8 +48,7 @@ test_that("Maximum parameters", {
         maxGenes = Inf,
         maxMitoRatio = 1L,
         minNovelty = 0L,
-        minCellsPerGene = 0L,
-        quiet = TRUE)
+        minCellsPerGene = 0L)
     expect_is(filtered, "bcbioSingleCell")
     expect_identical(
         dim(filtered),
@@ -92,8 +91,8 @@ test_that("Per sample cutoffs", {
             "run2_AGAGGATA" = Inf),
         minNovelty = c(
             "run1_AGAGGATA" = 0L,
-            "run2_AGAGGATA" = Inf),
-        quiet = TRUE)
+            "run2_AGAGGATA" = Inf)
+    )
     expect_identical(
         ncol(filtered),
         ncells1
