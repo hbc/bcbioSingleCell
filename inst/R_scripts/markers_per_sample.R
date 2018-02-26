@@ -14,30 +14,25 @@
 #
 # nolint end
 
-library(bcbioSingleCell)
-library(pbapply)
 library(rmarkdown)
+library(bcbioSingleCell)
 
-dataDir <- "data"
+data_dir <- path("data", Sys.Date())
 
-# sampleSubsets was saved in clustering_per_sample.R
-loadData(sampleSubsets, dir = dataDir)
+# Sample subsets was saved in clustering_per_sample.R
+loadData(subsets, dir = data_dir)
 
 # Render R Markdown reports per bcbioSingleCell subset file
-pblapply(seq_along(sampleSubsets), function(a) {
-    bcbName <- sampleSubsets[[a]]
-    seuratName <- paste(bcbName, "seurat", sep = "_")
-    seuratFile <- file.path(dataDir, paste0(seuratName, ".rda"))
-    if (!file.exists(seuratFile)) {
-        stop(paste(
-            "Seurat file missing:", seuratFile
-        ), call. = FALSE)
+invisible(mapply(
+    file = subsets,
+    name = names(subsets),
+    FUN = function(file, name) {
+        seurat_name <- paste(name, "seurat", sep = "_")
+        seurat_file <- path(data_dir, paste0(seurat_name, ".rda"))
+        stopifnot(file_exists(seurat_file))
+        render(input = "markers.Rmd",
+               output_file = paste(seurat_name, "markers.html", sep = "_"),
+               output_format = "html_document",
+               params = list(seurat_file = seurat_file))
     }
-    render(input = "markers.Rmd",
-           output_file = paste0(seuratName, "_markers.html"),
-           output_format = "html_document",
-           params = list(
-               seuratFile = seuratFile
-           ))
-}) %>%
-    invisible()
+))
