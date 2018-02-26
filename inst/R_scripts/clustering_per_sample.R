@@ -14,7 +14,6 @@
 # nolint end
 
 library(rmarkdown)
-library(tidyverse)
 library(bcbioSingleCell)
 
 data_dir <- path("data", Sys.Date())
