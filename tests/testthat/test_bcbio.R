@@ -1,8 +1,5 @@
 context("bcbio")
 
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 test_that("bcbioSingleCell", {
     slot <- bcbio(bcb)
     expect_is(slot, "SimpleList")

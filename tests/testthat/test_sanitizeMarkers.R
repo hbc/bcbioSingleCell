@@ -1,8 +1,5 @@
 context("sanitizeMarkers")
 
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seuratAllMarkersOriginal.rda", package = "bcbioSingleCell"))
-
 test_that("seurat", {
     data <- sanitizeMarkers(
         seurat,

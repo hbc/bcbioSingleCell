@@ -1,7 +1,5 @@
 context("topMarkers")
 
-load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
-
 test_that("data.frame", {
     data <- topMarkers(seuratAllMarkers)
     expect_is(data, "grouped_df")

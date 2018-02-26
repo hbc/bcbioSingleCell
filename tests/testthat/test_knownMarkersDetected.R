@@ -1,10 +1,7 @@
 context("knownMarkersDetected")
 
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
-knownMarkers <- cellTypeMarkers[["homoSapiens"]]
-
 test_that("knownMarkersDetected", {
+    knownMarkers <- cellTypeMarkers[["homoSapiens"]]
     data <- knownMarkersDetected(
         all = seuratAllMarkers,
         known = knownMarkers

@@ -1,8 +1,5 @@
 context("plotCellTypesPerCluster")
 
-load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 test_that("plotCellTypesPerCluster", {
     # Let's plot the first row, as an example
     cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected) %>%

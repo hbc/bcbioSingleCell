@@ -1,7 +1,5 @@
 context("fetchTSNEData")
 
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 test_that("fetchTSNEData", {
     data <- fetchTSNEData(seurat)
     expect_is(data, "data.frame")

@@ -1,7 +1,5 @@
 context("plotPCElbow")
 
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 test_that("seurat", {
     pcUse <- plotPCElbow(
         seurat,

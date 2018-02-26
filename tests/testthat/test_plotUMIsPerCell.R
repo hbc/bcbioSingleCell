@@ -1,8 +1,5 @@
 context("plotUMIsPerCell")
 
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 test_that("bcbioSingleCell", {
     p <- plotUMIsPerCell(bcb)
     expect_is(p, "ggplot")

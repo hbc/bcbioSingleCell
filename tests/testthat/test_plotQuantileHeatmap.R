@@ -1,7 +1,5 @@
 context("plotQuantileHeatmap")
 
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 test_that("seurat", {
     p <- plotQuantileHeatmap(seurat)
     # Check for pheatmap return

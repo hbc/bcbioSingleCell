@@ -1,9 +1,5 @@
 context("setAs coercion")
 
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/pooled.rda", package = "bcbioSingleCell"))
-
 test_that("Coerce bcbioSingleCell to seurat", {
     seurat <- as(filtered, "seurat")
     expect_is(seurat, "seurat")

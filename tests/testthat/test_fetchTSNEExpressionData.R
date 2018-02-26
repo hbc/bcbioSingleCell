@@ -1,7 +1,5 @@
 context("fetchTSNEExpressionData")
 
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 genes <- counts(seurat) %>% rownames() %>% head()
 
 test_that("seurat", {

@@ -1,8 +1,5 @@
 context("plotQC")
 
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 test_that("grid", {
     # Example dataset doesn't have a cellular barcode cutoff because we removed
     # the bcbio commands log file (which conflicts with Travis CI)

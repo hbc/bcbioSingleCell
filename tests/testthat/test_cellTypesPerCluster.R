@@ -1,7 +1,5 @@
 context("cellTypesPerCluster")
 
-load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-
 test_that("cellTypesPerCluster", {
     data <- cellTypesPerCluster(knownMarkersDetected)
     expect_is(data, "grouped_df")

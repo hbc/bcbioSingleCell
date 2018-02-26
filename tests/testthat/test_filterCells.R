@@ -1,7 +1,5 @@
 context("filterCells")
 
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-
 test_that("Default parameters", {
     filtered <- filterCells(bcb)
     expect_is(filtered, "bcbioSingleCell")
