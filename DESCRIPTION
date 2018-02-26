@@ -73,11 +73,11 @@ Imports:
     viridis (>= 0.5.0)
 Suggests:
     BiocStyle,
-    devtools,
     googlesheets,
     lintr,
     rmarkdown,
     roxygen2,
+    sessioninfo,
     testthat,
     tidyverse
 Remotes:

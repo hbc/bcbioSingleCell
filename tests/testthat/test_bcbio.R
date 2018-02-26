@@ -59,6 +59,7 @@ test_that("seurat", {
              "cellularBarcodeCutoff" = "NULL",  # numeric
              "date" = "Date",
              "wd" = "character",
+             # TODO Switch to single session info
              "utilsSessionInfo" = "sessionInfo",
              "devtoolsSessionInfo" = "session_info",
              "subset" = "logical",
