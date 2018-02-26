@@ -54,7 +54,7 @@ dgelrt <- bpmapply(
         # Get the primary interesting group, used to set up the contrast
         intgroup <- interestingGroups(seurat)[[1L]]
         group <- metrics(seurat) %>%
-            .[, intgroup] %>%
+            .[cells, intgroup] %>%
             as.factor() %>%
             # Be sure to set the control as the reference level!
             relevel(ref = "control")
