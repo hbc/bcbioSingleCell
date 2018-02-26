@@ -1,8 +1,9 @@
 # nolint start
 #
 # Seurat Clustering per Sample
+#
 # Michael Steinbaugh
-# 2018-02-18
+# 2018-02-26
 #
 # Latest version of this script is available here:
 # script <- system.file(
@@ -12,41 +13,30 @@
 #
 # nolint end
 
-library(bcbioSingleCell)
-library(pbapply)
 library(rmarkdown)
+library(tidyverse)
+library(bcbioSingleCell)
 
-prepareSingleCellTemplate()
-source("_setup.R")
-dataDir <- "data"
+data_dir <- path("data", Sys.Date())
 
-loadDataAsName(bcb = "bcb_filtered", dir = "data")
+loadDataAsName(bcb = "bcb_filtered", dir = data_dir)
 metadata(bcb)[["filterParams"]]
 
-dataDir <- file.path("data", Sys.Date())
-
-sampleNames <- sampleMetadata(bcb) %>%
-    pull(sampleName)
-sampleSubsets <- pblapply(seq_along(sampleNames), function(a) {
-    sampleName <- as.character(sampleNames[[a]])
-    sampleFileName <- snake(sampleName)
-    subset <- selectSamples(bcb, sampleName = sampleName)
-    assignAndSaveData(name = sampleFileName, object = subset, dir = dataDir)
-    sampleFileName
-}) %>%
-    unlist()
-saveData(sampleSubsets, dir = dataDir)
+subsets <- subsetPerSample(bcb, dir = data_dir)
+saveData(subsets, dir = data_dir)
 
 # Render R Markdown reports per bcbioSingleCell subset file
-pblapply(sampleSubsets, function(bcbName) {
-    bcbFile <- file.path(dataDir, paste0(bcbName, ".rda"))
-    seuratName <- paste(bcbName, "seurat", sep = "_")
-    render(input = "clustering.Rmd",
-           output_file = paste0(bcbName, ".html"),
-           output_format = "html_document",
-           params = list(
-               bcbFile = bcbFile,
-               seuratName = seuratName
-           ))
-}) %>%
-    invisible()
+invisible(mapply(
+    file = subsets,
+    name = names(subsets),
+    FUN = function(file, name) {
+        seurat_name <- paste(name, "seurat", sep = "_")
+        render(input = "clustering.Rmd",
+               output_file = paste0(name, ".html"),
+               output_format = "html_document",
+               params = list(
+                   bcb_file = file,
+                   seurat_name = seurat_name
+               ))
+    }
+))
