@@ -17,6 +17,7 @@
 #' @importFrom assertive assert_is_any_of
 #' @importFrom assertive assert_is_character
 #' @importFrom assertive assert_is_data.frame
+#' @importFrom assertive assert_is_environment
 #' @importFrom assertive assert_is_factor
 #' @importFrom assertive assert_is_non_empty
 #' @importFrom assertive assert_is_of_length
@@ -25,6 +26,7 @@
 #' @importFrom assertive is_character
 #'
 #' @importFrom basejump assertIsAStringOrNULL
+#' @importFrom basejump assertIsAnImplicitInteger
 #' @importFrom basejump assertIsAnImplicitIntegerOrNULL
 #' @importFrom basejump assertIsAnnotable
 #' @importFrom basejump assertIsGene2symbol

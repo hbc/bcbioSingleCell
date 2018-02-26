@@ -14,6 +14,16 @@ ggplot2::ggplot
 
 
 
+#' @importFrom fs dir_delete
+#' @export
+fs::dir_delete
+
+#' @importFrom fs dir_ls
+#' @export
+fs::dir_ls
+
+
+
 #' @importFrom tibble glimpse
 #' @export
 tibble::glimpse
