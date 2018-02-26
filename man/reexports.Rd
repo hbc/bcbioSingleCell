@@ -9,6 +9,16 @@
 \alias{reexports}
 \alias{ggplot}
 \alias{reexports}
+\alias{dir_create}
+\alias{reexports}
+\alias{dir_delete}
+\alias{reexports}
+\alias{dir_ls}
+\alias{reexports}
+\alias{file_exists}
+\alias{reexports}
+\alias{path}
+\alias{reexports}
 \alias{glimpse}
 \alias{reexports}
 \alias{inferno}
@@ -26,6 +36,8 @@ below to see their documentation.
 
 \describe{
   \item{dplyr}{\code{\link[dplyr]{pull}}, \code{\link[dplyr]{funs}}}
+
+  \item{fs}{\code{\link[fs]{dir_create}}, \code{\link[fs]{dir_delete}}, \code{\link[fs]{dir_ls}}, \code{\link[fs]{file_exists}}, \code{\link[fs]{path}}}
 
   \item{ggplot2}{\code{\link[ggplot2]{ggplot}}}
 

@@ -36,7 +36,7 @@ load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 subsetPerSample(filtered, dir = "subsetPerSample")
 dir_ls("subsetPerSample")
 
-# Cleanup
+# Clean up
 dir_delete("subsetPerSample")
 }
 \seealso{
