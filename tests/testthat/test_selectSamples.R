@@ -1,9 +1,7 @@
 context("selectSamples")
 
 test_that("selectSamples", {
-    subset <- suppressMessages(
-        selectSamples(filtered, sampleName = "M1")
-    )
+    subset <- selectSamples(filtered, sampleName = "M1")
     expect_is(subset, "bcbioSingleCell")
     expect_identical(
         metadata(subset)[["selectSamples"]],

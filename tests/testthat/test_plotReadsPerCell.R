@@ -3,9 +3,7 @@ context("plotReadsPerCell")
 test_that("bcbioSingleCell", {
     # Example dataset doesn't have a cellular barcode cutoff because we removed
     # the bcbio commands log file (which conflicts with Travis CI)
-    histogram <- suppressWarnings(
-        plotReadsPerCell(bcb, geom = "histogram")
-    )
+    histogram <- plotReadsPerCell(bcb, geom = "histogram")
     expect_is(histogram, "ggplot")
     expect_is(
         histogram %>%
@@ -15,9 +13,7 @@ test_that("bcbioSingleCell", {
         "GeomLine"
     )
 
-    ridgeline <- suppressWarnings(
-        plotReadsPerCell(bcb, geom = "ridgeline")
-    )
+    ridgeline <- plotReadsPerCell(bcb, geom = "ridgeline")
     expect_is(ridgeline, "ggplot")
     expect_is(
         ridgeline %>%
@@ -27,9 +23,7 @@ test_that("bcbioSingleCell", {
         "GeomDensityRidges"
     )
 
-    violin <- suppressWarnings(
-        plotReadsPerCell(bcb, geom = "violin")
-    )
+    violin <- plotReadsPerCell(bcb, geom = "violin")
     expect_is(violin, "ggplot")
     expect_is(
         violin %>%
@@ -41,7 +35,7 @@ test_that("bcbioSingleCell", {
 })
 
 test_that("filtered", {
-    p <- suppressWarnings(plotReadsPerCell(filtered))
+    p <- plotReadsPerCell(filtered)
     expect_is(p, "ggplot")
 })
 

@@ -3,12 +3,12 @@ context("plotQC")
 test_that("grid", {
     # Example dataset doesn't have a cellular barcode cutoff because we removed
     # the bcbio commands log file (which conflicts with Travis CI)
-    p <- suppressWarnings(plotQC(bcb, return = "grid"))
+    p <- plotQC(bcb, return = "grid")
     expect_is(p, "ggplot")
 })
 
 test_that("list", {
-    p <- suppressWarnings(plotQC(bcb, return = "list"))
+    p <- plotQC(bcb, return = "list")
     expect_identical(
         names(p),
         c("plotReadsPerCell",
@@ -22,9 +22,8 @@ test_that("list", {
 })
 
 test_that("markdown", {
-    output <- capture.output(suppressWarnings(
-        plotQC(bcb, return = "markdown")
-    ))
+    output <- plotQC(bcb, return = "markdown") %>%
+        capture.output()
     sep <- c("", "", "")
     expect_identical(
         output,

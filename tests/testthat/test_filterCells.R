@@ -26,9 +26,7 @@ test_that("Default parameters", {
 })
 
 test_that("Capture output", {
-    output <- capture.output(suppressMessages(
-        filterCells(bcb)
-    ))
+    output <- capture.output(filterCells(bcb))
     expect_is(output, "character")
     expect_identical(
         output[[1L]],
