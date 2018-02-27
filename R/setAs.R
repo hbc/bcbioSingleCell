@@ -94,7 +94,7 @@ NULL
 
     # Create the initial `seurat` object
     counts <- counts(from, gene2symbol = TRUE)
-    metrics <- metrics(from)
+    metadata <- colData(from)
 
     seurat <- CreateSeuratObject(
         raw.data = counts,
