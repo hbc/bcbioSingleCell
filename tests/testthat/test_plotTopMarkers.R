@@ -1,9 +1,9 @@
 context("plotTopMarkers")
 
 test_that("seurat", {
-    topMarkers <- topMarkers[1L:2L, ,]
-    expect_is(topMarkers, "grouped_df")
-    plotlist <- plotTopMarkers(seurat, topMarkers)
-    expect_is(plotlist, "list")
-    expect_is(plotlist[[1L]][[1L]], "ggplot")
+    top <- top[1L:2L, ,]
+    expect_is(top, "grouped_df")
+    x <- plotTopMarkers(seurat, topMarkers = top)
+    expect_is(x, "list")
+    expect_is(x[[1L]][[1L]], "ggplot")
 })
