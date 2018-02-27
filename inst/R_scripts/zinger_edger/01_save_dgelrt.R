@@ -74,7 +74,7 @@ dgelrt <- bpmapply(
 
         # This is the zingeR step that is computationally expensive
         weights <- zeroWeightsLS(
-            dge[["counts"]],
+            counts = dge[["counts"]],
             design = design,
             # The `maxit` default of 200 is too low
             maxit = 1000L,
