@@ -35,6 +35,7 @@
 #'   (e.g. treatment).
 #' @param denominator Group of cells to use in the denominator of the contrast
 #'   (e.g. control).
+#' @param minCells Minimum number of cells required per group.
 #'
 #' @seealso
 #' - DESeq2: We're trying to follow the conventions used in DESeq2 for
@@ -73,22 +74,26 @@ NULL
 #' @importFrom Seurat WhichCells
 #' @importFrom stats model.matrix
 #' @importFrom zingeR glmWeightedF
-.zingeR.edgeR.seurat <- function(  # nolint
+.zingeR.edgeR <- function(  # nolint
     object,
     numerator,
     denominator,
-    maxit = 1000L,
-    dir = ".") {
-    assert_is_all_of(object, "seurat")
+    minCells = 10L,
+    maxit = 1000L) {
     assert_is_character(numerator)
     assert_is_character(denominator)
     assert_are_disjoint_sets(numerator, denominator)
-    dir <- initializeDirectory(dir)
+    assertIsAnImplicitInteger(minCells)
+    assert_all_are_greater_than_or_equal_to(
+        x = c(length(numerator), length(denominator)),
+        y = minCells)
+    assertIsAnImplicitInteger(maxit)
 
     # Counts matrix
     cells <- c(numerator, denominator)
-    counts <- counts(object, normalized = FALSE) %>%
-        .[, cells]
+    counts <- counts(object, normalized = FALSE)
+    counts <- counts[, cells]
+    assert_has_dimnames(counts)
 
     # Create a cell factor to define the group for `DGEList()`
     numeratorFactor <- replicate(
@@ -149,5 +154,18 @@ NULL
 #' @export
 setMethod(
     "diffExp",
+    signature("bcbioSingleCell"),
+    .zingeR.edgeR)
+
+
+
+#' @rdname diffExp
+#' @export
+setMethod(
+    "diffExp",
     signature("seurat"),
-    .zingeR.edgeR.seurat)
+    .zingeR.edgeR)
+
+
+
+# TODO Add method for SingleCellExperiment

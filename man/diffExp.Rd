@@ -4,13 +4,17 @@
 \name{diffExp}
 \alias{diffExp}
 \alias{diffExp}
+\alias{diffExp,bcbioSingleCell-method}
 \alias{diffExp,seurat-method}
 \title{Differential Expression}
 \usage{
 diffExp(object, ...)
 
-\S4method{diffExp}{seurat}(object, numerator, denominator, maxit = 1000L,
-  dir = ".")
+\S4method{diffExp}{bcbioSingleCell}(object, numerator, denominator,
+  minCells = 10L, maxit = 1000L)
+
+\S4method{diffExp}{seurat}(object, numerator, denominator, minCells = 10L,
+  maxit = 1000L)
 }
 \arguments{
 \item{object}{Object.}
@@ -22,6 +26,8 @@ diffExp(object, ...)
 
 \item{denominator}{Group of cells to use in the denominator of the contrast
 (e.g. control).}
+
+\item{minCells}{Minimum number of cells required per group.}
 
 \item{maxit}{The number of iterations for the EM-algorithm. 200 by default, but larger may be useful for large datasets (many samples). Convergence of the posterior probabilities can be checked by following the distribution of posterior probabilities over iterations with \code{plotW}. The EM-algorithm will automatically stop if convergence is achieved before the maximum number of iterations.}
 }
