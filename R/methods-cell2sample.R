@@ -7,10 +7,10 @@
 #'
 #' @examples
 #' # bcbioSingleCell
-#' cell2sample(bcb) %>% summary()
+#' cell2sample(bcb) %>% table()
 #'
 #' # seurat
-#' cell2sample(pbmc_small) %>% summary()
+#' cell2sample(pbmc_small) %>% table()
 NULL
 
 
