@@ -22,6 +22,14 @@ setGeneric("cellTypesPerCluster", function(object, ...) {
 
 
 
+#' @rdname diffExp
+#' @export
+setGeneric("diffExp", function(object, ...) {
+    standardGeneric("diffExp")
+})
+
+
+
 #' @rdname fetchGeneData
 #' @export
 setGeneric("fetchGeneData", function(object, ...) {
