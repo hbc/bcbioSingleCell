@@ -71,17 +71,23 @@ Imports:
     tibble (>= 1.4.2),
     tidyr (>= 0.8.0),
     utils,
-    viridis (>= 0.5.0)
+    viridis (>= 0.5.0),
+    zinbwave (>= 1.0.0),
+    zingeR (>= 0.1.0)
 Suggests:
     BiocStyle,
     googlesheets,
     lintr,
+    MAST,
+    monocle,
     rmarkdown,
     roxygen2,
+    scde,
+    scone,
+    scran,
     sessioninfo,
     testthat,
-    tidyverse,
-    zingeR
+    tidyverse
 Remotes:
     hbc/bcbioBase,
     statOmics/zingeR
