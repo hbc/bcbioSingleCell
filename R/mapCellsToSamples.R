@@ -34,6 +34,14 @@ mapCellsToSamples <- function(cells, samples) {
     assert_has_no_duplicates(cells)
     assert_is_any_of(samples, c("character", "factor"))
     samples <- unique(as.character(samples))
+
+    # Early return if we're dealing with a single sample
+    if (length(samples) == 1L) {
+        cell2sample <- factor(replicate(n = length(cells), expr = samples))
+        names(cell2sample) <- cells
+        return(cell2sample)
+    }
+
     list <- bplapply(samples, function(sample) {
         pattern <- paste0("^(", sample, barcodePattern)
         match <- str_match(cells, pattern = pattern) %>%
