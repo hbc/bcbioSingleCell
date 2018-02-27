@@ -3,7 +3,7 @@ context("cellTypesPerCluster")
 test_that("cellTypesPerCluster", {
     x <- cellTypesPerCluster(known_markers_detected)
     expect_is(x, "grouped_df")
-    group <- group_vars(dx)
+    group <- group_vars(x)
     expect_identical(group, "cluster")
     tbl <- tibble(
         cluster = factor("2", levels = c("0", "1", "2", "3")),
