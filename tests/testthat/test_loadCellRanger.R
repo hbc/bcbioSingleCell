@@ -47,7 +47,7 @@ test_that("Homo sapiens", {
             "refdataDir" = "character",
             "refJSON" = "list",
             "date" = "Date",
-            "wd" = "character",
+            "wd" = c("fs_path", "character"),
             "utilsSessionInfo" = "sessionInfo",
             "devtoolsSessionInfo" = "session_info"
         )
