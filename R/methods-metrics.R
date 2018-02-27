@@ -71,4 +71,10 @@ setMethod(
 setMethod(
     "metrics",
     signature("seurat"),
-    .metrics)
+    function(object, interestingGroups) {
+        data <- .metrics(object, interestingGroups)
+        # Ensure ident column is added
+        assert_are_disjoint_sets(colnames(data), "ident")
+        ident <- slot(object, "ident")
+        cbind(data, ident)
+    })
