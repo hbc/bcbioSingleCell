@@ -22,29 +22,11 @@ test_that("list", {
 })
 
 test_that("markdown", {
-    output <- plotQC(bcb, return = "markdown") %>%
-        capture.output()
+    output <- capture.output(plotQC(bcb, return = "markdown"))
     sep <- c("", "", "")
     expect_identical(
-        output,
-        c("",
-          "",
-          "## Filtered quality control metrics {.tabset}",
-          sep,
-          "### Reads per cell",
-          sep,
-          "### Cell counts",
-          sep,
-          "### UMI counts per cell",
-          sep,
-          "### Genes detected",
-          sep,
-          "### UMIs vs. genes",
-          sep,
-          "### Mitochondrial counts ratio",
-          sep,
-          "### Novelty",
-          "")
+        head(output, 3L),
+        c("", "", "## Filtered quality control metrics {.tabset}")
     )
 })
 
