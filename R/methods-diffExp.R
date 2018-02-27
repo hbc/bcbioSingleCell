@@ -49,19 +49,24 @@
 #'
 #' @examples
 #' # seurat: expression in cluster 3 relative to cluster 2
-#' ident2 <- WhichCells(pbmc_small, ident = 2L)
-#' ident3 <- WhichCells(pbmc_small, ident = 3L)
+#' numerator <- WhichCells(pbmc_small, ident = 3L)
+#' denominator <- WhichCells(pbmc_small, ident = 2L)
 #' lrt <- diffExp(
 #'     pbmc_small,
-#'     numerator = ident3,
-#'     denominator = ident2,
+#'     numerator = numerator,
+#'     denominator = denominator,
 #'     maxit = 100L)
+#' lrt$table %>%
+#'     as_tibble() %>%
+#'     rownames_to_column("symbol") %>%
+#'     arrange(padjFilter) %>%
+#'     head()
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom basejump detectHPC initializeDirectory
+#' @importFrom basejump initializeDirectory
 #' @importFrom BiocParallel bpmapply
 #' @importFrom edgeR calcNormFactors DGEList glmFit
 #' @importFrom magrittr set_names
@@ -74,15 +79,6 @@ NULL
     denominator,
     maxit = 1000L,
     dir = ".") {
-    # Warn if user is running locally
-    if (!detectHPC()) {
-        inform(paste(
-            "High-performance cluster environment not detected.",
-            "It is strongly recommended to run differential expression",
-            "as a job, since this can take hours to finish."
-        ))
-    }
-
     assert_is_all_of(object, "seurat")
     assert_is_character(numerator)
     assert_is_character(denominator)

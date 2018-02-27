@@ -1,3 +1,7 @@
+#' @importFrom dplyr arrange
+#' @export
+dplyr::arrange
+
 #' @importFrom dplyr pull
 #' @export
 dplyr::pull
@@ -36,9 +40,21 @@ fs::path
 
 
 
+#' @importFrom tibble as_tibble
+#' @export
+tibble::as_tibble
+
+#' @importFrom tibble column_to_rownames
+#' @export
+tibble::column_to_rownames
+
 #' @importFrom tibble glimpse
 #' @export
 tibble::glimpse
+
+#' @importFrom tibble rownames_to_column
+#' @export
+tibble::rownames_to_column
 
 
 

@@ -59,13 +59,18 @@ information.
 
 \examples{
 # seurat: expression in cluster 3 relative to cluster 2
-ident2 <- WhichCells(pbmc_small, ident = 2L)
-ident3 <- WhichCells(pbmc_small, ident = 3L)
+numerator <- WhichCells(pbmc_small, ident = 3L)
+denominator <- WhichCells(pbmc_small, ident = 2L)
 lrt <- diffExp(
     pbmc_small,
-    numerator = ident3,
-    denominator = ident2,
+    numerator = numerator,
+    denominator = denominator,
     maxit = 100L)
+lrt$table \%>\%
+    as_tibble() \%>\%
+    rownames_to_column("symbol") \%>\%
+    arrange(padjFilter) \%>\%
+    head()
 }
 \seealso{
 \itemize{
