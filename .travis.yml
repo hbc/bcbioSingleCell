@@ -7,7 +7,7 @@ cache: packages
 warnings_are_errors: false
 
 # Temporarily enable to cache R packages
-# script: true
+script: true
 
 # Need to increase DLLs above default of 100
 env:
@@ -19,7 +19,6 @@ r:
   # - bioc-devel
 r_packages:
   - covr
-  - rlang
 
 after_success:
   - Rscript -e 'covr::codecov()'
