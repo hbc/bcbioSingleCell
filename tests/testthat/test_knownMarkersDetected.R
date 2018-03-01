@@ -1,20 +1,12 @@
 context("knownMarkersDetected")
 
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seuratAllMarkers.rda"),
-    package = "bcbioSingleCell"))
-knownMarkers <- cellTypeMarkers[["homoSapiens"]]
-
 test_that("knownMarkersDetected", {
-    data <- knownMarkersDetected(
-        all = seuratAllMarkers,
-        known = knownMarkers
-    )
-    expect_is(data, "grouped_df")
-    group <- group_vars(data)
+    known <- cellTypeMarkers[["homoSapiens"]]
+    x <- knownMarkersDetected(
+        all = seurat_all_markers,
+        known = known)
+    expect_is(x, "grouped_df")
+    group <- group_vars(x)
     expect_identical(group, "cell")
 
     annotable <- annotable(seurat)
@@ -23,7 +15,8 @@ test_that("knownMarkersDetected", {
     # Need better way to test P values here than using round.
     # Check old code, I think there's a stringr method that works well.
     # Or we can using `format()`.
-    subset <- data[1L, setdiff(colnames(data), colnames(annotable))] %>%
+    subset <- x %>%
+        .[1L, setdiff(colnames(.), colnames(annotable))] %>%
         mutate_if(is.numeric, funs(round(., digits = 3L)))
     tbl <- tibble(
         "cell" = "Natural Killer Cell",

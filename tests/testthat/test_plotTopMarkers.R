@@ -1,17 +1,9 @@
 context("plotTopMarkers")
 
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "topMarkers.rda"),
-    package = "bcbioSingleCell"))
-
-topMarkers <- topMarkers[1L:2L, ]
-
 test_that("seurat", {
-    expect_is(topMarkers, "grouped_df")
-    plotlist <- plotTopMarkers(seurat, topMarkers)
-    expect_is(plotlist, "list")
-    expect_is(plotlist[[1L]][[1L]], "ggplot")
+    top <- top[1L:2L, ,]
+    expect_is(top, "grouped_df")
+    x <- plotTopMarkers(seurat, topMarkers = top)
+    expect_is(x, "list")
+    expect_is(x[[1L]][[1L]], "ggplot")
 })

@@ -1,10 +1,10 @@
-#' Load 10X Genomics CellRanger Data
+#' Load 10X Genomics Cell Ranger Data
 #'
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
 #' counts from `barcodes.tsv`, `genes.tsv`, and `matrix.mtx` files.
 #'
 #' @details This function is a simplified version of [loadSingleCell()]
-#'   optimized for handling CellRanger output.
+#'   optimized for handling Cell Ranger output.
 #'
 #' @note Unlike [loadSingleCell()], the `organism`, `ensemblVersion`, and
 #'   `genomeBuild` are always detected automatically, based on the `refdataDir`
@@ -25,9 +25,9 @@
 #'
 #' @inherit loadSingleCell
 #'
-#' @param uploadDir Path to CellRanger output directory. This directory path
+#' @param uploadDir Path to Cell Ranger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices*` as a child directory.
-#' @param refdataDir Directory path to cellranger reference annotation data.
+#' @param refdataDir Directory path to Cell Ranger reference annotation data.
 #'
 #' @return [bcbioSingleCell].
 #' @export

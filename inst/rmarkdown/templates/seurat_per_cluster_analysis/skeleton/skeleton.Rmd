@@ -4,11 +4,11 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seurat_file: "data/YYYY-MM-DD/seurat.rda"
+    seurat_file: "seurat.rda"
 ---
 
 ```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-02-12
+# Last modified 2018-02-21
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 

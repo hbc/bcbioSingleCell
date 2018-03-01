@@ -1,23 +1,16 @@
 context("plotCellTypesPerCluster")
 
-load(system.file(
-    file.path("extdata", "knownMarkersDetected.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
-
 test_that("plotCellTypesPerCluster", {
     # Let's plot the first row, as an example
-    cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected) %>%
+    x <- cellTypesPerCluster(known_markers_detected) %>%
         .[1L, , drop = FALSE]
     expect_identical(
-        cellTypesPerCluster[["symbol"]],
+        x[["symbol"]],
         "NCAM1"
     )
-    plotlist <- plotCellTypesPerCluster(
+    p <- plotCellTypesPerCluster(
         seurat,
-        cellTypesPerCluster = cellTypesPerCluster)
-    expect_is(plotlist, "list")
-    expect_is(plotlist[[1L]][[1L]], "ggplot")
+        cellTypesPerCluster = x)
+    expect_is(p, "list")
+    expect_is(p[[1L]][[1L]], "ggplot")
 })

@@ -30,8 +30,7 @@
 #' load(system.file("extdata/topMarkers.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat
-#' genes <- pull(topMarkers, "symbol")
-#' print(genes)
+#' genes <- head(pull(topMarkers, "symbol"), 2L)
 #' plotMarkers(seurat, genes = genes)
 NULL
 

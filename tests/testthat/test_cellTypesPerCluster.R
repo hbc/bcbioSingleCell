@@ -1,16 +1,10 @@
 context("cellTypesPerCluster")
 
-load(system.file(
-    file.path("extdata", "knownMarkersDetected.rda"),
-    package = "bcbioSingleCell"))
-
 test_that("cellTypesPerCluster", {
-    data <- cellTypesPerCluster(knownMarkersDetected)
-    expect_is(data, "grouped_df")
-
-    group <- group_vars(data)
+    x <- cellTypesPerCluster(known_markers_detected)
+    expect_is(x, "grouped_df")
+    group <- group_vars(x)
     expect_identical(group, "cluster")
-
     tbl <- tibble(
         cluster = factor("2", levels = c("0", "1", "2", "3")),
         cell = "Natural Killer Cell",
@@ -19,5 +13,5 @@ test_that("cellTypesPerCluster", {
         ensgene = "ENSG00000149294"
     ) %>%
         group_by(!!sym(group))
-    expect_identical(data, tbl)
+    expect_identical(x, tbl)
 })

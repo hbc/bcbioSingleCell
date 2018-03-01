@@ -1,12 +1,5 @@
 context("subsetPerSample")
 
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "filtered.rda"),
-    package = "bcbioSingleCell"))
-
 test_that("Unfiltered bcbioSingleCell", {
     expect_error(
         subsetPerSample(bcb),

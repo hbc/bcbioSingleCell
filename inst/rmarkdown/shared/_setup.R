@@ -1,6 +1,7 @@
 library(knitr)
-library(bcbioSingleCell)
+library(rmarkdown)
 library(tidyverse)
+library(bcbioSingleCell)
 
 # Set seed for reproducibility
 set.seed(1454944673L)

@@ -1,17 +1,7 @@
 context("selectSamples")
 
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "filtered.rda"),
-    package = "bcbioSingleCell"))
-
 test_that("selectSamples", {
-    # Add a quiet argument here in the future
-    subset <- suppressMessages(
-        selectSamples(filtered, sampleName = "M1")
-    )
+    subset <- selectSamples(filtered, sampleName = "M1")
     expect_is(subset, "bcbioSingleCell")
     expect_identical(
         metadata(subset)[["selectSamples"]],

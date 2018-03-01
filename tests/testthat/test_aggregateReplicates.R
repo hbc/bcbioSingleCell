@@ -1,11 +1,7 @@
 context("aggregateReplicates")
 
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
-
 test_that("aggregateReplicates", {
-    pooled <- suppressMessages(aggregateReplicates(bcb))
+    pooled <- aggregateReplicates(bcb)
     expect_is(pooled, "bcbioSingleCell")
     expect_identical(
         dim(pooled),

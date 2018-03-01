@@ -177,11 +177,11 @@ loadSingleCell <- function(
         countsLevel <- "transcript"
     }
 
-    # Data versions and programs ===============================================
+    # Data and program versions ================================================
     inform("Reading data and program versions")
     dataVersions <- readDataVersions(
         file.path(projectDir, "data_versions.csv"))
-    programs <- readProgramVersions(
+    programVersions <- readProgramVersions(
         file.path(projectDir, "programs.txt"))
 
     # Detect genome build
@@ -377,7 +377,7 @@ loadSingleCell <- function(
         yaml = yaml,
         tx2gene = tx2gene,
         dataVersions = dataVersions,
-        programs = programs,
+        programVersions = programVersions,
         bcbioLog = bcbioLog,
         bcbioCommandsLog = bcbioCommandsLog,
         cellularBarcodeCutoff = cellularBarcodeCutoff)

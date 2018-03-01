@@ -3,13 +3,31 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{arrange}
+\alias{reexports}
 \alias{pull}
 \alias{reexports}
 \alias{funs}
 \alias{reexports}
 \alias{ggplot}
 \alias{reexports}
+\alias{dir_create}
+\alias{reexports}
+\alias{dir_delete}
+\alias{reexports}
+\alias{dir_ls}
+\alias{reexports}
+\alias{file_exists}
+\alias{reexports}
+\alias{path}
+\alias{reexports}
+\alias{as_tibble}
+\alias{reexports}
+\alias{column_to_rownames}
+\alias{reexports}
 \alias{glimpse}
+\alias{reexports}
+\alias{rownames_to_column}
 \alias{reexports}
 \alias{inferno}
 \alias{reexports}
@@ -25,11 +43,13 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{pull}}, \code{\link[dplyr]{funs}}}
+  \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{pull}}, \code{\link[dplyr]{funs}}}
+
+  \item{fs}{\code{\link[fs]{dir_create}}, \code{\link[fs]{dir_delete}}, \code{\link[fs]{dir_ls}}, \code{\link[fs]{file_exists}}, \code{\link[fs]{path}}}
 
   \item{ggplot2}{\code{\link[ggplot2]{ggplot}}}
 
-  \item{tibble}{\code{\link[tibble]{glimpse}}}
+  \item{tibble}{\code{\link[tibble]{as_tibble}}, \code{\link[tibble]{column_to_rownames}}, \code{\link[tibble]{glimpse}}, \code{\link[tibble]{rownames_to_column}}}
 
   \item{viridis}{\code{\link[viridis]{inferno}}, \code{\link[viridis]{scale_color_viridis}}, \code{\link[viridis]{scale_fill_viridis}}, \code{\link[viridis]{viridis}}}
 }}

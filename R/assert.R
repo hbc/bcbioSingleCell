@@ -2,9 +2,12 @@
 #'
 #' @rdname assert
 #' @name assert
+#' @keywords internal
 #'
 #' @importFrom assertive assert_all_are_dirs
 #' @importFrom assertive assert_all_are_existing_files
+#' @importFrom assertive assert_all_are_greater_than_or_equal_to
+#' @importFrom assertive assert_all_are_matching_regex
 #' @importFrom assertive assert_all_are_positive
 #' @importFrom assertive assert_any_are_matching_regex
 #' @importFrom assertive assert_are_identical
@@ -15,6 +18,7 @@
 #' @importFrom assertive assert_is_any_of
 #' @importFrom assertive assert_is_character
 #' @importFrom assertive assert_is_data.frame
+#' @importFrom assertive assert_is_environment
 #' @importFrom assertive assert_is_factor
 #' @importFrom assertive assert_is_non_empty
 #' @importFrom assertive assert_is_of_length
@@ -23,6 +27,7 @@
 #' @importFrom assertive is_character
 #'
 #' @importFrom basejump assertIsAStringOrNULL
+#' @importFrom basejump assertIsAnImplicitInteger
 #' @importFrom basejump assertIsAnImplicitIntegerOrNULL
 #' @importFrom basejump assertIsAnnotable
 #' @importFrom basejump assertIsGene2symbol

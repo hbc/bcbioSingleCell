@@ -6,12 +6,10 @@ test_that("Homo sapiens", {
     refdataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
     sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
     # This will warn about missing reference GTF
-    bcb <- suppressWarnings(
-        loadCellRanger(
+    bcb <- loadCellRanger(
         uploadDir = uploadDir,
         refdataDir = refdataDir,
         sampleMetadataFile = sampleMetadataFile)
-    )
     expect_identical(
         dim(bcb),
         c(500L, 500L)
@@ -49,7 +47,7 @@ test_that("Homo sapiens", {
             "refdataDir" = "character",
             "refJSON" = "list",
             "date" = "Date",
-            "wd" = "character",
+            "wd" = c("fs_path", "character"),
             "utilsSessionInfo" = "sessionInfo",
             "devtoolsSessionInfo" = "session_info"
         )

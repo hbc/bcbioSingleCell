@@ -114,7 +114,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>genes</th>
@@ -164,58 +164,18 @@ of which to get expression data.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"topMarkers.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/topMarkers.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
 <span class='co'># seurat</span>
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>topMarkers</span>, <span class='st'>"symbol"</span>)
-<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt;  [1] "ACTC1"    "MYL7"     "PLN.1"    "TNNI1"    "MYH6"     "TNNT2"   
-#&gt;  [7] "MYL9"     "TPM1"     "CSRP3"    "HSPB7"    "COL1A1"   "COL1A2"  
-#&gt; [13] "COL3A1"   "FN1"      "COL6A3"   "MFAP4"    "COL5A1"   "COL6A2"  
-#&gt; [19] "SERPINE2" "COL5A2"   "RPL39"    "RPS3A"    "HIST1H4C" "RPL13A"  
-#&gt; [25] "RPL10A"   "EEF1D.1"  "RPL30"    "RPLP0"    "RPLP1"    "RPL17"   
-#&gt; [31] "KRT19"    "MYRF"     "S100A10"  "PODXL"    "BNC1"     "TNNT1"   
-#&gt; [37] "CDH1"     "SPINT1"   "LAMA5"    "ALDH1A2"  "MAB21L1"  "RAX"     
-#&gt; [43] "CRABP1"   "ALDH1A1"  "TUBB2B"   "PAX6"     "HMX1"     "TUBA1A"  
-#&gt; [49] "H3F3A"    "DCX"      "RPS6KA5"  "PIGB"     "ST3GAL2"  "ARMC10"  
-#&gt; [55] "RPAP2"    "ARMC10.1" "POLR1C"   "OPHN1"    "MDM4"     "LRP2"    </div><div class='input'><span class='fu'>plotMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='output co'>#&gt; 
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>topMarkers</span>, <span class='st'>"symbol"</span>), <span class='fl'>2L</span>)
+<span class='fu'>plotMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## ACTC1
 #&gt; </div><div class='img'><img src='plotMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## MYL7
-#&gt; </div><div class='img'><img src='plotMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## PLN.1
-#&gt; </div><div class='img'><img src='plotMarkers-3.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## TNNI1
-#&gt; </div><div class='img'><img src='plotMarkers-4.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## MYH6
-#&gt; </div><div class='img'><img src='plotMarkers-5.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## TNNT2
-#&gt; </div><div class='img'><img src='plotMarkers-6.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## MYL9
-#&gt; </div><div class='img'><img src='plotMarkers-7.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## TPM1
-#&gt; </div><div class='img'><img src='plotMarkers-8.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## CSRP3
-#&gt; </div><div class='img'><img src='plotMarkers-9.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## HSPB7
-#&gt; </div><div class='img'><img src='plotMarkers-10.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## COL1A1
-#&gt; </div><div class='output co'>#&gt; <span class='error'>Error in grid.Call.graphics(C_upviewport, as.integer(n)): cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)</span></div><div class='img'><img src='plotMarkers-11.png' alt='' width='700' height='432.632880098887' /></div></pre>
+#&gt; </div><div class='img'><img src='plotMarkers-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

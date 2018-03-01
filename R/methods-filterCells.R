@@ -23,7 +23,6 @@
 #' @param minNovelty Minimum novelty score.
 #' @param minCellsPerGene Include genes with non-zero expression in at least
 #'   this many cells.
-#' @param quiet If `TRUE`, don't show the filtering parameter summary.
 #'
 #' @seealso [Seurat::CreateSeuratObject()].
 #'
@@ -52,8 +51,7 @@ NULL
     maxGenes = Inf,
     maxMitoRatio = 0.1,
     minNovelty = 0.75,
-    minCellsPerGene = 3L,
-    quiet = FALSE) {
+    minCellsPerGene = 3L) {
     metrics <- metrics(object)
     sampleIDs <- levels(metrics[["sampleID"]])
 
@@ -291,32 +289,30 @@ NULL
     }
 
     # Summary ==================================================================
-    if (!isTRUE(quiet)) {
-        printParams <- c(
-            paste(">=", toString(minUMIs), "UMI counts per cell"),
-            paste("<=", toString(maxUMIs), "UMI counts per cell"),
-            paste(">=", toString(minGenes), "genes per cell"),
-            paste("<=", toString(maxGenes), "genes per cell"),
-            paste("<=", toString(maxMitoRatio), "mitochondrial abundance"),
-            paste(">=", toString(minNovelty), "novelty score"),
-            paste(">=", toString(minCellsPerGene), "cells per gene")
+    printParams <- c(
+        paste(">=", toString(minUMIs), "UMI counts per cell"),
+        paste("<=", toString(maxUMIs), "UMI counts per cell"),
+        paste(">=", toString(minGenes), "genes per cell"),
+        paste("<=", toString(maxGenes), "genes per cell"),
+        paste("<=", toString(maxMitoRatio), "mitochondrial abundance"),
+        paste(">=", toString(minNovelty), "novelty score"),
+        paste(">=", toString(minCellsPerGene), "cells per gene")
+    )
+    cat(c(
+        "Filtering parameters:",
+        paste("  -", printParams),
+        sepBar,
+        as.character(summary),
+        sepBar,
+        paste(
+            length(cells), "/", ncol(object), "cells passed filtering",
+            paste0("(", percent(length(cells) / ncol(object)), ")")
+        ),
+        paste(
+            length(genes), "/", nrow(object), "genes passed filtering",
+            paste0("(", percent(length(genes) / nrow(object)), ")")
         )
-        cat(c(
-            "Filtering parameters:",
-            paste("  -", printParams),
-            sepBar,
-            as.character(summary),
-            sepBar,
-            paste(
-                length(cells), "/", ncol(object), "cells passed filtering",
-                paste0("(", percent(length(cells) / ncol(object)), ")")
-            ),
-            paste(
-                length(genes), "/", nrow(object), "genes passed filtering",
-                paste0("(", percent(length(genes) / nrow(object)), ")")
-            )
-        ), sep = "\n")
-    }
+    ), sep = "\n")
 
     # Metadata =================================================================
     metadata(object)[["filterCells"]] <- cells

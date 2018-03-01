@@ -1,9 +1,5 @@
 context("plotMarkerTSNE")
 
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
-
 genes <- counts(seurat) %>%
     rownames() %>%
     .[[1L]]

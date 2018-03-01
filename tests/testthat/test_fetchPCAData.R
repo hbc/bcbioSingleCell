@@ -1,9 +1,5 @@
 context("fetchPCAData")
 
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
-
 test_that("fetchPCAData", {
     data <- fetchPCAData(seurat)
     expect_is(data, "data.frame")

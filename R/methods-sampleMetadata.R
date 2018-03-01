@@ -75,13 +75,13 @@ NULL
 
 
 
-#' @importFrom dplyr everything mutate_if
+#' @importFrom dplyr everything mutate_all
 #' @importFrom magrittr set_rownames
 .sanitizeSampleMetadata <- function(metadata, interestingGroups) {
     metadata %>%
         select(c(metadataPriorityCols), everything()) %>%
-        mutate_if(is.character, as.factor) %>%
-        mutate_if(is.factor, droplevels) %>%
+        mutate_all(as.factor) %>%
+        mutate_all(droplevels) %>%
         uniteInterestingGroups(interestingGroups) %>%
         set_rownames(.[["sampleID"]])
 }
@@ -144,7 +144,6 @@ setMethod(
         # objects created with bcbioSingleCell.
         metadata <- bcbio(object, "sampleMetadata")
         if (!is.null(metadata)) {
-            inform("Using bcbio stashed metadata")
             if (!identical(
                 unique(as.character(metadata[["sampleID"]])),
                 unique(as.character(slot(object, "meta.data")[["sampleID"]]))
@@ -159,7 +158,6 @@ setMethod(
                 interestingGroups <- bcbioBase::interestingGroups(object)
             }
         } else {
-            inform("Generating sample metadata from `meta.data` slot")
             # Fall back to constructing metadata from cellular barcode info
             if (!.hasSlot(object, "version")) {
                 abort("Failed to detect seurat version")

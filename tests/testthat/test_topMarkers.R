@@ -1,18 +1,14 @@
 context("topMarkers")
 
-load(system.file(
-    file.path("extdata", "seuratAllMarkers.rda"),
-    package = "bcbioSingleCell"))
-
 test_that("data.frame", {
-    data <- topMarkers(seuratAllMarkers)
-    expect_is(data, "grouped_df")
+    x <- topMarkers(seurat_all_markers)
+    expect_is(x, "grouped_df")
     expect_identical(
-        group_vars(data),
+        group_vars(x),
         "cluster"
     )
     expect_identical(
-        dim(data),
+        dim(x),
         c(40L, 17L)
     )
 })

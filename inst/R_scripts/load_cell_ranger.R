@@ -1,12 +1,13 @@
 # nolint start
 #
-# CellRanger *Mus musculus* example
+# Load 10X Genomics Cell Ranger Data
+#
 # Michael Steinbaugh
-# 2017-12-01
+# 2018-02-26
 #
 # Latest version of this script is available here:
 # script <- system.file(
-#     file.path("R_scripts", "loadCellRanger.R"),
+#     "R_scripts/load_cell_ranger.R",
 #     package = "bcbioSingleCell")
 # file.edit(script)
 #
@@ -18,26 +19,23 @@ library(bcbioSingleCell)
 # Check the website for latest reference dataset version. These reference
 # datasets are quite large and should be saved in a central location rather
 # than per project.
-dir.create("annotations", showWarnings = FALSE)
-remoteFile <- file.path(
+dir_create("annotations")
+remote <- path(
     "http://cf.10xgenomics.com",
     "supp",
     "cell-exp",
     "refdata-cellranger-mm10-1.2.0.tar.gz")
-localFile <- file.path(
+local <- path(
     "annotations",
     "refdata-cellranger-mm10-1.2.0.tar.gz")
-download.file(remoteFile, localFile)
-untar(localFile)
-rm(remoteFile, localFile)
+download.file(remote, local)
+untar(local)
+rm(remote, local)
 
 bcb <- loadCellRanger(
-    uploadDir = file.path("data", "cellranger"),
-    refDataDir = file.path("annotations", "refdata-cellranger-mm10-1.2.0"),
-    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
+    uploadDir = path("data", "cellranger"),
+    refDataDir = path("annotations", "refdata-cellranger-mm10-1.2.0"),
+    sampleMetadataFile = path("meta", "sample_metadata.xlsx"),
     interestingGroups = c("genotype", "age")
 )
-
-# Back up all data inside bcbio object
-flatFiles <- flatFiles(bcb)
-saveData(bcb, flatFiles, dir = "data")
+saveData(bcb, dir = path("data", Sys.Date()))

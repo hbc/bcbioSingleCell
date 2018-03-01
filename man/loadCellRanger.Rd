@@ -2,16 +2,16 @@
 % Please edit documentation in R/loadCellRanger.R
 \name{loadCellRanger}
 \alias{loadCellRanger}
-\title{Load 10X Genomics CellRanger Data}
+\title{Load 10X Genomics Cell Ranger Data}
 \usage{
 loadCellRanger(uploadDir, refdataDir, interestingGroups = "sampleName",
   sampleMetadataFile = NULL, annotable = TRUE, prefilter = TRUE, ...)
 }
 \arguments{
-\item{uploadDir}{Path to CellRanger output directory. This directory path
+\item{uploadDir}{Path to Cell Ranger output directory. This directory path
 must contain \code{filtered_gene_bc_matrices*} as a child directory.}
 
-\item{refdataDir}{Directory path to cellranger reference annotation data.}
+\item{refdataDir}{Directory path to Cell Ranger reference annotation data.}
 
 \item{interestingGroups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
@@ -44,7 +44,7 @@ counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 }
 \details{
 This function is a simplified version of \code{\link[=loadSingleCell]{loadSingleCell()}}
-optimized for handling CellRanger output.
+optimized for handling Cell Ranger output.
 }
 \note{
 Unlike \code{\link[=loadSingleCell]{loadSingleCell()}}, the \code{organism}, \code{ensemblVersion}, and

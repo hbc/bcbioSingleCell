@@ -1,12 +1,5 @@
 context("bcbio")
 
-load(system.file(
-    file.path("extdata", "bcb.rda"),
-    package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "seurat.rda"),
-    package = "bcbioSingleCell"))
-
 test_that("bcbioSingleCell", {
     slot <- bcbio(bcb)
     expect_is(slot, "SimpleList")
@@ -63,6 +56,7 @@ test_that("seurat", {
              "cellularBarcodeCutoff" = "NULL",  # numeric
              "date" = "Date",
              "wd" = "character",
+             # TODO Switch to single session info
              "utilsSessionInfo" = "sessionInfo",
              "devtoolsSessionInfo" = "session_info",
              "subset" = "logical",
