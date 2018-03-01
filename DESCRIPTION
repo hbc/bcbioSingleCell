@@ -89,7 +89,8 @@ Suggests:
     tidyverse
 Remotes:
     hbc/bcbioBase@develop,
-    statOmics/zingeR
+    statOmics/zingeR,
+    steinbaugh/basejump@develop
 biocViews:
     DataImport,
     DataRepresentation,
