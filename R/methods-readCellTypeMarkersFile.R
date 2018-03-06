@@ -8,15 +8,15 @@
 #' @inheritParams general
 #'
 #' @param object Gene markers file (CSV or Excel).
-#' @param gene2symbol Gene-to-symbol annotation [data.frame].
+#' @param gene2symbol Gene-to-symbol annotation `data.frame`.
 #'
-#' @return [tibble], gropued by `cell` column.
+#' @return `tibble`, gropued by `cell` column.
 #'
 #' @examples
 #' cellTypeMarkersFile <- system.file(
 #'     file.path("extdata", "cellTypeMarkers.csv"),
 #'     package = "bcbioSingleCell")
-#' gene2symbol <- annotable("Mus musculus", format = "gene2symbol")
+#' gene2symbol <- gene2symbol("Mus musculus")
 #' readCellTypeMarkersFile(cellTypeMarkersFile, gene2symbol = gene2symbol)
 NULL
 

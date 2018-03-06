@@ -52,31 +52,31 @@ NULL
     }
 
     # Match the arguments against the sample metadata
-    sampleMetadata <- sampleMetadata(object)
+    sampleData <- sampleData(object)
     list <- lapply(seq_along(arguments), function(a) {
         column <- names(arguments)[[a]]
         # Check that column is present
-        if (!column %in% colnames(sampleMetadata)) {
+        if (!column %in% colnames(sampleData)) {
             abort(paste(column, "isn't present in metadata colnames"))
         }
         argument <- arguments[[a]]
         # Check that all items in argument are present
-        if (!all(argument %in% sampleMetadata[[column]])) {
-            missing <- argument[which(!argument %in% sampleMetadata[[column]])]
+        if (!all(argument %in% sampleData[[column]])) {
+            missing <- argument[which(!argument %in% sampleData[[column]])]
             abort(paste(
                 column,
                 "metadata column doesn't contain",
                 toString(missing)
             ))
         }
-        sampleMetadata %>%
+        sampleData %>%
             .[.[[column]] %in% argument, "sampleID", drop = TRUE]
     })
     sampleIDs <- Reduce(f = intersect, x = list)
 
     # Output to the user which samples matched, using the `sampleName` metadata
     # column, which is more descriptive than `sampleID`
-    sampleNames <- sampleMetadata %>%
+    sampleNames <- sampleData %>%
         .[.[["sampleID"]] %in% sampleIDs, "sampleName", drop = TRUE] %>%
         as.character() %>%
         sort() %>%

@@ -84,19 +84,19 @@ NULL
     # cell2sample
     cell2sample <- metadata[["cell2sample"]]
     assert_is_factor(cell2sample)
-    # Note that we're subsetting `sampleMetadata` by the factor levels in
+    # Note that we're subsetting `sampleData` by the factor levels in
     # `cell2sample`, so this must come first
     cell2sample <- droplevels(cell2sample[cells])
     metadata[["cell2sample"]] <- cell2sample
 
-    # sampleMetadata
-    sampleMetadata <- sampleMetadata(x) %>%
+    # sampleData
+    sampleData <- sampleData(x) %>%
         .[levels(cell2sample), , drop = FALSE] %>%
         mutate_all(as.factor) %>%
         mutate_all(droplevels) %>%
         set_rownames(.[["sampleID"]])
-    metadata[["sampleMetadata"]] <- sampleMetadata
-    sampleIDs <- as.character(sampleMetadata[["sampleID"]])
+    metadata[["sampleData"]] <- sampleData
+    sampleIDs <- as.character(sampleData[["sampleID"]])
 
     # aggregateReplicates
     aggregateReplicates <- metadata[["aggregateReplicates"]]

@@ -1,6 +1,11 @@
+# rename annotable to rowData
+# rename sampleData to sampleData
+
+
+
 # if (!is.factor(metadata(object[["cell2sample"]]))) {
 #     cells <- colnames(object)
-#     samples <- rownames(sampleMetadata(object))
+#     samples <- rownames(sampleData(object))
 #     cell2sample <- mapCellsToSamples(
 #         cells = cells,
 #         samples = samples)

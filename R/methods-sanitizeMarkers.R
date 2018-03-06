@@ -100,20 +100,21 @@ NULL
         }
     }
 
-    # Check for annotable annotations and add if necessary
+    # Check for rowData annotations and add if necessary
     if (!"description" %in% colnames(markers)) {
         inform("Adding stashed Ensembl annotations")
-        annotable <- bcbio(object)[["annotable"]]
-        # Drop the symbols from annotable before join to avoid mismatch
-        annotable[["symbol"]] <- NULL
+        rowData <- bcbio(object, "rowData")
+        # Drop the symbols from rowData before join to avoid mismatch
+        rowData[["symbol"]] <- NULL
         # Ensure Entrez IDs nested as a list get sanitized to string
-        if (is.list(annotable[["entrez"]])) {
-            annotable[["entrez"]] <- vapply(
-                annotable[["entrez"]],
+        if (is.list(rowData[["entrez"]])) {
+            rowData[["entrez"]] <- vapply(
+                rowData[["entrez"]],
                 FUN = toString,
-                FUN.VALUE = character(1L))
+                FUN.VALUE = character(1L)
+            )
         }
-        markers <- left_join(markers, annotable, by = "ensgene")
+        markers <- left_join(markers, rowData, by = "ensgene")
     }
 
     # Ensure that required columns are present
@@ -142,15 +143,18 @@ NULL
         # Ensure all the annotations added are camelCase
         camel(strict = FALSE) %>%
         # `padj` should come at the end, but isn't in legacy output
-        select(c(
-            "cluster",
-            "ensgene",
-            "symbol",
-            "pct1",
-            "pct2",
-            "avgLogFC",
-            "pvalue"
-        ), everything()) %>%
+        select(
+            c(
+                "cluster",
+                "ensgene",
+                "symbol",
+                "pct1",
+                "pct2",
+                "avgLogFC",
+                "pvalue"
+            ),
+            everything()
+        ) %>%
         group_by(.data[["cluster"]]) %>%
         # Arrange by P value
         arrange(!!sym("pvalue"), .by_group = TRUE)
@@ -166,4 +170,5 @@ setMethod(
     signature(
         object = "seurat",
         markers = "data.frame"),
-    .sanitizeMarkersSeurat)
+    .sanitizeMarkersSeurat
+)

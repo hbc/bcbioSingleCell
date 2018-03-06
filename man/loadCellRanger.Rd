@@ -5,7 +5,7 @@
 \title{Load 10X Genomics Cell Ranger Data}
 \usage{
 loadCellRanger(uploadDir, refdataDir, interestingGroups = "sampleName",
-  sampleMetadataFile = NULL, annotable = TRUE, prefilter = TRUE, ...)
+  sampleMetadataFile = NULL, rowData = TRUE, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to Cell Ranger output directory. This directory path
@@ -22,14 +22,13 @@ with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop). Consult the GitHub repo for examples and additional information.}
 
-\item{annotable}{User-defined gene annotations (a.k.a.
-"annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
-be left set to \code{TRUE}. By default, the function will automatically generate
-an annotable from the annotations available on Ensembl. If set \code{FALSE},
-then \code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
+\item{rowData}{User-defined gene annotations, which will be slotted into
+\code{\link[=rowData]{rowData()}}. Typically this should be left set to \code{TRUE}. By default, the
+function will automatically query Ensembl for annotations. If set \code{FALSE},
+then \code{\link[=rowData]{rowData()}} inside the resulting \code{bcbioSingleCell} object will be left
 empty. This is recommended for projects dealing with genes or transcripts
-that are poorly annotated. Additionally, a manually constructed annotable
-can be passed in as a \link{data.frame}, but this isn't generally recommended.}
+that are poorly annotated. Additionally, user-defined data can be passed in
+as a \code{data.frame}, but this isn't generally recommended.}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 

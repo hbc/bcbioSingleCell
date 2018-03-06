@@ -11,7 +11,7 @@
 #'
 #' @param interestingGroups Interesting group, to use for colors.
 #'
-#' @seealso [sampleMetadata()].
+#' @seealso [sampleData()].
 #'
 #' @return [data.frame] with cellular barcodes as rows.
 #'
@@ -39,7 +39,7 @@ NULL
     colData <- colData(object)
     sampleID <- cell2sample(object)
     assert_are_identical(rownames(colData), names(sampleID))
-    sampleMetadata <- sampleMetadata(
+    sampleData <- sampleData(
         object,
         interestingGroups = interestingGroups)
     cbind(
@@ -47,9 +47,9 @@ NULL
         as.data.frame(colData)
     ) %>%
         # Need to use `cellID` column for rownames, because that is the
-        # column set in `sampleMetadata`
+        # column set in `sampleData`
         rownames_to_column("cellID") %>%
-        left_join(sampleMetadata, by = "sampleID") %>%
+        left_join(sampleData, by = "sampleID") %>%
         .sanitizeMetrics() %>%
         column_to_rownames("cellID")
 }

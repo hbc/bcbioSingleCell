@@ -7,7 +7,7 @@
 #'
 #' @inheritParams general
 #'
-#' @param annotable Annotable.
+#' @param rowData Data describing the rows of the object.
 #' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
 #'
 #' @note This should only be performed during the initial run loading.
@@ -22,42 +22,37 @@
 #'
 #' # dgCMatrix
 #' counts <- counts(bcb)
-#' annotable <- annotable(bcb)
-#' calculateMetrics(counts, annotable = annotable) %>% glimpse()
+#' rowData <- rowData(bcb)
+#' calculateMetrics(counts, rowData = rowData) %>% glimpse()
 NULL
 
 
 
 # Constructors =================================================================
-#' Calculate Metrics from Sparse Counts Matrix
-#'
-#' @keywords internal
-#' @noRd
-#'
 #' @importFrom dplyr filter mutate mutate_if pull
 #' @importFrom Matrix colSums
 #' @importFrom scales percent
 #' @importFrom tibble column_to_rownames tibble
 .calculateMetrics.dgCMatrix <- function(  # nolint
     object,
-    annotable = TRUE,
+    rowData = TRUE,
     prefilter = TRUE) {
     inform("Calculating barcode metrics")
     inform(paste(ncol(object), "cellular barcodes detected"))
 
-    if (isTRUE(annotable)) {
+    if (isTRUE(rowData)) {
         organism <- rownames(object) %>%
             .[[1L]] %>%
             detectOrganism()
-        annotable <- annotable(organism)
+        rowData <- rowData(organism)
     }
 
-    # Check that all genes are in annotable
+    # Check that all genes are in rowData
     missing <- rownames(object) %>%
-        .[!rownames(object) %in% annotable[["ensgene"]]]
+        .[!rownames(object) %in% rowData[["ensgene"]]]
     if (identical(length(missing), nrow(object))) {
         abort(paste(
-            "No genes in the counts matrix matched the annotable.",
+            "No genes in the counts matrix matched the rowData.",
             "Check to ensure `organism` argument is correct."
         ))
     }
@@ -65,20 +60,20 @@ NULL
     if (length(missing) > 0L) {
         warn(paste(
             length(missing),
-            "genes missing in annotable used to calculate metrics",
+            "genes missing in rowData used to calculate metrics",
             paste0("(", percent(length(missing) / nrow(object)), ")")
         ))
     }
 
-    # Obtain detected coding and mitochondrial genes, using annotable
-    codingGenesDetected <- annotable %>%
+    # Obtain detected coding and mitochondrial genes, using rowData
+    codingGenesDetected <- rowData %>%
         filter(.data[["broadClass"]] == "coding") %>%
         pull("ensgene") %>%
         .[. %in% rownames(object)]
     if (length(codingGenesDetected) == 0L) {
         abort("No coding genes detected")
     }
-    mitoGenesDetected <- annotable %>%
+    mitoGenesDetected <- rowData %>%
         filter(.data[["broadClass"]] == "mito") %>%
         pull("ensgene") %>%
         .[. %in% rownames(object)]
@@ -97,9 +92,11 @@ NULL
         nUMI = Matrix::colSums(object),
         nGene = Matrix::colSums(object > 0L),
         nCoding = Matrix::colSums(
-            object[codingGenesDetected, , drop = FALSE]),
+            object[codingGenesDetected, , drop = FALSE]
+        ),
         nMito = Matrix::colSums(
-            object[mitoGenesDetected, , drop = FALSE])) %>%
+            object[mitoGenesDetected, , drop = FALSE])
+        ) %>%
         mutate(
             log10GenesPerUMI = log10(.data[["nGene"]]) /
                 log10(.data[["nUMI"]]),
@@ -135,7 +132,8 @@ NULL
 setMethod(
     "calculateMetrics",
     signature("dgCMatrix"),
-    .calculateMetrics.dgCMatrix)
+    .calculateMetrics.dgCMatrix
+)
 
 
 
@@ -150,6 +148,8 @@ setMethod(
         inform("Recalculating cellular barcode metrics")
         .calculateMetrics.dgCMatrix(
             assay(object),
-            annotable = metadata(object)[["annotable"]],
-            prefilter = prefilter)
-    })
+            rowData = metadata(object)[["rowData"]],
+            prefilter = prefilter
+        )
+    }
+)

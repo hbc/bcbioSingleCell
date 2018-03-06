@@ -68,7 +68,7 @@ setMethod(
         value = "character"),
     function(object, value) {
         assertFormalInterestingGroups(
-            x = sampleMetadata(object),
+            x = sampleData(object),
             interestingGroups = value)
         metadata(object)[["interestingGroups"]] <- value
         validObject(object)
@@ -86,7 +86,7 @@ setMethod(
         value = "character"),
     function(object, value) {
         assertFormalInterestingGroups(
-            x = sampleMetadata(object),
+            x = sampleData(object),
             interestingGroups = value)
         bcbio(object, "interestingGroups") <- value
         validObject(object)

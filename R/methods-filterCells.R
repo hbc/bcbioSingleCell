@@ -6,7 +6,7 @@
 #' @details The filtering cutoff values now support a named numeric vector. By
 #' default we recommend applying the same filtering cutoff to all samples.
 #' When matching the samples, be sure to use `sampleID` column (i.e. the
-#' rownames of [sampleMetadata()]).
+#' rownames of [sampleData()]).
 #'
 #' @rdname filterCells
 #' @name filterCells

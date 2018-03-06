@@ -57,7 +57,7 @@ plotCellCounts(seurat)
 
 # data.frame
 df <- metrics(bcb)
-metadata <- sampleMetadata(bcb)
+metadata <- sampleData(bcb)
 plotCellCounts(df, metadata = metadata)
 }
 \seealso{

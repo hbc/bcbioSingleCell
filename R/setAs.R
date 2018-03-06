@@ -29,7 +29,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @return [bcbioSingleCell] object.
+#' @return `bcbioSingleCell`.
 .coerceLegacy <- function(from) {
     # Check for version
     version <- metadata(from)[["version"]]
@@ -51,7 +51,7 @@ NULL
     validObject(to)
 
     # Recalculate the cellular barcode metrics
-    colData(to) <- calculateMetrics(assay(to), annotable = annotable(to))
+    colData(to) <- calculateMetrics(assay(to), rowData = rowData(to))
 
     # Update the automatic metadata slots
     metadata(to)[["version"]] <- packageVersion
@@ -79,10 +79,10 @@ NULL
 #'
 #' @importFrom Seurat CreateSeuratObject
 #'
-#' @return [seurat] object.
+#' @return `seurat`.
 .coerceToSeurat <- function(from) {
     # Require that technical replicates are aggregated
-    if ("sampleNameAggregate" %in% colnames(sampleMetadata(from))) {
+    if ("sampleNameAggregate" %in% colnames(sampleData(from))) {
         abort(paste(
             "`aggregateReplicates()` required",
             "to merge technical replicates prior to seurat coercion"
@@ -104,7 +104,8 @@ NULL
         min.genes = 0L,
         # Default for UMI datasets
         is.expr = 0L,
-        meta.data = metrics)
+        meta.data = metrics
+    )
 
     # Check that the dimensions match exactly
     if (!identical(dim(from), dim(slot(seurat, "raw.data")))) {
@@ -137,14 +138,15 @@ NULL
 #' @name upgrade-bcbioSingleCell
 #' @section Upgrade bcbioSingleCell to current version:
 #' This method adds support for upgrading `bcbioSCDataSet` objects to the latest
-#' [bcbioSingleCell] class version. This should be backwards compatible to
-#' [bcbioSingleCell] version 0.0.17. Previous objects saved using
+#' `bcbioSingleCell` class version. This should be backwards compatible to
+#' `bcbioSingleCell` version 0.0.17. Previous objects saved using
 #' `bcbioSinglecell` (note case) will likely fail to load with newer versions of
 #' the package.
 setAs(
     from = "bcbioSCDataSet",
     to = "bcbioSingleCell",
-    .coerceLegacy)
+    .coerceLegacy
+)
 
 
 
@@ -154,22 +156,24 @@ setAs(
 #' Interally [Seurat::CreateSeuratObject()] is called without applying any
 #' additional filtering cutoffs, since we have already defined them during our
 #' quality control analysis. Here we are passing the raw gene-level counts of
-#' the filtered cells into a new [seurat] class object, using [as()] object
+#' the filtered cells into a new `seurat` class object, using [as()] object
 #' coercion.
 setAs(
     from = "bcbioSingleCell",
     to = "seurat",
-    .coerceToSeurat)
+    .coerceToSeurat
+)
 
 
 
 #' @rdname coerce
 #' @name coerce-bcbioSingleCell-SummarizedExperiment
 #' @section bcbioSingleCell to SummarizedExperiment:
-#' Since [bcbioSingleCell] is an extension of [SummarizedExperiment], this
+#' Since `bcbioSingleCell` is an extension of `SummarizedExperiment`, this
 #' coercion method is very simple. Here we're simply dropping our `@bcbio` slot,
 #' which contains raw cellular barcodes and other bcbio-specific metadata.
 setAs(
     from = "bcbioSingleCell",
     to = "SummarizedExperiment",
-    .coerceToSummarizedExperiment)
+    .coerceToSummarizedExperiment
+)

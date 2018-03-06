@@ -23,13 +23,14 @@
 #' @importFrom assertive assert_is_non_empty
 #' @importFrom assertive assert_is_of_length
 #' @importFrom assertive assert_is_subset
+#' @importFrom assertive has_dims
+#' @importFrom assertive has_names
 #' @importFrom assertive is_a_string
 #' @importFrom assertive is_character
 #'
 #' @importFrom basejump assertIsAStringOrNULL
 #' @importFrom basejump assertIsAnImplicitInteger
 #' @importFrom basejump assertIsAnImplicitIntegerOrNULL
-#' @importFrom basejump assertIsAnnotable
 #' @importFrom basejump assertIsGene2symbol
 #'
 #' @importFrom bcbioBase assertFormalInterestingGroups

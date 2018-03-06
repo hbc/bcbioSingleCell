@@ -33,7 +33,7 @@ metrics(bcb) \%>\% glimpse()
 metrics(seurat) \%>\% glimpse()
 }
 \seealso{
-\code{\link[=sampleMetadata]{sampleMetadata()}}.
+\code{\link[=sampleData]{sampleData()}}.
 
 Other Quality Control Metrics: \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},

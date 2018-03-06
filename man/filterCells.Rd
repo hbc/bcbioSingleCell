@@ -48,7 +48,7 @@ cellular barcodes.
 The filtering cutoff values now support a named numeric vector. By
 default we recommend applying the same filtering cutoff to all samples.
 When matching the samples, be sure to use \code{sampleID} column (i.e. the
-rownames of \code{\link[=sampleMetadata]{sampleMetadata()}}).
+rownames of \code{\link[=sampleData]{sampleData()}}).
 }
 \examples{
 load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))

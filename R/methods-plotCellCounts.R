@@ -21,7 +21,7 @@
 #'
 #' # data.frame
 #' df <- metrics(bcb)
-#' metadata <- sampleMetadata(bcb)
+#' metadata <- sampleData(bcb)
 #' plotCellCounts(df, metadata = metadata)
 NULL
 
@@ -112,7 +112,7 @@ setMethod(
         metrics <- metrics(
             object,
             interestingGroups = interestingGroups)
-        metadata <- sampleMetadata(
+        metadata <- sampleData(
             object,
             interestingGroups = interestingGroups)
         .plotCellCounts(
@@ -150,7 +150,7 @@ setMethod(
         metrics <- metrics(
             object,
             interestingGroups = interestingGroups)
-        metadata <- sampleMetadata(
+        metadata <- sampleData(
             object,
             interestingGroups = interestingGroups)
         .plotCellCounts(

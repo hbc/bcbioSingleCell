@@ -23,7 +23,7 @@ matching.
 load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 
 cells <- colnames(bcb)
-samples <- sampleMetadata(bcb)[["sampleID"]]
+samples <- sampleData(bcb)[["sampleID"]]
 
 map <- mapCellsToSamples(cells, samples)
 head(map)

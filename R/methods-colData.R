@@ -26,7 +26,7 @@ setMethod(
             camel()
 
         # Legacy: ensure colData doesn't contain sample metadata
-        meta <- sampleMetadata(x)
+        meta <- sampleData(x)
         drop <- intersect(
             x = colnames(data),
             y = c(

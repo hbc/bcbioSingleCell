@@ -22,19 +22,19 @@ NULL
 
 
 # Constructors =================================================================
-.gene2symbolFromAnnotable <- function(object) {
-    annotable <- annotable(object)
-    if (is.null(annotable)) {
-        abort("Object does not contain internal annotable")
+.gene2symbolFromRowData <- function(object) {
+    rowData <- rowData(object)
+    if (is.null(rowData)) {
+        abort("Object does not contain internal rowData")
     }
     cols <- c("ensgene", "symbol")
-    if (!all(cols %in% colnames(annotable))) {
+    if (!all(cols %in% colnames(rowData))) {
         abort(paste(
             toString(cols),
-            "missing from internal annotable"
+            "missing from internal rowData"
         ))
     }
-    annotable[, cols]
+    rowData[, cols]
 }
 
 
@@ -48,8 +48,8 @@ setMethod(
         gene2symbol <- metadata(object)[["gene2symbol"]]
         if (is.data.frame(gene2symbol)) return(gene2symbol)
 
-        # Fall back to generating from annotable
-        .gene2symbolFromAnnotable(object)
+        # Fall back to generating from rowData
+        .gene2symbolFromRowData(object)
     })
 
 
@@ -63,7 +63,7 @@ setMethod(
         gene2symbol <- bcbio(object, "gene2symbol")
         if (is.data.frame(gene2symbol)) return(gene2symbol)
 
-        gene2symbol <- .gene2symbolFromAnnotable(object)
+        gene2symbol <- .gene2symbolFromRowData(object)
         if (is.data.frame(gene2symbol)) return(gene2symbol)
 
         rownames <- slot(object, "data") %>% rownames()
@@ -83,4 +83,5 @@ setMethod(
             "seurat object doesn't appear to contain",
             "Ensembl gene to symbol mappings"
         ))
-    })
+    }
+)

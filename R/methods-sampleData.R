@@ -1,9 +1,9 @@
-#' Sample Metadata
+#' Sample Data
 #'
-#' @rdname sampleMetadata
-#' @name sampleMetadata
+#' @rdname sampleData
+#' @name sampleData
 #'
-#' @importFrom bcbioBase sampleMetadata
+#' @importFrom bcbioBase sampleData
 #'
 #' @inheritParams general
 #' @inheritParams metrics
@@ -19,10 +19,10 @@
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
-#' sampleMetadata(bcb) %>% glimpse()
+#' sampleData(bcb) %>% glimpse()
 #'
 #' # seurat
-#' sampleMetadata(seurat) %>% glimpse()
+#' sampleData(seurat) %>% glimpse()
 NULL
 
 
@@ -41,7 +41,7 @@ NULL
 #' @importFrom basejump camel
 #' @importFrom dplyr distinct mutate_if select_if
 #' @importFrom tibble remove_rownames
-.sampleMetadata.seurat <- function(metadata) {  # nolint
+.sampleData.seurat <- function(metadata) {  # nolint
     # Assign the required metadata columns from `orig.ident`, if necessary
     if (!all(metadataPriorityCols %in% colnames(metadata))) {
         missing <- setdiff(metadataPriorityCols, colnames(metadata))
@@ -89,12 +89,12 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname sampleMetadata
+#' @rdname sampleData
 #' @importFrom dplyr distinct mutate select
 #' @importFrom stringr str_match
 #' @export
 setMethod(
-    "sampleMetadata",
+    "sampleData",
     signature("bcbioSingleCell"),
     function(
         object,
@@ -103,8 +103,17 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
+        # Legacy `sampleData` column fix
+        if ("sampleData" %in% names(metadata(object))) {
+            warn(paste(
+                "Legacy `sampleData` slot detected.",
+                "Run `updateObject()."
+            ))
+            metadata(object)[["sampleData"]] <- metadata(object)[["sampleData"]]
+        }
+
         metadata <- metadata(object) %>%
-            .[["sampleMetadata"]] %>%
+            .[["sampleData"]] %>%
             as.data.frame()
         # Aggregate replicates, if necessary
         if (isTRUE(aggregateReplicates)) {
@@ -132,17 +141,18 @@ setMethod(
 
 
 
-#' @rdname sampleMetadata
+#' @rdname sampleData
 #' @export
 setMethod(
-    "sampleMetadata",
+    "sampleData",
     signature("seurat"),
     function(
         object,
         interestingGroups) {
         # Attempt to use stashed metadata. This will only exist for seurat
         # objects created with bcbioSingleCell.
-        metadata <- bcbio(object, "sampleMetadata")
+        # FIXME Add `metadata()` support instead of using `bcbio()`
+        metadata <- bcbio(object, "sampleData")
         if (!is.null(metadata)) {
             if (!identical(
                 unique(as.character(metadata[["sampleID"]])),
@@ -165,11 +175,11 @@ setMethod(
             # Access the metadata
             if (.hasSlot(object, "meta.data")) {
                 metadata <- slot(object, "meta.data") %>%
-                    .sampleMetadata.seurat()
+                    .sampleData.seurat()
             } else if (.hasSlot(object, "data.info")) {
                 # Legacy support for older seurat objects (e.g. pbmc33k)
                 metadata <- slot(object, "data.info") %>%
-                    .sampleMetadata.seurat()
+                    .sampleData.seurat()
             } else {
                 abort("Failed to locate metadata in seurat object")
             }

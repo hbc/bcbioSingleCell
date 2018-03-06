@@ -46,7 +46,7 @@ setMethod(
         cell2sample <- bcbio(object, "cell2sample")
         if (!is.factor(cell2sample)) {
             cells <- colnames(slot(object, "data"))
-            samples <- rownames(sampleMetadata(object))
+            samples <- rownames(sampleData(object))
             cell2sample <- mapCellsToSamples(cells = cells, samples = samples)
         }
         cell2sample

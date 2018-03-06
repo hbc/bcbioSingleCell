@@ -45,7 +45,7 @@ setMethod(
         assert_all_are_positive(minCells)
         assert_is_environment(envir)
         dir <- initializeDirectory(dir)
-        sampleIDs <- sampleMetadata(object) %>%
+        sampleIDs <- sampleData(object) %>%
             pull("sampleID") %>%
             as.character()
         files <- mapply(

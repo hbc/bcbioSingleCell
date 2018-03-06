@@ -10,7 +10,7 @@
 \usage{
 calculateMetrics(object, ...)
 
-\S4method{calculateMetrics}{dgCMatrix}(object, annotable = TRUE,
+\S4method{calculateMetrics}{dgCMatrix}(object, rowData = TRUE,
   prefilter = TRUE)
 
 \S4method{calculateMetrics}{bcbioSingleCell}(object, prefilter = TRUE)
@@ -20,7 +20,7 @@ calculateMetrics(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{annotable}{Annotable.}
+\item{rowData}{Data describing the rows of the object.}
 
 \item{prefilter}{Whether to apply pre-filtering to the cellular barcodes.}
 }
@@ -41,8 +41,8 @@ calculateMetrics(bcb) \%>\% glimpse()
 
 # dgCMatrix
 counts <- counts(bcb)
-annotable <- annotable(bcb)
-calculateMetrics(counts, annotable = annotable) \%>\% glimpse()
+rowData <- rowData(bcb)
+calculateMetrics(counts, rowData = rowData) \%>\% glimpse()
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

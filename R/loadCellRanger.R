@@ -1,3 +1,8 @@
+# TODO Map legacy `annotable` argument to `rowData`
+# TODO Improve `DataFrame`, `GRanges` pass-in support for `rowData`
+
+
+
 #' Load 10X Genomics Cell Ranger Data
 #'
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
@@ -12,7 +17,7 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump annotable camel detectOrganism gene2symbol
+#' @importFrom basejump camel detectOrganism genes gene2symbol
 #'   gene2symbolFromGTF readGTF
 #' @importFrom bcbioBase prepareSummarizedExperiment readSampleMetadataFile
 #' @importFrom dplyr mutate
@@ -47,9 +52,10 @@ loadCellRanger <- function(
     refdataDir,
     interestingGroups = "sampleName",
     sampleMetadataFile = NULL,
-    annotable = TRUE,
+    rowData = TRUE,
     prefilter = TRUE,
-    ...) {
+    ...
+) {
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
     uploadDir <- normalizePath(uploadDir)
@@ -58,10 +64,7 @@ loadCellRanger <- function(
     refdataDir <- normalizePath(refdataDir)
     assert_is_character(interestingGroups)
     assertIsAStringOrNULL(sampleMetadataFile)
-    assert_is_any_of(annotable, c("data.frame", "logical", "NULL"))
-    if (is.data.frame(annotable)) {
-        assertIsAnnotable(annotable)
-    }
+    assert_is_any_of(rowData, c("data.frame", "logical", "NULL"))
     assert_is_a_bool(prefilter)
 
     pipeline <- "cellranger"
@@ -72,31 +75,31 @@ loadCellRanger <- function(
 
     # Sample metadata ==========================================================
     if (is_a_string(sampleMetadataFile)) {
-        sampleMetadata <- readSampleMetadataFile(sampleMetadataFile)
+        sampleData <- readSampleMetadataFile(sampleMetadataFile)
     } else {
         warn(paste(
             "`sampleMetadataFile` not specified.",
             "Generating minimal sample metadata."
         ))
-        sampleMetadata <- data.frame(row.names = names(sampleDirs))
+        sampleData <- data.frame(row.names = names(sampleDirs))
         for (i in seq_along(metadataPriorityCols)) {
-            sampleMetadata[, metadataPriorityCols[[i]]] <-
+            sampleData[, metadataPriorityCols[[i]]] <-
                 as.factor(names(sampleDirs))
         }
     }
-    assert_is_subset(sampleMetadata[["description"]], basename(sampleDirs))
+    assert_is_subset(sampleData[["description"]], basename(sampleDirs))
 
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
     interestingGroups <- camel(interestingGroups, strict = FALSE)
-    assertFormalInterestingGroups(sampleMetadata, interestingGroups)
+    assertFormalInterestingGroups(sampleData, interestingGroups)
 
     # Subset sample directories by metadata ====================================
-    if (nrow(sampleMetadata) < length(sampleDirs)) {
+    if (nrow(sampleData) < length(sampleDirs)) {
         inform("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
         sampleDirs <- sampleDirs %>%
-            .[names(sampleDirs) %in% rownames(sampleMetadata)]
+            .[names(sampleDirs) %in% rownames(sampleData)]
         inform(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
@@ -136,17 +139,18 @@ loadCellRanger <- function(
     ))
 
     # Gene annotations =========================================================
-    if (isTRUE(annotable)) {
-        annotable <- annotable(
+    if (isTRUE(rowData)) {
+        rowData <- genes(
             organism,
             genomeBuild = genomeBuild,
             release = release,
-            uniqueSymbol = FALSE)
-    } else if (is.data.frame(annotable)) {
-        annotable <- annotable(annotable)
+            uniqueSymbol = FALSE
+        )
+    } else if (is.data.frame(rowData)) {
+        rowData <- sanitizeRowData(rowData)
     } else {
         warn("Loading run without gene annotations")
-        annotable <- NULL
+        rowData <- NULL
     }
 
     # GTF annotations
@@ -155,7 +159,8 @@ loadCellRanger <- function(
         x = refdataDir,
         y = system.file(
             "extdata/refdata-cellranger-hg19-1.2.0",
-            package = "bcbioSingleCell")
+            package = "bcbioSingleCell"
+        )
     )) {
         inform("Minimal working example doesn't contain a GTF file")
         gtf <- NULL
@@ -163,7 +168,8 @@ loadCellRanger <- function(
         gene2symbol <- gene2symbol(
             organism,
             genomeBuild = genomeBuild,
-            release = release)
+            release = release
+        )
     } else {
         assert_all_are_existing_files(gtfFile)
         gtf <- readGTF(gtfFile)
@@ -175,7 +181,8 @@ loadCellRanger <- function(
     sparseCountsList <- .sparseCountsList(
         sampleDirs = sampleDirs,
         pipeline = pipeline,
-        umiType = umiType)
+        umiType = umiType
+    )
 
     # Cell Ranger always outputs at gene level
     counts <- do.call(Matrix::cBind, sparseCountsList)
@@ -183,8 +190,9 @@ loadCellRanger <- function(
     # Metrics ==================================================================
     metrics <- calculateMetrics(
         object = counts,
-        annotable = annotable,
-        prefilter = prefilter)
+        rowData = rowData,
+        prefilter = prefilter
+    )
 
     if (isTRUE(prefilter)) {
         # Subset the counts matrix to match the metrics
@@ -195,7 +203,7 @@ loadCellRanger <- function(
     # Check for multiplexed samples. CellRanger outputs these with a trailing
     # number (e.g. `-2$`, which we're sanitizing to `_2$`).
     if (any(grepl(x = colnames(counts), pattern = "_2$"))) {
-        if (!"index" %in% colnames(sampleMetadata)) {
+        if (!"index" %in% colnames(sampleData)) {
             abort(paste(
                 "`index` column must be defined using",
                 "`sampleMetadataFile` for multiplexed samples"
@@ -215,13 +223,14 @@ loadCellRanger <- function(
             )) %>%
             mutate_all(as.factor) %>%
             # Note that we can't use minimal sample metadata here
-            left_join(sampleMetadata, by = c("description", "index"))
+            left_join(sampleData, by = c("description", "index"))
         cell2sample <- map[["sampleID"]]
         names(cell2sample) <- map[["cellID"]]
     } else {
         cell2sample <- mapCellsToSamples(
             cells = colnames(counts),
-            samples = rownames(sampleMetadata))
+            samples = rownames(sampleData)
+        )
     }
 
     # Metadata =================================================================
@@ -231,13 +240,12 @@ loadCellRanger <- function(
         uploadDir = uploadDir,
         sampleDirs = sampleDirs,
         sampleMetadataFile = sampleMetadataFile,
-        sampleMetadata = sampleMetadata,
+        sampleData = sampleData,
         interestingGroups = interestingGroups,
         cell2sample = cell2sample,
         organism = organism,
         genomeBuild = genomeBuild,
         ensemblVersion = ensemblVersion,
-        annotable = annotable,
         gtfFile = gtfFile,
         gene2symbol = gene2symbol,
         umiType = umiType,
@@ -245,7 +253,8 @@ loadCellRanger <- function(
         prefilter = prefilter,
         # cellranger pipeline-specific
         refdataDir = refdataDir,
-        refJSON = refJSON)
+        refJSON = refJSON
+    )
     # Add user-defined custom metadata, if specified
     dots <- list(...)
     if (length(dots) > 0L) {
@@ -255,8 +264,9 @@ loadCellRanger <- function(
     # SummarizedExperiment =====================================================
     se <- prepareSummarizedExperiment(
         assays = list(assay = counts),
-        rowData = annotable,
+        rowData = rowData,
         colData = metrics,
-        metadata = metadata)
+        metadata = metadata
+    )
     new("bcbioSingleCell", se)
 }

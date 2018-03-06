@@ -5,7 +5,7 @@
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
 loadSingleCell(uploadDir, sampleMetadataFile = NULL,
-  interestingGroups = "sampleName", gtfFile = NULL, annotable = TRUE,
+  interestingGroups = "sampleName", gtfFile = NULL, rowData = TRUE,
   organism = NULL, ensemblVersion = NULL, genomeBuild = NULL,
   prefilter = TRUE, ...)
 }
@@ -26,14 +26,13 @@ is used for PCA and heatmap QC functions.}
 which will be used for gene-to-symbol (\code{gene2symbol}) and
 transcript-to-gene (\code{tx2gene}) annotation mappings.}
 
-\item{annotable}{User-defined gene annotations (a.k.a.
-"annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
-be left set to \code{TRUE}. By default, the function will automatically generate
-an annotable from the annotations available on Ensembl. If set \code{FALSE},
-then \code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
+\item{rowData}{User-defined gene annotations, which will be slotted into
+\code{\link[=rowData]{rowData()}}. Typically this should be left set to \code{TRUE}. By default, the
+function will automatically query Ensembl for annotations. If set \code{FALSE},
+then \code{\link[=rowData]{rowData()}} inside the resulting \code{bcbioSingleCell} object will be left
 empty. This is recommended for projects dealing with genes or transcripts
-that are poorly annotated. Additionally, a manually constructed annotable
-can be passed in as a \link{data.frame}, but this isn't generally recommended.}
+that are poorly annotated. Additionally, user-defined data can be passed in
+as a \code{data.frame}, but this isn't generally recommended.}
 
 \item{organism}{\emph{Optional.} Organism name. Use the full latin name (e.g.
 "Homo sapiens"), since this will be input downstream to
@@ -57,7 +56,7 @@ to download correctly.}
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
 \value{
-\link{bcbioSingleCell}.
+\code{bcbioSingleCell}.
 }
 \description{
 Load bcbio Single-Cell RNA-Seq Data
@@ -74,7 +73,8 @@ uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
 sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
 bcb <- loadSingleCell(
     uploadDir = uploadDir,
-    sampleMetadataFile = sampleMetadataFile)
+    sampleMetadataFile = sampleMetadataFile
+)
 print(bcb)
 }
 \author{

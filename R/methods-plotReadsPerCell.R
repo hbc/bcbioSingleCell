@@ -43,15 +43,15 @@ NULL
 #' @inheritParams plotReadsPerCell
 #'
 #' @return [tibble] grouped by `sampleName` containing `log10Count` values.
-.rawCBTibble <- function(cellularBarcodes, sampleMetadata) {
-    sampleMetadata <- sampleMetadata[, c("sampleID", "sampleName")]
+.rawCBTibble <- function(cellularBarcodes, sampleData) {
+    sampleData <- sampleData[, c("sampleID", "sampleName")]
     cellularBarcodes %>%
         mutate(
             log10Count = log10(.data[["nCount"]]),
             cellularBarcode = NULL,
             nCount = NULL
         ) %>%
-        left_join(sampleMetadata, by = "sampleID") %>%
+        left_join(sampleData, by = "sampleID") %>%
         group_by(!!sym("sampleName"))
 }
 
@@ -69,18 +69,18 @@ NULL
 #' @importFrom tibble tibble
 #'
 #' @param rawTibble [.rawCBTibble()] return.
-#' @param sampleMetadata [sampleMetadata()] return with `sampleName` columns
+#' @param sampleData [sampleData()] return with `sampleName` columns
 #'   that match the `rawTibble`.
 #'
 #' @details Modified version of Allon Klein Lab MATLAB code.
 #'
 #' @return [tibble].
-.proportionalCBTibble <- function(rawTibble, sampleMetadata) {
+.proportionalCBTibble <- function(rawTibble, sampleData) {
     # Ensure `sampleName` is set as factor across both data frames
     rawTibble[["sampleName"]] <-
         as.factor(rawTibble[["sampleName"]])
-    sampleMetadata[["sampleName"]] <-
-        as.factor(sampleMetadata[["sampleName"]])
+    sampleData[["sampleName"]] <-
+        as.factor(sampleData[["sampleName"]])
     mclapply(
         seq_along(levels(rawTibble[["sampleName"]])), function(a) {
             sampleName <- levels(rawTibble[["sampleName"]])[[a]]
@@ -100,7 +100,7 @@ NULL
         }) %>%
         bind_rows() %>%
         mutate(sampleName = as.factor(.data[["sampleName"]])) %>%
-        left_join(sampleMetadata, by = "sampleName")
+        left_join(sampleData, by = "sampleName")
 }
 
 
@@ -307,19 +307,19 @@ NULL
     }
 
     # Obtain the sample metadata
-    sampleMetadata <- sampleMetadata(
+    sampleData <- sampleData(
         object,
         interestingGroups = interestingGroups)
 
     # Mutate cellular barcodes to log10 and set up grouping
     rawTibble <- .rawCBTibble(
         cellularBarcodes = cellularBarcodes,
-        sampleMetadata = sampleMetadata)
+        sampleData = sampleData)
 
     if (geom == "histogram") {
         proportionalTibble <- .proportionalCBTibble(
             rawTibble = rawTibble,
-            sampleMetadata = sampleMetadata)
+            sampleData = sampleData)
     }
 
     # Define the log10 cutoff line (to match plot axis)

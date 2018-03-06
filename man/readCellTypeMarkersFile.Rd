@@ -17,10 +17,10 @@ readCellTypeMarkersFile(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{gene2symbol}{Gene-to-symbol annotation \link{data.frame}.}
+\item{gene2symbol}{Gene-to-symbol annotation \code{data.frame}.}
 }
 \value{
-\link{tibble}, gropued by \code{cell} column.
+\code{tibble}, gropued by \code{cell} column.
 }
 \description{
 Read Cell Type Markers File
@@ -29,7 +29,7 @@ Read Cell Type Markers File
 cellTypeMarkersFile <- system.file(
     file.path("extdata", "cellTypeMarkers.csv"),
     package = "bcbioSingleCell")
-gene2symbol <- annotable("Mus musculus", format = "gene2symbol")
+gene2symbol <- gene2symbol("Mus musculus")
 readCellTypeMarkersFile(cellTypeMarkersFile, gene2symbol = gene2symbol)
 }
 \seealso{
