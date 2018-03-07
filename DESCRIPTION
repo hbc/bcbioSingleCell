@@ -42,8 +42,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 Depends:
-    R (>= 3.5),
-    SingleCellExperiment (>= 1.1),
+    R (>= 3.4),
+    SingleCellExperiment (>= 1.0),
     bcbioBase (>= 0.1.4),
     Seurat (>= 2.0)
 Imports:
