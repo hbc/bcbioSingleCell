@@ -34,7 +34,8 @@
     sampleID,
     sampleDir,
     pipeline,
-    umiType) {
+    umiType
+) {
     assert_is_a_string(sampleID)
     assert_is_a_string(sampleDir)
     assert_all_are_dirs(sampleDir)
@@ -52,7 +53,8 @@
             sampleDir,
             pattern = "matrix.mtx",
             full.names = TRUE,
-            recursive = TRUE)
+            recursive = TRUE
+        )
         # Ensure we're using the filtered matrix
         matrixFile <- matrixFile[grepl(
             x = matrixFile,
@@ -82,12 +84,14 @@
         colnames <- read_tsv(
                 file = colFile,
                 col_names = "barcode",
-                col_types = "c") %>%
+                col_types = "c"
+            ) %>%
             pull("barcode")
         rownames <- read_tsv(
                 file = rowFile,
                 col_names = c("ensgene", "symbol"),
-                col_types = "cc") %>%
+                col_types = "cc"
+            ) %>%
             pull("ensgene")
     }
 
@@ -102,14 +106,16 @@
         gsub(
             x = .,
             pattern = "-",
-            replacement = "_") %>%
+            replacement = "_"
+        ) %>%
         make.names(unique = TRUE)
     rownames(counts) <- rownames %>%
         # Convert dashes to underscores
         gsub(
             x = .,
             pattern = "-",
-            replacement = "_") %>%
+            replacement = "_"
+        ) %>%
         make.names(unique = TRUE)
 
     counts
@@ -117,9 +123,10 @@
 
 
 
-#' @importFrom BiocParallel bpmapply
+# TODO Allow the user to specify number of cores with `mc.cores`
+#' @importFrom parallel mcmapply
 .sparseCountsList <- function(sampleDirs, pipeline, umiType) {
-    bpmapply(
+    mcmapply(
         FUN = function(sampleID, sampleDir, pipeline, umiType) {
             .readSparseCounts(
                 sampleID = sampleID,
@@ -131,5 +138,6 @@
         sampleDir = sampleDirs,
         MoreArgs = list(pipeline = pipeline, umiType = umiType),
         SIMPLIFY = FALSE,
-        USE.NAMES = TRUE)
+        USE.NAMES = TRUE
+    )
 }
