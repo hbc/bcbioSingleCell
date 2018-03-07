@@ -2,23 +2,30 @@
 # https://docs.travis-ci.com/user/languages/r
 
 language: r
-sudo: false
 cache: packages
 warnings_are_errors: false
 
 # Temporarily enable to cache R packages
 script: true
 
-# Need to increase DLLs above default of 100
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
 env:
   global:
     - R_MAX_NUM_DLLS=150
 
 r:
   - bioc-release
-  # - bioc-devel
+  - bioc-devel
+
 r_packages:
   - covr
+bioc_packages:
+  - BiocCheck
 
 after_success:
   - Rscript -e 'covr::codecov()'
+  - R CMD BiocCheck .
