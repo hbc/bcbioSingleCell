@@ -3,11 +3,9 @@
 #' This function extracts `sampleID` from the `cellID` column using grep
 #' matching.
 #'
-#' @rdname mapCellsToSamples
 #' @name mapCellsToSamples
 #' @author Michael Steinbaugh
 #'
-#' @importFrom BiocParallel bplapply
 #' @importFrom dplyr bind_rows filter mutate
 #' @importFrom magrittr set_colnames
 #' @importFrom parallel mclapply
@@ -42,7 +40,7 @@ mapCellsToSamples <- function(cells, samples) {
         return(cell2sample)
     }
 
-    list <- bplapply(samples, function(sample) {
+    list <- mclapply(samples, function(sample) {
         pattern <- paste0("^(", sample, barcodePattern)
         match <- str_match(cells, pattern = pattern) %>%
             as.data.frame() %>%
