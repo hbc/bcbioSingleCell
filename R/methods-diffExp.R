@@ -24,7 +24,6 @@
 #' Consult the [zingeR vignette v2](https://goo.gl/4rTK1w) for additional
 #' information.
 #'
-#' @rdname diffExp
 #' @name diffExp
 #' @author Michael Steinbaugh
 #'
@@ -46,7 +45,7 @@
 #'   numerator and `cells.2` for the denominator. See [Seurat::DiffExpTest()]
 #'   for additional information.
 #'
-#' @return [DEGLRT] object.
+#' @return `DEGLRT`.
 #'
 #' @examples
 #' # seurat: expression in cluster 3 relative to cluster 2
@@ -68,9 +67,9 @@ NULL
 
 # Constructors =================================================================
 #' @importFrom basejump initializeDirectory
-#' @importFrom BiocParallel bpmapply
 #' @importFrom edgeR calcNormFactors DGEList glmFit
 #' @importFrom magrittr set_names
+#' @importFrom parallel mcmapply
 #' @importFrom Seurat WhichCells
 #' @importFrom stats model.matrix
 #' @importFrom zingeR glmWeightedF
@@ -79,14 +78,16 @@ NULL
     numerator,
     denominator,
     minCells = 10L,
-    maxit = 1000L) {
+    maxit = 1000L
+) {
     assert_is_character(numerator)
     assert_is_character(denominator)
     assert_are_disjoint_sets(numerator, denominator)
     assertIsAnImplicitInteger(minCells)
     assert_all_are_greater_than_or_equal_to(
         x = c(length(numerator), length(denominator)),
-        y = minCells)
+        y = minCells
+    )
     assertIsAnImplicitInteger(maxit)
 
     # Counts matrix
@@ -97,11 +98,15 @@ NULL
 
     # Create a cell factor to define the group for `DGEList()`
     numeratorFactor <- replicate(
-        n = length(numerator), expr = "numerator") %>%
+        n = length(numerator),
+        expr = "numerator"
+    ) %>%
         factor() %>%
         set_names(numerator)
     denominatorFactor <- replicate(
-        n = length(denominator), expr = "denominator") %>%
+        n = length(denominator),
+        expr = "denominator"
+    ) %>%
         factor() %>%
         set_names(denominator)
     group <- factor(c(
@@ -130,7 +135,8 @@ NULL
         counts = dge[["counts"]],
         design = design,
         maxit = maxit,
-        normalization = "TMM")
+        normalization = "TMM"
+    )
 
     dge[["weights"]] <- weights
     dge <- estimateDisp(dge, design = design)
@@ -155,7 +161,8 @@ NULL
 setMethod(
     "diffExp",
     signature("bcbioSingleCell"),
-    .zingeR.edgeR)
+    .zingeR.edgeR
+)
 
 
 
@@ -164,7 +171,8 @@ setMethod(
 setMethod(
     "diffExp",
     signature("seurat"),
-    .zingeR.edgeR)
+    .zingeR.edgeR
+)
 
 
 
