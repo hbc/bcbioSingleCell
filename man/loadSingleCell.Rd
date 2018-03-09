@@ -5,9 +5,9 @@
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
 loadSingleCell(uploadDir, sampleMetadataFile = NULL,
-  interestingGroups = "sampleName", gtfFile = NULL, rowData = TRUE,
-  organism = NULL, ensemblVersion = NULL, genomeBuild = NULL,
-  prefilter = TRUE, ...)
+  interestingGroups = "sampleName", gtfFile = NULL, rowRanges,
+  isSpike = NULL, organism = NULL, ensemblRelease = NULL,
+  genomeBuild = NULL, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -26,13 +26,13 @@ is used for PCA and heatmap QC functions.}
 which will be used for gene-to-symbol (\code{gene2symbol}) and
 transcript-to-gene (\code{tx2gene}) annotation mappings.}
 
-\item{rowData}{User-defined gene annotations, which will be slotted into
-\code{\link[=rowData]{rowData()}}. Typically this should be left set to \code{TRUE}. By default, the
-function will automatically query Ensembl for annotations. If set \code{FALSE},
-then \code{\link[=rowData]{rowData()}} inside the resulting \code{bcbioSingleCell} object will be left
-empty. This is recommended for projects dealing with genes or transcripts
-that are poorly annotated. Additionally, user-defined data can be passed in
-as a \code{data.frame}, but this isn't generally recommended.}
+\item{rowRanges}{\emph{Required.} Genomic ranges (\code{GRanges}) that match the
+rownames of the counts matrix. If left missing (default), the annotations
+will be obtained automatically fron Ensembl using AnnotationHub and
+ensembldb. These values are also accessible with the \code{\link[=rowData]{rowData()}} function.}
+
+\item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
+sequences (e.g. ERCCs, EGFP, TDTOMATO).}
 
 \item{organism}{\emph{Optional.} Organism name. Use the full latin name (e.g.
 "Homo sapiens"), since this will be input downstream to
@@ -40,7 +40,7 @@ AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
 Normally this can be left \code{NULL}, and the function will attempt to detect
 the organism automatically using \code{\link[=detectOrganism]{detectOrganism()}}.}
 
-\item{ensemblVersion}{\emph{Optional.} Ensembl release version. If \code{NULL},
+\item{ensemblRelease}{\emph{Optional.} Ensembl release version. If \code{NULL},
 defaults to current release, and does not typically need to be
 user-defined. This parameter can be useful for matching Ensembl annotations
 against an outdated bcbio annotation build.}

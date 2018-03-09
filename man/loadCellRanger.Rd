@@ -5,7 +5,7 @@
 \title{Load 10X Genomics Cell Ranger Data}
 \usage{
 loadCellRanger(uploadDir, refdataDir, interestingGroups = "sampleName",
-  sampleMetadataFile = NULL, rowData = TRUE, prefilter = TRUE, ...)
+  sampleMetadataFile = NULL, rowRanges, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to Cell Ranger output directory. This directory path
@@ -22,20 +22,17 @@ with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop). Consult the GitHub repo for examples and additional information.}
 
-\item{rowData}{User-defined gene annotations, which will be slotted into
-\code{\link[=rowData]{rowData()}}. Typically this should be left set to \code{TRUE}. By default, the
-function will automatically query Ensembl for annotations. If set \code{FALSE},
-then \code{\link[=rowData]{rowData()}} inside the resulting \code{bcbioSingleCell} object will be left
-empty. This is recommended for projects dealing with genes or transcripts
-that are poorly annotated. Additionally, user-defined data can be passed in
-as a \code{data.frame}, but this isn't generally recommended.}
+\item{rowRanges}{\emph{Required.} Genomic ranges (\code{GRanges}) that match the
+rownames of the counts matrix. If left missing (default), the annotations
+will be obtained automatically fron Ensembl using AnnotationHub and
+ensembldb. These values are also accessible with the \code{\link[=rowData]{rowData()}} function.}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
 \value{
-\link{bcbioSingleCell}.
+\code{bcbioSingleCell}.
 }
 \description{
 Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} cell
@@ -46,9 +43,10 @@ This function is a simplified version of \code{\link[=loadSingleCell]{loadSingle
 optimized for handling Cell Ranger output.
 }
 \note{
-Unlike \code{\link[=loadSingleCell]{loadSingleCell()}}, the \code{organism}, \code{ensemblVersion}, and
-\code{genomeBuild} are always detected automatically, based on the \code{refdataDir}
-YAML metadata. Therefore, these parameters cannot be set by the user.
+Unlike \code{\link[=loadSingleCell]{loadSingleCell()}}, the \code{organism}, \code{ensemblRelease}, and
+\code{genomeBuild} are always detected automatically, based on the 10X
+\code{refdataDir} YAML metadata. Therefore, these parameters cannot be set by
+the user.
 }
 \examples{
 extdataDir <- system.file("extdata", package = "bcbioSingleCell")
@@ -58,7 +56,8 @@ sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
 bcb <- loadCellRanger(
     uploadDir = uploadDir,
     refdataDir = refdataDir,
-    sampleMetadataFile = sampleMetadataFile)
+    sampleMetadataFile = sampleMetadataFile
+)
 print(bcb)
 }
 \author{

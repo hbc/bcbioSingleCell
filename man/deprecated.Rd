@@ -37,7 +37,7 @@ readMarkers(...)
 \item{object}{Object.}
 }
 \value{
-Soft deprecation to new functions.
+\code{\link[=.Defunct]{.Defunct()}} or \code{\link[=.Deprecated]{.Deprecated()}}.
 }
 \description{
 Deprecated Functions
