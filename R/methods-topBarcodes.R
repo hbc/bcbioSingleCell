@@ -1,6 +1,5 @@
 #' Top Barcodes
 #'
-#' @rdname topBarcodes
 #' @name topBarcodes
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
@@ -9,7 +8,7 @@
 #'
 #' @param n Number of barcodes to return per sample.
 #'
-#' @return [data.frame]
+#' @return `data.frame`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
@@ -52,7 +51,8 @@ NULL
 setMethod(
     "topBarcodes",
     signature("bcbioSingleCell"),
-    .topBarcodes)
+    .topBarcodes
+)
 
 
 
@@ -62,4 +62,5 @@ setMethod(
 setMethod(
     "topBarcodes",
     signature("seurat"),
-    .topBarcodes)
+    .topBarcodes
+)

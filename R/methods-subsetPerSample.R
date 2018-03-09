@@ -1,6 +1,5 @@
 #' Subset Per Sample
 #'
-#' @rdname subsetPerSample
 #' @name subsetPerSample
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
@@ -11,17 +10,17 @@
 #' @param envir Environment where to assign the subsets.
 #' @param dir Output directory.
 #'
-#' @return Named vector of saved [bcbioSingleCell] subset file paths.
+#' @return Named vector of saved `bcbioSingleCell` subset file paths.
 #'
 #' @examples
 #' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 #'
 #' # This will save the subsets per sample to disk
 #' subsetPerSample(filtered, dir = "subsetPerSample")
-#' dir_ls("subsetPerSample")
+#' dir("subsetPerSample")
 #'
 #' # Clean up
-#' dir_delete("subsetPerSample")
+#' unlink("subsetPerSample", recursive = TRUE)
 NULL
 
 
@@ -30,7 +29,6 @@ NULL
 #' @rdname subsetPerSample
 #' @importFrom basejump assignAndSaveData initializeDirectory
 #' @importFrom dplyr pull
-#' @importFrom fs path_real
 #' @importFrom pbapply pblapply
 #' @export
 setMethod(
@@ -59,7 +57,8 @@ setMethod(
                 assignAndSaveData(
                     name = sampleID,
                     object = subset,
-                    dir = dir)
+                    dir = dir
+                )
             },
             sampleID = sampleIDs,
             MoreArgs = list(
@@ -69,12 +68,13 @@ setMethod(
                 dir = dir
             ),
             SIMPLIFY = FALSE,
-            USE.NAMES = TRUE)
-        # Drop any `NULL` subsets
+            USE.NAMES = TRUE
+        )
         files <- Filter(Negate(is.null), files)
         names <- names(files)
         files <- unlist(files)
-        files <- path_real(files)
+        files <- normalizePath(files, winslash = "/", mustWork = TRUE)
         names(files) <- names
         files
-    })
+    }
+)

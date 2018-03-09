@@ -1,6 +1,5 @@
 #' Select Samples
 #'
-#' @rdname selectSamples
 #' @name selectSamples
 #'
 #' @importFrom bcbioBase selectSamples
@@ -8,7 +7,7 @@
 #' @details Internally, pattern matching against sample and file names is
 #'   applied using logical grep matching.
 #'
-#' @note Bracket based subsetting with `[` also works on [bcbioSingleCell]
+#' @note Bracket based subsetting with `[` also works on `bcbioSingleCell`
 #'   objects. In this case, provide cellular barcode identifiers for columns
 #'   and Ensembl gene identifiers for rows.
 #'
@@ -17,7 +16,7 @@
 #' @param ... Columns to use for grep pattern matching. Supply a named character
 #'   vector containing the column name and the grep pattern.
 #'
-#' @return [bcbioSingleCell].
+#' @return `bcbioSingleCell`.
 #'
 #' @examples
 #' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
@@ -106,4 +105,5 @@ NULL
 setMethod(
     "selectSamples",
     signature("bcbioSingleCell"),
-    .selectSamples)
+    .selectSamples
+)

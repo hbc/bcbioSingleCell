@@ -13,10 +13,11 @@
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #' load(system.file("extdata/seuratAllMarkersOriginal.rda", package = "bcbioSingleCell"))
 #'
-#' # seurat
+#' # seurat ====
 #' sanitizeMarkers(
 #'     seurat,
-#'     markers = seuratAllMarkersOriginal) %>%
+#'     markers = seuratAllMarkersOriginal
+#' ) %>%
 #'     glimpse()
 NULL
 
@@ -29,7 +30,8 @@ NULL
 #' @importFrom tibble as_tibble remove_rownames
 .sanitizeMarkersSeurat <- function(
     object,
-    markers) {
+    markers
+) {
     sanitizedMarkers <- .checkSanitizedMarkers(markers, package = "Seurat")
     # Message and return unmodified, if already sanitized
     if (isTRUE(sanitizedMarkers)) {
