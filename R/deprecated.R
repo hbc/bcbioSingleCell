@@ -1,12 +1,11 @@
 #' Deprecated Functions
 #'
-#' @rdname deprecated
 #' @name deprecated
 #' @keywords internal
 #'
 #' @inheritParams general
 #'
-#' @return Soft deprecation to new functions.
+#' @return [.Defunct()] or [.Deprecated()].
 NULL
 
 
