@@ -7,11 +7,14 @@
 #'
 #' @param markers [Seurat::FindAllMarkers()] return.
 #'
-#' @return [grouped_df], grouped by cluster ident.
+#' @return `grouped_df`, grouped by cluster ident.
 #'
 #' @examples
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seuratAllMarkersOriginal.rda", package = "bcbioSingleCell"))
+#' load(system.file(
+#'     "extdata/seuratAllMarkersOriginal.rda",
+#'     package = "bcbioSingleCell"
+#' ))
 #'
 #' # seurat ====
 #' sanitizeMarkers(
@@ -171,6 +174,7 @@ setMethod(
     "sanitizeMarkers",
     signature(
         object = "seurat",
-        markers = "data.frame"),
+        markers = "data.frame"
+    ),
     .sanitizeMarkersSeurat
 )
