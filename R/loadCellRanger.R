@@ -1,5 +1,5 @@
-# TODO Map legacy `annotable` argument to `rowData`
-# TODO Improve `DataFrame`, `GRanges` pass-in support for `rowData`
+# TODO Map legacy `annotable` argument to `rowRanges`
+# TODO Build an EnsDb for the old release (84) currently used by cellranger
 
 
 
@@ -11,13 +11,14 @@
 #' @details This function is a simplified version of [loadSingleCell()]
 #'   optimized for handling Cell Ranger output.
 #'
-#' @note Unlike [loadSingleCell()], the `organism`, `ensemblVersion`, and
-#'   `genomeBuild` are always detected automatically, based on the `refdataDir`
-#'   YAML metadata. Therefore, these parameters cannot be set by the user.
+#' @note Unlike [loadSingleCell()], the `organism`, `ensemblRelease`, and
+#'   `genomeBuild` are always detected automatically, based on the 10X
+#'   `refdataDir` YAML metadata. Therefore, these parameters cannot be set by
+#'   the user.
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump camel detectOrganism genes gene2symbol
+#' @importFrom basejump camel detectOrganism ensembl gene2symbol
 #'   gene2symbolFromGTF readGTF
 #' @importFrom bcbioBase prepareSummarizedExperiment readSampleMetadataFile
 #' @importFrom dplyr mutate
@@ -34,7 +35,7 @@
 #'   must contain `filtered_gene_bc_matrices*` as a child directory.
 #' @param refdataDir Directory path to Cell Ranger reference annotation data.
 #'
-#' @return [bcbioSingleCell].
+#' @return `bcbioSingleCell`.
 #' @export
 #'
 #' @examples
@@ -45,14 +46,15 @@
 #' bcb <- loadCellRanger(
 #'     uploadDir = uploadDir,
 #'     refdataDir = refdataDir,
-#'     sampleMetadataFile = sampleMetadataFile)
+#'     sampleMetadataFile = sampleMetadataFile
+#' )
 #' print(bcb)
 loadCellRanger <- function(
     uploadDir,
     refdataDir,
     interestingGroups = "sampleName",
     sampleMetadataFile = NULL,
-    rowData = TRUE,
+    rowRanges,
     prefilter = TRUE,
     ...
 ) {
@@ -64,10 +66,13 @@ loadCellRanger <- function(
     refdataDir <- normalizePath(refdataDir)
     assert_is_character(interestingGroups)
     assertIsAStringOrNULL(sampleMetadataFile)
-    assert_is_any_of(rowData, c("data.frame", "logical", "NULL"))
+    if (!missing(rowRanges)) {
+        assert_is_all_of(rowRanges, "GRanges")
+    }
     assert_is_a_bool(prefilter)
 
     pipeline <- "cellranger"
+    level <- "genes"
     umiType <- "chromium"
 
     # Directory paths ==========================================================
@@ -118,39 +123,44 @@ loadCellRanger <- function(
     organism <- detectOrganism(genomeBuild)
     assert_is_a_string(organism)
     # Get the Ensembl version from the JSON reference file (via GTF)
-    ensemblVersion <- refJSON %>%
+    ensemblRelease <- refJSON %>%
         .[["input_gtf_files"]] %>%
         .[[1L]] %>%
         str_split("\\.", simplify = TRUE) %>%
         .[1L, 3L] %>%
         as.integer()
-    assert_is_an_integer(ensemblVersion)
-    assert_all_are_positive(ensemblVersion)
-    if (ensemblVersion < 87L) {
-        release <- NULL
-    } else {
-        release <- ensemblVersion
-    }
+    assert_is_an_integer(ensemblRelease)
+    assert_all_are_positive(ensemblRelease)
     inform(paste(
         paste("Organism:", organism),
         paste("Genome build:", genomeBuild),
-        paste("Ensembl release:", ensemblVersion),
+        paste("Ensembl release:", ensemblRelease),
         sep = "\n"
     ))
 
     # Gene annotations =========================================================
-    if (isTRUE(rowData)) {
-        rowData <- genes(
-            organism,
+    # TODO This code is shared with `loadRNASeq()`...see if we can consolidate
+    if (missing(rowRanges)) {
+        # ah = AnnotationHub
+        ah <- ensembl(
+            organism = organism,
+            format = level,
             genomeBuild = genomeBuild,
-            release = release,
-            uniqueSymbol = FALSE
+            release = ensemblRelease,
+            return = "GRanges",
+            metadata = TRUE
         )
-    } else if (is.data.frame(rowData)) {
-        rowData <- sanitizeRowData(rowData)
+        assert_is_list(ah)
+        assert_are_identical(names(ah), c("data", "metadata"))
+        rowRanges <- ah[["data"]]
+        assert_is_all_of(rowRanges, "GRanges")
+        ahMeta <- ah[["metadata"]]
+        assert_all_are_matching_regex(
+            x = ahMeta[["id"]],
+            pattern = "^AH\\d+$"
+        )
     } else {
-        warn("Loading run without gene annotations")
-        rowData <- NULL
+        ahMeta <- NULL
     }
 
     # GTF annotations
@@ -190,7 +200,7 @@ loadCellRanger <- function(
     # Metrics ==================================================================
     metrics <- calculateMetrics(
         object = counts,
-        rowData = rowData,
+        rowRanges = rowRanges,
         prefilter = prefilter
     )
 
@@ -235,38 +245,43 @@ loadCellRanger <- function(
 
     # Metadata =================================================================
     metadata <- list(
-        version = packageVersion,
-        pipeline = pipeline,
-        uploadDir = uploadDir,
-        sampleDirs = sampleDirs,
-        sampleMetadataFile = sampleMetadataFile,
-        sampleData = sampleData,
-        interestingGroups = interestingGroups,
-        cell2sample = cell2sample,
-        organism = organism,
-        genomeBuild = genomeBuild,
-        ensemblVersion = ensemblVersion,
-        gtfFile = gtfFile,
-        gene2symbol = gene2symbol,
-        umiType = umiType,
-        allSamples = allSamples,
-        prefilter = prefilter,
-        # cellranger pipeline-specific
-        refdataDir = refdataDir,
-        refJSON = refJSON
+        "version" = packageVersion,
+        "pipeline" = pipeline,
+        "uploadDir" = uploadDir,
+        "sampleDirs" = sampleDirs,
+        "sampleMetadataFile" = as.character(sampleMetadataFile),
+        "sampleData" = sampleData,
+        "interestingGroups" = interestingGroups,
+        "cell2sample" = cell2sample,
+        "organism" = organism,
+        "genomeBuild" = genomeBuild,
+        "ensemblRelease" = ensemblRelease,
+        "annotationHub" = as.list(ahMeta),
+        "gtfFile" = gtfFile,
+        "gene2symbol" = gene2symbol,
+        "umiType" = umiType,
+        "allSamples" = allSamples,
+        "prefilter" = prefilter,
+        # cellranger pipeline-specific ====
+        "refdataDir" = refdataDir,
+        "refJSON" = refJSON,
+        "loadCellRanger" = match.call()
     )
     # Add user-defined custom metadata, if specified
     dots <- list(...)
     if (length(dots) > 0L) {
         metadata <- c(metadata, dots)
     }
+    # TODO Add assert check to make sure the dots don't overlap
 
-    # SummarizedExperiment =====================================================
-    se <- prepareSummarizedExperiment(
+    # SingleCellExperiment =====================================================
+    rse <- prepareSummarizedExperiment(
         assays = list(assay = counts),
-        rowData = rowData,
+        rowRanges = rowRanges,
         colData = metrics,
         metadata = metadata
     )
-    new("bcbioSingleCell", se)
+    # Coerce to SingleCellExperiment
+    sce <- as(rse, "SingleCellExperiment")
+    new("bcbioSingleCell", sce)
 }

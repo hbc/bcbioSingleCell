@@ -1,5 +1,7 @@
 # TODO Map legacy `annotable` argument to `rowData`
 # TODO Improve `DataFrame`, `GRanges` pass-in support for `rowData`
+# TODO Store cellularBarcodes (cbList) in metadata, not bcbio slot
+# FIXME ensemblVersion renamed to ensemblRelease
 
 
 
@@ -11,7 +13,7 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump camel detectOrganism genes gene2symbolFromGTF readGTF
+#' @importFrom basejump camel detectOrganism ensembl gene2symbolFromGTF readGTF
 #'   readYAML tx2geneFromGTF
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
 #'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
@@ -34,19 +36,18 @@
 #' @param gtfFile *Optional but recommended*. GTF (Gene Transfer Format) file,
 #'   which will be used for gene-to-symbol (`gene2symbol`) and
 #'   transcript-to-gene (`tx2gene`) annotation mappings.
-#' @param rowData User-defined gene annotations, which will be slotted into
-#'   [rowData()]. Typically this should be left set to `TRUE`. By default, the
-#'   function will automatically query Ensembl for annotations. If set `FALSE`,
-#'   then [rowData()] inside the resulting `bcbioSingleCell` object will be left
-#'   empty. This is recommended for projects dealing with genes or transcripts
-#'   that are poorly annotated. Additionally, user-defined data can be passed in
-#'   as a `data.frame`, but this isn't generally recommended.
+#' @param rowRanges *Required.* Genomic ranges (`GRanges`) that match the
+#'   rownames of the counts matrix. If left missing (default), the annotations
+#'   will be obtained automatically fron Ensembl using AnnotationHub and
+#'   ensembldb. These values are also accessible with the [rowData()] function.
+#' @param isSpike *Optional.* Gene names corresponding to FASTA spike-in
+#'   sequences (e.g. ERCCs, EGFP, TDTOMATO).
 #' @param organism *Optional.* Organism name. Use the full latin name (e.g.
 #'   "Homo sapiens"), since this will be input downstream to
 #'   AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
 #'   Normally this can be left `NULL`, and the function will attempt to detect
 #'   the organism automatically using [detectOrganism()].
-#' @param ensemblVersion *Optional.* Ensembl release version. If `NULL`,
+#' @param ensemblRelease *Optional.* Ensembl release version. If `NULL`,
 #'   defaults to current release, and does not typically need to be
 #'   user-defined. This parameter can be useful for matching Ensembl annotations
 #'   against an outdated bcbio annotation build.
@@ -75,9 +76,10 @@ loadSingleCell <- function(
     sampleMetadataFile = NULL,
     interestingGroups = "sampleName",
     gtfFile = NULL,
-    rowData = TRUE,
+    rowRanges,
+    isSpike = NULL,
     organism = NULL,
-    ensemblVersion = NULL,
+    ensemblRelease = NULL,
     genomeBuild = NULL,
     prefilter = TRUE,
     ...
@@ -91,9 +93,11 @@ loadSingleCell <- function(
     if (is_a_string(gtfFile)) {
         assert_all_are_existing_files(gtfFile)
     }
-    assert_is_any_of(rowData, c("data.frame", "logical", "NULL"))
+    if (!missing(rowRanges)) {
+        assert_is_all_of(rowRanges, "GRanges")
+    }
     assertIsAStringOrNULL(organism)
-    assertIsAnImplicitIntegerOrNULL(ensemblVersion)
+    assertIsAnImplicitIntegerOrNULL(ensemblRelease)
     assertIsAStringOrNULL(genomeBuild)
     assert_is_a_bool(prefilter)
 
@@ -284,18 +288,28 @@ loadSingleCell <- function(
     }
 
     # Gene annotations =========================================================
-    if (isTRUE(rowData)) {
-        rowData <- genes(
+    if (missing(rowRanges)) {
+        # ah = AnnotationHub
+        ah <- ensembl(
             organism,
+            format = "genes",
             genomeBuild = genomeBuild,
-            release = ensemblVersion,
-            uniqueSymbol = FALSE
+            release = ensemblRelease,
+            return = "GRanges",
+            metadata = TRUE
         )
-    } else if (is.data.frame(rowData)) {
-        rowData <- sanitizeRowData(rowData)
+        assert_is_list(ah)
+        assert_is_list(ah)
+        assert_are_identical(names(ah), c("data", "metadata"))
+        rowRanges <- ah[["data"]]
+        assert_is_all_of(rowRanges, "GRanges")
+        ahMeta <- ah[["metadata"]]
+        assert_all_are_matching_regex(
+            x = ahMeta[["id"]],
+            pattern = "^AH\\d+$"
+        )
     } else {
-        warn("Loading run without gene annotations")
-        rowData <- NULL
+        ahMeta <- NULL
     }
 
     # GTF annotations
@@ -366,52 +380,53 @@ loadSingleCell <- function(
 
     # Metadata =================================================================
     metadata <- list(
-        version = packageVersion,
-        pipeline = pipeline,
-        uploadDir = uploadDir,
-        sampleDirs = sampleDirs,
-        sampleMetadataFile = sampleMetadataFile,
-        sampleData = sampleData,
-        interestingGroups = interestingGroups,
-        cell2sample = cell2sample,
-        organism = organism,
-        genomeBuild = genomeBuild,
-        ensemblVersion = ensemblVersion,
-        gtfFile = gtfFile,
-        gene2symbol = gene2symbol,
-        umiType = umiType,
-        allSamples = allSamples,
-        prefilter = prefilter,
-        # bcbio pipeline-specific
-        projectDir = projectDir,
-        template = template,
-        runDate = runDate,
-        yamlFile = yamlFile,
-        yaml = yaml,
-        tx2gene = tx2gene,
-        dataVersions = dataVersions,
-        programVersions = programVersions,
-        bcbioLog = bcbioLog,
-        bcbioCommandsLog = bcbioCommandsLog,
-        cellularBarcodeCutoff = cellularBarcodeCutoff
+        "version" = packageVersion,
+        "pipeline" = pipeline,
+        "uploadDir" = uploadDir,
+        "sampleDirs" = sampleDirs,
+        "sampleMetadataFile" = sampleMetadataFile,
+        "sampleData" = sampleData,
+        "interestingGroups" = interestingGroups,
+        "cell2sample" = cell2sample,
+        "organism" = organism,
+        "genomeBuild" = genomeBuild,
+        "ensemblRelease" = as.integer(ensemblRelease),
+        "annotationHub" = as.list(ahMeta),
+        "gtfFile" = as.character(gtfFile),
+        "gene2symbol" = gene2symbol,
+        "umiType" = umiType,
+        "allSamples" = allSamples,
+        "prefilter" = prefilter,
+        # bcbio pipeline-specific ====
+        "projectDir" = projectDir,
+        "template" = template,
+        "runDate" = runDate,
+        "yamlFile" = yamlFile,
+        "yaml" = yaml,
+        "tx2gene" = tx2gene,
+        "dataVersions" = dataVersions,
+        "programVersions" = programVersions,
+        "bcbioLog" = bcbioLog,
+        "bcbioCommandsLog" = bcbioCommandsLog,
+        "cellularBarcodeCutoff" = cellularBarcodeCutoff,
+        "loadSingleCell" = match.call()
     )
     # Add user-defined custom metadata, if specified
     dots <- list(...)
     if (length(dots) > 0L) {
         metadata <- c(metadata, dots)
     }
+    # TODO Add assert check to ensure disjoint sets
 
-    # Return ===================================================================
-    # Use an internal `SummarizedExperiment()` function call to handle rowname
-    # mismatches with the rowData. This can happen when newer Ensembl
-    # annotations are requested than those used for count alignment, or when
-    # we pass in FASTA spike-ins (e.g. EGFP).
-    se <- prepareSummarizedExperiment(
+    # SingleCellExperiment =====================================================
+    rse <- prepareSummarizedExperiment(
         assays = list(assay = counts),
-        rowData = rowData,
+        rowRanges = rowRanges,
         colData = metrics,
-        metadata = metadata
+        metadata = metadata,
+        isSpike = isSpike
     )
-    bcbio <- list(cellularBarcodes = cbList)
-    new("bcbioSingleCell", se, bcbio = as(bcbio, "SimpleList"))
+    # Coerce to SingleCellExperiment
+    sce <- as(rse, "SingleCellExperiment")
+    new("bcbioSingleCell", sce)
 }
