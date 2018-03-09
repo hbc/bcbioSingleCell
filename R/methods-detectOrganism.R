@@ -1,6 +1,5 @@
 #' Detect Organism
 #'
-#' @rdname detectOrganism
 #' @name detectOrganism
 #' @author Michael Steinbaugh
 #'
