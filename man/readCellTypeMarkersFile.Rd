@@ -28,7 +28,8 @@ Read Cell Type Markers File
 \examples{
 cellTypeMarkersFile <- system.file(
     file.path("extdata", "cellTypeMarkers.csv"),
-    package = "bcbioSingleCell")
+    package = "bcbioSingleCell"
+)
 gene2symbol <- gene2symbol("Mus musculus")
 readCellTypeMarkersFile(cellTypeMarkersFile, gene2symbol = gene2symbol)
 }

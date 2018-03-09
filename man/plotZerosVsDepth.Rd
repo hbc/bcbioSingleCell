@@ -25,10 +25,10 @@ plotZerosVsDepth(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{metrics}{Metrics \link{data.frame}.}
+\item{metrics}{Metrics \code{data.frame}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 This function helps us visualize the dropout rate.
@@ -37,15 +37,16 @@ This function helps us visualize the dropout rate.
 load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
-# bcbioSingleCell
+# bcbioSingleCell ====
 plotZerosVsDepth(bcb)
 
-# dgCMatrix
+# dgCMatrix ====
 counts <- counts(bcb)
 metrics <- metrics(bcb)
 plotZerosVsDepth(counts, metrics = metrics)
 
-# seurat
+# seurat ====
+plotZerosVsDepth(pbmc_small)
 plotZerosVsDepth(seurat)
 }
 \seealso{

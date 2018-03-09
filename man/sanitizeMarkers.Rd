@@ -19,14 +19,17 @@ sanitizeMarkers(object, markers, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\link{grouped_df}, grouped by cluster ident.
+\code{grouped_df}, grouped by cluster ident.
 }
 \description{
 Sanitize Markers Output
 }
 \examples{
 load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seuratAllMarkersOriginal.rda", package = "bcbioSingleCell"))
+load(system.file(
+    "extdata/seuratAllMarkersOriginal.rda",
+    package = "bcbioSingleCell"
+))
 
 # seurat ====
 sanitizeMarkers(

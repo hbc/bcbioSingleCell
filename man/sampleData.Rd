@@ -19,10 +19,10 @@
 
 \item{aggregateReplicates}{Aggregate technical replicates, if specified. This
 function uses values assigned in the \code{sampleNameAggregate} column of the
-internal sample metadata \link{data.frame}.}
+internal sample metadata \code{data.frame}.}
 }
 \value{
-\link{data.frame}.
+\code{data.frame}.
 }
 \description{
 Sample Data
@@ -31,9 +31,13 @@ Sample Data
 load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
-# bcbioSingleCell
+# bcbioSingleCell ====
 sampleData(bcb) \%>\% glimpse()
 
-# seurat
+# seurat ====
+sampleData(pbmc_small) \%>\% glimpse()
 sampleData(seurat) \%>\% glimpse()
+}
+\author{
+Michael Steinbaugh
 }
