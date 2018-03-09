@@ -39,3 +39,4 @@ setValidity(
         TRUE
     }
 )
+# object@bcbio$cellularBarcodes needs to go in metadata

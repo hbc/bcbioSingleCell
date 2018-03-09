@@ -3,17 +3,11 @@
 \docType{methods}
 \name{bcbio}
 \alias{bcbio}
-\alias{bcbio,bcbioSingleCell-method}
 \alias{bcbio,seurat-method}
-\alias{bcbio<-,bcbioSingleCell-method}
 \alias{bcbio<-,seurat-method}
 \title{Additional bcbio Run Data Accessor}
 \usage{
-\S4method{bcbio}{bcbioSingleCell}(object, type)
-
 \S4method{bcbio}{seurat}(object, type)
-
-\S4method{bcbio}{bcbioSingleCell}(object, type) <- value
 
 \S4method{bcbio}{seurat}(object, type) <- value
 }

@@ -38,26 +38,6 @@ NULL
 #' @export
 setMethod(
     "bcbio",
-    signature("bcbioSingleCell"),
-    function(object, type) {
-        bcbio <- slot(object, "bcbio")
-        if (missing(type)) {
-            return(bcbio)
-        }
-        if (type %in% names(bcbio)) {
-            return(bcbio[[type]])
-        } else {
-            return(NULL)
-        }
-    }
-)
-
-
-
-#' @rdname bcbio
-#' @export
-setMethod(
-    "bcbio",
     signature("seurat"),
     function(object, type) {
         stopifnot(.hasSlot(object, "misc"))
@@ -76,23 +56,6 @@ setMethod(
 
 
 # Assignment methods ===========================================================
-#' @rdname bcbio
-#' @export
-setMethod(
-    "bcbio<-",
-    signature(
-        object = "bcbioSingleCell",
-        value = "ANY"
-    ),
-    function(object, type, value) {
-        slot(object, "bcbio")[[type]] <- value
-        validObject(object)
-        object
-    }
-)
-
-
-
 #' @rdname bcbio
 #' @export
 setMethod(
