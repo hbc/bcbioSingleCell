@@ -8,7 +8,6 @@
 #' When matching the samples, be sure to use `sampleID` column (i.e. the
 #' rownames of [sampleData()]).
 #'
-#' @rdname filterCells
 #' @name filterCells
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
@@ -26,7 +25,7 @@
 #'
 #' @seealso [Seurat::CreateSeuratObject()].
 #'
-#' @return [bcbioSingleCell] object, with filtering information slotted into
+#' @return `bcbioSingleCell`, with filtering information slotted into
 #'   [metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples
@@ -51,7 +50,8 @@ NULL
     maxGenes = Inf,
     maxMitoRatio = 0.1,
     minNovelty = 0.75,
-    minCellsPerGene = 3L) {
+    minCellsPerGene = 3L
+) {
     metrics <- metrics(object)
     sampleIDs <- levels(metrics[["sampleID"]])
 
@@ -63,7 +63,8 @@ NULL
         maxGenes = maxGenes,
         maxMitoRatio = maxMitoRatio,
         minNovelty = minNovelty,
-        minCellsPerGene = minCellsPerGene)
+        minCellsPerGene = minCellsPerGene
+    )
     # Ensure all params are numeric
     if (!all(vapply(
         X = params,
@@ -338,18 +339,5 @@ NULL
 setMethod(
     "filterCells",
     signature("bcbioSingleCell"),
-    .filterCells)
-
-
-
-#' @rdname filterCells
-#' @export
-setMethod(
-    "filterCells",
-    signature("bcbioSCDataSet"),
-    function(object) {
-        abort(paste(
-            "Convert `bcbioSCDataSet` to `bcbioSingleCell` class.",
-            "Run this code: bcb <- as(bcb, \"bcbioSingleCell\")"
-        ))
-    })
+    .filterCells
+)
