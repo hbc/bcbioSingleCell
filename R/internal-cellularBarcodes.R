@@ -11,7 +11,7 @@
 #'
 #' @param list List of cellular barcodes.
 #'
-#' @return [data.frame].
+#' @return `data.frame`.
 .bindCellularBarcodes <- function(list) {
     list <- mclapply(seq_along(list), function(a) {
         # Add the sampleID as a column
@@ -19,19 +19,19 @@
         list[[a]] %>%
             mutate(sampleID = !!sampleID)
     })
-    df <- list %>%
+    list %>%
         bind_rows() %>%
         as.data.frame() %>%
         mutate(
             rowname = paste(
                 .data[["sampleID"]],
                 .data[["cellularBarcode"]],
-                sep = "_"),
+                sep = "_"
+            ),
             sampleID = as.factor(.data[["sampleID"]])
         ) %>%
         column_to_rownames() %>%
         .[, c("sampleID", "cellularBarcode", "nCount")]
-    df
 }
 
 
@@ -47,7 +47,7 @@
 #'
 #' @param sampleDirs Sample directories.
 #'
-#' @return [list].
+#' @return `list`.
 .cellularBarcodesList <- function(sampleDirs) {
     files <- file.path(
         normalizePath(sampleDirs),
@@ -62,11 +62,15 @@
         read_tsv(
             file = files[[a]],
             col_names = c("cellularBarcode", "nCount"),
-            col_types = "ci") %>%
-            mutate(cellularBarcode = gsub(
-                x = .data[["cellularBarcode"]],
-                pattern = "-",
-                replacement = "_"))
+            col_types = "ci"
+        ) %>%
+            mutate(
+                cellularBarcode = gsub(
+                    pattern = "-",
+                    replacement = "_",
+                    x = .data[["cellularBarcode"]]
+                )
+            )
     })
     names(list) <- names(sampleDirs)
     list

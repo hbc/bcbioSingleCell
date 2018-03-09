@@ -1,5 +1,7 @@
 #' Fetch Dimensionality Reduction Data
 #'
+#' Used by the [fetchPCAData()] and [fetchTSNEData()] functions.
+#'
 #' @author Rory Kirchner, Michael Steinbaugh
 #' @keywords internal
 #' @noRd
@@ -11,19 +13,18 @@
 #' @importFrom tibble rownames_to_column
 #' @importFrom rlang !! sym
 #'
-#' @param object [seurat] object.
+#' @param object `seurat`.
 #' @param dimCode Character vector of X and Y coordinate data to be used for
 #'   plotting. This can be `c("tSNE_1", "tSNE_2")` for tSNE data, or `c("PC1",
 #'   "PC2")` for PCA data.
 #'
-#' @return [data.frame].
+#' @return `data.frame`.
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
 #' .fetchDRData.seurat(
-#'     seurat,
-#'     dimCode = c(x = "tSNE_1", y = "tSNE_2")) %>%
+#'     pbmc_small,
+#'     dimCode = c(x = "tSNE_1", y = "tSNE_2")
+#'  ) %>%
 #'     glimpse()
 .fetchDRData.seurat <- function(object, dimCode) {  # nolint
     fetch <- Seurat::FetchData(object, vars.all = dimCode)

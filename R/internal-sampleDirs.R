@@ -1,6 +1,8 @@
 #' Detect Sample Directories
 #'
 #' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
 #'
 #' @importFrom bcbioBase sampleDirs
 #'
@@ -8,8 +10,7 @@
 #' @param pipeline Pipeline used to generate the samples.
 #'
 #' @return Named character vector containing sample directory paths. Function
-#'   will [abort()] if no complete sample directories match.
-#' @noRd
+#'   will abort if no complete sample directories match.
 .sampleDirs <- function(
     uploadDir,
     pipeline = c("bcbio", "cellranger")
@@ -38,7 +39,8 @@
             pattern = "matrix.mtx",
             include.dirs = FALSE,
             full.names = TRUE,
-            recursive = TRUE)
+            recursive = TRUE
+        )
         # Subset to only include `filtered_gene_bc_matrices*`. Note that
         # aggregation output is labeled `filtered_gene_bc_matrices_mex` by
         # default.
@@ -50,8 +52,9 @@
                 "outs",
                 "filtered_gene_bc_matrices([^/]+)?",
                 "[^/]+", # genomeBuild
-                paste0("matrix.mtx", "$"))
-            )]
+                paste0("matrix.mtx", "$")
+            )
+        )]
 
         # Check to ensure that matrices match standardized cellranger export
         if (!length(matrixFiles)) {

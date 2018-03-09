@@ -1,6 +1,8 @@
 #' Transcript To Gene-Level Counts
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @keywords internal
+#' @noRd
 #'
 #' @importFrom dplyr bind_rows
 #' @importFrom Matrix.utils aggregate.Matrix
@@ -11,7 +13,6 @@
 #' @param tx2gene Transcript to gene identifier mappings.
 #'
 #' @return `dgCMatrix`.
-#' @noRd
 .transcriptToGeneLevelCounts <- function(counts, tx2gene) {
     if (!is(counts, "dgCMatrix")) {
         abort("Counts matrix must be dgCMatrix")
@@ -44,7 +45,8 @@
             enstxp = missing,
             ensgene = missing,
             row.names = missing,
-            stringsAsFactors = FALSE) %>%
+            stringsAsFactors = FALSE
+        ) %>%
             rbind(match) %>%
             .[rownames(map), , drop = FALSE]
         map <- remap
@@ -59,5 +61,6 @@
     aggregate.Matrix(
         x = counts,
         groupings = rownames(counts),
-        fun = "sum")
+        fun = "sum"
+    )
 }

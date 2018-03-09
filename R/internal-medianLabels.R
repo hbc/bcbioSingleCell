@@ -1,19 +1,23 @@
 #' Add Median Labels to a Plot
 #'
+#' For example, `medianCol` can be `nGene`. Median values are always calculated
+#' by sample (`sampleName`).
+#'
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
 #'
 #' @importFrom ggplot2 aes_string geom_label
 #' @importFrom S4Vectors aggregate
+#'
+#' @return ggplot2 `geom_label`.
 .medianLabels <- function(metrics, medianCol, digits = 0L) {
-    # For example, `medianCol` can be `nGene`.
-    # Median values are always calculated by sample (`sampleName`).
     formula <- formula(paste(medianCol, "sampleName", sep = " ~ "))
     data <- aggregate(
         formula = formula,
         data = metrics,
-        FUN = median)
+        FUN = median
+    )
     data[["roundedMedian"]] <- round(data[[medianCol]], digits = digits)
 
     # Add `sampleNameAggregate` column for facet wrapping, if necessary
@@ -32,5 +36,6 @@
         fontface = qcLabelFontface,
         label.padding = qcLabelPadding,
         label.size = qcLabelSize,
-        show.legend = FALSE)
+        show.legend = FALSE
+    )
 }

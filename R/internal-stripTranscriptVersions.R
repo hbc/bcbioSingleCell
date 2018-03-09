@@ -1,11 +1,12 @@
 #' Strip Transcript Versions
 #'
 #' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
 #'
 #' @param sparseCounts Sparse counts matrix (`dgCMatrix`).
 #'
 #' @return `dgCMatrix`.
-#' @noRd
 .stripTranscriptVersions <- function(sparseCounts) {
     transcripts <- rownames(sparseCounts)
     # Pattern matching against Ensembl transcript IDs

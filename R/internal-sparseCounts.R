@@ -2,8 +2,8 @@
 #'
 #' Read single-cell RNA-seq counts saved as a
 #' [MatrixMarket](https://people.sc.fsu.edu/~jburkardt/data/mm/mm.html) file
-#' into a sparse counts matrix (`dgCMatrix`). Transcript ([rownames]) and
-#' molecular barcodes ([colnames]) identifiers are set from the corresponding
+#' into a sparse counts matrix (`dgCMatrix`). Transcript ([rownames()]) and
+#' molecular barcodes ([colnames()]) identifiers are set from the corresponding
 #' dependency files automatically.
 #'
 #' This function supports automatic handling of compressed matrix files.
@@ -11,14 +11,16 @@
 #' @note bcbio-nextgen outputs counts at transcript level. 10X Chromium
 #'   CellRanger outputs counts at gene level.
 #'
+#' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
+#'
 #' @importFrom dplyr pull
 #' @importFrom Matrix readMM
 #' @importFrom readr read_lines read_tsv
 #'
-#' @author Michael Steinbaugh
-#'
 #' @param sampleID Sample identifier. Must match the `sampleID` column of the
-#'   sample metadata [data.frame].
+#'   sample metadata `data.frame`.
 #' @param sampleDir Named character vector of sample directory containing the
 #'   MatrixMart file.
 #' @param pipeline Pipeline used to generate the MatrixMarket file. Defaults to
@@ -29,7 +31,6 @@
 #' @seealso `help("dgCMatrix-class")`
 #'
 #' @return `dgCMatrix`.
-#' @noRd
 .readSparseCounts <- function(
     sampleID,
     sampleDir,
@@ -132,7 +133,8 @@
                 sampleID = sampleID,
                 sampleDir = sampleDir,
                 pipeline = pipeline,
-                umiType = umiType)
+                umiType = umiType
+            )
         },
         sampleID = names(sampleDirs),
         sampleDir = sampleDirs,

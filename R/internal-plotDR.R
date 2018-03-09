@@ -12,9 +12,9 @@
 #' @importFrom ggplot2 aes_string geom_point geom_text ggplot guide_legend
 #'   guides labs scale_color_hue
 #'
-#' @param object [data.frame] returned from [fetchTSNEExpressionData()].
+#' @param object `data.frame` returned from [fetchTSNEExpressionData()].
 #'
-#' @return [ggplot].
+#' @return `ggplot`.
 #' @noRd
 .plotDR <- function(
     object,
@@ -25,9 +25,10 @@
     pointAlpha = 0.8,
     label = TRUE,
     labelSize = 6L,
-    color = ggplot2::scale_color_hue(),
+    color = scale_color_hue(),
     dark = TRUE,
-    title = NULL) {
+    title = NULL
+) {
     if (interestingGroups == "ident") {
         # Seurat stores the ident from `FetchData()` as `object.ident`
         colorCol <- "ident"
@@ -39,7 +40,8 @@
         mapping = aes_string(
             x = axes[["x"]],
             y = axes[["y"]],
-            color = colorCol)
+            color = colorCol
+        )
     )
     # Put the dark theme call before the other ggplot aesthetics
     if (isTRUE(dark)) {
@@ -52,14 +54,17 @@
                     x = axes[["x"]],
                     y = axes[["y"]],
                     label = "ident",
-                    color = colorCol),
+                    color = colorCol
+                ),
                 alpha = pointAlpha,
-                size = pointSize)
+                size = pointSize
+            )
     } else {
         p <- p +
             geom_point(
                 alpha = pointAlpha,
-                size = pointSize)
+                size = pointSize
+            )
     }
     if (interestingGroups == "ident") {
         # Present `ident` as `cluster` (more informative)
@@ -76,10 +81,12 @@
                 mapping = aes_string(
                     x = "centerX",
                     y = "centerY",
-                    label = "ident"),
+                    label = "ident"
+                ),
                 color = labelColor,
                 size = labelSize,
-                fontface = "bold")
+                fontface = "bold"
+            )
     }
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
