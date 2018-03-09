@@ -1,16 +1,32 @@
-# R for travis
+# Travis-CI configuration for Bioconductor packages
 # https://docs.travis-ci.com/user/languages/r
-
-# zinbwave requires gsl-config to build
-# sudo: require
-# before_install:
-#   - sudo apt-get install libgsl-dev
 
 language: r
 cache: packages
+
+r:
+  - bioc-release
+  # - bioc-devel
+
+# External dependencies
+# (required for zinbwave)
+addons:
+  apt:
+    packages:
+      - gsl-bin
+      - libgsl-dev
+
+env:
+  global:
+    - R_MAX_NUM_DLLS=150
+
+# r_build_args: "--no-build-vignettes"
+# r_check_args: "--no-vignettes"
+
+# Set true before submission to Bioconductor
 warnings_are_errors: false
 
-# Temporarily enable to cache R packages
+# Temporarily enable to cache packages
 script: true
 
 notifications:
@@ -18,20 +34,12 @@ notifications:
     on_success: change
     on_failure: change
 
-env:
-  global:
-    - R_MAX_NUM_DLLS=150
-
-r:
-  - bioc-release
-  # - bioc-devel
-
 r_packages:
   - covr
 bioc_packages:
   - BiocCheck
-  - BiocGenerics  # >= 0.23.3
-  - S4Vectors
+  # - BiocGenerics  # >= 0.23.3
+  # - S4Vectors
 
 after_success:
   - Rscript -e 'covr::codecov()'

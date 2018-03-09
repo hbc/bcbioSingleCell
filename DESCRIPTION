@@ -10,6 +10,7 @@ Imports:
     edgeR,
     SingleCellExperiment,
     Seurat,
+    zinbwave,
     zingeR
 Remotes:
     statOmics/zingeR
