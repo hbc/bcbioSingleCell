@@ -41,7 +41,7 @@ NULL
 #' @importFrom dplyr mutate_all
 #' @importFrom magrittr set_rownames
 #' @importFrom S4Vectors metadata SimpleList
-.subset <- function(x, i, j, ..., drop) {
+.subset <- function(x, i, j, ..., drop = FALSE) {
     validObject(x)
 
     # Genes
@@ -174,8 +174,5 @@ setMethod(
         j = "ANY",
         drop = "ANY"
     ),
-    function(x, i, j, ..., drop = FALSE) {
-        .subset(x, i, j, ..., drop)
-    })
-
-# TODO Add bracket based subsetting for seurat
+    .subset
+)
