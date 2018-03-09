@@ -7,16 +7,15 @@
 \alias{rowData,seurat-method}
 \title{Row Data}
 \usage{
-\S4method{rowData}{bcbioSingleCell}(x, return = c("DataFrame", "data.frame",
-  "AsIs"))
+\S4method{rowData}{bcbioSingleCell}(x, return = c("data.frame", "DataFrame"))
 
-\S4method{rowData}{seurat}(x, return = c("DataFrame", "data.frame", "AsIs"))
+\S4method{rowData}{seurat}(x, return = c("data.frame", "DataFrame"))
 }
 \arguments{
 \item{x}{Primary object.}
 }
 \value{
-\code{DataFrame}, \code{data.frame}, or \code{GRanges}.
+Return data as \code{data.frame}, or \code{DataFrame}.
 }
 \description{
 Row Data
@@ -25,10 +24,11 @@ Row Data
 load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
-# bcbioSingleCell
+# bcbioSingleCell ====
 rowData(bcb) \%>\% glimpse()
 
-# seurat
+# seurat ====
+rowData(pbmc_small) \%>\% glimpse()
 rowData(seurat) \%>\% glimpse()
 }
 \author{

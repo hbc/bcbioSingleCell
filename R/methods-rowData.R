@@ -17,10 +17,11 @@
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
+#' # bcbioSingleCell ====
 #' rowData(bcb) %>% glimpse()
 #'
-#' # seurat
+#' # seurat ====
+#' rowData(pbmc_small) %>% glimpse()
 #' rowData(seurat) %>% glimpse()
 NULL
 
@@ -55,8 +56,12 @@ setMethod(
             x = c("rowData", "annotable"),
             table = names(bcbio(x))
         ) %>%
-            na.omit() %>%
-            .[[1L]]
+            na.omit()
+        if (!length(match)) {
+            return(NULL)
+        } else {
+            match <- match[[1L]]
+        }
         data <- bcbio(x)[[match]]
         as(data, return)
     }
