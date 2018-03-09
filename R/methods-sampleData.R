@@ -1,7 +1,7 @@
 #' Sample Data
 #'
-#' @rdname sampleData
 #' @name sampleData
+#' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase sampleData
 #'
@@ -10,18 +10,19 @@
 #'
 #' @param aggregateReplicates Aggregate technical replicates, if specified. This
 #'   function uses values assigned in the `sampleNameAggregate` column of the
-#'   internal sample metadata [data.frame].
+#'   internal sample metadata `data.frame`.
 #'
-#' @return [data.frame].
+#' @return `data.frame`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
+#' # bcbioSingleCell ====
 #' sampleData(bcb) %>% glimpse()
 #'
-#' # seurat
+#' # seurat ====
+#' sampleData(pbmc_small) %>% glimpse()
 #' sampleData(seurat) %>% glimpse()
 NULL
 
@@ -34,7 +35,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @param metadata Seurat metadata [data.frame] per cellular barcode. Currently
+#' @param metadata Seurat metadata `data.frame` per cellular barcode. Currently
 #'   this is slotted in `object@meta.data` but older versions used
 #'   `object@data.info`.
 #'
@@ -99,7 +100,8 @@ setMethod(
     function(
         object,
         interestingGroups,
-        aggregateReplicates = FALSE) {
+        aggregateReplicates = FALSE
+    ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
@@ -136,7 +138,8 @@ setMethod(
         }
         .sanitizeSampleMetadata(
             metadata = metadata,
-            interestingGroups = interestingGroups)
+            interestingGroups = interestingGroups
+        )
     })
 
 
@@ -148,10 +151,8 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        interestingGroups) {
-        # Attempt to use stashed metadata. This will only exist for seurat
-        # objects created with bcbioSingleCell.
-        # FIXME Add `metadata()` support instead of using `bcbio()`
+        interestingGroups
+    ) {
         metadata <- bcbio(object, "sampleData")
         if (!is.null(metadata)) {
             if (!identical(
@@ -190,5 +191,6 @@ setMethod(
         }
         .sanitizeSampleMetadata(
             metadata = metadata,
-            interestingGroups = interestingGroups)
+            interestingGroups = interestingGroups
+        )
     })
