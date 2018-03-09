@@ -44,11 +44,11 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment (>= 1.0),
-    bcbioBase (>= 0.1.4),
+    bcbioBase (>= 0.2),
     Seurat (>= 2.0)
 Imports:
     assertive,
-    basejump (>= 0.3.1),
+    basejump (>= 0.3.2),
     Biobase,
     BiocGenerics,
     BiocParallel,
@@ -74,6 +74,7 @@ Imports:
     scales,
     stats,
     stringr,
+    SummarizedExperiment,
     tibble,
     tidyr,
     utils,
@@ -92,7 +93,6 @@ Suggests:
     testthat,
     tidyverse
 Remotes:
-    drisso/SingleCellExperiment,
     hbc/bcbioBase@develop,
     statOmics/zingeR,
     steinbaugh/basejump@develop
