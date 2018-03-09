@@ -1,13 +1,15 @@
 #' Prepare Single-Cell RNA-Seq RMarkdown Template
 #'
-#' @rdname prepareSingleCellTemplate
 #' @name prepareSingleCellTemplate
 #' @family RMarkdown Utilities
 #' @author Michael Steinbaugh
 #'
+#' @importFrom bcbioBase prepareTemplate
+#'
 #' @inheritParams general
 #'
 #' @return No value.
+#' @export
 #'
 #' @examples
 #' files <- c(
@@ -20,12 +22,7 @@
 #' prepareSingleCellTemplate()
 #' all(file.exists(files))
 #' unlink(files)
-NULL
-
-
-
-# Constructors =================================================================
-.prepareSingleCellTemplate <- function(object) {
+prepareSingleCellTemplate <- function() {
     prepareTemplate(
         c(
             "_footer.Rmd",
@@ -40,14 +37,3 @@ NULL
         )
     )
 }
-
-
-
-# Methods ======================================================================
-#' @rdname prepareSingleCellTemplate
-#' @importFrom bcbioBase prepareTemplate
-#' @export
-setMethod(
-    "prepareSingleCellTemplate",
-    signature("missing"),
-    .prepareSingleCellTemplate)

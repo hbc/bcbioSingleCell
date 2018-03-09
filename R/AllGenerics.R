@@ -226,14 +226,6 @@ setGeneric("plotZerosVsDepth", function(object, ...) {
 
 
 
-#' @rdname prepareSingleCellTemplate
-#' @export
-setGeneric("prepareSingleCellTemplate", function(object, ...) {
-    standardGeneric("prepareSingleCellTemplate")
-})
-
-
-
 #' @rdname readCellTypeMarkersFile
 #' @export
 setGeneric("readCellTypeMarkersFile", function(object, ...) {
