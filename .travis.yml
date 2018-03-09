@@ -30,7 +30,7 @@ r_packages:
   - covr
 bioc_packages:
   - BiocCheck
-  - SingleCellExperiment
+  # - SingleCellExperiment
   # - BiocGenerics  # >= 0.23.3
   # - S4Vectors
 
