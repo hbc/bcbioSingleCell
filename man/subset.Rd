@@ -68,10 +68,10 @@
   }
 }
 \value{
-\link{bcbioSingleCell}.
+\code{bcbioSingleCell}.
 }
 \description{
-Extract genes by row and cells by column from a \link{bcbioSingleCell} object.
+Extract genes by row and cells by column from a \code{bcbioSingleCell} object.
 }
 \examples{
 load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))

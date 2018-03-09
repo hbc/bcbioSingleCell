@@ -1,11 +1,11 @@
 #' Bracket-Based Subsetting
 #'
-#' Extract genes by row and cells by column from a [bcbioSingleCell] object.
+#' Extract genes by row and cells by column from a `bcbioSingleCell` object.
 #'
-#' @rdname subset
 #' @name subset
-#'
 #' @author Michael Steinbaugh
+#'
+#' @importFrom SingleCellExperiment SingleCellExperiment
 #'
 #' @inheritParams base::`[`
 #'
@@ -15,7 +15,7 @@
 #' - `help("[", "base")`.
 #' - `selectSamples()` for subsetting based on sample metadata.
 #'
-#' @return [bcbioSingleCell].
+#' @return `bcbioSingleCell`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
@@ -41,39 +41,43 @@ NULL
 #' @importFrom dplyr mutate_all
 #' @importFrom magrittr set_rownames
 #' @importFrom S4Vectors metadata SimpleList
-.subset <- function(x, i, j, ..., drop = FALSE) {
+.subset <- function(x, i, j, ..., drop) {
+    validObject(x)
+
+    # Genes
     if (missing(i)) {
         i <- 1L:nrow(x)
     }
+    # Cells
     if (missing(j)) {
         j <- 1L:ncol(x)
     }
 
     # Early return if dimensions are unmodified
-    if (identical(dim(x), c(length(i), length(j)))) return(x)
+    if (identical(dim(x), c(length(i), length(j)))) {
+        return(x)
+    }
 
     # Regenerate and subset SummarizedExperiment
-    se <- as(x, "SummarizedExperiment")
-    se <- se[i, j, drop = drop]
+    sce <- as(x, "SingleCellExperiment")
+    sce <- sce[i, j, drop = drop]
 
-    genes <- rownames(se)
-    cells <- colnames(se)
+    genes <- rownames(sce)
+    cells <- colnames(sce)
 
     # Assays ===================================================================
-    assays <- assays(se)
+    assays <- assays(sce)
 
     # Row data =================================================================
-    rowData <- rowData(se)
-    if (!is.null(rowData)) {
-        rownames(rowData) <- slot(se, "NAMES")
-    }
+    rowRanges <- rowRanges(sce)
+    assert_has_names(rowRanges)
 
     # Column data ==============================================================
     # Don't need to relevel factors here currently
-    colData <- colData(se)
+    colData <- colData(sce)
 
     # Metadata =================================================================
-    metadata <- metadata(se)
+    metadata <- metadata(sce)
     metadata[["subset"]] <- TRUE
     # Update version, if necessary
     if (!identical(metadata[["version"]], packageVersion)) {
@@ -122,6 +126,7 @@ NULL
     }
 
     # bcbio ====================================================================
+    # FIXME Need to move this into metadata and rework
     bcbio <- bcbio(x)
     if (is(bcbio, "SimpleList") & length(bcbio)) {
         # Cellular barcodes
@@ -147,13 +152,13 @@ NULL
     }
 
     # Return ===================================================================
-    new("bcbioSingleCell",
-        SummarizedExperiment(
-            assays = assays,
-            rowData = rowData,
-            colData = colData,
-            metadata = metadata),
-        bcbio = bcbio)
+    sce <- SingleCellExperiment(
+        assays = assays,
+        rowRanges = rowRanges,
+        colData = colData,
+        metadata = metadata
+    )
+    new("bcbioSingleCell", sce)
 }
 
 
@@ -166,7 +171,9 @@ setMethod(
     signature(
         x = "bcbioSingleCell",
         i = "ANY",
-        j = "ANY"),
+        j = "ANY",
+        drop = "ANY"
+    ),
     function(x, i, j, ..., drop = FALSE) {
         .subset(x, i, j, ..., drop)
     })
