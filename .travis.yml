@@ -2,9 +2,9 @@
 # https://docs.travis-ci.com/user/languages/r
 
 # SingleCellExperiment requires `gsl-config` to build
-sudo: require
-before_install:
-  - sudo apt-get install libgsl-dev
+# sudo: require
+# before_install:
+#   - sudo apt-get install libgsl-dev
 
 language: r
 cache: packages
@@ -30,8 +30,9 @@ r_packages:
   - covr
 bioc_packages:
   - BiocCheck
-  - BiocGenerics  # >= 0.23.3
-  - S4Vectors
+  - SingleCellExperiment
+  # - BiocGenerics  # >= 0.23.3
+  # - S4Vectors
 
 after_success:
   - Rscript -e 'covr::codecov()'
