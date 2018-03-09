@@ -16,13 +16,13 @@
 #' - [dplyr::slice()]
 #' - [dplyr::top_n()].
 #'
-#' @return [tibble].
+#' @return `tibble`.
 #' @export
 #'
 #' @examples
 #' load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
 #'
-#' # grouped_df
+#' # grouped_df ====
 #' topMarkers(seuratAllMarkers) %>% glimpse()
 NULL
 
@@ -35,7 +35,8 @@ NULL
     object,
     n = 10L,
     direction = "positive",
-    coding = TRUE) {
+    coding = TRUE
+) {
     .checkSanitizedMarkers(object, stop = TRUE)
     # Check to make sure `avgLogFC` column exists
     if (!"avgLogFC" %in% colnames(object)) {
@@ -79,4 +80,5 @@ NULL
 setMethod(
     "topMarkers",
     signature("grouped_df"),
-    .topMarkers)
+    .topMarkers
+)
