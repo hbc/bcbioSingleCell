@@ -1,6 +1,5 @@
 #' Plot Violin
 #'
-#' @rdname plotViolin
 #' @name plotViolin
 #' @author Michael Steinbaugh
 #'
@@ -15,20 +14,18 @@
 #'   `return = "markdown"`.
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' genes <- slot(seurat, "raw.data") %>% rownames() %>% .[1:2]
-#' print(genes)
+#' # seurat ====
+#' genes <- slot(pbmc_small, "raw.data") %>% rownames() %>% head(2L)
 #'
 #' # grid
-#' plotViolin(seurat, genes = genes, return = "grid")
+#' plotViolin(pbmc_small, genes = genes, return = "grid")
 #'
 #' # list
-#' list <- plotViolin(seurat, genes = genes, return = "list")
-#' glimpse(list)
+#' list <- plotViolin(pbmc_small, genes = genes, return = "list")
+#' names(list)
 #'
 #' # markdown
-#' plotViolin(seurat, genes = genes, return = "markdown")
+#' plotViolin(pbmc_small, genes = genes, return = "markdown")
 NULL
 
 
@@ -46,7 +43,8 @@ NULL
     genes,
     fill = viridis::scale_fill_viridis(discrete = TRUE),
     return = "grid",
-    headerLevel = 2L) {
+    headerLevel = 2L
+) {
     validReturn <- c("grid", "list", "markdown")
     if (!return %in% validReturn) {
         abort(paste("`return` must contain:", toString(validReturn)))
@@ -62,7 +60,8 @@ NULL
         gather(
             key = "gene",
             value = "expression",
-            !!genes) %>%
+            !!genes
+        ) %>%
         group_by(!!sym("gene"))
 
     # Loop across genes ====================================================
@@ -74,13 +73,15 @@ NULL
             mapping = aes_string(
                 x = "ident",
                 y = "expression",
-                fill = "ident")
+                fill = "ident"
+            )
         ) +
             geom_violin(
                 color = "black",
                 scale = "width",
                 adjust = 1L,
-                trim = TRUE) +
+                trim = TRUE
+            ) +
             labs(title = gene) +
             guides(fill = FALSE)
         if (is(fill, "ScaleDiscrete")) {
@@ -94,7 +95,8 @@ NULL
     dynamicPlotlist(
         plotlist,
         return = return,
-        headerLevel = headerLevel)
+        headerLevel = headerLevel
+    )
 }
 
 
@@ -105,4 +107,5 @@ NULL
 setMethod(
     "plotViolin",
     signature("seurat"),
-    .plotViolin.seurat)
+    .plotViolin.seurat
+)
