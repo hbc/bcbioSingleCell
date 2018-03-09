@@ -1,3 +1,7 @@
+# TODO Need to add `rowRanges()` support for seurat
+
+
+
 #' Row Data
 #'
 #' @name rowData
@@ -7,7 +11,7 @@
 #'
 #' @inheritParams general
 #'
-#' @return `DataFrame`, `data.frame`, or `GRanges`.
+#' @return Return data as `data.frame`, or `DataFrame`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
@@ -22,31 +26,18 @@ NULL
 
 
 
-# Constructors =================================================================
-.rowData <- function(x, return = c("DataFrame", "data.frame", "AsIs")) {
-    return <- match.arg(return)
-    data <- slot(x, "elementMetadata")
-    if (return != "AsIs") {
-        data <- as(data, return)
-    }
-    names <- slot(x, "NAMES")
-    if (has_dims(data)) {
-        rownames(data) <- names
-    } else if (has_names(data)) {
-        names(data) <- names
-    }
-    data
-}
-
-
-
 # Methods ======================================================================
 #' @rdname rowData
 #' @export
 setMethod(
     "rowData",
     signature("bcbioSingleCell"),
-    .rowData
+    function(x, return = c("data.frame", "DataFrame")) {
+        return <- match.arg(return)
+        data <- mcols(rowRanges(x))
+        rownames(data) <- names(rowRanges(x))
+        as(data, return)
+    }
 )
 
 
@@ -56,12 +47,17 @@ setMethod(
 setMethod(
     "rowData",
     signature("seurat"),
-    function(x, return = c("DataFrame", "data.frame", "AsIs")) {
+    function(x, return = c("data.frame", "DataFrame")) {
         return <- match.arg(return)
-        data <- bcbio(x, "rowData")
-        if (return != "AsIs") {
-            data <- as(data, return)
-        }
-        data
+        # Catch `rowData` or `annotable`
+        # TODO Error on stashed `annotable` in future update
+        match <- match(
+            x = c("rowData", "annotable"),
+            table = names(bcbio(x))
+        ) %>%
+            na.omit() %>%
+            .[[1L]]
+        data <- bcbio(x)[[match]]
+        as(data, return)
     }
 )
