@@ -1,12 +1,19 @@
 #' Column Data
 #'
-#' @rdname colData
 #' @name colData
 #' @author Michael Steinbaugh
 #'
 #' @importFrom SummarizedExperiment colData
 #'
 #' @inherit general
+#'
+#' @param return Return data as `data.frame` or `DataFrame`.
+#'
+#' @return Data describing the columns (cells).
+#'
+#' @examples
+#' # seurat ====
+#' colData(pbmc_small)
 NULL
 
 
@@ -19,11 +26,12 @@ NULL
 setMethod(
     "colData",
     signature("seurat"),
-    function(x) {
-        data <- slot(x, "meta.data") %>%
-            as.data.frame() %>%
-            # Ensure the column names get sanitized
-            camel()
+    function(x, return = c("data.frame", "DataFrame")) {
+        return <- match.arg(return)
+        data <- slot(x, "meta.data")
+        assert_is_data.frame(data)
+        # Sanitize column names
+        data <- camel(data)
 
         # Legacy: ensure colData doesn't contain sample metadata
         meta <- sampleData(x)
@@ -43,5 +51,7 @@ setMethod(
             rownames_to_column() %>%
             mutate_if(is.character, as.factor) %>%
             mutate_if(is.factor, droplevels) %>%
-            column_to_rownames()
-    })
+            column_to_rownames() %>%
+            as(return)
+    }
+)
