@@ -22,7 +22,7 @@ topBarcodes(object, ...)
 \item{n}{Number of barcodes to return per sample.}
 }
 \value{
-\link{data.frame}
+\code{data.frame}.
 }
 \description{
 Top Barcodes

@@ -24,7 +24,7 @@ subsetPerSample(object, ...)
 \item{dir}{Output directory.}
 }
 \value{
-Named vector of saved \link{bcbioSingleCell} subset file paths.
+Named vector of saved \code{bcbioSingleCell} subset file paths.
 }
 \description{
 Subset Per Sample
@@ -34,10 +34,10 @@ load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
 
 # This will save the subsets per sample to disk
 subsetPerSample(filtered, dir = "subsetPerSample")
-dir_ls("subsetPerSample")
+dir("subsetPerSample")
 
 # Clean up
-dir_delete("subsetPerSample")
+unlink("subsetPerSample", recursive = TRUE)
 }
 \seealso{
 Other Data Management Utilities: \code{\link{aggregateReplicates}},

@@ -25,7 +25,7 @@ directions of association per cluster. Defaults to \code{positive}.}
 \item{coding}{Only include protein coding genes.}
 }
 \value{
-\link{tibble}.
+\code{tibble}.
 }
 \description{
 Top Markers
@@ -33,7 +33,7 @@ Top Markers
 \examples{
 load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
 
-# grouped_df
+# grouped_df ====
 topMarkers(seuratAllMarkers) \%>\% glimpse()
 }
 \seealso{

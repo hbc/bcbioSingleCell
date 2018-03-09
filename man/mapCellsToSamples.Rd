@@ -12,7 +12,7 @@ mapCellsToSamples(cells, samples)
 \item{samples}{Sample identifiers.}
 }
 \value{
-Named factor containing cell IDs as the names, and samples as the
+Named \code{factor} containing cell IDs as the names, and samples as the
 factor levels.
 }
 \description{

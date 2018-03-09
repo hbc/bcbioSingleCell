@@ -15,7 +15,7 @@
 vector containing the column name and the grep pattern.}
 }
 \value{
-\link{bcbioSingleCell}.
+\code{bcbioSingleCell}.
 }
 \description{
 Select Samples
@@ -25,11 +25,9 @@ Internally, pattern matching against sample and file names is
 applied using logical grep matching.
 }
 \note{
-Bracket based subsetting with \code{[} also works on [bcbioSingleCell]
+Bracket based subsetting with \code{[} also works on \code{bcbioSingleCell}
 objects. In this case, provide cellular barcode identifiers for columns
 and Ensembl gene identifiers for rows.
-
-[` also works on [bcbioSingleCell]: R:%60%20also%20works%20on%20[bcbioSingleCell
 }
 \examples{
 load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))

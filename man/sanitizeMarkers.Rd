@@ -28,9 +28,10 @@ Sanitize Markers Output
 load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 load(system.file("extdata/seuratAllMarkersOriginal.rda", package = "bcbioSingleCell"))
 
-# seurat
+# seurat ====
 sanitizeMarkers(
     seurat,
-    markers = seuratAllMarkersOriginal) \%>\%
+    markers = seuratAllMarkersOriginal
+) \%>\%
     glimpse()
 }
