@@ -14,7 +14,7 @@
 #' @param cells Cell identifiers.
 #' @param samples Sample identifiers.
 #'
-#' @return Named factor containing cell IDs as the names, and samples as the
+#' @return Named `factor` containing cell IDs as the names, and samples as the
 #'   factor levels.
 #' @export
 #'
