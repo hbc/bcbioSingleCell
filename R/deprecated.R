@@ -82,15 +82,13 @@ quantileHeatmap <- function(...) {
 # v0.0.25 ======================================================================
 #' @rdname deprecated
 #' @export
-plotKnownMarkers <- function(
-    object,
-    knownMarkers,
-    ...) {
+plotKnownMarkers <- function(object, knownMarkers, ...) {
     .Deprecated("plotKnownMarkersDetected")
     plotKnownMarkersDetected(
         object,
         knownMarkersDetected = knownMarkers,
-        ...)
+        ...
+    )
 }
 
 
