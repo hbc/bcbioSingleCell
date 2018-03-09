@@ -25,18 +25,10 @@
 Additional bcbio Run Data Accessor
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
-# bcbioSingleCell
-bcbio(bcb) \%>\% names()
-
-# Assignment method support
-bcbio(bcb, "stash") <- "testing"
-bcbio(bcb, "stash")
-
-# seurat
-bcbio(seurat) \%>\% names()
+# seurat ====
+names(bcbio(seurat))
 
 # Assignment method support
 bcbio(seurat, "stash") <- "testing"
