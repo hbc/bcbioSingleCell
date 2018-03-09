@@ -32,7 +32,7 @@ diffExp(object, ...)
 \item{maxit}{The number of iterations for the EM-algorithm. 200 by default, but larger may be useful for large datasets (many samples). Convergence of the posterior probabilities can be checked by following the distribution of posterior probabilities over iterations with \code{plotW}. The EM-algorithm will automatically stop if convergence is achieved before the maximum number of iterations.}
 }
 \value{
-\link{DEGLRT} object.
+\code{DEGLRT}.
 }
 \description{
 Differential Expression

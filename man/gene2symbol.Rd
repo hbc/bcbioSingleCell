@@ -3,12 +3,9 @@
 \docType{methods}
 \name{gene2symbol}
 \alias{gene2symbol}
-\alias{gene2symbol,bcbioSingleCell-method}
 \alias{gene2symbol,seurat-method}
 \title{Gene to Symbol Mappings}
 \usage{
-\S4method{gene2symbol}{bcbioSingleCell}(object)
-
 \S4method{gene2symbol}{seurat}(object)
 }
 \arguments{
@@ -21,10 +18,10 @@ Gene to Symbol Mappings
 load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
-# bcbioRNASeq
+# bcbioRNASeq ====
 gene2symbol(bcb) \%>\% glimpse()
 
-# seurat
+# seurat ====
 gene2symbol(seurat) \%>\% glimpse()
 }
 \author{

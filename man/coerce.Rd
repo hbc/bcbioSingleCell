@@ -2,9 +2,7 @@
 % Please edit documentation in R/setAs.R
 \name{coerce}
 \alias{coerce}
-\alias{upgrade-bcbioSingleCell}
 \alias{coerce-bcbioSingleCell-seurat}
-\alias{coerce-bcbioSingleCell-SummarizedExperiment}
 \title{Coerce Object}
 \arguments{
 \item{from}{Class for which the coerce method will perform coercion.}
@@ -12,15 +10,6 @@
 \description{
 Coerce Object
 }
-\section{Upgrade bcbioSingleCell to current version}{
-
-This method adds support for upgrading \code{bcbioSCDataSet} objects to the latest
-\code{bcbioSingleCell} class version. This should be backwards compatible to
-\code{bcbioSingleCell} version 0.0.17. Previous objects saved using
-\code{bcbioSinglecell} (note case) will likely fail to load with newer versions of
-the package.
-}
-
 \section{bcbioSingleCell to seurat}{
 
 Interally \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}} is called without applying any
@@ -28,13 +17,6 @@ additional filtering cutoffs, since we have already defined them during our
 quality control analysis. Here we are passing the raw gene-level counts of
 the filtered cells into a new \code{seurat} class object, using \code{\link[=as]{as()}} object
 coercion.
-}
-
-\section{bcbioSingleCell to SummarizedExperiment}{
-
-Since \code{bcbioSingleCell} is an extension of \code{SummarizedExperiment}, this
-coercion method is very simple. Here we're simply dropping our \code{@bcbio} slot,
-which contains raw cellular barcodes and other bcbio-specific metadata.
 }
 
 \examples{

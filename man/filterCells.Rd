@@ -5,7 +5,6 @@
 \alias{filterCells}
 \alias{filterCells}
 \alias{filterCells,bcbioSingleCell-method}
-\alias{filterCells,bcbioSCDataSet-method}
 \title{Filter Cells}
 \usage{
 filterCells(object, ...)
@@ -13,8 +12,6 @@ filterCells(object, ...)
 \S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000L,
   maxUMIs = Inf, minGenes = 500L, maxGenes = Inf, maxMitoRatio = 0.1,
   minNovelty = 0.75, minCellsPerGene = 3L)
-
-\S4method{filterCells}{bcbioSCDataSet}(object)
 }
 \arguments{
 \item{object}{Object.}
@@ -37,7 +34,7 @@ filterCells(object, ...)
 this many cells.}
 }
 \value{
-\link{bcbioSingleCell} object, with filtering information slotted into
+\code{bcbioSingleCell}, with filtering information slotted into
 \code{\link[=metadata]{metadata()}} as \code{filterCells} and \code{filterParams}.
 }
 \description{
