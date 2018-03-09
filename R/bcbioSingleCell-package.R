@@ -20,6 +20,7 @@
 #' @importFrom assertive assert_has_no_duplicates
 #' @importFrom assertive assert_is_a_bool
 #' @importFrom assertive assert_is_a_string
+#' @importFrom assertive assert_is_all_of
 #' @importFrom assertive assert_is_an_integer
 #' @importFrom assertive assert_is_any_of
 #' @importFrom assertive assert_is_character
@@ -42,12 +43,12 @@
 #' @importFrom rlang !! .data abort inform sym warn
 #' @importFrom S4Vectors aggregate metadata
 #' @importFrom SummarizedExperiment assay assays colData rowData
+#' @importFrom utils globalVariables packageVersion
 NULL
 
-#' @importFrom utils globalVariables
-globalVariables(".")
 
-#' @importFrom utils packageVersion
+
+globalVariables(".")
 packageVersion <- packageVersion("bcbioSingleCell")
 
 # Trailing number is to match cellranger output
