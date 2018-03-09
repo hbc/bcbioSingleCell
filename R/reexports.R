@@ -16,6 +16,10 @@ dplyr::funs
 #' @export
 ggplot2::ggplot
 
+#' @importFrom ggplot2 scale_color_hue
+#' @export
+ggplot2::scale_color_hue
+
 
 
 #' @importFrom fs dir_create
