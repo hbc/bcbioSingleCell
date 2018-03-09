@@ -1,6 +1,5 @@
 #' Read Cell Type Markers File
 #'
-#' @rdname readCellTypeMarkersFile
 #' @name readCellTypeMarkersFile
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh
@@ -15,7 +14,8 @@
 #' @examples
 #' cellTypeMarkersFile <- system.file(
 #'     file.path("extdata", "cellTypeMarkers.csv"),
-#'     package = "bcbioSingleCell")
+#'     package = "bcbioSingleCell"
+#' )
 #' gene2symbol <- gene2symbol("Mus musculus")
 #' readCellTypeMarkersFile(cellTypeMarkersFile, gene2symbol = gene2symbol)
 NULL
@@ -82,4 +82,5 @@ NULL
 setMethod(
     "readCellTypeMarkersFile",
     signature("character"),
-    .readCellTypeMarkersFile)
+    .readCellTypeMarkersFile
+)

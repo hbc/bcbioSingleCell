@@ -2,30 +2,30 @@
 #'
 #' This function helps us visualize the dropout rate.
 #'
-#' @rdname plotZerosVsDepth
 #' @name plotZerosVsDepth
 #' @family Quality Control Metrics
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
 #'
-#' @param metrics Metrics [data.frame].
+#' @param metrics Metrics `data.frame`.
 #'
-#' @return [ggplot].
+#' @return `ggplot`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
+#' # bcbioSingleCell ====
 #' plotZerosVsDepth(bcb)
 #'
-#' # dgCMatrix
+#' # dgCMatrix ====
 #' counts <- counts(bcb)
 #' metrics <- metrics(bcb)
 #' plotZerosVsDepth(counts, metrics = metrics)
 #'
-#' # seurat
+#' # seurat ====
+#' plotZerosVsDepth(pbmc_small)
 #' plotZerosVsDepth(seurat)
 NULL
 
@@ -76,7 +76,8 @@ setMethod(
             object = counts(object),
             metrics = metrics(object)
         )
-    })
+    }
+)
 
 
 
@@ -85,7 +86,8 @@ setMethod(
 setMethod(
     "plotZerosVsDepth",
     signature("dgCMatrix"),
-    .plotZerosVsDepth)
+    .plotZerosVsDepth
+)
 
 
 
@@ -94,7 +96,8 @@ setMethod(
 setMethod(
     "plotZerosVsDepth",
     signature("matrix"),
-    .plotZerosVsDepth)
+    .plotZerosVsDepth
+)
 
 
 
