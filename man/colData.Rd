@@ -6,16 +6,22 @@
 \alias{colData,seurat-method}
 \title{Column Data}
 \usage{
-\S4method{colData}{seurat}(x)
+\S4method{colData}{seurat}(x, return = c("data.frame", "DataFrame"))
 }
 \arguments{
 \item{x}{Primary object.}
+
+\item{return}{Return data as \code{data.frame} or \code{DataFrame}.}
 }
 \value{
-No value.
+Data describing the columns (cells).
 }
 \description{
 Column Data
+}
+\examples{
+# seurat ====
+colData(pbmc_small)
 }
 \author{
 Michael Steinbaugh
