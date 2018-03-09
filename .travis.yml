@@ -1,7 +1,7 @@
 # R for travis
 # https://docs.travis-ci.com/user/languages/r
 
-# SingleCellExperiment requires `gsl-config` to build
+# zinbwave requires gsl-config to build
 # sudo: require
 # before_install:
 #   - sudo apt-get install libgsl-dev
@@ -30,9 +30,8 @@ r_packages:
   - covr
 bioc_packages:
   - BiocCheck
-  # - SingleCellExperiment
-  # - BiocGenerics  # >= 0.23.3
-  # - S4Vectors
+  - BiocGenerics  # >= 0.23.3
+  - S4Vectors
 
 after_success:
   - Rscript -e 'covr::codecov()'
