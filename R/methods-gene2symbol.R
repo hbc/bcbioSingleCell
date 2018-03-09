@@ -1,6 +1,5 @@
 #' Gene to Symbol Mappings
 #'
-#' @rdname gene2symbol
 #' @name gene2symbol
 #' @author Michael Steinbaugh
 #'
@@ -12,10 +11,10 @@
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioRNASeq
+#' # bcbioRNASeq ====
 #' gene2symbol(bcb) %>% glimpse()
 #'
-#' # seurat
+#' # seurat ====
 #' gene2symbol(seurat) %>% glimpse()
 NULL
 
@@ -43,28 +42,17 @@ NULL
 #' @export
 setMethod(
     "gene2symbol",
-    signature("bcbioSingleCell"),
-    function(object) {
-        gene2symbol <- metadata(object)[["gene2symbol"]]
-        if (is.data.frame(gene2symbol)) return(gene2symbol)
-
-        # Fall back to generating from rowData
-        .gene2symbolFromRowData(object)
-    })
-
-
-
-#' @rdname gene2symbol
-#' @export
-setMethod(
-    "gene2symbol",
     signature("seurat"),
     function(object) {
         gene2symbol <- bcbio(object, "gene2symbol")
-        if (is.data.frame(gene2symbol)) return(gene2symbol)
+        if (is.data.frame(gene2symbol)) {
+            return(gene2symbol)
+        }
 
         gene2symbol <- .gene2symbolFromRowData(object)
-        if (is.data.frame(gene2symbol)) return(gene2symbol)
+        if (is.data.frame(gene2symbol)) {
+            return(gene2symbol)
+        }
 
         rownames <- slot(object, "data") %>% rownames()
         if (!is.null(names(rownames))) {
