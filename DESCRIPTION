@@ -87,7 +87,6 @@ Suggests:
     monocle,
     rmarkdown,
     roxygen2,
-    scde,
     sessioninfo,
     testthat,
     tidyverse
