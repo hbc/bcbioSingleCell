@@ -1,10 +1,3 @@
-# TODO Map legacy `annotable` argument to `rowData`
-# TODO Improve `DataFrame`, `GRanges` pass-in support for `rowData`
-# TODO Store cellularBarcodes (cbList) in metadata, not bcbio slot
-# FIXME ensemblVersion renamed to ensemblRelease
-
-
-
 #' Load bcbio Single-Cell RNA-Seq Data
 #'
 #' @note When working in RStudio, we recommend connecting to the bcbio-nextgen
@@ -13,12 +6,13 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump camel detectOrganism ensembl gene2symbolFromGTF readGTF
-#'   readYAML tx2geneFromGTF
+#' @importFrom basejump camel detectOrganism ensembl readYAML
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
 #'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
+#' @importFrom GenomicFeatures exonsBy makeTxDbFromGFF
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
+#' @importFrom SingleCellExperiment isSpike<- SingleCellExperiment
 #' @importFrom stats na.omit setNames
 #' @importFrom stringr str_extract str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
@@ -32,16 +26,6 @@
 #' @param interestingGroups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
-#' @param prefilter Prefilter counts prior to quality control analysis.
-#' @param gtfFile *Optional but recommended*. GTF (Gene Transfer Format) file,
-#'   which will be used for gene-to-symbol (`gene2symbol`) and
-#'   transcript-to-gene (`tx2gene`) annotation mappings.
-#' @param rowRanges *Required.* Genomic ranges (`GRanges`) that match the
-#'   rownames of the counts matrix. If left missing (default), the annotations
-#'   will be obtained automatically fron Ensembl using AnnotationHub and
-#'   ensembldb. These values are also accessible with the [rowData()] function.
-#' @param isSpike *Optional.* Gene names corresponding to FASTA spike-in
-#'   sequences (e.g. ERCCs, EGFP, TDTOMATO).
 #' @param organism *Optional.* Organism name. Use the full latin name (e.g.
 #'   "Homo sapiens"), since this will be input downstream to
 #'   AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
@@ -56,13 +40,26 @@
 #'   manually (e.g. "hg19" for the older *Homo sapiens* reference genome). Note
 #'   that this must match the genome build identifier on Ensembl for annotations
 #'   to download correctly.
+#' @param isSpike *Optional.* Gene names corresponding to FASTA spike-in
+#'   sequences (e.g. ERCCs, EGFP, TDTOMATO).
+#' @param gffFile *Optional.* By default, we recommend leaving this `NULL` for
+#'   genomes that are supported on Ensembl. In this case, the row annotations
+#'   ([rowRanges()]) will be obtained automatically from Ensembl using
+#'   AnnotationHub and ensembldb. Internally, they are stored as genomic ranges
+#'   (`GRanges`). Additionally, these annotations are accessible as a
+#'   `data.frame` via the [rowData()] function. For a genome that is not
+#'   supported on Ensembl or AnnotationHub, a GFF/GTF (General Feature Format)
+#'   file is required. Generally, we recommend using a GTF (GFFv2) file here
+#'   over a GFF3 file, although both formats are supported. The function will
+#'   internally generate a `TxDb` containing transcript-to-gene mappings and
+#'   construct a `GRanges` object containing the genomic ranges ([rowRanges()]).
+#' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return `bcbioSingleCell`.
 #' @export
 #'
 #' @examples
-#' # Homo sapiens
 #' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 #' uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
 #' sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
@@ -75,12 +72,11 @@ loadSingleCell <- function(
     uploadDir,
     sampleMetadataFile = NULL,
     interestingGroups = "sampleName",
-    gtfFile = NULL,
-    rowRanges,
-    isSpike = NULL,
     organism = NULL,
     ensemblRelease = NULL,
     genomeBuild = NULL,
+    isSpike = NULL,
+    gffFile = NULL,
     prefilter = TRUE,
     ...
 ) {
@@ -89,19 +85,37 @@ loadSingleCell <- function(
     uploadDir <- normalizePath(uploadDir)
     assertIsAStringOrNULL(sampleMetadataFile)
     assert_is_character(interestingGroups)
-    assertIsAStringOrNULL(gtfFile)
-    if (is_a_string(gtfFile)) {
-        assert_all_are_existing_files(gtfFile)
-    }
-    if (!missing(rowRanges)) {
-        assert_is_all_of(rowRanges, "GRanges")
-    }
     assertIsAStringOrNULL(organism)
     assertIsAnImplicitIntegerOrNULL(ensemblRelease)
     assertIsAStringOrNULL(genomeBuild)
+    assertIsCharacterOrNULL(isSpike)
+    assertIsAStringOrNULL(gffFile)
+    if (is_a_string(gffFile)) {
+        assert_all_are_existing_files(gffFile)
+    }
     assert_is_a_bool(prefilter)
-
+    dots <- list(...)
     pipeline <- "bcbio"
+
+    # Legacy arguments =========================================================
+    call <- match.call(expand.dots = TRUE)
+    # annotable
+    if ("annotable" %in% names(call)) {
+        abort("Use `gffFile` instead of `annotable`")
+    }
+    # ensemblVersion
+    if ("ensemblVersion" %in% names(call)) {
+        warn("Use `ensemblRelease` instead of `ensemblVersion`")
+        ensemblRelease <- call[["ensemblVersion"]]
+        dots[["ensemblVersion"]] <- NULL
+    }
+    # gtfFile
+    if ("gtfFile" %in% names(call)) {
+        warn("Use `gffFile` instead of `gtfFile`")
+        gffFile <- call[["gtfFile"]]
+        dots[["gtfFile"]] <- NULL
+    }
+    dots <- Filter(Negate(is.null), dots)
 
     # Directory paths ==========================================================
     projectDir <- dir(
@@ -163,10 +177,12 @@ loadSingleCell <- function(
     cellularBarcodeCutoffPattern <- "--cb_cutoff (\\d+)"
     assert_any_are_matching_regex(
         x = bcbioCommandsLog,
-        pattern = cellularBarcodeCutoffPattern)
+        pattern = cellularBarcodeCutoffPattern
+    )
     match <- str_match(
         string = bcbioCommandsLog,
-        pattern = cellularBarcodeCutoffPattern)
+        pattern = cellularBarcodeCutoffPattern
+    )
     cellularBarcodeCutoff <- match %>%
         .[, 2L] %>%
         na.omit() %>%
@@ -182,9 +198,9 @@ loadSingleCell <- function(
     # Detect MatrixMarket output at transcript or gene level
     genemapPattern <- "--genemap (.+)-tx2gene.tsv"
     if (any(grepl(genemapPattern, bcbioCommandsLog))) {
-        countsLevel <- "gene"
+        level <- "gene"
     } else {
-        countsLevel <- "transcript"
+        level <- "transcript"
     }
 
     # Data and program versions ================================================
@@ -251,7 +267,6 @@ loadSingleCell <- function(
         assert_all_are_matching_regex(umiType, "indrop")
         sampleData <- sampleYAMLMetadata(yaml)
     }
-
     if ("sequence" %in% colnames(sampleData)) {
         sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
         if (identical(
@@ -287,11 +302,38 @@ loadSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Gene annotations =========================================================
-    if (missing(rowRanges)) {
+    # Unfiltered cellular barcode distributions ================================
+    cbList <- .cellularBarcodesList(sampleDirs)
+    cbData <- .bindCellularBarcodes(cbList)
+
+    # Assays ===================================================================
+    inform(paste("Reading counts at", level, "level"))
+    sparseCountsList <- .sparseCountsList(
+        sampleDirs = sampleDirs,
+        pipeline = pipeline,
+        umiType = umiType
+    )
+    counts <- do.call(Matrix::cBind, sparseCountsList)
+
+    # Row data =================================================================
+    ahMeta <- NULL
+    txdb <- NULL
+    if (is_a_string(gffFile)) {
+        txdb <- makeTxDbFromGFF(gffFile)
+        # rowRanges <- exonsBy(txdb, by = "gene")
+        rowRanges <- genes(txdb)
+        # Transcript-to-gene mappings
+        if (level == "transcripts") {
+            transcripts <- transcripts(txdb, columns = c("tx_name", "gene_id"))
+            tx2gene <- mcols(transcripts) %>%
+                as.data.frame() %>%
+                set_colnames(c("enstxp", "ensgene")) %>%
+                set_rownames(.[["enstxp"]])
+        }
+    } else {
         # ah = AnnotationHub
         ah <- ensembl(
-            organism,
+            organism = organism,
             format = "genes",
             genomeBuild = genomeBuild,
             release = ensemblRelease,
@@ -299,82 +341,56 @@ loadSingleCell <- function(
             metadata = TRUE
         )
         assert_is_list(ah)
-        assert_is_list(ah)
         assert_are_identical(names(ah), c("data", "metadata"))
         rowRanges <- ah[["data"]]
         assert_is_all_of(rowRanges, "GRanges")
         ahMeta <- ah[["metadata"]]
-        assert_all_are_matching_regex(
-            x = ahMeta[["id"]],
-            pattern = "^AH\\d+$"
-        )
-    } else {
-        ahMeta <- NULL
+        assert_all_are_matching_regex(ahMeta[["id"]], "^AH\\d+$")
+        # Transcript-to-gene mappings
+        if (level == "transcripts") {
+            tx2gene <- tx2gene(
+                organism,
+                genomeBuild = genomeBuild,
+                release = release
+            )
+        }
     }
 
-    # GTF annotations
-    if (is_a_string(gtfFile)) {
-        gtf <- readGTF(gtfFile)
-    } else {
-        gtf <- NULL
-    }
-
-    # Transcript-to-gene mappings
-    if (countsLevel == "transcript") {
-        assert_is_data.frame(gtf)
-        tx2gene <- tx2geneFromGTF(gtf)
-    } else {
-        # Not applicable to gene-level bcbio output
-        tx2gene <- NA
-    }
-
-    # Gene-to-symbol mappings
-    if (is_a_string(gtfFile)) {
-        gene2symbol <- gene2symbolFromGTF(gtf)
-    } else if (is.data.frame(rowData)) {
-        gene2symbol <- rowData[, c("ensgene", "symbol")]
-    } else {
-        abort("Loading run without gene-to-symbol mappings (not recommended)")
-        gene2symbol <- NULL
-    }
-
-    # Cellular barcode distributions ===========================================
-    cbList <- .cellularBarcodesList(sampleDirs)
-    cbData <- .bindCellularBarcodes(cbList)
-
-    # Counts ===================================================================
-    inform(paste("Reading counts at", countsLevel, "level"))
-    sparseCountsList <- .sparseCountsList(
-        sampleDirs = sampleDirs,
-        pipeline = pipeline,
-        umiType = umiType
+    # Check for gene-to-symbol mappings
+    assert_is_subset(
+        x = c("ensgene", "symbol"),
+        y = names(mcols(rowRanges)),
+        severity = "warning"
     )
-    # Combine the individual per-sample transcript-level sparse matrices into a
-    # single sparse matrix
-    counts <- do.call(Matrix::cBind, sparseCountsList)
-    # Convert counts from transcript-level to gene-level, if necessary
-    if (countsLevel == "transcript") {
+
+    # Generate rowData data.frame
+    rowData <- as.data.frame(rowRanges)
+    rownames(rowData) <- names(rowRanges)
+
+    # Transcript to gene level counts (legacy) =================================
+    # Now recommended to provide GTF in the bcbio run instead
+    if (level == "transcript") {
         counts <- .transcriptToGeneLevelCounts(counts, tx2gene)
     }
 
-    # Metrics ==================================================================
-    metrics <- calculateMetrics(
+    # Column data ==============================================================
+    colData <- calculateMetrics(
         object = counts,
         rowData = rowData,
         prefilter = prefilter
     )
-    # Bind the `nCount` column to the metrics
-    cbPass <- cbData[rownames(metrics), "nCount", drop = FALSE]
-    metrics <- cbind(metrics, cbPass)
+    # Bind the `nCount` column to the colData
+    cbPass <- cbData[rownames(colData), "nCount", drop = FALSE]
+    colData <- cbind(colData, cbPass)
 
     if (isTRUE(prefilter)) {
         # Subset the counts matrix to match the cells that passed prefiltering
-        counts <- counts[, rownames(metrics), drop = FALSE]
+        counts <- counts[, rownames(colData), drop = FALSE]
     }
 
     # Cell to sample mappings ==================================================
     cell2sample <- mapCellsToSamples(
-        cells = rownames(metrics),
+        cells = rownames(colData),
         samples = rownames(sampleData)
     )
 
@@ -392,12 +408,12 @@ loadSingleCell <- function(
         "genomeBuild" = genomeBuild,
         "ensemblRelease" = as.integer(ensemblRelease),
         "annotationHub" = as.list(ahMeta),
-        "gtfFile" = as.character(gtfFile),
-        "gene2symbol" = gene2symbol,
+        "gffFile" = as.character(gffFile),
+        "txdb" = txdb,
         "umiType" = umiType,
         "allSamples" = allSamples,
         "prefilter" = prefilter,
-        # bcbio pipeline-specific ====
+        # bcbio pipeline-specific ==============================================
         "projectDir" = projectDir,
         "template" = template,
         "runDate" = runDate,
@@ -408,25 +424,38 @@ loadSingleCell <- function(
         "programVersions" = programVersions,
         "bcbioLog" = bcbioLog,
         "bcbioCommandsLog" = bcbioCommandsLog,
+        "cellularBarcodes" = cbList,
         "cellularBarcodeCutoff" = cellularBarcodeCutoff,
         "loadSingleCell" = match.call()
     )
     # Add user-defined custom metadata, if specified
-    dots <- list(...)
     if (length(dots) > 0L) {
+        assert_are_disjoint_sets(names(metadata), names(dots))
         metadata <- c(metadata, dots)
     }
-    # TODO Add assert check to ensure disjoint sets
 
-    # SingleCellExperiment =====================================================
+    # Return ===================================================================
+    # Generate RangedSummarizedExperiment
     rse <- prepareSummarizedExperiment(
         assays = list(assay = counts),
         rowRanges = rowRanges,
-        colData = metrics,
+        colData = colData,
         metadata = metadata,
         isSpike = isSpike
     )
-    # Coerce to SingleCellExperiment
-    sce <- as(rse, "SingleCellExperiment")
+    # FIXME `as(rse, "SingleCellExperiment)` coercion doesn't return
+    # objectVersion correctly in SingleCellExperiment v1.0.0
+    sce <- SingleCellExperiment(
+        assays = assays(rse),
+        rowRanges = rowRanges(rse),
+        colData = colData(rse),
+        metadata = metadata(rse)
+    )
+    # Define spikeNames for spike-in sequences
+    if (is.character(isSpike)) {
+        for (i in seq_along(isSpike)) {
+            isSpike(sce, isSpike[[i]]) <- isSpike[[i]]
+        }
+    }
     new("bcbioSingleCell", sce)
 }
