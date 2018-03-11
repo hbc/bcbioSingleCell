@@ -1,4 +1,4 @@
-#' Transcript To Gene-Level Counts
+#' Transcript to Gene-Level Counts
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @keywords internal
@@ -9,27 +9,27 @@
 #' @importFrom magrittr set_rownames
 #' @importFrom tibble remove_rownames
 #'
-#' @param counts Transcript-level sparse counts matrix (`dgCMatrix`).
+#' @param object Transcript-level sparse counts matrix (`dgCMatrix`).
 #' @param tx2gene Transcript to gene identifier mappings.
 #'
 #' @return `dgCMatrix`.
-.transcriptToGeneLevelCounts <- function(counts, tx2gene) {
-    if (!is(counts, "dgCMatrix")) {
-        abort("Counts matrix must be dgCMatrix")
-    }
-    counts <- .stripTranscriptVersions(counts)
+.transcriptToGeneLevelCounts <- function(object, tx2gene) {
+    assert_is_all_of(object, "dgCMatrix")
+    object <- .stripTranscriptVersions(object)
+    assertIsTx2gene(tx2gene)
+    assert_is_subset(rownames(object), rownames(tx2gene))
 
     # Subset the tx2gene to keep only identifiers present in the matrix
-    map <- tx2gene[rownames(counts), , drop = FALSE]
-    rownames(map) <- rownames(counts)
+    tx2gene <- tx2gene[rownames(object), , drop = FALSE]
+    rownames(tx2gene) <- rownames(object)
 
     # Detect and handle missing transcript identifiers. These are typically
     # deprecated transcripts in the current Ensembl release, or FASTA
     # spike-in sequences (e.g. EGFP, GAL4). We don't want to simply trash here.
-    if (!all(rownames(map) %in% map[["enstxp"]])) {
-        match <- map %>%
+    if (!all(rownames(tx2gene) %in% tx2gene[["enstxp"]])) {
+        match <- tx2gene %>%
             .[!is.na(.[["enstxp"]]), , drop = FALSE]
-        missing <- map %>%
+        missing <- tx2gene %>%
             .[is.na(.[["enstxp"]]), , drop = FALSE] %>%
             rownames()
         if (length(missing) > 200L) {
@@ -48,19 +48,19 @@
             stringsAsFactors = FALSE
         ) %>%
             rbind(match) %>%
-            .[rownames(map), , drop = FALSE]
-        map <- remap
+            .[rownames(tx2gene), , drop = FALSE]
+        tx2gene <- remap
     }
 
-    if (!identical(rownames(counts), map[["enstxp"]])) {
+    if (!identical(rownames(object), tx2gene[["enstxp"]])) {
         abort("Transcript to gene mappings don't match counts matrix rows")
     }
 
     inform("Converting transcript-level counts to gene-level")
-    rownames(counts) <- map[["ensgene"]]
+    rownames(object) <- tx2gene[["ensgene"]]
     aggregate.Matrix(
-        x = counts,
-        groupings = rownames(counts),
+        x = object,
+        groupings = rownames(object),
         fun = "sum"
     )
 }
