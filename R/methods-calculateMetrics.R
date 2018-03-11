@@ -12,7 +12,7 @@
 #'
 #' @note This should only be performed during the initial run loading.
 #'
-#' @return [data.frame].
+#' @return `data.frame`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
@@ -35,56 +35,49 @@ NULL
 #' @importFrom tibble column_to_rownames tibble
 .calculateMetrics.dgCMatrix <- function(  # nolint
     object,
-    rowData = TRUE,
-    prefilter = TRUE) {
-    inform("Calculating barcode metrics")
-    inform(paste(ncol(object), "cellular barcodes detected"))
+    rowData,
+    prefilter = TRUE
+) {
+    assert_is_any_of(rowData, c("data.frame", "DataFrame"))
+    rowData <- as.data.frame(rowData)
+    assert_are_intersecting_sets(rownames(object), rownames(rowData))
+    assert_is_a_bool(prefilter)
 
-    if (isTRUE(rowData)) {
-        organism <- rownames(object) %>%
-            .[[1L]] %>%
-            detectOrganism()
-        rowData <- rowData(organism)
-    }
+    inform("Calculating cellular barcode metrics")
+    inform(paste(ncol(object), "cells detected"))
 
-    # Check that all genes are in rowData
-    missing <- rownames(object) %>%
-        .[!rownames(object) %in% rowData[["ensgene"]]]
-    if (identical(length(missing), nrow(object))) {
-        abort(paste(
-            "No genes in the counts matrix matched the rowData.",
-            "Check to ensure `organism` argument is correct."
-        ))
-    }
-
-    if (length(missing) > 0L) {
+    intersect <- intersect(rownames(object), rownames(rowData))
+    setdiff <- setdiff(rownames(object), rownames(rowData))
+    if (length(setdiff)) {
         warn(paste(
-            length(missing),
-            "genes missing in rowData used to calculate metrics",
-            paste0("(", percent(length(missing) / nrow(object)), ")")
+            length(setdiff),
+            "genes missing in rowData",
+            paste0("(", percent(length(setdiff) / nrow(object)), ")")
         ))
     }
+    rowData <- rowData[intersect, , drop = FALSE]
 
     # Obtain detected coding and mitochondrial genes, using rowData
     codingGenesDetected <- rowData %>%
         filter(.data[["broadClass"]] == "coding") %>%
-        pull("ensgene") %>%
-        .[. %in% rownames(object)]
-    if (length(codingGenesDetected) == 0L) {
+        pull("ensgene")
+    if (!length(codingGenesDetected)) {
         abort("No coding genes detected")
     }
+    inform(paste(
+        length(codingGenesDetected),
+        "coding genes detected"
+    ))
     mitoGenesDetected <- rowData %>%
         filter(.data[["broadClass"]] == "mito") %>%
-        pull("ensgene") %>%
-        .[. %in% rownames(object)]
-    if (length(mitoGenesDetected) == 0L) {
-        warn("No mitochondrial genes detected")
-    } else {
-        inform(paste(
-            length(mitoGenesDetected),
-            "mitochondrial genes detected"
-        ))
+        pull("ensgene")
+    if (!length(mitoGenesDetected)) {
+        abort("No mitochondrial genes detected")
     }
+    inform(paste(
+        length(mitoGenesDetected),
+        "mitochondrial genes detected"
+    ))
 
     metrics <- tibble(
         rowname = colnames(object),
@@ -144,11 +137,12 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        prefilter = TRUE) {
+        prefilter = TRUE
+    ) {
         inform("Recalculating cellular barcode metrics")
-        .calculateMetrics.dgCMatrix(
-            assay(object),
-            rowData = metadata(object)[["rowData"]],
+        calculateMetrics(
+            object = assay(object),
+            rowData = rowData(object),
             prefilter = prefilter
         )
     }
