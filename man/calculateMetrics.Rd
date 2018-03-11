@@ -10,8 +10,7 @@
 \usage{
 calculateMetrics(object, ...)
 
-\S4method{calculateMetrics}{dgCMatrix}(object, rowData = TRUE,
-  prefilter = TRUE)
+\S4method{calculateMetrics}{dgCMatrix}(object, rowData, prefilter = TRUE)
 
 \S4method{calculateMetrics}{bcbioSingleCell}(object, prefilter = TRUE)
 }
@@ -25,7 +24,7 @@ calculateMetrics(object, ...)
 \item{prefilter}{Whether to apply pre-filtering to the cellular barcodes.}
 }
 \value{
-\link{data.frame}.
+\code{data.frame}.
 }
 \description{
 Calculate Cellular Barcode Metrics Summary

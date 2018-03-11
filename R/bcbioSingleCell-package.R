@@ -41,6 +41,7 @@
 #' @importFrom basejump assertIsAnImplicitInteger
 #' @importFrom basejump assertIsAnImplicitIntegerOrNULL
 #' @importFrom basejump assertIsGene2symbol
+#' @importFrom basejump assertIsTx2gene
 #' @importFrom bcbioBase assertFormalInterestingGroups
 #' @importFrom magrittr %>%
 #' @importFrom rlang !! .data abort inform sym warn

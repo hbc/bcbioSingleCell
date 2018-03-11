@@ -26,20 +26,18 @@
 Plot Violin
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-genes <- slot(seurat, "raw.data") \%>\% rownames() \%>\% .[1:2]
-print(genes)
+# seurat ====
+genes <- slot(pbmc_small, "raw.data") \%>\% rownames() \%>\% head(2L)
 
 # grid
-plotViolin(seurat, genes = genes, return = "grid")
+plotViolin(pbmc_small, genes = genes, return = "grid")
 
 # list
-list <- plotViolin(seurat, genes = genes, return = "list")
-glimpse(list)
+list <- plotViolin(pbmc_small, genes = genes, return = "list")
+names(list)
 
 # markdown
-plotViolin(seurat, genes = genes, return = "markdown")
+plotViolin(pbmc_small, genes = genes, return = "markdown")
 }
 \author{
 Michael Steinbaugh
