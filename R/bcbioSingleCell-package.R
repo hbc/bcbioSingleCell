@@ -16,6 +16,8 @@
 #' @importFrom assertive assert_all_are_matching_regex
 #' @importFrom assertive assert_all_are_positive
 #' @importFrom assertive assert_any_are_matching_regex
+#' @importFrom assertive assert_are_disjoint_sets
+#' @importFrom assertive assert_are_intersecting_sets
 #' @importFrom assertive assert_are_identical
 #' @importFrom assertive assert_has_no_duplicates
 #' @importFrom assertive assert_is_a_bool
@@ -27,6 +29,7 @@
 #' @importFrom assertive assert_is_data.frame
 #' @importFrom assertive assert_is_environment
 #' @importFrom assertive assert_is_factor
+#' @importFrom assertive assert_is_list
 #' @importFrom assertive assert_is_non_empty
 #' @importFrom assertive assert_is_of_length
 #' @importFrom assertive assert_is_subset
@@ -42,7 +45,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom rlang !! .data abort inform sym warn
 #' @importFrom S4Vectors aggregate metadata
-#' @importFrom SummarizedExperiment assay assays colData rowData
+#' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
 #' @importFrom utils globalVariables packageVersion
 NULL
 
