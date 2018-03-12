@@ -23,6 +23,11 @@ environment:
 build_script:
   - travis-tool.sh bioc_install GenomeInfoDbData
   - travis-tool.sh install_deps
+  - travis-tool.sh bioc_install edgeR
+  - travis-tool.sh bioc_install DESeq2
+  - travis-tool.sh bioc_install SingleCellExperiment
+  - travis-tool.sh bioc_install zinbwave
+  - travis-tool.sh install_github statOmics/zingeR
 
 test_script:
   - travis-tool.sh run_tests
