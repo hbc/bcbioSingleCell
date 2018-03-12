@@ -6,8 +6,8 @@
 \usage{
 loadSingleCell(uploadDir, sampleMetadataFile = NULL,
   interestingGroups = "sampleName", gtfFile = NULL, annotable = TRUE,
-  organism = NULL, ensemblVersion = NULL, genomeBuild = NULL,
-  prefilter = TRUE, ...)
+  organism, ensemblVersion = NULL, genomeBuild = NULL, prefilter = TRUE,
+  ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -22,24 +22,24 @@ inDrop). Consult the GitHub repo for examples and additional information.}
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
-\item{gtfFile}{\emph{Optional but recommended}. GTF (Gene Transfer Format) file,
-which will be used for gene-to-symbol (\code{gene2symbol}) and
-transcript-to-gene (\code{tx2gene}) annotation mappings.}
+\item{gtfFile}{\emph{Optional.} GTF (Gene Transfer Format) file, which will be
+used for gene-to-symbol (\code{gene2symbol}) and transcript-to-gene (\code{tx2gene})
+annotation mappings.}
 
-\item{annotable}{User-defined gene annotations (a.k.a.
-"annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
-be left set to \code{TRUE}. By default, the function will automatically generate
-an annotable from the annotations available on Ensembl. If set \code{FALSE},
-then \code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
-empty. This is recommended for projects dealing with genes or transcripts
-that are poorly annotated. Additionally, a manually constructed annotable
-can be passed in as a \link{data.frame}, but this isn't generally recommended.}
+\item{annotable}{User-defined gene annotations (a.k.a. "annotable"), which
+will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should be left set to
+\code{TRUE}. By default, the function will automatically generate an annotable
+from the annotations available on Ensembl. If set \code{FALSE}, then \code{\link[=rowData]{rowData()}}
+inside the resulting \link{bcbioSingleCell} object will be left empty. This is
+recommended for projects dealing with genes or transcripts that are poorly
+annotated. Additionally, a manually constructed annotable can be passed in
+as a \link{data.frame}, but this isn't generally recommended.}
 
-\item{organism}{\emph{Optional.} Organism name. Use the full latin name (e.g.
-"Homo sapiens"), since this will be input downstream to
-AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
-Normally this can be left \code{NULL}, and the function will attempt to detect
-the organism automatically using \code{\link[=detectOrganism]{detectOrganism()}}.}
+\item{organism}{Organism name. Use the full latin name (e.g. "Homo sapiens"),
+since this will be input downstream to AnnotationHub/ensembldb. If set,
+this genome must be supported on Ensembl. Normally this can be left \code{NULL},
+and the function will attempt to detect the organism automatically using
+\code{\link[=detectOrganism]{detectOrganism()}}.}
 
 \item{ensemblVersion}{\emph{Optional.} Ensembl release version. If \code{NULL},
 defaults to current release, and does not typically need to be
@@ -74,7 +74,9 @@ uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
 sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
 bcb <- loadSingleCell(
     uploadDir = uploadDir,
-    sampleMetadataFile = sampleMetadataFile)
+    sampleMetadataFile = sampleMetadataFile,
+    organism = "Homo sapiens"
+)
 print(bcb)
 }
 \author{

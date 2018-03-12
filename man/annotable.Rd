@@ -7,12 +7,12 @@
 \alias{annotable,seurat-method}
 \title{Ensembl Annotations}
 \usage{
-\S4method{annotable}{bcbioSingleCell}(object)
+\S4method{annotable}{bcbioSingleCell}(...)
 
-\S4method{annotable}{seurat}(object)
+\S4method{annotable}{seurat}(...)
 }
 \arguments{
-\item{object}{Object.}
+\item{...}{Additional arguments.}
 }
 \value{
 \link{data.frame}
