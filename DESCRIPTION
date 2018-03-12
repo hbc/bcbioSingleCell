@@ -51,6 +51,7 @@ Imports:
     BiocGenerics,
     BiocParallel,
     DESeq2 (>= 1.18.0),
+    GenomicFeatures,
     Matrix (>= 1.0),
     Matrix.utils,
     S4Vectors,
