@@ -40,7 +40,7 @@ NULL
 #'   `object@data.info`.
 #'
 #' @importFrom basejump camel
-#' @importFrom dplyr distinct mutate_if select_if
+#' @importFrom dplyr mutate_if select_if
 #' @importFrom tibble remove_rownames
 .sampleData.seurat <- function(metadata) {  # nolint
     # Assign the required metadata columns from `orig.ident`, if necessary
@@ -63,7 +63,7 @@ NULL
         .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
         mutate_if(is.character, as.factor) %>%
         select_if(is.factor) %>%
-        distinct() %>%
+        unique() %>%
         camel(strict = FALSE)
 
     # Check for failure to make rows distinct (by `sampleName`)
@@ -131,7 +131,7 @@ setMethod(
                     sampleNameAggregate = NULL
                 ) %>%
                 select(unique(c(metadataPriorityCols, interestingGroups))) %>%
-                distinct()
+                unique()
             if (!identical(nrow(metadata), expected)) {
                 abort("Failed to aggregate sample metadata uniquely")
             }

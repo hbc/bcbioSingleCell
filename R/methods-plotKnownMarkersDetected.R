@@ -26,7 +26,6 @@ NULL
 # Constructors =================================================================
 #' @importFrom basejump markdownHeader
 #' @importFrom dplyr pull
-#' @importFrom stats na.omit
 #' @importFrom viridis scale_color_viridis
 .plotKnownMarkersDetected <- function(
     object,

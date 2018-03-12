@@ -28,7 +28,7 @@ NULL
 
 # Constructors =================================================================
 #' @importFrom basejump camel
-#' @importFrom dplyr arrange everything group_by left_join mutate rename select
+#' @importFrom dplyr arrange everything group_by left_join mutate select
 #' @importFrom rlang !! sym
 #' @importFrom tibble as_tibble remove_rownames
 .sanitizeMarkersSeurat <- function(
@@ -53,21 +53,21 @@ NULL
     # Rename specific columns prior to camelCase
     if ("gene" %in% colnames(markers)) {
         inform("Renaming `gene` column to `symbol`")
-        markers <- rename(markers, symbol = .data[["gene"]])
+        markers <- dplyr::rename(markers, symbol = .data[["gene"]])
     }
     if ("p_val" %in% colnames(markers)) {
         inform(paste(
             "Renaming `p_val` column to `pvalue`",
             "(matching DESeq2)"
         ))
-        markers <- rename(markers, pvalue = .data[["p_val"]])
+        markers <- dplyr::rename(markers, pvalue = .data[["p_val"]])
     }
     if ("p_val_adj" %in% colnames(markers)) {
         inform(paste(
             "Renaming `p_val_adj` column to `padj`",
             "(matching DESeq2)"
         ))
-        markers <- rename(markers, padj = .data[["p_val_adj"]])
+        markers <- dplyr::rename(markers, padj = .data[["p_val_adj"]])
     }
 
     # Sanitize column names into lowerCamelCase

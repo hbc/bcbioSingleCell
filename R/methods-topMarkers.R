@@ -29,7 +29,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr arrange filter slice
+#' @importFrom dplyr arrange filter
 #' @importFrom rlang !! sym
 .topMarkers <- function(
     object,
@@ -69,7 +69,7 @@ NULL
         # Arrange by P value
         arrange(!!sym("pvalue")) %>%
         # Take the top rows by using slice
-        slice(1L:n)
+        dplyr::slice(1L:n)
 }
 
 

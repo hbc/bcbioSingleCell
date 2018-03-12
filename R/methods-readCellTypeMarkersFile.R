@@ -24,7 +24,7 @@ NULL
 
 # Constructors =================================================================
 #' @importFrom basejump camel readFileByExtension
-#' @importFrom dplyr arrange distinct left_join
+#' @importFrom dplyr arrange left_join
 #' @importFrom rlang !!! !! sym syms
 #' @importFrom tibble as_tibble
 .readCellTypeMarkersFile <- function(object, gene2symbol) {
@@ -69,7 +69,7 @@ NULL
         as_tibble() %>%
         .[!is.na(.[["ensgene"]]), ] %>%
         .[, c("cell", "symbol", "ensgene")] %>%
-        distinct() %>%
+        unique() %>%
         group_by(!!sym("cell")) %>%
         arrange(!!!syms(c("cell", "symbol")))
 }

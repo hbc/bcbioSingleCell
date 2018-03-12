@@ -8,7 +8,6 @@
 #' @noRd
 #'
 #' @importFrom ggplot2 aes_string geom_label
-#' @importFrom S4Vectors aggregate
 #'
 #' @return ggplot2 `geom_label`.
 .medianLabels <- function(metrics, medianCol, digits = 0L) {
@@ -23,7 +22,7 @@
     # Add `sampleNameAggregate` column for facet wrapping, if necessary
     if ("sampleNameAggregate" %in% colnames(metrics)) {
         sampleFacet <- metrics[, c("sampleName", "sampleNameAggregate")] %>%
-        distinct()
+        unique()
         data <- left_join(data, sampleFacet, by = "sampleName")
     }
 
