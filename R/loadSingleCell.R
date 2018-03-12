@@ -63,7 +63,9 @@
 #' sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
 #' bcb <- loadSingleCell(
 #'     uploadDir = uploadDir,
-#'     sampleMetadataFile = sampleMetadataFile)
+#'     sampleMetadataFile = sampleMetadataFile,
+#'     organism = "Homo sapiens"
+#' )
 #' print(bcb)
 loadSingleCell <- function(
     uploadDir,
@@ -221,7 +223,7 @@ loadSingleCell <- function(
             ))
         }
     }
-    assert_are_identical(rownames(sampleMetadata), names(sampleDirs))
+    assert_is_subset(rownames(sampleMetadata), names(sampleDirs))
 
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
@@ -234,8 +236,7 @@ loadSingleCell <- function(
     if (nrow(sampleMetadata) < length(sampleDirs)) {
         inform("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
-        sampleDirs <- sampleDirs %>%
-            .[names(sampleDirs) %in% rownames(sampleMetadata)]
+        sampleDirs <- sampleDirs[rownames(sampleMetadata)]
         inform(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
