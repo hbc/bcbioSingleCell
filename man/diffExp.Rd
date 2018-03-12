@@ -74,7 +74,7 @@ lrt <- diffExp(
     maxit = 100L)
 lrt$table \%>\%
     as_tibble() \%>\%
-    rownames_to_column("symbol") \%>\%
+    rownames_to_column("geneName") \%>\%
     arrange(padjFilter) \%>\%
     head()
 }

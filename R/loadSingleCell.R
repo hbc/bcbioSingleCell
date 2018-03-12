@@ -6,7 +6,7 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump camel detectOrganism ensembl readYAML
+#' @importFrom basejump camel ensembl readYAML
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
 #'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
 #' @importFrom GenomicFeatures exonsBy makeTxDbFromGFF
@@ -26,33 +26,27 @@
 #' @param interestingGroups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
-#' @param organism *Optional.* Organism name. Use the full latin name (e.g.
-#'   "Homo sapiens"), since this will be input downstream to
-#'   AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
-#'   Normally this can be left `NULL`, and the function will attempt to detect
-#'   the organism automatically using [detectOrganism()].
+#' @param organism Organism name. Use the full latin name (e.g. "Homo sapiens").
+#'   By default, this will be passed to AnnotationHub and ensembldb to obtain
+#'   pre-built annotations, unless `gffFile` is set.
+#' @param genomeBuild *Optional.* Ensembl genome build name (e.g. "GRCh38").
+#'   Included in database query to AnnotationHub, unless `gffFile` is set.
 #' @param ensemblRelease *Optional.* Ensembl release version. If `NULL`,
-#'   defaults to current release, and does not typically need to be
-#'   user-defined. This parameter can be useful for matching Ensembl annotations
-#'   against an outdated bcbio annotation build.
-#' @param genomeBuild *Optional.* Genome build. Normally this can be left `NULL`
-#'   and the build will be detected from the bcbio run data. This can be set
-#'   manually (e.g. "hg19" for the older *Homo sapiens* reference genome). Note
-#'   that this must match the genome build identifier on Ensembl for annotations
-#'   to download correctly.
-#' @param isSpike *Optional.* Gene names corresponding to FASTA spike-in
-#'   sequences (e.g. ERCCs, EGFP, TDTOMATO).
-#' @param gffFile *Optional.* By default, we recommend leaving this `NULL` for
-#'   genomes that are supported on Ensembl. In this case, the row annotations
-#'   ([rowRanges()]) will be obtained automatically from Ensembl using
-#'   AnnotationHub and ensembldb. Internally, they are stored as genomic ranges
-#'   (`GRanges`). Additionally, these annotations are accessible as a
+#'   defaults to current release available through AnnotationHub/ensembldb.
+#'   Only applies unless `gffFile` is set.
+#' @param gffFile *Optional, not recommended.* By default, we recommend leaving
+#'   this `NULL` for genomes that are supported on Ensembl. In this case, the
+#'   row annotations ([rowRanges()]) will be obtained automatically from Ensembl
+#'   using AnnotationHub and ensembldb. Internally, they are stored as genomic
+#'   ranges (`GRanges`). Additionally, these annotations are accessible as a
 #'   `data.frame` via the [rowData()] function. For a genome that is not
 #'   supported on Ensembl or AnnotationHub, a GFF/GTF (General Feature Format)
 #'   file is required. Generally, we recommend using a GTF (GFFv2) file here
 #'   over a GFF3 file, although both formats are supported. The function will
 #'   internally generate a `TxDb` containing transcript-to-gene mappings and
 #'   construct a `GRanges` object containing the genomic ranges ([rowRanges()]).
+#' @param isSpike *Optional.* Gene names corresponding to FASTA spike-in
+#'   sequences (e.g. ERCCs, EGFP, TDTOMATO).
 #' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
@@ -71,11 +65,11 @@ loadSingleCell <- function(
     uploadDir,
     sampleMetadataFile = NULL,
     interestingGroups = "sampleName",
-    organism = NULL,
-    ensemblRelease = NULL,
+    organism,
     genomeBuild = NULL,
-    isSpike = NULL,
+    ensemblRelease = NULL,
     gffFile = NULL,
+    isSpike = NULL,
     prefilter = TRUE,
     ...
 ) {
@@ -85,8 +79,8 @@ loadSingleCell <- function(
     assertIsAStringOrNULL(sampleMetadataFile)
     assert_is_character(interestingGroups)
     assertIsAStringOrNULL(organism)
-    assertIsAnImplicitIntegerOrNULL(ensemblRelease)
     assertIsAStringOrNULL(genomeBuild)
+    assertIsAnImplicitIntegerOrNULL(ensemblRelease)
     assertIsCharacterOrNULL(isSpike)
     assertIsAStringOrNULL(gffFile)
     if (is_a_string(gffFile)) {
@@ -210,39 +204,6 @@ loadSingleCell <- function(
     programVersions <- readProgramVersions(
         file.path(projectDir, "programs.txt")
     )
-
-    # Detect genome build
-    if (!is_a_string(genomeBuild)) {
-        if (is.data.frame(dataVersions)) {
-            genomeBuild <- dataVersions %>%
-                .[.[["resource"]] == "transcripts", "genome", drop = TRUE]
-        } else {
-            # Data versions aren't saved when using a custom FASTA
-            genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
-            assert_any_are_matching_regex(bcbioCommandsLog, genomePattern)
-            genomeBuild <- str_match(
-                string = bcbioCommandsLog,
-                pattern = genomePattern
-            ) %>%
-                .[, 2L] %>%
-                na.omit() %>%
-                unique()
-        }
-    }
-    assert_is_a_string(genomeBuild)
-
-    # Detect organism
-    if (!is_a_string(organism)) {
-        assert_is_a_string(genomeBuild)
-        organism <- detectOrganism(genomeBuild)
-    }
-    assert_is_a_string(organism)
-
-    inform(paste(
-        paste("Organism:", organism),
-        paste("Genome build:", genomeBuild),
-        sep = "\n"
-    ))
 
     # Molecular barcode (UMI) type =============================================
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
@@ -404,7 +365,7 @@ loadSingleCell <- function(
         "interestingGroups" = interestingGroups,
         "cell2sample" = cell2sample,
         "organism" = organism,
-        "genomeBuild" = genomeBuild,
+        "genomeBuild" = as.character(genomeBuild),
         "ensemblRelease" = as.integer(ensemblRelease),
         "annotationHub" = as.list(ahMeta),
         "gffFile" = as.character(gffFile),

@@ -5,9 +5,9 @@
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
 loadSingleCell(uploadDir, sampleMetadataFile = NULL,
-  interestingGroups = "sampleName", organism = NULL,
-  ensemblRelease = NULL, genomeBuild = NULL, isSpike = NULL,
-  gffFile = NULL, prefilter = TRUE, ...)
+  interestingGroups = "sampleName", organism, genomeBuild = NULL,
+  ensemblRelease = NULL, gffFile = NULL, isSpike = NULL,
+  prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -22,37 +22,31 @@ inDrop). Consult the GitHub repo for examples and additional information.}
 is used for plot colors during quality control (QC) analysis. Entire vector
 is used for PCA and heatmap QC functions.}
 
-\item{organism}{\emph{Optional.} Organism name. Use the full latin name (e.g.
-"Homo sapiens"), since this will be input downstream to
-AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
-Normally this can be left \code{NULL}, and the function will attempt to detect
-the organism automatically using \code{\link[=detectOrganism]{detectOrganism()}}.}
+\item{organism}{Organism name. Use the full latin name (e.g. "Homo sapiens").
+By default, this will be passed to AnnotationHub and ensembldb to obtain
+pre-built annotations, unless \code{gffFile} is set.}
+
+\item{genomeBuild}{\emph{Optional.} Ensembl genome build name (e.g. "GRCh38").
+Included in database query to AnnotationHub, unless \code{gffFile} is set.}
 
 \item{ensemblRelease}{\emph{Optional.} Ensembl release version. If \code{NULL},
-defaults to current release, and does not typically need to be
-user-defined. This parameter can be useful for matching Ensembl annotations
-against an outdated bcbio annotation build.}
+defaults to current release available through AnnotationHub/ensembldb.
+Only applies unless \code{gffFile} is set.}
 
-\item{genomeBuild}{\emph{Optional.} Genome build. Normally this can be left \code{NULL}
-and the build will be detected from the bcbio run data. This can be set
-manually (e.g. "hg19" for the older \emph{Homo sapiens} reference genome). Note
-that this must match the genome build identifier on Ensembl for annotations
-to download correctly.}
-
-\item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
-sequences (e.g. ERCCs, EGFP, TDTOMATO).}
-
-\item{gffFile}{\emph{Optional.} By default, we recommend leaving this \code{NULL} for
-genomes that are supported on Ensembl. In this case, the row annotations
-(\code{\link[=rowRanges]{rowRanges()}}) will be obtained automatically from Ensembl using
-AnnotationHub and ensembldb. Internally, they are stored as genomic ranges
-(\code{GRanges}). Additionally, these annotations are accessible as a
+\item{gffFile}{\emph{Optional, not recommended.} By default, we recommend leaving
+this \code{NULL} for genomes that are supported on Ensembl. In this case, the
+row annotations (\code{\link[=rowRanges]{rowRanges()}}) will be obtained automatically from Ensembl
+using AnnotationHub and ensembldb. Internally, they are stored as genomic
+ranges (\code{GRanges}). Additionally, these annotations are accessible as a
 \code{data.frame} via the \code{\link[=rowData]{rowData()}} function. For a genome that is not
 supported on Ensembl or AnnotationHub, a GFF/GTF (General Feature Format)
 file is required. Generally, we recommend using a GTF (GFFv2) file here
 over a GFF3 file, although both formats are supported. The function will
 internally generate a \code{TxDb} containing transcript-to-gene mappings and
 construct a \code{GRanges} object containing the genomic ranges (\code{\link[=rowRanges]{rowRanges()}}).}
+
+\item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
+sequences (e.g. ERCCs, EGFP, TDTOMATO).}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 
