@@ -47,10 +47,3 @@ test_that("Match failure", {
         "sampleID metadata column doesn't contain XXX"
     )
 })
-
-test_that("Stop on unfiltered object", {
-    expect_error(
-        selectSamples(bcb, interestingGroups = "homozygote"),
-        "`filterCells\\(\\)` hasn't been applied to this dataset"
-    )
-})

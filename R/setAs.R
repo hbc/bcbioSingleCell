@@ -81,11 +81,10 @@ NULL
 #'
 #' @return [seurat] object.
 .coerceToSeurat <- function(from) {
-    # Require that technical replicates are aggregated
+    # Warn user about technical replicates
     if ("sampleNameAggregate" %in% colnames(sampleMetadata(from))) {
-        abort(paste(
-            "`aggregateReplicates()` required",
-            "to merge technical replicates prior to seurat coercion"
+        warn(paste(
+            "Use `aggregateReplicates()` to merge technical replicates"
         ))
     }
 

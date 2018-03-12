@@ -6,7 +6,9 @@ sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
 
 bcb <- loadSingleCell(
     uploadDir = uploadDir,
-    sampleMetadataFile = sampleMetadataFile)
+    sampleMetadataFile = sampleMetadataFile,
+    organism = "Homo sapiens"
+)
 
 slotNames(bcb)
 names(assay(bcb))

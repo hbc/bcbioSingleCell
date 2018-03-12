@@ -6,9 +6,6 @@ load(system.file(
 load(system.file(
     file.path("extdata", "filtered.rda"),
     package = "bcbioSingleCell"))
-load(system.file(
-    file.path("extdata", "pooled.rda"),
-    package = "bcbioSingleCell"))
 
 test_that("Coerce bcbioSingleCell to seurat", {
     seurat <- as(filtered, "seurat")
@@ -30,17 +27,13 @@ test_that("Coerce bcbioSingleCell to seurat", {
     )
 })
 
-test_that("Require technical replicate aggregation", {
-    expect_error(
+test_that("Expected warnings", {
+    expect_warning(
         as(bcb, "seurat"),
-        paste("`aggregateReplicates\\(\\)` required to merge",
-              "technical replicates prior to seurat coercion")
+        "Use `aggregateReplicates\\(\\)` to merge technical replicates"
     )
-})
-
-test_that("Require filtered counts", {
-    expect_error(
-        as(pooled, "seurat"),
-        "`filterCells\\(\\)` hasn't been applied to this dataset"
+    expect_warning(
+        as(bcb, "seurat"),
+        "Use `filterCells\\(\\)` to apply filtering cutoffs"
     )
 })

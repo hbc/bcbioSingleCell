@@ -22,14 +22,14 @@ with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop). Consult the GitHub repo for examples and additional information.}
 
-\item{annotable}{User-defined gene annotations (a.k.a.
-"annotable"), which will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should
-be left set to \code{TRUE}. By default, the function will automatically generate
-an annotable from the annotations available on Ensembl. If set \code{FALSE},
-then \code{\link[=rowData]{rowData()}} inside the resulting \link{bcbioSingleCell} object will be left
-empty. This is recommended for projects dealing with genes or transcripts
-that are poorly annotated. Additionally, a manually constructed annotable
-can be passed in as a \link{data.frame}, but this isn't generally recommended.}
+\item{annotable}{User-defined gene annotations (a.k.a. "annotable"), which
+will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should be left set to
+\code{TRUE}. By default, the function will automatically generate an annotable
+from the annotations available on Ensembl. If set \code{FALSE}, then \code{\link[=rowData]{rowData()}}
+inside the resulting \link{bcbioSingleCell} object will be left empty. This is
+recommended for projects dealing with genes or transcripts that are poorly
+annotated. Additionally, a manually constructed annotable can be passed in
+as a \link{data.frame}, but this isn't generally recommended.}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 

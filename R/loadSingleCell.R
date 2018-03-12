@@ -6,8 +6,8 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
-#'   readGTF readYAML tx2geneFromGTF
+#' @importFrom basejump annotable assertIsAnnotable camel detectOrganism
+#'   gene2symbolFromGTF readGTF readYAML tx2geneFromGTF
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
 #'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
 #' @importFrom Matrix cBind
@@ -26,22 +26,22 @@
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
 #' @param prefilter Prefilter counts prior to quality control analysis.
-#' @param gtfFile *Optional but recommended*. GTF (Gene Transfer Format) file,
-#'   which will be used for gene-to-symbol (`gene2symbol`) and
-#'   transcript-to-gene (`tx2gene`) annotation mappings.
-#' @param annotable User-defined gene annotations (a.k.a.
-#'   "annotable"), which will be slotted into [rowData()]. Typically this should
-#'   be left set to `TRUE`. By default, the function will automatically generate
-#'   an annotable from the annotations available on Ensembl. If set `FALSE`,
-#'   then [rowData()] inside the resulting [bcbioSingleCell] object will be left
-#'   empty. This is recommended for projects dealing with genes or transcripts
-#'   that are poorly annotated. Additionally, a manually constructed annotable
-#'   can be passed in as a [data.frame], but this isn't generally recommended.
-#' @param organism *Optional.* Organism name. Use the full latin name (e.g.
-#'   "Homo sapiens"), since this will be input downstream to
-#'   AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
-#'   Normally this can be left `NULL`, and the function will attempt to detect
-#'   the organism automatically using [detectOrganism()].
+#' @param gtfFile *Optional.* GTF (Gene Transfer Format) file, which will be
+#'   used for gene-to-symbol (`gene2symbol`) and transcript-to-gene (`tx2gene`)
+#'   annotation mappings.
+#' @param annotable User-defined gene annotations (a.k.a. "annotable"), which
+#'   will be slotted into [rowData()]. Typically this should be left set to
+#'   `TRUE`. By default, the function will automatically generate an annotable
+#'   from the annotations available on Ensembl. If set `FALSE`, then [rowData()]
+#'   inside the resulting [bcbioSingleCell] object will be left empty. This is
+#'   recommended for projects dealing with genes or transcripts that are poorly
+#'   annotated. Additionally, a manually constructed annotable can be passed in
+#'   as a [data.frame], but this isn't generally recommended.
+#' @param organism Organism name. Use the full latin name (e.g. "Homo sapiens"),
+#'   since this will be input downstream to AnnotationHub/ensembldb. If set,
+#'   this genome must be supported on Ensembl. Normally this can be left `NULL`,
+#'   and the function will attempt to detect the organism automatically using
+#'   [detectOrganism()].
 #' @param ensemblVersion *Optional.* Ensembl release version. If `NULL`,
 #'   defaults to current release, and does not typically need to be
 #'   user-defined. This parameter can be useful for matching Ensembl annotations
@@ -63,7 +63,9 @@
 #' sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
 #' bcb <- loadSingleCell(
 #'     uploadDir = uploadDir,
-#'     sampleMetadataFile = sampleMetadataFile)
+#'     sampleMetadataFile = sampleMetadataFile,
+#'     organism = "Homo sapiens"
+#' )
 #' print(bcb)
 loadSingleCell <- function(
     uploadDir,
@@ -71,7 +73,7 @@ loadSingleCell <- function(
     interestingGroups = "sampleName",
     gtfFile = NULL,
     annotable = TRUE,
-    organism = NULL,
+    organism,
     ensemblVersion = NULL,
     genomeBuild = NULL,
     prefilter = TRUE,
@@ -89,7 +91,7 @@ loadSingleCell <- function(
     if (is.data.frame(annotable)) {
         assertIsAnnotable(annotable)
     }
-    assertIsAStringOrNULL(organism)
+    assert_is_a_string(organism)
     assertIsAnImplicitIntegerOrNULL(ensemblVersion)
     assertIsAStringOrNULL(genomeBuild)
     assert_is_a_bool(prefilter)
@@ -102,7 +104,7 @@ loadSingleCell <- function(
         pattern = projectDirPattern,
         full.names = FALSE,
         recursive = FALSE)
-    assert_is_of_length(projectDir, 1L)
+    assert_is_a_string(projectDir)
     inform(projectDir)
     match <- str_match(projectDir, projectDirPattern)
     runDate <- as.Date(match[[2L]])
@@ -184,37 +186,6 @@ loadSingleCell <- function(
     programs <- readProgramVersions(
         file.path(projectDir, "programs.txt"))
 
-    # Detect genome build
-    if (!is_a_string(genomeBuild)) {
-        if (is.data.frame(dataVersions)) {
-            genomeBuild <- dataVersions %>%
-                .[.[["resource"]] == "transcripts", "genome", drop = TRUE]
-        } else {
-            # Data versions aren't saved when using a custom FASTA
-            genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
-            assert_any_are_matching_regex(bcbioCommandsLog, genomePattern)
-            genomeBuild <- str_match(
-                bcbioCommandsLog, genomePattern) %>%
-                .[, 2L] %>%
-                na.omit() %>%
-                unique()
-        }
-    }
-    assert_is_a_string(genomeBuild)
-
-    # Detect organism
-    if (!is_a_string(organism)) {
-        assert_is_a_string(genomeBuild)
-        organism <- detectOrganism(genomeBuild)
-    }
-    assert_is_a_string(organism)
-
-    inform(paste(
-        paste("Organism:", organism),
-        paste("Genome build:", genomeBuild),
-        sep = "\n"
-    ))
-
     # Molecular barcode (UMI) type =============================================
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
     assert_any_are_matching_regex(bcbioCommandsLog, umiPattern)
@@ -252,7 +223,7 @@ loadSingleCell <- function(
             ))
         }
     }
-    assert_are_identical(rownames(sampleMetadata), names(sampleDirs))
+    assert_is_subset(rownames(sampleMetadata), names(sampleDirs))
 
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
@@ -265,8 +236,7 @@ loadSingleCell <- function(
     if (nrow(sampleMetadata) < length(sampleDirs)) {
         inform("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
-        sampleDirs <- sampleDirs %>%
-            .[names(sampleDirs) %in% rownames(sampleMetadata)]
+        sampleDirs <- sampleDirs[rownames(sampleMetadata)]
         inform(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
@@ -278,13 +248,17 @@ loadSingleCell <- function(
         annotable <- annotable(
             organism,
             genomeBuild = genomeBuild,
-            release = ensemblVersion,
-            uniqueSymbol = FALSE)
+            release = ensemblVersion)
     } else if (is.data.frame(annotable)) {
         annotable <- annotable(annotable)
     } else {
         warn("Loading run without gene annotations")
         annotable <- NULL
+    }
+
+    # Check annotable integrity
+    if (is.data.frame(annotable)) {
+        assertIsAnnotable(annotable)
     }
 
     # GTF annotations
@@ -307,9 +281,10 @@ loadSingleCell <- function(
     if (is_a_string(gtfFile)) {
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else if (is.data.frame(annotable)) {
+        assert_is_subset(c("ensgene", "symbol"), colnames(annotable))
         gene2symbol <- annotable[, c("ensgene", "symbol")]
     } else {
-        abort("Loading run without gene-to-symbol mappings (not recommended)")
+        warn("Loading run without gene-to-symbol mappings (not recommended)")
         gene2symbol <- NULL
     }
 

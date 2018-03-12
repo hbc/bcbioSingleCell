@@ -5,6 +5,7 @@
 #'
 #' @importFrom assertive assert_all_are_dirs
 #' @importFrom assertive assert_all_are_existing_files
+#' @importFrom assertive assert_all_are_matching_regex
 #' @importFrom assertive assert_all_are_positive
 #' @importFrom assertive assert_any_are_matching_regex
 #' @importFrom assertive assert_are_identical
@@ -16,6 +17,7 @@
 #' @importFrom assertive assert_is_character
 #' @importFrom assertive assert_is_data.frame
 #' @importFrom assertive assert_is_factor
+#' @importFrom assertive assert_is_list
 #' @importFrom assertive assert_is_non_empty
 #' @importFrom assertive assert_is_of_length
 #' @importFrom assertive assert_is_subset
