@@ -1,9 +1,9 @@
 .checkFilterParams <- function(object) {
     params <- metadata(object)[["filterParams"]]
 
-    # Warn and early return on unfiltered dataset
+    # Abort on NULL params
     if (is.null(params)) {
-        return(warn("`filterCells()` hasn't been applied to this dataset"))
+        abort("`filterCells()` hasn't been applied to this dataset")
     }
 
     # `filterParams` metadata was stored as a named numeric vector up until
