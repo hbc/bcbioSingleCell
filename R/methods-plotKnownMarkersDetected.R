@@ -49,7 +49,7 @@ NULL
         cellType <- cellTypes[[a]]
         genes <- knownMarkersDetected %>%
             .[.[["cell"]] == cellType, ] %>%
-            pull("symbol") %>%
+            pull("geneName") %>%
             unique() %>%
             na.omit()
         if (is.null(genes)) return(NULL)

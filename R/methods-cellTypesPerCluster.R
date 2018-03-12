@@ -36,15 +36,11 @@ NULL
         "avgLogFC",  # Seurat v2.1
         "cell",      # bcbio
         "cluster",   # Seurat
-        "ensgene",   # bcbio
-        "padj",      # Seurat v2.1
-        "symbol"     # bcbio
+        "geneID",    # bcbio
+        "geneName",  # bcbio
+        "padj"       # Seurat v2.1
     )
-    if (!all(requiredCols %in% colnames(object))) {
-        abort(paste(
-            "Required columns:", toString(sort(requiredCols))
-        ))
-    }
+    assert_is_subset(requiredCols, colnames(object))
     groupCols <- syms(c("cluster", "cell"))
 
     tbl <- object %>%
@@ -57,8 +53,8 @@ NULL
         summarize(
             n = n(),
             # Genes are arranged by P value
-            symbol = toString(.data[["symbol"]]),
-            ensgene = toString(.data[["ensgene"]])
+            geneID = toString(.data[["geneID"]]),
+            geneName = toString(.data[["geneName"]])
         ) %>%
         group_by(!!sym("cluster")) %>%
         arrange(desc(.data[["n"]]), .by_group = TRUE)
@@ -71,7 +67,9 @@ NULL
         tbl <- filter(tbl, .data[["n"]] <= max)
 
     }
-    if (!nrow(tbl)) return(NULL)
+    if (!nrow(tbl)) {
+        return(NULL)
+    }
 
     tbl
 }

@@ -1,6 +1,6 @@
 context("gene2symbol")
 
-colnames <- c("ensgene", "symbol")
+colnames <- c("geneID", "geneName")
 
 test_that("bcbioSingleCell", {
     data <- gene2symbol(bcb)

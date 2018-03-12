@@ -60,7 +60,7 @@ NULL
     # Obtain detected coding and mitochondrial genes, using rowData
     codingGenesDetected <- rowData %>%
         filter(.data[["broadClass"]] == "coding") %>%
-        pull("ensgene")
+        pull("geneID")
     if (!length(codingGenesDetected)) {
         abort("No coding genes detected")
     }
@@ -70,7 +70,7 @@ NULL
     ))
     mitoGenesDetected <- rowData %>%
         filter(.data[["broadClass"]] == "mito") %>%
-        pull("ensgene")
+        pull("geneID")
     if (!length(mitoGenesDetected)) {
         abort("No mitochondrial genes detected")
     }

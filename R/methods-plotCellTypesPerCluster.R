@@ -68,7 +68,7 @@ NULL
                 .[.[["cluster"]] == cluster, , drop = FALSE]
         lapply(seq_len(nrow(subset)), function(b) {
             cellType <- subset[b, , drop = FALSE]
-            genes <- pull(cellType, "symbol") %>%
+            genes <- pull(cellType, "geneName") %>%
                 strsplit(", ") %>%
                 .[[1L]]
             title <- pull(cellType, "cell")

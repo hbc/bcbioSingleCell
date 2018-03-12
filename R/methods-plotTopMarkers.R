@@ -45,10 +45,10 @@ NULL
     clusters <- levels(topMarkers[["cluster"]])
     list <- pblapply(seq_along(clusters), function(a) {
         cluster <- clusters[[a]]
-        # We're matching against the `symbol` column here
+        # We're matching against the `geneName` column here
         genes <- topMarkers %>%
             as.data.frame() %>%
-            .[.[["cluster"]] == cluster, "symbol", drop = TRUE]
+            .[.[["cluster"]] == cluster, "geneName", drop = TRUE]
         if (!length(genes)) return(invisible())
         if (length(genes) > 10L) {
             warn("Maximum of 10 genes per cluster is recommended")

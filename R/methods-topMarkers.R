@@ -52,7 +52,7 @@ NULL
     }
     if (isTRUE(coding)) {
         object <- object %>%
-            filter(.data[["biotype"]] == "protein_coding") %>%
+            filter(.data[["geneBiotype"]] == "protein_coding") %>%
             # Remove additional genes annotated as "predicted" in description
             filter(!grepl(
                 x = .data[["description"]], pattern = "^predicted\\s"

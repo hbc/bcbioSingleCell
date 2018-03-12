@@ -9,14 +9,15 @@ test_that("Mus musculus", {
         cellTypeMarkersFile,
         gene2symbol = gene2symbol)
     group <- group_vars(data)
-    expect_identical(group, "cell")
+    expect_identical(group, "cellType")
     expect_identical(
         data[1L, ],
+        # TODO Switch to cellType
         tibble(
-            "cell" = "B Cell",
-            "symbol" = "Blnk",
-            "ensgene" = "ENSMUSG00000061132"
+            "cellType" = "B Cell",
+            "geneID" = "ENSMUSG00000061132",
+            "geneName" = "Blnk",
         ) %>%
-            group_by(.data[["cell"]])
+            group_by(.data[["cellType"]])
     )
 })

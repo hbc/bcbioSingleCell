@@ -5,7 +5,7 @@ test_that("plotCellTypesPerCluster", {
     x <- cellTypesPerCluster(known_markers_detected) %>%
         .[1L, , drop = FALSE]
     expect_identical(
-        x[["symbol"]],
+        x[["geneName"]],
         "NCAM1"
     )
     p <- plotCellTypesPerCluster(

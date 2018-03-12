@@ -26,11 +26,11 @@
     # Detect and handle missing transcript identifiers. These are typically
     # deprecated transcripts in the current Ensembl release, or FASTA
     # spike-in sequences (e.g. EGFP, GAL4). We don't want to simply trash here.
-    if (!all(rownames(tx2gene) %in% tx2gene[["enstxp"]])) {
+    if (!all(rownames(tx2gene) %in% tx2gene[["txID"]])) {
         match <- tx2gene %>%
-            .[!is.na(.[["enstxp"]]), , drop = FALSE]
+            .[!is.na(.[["txID"]]), , drop = FALSE]
         missing <- tx2gene %>%
-            .[is.na(.[["enstxp"]]), , drop = FALSE] %>%
+            .[is.na(.[["txID"]]), , drop = FALSE] %>%
             rownames()
         if (length(missing) > 200L) {
             abort(paste(length(missing), "missing transcripts in tx2gene."))
@@ -42,8 +42,8 @@
         ))
         # Warn and append unmatched transcripts as genes
         remap <- data.frame(
-            enstxp = missing,
-            ensgene = missing,
+            "txID" = missing,
+            "geneID" = missing,
             row.names = missing,
             stringsAsFactors = FALSE
         ) %>%
@@ -52,12 +52,12 @@
         tx2gene <- remap
     }
 
-    if (!identical(rownames(object), tx2gene[["enstxp"]])) {
+    if (!identical(rownames(object), tx2gene[["txID"]])) {
         abort("Transcript to gene mappings don't match counts matrix rows")
     }
 
     inform("Converting transcript-level counts to gene-level")
-    rownames(object) <- tx2gene[["ensgene"]]
+    rownames(object) <- tx2gene[["geneID"]]
     aggregate.Matrix(
         x = object,
         groupings = rownames(object),

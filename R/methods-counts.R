@@ -44,19 +44,19 @@ NULL
                 .[rownames(counts), , drop = FALSE] %>%
                 set_rownames(rownames(counts))
             matched <- g2s %>%
-                .[!is.na(.[["symbol"]]), , drop = FALSE]
+                .[!is.na(.[["geneName"]]), , drop = FALSE]
             unmatched <- g2s %>%
-                .[is.na(.[["symbol"]]), , drop = FALSE]
+                .[is.na(.[["geneName"]]), , drop = FALSE]
             warn(paste(
                 "Unmatched in gene2symbol:",
                 toString(rownames(unmatched))
             ))
-            unmatched[["ensgene"]] <- rownames(unmatched)
-            unmatched[["symbol"]] <- rownames(unmatched)
+            unmatched[["geneID"]] <- rownames(unmatched)
+            unmatched[["geneName"]] <- rownames(unmatched)
             g2s <- rbind(matched, unmatched)
         }
         g2s <- g2s[rownames(counts), , drop = FALSE]
-        rows <- pull(g2s, "symbol")
+        rows <- pull(g2s, "geneName")
         names(rows) <- rownames(g2s)
         rownames(counts) <- rows
     }

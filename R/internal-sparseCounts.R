@@ -90,10 +90,10 @@
             pull("barcode")
         rownames <- read_tsv(
                 file = rowFile,
-                col_names = c("ensgene", "symbol"),
+                col_names = c("geneID", "geneName"),
                 col_types = "cc"
             ) %>%
-            pull("ensgene")
+            pull("geneID")
     }
 
     # Integrity checks

@@ -21,8 +21,8 @@ pblapply(seq_along(files), function(a) {
     tbl <- lrt %>%
         # DGELRT object slots the data.frame as `table`
         .[["table"]] %>%
-        rownames_to_column("ensgene") %>%
-        left_join(anno, by = "ensgene")
+        rownames_to_column("geneID") %>%
+        left_join(anno, by = "geneID")
     write_csv(tbl, file.path(deDir, paste0(fileStem, ".csv.gz")))
 }) %>%
     invisible()

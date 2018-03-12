@@ -26,15 +26,11 @@ NULL
     if (is.null(rowData)) {
         abort("Object does not contain internal rowData")
     }
-    cols <- c("ensgene", "symbol")
-    if (!all(cols %in% colnames(rowData))) {
-        abort(paste(
-            toString(cols),
-            "missing from internal rowData"
-        ))
-    }
+    cols <- c("geneID", "geneName")
+    assert_is_subset(cols, colnames(rowData))
     rowData[, cols]
 }
+
 
 
 # Methods ======================================================================
@@ -56,20 +52,20 @@ setMethod(
 
         rownames <- slot(object, "data") %>% rownames()
         if (!is.null(names(rownames))) {
-            ensgene <- names(rownames)
-            symbol <- rownames
+            geneID <- names(rownames)
+            geneName <- rownames
             gene2symbol <- data.frame(
-                "ensgene" = ensgene,
-                "symbol" = symbol,
-                row.names = ensgene,
+                "geneID" = geneID,
+                "geneName" = geneName,
+                row.names = geneID,
                 stringsAsFactors = FALSE
             )
             return(gene2symbol)
         }
 
-        warn(paste(
+        abort(paste(
             "seurat object doesn't appear to contain",
-            "Ensembl gene to symbol mappings"
+            "Ensembl gene-to-symbol mappings"
         ))
     }
 )

@@ -70,9 +70,9 @@
             return(FALSE)
         }
     }
-    if (!"ensgene" %in% colnames(object)) {
+    if (!"geneID" %in% colnames(object)) {
         if (isTRUE(stop)) {
-            abort("Object missing `ensgene` column")
+            abort("Object missing `geneID` column")
         } else {
             return(FALSE)
         }
@@ -84,11 +84,11 @@
         # These columns are output in an inconsistent format, so we'll sanitize
         # into lowerCamelCase.
         seuratBlacklist <- c(
-            "avg_diff",   # legacy, now "avg_logFC"
-            "avg_logFC",  # renamed in v2.1
-            "gene",       # gene symbol, we'll rename to "symbol"
-            "p_val",      # we'll rename to pvalue, matching DESeq2
-            "p_val_adj",  # new in v2.1, we'll rename to padj, matching DESeq2
+            "avg_diff",   # Legacy, now "avg_logFC"
+            "avg_logFC",  # Renamed in v2.1
+            "gene",       # Gene symbol, we'll rename to "geneName"
+            "p_val",      # We'll rename to pvalue, matching DESeq2
+            "p_val_adj",  # New in v2.1, we'll rename to padj, matching DESeq2
             "pct.1",
             "pct.2"
         )

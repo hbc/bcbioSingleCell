@@ -4,14 +4,14 @@
 \alias{loadCellRanger}
 \title{Load 10X Genomics Cell Ranger Data}
 \usage{
-loadCellRanger(uploadDir, refdataDir, interestingGroups = "sampleName",
-  sampleMetadataFile = NULL, rowRanges, prefilter = TRUE, ...)
+loadCellRanger(uploadDir, refDataDir, interestingGroups = "sampleName",
+  sampleMetadataFile = NULL, isSpike = NULL, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to Cell Ranger output directory. This directory path
 must contain \code{filtered_gene_bc_matrices*} as a child directory.}
 
-\item{refdataDir}{Directory path to Cell Ranger reference annotation data.}
+\item{refDataDir}{Directory path to Cell Ranger reference annotation data.}
 
 \item{interestingGroups}{Character vector of interesting groups. First entry
 is used for plot colors during quality control (QC) analysis. Entire vector
@@ -22,10 +22,8 @@ with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop). Consult the GitHub repo for examples and additional information.}
 
-\item{rowRanges}{\emph{Required.} Genomic ranges (\code{GRanges}) that match the
-rownames of the counts matrix. If left missing (default), the annotations
-will be obtained automatically fron Ensembl using AnnotationHub and
-ensembldb. These values are also accessible with the \code{\link[=rowData]{rowData()}} function.}
+\item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
+sequences (e.g. ERCCs, EGFP, TDTOMATO).}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 
@@ -45,20 +43,19 @@ optimized for handling Cell Ranger output.
 \note{
 Unlike \code{\link[=loadSingleCell]{loadSingleCell()}}, the \code{organism}, \code{ensemblRelease}, and
 \code{genomeBuild} are always detected automatically, based on the 10X
-\code{refdataDir} YAML metadata. Therefore, these parameters cannot be set by
+\code{refDataDir} YAML metadata. Therefore, these parameters cannot be set by
 the user.
 }
 \examples{
 extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 uploadDir <- file.path(extdataDir, "cellranger")
-refdataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
+refDataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
 sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
-bcb <- loadCellRanger(
+loadCellRanger(
     uploadDir = uploadDir,
-    refdataDir = refdataDir,
+    refDataDir = refDataDir,
     sampleMetadataFile = sampleMetadataFile
 )
-print(bcb)
 }
 \author{
 Michael Steinbaugh

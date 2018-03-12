@@ -326,8 +326,8 @@ loadSingleCell <- function(
             transcripts <- transcripts(txdb, columns = c("tx_name", "gene_id"))
             tx2gene <- mcols(transcripts) %>%
                 as.data.frame() %>%
-                set_colnames(c("enstxp", "ensgene")) %>%
-                set_rownames(.[["enstxp"]])
+                set_colnames(c("txID", "geneID")) %>%
+                set_rownames(.[["txID"]])
         }
     } else {
         # ah = AnnotationHub
@@ -357,7 +357,7 @@ loadSingleCell <- function(
 
     # Check for gene-to-symbol mappings
     assert_is_subset(
-        x = c("ensgene", "symbol"),
+        x = c("geneID", "geneName"),
         y = names(mcols(rowRanges)),
         severity = "warning"
     )

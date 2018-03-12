@@ -31,47 +31,49 @@ NULL
     assertIsGene2symbol(gene2symbol)
     markers <- readFileByExtension(object) %>%
         camel(strict = FALSE)
-
-    # Match the markers file by Ensembl gene identifier, otherwise symbol
-    if ("ensgene" %in% colnames(markers)) {
+        
+    # Match the markers file by Ensembl gene identifier, otherwise use name
+    assert_are_intersecting_sets(
+        x = c("geneID", "geneName"),
+        y = colnames(markers)
+    )
+    if ("geneID" %in% colnames(markers)) {
         inform("Matching by gene identifier")
         markers <- markers %>%
-            .[, c("cell", "ensgene")] %>%
-            .[!is.na(.[["ensgene"]]), , drop = FALSE] %>%
-            left_join(gene2symbol, by = "ensgene")
+            .[, c("cell", "geneID")] %>%
+            .[!is.na(.[["geneID"]]), , drop = FALSE] %>%
+            left_join(gene2symbol, by = "geneID")
         # Check for bad identifiers
-        if (any(is.na(markers[["symbol"]]))) {
+        if (any(is.na(markers[["geneName"]]))) {
             missing <- markers %>%
-                .[is.na(.[["symbol"]]), "ensgene", drop = TRUE] %>%
+                .[is.na(.[["geneName"]]), "geneID", drop = TRUE] %>%
                 sort() %>%
                 unique()
             abort(paste("Invalid genes:", toString(missing)))
         }
-    } else if ("symbol" %in% colnames(markers)) {
-        inform("Matching by gene symbol")
+    } else if ("geneName" %in% colnames(markers)) {
+        inform("Matching by gene name (symbol)")
         markers <- markers %>%
-            .[, c("cell", "symbol")] %>%
-            .[!is.na(.[["symbol"]]), ] %>%
-            left_join(gene2symbol, by = "symbol")
+            .[, c("cell", "geneName")] %>%
+            .[!is.na(.[["geneName"]]), ] %>%
+            left_join(gene2symbol, by = "geneName")
         # Check for bad identifiers
-        if (any(is.na(markers[["ensgene"]]))) {
+        if (any(is.na(markers[["geneID"]]))) {
             missing <- markers %>%
-                .[is.na(.[["ensgene"]]), "symbol", drop = TRUE] %>%
+                .[is.na(.[["geneID"]]), "geneName", drop = TRUE] %>%
                 sort() %>%
                 unique()
             abort(paste("Invalid genes:", toString(missing)))
         }
-    } else {
-        abort("Marker file must contain: ensgene, symbol")
     }
 
     markers %>%
         as_tibble() %>%
-        .[!is.na(.[["ensgene"]]), ] %>%
-        .[, c("cell", "symbol", "ensgene")] %>%
+        .[!is.na(.[["geneID"]]), ] %>%
+        .[, c("cell", "geneName", "geneID")] %>%
         distinct() %>%
         group_by(!!sym("cell")) %>%
-        arrange(!!!syms(c("cell", "symbol")))
+        arrange(!!!syms(c("cell", "geneName")))
 }
 
 

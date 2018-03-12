@@ -1,4 +1,4 @@
-# TODO Map legacy `annotable` argument to `rowRanges`
+# TODO Consolidate code where applicable with loadSingleCell
 # TODO Build an EnsDb for the old release (84) currently used by cellranger
 
 
@@ -13,13 +13,12 @@
 #'
 #' @note Unlike [loadSingleCell()], the `organism`, `ensemblRelease`, and
 #'   `genomeBuild` are always detected automatically, based on the 10X
-#'   `refdataDir` YAML metadata. Therefore, these parameters cannot be set by
+#'   `refDataDir` YAML metadata. Therefore, these parameters cannot be set by
 #'   the user.
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump camel detectOrganism ensembl gene2symbol
-#'   gene2symbolFromGTF readGTF
+#' @importFrom basejump camel detectOrganism ensembl
 #' @importFrom bcbioBase prepareSummarizedExperiment readSampleMetadataFile
 #' @importFrom dplyr mutate
 #' @importFrom jsonlite read_json
@@ -33,7 +32,7 @@
 #'
 #' @param uploadDir Path to Cell Ranger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices*` as a child directory.
-#' @param refdataDir Directory path to Cell Ranger reference annotation data.
+#' @param refDataDir Directory path to Cell Ranger reference annotation data.
 #'
 #' @return `bcbioSingleCell`.
 #' @export
@@ -41,39 +40,50 @@
 #' @examples
 #' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 #' uploadDir <- file.path(extdataDir, "cellranger")
-#' refdataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
+#' refDataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
 #' sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
-#' bcb <- loadCellRanger(
+#' loadCellRanger(
 #'     uploadDir = uploadDir,
-#'     refdataDir = refdataDir,
+#'     refDataDir = refDataDir,
 #'     sampleMetadataFile = sampleMetadataFile
 #' )
-#' print(bcb)
 loadCellRanger <- function(
     uploadDir,
-    refdataDir,
+    refDataDir,
     interestingGroups = "sampleName",
     sampleMetadataFile = NULL,
-    rowRanges,
+    isSpike = NULL,
     prefilter = TRUE,
     ...
 ) {
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
     uploadDir <- normalizePath(uploadDir)
-    assert_is_a_string(refdataDir)
-    assert_all_are_dirs(refdataDir)
-    refdataDir <- normalizePath(refdataDir)
+    assert_is_a_string(refDataDir)
+    assert_all_are_dirs(refDataDir)
+    refDataDir <- normalizePath(refDataDir)
     assert_is_character(interestingGroups)
     assertIsAStringOrNULL(sampleMetadataFile)
-    if (!missing(rowRanges)) {
-        assert_is_all_of(rowRanges, "GRanges")
-    }
+    assertIsCharacterOrNULL(isSpike)
     assert_is_a_bool(prefilter)
+    dots <- list(...)
 
     pipeline <- "cellranger"
     level <- "genes"
     umiType <- "chromium"
+
+    # Legacy arguments =========================================================
+    # annotable
+    if ("annotable" %in% names(call)) {
+        abort("User-defined `annotable` no longer allowed")
+    }
+    # refdataDir
+    if ("refdataDir" %in% names(call)) {
+        warn("Use `refDataDir` instead of `refdataDir`")
+        refDataDir <- call[["refdataDir"]]
+        dots[["refdataDir"]] <- NULL
+    }
+    dots <- Filter(Negate(is.null), dots)
 
     # Directory paths ==========================================================
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
@@ -112,7 +122,7 @@ loadCellRanger <- function(
 
     # Reference data ===========================================================
     # JSON data
-    refJSONFile <- file.path(refdataDir, "reference.json")
+    refJSONFile <- file.path(refDataDir, "reference.json")
     assert_all_are_existing_files(refJSONFile)
     refJSON <- read_json(refJSONFile)
     genomeBuild <- refJSON %>%
@@ -139,34 +149,30 @@ loadCellRanger <- function(
     ))
 
     # Gene annotations =========================================================
-    # TODO This code is shared with `loadRNASeq()`...see if we can consolidate
-    if (missing(rowRanges)) {
-        # ah = AnnotationHub
-        ah <- ensembl(
-            organism = organism,
-            format = level,
-            genomeBuild = genomeBuild,
-            release = ensemblRelease,
-            return = "GRanges",
-            metadata = TRUE
-        )
-        assert_is_list(ah)
-        assert_are_identical(names(ah), c("data", "metadata"))
-        rowRanges <- ah[["data"]]
-        assert_is_all_of(rowRanges, "GRanges")
-        ahMeta <- ah[["metadata"]]
-        assert_all_are_matching_regex(
-            x = ahMeta[["id"]],
-            pattern = "^AH\\d+$"
-        )
-    } else {
-        ahMeta <- NULL
-    }
+    ahMeta <- NULL
+    # ah = AnnotationHub
+    ah <- ensembl(
+        organism = organism,
+        format = level,
+        genomeBuild = genomeBuild,
+        release = ensemblRelease,
+        return = "GRanges",
+        metadata = TRUE
+    )
+    assert_is_list(ah)
+    assert_are_identical(names(ah), c("data", "metadata"))
+    rowRanges <- ah[["data"]]
+    assert_is_all_of(rowRanges, "GRanges")
+    ahMeta <- ah[["metadata"]]
+    assert_all_are_matching_regex(
+        x = ahMeta[["id"]],
+        pattern = "^AH\\d+$"
+    )
 
     # GTF annotations
-    gtfFile <- file.path(refdataDir, "genes", "genes.gtf")
+    gtfFile <- file.path(refDataDir, "genes", "genes.gtf")
     if (identical(
-        x = refdataDir,
+        x = refDataDir,
         y = system.file(
             "extdata/refdata-cellranger-hg19-1.2.0",
             package = "bcbioSingleCell"
@@ -263,25 +269,38 @@ loadCellRanger <- function(
         "allSamples" = allSamples,
         "prefilter" = prefilter,
         # cellranger pipeline-specific ====
-        "refdataDir" = refdataDir,
+        "refDataDir" = refDataDir,
         "refJSON" = refJSON,
         "loadCellRanger" = match.call()
     )
     # Add user-defined custom metadata, if specified
-    dots <- list(...)
     if (length(dots) > 0L) {
+        assert_are_disjoint_sets(names(metadata), names(dots))
         metadata <- c(metadata, dots)
     }
-    # TODO Add assert check to make sure the dots don't overlap
 
-    # SingleCellExperiment =====================================================
+    # Return ===================================================================
+    # Generate RangedSummarizedExperiment
     rse <- prepareSummarizedExperiment(
         assays = list(assay = counts),
         rowRanges = rowRanges,
-        colData = metrics,
-        metadata = metadata
+        colData = colData,
+        metadata = metadata,
+        isSpike = isSpike
     )
-    # Coerce to SingleCellExperiment
-    sce <- as(rse, "SingleCellExperiment")
+    # FIXME `as(rse, "SingleCellExperiment)` coercion doesn't return
+    # objectVersion correctly in SingleCellExperiment v1.0.0
+    sce <- SingleCellExperiment(
+        assays = assays(rse),
+        rowRanges = rowRanges(rse),
+        colData = colData(rse),
+        metadata = metadata(rse)
+    )
+    # Define spikeNames for spike-in sequences
+    if (is.character(isSpike)) {
+        for (i in seq_along(isSpike)) {
+            isSpike(sce, isSpike[[i]]) <- isSpike[[i]]
+        }
+    }
     new("bcbioSingleCell", sce)
 }
