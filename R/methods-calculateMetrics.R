@@ -30,7 +30,6 @@ NULL
 
 # Constructors =================================================================
 #' @importFrom dplyr filter mutate mutate_if pull
-#' @importFrom Matrix colSums
 #' @importFrom scales percent
 #' @importFrom tibble column_to_rownames tibble
 .calculateMetrics.dgCMatrix <- function(  # nolint

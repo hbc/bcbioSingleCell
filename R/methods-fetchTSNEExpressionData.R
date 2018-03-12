@@ -42,9 +42,10 @@ NULL
 
     # Gene aggregate math
     data <- fetchGeneData(object, genes = genes)
-    mean <- rowMeans(data)
+    # TODO Okay to just use S4Vectors methods here?
+    mean <- Matrix::rowMeans(data)
     median <- rowMedians(data)
-    sum <- rowSums(data)
+    sum <- Matrix::rowSums(data)
 
     cbind(tsne, mean, median, sum)
 }
