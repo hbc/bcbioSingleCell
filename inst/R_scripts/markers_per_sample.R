@@ -2,7 +2,7 @@
 #
 # Seurat markers per sample
 # Michael Steinbaugh
-# 2017-12-14
+# 2018-03-12
 #
 # Clustering must be performed before running this script!
 #
@@ -17,7 +17,7 @@
 library(rmarkdown)
 library(bcbioSingleCell)
 
-data_dir <- path("data", Sys.Date())
+data_dir <- file.path("data", Sys.Date())
 
 # Sample subsets was saved in clustering_per_sample.R
 loadData(subsets, dir = data_dir)
@@ -28,11 +28,13 @@ invisible(mapply(
     name = names(subsets),
     FUN = function(file, name) {
         seurat_name <- paste(name, "seurat", sep = "_")
-        seurat_file <- path(data_dir, paste0(seurat_name, ".rda"))
-        stopifnot(file_exists(seurat_file))
-        render(input = "markers.Rmd",
-               output_file = paste(seurat_name, "markers.html", sep = "_"),
-               output_format = "html_document",
-               params = list(seurat_file = seurat_file))
+        seurat_file <- file.path(data_dir, paste0(seurat_name, ".rda"))
+        stopifnot(file.exists(seurat_file))
+        render(
+            input = "markers.Rmd",
+            output_file = paste(seurat_name, "markers.html", sep = "_"),
+            output_format = "html_document",
+            params = list(seurat_file = seurat_file)
+        )
     }
 ))

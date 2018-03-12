@@ -3,12 +3,13 @@
 # Seurat Clustering per Sample
 #
 # Michael Steinbaugh
-# 2018-02-26
+# 2018-03-12
 #
 # Latest version of this script is available here:
 # script <- system.file(
 #     "R_scripts/clustering_per_sample.R",
-#     package = "bcbioSingleCell")
+#     package = "bcbioSingleCell"
+# )
 # file.edit(script)
 #
 # nolint end
@@ -16,7 +17,7 @@
 library(rmarkdown)
 library(bcbioSingleCell)
 
-data_dir <- path("data", Sys.Date())
+data_dir <- file.path("data", Sys.Date())
 
 loadDataAsName(bcb = "bcb_filtered", dir = data_dir)
 metadata(bcb)[["filterParams"]]

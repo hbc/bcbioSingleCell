@@ -3,12 +3,13 @@
 # Load 10X Genomics Cell Ranger Data
 #
 # Michael Steinbaugh
-# 2018-02-26
+# 2018-03-12
 #
 # Latest version of this script is available here:
 # script <- system.file(
 #     "R_scripts/load_cell_ranger.R",
-#     package = "bcbioSingleCell")
+#     package = "bcbioSingleCell"
+# )
 # file.edit(script)
 #
 # nolint end
@@ -19,23 +20,25 @@ library(bcbioSingleCell)
 # Check the website for latest reference dataset version. These reference
 # datasets are quite large and should be saved in a central location rather
 # than per project.
-dir_create("annotations")
-remote <- path(
+dir.create("annotations", showWarnings = FALSE)
+remote <- file.path(
     "http://cf.10xgenomics.com",
     "supp",
     "cell-exp",
-    "refdata-cellranger-mm10-1.2.0.tar.gz")
-local <- path(
+    "refdata-cellranger-mm10-1.2.0.tar.gz"
+)
+local <- file.path(
     "annotations",
-    "refdata-cellranger-mm10-1.2.0.tar.gz")
+    "refdata-cellranger-mm10-1.2.0.tar.gz"
+)
 download.file(remote, local)
 untar(local)
 rm(remote, local)
 
 bcb <- loadCellRanger(
-    uploadDir = path("data", "cellranger"),
-    refDataDir = path("annotations", "refdata-cellranger-mm10-1.2.0"),
-    sampleMetadataFile = path("meta", "sample_metadata.xlsx"),
+    uploadDir = file.path("data", "cellranger"),
+    refDataDir = file.path("annotations", "refdata-cellranger-mm10-1.2.0"),
+    sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
     interestingGroups = c("genotype", "age")
 )
-saveData(bcb, dir = path("data", Sys.Date()))
+saveData(bcb, dir = file.path("data", Sys.Date()))

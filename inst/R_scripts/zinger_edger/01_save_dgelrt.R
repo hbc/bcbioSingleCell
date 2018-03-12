@@ -1,7 +1,7 @@
 # Differential Expression Per Cluster Using zingeR-edgeR
 #
 # Michael Steinbaugh
-# 2018-03-07
+# 2018-03-12
 #
 # Compatible with bcbioSingleCell v0.0.32
 # zingeR vignette v2: https://goo.gl/4rTK1w
@@ -13,7 +13,7 @@ library(Seurat)
 library(bcbioSingleCell)
 library(tidyverse)
 
-data_dir <- path("dir", Sys.Date())
+data_dir <- file.path("dir", Sys.Date())
 loadData(seurat, dir = data_dir)
 
 # Get the cell cluster identities from the final Seurat object

@@ -7,20 +7,22 @@ library(tidyverse)
 # Load up the Seurat object
 loadData(seurat)
 
-degTableDir <-
-    file.path("results",
-              "differential_expression",
-              "zinger_edger")
+degTableDir <- file.path(
+    "results",
+    "differential_expression",
+    "zinger_edger"
+)
 dir.exists(degTableDir)
 
-newTableDir <-
-    file.path("results",
-              "differential_expression",
-              "zinger_edger_with_counts")
+newTableDir <- file.path(
+    "results",
+    "differential_expression",
+    "zinger_edger_with_counts"
+)
 dir.create(newTableDir, recursive = TRUE, showWarnings = FALSE)
 
 # Let's get a list of the CSV files per cluster
-csv <- dir(degTableDir, pattern = "*.csv.gz", full.names = TRUE)
+csv <- list.files(degTableDir, pattern = "*.csv.gz", full.names = TRUE)
 
 # Now we can loop across the CSV files
 pblapply(seq_along(csv), function(a) {
