@@ -79,6 +79,7 @@ Imports:
     tidyr,
     utils,
     viridis,
+    zinbwave (>= 1.0.0),
     zingeR (>= 0.1.0)
 Suggests:
     BiocStyle,
