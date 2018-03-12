@@ -4,7 +4,7 @@
 
     # Warn and early return
     if (is.null(params)) {
-        warn("Use `filterCells()` apply filtering cutoffs")
+        warn("Use `filterCells()` to apply filtering cutoffs")
         return(object)
     }
 
