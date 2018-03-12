@@ -6,8 +6,8 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump annotable camel detectOrganism gene2symbolFromGTF
-#'   readGTF readYAML tx2geneFromGTF
+#' @importFrom basejump annotable assertIsAnnotable camel detectOrganism
+#'   gene2symbolFromGTF readGTF readYAML tx2geneFromGTF
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
 #'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
 #' @importFrom Matrix cBind
@@ -256,6 +256,11 @@ loadSingleCell <- function(
         annotable <- NULL
     }
 
+    # Check annotable integrity
+    if (is.data.frame(annotable)) {
+        assertIsAnnotable(annotable)
+    }
+
     # GTF annotations
     if (is_a_string(gtfFile)) {
         gtf <- readGTF(gtfFile)
@@ -276,9 +281,10 @@ loadSingleCell <- function(
     if (is_a_string(gtfFile)) {
         gene2symbol <- gene2symbolFromGTF(gtf)
     } else if (is.data.frame(annotable)) {
+        assert_is_subset(c("ensgene", "symbol"), colnames(annotable))
         gene2symbol <- annotable[, c("ensgene", "symbol")]
     } else {
-        abort("Loading run without gene-to-symbol mappings (not recommended)")
+        warn("Loading run without gene-to-symbol mappings (not recommended)")
         gene2symbol <- NULL
     }
 
