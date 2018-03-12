@@ -13,16 +13,6 @@
 \alias{reexports}
 \alias{scale_color_hue}
 \alias{reexports}
-\alias{dir_create}
-\alias{reexports}
-\alias{dir_delete}
-\alias{reexports}
-\alias{dir_ls}
-\alias{reexports}
-\alias{file_exists}
-\alias{reexports}
-\alias{path}
-\alias{reexports}
 \alias{as_tibble}
 \alias{reexports}
 \alias{column_to_rownames}
@@ -46,8 +36,6 @@ below to see their documentation.
 
 \describe{
   \item{dplyr}{\code{\link[dplyr]{arrange}}, \code{\link[dplyr]{pull}}, \code{\link[dplyr]{funs}}}
-
-  \item{fs}{\code{\link[fs]{dir_create}}, \code{\link[fs]{dir_delete}}, \code{\link[fs]{dir_ls}}, \code{\link[fs]{file_exists}}, \code{\link[fs]{path}}}
 
   \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_hue}}}
 

@@ -23,7 +23,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr desc everything group_by select ungroup
+#' @importFrom dplyr everything group_by select ungroup
 #' @importFrom rlang !!! quos
 .cellTypesPerCluster <- function(
     object,
@@ -57,7 +57,7 @@ NULL
             geneName = toString(.data[["geneName"]])
         ) %>%
         group_by(!!sym("cluster")) %>%
-        arrange(desc(.data[["n"]]), .by_group = TRUE)
+        arrange(dplyr::desc(.data[["n"]]), .by_group = TRUE)
 
     # Apply minimum and maximum gene cutoffs
     if (is.numeric(min) & min > 1L) {

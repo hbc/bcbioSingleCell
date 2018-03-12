@@ -34,7 +34,6 @@ NULL
 # Constructors =================================================================
 #' @importFrom ggplot2 aes_string facet_wrap geom_point ggplot labs
 #'   scale_x_log10
-#' @importFrom Matrix colSums
 .plotZerosVsDepth <- function(object, metrics) {
     # Using a logical matrix is fast and memory efficient
     present <- as(object, "lgCMatrix")

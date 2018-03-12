@@ -13,7 +13,7 @@
 #' @importFrom Matrix cBind
 #' @importFrom pbapply pblapply
 #' @importFrom SingleCellExperiment isSpike<- SingleCellExperiment
-#' @importFrom stats na.omit setNames
+#' @importFrom stats setNames
 #' @importFrom stringr str_extract str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
 #'

@@ -22,7 +22,7 @@ newTableDir <- file.path(
 dir.create(newTableDir, recursive = TRUE, showWarnings = FALSE)
 
 # Let's get a list of the CSV files per cluster
-csv <- dir(degTableDir, pattern = "*.csv.gz", full.names = TRUE)
+csv <- list.files(degTableDir, pattern = "*.csv.gz", full.names = TRUE)
 
 # Now we can loop across the CSV files
 pblapply(seq_along(csv), function(a) {

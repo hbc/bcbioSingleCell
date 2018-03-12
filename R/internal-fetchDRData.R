@@ -9,7 +9,6 @@
 #' @importFrom basejump camel
 #' @importFrom dplyr group_by mutate mutate_if ungroup
 #' @importFrom Seurat FetchData
-#' @importFrom stats median
 #' @importFrom tibble rownames_to_column
 #' @importFrom rlang !! sym
 #'

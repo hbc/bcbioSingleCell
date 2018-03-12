@@ -24,7 +24,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr slice
 #' @importFrom tibble as_tibble column_to_rownames rownames_to_column
 .topBarcodes <- function(object, n = 10L) {
     col <- "nUMI"
@@ -38,7 +37,7 @@ NULL
         as_tibble() %>%
         .[order(.[[col]], decreasing = TRUE), , drop = FALSE] %>%
         # Take the top rows by using slice
-        slice(1L:n) %>%
+        dplyr::slice(1L:n) %>%
         as.data.frame() %>%
         column_to_rownames()
 }

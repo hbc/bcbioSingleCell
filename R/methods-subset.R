@@ -40,7 +40,6 @@ NULL
 # Constructors =================================================================
 #' @importFrom dplyr mutate_all
 #' @importFrom magrittr set_rownames
-#' @importFrom S4Vectors metadata SimpleList
 .subset <- function(x, i, j, ..., drop = FALSE) {
     validObject(x)
 

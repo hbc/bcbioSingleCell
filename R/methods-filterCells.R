@@ -39,7 +39,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom Matrix rowSums
 #' @importFrom scales percent
 #' @importFrom tibble rownames_to_column
 .filterCells <- function(

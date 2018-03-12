@@ -7,9 +7,10 @@
 #' @name bcbioSingleCell-package
 #' @docType package
 #'
-#' @import methods
+#' @import methods S4Vectors
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
+#' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
 #' @importFrom assertive assert_all_are_dirs
 #' @importFrom assertive assert_all_are_existing_files
 #' @importFrom assertive assert_all_are_greater_than_or_equal_to
@@ -45,8 +46,6 @@
 #' @importFrom bcbioBase assertFormalInterestingGroups
 #' @importFrom magrittr %>%
 #' @importFrom rlang !! .data abort inform sym warn
-#' @importFrom S4Vectors aggregate metadata
-#' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
 #' @importFrom utils globalVariables packageVersion
 NULL
 

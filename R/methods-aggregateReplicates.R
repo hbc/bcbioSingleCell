@@ -109,7 +109,8 @@ NULL
             summarize(nCount = sum(.data[["nCount"]])) %>%
             ungroup() %>%
             group_by(.data[["sampleID"]]) %>%
-            arrange(desc(.data[["nCount"]]), .by_group = TRUE)
+            # FIXME Switch to base method
+            arrange(dplyr::desc(.data[["nCount"]]), .by_group = TRUE)
         # Group and sum the counts
         # Now split this back out into a list to match the original data
         # structure
