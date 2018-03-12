@@ -5,6 +5,7 @@
 #'
 #' @importFrom assertive assert_all_are_dirs
 #' @importFrom assertive assert_all_are_existing_files
+#' @importFrom assertive assert_all_are_matching_regex
 #' @importFrom assertive assert_all_are_positive
 #' @importFrom assertive assert_any_are_matching_regex
 #' @importFrom assertive assert_are_identical
