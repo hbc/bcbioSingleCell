@@ -1,5 +1,31 @@
 .applyFilterCutoffs <- function(object) {
-    .checkFilterParams(object)
+    validObject(object)
+    params <- metadata(object)[["filterParams"]]
+
+    # Warn and early return
+    if (is.null(params)) {
+        warn("Use `filterCells()` apply filtering cutoffs")
+        return(object)
+    }
+
+    # TODO Require user to `updateObject()` for this in the future
+    # `filterParams` metadata was stored as a named numeric vector up until
+    # v0.0.28. We changed to storing as a list in v0.0.29, to allow for per
+    # sample cutoffs.
+    if (is.numeric(params)) {
+        params <- as.list(params)
+    }
+    assert_is_list(params)
+
+    # Ensure all params are numeric
+    # TODO Switch to assertive method here
+    if (!all(vapply(
+        X = params,
+        FUN = is.numeric,
+        FUN.VALUE = logical(1L)
+    ))) {
+        abort("Filter parameters must be numeric")
+    }
 
     # Apply cell filtering cutoffs =============================================
     filterCells <- metadata(object)[["filterCells"]]

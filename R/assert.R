@@ -16,6 +16,7 @@
 #' @importFrom assertive assert_is_character
 #' @importFrom assertive assert_is_data.frame
 #' @importFrom assertive assert_is_factor
+#' @importFrom assertive assert_is_list
 #' @importFrom assertive assert_is_non_empty
 #' @importFrom assertive assert_is_of_length
 #' @importFrom assertive assert_is_subset
