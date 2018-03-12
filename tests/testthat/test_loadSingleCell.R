@@ -7,7 +7,8 @@ test_that("Homo sapiens", {
     bcb <- suppressWarnings(suppressMessages(
         loadSingleCell(
         uploadDir = uploadDir,
-        sampleMetadataFile = sampleMetadataFile)
+        sampleMetadataFile = sampleMetadataFile,
+        organism = "Homo sapiens")
     ))
     expect_is(bcb, "bcbioSingleCell")
 })

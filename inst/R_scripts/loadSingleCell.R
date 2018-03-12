@@ -2,7 +2,7 @@
 #
 # Load bcbio single-cell RNA-seq data
 # Michael Steinbaugh
-# 2018-01-23
+# 2018-03-12
 #
 # Example script for *Mus musculus* with Ensembl 88 annotations
 #
@@ -23,21 +23,25 @@ download.file(
         "pub",
         "release-88",
         "mus_musculus",
-        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
+        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"
+    ),
     destfile = file.path(
         "annotations",
-        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"))
+        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"
+    )
+)
 
 bcb <- loadSingleCell(
     uploadDir = file.path("data", "indrop_rnaseq"),
     interestingGroups = c("genotype", "treatment"),
     sampleMetadataFile = file.path("meta", "sample_metadata.xlsx"),
+    organism = "Mus musculus",
+    genomeBuild = "GRCm38",
+    ensemblVersion = 88L,
     gtfFile = file.path(
         "annotations",
-        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"),
-    ensemblVersion = 88L)
-
-# Back up all data inside bcbio object
-flatFiles <- flatFiles(bcb)
+        "Mus_musculus.GRCm38.88.chr_patch_hapl_scaff.gtf.gz"
+    )
+)
 
 saveData(bcb, flatFiles, dir = "data")
