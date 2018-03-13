@@ -403,7 +403,7 @@ loadSingleCell <- function(
     # Generate RangedSummarizedExperiment, with automatic resizing of rowRanges
     # and support for FASTA spike-ins
     rse <- prepareSummarizedExperiment(
-        assays = list(assay = counts),
+        assays = list("raw" = counts),
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
