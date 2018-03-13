@@ -278,13 +278,12 @@ loadSingleCell <- function(
     counts <- do.call(Matrix::cBind, sparseCountsList)
 
     # Row data =================================================================
-    # gr = GRanges
+    # TODO Consolidate this code with bcbioRNASeq
     rowRangesMetadata <- NULL
     txdb <- NULL
     tx2gene <- NULL
     if (is_a_string(gffFile)) {
         txdb <- makeTxDbFromGFF(gffFile)
-        # Alternate: `exonsBy(txdb, by = "gene")`
         rowRanges <- genes(txdb)
         # Transcript-to-gene mappings
         if (level == "transcripts") {
@@ -360,16 +359,17 @@ loadSingleCell <- function(
     metadata <- list(
         "version" = packageVersion,
         "pipeline" = pipeline,
+        "level" = level,
         "uploadDir" = uploadDir,
         "sampleDirs" = sampleDirs,
         "sampleMetadataFile" = as.character(sampleMetadataFile),
-        "sampleData" = sampleData,
         "interestingGroups" = interestingGroups,
-        "cell2sample" = cell2sample,
         "organism" = organism,
         "genomeBuild" = as.character(genomeBuild),
         "ensemblRelease" = as.integer(ensemblRelease),
         "rowRangesMetadata" = rowRangesMetadata,
+        "sampleData" = sampleData,
+        "cell2sample" = cell2sample,
         "gffFile" = as.character(gffFile),
         "txdb" = txdb,
         "umiType" = umiType,
