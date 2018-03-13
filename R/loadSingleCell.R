@@ -278,12 +278,13 @@ loadSingleCell <- function(
     counts <- do.call(Matrix::cBind, sparseCountsList)
 
     # Row data =================================================================
-    ahMeta <- NULL
+    # gr = GRanges
+    rowRangesMetadata <- NULL
     txdb <- NULL
     tx2gene <- NULL
     if (is_a_string(gffFile)) {
         txdb <- makeTxDbFromGFF(gffFile)
-        # rowRanges <- exonsBy(txdb, by = "gene")
+        # Alternate: `exonsBy(txdb, by = "gene")`
         rowRanges <- genes(txdb)
         # Transcript-to-gene mappings
         if (level == "transcripts") {
@@ -307,8 +308,8 @@ loadSingleCell <- function(
         assert_are_identical(names(ah), c("data", "metadata"))
         rowRanges <- ah[["data"]]
         assert_is_all_of(rowRanges, "GRanges")
-        ahMeta <- ah[["metadata"]]
-        assert_all_are_matching_regex(ahMeta[["id"]], "^AH\\d+$")
+        rowRangesMetadata <- ah[["metadata"]]
+        assert_is_data.frame(rowRangesMetadata)
         # Transcript-to-gene mappings
         if (level == "transcripts") {
             tx2gene <- tx2gene(
@@ -368,7 +369,7 @@ loadSingleCell <- function(
         "organism" = organism,
         "genomeBuild" = as.character(genomeBuild),
         "ensemblRelease" = as.integer(ensemblRelease),
-        "annotationHub" = as.list(ahMeta),
+        "rowRangesMetadata" = rowRangesMetadata,
         "gffFile" = as.character(gffFile),
         "txdb" = txdb,
         "umiType" = umiType,
