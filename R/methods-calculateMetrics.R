@@ -51,7 +51,8 @@ NULL
         warn(paste(
             length(setdiff),
             "genes missing in rowData",
-            paste0("(", percent(length(setdiff) / nrow(object)), ")")
+            paste0("(", percent(length(setdiff) / nrow(object)), "):"),
+            toString(setdiff)
         ))
     }
     rowData <- rowData[intersect, , drop = FALSE]
