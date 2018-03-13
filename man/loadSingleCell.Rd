@@ -66,11 +66,9 @@ run directory as a remote connection over
 }
 \examples{
 extdataDir <- system.file("extdata", package = "bcbioSingleCell")
-uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
-sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.csv")
 loadSingleCell(
-    uploadDir = uploadDir,
-    sampleMetadataFile = sampleMetadataFile,
+    uploadDir = file.path(extdataDir, "harvard_indrop_v3"),
+    sampleMetadataFile = file.path(extdataDir, "harvard_indrop_v3.csv"),
     organism = "Homo sapiens"
 )
 }
