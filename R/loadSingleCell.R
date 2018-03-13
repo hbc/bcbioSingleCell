@@ -6,13 +6,13 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump camel detectOrganism ensembl readYAML
-#' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
-#'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
 #' @importFrom GenomicFeatures exonsBy makeTxDbFromGFF
 #' @importFrom Matrix cBind
-#' @importFrom pbapply pblapply
 #' @importFrom SingleCellExperiment isSpike<- SingleCellExperiment
+#' @importFrom basejump camel ensembl readYAML
+#' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
+#'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
+#' @importFrom pbapply pblapply
 #' @importFrom stats setNames
 #' @importFrom stringr str_extract str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
