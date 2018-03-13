@@ -56,7 +56,7 @@
 #' @return `list`.
 .cellularBarcodesList <- function(sampleDirs) {
     files <- file.path(
-        normalizePath(sampleDirs),
+        normalizePath(sampleDirs, winslash = "/", mustWork = TRUE),
         paste(basename(sampleDirs), "barcodes.tsv", sep = "-")
     )
     names(files) <- names(sampleDirs)

@@ -77,7 +77,7 @@ loadSingleCell <- function(
 ) {
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
-    uploadDir <- normalizePath(uploadDir)
+    uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
     if (!missing(sampleMetadataFile)) {
         assert_is_a_string(sampleMetadataFile)
         # Allow for metadata from URL, so don't check if exists here
@@ -393,7 +393,7 @@ loadSingleCell <- function(
         "loadSingleCell" = match.call()
     )
     # Add user-defined custom metadata, if specified
-    if (length(dots) > 0L) {
+    if (length(dots)) {
         assert_are_disjoint_sets(names(metadata), names(dots))
         metadata <- c(metadata, dots)
     }
