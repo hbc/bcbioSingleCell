@@ -32,8 +32,8 @@ unless \code{gffFile} is set.}
 
 \item{ensemblRelease}{\emph{Optional.} Ensembl release version. If \code{NULL},
 defaults to current release, and does not typically need to be
-user-defined. This parameter can be useful for matching Ensembl annotations
-against an outdated bcbio annotation build.}
+user-defined. Passed to AnnotationHub for \code{EnsDb} annotation matching,
+unless \code{gffFile} is set.}
 
 \item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
 sequences (e.g. ERCCs, EGFP, TDTOMATO).}

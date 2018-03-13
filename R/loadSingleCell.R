@@ -34,8 +34,8 @@
 #'   unless `gffFile` is set.
 #' @param ensemblRelease *Optional.* Ensembl release version. If `NULL`,
 #'   defaults to current release, and does not typically need to be
-#'   user-defined. This parameter can be useful for matching Ensembl annotations
-#'   against an outdated bcbio annotation build.
+#'   user-defined. Passed to AnnotationHub for `EnsDb` annotation matching,
+#'   unless `gffFile` is set.
 #' @param isSpike *Optional.* Gene names corresponding to FASTA spike-in
 #'   sequences (e.g. ERCCs, EGFP, TDTOMATO).
 #' @param gffFile *Optional, not recommended.* By default, we recommend leaving
