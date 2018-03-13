@@ -124,10 +124,12 @@
 
 
 
-# TODO Allow the user to specify number of cores with `mc.cores`
 #' @importFrom parallel mcmapply
 .sparseCountsList <- function(sampleDirs, pipeline, umiType) {
     mcmapply(
+        sampleID = names(sampleDirs),
+        sampleDir = sampleDirs,
+        MoreArgs = list(pipeline = pipeline, umiType = umiType),
         FUN = function(sampleID, sampleDir, pipeline, umiType) {
             .readSparseCounts(
                 sampleID = sampleID,
@@ -136,9 +138,6 @@
                 umiType = umiType
             )
         },
-        sampleID = names(sampleDirs),
-        sampleDir = sampleDirs,
-        MoreArgs = list(pipeline = pipeline, umiType = umiType),
         SIMPLIFY = FALSE,
         USE.NAMES = TRUE
     )
