@@ -56,11 +56,9 @@
 #'
 #' @examples
 #' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
-#' uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
-#' sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.csv")
 #' loadSingleCell(
-#'     uploadDir = uploadDir,
-#'     sampleMetadataFile = sampleMetadataFile,
+#'     uploadDir = file.path(extdataDir, "harvard_indrop_v3"),
+#'     sampleMetadataFile = file.path(extdataDir, "harvard_indrop_v3.csv"),
 #'     organism = "Homo sapiens"
 #' )
 loadSingleCell <- function(
@@ -328,7 +326,6 @@ loadSingleCell <- function(
         severity = "warning"
     )
 
-    # Generate rowData (used to calculate cell metrics)
     rowData <- as.data.frame(rowRanges)
     rownames(rowData) <- names(rowRanges)
 
