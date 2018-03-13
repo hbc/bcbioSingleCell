@@ -26,31 +26,26 @@
 #' @param interestingGroups Character vector of interesting groups. First entry
 #'   is used for plot colors during quality control (QC) analysis. Entire vector
 #'   is used for PCA and heatmap QC functions.
-#' @param organism *Optional.* Organism name. Use the full latin name (e.g.
+#' @param organism Organism name. Use the full latin name (e.g.
 #'   "Homo sapiens"), since this will be input downstream to
-#'   AnnotationHub/ensembldb. If set, this genome must be supported on Ensembl.
-#'   Normally this can be left `NULL`, and the function will attempt to detect
-#'   the organism automatically using [detectOrganism()].
+#'   AnnotationHub and ensembldb, unless `gffFile` is set.
+#' @param genomeBuild *Optional.* Ensembl genome build name (e.g. "GRCh38").
+#'   This will be passed to AnnotationHub for `EnsDb` annotation matching,
+#'   unless `gffFile` is set.
 #' @param ensemblRelease *Optional.* Ensembl release version. If `NULL`,
 #'   defaults to current release, and does not typically need to be
 #'   user-defined. This parameter can be useful for matching Ensembl annotations
 #'   against an outdated bcbio annotation build.
-#' @param genomeBuild *Optional.* Genome build. Normally this can be left `NULL`
-#'   and the build will be detected from the bcbio run data. This can be set
-#'   manually (e.g. "hg19" for the older *Homo sapiens* reference genome). Note
-#'   that this must match the genome build identifier on Ensembl for annotations
-#'   to download correctly.
 #' @param isSpike *Optional.* Gene names corresponding to FASTA spike-in
 #'   sequences (e.g. ERCCs, EGFP, TDTOMATO).
-#' @param gffFile *Optional.* By default, we recommend leaving this `NULL` for
-#'   genomes that are supported on Ensembl. In this case, the row annotations
-#'   ([rowRanges()]) will be obtained automatically from Ensembl using
-#'   AnnotationHub and ensembldb. Internally, they are stored as genomic ranges
-#'   (`GRanges`). Additionally, these annotations are accessible as a
-#'   `data.frame` via the [rowData()] function. For a genome that is not
-#'   supported on Ensembl or AnnotationHub, a GFF/GTF (General Feature Format)
-#'   file is required. Generally, we recommend using a GTF (GFFv2) file here
-#'   over a GFF3 file, although both formats are supported. The function will
+#' @param gffFile *Optional, not recommended.* By default, we recommend leaving
+#'   this `NULL` for genomes that are supported on Ensembl. In this case, the
+#'   row annotations ([rowRanges()]) will be obtained automatically from Ensembl
+#'   by passing the `organism`, `genomeBuild`, and `ensemblRelease` arguments to
+#'   AnnotationHub and ensembldb. For a genome that is not supported on Ensembl
+#'   and/or AnnotationHub, a GFF/GTF (General Feature Format) file is required.
+#'   Generally, we recommend using a GTF (GFFv2) file here over a GFF3 file if
+#'   possible, although all GFF formats are supported. The function will
 #'   internally generate a `TxDb` containing transcript-to-gene mappings and
 #'   construct a `GRanges` object containing the genomic ranges ([rowRanges()]).
 #' @param prefilter Prefilter counts prior to quality control analysis.
@@ -62,18 +57,19 @@
 #' @examples
 #' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
 #' uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
-#' sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
+#' sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.csv")
 #' loadSingleCell(
 #'     uploadDir = uploadDir,
-#'     sampleMetadataFile = sampleMetadataFile
+#'     sampleMetadataFile = sampleMetadataFile,
+#'     organism = "Homo sapiens"
 #' )
 loadSingleCell <- function(
     uploadDir,
-    sampleMetadataFile = NULL,
+    sampleMetadataFile,
     interestingGroups = "sampleName",
-    organism = NULL,
-    ensemblRelease = NULL,
+    organism,
     genomeBuild = NULL,
+    ensemblRelease = NULL,
     isSpike = NULL,
     gffFile = NULL,
     prefilter = TRUE,
@@ -82,11 +78,14 @@ loadSingleCell <- function(
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
     uploadDir <- normalizePath(uploadDir)
-    assertIsAStringOrNULL(sampleMetadataFile)
+    if (!missing(sampleMetadataFile)) {
+        assert_is_a_string(sampleMetadataFile)
+        # Allow for metadata from URL, so don't check if exists here
+    }
     assert_is_character(interestingGroups)
-    assertIsAStringOrNULL(organism)
-    assertIsAnImplicitIntegerOrNULL(ensemblRelease)
+    assert_is_a_string(organism)
     assertIsAStringOrNULL(genomeBuild)
+    assertIsAnImplicitIntegerOrNULL(ensemblRelease)
     assertIsCharacterOrNULL(isSpike)
     assertIsAStringOrNULL(gffFile)
     if (is_a_string(gffFile)) {
@@ -123,7 +122,7 @@ loadSingleCell <- function(
         full.names = FALSE,
         recursive = FALSE
     )
-    assert_is_of_length(projectDir, 1L)
+    assert_is_a_string(projectDir)
     inform(projectDir)
     match <- str_match(projectDir, projectDirPattern)
     runDate <- as.Date(match[[2L]])
@@ -205,44 +204,11 @@ loadSingleCell <- function(
     # Data and program versions ================================================
     inform("Reading data and program versions")
     dataVersions <- readDataVersions(
-        file.path(projectDir, "data_versions.csv")
+        file = file.path(projectDir, "data_versions.csv")
     )
     programVersions <- readProgramVersions(
-        file.path(projectDir, "programs.txt")
+        file = file.path(projectDir, "programs.txt")
     )
-
-    # Detect genome build
-    if (!is_a_string(genomeBuild)) {
-        if (is.data.frame(dataVersions)) {
-            genomeBuild <- dataVersions %>%
-                .[.[["resource"]] == "transcripts", "genome", drop = TRUE]
-        } else {
-            # Data versions aren't saved when using a custom FASTA
-            genomePattern <- "work/rapmap/[^/]+/quasiindex/(\\b[A-Za-z0-9]+\\b)"
-            assert_any_are_matching_regex(bcbioCommandsLog, genomePattern)
-            genomeBuild <- str_match(
-                string = bcbioCommandsLog,
-                pattern = genomePattern
-            ) %>%
-                .[, 2L] %>%
-                na.omit() %>%
-                unique()
-        }
-    }
-    assert_is_a_string(genomeBuild)
-
-    # Detect organism
-    if (!is_a_string(organism)) {
-        assert_is_a_string(genomeBuild)
-        organism <- detectOrganism(genomeBuild)
-    }
-    assert_is_a_string(organism)
-
-    inform(paste(
-        paste("Organism:", organism),
-        paste("Genome build:", genomeBuild),
-        sep = "\n"
-    ))
 
     # Molecular barcode (UMI) type =============================================
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
@@ -263,25 +229,25 @@ loadSingleCell <- function(
     if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleMetadataFile(sampleMetadataFile)
     } else {
-        assert_all_are_matching_regex(umiType, "indrop")
         sampleData <- sampleYAMLMetadata(yaml)
     }
+    # Check for reverse complement input
     if ("sequence" %in% colnames(sampleData)) {
         sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
         if (identical(
             sort(sampleDirSequence),
             sort(as.character(sampleData[["sequence"]]))
         )) {
-            warn(paste(
+            abort(paste(
                 "It appears that the reverse complement sequence of the",
-                "i5 index barcode(s) was input into the sample metadata",
+                "i5 index barcodes were input into the sample metadata",
                 "`sequence` column. bcbio outputs the revcomp into the",
                 "sample directories, but the forward sequence should be",
                 "used in the R package."
             ))
         }
     }
-    assert_are_identical(rownames(sampleData), names(sampleDirs))
+    assert_is_subset(rownames(sampleData), names(sampleDirs))
 
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
@@ -294,8 +260,7 @@ loadSingleCell <- function(
     if (nrow(sampleData) < length(sampleDirs)) {
         inform("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
-        sampleDirs <- sampleDirs %>%
-            .[names(sampleDirs) %in% rownames(sampleData)]
+        sampleDirs <- sampleDirs[rownames(sampleMetadata)]
         inform(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
@@ -317,6 +282,7 @@ loadSingleCell <- function(
     # Row data =================================================================
     ahMeta <- NULL
     txdb <- NULL
+    tx2gene <- NULL
     if (is_a_string(gffFile)) {
         txdb <- makeTxDbFromGFF(gffFile)
         # rowRanges <- exonsBy(txdb, by = "gene")
@@ -362,12 +328,11 @@ loadSingleCell <- function(
         severity = "warning"
     )
 
-    # Generate rowData data.frame
+    # Generate rowData (used to calculate cell metrics)
     rowData <- as.data.frame(rowRanges)
     rownames(rowData) <- names(rowRanges)
 
     # Transcript to gene level counts (legacy) =================================
-    # Now recommended to provide GTF in the bcbio run instead
     if (level == "transcript") {
         counts <- .transcriptToGeneLevelCounts(counts, tx2gene)
     }
@@ -399,12 +364,12 @@ loadSingleCell <- function(
         "pipeline" = pipeline,
         "uploadDir" = uploadDir,
         "sampleDirs" = sampleDirs,
-        "sampleMetadataFile" = sampleMetadataFile,
+        "sampleMetadataFile" = as.character(sampleMetadataFile),
         "sampleData" = sampleData,
         "interestingGroups" = interestingGroups,
         "cell2sample" = cell2sample,
         "organism" = organism,
-        "genomeBuild" = genomeBuild,
+        "genomeBuild" = as.character(genomeBuild),
         "ensemblRelease" = as.integer(ensemblRelease),
         "annotationHub" = as.list(ahMeta),
         "gffFile" = as.character(gffFile),
@@ -432,9 +397,11 @@ loadSingleCell <- function(
         assert_are_disjoint_sets(names(metadata), names(dots))
         metadata <- c(metadata, dots)
     }
+    metadata <- Filter(Negate(is.null), metadata)
 
     # Return ===================================================================
-    # Generate RangedSummarizedExperiment
+    # Generate RangedSummarizedExperiment, with automatic resizing of rowRanges
+    # and support for FASTA spike-ins
     rse <- prepareSummarizedExperiment(
         assays = list(assay = counts),
         rowRanges = rowRanges,
@@ -442,8 +409,6 @@ loadSingleCell <- function(
         metadata = metadata,
         isSpike = isSpike
     )
-    # FIXME `as(rse, "SingleCellExperiment)` coercion doesn't return
-    # objectVersion correctly in SingleCellExperiment v1.0.0
     sce <- SingleCellExperiment(
         assays = assays(rse),
         rowRanges = rowRanges(rse),
