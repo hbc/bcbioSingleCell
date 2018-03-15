@@ -1,3 +1,7 @@
+# TODO Add `samples` param to match metadata
+
+
+
 #' Load bcbio Single-Cell RNA-Seq Data
 #'
 #' @note When working in RStudio, we recommend connecting to the bcbio-nextgen
@@ -48,6 +52,8 @@
 #'   possible, although all GFF formats are supported. The function will
 #'   internally generate a `TxDb` containing transcript-to-gene mappings and
 #'   construct a `GRanges` object containing the genomic ranges ([rowRanges()]).
+#' @param isSpike *Optional.* Gene names corresponding to FASTA spike-in
+#'   sequences (e.g. ERCCs, EGFP, TDTOMATO).
 #' @param prefilter Prefilter counts prior to quality control analysis.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'

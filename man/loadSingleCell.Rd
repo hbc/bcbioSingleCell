@@ -52,6 +52,9 @@ construct a \code{GRanges} object containing the genomic ranges (\code{\link[=ro
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
+
+\item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
+sequences (e.g. ERCCs, EGFP, TDTOMATO).}
 }
 \value{
 \code{bcbioSingleCell}.
