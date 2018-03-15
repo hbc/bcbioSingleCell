@@ -21,12 +21,12 @@ environment:
     R_MAX_NUM_DLLS: 150
 
 build_script:
-  - travis-tool.sh bioc_install GenomeInfoDbData
+  - travis-tool.sh install_bioc GenomeInfoDbData
   - travis-tool.sh install_deps
-  - travis-tool.sh bioc_install edgeR
-  - travis-tool.sh bioc_install DESeq2
-  - travis-tool.sh bioc_install SingleCellExperiment
-  - travis-tool.sh bioc_install zinbwave
+  - travis-tool.sh install_bioc edgeR
+  - travis-tool.sh install_bioc DESeq2
+  - travis-tool.sh install_bioc SingleCellExperiment
+  - travis-tool.sh install_bioc zinbwave
   - travis-tool.sh install_github statOmics/zingeR
 
 test_script:
