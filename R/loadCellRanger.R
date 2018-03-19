@@ -18,7 +18,7 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump camel detectOrganism ensembl
+#' @importFrom basejump camel convertUCSCBuildToEnsembl detectOrganism ensembl
 #' @importFrom bcbioBase prepareSummarizedExperiment readSampleMetadataFile
 #' @importFrom dplyr mutate
 #' @importFrom jsonlite read_json
@@ -105,8 +105,9 @@ loadCellRanger <- function(
     refJSON <- read_json(refJSONFile)
     genomeBuild <- refJSON %>%
         .[["genomes"]] %>%
-        .[[1L]]
-    # Only a single genome is currently supported
+        .[[1L]] %>%
+        # CellRanger uses UCSC build names in directories (e.g. hg19)
+        convertUCSCBuildToEnsembl()
     assert_is_a_string(genomeBuild)
     organism <- detectOrganism(genomeBuild)
     assert_is_a_string(organism)
