@@ -76,9 +76,9 @@ Extract genes by row and cells by column from a \code{bcbioSingleCell} object.
 \examples{
 load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 
-cells <- colnames(bcb)[1:100]
+cells <- head(colnames(bcb), 100L)
 head(cells)
-genes <- rownames(bcb)[1:100]
+genes <- head(rownames(bcb), 100L)
 head(genes)
 
 # Subset by cell identifiers

@@ -7,8 +7,7 @@
 \alias{sampleData,seurat-method}
 \title{Sample Data}
 \usage{
-\S4method{sampleData}{bcbioSingleCell}(object, interestingGroups,
-  aggregateReplicates = FALSE)
+\S4method{sampleData}{bcbioSingleCell}(object, interestingGroups)
 
 \S4method{sampleData}{seurat}(object, interestingGroups)
 }
@@ -16,10 +15,6 @@
 \item{object}{Object.}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{aggregateReplicates}{Aggregate technical replicates, if specified. This
-function uses values assigned in the \code{sampleNameAggregate} column of the
-internal sample metadata \code{data.frame}.}
 }
 \value{
 \code{data.frame}.
