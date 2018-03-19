@@ -37,7 +37,7 @@ NULL
     }
     colData <- colData(object)
     sampleID <- cell2sample(object)
-    assert_are_set_equal(rownames(colData), names(sampleID))
+    assert_are_identical(rownames(colData), names(sampleID))
     sampleData <- sampleData(
         object,
         interestingGroups = interestingGroups
