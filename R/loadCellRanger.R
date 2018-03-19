@@ -238,28 +238,13 @@ loadCellRanger <- function(
         assert_are_disjoint_sets(names(metadata), names(dots))
         metadata <- c(metadata, dots)
     }
-    metadata <- Filter(Negate(is.null), metadata)
 
     # Return ===================================================================
-    # Generate RangedSummarizedExperiment
-    rse <- prepareSummarizedExperiment(
+    .newBcbioSingleCell(
         assays = list("raw" = counts),
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
         isSpike = isSpike
     )
-    sce <- SingleCellExperiment(
-        assays = assays(rse),
-        rowRanges = rowRanges(rse),
-        colData = colData(rse),
-        metadata = metadata(rse)
-    )
-    # Define spikeNames for spike-in sequences
-    if (is.character(isSpike)) {
-        for (i in seq_along(isSpike)) {
-            isSpike(sce, isSpike[[i]]) <- isSpike[[i]]
-        }
-    }
-    new("bcbioSingleCell", sce)
 }

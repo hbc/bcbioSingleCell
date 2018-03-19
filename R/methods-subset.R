@@ -65,11 +65,6 @@ NULL
     genes <- rownames(sce)
     cells <- colnames(sce)
 
-    assays <- assays(sce)
-    rowRanges <- rowRanges(sce)
-    colData <- colData(sce)
-    isSpike <- isSpike(sce)
-
     # Metadata =================================================================
     metadata <- metadata(sce)
     metadata[["subset"]] <- TRUE
@@ -138,19 +133,13 @@ NULL
     }
 
     # Return ===================================================================
-    sce <- SingleCellExperiment(
-        assays = assays,
-        rowRanges = rowRanges,
-        colData = colData,
-        metadata = metadata
+    .newBcbioSingleCell(
+        assays = assays(sce),
+        rowRanges <- rowRanges(sce),
+        colData <- colData(sce),
+        metadata = metadata,
+        isSpike <- isSpike(sce)
     )
-    # Define spikeNames for spike-in sequences
-    if (is.character(isSpike)) {
-        for (i in seq_along(isSpike)) {
-            isSpike(sce, isSpike[[i]]) <- isSpike[[i]]
-        }
-    }
-    new("bcbioSingleCell", sce)
 }
 
 

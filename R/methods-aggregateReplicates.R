@@ -27,6 +27,9 @@ NULL
 #' @importFrom stringr str_match
 #' @importFrom tibble column_to_rownames rownames_to_column
 .aggregateReplicates <- function(object) {
+    validObject(object)
+    metadata <- metadata(object)
+
     sampleData <- sampleData(object)
     assert_is_subset("sampleNameAggregate", colnames(sampleData))
     # We'll end up replacing `sampleID` and `sampleName` columns with the
@@ -69,7 +72,7 @@ NULL
     ) %>%
         as.factor()
 
-    # Counts ===================================================================
+    # Assays ===================================================================
     inform("Aggregating counts")
     counts <- aggregateReplicates(assay(object), groupings = groupings)
     # Check that the count number of counts matches
@@ -77,18 +80,67 @@ NULL
         abort("Aggregated counts sum doens't match the original")
     }
 
-    # Cellular barcodes list ===================================================
-    inform("Aggregating raw cellular barcode counts")
-    cb <- bcbio(object, "cellularBarcodes")
-    if (is.null(cb)) {
-        cbAggregateList <- NULL
-    } else {
-        if (is.list(cb)) {
-            # Aggregate and split back out as a list?
-            colnames <- c("sampleID", colnames(cb[[1L]]))
-            cb <- .bindCellularBarcodes(cb)
-            cb <- cb[, colnames]
-        }
+    # Column data ==============================================================
+    rowData <- rowData(object)
+    prefilter <- metadata[["prefilter"]]
+
+    # Rather than recalculating, we need to just remap the rownames
+    colData <- calculateMetrics(
+        counts,
+        rowData = rowData,
+        prefilter = prefilter
+    )
+    # Add the raw read counts for objects with raw cellular barcodes list
+    if (!is.null(cb)) {
+        nCount <- cbAggregateData %>%
+            mutate(
+                rowname = paste(
+                    .data[["sampleID"]],
+                    .data[["cellularBarcode"]],
+                    sep = "_"
+                )
+            ) %>%
+            as.data.frame() %>%
+            column_to_rownames() %>%
+            .[rownames(colData), "nCount", drop = FALSE]
+        colData <- cbind(colData, nCount)
+    }
+
+    # Prefilter very low quality cells, if desired
+    if (isTRUE(prefilter)) {
+        # Subset the counts matrix to match the colData
+        counts <- counts[, rownames(colData)]
+    }
+
+    # Metadata =================================================================
+    inform("Updating metadata")
+
+    # sampleData
+    metadata[["sampleData"]] <-
+        sampleData(object, aggregateReplicates = TRUE)
+
+    # cell2sample
+    metadata[["cell2sample"]] <- mapCellsToSamples(
+        cells = colnames(counts),
+        samples = newIDs
+    )
+
+    # aggregateReplicates
+    metadata[["aggregateReplicates"]] <- groupings
+
+    # filterCells, if set
+    filterCells <- metadata[["filterCells"]]
+    if (!is.null(filterCells)) {
+        metadata[["filterCells"]] <- groupings[filterCells]
+    }
+
+    # cellularBarcodes, if set
+    cb <- metadata[["cellularBarcodes"]]
+    if (is.list(cb)) {
+        # Aggregate and split back out as a list?
+        colnames <- c("sampleID", colnames(cb[[1L]]))
+        cb <- .bindCellularBarcodes(cb)
+        cb <- cb[, colnames]
         # Now let's remap the cellular barcode counts for the aggregated samples
         cbAggregateData <- cb %>%
             # Now we need to map the new sampleIDs
@@ -121,69 +173,17 @@ NULL
                 mutate(sampleID = NULL)
         })
         names(cbAggregateList) <- as.character(newIDs)
+        metadata[["cellularBarcodes"]] <- cbAggregateList
     }
 
-    # Metrics ==================================================================
-    rowData <- rowData(object)
-    prefilter <- metadata(object)[["prefilter"]]
-
-    # Rather than recalculating, we need to just remap the rownames
-    metrics <- calculateMetrics(
-        counts,
-        rowData = rowData,
-        prefilter = prefilter
-    )
-    # Add the raw read counts for objects with raw cellular barcodes list
-    if (!is.null(cb)) {
-        nCount <- cbAggregateData %>%
-            mutate(
-                rowname = paste(
-                    .data[["sampleID"]],
-                    .data[["cellularBarcode"]],
-                    sep = "_"
-                )
-            ) %>%
-            as.data.frame() %>%
-            column_to_rownames() %>%
-            .[rownames(metrics), "nCount", drop = FALSE]
-        metrics <- cbind(metrics, nCount)
-    }
-
-    # Prefilter very low quality cells, if desired
-    if (isTRUE(prefilter)) {
-        # Subset the counts matrix to match the metrics
-        counts <- counts[, rownames(metrics)]
-    }
-
-    # Metadata =================================================================
-    inform("Updating metadata")
-    metadata <- metadata(object)
-    metadata[["sampleData"]] <-
-        sampleData(object, aggregateReplicates = TRUE)
-    metadata[["cell2sample"]] <- mapCellsToSamples(
-        cells = colnames(counts),
-        samples = newIDs
-    )
-    # Slot the named vector used to aggregate the replicates
-    metadata[["aggregateReplicates"]] <- groupings
-    # Update filtered cells
-    filterCells <- metadata[["filterCells"]]
-    if (!is.null(filterCells)) {
-        metadata[["filterCells"]] <- groupings[filterCells]
-    }
-
-    # bcbioSingleCell ==========================================================
-    inform("Preparing aggregated bcbioSingleCell object")
-    se <- SummarizedExperiment(
+    # Return ===================================================================
+    .newBcbioSingleCell(
         assays = list(assay = counts),
-        rowData = rowData,
-        colData = metrics,
-        metadata = metadata
+        rowRanges = rowRanges(object),
+        colData = colData,
+        metadata = metadata,
+        isSpike = isSpike(object)
     )
-    bcb <- new("bcbioSingleCell", se)
-    bcbio(bcb, "cellularBarcodes") <- cbAggregateList
-    validObject(bcb)
-    bcb
 }
 
 
