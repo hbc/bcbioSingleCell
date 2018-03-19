@@ -1,17 +1,3 @@
-#' @importFrom dplyr arrange
-#' @export
-dplyr::arrange
-
-#' @importFrom dplyr pull
-#' @export
-dplyr::pull
-
-#' @importFrom dplyr funs
-#' @export
-dplyr::funs
-
-
-
 #' @importFrom ggplot2 ggplot
 #' @export
 ggplot2::ggplot
