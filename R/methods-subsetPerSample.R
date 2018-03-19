@@ -5,7 +5,6 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param minCells Minimum number of cells required per sample.
 #' @param envir Environment where to assign the subsets.
 #' @param dir Output directory.
@@ -13,11 +12,10 @@
 #' @return Named vector of saved `bcbioSingleCell` subset file paths.
 #'
 #' @examples
-#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-#'
+#' # bcbioRNASeq ====
 #' # This will save the subsets per sample to disk
-#' subsetPerSample(filtered, dir = "subsetPerSample")
-#' dir("subsetPerSample")
+#' subsetPerSample(bcb_small, dir = "subsetPerSample")
+#' list.files("subsetPerSample")
 #'
 #' # Clean up
 #' unlink("subsetPerSample", recursive = TRUE)
@@ -38,7 +36,8 @@ setMethod(
         object,
         minCells = 200L,
         envir = parent.frame(),
-        dir = ".") {
+        dir = "."
+    ) {
         assertIsAnImplicitInteger(minCells)
         assert_all_are_positive(minCells)
         assert_is_environment(envir)
