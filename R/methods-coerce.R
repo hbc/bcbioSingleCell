@@ -56,7 +56,11 @@ NULL
     }
 
     # Stash bcbio run metadata into `misc` slot
-    slot(seurat, "misc")[["bcbio"]] <- metadata(from)
+    bcbio <- list(
+        "rowRanges" = rowRanges(from),
+        "metadata" = metadata(from)
+    )
+    slot(seurat, "misc")[["bcbio"]] <- bcbio
 
     seurat
 }
