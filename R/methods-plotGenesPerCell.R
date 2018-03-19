@@ -158,10 +158,10 @@ setMethod(
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
         if (missing(min)) {
-            min <- bcbio(object)[["filterParams"]][["minGenes"]]
+            min <- metadata(object)[["filterParams"]][["minGenes"]]
         }
         if (missing(max)) {
-            max <- bcbio(object)[["filterParams"]][["maxGenes"]]
+            max <- metadata(object)[["filterParams"]][["maxGenes"]]
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotGenesPerCell(

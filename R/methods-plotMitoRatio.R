@@ -137,7 +137,7 @@ setMethod(
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
         if (missing(max)) {
-            max <- bcbio(object)[["filterParams"]][["maxMitoRatio"]]
+            max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotMitoRatio(
