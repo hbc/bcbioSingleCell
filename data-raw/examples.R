@@ -45,7 +45,7 @@ all_markers_small_sanitized <- sanitizeMarkers(
     object = seurat_small,
     markers = all_markers_small
 )
-known_markers_detected <- knownMarkersDetected(
+known_markers_small <- knownMarkersDetected(
     all = all_markers_small_sanitized,
     known = cellTypeMarkers[["homoSapiens"]]
 )
@@ -53,8 +53,8 @@ known_markers_detected <- knownMarkersDetected(
 use_data(
     bcb_small,
     seurat_small,
-    all_markers,
-    known_markers_detected,
+    all_markers_small,
+    known_markers_small,
     compress = "xz",
     overwrite = TRUE
 )
