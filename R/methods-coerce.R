@@ -36,15 +36,18 @@ NULL
     # Require filtered cells and genes only
     from <- .applyFilterCutoffs(from)
 
+    # Create seurat object
+    raw <- counts(from, gene2symbol = TRUE)
+    colData <- colData(from, return = "data.frame")
     seurat <- CreateSeuratObject(
-        raw.data = counts(from, gene2symbol = TRUE),
+        raw.data = raw,
         project = "bcbioSingleCell",
         # Already applied filtering cutoffs for cells and genes
         min.cells = 0L,
         min.genes = 0L,
         # Default for UMI datasets
         is.expr = 0L,
-        meta.data = as.data.frame(colData(from))
+        meta.data = colData
     )
 
     # Check that the dimensions match exactly
