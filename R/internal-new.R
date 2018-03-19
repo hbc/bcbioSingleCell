@@ -6,8 +6,6 @@
     metadata,
     isSpike
 ) {
-    metadata <- Filter(Negate(is.null), metadata)
-
     # Prepare RangedSummarizedExperiment, with automatic resizing of rowRanges
     # and support for FASTA spike-ins
     rse <- prepareSummarizedExperiment(
