@@ -44,7 +44,7 @@ NULL
         g2s <- g2s[rownames(counts), , drop = FALSE]
         # Abort on any NA gene names
         stopifnot(!any(is.na(g2s[["geneName"]])))
-        rownames <- g2s[["geneName"]]
+        rownames <- make.names(g2s[["geneName"]], unique = TRUE)
         names(rownames) <- g2s[["geneID"]]
         rownames(counts) <- rownames
     }
