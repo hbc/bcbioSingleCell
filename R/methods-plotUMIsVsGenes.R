@@ -1,6 +1,5 @@
 #' Plot UMI and Gene Correlation
 #'
-#' @rdname plotUMIsVsGenes
 #' @name plotUMIsVsGenes
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -14,14 +13,12 @@
 #'   [ggplot2::scale_color_manual()].
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' plotUMIsVsGenes(bcb_small)
 #'
-#' # bcbioSingleCell
-#' plotUMIsVsGenes(bcb)
-#'
-#' # seurat
-#' plotUMIsVsGenes(seurat)
+#' # seurat ====
+#' plotUMIsVsGenes(pbmc_small)
+#' plotUMIsVsGenes(seurat_small)
 #'
 #' # data.frame
 #' df <- metrics(bcb)
@@ -76,27 +73,22 @@ setMethod(
         object,
         interestingGroups,
         samplesOnYAxis = TRUE,
-        color = scale_color_viridis(discrete = TRUE)) {
+        color = scale_color_viridis(discrete = TRUE)
+    ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
         metrics <- metrics(
             object,
-            interestingGroups = interestingGroups)
+            interestingGroups = interestingGroups
+        )
         .plotUMIsVsGenes(
             object = metrics,
             interestingGroups = interestingGroups,
-            color = color)
-    })
-
-
-
-#' @rdname plotUMIsVsGenes
-#' @export
-setMethod(
-    "plotUMIsVsGenes",
-    signature("data.frame"),
-    .plotUMIsVsGenes)
+            color = color
+        )
+    }
+)
 
 
 
@@ -109,7 +101,8 @@ setMethod(
     function(
         object,
         interestingGroups,
-        color = scale_color_viridis(discrete = TRUE)) {
+        color = scale_color_viridis(discrete = TRUE)
+    ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
@@ -117,5 +110,7 @@ setMethod(
         .plotUMIsVsGenes(
             object = metrics,
             interestingGroups = interestingGroups,
-            color = color)
-    })
+            color = color
+        )
+    }
+)
