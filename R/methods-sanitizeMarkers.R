@@ -10,16 +10,11 @@
 #' @return `grouped_df`, grouped by cluster ident.
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#' load(system.file(
-#'     "extdata/seuratAllMarkersOriginal.rda",
-#'     package = "bcbioSingleCell"
-#' ))
-#'
 #' # seurat ====
+#' ident_3_markers <- FindMarkers(seurat_small, ident.1 = "3", ident.2 = NULL)
 #' sanitizeMarkers(
-#'     seurat,
-#'     markers = seuratAllMarkersOriginal
+#'     object = seurat_small,
+#'     markers = ident_3_markers
 #' ) %>%
 #'     glimpse()
 NULL
@@ -86,11 +81,9 @@ NULL
     markers <- left_join(markers, symbol2gene, by = "rowname")
 
     # Add genomic ranges, if available
-    rowRanges <- bcbio(object, "rowRanges")
-    if (is(rowRanges, "GRanges")) {
+    rowData <- rowData(object)
+    if (is.data.frame(rowData)) {
         inform("Joining row data")
-        assert_is_all_of(rowRanges, "GRanges")
-        rowData <- as.data.frame(rowRanges)
         assert_is_subset("geneID", colnames(rowData))
         # Ensure any nested list columns are dropped
         cols <- vapply(
