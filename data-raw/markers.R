@@ -56,14 +56,15 @@ print(ws)
 cellTypeMarkers <- lapply(ws, function(ws) {
     gs %>%
         gs_read(ws = ws) %>%
-        dplyr::select(cell, geneID) %>%
+        dplyr::select(cellType, geneID) %>%
         mutate(
             geneName = convertGenesToSymbols(
                 geneID,
                 organism = ws[[a]],
-                release = release)
+                release = release
+            )
         ) %>%
-        group_by(cell) %>%
+        group_by(cellType) %>%
         arrange(geneName, .by_group = TRUE)
 })
 names(cellTypeMarkers) <- camel(ws)
