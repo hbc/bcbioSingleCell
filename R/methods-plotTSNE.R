@@ -16,19 +16,15 @@
 #'   the dataset, and some cells can be masked.
 #' @param label Overlay a cluster identitiy label on the plot.
 #' @param labelSize Size of the text label.
-#' @param color Color palette to use for points. Defaults to the viridis color
-#'   palette. Use [ggplot2::scale_color_gradient()] to easily define your own
-#'   low/high gradient.
+#' @param color Color palette to use for points.
 #' @param dark Enable dark mode.
 #' @param title Plot title.
 #'
-#' @return [ggplot].
+#' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' plotTSNE(seurat)
+#' # seurat ====
+#' plotTSNE(pbmc_small)
 NULL
 
 
@@ -48,9 +44,10 @@ setMethod(
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        color = ggplot2::scale_color_hue(),
+        color = scale_color_hue(),
         dark = TRUE,
-        title = NULL) {
+        title = NULL
+    ) {
         tsne <- fetchTSNEData(object)
         .plotDR(
             tsne,
@@ -63,5 +60,7 @@ setMethod(
             labelSize = labelSize,
             color = color,
             dark = dark,
-            title = title)
-    })
+            title = title
+        )
+    }
+)

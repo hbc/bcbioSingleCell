@@ -66,10 +66,6 @@
                 size = pointSize
             )
     }
-    if (interestingGroups == "ident") {
-        # Present `ident` as `cluster` (more informative)
-        p <- p + labs(color = "cluster")
-    }
     if (isTRUE(label)) {
         if (isTRUE(dark)) {
             labelColor <- "white"

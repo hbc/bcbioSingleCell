@@ -27,9 +27,7 @@ scores, number of genes detected).}
 \item{pointAlpha}{Alpha transparency level. Useful when there many cells in
 the dataset, and some cells can be masked.}
 
-\item{color}{Color palette to use for points. Defaults to the viridis color
-palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
-low/high gradient.}
+\item{color}{Color palette to use for points.}
 
 \item{dark}{Enable dark mode.}
 
