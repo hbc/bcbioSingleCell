@@ -128,7 +128,7 @@ loadCellRanger <- function(
     ))
 
     # Gene annotations =========================================================
-    ahMeta <- NULL
+    rowRangesMetadata <- NULL
     # ah = AnnotationHub
     # Don't warn about old Ensembl release version (expected)
     ah <- suppressWarnings(ensembl(
@@ -143,11 +143,8 @@ loadCellRanger <- function(
     assert_are_identical(names(ah), c("data", "metadata"))
     rowRanges <- ah[["data"]]
     assert_is_all_of(rowRanges, "GRanges")
-    ahMeta <- ah[["metadata"]]
-    assert_all_are_matching_regex(
-        x = ahMeta[["id"]],
-        pattern = "^AH\\d+$"
-    )
+    rowRangesMetadata <- ah[["metadata"]]
+    assert_is_data.frame(rowRangesMetadata)
 
     # Check for gene-to-symbol mappings
     assert_is_subset(
@@ -227,11 +224,11 @@ loadCellRanger <- function(
         "organism" = organism,
         "genomeBuild" = as.character(genomeBuild),
         "ensemblRelease" = as.character(ensemblRelease),
-        "annotationHub" = as.list(ahMeta),
+        "rowRangesMetadata" = rowRangesMetadata,
         "umiType" = umiType,
         "allSamples" = allSamples,
         "prefilter" = prefilter,
-        # cellranger pipeline-specific ====
+        # cellranger pipeline-specific =========================================
         "refdataDir" = refdataDir,
         "refJSON" = refJSON,
         "loadCellRanger" = match.call()
