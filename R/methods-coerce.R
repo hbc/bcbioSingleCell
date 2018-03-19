@@ -9,10 +9,8 @@
 #' @seealso `help(topic = "coerce", package = "methods")`.
 #'
 #' @examples
-#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-#'
 #' # Coerce bcbioSingleCell to seurat
-#' as(filtered, "seurat")
+#' as(bcb_small, "seurat")
 NULL
 
 
@@ -32,33 +30,26 @@ NULL
 .coerceToSeurat <- function(from) {
     # Require that technical replicates are aggregated
     if ("sampleNameAggregate" %in% colnames(sampleData(from))) {
-        abort(paste(
-            "`aggregateReplicates()` required",
-            "to merge technical replicates prior to seurat coercion"
-        ))
+        warn("Use `aggregateReplicates()` to combine technical replicates")
     }
 
     # Require filtered cells and genes only
     from <- .applyFilterCutoffs(from)
 
-    # Create the initial `seurat` object
-    counts <- counts(from, gene2symbol = TRUE)
-    metadata <- colData(from)
-
     seurat <- CreateSeuratObject(
-        raw.data = counts,
+        raw.data = counts(from, gene2symbol = TRUE),
         project = "bcbioSingleCell",
         # Already applied filtering cutoffs for cells and genes
         min.cells = 0L,
         min.genes = 0L,
         # Default for UMI datasets
         is.expr = 0L,
-        meta.data = metrics
+        meta.data = as.data.frame(colData(from))
     )
 
     # Check that the dimensions match exactly
     if (!identical(dim(from), dim(slot(seurat, "raw.data")))) {
-        abort("Dimension mismatch between bcbioSingleCell and seurat objects")
+        abort("Dimension mismatch between bcbioSingleCell and seurat")
     }
 
     # Stash bcbio run metadata into `misc` slot
