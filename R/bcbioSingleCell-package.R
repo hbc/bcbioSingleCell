@@ -10,6 +10,7 @@
 #' @import methods S4Vectors
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
+#' @importFrom SingleCellExperiment isSpike isSpike<- SingleCellExperiment
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
 #' @importFrom assertive assert_all_are_dirs
 #' @importFrom assertive assert_all_are_existing_files

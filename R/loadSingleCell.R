@@ -12,10 +12,9 @@
 #'
 #' @importFrom GenomicFeatures exonsBy makeTxDbFromGFF
 #' @importFrom Matrix cBind
-#' @importFrom SingleCellExperiment isSpike<- SingleCellExperiment
 #' @importFrom basejump camel ensembl readYAML
-#' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
-#'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
+#' @importFrom bcbioBase readDataVersions readLogFile readProgramVersions
+#'   readSampleMetadataFile sampleYAMLMetadata
 #' @importFrom pbapply pblapply
 #' @importFrom stats setNames
 #' @importFrom stringr str_extract str_match

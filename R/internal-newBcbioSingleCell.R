@@ -1,5 +1,4 @@
 #' @importFrom bcbioBase prepareSummarizedExperiment
-#' @importFrom SingleCellExperiment SingleCellExperiment
 .newBcbioSingleCell <- function(
     assays,
     rowRanges,

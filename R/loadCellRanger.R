@@ -19,7 +19,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @importFrom basejump camel convertUCSCBuildToEnsembl detectOrganism ensembl
-#' @importFrom bcbioBase prepareSummarizedExperiment readSampleMetadataFile
+#' @importFrom bcbioBase readSampleMetadataFile
 #' @importFrom dplyr mutate
 #' @importFrom jsonlite read_json
 #' @importFrom magrittr set_colnames

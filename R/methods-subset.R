@@ -6,7 +6,6 @@
 #' @author Michael Steinbaugh
 #'
 #' @importFrom parallel mclapply
-#' @importFrom SingleCellExperiment SingleCellExperiment
 #'
 #' @inheritParams base::`[`
 #'
