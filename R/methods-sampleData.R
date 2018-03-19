@@ -11,15 +11,12 @@
 #' @return `data.frame`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
-#' sampleData(bcb) %>% glimpse()
+#' sampleData(bcb_small) %>% glimpse()
 #'
 #' # seurat ====
 #' sampleData(pbmc_small) %>% glimpse()
-#' sampleData(seurat) %>% glimpse()
+#' sampleData(seurat_small) %>% glimpse()
 NULL
 
 
@@ -114,14 +111,9 @@ setMethod(
     "sampleData",
     signature("seurat"),
     function(object, interestingGroups) {
-        data <- bcbio(object, "sampleData")
+        # FIXME Add `metadata()` accessor support to seurat
+        data <- bcbio(object, "metadata")[["sampleData"]]
         if (!is.null(data)) {
-            if (!identical(
-                unique(as.character(data[["sampleID"]])),
-                unique(as.character(slot(object, "meta.data")[["sampleID"]]))
-            )) {
-                abort("`sampleID` mismatch with `seurat@meta.data` detected")
-            }
             # Define interesting groups
             if (missing(interestingGroups)) {
                 interestingGroups <- bcbioBase::interestingGroups(object)
