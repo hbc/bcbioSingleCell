@@ -1,0 +1,2 @@
+--cb_cutoff 1000 
+--genemap Homo_sapiens.GRCh38.90.chr_patch_hapl_scaff-tx2gene.tsv
