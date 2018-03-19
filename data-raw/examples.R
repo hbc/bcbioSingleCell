@@ -46,7 +46,7 @@ all_markers_small_sanitized <- sanitizeMarkers(
     markers = all_markers_small
 )
 known_markers_detected <- knownMarkersDetected(
-    all = all_markers_sanitized,
+    all = all_markers_small_sanitized,
     known = cellTypeMarkers[["homoSapiens"]]
 )
 
