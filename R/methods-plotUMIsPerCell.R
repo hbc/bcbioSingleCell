@@ -10,18 +10,11 @@
 #' @inherit plotGenesPerCell
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' plotUMIsPerCell(bcb_small)
 #'
-#' # bcbioSingleCell
-#' plotUMIsPerCell(bcb)
-#'
-#' # seurat
-#' plotUMIsPerCell(seurat)
-#'
-#' # data.frame
-#' df <- metrics(bcb)
-#' plotUMIsPerCell(df)
+#' # seurat ====
+#' plotUMIsPerCell(seurat_small)
 NULL
 
 
@@ -90,7 +83,8 @@ setMethod(
         min,
         interestingGroups,
         samplesOnYAxis = TRUE,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
+        fill = viridis::scale_fill_viridis(discrete = TRUE)
+    ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
@@ -99,24 +93,18 @@ setMethod(
         }
         metrics <- metrics(
             object,
-            interestingGroups = interestingGroups)
+            interestingGroups = interestingGroups
+        )
         .plotUMIsPerCell(
             object = metrics,
             geom = geom,
             min = min,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
-
-
-
-#' @rdname plotUMIsPerCell
-#' @export
-setMethod(
-    "plotUMIsPerCell",
-    signature("data.frame"),
-    .plotUMIsPerCell)
+            fill = fill
+        )
+    }
+)
 
 
 
@@ -137,7 +125,7 @@ setMethod(
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
         if (missing(min)) {
-            min <- bcbio(object)[["filterParams"]][["minUMIs"]]
+            min <- metadata(object)[["filterParams"]][["minUMIs"]]
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         .plotUMIsPerCell(
@@ -146,5 +134,7 @@ setMethod(
             min = min,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
+            fill = fill
+        )
+    }
+)
