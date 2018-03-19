@@ -1,7 +1,4 @@
-# TODO Consolidate code where applicable with loadSingleCell
 # TODO Build an EnsDb for the old release (84) currently used by cellranger
-
-
 
 #' Load 10X Genomics Cell Ranger Data
 #'
@@ -19,6 +16,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @importFrom basejump camel convertUCSCBuildToEnsembl detectOrganism ensembl
+#'   sanitizeSampleData
 #' @importFrom bcbioBase readSampleMetadataFile
 #' @importFrom dplyr mutate
 #' @importFrom jsonlite read_json
@@ -81,6 +79,7 @@ loadCellRanger <- function(
     # Sample metadata ==========================================================
     sampleData <- readSampleMetadataFile(sampleMetadataFile)
     assert_is_subset(sampleData[["description"]], basename(sampleDirs))
+    sampleData <- sanitizeSampleData(sampleData)
 
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
@@ -240,7 +239,7 @@ loadCellRanger <- function(
     }
 
     # Return ===================================================================
-    .newBcbioSingleCell(
+    .new.bcbioSingleCell(
         assays = list("raw" = counts),
         rowRanges = rowRanges,
         colData = colData,

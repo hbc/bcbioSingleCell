@@ -1,7 +1,3 @@
-# TODO Add `samples` param to match metadata
-
-
-
 #' Load bcbio Single-Cell RNA-Seq Data
 #'
 #' @note When working in RStudio, we recommend connecting to the bcbio-nextgen
@@ -12,7 +8,7 @@
 #'
 #' @importFrom GenomicFeatures exonsBy makeTxDbFromGFF
 #' @importFrom Matrix cBind
-#' @importFrom basejump camel ensembl readYAML
+#' @importFrom basejump camel ensembl readYAML sanitizeSampleData
 #' @importFrom bcbioBase readDataVersions readLogFile readProgramVersions
 #'   readSampleMetadataFile sampleYAMLMetadata
 #' @importFrom pbapply pblapply
@@ -234,6 +230,7 @@ loadSingleCell <- function(
         }
     }
     assert_is_subset(rownames(sampleData), names(sampleDirs))
+    sampleData <- sanitizeSampleData(sampleData)
 
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
@@ -381,7 +378,7 @@ loadSingleCell <- function(
     }
 
     # Return ===================================================================
-    .newBcbioSingleCell(
+    .new.bcbioSingleCell(
         assays = list("raw" = counts),
         rowRanges = rowRanges,
         colData = colData,

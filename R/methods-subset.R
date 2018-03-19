@@ -132,7 +132,7 @@ NULL
     }
 
     # Return ===================================================================
-    .newBcbioSingleCell(
+    .new.bcbioSingleCell(
         assays = assays(sce),
         rowRanges <- rowRanges(sce),
         colData <- colData(sce),

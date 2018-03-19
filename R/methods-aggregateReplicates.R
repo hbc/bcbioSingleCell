@@ -175,7 +175,7 @@ NULL
     }
 
     # Return ===================================================================
-    .newBcbioSingleCell(
+    .new.bcbioSingleCell(
         assays = list(assay = counts),
         rowRanges = rowRanges(object),
         colData = colData,

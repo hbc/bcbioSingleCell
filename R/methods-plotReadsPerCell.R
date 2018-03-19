@@ -96,7 +96,8 @@ NULL
                 # log10 reads per cell
                 log10Count = mids,
                 # Proportion of cells
-                proportion = counts * (10L ^ mids) / sum(counts * (10L ^ mids)))
+                proportion = counts * (10L ^ mids) / sum(counts * (10L ^ mids))
+            )
         }) %>%
         bind_rows() %>%
         mutate(sampleName = as.factor(.data[["sampleName"]])) %>%
@@ -115,7 +116,7 @@ NULL
 #'
 #' @inheritParams plotReadsPerCell
 #'
-#' @return [ggplot].
+#' @return `ggplot`.
 .plotRawCBViolin <- function(
     tibble,
     interestingGroups = "sampleName",
@@ -128,13 +129,15 @@ NULL
         mapping = aes_string(
             x = "sampleName",
             y = "log10Count",
-            fill = interestingGroups)
+            fill = interestingGroups
+        )
     ) +
         labs(y = "log10 reads per cell") +
         geom_violin(
             alpha = qcPlotAlpha,
             color = lineColor,
-            scale = "width") +
+            scale = "width"
+        ) +
         coord_flip() +
         scale_fill_viridis(discrete = TRUE)
 
@@ -169,7 +172,7 @@ NULL
 #'
 #' @inheritParams plotReadsPerCell
 #'
-#' @return [ggplot].
+#' @return `ggplot`.
 .plotRawCBRidgeline <- function(
     tibble,
     interestingGroups = "sampleName",
@@ -183,14 +186,16 @@ NULL
         mapping = aes_string(
             x = "log10Count",
             y = "sampleName",
-            fill = interestingGroups)
+            fill = interestingGroups
+        )
     ) +
         labs(x = "log10 reads per cell") +
         geom_density_ridges(
             alpha = qcPlotAlpha,
             color = lineColor,
             panel_scaling = TRUE,
-            scale = 10L) +
+            scale = 10L
+        ) +
         scale_fill_viridis(discrete = TRUE) +
         scale_x_sqrt()
 
@@ -224,7 +229,7 @@ NULL
 #'
 #' @inheritParams plotReadsPerCell
 #'
-#' @return [ggplot].
+#' @return `ggplot`.
 .plotProportionalCBHistogram <- function(
     tibble,
     interestingGroups = "sampleName",
@@ -234,14 +239,17 @@ NULL
         mapping = aes_string(
             x = "log10Count",
             y = "proportion",
-            color = interestingGroups)
+            color = interestingGroups
+        )
     ) +
         geom_line(
             alpha = qcPlotAlpha,
-            size = 1.5) +
+            size = 1.5
+        ) +
         labs(
             x = "log10 reads per cell",
-            y = "proportion of cells") +
+            y = "proportion of cells"
+        ) +
         scale_color_viridis(discrete = TRUE)
 
     # Cutoff lines
@@ -277,49 +285,40 @@ NULL
 .plotReadsPerCell <- function(
     object,
     geom = "histogram",
-    interestingGroups) {
-    skipMessage <- paste(
-        "Raw cellular barcodes are not defined",
-        "in `object@bcbio` slot...skipping"
-    )
+    interestingGroups
+) {
+    skipMessage <- "Raw cellular barcodes are not slotted in object"
+
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
 
     # Obtain the cellular barcode distributions
-    if (!is.null(metadata(object)[["filterParams"]])) {
-        # Check to see if the object has been filtered, and use the stashed
-        # metadata in the metrics for better performance. The read counts are
-        # defined in the metrics `nCount` column.
-        metrics <- metrics(object)
-        if (!"nCount" %in% colnames(metrics)) {
-            return(inform(skipMessage))
-        }
-        cellularBarcodes <- metrics[, c("sampleID", "nCount")]
-    } else {
-        cellularBarcodes <- bcbio(object, "cellularBarcodes")
-        if (is.null(cellularBarcodes)) {
-            return(inform(skipMessage))
-        }
-        if (is.list(cellularBarcodes)) {
-            cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
-        }
+    cellularBarcodes <- metadata(object)[["cellularBarcodes"]]
+    if (is.null(cellularBarcodes)) {
+        return(inform(skipMessage))
+    }
+    if (is.list(cellularBarcodes)) {
+        cellularBarcodes <- .bindCellularBarcodes(cellularBarcodes)
     }
 
     # Obtain the sample metadata
     sampleData <- sampleData(
         object,
-        interestingGroups = interestingGroups)
+        interestingGroups = interestingGroups
+    )
 
     # Mutate cellular barcodes to log10 and set up grouping
     rawTibble <- .rawCBTibble(
         cellularBarcodes = cellularBarcodes,
-        sampleData = sampleData)
+        sampleData = sampleData
+    )
 
     if (geom == "histogram") {
         proportionalTibble <- .proportionalCBTibble(
             rawTibble = rawTibble,
-            sampleData = sampleData)
+            sampleData = sampleData
+        )
     }
 
     # Define the log10 cutoff line (to match plot axis)
@@ -341,17 +340,20 @@ NULL
         p <- .plotProportionalCBHistogram(
             proportionalTibble,
             interestingGroups = interestingGroups,
-            cutoffLine = cutoffLine)
+            cutoffLine = cutoffLine
+        )
     } else if (geom == "ridgeline") {
         p <- .plotRawCBRidgeline(
             rawTibble,
             interestingGroups = interestingGroups,
-            cutoffLine = cutoffLine)
+            cutoffLine = cutoffLine
+        )
     } else if (geom == "violin") {
         p <- .plotRawCBViolin(
             rawTibble,
             interestingGroups = interestingGroups,
-            cutoffLine = cutoffLine)
+            cutoffLine = cutoffLine
+        )
     }
 
     p
@@ -365,7 +367,8 @@ NULL
 setMethod(
     "plotReadsPerCell",
     signature("bcbioSingleCell"),
-    .plotReadsPerCell)
+    .plotReadsPerCell
+)
 
 
 
@@ -376,4 +379,5 @@ setMethod(
     signature("seurat"),
     function(object, ...) {
         NULL
-    })
+    }
+)
