@@ -7,7 +7,6 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param metrics Metrics `data.frame`.
 #'
 #' @return `ggplot`.

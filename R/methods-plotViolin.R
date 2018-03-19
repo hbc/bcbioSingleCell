@@ -7,7 +7,6 @@
 #'
 #' @inheritParams general
 #' @inheritParams plotDot
-#'
 #' @param fill Fill color palette. Defaults to viridis.
 #' @param return Return type. "grid", "list", and "markdown" are supported.
 #' @param headerLevel Markdown header level. Only applicable when

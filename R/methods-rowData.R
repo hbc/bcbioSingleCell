@@ -10,15 +10,12 @@
 #' @return Return data as `data.frame`, or `DataFrame`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
-#' rowData(bcb) %>% glimpse()
+#' rowData(bcb_small) %>% glimpse()
 #'
 #' # seurat ====
 #' rowData(pbmc_small) %>% glimpse()
-#' rowData(seurat) %>% glimpse()
+#' rowData(seurat_small) %>% glimpse()
 NULL
 
 
