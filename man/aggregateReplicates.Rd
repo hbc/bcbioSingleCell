@@ -15,11 +15,9 @@
 Aggregate Replicates
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-
-# bcbioSingleCell
-print(bcb)
-aggregateReplicates(bcb)
+# bcbioSingleCell ====
+x <- aggregateReplicates(bcb_small)
+sampleData(x)
 }
 \seealso{
 Other Data Management Utilities: \code{\link{filterCells}},
