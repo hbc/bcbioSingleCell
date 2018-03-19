@@ -3,9 +3,12 @@
 \docType{methods}
 \name{colData}
 \alias{colData}
+\alias{colData,bcbioSingleCell-method}
 \alias{colData,seurat-method}
 \title{Column Data}
 \usage{
+\S4method{colData}{bcbioSingleCell}(x, return = c("data.frame", "DataFrame"))
+
 \S4method{colData}{seurat}(x, return = c("data.frame", "DataFrame"))
 }
 \arguments{
