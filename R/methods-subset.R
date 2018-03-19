@@ -5,6 +5,7 @@
 #' @name subset
 #' @author Michael Steinbaugh
 #'
+#' @importFrom parallel mclapply
 #' @importFrom SingleCellExperiment SingleCellExperiment
 #'
 #' @inheritParams base::`[`
@@ -20,9 +21,9 @@
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 #'
-#' cells <- colnames(bcb)[1:100]
+#' cells <- head(colnames(bcb), 100L)
 #' head(cells)
-#' genes <- rownames(bcb)[1:100]
+#' genes <- head(rownames(bcb), 100L)
 #' head(genes)
 #'
 #' # Subset by cell identifiers
@@ -64,16 +65,10 @@ NULL
     genes <- rownames(sce)
     cells <- colnames(sce)
 
-    # Assays ===================================================================
     assays <- assays(sce)
-
-    # Row data =================================================================
     rowRanges <- rowRanges(sce)
-    assert_has_names(rowRanges)
-
-    # Column data ==============================================================
-    # Don't need to relevel factors here currently
     colData <- colData(sce)
+    isSpike <- isSpike(sce)
 
     # Metadata =================================================================
     metadata <- metadata(sce)
@@ -86,7 +81,6 @@ NULL
 
     # cell2sample
     cell2sample <- metadata[["cell2sample"]]
-    assert_is_factor(cell2sample)
     # Note that we're subsetting `sampleData` by the factor levels in
     # `cell2sample`, so this must come first
     cell2sample <- droplevels(cell2sample[cells])
@@ -99,6 +93,7 @@ NULL
         mutate_all(droplevels) %>%
         set_rownames(.[["sampleID"]])
     metadata[["sampleData"]] <- sampleData
+
     sampleIDs <- as.character(sampleData[["sampleID"]])
 
     # aggregateReplicates
@@ -124,30 +119,22 @@ NULL
         metadata[["filterGenes"]] <- filterGenes
     }
 
-    # bcbio ====================================================================
-    # FIXME Need to move this into metadata and rework
-    bcbio <- bcbio(x)
-    if (is(bcbio, "SimpleList") & length(bcbio)) {
-        # Cellular barcodes
-        cb <- bcbio[["cellularBarcodes"]]
-        # Bind barcodes into a single `data.frame`, which we can subset
-        if (!is.null(cb)) {
-            if (is.list(cb)) {
-                cb <- .bindCellularBarcodes(cb)
-            }
-            cb <- cb[cells, , drop = FALSE]
-            cbList <- lapply(seq_along(sampleIDs), function(a) {
-                cb %>%
-                    ungroup() %>%
-                    filter(.data[["sampleID"]] == sampleIDs[[a]]) %>%
-                    mutate(sampleID = NULL)
-            })
-            names(cbList) <- sampleIDs
-        }
-        # Return the SimpleList
-        bcbio <- list(
-            cellularBarcodes = cbList) %>%
-            as("SimpleList")
+    # Unfiltered cellular barcodes
+    cb <- metadata[["cellularBarcodes"]]
+    # Bind barcodes into a single `data.frame`, which we can subset
+    if (!is.null(cb)) {
+        assert_is_list(cb)
+        df <- cb %>%
+            .bindCellularBarcodes() %>%
+            .[cells, , drop = FALSE]
+        cb <- mclapply(seq_along(sampleIDs), function(a) {
+            df %>%
+                ungroup() %>%
+                filter(.data[["sampleID"]] == sampleIDs[[a]]) %>%
+                mutate(sampleID = NULL)
+        })
+        names(cb) <- sampleIDs
+        metadata[["cellularBarcodes"]] <- cb
     }
 
     # Return ===================================================================
@@ -157,6 +144,12 @@ NULL
         colData = colData,
         metadata = metadata
     )
+    # Define spikeNames for spike-in sequences
+    if (is.character(isSpike)) {
+        for (i in seq_along(isSpike)) {
+            isSpike(sce, isSpike[[i]]) <- isSpike[[i]]
+        }
+    }
     new("bcbioSingleCell", sce)
 }
 
