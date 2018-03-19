@@ -20,7 +20,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr arrange group_by filter mutate mutate_all select ungroup
+#' @importFrom dplyr arrange group_by mutate mutate_all ungroup
 #' @importFrom parallel mclapply
 #' @importFrom rlang !!! syms
 #' @importFrom stats reorder
@@ -101,7 +101,22 @@ NULL
     inform("Updating metadata")
 
     # sampleData
-    metadata[["sampleData"]] <- sampleData(object, aggregateReplicates = TRUE)
+    expected <- length(unique(sampleData[["sampleNameAggregate"]]))
+    sampleData <- sampleData %>%
+        mutate(
+            sampleName = .data[["sampleNameAggregate"]],
+            description = .data[["sampleName"]],
+            sampleID = make.names(
+                .data[["sampleName"]], unique = FALSE)
+        ) %>%
+        # FIXME Improve detection and handling of unique columns here
+        .[, metadataPriorityCols] %>%
+        unique()
+    if (!identical(nrow(sampleData), expected)) {
+        abort("Failed to aggregate sample metadata uniquely")
+    }
+    rownames(sampleData) <- sampleData[["sampleID"]]
+    metadata[["sampleData"]] <- sampleData
 
     # cell2sample
     metadata[["cell2sample"]] <- mapCellsToSamples(
@@ -139,7 +154,6 @@ NULL
             summarize(nCount = sum(.data[["nCount"]])) %>%
             ungroup() %>%
             group_by(.data[["sampleID"]]) %>%
-            # FIXME Switch to base method
             arrange(dplyr::desc(.data[["nCount"]]), .by_group = TRUE)
         # Group and sum the counts
         # Now split this back out into a list to match the original data
@@ -147,7 +161,7 @@ NULL
         cbAggregateList <- lapply(seq_along(newIDs), function(a) {
             cbAggregateData %>%
                 ungroup() %>%
-                filter(.data[["sampleID"]] == newIDs[[a]]) %>%
+                .[.[["sampleID"]] == newIDs[[a]], , drop = FALSE] %>%
                 mutate(sampleID = NULL)
         })
         names(cbAggregateList) <- as.character(newIDs)
