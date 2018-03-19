@@ -20,6 +20,20 @@ NULL
 
 # Methods ======================================================================
 #' @rdname colData
+#' @export
+setMethod(
+    "colData",
+    signature("bcbioSingleCell"),
+    function(x, return = c("data.frame", "DataFrame")) {
+        return <- match.arg(return)
+        data <- slot(x, "colData")
+        as(data, return)
+    }
+)
+
+
+
+#' @rdname colData
 #' @importFrom dplyr mutate_if
 #' @importFrom tibble column_to_rownames rownames_to_column
 #' @export
