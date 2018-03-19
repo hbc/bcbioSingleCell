@@ -17,9 +17,9 @@ Metadata
 \examples{
 # seurat ====
 # Only works for objects created with bcbioSingleCell
-metadata(pbmc_small)
 names(metadata(seurat_small))
 
+# Assignment method support
 metadata(seurat_small)[["stash"]] <- "XXX"
 metadata(seurat_small)[["stash"]]
 }

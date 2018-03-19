@@ -25,16 +25,11 @@ sanitizeMarkers(object, markers, ...)
 Sanitize Markers Output
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-load(system.file(
-    "extdata/seuratAllMarkersOriginal.rda",
-    package = "bcbioSingleCell"
-))
-
 # seurat ====
+ident_3_markers <- FindMarkers(seurat_small, ident.1 = "3", ident.2 = NULL)
 sanitizeMarkers(
-    seurat,
-    markers = seuratAllMarkersOriginal
+    object = seurat_small,
+    markers = ident_3_markers
 ) \%>\%
     glimpse()
 }

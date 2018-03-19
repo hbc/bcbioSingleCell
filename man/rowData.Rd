@@ -21,15 +21,12 @@ Return data as \code{data.frame}, or \code{DataFrame}.
 Row Data
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
-rowData(bcb) \%>\% glimpse()
+rowData(bcb_small) \%>\% glimpse()
 
 # seurat ====
 rowData(pbmc_small) \%>\% glimpse()
-rowData(seurat) \%>\% glimpse()
+rowData(seurat_small) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

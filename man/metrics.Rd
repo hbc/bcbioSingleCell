@@ -17,20 +17,19 @@
 \item{interestingGroups}{Interesting group, to use for colors.}
 }
 \value{
-\link{data.frame} with cellular barcodes as rows.
+\code{data.frame} with cellular barcodes as rows.
 }
 \description{
 Sample Barcode Metrics
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell
-metrics(bcb) \%>\% glimpse()
+metrics(bcb_small) \%>\% glimpse()
 
-# seurat
-metrics(seurat) \%>\% glimpse()
+# seurat ====
+metrics(pbmc_small) \%>\% glimpse()
+metrics(seurat_small) \%>\% glimpse()
 }
 \seealso{
 \code{\link[=sampleData]{sampleData()}}.

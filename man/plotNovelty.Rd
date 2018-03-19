@@ -5,7 +5,6 @@
 \alias{plotNovelty}
 \alias{plotNovelty}
 \alias{plotNovelty,bcbioSingleCell-method}
-\alias{plotNovelty,data.frame-method}
 \alias{plotNovelty,seurat-method}
 \title{Plot Novelty Score}
 \usage{
@@ -13,15 +12,11 @@ plotNovelty(object, ...)
 
 \S4method{plotNovelty}{bcbioSingleCell}(object, geom = "violin", min,
   interestingGroups, samplesOnYAxis = TRUE,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotNovelty}{data.frame}(object, geom = "violin", min = 0L,
-  interestingGroups, samplesOnYAxis = TRUE,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotNovelty}{seurat}(object, geom = "violin", min,
   interestingGroups, samplesOnYAxis = TRUE,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -56,18 +51,11 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotNovelty(bcb_small)
 
-# bcbioSingleCell
-plotNovelty(bcb)
-
-# seurat
-plotNovelty(seurat)
-
-# data.frame
-df <- metrics(bcb)
-plotNovelty(df)
+# seurat ====
+plotNovelty(seurat_small)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

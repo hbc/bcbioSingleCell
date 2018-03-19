@@ -29,22 +29,19 @@ Character vector.
 Interesting Groups
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# bcbioSingleCell
-interestingGroups(bcb)
+# bcbioSingleCell ====
+interestingGroups(bcb_small)
 
 # Assignment method support
-interestingGroups(bcb) <- "sampleID"
-interestingGroups(bcb)
+interestingGroups(bcb_small) <- "sampleID"
+interestingGroups(bcb_small)
 
-# seurat
-interestingGroups(seurat)
+# seurat ====
+interestingGroups(seurat_small)
 
 # Assignment method support
-interestingGroups(seurat) <- "sampleID"
-interestingGroups(seurat)
+interestingGroups(seurat_small) <- "sampleID"
+interestingGroups(seurat_small)
 }
 \author{
 Michael Steinbaugh

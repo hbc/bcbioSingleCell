@@ -20,20 +20,17 @@ metricsPerSample(object, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\link{tibble} containing summary statistics.
+\code{tibble} containing summary statistics.
 }
 \description{
 Metrics per Sample
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+metricsPerSample(bcb_small)
 
-# bcbioSingleCell
-metricsPerSample(bcb)
-
-# seurat
-metricsPerSample(seurat)
+# seurat ====
+metricsPerSample(seurat_small)
 }
 \author{
 Michael Steinbaugh

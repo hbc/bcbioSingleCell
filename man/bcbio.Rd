@@ -7,19 +7,19 @@
 \alias{bcbio<-,seurat-method}
 \title{Additional bcbio Run Data Accessor}
 \usage{
-\S4method{bcbio}{seurat}(object, type)
+\S4method{bcbio}{seurat}(object, slot)
 
-\S4method{bcbio}{seurat}(object, type) <- value
+\S4method{bcbio}{seurat}(object, slot) <- value
 }
 \arguments{
 \item{object}{Object.}
 
-\item{type}{Type of count data to retrieve.}
+\item{slot}{Slot name of data inside accessor.}
 
 \item{value}{Object to assign.}
 }
 \value{
-\link{bcbioSingleCell}.
+Various data types.
 }
 \description{
 Additional bcbio Run Data Accessor
@@ -29,9 +29,10 @@ Additional bcbio Run Data Accessor
 names(bcbio(seurat_small))
 
 # Assignment method support
-bcbio(seurat_small, "stash") <- "testing"
-bcbio(seurat_small, "stash")
+bcbio(seurat_small, "metadata")[["stash"]] <- "XXX"
+bcbio(seurat_small, "metadata")[["stash"]]
 }
 \author{
 Michael Steinbaugh
 }
+\keyword{internal}

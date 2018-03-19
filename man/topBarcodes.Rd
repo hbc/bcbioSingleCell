@@ -28,14 +28,11 @@ topBarcodes(object, ...)
 Top Barcodes
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+topBarcodes(bcb_small) \%>\% glimpse()
 
-# bcbioSingleCell
-topBarcodes(bcb) \%>\% glimpse()
-
-# seurat
-topBarcodes(seurat) \%>\% glimpse()
+# seurat ====
+topBarcodes(pbmc_small) \%>\% glimpse()
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
