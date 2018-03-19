@@ -1,6 +1,5 @@
 #' Calculate Cellular Barcode Metrics Summary
 #'
-#' @rdname calculateMetrics
 #' @name calculateMetrics
 #' @family QC Metrics Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
@@ -15,14 +14,12 @@
 #' @return `data.frame`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell
-#' calculateMetrics(bcb) %>% glimpse()
+#' calculateMetrics(bcb_small) %>% glimpse()
 #'
-#' # dgCMatrix
-#' counts <- counts(bcb)
-#' rowData <- rowData(bcb)
+#' # dgCMatrix ====
+#' counts <- counts(bcb_small)
+#' rowData <- rowData(bcb_small)
 #' calculateMetrics(counts, rowData = rowData) %>% glimpse()
 NULL
 
