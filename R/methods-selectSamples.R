@@ -19,11 +19,9 @@
 #' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-#'
-#' # bcbioSingleCell
-#' # Quality control filtering must be applied first!
-#' selectSamples(filtered, sampleName = "M1")
+#' # bcbioSingleCell ====
+#' sampleData(bcb_small) %>% glimpse()
+#' selectSamples(bcb_small, sampleName = "M1_seq_rep_1")
 NULL
 
 
