@@ -14,8 +14,8 @@
 \arguments{
 \item{object}{Object.}
 
-\item{gene2symbol}{Convert Ensembl gene identifiers (rownames) to gene
-symbols. Recommended for passing counts to Seurat.}
+\item{gene2symbol}{\emph{Not recommended.} Convert Ensembl gene identifiers
+(rownames) to gene symbols. Required for passing counts to Seurat.}
 
 \item{normalized}{Normalized (\code{TRUE}) or raw (\code{FALSE}) counts.}
 }

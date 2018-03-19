@@ -8,8 +8,8 @@
 #'
 #' @inheritParams general
 #'
-#' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
-#'   symbols. Recommended for passing counts to Seurat.
+#' @param gene2symbol *Not recommended.* Convert Ensembl gene identifiers
+#'   (rownames) to gene symbols. Required for passing counts to Seurat.
 #' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
 #'
 #' @return Counts matrix.
@@ -34,31 +34,19 @@ NULL
 #' @importFrom magrittr set_rownames
 .counts <- function(
     object,
-    gene2symbol = FALSE) {
+    gene2symbol = FALSE
+) {
     counts <- assay(object)
     if (isTRUE(gene2symbol)) {
-        g2s <- metadata(object)[["gene2symbol"]]
-        if (!all(rownames(counts) %in% rownames(g2s))) {
-            # Resize the gene2symbol data.frame
-            g2s <- g2s %>%
-                .[rownames(counts), , drop = FALSE] %>%
-                set_rownames(rownames(counts))
-            matched <- g2s %>%
-                .[!is.na(.[["geneName"]]), , drop = FALSE]
-            unmatched <- g2s %>%
-                .[is.na(.[["geneName"]]), , drop = FALSE]
-            warn(paste(
-                "Unmatched in gene2symbol:",
-                toString(rownames(unmatched))
-            ))
-            unmatched[["geneID"]] <- rownames(unmatched)
-            unmatched[["geneName"]] <- rownames(unmatched)
-            g2s <- rbind(matched, unmatched)
-        }
+        g2s <- gene2symbol(object)
+        assert_is_subset(rownames(counts), rownames(g2s))
+        # Resize the gene2symbol data.frame
         g2s <- g2s[rownames(counts), , drop = FALSE]
-        rows <- pull(g2s, "geneName")
-        names(rows) <- rownames(g2s)
-        rownames(counts) <- rows
+        # Abort on any NA gene names
+        stopifnot(!any(is.na(g2s[["geneName"]])))
+        rownames <- make.names(g2s[["geneName"]], unique = TRUE)
+        names(rownames) <- g2s[["geneID"]]
+        rownames(counts) <- rownames
     }
     counts
 }
@@ -71,7 +59,8 @@ NULL
 setMethod(
     "counts",
     signature("bcbioSingleCell"),
-    .counts)
+    .counts
+)
 
 
 
@@ -81,15 +70,12 @@ setMethod(
     "counts",
     signature("seurat"),
     function(object, normalized = FALSE) {
+        assert_is_a_bool(normalized)
+        # seurat also stashes scaled counts in `scale.data`
         if (identical(normalized, FALSE)) {
             slot(object, "raw.data")
         } else if (identical(normalized, TRUE)) {
             slot(object, "data")
-        } else if (normalized == "scaled") {
-            slot(object, "scale.data")
-        } else {
-            warn("Unsupported `normalized` argument")
-            return(NULL)
         }
     }
 )

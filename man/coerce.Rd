@@ -20,10 +20,8 @@ coercion.
 }
 
 \examples{
-load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-
 # Coerce bcbioSingleCell to seurat
-as(filtered, "seurat")
+as(bcb_small, "seurat")
 }
 \seealso{
 \code{help(topic = "coerce", package = "methods")}.

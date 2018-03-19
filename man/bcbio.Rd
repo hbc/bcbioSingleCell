@@ -25,14 +25,12 @@
 Additional bcbio Run Data Accessor
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 # seurat ====
-names(bcbio(seurat))
+names(bcbio(seurat_small))
 
 # Assignment method support
-bcbio(seurat, "stash") <- "testing"
-bcbio(seurat, "stash")
+bcbio(seurat_small, "stash") <- "testing"
+bcbio(seurat_small, "stash")
 }
 \author{
 Michael Steinbaugh
