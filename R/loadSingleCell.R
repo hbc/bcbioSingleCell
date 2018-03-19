@@ -328,9 +328,6 @@ loadSingleCell <- function(
         rowData = rowData,
         prefilter = prefilter
     )
-    # Bind the `nCount` column to the colData
-    cbPass <- cbData[rownames(colData), "nCount", drop = FALSE]
-    colData <- cbind(colData, cbPass)
 
     if (isTRUE(prefilter)) {
         # Subset the counts matrix to match the cells that passed prefiltering

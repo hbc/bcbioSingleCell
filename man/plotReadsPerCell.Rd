@@ -26,7 +26,7 @@ plotReadsPerCell(object, ...)
 \item{interestingGroups}{Interesting group, to use for colors.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Plot Read Counts per Cell

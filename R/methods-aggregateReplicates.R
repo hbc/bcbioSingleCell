@@ -90,21 +90,6 @@ NULL
         rowData = rowData,
         prefilter = prefilter
     )
-    # Add the raw read counts for objects with raw cellular barcodes list
-    if (!is.null(cb)) {
-        nCount <- cbAggregateData %>%
-            mutate(
-                rowname = paste(
-                    .data[["sampleID"]],
-                    .data[["cellularBarcode"]],
-                    sep = "_"
-                )
-            ) %>%
-            as.data.frame() %>%
-            column_to_rownames() %>%
-            .[rownames(colData), "nCount", drop = FALSE]
-        colData <- cbind(colData, nCount)
-    }
 
     # Prefilter very low quality cells, if desired
     if (isTRUE(prefilter)) {
@@ -116,8 +101,7 @@ NULL
     inform("Updating metadata")
 
     # sampleData
-    metadata[["sampleData"]] <-
-        sampleData(object, aggregateReplicates = TRUE)
+    metadata[["sampleData"]] <- sampleData(object, aggregateReplicates = TRUE)
 
     # cell2sample
     metadata[["cell2sample"]] <- mapCellsToSamples(
@@ -127,12 +111,6 @@ NULL
 
     # aggregateReplicates
     metadata[["aggregateReplicates"]] <- groupings
-
-    # filterCells, if set
-    filterCells <- metadata[["filterCells"]]
-    if (!is.null(filterCells)) {
-        metadata[["filterCells"]] <- groupings[filterCells]
-    }
 
     # cellularBarcodes, if set
     cb <- metadata[["cellularBarcodes"]]
@@ -174,6 +152,12 @@ NULL
         })
         names(cbAggregateList) <- as.character(newIDs)
         metadata[["cellularBarcodes"]] <- cbAggregateList
+    }
+
+    # filterCells, if set
+    filterCells <- metadata[["filterCells"]]
+    if (!is.null(filterCells)) {
+        metadata[["filterCells"]] <- groupings[filterCells]
     }
 
     # Return ===================================================================

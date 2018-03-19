@@ -13,7 +13,7 @@
 #'
 #' @note Here by "cell" we mean "cellular barcode".
 #'
-#' @return [ggplot].
+#' @return `ggplot`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
