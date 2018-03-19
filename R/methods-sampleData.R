@@ -69,23 +69,24 @@ NULL
 
 
 
-#' @importFrom dplyr everything mutate_all
-#' @importFrom magrittr set_rownames
-.sanitizeSampleMetadata <- function(metadata, interestingGroups) {
-    metadata %>%
-        select(c(metadataPriorityCols), everything()) %>%
-        mutate_all(as.factor) %>%
-        mutate_all(droplevels) %>%
-        uniteInterestingGroups(interestingGroups) %>%
-        set_rownames(.[["sampleID"]])
-}
+# FIXME Remove this legacy code
+# #' @importFrom dplyr everything mutate_all
+# #' @importFrom magrittr set_rownames
+# .sanitizeSampleMetadata <- function(metadata, interestingGroups) {
+#     metadata %>%
+#         select(c(metadataPriorityCols), everything()) %>%
+#         mutate_all(as.factor) %>%
+#         mutate_all(droplevels) %>%
+#         uniteInterestingGroups(interestingGroups) %>%
+#         set_rownames(.[["sampleID"]])
+# }
 
 
 
 # Methods ======================================================================
 #' @rdname sampleData
-#' @importFrom dplyr distinct mutate select
-#' @importFrom stringr str_match
+#' @importFrom basejump sanitizeSampleData
+#' @importFrom bcbioBase uniteInterestingGroups
 #' @export
 setMethod(
     "sampleData",
@@ -96,29 +97,28 @@ setMethod(
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
         data <- metadata(object)[["sampleData"]]
-        .sanitizeSampleMetadata(
-            metadata = data,
-            interestingGroups = interestingGroups
-        )
+        data <- uniteInterestingGroups(data, interestingGroups)
+        data <- sanitizeSampleData(data)
+        data
     }
 )
 
 
 
 #' @rdname sampleData
+#' @importFrom basejump sanitizeSampleData
+#' @importFrom bcbioBase uniteInterestingGroups
 #' @export
 setMethod(
     "sampleData",
     signature("seurat"),
     function(object, interestingGroups) {
-        # FIXME Add `metadata()` accessor support to seurat
-        data <- bcbio(object, "metadata")[["sampleData"]]
-        if (!is.null(data)) {
-            # Define interesting groups
-            if (missing(interestingGroups)) {
-                interestingGroups <- bcbioBase::interestingGroups(object)
-            }
-        } else {
+        data <- metadata(object)[["sampleData"]]
+        # Define interesting groups
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        if (is.null(data)) {
             # Fall back to constructing metadata from cellular barcode info
             if (!.hasSlot(object, "version")) {
                 abort("Failed to detect seurat version")
@@ -139,9 +139,8 @@ setMethod(
                 interestingGroups <- "sampleName"
             }
         }
-        .sanitizeSampleMetadata(
-            metadata = data,
-            interestingGroups = interestingGroups
-        )
+        data <- uniteInterestingGroups(data, interestingGroups)
+        data <- sanitizeSampleData(data)
+        data
     }
 )
