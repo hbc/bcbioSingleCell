@@ -2,7 +2,6 @@
 #'
 #' @note This function only returns the positive markers per cluster.
 #'
-#' @rdname cellTypesPerCluster
 #' @name cellTypesPerCluster
 #' @author Michael Steinbaugh
 #'
@@ -11,13 +10,11 @@
 #' @param min Minimum number of marker genes per cluster.
 #' @param max Maximum number of marker genes per cluster.
 #'
-#' @return [tibble] grouped by cluster, containing the count (`n`) of
+#' @return `tibble` grouped by cluster, containing the count (`n`) of
 #'   significant known makers per cell type.
 #'
 #' @examples
-#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-#'
-#' cellTypesPerCluster(knownMarkersDetected) %>% glimpse()
+#' cellTypesPerCluster(known_markers_small) %>% glimpse()
 NULL
 
 
@@ -29,19 +26,22 @@ NULL
     object,
     min = 1L,
     max = Inf) {
-    if (attr(object, "vars") != "cell") {
-        abort("Markers tibble should be grouped by cell")
+    if (attr(object, "vars") != "cellType") {
+        abort("Markers tibble is not grouped by `cellType`")
     }
+
     requiredCols <- c(
-        "avgLogFC",  # Seurat v2.1
-        "cell",      # bcbio
+        "cellType",  # bcbio
         "cluster",   # Seurat
         "geneID",    # bcbio
         "geneName",  # bcbio
+        "avgLogFC",  # Seurat v2.1
         "padj"       # Seurat v2.1
     )
     assert_is_subset(requiredCols, colnames(object))
-    groupCols <- syms(c("cluster", "cell"))
+
+    # Note that the order is important here
+    groupCols <- syms(c("cluster", "cellType"))
 
     tbl <- object %>%
         ungroup() %>%
@@ -50,6 +50,7 @@ NULL
         select(!!!groupCols, everything()) %>%
         group_by(!!!groupCols) %>%
         arrange(.data[["padj"]], .by_group = TRUE) %>%
+        # Use `toString()` instead of `aggregate()` for R Markdown tables
         summarize(
             n = n(),
             # Genes are arranged by P value
@@ -82,4 +83,5 @@ NULL
 setMethod(
     "cellTypesPerCluster",
     signature("grouped_df"),
-    .cellTypesPerCluster)
+    .cellTypesPerCluster
+)
