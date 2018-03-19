@@ -151,8 +151,12 @@ loadSingleCell <- function(
     yamlFile <- file.path(projectDir, "project-summary.yaml")
     yaml <- readYAML(yamlFile)
 
-    # Log files ================================================================
-    inform("Reading log files")
+    # bcbio run information ====================================================
+    programVersions <- readProgramVersions(
+        file = file.path(projectDir, "programs.txt")
+    )
+    assert_is_tbl_df(programVersions)
+
     bcbioLogFile <- list.files(
         path = projectDir,
         pattern = "bcbio-nextgen.log",
@@ -175,7 +179,7 @@ loadSingleCell <- function(
     bcbioCommandsLog <- readLogFile(bcbioCommandsLogFile)
     assert_is_character(bcbioCommandsLog)
 
-    # Cellular barcode cutoff
+    # Cellular barcode cutoff ==================================================
     cellularBarcodeCutoffPattern <- "--cb_cutoff (\\d+)"
     assert_any_are_matching_regex(
         x = bcbioCommandsLog,
@@ -197,22 +201,13 @@ loadSingleCell <- function(
         "reads per cellular barcode cutoff detected"
     ))
 
-    # Detect MatrixMarket output at transcript or gene level
+    # Detect gene or transcript-level output ===================================
     genemapPattern <- "--genemap (.+)-tx2gene.tsv"
     if (any(grepl(genemapPattern, bcbioCommandsLog))) {
         level <- "gene"
     } else {
         level <- "transcript"
     }
-
-    # Data and program versions ================================================
-    inform("Reading data and program versions")
-    dataVersions <- readDataVersions(
-        file = file.path(projectDir, "data_versions.csv")
-    )
-    programVersions <- readProgramVersions(
-        file = file.path(projectDir, "programs.txt")
-    )
 
     # Molecular barcode (UMI) type =============================================
     umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
@@ -388,7 +383,6 @@ loadSingleCell <- function(
         "yamlFile" = yamlFile,
         "yaml" = yaml,
         "tx2gene" = tx2gene,
-        "dataVersions" = dataVersions,
         "programVersions" = programVersions,
         "bcbioLog" = bcbioLog,
         "bcbioCommandsLog" = bcbioCommandsLog,
