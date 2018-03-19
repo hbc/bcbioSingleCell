@@ -1,74 +1,35 @@
-devtools::load_all()
+library(devtools)
+load_all()
 
-extdataDir <- file.path("inst", "extdata")
-uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
-sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
+bcb_small <- loadSingleCell(
+    uploadDir = "inst/extdata/harvard_indrop_v3",
+    sampleMetadataFile = "inst/extdata/harvard_indrop_v3.csv",
+    organism = "Homo sapiens"
+)
 
-bcb <- loadSingleCell(
-    uploadDir = uploadDir,
-    sampleMetadataFile = sampleMetadataFile)
-
-slotNames(bcb)
-names(assay(bcb))
-
-# Make the example bcbioSingleCell object more minimal to save disk space
-# First, let's pick only the top 250 genes that have the most robust expression.
-counts <- counts(bcb)
-if (!is(counts, "dgCMatrix")) {
-    stop("counts should be sparse dgCMatrix")
-}
-if (is.null(colnames(counts))) {
-    stop("colnames are NULL")
-}
-# FIXME Migration to SingleCellExperiment uses rowRanges rather than rowData.
-# We may need to convert our object to use GenomicRanges...
-if (is.null(rownames(counts))) {
-    stop("rownames are NULL")
-}
-
-nGenes <- 1000L
+counts <- counts(bcb_small)
 countsPerGene <- Matrix::rowSums(counts) %>%
     sort(decreasing = TRUE) %>%
-    head(n = nGenes)
-topGenes <- names(countsPerGene) %>%
-    sort()
-length(topGenes)
-
-nCells <- 500L
+    head(n = 500L)
+genes <- names(countsPerGene)
 countsPerCell <- Matrix::colSums(counts) %>%
     sort(decreasing = TRUE) %>%
-    head(n = nCells)
-topCells <- names(countsPerCell) %>%
-    sort()
-length(topCells)
+    head(n = 500L)
+cells <- names(countsPerCell)
 
-if (!identical(
-    c(nGenes, nCells),
-    c(length(topGenes), length(topCells))
-)) {
-    stop("Example should have same number of genes and cells")
-}
+bcb_small <- bcb_small[genes, cells]
 
-bcb <- bcb[topGenes, topCells]
-if (!identical(c(nGenes, nCells), dim(bcb))) {
-    stop("Subset operation failed")
-}
-bcb
-object.size(bcb) %>%
-    format(units = "auto")
-
-pooled <- aggregateReplicates(bcb)
-pooled
-
-filtered <- filterCells(
-    pooled,
+bcb_small <- filterCells(
+    agg_small,
+    minUMIs = 0,
+    minGenes = 0,
     maxMitoRatio = 0.25,
-    minNovelty = 0.7)
-filtered
+    minNovelty = 0.7
+)
 
 # Minimal simple Seurat working example
-dimsUse <- 1:20
-seurat <- as(filtered, "seurat") %>%
+dimsUse <- seq_len(20L)
+seurat_small <- as(filter_small, "seurat") %>%
     NormalizeData() %>%
     FindVariableGenes(do.plot = FALSE) %>%
     ScaleData() %>%
@@ -76,22 +37,21 @@ seurat <- as(filtered, "seurat") %>%
     FindClusters(dims.use = dimsUse) %>%
     RunTSNE(dims.use = dimsUse, do.fast = TRUE)
 
-seuratAllMarkersOriginal <- FindAllMarkers(seurat)
-seuratAllMarkers <- sanitizeMarkers(
-    seurat,
-    markers = seuratAllMarkersOriginal)
-knownMarkersDetected <- knownMarkersDetected(
-    all = seuratAllMarkers,
-    known = cellTypeMarkers[["hsapiens"]])
+all_markers <- FindAllMarkers(seurat_small)
+all_markers <- sanitizeMarkers(
+    object = seurat_small,
+    markers = all_markers
+)
+known_markers_detected <- knownMarkersDetected(
+    all = all_markers,
+    known = cellTypeMarkers[["hsapiens"]]
+)
 
-saveData(
-    bcb,
-    pooled,
-    filtered,
-    knownMarkersDetected,
-    seurat,
-    seuratAllMarkers,
-    seuratAllMarkersOriginal,
-    dir = extdataDir,
+use_data(
+    bcb_small,
+    seurat_small,
+    all_markers,
+    known_markers_detected,
     compress = "xz",
-    overwrite = TRUE)
+    overwrite = TRUE
+)
