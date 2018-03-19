@@ -5,23 +5,21 @@
 #' simply reassign first using that function. If necessary, we can add support
 #' for the number of genes to plot here in a future update.
 #'
-#' @rdname plotTopMarkers
 #' @name plotTopMarkers
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
 #' @inherit plotMarkers
 #'
-#' @param topMarkers Top markers [tibble] grouped by cluster, returned by
+#' @param topMarkers Top markers `tibble` grouped by cluster, returned by
 #'   [topMarkers()].
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/topMarkers.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat, grouped_df
-#' # Let's plot the top 2 markers from cluster 0, as a quick example
-#' plotTopMarkers(seurat, topMarkers = topMarkers[1:2, ])
+#' # seurat, grouped_df ====
+#' plotTopMarkers(
+#'     object = seurat_small,
+#'     topMarkers = topMarkers(all_markers_small, n = 1L)
+#' )
 NULL
 
 
@@ -32,14 +30,16 @@ NULL
 .plotTopMarkers <- function(
     object,
     topMarkers,
-    tsneColor = viridis::scale_color_viridis(),
-    violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-    dotColor = ggplot2::scale_color_gradient(
+    tsneColor = scale_color_viridis(),
+    violinFill = scale_fill_viridis(discrete = TRUE),
+    dotColor = scale_color_gradient(
         low = "lightgray",
-        high = "purple"),
+        high = "purple"
+    ),
     dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = 2L) {
+    headerLevel = 2L
+) {
     .checkSanitizedMarkers(topMarkers)
     clusters <- levels(topMarkers[["cluster"]])
     list <- pblapply(seq_along(clusters), function(a) {
@@ -57,7 +57,8 @@ NULL
                 paste("Cluster", cluster),
                 level = headerLevel,
                 tabset = TRUE,
-                asis = TRUE)
+                asis = TRUE
+            )
             subheaderLevel <- headerLevel + 1L
         } else {
             subheaderLevel <- NULL
@@ -70,7 +71,8 @@ NULL
             dotColor = dotColor,
             dark = dark,
             pointsAsNumbers = pointsAsNumbers,
-            headerLevel = subheaderLevel)
+            headerLevel = subheaderLevel
+        )
     })
     invisible(list)
 }
@@ -84,5 +86,7 @@ setMethod(
     "plotTopMarkers",
     signature(
         object = "seurat",
-        topMarkers = "grouped_df"),
-    .plotTopMarkers)
+        topMarkers = "grouped_df"
+    ),
+    .plotTopMarkers
+)
