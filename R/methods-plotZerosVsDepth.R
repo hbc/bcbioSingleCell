@@ -13,20 +13,17 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
-#' plotZerosVsDepth(bcb)
+#' plotZerosVsDepth(bcb_small)
 #'
 #' # dgCMatrix ====
-#' counts <- counts(bcb)
-#' metrics <- metrics(bcb)
+#' counts <- counts(bcb_small)
+#' metrics <- metrics(bcb_small)
 #' plotZerosVsDepth(counts, metrics = metrics)
 #'
 #' # seurat ====
 #' plotZerosVsDepth(pbmc_small)
-#' plotZerosVsDepth(seurat)
+#' plotZerosVsDepth(seurat_small)
 NULL
 
 
@@ -35,31 +32,27 @@ NULL
 #' @importFrom ggplot2 aes_string facet_wrap geom_point ggplot labs
 #'   scale_x_log10
 .plotZerosVsDepth <- function(object, metrics) {
-    # Using a logical matrix is fast and memory efficient
-    present <- as(object, "lgCMatrix")
-    df <- data.frame(
-        dropout = (nrow(present) - Matrix::colSums(present)) / nrow(present),
-        depth = Matrix::colSums(object),
-        description = metrics[["description"]]
+    # Using a logical matrix is faster and more memory efficient
+    present <- object %>%
+        # Ensure dgTMatrix gets coereced (e.g. pbmc_small)
+        as("dgCMatrix") %>%
+        as("lgCMatrix")
+    data <- tibble(
+        "dropout" = (nrow(present) - Matrix::colSums(present)) / nrow(present),
+        "depth" = Matrix::colSums(object),
+        "sampleName" = metrics[["sampleID"]]
     )
-    p <- ggplot(
-        df,
-        mapping = aes_string(x = "depth", y = "dropout")
+    ggplot(
+        data = data,
+        mapping = aes_string(
+            x = "depth",
+            y = "dropout",
+            color = "sampleName"
+        )
     ) +
-        geom_point(size = 0.8, alpha = 0.3) +
+        geom_point(size = 0.8, alpha = 0.8) +
         scale_x_log10() +
         labs(x = "library size (depth)", y = "dropout rate")
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
-        facets <- c(facets, "sampleNameAggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free")
-    }
-
-    p
 }
 
 
