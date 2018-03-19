@@ -8,10 +8,6 @@
 #' @inheritParams general
 #' @inheritParams metrics
 #'
-#' @param aggregateReplicates Aggregate technical replicates, if specified. This
-#'   function uses values assigned in the `sampleNameAggregate` column of the
-#'   internal sample metadata `data.frame`.
-#'
 #' @return `data.frame`.
 #'
 #' @examples
@@ -29,7 +25,7 @@ NULL
 
 
 # Constructors =================================================================
-#' Prepare Sample Metadata from Seurat
+#' Prepare Sample Data from Seurat
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
@@ -97,50 +93,18 @@ NULL
 setMethod(
     "sampleData",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        interestingGroups,
-        aggregateReplicates = FALSE
-    ) {
+    function(object, interestingGroups) {
+        validObject(object)
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
-        # Legacy `sampleData` column fix
-        if ("sampleData" %in% names(metadata(object))) {
-            warn(paste(
-                "Legacy `sampleData` slot detected.",
-                "Run `updateObject()."
-            ))
-            metadata(object)[["sampleData"]] <- metadata(object)[["sampleData"]]
-        }
-
-        metadata <- metadata(object) %>%
-            .[["sampleData"]] %>%
-            as.data.frame()
-        # Aggregate replicates, if necessary
-        if (isTRUE(aggregateReplicates)) {
-            .checkAggregate(metadata, stop = TRUE)
-            # Get the expected number of rows
-            expected <- length(unique(metadata[["sampleNameAggregate"]]))
-            metadata <- metadata %>%
-                mutate(
-                    sampleName = .data[["sampleNameAggregate"]],
-                    description = .data[["sampleName"]],
-                    sampleID = make.names(
-                        .data[["sampleName"]], unique = FALSE),
-                    sampleNameAggregate = NULL
-                ) %>%
-                select(unique(c(metadataPriorityCols, interestingGroups))) %>%
-                unique()
-            if (!identical(nrow(metadata), expected)) {
-                abort("Failed to aggregate sample metadata uniquely")
-            }
-        }
+        data <- metadata(object)[["sampleData"]]
         .sanitizeSampleMetadata(
-            metadata = metadata,
+            metadata = data,
             interestingGroups = interestingGroups
         )
-    })
+    }
+)
 
 
 
@@ -149,20 +113,14 @@ setMethod(
 setMethod(
     "sampleData",
     signature("seurat"),
-    function(
-        object,
-        interestingGroups
-    ) {
-        metadata <- bcbio(object, "sampleData")
-        if (!is.null(metadata)) {
+    function(object, interestingGroups) {
+        data <- bcbio(object, "sampleData")
+        if (!is.null(data)) {
             if (!identical(
-                unique(as.character(metadata[["sampleID"]])),
+                unique(as.character(data[["sampleID"]])),
                 unique(as.character(slot(object, "meta.data")[["sampleID"]]))
             )) {
-                abort(paste(
-                    "`sampleID` mismatch with `seurat@meta.data`",
-                    "Using Seurat cellular barcode metadata instead"
-                ))
+                abort("`sampleID` mismatch with `seurat@meta.data` detected")
             }
             # Define interesting groups
             if (missing(interestingGroups)) {
@@ -175,11 +133,11 @@ setMethod(
             }
             # Access the metadata
             if (.hasSlot(object, "meta.data")) {
-                metadata <- slot(object, "meta.data") %>%
+                data <- slot(object, "meta.data") %>%
                     .sampleData.seurat()
             } else if (.hasSlot(object, "data.info")) {
                 # Legacy support for older seurat objects (e.g. pbmc33k)
-                metadata <- slot(object, "data.info") %>%
+                data <- slot(object, "data.info") %>%
                     .sampleData.seurat()
             } else {
                 abort("Failed to locate metadata in seurat object")
@@ -190,7 +148,8 @@ setMethod(
             }
         }
         .sanitizeSampleMetadata(
-            metadata = metadata,
+            metadata = data,
             interestingGroups = interestingGroups
         )
-    })
+    }
+)
