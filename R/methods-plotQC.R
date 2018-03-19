@@ -64,29 +64,36 @@ validQCGeomFlip <- c(
     plotlist <- list(
         plotReadsPerCell = plotReadsPerCell(
             object,
-            interestingGroups = interestingGroups),
+            interestingGroups = interestingGroups
+        ),
         plotCellCounts = plotCellCounts(
             object,
-            interestingGroups = interestingGroups),
+            interestingGroups = interestingGroups
+        ),
         plotUMIsPerCell = plotUMIsPerCell(
             object,
             interestingGroups = interestingGroups,
-            geom = geom),
+            geom = geom
+        ),
         plotGenesPerCell = plotGenesPerCell(
             object,
             interestingGroups = interestingGroups,
-            geom = geom),
+            geom = geom
+        ),
         plotUMIsVsGenes = plotUMIsVsGenes(
             object,
-            interestingGroups = interestingGroups),
+            interestingGroups = interestingGroups
+        ),
         plotMitoRatio = plotMitoRatio(
             object,
             interestingGroups = interestingGroups,
-            geom = geom),
+            geom = geom
+        ),
         plotNovelty = plotNovelty(
             object,
             interestingGroups = interestingGroups,
-            geom = geom)
+            geom = geom
+        )
     )
     # Remove any `NULL`` plots. This is useful for nuking the
     # `plotReadsPerCell()` return on an object that doesn't contain raw cellular
@@ -111,51 +118,59 @@ validQCGeomFlip <- c(
             "Filtered quality control metrics",
             level = headerLevel,
             tabset = TRUE,
-            asis = TRUE)
+            asis = TRUE
+        )
 
         # Reads per cell currently only supported for bcbio runs
         if (!is.null(plotlist[["plotReadsPerCell"]])) {
             markdownHeader(
                 "Reads per cell",
                 level = headerLevel + 1L,
-                asis = TRUE)
+                asis = TRUE
+            )
             show(plotlist[["plotReadsPerCell"]])
         }
 
         markdownHeader(
             "Cell counts",
             level = headerLevel + 1L,
-            asis = TRUE)
+            asis = TRUE
+        )
         show(plotlist[["plotCellCounts"]])
 
         markdownHeader(
             "UMI counts per cell",
             level = headerLevel + 1L,
-            asis = TRUE)
+            asis = TRUE
+        )
         show(plotlist[["plotUMIsPerCell"]])
 
         markdownHeader(
             "Genes detected",
             level = headerLevel + 1L,
-            asis = TRUE)
+            asis = TRUE
+        )
         show(plotlist[["plotGenesPerCell"]])
 
         markdownHeader(
             "UMIs vs. genes",
             level = headerLevel + 1L,
-            asis = TRUE)
+            asis = TRUE
+        )
         show(plotlist[["plotUMIsVsGenes"]])
 
         markdownHeader(
             "Mitochondrial counts ratio",
             level = headerLevel + 1L,
-            asis = TRUE)
+            asis = TRUE
+        )
         show(plotlist[["plotMitoRatio"]])
 
         markdownHeader(
             "Novelty",
             level = headerLevel + 1L,
-            asis = TRUE)
+            asis = TRUE
+        )
         show(plotlist[["plotNovelty"]])
     }
 }
@@ -192,11 +207,12 @@ validQCGeomFlip <- c(
     max <- max(max)
 
     p <- ggplot(
-        metrics,
+        data = metrics,
         mapping = aes_string(
             x = "sampleName",
             y = metricCol,
-            fill = "interestingGroups")
+            fill = "interestingGroups"
+        )
     ) +
         geom_boxplot(color = lineColor, outlier.shape = NA) +
         scale_y_sqrt() +
@@ -224,10 +240,11 @@ validQCGeomFlip <- c(
     max <- max(max)
 
     p <- ggplot(
-        metrics,
+        data = metrics,
         mapping = aes_string(
             x = metricCol,
-            fill = "interestingGroups")
+            fill = "interestingGroups"
+        )
     ) +
         geom_histogram(bins = bins) +
         scale_x_sqrt() +
@@ -257,17 +274,19 @@ validQCGeomFlip <- c(
     max <- max(max)
 
     p <- ggplot(
-        metrics,
+        data = metrics,
         mapping = aes_string(
             x = metricCol,
             y = "sampleName",
-            fill = "interestingGroups")
+            fill = "interestingGroups"
+        )
     ) +
         geom_density_ridges(
             alpha = qcPlotAlpha,
             color = lineColor,
             panel_scaling = TRUE,
-            scale = 10L) +
+            scale = 10L
+        ) +
         scale_x_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
@@ -289,11 +308,12 @@ validQCGeomFlip <- c(
 #' @importFrom viridis scale_color_viridis
 .plotQCScatterplot <- function(metrics, xCol, yCol) {
     ggplot(
-        metrics,
+        data = metrics,
         mapping = aes_string(
             x = xCol,
             y = yCol,
-            color = "interestingGroups")
+            color = "interestingGroups"
+        )
     ) +
         geom_point(alpha = 0.25, size = 0.8) +
         # If `method = "gam"`, `mgcv` package is required.
@@ -301,7 +321,8 @@ validQCGeomFlip <- c(
         geom_smooth(
             method = "glm",
             se = FALSE,
-            size = 1.5) +
+            size = 1.5
+        ) +
         scale_x_sqrt() +
         scale_y_sqrt()
 }
@@ -317,16 +338,18 @@ validQCGeomFlip <- c(
     max <- max(max)
 
     p <- ggplot(
-        metrics,
+        data = metrics,
         mapping = aes_string(
             x = "sampleName",
             y = metricCol,
-            fill = "interestingGroups")
+            fill = "interestingGroups"
+        )
     ) +
         geom_violin(
             color = lineColor,
             scale = "width",
-            trim = TRUE) +
+            trim = TRUE
+        ) +
         scale_y_sqrt() +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
@@ -349,7 +372,8 @@ validQCGeomFlip <- c(
 setMethod(
     "plotQC",
     signature("bcbioSingleCell"),
-    .plotQC)
+    .plotQC
+)
 
 
 
@@ -358,4 +382,5 @@ setMethod(
 setMethod(
     "plotQC",
     signature("seurat"),
-    .plotQC)
+    .plotQC
+)

@@ -5,17 +5,12 @@
 \alias{plotUMIsPerCell}
 \alias{plotUMIsPerCell}
 \alias{plotUMIsPerCell,bcbioSingleCell-method}
-\alias{plotUMIsPerCell,data.frame-method}
 \alias{plotUMIsPerCell,seurat-method}
 \title{Plot UMIs per Cell}
 \usage{
 plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = "violin", min,
-  interestingGroups, samplesOnYAxis = TRUE,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotUMIsPerCell}{data.frame}(object, geom = "violin", min = 0L,
   interestingGroups, samplesOnYAxis = TRUE,
   fill = viridis::scale_fill_viridis(discrete = TRUE))
 
@@ -56,18 +51,11 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotUMIsPerCell(bcb_small)
 
-# bcbioSingleCell
-plotUMIsPerCell(bcb)
-
-# seurat
-plotUMIsPerCell(seurat)
-
-# data.frame
-df <- metrics(bcb)
-plotUMIsPerCell(df)
+# seurat ====
+plotUMIsPerCell(seurat_small)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

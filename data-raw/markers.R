@@ -6,10 +6,10 @@
 # This code is derived from:
 #   - Tirosh et al, 2015
 #   - http://satijalab.org/seurat/cell_cycle_vignette.html
-
-devtools::load_all()
+library(devtools)
 library(googlesheets)
 library(tidyverse)
+load_all()
 
 # Ensembl release version
 release <- 90L
@@ -56,11 +56,11 @@ print(ws)
 cellTypeMarkers <- lapply(ws, function(ws) {
     gs %>%
         gs_read(ws = ws) %>%
-        dplyr::select(cellType, geneID) %>%
+        select(cellType, geneID) %>%
         mutate(
             geneName = convertGenesToSymbols(
                 geneID,
-                organism = ws[[a]],
+                organism = ws,
                 release = release
             )
         ) %>%
@@ -70,7 +70,7 @@ cellTypeMarkers <- lapply(ws, function(ws) {
 names(cellTypeMarkers) <- camel(ws)
 
 # Save R data ==================================================================
-devtools::use_data(
+use_data(
     cellCycleMarkers,
     cellTypeMarkers,
     compress = "xz",

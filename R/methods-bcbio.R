@@ -1,26 +1,23 @@
-# FIXME Update handling of gene2symbol and rowRanges here
-
 #' Additional bcbio Run Data Accessor
 #'
-#' @rdname bcbio
 #' @name bcbio
 #' @author Michael Steinbaugh
+#' @keywords internal
 #'
-#' @importFrom bcbioBase bcbio bcbio<-
+#' @importFrom bcbioBase bcbio
 #'
 #' @inheritParams general
+#' @param slot Slot name of data inside accessor.
 #'
-#' @param type Type of count data to retrieve.
-#'
-#' @return [bcbioSingleCell].
+#' @return Various data types.
 #'
 #' @examples
 #' # seurat ====
 #' names(bcbio(seurat_small))
 #'
 #' # Assignment method support
-#' bcbio(seurat_small, "stash") <- "testing"
-#' bcbio(seurat_small, "stash")
+#' bcbio(seurat_small, "metadata")[["stash"]] <- "XXX"
+#' bcbio(seurat_small, "metadata")[["stash"]]
 NULL
 
 
@@ -31,17 +28,16 @@ NULL
 setMethod(
     "bcbio",
     signature("seurat"),
-    function(object, type) {
+    function(object, slot) {
         stopifnot(.hasSlot(object, "misc"))
         bcbio <- slot(object, "misc")[["bcbio"]]
-        if (missing(type)) {
+        if (missing(slot)) {
             return(bcbio)
         }
-        if (type %in% names(bcbio)) {
-            return(bcbio[[type]])
-        } else {
+        if (!slot %in% names(bcbio)) {
             return(NULL)
         }
+        bcbio[[slot]]
     }
 )
 
@@ -56,12 +52,12 @@ setMethod(
         object = "seurat",
         value = "ANY"
     ),
-    function(object, type, value) {
+    function(object, slot, value) {
         stopifnot(.hasSlot(object, "misc"))
         if (is.null(slot(object, "misc")[["bcbio"]])) {
             abort("seurat object was not generated with bcbioSingleCell")
         }
-        slot(object, "misc")[["bcbio"]][[type]] <- value
+        slot(object, "misc")[["bcbio"]][[slot]] <- value
         validObject(object)
         object
     }

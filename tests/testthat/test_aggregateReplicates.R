@@ -1,13 +1,13 @@
 context("aggregateReplicates")
 
 test_that("aggregateReplicates", {
-    pooled <- aggregateReplicates(bcb)
-    expect_is(pooled, "bcbioSingleCell")
+    x <- aggregateReplicates(bcb_small)
+    expect_s4_class(x, "bcbioSingleCell")
     expect_identical(
-        dim(pooled),
-        c(1000L, 286L)
+        dim(x),
+        c(500L, 286L)
     )
-    map <- metadata(pooled)[["aggregateReplicates"]]
+    map <- metadata(x)[["aggregateReplicates"]]
     expect_is(map, "factor")
     expect_identical(length(map), 500L)
     expect_identical(length(levels(map)), 286L)

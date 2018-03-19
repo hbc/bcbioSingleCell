@@ -1,6 +1,7 @@
 #' Select Samples
 #'
 #' @name selectSamples
+#' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase selectSamples
 #'
@@ -12,18 +13,15 @@
 #'   and Ensembl gene identifiers for rows.
 #'
 #' @inheritParams general
-#'
 #' @param ... Columns to use for grep pattern matching. Supply a named character
 #'   vector containing the column name and the grep pattern.
 #'
 #' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-#'
-#' # bcbioSingleCell
-#' # Quality control filtering must be applied first!
-#' selectSamples(filtered, sampleName = "M1")
+#' # bcbioSingleCell ====
+#' sampleData(bcb_small) %>% glimpse()
+#' selectSamples(bcb_small, sampleName = "M1_seq_rep_1")
 NULL
 
 

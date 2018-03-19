@@ -1,7 +1,3 @@
-# TODO Need to add `rowRanges()` support for seurat
-
-
-
 #' Row Data
 #'
 #' @name rowData
@@ -14,15 +10,12 @@
 #' @return Return data as `data.frame`, or `DataFrame`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
-#' rowData(bcb) %>% glimpse()
+#' rowData(bcb_small) %>% glimpse()
 #'
 #' # seurat ====
 #' rowData(pbmc_small) %>% glimpse()
-#' rowData(seurat) %>% glimpse()
+#' rowData(seurat_small) %>% glimpse()
 NULL
 
 
@@ -35,9 +28,9 @@ setMethod(
     signature("bcbioSingleCell"),
     function(x, return = c("data.frame", "DataFrame")) {
         return <- match.arg(return)
-        data <- mcols(rowRanges(x))
-        rownames(data) <- names(rowRanges(x))
-        as(data, return)
+        rowRanges <- rowRanges(x)
+        assert_is_all_of(rowRanges, "GRanges")
+        as(rowRanges, return)
     }
 )
 
@@ -50,19 +43,11 @@ setMethod(
     signature("seurat"),
     function(x, return = c("data.frame", "DataFrame")) {
         return <- match.arg(return)
-        # Catch `rowData` or `annotable`
-        # TODO Error on stashed `annotable` in future update
-        match <- match(
-            x = c("rowData", "annotable"),
-            table = names(bcbio(x))
-        ) %>%
-            na.omit()
-        if (!length(match)) {
-            return(NULL)
+        rowRanges <- bcbio(x, "rowRanges")
+        if (is(rowRanges, "GRanges")) {
+            as(rowRanges, return)
         } else {
-            match <- match[[1L]]
+            NULL
         }
-        data <- bcbio(x)[[match]]
-        as(data, return)
     }
 )

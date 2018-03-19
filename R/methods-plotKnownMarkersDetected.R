@@ -25,39 +25,42 @@ NULL
 
 # Constructors =================================================================
 #' @importFrom basejump markdownHeader
-#' @importFrom dplyr pull
-#' @importFrom viridis scale_color_viridis
 .plotKnownMarkersDetected <- function(
     object,
     knownMarkersDetected,
-    tsneColor = viridis::scale_color_viridis(),
-    violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-    dotColor = ggplot2::scale_color_gradient(
+    tsneColor = scale_color_viridis(),
+    violinFill = scale_fill_viridis(discrete = TRUE),
+    dotColor = scale_color_gradient(
         low = "lightgray",
-        high = "purple"),
+        high = "purple"
+    ),
     dark = TRUE,
     pointsAsNumbers = FALSE,
-    headerLevel = 2L) {
-    if (!nrow(knownMarkersDetected)) return(NULL)
-    cellTypes <- knownMarkersDetected %>%
-        pull("cell") %>%
-        unique() %>%
+    headerLevel = 2L
+) {
+    if (!nrow(knownMarkersDetected)) {
+        return(NULL)
+    }
+    cellTypes <- knownMarkersDetected[, "cellType", drop = TRUE] %>%
         na.omit()
+        unique()
     if (is.null(cellTypes)) return(NULL)
     list <- pblapply(seq_along(cellTypes), function(a) {
         cellType <- cellTypes[[a]]
         genes <- knownMarkersDetected %>%
-            .[.[["cell"]] == cellType, ] %>%
-            pull("geneName") %>%
-            unique() %>%
-            na.omit()
-        if (is.null(genes)) return(NULL)
+            .[.[["cellType"]] == cellType, "geneName", drop = TRUE] %>%
+            na.omit() %>%
+            unique()
+        if (is.null(genes)) {
+            return(NULL)
+        }
         if (!is.null(headerLevel)) {
             markdownHeader(
                 cellType,
                 level = headerLevel,
                 tabset = TRUE,
-                asis = TRUE)
+                asis = TRUE
+            )
             subheaderLevel <- headerLevel + 1L
         } else {
             subheaderLevel <- NULL
@@ -71,7 +74,8 @@ NULL
             dark = dark,
             pointsAsNumbers = pointsAsNumbers,
             headerLevel = subheaderLevel,
-            title = cellType)
+            title = cellType
+        )
     })
     invisible(list)
 }
@@ -85,5 +89,7 @@ setMethod(
     "plotKnownMarkersDetected",
     signature(
         object = "seurat",
-        knownMarkersDetected = "grouped_df"),
-    .plotKnownMarkersDetected)
+        knownMarkersDetected = "grouped_df"
+    ),
+    .plotKnownMarkersDetected
+)

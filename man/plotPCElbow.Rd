@@ -36,14 +36,11 @@ minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
 PC cutoff for either 5% SD (\code{maxPct}) or 90% cumulative (\code{minCumsum}).
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-pcUse <- plotPCElbow(seurat)
-pcUse
+# seurat ====
+plotPCElbow(pbmc_small)
 }
 \seealso{
-\link[Seurat:PCElbowPlot]{Seurat::PCElbowPlot}.
+\code{\link[Seurat:PCElbowPlot]{Seurat::PCElbowPlot()}}.
 
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
   \code{\link{plotKnownMarkersDetected}},

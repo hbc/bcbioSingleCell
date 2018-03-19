@@ -12,80 +12,65 @@
 #' @inheritParams general
 #'
 #' @param n The number of breaks to create.
-#' @param annotationCol *Optional.* [data.frame] that defines annotation
+#' @param annotationCol *Optional.* `data.frame` that defines annotation
 #'   mappings for the columns.
 #' @param clusterCols Logical determining if columns should be arranged with
 #'   hierarchical clustering. Alternatively, can define an `hclust` object.
 #' @param clusterRows Logical determining if rows should be arranged with
 #'   hierarchical clustering. Alternatively, can define an `hclust` object.
-#' @param color Colors to use for plot. Defaults to the [viridis::viridis()]
-#'   palette.
+#' @param color Colors to use for plot.
 #' @param legendColor Colors to use for legend labels. Defaults to the
 #'   [viridis::viridis()] palette.
 #' @param title *Optional.* Plot title.
 #'
 #' @examples
-#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-#'
-#' # bcbioSingleCell
-#' plotQuantileHeatmap(filtered)
+#' # bcbioSingleCell ====
+#' plotQuantileHeatmap(bcb_small)
 NULL
+
+
+
+# Constructors =================================================================
+.plotQuantileHeatmap <- function(
+    object,
+    n = 5L,
+    annotationCol = NA,
+    clusterCols = FALSE,
+    clusterRows = FALSE,
+    color = viridis,
+    legendColor = viridis,
+    title = NULL
+) {
+    counts <- counts(object)
+    plotQuantileHeatmap(
+        object = counts,
+        n = n,
+        annotationCol = annotationCol,
+        clusterCols = clusterCols,
+        clusterRows = clusterRows,
+        color = color,
+        legendColor = legendColor,
+        title = title
+    )
+}
 
 
 
 # Methods ======================================================================
 #' @rdname plotQuantileHeatmap
-#' @importFrom viridis viridis
 #' @export
 setMethod(
     "plotQuantileHeatmap",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        n = 5L,
-        annotationCol = NA,
-        clusterCols = FALSE,
-        clusterRows = FALSE,
-        color = viridis::viridis,
-        legendColor = viridis::viridis,
-        title = NULL) {
-        counts <- counts(object)
-        plotQuantileHeatmap(
-            object = counts,
-            n = n,
-            annotationCol = annotationCol,
-            clusterCols = clusterCols,
-            clusterRows = clusterRows,
-            color = color,
-            legendColor = legendColor,
-            title = title)
-    })
+    .plotQuantileHeatmap
+)
 
 
 
 #' @rdname plotQuantileHeatmap
-#' @importFrom viridis viridis
 #' @export
 setMethod(
     "plotQuantileHeatmap",
     signature("seurat"),
-    function(
-        object,
-        n = 5L,
-        annotationCol = NA,
-        clusterCols = FALSE,
-        clusterRows = FALSE,
-        color = viridis::viridis,
-        legendColor = viridis::viridis,
-        title = NULL) {
-        counts <- counts(object, normalized = FALSE)
-        plotQuantileHeatmap(
-            object = counts,
-            n = n,
-            annotationCol = annotationCol,
-            clusterCols = clusterCols,
-            clusterRows = clusterRows,
-            color = color,
-            legendColor = legendColor,
-            title = title)
-    })
+    .plotQuantileHeatmap
+)

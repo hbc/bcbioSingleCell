@@ -11,23 +11,44 @@
 #' @return Character vector.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # bcbioSingleCell
-#' interestingGroups(bcb)
+#' # bcbioSingleCell ====
+#' interestingGroups(bcb_small)
 #'
 #' # Assignment method support
-#' interestingGroups(bcb) <- "sampleID"
-#' interestingGroups(bcb)
+#' interestingGroups(bcb_small) <- "sampleID"
+#' interestingGroups(bcb_small)
 #'
-#' # seurat
-#' interestingGroups(seurat)
+#' # seurat ====
+#' interestingGroups(seurat_small)
 #'
 #' # Assignment method support
-#' interestingGroups(seurat) <- "sampleID"
-#' interestingGroups(seurat)
+#' interestingGroups(seurat_small) <- "sampleID"
+#' interestingGroups(seurat_small)
 NULL
+
+
+
+# Constructors =================================================================
+.interestingGroups <- function(object) {
+    validObject(object)
+    x <- metadata(object)[["interestingGroups"]]
+    if (is.null(x)) {
+        x <- "sampleName"
+    }
+    x
+}
+
+
+
+`.interestingGroups<-` <- function(object, value) {
+    assertFormalInterestingGroups(
+        x = sampleData(object),
+        interestingGroups = value
+    )
+    metadata(object)[["interestingGroups"]] <- value
+    validObject(object)
+    object
+}
 
 
 
@@ -37,9 +58,8 @@ NULL
 setMethod(
     "interestingGroups",
     signature("bcbioSingleCell"),
-    function(object) {
-        metadata(object)[["interestingGroups"]]
-    })
+    .interestingGroups
+)
 
 
 
@@ -48,13 +68,8 @@ setMethod(
 setMethod(
     "interestingGroups",
     signature("seurat"),
-    function(object) {
-        interestingGroups <- bcbio(object)[["interestingGroups"]]
-        if (is.null(interestingGroups)) {
-            interestingGroups <- "sampleName"
-        }
-        interestingGroups
-    })
+    .interestingGroups
+)
 
 
 
@@ -65,30 +80,22 @@ setMethod(
     "interestingGroups<-",
     signature(
         object = "bcbioSingleCell",
-        value = "character"),
-    function(object, value) {
-        assertFormalInterestingGroups(
-            x = sampleData(object),
-            interestingGroups = value)
-        metadata(object)[["interestingGroups"]] <- value
-        validObject(object)
-        object
-    })
+        value = "character"
+    ),
+    `.interestingGroups<-`
+)
 
 
 
+# FIXME Don't use bcbio assignment method
+# FIXME Use metdata for seurat
 #' @rdname interestingGroups
 #' @export
 setMethod(
     "interestingGroups<-",
     signature(
         object = "seurat",
-        value = "character"),
-    function(object, value) {
-        assertFormalInterestingGroups(
-            x = sampleData(object),
-            interestingGroups = value)
-        bcbio(object, "interestingGroups") <- value
-        validObject(object)
-        object
-    })
+        value = "character"
+    ),
+    `.interestingGroups<-`
+)

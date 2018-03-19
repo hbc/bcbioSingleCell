@@ -39,22 +39,25 @@ seurat_small <- as(bcb_small, "seurat") %>%
     FindClusters(dims.use = dimsUse) %>%
     RunTSNE(dims.use = dimsUse, do.fast = TRUE)
 
-all_markers <- FindAllMarkers(seurat_small)
-
-all_markers_sanitized <- sanitizeMarkers(
+# all_markers_small ============================================================
+all_markers_small <- FindAllMarkers(seurat_small)
+all_markers_small <- sanitizeMarkers(
     object = seurat_small,
-    markers = all_markers
+    markers = all_markers_small
 )
-known_markers_detected <- knownMarkersDetected(
-    all = all_markers_sanitized,
+
+# known_markers_small ==========================================================
+known_markers_small <- knownMarkersDetected(
+    all = all_markers_small_sanitized,
     known = cellTypeMarkers[["homoSapiens"]]
 )
 
+# save =========================================================================
 use_data(
     bcb_small,
     seurat_small,
-    all_markers,
-    known_markers_detected,
+    all_markers_small,
+    known_markers_small,
     compress = "xz",
     overwrite = TRUE
 )

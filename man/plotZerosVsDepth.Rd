@@ -34,20 +34,17 @@ plotZerosVsDepth(object, ...)
 This function helps us visualize the dropout rate.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
-plotZerosVsDepth(bcb)
+plotZerosVsDepth(bcb_small)
 
 # dgCMatrix ====
-counts <- counts(bcb)
-metrics <- metrics(bcb)
+counts <- counts(bcb_small)
+metrics <- metrics(bcb_small)
 plotZerosVsDepth(counts, metrics = metrics)
 
 # seurat ====
 plotZerosVsDepth(pbmc_small)
-plotZerosVsDepth(seurat)
+plotZerosVsDepth(seurat_small)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

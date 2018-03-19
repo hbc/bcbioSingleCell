@@ -1,12 +1,10 @@
 #' Top Markers
 #'
-#' @rdname topMarkers
 #' @name topMarkers
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param n Number of genes per cluster.
 #' @param direction Whether to include only `positive`, `negative`, or `both`
 #'   directions of association per cluster. Defaults to `positive`.
@@ -20,10 +18,8 @@
 #' @export
 #'
 #' @examples
-#' load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
-#'
 #' # grouped_df ====
-#' topMarkers(seuratAllMarkers) %>% glimpse()
+#' topMarkers(all_markers_small, n = 1L)
 NULL
 
 

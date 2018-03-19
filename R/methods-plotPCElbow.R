@@ -4,13 +4,11 @@
 #' minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
 #' PC cutoff for either 5% SD (`maxPct`) or 90% cumulative (`minCumsum`).
 #'
-#' @rdname plotPCElbow
 #' @name plotPCElbow
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param maxPct Maximum percent standard deviation.
 #' @param minCumPct Minimum cumulative percent standard deviation.
 #' @param plot Plot the PC standard deviations.
@@ -20,14 +18,11 @@
 #' - Invisibly return numeric sequence vector of PCs to include for
 #'   dimensionality reduction analysis.
 #'
-#' @seealso [Seurat::PCElbowPlot].
+#' @seealso [Seurat::PCElbowPlot()].
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' pcUse <- plotPCElbow(seurat)
-#' pcUse
+#' # seurat ====
+#' plotPCElbow(pbmc_small)
 NULL
 
 
@@ -42,22 +37,24 @@ NULL
     sd,
     maxPct = 0.05,
     minCumPct = 0.8,
-    plot = TRUE) {
+    plot = TRUE
+) {
     xlab <- "pc"
 
     # Principal component standard deviations
     pct <- sd ^ 2L / sum(sd ^ 2L)
     cumsum <- cumsum(pct)
-    tbl <- tibble(
-        pc = seq_along(sd),
-        sdev = sd,
-        pct = pct,
-        cumsum = cumsum)
+    data <- tibble(
+        "pc" = seq_along(sd),
+        "sdev" = sd,
+        "pct" = pct,
+        "cumsum" = cumsum
+    )
 
-    cutoffPct <- tbl %>%
+    cutoffPct <- data %>%
         .[.[["pct"]] >= maxPct, "pc"] %>%
         max()
-    cutoffCumPct <- tbl %>%
+    cutoffCumPct <- data %>%
         .[.[["cumsum"]] <= minCumPct, "pc"] %>%
         max()
 
@@ -66,7 +63,7 @@ NULL
 
     # Elbow plot
     ggelbow <- ggplot(
-        tbl,
+        data = data,
         mapping = aes_string(x = "pc", y = "sd")
     ) +
         geom_point() +
@@ -76,7 +73,7 @@ NULL
 
     # Percentage plot
     ggpct <- ggplot(
-        tbl,
+        data = data,
         mapping = aes_string(x = "pc", y = "pct")
     ) +
         geom_point() +
@@ -85,14 +82,15 @@ NULL
             alpha = 0.5,
             color = "orange",
             size = 1.5,
-            yintercept = maxPct) +
+            yintercept = maxPct
+        ) +
         .qcCutoffLine(xintercept = cutoff) +
         labs(x = xlab, y = "% std dev") +
-        scale_y_continuous(labels = scales::percent)
+        scale_y_continuous(labels = percent)
 
     # Cumulative plot
     ggcumsum <- ggplot(
-        tbl,
+        data = data,
         mapping = aes_string(x = "pc", y = "cumsum")
     ) +
         geom_point() +
@@ -101,21 +99,31 @@ NULL
             alpha = 0.5,
             color = "orange",
             size = 1.5,
-            yintercept = minCumPct) +
+            yintercept = minCumPct
+        ) +
         .qcCutoffLine(xintercept = cutoff) +
         labs(x = xlab, y = "cumulative % std dev") +
-        scale_y_continuous(labels = scales::percent)
+        scale_y_continuous(labels = percent)
 
     p <- ggdraw() +
         # Coordinates are relative to lower left corner
         draw_plot(
-            ggelbow,
-            x = 0L, y = 0.5, width = 1L, height = 0.5) +
+            plot = ggelbow,
+            x = 0L,
+            y = 0.5,
+            width = 1L,
+            height = 0.5
+        ) +
         draw_plot(
-            ggpct,
+            plot = ggpct,
             x = 0L, y = 0L, width = 0.5, height = 0.5) +
         draw_plot(
-            ggcumsum, x = 0.5, y = 0L, width = 0.5, height = 0.5)
+            plot = ggcumsum,
+            x = 0.5,
+            y = 0L,
+            width = 0.5,
+            height = 0.5
+        )
     show(p)
 
     invisible(seq_len(cutoff))
@@ -133,16 +141,20 @@ setMethod(
         object,
         maxPct = 0.05,
         minCumPct = 0.9,
-        plot = TRUE) {
+        plot = TRUE
+    ) {
         # seurat slot descriptions
         # dr: dimensionality reduction
         # sdev: standard deviation
-        sd <- slot(object, "dr") %>%
+        sd <- object %>%
+            slot("dr") %>%
             .[["pca"]] %>%
             slot("sdev")
         .plotPCElbow(
             sd,
             maxPct = maxPct,
             minCumPct = minCumPct,
-            plot = plot)
-    })
+            plot = plot
+        )
+    }
+)

@@ -1,13 +1,5 @@
 cacheURL <- "http://bcbiosinglecell.seq.cloud"
-files <- c(
-    "bcb.rda",
-    "filtered.rda",
-    "known_markers_detected.rda",
-    "pooled.rda",
-    "seurat.rda",
-    "seurat_all_markers.rda",
-    "seurat_all_markers_original.rda",
-    "top.rda")
+files <- character()
 mapply(
     FUN = function(cacheURL, file, envir) {
         # Download file to testthat directory

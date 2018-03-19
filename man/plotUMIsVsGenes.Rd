@@ -5,7 +5,6 @@
 \alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes,bcbioSingleCell-method}
-\alias{plotUMIsVsGenes,data.frame-method}
 \alias{plotUMIsVsGenes,seurat-method}
 \title{Plot UMI and Gene Correlation}
 \usage{
@@ -13,9 +12,6 @@ plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{bcbioSingleCell}(object, interestingGroups,
   samplesOnYAxis = TRUE, color = scale_color_viridis(discrete = TRUE))
-
-\S4method{plotUMIsVsGenes}{data.frame}(object, interestingGroups,
-  color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotUMIsVsGenes}{seurat}(object, interestingGroups,
   color = scale_color_viridis(discrete = TRUE))
@@ -48,14 +44,12 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotUMIsVsGenes(bcb_small)
 
-# bcbioSingleCell
-plotUMIsVsGenes(bcb)
-
-# seurat
-plotUMIsVsGenes(seurat)
+# seurat ====
+plotUMIsVsGenes(pbmc_small)
+plotUMIsVsGenes(seurat_small)
 
 # data.frame
 df <- metrics(bcb)

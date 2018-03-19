@@ -31,10 +31,8 @@ directions of association per cluster. Defaults to \code{positive}.}
 Top Markers
 }
 \examples{
-load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
-
 # grouped_df ====
-topMarkers(seuratAllMarkers) \%>\% glimpse()
+topMarkers(all_markers_small, n = 1L)
 }
 \seealso{
 \itemize{

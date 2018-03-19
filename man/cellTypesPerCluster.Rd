@@ -21,7 +21,7 @@ cellTypesPerCluster(object, ...)
 \item{max}{Maximum number of marker genes per cluster.}
 }
 \value{
-\link{tibble} grouped by cluster, containing the count (\code{n}) of
+\code{tibble} grouped by cluster, containing the count (\code{n}) of
 significant known makers per cell type.
 }
 \description{
@@ -31,9 +31,7 @@ Cell Types per Cluster
 This function only returns the positive markers per cluster.
 }
 \examples{
-load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-
-cellTypesPerCluster(knownMarkersDetected) \%>\% glimpse()
+cellTypesPerCluster(known_markers_small) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

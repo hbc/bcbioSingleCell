@@ -23,15 +23,12 @@
 Sample Data
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
-sampleData(bcb) \%>\% glimpse()
+sampleData(bcb_small) \%>\% glimpse()
 
 # seurat ====
 sampleData(pbmc_small) \%>\% glimpse()
-sampleData(seurat) \%>\% glimpse()
+sampleData(seurat_small) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

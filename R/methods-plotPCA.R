@@ -1,6 +1,5 @@
 #' Plot Principal Component Analysis (PCA)
 #'
-#' @rdname plotPCA
 #' @name plotPCA
 #' @family PCA Utilities
 #' @author Michael Steinbaugh

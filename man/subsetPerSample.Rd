@@ -30,11 +30,10 @@ Named vector of saved \code{bcbioSingleCell} subset file paths.
 Subset Per Sample
 }
 \examples{
-load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-
+# bcbioRNASeq ====
 # This will save the subsets per sample to disk
-subsetPerSample(filtered, dir = "subsetPerSample")
-dir("subsetPerSample")
+subsetPerSample(bcb_small, dir = "subsetPerSample")
+list.files("subsetPerSample")
 
 # Clean up
 unlink("subsetPerSample", recursive = TRUE)

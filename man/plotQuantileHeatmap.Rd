@@ -9,18 +9,18 @@
 \usage{
 \S4method{plotQuantileHeatmap}{bcbioSingleCell}(object, n = 5L,
   annotationCol = NA, clusterCols = FALSE, clusterRows = FALSE,
-  color = viridis::viridis, legendColor = viridis::viridis, title = NULL)
+  color = viridis, legendColor = viridis, title = NULL)
 
 \S4method{plotQuantileHeatmap}{seurat}(object, n = 5L, annotationCol = NA,
-  clusterCols = FALSE, clusterRows = FALSE, color = viridis::viridis,
-  legendColor = viridis::viridis, title = NULL)
+  clusterCols = FALSE, clusterRows = FALSE, color = viridis,
+  legendColor = viridis, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{n}{The number of breaks to create.}
 
-\item{annotationCol}{\emph{Optional.} \link{data.frame} that defines annotation
+\item{annotationCol}{\emph{Optional.} \code{data.frame} that defines annotation
 mappings for the columns.}
 
 \item{clusterCols}{Logical determining if columns should be arranged with
@@ -29,8 +29,7 @@ hierarchical clustering. Alternatively, can define an \code{hclust} object.}
 \item{clusterRows}{Logical determining if rows should be arranged with
 hierarchical clustering. Alternatively, can define an \code{hclust} object.}
 
-\item{color}{Colors to use for plot. Defaults to the \code{\link[viridis:viridis]{viridis::viridis()}}
-palette.}
+\item{color}{Colors to use for plot.}
 
 \item{legendColor}{Colors to use for legend labels. Defaults to the
 \code{\link[viridis:viridis]{viridis::viridis()}} palette.}
@@ -45,10 +44,8 @@ This is helpful for more usefully visualizing single cell data.
 Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 }
 \examples{
-load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-
-# bcbioSingleCell
-plotQuantileHeatmap(filtered)
+# bcbioSingleCell ====
+plotQuantileHeatmap(bcb_small)
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

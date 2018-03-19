@@ -5,20 +5,16 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param n Number of barcodes to return per sample.
 #'
 #' @return `data.frame`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' topBarcodes(bcb_small) %>% glimpse()
 #'
-#' # bcbioSingleCell
-#' topBarcodes(bcb) %>% glimpse()
-#'
-#' # seurat
-#' topBarcodes(seurat) %>% glimpse()
+#' # seurat ====
+#' topBarcodes(pbmc_small) %>% glimpse()
 NULL
 
 

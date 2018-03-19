@@ -1,22 +1,18 @@
 #' Metrics per Sample
 #'
-#' @rdname metricsPerSample
 #' @name metricsPerSample
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
 #'
-#' @return [tibble] containing summary statistics.
+#' @return `tibble` containing summary statistics.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' metricsPerSample(bcb_small)
 #'
-#' # bcbioSingleCell
-#' metricsPerSample(bcb)
-#'
-#' # seurat
-#' metricsPerSample(seurat)
+#' # seurat ====
+#' metricsPerSample(seurat_small)
 NULL
 
 
@@ -43,7 +39,8 @@ NULL
 setMethod(
     "metricsPerSample",
     signature("bcbioSingleCell"),
-    .metricsPerSample)
+    .metricsPerSample
+)
 
 
 
@@ -52,4 +49,5 @@ setMethod(
 setMethod(
     "metricsPerSample",
     signature("seurat"),
-    .metricsPerSample)
+    .metricsPerSample
+)

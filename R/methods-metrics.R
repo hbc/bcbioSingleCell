@@ -13,17 +13,16 @@
 #'
 #' @seealso [sampleData()].
 #'
-#' @return [data.frame] with cellular barcodes as rows.
+#' @return `data.frame` with cellular barcodes as rows.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
-#' metrics(bcb) %>% glimpse()
+#' metrics(bcb_small) %>% glimpse()
 #'
-#' # seurat
-#' metrics(seurat) %>% glimpse()
+#' # seurat ====
+#' metrics(pbmc_small) %>% glimpse()
+#' metrics(seurat_small) %>% glimpse()
 NULL
 
 
@@ -41,7 +40,8 @@ NULL
     assert_are_identical(rownames(colData), names(sampleID))
     sampleData <- sampleData(
         object,
-        interestingGroups = interestingGroups)
+        interestingGroups = interestingGroups
+    )
     cbind(
         as.data.frame(sampleID),
         as.data.frame(colData)
@@ -62,7 +62,8 @@ NULL
 setMethod(
     "metrics",
     signature("bcbioSingleCell"),
-    .metrics)
+    .metrics
+)
 
 
 
@@ -77,4 +78,5 @@ setMethod(
         assert_are_disjoint_sets(colnames(data), "ident")
         ident <- slot(object, "ident")
         cbind(data, ident)
-    })
+    }
+)
