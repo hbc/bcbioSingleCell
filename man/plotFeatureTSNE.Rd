@@ -10,9 +10,9 @@
 plotFeatureTSNE(object, ...)
 
 \S4method{plotFeatureTSNE}{seurat}(object, features, pointSize = 0.5,
-  pointAlpha = 0.8, color = ggplot2::scale_color_gradient(low = "lightgray",
-  high = "purple"), dark = FALSE, label = TRUE, labelSize = 6L,
-  legend = FALSE, returnAsList = FALSE)
+  pointAlpha = 0.8, color = scale_color_gradient(low = "lightgray", high =
+  "purple"), dark = FALSE, label = TRUE, labelSize = 6L, legend = FALSE,
+  return = c("plot", "list"))
 }
 \arguments{
 \item{object}{Object.}
@@ -38,19 +38,17 @@ the dataset, and some cells can be masked.}
 \item{legend}{Show legends in paneled plots. Defaults to \code{FALSE} because
 typically these look too busy and the legends can get cut off.}
 
-\item{returnAsList}{Return plots as a list.}
+\item{return}{Return as "\code{plot}" or "\code{list}".}
 }
 \value{
-No return, only graphical output.
+Depends on the return argument.
 }
 \description{
 Plot Feature t-SNE
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-plotFeatureTSNE(seurat, features = "PC1")
+# seurat ====
+plotFeatureTSNE(pbmc_small, features = "PC1")
 }
 \seealso{
 \code{\link[Seurat:FeaturePlot]{Seurat::FeaturePlot()}}.
