@@ -25,9 +25,7 @@ setMethod(
     signature("seurat"),
     function(object) {
         rowData <- rowData(object)
-        if (is.null(rowData)) {
-            abort("Object does not contain internal rowData")
-        }
+        assert_is_non_empty(rowData)
         cols <- c("geneID", "geneName")
         assert_is_subset(cols, colnames(rowData))
         rowData[, cols]
