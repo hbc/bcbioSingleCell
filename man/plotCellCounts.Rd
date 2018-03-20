@@ -31,7 +31,7 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 \item{metadata}{Sample metadata \code{data.frame}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Plot Cell Counts

@@ -40,7 +40,7 @@ histogram.}
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 "Novelty" refers to log10 genes detected per count.

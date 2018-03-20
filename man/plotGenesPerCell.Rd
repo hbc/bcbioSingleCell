@@ -5,22 +5,17 @@
 \alias{plotGenesPerCell}
 \alias{plotGenesPerCell}
 \alias{plotGenesPerCell,bcbioSingleCell-method}
-\alias{plotGenesPerCell,data.frame-method}
 \alias{plotGenesPerCell,seurat-method}
 \title{Plot Genes per Cell}
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "violin", min,
-  max, interestingGroups, samplesOnYAxis = TRUE,
+\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "violin",
+  min = 0L, max = Inf, interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0L,
+\S4method{plotGenesPerCell}{seurat}(object, geom = "violin", min = 0L,
   max = Inf, interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotGenesPerCell}{seurat}(object, geom = "violin", min, max,
-  interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
@@ -47,7 +42,7 @@ histogram.}
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Plot Genes per Cell
@@ -58,18 +53,11 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotGenesPerCell(bcb_small)
 
-# bcbioSingleCell
-plotGenesPerCell(bcb)
-
-# seurat
-plotGenesPerCell(seurat)
-
-# data.frame
-df <- metrics(bcb)
-plotGenesPerCell(df)
+# seurat ====
+plotGenesPerCell(seurat_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{metrics}},
