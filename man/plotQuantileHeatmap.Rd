@@ -31,8 +31,7 @@ hierarchical clustering. Alternatively, can define an \code{hclust} object.}
 
 \item{color}{Colors to use for plot.}
 
-\item{legendColor}{Colors to use for legend labels. Defaults to the
-\code{\link[viridis:viridis]{viridis::viridis()}} palette.}
+\item{legendColor}{Colors to use for legend labels.}
 
 \item{title}{\emph{Optional.} Plot title.}
 }

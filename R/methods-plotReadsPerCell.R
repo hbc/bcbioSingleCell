@@ -2,14 +2,12 @@
 
 #' Plot Read Counts per Cell
 #'
-#' @rdname plotReadsPerCell
 #' @name plotReadsPerCell
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
 #' @inheritParams plotGenesPerCell
-#'
 #' @param geom Plot type. Supported formats: proportional `histogram`
 #'   (*recommended*), raw `ridgeline`, and raw `violin`.
 #'

@@ -3,14 +3,12 @@
 #' @details This is helpful for more usefully visualizing single cell data.
 #'   Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 #'
-#' @rdname plotQuantileHeatmap
 #' @name plotQuantileHeatmap
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @importFrom basejump plotQuantileHeatmap
 #'
 #' @inheritParams general
-#'
 #' @param n The number of breaks to create.
 #' @param annotationCol *Optional.* `data.frame` that defines annotation
 #'   mappings for the columns.
@@ -19,8 +17,7 @@
 #' @param clusterRows Logical determining if rows should be arranged with
 #'   hierarchical clustering. Alternatively, can define an `hclust` object.
 #' @param color Colors to use for plot.
-#' @param legendColor Colors to use for legend labels. Defaults to the
-#'   [viridis::viridis()] palette.
+#' @param legendColor Colors to use for legend labels.
 #' @param title *Optional.* Plot title.
 #'
 #' @examples
