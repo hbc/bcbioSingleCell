@@ -1,10 +1,9 @@
 #' Sanitize Markers Output
 #'
-#' @rdname sanitizeMarkers
 #' @name sanitizeMarkers
+#' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param markers Original [Seurat::FindAllMarkers()] `data.frame`.
 #'
 #' @return `grouped_df`, grouped by cluster ident.

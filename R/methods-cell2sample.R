@@ -10,7 +10,6 @@
 #' cell2sample(bcb_small) %>% table()
 #'
 #' # seurat ====
-#' cell2sample(pbmc_small) %>% table()
 #' cell2sample(seurat_small) %>% table()
 NULL
 
