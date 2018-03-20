@@ -116,7 +116,11 @@ NULL
         ) +
         draw_plot(
             plot = ggpct,
-            x = 0L, y = 0L, width = 0.5, height = 0.5) +
+            x = 0L,
+            y = 0L,
+            width = 0.5,
+            height = 0.5
+        ) +
         draw_plot(
             plot = ggcumsum,
             x = 0.5,
