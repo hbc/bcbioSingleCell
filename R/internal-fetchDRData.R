@@ -23,7 +23,7 @@
 #' .fetchDRData.seurat(
 #'     pbmc_small,
 #'     dimCode = c(x = "tSNE_1", y = "tSNE_2")
-#'  ) %>%
+#' ) %>%
 #'     glimpse()
 .fetchDRData.seurat <- function(object, dimCode) {  # nolint
     fetch <- Seurat::FetchData(object, vars.all = dimCode)

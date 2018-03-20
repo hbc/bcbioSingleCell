@@ -1,4 +1,5 @@
 # TODO Move the ggplot imports here to each file
+
 #' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_line
 #'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
 #'   geom_histogram geom_hline geom_label geom_line geom_point geom_smooth
