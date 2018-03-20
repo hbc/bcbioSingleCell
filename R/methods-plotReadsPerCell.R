@@ -1,3 +1,5 @@
+# TODO Allow the user to define the color palette
+
 #' Plot Read Counts per Cell
 #'
 #' @rdname plotReadsPerCell
@@ -16,14 +18,11 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' plotReadsPerCell(bcb_small)
 #'
-#' # bcbioSingleCell
-#' plotReadsPerCell(bcb)
-#'
-#' # seurat
-#' plotReadsPerCell(seurat)
+#' # seurat ====
+#' plotReadsPerCell(seurat_small)
 NULL
 
 
@@ -42,7 +41,7 @@ NULL
 #'
 #' @inheritParams plotReadsPerCell
 #'
-#' @return [tibble] grouped by `sampleName` containing `log10Count` values.
+#' @return `tibble` grouped by `sampleName`, containing `log10Count` values.
 .rawCBTibble <- function(cellularBarcodes, sampleData) {
     sampleData <- sampleData[, c("sampleID", "sampleName")]
     cellularBarcodes %>%
@@ -74,7 +73,7 @@ NULL
 #'
 #' @details Modified version of Allon Klein Lab MATLAB code.
 #'
-#' @return [tibble].
+#' @return `tibble`.
 .proportionalCBTibble <- function(rawTibble, sampleData) {
     # Ensure `sampleName` is set as factor across both data frames
     rawTibble[["sampleName"]] <-
@@ -120,7 +119,8 @@ NULL
 .plotRawCBViolin <- function(
     tibble,
     interestingGroups = "sampleName",
-    cutoffLine = 0L) {
+    cutoffLine = 0L
+) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
     tibble <- tibble[tibble[["log10Count"]] >= 2L, , drop = FALSE]
@@ -142,7 +142,7 @@ NULL
         scale_fill_viridis(discrete = TRUE)
 
     # Cutoff lines
-    if (cutoffLine > 0L & length(cutoffLine)) {
+    if (cutoffLine > 0L && length(cutoffLine)) {
         p <- p +
             .qcCutoffLine(yintercept = cutoffLine)
     }
@@ -200,7 +200,7 @@ NULL
         scale_x_sqrt()
 
     # Cutoff lines
-    if (cutoffLine > 0L & length(cutoffLine)) {
+    if (cutoffLine > 0L && length(cutoffLine)) {
         p <- p +
             .qcCutoffLine(xintercept = cutoffLine)
     }
@@ -253,7 +253,7 @@ NULL
         scale_color_viridis(discrete = TRUE)
 
     # Cutoff lines
-    if (!is.null(cutoffLine) & length(cutoffLine)) {
+    if (!is.null(cutoffLine) && length(cutoffLine)) {
         p <- p +
             .qcCutoffLine(xintercept = cutoffLine)
     }
