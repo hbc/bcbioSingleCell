@@ -6,8 +6,9 @@
     assert_is_character(filterCells)
     assert_is_non_empty(filterCells)
     cells <- intersect(
-        colnames(object),
-        metadata(object)[["filterCells"]]) %>%
+        x = colnames(object),
+        y = metadata(object)[["filterCells"]]
+    ) %>%
         sort()
     assert_is_non_empty(cells)
     object <- object[, cells]
@@ -15,12 +16,12 @@
 
     # Apply gene filtering cutoffs =============================================
     filterGenes <- metadata(object)[["filterGenes"]]
-    # Warn here instead of stop, since we didn't define in earlier versions
-    assert_is_character(filterCells, severity = "warning")
-    assert_is_non_empty(filterGenes, severity = "warning")
+    assert_is_character(filterGenes)
+    assert_is_non_empty(filterGenes)
     genes <- intersect(
-        rownames(object),
-        metadata(object)[["filterGenes"]]) %>%
+        x = rownames(object),
+        y = metadata(object)[["filterGenes"]]
+    ) %>%
         sort()
     assert_is_non_empty(genes, severity = "warning")
     if (is.null(genes)) {
