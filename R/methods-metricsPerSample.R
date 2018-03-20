@@ -5,7 +5,7 @@
 #'
 #' @inheritParams general
 #'
-#' @return `tibble` containing summary statistics.
+#' @return `tbl_df` containing summary statistics.
 #'
 #' @examples
 #' # bcbioSingleCell ====
@@ -21,12 +21,7 @@ NULL
 #' @importFrom dplyr group_by summarize_all
 .metricsPerSample <- function(object) {
     metrics(object) %>%
-        .[, c(
-            "sampleName",
-            "nUMI",
-            "nGene",
-            "nCoding"
-        ), drop = FALSE] %>%
+        .[, c("sampleName", "nUMI", "nGene", "nCoding"), drop = FALSE] %>%
         group_by(!!sym("sampleName")) %>%
         summarize_all(sum)
 }
