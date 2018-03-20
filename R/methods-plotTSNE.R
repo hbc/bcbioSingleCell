@@ -2,13 +2,11 @@
 #'
 #' Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.
 #'
-#' @rdname plotTSNE
 #' @name plotTSNE
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param interestingGroups Interesting group to use for plot colors.
 #' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).
 #' @param pointSize Cell point size.
