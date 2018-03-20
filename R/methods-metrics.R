@@ -38,16 +38,11 @@ NULL
     colData <- colData(object)
     sampleID <- cell2sample(object)
     assert_are_identical(rownames(colData), names(sampleID))
-    sampleData <- sampleData(
-        object,
-        interestingGroups = interestingGroups
-    )
+    sampleData <- sampleData(object, interestingGroups)
     cbind(
         as.data.frame(sampleID),
         as.data.frame(colData)
     ) %>%
-        # Need to use `cellID` column for rownames, because that is the
-        # column set in `sampleData`
         rownames_to_column("cellID") %>%
         left_join(sampleData, by = "sampleID") %>%
         .sanitizeMetrics() %>%
