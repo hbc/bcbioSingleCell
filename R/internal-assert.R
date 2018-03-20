@@ -4,8 +4,10 @@
 
 .checkAggregate <- function(object, stop = FALSE) {
     logical <- "sampleNameAggregate" %in% colnames(object)
-    if (identical(logical, FALSE) &
-        identical(stop, TRUE)) {
+    if (
+        identical(logical, FALSE) &&
+        identical(stop, TRUE)
+    ) {
         abort("`sampleNameAggregate` column is required")
     }
     logical
@@ -53,7 +55,8 @@
 .checkSanitizedMarkers <- function(
     object,
     package = "Seurat",
-    stop = FALSE) {
+    stop = FALSE
+) {
     # General checks ===========================================================
     if (!is(object, "grouped_df")) {
         if (isTRUE(stop)) {
