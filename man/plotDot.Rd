@@ -6,9 +6,9 @@
 \alias{plotDot,seurat-method}
 \title{Plot Dot}
 \usage{
-\S4method{plotDot}{seurat}(object, genes,
-  color = ggplot2::scale_color_gradient(low = "lightgray", high = "purple"),
-  colMin = -2.5, colMax = 2.5, dotMin = 0L, dotScale = 6L)
+\S4method{plotDot}{seurat}(object, genes, color = scale_color_gradient(low =
+  "lightgray", high = "purple"), colMin = -2.5, colMax = 2.5, dotMin = 0L,
+  dotScale = 6L)
 }
 \arguments{
 \item{object}{Object.}
@@ -38,11 +38,9 @@ In the meantime, we've broken out the code into this generic to fix
 RMarkdown looping of our marker plots.
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-genes <- slot(seurat, "data") \%>\% rownames() \%>\% head()
-plotDot(seurat, genes = genes)
+# seurat ====
+genes <- head(rownames(pbmc_small))
+plotDot(pbmc_small, genes = genes)
 }
 \seealso{
 Modified version of \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}}.
