@@ -1,9 +1,14 @@
-#' Metadata
+#' Extend S4 Methods for `seurat` Objects
 #'
-#' @name metadata
+#' @name seurat
+#' @author Michael Steinbaugh
 #'
 #' @examples
-#' # seurat ====
+#' # dimensions ====
+#' rownames(pbmc_small) %>% head()
+#' colnames(pbmc_small) %>% head()
+#'
+#' # metadata ====
 #' # Only works for objects created with bcbioSingleCell
 #' names(metadata(seurat_small))
 #'
@@ -15,7 +20,20 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname metadata
+#' @rdname seurat
+#' @importFrom BiocGenerics colnames
+#' @export
+setMethod(
+    "colnames",
+    signature("seurat"),
+    function(x) {
+        colnames(counts(x))
+    }
+)
+
+
+
+#' @rdname seurat
 #' @export
 setMethod(
     "metadata",
@@ -27,8 +45,21 @@ setMethod(
 
 
 
+#' @rdname seurat
+#' @importFrom BiocGenerics rownames
+#' @export
+setMethod(
+    "rownames",
+    signature("seurat"),
+    function(x) {
+        rownames(counts(x))
+    }
+)
+
+
+
 # Assignment methods ===========================================================
-#' @rdname metadata
+#' @rdname seurat
 #' @seealso `getMethod("metadata<-", "Annotated")`
 #' @export
 setMethod(
