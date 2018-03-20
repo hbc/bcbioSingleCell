@@ -2,7 +2,6 @@
 #'
 #' "Novelty" refers to log10 genes detected per count.
 #'
-#' @rdname plotNovelty
 #' @name plotNovelty
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh
@@ -20,6 +19,8 @@ NULL
 
 
 # Constructors =================================================================
+#' @importFrom bcbioBase interestingGroups
+#' @importFrom ggplot2 coord_flip facet_wrap labs
 .plotNovelty <- function(
     object,
     geom = "violin",
@@ -28,8 +29,6 @@ NULL
     samplesOnYAxis = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    metricCol <- "log10GenesPerUMI"
-
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
@@ -38,6 +37,7 @@ NULL
     }
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
+    metricCol <- "log10GenesPerUMI"
 
     p <- .plotQCGeom(
         metrics = metrics,
@@ -83,7 +83,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotNovelty
-#' @importFrom bcbioBase interestingGroups
 #' @export
 setMethod(
     "plotNovelty",
@@ -94,7 +93,6 @@ setMethod(
 
 
 #' @rdname plotNovelty
-#' @importFrom bcbioBase interestingGroups
 #' @export
 setMethod(
     "plotNovelty",
