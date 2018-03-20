@@ -64,3 +64,13 @@ metadataPriorityCols <- c("sampleID", "sampleName", "description")
 projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
 
 sepBar <- "============================================================"
+
+validMedianGeom <- c(
+    "boxplot",
+    "ridgeline",
+    "violin"
+)
+validQCGeomFlip <- c(
+    "boxplot",
+    "violin"
+)
