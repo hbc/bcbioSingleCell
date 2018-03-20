@@ -29,21 +29,15 @@
     fetch <- Seurat::FetchData(object, vars.all = dimCode)
     ident <- slot(object, "ident")
     metadata <- slot(object, "meta.data")
-
-    # Check integrity of seurat data. This shouldn't happen but it's a good
-    # failsafe check here.
-    if (!identical(rownames(fetch), names(ident))) {
-        abort("Cell mismatch between Seurat `FetchData()` and `ident`")
-    }
-    if (!identical(rownames(fetch), rownames(metadata))) {
-        abort("Cell mismatch between Seurat `FetchData()` and `meta.data`")
-    }
+    assert_are_identical(rownames(fetch), names(ident))
+    assert_are_identical(rownames(fetch), rownames(metadata))
 
     # Bind into a single data.frame
     data <- cbind(
         fetch,
         as.data.frame(ident),
-        metadata) %>%
+        metadata
+    ) %>%
         # Note that this step may make the resolution columns confusing
         # (e.g. `res08` instead of `res.0.8`)
         camel() %>%
