@@ -287,7 +287,8 @@ NULL
     geom = "histogram",
     interestingGroups
 ) {
-    skipMessage <- "Raw cellular barcodes are not slotted in object"
+    validObject(object)
+    skipMessage <- "Object doesn't contain unfiltered cellular barcodes"
 
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
@@ -322,14 +323,10 @@ NULL
     }
 
     # Define the log10 cutoff line (to match plot axis)
-    if (!is.null(metadata(object)[["cbCutoff"]])) {
-        # This will be deprecated in a future release in favor of the longer
-        # spelling variant
-        cutoffLine <- metadata(object)[["cbCutoff"]]
-    } else if (!is.null(metadata(object)[["cellularBarcodeCutoff"]])) {
+    if (!is.null(metadata(object)[["cellularBarcodeCutoff"]])) {
         cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
     } else {
-        warn("Failed to detect cellular barcode cutoff")
+        warn("Cellular barcode cutoff is not saved in object")
         cutoffLine <- 0L
     }
     cutoffLine <- cutoffLine %>%
@@ -377,7 +374,5 @@ setMethod(
 setMethod(
     "plotReadsPerCell",
     signature("seurat"),
-    function(object, ...) {
-        NULL
-    }
+    .plotReadsPerCell
 )
