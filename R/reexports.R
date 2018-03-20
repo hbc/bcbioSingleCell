@@ -1,3 +1,9 @@
+#' @importFrom dplyr pull
+#' @export
+dplyr::pull
+
+
+
 #' @importFrom ggplot2 ggplot
 #' @export
 ggplot2::ggplot
