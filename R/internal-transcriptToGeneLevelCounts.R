@@ -15,7 +15,7 @@
 #' @return `dgCMatrix`.
 .transcriptToGeneLevelCounts <- function(object, tx2gene) {
     assert_is_all_of(object, "dgCMatrix")
-    object <- .stripTranscriptVersions(object)
+    object <- stripTranscriptVersions(object)
     assertIsTx2gene(tx2gene)
     assert_is_subset(rownames(object), rownames(tx2gene))
 
