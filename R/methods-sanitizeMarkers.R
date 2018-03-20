@@ -5,7 +5,7 @@
 #'
 #' @inheritParams general
 #'
-#' @param markers [Seurat::FindAllMarkers()] return.
+#' @param markers Original [Seurat::FindAllMarkers()] `data.frame`.
 #'
 #' @return `grouped_df`, grouped by cluster ident.
 #'
