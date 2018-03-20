@@ -19,8 +19,8 @@ plotKnownMarkersDetected(object, knownMarkersDetected, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{knownMarkersDetected}{\code{\link[=knownMarkersDetected]{knownMarkersDetected()}} return \link{tibble} grouped
-by cluster.}
+\item{knownMarkersDetected}{\code{\link[=knownMarkersDetected]{knownMarkersDetected()}} return \code{grouped_df},
+grouped by \code{cluster} ident.}
 
 \item{...}{Additional arguments.}
 
@@ -43,14 +43,11 @@ No value, only graphical output.
 Plot Known Markers Detected
 }
 \examples{
-load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-# Let's plot the first 2 markers, as a quick example
+# seurat ====
 plotKnownMarkersDetected(
-    seurat,
-    knownMarkersDetected = knownMarkersDetected[1:2, ])
+    object = seurat_small,
+    knownMarkersDetected = known_markers_small
+)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},

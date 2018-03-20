@@ -7,18 +7,15 @@
 #'
 #' @inherit plotMarkers
 #'
-#' @param knownMarkersDetected [knownMarkersDetected()] return [tibble] grouped
-#'   by cluster.
+#' @param knownMarkersDetected [knownMarkersDetected()] return `grouped_df`,
+#'   grouped by `cluster` ident.
 #'
 #' @examples
-#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' # Let's plot the first 2 markers, as a quick example
+#' # seurat ====
 #' plotKnownMarkersDetected(
-#'     seurat,
-#'     knownMarkersDetected = knownMarkersDetected[1:2, ])
+#'     object = seurat_small,
+#'     knownMarkersDetected = known_markers_small
+#' )
 NULL
 
 
@@ -38,33 +35,33 @@ NULL
     pointsAsNumbers = FALSE,
     headerLevel = 2L
 ) {
-    if (!nrow(knownMarkersDetected)) {
-        return(NULL)
-    }
-    cellTypes <- knownMarkersDetected[, "cellType", drop = TRUE] %>%
-        na.omit()
+    # Passthrough: tsneColor, violinFill, dotColor, dark, pointsAsNumbers
+    assertIsAHeaderLevel(headerLevel)
+    assert_has_rows(knownMarkersDetected)
+    assert_is_subset("cellType", colnames(knownMarkersDetected))
+
+    cellTypes <- knownMarkersDetected %>%
+        pull("cellType") %>%
+        na.omit() %>%
         unique()
-    if (is.null(cellTypes)) return(NULL)
-    list <- pblapply(seq_along(cellTypes), function(a) {
-        cellType <- cellTypes[[a]]
+    assert_is_non_empty(cellTypes)
+
+    list <- pblapply(cellTypes, function(cellType) {
         genes <- knownMarkersDetected %>%
-            .[.[["cellType"]] == cellType, "geneName", drop = TRUE] %>%
+            .[.[["cellType"]] == cellType, , drop = FALSE] %>%
+            pull("geneName") %>%
             na.omit() %>%
             unique()
-        if (is.null(genes)) {
-            return(NULL)
-        }
-        if (!is.null(headerLevel)) {
-            markdownHeader(
-                cellType,
-                level = headerLevel,
-                tabset = TRUE,
-                asis = TRUE
-            )
-            subheaderLevel <- headerLevel + 1L
-        } else {
-            subheaderLevel <- NULL
-        }
+        assert_is_non_empty(genes)
+
+        markdownHeader(
+            cellType,
+            level = headerLevel,
+            tabset = TRUE,
+            asis = TRUE
+        )
+        subheaderLevel <- headerLevel + 1L
+
         plotMarkers(
             object,
             genes = genes,
@@ -77,6 +74,7 @@ NULL
             title = cellType
         )
     })
+
     invisible(list)
 }
 
