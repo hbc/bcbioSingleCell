@@ -1,6 +1,7 @@
 #' Plot Violin
 #'
 #' @name plotViolin
+#' @family Gene Expression Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase plotViolin
