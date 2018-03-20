@@ -1,16 +1,16 @@
 #' Select Samples
 #'
-#' @name selectSamples
-#' @author Michael Steinbaugh
-#'
-#' @importFrom bcbioBase selectSamples
-#'
 #' @details Internally, pattern matching against sample and file names is
 #'   applied using logical grep matching.
 #'
 #' @note Bracket based subsetting with `[` also works on `bcbioSingleCell`
 #'   objects. In this case, provide cellular barcode identifiers for columns
 #'   and Ensembl gene identifiers for rows.
+#'
+#' @name selectSamples
+#' @author Michael Steinbaugh
+#'
+#' @importFrom bcbioBase selectSamples
 #'
 #' @inheritParams general
 #' @param ... Columns to use for grep pattern matching. Supply a named character
