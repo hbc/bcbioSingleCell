@@ -23,10 +23,13 @@ cell2sample(object, ...)
 Cell to Sample Mappings
 }
 \examples{
-# bcbioSingleCell
+# bcbioSingleCell ====
 cell2sample(bcb_small) \%>\% table()
 
-# seurat
+# seurat ====
 cell2sample(pbmc_small) \%>\% table()
 cell2sample(seurat_small) \%>\% table()
+}
+\author{
+Michael Steinbaugh
 }

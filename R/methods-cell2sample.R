@@ -1,18 +1,40 @@
 #' Cell to Sample Mappings
 #'
-#' @rdname cell2sample
 #' @name cell2sample
+#' @author Michael Steinbaugh
 #'
 #' @inheritParams general
 #'
 #' @examples
-#' # bcbioSingleCell
+#' # bcbioSingleCell ====
 #' cell2sample(bcb_small) %>% table()
 #'
-#' # seurat
+#' # seurat ====
 #' cell2sample(pbmc_small) %>% table()
 #' cell2sample(seurat_small) %>% table()
 NULL
+
+
+
+# Constructors =================================================================
+.cell2sample <- function(object) {
+    validObject(object)
+    cell2sample <- metadata(object)[["cell2sample"]]
+    if (!is.factor(cell2sample)) {
+        warn(paste(
+            "cell2sample is not stashed in object.",
+            "Calculating on the fly instead."
+        ))
+        # FIXME Add support for `colnames()` to seurat
+        cells <- rownames(colData(object))
+        samples <- rownames(sampleData(object))
+        cell2sample <- mapCellsToSamples(cells = cells, samples = samples)
+    }
+    cell2sample %>%
+        # FIXME Add support for `colnames()` to seurat
+        .[rownames(colData(object))] %>%
+        droplevels()
+}
 
 
 
@@ -22,18 +44,8 @@ NULL
 setMethod(
     "cell2sample",
     signature("bcbioSingleCell"),
-    function(object) {
-        cell2sample <- metadata(object)[["cell2sample"]]
-        if (!is.factor(cell2sample)) {
-            abort(paste(
-                "cell2sample is not a factor.",
-                "Run `updateObject()`."
-            ))
-        }
-        cell2sample %>%
-            .[colnames(object)] %>%
-            droplevels()
-    })
+    .cell2sample
+)
 
 
 
@@ -42,16 +54,5 @@ setMethod(
 setMethod(
     "cell2sample",
     signature("seurat"),
-    function(object) {
-        cell2sample <- metadata(object)[["cell2sample"]]
-        if (!is.factor(cell2sample)) {
-            cells <- colnames(slot(object, "data"))
-            samples <- rownames(sampleData(object))
-            cell2sample <- mapCellsToSamples(cells = cells, samples = samples)
-        }
-        assert_is_subset(names(cell2sample), rownames(colData(object)))
-        cell2sample %>%
-            .[rownames(colData(object))] %>%
-            droplevels()
-    }
+    .cell2sample
 )
