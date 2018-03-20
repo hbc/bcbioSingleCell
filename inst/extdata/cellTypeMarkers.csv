@@ -1,4 +1,4 @@
-cell,ensgene,symbol
+cellType,geneID,geneName
 B Cell,ENSMUSG00000061132,Blnk
 B Cell,ENSMUSG00000030724,Cd19
 B Cell,ENSMUSG00000030798,Cd37
