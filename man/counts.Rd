@@ -27,12 +27,12 @@ Counts Accessor
 }
 \examples{
 # bcbioSingleCell ====
-counts(bcb, gene2symbol = FALSE) \%>\% glimpse()
-counts(bcb, gene2symbol = TRUE) \%>\% glimpse()
+counts(bcb_small, gene2symbol = FALSE) \%>\% glimpse()
+counts(bcb_small, gene2symbol = TRUE) \%>\% glimpse()
 
 # seurat ====
-counts(seurat, normalized = FALSE) \%>\% glimpse()
-counts(seurat, normalized = TRUE) \%>\% glimpse()
+counts(seurat_small, normalized = FALSE) \%>\% glimpse()
+counts(seurat_small, normalized = TRUE) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh
