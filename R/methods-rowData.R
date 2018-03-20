@@ -1,5 +1,8 @@
 #' Row Data
 #'
+#' Metadata describing the genes. These annotations are obtained from
+#' AnnotationHub and ensembldb using [basejump::ensembl()].
+#'
 #' @name rowData
 #' @author Michael Steinbaugh
 #'

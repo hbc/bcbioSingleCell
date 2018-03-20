@@ -1,5 +1,10 @@
 #' Sample Data
 #'
+#' Metadata in columns describing the samples, which are defined in the
+#' rownames. Similar to [colData()], which for `bcbioSingleCell` and
+#' `SingleCellExperiment` objects describes cells in the columns, rather than
+#' the samples.
+#'
 #' @name sampleData
 #' @author Michael Steinbaugh
 #'
