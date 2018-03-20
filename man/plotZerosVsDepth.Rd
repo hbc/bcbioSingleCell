@@ -5,18 +5,12 @@
 \alias{plotZerosVsDepth}
 \alias{plotZerosVsDepth}
 \alias{plotZerosVsDepth,bcbioSingleCell-method}
-\alias{plotZerosVsDepth,dgCMatrix-method}
-\alias{plotZerosVsDepth,matrix-method}
 \alias{plotZerosVsDepth,seurat-method}
 \title{Plot Percentage of Zeros vs. Library Depth}
 \usage{
 plotZerosVsDepth(object, ...)
 
 \S4method{plotZerosVsDepth}{bcbioSingleCell}(object)
-
-\S4method{plotZerosVsDepth}{dgCMatrix}(object, metrics)
-
-\S4method{plotZerosVsDepth}{matrix}(object, metrics)
 
 \S4method{plotZerosVsDepth}{seurat}(object)
 }
@@ -36,11 +30,6 @@ This function helps us visualize the dropout rate.
 \examples{
 # bcbioSingleCell ====
 plotZerosVsDepth(bcb_small)
-
-# dgCMatrix ====
-counts <- counts(bcb_small)
-metrics <- metrics(bcb_small)
-plotZerosVsDepth(counts, metrics = metrics)
 
 # seurat ====
 plotZerosVsDepth(pbmc_small)

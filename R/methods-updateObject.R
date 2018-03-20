@@ -24,3 +24,8 @@
 #         cell2sample <- NULL
 #     }
 # }
+
+
+
+# cellularBarcodeCutoff
+# metadata(object)[["cbCutoff"]]

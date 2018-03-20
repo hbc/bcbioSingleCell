@@ -18,7 +18,8 @@
 Return data as \code{data.frame}, or \code{DataFrame}.
 }
 \description{
-Row Data
+Metadata describing the genes. These annotations are obtained from
+AnnotationHub and ensembldb using \code{\link[basejump:ensembl]{basejump::ensembl()}}.
 }
 \examples{
 # bcbioSingleCell ====

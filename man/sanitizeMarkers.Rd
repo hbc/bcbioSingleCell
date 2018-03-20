@@ -14,7 +14,7 @@ sanitizeMarkers(object, markers, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{markers}{\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}
+\item{markers}{Original \code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} \code{data.frame}.}
 
 \item{...}{Additional arguments.}
 }

@@ -20,7 +20,10 @@
 \code{data.frame}.
 }
 \description{
-Sample Data
+Metadata in columns describing the samples, which are defined in the
+rownames. Similar to \code{\link[=colData]{colData()}}, which for \code{bcbioSingleCell} and
+\code{SingleCellExperiment} objects describes cells in the columns, rather than
+the samples.
 }
 \examples{
 # bcbioSingleCell ====

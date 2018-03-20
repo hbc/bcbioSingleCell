@@ -11,7 +11,7 @@
 plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{bcbioSingleCell}(object, interestingGroups,
-  samplesOnYAxis = TRUE, color = scale_color_viridis(discrete = TRUE))
+  color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotUMIsVsGenes}{seurat}(object, interestingGroups,
   color = scale_color_viridis(discrete = TRUE))
@@ -22,9 +22,6 @@ plotUMIsVsGenes(object, ...)
 \item{...}{Additional arguments.}
 
 \item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
-histogram.}
 
 \item{color}{\emph{Only applies to scatterplot}. Desired ggplot color scale.
 Defaults to \code{\link[viridis:scale_color_viridis]{viridis::scale_color_viridis()}}. Must supply discrete values.

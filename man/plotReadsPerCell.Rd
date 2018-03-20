@@ -13,7 +13,8 @@ plotReadsPerCell(object, ...)
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
   interestingGroups)
 
-\S4method{plotReadsPerCell}{seurat}(object, ...)
+\S4method{plotReadsPerCell}{seurat}(object, geom = "histogram",
+  interestingGroups)
 }
 \arguments{
 \item{object}{Object.}
@@ -35,14 +36,11 @@ Plot Read Counts per Cell
 Here by "cell" we mean "cellular barcode".
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotReadsPerCell(bcb_small)
 
-# bcbioSingleCell
-plotReadsPerCell(bcb)
-
-# seurat
-plotReadsPerCell(seurat)
+# seurat ====
+plotReadsPerCell(seurat_small)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

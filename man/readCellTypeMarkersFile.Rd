@@ -20,7 +20,7 @@ readCellTypeMarkersFile(object, ...)
 \item{gene2symbol}{Gene-to-symbol annotation \code{data.frame}.}
 }
 \value{
-\code{tibble}, gropued by \code{cell} column.
+\code{grouped_df}, grouped by \code{cellType}.
 }
 \description{
 Read Cell Type Markers File

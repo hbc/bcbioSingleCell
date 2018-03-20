@@ -8,7 +8,6 @@
 #' @importFrom parallel mclapply
 #'
 #' @inheritParams base::`[`
-#'
 #' @param ... Additional arguments.
 #'
 #' @seealso
