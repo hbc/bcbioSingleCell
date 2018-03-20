@@ -14,72 +14,51 @@
 #' @param legend Show plot legend.
 #' @param subtitle Include gene(s) in the subtitle.
 #'
-#' @return [ggplot].
+#' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' genes <- counts(seurat) %>% rownames() %>% head()
-#' print(genes)
-#'
-#' # seurat
-#' plotMarkerTSNE(seurat, genes = genes)
-#'
-#' # data.frame
-#' df <- fetchTSNEExpressionData(seurat, genes = genes)
-#' plotMarkerTSNE(df, genes = genes)
+#' # seurat ====
+#' # Mitochondrial genes
+#' mito <- grep("^MT\\.", rownames(counts(seurat_small)), value = TRUE)
+#' print(mito)
+#' plotMarkerTSNE(seurat_small, genes = mito)
 NULL
 
 
 
 # Constructors =================================================================
-#' Plot Marker tSNE Constructor
-#'
-#' @keywords internal
-#' @noRd
-#'
 #' @importFrom basejump midnightTheme
 #' @importFrom ggplot2 aes_string geom_point geom_text ggplot labs guides
 #'   guide_colorbar theme
-#' @importFrom viridis scale_color_viridis
-#'
-#' @param object Marker gene expression [data.frame] returned from
-#'   [fetchTSNEExpressionData()].
 .plotMarkerTSNE <- function(
     object,
     genes,
-    expression = "mean",
+    expression = c("mean", "median", "sum"),
     pointsAsNumbers = FALSE,
     pointSize = 0.5,
     pointAlpha = 0.8,
     label = TRUE,
     labelSize = 6L,
-    color = viridis::scale_color_viridis(),
+    color = scale_color_viridis(),
     dark = TRUE,
     legend = TRUE,
     title = NULL,
-    subtitle = TRUE) {
-    requiredCols <- c(
-        "centerX",
-        "centerY",
-        "mean",
-        "median",
-        "ident",
-        "sum",
-        "tSNE1",
-        "tSNE2")
-    if (!all(requiredCols %in% colnames(object))) {
-        abort(paste(
-            "Required columns:", toString(requiredCols)
-        ))
-    }
-    validExpression <- c("mean", "median", "sum")
-    if (!expression %in% validExpression) {
-        abort(paste(
-            "`expression` must contain:",
-            toString(validExpression)
-        ))
-    }
+    subtitle = TRUE
+) {
+    assert_is_character(genes)
+    expression <- match.arg(expression)
+    assert_is_a_bool(pointsAsNumbers)
+    assert_is_a_number(pointSize)
+    assert_is_a_number(pointAlpha)
+    assert_is_a_bool(label)
+    assert_is_a_number(labelSize)
+    assertIsColorScaleContinuousOrNULL(color)
+    assert_is_a_bool(dark)
+    assert_is_a_bool(legend)
+    assertIsCharacterOrNULL(title)
+    assert_is_a_bool(subtitle)
+
+    data <- fetchTSNEExpressionData(object, genes = genes)
 
     # Automatic subtitle containing list of marker genes
     if (isTRUE(subtitle)) {
@@ -92,11 +71,12 @@ NULL
     }
 
     p <- ggplot(
-        object,
+        data = data,
         mapping = aes_string(
             x = "tSNE1",
             y = "tSNE2",
-            color = expression)
+            color = expression
+        )
     )
 
     if (isTRUE(dark)) {
@@ -123,11 +103,13 @@ NULL
                 color = guide_colorbar(
                     barwidth = 20L,
                     barheight = 1L,
-                    direction = "horizontal")
+                    direction = "horizontal"
+                )
             ) +
             theme(
                 legend.justification = "center",
-                legend.position = "bottom")
+                legend.position = "bottom"
+            )
     } else {
         p <- p + theme(legend.position = "none")
     }
@@ -139,14 +121,17 @@ NULL
                     x = "tSNE1",
                     y = "tSNE2",
                     label = "ident",
-                    color = expression),
+                    color = expression
+                ),
                 alpha = pointAlpha,
-                size = pointSize)
+                size = pointSize
+            )
     } else {
         p <- p +
             geom_point(
                 alpha = pointAlpha,
-                size = pointSize)
+                size = pointSize
+            )
     }
 
     if (isTRUE(label)) {
@@ -160,10 +145,12 @@ NULL
                 mapping = aes_string(
                     x = "centerX",
                     y = "centerY",
-                    label = "ident"),
+                    label = "ident"
+                ),
                 color = labelColor,
                 size = labelSize,
-                fontface = "bold")
+                fontface = "bold"
+            )
     }
 
     if (is(color, "ScaleContinuous")) {
@@ -180,41 +167,6 @@ NULL
 #' @export
 setMethod(
     "plotMarkerTSNE",
-    signature("data.frame"),
-    .plotMarkerTSNE)
-
-
-
-#' @rdname plotMarkerTSNE
-#' @export
-setMethod(
-    "plotMarkerTSNE",
     signature("seurat"),
-    function(
-        object,
-        genes,
-        expression = "mean",
-        pointsAsNumbers = FALSE,
-        pointSize = 0.5,
-        pointAlpha = 0.8,
-        label = TRUE,
-        labelSize = 6L,
-        color = viridis::scale_color_viridis(),
-        dark = TRUE,
-        title = NULL,
-        subtitle = TRUE) {
-        data <- fetchTSNEExpressionData(object, genes = genes)
-        .plotMarkerTSNE(
-            object = data,
-            genes = genes,
-            expression = expression,
-            pointsAsNumbers = pointsAsNumbers,
-            pointSize = pointSize,
-            pointAlpha = pointAlpha,
-            label = label,
-            labelSize = labelSize,
-            color = color,
-            dark = dark,
-            title = title,
-            subtitle = subtitle)
-    })
+    .plotMarkerTSNE
+)
