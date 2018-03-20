@@ -30,7 +30,7 @@ present in as many clusters as defined by \code{promiscuousCutoff}.}
 gene marker promiscuous.}
 }
 \value{
-Grouped \code{tibble}.
+\code{grouped_df}, grouped by \code{cellType}.
 }
 \description{
 Known Markers Detected
@@ -42,15 +42,11 @@ based on the gene names, since these change often and can mismatch
 easily.
 }
 \examples{
-load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
-
-# Use internal known markers for Homo sapiens
-knownMarkers <- cellTypeMarkers[["homoSapiens"]]
-
-# grouped_df
+# grouped_df ====
 knownMarkersDetected(
-    all = seuratAllMarkers,
-    known = knownMarkers) \%>\%
+    all = all_markers_small,
+    known = cellTypeMarkers[["homoSapiens"]]
+) \%>\%
     glimpse()
 }
 \seealso{

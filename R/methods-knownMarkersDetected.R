@@ -20,18 +20,14 @@
 #' @param promiscuousCutoff Minimum number of clusters required to consider a
 #'   gene marker promiscuous.
 #'
-#' @return Grouped `tibble`.
+#' @return `grouped_df`, grouped by `cellType`.
 #'
 #' @examples
-#' load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
-#'
-#' # Use internal known markers for Homo sapiens
-#' knownMarkers <- cellTypeMarkers[["homoSapiens"]]
-#'
-#' # grouped_df
+#' # grouped_df ====
 #' knownMarkersDetected(
-#'     all = seuratAllMarkers,
-#'     known = knownMarkers) %>%
+#'     all = all_markers_small,
+#'     known = cellTypeMarkers[["homoSapiens"]]
+#' ) %>%
 #'     glimpse()
 NULL
 
@@ -62,11 +58,7 @@ NULL
         filter(.data[["padj"]] < alpha) %>%
         left_join(known[, c("cellType", "geneID")], by = "geneID") %>%
         .[, unique(c(
-            "cellType",
-            "cluster",
-            "geneID",
-            "geneName",
-            colnames(.)
+            "cellType", "cluster", "geneID", "geneName", colnames(.)
         ))] %>%
         .[!is.na(.[["cellType"]]), , drop = FALSE] %>%
         group_by(!!sym("cellType")) %>%
