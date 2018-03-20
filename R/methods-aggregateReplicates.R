@@ -1,6 +1,5 @@
 #' Aggregate Replicates
 #'
-#' @rdname aggregateReplicates
 #' @name aggregateReplicates
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -107,7 +106,7 @@ NULL
             sampleID = make.names(
                 .data[["sampleName"]], unique = FALSE)
         ) %>%
-        # FIXME Improve detection and handling of unique columns here
+        # TODO Improve detection and handling of unique columns here
         .[, metadataPriorityCols] %>%
         unique()
     if (!identical(nrow(sampleData), expected)) {

@@ -20,7 +20,7 @@
 #'
 #' @examples
 #' cells <- colnames(bcb_small)
-#' samples <- sampleData(bcb_small)[["sampleID"]]
+#' samples <- sampleData(bcb_small) %>% rownames()
 #' map <- mapCellsToSamples(cells, samples)
 #' head(map)
 #' levels(map)
