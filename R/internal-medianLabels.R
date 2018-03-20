@@ -7,10 +7,15 @@
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom dplyr left_join
 #' @importFrom ggplot2 aes_string geom_label
 #'
 #' @return ggplot2 `geom_label`.
 .medianLabels <- function(metrics, medianCol, digits = 0L) {
+    assert_is_data.frame(metrics)
+    assert_is_a_string(medianCol)
+    assert_is_an_integer(digits)
+
     data <- aggregate(
         formula = as.formula(paste(medianCol, "sampleName", sep = " ~ ")),
         data = metrics,
