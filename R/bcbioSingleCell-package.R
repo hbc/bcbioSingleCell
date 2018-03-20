@@ -43,6 +43,7 @@
 #' @importFrom assertive has_names
 #' @importFrom assertive is_a_string
 #' @importFrom assertive is_character
+#' @importFrom basejump assertHasRownames
 #' @importFrom basejump assertIsAHeaderLevel
 #' @importFrom basejump assertIsAStringOrNULL
 #' @importFrom basejump assertIsAnImplicitInteger

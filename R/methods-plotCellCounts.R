@@ -1,3 +1,5 @@
+# FIXME PBMC working example is broken
+
 #' Plot Cell Counts
 #'
 #' @name plotCellCounts
@@ -35,6 +37,7 @@ NULL
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
 
+    # sampleID level issue here
     metrics <- metrics(object, interestingGroups)
     metadata <- sampleData(object, interestingGroups)
     data <- metrics %>%

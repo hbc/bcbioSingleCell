@@ -71,7 +71,8 @@ lrt <- diffExp(
     pbmc_small,
     numerator = numerator,
     denominator = denominator,
-    maxit = 100L)
+    maxit = 100L
+)
 lrt$table \%>\%
     as_tibble() \%>\%
     rownames_to_column("geneName") \%>\%

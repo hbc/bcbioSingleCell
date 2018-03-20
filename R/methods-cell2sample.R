@@ -11,6 +11,7 @@
 #'
 #' # seurat ====
 #' cell2sample(seurat_small) %>% table()
+#' cell2sample(pbmc_small) %>% table()
 NULL
 
 
@@ -20,18 +21,16 @@ NULL
     validObject(object)
     cell2sample <- metadata(object)[["cell2sample"]]
     if (!is.factor(cell2sample)) {
-        warn(paste(
+        inform(paste(
             "cell2sample is not stashed in object.",
             "Calculating on the fly instead."
         ))
-        # FIXME Add support for `colnames()` to seurat
-        cells <- rownames(colData(object))
+        cells <- colnames(object)
         samples <- rownames(sampleData(object))
         cell2sample <- mapCellsToSamples(cells = cells, samples = samples)
     }
     cell2sample %>%
-        # FIXME Add support for `colnames()` to seurat
-        .[rownames(colData(object))] %>%
+        .[colnames(object)] %>%
         droplevels()
 }
 

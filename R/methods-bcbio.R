@@ -4,7 +4,7 @@
 #' @author Michael Steinbaugh
 #' @keywords internal
 #'
-#' @importFrom bcbioBase bcbio
+#' @importFrom bcbioBase bcbio bcbio<-
 #'
 #' @inheritParams general
 #' @param slot Slot name of data inside accessor.
@@ -30,7 +30,7 @@ setMethod(
     signature("seurat"),
     function(object, slot) {
         stopifnot(.hasSlot(object, "misc"))
-        bcbio <- slot(object, "misc")[["bcbio"]]
+        bcbio <- object@misc[["bcbio"]]
         if (missing(slot)) {
             return(bcbio)
         }
@@ -54,10 +54,10 @@ setMethod(
     ),
     function(object, slot, value) {
         stopifnot(.hasSlot(object, "misc"))
-        if (is.null(slot(object, "misc")[["bcbio"]])) {
+        if (is.null(object@misc[["bcbio"]])) {
             abort("seurat object was not generated with bcbioSingleCell")
         }
-        slot(object, "misc")[["bcbio"]][[slot]] <- value
+        object@misc[["bcbio"]][[slot]] <- value
         validObject(object)
         object
     }

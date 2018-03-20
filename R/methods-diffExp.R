@@ -55,7 +55,8 @@
 #'     pbmc_small,
 #'     numerator = numerator,
 #'     denominator = denominator,
-#'     maxit = 100L)
+#'     maxit = 100L
+#' )
 #' lrt$table %>%
 #'     as_tibble() %>%
 #'     rownames_to_column("geneName") %>%
@@ -72,7 +73,7 @@ NULL
 #' @importFrom parallel mcmapply
 #' @importFrom Seurat WhichCells
 #' @importFrom stats model.matrix
-#' @importFrom zingeR glmWeightedF
+#' @importFrom zingeR glmWeightedF zeroWeightsLS
 .zingeR.edgeR <- function(  # nolint
     object,
     numerator,

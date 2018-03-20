@@ -21,8 +21,8 @@
 #' metrics(bcb_small) %>% glimpse()
 #'
 #' # seurat ====
-#' metrics(pbmc_small) %>% glimpse()
 #' metrics(seurat_small) %>% glimpse()
+#' metrics(pbmc_small) %>% glimpse()
 NULL
 
 

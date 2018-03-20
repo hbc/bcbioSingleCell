@@ -28,6 +28,7 @@ cell2sample(bcb_small) \%>\% table()
 
 # seurat ====
 cell2sample(seurat_small) \%>\% table()
+cell2sample(pbmc_small) \%>\% table()
 }
 \author{
 Michael Steinbaugh
