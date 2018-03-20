@@ -2,7 +2,7 @@
 #'
 #' @rdname metrics
 #' @name metrics
-#' @family Quality Control Metrics
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @importFrom bcbioBase metrics
