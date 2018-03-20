@@ -9,7 +9,7 @@
 #' @param object Gene markers file (CSV or Excel).
 #' @param gene2symbol Gene-to-symbol annotation `data.frame`.
 #'
-#' @return `tibble`, gropued by `cell` column.
+#' @return `grouped_df`, grouped by `cellType`.
 #'
 #' @examples
 #' cellTypeMarkersFile <- system.file(
@@ -31,7 +31,7 @@ NULL
     assertIsGene2symbol(gene2symbol)
     markers <- readFileByExtension(object) %>%
         camel(strict = FALSE)
-        
+
     # Match the markers file by Ensembl gene identifier, otherwise use name
     assert_are_intersecting_sets(
         x = c("geneID", "geneName"),
