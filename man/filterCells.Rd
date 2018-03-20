@@ -48,11 +48,8 @@ When matching the samples, be sure to use \code{sampleID} column (i.e. the
 rownames of \code{\link[=sampleData]{sampleData()}}).
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-
-# bcbioSingleCell
-print(bcb)
-filterCells(bcb)
+# bcbioSingleCell ====
+filterCells(bcb_small)
 }
 \seealso{
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.

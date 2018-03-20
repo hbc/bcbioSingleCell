@@ -29,11 +29,8 @@
 #'   [metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#'
-#' # bcbioSingleCell
-#' print(bcb)
-#' filterCells(bcb)
+#' # bcbioSingleCell ====
+#' filterCells(bcb_small)
 NULL
 
 
@@ -64,22 +61,8 @@ NULL
         minNovelty = minNovelty,
         minCellsPerGene = minCellsPerGene
     )
-    # Ensure all params are numeric
-    if (!all(vapply(
-        X = params,
-        FUN = is.numeric,
-        FUN.VALUE = logical(1L)
-    ))) {
-        abort("Filter parameters must be numeric")
-    }
-    # Ensure all params are not negative
-    if (!all(vapply(
-        X = params,
-        FUN = function(x) { all(x >= 0L) },
-        FUN.VALUE = logical(1L)
-    ))) {
-        abort("Filter parameters must be non-negative")
-    }
+    invisible(lapply(params, assert_is_a_number))
+    assert_all_are_positive(as.numeric(params))
 
     # Filter low quality cells =================================================
     summary <- list()
@@ -89,8 +72,7 @@ NULL
         ncol(object), "cells"
     )
 
-
-    # minUMIs ====
+    # minUMIs ------------------------------------------------------------------
     if (!is.null(names(minUMIs))) {
         # Per sample mode
         if (!all(names(minUMIs) %in% sampleIDs)) {
@@ -118,12 +100,13 @@ NULL
         paste("minUMIs", ">=", toString(minUMIs))
     )
 
-    # maxUMIs ====
+    # maxUMIs ------------------------------------------------------------------
     if (!is.null(names(maxUMIs))) {
         # Per sample mode
         if (!all(names(maxUMIs) %in% sampleIDs)) {
             abort("`maxUMIs` names don't match sample IDs")
         }
+        # FIXME Switch to `mapply()` method to loop across names
         list <- lapply(seq_along(names(maxUMIs)), function(a) {
             sampleID <- names(maxUMIs)[[a]]
             cutoff <- maxUMIs[[a]]
@@ -146,7 +129,7 @@ NULL
         paste("maxUMIs", "<=", toString(maxUMIs))
     )
 
-    # minGenes ====
+    # minGenes -----------------------------------------------------------------
     if (!is.null(names(minGenes))) {
         # Per sample mode
         if (!all(names(minGenes) %in% sampleIDs)) {
@@ -174,7 +157,7 @@ NULL
         paste("minGenes", ">=", toString(minGenes))
     )
 
-    # maxGenes ====
+    # maxGenes -----------------------------------------------------------------
     if (!is.null(names(maxGenes))) {
         # Per sample mode
         if (!all(names(maxGenes) %in% sampleIDs)) {
@@ -202,7 +185,7 @@ NULL
         paste("maxGenes", "<=", toString(maxGenes))
     )
 
-    # maxMitoRatio ====
+    # maxMitoRatio -------------------------------------------------------------
     if (!is.null(names(maxMitoRatio))) {
         # Per sample mode
         if (!all(names(maxMitoRatio) %in% sampleIDs)) {
@@ -230,7 +213,7 @@ NULL
         paste("maxMitoRatio", "<=", toString(maxMitoRatio))
     )
 
-    # minNovelty ====
+    # minNovelty ---------------------------------------------------------------
     if (!is.null(names(minNovelty))) {
         # Per sample mode
         if (!all(names(minNovelty) %in% sampleIDs)) {
