@@ -21,10 +21,6 @@ NULL
     validObject(object)
     cell2sample <- metadata(object)[["cell2sample"]]
     if (!is.factor(cell2sample)) {
-        inform(paste(
-            "cell2sample is not stashed in object.",
-            "Calculating on the fly instead."
-        ))
         cells <- colnames(object)
         samples <- rownames(sampleData(object))
         cell2sample <- mapCellsToSamples(cells = cells, samples = samples)

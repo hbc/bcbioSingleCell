@@ -1,7 +1,7 @@
 context("topMarkers")
 
-test_that("data.frame", {
-    x <- topMarkers(seurat_all_markers)
+test_that("grouped_df", {
+    x <- topMarkers(all_markers_small)
     expect_is(x, "grouped_df")
     expect_identical(
         group_vars(x),
@@ -9,6 +9,6 @@ test_that("data.frame", {
     )
     expect_identical(
         dim(x),
-        c(40L, 17L)
+        c(40L, 18L)
     )
 })

@@ -1,77 +1,29 @@
 context("bcbio")
 
-test_that("bcbioSingleCell", {
-    slot <- bcbio(bcb)
-    expect_is(slot, "SimpleList")
+test_that("seurat", {
+    x <- bcbio(seurat_small)
+    expect_is(x, "list")
     expect_identical(
-        lapply(slot, class),
+        lapply(x, class),
         list(
-            "cellularBarcodes" = "list"
+            "rowRanges" = structure("GRanges", package = "GenomicRanges"),
+            "metadata" = "list"
         )
     )
 })
 
-test_that("bcbioSingleCell assignment", {
-    data <- bcb
-    bcbio(data, "stash") <- "test"
-    expect_identical(
-        bcbio(data, "stash"),
-        "test"
-    )
-})
-
-test_that("seurat", {
-    tibble <- c("tbl_df", "tbl", "data.frame")
-    slot <- bcbio(seurat)
-    expect_is(slot, "list")
-    expect_identical(
-        lapply(slot, class),
-        list("version" = c("package_version", "numeric_version"),
-             "pipeline" = "character",
-             "uploadDir" = "character",
-             "sampleDirs" = "character",
-             "sampleMetadataFile" = "character",
-             "sampleMetadata" = "data.frame",
-             "interestingGroups" = "character",
-             "cell2sample" = "factor",
-             "organism" = "character",
-             "genomeBuild" = "character",
-             "ensemblVersion" = "NULL",
-             "gtfFile" = "NULL",
-             "annotable" = "data.frame",
-             "gene2symbol" = "data.frame",
-             "umiType" = "character",
-             "allSamples" = "logical",
-             "prefilter" = "logical",
-             "projectDir" = "character",
-             "template" = "character",
-             "runDate" = "Date",
-             "yamlFile" = "character",
-             "yaml" = "list",
-             "tx2gene" = "logical",
-             "dataVersions" = tibble,
-             "programs" = tibble,
-             "bcbioLog" = "NULL",  # character
-             "bcbioCommandsLog" = "NULL",  # character
-             "cellularBarcodeCutoff" = "NULL",  # numeric
-             "date" = "Date",
-             "wd" = "character",
-             # TODO Switch to single session info
-             "utilsSessionInfo" = "sessionInfo",
-             "devtoolsSessionInfo" = "session_info",
-             "subset" = "logical",
-             "aggregateReplicates" = "factor",
-             "filterCells" = "character",
-             "filterGenes" = "character",
-             "filterParams" = "numeric")
-    )
-})
-
 test_that("seurat assignment", {
-    data <- seurat
-    bcbio(data, "stash") <- "test"
+    x <- seurat_small
+    # Stash as new slot
+    bcbio(x, "stash") <- "XXX"
     expect_identical(
-        bcbio(data, "stash"),
-        "test"
+        bcbio(x, "stash"),
+        "XXX"
+    )
+    # Metadata stash
+    bcbio(x, "metadata")[["stash"]] <- "YYY"
+    expect_identical(
+        bcbio(x, "metadata")[["stash"]],
+        "YYY"
     )
 })

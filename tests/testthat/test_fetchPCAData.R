@@ -1,58 +1,45 @@
 context("fetchPCAData")
 
 test_that("fetchPCAData", {
-    data <- fetchPCAData(seurat)
-    expect_is(data, "data.frame")
+    x <- fetchPCAData(pbmc_small)
+    expect_is(x, "data.frame")
     expect_identical(
-        lapply(data, class),
+        lapply(x, class),
         list(
             "pc1" = "numeric",
             "pc2" = "numeric",
             "ident" = "factor",
             "nGene" = "integer",
             "nUMI" = "integer",
-            "sampleID" = "factor",
-            "nCoding" = "integer",
-            "nMito" = "integer",
-            "log10GenesPerUMI" = "numeric",
-            "mitoRatio" = "numeric",
-            "nCount" = "integer",
-            "sampleName" = "factor",
-            "description" = "factor",
-            "interestingGroups" = "factor",
             "origIdent" = "factor",
             "res0x8" = "factor",
+            "res1" = "factor",
             "centerX" = "numeric",
             "centerY" = "numeric"
         )
     )
-
-    subset <- data[1L, ] %>%
-        rownames_to_column() %>%
-        mutate_if(is.numeric, funs(round(., digits = 3L))) %>%
-        column_to_rownames()
-    identLevels <- c("0", "1", "2", "3")
+    subset <- x[1L, ] %>%
+        tibble::rownames_to_column(.) %>%
+        dplyr::mutate_if(
+            is.numeric,
+            dplyr::funs(round(., digits = 3L))
+        ) %>%
+        tibble::column_to_rownames(.)
+    levels <- c("0", "1", "2", "3")
     target <- data.frame(
-        "pc1" = 3.947,
-        "pc2" = 1.596,
-        "ident" = factor("0", levels = identLevels),
-        "nGene" = 734L,
-        "nUMI" = 6220L,
-        "sampleID" = factor("M1"),
-        "nCoding" = 5495L,
-        "nMito" = 442L,
-        "log10GenesPerUMI" = 0.755,
-        "mitoRatio" = 0.071,
-        "nCount" = 95155L,
-        "sampleName" = factor("M1"),
-        "description" = factor("M1"),
-        "interestingGroups" = factor("M1"),
-        "origIdent" = factor("M1"),
-        "res0x8" = factor("0", levels = identLevels),
-        "centerX" = 3.581,
-        "centerY" = 3.17,
-        row.names = "M1_AAACACTA_CTTAGGTA",
+        "pc1" = 0.443,
+        "pc2" = -1.575,
+        "ident" = factor("0", levels = levels),
+        "nGene" = 47L,
+        "nUMI" = 70L,
+        "origIdent" = factor("SeuratProject"),
+        "res0x8" = factor("0", levels = "0"),
+        "res1" = factor("0", levels = levels),
+        "centerX" = -1.176,
+        "centerY" = -1.683,
+        row.names = "ATGCCAGAACGACT",
         stringsAsFactors = FALSE
     )
+    # Use `glimpse()` to compare the rounded numbers
     expect_equal(subset, target)
 })
