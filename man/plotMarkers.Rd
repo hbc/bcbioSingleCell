@@ -10,11 +10,10 @@
 plotMarkers(object, ...)
 
 \S4method{plotMarkers}{seurat}(object, genes,
-  tsneColor = viridis::scale_color_viridis(),
-  violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-  dotColor = ggplot2::scale_color_gradient(low = "lightgray", high =
-  "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L,
-  title = NULL)
+  tsneColor = scale_color_viridis(),
+  violinFill = scale_fill_viridis(discrete = TRUE),
+  dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
+  dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -51,12 +50,10 @@ Plot gene expression per cell in multiple formats:
 }
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/topMarkers.rda", package = "bcbioSingleCell"))
-
-# seurat
-genes <- head(pull(topMarkers, "geneName"), 2L)
-plotMarkers(seurat, genes = genes)
+# seurat ===
+top <- topMarkers(all_markers_small, n = 1L)
+genes <- pull(top, "geneName")
+plotMarkers(seurat_small, genes = genes)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},

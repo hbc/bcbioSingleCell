@@ -4,21 +4,16 @@
 \name{plotMarkerTSNE}
 \alias{plotMarkerTSNE}
 \alias{plotMarkerTSNE}
-\alias{plotMarkerTSNE,data.frame-method}
 \alias{plotMarkerTSNE,seurat-method}
 \title{Plot Marker t-SNE}
 \usage{
 plotMarkerTSNE(object, ...)
 
-\S4method{plotMarkerTSNE}{data.frame}(object, genes, expression = "mean",
-  pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
-  dark = TRUE, legend = TRUE, title = NULL, subtitle = TRUE)
-
-\S4method{plotMarkerTSNE}{seurat}(object, genes, expression = "mean",
-  pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
-  dark = TRUE, title = NULL, subtitle = TRUE)
+\S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
+  "median", "sum"), pointsAsNumbers = FALSE, pointSize = 0.5,
+  pointAlpha = 0.8, label = TRUE, labelSize = 6L,
+  color = scale_color_viridis(), dark = TRUE, legend = TRUE,
+  title = NULL, subtitle = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -53,23 +48,17 @@ the dataset, and some cells can be masked.}
 \item{subtitle}{Include gene(s) in the subtitle.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Plot Marker t-SNE
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-genes <- counts(seurat) \%>\% rownames() \%>\% head()
-print(genes)
-
-# seurat
-plotMarkerTSNE(seurat, genes = genes)
-
-# data.frame
-df <- fetchTSNEExpressionData(seurat, genes = genes)
-plotMarkerTSNE(df, genes = genes)
+# seurat ====
+# Mitochondrial genes
+mito <- grep("^MT\\\\.", rownames(counts(seurat_small)), value = TRUE)
+print(mito)
+plotMarkerTSNE(seurat_small, genes = mito)
 }
 \seealso{
 Other t-SNE Utilities: \code{\link{fetchTSNEData}},

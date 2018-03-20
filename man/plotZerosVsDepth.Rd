@@ -36,12 +36,12 @@ plotZerosVsDepth(pbmc_small)
 plotZerosVsDepth(seurat_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{metrics}},
+Other Quality Control Functions: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}}

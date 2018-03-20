@@ -5,23 +5,18 @@
 \alias{plotMitoRatio}
 \alias{plotMitoRatio}
 \alias{plotMitoRatio,bcbioSingleCell-method}
-\alias{plotMitoRatio,data.frame-method}
 \alias{plotMitoRatio,seurat-method}
 \title{Plot Mitochondrial Transcript Abundance}
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "violin", max,
-  interestingGroups, samplesOnYAxis = TRUE,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotMitoRatio}{data.frame}(object, geom = "violin", max = Inf,
-  interestingGroups, samplesOnYAxis = TRUE,
+\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "violin",
+  max = Inf, interestingGroups, samplesOnYAxis = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotMitoRatio}{seurat}(object, geom = "violin", max,
+\S4method{plotMitoRatio}{seurat}(object, geom = "violin", max = Inf,
   interestingGroups, samplesOnYAxis = TRUE,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -56,25 +51,18 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotMitoRatio(bcb_small)
 
-# bcbioSingleCell
-plotMitoRatio(bcb)
-
-# seurat
-plotMitoRatio(seurat)
-
-# data.frame
-df <- metrics(bcb)
-plotMitoRatio(df)
+# seurat ====
+plotMitoRatio(seurat_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{metrics}},
+Other Quality Control Functions: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}},

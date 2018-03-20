@@ -34,11 +34,11 @@ metrics(seurat_small) \%>\% glimpse()
 \seealso{
 \code{\link[=sampleData]{sampleData()}}.
 
-Other Quality Control Metrics: \code{\link{plotCellCounts}},
+Other Quality Control Functions: \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotUMIsVsGenes}},

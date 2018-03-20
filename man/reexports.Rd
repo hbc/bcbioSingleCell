@@ -3,6 +3,8 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{pull}
+\alias{reexports}
 \alias{ggplot}
 \alias{reexports}
 \alias{scale_color_hue}
@@ -29,6 +31,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{dplyr}{\code{\link[dplyr]{pull}}}
+
   \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_hue}}}
 
   \item{tibble}{\code{\link[tibble]{as_tibble}}, \code{\link[tibble]{column_to_rownames}}, \code{\link[tibble]{glimpse}}, \code{\link[tibble]{rownames_to_column}}}
