@@ -33,58 +33,49 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @param metadata Seurat metadata `data.frame` per cellular barcode. Currently
+#' @param data Seurat metadata `data.frame` per cellular barcode. Currently
 #'   this is slotted in `object@meta.data` but older versions used
 #'   `object@data.info`.
 #'
 #' @importFrom basejump camel
 #' @importFrom dplyr mutate_if select_if
 #' @importFrom tibble remove_rownames
-.sampleData.seurat <- function(metadata) {  # nolint
+.sampleData.seurat <- function(data) {  # nolint
     # Assign the required metadata columns from `orig.ident`, if necessary
-    if (!all(metadataPriorityCols %in% colnames(metadata))) {
-        missing <- setdiff(metadataPriorityCols, colnames(metadata))
+    if (!all(metadataPriorityCols %in% colnames(data))) {
+        missing <- setdiff(metadataPriorityCols, colnames(data))
         for (i in seq_along(missing)) {
-            metadata[[missing[[i]]]] <- metadata[["orig.ident"]]
+            data[[missing[[i]]]] <- data[["orig.ident"]]
         }
     }
 
-    blacklist <- paste(c(
-        "cellularBarcode",
-        "orig.ident",
-        "Phase",
-        "^res\\.[0-9]"
-    ), collapse = "|")
+    blacklist <- paste(
+        c(
+            "cellularBarcode",
+            "orig.ident",
+            "Phase",
+            "^res\\.[0-9]"
+        ),
+        collapse = "|"
+    )
 
-    metadata <- metadata %>%
+    data <- data %>%
         remove_rownames() %>%
         .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
         mutate_if(is.character, as.factor) %>%
         select_if(is.factor) %>%
+        mutate_all(droplevels) %>%
         unique() %>%
-        camel(strict = FALSE)
+        camel()
 
     # Check for failure to make rows distinct (by `sampleName`)
-    if (any(duplicated(metadata[["sampleName"]]))) {
+    if (any(duplicated(data[["sampleName"]]))) {
         abort("Failed to make `sampleName` column unique")
     }
 
-    metadata
+    rownames(data) <- data[["sampleID"]]
+    data
 }
-
-
-
-# FIXME Remove this legacy code
-# #' @importFrom dplyr everything mutate_all
-# #' @importFrom magrittr set_rownames
-# .sanitizeSampleMetadata <- function(metadata, interestingGroups) {
-#     metadata %>%
-#         select(c(metadataPriorityCols), everything()) %>%
-#         mutate_all(as.factor) %>%
-#         mutate_all(droplevels) %>%
-#         uniteInterestingGroups(interestingGroups) %>%
-#         set_rownames(.[["sampleID"]])
-# }
 
 
 
@@ -104,6 +95,7 @@ setMethod(
         data <- metadata(object)[["sampleData"]]
         data <- uniteInterestingGroups(data, interestingGroups)
         data <- sanitizeSampleData(data)
+        assertHasRownames(data)
         data
     }
 )
@@ -146,6 +138,7 @@ setMethod(
         }
         data <- uniteInterestingGroups(data, interestingGroups)
         data <- sanitizeSampleData(data)
+        assertHasRownames(data)
         data
     }
 )
