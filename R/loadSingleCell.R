@@ -1,3 +1,5 @@
+# TODO Consolidate this code with bcbioRNASeq
+
 #' Load bcbio Single-Cell RNA-Seq Data
 #'
 #' @note When working in RStudio, we recommend connecting to the bcbio-nextgen
@@ -147,6 +149,10 @@ loadSingleCell <- function(
     yaml <- readYAML(yamlFile)
 
     # bcbio run information ====================================================
+    dataVersions <- readDataVersions(
+        file = file.path(projectDir, "data_versions.csv"))
+    assert_is_tbl_df(dataVersions)
+
     programVersions <- readProgramVersions(
         file = file.path(projectDir, "programs.txt")
     )
@@ -251,7 +257,6 @@ loadSingleCell <- function(
 
     # Unfiltered cellular barcode distributions ================================
     cbList <- .cellularBarcodesList(sampleDirs)
-    cbData <- .bindCellularBarcodes(cbList)
 
     # Assays ===================================================================
     inform(paste("Reading counts at", level, "level"))
@@ -263,7 +268,6 @@ loadSingleCell <- function(
     counts <- do.call(Matrix::cBind, sparseCountsList)
 
     # Row data =================================================================
-    # TODO Consolidate this code with bcbioRNASeq
     rowRangesMetadata <- NULL
     txdb <- NULL
     tx2gene <- NULL
@@ -364,6 +368,7 @@ loadSingleCell <- function(
         "yamlFile" = yamlFile,
         "yaml" = yaml,
         "tx2gene" = tx2gene,
+        "dataVersions" = dataVersions,
         "programVersions" = programVersions,
         "bcbioLog" = bcbioLog,
         "bcbioCommandsLog" = bcbioCommandsLog,
