@@ -29,3 +29,5 @@
 
 # cellularBarcodeCutoff
 # metadata(object)[["cbCutoff"]]
+
+# filterGenes
