@@ -21,7 +21,7 @@ fetchTSNEExpressionData(object, ...)
 of which to get expression data.}
 }
 \value{
-\link{data.frame} containing tSNE coordinates, sample metadata, and
+\code{data.frame} containing tSNE coordinates, sample metadata, and
 aggregate marker expression values (\code{mean}, \code{median}, and \code{sum}).
 }
 \description{
@@ -29,13 +29,10 @@ This gets t-SNE locations, cellular metadata, expression of genes and
 the geometric mean of the gene expression from a \link{seurat} object.
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-genes <- counts(seurat) \%>\% rownames() \%>\% head()
+# seurat ====
+genes <- head(rownames(pbmc_small))
 print(genes)
-
-fetchTSNEExpressionData(seurat, genes = genes) \%>\%
-    glimpse()
+fetchTSNEExpressionData(pbmc_small, genes = genes) \%>\% glimpse()
 }
 \seealso{
 Other t-SNE Utilities: \code{\link{fetchTSNEData}},
