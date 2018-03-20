@@ -26,14 +26,11 @@ Counts matrix.
 Counts Accessor
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# bcbioSingleCell
+# bcbioSingleCell ====
 counts(bcb, gene2symbol = FALSE) \%>\% glimpse()
 counts(bcb, gene2symbol = TRUE) \%>\% glimpse()
 
-# seurat
+# seurat ====
 counts(seurat, normalized = FALSE) \%>\% glimpse()
 counts(seurat, normalized = TRUE) \%>\% glimpse()
 }

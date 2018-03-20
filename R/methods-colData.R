@@ -5,8 +5,7 @@
 #'
 #' @importFrom SummarizedExperiment colData
 #'
-#' @inherit general
-#'
+#' @inheritParams general
 #' @param return Return data as `data.frame` or `DataFrame`.
 #'
 #' @return Data describing the columns (cells).
@@ -42,6 +41,7 @@ setMethod(
     signature("seurat"),
     function(x, return = c("data.frame", "DataFrame")) {
         return <- match.arg(return)
+
         data <- slot(x, "meta.data")
         assert_is_data.frame(data)
         # Sanitize column names
@@ -51,10 +51,7 @@ setMethod(
         meta <- sampleData(x)
         drop <- intersect(
             x = colnames(data),
-            y = c(
-                colnames(meta),
-                "cellularBarcode"
-            )
+            y = c(colnames(meta), "cellularBarcode")
         )
         if (length(drop)) {
             data <- data %>%
