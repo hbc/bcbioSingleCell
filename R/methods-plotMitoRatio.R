@@ -1,44 +1,48 @@
 #' Plot Mitochondrial Transcript Abundance
 #'
-#' @rdname plotMitoRatio
 #' @name plotMitoRatio
-#' @family Quality Control Metrics
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' plotMitoRatio(bcb_small)
 #'
-#' # bcbioSingleCell
-#' plotMitoRatio(bcb)
-#'
-#' # seurat
-#' plotMitoRatio(seurat)
-#'
-#' # data.frame
-#' df <- metrics(bcb)
-#' plotMitoRatio(df)
+#' # seurat ====
+#' plotMitoRatio(seurat_small)
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom viridis scale_fill_viridis
+#' @importFrom bcbioBase interestingGroups
+#' @importFrom ggplot2 coord_flip facet_wrap labs
 .plotMitoRatio <- function(
     object,
     geom = "violin",
     max = Inf,
     interestingGroups,
     samplesOnYAxis = TRUE,
-    fill = scale_fill_viridis(discrete = TRUE)) {
+    fill = scale_fill_viridis(discrete = TRUE)
+) {
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
+    if (missing(max)) {
+        max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
+    }
+
+    metrics <- metrics(object, interestingGroups)
     metricCol <- "mitoRatio"
+
     p <- .plotQCGeom(
-            object,
-            geom = geom,
-            metricCol = metricCol,
-            max = max)
+        metrics = metrics,
+        geom = geom,
+        metricCol = metricCol,
+        max = max
+    )
 
     # Label interesting groups
     if (!missing(interestingGroups)) {
@@ -54,19 +58,19 @@ NULL
 
     # Median labels
     if (geom %in% validMedianGeom) {
-        p <- p + .medianLabels(object, medianCol = metricCol, digits = 2L)
+        p <- p + .medianLabels(metrics, medianCol = metricCol, digits = 2L)
     }
 
     # Facets
     facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
+    if (isTRUE(.checkAggregate(metrics))) {
         facets <- "sampleNameAggregate"
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free_y")
     }
 
-    if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
+    if (isTRUE(samplesOnYAxis) && geom %in% validQCGeomFlip) {
         p <- p + coord_flip()
     }
 
@@ -77,74 +81,19 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotMitoRatio
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotMitoRatio",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        geom = "violin",
-        max,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(max)) {
-            max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups)
-        .plotMitoRatio(
-            object = metrics,
-            geom = geom,
-            max = max,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
+    .plotMitoRatio
+)
 
 
 
 #' @rdname plotMitoRatio
-#' @export
-setMethod(
-    "plotMitoRatio",
-    signature("data.frame"),
-    .plotMitoRatio)
-
-
-
-#' @rdname plotMitoRatio
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotMitoRatio",
     signature("seurat"),
-    function(
-        object,
-        geom = "violin",
-        max,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(max)) {
-            max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
-        }
-        metrics <- metrics(object, interestingGroups = interestingGroups)
-        .plotMitoRatio(
-            object = metrics,
-            geom = geom,
-            max = max,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
+    .plotMitoRatio
+)

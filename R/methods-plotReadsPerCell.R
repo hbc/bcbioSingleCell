@@ -3,7 +3,7 @@
 #' Plot Read Counts per Cell
 #'
 #' @name plotReadsPerCell
-#' @family Quality Control Metrics
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general

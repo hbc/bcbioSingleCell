@@ -3,7 +3,7 @@
 #' "Novelty" refers to log10 genes detected per count.
 #'
 #' @name plotNovelty
-#' @family Quality Control Metrics
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
 #' @inherit plotGenesPerCell

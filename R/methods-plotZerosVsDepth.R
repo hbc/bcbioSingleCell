@@ -3,7 +3,7 @@
 #' This function helps us visualize the dropout rate.
 #'
 #' @name plotZerosVsDepth
-#' @family Quality Control Metrics
+#' @family Quality Control Functions
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
