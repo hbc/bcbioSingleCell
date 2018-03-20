@@ -29,12 +29,27 @@
     dark = TRUE,
     title = NULL
 ) {
+    assert_is_data.frame(object)
+    assert_is_character(axes)
+    assert_is_subset(axes, colnames(object))
+    assert_is_a_string(interestingGroups)
+    assert_is_subset(interestingGroups, colnames(object))
+    assert_is_a_bool(pointsAsNumbers)
+    assert_is_a_number(pointSize)
+    assert_is_a_number(pointAlpha)
+    assert_is_a_bool(label)
+    assert_is_a_number(labelSize)
+    assertIsColorScaleDiscreteOrNULL(color)
+    assert_is_a_bool(dark)
+    assertIsAStringOrNULL(title)
+
     if (interestingGroups == "ident") {
         # Seurat stores the ident from `FetchData()` as `object.ident`
         colorCol <- "ident"
     } else {
         colorCol <- interestingGroups
     }
+
     p <- ggplot(
         object,
         mapping = aes_string(
@@ -43,10 +58,12 @@
             color = colorCol
         )
     )
+
     # Put the dark theme call before the other ggplot aesthetics
     if (isTRUE(dark)) {
         p <- p + midnightTheme()
     }
+
     if (isTRUE(pointsAsNumbers)) {
         p <- p +
             geom_text(
@@ -66,6 +83,7 @@
                 size = pointSize
             )
     }
+
     if (isTRUE(label)) {
         if (isTRUE(dark)) {
             labelColor <- "white"
@@ -84,8 +102,10 @@
                 fontface = "bold"
             )
     }
+
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
+
     p
 }
