@@ -47,6 +47,7 @@ plotCellCounts(bcb_small)
 
 # seurat ====
 plotCellCounts(seurat_small)
+plotCellCounts(pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{metrics}},

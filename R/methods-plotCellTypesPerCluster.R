@@ -1,4 +1,4 @@
-# FIXME Need to update arguments to match `plotMarkerTSNE()`
+# TODO Need to update arguments to match `plotMarkerTSNE()`
 
 #' Plot Cell Types per Cluster
 #'
@@ -6,31 +6,24 @@
 #' type (per unbiased cluster). Cell types with too few (`min` cutoff) or too
 #' many (`max` cutoff) marker genes will be skipped.
 #'
-#' @rdname plotCellTypesPerCluster
 #' @name plotCellTypesPerCluster
 #' @author Michael Steinbaugh
 #'
 #' @inherit plotMarkers
 #'
-#' @param cellTypesPerCluster Cell types per cluster grouped [tibble]. This must
+#' @param cellTypesPerCluster `grouped_df`, grouped by `cellType`. This must
 #'   be the return from [cellTypesPerCluster()].
 #' @param color Color palette.
 #'
-#' @return Show graphical output. Invisibly return [ggplot] plotlist.
+#' @return Show graphical output. Invisibly return `ggplot` plotlist.
 #'
 #' @examples
-#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
-#' glimpse(cellTypesPerCluster)
-#'
-#' # seurat
-#' # Let's plot the first row, as an example
-#' cellTypesPerCluster <- cellTypesPerCluster[1, , drop = FALSE]
+#' # seurat ====
+#' cellTypesPerCluster <- cellTypesPerCluster(known_markers_small)
 #' plotCellTypesPerCluster(
-#'     seurat,
-#'     cellTypesPerCluster = cellTypesPerCluster)
+#'     object = seurat_small,
+#'     cellTypesPerCluster = cellTypesPerCluster
+#' )
 NULL
 
 
@@ -42,43 +35,46 @@ NULL
 .plotCellTypesPerCluster <- function(
     object,
     cellTypesPerCluster,
-    color = viridis::scale_color_viridis(),
+    color = scale_color_viridis(),
     dark = TRUE,
-    headerLevel = NULL) {
-    if (!nrow(cellTypesPerCluster)) return(NULL)
-    if (group_vars(cellTypesPerCluster) != "cluster") {
-        abort("cellTypesPerCluster must be grouped by `cluster` column")
-    }
+    headerLevel = 2L
+) {
+    assert_has_rows(cellTypesPerCluster)
+    assert_are_identical(
+        x = group_vars(cellTypesPerCluster),
+        y = "cluster"
+    )
+
     cellTypesPerCluster <- cellTypesPerCluster %>%
         ungroup() %>%
         mutate_if(is.factor, droplevels)
+
     # Output Markdown headers per cluster
     clusters <- levels(cellTypesPerCluster[["cluster"]])
-    if (is.null(clusters)) return(NULL)
-    return <- pblapply(seq_along(clusters), function(a) {
-        cluster <- clusters[[a]]
-        if (!is.null(headerLevel)) {
-            markdownHeader(
-                paste("Cluster", cluster),
-                level = headerLevel,
-                tabset = TRUE,
-                asis = TRUE)
-        }
+    assert_is_non_empty(clusters)
+
+    return <- pblapply(clusters, function(cluster) {
+        markdownHeader(
+            paste("Cluster", cluster),
+            level = headerLevel,
+            tabset = TRUE,
+            asis = TRUE
+        )
         subset <- cellTypesPerCluster %>%
                 .[.[["cluster"]] == cluster, , drop = FALSE]
-        lapply(seq_len(nrow(subset)), function(b) {
-            cellType <- subset[b, , drop = FALSE]
-            genes <- pull(cellType, "geneName") %>%
+        assert_has_rows(subset)
+        lapply(seq_len(nrow(subset)), function(x) {
+            row <- subset[x, , drop = FALSE]
+            genes <- pull(row, "geneName") %>%
                 strsplit(", ") %>%
-                .[[1L]]
-            title <- pull(cellType, "cell")
-            if (!is.null(headerLevel)) {
-                markdownHeader(
-                    title,
-                    level = headerLevel + 1L,
-                    tabset = TRUE,
-                    asis = TRUE)
-            }
+                as.character()
+            title <- pull(row, "cellType")
+            markdownHeader(
+                title,
+                level = headerLevel + 1L,
+                tabset = TRUE,
+                asis = TRUE
+            )
             # Modify the title by adding the cluster number (for the plot)
             title <- paste(paste0("Cluster ", cluster, ":"), title)
             p <- plotMarkerTSNE(
@@ -89,11 +85,13 @@ NULL
                 dark = dark,
                 pointsAsNumbers = FALSE,
                 label = TRUE,
-                title = title)
+                title = title
+            )
             show(p)
-            p
+            invisible(p)
         })
     })
+
     invisible(return)
 }
 
@@ -106,5 +104,7 @@ setMethod(
     "plotCellTypesPerCluster",
     signature(
         object = "seurat",
-        cellTypesPerCluster = "grouped_df"),
-    .plotCellTypesPerCluster)
+        cellTypesPerCluster = "grouped_df"
+    ),
+    .plotCellTypesPerCluster
+)

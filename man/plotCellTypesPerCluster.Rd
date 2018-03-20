@@ -11,13 +11,13 @@
 plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat,grouped_df}(object,
-  cellTypesPerCluster, color = viridis::scale_color_viridis(), dark = TRUE,
-  headerLevel = NULL)
+  cellTypesPerCluster, color = scale_color_viridis(), dark = TRUE,
+  headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{cellTypesPerCluster}{Cell types per cluster grouped \link{tibble}. This must
+\item{cellTypesPerCluster}{\code{grouped_df}, grouped by \code{cellType}. This must
 be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
 \item{...}{Additional arguments.}
@@ -29,7 +29,7 @@ be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 \item{headerLevel}{Include a Markdown header for each gene.}
 }
 \value{
-Show graphical output. Invisibly return \link{ggplot} plotlist.
+Show graphical output. Invisibly return \code{ggplot} plotlist.
 }
 \description{
 Plot the geometric mean of the significant marker genes for every known cell
@@ -37,18 +37,12 @@ type (per unbiased cluster). Cell types with too few (\code{min} cutoff) or too
 many (\code{max} cutoff) marker genes will be skipped.
 }
 \examples{
-load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
-glimpse(cellTypesPerCluster)
-
-# seurat
-# Let's plot the first row, as an example
-cellTypesPerCluster <- cellTypesPerCluster[1, , drop = FALSE]
+# seurat ====
+cellTypesPerCluster <- cellTypesPerCluster(known_markers_small)
 plotCellTypesPerCluster(
-    seurat,
-    cellTypesPerCluster = cellTypesPerCluster)
+    object = seurat_small,
+    cellTypesPerCluster = cellTypesPerCluster
+)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
