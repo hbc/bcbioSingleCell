@@ -42,7 +42,7 @@
 
 
 
-#' Cellular Barcode Distributions
+#' Cellular Barcodes List
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
@@ -60,9 +60,7 @@
         paste(basename(sampleDirs), "barcodes.tsv", sep = "-")
     )
     names(files) <- names(sampleDirs)
-    if (!all(file.exists(files))) {
-        abort("Cellular barcode file missing")
-    }
+    assert_all_are_existing_files(files)
     inform("Reading cellular barcode distributions")
     list <- mclapply(files, function(file) {
         read_tsv(
