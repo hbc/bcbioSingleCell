@@ -29,12 +29,18 @@ NULL
 
 # Constructors =================================================================
 #' @importFrom ggplot2 facet_wrap labs
-#' @importFrom viridis scale_color_viridis
 .plotUMIsVsGenes <- function(
     object,
     interestingGroups,
-    color = scale_color_viridis(discrete = TRUE)) {
-    p <- .plotQCScatterplot(object, xCol = "nUMI", yCol = "nGene")
+    color = scale_color_viridis(discrete = TRUE)
+) {
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
+
+    metrics <- metrics(object, interestingGroups)
+
+    p <- .plotQCScatterplot(metrics, xCol = "nUMI", yCol = "nGene")
 
     # Label interesting groups
     if (!missing(interestingGroups)) {
@@ -50,7 +56,7 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
+    if (isTRUE(.checkAggregate(metrics))) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (is.character(facets)) {
@@ -64,53 +70,19 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotUMIsVsGenes
-#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotUMIsVsGenes",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        color = scale_color_viridis(discrete = TRUE)
-    ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups
-        )
-        .plotUMIsVsGenes(
-            object = metrics,
-            interestingGroups = interestingGroups,
-            color = color
-        )
-    }
+    .plotUMIsVsGenes
 )
 
 
 
 #' @rdname plotUMIsVsGenes
-#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotUMIsVsGenes",
     signature("seurat"),
-    function(
-        object,
-        interestingGroups,
-        color = scale_color_viridis(discrete = TRUE)
-    ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        metrics <- metrics(object, interestingGroups = interestingGroups)
-        .plotUMIsVsGenes(
-            object = metrics,
-            interestingGroups = interestingGroups,
-            color = color
-        )
-    }
+    .plotUMIsVsGenes
 )
