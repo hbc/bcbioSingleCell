@@ -1,21 +1,18 @@
 #' Fetch t-SNE Locations and Cellular Metadata
 #'
-#' @rdname fetchTSNEData
 #' @name fetchTSNEData
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
 #'
-#' @return [data.frame] of t-SNE points and metadata for each cell.
+#' @return `data.frame` of t-SNE points and metadata for each cell.
 #'
 #' @seealso [Seurat::TSNEPlot()].
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' fetchTSNEData(seurat) %>% glimpse()
+#' # seurat ====
+#' fetchTSNEData(pbmc_small) %>% glimpse()
 NULL
 
 
@@ -31,4 +28,5 @@ setMethod(
             object,
             dimCode = c(x = "tSNE_1", y = "tSNE_2")
         )
-    })
+    }
+)

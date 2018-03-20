@@ -17,16 +17,14 @@ fetchPCAData(object, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\link{data.frame} of PCA points and metadata for each cell.
+\code{data.frame} of PCA points and metadata for each cell.
 }
 \description{
 Fetch PCA Dimensions and Cellular Metadata
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-fetchPCAData(seurat) \%>\% glimpse()
+# seurat ====
+fetchPCAData(pbmc_small) \%>\% glimpse()
 }
 \seealso{
 \code{\link[Seurat:PCAPlot]{Seurat::PCAPlot()}}.

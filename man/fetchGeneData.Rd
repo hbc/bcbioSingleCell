@@ -26,8 +26,8 @@ Fetch Gene Expression Data
 }
 \examples{
 # seurat ====
-genes <- counts(seurat_small) \%>\% rownames() \%>\% head()
-fetchGeneData(seurat_small, genes = genes) \%>\% glimpse()
+genes <- counts(pbmc_small) \%>\% rownames() \%>\% head()
+fetchGeneData(pbmc_small, genes = genes) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

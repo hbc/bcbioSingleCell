@@ -1,21 +1,18 @@
 #' Fetch PCA Dimensions and Cellular Metadata
 #'
-#' @rdname fetchPCAData
 #' @name fetchPCAData
 #' @family PCA Utilities
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
 #'
-#' @return [data.frame] of PCA points and metadata for each cell.
+#' @return `data.frame` of PCA points and metadata for each cell.
 #'
 #' @seealso [Seurat::PCAPlot()].
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' fetchPCAData(seurat) %>% glimpse()
+#' # seurat ====
+#' fetchPCAData(pbmc_small) %>% glimpse()
 NULL
 
 
@@ -31,4 +28,5 @@ setMethod(
             object,
             dimCode = c(x = "PC1", y = "PC2")
         )
-    })
+    }
+)
