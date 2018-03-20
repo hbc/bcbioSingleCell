@@ -3,15 +3,14 @@
 #' Utility function that loops our standard quality control plots, for easy
 #' visualization.
 #'
-#' @rdname plotQC
 #' @name plotQC
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase plotQC
 #'
 #' @inheritParams general
 #' @inheritParams metrics
-#'
 #' @param geom Plot type. Supported formats: `boxplot`, `histogram`,
 #'   `ridgeline`, and `violin`. Applies to [plotUMIsPerCell()],
 #'   [plotGenesPerCell()], [plotMitoRatio()], and [plotNovelty()] output.
@@ -19,35 +18,22 @@
 #' @param legend Include plot legend.
 #' @param return
 #'   - `grid`: [cowplot::plot_grid()] graphical output.
-#'   - `list`: [ggplot] [list].
+#'   - `list`: `list` containing `ggplot` objects.
 #'   - `markdown`: R Markdown report, with reports separated by headers.
 #'
 #' @return R Markdown template code for quality control analysis.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' plotQC(bcb_small)
 #'
-#' # bcbioSingleCell
-#' plotQC(bcb)
-#'
-#' # seurat
-#' plotQC(seurat)
+#' # seurat ====
+#' plotQC(seurat_small)
 NULL
 
 
 
 # Constructors =================================================================
-validMedianGeom <- c(
-    "boxplot",
-    "ridgeline",
-    "violin")
-validQCGeomFlip <- c(
-    "boxplot",
-    "violin")
-
-
-
 #' @importFrom basejump markdownHeader
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 theme
@@ -57,7 +43,8 @@ validQCGeomFlip <- c(
     geom = "violin",
     headerLevel = 2L,
     legend = FALSE,
-    return = "grid") {
+    return = "grid"
+) {
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
@@ -95,6 +82,7 @@ validQCGeomFlip <- c(
             geom = geom
         )
     )
+
     # Remove any `NULL`` plots. This is useful for nuking the
     # `plotReadsPerCell()` return on an object that doesn't contain raw cellular
     # barcode counts.
@@ -182,7 +170,8 @@ validQCGeomFlip <- c(
         "boxplot",
         "histogram",
         "ridgeline",
-        "violin")
+        "violin"
+    )
     if (geom == "boxplot") {
         .plotQCBoxplot(...)
     } else if (geom == "histogram") {
@@ -201,10 +190,10 @@ validQCGeomFlip <- c(
 #' @importFrom ggplot2 aes_string element_text geom_boxplot ggplot labs
 #'   scale_y_sqrt theme
 .plotQCBoxplot <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) min <- 0L
-    min <- min(min)
-    if (!is.numeric(max)) max <- Inf
-    max <- max(max)
+    assert_is_data.frame(metrics)
+    assert_is_a_string(metricCol)
+    assert_is_a_number(min)
+    assert_is_a_number(max)
 
     p <- ggplot(
         data = metrics,
@@ -234,10 +223,10 @@ validQCGeomFlip <- c(
 #' @importFrom ggplot2 aes_string element_text geom_histogram ggplot labs
 #'   scale_x_sqrt scale_y_sqrt theme
 .plotQCHistogram <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) min <- 0L
-    min <- min(min)
-    if (!is.numeric(max)) max <- Inf
-    max <- max(max)
+    assert_is_data.frame(metrics)
+    assert_is_a_string(metricCol)
+    assert_is_a_number(min)
+    assert_is_a_number(max)
 
     p <- ggplot(
         data = metrics,
@@ -268,10 +257,10 @@ validQCGeomFlip <- c(
 #'   scale_x_sqrt theme
 #' @importFrom ggridges geom_density_ridges
 .plotQCRidgeline <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) min <- 0L
-    min <- min(min)
-    if (!is.numeric(max)) max <- Inf
-    max <- max(max)
+    assert_is_data.frame(metrics)
+    assert_is_a_string(metricCol)
+    assert_is_a_number(min)
+    assert_is_a_number(max)
 
     p <- ggplot(
         data = metrics,
@@ -307,6 +296,10 @@ validQCGeomFlip <- c(
 #' @importFrom tibble rownames_to_column
 #' @importFrom viridis scale_color_viridis
 .plotQCScatterplot <- function(metrics, xCol, yCol) {
+    assert_is_data.frame(metrics)
+    assert_is_a_string(xCol)
+    assert_is_a_string(yCol)
+
     ggplot(
         data = metrics,
         mapping = aes_string(
@@ -332,10 +325,10 @@ validQCGeomFlip <- c(
 #' @importFrom ggplot2 aes_string element_text geom_violin ggplot labs
 #'   scale_y_sqrt theme
 .plotQCViolin <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) min <- 0L
-    min <- min(min)
-    if (!is.numeric(max)) max <- Inf
-    max <- max(max)
+    assert_is_data.frame(metrics)
+    assert_is_a_string(metricCol)
+    assert_is_a_number(min)
+    assert_is_a_number(max)
 
     p <- ggplot(
         data = metrics,

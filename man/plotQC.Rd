@@ -29,7 +29,7 @@
 \item{return}{\itemize{
 \item \code{grid}: \code{\link[cowplot:plot_grid]{cowplot::plot_grid()}} graphical output.
 \itemize{
-\item \code{list}: \link{ggplot} \link{list}.
+\item \code{list}: \code{list} containing \code{ggplot} objects.
 \item \code{markdown}: R Markdown report, with reports separated by headers.
 }
 }}
@@ -42,14 +42,11 @@ Utility function that loops our standard quality control plots, for easy
 visualization.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotQC(bcb_small)
 
-# bcbioSingleCell
-plotQC(bcb)
-
-# seurat
-plotQC(seurat)
+# seurat ====
+plotQC(seurat_small)
 }
 \author{
 Michael Steinbaugh
