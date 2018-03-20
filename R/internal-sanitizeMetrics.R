@@ -1,4 +1,6 @@
+#' @importFrom dplyr mutate_if
 .sanitizeMetrics <- function(object) {
+    assert_is_data.frame(object)
     # Ensure that rownames are set as a column before performing this chain
     object %>%
         # Enforce count columns as integers (e.g. `nUMI`)
