@@ -1,46 +1,35 @@
 #' Fetch Gene Expression Data
 #'
-#' @rdname fetchGeneData
 #' @name fetchGeneData
+#' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param genes Gene identifiers (matrix rownames).
 #'
-#' @return [matrix].
+#' @return `matrix`.
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' genes <- slot(seurat, "data") %>%
-#'     rownames() %>%
-#'     head()
-#' fetchGeneData(seurat, genes = genes) %>%
-#'     head()
+#' # seurat ====
+#' genes <- counts(seurat_small) %>% rownames() %>% head()
+#' fetchGeneData(seurat_small, genes = genes) %>% glimpse()
 NULL
-
-
-
-# Constructors =================================================================
-#' @importFrom Seurat FetchData
-.fetchGeneData.seurat <- function(object, genes) {  # nolint
-    data <- Seurat::FetchData(object, vars.all = genes)
-    if (!identical(
-        as.character(genes),
-        as.character(colnames(data))
-    )) {
-        abort("`Seurat::FetchData()` return doesn't match `genes` input")
-    }
-    data
-}
 
 
 
 # Methods ======================================================================
 #' @rdname fetchGeneData
+#' @importFrom Seurat FetchData
 #' @export
 setMethod(
     "fetchGeneData",
     signature("seurat"),
-    .fetchGeneData.seurat)
+    function(object, genes) {
+        assert_is_character(genes)
+        data <- Seurat::FetchData(object, vars.all = genes)
+        assert_are_identical(
+            x = as.character(genes),
+            y = as.character(colnames(data))
+        )
+        data
+    }
+)

@@ -19,18 +19,16 @@ fetchGeneData(object, ...)
 \item{genes}{Gene identifiers (matrix rownames).}
 }
 \value{
-\link{matrix}.
+\code{matrix}.
 }
 \description{
 Fetch Gene Expression Data
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-genes <- slot(seurat, "data") \%>\%
-    rownames() \%>\%
-    head()
-fetchGeneData(seurat, genes = genes) \%>\%
-    head()
+# seurat ====
+genes <- counts(seurat_small) \%>\% rownames() \%>\% head()
+fetchGeneData(seurat_small, genes = genes) \%>\% glimpse()
+}
+\author{
+Michael Steinbaugh
 }
