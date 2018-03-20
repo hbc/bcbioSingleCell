@@ -19,11 +19,8 @@
 #' @export
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#'
-#' cells <- colnames(bcb)
-#' samples <- sampleData(bcb)[["sampleID"]]
-#'
+#' cells <- colnames(bcb_small)
+#' samples <- sampleData(bcb_small)[["sampleID"]]
 #' map <- mapCellsToSamples(cells, samples)
 #' head(map)
 #' levels(map)
@@ -57,6 +54,7 @@ mapCellsToSamples <- function(cells, samples) {
         names(vec) <- match[["cellID"]]
         vec
     })
+
     cell2sample <- unlist(list)
     assert_are_identical(length(cells), length(cell2sample))
     as.factor(cell2sample)
