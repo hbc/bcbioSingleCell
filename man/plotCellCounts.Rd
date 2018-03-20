@@ -5,20 +5,16 @@
 \alias{plotCellCounts}
 \alias{plotCellCounts}
 \alias{plotCellCounts,bcbioSingleCell-method}
-\alias{plotCellCounts,data.frame-method}
 \alias{plotCellCounts,seurat-method}
 \title{Plot Cell Counts}
 \usage{
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{bcbioSingleCell}(object, interestingGroups,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotCellCounts}{data.frame}(object, metadata, interestingGroups,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{seurat}(object, interestingGroups,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -32,7 +28,7 @@ plotCellCounts(object, ...)
 \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 
-\item{metadata}{Sample metadata \link{data.frame}.}
+\item{metadata}{Sample metadata \code{data.frame}.}
 }
 \value{
 \link{ggplot}.
@@ -46,19 +42,11 @@ is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_
 mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotCellCounts(bcb_small)
 
-# bcbioSingleCell
-plotCellCounts(bcb)
-
-# seurat
-plotCellCounts(seurat)
-
-# data.frame
-df <- metrics(bcb)
-metadata <- sampleData(bcb)
-plotCellCounts(df, metadata = metadata)
+# seurat ====
+plotCellCounts(seurat_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{metrics}},

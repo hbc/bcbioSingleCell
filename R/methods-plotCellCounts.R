@@ -1,33 +1,26 @@
 #' Plot Cell Counts
 #'
-#' @rdname plotCellCounts
 #' @name plotCellCounts
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell
 #'
-#' @param metadata Sample metadata [data.frame].
+#' @param metadata Sample metadata `data.frame`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' plotCellCounts(bcb_small)
 #'
-#' # bcbioSingleCell
-#' plotCellCounts(bcb)
-#'
-#' # seurat
-#' plotCellCounts(seurat)
-#'
-#' # data.frame
-#' df <- metrics(bcb)
-#' metadata <- sampleData(bcb)
-#' plotCellCounts(df, metadata = metadata)
+#' # seurat ====
+#' plotCellCounts(seurat_small)
+#' plotCellCounts(pbmc_small)
 NULL
 
 
 
 # Constructors =================================================================
+#' @importFrom bcbioBase interestingGroups
 #' @importFrom dplyr group_by left_join n summarize
 #' @importFrom ggplot2 aes_string element_text facet_wrap geom_bar geom_label
 #'   ggplot labs theme
@@ -35,19 +28,27 @@ NULL
 #' @importFrom viridis scale_fill_viridis
 .plotCellCounts <- function(
     object,
-    metadata,
     interestingGroups,
-    fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-    data <- object %>%
+    fill = scale_fill_viridis(discrete = TRUE)
+) {
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
+
+    metrics <- metrics(object, interestingGroups)
+    metadata <- sampleData(object, interestingGroups)
+    data <- metrics %>%
         group_by(!!sym("sampleName")) %>%
         summarize(nCells = n()) %>%
         left_join(metadata, by = "sampleName")
+
     p <- ggplot(
-        data,
+        data = data,
         mapping = aes_string(
             x = "sampleName",
             y = "nCells",
-            fill = "interestingGroups")
+            fill = "interestingGroups"
+        )
     ) +
         geom_bar(stat = "identity") +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
@@ -77,12 +78,13 @@ NULL
             label.size = qcLabelSize,
             show.legend = FALSE,
             # Align the label just under the top of the bar
-            vjust = 1.25)
+            vjust = 1.25
+        )
     }
 
     # Facets
     facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
+    if (isTRUE(.checkAggregate(data))) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (is.character(facets)) {
@@ -96,66 +98,19 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotCellCounts
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotCellCounts",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        interestingGroups,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups)
-        metadata <- sampleData(
-            object,
-            interestingGroups = interestingGroups)
-        .plotCellCounts(
-            object = metrics,
-            metadata = metadata,
-            interestingGroups = interestingGroups,
-            fill = fill)
-    })
+    .plotCellCounts
+)
 
 
 
 #' @rdname plotCellCounts
-#' @export
-setMethod(
-    "plotCellCounts",
-    signature("data.frame"),
-    .plotCellCounts)
-
-
-
-#' @rdname plotCellCounts
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotCellCounts",
     signature("seurat"),
-    function(
-        object,
-        interestingGroups,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups)
-        metadata <- sampleData(
-            object,
-            interestingGroups = interestingGroups)
-        .plotCellCounts(
-            object = metrics,
-            metadata = metadata,
-            interestingGroups = interestingGroups,
-            fill = fill)
-    })
+    .plotCellCounts
+)

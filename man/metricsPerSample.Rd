@@ -20,7 +20,7 @@ metricsPerSample(object, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\code{tibble} containing summary statistics.
+\code{tbl_df} containing summary statistics.
 }
 \description{
 Metrics per Sample
