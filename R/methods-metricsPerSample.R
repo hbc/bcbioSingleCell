@@ -18,7 +18,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr group_by summarize_all
 .metricsPerSample <- function(object) {
     metrics(object) %>%
         .[, c(

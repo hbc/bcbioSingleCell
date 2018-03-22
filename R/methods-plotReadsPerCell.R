@@ -37,12 +37,9 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr group_by left_join mutate
-#' @importFrom rlang !! sym
-#'
 #' @inheritParams plotReadsPerCell
 #'
-#' @return [tibble] grouped by `sampleName` containing `log10Count` values.
+#' @return `grouped_df` grouped by `sampleName` containing `log10Count` values.
 .rawCBTibble <- function(cellularBarcodes, sampleData) {
     sampleData <- sampleData[, c("sampleID", "sampleName")]
     cellularBarcodes %>%
@@ -62,11 +59,6 @@ NULL
 #' @author Rory Kirchner, Michael Steinbaugh
 #' @keywords internal
 #' @noRd
-#'
-#' @importFrom dplyr bind_rows left_join mutate
-#' @importFrom graphics hist
-#' @importFrom parallel mclapply
-#' @importFrom tibble tibble
 #'
 #' @param rawTibble [.rawCBTibble()] return.
 #' @param sampleData [sampleData()] return with `sampleName` columns
@@ -112,15 +104,14 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom viridis scale_fill_viridis
-#'
 #' @inheritParams plotReadsPerCell
 #'
 #' @return `ggplot`.
 .plotRawCBViolin <- function(
     tibble,
     interestingGroups = "sampleName",
-    cutoffLine = 0L) {
+    cutoffLine = 0L
+) {
     # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
     # plot gets dominated by cellular barcodes with low read counts.
     tibble <- tibble[tibble[["log10Count"]] >= 2L, , drop = FALSE]
@@ -167,8 +158,6 @@ NULL
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
-#'
-#' @importFrom ggridges geom_density_ridges
 #'
 #' @inheritParams plotReadsPerCell
 #'
@@ -225,8 +214,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom viridis scale_color_viridis
-#'
 #' @inheritParams plotReadsPerCell
 #'
 #' @return `ggplot`.
@@ -277,9 +264,6 @@ NULL
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
-#'
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom cowplot draw_plot ggdraw
 #'
 #' @inherit plotReadsPerCell
 .plotReadsPerCell <- function(

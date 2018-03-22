@@ -28,8 +28,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom ggplot2 facet_wrap labs
-#' @importFrom viridis scale_color_viridis
 .plotUMIsVsGenes <- function(
     object,
     interestingGroups,
@@ -64,7 +62,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotUMIsVsGenes
-#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotUMIsVsGenes",
@@ -93,7 +90,6 @@ setMethod(
 
 
 #' @rdname plotUMIsVsGenes
-#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotUMIsVsGenes",

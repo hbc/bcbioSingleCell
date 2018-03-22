@@ -28,10 +28,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotFeatureTSNE
-#' @importFrom basejump midnightTheme
-#' @importFrom cowplot plot_grid
-#' @importFrom ggplot2 aes_string geom_point ggplot scale_color_gradient theme
-#' @importFrom Seurat FetchData
 #' @export
 setMethod(
     "plotFeatureTSNE",
@@ -41,9 +37,10 @@ setMethod(
         features,
         pointSize = 0.5,
         pointAlpha = 0.8,
-        color = ggplot2::scale_color_gradient(
+        color = scale_color_gradient(
             low = "lightgray",
-            high = "purple"),
+            high = "purple"
+        ),
         dark = FALSE,
         label = TRUE,
         labelSize = 6L,

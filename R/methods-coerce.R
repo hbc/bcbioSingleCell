@@ -24,8 +24,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom Seurat CreateSeuratObject
-#'
 #' @return `seurat`.
 .coerceToSeurat <- function(from) {
     # Require that technical replicates are aggregated
@@ -39,7 +37,7 @@ NULL
     # Create seurat object
     raw <- counts(from, gene2symbol = TRUE)
     colData <- colData(from, return = "data.frame")
-    seurat <- CreateSeuratObject(
+    seurat <- Seurat::CreateSeuratObject(
         raw.data = raw,
         project = "bcbioSingleCell",
         # Already applied filtering cutoffs for cells and genes

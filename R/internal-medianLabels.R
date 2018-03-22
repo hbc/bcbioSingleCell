@@ -7,8 +7,6 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom ggplot2 aes_string geom_label
-#'
 #' @return ggplot2 `geom_label`.
 .medianLabels <- function(metrics, medianCol, digits = 0L) {
     data <- aggregate(

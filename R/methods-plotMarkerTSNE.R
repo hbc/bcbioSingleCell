@@ -38,11 +38,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom basejump midnightTheme
-#' @importFrom ggplot2 aes_string geom_point geom_text ggplot labs guides
-#'   guide_colorbar theme
-#' @importFrom viridis scale_color_viridis
-#'
 #' @param object Marker gene expression [data.frame] returned from
 #'   [fetchTSNEExpressionData()].
 .plotMarkerTSNE <- function(
@@ -54,11 +49,13 @@ NULL
     pointAlpha = 0.8,
     label = TRUE,
     labelSize = 6L,
-    color = viridis::scale_color_viridis(),
+    # FIXME Change color method to use function name?
+    color = scale_color_viridis(),
     dark = TRUE,
     legend = TRUE,
     title = NULL,
-    subtitle = TRUE) {
+    subtitle = TRUE
+) {
     requiredCols <- c(
         "centerX",
         "centerY",

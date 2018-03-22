@@ -18,12 +18,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr arrange group_by mutate mutate_all ungroup
-#' @importFrom parallel mclapply
-#' @importFrom rlang !!! syms
-#' @importFrom stats reorder
-#' @importFrom stringr str_match
-#' @importFrom tibble column_to_rownames rownames_to_column
 .aggregateReplicates <- function(object) {
     validObject(object)
     metadata <- metadata(object)

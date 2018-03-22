@@ -20,7 +20,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom tibble as_tibble column_to_rownames rownames_to_column
 .topBarcodes <- function(object, n = 10L) {
     col <- "nUMI"
     metrics <- metrics(object)

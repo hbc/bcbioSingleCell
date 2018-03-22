@@ -29,12 +29,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom Biobase rowMedians
-#' @importFrom dplyr everything group_by select
-#' @importFrom rlang !!! !! sym syms
-#' @importFrom Seurat FetchData
-#' @importFrom tibble column_to_rownames rownames_to_column
-#' @importFrom tidyr gather
 .fetchTSNEExpressionData.seurat <- function(  # nolint
     object,
     genes) {
@@ -44,7 +38,7 @@ NULL
     data <- fetchGeneData(object, genes = genes)
     # TODO Okay to just use S4Vectors methods here?
     mean <- Matrix::rowMeans(data)
-    median <- rowMedians(data)
+    median <- Biobase::rowMedians(data)
     sum <- Matrix::rowSums(data)
 
     cbind(tsne, mean, median, sum)

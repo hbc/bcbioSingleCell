@@ -28,16 +28,11 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr group_by left_join n summarize
-#' @importFrom ggplot2 aes_string element_text facet_wrap geom_bar geom_label
-#'   ggplot labs theme
-#' @importFrom rlang !! sym
-#' @importFrom viridis scale_fill_viridis
 .plotCellCounts <- function(
     object,
     metadata,
     interestingGroups,
-    fill = viridis::scale_fill_viridis(discrete = TRUE)) {
+    fill = scale_fill_viridis(discrete = TRUE)) {
     data <- object %>%
         group_by(!!sym("sampleName")) %>%
         summarize(nCells = n()) %>%
@@ -96,8 +91,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotCellCounts
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotCellCounts",
@@ -105,7 +98,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
+        fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
@@ -134,8 +127,6 @@ setMethod(
 
 
 #' @rdname plotCellCounts
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotCellCounts",
@@ -143,7 +134,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
+        fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }

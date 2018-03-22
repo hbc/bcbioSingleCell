@@ -7,7 +7,7 @@
 \title{Plot Violin}
 \usage{
 \S4method{plotViolin}{seurat}(object, genes,
-  fill = viridis::scale_fill_viridis(discrete = TRUE), return = "grid",
+  fill = scale_fill_viridis(discrete = TRUE), return = "grid",
   headerLevel = 2L)
 }
 \arguments{

@@ -22,10 +22,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump camel
-#' @importFrom dplyr arrange group_by left_join mutate
-#' @importFrom rlang !! sym
-#' @importFrom tibble as_tibble remove_rownames
 .sanitizeMarkers.seurat <- function(  # nolint
     object,
     markers

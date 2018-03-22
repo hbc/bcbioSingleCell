@@ -6,11 +6,6 @@
 #' @name mapCellsToSamples
 #' @author Michael Steinbaugh
 #'
-#' @importFrom dplyr bind_rows filter mutate
-#' @importFrom magrittr set_colnames
-#' @importFrom parallel mclapply
-#' @importFrom stringr str_match
-#'
 #' @param cells Cell identifiers.
 #' @param samples Sample identifiers.
 #'
@@ -51,8 +46,8 @@ mapCellsToSamples <- function(cells, samples) {
                 # Trailing number is for matching cellranger
                 "trailingNumber"
             )) %>%
-            select(c("cellID", "sampleID")) %>%
-            filter(!is.na(.data[["sampleID"]]))
+            .[, c("cellID", "sampleID")] %>%
+            .[!is.na(.[["sampleID"]]), , drop = FALSE]
         vec <- match[["sampleID"]]
         names(vec) <- match[["cellID"]]
         vec

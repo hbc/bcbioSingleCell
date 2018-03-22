@@ -42,7 +42,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom viridis scale_fill_viridis
 .plotGenesPerCell <- function(
     object,
     geom = "violin",

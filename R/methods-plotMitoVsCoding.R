@@ -25,12 +25,11 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom ggplot2 facet_wrap labs
-#' @importFrom viridis scale_color_viridis
 .plotMitoVsCoding <- function(
     object,
     interestingGroups,
-    color = viridis::scale_color_viridis(discrete = TRUE)) {
+    color = scale_color_viridis(discrete = TRUE)
+) {
     p <- .plotQCScatterplot(object, xCol = "nCoding", yCol = "nMito")
 
     # Label interesting groups
@@ -61,8 +60,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotMitoVsCoding
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotMitoVsCoding",
@@ -70,18 +67,19 @@ setMethod(
     function(
         object,
         interestingGroups,
-        color = viridis::scale_color_viridis(discrete = TRUE)) {
+        color = scale_color_viridis(discrete = TRUE)
+    ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups)
+        metrics <- metrics(object, interestingGroups)
         .plotMitoVsCoding(
             object = metrics,
             interestingGroups = interestingGroups,
-            color = color)
-    })
+            color = color
+        )
+    }
+)
 
 
 
@@ -90,13 +88,12 @@ setMethod(
 setMethod(
     "plotMitoVsCoding",
     signature("data.frame"),
-    .plotMitoVsCoding)
+    .plotMitoVsCoding
+)
 
 
 
 #' @rdname plotMitoVsCoding
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom viridis scale_color_viridis
 #' @export
 setMethod(
     "plotMitoVsCoding",
@@ -104,13 +101,16 @@ setMethod(
     function(
         object,
         interestingGroups,
-        color = viridis::scale_color_viridis(discrete = TRUE)) {
+        color = scale_color_viridis(discrete = TRUE)
+    ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
-        metrics <- metrics(object, interestingGroups = interestingGroups)
+        metrics <- metrics(object, interestingGroups)
         .plotMitoVsCoding(
             object = metrics,
             interestingGroups = interestingGroups,
-            color = color)
-    })
+            color = color
+        )
+    }
+)

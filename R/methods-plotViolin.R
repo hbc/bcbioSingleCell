@@ -30,17 +30,10 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump dynamicPlotlist
-#' @importFrom cowplot plot_grid
-#' @importFrom ggplot2 aes_string geom_violin ggplot
-#' @importFrom rlang !! sym
-#' @importFrom tibble as_tibble
-#' @importFrom tidyr gather
-#' @importFrom viridis scale_fill_viridis
 .plotViolin.seurat <- function(  # nolint
     object,
     genes,
-    fill = viridis::scale_fill_viridis(discrete = TRUE),
+    fill = scale_fill_viridis(discrete = TRUE),
     return = "grid",
     headerLevel = 2L
 ) {

@@ -15,17 +15,6 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump camel convertUCSCBuildToEnsembl detectOrganism ensembl
-#'   sanitizeSampleData
-#' @importFrom bcbioBase readSampleMetadataFile
-#' @importFrom dplyr mutate
-#' @importFrom jsonlite read_json
-#' @importFrom magrittr set_colnames
-#' @importFrom Matrix cBind
-#' @importFrom pbapply pblapply
-#' @importFrom stats setNames
-#' @importFrom stringr str_split
-#'
 #' @inherit loadSingleCell
 #'
 #' @param uploadDir Path to Cell Ranger output directory. This directory path

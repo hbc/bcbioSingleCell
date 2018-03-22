@@ -19,7 +19,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotPCA
-#' @importFrom ggplot2 scale_color_hue
 #' @export
 setMethod(
     "plotPCA",

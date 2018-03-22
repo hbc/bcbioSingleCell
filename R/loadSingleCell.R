@@ -6,16 +6,6 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom GenomicFeatures exonsBy makeTxDbFromGFF
-#' @importFrom Matrix cBind
-#' @importFrom basejump camel ensembl readYAML sanitizeSampleData
-#' @importFrom bcbioBase readDataVersions readLogFile readProgramVersions
-#'   readSampleMetadataFile sampleYAMLMetadata
-#' @importFrom pbapply pblapply
-#' @importFrom stats setNames
-#' @importFrom stringr str_extract str_match
-#' @importFrom tibble column_to_rownames rownames_to_column
-#'
 #' @param uploadDir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
 #' @param sampleMetadataFile Sample barcode metadata file. Optional for runs

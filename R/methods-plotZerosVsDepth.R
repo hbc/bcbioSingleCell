@@ -28,8 +28,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom ggplot2 aes_string facet_wrap geom_point ggplot labs
-#'   scale_x_log10
 .plotZerosVsDepth <- function(object, metrics) {
     # Using a logical matrix is faster and more memory efficient
     present <- object %>%

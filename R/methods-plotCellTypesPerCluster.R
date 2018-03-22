@@ -36,9 +36,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump markdownHeader
-#' @importFrom dplyr group_vars mutate_if pull
-#' @importFrom pbapply pblapply
 .plotCellTypesPerCluster <- function(
     object,
     cellTypesPerCluster,

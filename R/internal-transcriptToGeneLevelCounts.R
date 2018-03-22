@@ -4,11 +4,6 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr bind_rows
-#' @importFrom Matrix.utils aggregate.Matrix
-#' @importFrom magrittr set_rownames
-#' @importFrom tibble remove_rownames
-#'
 #' @param object Transcript-level sparse counts matrix (`dgCMatrix`).
 #' @param tx2gene Transcript to gene identifier mappings.
 #'

@@ -27,9 +27,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase prepareSummarizedExperiment
-#' @importFrom dplyr mutate_if
-#' @importFrom magrittr set_rownames
 .selectSamples <- function(object, ...) {
     object <- .applyFilterCutoffs(object)
     metadata(object)[["selectSamples"]] <- TRUE

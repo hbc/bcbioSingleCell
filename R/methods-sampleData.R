@@ -31,10 +31,6 @@ NULL
 #' @param metadata Seurat metadata `data.frame` per cellular barcode. Currently
 #'   this is slotted in `object@meta.data` but older versions used
 #'   `object@data.info`.
-#'
-#' @importFrom basejump camel
-#' @importFrom dplyr mutate_if select_if
-#' @importFrom tibble remove_rownames
 .sampleData.seurat <- function(metadata) {  # nolint
     # Assign the required metadata columns from `orig.ident`, if necessary
     if (!all(metadataPriorityCols %in% colnames(metadata))) {
@@ -69,24 +65,8 @@ NULL
 
 
 
-# FIXME Remove this legacy code
-# #' @importFrom dplyr everything mutate_all
-# #' @importFrom magrittr set_rownames
-# .sanitizeSampleMetadata <- function(metadata, interestingGroups) {
-#     metadata %>%
-#         select(c(metadataPriorityCols), everything()) %>%
-#         mutate_all(as.factor) %>%
-#         mutate_all(droplevels) %>%
-#         uniteInterestingGroups(interestingGroups) %>%
-#         set_rownames(.[["sampleID"]])
-# }
-
-
-
 # Methods ======================================================================
 #' @rdname sampleData
-#' @importFrom basejump sanitizeSampleData
-#' @importFrom bcbioBase uniteInterestingGroups
 #' @export
 setMethod(
     "sampleData",
@@ -106,8 +86,6 @@ setMethod(
 
 
 #' @rdname sampleData
-#' @importFrom basejump sanitizeSampleData
-#' @importFrom bcbioBase uniteInterestingGroups
 #' @export
 setMethod(
     "sampleData",

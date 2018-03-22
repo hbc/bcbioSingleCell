@@ -20,14 +20,13 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom viridis scale_fill_viridis
 .plotUMIsPerCell <- function(
     object,
     geom = "violin",
     min = 0L,
     interestingGroups,
     samplesOnYAxis = TRUE,
-    fill = viridis::scale_fill_viridis(discrete = TRUE)) {
+    fill = scale_fill_viridis(discrete = TRUE)) {
     metricCol <- "nUMI"
     p <- .plotQCGeom(
         object,
@@ -72,7 +71,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotUMIsPerCell
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotUMIsPerCell",
@@ -83,7 +81,7 @@ setMethod(
         min,
         interestingGroups,
         samplesOnYAxis = TRUE,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)
+        fill = scale_fill_viridis(discrete = TRUE)
     ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
@@ -109,7 +107,6 @@ setMethod(
 
 
 #' @rdname plotUMIsPerCell
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotUMIsPerCell",
@@ -120,7 +117,7 @@ setMethod(
         min,
         interestingGroups,
         samplesOnYAxis = TRUE,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
+        fill = scale_fill_viridis(discrete = TRUE)) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }

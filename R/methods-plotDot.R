@@ -58,19 +58,13 @@ NULL
 
 
 
-#' @importFrom dplyr group_by mutate summarize ungroup
-#' @importFrom ggplot2 aes_string geom_point labs scale_color_gradient
-#'   scale_radius
-#' @importFrom tibble rownames_to_column
-#' @importFrom rlang !! !!! sym syms
-#' @importFrom tibble as_tibble
-#' @importFrom tidyr gather
 .plotDot.seurat <- function(  # nolint
     object,
     genes,
-    color = ggplot2::scale_color_gradient(
+    color = scale_color_gradient(
         low = "lightgray",
-        high = "purple"),
+        high = "purple"
+    ),
     colMin = -2.5,
     colMax = 2.5,
     dotMin = 0L,
@@ -84,7 +78,8 @@ NULL
         gather(
             key = "gene",
             value = "expression",
-            !!genes) %>%
+            !!genes
+        ) %>%
         group_by(!!!syms(c("ident", "gene"))) %>%
         summarize(
             avgExp = mean(expm1(.data[["expression"]])),

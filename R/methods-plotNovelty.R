@@ -83,7 +83,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotNovelty
-#' @importFrom bcbioBase interestingGroups
 #' @export
 setMethod(
     "plotNovelty",
@@ -94,7 +93,6 @@ setMethod(
 
 
 #' @rdname plotNovelty
-#' @importFrom bcbioBase interestingGroups
 #' @export
 setMethod(
     "plotNovelty",

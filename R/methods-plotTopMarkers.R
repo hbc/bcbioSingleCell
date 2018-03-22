@@ -25,8 +25,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump markdownHeader
-#' @importFrom pbapply pblapply
 .plotTopMarkers <- function(
     object,
     topMarkers,

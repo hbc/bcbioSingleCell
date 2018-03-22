@@ -6,9 +6,9 @@
 \alias{plotDot,seurat-method}
 \title{Plot Dot}
 \usage{
-\S4method{plotDot}{seurat}(object, genes,
-  color = ggplot2::scale_color_gradient(low = "lightgray", high = "purple"),
-  colMin = -2.5, colMax = 2.5, dotMin = 0L, dotScale = 6L)
+\S4method{plotDot}{seurat}(object, genes, color = scale_color_gradient(low =
+  "lightgray", high = "purple"), colMin = -2.5, colMax = 2.5, dotMin = 0L,
+  dotScale = 6L)
 }
 \arguments{
 \item{object}{Object.}

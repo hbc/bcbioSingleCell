@@ -28,9 +28,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase uniteInterestingGroups
-#' @importFrom dplyr left_join
-#' @importFrom tibble column_to_rownames rownames_to_column
 .metrics <- function(object, interestingGroups) {
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)

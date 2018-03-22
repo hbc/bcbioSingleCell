@@ -49,8 +49,8 @@
 #'
 #' @examples
 #' # seurat: expression in cluster 3 relative to cluster 2
-#' numerator <- WhichCells(pbmc_small, ident = 3L)
-#' denominator <- WhichCells(pbmc_small, ident = 2L)
+#' numerator <- Seurat::WhichCells(pbmc_small, ident = 3L)
+#' denominator <- Seurat::WhichCells(pbmc_small, ident = 2L)
 #' lrt <- diffExp(
 #'     pbmc_small,
 #'     numerator = numerator,
@@ -66,13 +66,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump initializeDirectory
-#' @importFrom edgeR calcNormFactors DGEList glmFit
-#' @importFrom magrittr set_names
-#' @importFrom parallel mcmapply
-#' @importFrom Seurat WhichCells
-#' @importFrom stats model.matrix
-#' @importFrom zingeR glmWeightedF
 .zingeR.edgeR <- function(  # nolint
     object,
     numerator,

@@ -38,8 +38,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr arrange group_by left_join n summarize
-#' @importFrom rlang !! !!! sym syms
 .knownMarkersDetected <- function(
     all,
     known,
@@ -59,7 +57,7 @@ NULL
     # Group by cell type and arrange by P value
     markers <- all %>%
         # Apply alpha cutoff, before adding cell type annotations
-        filter(.data[["padj"]] < alpha) %>%
+        .[.[["padj"]] < alpha, , drop = FALSE] %>%
         left_join(known[, c("cellType", "geneID")], by = "geneID") %>%
         .[, unique(c(
             "cellType",

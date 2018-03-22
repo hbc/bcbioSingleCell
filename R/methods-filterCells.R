@@ -39,8 +39,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom scales percent
-#' @importFrom tibble rownames_to_column
 .filterCells <- function(
     object,
     minUMIs = 1000L,
@@ -325,7 +323,6 @@ NULL
 
 
 
-#' @importFrom stringr str_pad
 .paddedCount <- function(x, width = 8L) {
     str_pad(x, width = width, pad = " ")
 }

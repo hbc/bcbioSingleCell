@@ -25,9 +25,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname subsetPerSample
-#' @importFrom basejump assignAndSaveData initializeDirectory
-#' @importFrom dplyr pull
-#' @importFrom pbapply pblapply
 #' @export
 setMethod(
     "subsetPerSample",

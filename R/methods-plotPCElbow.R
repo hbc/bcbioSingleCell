@@ -28,11 +28,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom cowplot draw_plot ggdraw
-#' @importFrom ggplot2 aes_string geom_hline geom_line geom_point ggplot labs
-#'   scale_y_continuous
-#' @importFrom scales percent
-#' @importFrom tibble tibble
 .plotPCElbow <- function(
     sd,
     maxPct = 0.05,

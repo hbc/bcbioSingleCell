@@ -15,10 +15,6 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr pull
-#' @importFrom Matrix readMM
-#' @importFrom readr read_lines read_tsv
-#'
 #' @param sampleID Sample identifier. Must match the `sampleID` column of the
 #'   sample metadata `data.frame`.
 #' @param sampleDir Named character vector of sample directory containing the
@@ -124,7 +120,6 @@
 
 
 
-#' @importFrom parallel mcmapply
 .sparseCountsList <- function(sampleDirs, pipeline, umiType) {
     mcmapply(
         sampleID = names(sampleDirs),

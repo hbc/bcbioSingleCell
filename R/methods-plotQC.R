@@ -48,9 +48,6 @@ validQCGeomFlip <- c(
 
 
 
-#' @importFrom basejump markdownHeader
-#' @importFrom cowplot plot_grid
-#' @importFrom ggplot2 theme
 .plotQC <- function(
     object,
     interestingGroups,
@@ -198,8 +195,6 @@ validQCGeomFlip <- c(
 
 
 
-#' @importFrom ggplot2 aes_string element_text geom_boxplot ggplot labs
-#'   scale_y_sqrt theme
 .plotQCBoxplot <- function(metrics, metricCol, min = 0L, max = Inf) {
     if (!is.numeric(min)) min <- 0L
     min <- min(min)
@@ -231,8 +226,6 @@ validQCGeomFlip <- c(
 
 
 
-#' @importFrom ggplot2 aes_string element_text geom_histogram ggplot labs
-#'   scale_x_sqrt scale_y_sqrt theme
 .plotQCHistogram <- function(metrics, metricCol, min = 0L, max = Inf) {
     if (!is.numeric(min)) min <- 0L
     min <- min(min)
@@ -264,9 +257,6 @@ validQCGeomFlip <- c(
 
 
 
-#' @importFrom ggplot2 aes_string element_text geom_boxplot ggplot labs
-#'   scale_x_sqrt theme
-#' @importFrom ggridges geom_density_ridges
 .plotQCRidgeline <- function(metrics, metricCol, min = 0L, max = Inf) {
     if (!is.numeric(min)) min <- 0L
     min <- min(min)
@@ -303,9 +293,6 @@ validQCGeomFlip <- c(
 
 
 
-#' @importFrom dplyr filter pull
-#' @importFrom tibble rownames_to_column
-#' @importFrom viridis scale_color_viridis
 .plotQCScatterplot <- function(metrics, xCol, yCol) {
     ggplot(
         data = metrics,
@@ -329,8 +316,6 @@ validQCGeomFlip <- c(
 
 
 
-#' @importFrom ggplot2 aes_string element_text geom_violin ggplot labs
-#'   scale_y_sqrt theme
 .plotQCViolin <- function(metrics, metricCol, min = 0L, max = Inf) {
     if (!is.numeric(min)) min <- 0L
     min <- min(min)

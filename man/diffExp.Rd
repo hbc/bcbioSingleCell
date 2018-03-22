@@ -65,8 +65,8 @@ information.
 
 \examples{
 # seurat: expression in cluster 3 relative to cluster 2
-numerator <- WhichCells(pbmc_small, ident = 3L)
-denominator <- WhichCells(pbmc_small, ident = 2L)
+numerator <- Seurat::WhichCells(pbmc_small, ident = 3L)
+denominator <- Seurat::WhichCells(pbmc_small, ident = 2L)
 lrt <- diffExp(
     pbmc_small,
     numerator = numerator,

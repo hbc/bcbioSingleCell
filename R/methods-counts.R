@@ -30,8 +30,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr pull
-#' @importFrom magrittr set_rownames
 .counts <- function(
     object,
     gene2symbol = FALSE

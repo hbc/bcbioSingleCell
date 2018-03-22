@@ -42,21 +42,17 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom cowplot plot_grid
-#' @importFrom dplyr filter
-#' @importFrom ggplot2 aes_string coord_flip element_blank geom_violin ggplot
-#'   theme
-#' @importFrom viridis scale_fill_viridis viridis
-#'
 #' @param returnAsList Return the `gg` objects as a list.
 .plotMarker.seurat <- function(  # nolint
     object,
     gene,
-    tsneColor = viridis::scale_color_viridis(),
-    violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-    dotColor = ggplot2::scale_color_gradient(
+    # FIXME Change tsneColor method here to use function name?
+    tsneColor = scale_color_viridis(),
+    violinFill = scale_fill_viridis(discrete = TRUE),
+    dotColor = scale_color_gradient(
         low = "lightgray",
-        high = "purple"),
+        high = "purple"
+    ),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     title = NULL,
@@ -118,20 +114,21 @@ NULL
 
 
 
-#' @importFrom basejump markdownHeader
-#' @importFrom viridis scale_color_viridis
 .plotMarkers.seurat <- function(  # nolint
     object,
     genes,
-    tsneColor = viridis::scale_color_viridis(),
-    violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-    dotColor = ggplot2::scale_color_gradient(
+    # FIXME Change tsneColor method?
+    tsneColor = scale_color_viridis(),
+    violinFill = scale_fill_viridis(discrete = TRUE),
+    dotColor = scale_color_gradient(
         low = "lightgray",
-        high = "purple"),
+        high = "purple"
+    ),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     headerLevel = 2L,
-    title = NULL) {
+    title = NULL
+) {
     list <- lapply(seq_along(genes), function(a) {
         gene <- genes[[a]]
         # Skip and warn if gene is missing

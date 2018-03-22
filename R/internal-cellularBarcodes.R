@@ -4,10 +4,6 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr bind_rows group_by mutate
-#' @importFrom parallel mclapply
-#' @importFrom tibble column_to_rownames
-#'
 #' @param list List of cellular barcodes.
 #'
 #' @return `data.frame`.
@@ -47,9 +43,6 @@
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
-#'
-#' @importFrom parallel mclapply
-#' @importFrom readr read_tsv
 #'
 #' @param sampleDirs Sample directories.
 #'

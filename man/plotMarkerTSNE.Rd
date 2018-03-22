@@ -12,7 +12,7 @@ plotMarkerTSNE(object, ...)
 
 \S4method{plotMarkerTSNE}{data.frame}(object, genes, expression = "mean",
   pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
+  label = TRUE, labelSize = 6L, color = scale_color_viridis(),
   dark = TRUE, legend = TRUE, title = NULL, subtitle = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = "mean",

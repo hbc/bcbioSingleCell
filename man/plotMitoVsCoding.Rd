@@ -12,13 +12,13 @@
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{bcbioSingleCell}(object, interestingGroups,
-  color = viridis::scale_color_viridis(discrete = TRUE))
+  color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotMitoVsCoding}{data.frame}(object, interestingGroups,
-  color = viridis::scale_color_viridis(discrete = TRUE))
+  color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
-  color = viridis::scale_color_viridis(discrete = TRUE))
+  color = scale_color_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}

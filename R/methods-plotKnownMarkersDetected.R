@@ -24,7 +24,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump markdownHeader
 .plotKnownMarkersDetected <- function(
     object,
     knownMarkersDetected,
