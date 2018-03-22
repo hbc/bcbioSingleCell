@@ -7,10 +7,6 @@
 #'
 #' @inheritParams general
 #' @inheritParams plotDot
-#' @param fill Fill color palette. Defaults to viridis.
-#' @param return Return type. "grid", "list", and "markdown" are supported.
-#' @param headerLevel Markdown header level. Only applicable when
-#'   `return = "markdown"`.
 #'
 #' @examples
 #' # seurat ====
@@ -34,13 +30,12 @@ NULL
     object,
     genes,
     fill = scale_fill_viridis(discrete = TRUE),
-    return = "grid",
-    headerLevel = 2L
+    headerLevel = 2L,
+    return = c("grid", "list", "markdown")
 ) {
-    validReturn <- c("grid", "list", "markdown")
-    if (!return %in% validReturn) {
-        abort(paste("`return` must contain:", toString(validReturn)))
-    }
+    assertIsFillScaleDiscreteOrNULL(fill)
+    assertIsAHeaderLevel(headerLevel)
+    return <- match.arg(return)
 
     # Fetch data ===============================================================
     ident <- slot(object, "ident")
