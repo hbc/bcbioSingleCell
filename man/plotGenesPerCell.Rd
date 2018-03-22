@@ -28,7 +28,8 @@ plotGenesPerCell(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{geom}{Plot type.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
 
 \item{min}{Recommended minimum value cutoff.}
 

@@ -14,7 +14,8 @@
 #'   must contain `geneID` and `geneName`.
 #' @param dark Plot against a dark background using [midnightTheme()].
 #' @param dir Output directory.
-#' @param geom Plot type.
+#' @param geom Plot type. Uses [match.arg()] internally and defaults to the
+#'   first argument in the vector.
 #' @param headerLevel R Markdown header level.
 #' @param interestingGroups Character vector of interesting groups. Must be
 #'   formatted in [camel()] case and intersect with [sampleData()] colnames.
@@ -24,7 +25,7 @@
 #' @param object Object.
 #' @param pipeline Pipeline used to generate the samples.
 #' @param return Return type. Uses [match.arg()] internally and defaults to the
-#'   first item in the arguments vector.
+#'   first argument in the vector.
 #' @param samplesOnYAxis Plot the samples on the y axis.
 #' @param title Plot title.
 #' @param value Object to assign.

@@ -22,7 +22,7 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 \item{headerLevel}{R Markdown header level.}
 
 \item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
-first item in the arguments vector.}
+first argument in the vector.}
 }
 \description{
 Plot Violin

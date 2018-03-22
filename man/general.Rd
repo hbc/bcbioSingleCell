@@ -20,7 +20,8 @@ must contain \code{geneID} and \code{geneName}.}
 
 \item{dir}{Output directory.}
 
-\item{geom}{Plot type.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
 
 \item{headerLevel}{R Markdown header level.}
 
@@ -38,7 +39,7 @@ formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=
 \item{pipeline}{Pipeline used to generate the samples.}
 
 \item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
-first item in the arguments vector.}
+first argument in the vector.}
 
 \item{samplesOnYAxis}{Plot the samples on the y axis.}
 

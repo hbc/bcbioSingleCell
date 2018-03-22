@@ -21,14 +21,15 @@
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{geom}{Plot type.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
 
 \item{headerLevel}{R Markdown header level.}
 
 \item{legend}{Include plot legend.}
 
 \item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
-first item in the arguments vector.}
+first argument in the vector.}
 }
 \value{
 \itemize{
