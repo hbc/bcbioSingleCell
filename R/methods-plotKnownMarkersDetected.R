@@ -7,18 +7,21 @@
 #'
 #' @inherit plotMarkers
 #'
-#' @param knownMarkersDetected [knownMarkersDetected()] return [tibble] grouped
-#'   by cluster.
+#' @param knownMarkersDetected `grouped_df`.
 #'
 #' @examples
-#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
+#' load(system.file(
+#'     "extdata/knownMarkersDetected.rda",
+#'     package = "bcbioSingleCell"
+#' ))
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
-#' # seurat
+#' # seurat ====
 #' # Let's plot the first 2 markers, as a quick example
 #' plotKnownMarkersDetected(
 #'     seurat,
-#'     knownMarkersDetected = knownMarkersDetected[1:2, ])
+#'     knownMarkersDetected = knownMarkersDetected[seq_len(2L), ]
+#' )
 NULL
 
 

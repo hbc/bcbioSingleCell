@@ -24,7 +24,7 @@ NULL
 
 # Constructors =================================================================
 .fetchGeneData.seurat <- function(object, genes) {  # nolint
-    data <- Seurat::FetchData(object, vars.all = genes)
+    data <- FetchData(object, vars.all = genes)
     if (!identical(
         as.character(genes),
         as.character(colnames(data))

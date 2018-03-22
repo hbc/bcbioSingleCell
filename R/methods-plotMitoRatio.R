@@ -1,11 +1,16 @@
+# FIXME Improve constructor and geom
+
+
+
 #' Plot Mitochondrial Transcript Abundance
 #'
-#' @rdname plotMitoRatio
 #' @name plotMitoRatio
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inherit plotGenesPerCell
+#' @inheritParams general
+#'
+#' @return `ggplot`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
@@ -16,10 +21,6 @@
 #'
 #' # seurat
 #' plotMitoRatio(seurat)
-#'
-#' # data.frame
-#' df <- metrics(bcb)
-#' plotMitoRatio(df)
 NULL
 
 

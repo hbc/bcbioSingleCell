@@ -26,7 +26,8 @@ NULL
     min = 0L,
     interestingGroups,
     samplesOnYAxis = TRUE,
-    fill = scale_fill_viridis(discrete = TRUE)) {
+    fill = scale_fill_viridis(discrete = TRUE)
+) {
     metricCol <- "nUMI"
     p <- .plotQCGeom(
         object,

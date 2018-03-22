@@ -17,10 +17,11 @@ readCellTypeMarkersFile(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{gene2symbol}{Gene-to-symbol annotation \code{data.frame}.}
+\item{gene2symbol}{\code{data.frame} containing gene-to-symbol mappings. Columns
+must contain \code{geneID} and \code{geneName}.}
 }
 \value{
-\code{tibble}, gropued by \code{cell} column.
+\code{grouped_df}, grouped by \code{cellType} column.
 }
 \description{
 Read Cell Type Markers File

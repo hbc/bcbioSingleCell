@@ -15,7 +15,10 @@
 
 \item{genes}{Gene identifiers to plot.}
 
-\item{color}{Color palette. If \code{NULL}, uses default ggplot2 colors.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
 \item{colMin}{Minimum scaled average expression threshold. Everything
 smaller will be set to this.}

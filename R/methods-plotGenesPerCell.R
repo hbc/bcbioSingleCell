@@ -1,28 +1,12 @@
 #' Plot Genes per Cell
 #'
-#' @details A violin plot is a comact display of a continuous distribution. It
-#'   is a blend of [geom_boxplot()] and [geom_density()]: a violin plot is a
-#'   mirrored density plot displayed in the same way as a boxplot.
-#'
-#' @rdname plotGenesPerCell
 #' @name plotGenesPerCell
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
-#' @inheritParams metrics
-#' @inheritParams plotQC
 #'
-#' @param min Recommended minimum value cutoff.
-#' @param max Recommended maximum value cutoff.
-#' @param fill Desired ggplot fill scale. Defaults to
-#'   [viridis::scale_fill_viridis()]. Must supply discrete values. When set to
-#'   `NULL`, the default ggplot2 color palette will be used. If manual color
-#'   definitions are desired, we recommend using [ggplot2::scale_fill_manual()].
-#' @param samplesOnYAxis Plot the samples on the y axis. Doesn't apply to
-#'   histogram.
-#'
-#' @return [ggplot].
+#' @return `ggplot`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))

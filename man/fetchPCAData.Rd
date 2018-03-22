@@ -17,7 +17,7 @@ fetchPCAData(object, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\link{data.frame} of PCA points and metadata for each cell.
+\code{data.frame} of PCA points and metadata for each cell.
 }
 \description{
 Fetch PCA Dimensions and Cellular Metadata

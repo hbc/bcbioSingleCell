@@ -19,8 +19,7 @@ plotKnownMarkersDetected(object, knownMarkersDetected, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{knownMarkersDetected}{\code{\link[=knownMarkersDetected]{knownMarkersDetected()}} return \link{tibble} grouped
-by cluster.}
+\item{knownMarkersDetected}{\code{grouped_df}.}
 
 \item{...}{Additional arguments.}
 
@@ -30,11 +29,11 @@ by cluster.}
 
 \item{dotColor}{Color palette to use for dot plot.}
 
-\item{dark}{Plot the TSNE against a dark background.}
+\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
-\item{headerLevel}{Include a Markdown header for each gene.}
+\item{headerLevel}{R Markdown header level.}
 }
 \value{
 No value, only graphical output.
@@ -43,14 +42,18 @@ No value, only graphical output.
 Plot Known Markers Detected
 }
 \examples{
-load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
+load(system.file(
+    "extdata/knownMarkersDetected.rda",
+    package = "bcbioSingleCell"
+))
 load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
-# seurat
+# seurat ====
 # Let's plot the first 2 markers, as a quick example
 plotKnownMarkersDetected(
     seurat,
-    knownMarkersDetected = knownMarkersDetected[1:2, ])
+    knownMarkersDetected = knownMarkersDetected[seq_len(2L), ]
+)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},

@@ -10,7 +10,6 @@
 #' @importFrom basejump plotQuantileHeatmap
 #'
 #' @inheritParams general
-#'
 #' @param n The number of breaks to create.
 #' @param annotationCol *Optional.* `data.frame` that defines annotation
 #'   mappings for the columns.
@@ -18,10 +17,7 @@
 #'   hierarchical clustering. Alternatively, can define an `hclust` object.
 #' @param clusterRows Logical determining if rows should be arranged with
 #'   hierarchical clustering. Alternatively, can define an `hclust` object.
-#' @param color Colors to use for plot.
-#' @param legendColor Colors to use for legend labels. Defaults to the
-#'   [viridis::viridis()] palette.
-#' @param title *Optional.* Plot title.
+#' @param legendColor Colors to use for legend labels.
 #'
 #' @examples
 #' # bcbioSingleCell ====

@@ -11,25 +11,28 @@
 plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat,grouped_df}(object,
-  cellTypesPerCluster, color = viridis::scale_color_viridis(), dark = TRUE,
+  cellTypesPerCluster, color = scale_color_viridis(), dark = TRUE,
   headerLevel = NULL)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{cellTypesPerCluster}{Cell types per cluster grouped \link{tibble}. This must
-be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
+\item{cellTypesPerCluster}{Cell types per cluster \code{grouped_df}. This must be the
+return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
 \item{...}{Additional arguments.}
 
-\item{color}{Color palette.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Plot the TSNE against a dark background.}
+\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
 
-\item{headerLevel}{Include a Markdown header for each gene.}
+\item{headerLevel}{R Markdown header level.}
 }
 \value{
-Show graphical output. Invisibly return \link{ggplot} plotlist.
+Show graphical output. Invisibly return \code{ggplot} plotlist.
 }
 \description{
 Plot the geometric mean of the significant marker genes for every known cell
@@ -45,10 +48,11 @@ glimpse(cellTypesPerCluster)
 
 # seurat
 # Let's plot the first row, as an example
-cellTypesPerCluster <- cellTypesPerCluster[1, , drop = FALSE]
+cellTypesPerCluster <- cellTypesPerCluster[1L, , drop = FALSE]
 plotCellTypesPerCluster(
     seurat,
-    cellTypesPerCluster = cellTypesPerCluster)
+    cellTypesPerCluster = cellTypesPerCluster
+)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},

@@ -8,7 +8,7 @@
 #'
 #' @inheritParams plotTSNE
 #'
-#' @param object `data.frame` returned from [fetchTSNEExpressionData()].
+#' @param object `data.frame` returned by [fetchTSNEExpressionData()].
 #'
 #' @return `ggplot`.
 #' @noRd

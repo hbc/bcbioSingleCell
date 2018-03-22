@@ -7,14 +7,14 @@
 \alias{counts,seurat-method}
 \title{Counts Accessor}
 \usage{
-\S4method{counts}{bcbioSingleCell}(object, gene2symbol = FALSE)
+\S4method{counts}{bcbioSingleCell}(object, convertGenesToSymbols = FALSE)
 
 \S4method{counts}{seurat}(object, normalized = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{gene2symbol}{\emph{Not recommended.} Convert Ensembl gene identifiers
+\item{convertGenesToSymbols}{\emph{Not recommended.} Convert Ensembl gene identifiers
 (rownames) to gene symbols. Required for passing counts to Seurat.}
 
 \item{normalized}{Normalized (\code{TRUE}) or raw (\code{FALSE}) counts.}
@@ -30,8 +30,8 @@ load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell
-counts(bcb, gene2symbol = FALSE) \%>\% glimpse()
-counts(bcb, gene2symbol = TRUE) \%>\% glimpse()
+counts(bcb, convertGenesToSymbols = FALSE) \%>\% glimpse()
+counts(bcb, convertGenesToSymbols = TRUE) \%>\% glimpse()
 
 # seurat
 counts(seurat, normalized = FALSE) \%>\% glimpse()

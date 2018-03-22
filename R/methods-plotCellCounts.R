@@ -5,24 +5,19 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inherit plotGenesPerCell
+#' @inheritParams general
 #'
-#' @param metadata Sample metadata [data.frame].
+#' @return `ggplot`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
+#' # bcbioSingleCell ====
 #' plotCellCounts(bcb)
 #'
-#' # seurat
+#' # seurat ====
 #' plotCellCounts(seurat)
-#'
-#' # data.frame
-#' df <- metrics(bcb)
-#' metadata <- sampleData(bcb)
-#' plotCellCounts(df, metadata = metadata)
 NULL
 
 
@@ -30,29 +25,33 @@ NULL
 # Constructors =================================================================
 .plotCellCounts <- function(
     object,
-    metadata,
     interestingGroups,
-    fill = scale_fill_viridis(discrete = TRUE)) {
-    data <- object %>%
+    fill = scale_fill_viridis(discrete = TRUE)
+) {
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
+    assertIsFillScaleDiscreteOrNULL(fill)
+
+    metrics <- metrics(object, interestingGroups)
+    metadata <- sampleData(object, interestingGroups)
+
+    data <- metrics %>%
         group_by(!!sym("sampleName")) %>%
         summarize(nCells = n()) %>%
         left_join(metadata, by = "sampleName")
+
     p <- ggplot(
-        data,
+        data = data,
         mapping = aes_string(
             x = "sampleName",
             y = "nCells",
-            fill = "interestingGroups")
+            fill = "interestingGroups"
+        )
     ) +
         geom_bar(stat = "identity") +
+        labs(fill = paste(interestingGroups, collapse = ":\n")) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-
-    # Label interesting groups
-    if (!missing(interestingGroups)) {
-        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
-    } else {
-        p <- p + labs(color = NULL, fill = NULL)
-    }
 
     # Color palette
     if (!is.null(fill)) {
@@ -72,7 +71,8 @@ NULL
             label.size = qcLabelSize,
             show.legend = FALSE,
             # Align the label just under the top of the bar
-            vjust = 1.25)
+            vjust = 1.25
+        )
     }
 
     # Facets
@@ -95,34 +95,8 @@ NULL
 setMethod(
     "plotCellCounts",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        interestingGroups,
-        fill = scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups)
-        metadata <- sampleData(
-            object,
-            interestingGroups = interestingGroups)
-        .plotCellCounts(
-            object = metrics,
-            metadata = metadata,
-            interestingGroups = interestingGroups,
-            fill = fill)
-    })
-
-
-
-#' @rdname plotCellCounts
-#' @export
-setMethod(
-    "plotCellCounts",
-    signature("data.frame"),
-    .plotCellCounts)
+    .plotCellCounts
+)
 
 
 
@@ -131,22 +105,5 @@ setMethod(
 setMethod(
     "plotCellCounts",
     signature("seurat"),
-    function(
-        object,
-        interestingGroups,
-        fill = scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups)
-        metadata <- sampleData(
-            object,
-            interestingGroups = interestingGroups)
-        .plotCellCounts(
-            object = metrics,
-            metadata = metadata,
-            interestingGroups = interestingGroups,
-            fill = fill)
-    })
+    .plotCellCounts
+)

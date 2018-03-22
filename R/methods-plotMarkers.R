@@ -15,13 +15,9 @@
 #'
 #' @inheritParams general
 #' @inheritParams plotMarkerTSNE
-#'
 #' @param tsneColor Color palette to use for tSNE plot.
 #' @param violinFill Color palette to use for violin plot.
 #' @param dotColor Color palette to use for dot plot.
-#' @param dark Plot the TSNE against a dark background.
-#' @param headerLevel Include a Markdown header for each gene.
-#' @param title Plot title.
 #'
 #' @return No value, only graphical output.
 #'

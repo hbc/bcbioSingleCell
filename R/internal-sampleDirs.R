@@ -6,8 +6,7 @@
 #'
 #' @importFrom bcbioBase sampleDirs
 #'
-#' @param uploadDir Upload directory.
-#' @param pipeline Pipeline used to generate the samples.
+#' @param uploadDir Path to final upload directory.
 #'
 #' @return Named character vector containing sample directory paths. Function
 #'   will abort if no complete sample directories match.

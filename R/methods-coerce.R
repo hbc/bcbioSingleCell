@@ -35,9 +35,9 @@ NULL
     from <- .applyFilterCutoffs(from)
 
     # Create seurat object
-    raw <- counts(from, gene2symbol = TRUE)
+    raw <- counts(from, convertGenesToSymbols = TRUE)
     colData <- colData(from, return = "data.frame")
-    seurat <- Seurat::CreateSeuratObject(
+    seurat <- CreateSeuratObject(
         raw.data = raw,
         project = "bcbioSingleCell",
         # Already applied filtering cutoffs for cells and genes

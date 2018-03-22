@@ -29,12 +29,14 @@ hierarchical clustering. Alternatively, can define an \code{hclust} object.}
 \item{clusterRows}{Logical determining if rows should be arranged with
 hierarchical clustering. Alternatively, can define an \code{hclust} object.}
 
-\item{color}{Colors to use for plot.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{legendColor}{Colors to use for legend labels. Defaults to the
-\code{\link[viridis:viridis]{viridis::viridis()}} palette.}
+\item{legendColor}{Colors to use for legend labels.}
 
-\item{title}{\emph{Optional.} Plot title.}
+\item{title}{Plot title.}
 }
 \description{
 Plot Heatmap with Quantile Breaks

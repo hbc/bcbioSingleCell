@@ -9,8 +9,6 @@
 #'
 #' @inheritParams general
 #'
-#' @param interestingGroups Interesting group, to use for colors.
-#'
 #' @seealso [sampleData()].
 #'
 #' @return `data.frame` with cellular barcodes as rows.

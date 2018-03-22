@@ -6,15 +6,13 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
+#' @inheritParams general
 #' @param uploadDir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
 #' @param sampleMetadataFile Sample barcode metadata file. Optional for runs
 #'   with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 #'   for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 #'   inDrop). Consult the GitHub repo for examples and additional information.
-#' @param interestingGroups Character vector of interesting groups. First entry
-#'   is used for plot colors during quality control (QC) analysis. Entire vector
-#'   is used for PCA and heatmap QC functions.
 #' @param organism Organism name. Use the full latin name (e.g.
 #'   "Homo sapiens"), since this will be input downstream to
 #'   AnnotationHub and ensembldb, unless `gffFile` is set.
@@ -250,7 +248,7 @@ loadSingleCell <- function(
         pipeline = pipeline,
         umiType = umiType
     )
-    counts <- do.call(Matrix::cBind, sparseCountsList)
+    counts <- do.call(cBind, sparseCountsList)
 
     # Row data =================================================================
     # TODO Consolidate this code with bcbioRNASeq

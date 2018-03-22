@@ -13,6 +13,9 @@
 }
 \arguments{
 \item{x}{Primary object.}
+
+\item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first item in the arguments vector.}
 }
 \value{
 Return data as \code{data.frame}, or \code{DataFrame}.

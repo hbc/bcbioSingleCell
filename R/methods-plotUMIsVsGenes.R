@@ -5,12 +5,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell
-#'
-#' @param color *Only applies to scatterplot*. Desired ggplot color scale.
-#'   Defaults to [viridis::scale_color_viridis()]. Must supply discrete values.
-#'   When set to `NULL`, the default ggplot2 color palette will be used. If
-#'   manual color definitions are desired, we recommend using
-#'   [ggplot2::scale_color_manual()].
+#' @inheritParams general
 #'
 #' @examples
 #' # bcbioSingleCell ====

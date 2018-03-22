@@ -10,19 +10,11 @@
 #' @importFrom bcbioBase plotQC
 #'
 #' @inheritParams general
-#' @inheritParams metrics
 #'
-#' @param geom Plot type. Supported formats: `boxplot`, `histogram`,
-#'   `ridgeline`, and `violin`. Applies to [plotUMIsPerCell()],
-#'   [plotGenesPerCell()], [plotMitoRatio()], and [plotNovelty()] output.
-#' @param headerLevel R Markdown header level.
-#' @param legend Include plot legend.
-#' @param return
+#' @return
 #'   - `grid`: [cowplot::plot_grid()] graphical output.
-#'   - `list`: [ggplot] [list].
+#'   - `list`: `list` containing `ggplot` objects.
 #'   - `markdown`: R Markdown report, with reports separated by headers.
-#'
-#' @return R Markdown template code for quality control analysis.
 #'
 #' @examples
 #' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
@@ -38,26 +30,25 @@ NULL
 
 
 # Constructors =================================================================
-validMedianGeom <- c(
-    "boxplot",
-    "ridgeline",
-    "violin")
-validQCGeomFlip <- c(
-    "boxplot",
-    "violin")
+validMedianGeom <- c("boxplot", "ridgeline", "violin")
+validQCGeomFlip <- c("boxplot", "violin")
 
 
 
 .plotQC <- function(
     object,
     interestingGroups,
-    geom = "violin",
+    geom = c("violin", "boxplot", "histogram", "ridgeline"),
     headerLevel = 2L,
     legend = FALSE,
-    return = "grid") {
+    return = c("grid", "list", "markdown")
+) {
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
+    geom <- match.arg(geom)
+    return <- match.arg(return)
+    
     plotlist <- list(
         plotReadsPerCell = plotReadsPerCell(
             object,
@@ -92,7 +83,8 @@ validQCGeomFlip <- c(
             geom = geom
         )
     )
-    # Remove any `NULL`` plots. This is useful for nuking the
+    
+    # Remove any `NULL` plots. This is useful for nuking the
     # `plotReadsPerCell()` return on an object that doesn't contain raw cellular
     # barcode counts.
     plotlist <- Filter(Negate(is.null), plotlist)
@@ -110,7 +102,7 @@ validQCGeomFlip <- c(
         plotlist
     } else if (return == "grid") {
         plot_grid(plotlist = plotlist, labels = "AUTO")
-    } else {
+    } else if (return == "markdown") {
         markdownHeader(
             "Filtered quality control metrics",
             level = headerLevel,
@@ -174,12 +166,11 @@ validQCGeomFlip <- c(
 
 
 
-.plotQCGeom <- function(..., geom = "violin") {
-    validGeom <- c(
-        "boxplot",
-        "histogram",
-        "ridgeline",
-        "violin")
+.plotQCGeom <- function(
+	...,
+	geom = c("boxplot", "histogram", "ridgeline", "violin")
+) {
+    geom <- match.arg(geom)
     if (geom == "boxplot") {
         .plotQCBoxplot(...)
     } else if (geom == "histogram") {
@@ -188,17 +179,19 @@ validQCGeomFlip <- c(
         .plotQCRidgeline(...)
     } else if (geom == "violin") {
         .plotQCViolin(...)
-    } else {
-        abort(paste("Valid formats:", toString(validGeom)))
     }
 }
 
 
 
 .plotQCBoxplot <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) min <- 0L
+    if (!is.numeric(min)) {
+    	min <- 0L
+    }
     min <- min(min)
-    if (!is.numeric(max)) max <- Inf
+    if (!is.numeric(max)) {
+    	max <- Inf
+    }
     max <- max(max)
 
     p <- ggplot(
@@ -227,9 +220,13 @@ validQCGeomFlip <- c(
 
 
 .plotQCHistogram <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) min <- 0L
+    if (!is.numeric(min)) {
+    	min <- 0L
+    }
     min <- min(min)
-    if (!is.numeric(max)) max <- Inf
+    if (!is.numeric(max)) {
+    	max <- Inf
+    }
     max <- max(max)
 
     p <- ggplot(
@@ -258,9 +255,13 @@ validQCGeomFlip <- c(
 
 
 .plotQCRidgeline <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) min <- 0L
+    if (!is.numeric(min)) {
+    	min <- 0L
+    }
     min <- min(min)
-    if (!is.numeric(max)) max <- Inf
+    if (!is.numeric(max)) {
+    	max <- Inf
+    }
     max <- max(max)
 
     p <- ggplot(
@@ -317,9 +318,13 @@ validQCGeomFlip <- c(
 
 
 .plotQCViolin <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) min <- 0L
+    if (!is.numeric(min)) {
+    	min <- 0L
+    }
     min <- min(min)
-    if (!is.numeric(max)) max <- Inf
+    if (!is.numeric(max)) {
+    	max <- Inf
+    }
     max <- max(max)
 
     p <- ggplot(

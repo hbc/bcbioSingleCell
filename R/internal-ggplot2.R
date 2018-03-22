@@ -16,7 +16,7 @@ qcLabelAlpha <- 0.75
 qcLabelColor <- "white"
 qcLabelFill <- "black"
 qcLabelFontface <- "bold"
-qcLabelPadding <- grid::unit(0.2, "lines")
+qcLabelPadding <- unit(0.2, "lines")
 qcLabelSize <- NA
 
 # Maximum number of samples to label in a bar or boxplot

@@ -10,8 +10,8 @@
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
-  interestingGroups)
+\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = c("histogram",
+  "ridgeline", "violin"), interestingGroups)
 
 \S4method{plotReadsPerCell}{seurat}(object, ...)
 }
@@ -20,10 +20,10 @@ plotReadsPerCell(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{geom}{Plot type. Supported formats: proportional \code{histogram}
-(\emph{recommended}), raw \code{ridgeline}, and raw \code{violin}.}
+\item{geom}{Plot type.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \code{ggplot}.

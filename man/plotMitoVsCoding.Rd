@@ -25,24 +25,19 @@ plotMitoVsCoding(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{color}{\emph{Only applies to scatterplot}. Desired ggplot color scale.
-Defaults to \code{\link[viridis:scale_color_viridis]{viridis::scale_color_viridis()}}. Must supply discrete values.
-When set to \code{NULL}, the default ggplot2 color palette will be used. If
-manual color definitions are desired, we recommend using
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Plot Mitochondrial Counts vs. Coding Counts
-}
-\details{
-A violin plot is a comact display of a continuous distribution. It
-is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_density]{geom_density()}}: a violin plot is a
-mirrored density plot displayed in the same way as a boxplot.
 }
 \examples{
 load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))

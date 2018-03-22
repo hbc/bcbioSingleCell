@@ -7,7 +7,7 @@
 #'
 #' @inheritParams general
 #'
-#' @return [data.frame] of PCA points and metadata for each cell.
+#' @return `data.frame` of PCA points and metadata for each cell.
 #'
 #' @seealso [Seurat::PCAPlot()].
 #'

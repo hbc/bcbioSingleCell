@@ -50,7 +50,8 @@ knownMarkers <- cellTypeMarkers[["homoSapiens"]]
 # grouped_df
 knownMarkersDetected(
     all = seuratAllMarkers,
-    known = knownMarkers) \%>\%
+    known = knownMarkers
+) \%>\%
     glimpse()
 }
 \seealso{

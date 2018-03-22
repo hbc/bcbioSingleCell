@@ -11,10 +11,9 @@
 #'
 #' @param expression Calculation to apply on the aggregate marker expression.
 #'   Supports `mean` (default), `median`, or `sum`.
-#' @param legend Show plot legend.
-#' @param subtitle Include gene(s) in the subtitle.
+#' @param subtitle Include gene identifiers as subtitles.
 #'
-#' @return [ggplot].
+#' @return `ggplot`.
 #'
 #' @examples
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
@@ -38,7 +37,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @param object Marker gene expression [data.frame] returned from
+#' @param object Marker gene expression `data.frame` returned from
 #'   [fetchTSNEExpressionData()].
 .plotMarkerTSNE <- function(
     object,
@@ -196,7 +195,7 @@ setMethod(
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        color = viridis::scale_color_viridis(),
+        color = scale_color_viridis(),
         dark = TRUE,
         title = NULL,
         subtitle = TRUE) {
@@ -213,5 +212,7 @@ setMethod(
             color = color,
             dark = dark,
             title = title,
-            subtitle = subtitle)
-    })
+            subtitle = subtitle
+        )
+    }
+)

@@ -17,7 +17,7 @@ plotMarkerTSNE(object, ...)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = "mean",
   pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
+  label = TRUE, labelSize = 6L, color = scale_color_viridis(),
   dark = TRUE, title = NULL, subtitle = TRUE)
 }
 \arguments{
@@ -42,18 +42,21 @@ the dataset, and some cells can be masked.}
 
 \item{labelSize}{Size of the text label.}
 
-\item{color}{Color palette to use for points.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Enable dark mode.}
+\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
 
-\item{legend}{Show plot legend.}
+\item{legend}{Include plot legend.}
 
 \item{title}{Plot title.}
 
-\item{subtitle}{Include gene(s) in the subtitle.}
+\item{subtitle}{Include gene identifiers as subtitles.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Plot Marker t-SNE

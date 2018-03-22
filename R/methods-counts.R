@@ -1,3 +1,5 @@
+# FIXME Rename `gene2symbol` to `convertGenesToSymbols. Catch the legacy param.
+
 #' Counts Accessor
 #'
 #' @rdname counts
@@ -8,7 +10,7 @@
 #'
 #' @inheritParams general
 #'
-#' @param gene2symbol *Not recommended.* Convert Ensembl gene identifiers
+#' @param convertGenesToSymbols *Not recommended.* Convert Ensembl gene identifiers
 #'   (rownames) to gene symbols. Required for passing counts to Seurat.
 #' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
 #'
@@ -19,8 +21,8 @@
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell
-#' counts(bcb, gene2symbol = FALSE) %>% glimpse()
-#' counts(bcb, gene2symbol = TRUE) %>% glimpse()
+#' counts(bcb, convertGenesToSymbols = FALSE) %>% glimpse()
+#' counts(bcb, convertGenesToSymbols = TRUE) %>% glimpse()
 #'
 #' # seurat
 #' counts(seurat, normalized = FALSE) %>% glimpse()
@@ -32,10 +34,10 @@ NULL
 # Constructors =================================================================
 .counts <- function(
     object,
-    gene2symbol = FALSE
+    convertGenesToSymbols = FALSE
 ) {
     counts <- assay(object)
-    if (isTRUE(gene2symbol)) {
+    if (isTRUE(convertGenesToSymbols)) {
         g2s <- gene2symbol(object)
         assert_is_subset(rownames(counts), rownames(g2s))
         # Resize the gene2symbol data.frame

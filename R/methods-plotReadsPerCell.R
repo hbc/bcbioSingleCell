@@ -6,10 +6,6 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
-#' @inheritParams plotGenesPerCell
-#'
-#' @param geom Plot type. Supported formats: proportional `histogram`
-#'   (*recommended*), raw `ridgeline`, and raw `violin`.
 #'
 #' @note Here by "cell" we mean "cellular barcode".
 #'
@@ -268,14 +264,15 @@ NULL
 #' @inherit plotReadsPerCell
 .plotReadsPerCell <- function(
     object,
-    geom = "histogram",
+    geom = c("histogram", "ridgeline", "violin"),
     interestingGroups
 ) {
-    skipMessage <- "Raw cellular barcodes are not slotted in object"
-
-    if (missing(interestingGroups)) {
+	if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
+    geom <- match.arg(geom)
+    
+    skipMessage <- "Raw cellular barcodes are not slotted in object"
 
     # Obtain the cellular barcode distributions
     cellularBarcodes <- metadata(object)[["cellularBarcodes"]]
@@ -356,12 +353,14 @@ setMethod(
 
 
 
+# FIXME Add support by plotting nUMI
 #' @rdname plotReadsPerCell
 #' @export
 setMethod(
     "plotReadsPerCell",
     signature("seurat"),
     function(object, ...) {
+    	warn("Not yet supported for seurat objects")
         NULL
     }
 )

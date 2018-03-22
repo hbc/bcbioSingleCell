@@ -31,7 +31,8 @@
 #' # grouped_df
 #' knownMarkersDetected(
 #'     all = seuratAllMarkers,
-#'     known = knownMarkers) %>%
+#'     known = knownMarkers
+#' ) %>%
 #'     glimpse()
 NULL
 

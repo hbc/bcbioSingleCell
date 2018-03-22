@@ -27,9 +27,12 @@ scores, number of genes detected).}
 \item{pointAlpha}{Alpha transparency level. Useful when there many cells in
 the dataset, and some cells can be masked.}
 
-\item{color}{Color palette to use for points.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Enable dark mode.}
+\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
 
 \item{label}{Overlay a cluster identitiy label on the plot.}
 

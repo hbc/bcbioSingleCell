@@ -12,11 +12,11 @@
 #'
 #' @inherit plotMarkers
 #'
-#' @param cellTypesPerCluster Cell types per cluster grouped [tibble]. This must
-#'   be the return from [cellTypesPerCluster()].
-#' @param color Color palette.
+#' @inheritParams general
+#' @param cellTypesPerCluster Cell types per cluster `grouped_df`. This must be the
+#'   return from [cellTypesPerCluster()].
 #'
-#' @return Show graphical output. Invisibly return [ggplot] plotlist.
+#' @return Show graphical output. Invisibly return `ggplot` plotlist.
 #'
 #' @examples
 #' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
@@ -27,10 +27,11 @@
 #'
 #' # seurat
 #' # Let's plot the first row, as an example
-#' cellTypesPerCluster <- cellTypesPerCluster[1, , drop = FALSE]
+#' cellTypesPerCluster <- cellTypesPerCluster[1L, , drop = FALSE]
 #' plotCellTypesPerCluster(
 #'     seurat,
-#'     cellTypesPerCluster = cellTypesPerCluster)
+#'     cellTypesPerCluster = cellTypesPerCluster
+#' )
 NULL
 
 
@@ -39,10 +40,12 @@ NULL
 .plotCellTypesPerCluster <- function(
     object,
     cellTypesPerCluster,
-    color = viridis::scale_color_viridis(),
+    color = scale_color_viridis(),
     dark = TRUE,
     headerLevel = NULL) {
-    if (!nrow(cellTypesPerCluster)) return(NULL)
+    if (!nrow(cellTypesPerCluster)) {
+    	return(NULL)
+    }
     if (group_vars(cellTypesPerCluster) != "cluster") {
         abort("cellTypesPerCluster must be grouped by `cluster` column")
     }

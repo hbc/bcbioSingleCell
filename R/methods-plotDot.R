@@ -10,7 +10,6 @@
 #' @inheritParams general
 #'
 #' @param genes Gene identifiers to plot.
-#' @param color Color palette. If `NULL`, uses default ggplot2 colors.
 #' @param colMin Minimum scaled average expression threshold. Everything
 #'   smaller will be set to this.
 #' @param colMax Maximum scaled average expression threshold. Everything larger
@@ -38,7 +37,7 @@ NULL
 
 # Constructors =================================================================
 #' Min Max
-#' @seealso `Seurat:::MinMax()`
+#' @seealso [Seurat:::MinMax()].
 #' @noRd
 .minMax <- function(data, min, max) {
     data2 <- data
@@ -50,7 +49,7 @@ NULL
 
 
 #' Percent Above
-#' @seealso `Seurat:::PercentAbove()`
+#' @seealso [Seurat:::PercentAbove()].
 #' @noRd
 .percentAbove <- function(x, threshold) {
     length(x[x > threshold]) / length(x)
