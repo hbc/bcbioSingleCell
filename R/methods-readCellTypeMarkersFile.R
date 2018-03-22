@@ -5,11 +5,9 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param object Gene markers file (CSV or Excel).
-#' @param gene2symbol Gene-to-symbol annotation `data.frame`.
 #'
-#' @return `tibble`, gropued by `cell` column.
+#' @return `grouped_df`, grouped by `cellType` column.
 #'
 #' @examples
 #' cellTypeMarkersFile <- system.file(
@@ -27,7 +25,7 @@ NULL
     assertIsGene2symbol(gene2symbol)
     markers <- readFileByExtension(object) %>%
         camel(strict = FALSE)
-        
+
     # Match the markers file by Ensembl gene identifier, otherwise use name
     assert_are_intersecting_sets(
         x = c("geneID", "geneName"),
@@ -36,7 +34,7 @@ NULL
     if ("geneID" %in% colnames(markers)) {
         inform("Matching by gene identifier")
         markers <- markers %>%
-            .[, c("cell", "geneID")] %>%
+            .[, c("cellType", "geneID")] %>%
             .[!is.na(.[["geneID"]]), , drop = FALSE] %>%
             left_join(gene2symbol, by = "geneID")
         # Check for bad identifiers
@@ -50,7 +48,7 @@ NULL
     } else if ("geneName" %in% colnames(markers)) {
         inform("Matching by gene name (symbol)")
         markers <- markers %>%
-            .[, c("cell", "geneName")] %>%
+            .[, c("cellType", "geneName")] %>%
             .[!is.na(.[["geneName"]]), ] %>%
             left_join(gene2symbol, by = "geneName")
         # Check for bad identifiers
@@ -65,11 +63,11 @@ NULL
 
     markers %>%
         as_tibble() %>%
-        .[!is.na(.[["geneID"]]), ] %>%
-        .[, c("cell", "geneName", "geneID")] %>%
+        .[!is.na(.[["geneID"]]), , drop = FALSE] %>%
+        .[, c("cellType", "geneName", "geneID")] %>%
         unique() %>%
-        group_by(!!sym("cell")) %>%
-        arrange(!!!syms(c("cell", "geneName")))
+        group_by(!!sym("cellType")) %>%
+        arrange(!!sym("geneName"), .by_group = TRUE)
 }
 
 
