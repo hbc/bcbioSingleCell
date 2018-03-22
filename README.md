@@ -3,7 +3,8 @@
 [![Travis CI](https://travis-ci.org/hbc/bcbioSingleCell.svg?branch=master)](https://travis-ci.org/hbc/bcbioSingleCell)
 [![AppVeyor CI](https://ci.appveyor.com/api/projects/status/npy0mhfjn9saqv4g/branch/master?svg=true)](https://ci.appveyor.com/project/mjsteinbaugh/bcbiosinglecell/branch/master)
 [![Codecov](https://codecov.io/gh/hbc/bcbioSingleCell/branch/master/graph/badge.svg)](https://codecov.io/gh/hbc/bcbioSingleCell)
-[![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
+[![Anaconda-Server Badge](https://anaconda.org/bioconda/r-bcbiosinglecell/badges/version.svg)](https://anaconda.org/bioconda/r-bcbiosinglecell)
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
 Import and analyze [bcbio][] single-cell RNA-seq data.
 
@@ -24,6 +25,37 @@ biocLite(
 )
 ```
 
+### [conda][] method
+
+```bash
+conda install -c bioconda r-bcbiosinglecell
+```
+
+
+## Load [bcbio][] run
+
+```r
+library(bcbioSingleCell)
+bcb <- loadSingleCell(
+    uploadDir = "bcbio_indrop_rnaseq/final",
+    interestingGroups = c("genotype", "treatment"),
+    sampleMetadataFile = "meta/sample_metadata.xlsx",
+    organism = "Homo sapiens",
+    ensemblVersion = 90L
+)
+saveData(bcb, dir = file.path("data", Sys.Date()))
+```
+
+This will return a `bcbioSingleCell` object, which is an extension of the [Bioconductor][] [SingleCellExperiment][SCE] container class.
+
+Parameters:
+
+- `uploadDir`: Path to the [bcbio][] final upload directory.
+- `interestingGroups`: Character vector of the column names of interest in the sample metadata, which is stored in the `sampleData()` accessor slot of the `bcbioSingleCell` object. These values should be formatted in camelCase, and can be reassigned in the object after creation (e.g. `interestingGroups(bcb) <- c("batch", "age")`). They are used for data visualization in the quality control utility functions.
+- `organism`: Organism name. Use the full latin name (e.g. "Homo sapiens").
+
+Consult `help("loadSingleCell", "bcbioSingleCell")` for additional documentation.
+
 
 ## Sample metadata examples
 
@@ -33,25 +65,25 @@ This is our current method for handling inDrop samples.
 
 | fileName           | description | index | sequence | sampleName |
 | -------------------|-------------|-------|----------|------------|
-| 170201_R1.fastq.gz | run1        | 17    | GGAGGTAA | sample1    |
-| 170201_R1.fastq.gz | run1        | 18    | CATAACTG | sample2    |
-| 170620_R1.fastq.gz | run2        | 12    | GCGTAAGA | sample3    |
-| 170620_R1.fastq.gz | run2        | 13    | CTATTAAG | sample4    |
-| 170620_R1.fastq.gz | run2        | 14    | AAGGCTAT | sample5    |
-| 170620_R1.fastq.gz | run2        | 15    | GAGCCTTA | sample6    |
-| 170620_R1.fastq.gz | run2        | 16    | TTATGCGA | sample7    |
+| 170201_R1.fastq.gz | run_1       | 17    | GGAGGTAA | sample_1   |
+| 170201_R1.fastq.gz | run_1       | 18    | CATAACTG | sample_2   |
+| 170620_R1.fastq.gz | run_2       | 12    | GCGTAAGA | sample_3   |
+| 170620_R1.fastq.gz | run_2       | 13    | CTATTAAG | sample_4   |
+| 170620_R1.fastq.gz | run_2       | 14    | AAGGCTAT | sample_5   |
+| 170620_R1.fastq.gz | run_2       | 15    | GAGCCTTA | sample_6   |
+| 170620_R1.fastq.gz | run_2       | 16    | TTATGCGA | sample_7   |
 
 ### FASTQ files demultiplexed per sample
 
 This is our current method for handling 10X and SureCell samples.
 
-| fileName                   | description |
-|----------------------------|-------------|
-| sample1_170620_R1.fastq.gz | sample1     |
-| sample2_170620_R1.fastq.gz | sample2     |
-| sample3_170620_R1.fastq.gz | sample3     |
-| sample4_170620_R1.fastq.gz | sample4     |
-| sample5_170620_R1.fastq.gz | sample5     |
+| fileName              | description |
+|-----------------------|-------------|
+| S1_170620_R1.fastq.gz | sample_1    |
+| S2_170620_R1.fastq.gz | sample_2    |
+| S3_170620_R1.fastq.gz | sample_3    |
+| S4_170620_R1.fastq.gz | sample_4    |
+| S5_170620_R1.fastq.gz | sample_5    |
 
 ### Technical replicates
 
@@ -94,6 +126,8 @@ The papers and software cited in our workflows are available as a [shared librar
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [Bioconductor]: https://bioconductor.org
+[conda]: https://conda.io
 [devtools]: https://cran.r-project.org/package=devtools
 [Paperpile]: https://paperpile.com
 [R]: https://www.r-project.org
+[SCE]: https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment
