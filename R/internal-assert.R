@@ -28,9 +28,11 @@
 #' @importFrom assertive is_a_string
 #' @importFrom assertive is_character
 #'
+#' @importFrom basejump assertIsAHeaderLevel
 #' @importFrom basejump assertIsAStringOrNULL
 #' @importFrom basejump assertIsAnImplicitInteger
 #' @importFrom basejump assertIsAnImplicitIntegerOrNULL
+#' @importFrom basejump assertIsFillScaleDiscreteOrNULL
 #' @importFrom basejump assertIsGene2symbol
 #' @importFrom basejump assertIsTx2gene
 #'
@@ -90,7 +92,8 @@ NULL
 .checkSanitizedMarkers <- function(
     object,
     package = "Seurat",
-    stop = FALSE) {
+    stop = FALSE
+) {
     # General checks ===========================================================
     if (!is(object, "grouped_df")) {
         if (isTRUE(stop)) {
