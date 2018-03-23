@@ -1,6 +1,7 @@
+# FIXME Use match.arg for expression
+
 #' Plot Marker t-SNE
 #'
-#' @rdname plotMarkerTSNE
 #' @name plotMarkerTSNE
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
@@ -8,7 +9,6 @@
 #' @inheritParams general
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
-#'
 #' @param expression Calculation to apply on the aggregate marker expression.
 #'   Supports `mean` (default), `median`, or `sum`.
 #' @param subtitle Include gene identifiers as subtitles.
@@ -21,10 +21,10 @@
 #' genes <- counts(seurat) %>% rownames() %>% head()
 #' print(genes)
 #'
-#' # seurat
+#' # seurat ====
 #' plotMarkerTSNE(seurat, genes = genes)
 #'
-#' # data.frame
+#' # data.frame ====
 #' df <- fetchTSNEExpressionData(seurat, genes = genes)
 #' plotMarkerTSNE(df, genes = genes)
 NULL
@@ -63,7 +63,8 @@ NULL
         "ident",
         "sum",
         "tSNE1",
-        "tSNE2")
+        "tSNE2"
+    )
     if (!all(requiredCols %in% colnames(object))) {
         abort(paste(
             "Required columns:", toString(requiredCols)
@@ -92,7 +93,8 @@ NULL
         mapping = aes_string(
             x = "tSNE1",
             y = "tSNE2",
-            color = expression)
+            color = expression
+        )
     )
 
     if (isTRUE(dark)) {
@@ -119,11 +121,13 @@ NULL
                 color = guide_colorbar(
                     barwidth = 20L,
                     barheight = 1L,
-                    direction = "horizontal")
+                    direction = "horizontal"
+                )
             ) +
             theme(
                 legend.justification = "center",
-                legend.position = "bottom")
+                legend.position = "bottom"
+            )
     } else {
         p <- p + theme(legend.position = "none")
     }
@@ -135,14 +139,17 @@ NULL
                     x = "tSNE1",
                     y = "tSNE2",
                     label = "ident",
-                    color = expression),
+                    color = expression
+                ),
                 alpha = pointAlpha,
-                size = pointSize)
+                size = pointSize
+            )
     } else {
         p <- p +
             geom_point(
                 alpha = pointAlpha,
-                size = pointSize)
+                size = pointSize
+            )
     }
 
     if (isTRUE(label)) {
@@ -156,10 +163,12 @@ NULL
                 mapping = aes_string(
                     x = "centerX",
                     y = "centerY",
-                    label = "ident"),
+                    label = "ident"
+                ),
                 color = labelColor,
                 size = labelSize,
-                fontface = "bold")
+                fontface = "bold"
+            )
     }
 
     if (is(color, "ScaleContinuous")) {
@@ -177,7 +186,8 @@ NULL
 setMethod(
     "plotMarkerTSNE",
     signature("data.frame"),
-    .plotMarkerTSNE)
+    .plotMarkerTSNE
+)
 
 
 
@@ -198,7 +208,8 @@ setMethod(
         color = scale_color_viridis(),
         dark = TRUE,
         title = NULL,
-        subtitle = TRUE) {
+        subtitle = TRUE
+    ) {
         data <- fetchTSNEExpressionData(object, genes = genes)
         .plotMarkerTSNE(
             object = data,

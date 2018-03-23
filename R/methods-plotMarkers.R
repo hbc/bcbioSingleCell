@@ -8,7 +8,6 @@
 #' 3. Ridgeline plot
 #' 4. Dot plot
 #'
-#' @rdname plotMarkers
 #' @name plotMarkers
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
@@ -52,7 +51,8 @@ NULL
     dark = TRUE,
     pointsAsNumbers = FALSE,
     title = NULL,
-    return = "grid") {
+    return = "grid"
+) {
     # Parameter integrity ======================================================
     if (!is_a_string(gene)) {
         abort("`gene` must be a string")
@@ -72,15 +72,18 @@ NULL
         dark = dark,
         pointsAsNumbers = pointsAsNumbers,
         title = gene,
-        subtitle = FALSE)
+        subtitle = FALSE
+    )
     violin <- plotViolin(
         object,
         genes = gene,
-        fill = violinFill)
+        fill = violinFill
+    )
     dot <- plotDot(
         object,
         genes = gene,
-        color = dotColor)
+        color = dotColor
+    )
 
     # Return ===================================================================
     if (return == "grid") {
@@ -89,7 +92,8 @@ NULL
             coord_flip() +
             theme(
                 axis.text.y = element_text(angle = 90L, hjust = 0.5),
-                legend.position = "none")
+                legend.position = "none"
+            )
         plot_grid(
             tsne,
             violin,
@@ -143,7 +147,8 @@ NULL
             dark = dark,
             pointsAsNumbers = pointsAsNumbers,
             title = title,
-            return = "grid")
+            return = "grid"
+        )
         show(p)
         p
     })
@@ -158,4 +163,5 @@ NULL
 setMethod(
     "plotMarkers",
     signature("seurat"),
-    .plotMarkers.seurat)
+    .plotMarkers.seurat
+)

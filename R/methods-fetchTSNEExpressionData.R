@@ -3,17 +3,15 @@
 #' This gets t-SNE locations, cellular metadata, expression of genes and
 #' the geometric mean of the gene expression from a [seurat] object.
 #'
-#' @rdname fetchTSNEExpressionData
 #' @name fetchTSNEExpressionData
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param genes Genes identifiers (matching the rownames in the object),
 #'   of which to get expression data.
 #'
-#' @return [data.frame] containing tSNE coordinates, sample metadata, and
+#' @return `data.frame` containing tSNE coordinates, sample metadata, and
 #'   aggregate marker expression values (`mean`, `median`, and `sum`).
 #'
 #' @examples

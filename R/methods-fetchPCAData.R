@@ -1,6 +1,5 @@
 #' Fetch PCA Dimensions and Cellular Metadata
 #'
-#' @rdname fetchPCAData
 #' @name fetchPCAData
 #' @family PCA Utilities
 #' @author Michael Steinbaugh

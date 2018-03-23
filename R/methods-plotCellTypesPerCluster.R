@@ -6,7 +6,6 @@
 #' type (per unbiased cluster). Cell types with too few (`min` cutoff) or too
 #' many (`max` cutoff) marker genes will be skipped.
 #'
-#' @rdname plotCellTypesPerCluster
 #' @name plotCellTypesPerCluster
 #' @author Michael Steinbaugh
 #'
@@ -42,7 +41,8 @@ NULL
     cellTypesPerCluster,
     color = scale_color_viridis(),
     dark = TRUE,
-    headerLevel = NULL) {
+    headerLevel = NULL
+) {
     if (!nrow(cellTypesPerCluster)) {
     	return(NULL)
     }
@@ -62,7 +62,8 @@ NULL
                 paste("Cluster", cluster),
                 level = headerLevel,
                 tabset = TRUE,
-                asis = TRUE)
+                asis = TRUE
+            )
         }
         subset <- cellTypesPerCluster %>%
                 .[.[["cluster"]] == cluster, , drop = FALSE]
@@ -77,7 +78,8 @@ NULL
                     title,
                     level = headerLevel + 1L,
                     tabset = TRUE,
-                    asis = TRUE)
+                    asis = TRUE
+                )
             }
             # Modify the title by adding the cluster number (for the plot)
             title <- paste(paste0("Cluster ", cluster, ":"), title)
@@ -89,7 +91,8 @@ NULL
                 dark = dark,
                 pointsAsNumbers = FALSE,
                 label = TRUE,
-                title = title)
+                title = title
+            )
             show(p)
             p
         })
@@ -106,5 +109,7 @@ setMethod(
     "plotCellTypesPerCluster",
     signature(
         object = "seurat",
-        cellTypesPerCluster = "grouped_df"),
-    .plotCellTypesPerCluster)
+        cellTypesPerCluster = "grouped_df"
+    ),
+    .plotCellTypesPerCluster
+)

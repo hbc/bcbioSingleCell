@@ -1,7 +1,7 @@
 #' Cell to Sample Mappings
 #'
-#' @rdname cell2sample
 #' @name cell2sample
+#' @author Michael Steinbaugh
 #'
 #' @inheritParams general
 #'

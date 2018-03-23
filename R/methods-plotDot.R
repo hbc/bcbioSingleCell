@@ -1,15 +1,15 @@
 #' Plot Dot
 #'
-#' @rdname plotDot
-#' @name plotDot
+#' @note [Seurat::DotPlot()] is still plotting even when `do.return = TRUE`.
+#' In the meantime, we've broken out the code into this generic to fix
+#' RMarkdown looping of our marker plots.
 #'
+#' @name plotDot
 #' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase plotDot
 #'
 #' @inheritParams general
-#'
-#' @param genes Gene identifiers to plot.
 #' @param colMin Minimum scaled average expression threshold. Everything
 #'   smaller will be set to this.
 #' @param colMax Maximum scaled average expression threshold. Everything larger
@@ -18,10 +18,6 @@
 #'   cell groups with less than this expressing the given gene will have no dot
 #'   drawn.
 #' @param dotScale Scale the size of the points, similar to `cex`.
-#'
-#' @note [Seurat::DotPlot()] is still plotting even when `do.return = TRUE`.
-#' In the meantime, we've broken out the code into this generic to fix
-#' RMarkdown looping of our marker plots.
 #'
 #' @seealso Modified version of [Seurat::DotPlot()].
 #'
@@ -67,7 +63,8 @@ NULL
     colMin = -2.5,
     colMax = 2.5,
     dotMin = 0L,
-    dotScale = 6L) {
+    dotScale = 6L
+) {
     ident <- slot(object, "ident")
     data <- fetchGeneData(object, genes = genes) %>%
         as.data.frame() %>%
@@ -91,7 +88,8 @@ NULL
             avgExpScale = .minMax(
                 .data[["avgExpScale"]],
                 max = colMax,
-                min = colMin)
+                min = colMin
+            )
         )
     data[["pctExp"]][data[["pctExp"]] < dotMin] <- NA
 
@@ -120,4 +118,5 @@ NULL
 setMethod(
     "plotDot",
     signature("seurat"),
-    .plotDot.seurat)
+    .plotDot.seurat
+)

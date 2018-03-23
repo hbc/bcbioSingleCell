@@ -1,6 +1,5 @@
 #' Aggregate Replicates
 #'
-#' @rdname aggregateReplicates
 #' @name aggregateReplicates
 #' @family Data Management Utilities
 #' @author Michael Steinbaugh, Rory Kirchner

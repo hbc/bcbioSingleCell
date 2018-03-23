@@ -1,6 +1,5 @@
 #' Plot Cell Counts
 #'
-#' @rdname plotCellCounts
 #' @name plotCellCounts
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner

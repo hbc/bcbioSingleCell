@@ -1,7 +1,7 @@
 #' Sanitize Markers Output
 #'
-#' @rdname sanitizeMarkers
 #' @name sanitizeMarkers
+#' @author Michael Steinbaugh
 #'
 #' @inheritParams general
 #'

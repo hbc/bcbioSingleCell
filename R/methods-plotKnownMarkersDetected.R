@@ -1,6 +1,5 @@
 #' Plot Known Markers Detected
 #'
-#' @rdname plotKnownMarkersDetected
 #' @name plotKnownMarkersDetected
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh

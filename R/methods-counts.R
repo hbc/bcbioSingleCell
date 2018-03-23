@@ -1,8 +1,9 @@
 # FIXME Rename `gene2symbol` to `convertGenesToSymbols. Catch the legacy param.
 
+
+
 #' Counts Accessor
 #'
-#' @rdname counts
 #' @name counts
 #' @author Michael Steinbaugh
 #'

@@ -1,6 +1,5 @@
 #' Sample Barcode Metrics
 #'
-#' @rdname metrics
 #' @name metrics
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner

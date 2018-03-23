@@ -1,13 +1,12 @@
 #' Fetch t-SNE Locations and Cellular Metadata
 #'
-#' @rdname fetchTSNEData
 #' @name fetchTSNEData
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
 #'
-#' @return [data.frame] of t-SNE points and metadata for each cell.
+#' @return `data.frame` of t-SNE points and metadata for each cell.
 #'
 #' @seealso [Seurat::TSNEPlot()].
 #'

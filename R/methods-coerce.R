@@ -1,6 +1,5 @@
 #' Coerce Object
 #'
-#' @rdname coerce
 #' @name coerce
 #' @author Michael Steinbaugh
 #'

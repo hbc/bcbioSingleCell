@@ -1,7 +1,7 @@
 #' Fetch Gene Expression Data
 #'
-#' @rdname fetchGeneData
 #' @name fetchGeneData
+#' @author Michael Steinbaugh
 #'
 #' @inheritParams general
 #'

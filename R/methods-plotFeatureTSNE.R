@@ -1,12 +1,10 @@
 #' Plot Feature t-SNE
 #'
-#' @rdname plotFeatureTSNE
 #' @name plotFeatureTSNE
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
 #' @inheritParams plotTSNE
-#'
 #' @param features Character vector of features (e.g. gene expression, PC
 #'   scores, number of genes detected).
 #' @param legend Show legends in paneled plots. Defaults to `FALSE` because
@@ -45,7 +43,8 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         legend = FALSE,
-        returnAsList = FALSE) {
+        returnAsList = FALSE
+    ) {
         data <- cbind(
             fetchTSNEData(object),
             FetchData(object, vars.all = features)
@@ -58,7 +57,8 @@ setMethod(
                 mapping = aes_string(
                     x = "tSNE1",
                     y = "tSNE2",
-                    color = features[[a]])
+                    color = features[[a]]
+                )
             )
             if (isTRUE(dark)) {
                 p <- p + midnightTheme()
@@ -66,7 +66,8 @@ setMethod(
             p <- p +
                 geom_point(
                     alpha = pointAlpha,
-                    size = pointSize) +
+                    size = pointSize
+                ) +
                 labs(title = features[[a]])
             if (isTRUE(label)) {
                 if (isTRUE(dark)) {
@@ -79,10 +80,12 @@ setMethod(
                         mapping = aes_string(
                             x = "centerX",
                             y = "centerY",
-                            label = "ident"),
+                            label = "ident"
+                        ),
                         color = labelColor,
                         size = labelSize,
-                        fontface = "bold")
+                        fontface = "bold"
+                    )
             }
             if (is(color, "ScaleContinuous")) {
                 p <- p + color
@@ -97,4 +100,5 @@ setMethod(
         } else {
             plot_grid(plotlist = plotlist, labels = NULL)
         }
-    })
+    }
+)

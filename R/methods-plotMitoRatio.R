@@ -104,17 +104,10 @@ setMethod(
             max = max,
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
-
-
-
-#' @rdname plotMitoRatio
-#' @export
-setMethod(
-    "plotMitoRatio",
-    signature("data.frame"),
-    .plotMitoRatio)
+            fill = fill
+        )
+    }
+)
 
 
 
@@ -145,4 +138,5 @@ setMethod(
             interestingGroups = interestingGroups,
             samplesOnYAxis = samplesOnYAxis,
             fill = fill)
-    })
+    }
+)
