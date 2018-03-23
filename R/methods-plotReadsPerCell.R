@@ -1,6 +1,5 @@
 #' Plot Read Counts per Cell
 #'
-#' @rdname plotReadsPerCell
 #' @name plotReadsPerCell
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -29,9 +28,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @inheritParams plotReadsPerCell
-#'
-#' @return `grouped_df` grouped by `sampleName` containing `log10Count` values.
+#' @return `grouped_df`, grouped by `sampleName` containing `log10Count` values.
 .rawCBTibble <- function(cellularBarcodes, sampleData) {
     sampleData <- sampleData[, c("sampleID", "sampleName")]
     cellularBarcodes %>%
@@ -58,7 +55,7 @@ NULL
 #'
 #' @details Modified version of Allon Klein Lab MATLAB code.
 #'
-#' @return [tibble].
+#' @return `tibble`.
 .proportionalCBTibble <- function(rawTibble, sampleData) {
     # Ensure `sampleName` is set as factor across both data frames
     rawTibble[["sampleName"]] <-
@@ -95,8 +92,6 @@ NULL
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
-#'
-#' @inheritParams plotReadsPerCell
 #'
 #' @return `ggplot`.
 .plotRawCBViolin <- function(
@@ -151,8 +146,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @inheritParams plotReadsPerCell
-#'
 #' @return `ggplot`.
 .plotRawCBRidgeline <- function(
     tibble,
@@ -206,8 +199,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @inheritParams plotReadsPerCell
-#'
 #' @return `ggplot`.
 .plotProportionalCBHistogram <- function(
     tibble,
@@ -257,7 +248,7 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @inherit plotReadsPerCell
+#' @return `ggplot`
 .plotReadsPerCell <- function(
     object,
     geom = c("histogram", "ridgeline", "violin"),
