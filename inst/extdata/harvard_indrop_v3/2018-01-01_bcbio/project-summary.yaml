@@ -1,0 +1,24 @@
+date: '2018-01-01 00:00:00.000000'
+upload: /n/data1/XXX/final
+bcbio_system: /n/app/bcbio/dev/galaxy/bcbio_system.yaml
+samples:
+- description: multiplexed-AGAGGATA
+  dirs:
+    config: /n/app/bcbio/dev/galaxy
+    fastq: null
+    flowcell: null
+    galaxy: /n/app/bcbio/dev/galaxy
+    work: /n/scratch2/XXX/data/bcbio
+  metadata:
+    batch: null
+    phenotype: ''
+- description: multiplexed-AGAGGATA
+  dirs:
+    config: /n/app/bcbio/dev/galaxy
+    fastq: null
+    flowcell: null
+    galaxy: /n/app/bcbio/dev/galaxy
+    work: /n/scratch2/XXX/data/bcbio
+  metadata:
+    batch: null
+    phenotype: ''

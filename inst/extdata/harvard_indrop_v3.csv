@@ -1,3 +1,3 @@
 fileName,description,index,sequence,sampleName,sampleNameAggregate
-20170915_Pool_ZG4780-1_S1_R1_001.fastq.gz,run1,2,TATCCTCT,M1_seq_rep_1,M1
-20171010_Pool_ZG4780-3_S1_R1_001.fastq.gz,run2,2,TATCCTCT,M1_seq_rep_2,M1
+multiplexed.fastq.gz,multiplexed,1,TTTTTTTT,rep_1,sample
+multiplexed.fastq.gz,multiplexed,2,GGGGGGGG,rep_2,sample
