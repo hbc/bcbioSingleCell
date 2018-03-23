@@ -29,9 +29,6 @@ set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 }
-\value{
-\code{ggplot}.
-}
 \description{
 Plot Mitochondrial Counts vs. Coding Counts
 }

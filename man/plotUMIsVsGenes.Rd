@@ -11,7 +11,7 @@
 plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{bcbioSingleCell}(object, interestingGroups,
-  flip = TRUE, color = scale_color_viridis(discrete = TRUE))
+  color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotUMIsVsGenes}{seurat}(object, interestingGroups,
   color = scale_color_viridis(discrete = TRUE))
@@ -29,13 +29,13 @@ set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 }
-\value{
-\code{ggplot}.
-}
 \description{
 Plot UMI and Gene Correlation
 }
 \examples{
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # bcbioSingleCell ====
 plotUMIsVsGenes(bcb_small)
 

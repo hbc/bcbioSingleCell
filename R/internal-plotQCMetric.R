@@ -133,7 +133,8 @@
     object,
     xCol,
     yCol,
-    trans = "identity",
+    xTrans = "identity",
+    yTrans = "identity",
     interestingGroups,
     color = scale_color_viridis(discrete = TRUE)
 ) {
@@ -142,7 +143,8 @@
     }
     assert_is_a_string(xCol)
     assert_is_a_string(yCol)
-    assert_is_a_string(trans)
+    assert_is_a_string(xTrans)
+    assert_is_a_string(yTrans)
     assertIsColorScaleDiscreteOrNULL(color)
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
@@ -159,8 +161,8 @@
         # If `method = "gam"`, `mgcv` package is required.
         # Otherwise build checks will error.
         geom_smooth(method = "glm", se = FALSE, size = 1.5) +
-        scale_x_continuous(trans = trans) +
-        scale_y_continuous(trans = trans)
+        scale_x_continuous(trans = xTrans) +
+        scale_y_continuous(trans = yTrans)
 
     # Label interesting groups
     p <- p + labs(color = paste(interestingGroups, collapse = ":\n"))

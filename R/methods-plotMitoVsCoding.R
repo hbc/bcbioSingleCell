@@ -4,7 +4,7 @@
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inherit plotUMIsVsGenes
+#' @inheritParams general
 #'
 #' @examples
 #' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
@@ -29,7 +29,8 @@ NULL
         object = object,
         xCol = "nCoding",
         yCol = "nMito",
-        trans = "log2"
+        xTrans = "log2",
+        yTrans = "log2"
     )
 }
 
