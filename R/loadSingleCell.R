@@ -237,10 +237,6 @@ loadSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Unfiltered cellular barcode distributions ================================
-    cbList <- .cellularBarcodesList(sampleDirs)
-    cbData <- .bindCellularBarcodes(cbList)
-
     # Assays ===================================================================
     inform(paste("Reading counts at", level, "level"))
     sparseCountsList <- .sparseCountsList(
@@ -251,7 +247,6 @@ loadSingleCell <- function(
     counts <- do.call(cBind, sparseCountsList)
 
     # Row data =================================================================
-    # TODO Consolidate this code with bcbioRNASeq
     rowRangesMetadata <- NULL
     txdb <- NULL
     tx2gene <- NULL
@@ -260,7 +255,10 @@ loadSingleCell <- function(
         rowRanges <- genes(txdb)
         # Transcript-to-gene mappings
         if (level == "transcripts") {
-            transcripts <- transcripts(txdb, columns = c("tx_name", "gene_id"))
+            transcripts <- transcripts(
+                object = txdb,
+                columns = c("tx_name", "gene_id")
+            )
             tx2gene <- mcols(transcripts) %>%
                 as.data.frame() %>%
                 set_colnames(c("txID", "geneID")) %>%
@@ -285,7 +283,7 @@ loadSingleCell <- function(
         # Transcript-to-gene mappings
         if (level == "transcripts") {
             tx2gene <- tx2gene(
-                organism,
+                object = organism,
                 genomeBuild = genomeBuild,
                 release = release
             )
@@ -307,6 +305,10 @@ loadSingleCell <- function(
         counts <- .transcriptToGeneLevelCounts(counts, tx2gene)
     }
 
+    # Unfiltered cellular barcode distributions ================================
+    cbList <- .cellularBarcodesList(sampleDirs)
+    cbData <- .bindCellularBarcodes(cbList)
+
     # Column data ==============================================================
     colData <- calculateMetrics(
         object = counts,
@@ -318,6 +320,10 @@ loadSingleCell <- function(
         # Subset the counts matrix to match the cells that passed prefiltering
         counts <- counts[, rownames(colData), drop = FALSE]
     }
+
+    # Bind the `nCount` column into the colData
+    nCount <- cbData[rownames(colData), "nCount", drop = FALSE]
+    colData <- cbind(nCount, colData)
 
     # Cell to sample mappings ==================================================
     cell2sample <- mapCellsToSamples(

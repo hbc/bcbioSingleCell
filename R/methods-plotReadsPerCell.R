@@ -12,14 +12,10 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
-#' plotReadsPerCell(bcb)
-#'
-#' # seurat
-#' plotReadsPerCell(seurat)
+#' # bcbioSingleCell ====
+#' plotReadsPerCell(bcb_small)
 NULL
 
 
@@ -271,7 +267,7 @@ NULL
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
     geom <- match.arg(geom)
-    
+
     skipMessage <- "Raw cellular barcodes are not slotted in object"
 
     # Obtain the cellular barcode distributions
@@ -353,14 +349,13 @@ setMethod(
 
 
 
-# FIXME Add support by plotting nUMI
 #' @rdname plotReadsPerCell
 #' @export
 setMethod(
     "plotReadsPerCell",
     signature("seurat"),
     function(object, ...) {
-    	warn("Not yet supported for seurat objects")
-        NULL
+        inform("Raw read counts not available")
+        invisible()
     }
 )

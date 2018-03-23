@@ -1,7 +1,3 @@
-# FIXME Need to add `nCount` column back into metrics
-
-
-
 #' Sample Barcode Metrics
 #'
 #' @name metrics
