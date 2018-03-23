@@ -11,13 +11,12 @@
 plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), min = 0L, max = Inf,
-  interestingGroups, flip = TRUE, fill = scale_fill_viridis(discrete =
-  TRUE))
+  "boxplot", "histogram", "ridgeline"), interestingGroups, min, max,
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotGenesPerCell}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), min = 0L, max = Inf, interestingGroups,
-  flip = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+  "histogram", "ridgeline"), interestingGroups, min, max,
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -27,14 +26,12 @@ plotGenesPerCell(object, ...)
 \item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
 first argument in the vector.}
 
-\item{min}{Recommended minimum value cutoff.}
-
-\item{max}{Recommended maximum value cutoff.}
-
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{flip}{Plot the samples on the y axis.}
+\item{min}{Recommended minimum value cutoff.}
+
+\item{max}{Recommended maximum value cutoff.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color

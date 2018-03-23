@@ -27,7 +27,6 @@
 #' @param pipeline Pipeline used to generate the samples.
 #' @param return Return type. Uses [match.arg()] internally and defaults to the
 #'   first argument in the vector.
-#' @param flip Plot the samples on the y axis.
 #' @param title Plot title.
 #' @param value Object to assign.
 #' @param x Primary object.

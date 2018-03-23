@@ -27,29 +27,19 @@ NULL
 .plotGenesPerCell <- function(
     object,
     geom = c("violin", "boxplot", "histogram", "ridgeline"),
-    min = 0L,
-    max = Inf,
     interestingGroups,
-    flip = TRUE,
+    min,
+    max,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
-    }
-    if (missing(min)) {
-        min <- metadata(object)[["filterParams"]][["minGenes"]]
-    }
-    if (missing(max)) {
-        max <- metadata(object)[["filterParams"]][["maxGenes"]]
-    }
-    .plotQCGeom(
-        metrics = metrics(object, interestingGroups = interestingGroups),
+    geom <- match.arg(geom)
+    .plotQCMetric(
+        object = object,
         metricCol = "nGene",
         geom = geom,
+        interestingGroups = interestingGroups,
         min = min,
         max = max,
-        interestingGroups = interestingGroups,
-        flip = flip,
         fill = fill
     )
 }
