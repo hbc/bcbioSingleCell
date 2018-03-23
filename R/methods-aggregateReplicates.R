@@ -17,6 +17,7 @@ NULL
 
 
 # Constructors =================================================================
+#' @importFrom basejump makeNames
 #' @importFrom dplyr arrange group_by mutate mutate_all ungroup
 #' @importFrom parallel mclapply
 #' @importFrom rlang !!! syms
@@ -33,10 +34,10 @@ NULL
     # corresponding `*Aggregate` columns.
     map <- sampleData %>%
         .[, c("sampleID", "sampleName", "sampleNameAggregate")] %>%
-        mutate(sampleIDAggregate = make.names(
+        mutate(sampleIDAggregate = makeNames(
             .data[["sampleNameAggregate"]],
-            unique = FALSE)
-        ) %>%
+            unique = FALSE
+        )) %>%
         mutate_all(as.factor) %>%
         .[, c(
             "sampleIDAggregate", "sampleID",
@@ -103,8 +104,9 @@ NULL
         mutate(
             sampleName = .data[["sampleNameAggregate"]],
             description = .data[["sampleName"]],
-            sampleID = make.names(
-                .data[["sampleName"]], unique = FALSE)
+            sampleID = makeNames(
+                .data[["sampleName"]], unique = FALSE
+            )
         ) %>%
         # TODO Improve detection and handling of unique columns here
         .[, metadataPriorityCols] %>%

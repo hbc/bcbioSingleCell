@@ -103,21 +103,8 @@
     colnames(counts) <- colnames %>%
         # Append sample name
         paste(sampleID, ., sep = "_") %>%
-        # Convert dashes to underscores
-        gsub(
-            x = .,
-            pattern = "-",
-            replacement = "_"
-        ) %>%
-        make.names(unique = TRUE)
-    rownames(counts) <- rownames %>%
-        # Convert dashes to underscores
-        gsub(
-            x = .,
-            pattern = "-",
-            replacement = "_"
-        ) %>%
-        make.names(unique = TRUE)
+        makeNames(unique = TRUE)
+    rownames(counts) <- makeNames(rownames, unique = TRUE)
 
     counts
 }

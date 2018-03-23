@@ -4,6 +4,7 @@
 #' @keywords internal
 #' @noRd
 #'
+#' @importFrom basejump makeNames
 #' @importFrom bcbioBase sampleDirs
 #'
 #' @param uploadDir Upload directory.
@@ -67,7 +68,7 @@
             dirname() %>%
             dirname() %>%
             dirname()
-        names(sampleDirs) <- make.names(basename(sampleDirs), unique = TRUE)
+        names(sampleDirs) <- makeNames(basename(sampleDirs), unique = TRUE)
 
         inform(paste(length(sampleDirs), "samples detected"))
     }
