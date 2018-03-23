@@ -8,13 +8,11 @@
 #' @return `matrix`.
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
+#' # seurat ====
 #' genes <- slot(seurat, "data") %>%
 #'     rownames() %>%
 #'     head()
-#' fetchGeneData(seurat, genes = genes) %>%
+#' fetchGeneData(pbmc_small, genes = genes) %>%
 #'     head()
 NULL
 

@@ -13,13 +13,12 @@
 #'   aggregate marker expression values (`mean`, `median`, and `sum`).
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat ====
-#' genes <- counts(seurat) %>% rownames() %>% head()
+#' genes <- counts(seurat_small) %>% rownames() %>% head()
 #' print(genes)
-#' fetchTSNEExpressionData(seurat, genes = genes) %>%
-#'     glimpse()
+#' fetchTSNEExpressionData(seurat_small, genes = genes) %>% glimpse()
 NULL
 
 
@@ -30,12 +29,12 @@ NULL
     genes
 ) {
     tsne <- fetchTSNEData(object)
-    
+
     data <- fetchGeneData(object, genes = genes)
     mean <- Matrix::rowMeans(data)
     median <- Biobase::rowMedians(data)
     sum <- Matrix::rowSums(data)
-    
+
     cbind(tsne, mean, median, sum)
 }
 

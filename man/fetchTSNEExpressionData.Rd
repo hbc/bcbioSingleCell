@@ -28,13 +28,12 @@ This gets t-SNE locations, cellular metadata, expression of genes and
 the geometric mean of the gene expression from a \link{seurat} object.
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
 # seurat ====
-genes <- counts(seurat) \%>\% rownames() \%>\% head()
+genes <- counts(seurat_small) \%>\% rownames() \%>\% head()
 print(genes)
-fetchTSNEExpressionData(seurat, genes = genes) \%>\%
-    glimpse()
+fetchTSNEExpressionData(seurat_small, genes = genes) \%>\% glimpse()
 }
 \seealso{
 Other t-SNE Utilities: \code{\link{fetchTSNEData}},

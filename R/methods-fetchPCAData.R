@@ -11,10 +11,8 @@
 #' @seealso [Seurat::PCAPlot()].
 #'
 #' @examples
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' fetchPCAData(seurat) %>% glimpse()
+#' # seurat ====
+#' fetchPCAData(pbmc_small) %>% glimpse()
 NULL
 
 

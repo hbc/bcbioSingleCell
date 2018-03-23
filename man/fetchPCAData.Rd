@@ -23,10 +23,8 @@ fetchPCAData(object, ...)
 Fetch PCA Dimensions and Cellular Metadata
 }
 \examples{
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
-# seurat
-fetchPCAData(seurat) \%>\% glimpse()
+# seurat ====
+fetchPCAData(pbmc_small) \%>\% glimpse()
 }
 \seealso{
 \code{\link[Seurat:PCAPlot]{Seurat::PCAPlot()}}.

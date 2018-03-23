@@ -40,13 +40,16 @@ type (per unbiased cluster). Cell types with too few (\code{min} cutoff) or too
 many (\code{max} cutoff) marker genes will be skipped.
 }
 \examples{
-load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+load(system.file(
+    "extdata/knownMarkersDetected.rda",
+    package = "bcbioSingleCell"
+))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
+# seurat ====
 cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
 glimpse(cellTypesPerCluster)
 
-# seurat
 # Let's plot the first row, as an example
 cellTypesPerCluster <- cellTypesPerCluster[1L, , drop = FALSE]
 plotCellTypesPerCluster(

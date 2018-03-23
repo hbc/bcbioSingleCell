@@ -86,8 +86,6 @@ setMethod(
 
 
 
-# FIXME Don't use bcbio assignment method
-# FIXME Use metdata for seurat
 #' @rdname interestingGroups
 #' @export
 setMethod(

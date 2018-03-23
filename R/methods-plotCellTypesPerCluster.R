@@ -1,4 +1,4 @@
-# FIXME Need to update arguments to match `plotMarkerTSNE()`
+# TODO Need to update arguments to match `plotMarkerTSNE()`
 
 #' Plot Cell Types per Cluster
 #'
@@ -18,13 +18,16 @@
 #' @return Show graphical output. Invisibly return `ggplot` plotlist.
 #'
 #' @examples
-#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file(
+#'     "extdata/knownMarkersDetected.rda",
+#'     package = "bcbioSingleCell"
+#' ))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 #'
+#' # seurat ====
 #' cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
 #' glimpse(cellTypesPerCluster)
 #'
-#' # seurat
 #' # Let's plot the first row, as an example
 #' cellTypesPerCluster <- cellTypesPerCluster[1L, , drop = FALSE]
 #' plotCellTypesPerCluster(

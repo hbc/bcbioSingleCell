@@ -14,7 +14,9 @@
 #' @return `data.frame`.
 #'
 #' @examples
-#' # bcbioSingleCell
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell ====
 #' calculateMetrics(bcb_small) %>% glimpse()
 #'
 #' # dgCMatrix ====

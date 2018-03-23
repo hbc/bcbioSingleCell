@@ -6,10 +6,13 @@
 #' @inheritParams general
 #'
 #' @examples
-#' # bcbioSingleCell
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell ====
 #' cell2sample(bcb_small) %>% table()
 #'
-#' # seurat
+#' # seurat ====
 #' cell2sample(pbmc_small) %>% table()
 #' cell2sample(seurat_small) %>% table()
 NULL

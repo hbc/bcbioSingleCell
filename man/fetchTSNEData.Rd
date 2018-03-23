@@ -23,10 +23,8 @@ fetchTSNEData(object, ...)
 Fetch t-SNE Locations and Cellular Metadata
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-fetchTSNEData(seurat) \%>\% glimpse()
+# seurat ====
+fetchTSNEData(pbmc_small) \%>\% glimpse()
 }
 \seealso{
 \code{\link[Seurat:TSNEPlot]{Seurat::TSNEPlot()}}.

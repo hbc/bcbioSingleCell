@@ -20,7 +20,9 @@ coercion.
 }
 
 \examples{
-# Coerce bcbioSingleCell to seurat
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+
+# bcbioSingleCell to seurat
 as(bcb_small, "seurat")
 }
 \seealso{

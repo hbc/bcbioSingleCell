@@ -18,14 +18,14 @@
 #' @return Counts matrix.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
-#' counts(bcb, convertGenesToSymbols = FALSE) %>% glimpse()
-#' counts(bcb, convertGenesToSymbols = TRUE) %>% glimpse()
+#' # bcbioSingleCell ====
+#' counts(bcb_small, convertGenesToSymbols = FALSE) %>% glimpse()
+#' counts(bcb_small, convertGenesToSymbols = TRUE) %>% glimpse()
 #'
-#' # seurat
+#' # seurat ====
 #' counts(seurat, normalized = FALSE) %>% glimpse()
 #' counts(seurat, normalized = TRUE) %>% glimpse()
 NULL

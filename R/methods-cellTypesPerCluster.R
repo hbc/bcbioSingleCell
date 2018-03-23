@@ -14,6 +14,10 @@
 #'   significant known makers per cell type.
 #'
 #' @examples
+#' load(system.file(
+#'     "extdata/known_markers_small.rda",
+#'     package = "bcbioSingleCell"
+#' ))
 #' cellTypesPerCluster(known_markers_small) %>% glimpse()
 NULL
 

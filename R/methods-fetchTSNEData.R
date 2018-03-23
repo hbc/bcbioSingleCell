@@ -11,10 +11,8 @@
 #' @seealso [Seurat::TSNEPlot()].
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' fetchTSNEData(seurat) %>% glimpse()
+#' # seurat ====
+#' fetchTSNEData(pbmc_small) %>% glimpse()
 NULL
 
 

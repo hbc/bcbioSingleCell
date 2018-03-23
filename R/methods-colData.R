@@ -49,14 +49,10 @@ setMethod(
         meta <- sampleData(x)
         drop <- intersect(
             x = colnames(data),
-            y = c(
-                colnames(meta),
-                "cellularBarcode"
-            )
+            y = c(colnames(meta), "cellularBarcode")
         )
         if (length(drop)) {
-            data <- data %>%
-                .[, setdiff(colnames(.), drop)]
+            data <- data[, setdiff(colnames(data), drop)]
         }
 
         data %>%

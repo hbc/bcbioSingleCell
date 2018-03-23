@@ -35,11 +35,11 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 Plot Cell Counts
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell ====
-plotCellCounts(bcb)
+plotCellCounts(bcb_small)
 
 # seurat ====
 plotCellCounts(seurat)

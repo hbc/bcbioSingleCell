@@ -51,7 +51,7 @@
 #'   rownames_to_column tibble
 #' @importFrom tidyr gather
 #' @importFrom utils globalVariables packageVersion
-#' @importFrom zingeR glmWeightedF
+#' @importFrom zingeR glmWeightedF zeroWeightsLS
 NULL
 
 
