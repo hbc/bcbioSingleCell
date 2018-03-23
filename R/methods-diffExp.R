@@ -27,9 +27,8 @@
 #' @name diffExp
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams general
 #' @inheritParams zingeR::zeroWeightsLS
-#'
+#' @inheritParams general
 #' @param numerator Group of cells to use in the numerator of the contrast
 #'   (e.g. treatment).
 #' @param denominator Group of cells to use in the denominator of the contrast
@@ -48,19 +47,17 @@
 #' @return `DEGLRT`.
 #'
 #' @examples
-#' # seurat: expression in cluster 3 relative to cluster 2
+#' # seurat ====
+#' # Expression in cluster 3 relative to cluster 2
 #' numerator <- Seurat::WhichCells(pbmc_small, ident = 3L)
 #' denominator <- Seurat::WhichCells(pbmc_small, ident = 2L)
 #' lrt <- diffExp(
 #'     pbmc_small,
 #'     numerator = numerator,
 #'     denominator = denominator,
-#'     maxit = 100L)
-#' lrt$table %>%
-#'     as_tibble() %>%
-#'     rownames_to_column("geneName") %>%
-#'     arrange(padjFilter) %>%
-#'     head()
+#'     maxit = 100L
+#' )
+#' glimpse(lrt[["table"]])
 NULL
 
 
@@ -112,16 +109,12 @@ NULL
 
     # Set up the design matrix
     design <- model.matrix(~group)
-    # levels(group)
-    # table(group)
-    # table(design[, 2L])
 
     # zingeR + edgeR analysis
     # Note that TMM needs to be consistently applied for both
     # `calcNormFactors()` and `zeroWeightsLS()`
     dge <- DGEList(counts, group = group)
     dge <- calcNormFactors(dge, method = "TMM")
-    # dge[["samples"]]
 
     # This is the zingeR step that is computationally expensive
     weights <- zeroWeightsLS(
@@ -134,15 +127,8 @@ NULL
     dge[["weights"]] <- weights
     dge <- estimateDisp(dge, design = design)
 
-    # Plot biological coefficient of variation
-    # plotBCV(dge)
-
     fit <- glmFit(dge, design = design)
     lrt <- glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
-
-    # hist(lrt$table$PValue)
-    # sum(lrt$table$padjFilter <= 0.05, na.rm = TRUE)
-
     lrt
 }
 
