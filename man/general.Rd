@@ -43,8 +43,6 @@ formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=
 \item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
 first argument in the vector.}
 
-\item{flip}{Plot the samples on the y axis.}
-
 \item{title}{Plot title.}
 
 \item{value}{Object to assign.}

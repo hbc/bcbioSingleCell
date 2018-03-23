@@ -11,11 +11,11 @@
 plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), max = Inf, interestingGroups,
-  flip = TRUE, fill = scale_fill_viridis(discrete = TRUE))
+  "boxplot", "histogram", "ridgeline"), interestingGroups, max,
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotMitoRatio}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), max = Inf, interestingGroups, flip = TRUE,
+  "histogram", "ridgeline"), interestingGroups, max,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
@@ -26,12 +26,10 @@ plotMitoRatio(object, ...)
 \item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
 first argument in the vector.}
 
-\item{max}{Recommended maximum value cutoff.}
-
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{flip}{Plot the samples on the y axis.}
+\item{max}{Recommended maximum value cutoff.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color

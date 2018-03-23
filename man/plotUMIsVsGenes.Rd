@@ -24,8 +24,6 @@ plotUMIsVsGenes(object, ...)
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{flip}{Plot the samples on the y axis.}
-
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
