@@ -25,24 +25,17 @@ NULL
 .plotMitoRatio <- function(
     object,
     geom = c("violin", "boxplot", "histogram", "ridgeline"),
-    max = Inf,
     interestingGroups,
-    flip = TRUE,
+    max,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
-    }
-    if (missing(max)) {
-        max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
-    }
-    .plotQCGeom(
-        metrics = metrics(object, interestingGroups = interestingGroups),
+    geom <- match.arg(geom)
+    .plotQCMetric(
+        object = object,
         metricCol = "mitoRatio",
         geom = geom,
-        max = max,
         interestingGroups = interestingGroups,
-        flip = flip,
+        max = max,
         fill = fill
     )
 }

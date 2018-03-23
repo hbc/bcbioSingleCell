@@ -26,24 +26,17 @@ NULL
 .plotNovelty <- function(
     object,
     geom = c("violin", "boxplot", "histogram", "ridgeline"),
-    min,
     interestingGroups,
-    flip = TRUE,
+    min,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
-    }
-    if (missing(min)) {
-        min <- metadata(object)[["filterParams"]][["minNovelty"]]
-    }
-    .plotQCGeom(
-        metrics = metrics(object, interestingGroups = interestingGroups),
+    geom <- match.arg(geom)
+    .plotQCMetric(
+        object = object,
         metricCol = "log10GenesPerUMI",
         geom = geom,
-        min = min,
         interestingGroups = interestingGroups,
-        flip = flip,
+        min = min,
         fill = fill
     )
 }

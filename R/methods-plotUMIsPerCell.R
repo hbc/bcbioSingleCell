@@ -2,7 +2,6 @@
 #'
 #' Plot the universal molecular identifiers (UMIs) per cell.
 #'
-#' @rdname plotUMIsPerCell
 #' @name plotUMIsPerCell
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -22,25 +21,18 @@ NULL
 # Constructors =================================================================
 .plotUMIsPerCell <- function(
     object,
-    geom = "violin",
-    min = 0L,
+    geom = c("violin", "boxplot", "histogram", "ridgeline"),
     interestingGroups,
-    flip = TRUE,
+    min,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
-    }
-    if (missing(min)) {
-        min <- metadata(object)[["filterParams"]][["minUMIs"]]
-    }
-    .plotQCGeom(
-        metrics = metrics(object, interestingGroups = interestingGroups),
+    geom <- match.arg(geom)
+    .plotQCMetric(
+        object = object,
         metricCol = "nUMI",
         geom = geom,
-        min = min,
         interestingGroups = interestingGroups,
-        flip = flip,
+        min = min,
         fill = fill
     )
 }
