@@ -16,10 +16,6 @@
 #' # seurat ====
 #' plotUMIsVsGenes(pbmc_small)
 #' plotUMIsVsGenes(seurat_small)
-#'
-#' # data.frame
-#' df <- metrics(bcb)
-#' plotUMIsPerCell(df)
 NULL
 
 

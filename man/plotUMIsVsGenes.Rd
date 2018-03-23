@@ -42,10 +42,6 @@ plotUMIsVsGenes(bcb_small)
 # seurat ====
 plotUMIsVsGenes(pbmc_small)
 plotUMIsVsGenes(seurat_small)
-
-# data.frame
-df <- metrics(bcb)
-plotUMIsPerCell(df)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},
