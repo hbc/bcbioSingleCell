@@ -17,24 +17,19 @@
 #'   - `markdown`: R Markdown report, with reports separated by headers.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
-#' plotQC(bcb)
+#' # bcbioSingleCell ====
+#' plotQC(bcb_small)
 #'
-#' # seurat
-#' plotQC(seurat)
+#' # seurat ====
+#' plotQC(seurat_small)
 NULL
 
 
 
 # Constructors =================================================================
-validMedianGeom <- c("boxplot", "ridgeline", "violin")
-validQCGeomFlip <- c("boxplot", "violin")
-
-
-
 .plotQC <- function(
     object,
     interestingGroups,
@@ -48,7 +43,7 @@ validQCGeomFlip <- c("boxplot", "violin")
     }
     geom <- match.arg(geom)
     return <- match.arg(return)
-    
+
     plotlist <- list(
         plotReadsPerCell = plotReadsPerCell(
             object,
@@ -83,7 +78,7 @@ validQCGeomFlip <- c("boxplot", "violin")
             geom = geom
         )
     )
-    
+
     # Remove any `NULL` plots. This is useful for nuking the
     # `plotReadsPerCell()` return on an object that doesn't contain raw cellular
     # barcode counts.
@@ -162,196 +157,6 @@ validQCGeomFlip <- c("boxplot", "violin")
         )
         show(plotlist[["plotNovelty"]])
     }
-}
-
-
-
-.plotQCGeom <- function(
-	...,
-	geom = c("boxplot", "histogram", "ridgeline", "violin")
-) {
-    geom <- match.arg(geom)
-    if (geom == "boxplot") {
-        .plotQCBoxplot(...)
-    } else if (geom == "histogram") {
-        .plotQCHistogram(...)
-    } else if (geom == "ridgeline") {
-        .plotQCRidgeline(...)
-    } else if (geom == "violin") {
-        .plotQCViolin(...)
-    }
-}
-
-
-
-.plotQCBoxplot <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) {
-    	min <- 0L
-    }
-    min <- min(min)
-    if (!is.numeric(max)) {
-    	max <- Inf
-    }
-    max <- max(max)
-
-    p <- ggplot(
-        data = metrics,
-        mapping = aes_string(
-            x = "sampleName",
-            y = metricCol,
-            fill = "interestingGroups"
-        )
-    ) +
-        geom_boxplot(color = lineColor, outlier.shape = NA) +
-        scale_y_sqrt() +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-
-    # Cutoff lines
-    if (min > 0L) {
-        p <- p + .qcCutoffLine(yintercept = min)
-    }
-    if (max < Inf) {
-        p <- p + .qcCutoffLine(yintercept = max)
-    }
-
-    p
-}
-
-
-
-.plotQCHistogram <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) {
-    	min <- 0L
-    }
-    min <- min(min)
-    if (!is.numeric(max)) {
-    	max <- Inf
-    }
-    max <- max(max)
-
-    p <- ggplot(
-        data = metrics,
-        mapping = aes_string(
-            x = metricCol,
-            fill = "interestingGroups"
-        )
-    ) +
-        geom_histogram(bins = bins) +
-        scale_x_sqrt() +
-        scale_y_sqrt() +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-
-    # Cutoff lines
-    if (min > 0L) {
-        p <- p + .qcCutoffLine(xintercept = min)
-    }
-    if (max < Inf) {
-        p <- p + .qcCutoffLine(xintercept = max)
-    }
-
-    p
-}
-
-
-
-.plotQCRidgeline <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) {
-    	min <- 0L
-    }
-    min <- min(min)
-    if (!is.numeric(max)) {
-    	max <- Inf
-    }
-    max <- max(max)
-
-    p <- ggplot(
-        data = metrics,
-        mapping = aes_string(
-            x = metricCol,
-            y = "sampleName",
-            fill = "interestingGroups"
-        )
-    ) +
-        geom_density_ridges(
-            alpha = qcPlotAlpha,
-            color = lineColor,
-            panel_scaling = TRUE,
-            scale = 10L
-        ) +
-        scale_x_sqrt() +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-
-    # Cutoff lines
-    if (min > 0L) {
-        p <- p + .qcCutoffLine(xintercept = min)
-    }
-    if (max < Inf) {
-        p <- p + .qcCutoffLine(xintercept = max)
-    }
-
-    p
-}
-
-
-
-.plotQCScatterplot <- function(metrics, xCol, yCol) {
-    ggplot(
-        data = metrics,
-        mapping = aes_string(
-            x = xCol,
-            y = yCol,
-            color = "interestingGroups"
-        )
-    ) +
-        geom_point(alpha = 0.25, size = 0.8) +
-        # If `method = "gam"`, `mgcv` package is required.
-        # Otherwise build checks will error.
-        geom_smooth(
-            method = "glm",
-            se = FALSE,
-            size = 1.5
-        ) +
-        scale_x_sqrt() +
-        scale_y_sqrt()
-}
-
-
-
-.plotQCViolin <- function(metrics, metricCol, min = 0L, max = Inf) {
-    if (!is.numeric(min)) {
-    	min <- 0L
-    }
-    min <- min(min)
-    if (!is.numeric(max)) {
-    	max <- Inf
-    }
-    max <- max(max)
-
-    p <- ggplot(
-        data = metrics,
-        mapping = aes_string(
-            x = "sampleName",
-            y = metricCol,
-            fill = "interestingGroups"
-        )
-    ) +
-        geom_violin(
-            color = lineColor,
-            scale = "width",
-            trim = TRUE
-        ) +
-        scale_y_sqrt() +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-
-    # Cutoff lines
-    if (min > 0L) {
-        p <- p + .qcCutoffLine(yintercept = min)
-    }
-    if (max < Inf) {
-        p <- p + .qcCutoffLine(yintercept = max)
-    }
-
-    p
 }
 
 

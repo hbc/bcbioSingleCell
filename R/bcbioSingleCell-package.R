@@ -65,4 +65,7 @@ lanePattern <- "_L(\\d{3})"
 metadataPriorityCols <- c("sampleID", "sampleName", "description")
 projectDirPattern <- "^(\\d{4}-\\d{2}-\\d{2})_([^/]+)$"
 
+validMedianGeom <- c("violin", "boxplot", "ridgeline")
+validQCGeomFlip <- c("violin", "boxplot")
+
 sepBar <- "============================================================"
