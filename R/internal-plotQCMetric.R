@@ -64,7 +64,7 @@
         p <- p +
             geom_violin(
                 color = lineColor,
-                scale = "width",
+                scale = "count",
                 trim = TRUE
             ) +
             scale_y_sqrt()
@@ -99,7 +99,7 @@
 
     # Median labels
     if (geom != "histogram") {
-        if (metricCol == "mitoRatio") {
+        if (metricCol %in% c("log10GenesPerUMI", "mitoRatio")) {
             digits <- 2
         } else {
             digits <- 0
