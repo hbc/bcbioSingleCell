@@ -64,7 +64,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        samplesOnYAxis = TRUE,
+        flip = TRUE,
         color = scale_color_viridis(discrete = TRUE)
     ) {
         if (missing(interestingGroups)) {

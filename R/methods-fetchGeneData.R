@@ -5,9 +5,7 @@
 #'
 #' @inheritParams general
 #'
-#' @param genes Gene identifiers (matrix rownames).
-#'
-#' @return [matrix].
+#' @return `matrix`.
 #'
 #' @examples
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))

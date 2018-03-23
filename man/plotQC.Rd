@@ -43,14 +43,14 @@ Utility function that loops our standard quality control plots, for easy
 visualization.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
-# bcbioSingleCell
-plotQC(bcb)
+# bcbioSingleCell ====
+plotQC(bcb_small)
 
-# seurat
-plotQC(seurat)
+# seurat ====
+plotQC(seurat_small)
 }
 \author{
 Michael Steinbaugh

@@ -13,7 +13,7 @@
 \arguments{
 \item{object}{Object.}
 
-\item{genes}{Gene identifiers to plot.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color

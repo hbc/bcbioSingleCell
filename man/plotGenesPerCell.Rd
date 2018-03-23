@@ -5,23 +5,19 @@
 \alias{plotGenesPerCell}
 \alias{plotGenesPerCell}
 \alias{plotGenesPerCell,bcbioSingleCell-method}
-\alias{plotGenesPerCell,data.frame-method}
 \alias{plotGenesPerCell,seurat-method}
 \title{Plot Genes per Cell}
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "violin", min,
-  max, interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
+\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = c("violin",
+  "boxplot", "histogram", "ridgeline"), min = 0L, max = Inf,
+  interestingGroups, flip = TRUE, fill = scale_fill_viridis(discrete =
+  TRUE))
 
-\S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0L,
-  max = Inf, interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotGenesPerCell}{seurat}(object, geom = "violin", min, max,
-  interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
+\S4method{plotGenesPerCell}{seurat}(object, geom = c("violin", "boxplot",
+  "histogram", "ridgeline"), min = 0L, max = Inf, interestingGroups,
+  flip = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -38,7 +34,7 @@ first argument in the vector.}
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{samplesOnYAxis}{Plot the samples on the y axis.}
+\item{flip}{Plot the samples on the y axis.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
@@ -51,18 +47,14 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 Plot Genes per Cell
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
-# bcbioSingleCell
-plotGenesPerCell(bcb)
+# bcbioSingleCell ====
+plotGenesPerCell(bcb_small)
 
-# seurat
-plotGenesPerCell(seurat)
-
-# data.frame
-df <- metrics(bcb)
-plotGenesPerCell(df)
+# seurat ====
+plotGenesPerCell(seurat_small)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

@@ -1,7 +1,3 @@
-# FIXME Improve constructor and geom
-
-
-
 #' Plot Mitochondrial Transcript Abundance
 #'
 #' @name plotMitoRatio
@@ -13,14 +9,14 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
-#' plotMitoRatio(bcb)
+#' # bcbioSingleCell ====
+#' plotMitoRatio(bcb_small)
 #'
-#' # seurat
-#' plotMitoRatio(seurat)
+#' # seurat ====
+#' plotMitoRatio(seurat_small)
 NULL
 
 
@@ -28,49 +24,27 @@ NULL
 # Constructors =================================================================
 .plotMitoRatio <- function(
     object,
-    geom = "violin",
+    geom = c("violin", "boxplot", "histogram", "ridgeline"),
     max = Inf,
     interestingGroups,
-    samplesOnYAxis = TRUE,
-    fill = scale_fill_viridis(discrete = TRUE)) {
-    metricCol <- "mitoRatio"
-    p <- .plotQCGeom(
-            object,
-            geom = geom,
-            metricCol = metricCol,
-            max = max)
-
-    # Label interesting groups
-    if (!missing(interestingGroups)) {
-        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
-    } else {
-        p <- p + labs(color = NULL, fill = NULL)
+    flip = TRUE,
+    fill = scale_fill_viridis(discrete = TRUE)
+) {
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
     }
-
-    # Color palette
-    if (!is.null(fill)) {
-        p <- p + fill
+    if (missing(max)) {
+        max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
     }
-
-    # Median labels
-    if (geom %in% validMedianGeom) {
-        p <- p + .medianLabels(object, medianCol = metricCol, digits = 2L)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
-        facets <- "sampleNameAggregate"
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_y")
-    }
-
-    if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
-        p <- p + coord_flip()
-    }
-
-    p
+    .plotQCGeom(
+        metrics = metrics(object, interestingGroups = interestingGroups),
+        metricCol = "mitoRatio",
+        geom = geom,
+        max = max,
+        interestingGroups = interestingGroups,
+        flip = flip,
+        fill = fill
+    )
 }
 
 
@@ -81,32 +55,7 @@ NULL
 setMethod(
     "plotMitoRatio",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        geom = "violin",
-        max,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = scale_fill_viridis(discrete = TRUE)
-    ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(max)) {
-            max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups)
-        .plotMitoRatio(
-            object = metrics,
-            geom = geom,
-            max = max,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill
-        )
-    }
+    .plotMitoRatio
 )
 
 
@@ -116,27 +65,5 @@ setMethod(
 setMethod(
     "plotMitoRatio",
     signature("seurat"),
-    function(
-        object,
-        geom = "violin",
-        max,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = scale_fill_viridis(discrete = TRUE)
-    ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(max)) {
-            max <- metadata(object)[["filterParams"]][["maxMitoRatio"]]
-        }
-        metrics <- metrics(object, interestingGroups = interestingGroups)
-        .plotMitoRatio(
-            object = metrics,
-            geom = geom,
-            max = max,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    }
+    .plotMitoRatio
 )

@@ -10,13 +10,13 @@
 \usage{
 plotUMIsPerCell(object, ...)
 
-\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = "violin", min,
-  interestingGroups, samplesOnYAxis = TRUE,
+\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = "violin",
+  min = 0L, interestingGroups, flip = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotUMIsPerCell}{seurat}(object, geom = "violin", min,
-  interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
+\S4method{plotUMIsPerCell}{seurat}(object, geom = "violin", min = 0L,
+  interestingGroups, flip = TRUE, fill = scale_fill_viridis(discrete =
+  TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -31,7 +31,7 @@ first argument in the vector.}
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{samplesOnYAxis}{Plot the samples on the y axis.}
+\item{flip}{Plot the samples on the y axis.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color

@@ -10,6 +10,9 @@
 #' @inherit plotGenesPerCell
 #'
 #' @examples
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell ====
 #' plotNovelty(bcb_small)
 #'
@@ -22,61 +25,27 @@ NULL
 # Constructors =================================================================
 .plotNovelty <- function(
     object,
-    geom = "violin",
+    geom = c("violin", "boxplot", "histogram", "ridgeline"),
     min,
     interestingGroups,
-    samplesOnYAxis = TRUE,
+    flip = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    metricCol <- "log10GenesPerUMI"
-
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
     if (missing(min)) {
         min <- metadata(object)[["filterParams"]][["minNovelty"]]
     }
-
-    metrics <- metrics(object, interestingGroups = interestingGroups)
-
-    p <- .plotQCGeom(
-        metrics = metrics,
+    .plotQCGeom(
+        metrics = metrics(object, interestingGroups = interestingGroups),
+        metricCol = "log10GenesPerUMI",
         geom = geom,
-        metricCol = metricCol,
-        min = min
+        min = min,
+        interestingGroups = interestingGroups,
+        flip = flip,
+        fill = fill
     )
-
-    # Label interesting groups
-    if (!missing(interestingGroups)) {
-        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
-    } else {
-        p <- p + labs(color = NULL, fill = NULL)
-    }
-
-    # Color palette
-    if (!is.null(fill)) {
-        p <- p + fill
-    }
-
-    # Median labels
-    if (geom %in% validMedianGeom) {
-        p <- p + .medianLabels(metrics, medianCol = metricCol, digits = 2L)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(.checkAggregate(metrics))) {
-        facets <- "sampleNameAggregate"
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_y")
-    }
-
-    if (isTRUE(samplesOnYAxis) && geom %in% validQCGeomFlip) {
-        p <- p + coord_flip()
-    }
-
-    p
 }
 
 

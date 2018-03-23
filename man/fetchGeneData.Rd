@@ -16,10 +16,10 @@ fetchGeneData(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Gene identifiers (matrix rownames).}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 }
 \value{
-\link{matrix}.
+\code{matrix}.
 }
 \description{
 Fetch Gene Expression Data
@@ -33,4 +33,7 @@ genes <- slot(seurat, "data") \%>\%
     head()
 fetchGeneData(seurat, genes = genes) \%>\%
     head()
+}
+\author{
+Michael Steinbaugh
 }

@@ -5,22 +5,17 @@
 \alias{plotMitoRatio}
 \alias{plotMitoRatio}
 \alias{plotMitoRatio,bcbioSingleCell-method}
-\alias{plotMitoRatio,data.frame-method}
 \alias{plotMitoRatio,seurat-method}
 \title{Plot Mitochondrial Transcript Abundance}
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "violin", max,
-  interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
+\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = c("violin",
+  "boxplot", "histogram", "ridgeline"), max = Inf, interestingGroups,
+  flip = TRUE, fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotMitoRatio}{data.frame}(object, geom = "violin", max = Inf,
-  interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotMitoRatio}{seurat}(object, geom = "violin", max,
-  interestingGroups, samplesOnYAxis = TRUE,
+\S4method{plotMitoRatio}{seurat}(object, geom = c("violin", "boxplot",
+  "histogram", "ridgeline"), max = Inf, interestingGroups, flip = TRUE,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
@@ -36,7 +31,7 @@ first argument in the vector.}
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{samplesOnYAxis}{Plot the samples on the y axis.}
+\item{flip}{Plot the samples on the y axis.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
@@ -49,14 +44,14 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 Plot Mitochondrial Transcript Abundance
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
-# bcbioSingleCell
-plotMitoRatio(bcb)
+# bcbioSingleCell ====
+plotMitoRatio(bcb_small)
 
-# seurat
-plotMitoRatio(seurat)
+# seurat ====
+plotMitoRatio(seurat_small)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

@@ -20,6 +20,8 @@ must contain \code{geneID} and \code{geneName}.}
 
 \item{dir}{Output directory.}
 
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
+
 \item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
 first argument in the vector.}
 
@@ -41,7 +43,7 @@ formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=
 \item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
 first argument in the vector.}
 
-\item{samplesOnYAxis}{Plot the samples on the y axis.}
+\item{flip}{Plot the samples on the y axis.}
 
 \item{title}{Plot title.}
 

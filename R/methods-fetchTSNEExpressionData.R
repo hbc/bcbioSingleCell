@@ -8,8 +8,6 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param genes Genes identifiers (matching the rownames in the object),
-#'   of which to get expression data.
 #'
 #' @return `data.frame` containing tSNE coordinates, sample metadata, and
 #'   aggregate marker expression values (`mean`, `median`, and `sum`).
@@ -17,9 +15,9 @@
 #' @examples
 #' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 #'
+#' # seurat ====
 #' genes <- counts(seurat) %>% rownames() %>% head()
 #' print(genes)
-#'
 #' fetchTSNEExpressionData(seurat, genes = genes) %>%
 #'     glimpse()
 NULL
@@ -29,16 +27,15 @@ NULL
 # Constructors =================================================================
 .fetchTSNEExpressionData.seurat <- function(  # nolint
     object,
-    genes) {
+    genes
+) {
     tsne <- fetchTSNEData(object)
-
-    # Gene aggregate math
+    
     data <- fetchGeneData(object, genes = genes)
-    # TODO Okay to just use S4Vectors methods here?
     mean <- Matrix::rowMeans(data)
     median <- Biobase::rowMedians(data)
     sum <- Matrix::rowSums(data)
-
+    
     cbind(tsne, mean, median, sum)
 }
 
@@ -50,4 +47,5 @@ NULL
 setMethod(
     "fetchTSNEExpressionData",
     signature("seurat"),
-    .fetchTSNEExpressionData.seurat)
+    .fetchTSNEExpressionData.seurat
+)

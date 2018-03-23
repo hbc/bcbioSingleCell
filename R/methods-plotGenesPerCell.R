@@ -1,3 +1,5 @@
+# FIXME Round median labels -- pass digits here?
+
 #' Plot Genes per Cell
 #'
 #' @name plotGenesPerCell
@@ -9,18 +11,14 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
-#' plotGenesPerCell(bcb)
+#' # bcbioSingleCell ====
+#' plotGenesPerCell(bcb_small)
 #'
-#' # seurat
-#' plotGenesPerCell(seurat)
-#'
-#' # data.frame
-#' df <- metrics(bcb)
-#' plotGenesPerCell(df)
+#' # seurat ====
+#' plotGenesPerCell(seurat_small)
 NULL
 
 
@@ -28,51 +26,32 @@ NULL
 # Constructors =================================================================
 .plotGenesPerCell <- function(
     object,
-    geom = "violin",
+    geom = c("violin", "boxplot", "histogram", "ridgeline"),
     min = 0L,
     max = Inf,
     interestingGroups,
-    samplesOnYAxis = TRUE,
-    fill = scale_fill_viridis(discrete = TRUE)) {
-    metricCol <- "nGene"
-    p <- .plotQCGeom(
-        object,
+    flip = TRUE,
+    fill = scale_fill_viridis(discrete = TRUE)
+) {
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
+    if (missing(min)) {
+        min <- metadata(object)[["filterParams"]][["minGenes"]]
+    }
+    if (missing(max)) {
+        max <- metadata(object)[["filterParams"]][["maxGenes"]]
+    }
+    .plotQCGeom(
+        metrics = metrics(object, interestingGroups = interestingGroups),
+        metricCol = "nGene",
         geom = geom,
-        metricCol = metricCol,
         min = min,
-        max = max)
-
-    # Label interesting groups
-    if (!missing(interestingGroups)) {
-        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
-    } else {
-        p <- p + labs(fill = NULL)
-    }
-
-    # Color palette
-    if (!is.null(fill)) {
-        p <- p + fill
-    }
-
-    # Median labels
-    if (geom %in% validMedianGeom) {
-        p <- p + .medianLabels(object, medianCol = metricCol)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
-        facets <- "sampleNameAggregate"
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_y")
-    }
-
-    if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
-        p <- p + coord_flip()
-    }
-
-    p
+        max = max,
+        interestingGroups = interestingGroups,
+        flip = flip,
+        fill = fill
+    )
 }
 
 
@@ -83,44 +62,8 @@ NULL
 setMethod(
     "plotGenesPerCell",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        geom = "violin",
-        min,
-        max,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(min)) {
-            min <- metadata(object)[["filterParams"]][["minGenes"]]
-        }
-        if (missing(max)) {
-            max <- metadata(object)[["filterParams"]][["maxGenes"]]
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups)
-        .plotGenesPerCell(
-            object = metrics,
-            geom = geom,
-            min = min,
-            max = max,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
-
-
-
-#' @rdname plotGenesPerCell
-#' @export
-setMethod(
-    "plotGenesPerCell",
-    signature("data.frame"),
-    .plotGenesPerCell)
+    .plotGenesPerCell
+)
 
 
 
@@ -129,30 +72,5 @@ setMethod(
 setMethod(
     "plotGenesPerCell",
     signature("seurat"),
-    function(
-        object,
-        geom = "violin",
-        min,
-        max,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(min)) {
-            min <- metadata(object)[["filterParams"]][["minGenes"]]
-        }
-        if (missing(max)) {
-            max <- metadata(object)[["filterParams"]][["maxGenes"]]
-        }
-        metrics <- metrics(object, interestingGroups = interestingGroups)
-        .plotGenesPerCell(
-            object = metrics,
-            geom = geom,
-            min = min,
-            max = max,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
+    .plotGenesPerCell
+)

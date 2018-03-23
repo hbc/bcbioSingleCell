@@ -8,7 +8,7 @@
 #' @noRd
 #'
 #' @return ggplot2 `geom_label`.
-.medianLabels <- function(metrics, medianCol, digits = 0L) {
+.medianLabels <- function(metrics, medianCol, digits = 2L) {
     data <- aggregate(
         formula = as.formula(paste(medianCol, "sampleName", sep = " ~ ")),
         data = metrics,

@@ -25,8 +25,7 @@ plotMarkerTSNE(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Genes identifiers (matching the rownames in the object),
-of which to get expression data.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
 \item{expression}{Calculation to apply on the aggregate marker expression.
 Supports \code{mean} (default), \code{median}, or \code{sum}.}
@@ -67,10 +66,10 @@ load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 genes <- counts(seurat) \%>\% rownames() \%>\% head()
 print(genes)
 
-# seurat
+# seurat ====
 plotMarkerTSNE(seurat, genes = genes)
 
-# data.frame
+# data.frame ====
 df <- fetchTSNEExpressionData(seurat, genes = genes)
 plotMarkerTSNE(df, genes = genes)
 }

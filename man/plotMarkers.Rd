@@ -20,8 +20,7 @@ plotMarkers(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Genes identifiers (matching the rownames in the object),
-of which to get expression data.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
 \item{tsneColor}{Color palette to use for tSNE plot.}
 

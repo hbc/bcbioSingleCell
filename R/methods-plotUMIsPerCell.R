@@ -25,47 +25,24 @@ NULL
     geom = "violin",
     min = 0L,
     interestingGroups,
-    samplesOnYAxis = TRUE,
+    flip = TRUE,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    metricCol <- "nUMI"
-    p <- .plotQCGeom(
-        object,
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
+    if (missing(min)) {
+        min <- metadata(object)[["filterParams"]][["minUMIs"]]
+    }
+    .plotQCGeom(
+        metrics = metrics(object, interestingGroups = interestingGroups),
+        metricCol = "nUMI",
         geom = geom,
-        metricCol = metricCol,
-        min = min)
-
-    # Label interesting groups
-    if (!missing(interestingGroups)) {
-        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
-    } else {
-        p <- p + labs(fill = NULL)
-    }
-
-    # Color palette
-    if (!is.null(fill)) {
-        p <- p + fill
-    }
-
-    # Median labels
-    if (geom %in% validMedianGeom) {
-        p <- p + .medianLabels(object, medianCol = metricCol)
-    }
-
-    # Wrap aggregated samples
-    facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
-        facets <- "sampleNameAggregate"
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_y")
-    }
-
-    if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
-        p <- p + coord_flip()
-    }
-
-    p
+        min = min,
+        interestingGroups = interestingGroups,
+        flip = flip,
+        fill = fill
+    )
 }
 
 
@@ -76,33 +53,7 @@ NULL
 setMethod(
     "plotUMIsPerCell",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        geom = "violin",
-        min,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = scale_fill_viridis(discrete = TRUE)
-    ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(min)) {
-            min <- metadata(object)[["filterParams"]][["minUMIs"]]
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups
-        )
-        .plotUMIsPerCell(
-            object = metrics,
-            geom = geom,
-            min = min,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill
-        )
-    }
+    .plotUMIsPerCell
 )
 
 
@@ -112,27 +63,5 @@ setMethod(
 setMethod(
     "plotUMIsPerCell",
     signature("seurat"),
-    function(
-        object,
-        geom = "violin",
-        min,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(min)) {
-            min <- metadata(object)[["filterParams"]][["minUMIs"]]
-        }
-        metrics <- metrics(object, interestingGroups = interestingGroups)
-        .plotUMIsPerCell(
-            object = metrics,
-            geom = geom,
-            min = min,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill
-        )
-    }
+    .plotUMIsPerCell
 )

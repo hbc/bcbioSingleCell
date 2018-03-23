@@ -17,11 +17,10 @@ fetchTSNEExpressionData(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Genes identifiers (matching the rownames in the object),
-of which to get expression data.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 }
 \value{
-\link{data.frame} containing tSNE coordinates, sample metadata, and
+\code{data.frame} containing tSNE coordinates, sample metadata, and
 aggregate marker expression values (\code{mean}, \code{median}, and \code{sum}).
 }
 \description{
@@ -31,9 +30,9 @@ the geometric mean of the gene expression from a \link{seurat} object.
 \examples{
 load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
 
+# seurat ====
 genes <- counts(seurat) \%>\% rownames() \%>\% head()
 print(genes)
-
 fetchTSNEExpressionData(seurat, genes = genes) \%>\%
     glimpse()
 }
