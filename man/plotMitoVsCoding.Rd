@@ -5,16 +5,12 @@
 \alias{plotMitoVsCoding}
 \alias{plotMitoVsCoding}
 \alias{plotMitoVsCoding,bcbioSingleCell-method}
-\alias{plotMitoVsCoding,data.frame-method}
 \alias{plotMitoVsCoding,seurat-method}
 \title{Plot Mitochondrial Counts vs. Coding Counts}
 \usage{
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{bcbioSingleCell}(object, interestingGroups,
-  color = scale_color_viridis(discrete = TRUE))
-
-\S4method{plotMitoVsCoding}{data.frame}(object, interestingGroups,
   color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
@@ -40,18 +36,14 @@ color definitions are desired, we recommend using
 Plot Mitochondrial Counts vs. Coding Counts
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
-# bcbioSingleCell
-plotMitoVsCoding(bcb)
+# bcbioSingleCell ====
+plotMitoVsCoding(bcb_small)
 
-# seurat
-plotMitoVsCoding(seurat)
-
-# data.frame
-df <- metrics(bcb)
-plotMitoVsCoding(df)
+# seurat ====
+plotMitoVsCoding(seurat_small)
 }
 \seealso{
 Other Quality Control Metrics: \code{\link{metrics}},

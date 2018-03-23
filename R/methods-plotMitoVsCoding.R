@@ -1,6 +1,5 @@
 #' Plot Mitochondrial Counts vs. Coding Counts
 #'
-#' @rdname plotMitoVsCoding
 #' @name plotMitoVsCoding
 #' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -8,18 +7,14 @@
 #' @inherit plotUMIsVsGenes
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
-#' plotMitoVsCoding(bcb)
+#' # bcbioSingleCell ====
+#' plotMitoVsCoding(bcb_small)
 #'
-#' # seurat
-#' plotMitoVsCoding(seurat)
-#'
-#' # data.frame
-#' df <- metrics(bcb)
-#' plotMitoVsCoding(df)
+#' # seurat ====
+#' plotMitoVsCoding(seurat_small)
 NULL
 
 
@@ -30,30 +25,12 @@ NULL
     interestingGroups,
     color = scale_color_viridis(discrete = TRUE)
 ) {
-    p <- .plotQCScatterplot(object, xCol = "nCoding", yCol = "nMito")
-
-    # Label interesting groups
-    if (!missing(interestingGroups)) {
-        p <- p + labs(color = paste(interestingGroups, collapse = ":\n"))
-    } else {
-        p <- p + labs(color = NULL, fill = NULL)
-    }
-
-    # Color palette
-    if (is(color, "ScaleDiscrete")) {
-        p <- p + color
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
-        facets <- c(facets, "sampleNameAggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free")
-    }
-
-    p
+    .plotQCScatterplot(
+        object = object,
+        xCol = "nCoding",
+        yCol = "nMito",
+        trans = "log2"
+    )
 }
 
 
@@ -64,30 +41,6 @@ NULL
 setMethod(
     "plotMitoVsCoding",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        interestingGroups,
-        color = scale_color_viridis(discrete = TRUE)
-    ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        metrics <- metrics(object, interestingGroups)
-        .plotMitoVsCoding(
-            object = metrics,
-            interestingGroups = interestingGroups,
-            color = color
-        )
-    }
-)
-
-
-
-#' @rdname plotMitoVsCoding
-#' @export
-setMethod(
-    "plotMitoVsCoding",
-    signature("data.frame"),
     .plotMitoVsCoding
 )
 
@@ -98,19 +51,5 @@ setMethod(
 setMethod(
     "plotMitoVsCoding",
     signature("seurat"),
-    function(
-        object,
-        interestingGroups,
-        color = scale_color_viridis(discrete = TRUE)
-    ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        metrics <- metrics(object, interestingGroups)
-        .plotMitoVsCoding(
-            object = metrics,
-            interestingGroups = interestingGroups,
-            color = color
-        )
-    }
+    .plotMitoVsCoding
 )

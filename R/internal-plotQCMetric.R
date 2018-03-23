@@ -6,6 +6,7 @@
     interestingGroups,
     min = 0,
     max = Inf,
+    trans = "identity",
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
     assert_is_a_string(metricCol)
@@ -23,6 +24,7 @@
     # Support for per sample filtering cutoffs
     min <- min(min)
     max <- max(max)
+    assert_is_a_string(trans)
     assertIsFillScaleDiscreteOrNULL(fill)
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
@@ -45,12 +47,12 @@
     if (geom == "boxplot") {
         p <- p +
             geom_boxplot(color = lineColor, outlier.shape = NA) +
-            scale_y_sqrt()
+            scale_y_continuous(trans = trans)
     } else if (geom == "histogram") {
         p <- p +
             geom_histogram(bins = bins) +
-            scale_x_sqrt() +
-            scale_y_sqrt()
+            scale_x_continuous(trans = trans) +
+            scale_y_continuous(trans = trans)
     } else if (geom == "ridgeline") {
         p <- p +
             geom_density_ridges(
@@ -59,7 +61,7 @@
                 panel_scaling = TRUE,
                 scale = 10L
             ) +
-            scale_x_sqrt()
+            scale_x_continuous(trans = trans)
     } else if (geom == "violin") {
         p <- p +
             geom_violin(
@@ -67,7 +69,7 @@
                 scale = "count",
                 trim = TRUE
             ) +
-            scale_y_sqrt()
+            scale_y_continuous(trans = trans)
     }
 
     p <- p + theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
@@ -127,16 +129,23 @@
 
 
 # Compare two quality control metrics
-.plotQCTwoMetrics <- function(
-    metrics,
+.plotQCScatterplot <- function(
+    object,
     xCol,
     yCol,
-    interestingGroups = "sampleName",
+    trans = "identity",
+    interestingGroups,
     color = scale_color_viridis(discrete = TRUE)
 ) {
-    assert_is_data.frame(metrics)
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
     assert_is_a_string(xCol)
     assert_is_a_string(yCol)
+    assert_is_a_string(trans)
+    assertIsColorScaleDiscreteOrNULL(color)
+
+    metrics <- metrics(object, interestingGroups = interestingGroups)
 
     p <- ggplot(
         data = metrics,
@@ -146,35 +155,28 @@
             color = "interestingGroups"
         )
     ) +
-        geom_point(alpha = 0.25, size = 0.8) +
+        geom_point(alpha = 0.5, size = 1L) +
         # If `method = "gam"`, `mgcv` package is required.
         # Otherwise build checks will error.
-        geom_smooth(
-            method = "glm",
-            se = FALSE,
-            size = 1.5
-        ) +
-        scale_x_sqrt() +
-        scale_y_sqrt()
+        geom_smooth(method = "glm", se = FALSE, size = 1.5) +
+        scale_x_continuous(trans = trans) +
+        scale_y_continuous(trans = trans)
 
     # Label interesting groups
     p <- p + labs(color = paste(interestingGroups, collapse = ":\n"))
 
     # Color palette
-    if (!is.null(fill)) {
-        p <- p + fill
+    if (is(color, "ScaleDiscrete")) {
+        p <- p + color
     }
-
-    # Median labels
-    p <- p + .medianLabels(metrics, medianCol = metricCol)
 
     # Facets
     facets <- NULL
     if (isTRUE(.checkAggregate(object))) {
-        facets <- "sampleNameAggregate"
+        facets <- c(facets, "sampleNameAggregate")
     }
     if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_y")
+        p <- p + facet_wrap(facets = facets, scales = "free")
     }
 
     p

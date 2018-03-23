@@ -40,6 +40,7 @@ NULL
         interestingGroups = interestingGroups,
         min = min,
         max = max,
+        trans = "identity",
         fill = fill
     )
 }

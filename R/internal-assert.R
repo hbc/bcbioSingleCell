@@ -34,6 +34,7 @@
 #' @importFrom basejump assertIsAStringOrNULL
 #' @importFrom basejump assertIsAnImplicitInteger
 #' @importFrom basejump assertIsAnImplicitIntegerOrNULL
+#' @importFrom basejump assertIsColorScaleDiscreteOrNULL
 #' @importFrom basejump assertIsFillScaleDiscreteOrNULL
 #' @importFrom basejump assertIsGene2symbol
 #' @importFrom basejump assertIsTx2gene

@@ -1,3 +1,7 @@
+# FIXME Need to add `nCount` column back into metrics
+
+
+
 #' Sample Barcode Metrics
 #'
 #' @name metrics
@@ -13,8 +17,10 @@
 #' @return `data.frame` with cellular barcodes as rows.
 #'
 #' @examples
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
+#' # bcbioSingleCell ====
 #' metrics(bcb_small) %>% glimpse()
 #'
 #' # seurat ====

@@ -36,6 +36,7 @@ NULL
         geom = geom,
         interestingGroups = interestingGroups,
         max = max,
+        trans = "identity",
         fill = fill
     )
 }

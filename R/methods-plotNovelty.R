@@ -37,6 +37,7 @@ NULL
         geom = geom,
         interestingGroups = interestingGroups,
         min = min,
+        trans = "sqrt",
         fill = fill
     )
 }
