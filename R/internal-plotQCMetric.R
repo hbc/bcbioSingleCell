@@ -35,7 +35,7 @@
     } else if (geom == "ridgeline") {
         # ridgeline flips the axes
         mapping[["x"]] <- as.symbol(metricCol)
-        mapping[["y"]] <- "sampleName"
+        mapping[["y"]] <- as.symbol("sampleName")
     } else if (geom == "histogram") {
         mapping[["x"]] <- as.symbol(metricCol)
     }
