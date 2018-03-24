@@ -3,7 +3,7 @@
 #' Plot the universal molecular identifiers (UMIs) per cell.
 #'
 #' @name plotUMIsPerCell
-#' @family Quality Control Metrics
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell

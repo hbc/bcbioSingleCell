@@ -1,7 +1,7 @@
 #' Plot Mitochondrial Counts vs. Coding Counts
 #'
 #' @name plotMitoVsCoding
-#' @family Quality Control Metrics
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general

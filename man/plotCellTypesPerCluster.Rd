@@ -17,8 +17,8 @@ plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{cellTypesPerCluster}{Cell types per cluster \code{grouped_df}. This must be the
-return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
+\item{cellTypesPerCluster}{Cell types per cluster \code{grouped_df}. This must be
+the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
 \item{...}{Additional arguments.}
 
@@ -53,7 +53,7 @@ glimpse(cellTypesPerCluster)
 # Let's plot the first row, as an example
 cellTypesPerCluster <- cellTypesPerCluster[1L, , drop = FALSE]
 plotCellTypesPerCluster(
-    seurat,
+    object = seurat_small,
     cellTypesPerCluster = cellTypesPerCluster
 )
 }

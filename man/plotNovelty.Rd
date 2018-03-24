@@ -52,11 +52,13 @@ plotNovelty(bcb_small)
 plotNovelty(seurat_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{plotMitoRatio}},
+Other Quality Control Functions: \code{\link{metrics}},
+  \code{\link{plotCellCounts}},
+  \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}}
+  \code{\link{plotZerosVsDepth}}
 }
 \author{
 Michael Steinbaugh

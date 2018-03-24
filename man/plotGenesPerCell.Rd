@@ -56,6 +56,10 @@ plotGenesPerCell(seurat_small)
 \seealso{
 Other Quality Control Functions: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}
 }
 \author{

@@ -39,6 +39,10 @@ metrics(pbmc_small) \%>\% glimpse()
 
 Other Quality Control Functions: \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}
 }
 \author{

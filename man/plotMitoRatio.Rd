@@ -52,11 +52,7 @@ plotMitoRatio(bcb_small)
 plotMitoRatio(seurat_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}}
+Other Quality Control Metrics: \code{\link{plotUMIsVsGenes}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

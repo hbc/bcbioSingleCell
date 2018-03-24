@@ -38,7 +38,11 @@ plotZerosVsDepth(seurat_small)
 \seealso{
 Other Quality Control Functions: \code{\link{metrics}},
   \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}}
+  \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

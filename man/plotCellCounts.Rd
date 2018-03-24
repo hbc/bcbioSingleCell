@@ -48,6 +48,10 @@ plotCellCounts(pbmc_small)
 \seealso{
 Other Quality Control Functions: \code{\link{metrics}},
   \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}
 }
 \author{

@@ -10,8 +10,8 @@
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = c("histogram",
-  "ridgeline", "violin"), interestingGroups)
+\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
+  interestingGroups)
 
 \S4method{plotReadsPerCell}{seurat}(object, ...)
 }
@@ -42,10 +42,12 @@ load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
 plotReadsPerCell(bcb_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{plotMitoRatio}},
+Other Quality Control Functions: \code{\link{metrics}},
+  \code{\link{plotCellCounts}},
+  \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}}
+  \code{\link{plotZerosVsDepth}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

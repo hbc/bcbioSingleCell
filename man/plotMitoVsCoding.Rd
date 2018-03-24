@@ -43,11 +43,13 @@ plotMitoVsCoding(bcb_small)
 plotMitoVsCoding(seurat_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{plotMitoRatio}},
+Other Quality Control Functions: \code{\link{metrics}},
+  \code{\link{plotCellCounts}},
+  \code{\link{plotGenesPerCell}},
   \code{\link{plotNovelty}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}}
+  \code{\link{plotZerosVsDepth}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner
