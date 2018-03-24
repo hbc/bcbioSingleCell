@@ -5,31 +5,21 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
-#' @param object Gene markers file (CSV or Excel).
-#' @param gene2symbol Gene-to-symbol annotation `data.frame`.
+#' @param file Gene markers file (CSV or Excel).
 #'
 #' @return `grouped_df`, grouped by `cellType`.
+#' @export
 #'
 #' @examples
-#' cellTypeMarkersFile <- system.file(
-#'     file.path("extdata", "cellTypeMarkers.csv"),
+#' file <- system.file(
+#'     file.path("extdata", "cell_type_markers.csv"),
 #'     package = "bcbioSingleCell"
 #' )
 #' gene2symbol <- gene2symbol("Mus musculus")
-#' readCellTypeMarkersFile(cellTypeMarkersFile, gene2symbol = gene2symbol)
-NULL
-
-
-
-# Constructors =================================================================
-#' @importFrom basejump camel readFileByExtension
-#' @importFrom dplyr arrange left_join
-#' @importFrom rlang !!! !! sym syms
-#' @importFrom tibble as_tibble
-.readCellTypeMarkersFile <- function(object, gene2symbol) {
+#' readCellTypeMarkersFile(file, gene2symbol = gene2symbol)
+readCellTypeMarkersFile <- function(file, gene2symbol) {
     assertIsGene2symbol(gene2symbol)
-    markers <- readFileByExtension(object) %>%
+    markers <- readFileByExtension(file) %>%
         camel(strict = FALSE)
 
     # Match the markers file by Ensembl gene identifier, otherwise use name
@@ -40,7 +30,7 @@ NULL
     if ("geneID" %in% colnames(markers)) {
         inform("Matching by gene identifier")
         markers <- markers %>%
-            .[, c("cell", "geneID")] %>%
+            .[, c("cellType", "geneID")] %>%
             .[!is.na(.[["geneID"]]), , drop = FALSE] %>%
             left_join(gene2symbol, by = "geneID")
         # Check for bad identifiers
@@ -54,7 +44,7 @@ NULL
     } else if ("geneName" %in% colnames(markers)) {
         inform("Matching by gene name (symbol)")
         markers <- markers %>%
-            .[, c("cell", "geneName")] %>%
+            .[, c("cellType", "geneName")] %>%
             .[!is.na(.[["geneName"]]), ] %>%
             left_join(gene2symbol, by = "geneName")
         # Check for bad identifiers
@@ -69,20 +59,9 @@ NULL
 
     markers %>%
         as_tibble() %>%
-        .[!is.na(.[["geneID"]]), ] %>%
-        .[, c("cell", "geneName", "geneID")] %>%
+        .[!is.na(.[["geneID"]]), , drop = FALSE] %>%
+        .[, c("cellType", "geneName", "geneID")] %>%
         unique() %>%
-        group_by(!!sym("cell")) %>%
-        arrange(!!!syms(c("cell", "geneName")))
+        group_by(!!sym("cellType")) %>%
+        arrange(!!sym("geneName"), .by_group = TRUE)
 }
-
-
-
-# Methods ======================================================================
-#' @rdname readCellTypeMarkersFile
-#' @export
-setMethod(
-    "readCellTypeMarkersFile",
-    signature("character"),
-    .readCellTypeMarkersFile
-)

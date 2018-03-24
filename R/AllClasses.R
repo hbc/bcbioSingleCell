@@ -1,3 +1,7 @@
+# TODO Add validity checks
+
+
+
 setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 
@@ -32,7 +36,6 @@ bcbioSingleCell <- setClass(
 
 
 # Validity =====================================================================
-# TODO Add checks
 setValidity(
     "bcbioSingleCell",
     function(object) {

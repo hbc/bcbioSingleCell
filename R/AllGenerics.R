@@ -226,14 +226,6 @@ setGeneric("plotZerosVsDepth", function(object, ...) {
 
 
 
-#' @rdname readCellTypeMarkersFile
-#' @export
-setGeneric("readCellTypeMarkersFile", function(object, ...) {
-    standardGeneric("readCellTypeMarkersFile")
-})
-
-
-
 #' @rdname sanitizeMarkers
 #' @export
 setGeneric("sanitizeMarkers", function(object, markers, ...) {
