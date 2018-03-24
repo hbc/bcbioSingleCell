@@ -6,7 +6,7 @@
 #' @name plotQuantileHeatmap
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
-#' @importFrom basejump plotQuantileHeatmap
+#' @importFrom bcbioBase plotQuantileHeatmap
 #'
 #' @inheritParams general
 #' @param n The number of breaks to create.
