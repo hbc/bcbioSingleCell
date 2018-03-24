@@ -8,25 +8,13 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom GenomicFeatures exonsBy makeTxDbFromGFF
-#' @importFrom Matrix cBind
-#' @importFrom basejump camel ensembl readYAML sanitizeSampleData
-#' @importFrom bcbioBase readDataVersions readLogFile readProgramVersions
-#'   readSampleMetadataFile sampleYAMLMetadata
-#' @importFrom pbapply pblapply
-#' @importFrom stats setNames
-#' @importFrom stringr str_extract str_match
-#' @importFrom tibble column_to_rownames rownames_to_column
-#'
+#' @inheritParams general
 #' @param uploadDir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
 #' @param sampleMetadataFile Sample barcode metadata file. Optional for runs
 #'   with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 #'   for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 #'   inDrop). Consult the GitHub repo for examples and additional information.
-#' @param interestingGroups Character vector of interesting groups. First entry
-#'   is used for plot colors during quality control (QC) analysis. Entire vector
-#'   is used for PCA and heatmap QC functions.
 #' @param organism Organism name. Use the full latin name (e.g.
 #'   "Homo sapiens"), since this will be input downstream to
 #'   AnnotationHub and ensembldb, unless `gffFile` is set.
@@ -255,9 +243,6 @@ loadSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Unfiltered cellular barcode distributions ================================
-    cbList <- .cellularBarcodesList(sampleDirs)
-
     # Assays ===================================================================
     inform(paste("Reading counts at", level, "level"))
     sparseCountsList <- .sparseCountsList(
@@ -265,7 +250,7 @@ loadSingleCell <- function(
         pipeline = pipeline,
         umiType = umiType
     )
-    counts <- do.call(Matrix::cBind, sparseCountsList)
+    counts <- do.call(cBind, sparseCountsList)
 
     # Row data =================================================================
     rowRangesMetadata <- NULL
@@ -276,7 +261,10 @@ loadSingleCell <- function(
         rowRanges <- genes(txdb)
         # Transcript-to-gene mappings
         if (level == "transcripts") {
-            transcripts <- transcripts(txdb, columns = c("tx_name", "gene_id"))
+            transcripts <- transcripts(
+                object = txdb,
+                columns = c("tx_name", "gene_id")
+            )
             tx2gene <- mcols(transcripts) %>%
                 as.data.frame() %>%
                 set_colnames(c("txID", "geneID")) %>%
@@ -301,7 +289,7 @@ loadSingleCell <- function(
         # Transcript-to-gene mappings
         if (level == "transcripts") {
             tx2gene <- tx2gene(
-                organism,
+                object = organism,
                 genomeBuild = genomeBuild,
                 release = release
             )
@@ -323,6 +311,10 @@ loadSingleCell <- function(
         counts <- .transcriptToGeneLevelCounts(counts, tx2gene)
     }
 
+    # Unfiltered cellular barcode distributions ================================
+    cbList <- .cellularBarcodesList(sampleDirs)
+    cbData <- .bindCellularBarcodes(cbList)
+
     # Column data ==============================================================
     colData <- calculateMetrics(
         object = counts,
@@ -334,6 +326,10 @@ loadSingleCell <- function(
         # Subset the counts matrix to match the cells that passed prefiltering
         counts <- counts[, rownames(colData), drop = FALSE]
     }
+
+    # Bind the `nCount` column into the colData
+    nCount <- cbData[rownames(colData), "nCount", drop = FALSE]
+    colData <- cbind(nCount, colData)
 
     # Cell to sample mappings ==================================================
     cell2sample <- mapCellsToSamples(

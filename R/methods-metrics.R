@@ -1,6 +1,5 @@
 #' Sample Barcode Metrics
 #'
-#' @rdname metrics
 #' @name metrics
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -9,15 +8,15 @@
 #'
 #' @inheritParams general
 #'
-#' @param interestingGroups Interesting group, to use for colors.
-#'
 #' @seealso [sampleData()].
 #'
 #' @return `data.frame` with cellular barcodes as rows.
 #'
 #' @examples
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 #'
-#' # bcbioSingleCell
+#' # bcbioSingleCell ====
 #' metrics(bcb_small) %>% glimpse()
 #'
 #' # seurat ====
@@ -28,9 +27,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase uniteInterestingGroups
-#' @importFrom dplyr left_join
-#' @importFrom tibble column_to_rownames rownames_to_column
 .metrics <- function(object, interestingGroups) {
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)

@@ -16,13 +16,11 @@
 #'   hierarchical clustering. Alternatively, can define an `hclust` object.
 #' @param clusterRows Logical determining if rows should be arranged with
 #'   hierarchical clustering. Alternatively, can define an `hclust` object.
-#' @param color Colors to use for plot.
 #' @param legendColor Colors to use for legend labels.
-#' @param title *Optional.* Plot title.
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotQuantileHeatmap(bcb_small)
+#' plotQuantileHeatmap(pbmc_small)
 NULL
 
 

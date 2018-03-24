@@ -11,35 +11,22 @@
 #' @importFrom bcbioBase sampleData
 #'
 #' @inheritParams general
-#' @inheritParams metrics
 #'
 #' @return `data.frame`.
 #'
 #' @examples
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell ====
 #' sampleData(bcb_small) %>% glimpse()
 #'
 #' # seurat ====
 #' sampleData(pbmc_small) %>% glimpse()
-#' sampleData(seurat_small) %>% glimpse()
 NULL
 
 
 
 # Constructors =================================================================
-#' Prepare Sample Data from Seurat
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @param data Seurat metadata `data.frame` per cellular barcode. Currently
-#'   this is slotted in `object@meta.data` but older versions used
-#'   `object@data.info`.
-#'
-#' @importFrom basejump camel
-#' @importFrom dplyr mutate_if select_if
-#' @importFrom tibble remove_rownames
 .sampleData.seurat <- function(data) {  # nolint
     # Assign the required metadata columns from `orig.ident`, if necessary
     if (!all(metadataPriorityCols %in% colnames(data))) {
@@ -81,8 +68,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname sampleData
-#' @importFrom basejump sanitizeSampleData
-#' @importFrom bcbioBase uniteInterestingGroups
 #' @export
 setMethod(
     "sampleData",
@@ -103,8 +88,6 @@ setMethod(
 
 
 #' @rdname sampleData
-#' @importFrom basejump sanitizeSampleData
-#' @importFrom bcbioBase uniteInterestingGroups
 #' @export
 setMethod(
     "sampleData",

@@ -1,5 +1,7 @@
 # TODO Build an EnsDb for the old release (84) currently used by cellranger
 
+
+
 #' Load 10X Genomics Cell Ranger Data
 #'
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
@@ -15,19 +17,9 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump camel convertUCSCBuildToEnsembl detectOrganism ensembl
-#'   sanitizeSampleData
-#' @importFrom bcbioBase readSampleMetadataFile
-#' @importFrom dplyr mutate
-#' @importFrom jsonlite read_json
-#' @importFrom magrittr set_colnames
-#' @importFrom Matrix cBind
-#' @importFrom pbapply pblapply
-#' @importFrom stats setNames
-#' @importFrom stringr str_split
-#'
 #' @inherit loadSingleCell
 #'
+#' @inheritParams general
 #' @param uploadDir Path to Cell Ranger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices*` as a child directory.
 #' @param refdataDir Directory path to Cell Ranger reference annotation data.
@@ -162,7 +154,7 @@ loadCellRanger <- function(
         pipeline = pipeline,
         umiType = umiType
     )
-    counts <- do.call(Matrix::cBind, sparseCountsList)
+    counts <- do.call(cBind, sparseCountsList)
 
     # Column data ==============================================================
     colData <- calculateMetrics(

@@ -14,14 +14,16 @@
 #'   significant known makers per cell type.
 #'
 #' @examples
+#' load(system.file(
+#'     "extdata/known_markers_small.rda",
+#'     package = "bcbioSingleCell"
+#' ))
 #' cellTypesPerCluster(known_markers_small) %>% glimpse()
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom dplyr everything group_by select ungroup
-#' @importFrom rlang !!! quos
 .cellTypesPerCluster <- function(
     object,
     min = 1L,
@@ -41,14 +43,14 @@ NULL
     assert_is_subset(requiredCols, colnames(object))
 
     # Note that the order is important here
-    groupCols <- syms(c("cluster", "cellType"))
+    groupCols <- c("cluster", "cellType")
 
     tbl <- object %>%
         ungroup() %>%
         # Use only positive markers for this approach
-        filter(.data[["avgLogFC"]] > 0L) %>%
-        select(!!!groupCols, everything()) %>%
-        group_by(!!!groupCols) %>%
+        .[.[["avgLogFC"]] > 0L, , drop = FALSE] %>%
+        .[, unique(c(groupCols, colnames(.))), drop = FALSE] %>%
+        group_by(!!!syms(groupCols)) %>%
         arrange(.data[["padj"]], .by_group = TRUE) %>%
         # Use `toString()` instead of `aggregate()` for R Markdown tables
         summarize(
@@ -62,10 +64,10 @@ NULL
 
     # Apply minimum and maximum gene cutoffs
     if (is.numeric(min) & min > 1L) {
-        tbl <- filter(tbl, .data[["n"]] >= min)
+        tbl <- tbl[tbl[["n"]] >= min, , drop = FALSE]
     }
     if (is.numeric(max) & max > 1L) {
-        tbl <- filter(tbl, .data[["n"]] <= max)
+        tbl <- tbl[tbl[["n"]] <= max, , drop = FALSE]
 
     }
     if (!nrow(tbl)) {

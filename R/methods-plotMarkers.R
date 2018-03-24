@@ -12,18 +12,21 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams general
 #' @inheritParams plotMarkerTSNE
+#' @inheritParams general
 #' @param tsneColor Color palette to use for tSNE plot.
 #' @param violinFill Color palette to use for violin plot.
 #' @param dotColor Color palette to use for dot plot.
-#' @param dark Plot the TSNE against a dark background.
-#' @param headerLevel Include a Markdown header for each gene.
-#' @param title Plot title.
 #'
 #' @return No value, only graphical output.
 #'
 #' @examples
+#' load(system.file(
+#'     "extdata/all_markers_small.rda",
+#'     package = "bcbioSingleCell"
+#' ))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
 #' # seurat ===
 #' top <- topMarkers(all_markers_small, n = 1L)
 #' genes <- pull(top, "geneName")
@@ -33,13 +36,10 @@ NULL
 
 
 # Constructors =================================================================
-# FIXME Export `plotMarker()`?
-#' @importFrom cowplot plot_grid
-#' @importFrom ggplot2 aes_string coord_flip element_blank geom_violin ggplot
-#'   theme
-.plotMarker <- function(  # nolint
+.plotMarker.seurat <- function(  # nolint
     object,
     gene,
+    # FIXME Change tsneColor method here to use function name?
     tsneColor = scale_color_viridis(),
     violinFill = scale_fill_viridis(discrete = TRUE),
     dotColor = scale_color_gradient(
@@ -111,10 +111,10 @@ NULL
 
 
 
-#' @importFrom basejump markdownHeader
-.plotMarkers <- function(  # nolint
+.plotMarkers.seurat <- function(  # nolint
     object,
     genes,
+    # FIXME Change tsneColor method?
     tsneColor = scale_color_viridis(),
     violinFill = scale_fill_viridis(discrete = TRUE),
     dotColor = scale_color_gradient(
@@ -129,12 +129,11 @@ NULL
     assertIsAHeaderLevel(headerLevel)
 
     # Abort on missing genes
-    # FIXME Add method support for `rownames()` on seurat object
-    assert_is_subset(genes, rownames(counts(object)))
+    assert_is_subset(genes, rownames(object))
 
     list <- lapply(genes, function(gene) {
         markdownHeader(gene, level = headerLevel, asis = TRUE)
-        p <- .plotMarker(
+        p <- .plotMarker.seurat(
             object = object,
             gene = gene,
             tsneColor = tsneColor,
@@ -160,5 +159,5 @@ NULL
 setMethod(
     "plotMarkers",
     signature("seurat"),
-    .plotMarkers
+    .plotMarkers.seurat
 )

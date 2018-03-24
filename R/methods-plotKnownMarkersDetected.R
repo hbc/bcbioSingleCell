@@ -1,27 +1,36 @@
 #' Plot Known Markers Detected
 #'
-#' @rdname plotKnownMarkersDetected
 #' @name plotKnownMarkersDetected
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
 #' @inherit plotMarkers
 #'
-#' @param knownMarkersDetected [knownMarkersDetected()] return `grouped_df`,
-#'   grouped by `cluster` ident.
+#' @param knownMarkersDetected `grouped_df`.
 #'
 #' @examples
+#' load(system.file(
+#'     "extdata/all_markers_small.rda",
+#'     package = "bcbioSingleCell"
+#' ))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
 #' # seurat ====
+#' known_detected <- knownMarkersDetected(
+#'     all = all_markers_small,
+#'     known = cellTypeMarkers[["homoSapiens"]]
+#' )
+#'
+#' # Let's plot the first 2 markers, as a quick example
 #' plotKnownMarkersDetected(
 #'     object = seurat_small,
-#'     knownMarkersDetected = known_markers_small
+#'     knownMarkersDetected = known_detected[seq_len(2L), ]
 #' )
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom basejump markdownHeader
 .plotKnownMarkersDetected <- function(
     object,
     knownMarkersDetected,

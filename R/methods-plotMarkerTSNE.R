@@ -1,6 +1,5 @@
 #' Plot Marker t-SNE
 #'
-#' @rdname plotMarkerTSNE
 #' @name plotMarkerTSNE
 #' @family t-SNE Utilities
 #' @author Rory Kirchner, Michael Steinbaugh
@@ -8,28 +7,25 @@
 #' @inheritParams general
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
-#'
 #' @param expression Calculation to apply on the aggregate marker expression.
 #'   Supports `mean` (default), `median`, or `sum`.
-#' @param legend Show plot legend.
-#' @param subtitle Include gene(s) in the subtitle.
+#' @param subtitle Include gene identifiers as subtitles.
 #'
 #' @return `ggplot`.
 #'
 #' @examples
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
 #' # seurat ====
 #' # Mitochondrial genes
 #' mito <- grep("^MT\\.", rownames(counts(seurat_small)), value = TRUE)
-#' print(mito)
+#' head(mito)
 #' plotMarkerTSNE(seurat_small, genes = mito)
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom basejump midnightTheme
-#' @importFrom ggplot2 aes_string geom_point geom_text ggplot labs guides
-#'   guide_colorbar theme
 .plotMarkerTSNE <- function(
     object,
     genes,
@@ -39,6 +35,7 @@ NULL
     pointAlpha = 0.8,
     label = TRUE,
     labelSize = 6L,
+    # FIXME Change color method to use function name?
     color = scale_color_viridis(),
     dark = TRUE,
     legend = TRUE,
@@ -52,6 +49,7 @@ NULL
     assert_is_a_number(pointAlpha)
     assert_is_a_bool(label)
     assert_is_a_number(labelSize)
+    # FIXME Assert check
     assertIsColorScaleContinuousOrNULL(color)
     assert_is_a_bool(dark)
     assert_is_a_bool(legend)
@@ -59,6 +57,17 @@ NULL
     assert_is_a_bool(subtitle)
 
     data <- fetchTSNEExpressionData(object, genes = genes)
+    requiredCols <- c(
+        "centerX",
+        "centerY",
+        "mean",
+        "median",
+        "ident",
+        "sum",
+        "tSNE1",
+        "tSNE2"
+    )
+    assert_is_subset(requiredCols, colnames(data))
 
     # Automatic subtitle containing list of marker genes
     if (isTRUE(subtitle)) {
@@ -84,9 +93,6 @@ NULL
     }
 
     # Labels
-    if (!is.character(title)) {
-        title <- NULL
-    }
     if (isTRUE(subtitle)) {
         subtitle <- genes
     } else {

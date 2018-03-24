@@ -33,8 +33,6 @@ setMethod(
 
 
 #' @rdname colData
-#' @importFrom dplyr mutate_if
-#' @importFrom tibble column_to_rownames rownames_to_column
 #' @export
 setMethod(
     "colData",
@@ -54,8 +52,7 @@ setMethod(
             y = c(colnames(meta), "cellularBarcode")
         )
         if (length(drop)) {
-            data <- data %>%
-                .[, setdiff(colnames(.), drop)]
+            data <- data[, setdiff(colnames(data), drop)]
         }
 
         data %>%

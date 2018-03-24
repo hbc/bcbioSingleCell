@@ -5,8 +5,6 @@
 #' @name subset
 #' @author Michael Steinbaugh
 #'
-#' @importFrom parallel mclapply
-#'
 #' @inheritParams base::`[`
 #' @param ... Additional arguments.
 #'
@@ -36,8 +34,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr mutate_all
-#' @importFrom magrittr set_rownames
 .subset <- function(x, i, j, ..., drop = FALSE) {
     validObject(x)
 
@@ -122,7 +118,7 @@ NULL
         cb <- mclapply(seq_along(sampleIDs), function(a) {
             df %>%
                 ungroup() %>%
-                filter(.data[["sampleID"]] == sampleIDs[[a]]) %>%
+                .[.[["sampleID"]] == sampleIDs[[a]], , drop = FALSE] %>%
                 mutate(sampleID = NULL)
         })
         names(cb) <- sampleIDs

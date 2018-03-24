@@ -7,7 +7,6 @@
 #' @inheritParams general
 #' @param minCells Minimum number of cells required per sample.
 #' @param envir Environment where to assign the subsets.
-#' @param dir Output directory.
 #'
 #' @return Named vector of saved `bcbioSingleCell` subset file paths.
 #'
@@ -25,9 +24,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname subsetPerSample
-#' @importFrom basejump assignAndSaveData initializeDirectory
-#' @importFrom dplyr pull
-#' @importFrom pbapply pblapply
 #' @export
 setMethod(
     "subsetPerSample",

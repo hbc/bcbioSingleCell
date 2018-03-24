@@ -1,16 +1,17 @@
-# FIXME PBMC working example is broken
-
 #' Plot Cell Counts
 #'
 #' @name plotCellCounts
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inherit plotGenesPerCell
+#' @inheritParams general
 #'
-#' @param metadata Sample metadata `data.frame`.
+#' @return `ggplot`.
 #'
 #' @examples
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell ====
 #' plotCellCounts(bcb_small)
 #'
@@ -22,12 +23,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom dplyr group_by left_join n summarize
-#' @importFrom ggplot2 aes_string element_text facet_wrap geom_bar geom_label
-#'   ggplot labs theme
-#' @importFrom rlang !! sym
-#' @importFrom viridis scale_fill_viridis
 .plotCellCounts <- function(
     object,
     interestingGroups,
@@ -36,10 +31,11 @@ NULL
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
+    assertIsFillScaleDiscreteOrNULL(fill)
 
-    # sampleID level issue here
     metrics <- metrics(object, interestingGroups)
     metadata <- sampleData(object, interestingGroups)
+
     data <- metrics %>%
         group_by(!!sym("sampleName")) %>%
         summarize(nCells = n()) %>%
@@ -54,14 +50,8 @@ NULL
         )
     ) +
         geom_bar(stat = "identity") +
+        labs(fill = paste(interestingGroups, collapse = ":\n")) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-
-    # Label interesting groups
-    if (!missing(interestingGroups)) {
-        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
-    } else {
-        p <- p + labs(color = NULL, fill = NULL)
-    }
 
     # Color palette
     if (!is.null(fill)) {

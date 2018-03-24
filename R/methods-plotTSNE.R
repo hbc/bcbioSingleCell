@@ -7,16 +7,12 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param interestingGroups Interesting group to use for plot colors.
 #' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).
 #' @param pointSize Cell point size.
 #' @param pointAlpha Alpha transparency level. Useful when there many cells in
 #'   the dataset, and some cells can be masked.
 #' @param label Overlay a cluster identitiy label on the plot.
 #' @param labelSize Size of the text label.
-#' @param color Color palette to use for points.
-#' @param dark Enable dark mode.
-#' @param title Plot title.
 #'
 #' @return `ggplot`.
 #'
@@ -29,7 +25,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname plotTSNE
-#' @importFrom ggplot2 scale_color_hue
 #' @export
 setMethod(
     "plotTSNE",

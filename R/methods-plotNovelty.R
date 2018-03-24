@@ -2,13 +2,17 @@
 #'
 #' "Novelty" refers to log10 genes detected per count.
 #'
+#' @rdname plotNovelty
 #' @name plotNovelty
-#' @family Quality Control Functions
+#' @family Quality Control Metrics
 #' @author Michael Steinbaugh
 #'
 #' @inherit plotGenesPerCell
 #'
 #' @examples
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell ====
 #' plotNovelty(bcb_small)
 #'
@@ -19,64 +23,23 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom ggplot2 coord_flip facet_wrap labs
 .plotNovelty <- function(
     object,
-    geom = "violin",
-    min,
+    geom = c("violin", "boxplot", "histogram", "ridgeline"),
     interestingGroups,
-    samplesOnYAxis = TRUE,
+    min,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
-    }
-    if (missing(min)) {
-        min <- metadata(object)[["filterParams"]][["minNovelty"]]
-    }
-
-    metrics <- metrics(object, interestingGroups = interestingGroups)
-    metricCol <- "log10GenesPerUMI"
-
-    p <- .plotQCGeom(
-        metrics = metrics,
+    geom <- match.arg(geom)
+    .plotQCMetric(
+        object = object,
+        metricCol = "log10GenesPerUMI",
         geom = geom,
-        metricCol = metricCol,
-        min = min
+        interestingGroups = interestingGroups,
+        min = min,
+        trans = "sqrt",
+        fill = fill
     )
-
-    # Label interesting groups
-    if (!missing(interestingGroups)) {
-        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
-    } else {
-        p <- p + labs(color = NULL, fill = NULL)
-    }
-
-    # Color palette
-    if (!is.null(fill)) {
-        p <- p + fill
-    }
-
-    # Median labels
-    if (geom %in% validMedianGeom) {
-        p <- p + .medianLabels(metrics, medianCol = metricCol, digits = 2L)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(.checkAggregate(metrics))) {
-        facets <- "sampleNameAggregate"
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_y")
-    }
-
-    if (isTRUE(samplesOnYAxis) && geom %in% validQCGeomFlip) {
-        p <- p + coord_flip()
-    }
-
-    p
 }
 
 

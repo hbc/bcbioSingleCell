@@ -1,3 +1,6 @@
+# FIXME Don't use `counts(from, convertGenesToSymbols = TRUE)`
+
+
 #' Coerce Object
 #'
 #' @name coerce
@@ -8,7 +11,9 @@
 #' @seealso `help(topic = "coerce", package = "methods")`.
 #'
 #' @examples
-#' # Coerce bcbioSingleCell to seurat
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell to seurat
 #' as(bcb_small, "seurat")
 NULL
 
@@ -23,8 +28,6 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom Seurat CreateSeuratObject
-#'
 #' @return `seurat`.
 .coerceToSeurat <- function(from) {
     # Require that technical replicates are aggregated
@@ -36,7 +39,7 @@ NULL
     from <- .applyFilterCutoffs(from)
 
     # Create seurat object
-    raw <- counts(from, gene2symbol = TRUE)
+    raw <- counts(from, convertGenesToSymbols = TRUE)
     colData <- colData(from, return = "data.frame")
     seurat <- CreateSeuratObject(
         raw.data = raw,

@@ -1,6 +1,5 @@
 #' Interesting Groups
 #'
-#' @rdname interestingGroups
 #' @name interestingGroups
 #' @author Michael Steinbaugh
 #'

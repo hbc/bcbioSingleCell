@@ -8,10 +8,6 @@
 #'
 #' @inheritParams general
 #' @inheritParams plotDot
-#' @param fill Fill color palette. Defaults to viridis.
-#' @param return Return type. "grid", "list", and "markdown" are supported.
-#' @param headerLevel Markdown header level. Only applicable when
-#'   `return = "markdown"`.
 #'
 #' @examples
 #' # seurat ====
@@ -31,24 +27,16 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump dynamicPlotlist
-#' @importFrom cowplot plot_grid
-#' @importFrom ggplot2 aes_string geom_violin ggplot
-#' @importFrom rlang !! sym
-#' @importFrom tibble as_tibble
-#' @importFrom tidyr gather
-#' @importFrom viridis scale_fill_viridis
 .plotViolin.seurat <- function(  # nolint
     object,
     genes,
-    fill = viridis::scale_fill_viridis(discrete = TRUE),
-    return = "grid",
-    headerLevel = 2L
+    fill = scale_fill_viridis(discrete = TRUE),
+    headerLevel = 2L,
+    return = c("grid", "list", "markdown")
 ) {
-    validReturn <- c("grid", "list", "markdown")
-    if (!return %in% validReturn) {
-        abort(paste("`return` must contain:", toString(validReturn)))
-    }
+    assertIsFillScaleDiscreteOrNULL(fill)
+    assertIsAHeaderLevel(headerLevel)
+    return <- match.arg(return)
 
     # Fetch data ===============================================================
     ident <- slot(object, "ident")

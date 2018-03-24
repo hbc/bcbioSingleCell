@@ -4,13 +4,12 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param genes Gene identifiers (matrix rownames).
 #'
 #' @return `matrix`.
 #'
 #' @examples
 #' # seurat ====
-#' genes <- counts(pbmc_small) %>% rownames() %>% head()
+#' genes <- head(rownames(pbmc_small))
 #' fetchGeneData(pbmc_small, genes = genes) %>% glimpse()
 NULL
 
@@ -18,7 +17,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname fetchGeneData
-#' @importFrom Seurat FetchData
 #' @export
 setMethod(
     "fetchGeneData",

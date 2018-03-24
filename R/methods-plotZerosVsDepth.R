@@ -23,8 +23,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom ggplot2 aes_string facet_wrap geom_point ggplot labs
-#'   scale_x_log10
 .plotZerosVsDepth <- function(object) {
     counts <- counts(object)
     metrics <- metrics(object)
@@ -38,8 +36,8 @@ NULL
     # Add dropout rate and depth
     metrics <- mutate(
         metrics,
-        "dropout" = (nrow(present) - Matrix::colSums(present)) / nrow(present),
-        "depth" = Matrix::colSums(counts)
+        dropout = (nrow(present) - Matrix::colSums(present)) / nrow(present),
+        depth = Matrix::colSums(counts)
     )
 
     p <- ggplot(

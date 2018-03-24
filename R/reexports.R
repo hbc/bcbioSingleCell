@@ -8,6 +8,10 @@ dplyr::pull
 #' @export
 ggplot2::ggplot
 
+#' @importFrom ggplot2 scale_color_gradient
+#' @export
+ggplot2::scale_color_gradient
+
 #' @importFrom ggplot2 scale_color_hue
 #' @export
 ggplot2::scale_color_hue

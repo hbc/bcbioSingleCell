@@ -23,6 +23,11 @@
 #' @return `grouped_df`, grouped by `cellType`.
 #'
 #' @examples
+#' load(system.file(
+#'     "extdata/all_markers_small.rda",
+#'     package = "bcbioSingleCell"
+#' ))
+#'
 #' # grouped_df ====
 #' knownMarkersDetected(
 #'     all = all_markers_small,
@@ -34,9 +39,7 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr arrange group_by left_join n summarize
-#' @importFrom rlang !! !!! sym syms
-.knownMarkersDetected <- function(
+.knownMarkersDetected.tibble <- function(
     all,
     known,
     alpha = 0.05,
@@ -55,7 +58,7 @@ NULL
     # Group by cell type and arrange by P value
     markers <- all %>%
         # Apply alpha cutoff, before adding cell type annotations
-        filter(.data[["padj"]] < alpha) %>%
+        .[.[["padj"]] < alpha, , drop = FALSE] %>%
         left_join(known[, c("cellType", "geneID")], by = "geneID") %>%
         .[, unique(c(
             "cellType", "cluster", "geneID", "geneName", colnames(.)
@@ -91,5 +94,5 @@ setMethod(
         all = "grouped_df",
         known = "tbl_df"
     ),
-    .knownMarkersDetected
+    .knownMarkersDetected.tibble
 )
