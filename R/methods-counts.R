@@ -6,20 +6,19 @@
 #' @importFrom BiocGenerics counts
 #'
 #' @inheritParams general
-#' @param gene2symbol *Not recommended.* Convert Ensembl gene identifiers
-#'   (rownames) to gene symbols. Required for passing counts to Seurat.
 #' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
 #'
-#' @return Counts matrix.
+#' @return Counts matrix (typically a `dgCMatrix`).
 #'
 #' @examples
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell ====
-#' counts(bcb_small, gene2symbol = FALSE) %>% glimpse()
-#' counts(bcb_small, gene2symbol = TRUE) %>% glimpse()
+#' counts(bcb_small) %>% glimpse()
 #'
 #' # seurat ====
-#' counts(seurat_small, normalized = FALSE) %>% glimpse()
-#' counts(seurat_small, normalized = TRUE) %>% glimpse()
+#' counts(pbmc_small, normalized = FALSE) %>% glimpse()
+#' counts(pbmc_small, normalized = TRUE) %>% glimpse()
 NULL
 
 
@@ -31,24 +30,8 @@ NULL
 setMethod(
     "counts",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        gene2symbol = FALSE
-    ) {
-        counts <- assay(object)
-        if (isTRUE(gene2symbol)) {
-            g2s <- gene2symbol(object)
-            assert_is_subset(rownames(counts), rownames(g2s))
-            # Resize the gene2symbol data.frame
-            g2s <- g2s[rownames(counts), , drop = FALSE]
-            # Abort on any NA gene names
-            stopifnot(!any(is.na(g2s[["geneName"]])))
-            # Ensure symbols are unique (e.g. "XXX_1")
-            rownames <- makeNames(g2s[["geneName"]], unique = TRUE)
-            names(rownames) <- g2s[["geneID"]]
-            rownames(counts) <- rownames
-        }
-        counts
+    function(object) {
+        assay(object)
     }
 )
 

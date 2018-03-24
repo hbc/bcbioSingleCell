@@ -1,4 +1,5 @@
 # TODO Need to update arguments to match `plotMarkerTSNE()`
+# FIXME Need to fix working example
 
 #' Plot Cell Types per Cluster
 #'
@@ -11,15 +12,25 @@
 #'
 #' @inherit plotMarkers
 #'
-#' @param cellTypesPerCluster `grouped_df`, grouped by `cellType`. This must
-#'   be the return from [cellTypesPerCluster()].
-#' @param color Color palette.
+#' @inheritParams general
+#' @param cellTypesPerCluster Cell types per cluster `grouped_df`. This must be
+#'   the return from [cellTypesPerCluster()].
 #'
 #' @return Show graphical output. Invisibly return `ggplot` plotlist.
 #'
 #' @examples
+#' load(system.file(
+#'     "extdata/knownMarkersDetected.rda",
+#'     package = "bcbioSingleCell"
+#' ))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
 #' # seurat ====
-#' cellTypesPerCluster <- cellTypesPerCluster(known_markers_small)
+#' cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
+#' glimpse(cellTypesPerCluster)
+#'
+#' # Let's plot the first row, as an example
+#' cellTypesPerCluster <- cellTypesPerCluster[1L, , drop = FALSE]
 #' plotCellTypesPerCluster(
 #'     object = seurat_small,
 #'     cellTypesPerCluster = cellTypesPerCluster
@@ -29,9 +40,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom basejump markdownHeader
-#' @importFrom dplyr group_vars mutate_if pull
-#' @importFrom pbapply pblapply
 .plotCellTypesPerCluster <- function(
     object,
     cellTypesPerCluster,
@@ -44,6 +52,9 @@ NULL
         x = group_vars(cellTypesPerCluster),
         y = "cluster"
     )
+    # FIXME Add color assert check
+    assert_is_a_bool(dark)
+    assertIsAHeaderLevel(headerLevel)
 
     cellTypesPerCluster <- cellTypesPerCluster %>%
         ungroup() %>%
@@ -51,7 +62,9 @@ NULL
 
     # Output Markdown headers per cluster
     clusters <- levels(cellTypesPerCluster[["cluster"]])
-    assert_is_non_empty(clusters)
+    if (is.null(clusters)) {
+        return(invisible())
+    }
 
     return <- pblapply(clusters, function(cluster) {
         markdownHeader(
@@ -61,14 +74,14 @@ NULL
             asis = TRUE
         )
         subset <- cellTypesPerCluster %>%
-                .[.[["cluster"]] == cluster, , drop = FALSE]
+            .[.[["cluster"]] == cluster, , drop = FALSE]
         assert_has_rows(subset)
         lapply(seq_len(nrow(subset)), function(x) {
-            row <- subset[x, , drop = FALSE]
-            genes <- pull(row, "geneName") %>%
+            cellType <- subset[x, , drop = FALSE]
+            genes <- pull(cellType, "geneName") %>%
                 strsplit(", ") %>%
-                as.character()
-            title <- pull(row, "cellType")
+                .[[1L]]
+            title <- pull(cellType, "cell")
             markdownHeader(
                 title,
                 level = headerLevel + 1L,
@@ -91,7 +104,6 @@ NULL
             invisible(p)
         })
     })
-
     invisible(return)
 }
 
