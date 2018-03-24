@@ -10,8 +10,6 @@
 #' @importFrom bcbioBase plotDot
 #'
 #' @inheritParams general
-#' @param genes Gene identifiers to plot.
-#' @param color Color palette. If `NULL`, uses default ggplot2 colors.
 #' @param colMin Minimum scaled average expression threshold. Everything
 #'   smaller will be set to this.
 #' @param colMax Maximum scaled average expression threshold. Everything larger
@@ -24,7 +22,7 @@
 #' @seealso Modified version of [Seurat::DotPlot()].
 #'
 #' @examples
-#' # seurat ====
+#' # seurat
 #' genes <- head(rownames(pbmc_small))
 #' plotDot(pbmc_small, genes = genes)
 NULL
@@ -33,7 +31,7 @@ NULL
 
 # Constructors =================================================================
 #' Min Max
-#' @seealso `Seurat:::MinMax()`
+#' @seealso [Seurat:::MinMax()].
 #' @noRd
 .minMax <- function(data, min, max) {
     data2 <- data
@@ -45,7 +43,7 @@ NULL
 
 
 #' Percent Above
-#' @seealso `Seurat:::PercentAbove()`
+#' @seealso [Seurat:::PercentAbove()].
 #' @noRd
 .percentAbove <- function(x, threshold) {
     length(x[x > threshold]) / length(x)
@@ -53,14 +51,7 @@ NULL
 
 
 
-#' @importFrom dplyr group_by mutate summarize ungroup
-#' @importFrom ggplot2 aes_string geom_point labs scale_color_gradient
-#'   scale_radius
-#' @importFrom tibble rownames_to_column
-#' @importFrom rlang !! !!! sym syms
-#' @importFrom tibble as_tibble
-#' @importFrom tidyr gather
-.plotDot <- function(  # nolint
+.plotDot.seurat <- function(  # nolint
     object,
     genes,
     color = scale_color_gradient(
@@ -98,9 +89,9 @@ NULL
         ungroup() %>%
         group_by(!!sym("gene")) %>%
         mutate(
-            avgExpScale = scale(.data[["avgExp"]]),
+            avgExpScale = scale(!!sym("avgExp")),
             avgExpScale = .minMax(
-                data = .data[["avgExpScale"]],
+                !!sym("avgExpScale"),
                 max = colMax,
                 min = colMin
             )
@@ -132,5 +123,5 @@ NULL
 setMethod(
     "plotDot",
     signature("seurat"),
-    .plotDot
+    .plotDot.seurat
 )
