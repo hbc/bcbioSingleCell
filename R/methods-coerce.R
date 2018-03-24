@@ -32,14 +32,15 @@ NULL
 .coerceToSeurat <- function(from) {
     # Require that technical replicates are aggregated
     if ("sampleNameAggregate" %in% colnames(sampleData(from))) {
-        warn("Use `aggregateReplicates()` to combine technical replicates")
+        inform("Use `aggregateReplicates()` to combine technical replicates")
     }
 
     # Require filtered cells and genes only
     from <- .applyFilterCutoffs(from)
 
     # Create seurat object
-    raw <- counts(from, convertGenesToSymbols = TRUE)
+    raw <- counts(from)
+    rownames(raw) <- makeNames(gene2symbol(from)[["geneName"]])
     colData <- colData(from, return = "data.frame")
     seurat <- CreateSeuratObject(
         raw.data = raw,
