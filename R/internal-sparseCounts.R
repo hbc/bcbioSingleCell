@@ -15,17 +15,11 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr pull
-#' @importFrom Matrix readMM
-#' @importFrom readr read_lines read_tsv
-#'
+#' @inheritParams general
 #' @param sampleID Sample identifier. Must match the `sampleID` column of the
 #'   sample metadata `data.frame`.
 #' @param sampleDir Named character vector of sample directory containing the
 #'   MatrixMart file.
-#' @param pipeline Pipeline used to generate the MatrixMarket file. Defaults to
-#'   bcbio-nextgen (`bcbio`). Also supports 10X Chromium CellRanger
-#'   (`cellranger`).
 #' @param umiType UMI type.
 #'
 #' @seealso `help("dgCMatrix-class")`
@@ -34,14 +28,14 @@
 .readSparseCounts <- function(
     sampleID,
     sampleDir,
-    pipeline,
+    pipeline = c("bcbio", "cellranger"),
     umiType
 ) {
     assert_is_a_string(sampleID)
     assert_is_a_string(sampleDir)
     assert_all_are_dirs(sampleDir)
     assert_is_a_string(pipeline)
-    assert_is_subset(pipeline, c("bcbio", "cellranger"))
+    pipeline <- match.arg(pipeline)
     assert_is_a_string(umiType)
 
     if (pipeline == "bcbio") {
@@ -111,7 +105,6 @@
 
 
 
-#' @importFrom parallel mcmapply
 .sparseCountsList <- function(sampleDirs, pipeline, umiType) {
     mcmapply(
         sampleID = names(sampleDirs),

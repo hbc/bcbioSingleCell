@@ -8,55 +8,51 @@
 #' @docType package
 #'
 #' @import methods S4Vectors
+#'
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
+#'
+#' @importFrom Biobase rowMedians
+#' @importFrom GenomicFeatures makeTxDbFromGFF
+#' @importFrom Matrix cBind readMM
+#' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom SingleCellExperiment isSpike isSpike<- SingleCellExperiment
+#' @importFrom Seurat CreateSeuratObject FetchData
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
-#' @importFrom assertive assert_all_are_dirs
-#' @importFrom assertive assert_all_are_existing_files
-#' @importFrom assertive assert_all_are_greater_than_or_equal_to
-#' @importFrom assertive assert_all_are_matching_regex
-#' @importFrom assertive assert_all_are_positive
-#' @importFrom assertive assert_any_are_matching_regex
-#' @importFrom assertive assert_are_disjoint_sets
-#' @importFrom assertive assert_are_intersecting_sets
-#' @importFrom assertive assert_are_identical
-#' @importFrom assertive assert_has_no_duplicates
-#' @importFrom assertive assert_has_names
-#' @importFrom assertive assert_has_rows
-#' @importFrom assertive assert_is_a_bool
-#' @importFrom assertive assert_is_a_number
-#' @importFrom assertive assert_is_a_string
-#' @importFrom assertive assert_is_all_of
-#' @importFrom assertive assert_is_an_integer
-#' @importFrom assertive assert_is_any_of
-#' @importFrom assertive assert_is_character
-#' @importFrom assertive assert_is_data.frame
-#' @importFrom assertive assert_is_environment
-#' @importFrom assertive assert_is_factor
-#' @importFrom assertive assert_is_list
-#' @importFrom assertive assert_is_non_empty
-#' @importFrom assertive assert_is_of_length
-#' @importFrom assertive assert_is_subset
-#' @importFrom assertive assert_is_tbl_df
-#' @importFrom assertive has_dims
-#' @importFrom assertive has_names
-#' @importFrom assertive is_a_string
-#' @importFrom assertive is_character
-#' @importFrom basejump assertHasRownames
-#' @importFrom basejump assertIsAHeaderLevel
-#' @importFrom basejump assertIsAStringOrNULL
-#' @importFrom basejump assertIsAnImplicitInteger
-#' @importFrom basejump assertIsAnImplicitIntegerOrNULL
-#' @importFrom basejump assertIsCharacterOrNULL
-#' @importFrom basejump assertIsColorScaleContinuousOrNULL
-#' @importFrom basejump assertIsColorScaleDiscreteOrNULL
-#' @importFrom basejump assertIsGene2symbol
-#' @importFrom basejump assertIsTx2gene
-#' @importFrom bcbioBase assertFormalInterestingGroups
-#' @importFrom magrittr %>%
-#' @importFrom rlang !! .data abort inform sym warn
+#' @importFrom basejump assignAndSaveData camel convertUCSCBuildToEnsembl
+#'   detectOrganism dynamicPlotlist ensembl initializeDirectory markdownHeader
+#'   midnightTheme readFileByExtension readYAML sanitizeSampleData
+#'   stripTranscriptVersions
+#' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
+#'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
+#'   uniteInterestingGroups
+#' @importFrom cowplot draw_plot ggdraw plot_grid
+#' @importFrom dplyr arrange bind_rows group_by group_vars left_join mutate
+#'   mutate_all mutate_if n pull select_if summarize summarize_all ungroup
+#' @importFrom edgeR calcNormFactors DGEList glmFit
+#' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_line
+#'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
+#'   geom_histogram geom_hline geom_label geom_line geom_point geom_smooth
+#'   geom_text geom_violin geom_vline ggplot ggtitle guide_colorbar guide_legend
+#'   guides labs qplot scale_radius scale_x_log10 scale_x_sqrt
+#'   scale_y_continuous scale_y_log10 scale_y_sqrt theme xlab xlim ylab
+#' @importFrom ggridges geom_density_ridges
+#' @importFrom graphics hist
+#' @importFrom grid unit
+#' @importFrom jsonlite read_json
+#' @importFrom magrittr %>% set_colnames set_names set_rownames
+#' @importFrom parallel mclapply mcmapply
+#' @importFrom pbapply pblapply
+#' @importFrom readr read_lines read_tsv
+#' @importFrom rlang !! !!! .data abort inform sym syms warn
+#' @importFrom scales percent
+#' @importFrom stats model.matrix reorder
+#' @importFrom stringr str_extract str_match str_pad str_split
+#' @importFrom tibble as_tibble column_to_rownames remove_rownames
+#'   rownames_to_column tibble
+#' @importFrom tidyr gather
 #' @importFrom utils globalVariables packageVersion
+#' @importFrom zingeR glmWeightedF zeroWeightsLS
 NULL
 
 

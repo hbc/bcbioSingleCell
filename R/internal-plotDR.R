@@ -8,11 +8,7 @@
 #'
 #' @inheritParams plotTSNE
 #'
-#' @importFrom basejump midnightTheme
-#' @importFrom ggplot2 aes_string geom_point geom_text ggplot guide_legend
-#'   guides labs scale_color_hue
-#'
-#' @param object `data.frame` returned from [fetchTSNEExpressionData()].
+#' @param object `data.frame` returned by [fetchTSNEExpressionData()].
 #'
 #' @return `ggplot`.
 #' @noRd

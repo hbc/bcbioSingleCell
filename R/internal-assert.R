@@ -1,4 +1,51 @@
-# TODO Convert these functions into better assert checks
+#' @importFrom assertive assert_all_are_dirs
+#' @importFrom assertive assert_all_are_existing_files
+#' @importFrom assertive assert_all_are_greater_than_or_equal_to
+#' @importFrom assertive assert_all_are_matching_regex
+#' @importFrom assertive assert_all_are_non_negative
+#' @importFrom assertive assert_all_are_positive
+#' @importFrom assertive assert_any_are_matching_regex
+#' @importFrom assertive assert_are_disjoint_sets
+#' @importFrom assertive assert_are_intersecting_sets
+#' @importFrom assertive assert_are_identical
+#' @importFrom assertive assert_has_no_duplicates
+#' @importFrom assertive assert_has_names
+#' @importFrom assertive assert_has_rows
+#' @importFrom assertive assert_is_a_bool
+#' @importFrom assertive assert_is_a_number
+#' @importFrom assertive assert_is_a_string
+#' @importFrom assertive assert_is_all_of
+#' @importFrom assertive assert_is_an_integer
+#' @importFrom assertive assert_is_any_of
+#' @importFrom assertive assert_is_character
+#' @importFrom assertive assert_is_data.frame
+#' @importFrom assertive assert_is_environment
+#' @importFrom assertive assert_is_factor
+#' @importFrom assertive assert_is_function
+#' @importFrom assertive assert_is_list
+#' @importFrom assertive assert_is_non_empty
+#' @importFrom assertive assert_is_of_length
+#' @importFrom assertive assert_is_subset
+#' @importFrom assertive assert_is_tbl_df
+#' @importFrom assertive has_dims
+#' @importFrom assertive has_names
+#' @importFrom assertive is_a_string
+#' @importFrom assertive is_character
+#'
+#' @importFrom basejump assertHasRownames
+#' @importFrom basejump assertIsAHeaderLevel
+#' @importFrom basejump assertIsAStringOrNULL
+#' @importFrom basejump assertIsAnImplicitInteger
+#' @importFrom basejump assertIsAnImplicitIntegerOrNULL
+#' @importFrom basejump assertIsCharacterOrNULL
+#' @importFrom basejump assertIsColorScaleContinuousOrNULL
+#' @importFrom basejump assertIsColorScaleDiscreteOrNULL
+#' @importFrom basejump assertIsFillScaleDiscreteOrNULL
+#' @importFrom basejump assertIsGene2symbol
+#' @importFrom basejump assertIsTx2gene
+#'
+#' @importFrom bcbioBase assertFormalInterestingGroups
+NULL
 
 
 

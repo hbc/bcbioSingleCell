@@ -1,15 +1,3 @@
-# TODO Move the ggplot imports here to each file
-
-#' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_line
-#'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
-#'   geom_histogram geom_hline geom_label geom_line geom_point geom_smooth
-#'   geom_text geom_violin geom_vline ggplot ggtitle guide_colorbar
-#'   guide_legend guides labs qplot scale_color_gradient scale_radius
-#'   scale_x_log10 scale_x_sqrt scale_y_continuous scale_y_log10 scale_y_sqrt
-#'   theme xlab xlim ylab
-#' @importFrom grid unit
-#' @importFrom viridis inferno
-
 bins <- 200L
 
 lineColor <- "black"
@@ -45,7 +33,6 @@ labelSep <- ": "
 
 
 # Internal functions ===========================================================
-#' @importFrom ggplot2 geom_hline geom_vline
 .qcCutoffLine <- function(xintercept, yintercept) {
     if (!missing(xintercept)) {
         geom_vline(
