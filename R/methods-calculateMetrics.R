@@ -14,7 +14,9 @@
 #' @return `data.frame`.
 #'
 #' @examples
-#' # bcbioSingleCell
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#'
+#' # bcbioSingleCell ====
 #' calculateMetrics(bcb_small) %>% glimpse()
 #'
 #' # dgCMatrix ====
@@ -26,9 +28,6 @@ NULL
 
 
 # Constructors =================================================================
-#' @importFrom dplyr filter mutate mutate_if pull
-#' @importFrom scales percent
-#' @importFrom tibble column_to_rownames tibble
 .calculateMetrics.dgCMatrix <- function(  # nolint
     object,
     rowData,
@@ -56,7 +55,7 @@ NULL
 
     # Obtain detected coding and mitochondrial genes, using rowData
     codingGenesDetected <- rowData %>%
-        filter(.data[["broadClass"]] == "coding") %>%
+        .[.[["broadClass"]] == "coding", , drop = FALSE] %>%
         pull("geneID")
     if (!length(codingGenesDetected)) {
         abort("No coding genes detected")
@@ -66,7 +65,7 @@ NULL
         "coding genes detected"
     ))
     mitoGenesDetected <- rowData %>%
-        filter(.data[["broadClass"]] == "mito") %>%
+        .[.[["broadClass"]] == "mito", , drop = FALSE] %>%
         pull("geneID")
     if (!length(mitoGenesDetected)) {
         abort("No mitochondrial genes detected")
