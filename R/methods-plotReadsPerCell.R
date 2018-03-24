@@ -1,4 +1,4 @@
-# TODO Allow the user to define the color palette
+# FIXME Allow the user to define the color palette
 
 #' Plot Read Counts per Cell
 #'
@@ -7,20 +7,16 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
-#' @inheritParams plotGenesPerCell
-#' @param geom Plot type. Supported formats: proportional `histogram`
-#'   (*recommended*), raw `ridgeline`, and raw `violin`.
 #'
 #' @note Here by "cell" we mean "cellular barcode".
 #'
 #' @return `ggplot`.
 #'
 #' @examples
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell ====
 #' plotReadsPerCell(bcb_small)
-#'
-#' # seurat ====
-#' plotReadsPerCell(seurat_small)
 NULL
 
 
@@ -28,18 +24,11 @@ NULL
 # Constructors =================================================================
 #' Raw Cellular Barcodes Tibble
 #'
-#' Used for `geom` parameter: `ridgeline` and `violin` arguments.
-#'
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr group_by left_join mutate
-#' @importFrom rlang !! sym
-#'
-#' @inheritParams plotReadsPerCell
-#'
-#' @return `tibble` grouped by `sampleName`, containing `log10Count` values.
+#' @return `tibble` grouped by `sampleID`, containing `log10Count` values.
 .rawCBTibble <- function(cellularBarcodes, sampleData) {
     sampleData <- sampleData[, c("sampleID", "sampleName")]
     cellularBarcodes %>%
@@ -49,7 +38,7 @@ NULL
             nCount = NULL
         ) %>%
         left_join(sampleData, by = "sampleID") %>%
-        group_by(!!sym("sampleName"))
+        group_by(!!sym("sampleID"))
 }
 
 
@@ -60,60 +49,41 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr bind_rows left_join mutate
-#' @importFrom graphics hist
-#' @importFrom parallel mclapply
-#' @importFrom tibble tibble
-#'
 #' @param rawTibble [.rawCBTibble()] return.
-#' @param sampleData [sampleData()] return with `sampleName` columns
+#' @param sampleData [sampleData()] return with `sampleID` columns
 #'   that match the `rawTibble`.
 #'
 #' @details Modified version of Allon Klein Lab MATLAB code.
 #'
 #' @return `tibble`.
 .proportionalCBTibble <- function(rawTibble, sampleData) {
-    # Ensure `sampleName` is set as factor across both data frames
-    rawTibble[["sampleName"]] <-
-        as.factor(rawTibble[["sampleName"]])
-    sampleData[["sampleName"]] <-
-        as.factor(sampleData[["sampleName"]])
-    mclapply(
-        seq_along(levels(rawTibble[["sampleName"]])), function(a) {
-            sampleName <- levels(rawTibble[["sampleName"]])[[a]]
-            cb <- rawTibble %>%
-                .[.[["sampleName"]] == sampleName, , drop = FALSE]
-            cbHist <- hist(cb[["log10Count"]], n = 100L, plot = FALSE)
-            # `counts = fLog` in MATLAB version
-            counts <- cbHist[["counts"]]
-            # `mids = xLog` in MATLAB version
-            mids <-  cbHist[["mids"]]
-            tibble(
-                sampleName = sampleName,
-                # log10 reads per cell
-                log10Count = mids,
-                # Proportion of cells
-                proportion = counts * (10L ^ mids) / sum(counts * (10L ^ mids))
-            )
-        }) %>%
+    # Ensure `sampleID` is set as factor across both data frames
+    rawTibble[["sampleID"]] <- as.factor(rawTibble[["sampleID"]])
+    sampleData[["sampleID"]] <- as.factor(sampleData[["sampleID"]])
+    sampleIDs <- levels(rawTibble[["sampleID"]])
+    mclapply(sampleIDs, function(sampleID) {
+        cb <- rawTibble %>%
+            .[.[["sampleID"]] == sampleID, , drop = FALSE]
+        cbHist <- hist(cb[["log10Count"]], n = 100L, plot = FALSE)
+        # `counts = fLog` in MATLAB version
+        counts <- cbHist[["counts"]]
+        # `mids = xLog` in MATLAB version
+        mids <-  cbHist[["mids"]]
+        tibble(
+            "sampleID" = sampleID,
+            # log10 reads per cell
+            "log10Count" = mids,
+            # Proportion of cells
+            "proportion" = counts * (10L ^ mids) / sum(counts * (10L ^ mids))
+        )
+    }) %>%
         bind_rows() %>%
-        mutate(sampleName = as.factor(.data[["sampleName"]])) %>%
-        left_join(sampleData, by = "sampleName")
+        mutate(sampleID = as.factor(.data[["sampleID"]])) %>%
+        left_join(sampleData, by = "sampleID")
 }
 
 
 
-#' Plot Raw Cellular Barcodes Violin
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @importFrom viridis scale_fill_viridis
-#'
-#' @inheritParams plotReadsPerCell
-#'
-#' @return `ggplot`.
 .plotRawCBViolin <- function(
     tibble,
     interestingGroups = "sampleName",
@@ -160,17 +130,6 @@ NULL
 
 
 
-#' Plot Raw Cellular Barcodes Ridgeline
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @importFrom ggridges geom_density_ridges
-#'
-#' @inheritParams plotReadsPerCell
-#'
-#' @return `ggplot`.
 .plotRawCBRidgeline <- function(
     tibble,
     interestingGroups = "sampleName",
@@ -217,17 +176,6 @@ NULL
 
 
 
-#' Plot Proportional Cellular Barcodes Histogram
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @importFrom viridis scale_color_viridis
-#'
-#' @inheritParams plotReadsPerCell
-#'
-#' @return `ggplot`.
 .plotProportionalCBHistogram <- function(
     tibble,
     interestingGroups = "sampleName",
@@ -270,16 +218,6 @@ NULL
 
 
 
-#' Plot Read Counts per Cell Constructor
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom cowplot draw_plot ggdraw
-#'
-#' @inherit plotReadsPerCell
 .plotReadsPerCell <- function(
     object,
     geom = "histogram",
@@ -302,10 +240,7 @@ NULL
     }
 
     # Obtain the sample metadata
-    sampleData <- sampleData(
-        object,
-        interestingGroups = interestingGroups
-    )
+    sampleData <- sampleData(object, interestingGroups = interestingGroups)
 
     # Mutate cellular barcodes to log10 and set up grouping
     rawTibble <- .rawCBTibble(
@@ -332,26 +267,24 @@ NULL
         log10()
 
     if (geom == "histogram") {
-        p <- .plotProportionalCBHistogram(
+        .plotProportionalCBHistogram(
             proportionalTibble,
             interestingGroups = interestingGroups,
             cutoffLine = cutoffLine
         )
     } else if (geom == "ridgeline") {
-        p <- .plotRawCBRidgeline(
+        .plotRawCBRidgeline(
             rawTibble,
             interestingGroups = interestingGroups,
             cutoffLine = cutoffLine
         )
     } else if (geom == "violin") {
-        p <- .plotRawCBViolin(
+        .plotRawCBViolin(
             rawTibble,
             interestingGroups = interestingGroups,
             cutoffLine = cutoffLine
         )
     }
-
-    p
 }
 
 
@@ -372,5 +305,8 @@ setMethod(
 setMethod(
     "plotReadsPerCell",
     signature("seurat"),
-    .plotReadsPerCell
+    function(object, ...) {
+        message("Raw reads not stored in object")
+        invisible()
+    }
 )
