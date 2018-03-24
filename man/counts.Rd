@@ -7,32 +7,30 @@
 \alias{counts,seurat-method}
 \title{Counts Accessor}
 \usage{
-\S4method{counts}{bcbioSingleCell}(object, gene2symbol = FALSE)
+\S4method{counts}{bcbioSingleCell}(object)
 
 \S4method{counts}{seurat}(object, normalized = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{gene2symbol}{\emph{Not recommended.} Convert Ensembl gene identifiers
-(rownames) to gene symbols. Required for passing counts to Seurat.}
-
 \item{normalized}{Normalized (\code{TRUE}) or raw (\code{FALSE}) counts.}
 }
 \value{
-Counts matrix.
+Counts matrix (typically a \code{dgCMatrix}).
 }
 \description{
 Counts Accessor
 }
 \examples{
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+
 # bcbioSingleCell ====
-counts(bcb_small, gene2symbol = FALSE) \%>\% glimpse()
-counts(bcb_small, gene2symbol = TRUE) \%>\% glimpse()
+counts(bcb_small) \%>\% glimpse()
 
 # seurat ====
-counts(seurat_small, normalized = FALSE) \%>\% glimpse()
-counts(seurat_small, normalized = TRUE) \%>\% glimpse()
+counts(pbmc_small, normalized = FALSE) \%>\% glimpse()
+counts(pbmc_small, normalized = TRUE) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

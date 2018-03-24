@@ -64,20 +64,17 @@ information.
 }
 
 \examples{
-# seurat: expression in cluster 3 relative to cluster 2
-numerator <- WhichCells(pbmc_small, ident = 3L)
-denominator <- WhichCells(pbmc_small, ident = 2L)
+# seurat ====
+# Expression in cluster 3 relative to cluster 2
+numerator <- Seurat::WhichCells(pbmc_small, ident = 3L)
+denominator <- Seurat::WhichCells(pbmc_small, ident = 2L)
 lrt <- diffExp(
     pbmc_small,
     numerator = numerator,
     denominator = denominator,
     maxit = 100L
 )
-lrt$table \%>\%
-    as_tibble() \%>\%
-    rownames_to_column("geneName") \%>\%
-    arrange(padjFilter) \%>\%
-    head()
+glimpse(lrt[["table"]])
 }
 \seealso{
 \itemize{

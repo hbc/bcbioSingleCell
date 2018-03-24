@@ -19,8 +19,7 @@ plotKnownMarkersDetected(object, knownMarkersDetected, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{knownMarkersDetected}{\code{\link[=knownMarkersDetected]{knownMarkersDetected()}} return \code{grouped_df},
-grouped by \code{cluster} ident.}
+\item{knownMarkersDetected}{\code{grouped_df}.}
 
 \item{...}{Additional arguments.}
 
@@ -30,11 +29,11 @@ grouped by \code{cluster} ident.}
 
 \item{dotColor}{Color palette to use for dot plot.}
 
-\item{dark}{Plot the TSNE against a dark background.}
+\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
-\item{headerLevel}{Include a Markdown header for each gene.}
+\item{headerLevel}{R Markdown header level.}
 }
 \value{
 No value, only graphical output.
@@ -43,10 +42,22 @@ No value, only graphical output.
 Plot Known Markers Detected
 }
 \examples{
+load(system.file(
+    "extdata/all_markers_small.rda",
+    package = "bcbioSingleCell"
+))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # seurat ====
+known_detected <- knownMarkersDetected(
+    all = all_markers_small,
+    known = cellTypeMarkers[["homoSapiens"]]
+)
+
+# Let's plot the first 2 markers, as a quick example
 plotKnownMarkersDetected(
     object = seurat_small,
-    knownMarkersDetected = known_markers_small
+    knownMarkersDetected = known_detected[seq_len(2L), ]
 )
 }
 \seealso{

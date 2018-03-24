@@ -14,7 +14,8 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \code{data.frame}.
@@ -26,12 +27,13 @@ rownames. Similar to \code{\link[=colData]{colData()}}, which for \code{bcbioSin
 the samples.
 }
 \examples{
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+
 # bcbioSingleCell ====
 sampleData(bcb_small) \%>\% glimpse()
 
 # seurat ====
 sampleData(pbmc_small) \%>\% glimpse()
-sampleData(seurat_small) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

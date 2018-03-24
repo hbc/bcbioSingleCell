@@ -17,8 +17,7 @@ fetchTSNEExpressionData(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Genes identifiers (matching the rownames in the object),
-of which to get expression data.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 }
 \value{
 \code{data.frame} containing tSNE coordinates, sample metadata, and
@@ -31,7 +30,6 @@ the geometric mean of the gene expression from a \link{seurat} object.
 \examples{
 # seurat ====
 genes <- head(rownames(pbmc_small))
-print(genes)
 fetchTSNEExpressionData(pbmc_small, genes = genes) \%>\% glimpse()
 }
 \seealso{

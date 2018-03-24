@@ -10,21 +10,21 @@
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
-  interestingGroups)
+\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = c("histogram",
+  "ridgeline", "violin"), interestingGroups)
 
-\S4method{plotReadsPerCell}{seurat}(object, geom = "histogram",
-  interestingGroups)
+\S4method{plotReadsPerCell}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{geom}{Plot type. Supported formats: proportional \code{histogram}
-(\emph{recommended}), raw \code{ridgeline}, and raw \code{violin}.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \code{ggplot}.
@@ -36,22 +36,16 @@ Plot Read Counts per Cell
 Here by "cell" we mean "cellular barcode".
 }
 \examples{
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+
 # bcbioSingleCell ====
 plotReadsPerCell(bcb_small)
-
-# seurat ====
-plotReadsPerCell(seurat_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{metrics}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
+Other Quality Control Metrics: \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}},
-  \code{\link{plotZerosVsDepth}}
+  \code{\link{plotNovelty}}, \code{\link{plotUMIsPerCell}},
+  \code{\link{plotUMIsVsGenes}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

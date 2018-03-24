@@ -20,8 +20,7 @@ plotMarkerTSNE(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Genes identifiers (matching the rownames in the object),
-of which to get expression data.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
 \item{expression}{Calculation to apply on the aggregate marker expression.
 Supports \code{mean} (default), \code{median}, or \code{sum}.}
@@ -37,15 +36,18 @@ the dataset, and some cells can be masked.}
 
 \item{labelSize}{Size of the text label.}
 
-\item{color}{Color palette to use for points.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Enable dark mode.}
+\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
 
-\item{legend}{Show plot legend.}
+\item{legend}{Include plot legend.}
 
 \item{title}{Plot title.}
 
-\item{subtitle}{Include gene(s) in the subtitle.}
+\item{subtitle}{Include gene identifiers as subtitles.}
 }
 \value{
 \code{ggplot}.
@@ -54,10 +56,12 @@ the dataset, and some cells can be masked.}
 Plot Marker t-SNE
 }
 \examples{
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # seurat ====
 # Mitochondrial genes
 mito <- grep("^MT\\\\.", rownames(counts(seurat_small)), value = TRUE)
-print(mito)
+head(mito)
 plotMarkerTSNE(seurat_small, genes = mito)
 }
 \seealso{

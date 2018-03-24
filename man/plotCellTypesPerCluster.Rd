@@ -17,16 +17,19 @@ plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{cellTypesPerCluster}{\code{grouped_df}, grouped by \code{cellType}. This must
-be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
+\item{cellTypesPerCluster}{Cell types per cluster \code{grouped_df}. This must be the
+return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
 \item{...}{Additional arguments.}
 
-\item{color}{Color palette.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Plot the TSNE against a dark background.}
+\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
 
-\item{headerLevel}{Include a Markdown header for each gene.}
+\item{headerLevel}{R Markdown header level.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} plotlist.
@@ -37,10 +40,20 @@ type (per unbiased cluster). Cell types with too few (\code{min} cutoff) or too
 many (\code{max} cutoff) marker genes will be skipped.
 }
 \examples{
+load(system.file(
+    "extdata/knownMarkersDetected.rda",
+    package = "bcbioSingleCell"
+))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # seurat ====
-cellTypesPerCluster <- cellTypesPerCluster(known_markers_small)
+cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
+glimpse(cellTypesPerCluster)
+
+# Let's plot the first row, as an example
+cellTypesPerCluster <- cellTypesPerCluster[1L, , drop = FALSE]
 plotCellTypesPerCluster(
-    object = seurat_small,
+    seurat,
     cellTypesPerCluster = cellTypesPerCluster
 )
 }

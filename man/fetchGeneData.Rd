@@ -16,7 +16,7 @@ fetchGeneData(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Gene identifiers (matrix rownames).}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 }
 \value{
 \code{matrix}.
@@ -26,7 +26,7 @@ Fetch Gene Expression Data
 }
 \examples{
 # seurat ====
-genes <- counts(pbmc_small) \%>\% rownames() \%>\% head()
+genes <- head(rownames(pbmc_small))
 fetchGeneData(pbmc_small, genes = genes) \%>\% glimpse()
 }
 \author{

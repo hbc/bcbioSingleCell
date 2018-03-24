@@ -20,8 +20,7 @@ plotMarkers(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Genes identifiers (matching the rownames in the object),
-of which to get expression data.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
 \item{tsneColor}{Color palette to use for tSNE plot.}
 
@@ -29,11 +28,11 @@ of which to get expression data.}
 
 \item{dotColor}{Color palette to use for dot plot.}
 
-\item{dark}{Plot the TSNE against a dark background.}
+\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
-\item{headerLevel}{Include a Markdown header for each gene.}
+\item{headerLevel}{R Markdown header level.}
 
 \item{title}{Plot title.}
 }
@@ -50,6 +49,12 @@ Plot gene expression per cell in multiple formats:
 }
 }
 \examples{
+load(system.file(
+    "extdata/all_markers_small.rda",
+    package = "bcbioSingleCell"
+))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # seurat ===
 top <- topMarkers(all_markers_small, n = 1L)
 genes <- pull(top, "geneName")

@@ -7,58 +7,50 @@
 \alias{plotQC,seurat-method}
 \title{Quality Control Plots}
 \usage{
-\S4method{plotQC}{bcbioSingleCell}(object, interestingGroups, geom = "violin",
-  headerLevel = 2L, legend = FALSE, return = "grid")
+\S4method{plotQC}{bcbioSingleCell}(object, interestingGroups,
+  geom = c("violin", "boxplot", "histogram", "ridgeline"), headerLevel = 2L,
+  legend = FALSE, return = c("grid", "list", "markdown"))
 
-\S4method{plotQC}{seurat}(object, interestingGroups, geom = "violin",
-  headerLevel = 2L, legend = FALSE, return = "grid")
+\S4method{plotQC}{seurat}(object, interestingGroups, geom = c("violin",
+  "boxplot", "histogram", "ridgeline"), headerLevel = 2L, legend = FALSE,
+  return = c("grid", "list", "markdown"))
 }
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{geom}{Plot type. Supported formats: \code{boxplot}, \code{histogram},
-\code{ridgeline}, and \code{violin}. Applies to \code{\link[=plotUMIsPerCell]{plotUMIsPerCell()}},
-\code{\link[=plotGenesPerCell]{plotGenesPerCell()}}, \code{\link[=plotMitoRatio]{plotMitoRatio()}}, and \code{\link[=plotNovelty]{plotNovelty()}} output.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
 
 \item{headerLevel}{R Markdown header level.}
 
 \item{legend}{Include plot legend.}
 
-\item{return}{\itemize{
-\item \code{grid}: \code{\link[cowplot:plot_grid]{cowplot::plot_grid()}} graphical output.
+\item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
+}
+\value{
 \itemize{
+\item \code{grid}: \code{\link[cowplot:plot_grid]{cowplot::plot_grid()}} graphical output.
 \item \code{list}: \code{list} containing \code{ggplot} objects.
 \item \code{markdown}: R Markdown report, with reports separated by headers.
 }
-}}
-}
-\value{
-R Markdown template code for quality control analysis.
 }
 \description{
 Utility function that loops our standard quality control plots, for easy
 visualization.
 }
 \examples{
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # bcbioSingleCell ====
 plotQC(bcb_small)
 
 # seurat ====
 plotQC(seurat_small)
-}
-\seealso{
-Other Quality Control Functions: \code{\link{metrics}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}},
-  \code{\link{plotZerosVsDepth}}
 }
 \author{
 Michael Steinbaugh

@@ -7,20 +7,22 @@
 \title{Plot Violin}
 \usage{
 \S4method{plotViolin}{seurat}(object, genes,
-  fill = viridis::scale_fill_viridis(discrete = TRUE), return = "grid",
-  headerLevel = 2L)
+  fill = scale_fill_viridis(discrete = TRUE), headerLevel = 2L,
+  return = c("grid", "list", "markdown"))
 }
 \arguments{
 \item{object}{Object.}
 
-\item{genes}{Gene identifiers to plot.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
-\item{fill}{Fill color palette. Defaults to viridis.}
+\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
+to \code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 
-\item{return}{Return type. "grid", "list", and "markdown" are supported.}
+\item{headerLevel}{R Markdown header level.}
 
-\item{headerLevel}{Markdown header level. Only applicable when
-\code{return = "markdown"}.}
+\item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
 }
 \description{
 Plot Violin

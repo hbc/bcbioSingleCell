@@ -19,8 +19,8 @@ topMarkers(object, ...)
 
 \item{n}{Number of genes per cluster.}
 
-\item{direction}{Whether to include only \code{positive}, \code{negative}, or \code{both}
-directions of association per cluster. Defaults to \code{positive}.}
+\item{direction}{Whether to include "\code{positive}", "\code{negative}", or "\code{both}"
+directions of association per cluster.}
 
 \item{coding}{Only include protein coding genes.}
 }
@@ -36,7 +36,7 @@ topMarkers(all_markers_small, n = 1L)
 }
 \seealso{
 \itemize{
-\item \code{\link[dplyr:slice]{dplyr::slice()}}
+\item \code{\link[dplyr:slice]{dplyr::slice()}}.
 \item \code{\link[dplyr:top_n]{dplyr::top_n()}}.
 }
 

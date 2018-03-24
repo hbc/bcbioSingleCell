@@ -13,9 +13,12 @@
 \arguments{
 \item{object}{Object.}
 
-\item{genes}{Gene identifiers to plot.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
-\item{color}{Color palette. If \code{NULL}, uses default ggplot2 colors.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
 \item{colMin}{Minimum scaled average expression threshold. Everything
 smaller will be set to this.}
@@ -38,9 +41,11 @@ In the meantime, we've broken out the code into this generic to fix
 RMarkdown looping of our marker plots.
 }
 \examples{
-# seurat ====
-genes <- head(rownames(pbmc_small))
-plotDot(pbmc_small, genes = genes)
+load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+
+# seurat
+genes <- slot(seurat, "data") \%>\% rownames() \%>\% head()
+plotDot(seurat, genes = genes)
 }
 \seealso{
 Modified version of \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}}.

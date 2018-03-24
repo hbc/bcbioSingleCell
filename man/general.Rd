@@ -4,7 +4,46 @@
 \alias{general}
 \title{General Arguments}
 \arguments{
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
+\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
+to \code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{gene2symbol}{\code{data.frame} containing gene-to-symbol mappings. Columns
+must contain \code{geneID} and \code{geneName}.}
+
+\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
+
+\item{dir}{Output directory.}
+
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
+
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
+
+\item{headerLevel}{R Markdown header level.}
+
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{legend}{Include plot legend.}
+
+\item{min}{Recommended minimum value cutoff.}
+
+\item{max}{Recommended maximum value cutoff.}
+
 \item{object}{Object.}
+
+\item{pipeline}{Pipeline used to generate the samples.}
+
+\item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
+
+\item{title}{Plot title.}
 
 \item{value}{Object to assign.}
 

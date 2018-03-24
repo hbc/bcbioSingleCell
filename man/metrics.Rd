@@ -14,7 +14,8 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \code{data.frame} with cellular barcodes as rows.
@@ -23,8 +24,10 @@
 Sample Barcode Metrics
 }
 \examples{
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
-# bcbioSingleCell
+# bcbioSingleCell ====
 metrics(bcb_small) \%>\% glimpse()
 
 # seurat ====
@@ -36,12 +39,6 @@ metrics(pbmc_small) \%>\% glimpse()
 
 Other Quality Control Functions: \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}},
   \code{\link{plotZerosVsDepth}}
 }
 \author{

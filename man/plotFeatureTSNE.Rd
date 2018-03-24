@@ -12,7 +12,7 @@ plotFeatureTSNE(object, ...)
 \S4method{plotFeatureTSNE}{seurat}(object, features, pointSize = 0.5,
   pointAlpha = 0.8, color = scale_color_gradient(low = "lightgray", high =
   "purple"), dark = FALSE, label = TRUE, labelSize = 6L, legend = FALSE,
-  return = c("plot", "list"))
+  return = c("ggplot", "list"))
 }
 \arguments{
 \item{object}{Object.}
@@ -27,9 +27,12 @@ scores, number of genes detected).}
 \item{pointAlpha}{Alpha transparency level. Useful when there many cells in
 the dataset, and some cells can be masked.}
 
-\item{color}{Color palette to use for points.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Enable dark mode.}
+\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
 
 \item{label}{Overlay a cluster identitiy label on the plot.}
 
@@ -38,17 +41,20 @@ the dataset, and some cells can be masked.}
 \item{legend}{Show legends in paneled plots. Defaults to \code{FALSE} because
 typically these look too busy and the legends can get cut off.}
 
-\item{return}{Return as "\code{plot}" or "\code{list}".}
+\item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
 }
 \value{
-Depends on the return argument.
+Show plot or return as a \code{list}.
 }
 \description{
 Plot Feature t-SNE
 }
 \examples{
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # seurat ====
-plotFeatureTSNE(pbmc_small, features = "PC1")
+plotFeatureTSNE(seurat_small, features = "PC1")
 }
 \seealso{
 \code{\link[Seurat:FeaturePlot]{Seurat::FeaturePlot()}}.
