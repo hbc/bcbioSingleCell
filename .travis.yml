@@ -38,8 +38,8 @@ r_packages:
   - covr
 bioc_packages:
   - BiocCheck
+  - BiocGenerics  # zingeR requires BiocGenerics >= 0.23.3
   - S4Vectors
-# zingeR requires BiocGenerics >= 0.23.3
 
 after_success:
   - Rscript -e 'covr::codecov()'
