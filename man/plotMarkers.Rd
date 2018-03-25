@@ -37,7 +37,7 @@ plotMarkers(object, ...)
 \item{title}{Plot title.}
 }
 \value{
-No value, only graphical output.
+Show graphical output. Invisibly return \code{ggplot} plotlist.
 }
 \description{
 Plot gene expression per cell in multiple formats:
@@ -62,6 +62,7 @@ plotMarkers(seurat_small, genes = genes)
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}}, \code{\link{plotTopMarkers}},
   \code{\link{topBarcodes}}, \code{\link{topMarkers}}

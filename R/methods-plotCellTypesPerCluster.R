@@ -1,5 +1,3 @@
-# TODO Need to update arguments to match `plotMarkerTSNE()`
-
 #' Plot Cell Types per Cluster
 #'
 #' Plot the geometric mean of the significant marker genes for every known cell
@@ -8,8 +6,7 @@
 #'
 #' @name plotCellTypesPerCluster
 #' @author Michael Steinbaugh
-#'
-#' @inherit plotMarkers
+#' @family Clustering Utilities
 #'
 #' @inheritParams general
 #' @param cellTypesPerCluster Cell types per cluster `grouped_df`. This must be

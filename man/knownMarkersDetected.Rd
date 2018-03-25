@@ -55,7 +55,8 @@ knownMarkersDetected(
     glimpse()
 }
 \seealso{
-Other Clustering Utilities: \code{\link{plotKnownMarkersDetected}},
+Other Clustering Utilities: \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}

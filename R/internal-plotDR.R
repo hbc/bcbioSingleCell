@@ -6,12 +6,9 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @inheritParams plotTSNE
-#'
 #' @param object `data.frame` returned by [fetchTSNEExpressionData()].
 #'
 #' @return `ggplot`.
-#' @noRd
 .plotDR <- function(
     object,
     axes,

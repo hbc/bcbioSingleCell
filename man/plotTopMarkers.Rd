@@ -36,7 +36,7 @@ plotTopMarkers(object, topMarkers, ...)
 \item{headerLevel}{R Markdown header level.}
 }
 \value{
-No value, only graphical output.
+Show graphical output. Invisibly return \code{ggplot} plotlist.
 }
 \description{
 Plot Top Markers
@@ -62,6 +62,7 @@ plotTopMarkers(
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
   \code{\link{topBarcodes}}, \code{\link{topMarkers}}

@@ -9,10 +9,11 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inherit plotMarkers
-#'
+#' @inheritParams general
 #' @param topMarkers `grouped_df` grouped by "`cluster`", returned by
 #'   [topMarkers()].
+#'
+#' @return Show graphical output. Invisibly return `ggplot` plotlist.
 #'
 #' @examples
 #' load(system.file(

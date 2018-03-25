@@ -36,7 +36,7 @@ plotKnownMarkersDetected(object, knownMarkersDetected, ...)
 \item{headerLevel}{R Markdown header level.}
 }
 \value{
-No value, only graphical output.
+Show graphical output. Invisibly return \code{ggplot} plotlist.
 }
 \description{
 Plot Known Markers Detected
@@ -57,6 +57,7 @@ plotKnownMarkersDetected(
 }
 \seealso{
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}

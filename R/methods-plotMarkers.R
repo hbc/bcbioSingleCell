@@ -12,13 +12,9 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams plotMarkerTSNE
 #' @inheritParams general
-#' @param tsneColor Color palette to use for tSNE plot.
-#' @param violinFill Color palette to use for violin plot.
-#' @param dotColor Color palette to use for dot plot.
 #'
-#' @return No value, only graphical output.
+#' @return Show graphical output. Invisibly return `ggplot` plotlist.
 #'
 #' @examples
 #' load(system.file(

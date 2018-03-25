@@ -50,6 +50,7 @@ topMarkers(
 }
 
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
   \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}}

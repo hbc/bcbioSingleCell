@@ -43,6 +43,7 @@ plotPCElbow(pbmc_small)
 \code{\link[Seurat:PCElbowPlot]{Seurat::PCElbowPlot()}}.
 
 Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkers}}, \code{\link{plotTopMarkers}},
   \code{\link{topBarcodes}}, \code{\link{topMarkers}}

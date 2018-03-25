@@ -4,9 +4,10 @@
 #' @family Clustering Utilities
 #' @author Michael Steinbaugh
 #'
-#' @inherit plotMarkers
-#'
+#' @inheritParams general
 #' @param knownMarkersDetected `grouped_df`.
+#'
+#' @return Show graphical output. Invisibly return `ggplot` plotlist.
 #'
 #' @examples
 #' load(system.file(
