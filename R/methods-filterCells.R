@@ -32,7 +32,7 @@
 #'
 #' # bcbioSingleCell ====
 #' print(bcb_small)
-#' filterCells(bcb_small)
+#' filterCells(bcb_small, minGenes = 0L)
 NULL
 
 
