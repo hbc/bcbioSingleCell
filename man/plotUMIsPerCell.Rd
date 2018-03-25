@@ -52,11 +52,14 @@ plotUMIsPerCell(bcb_small)
 plotUMIsPerCell(seurat_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{metrics}},
+Other Quality Control Functions: \code{\link{calculateMetrics}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotZerosVsDepth}}
 }

@@ -6,7 +6,9 @@
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
-#' @inherit plotGenesPerCell
+#' @inheritParams general
+#'
+#' @return `ggplot`.
 #'
 #' @examples
 #' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))

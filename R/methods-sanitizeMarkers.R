@@ -5,6 +5,7 @@
 #'   the rownames of the returned marker `data.frame`.
 #'
 #' @name sanitizeMarkers
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

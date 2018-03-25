@@ -65,9 +65,16 @@ head(mito)
 plotMarkerTSNE(seurat_small, genes = mito)
 }
 \seealso{
-Other t-SNE Utilities: \code{\link{fetchTSNEData}},
-  \code{\link{fetchTSNEExpressionData}},
-  \code{\link{plotTSNE}}
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotMarkers}}, \code{\link{plotPCA}},
+  \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
+  \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
+  \code{\link{topMarkers}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

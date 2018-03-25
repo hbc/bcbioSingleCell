@@ -51,6 +51,17 @@ ident_3_sanitized <- sanitizeMarkers(
 )
 glimpse(ident_3_sanitized)
 }
+\seealso{
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
+  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+}
 \author{
 Michael Steinbaugh
 }

@@ -6,9 +6,10 @@
 #' for the number of genes to plot here in a future update.
 #'
 #' @name plotTopMarkers
-#' @family Clustering Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams plotMarkers
 #' @inheritParams general
 #' @param topMarkers `grouped_df` grouped by "`cluster`", returned by
 #'   [topMarkers()].

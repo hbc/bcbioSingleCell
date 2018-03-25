@@ -8,6 +8,7 @@
 #'   and Ensembl gene identifiers for rows.
 #'
 #' @name selectSamples
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase selectSamples

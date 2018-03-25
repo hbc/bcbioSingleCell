@@ -46,6 +46,18 @@ interestingGroups(seurat_small)
 interestingGroups(seurat_small) <- "sampleID"
 interestingGroups(seurat_small)
 }
+\seealso{
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{colData}},
+  \code{\link{counts}}, \code{\link{fetchGeneData}},
+  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}}, \code{\link{gene2symbol}},
+  \code{\link{readCellTypeMarkersFile}},
+  \code{\link{rowData}}, \code{\link{sampleData}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}
+}
 \author{
 Michael Steinbaugh
 }

@@ -1,6 +1,7 @@
 #' Gene to Symbol Mappings
 #'
 #' @name gene2symbol
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom basejump gene2symbol

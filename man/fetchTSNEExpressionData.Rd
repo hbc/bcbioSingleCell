@@ -33,8 +33,16 @@ genes <- head(rownames(pbmc_small))
 fetchTSNEExpressionData(pbmc_small, genes = genes) \%>\% glimpse()
 }
 \seealso{
-Other t-SNE Utilities: \code{\link{fetchTSNEData}},
-  \code{\link{plotMarkerTSNE}}, \code{\link{plotTSNE}}
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{colData}},
+  \code{\link{counts}}, \code{\link{fetchGeneData}},
+  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
+  \code{\link{filterCells}}, \code{\link{gene2symbol}},
+  \code{\link{interestingGroups}},
+  \code{\link{readCellTypeMarkersFile}},
+  \code{\link{rowData}}, \code{\link{sampleData}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

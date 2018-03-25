@@ -9,10 +9,13 @@
 #' 4. Dot plot
 #'
 #' @name plotMarkers
-#' @family Clustering Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
+#' @param tsneColor Color palette to use for tSNE plot.
+#' @param violinFill Color palette to use for violin plot.
+#' @param dotColor Color palette to use for dot plot.
 #'
 #' @return Show graphical output. Invisibly return `ggplot` plotlist.
 #'

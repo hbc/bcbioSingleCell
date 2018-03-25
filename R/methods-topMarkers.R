@@ -1,7 +1,7 @@
 #' Top Markers
 #'
 #' @name topMarkers
-#' @family Clustering Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

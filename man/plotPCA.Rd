@@ -48,9 +48,16 @@ Plot Principal Component Analysis (PCA)
 plotPCA(pbmc_small)
 }
 \seealso{
-\code{\link[=plotTSNE]{plotTSNE()}}.
-
-Other PCA Utilities: \code{\link{fetchPCAData}}
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
+  \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

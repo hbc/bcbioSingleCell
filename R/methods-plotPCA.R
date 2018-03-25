@@ -1,14 +1,15 @@
 #' Plot Principal Component Analysis (PCA)
 #'
 #' @name plotPCA
-#' @family PCA Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom BiocGenerics plotPCA
 #'
-#' @inherit plotTSNE
+#' @inheritParams plotTSNE
+#' @inheritParams general
 #'
-#' @seealso [plotTSNE()].
+#' @return `ggplot`.
 #'
 #' @examples
 #' # seurat ====

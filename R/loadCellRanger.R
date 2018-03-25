@@ -17,8 +17,7 @@
 #'
 #' @author Michael Steinbaugh
 #'
-#' @inherit loadSingleCell
-#'
+#' @inheritParams loadSingleCell
 #' @inheritParams general
 #' @param uploadDir Path to Cell Ranger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices*` as a child directory.

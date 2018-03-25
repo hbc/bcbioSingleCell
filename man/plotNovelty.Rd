@@ -52,10 +52,13 @@ plotNovelty(bcb_small)
 plotNovelty(seurat_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{metrics}},
+Other Quality Control Functions: \code{\link{calculateMetrics}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}}, \code{\link{plotQC}},
+  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}

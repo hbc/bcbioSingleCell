@@ -4,7 +4,7 @@
 #' the geometric mean of the gene expression from a [seurat] object.
 #'
 #' @name fetchTSNEExpressionData
-#' @family t-SNE Utilities
+#' @family Data Functions
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general

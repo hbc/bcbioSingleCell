@@ -53,9 +53,16 @@ Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.
 plotTSNE(pbmc_small)
 }
 \seealso{
-Other t-SNE Utilities: \code{\link{fetchTSNEData}},
-  \code{\link{fetchTSNEExpressionData}},
-  \code{\link{plotMarkerTSNE}}
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
+  \code{\link{topMarkers}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

@@ -43,9 +43,6 @@ plotUMIsVsGenes(bcb_small)
 plotUMIsVsGenes(pbmc_small)
 plotUMIsVsGenes(seurat_small)
 }
-\seealso{
-Other Quality Control Metrics: \code{\link{plotMitoRatio}}
-}
 \author{
 Michael Steinbaugh, Rory Kirchner
 }

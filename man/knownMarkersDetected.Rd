@@ -55,10 +55,14 @@ knownMarkersDetected(
     glimpse()
 }
 \seealso{
-Other Clustering Utilities: \code{\link{plotCellTypesPerCluster}},
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
-  \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
   \code{\link{topMarkers}}
 }
 \author{

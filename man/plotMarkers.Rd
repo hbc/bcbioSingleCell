@@ -61,11 +61,16 @@ genes <- pull(top, "geneName")
 plotMarkers(seurat_small, genes = genes)
 }
 \seealso{
-Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotPCElbow}}, \code{\link{plotTopMarkers}},
-  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotPCA}},
+  \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
+  \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

@@ -1,7 +1,7 @@
 #' Top Barcodes
 #'
 #' @name topBarcodes
-#' @family Clustering Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

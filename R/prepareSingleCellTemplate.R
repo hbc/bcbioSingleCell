@@ -1,7 +1,7 @@
 #' Prepare Single-Cell RNA-Seq RMarkdown Template
 #'
 #' @name prepareSingleCellTemplate
-#' @family RMarkdown Utilities
+#' @family R Markdown Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase prepareTemplate

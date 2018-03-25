@@ -3,6 +3,7 @@
 #' @note This function only returns the positive markers per cluster.
 #'
 #' @name cellTypesPerCluster
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

@@ -30,6 +30,10 @@ first argument in the vector.}
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
+\item{label}{Overlay a cluster identitiy label on the plot.}
+
+\item{labelSize}{Size of the text label.}
+
 \item{legend}{Include plot legend.}
 
 \item{min}{Recommended minimum value cutoff.}
@@ -39,6 +43,13 @@ formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=
 \item{object}{Object.}
 
 \item{pipeline}{Pipeline used to generate the samples.}
+
+\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
+the dataset, and some cells can be masked.}
+
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+
+\item{pointSize}{Cell point size.}
 
 \item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
 first argument in the vector.}
@@ -52,17 +63,6 @@ first argument in the vector.}
 \item{y}{Secondary object.}
 
 \item{...}{Additional arguments.}
-
-\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
-
-\item{pointSize}{Cell point size.}
-
-\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.}
-
-\item{label}{Overlay a cluster identitiy label on the plot.}
-
-\item{labelSize}{Size of the text label.}
 }
 \value{
 No value.

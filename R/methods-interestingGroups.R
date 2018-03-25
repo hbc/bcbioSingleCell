@@ -1,6 +1,7 @@
 #' Interesting Groups
 #'
 #' @name interestingGroups
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase interestingGroups interestingGroups<-

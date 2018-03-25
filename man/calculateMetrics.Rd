@@ -43,6 +43,18 @@ counts <- counts(bcb_small)
 rowData <- rowData(bcb_small)
 calculateMetrics(counts, rowData = rowData) \%>\% glimpse()
 }
+\seealso{
+Other Quality Control Functions: \code{\link{metricsPerSample}},
+  \code{\link{metrics}}, \code{\link{plotCellCounts}},
+  \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotQuantileHeatmap}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
+  \code{\link{plotZerosVsDepth}}
+}
 \author{
 Rory Kirchner, Michael Steinbaugh
 }

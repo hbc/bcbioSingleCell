@@ -24,6 +24,19 @@ gene2symbol(bcb_small) \%>\% glimpse()
 # seurat ====
 gene2symbol(seurat_small) \%>\% glimpse()
 }
+\seealso{
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{colData}},
+  \code{\link{counts}}, \code{\link{fetchGeneData}},
+  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{interestingGroups}},
+  \code{\link{readCellTypeMarkersFile}},
+  \code{\link{rowData}}, \code{\link{sampleData}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}
+}
 \author{
 Michael Steinbaugh
 }

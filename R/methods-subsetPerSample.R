@@ -1,7 +1,7 @@
 #' Subset Per Sample
 #'
 #' @name subsetPerSample
-#' @family Data Management Utilities
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

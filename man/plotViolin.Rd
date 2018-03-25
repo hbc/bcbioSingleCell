@@ -41,6 +41,9 @@ names(list)
 # markdown
 plotViolin(pbmc_small, genes = genes, return = "markdown")
 }
+\seealso{
+Other Gene Expression Functions: \code{\link{plotDot}}
+}
 \author{
 Michael Steinbaugh
 }

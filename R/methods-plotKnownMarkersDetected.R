@@ -1,9 +1,10 @@
 #' Plot Known Markers Detected
 #'
 #' @name plotKnownMarkersDetected
-#' @family Clustering Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
+#' @inheritParams plotMarkers
 #' @inheritParams general
 #' @param knownMarkersDetected `grouped_df`.
 #'

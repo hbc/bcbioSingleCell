@@ -46,6 +46,8 @@ plotDot(pbmc_small, genes = head(rownames(pbmc_small)))
 }
 \seealso{
 Modified version of \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}}.
+
+Other Gene Expression Functions: \code{\link{plotViolin}}
 }
 \author{
 Michael Steinbaugh

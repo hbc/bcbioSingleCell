@@ -1,7 +1,7 @@
 #' Plot Marker t-SNE
 #'
 #' @name plotMarkerTSNE
-#' @family t-SNE Utilities
+#' @family Clustering Functions
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general

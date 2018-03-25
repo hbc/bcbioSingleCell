@@ -4,6 +4,7 @@
 #' AnnotationHub and ensembldb using [basejump::ensembl()].
 #'
 #' @name rowData
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom SummarizedExperiment rowData

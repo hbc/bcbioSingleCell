@@ -1,7 +1,7 @@
 #' Aggregate Replicates
 #'
 #' @name aggregateReplicates
-#' @family Data Management Utilities
+#' @family Data Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @importFrom basejump aggregateReplicates

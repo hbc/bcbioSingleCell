@@ -1,7 +1,7 @@
 #' Calculate Cellular Barcode Metrics Summary
 #'
 #' @name calculateMetrics
-#' @family QC Metrics Utilities
+#' @family Quality Control Functions
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general

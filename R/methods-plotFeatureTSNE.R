@@ -1,6 +1,7 @@
 #' Plot Feature t-SNE
 #'
 #' @name plotFeatureTSNE
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams plotTSNE

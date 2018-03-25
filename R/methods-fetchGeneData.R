@@ -1,6 +1,7 @@
 #' Fetch Gene Expression Data
 #'
 #' @name fetchGeneData
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

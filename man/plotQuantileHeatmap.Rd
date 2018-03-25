@@ -55,8 +55,16 @@ plotQuantileHeatmap(bcb_small)
 plotQuantileHeatmap(seurat_small)
 }
 \seealso{
-Other Plot Functions: \code{\link{plotCorrelationHeatmap}},
-  \code{\link{plotHeatmap}}
+Other Quality Control Functions: \code{\link{calculateMetrics}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{plotCellCounts}},
+  \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
+  \code{\link{plotZerosVsDepth}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

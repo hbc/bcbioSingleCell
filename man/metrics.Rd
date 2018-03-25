@@ -37,10 +37,14 @@ metrics(pbmc_small) \%>\% glimpse()
 \seealso{
 \code{\link[=sampleData]{sampleData()}}.
 
-Other Quality Control Functions: \code{\link{plotCellCounts}},
+Other Quality Control Functions: \code{\link{calculateMetrics}},
+  \code{\link{metricsPerSample}},
+  \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}

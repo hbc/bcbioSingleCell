@@ -5,7 +5,7 @@
 #' PC cutoff for either 5% SD (`maxPct`) or 90% cumulative (`minCumsum`).
 #'
 #' @name plotPCElbow
-#' @family Clustering Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

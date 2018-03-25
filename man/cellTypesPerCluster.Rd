@@ -37,6 +37,17 @@ load(system.file(
 ))
 cellTypesPerCluster(known_markers_small) \%>\% glimpse()
 }
+\seealso{
+Other Clustering Functions: \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
+  \code{\link{topMarkers}}
+}
 \author{
 Michael Steinbaugh
 }

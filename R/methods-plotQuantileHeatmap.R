@@ -4,6 +4,7 @@
 #'   Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 #'
 #' @name plotQuantileHeatmap
+#' @family Quality Control Functions
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @importFrom bcbioBase plotQuantileHeatmap

@@ -6,6 +6,7 @@
 #' the samples.
 #'
 #' @name sampleData
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase sampleData

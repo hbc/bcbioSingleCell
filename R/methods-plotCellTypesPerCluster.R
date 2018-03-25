@@ -5,8 +5,8 @@
 #' many (`max` cutoff) marker genes will be skipped.
 #'
 #' @name plotCellTypesPerCluster
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
-#' @family Clustering Utilities
 #'
 #' @inheritParams general
 #' @param cellTypesPerCluster Cell types per cluster `grouped_df`. This must be

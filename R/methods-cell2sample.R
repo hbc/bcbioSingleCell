@@ -1,6 +1,7 @@
 #' Cell to Sample Mappings
 #'
 #' @name cell2sample
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

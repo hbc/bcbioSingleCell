@@ -9,7 +9,7 @@
 #' rownames of [sampleData()]).
 #'
 #' @name filterCells
-#' @family Data Management Utilities
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

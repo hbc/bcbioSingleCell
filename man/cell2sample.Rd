@@ -31,6 +31,19 @@ cell2sample(bcb_small) \%>\% table()
 # seurat ====
 cell2sample(pbmc_small) \%>\% table()
 }
+\seealso{
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{colData}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
+  \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}}, \code{\link{gene2symbol}},
+  \code{\link{interestingGroups}},
+  \code{\link{readCellTypeMarkersFile}},
+  \code{\link{rowData}}, \code{\link{sampleData}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}
+}
 \author{
 Michael Steinbaugh
 }

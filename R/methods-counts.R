@@ -1,6 +1,7 @@
 #' Counts Accessor
 #'
 #' @name counts
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom BiocGenerics counts

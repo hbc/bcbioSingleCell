@@ -6,7 +6,7 @@
 #'   easily.
 #'
 #' @name knownMarkersDetected
-#' @family Clustering Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

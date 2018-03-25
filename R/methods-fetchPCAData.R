@@ -1,7 +1,7 @@
 #' Fetch PCA Dimensions and Cellular Metadata
 #'
 #' @name fetchPCAData
-#' @family PCA Utilities
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

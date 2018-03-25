@@ -5,6 +5,7 @@
 #' RMarkdown looping of our marker plots.
 #'
 #' @name plotDot
+#' @family Gene Expression Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase plotDot
