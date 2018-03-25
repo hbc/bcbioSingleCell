@@ -96,7 +96,7 @@ NULL
     }
 
     # Add Ensembl gene IDs
-    rownames <- rownames(slot(object, "data"))
+    rownames <- rownames(object, "data")
     assert_has_names(rownames)
     map <- tibble(
         "rowname" = rownames,
