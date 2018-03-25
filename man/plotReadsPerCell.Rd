@@ -10,8 +10,10 @@
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
-  interestingGroups)
+\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = c("histogram",
+  "violin", "ridgeline"), interestingGroups,
+  color = scale_color_viridis(discrete = TRUE),
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotReadsPerCell}{seurat}(object, ...)
 }
@@ -25,6 +27,15 @@ first argument in the vector.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
+\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
+to \code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
 \code{ggplot}.
