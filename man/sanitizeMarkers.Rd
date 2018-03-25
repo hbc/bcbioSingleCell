@@ -19,19 +19,37 @@ sanitizeMarkers(object, markers, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\code{grouped_df}, grouped by cluster ident.
+Tibble arranged by adjusted P value.
+\itemize{
+\item 
+\item \code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}}: \code{grouped_df}, grouped by cluster ident.
+}
 }
 \description{
 Sanitize Markers Output
 }
+\note{
+\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} maps the counts matrix rownames correctly in
+the \code{gene} column, whereas \code{\link[Seurat:FindMarkers]{Seurat::FindMarkers()}} maps them correctly in
+the rownames of the returned marker \code{data.frame}.
+}
 \examples{
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # seurat ====
+all_markers <- FindAllMarkers(seurat_small)
+all_sanitized <- sanitizeMarkers(
+    object = seurat_small,
+    markers = all_markers
+)
+glimpse(all_sanitized)
+
 ident_3_markers <- FindMarkers(seurat_small, ident.1 = "3", ident.2 = NULL)
-sanitizeMarkers(
+ident_3_sanitized <- sanitizeMarkers(
     object = seurat_small,
     markers = ident_3_markers
-) \%>\%
-    glimpse()
+)
+glimpse(ident_3_sanitized)
 }
 \author{
 Michael Steinbaugh

@@ -10,7 +10,7 @@
 plotTopMarkers(object, topMarkers, ...)
 
 \S4method{plotTopMarkers}{seurat,grouped_df}(object, topMarkers,
-  tsneColor = scale_color_viridis(),
+  tsneColor = scale_color_viridis(discrete = FALSE),
   violinFill = scale_fill_viridis(discrete = TRUE),
   dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
   dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L)
@@ -18,7 +18,7 @@ plotTopMarkers(object, topMarkers, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{topMarkers}{Top markers \code{tibble} grouped by cluster, returned by
+\item{topMarkers}{\code{grouped_df} grouped by "\code{cluster}", returned by
 \code{\link[=topMarkers]{topMarkers()}}.}
 
 \item{...}{Additional arguments.}
@@ -48,6 +48,12 @@ simply reassign first using that function. If necessary, we can add support
 for the number of genes to plot here in a future update.
 }
 \examples{
+load(system.file(
+    "extdata/all_markers_small.rda",
+    package = "bcbioSingleCell"
+))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # seurat, grouped_df ====
 plotTopMarkers(
     object = seurat_small,

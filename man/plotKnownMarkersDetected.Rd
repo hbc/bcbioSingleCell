@@ -11,7 +11,7 @@
 plotKnownMarkersDetected(object, knownMarkersDetected, ...)
 
 \S4method{plotKnownMarkersDetected}{seurat,grouped_df}(object,
-  knownMarkersDetected, tsneColor = scale_color_viridis(),
+  knownMarkersDetected, tsneColor = scale_color_viridis(discrete = FALSE),
   violinFill = scale_fill_viridis(discrete = TRUE),
   dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
   dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L)
@@ -43,21 +43,16 @@ Plot Known Markers Detected
 }
 \examples{
 load(system.file(
-    "extdata/all_markers_small.rda",
+    "extdata/known_markers_small.rda",
     package = "bcbioSingleCell"
 ))
 load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
 # seurat ====
-known_detected <- knownMarkersDetected(
-    all = all_markers_small,
-    known = cellTypeMarkers[["homoSapiens"]]
-)
-
 # Let's plot the first 2 markers, as a quick example
 plotKnownMarkersDetected(
     object = seurat_small,
-    knownMarkersDetected = known_detected[seq_len(2L), ]
+    knownMarkersDetected = known_markers_small[seq_len(2L), ]
 )
 }
 \seealso{

@@ -9,8 +9,8 @@
 \usage{
 topMarkers(object, ...)
 
-\S4method{topMarkers}{grouped_df}(object, n = 10L, direction = "positive",
-  coding = TRUE)
+\S4method{topMarkers}{grouped_df}(object, n = 10L, direction = c("positive",
+  "negative", "both"), coding = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -31,8 +31,17 @@ directions of association per cluster.}
 Top Markers
 }
 \examples{
+load(system.file(
+    "extdata/all_markers_small.rda",
+    package = "bcbioSingleCell"
+))
+
 # grouped_df ====
-topMarkers(all_markers_small, n = 1L)
+topMarkers(
+    object = all_markers_small,
+    n = 2L,
+    direction = "positive"
+)
 }
 \seealso{
 \itemize{

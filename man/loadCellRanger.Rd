@@ -46,11 +46,11 @@ Unlike \code{\link[=loadSingleCell]{loadSingleCell()}}, the \code{organism}, \co
 the user.
 }
 \examples{
-extdataDir <- system.file("extdata", package = "bcbioSingleCell")
+uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
 loadCellRanger(
-    uploadDir = file.path(extdataDir, "cellranger"),
-    refdataDir = file.path(extdataDir, "refdata-cellranger-hg19-1.2.0"),
-    sampleMetadataFile = file.path(extdataDir, "cellranger.csv")
+    uploadDir = uploadDir,
+    refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
+    sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 )
 }
 \author{

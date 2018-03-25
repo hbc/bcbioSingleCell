@@ -3,12 +3,15 @@
 \docType{methods}
 \name{seurat}
 \alias{seurat}
+\alias{assay,seurat,ANY-method}
 \alias{colnames,seurat-method}
 \alias{metadata,seurat-method}
 \alias{rownames,seurat-method}
 \alias{metadata<-,seurat-method}
 \title{Extend S4 Methods for \code{seurat} Objects}
 \usage{
+\S4method{assay}{seurat,ANY}(x)
+
 \S4method{colnames}{seurat}(x)
 
 \S4method{metadata}{seurat}(x)
@@ -21,6 +24,11 @@
 Extend S4 Methods for \code{seurat} Objects
 }
 \examples{
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
+# assay ====
+assay(pbmc_small) \%>\% glimpse()
+
 # dimensions ====
 rownames(pbmc_small) \%>\% head()
 colnames(pbmc_small) \%>\% head()

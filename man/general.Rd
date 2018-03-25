@@ -52,6 +52,17 @@ first argument in the vector.}
 \item{y}{Secondary object.}
 
 \item{...}{Additional arguments.}
+
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+
+\item{pointSize}{Cell point size.}
+
+\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
+the dataset, and some cells can be masked.}
+
+\item{label}{Overlay a cluster identitiy label on the plot.}
+
+\item{labelSize}{Size of the text label.}
 }
 \value{
 No value.

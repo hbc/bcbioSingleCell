@@ -30,6 +30,8 @@ objects. In this case, provide cellular barcode identifiers for columns
 and Ensembl gene identifiers for rows.
 }
 \examples{
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+
 # bcbioSingleCell ====
 sampleData(bcb_small) \%>\% glimpse()
 selectSamples(bcb_small, sampleName = "M1_seq_rep_1")

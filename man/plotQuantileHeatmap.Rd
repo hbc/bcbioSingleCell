@@ -3,17 +3,12 @@
 \docType{methods}
 \name{plotQuantileHeatmap}
 \alias{plotQuantileHeatmap}
-\alias{plotQuantileHeatmap,bcbioSingleCell-method}
 \alias{plotQuantileHeatmap,seurat-method}
 \title{Plot Heatmap with Quantile Breaks}
 \usage{
-\S4method{plotQuantileHeatmap}{bcbioSingleCell}(object, n = 5L,
-  annotationCol = NA, clusterCols = FALSE, clusterRows = FALSE,
-  color = viridis, legendColor = viridis, title = NULL)
-
 \S4method{plotQuantileHeatmap}{seurat}(object, n = 5L, annotationCol = NA,
   clusterCols = FALSE, clusterRows = FALSE, color = viridis,
-  legendColor = viridis, title = NULL)
+  legendColor = viridis, title = NULL, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -29,25 +24,39 @@ hierarchical clustering. Alternatively, can define an \code{hclust} object.}
 \item{clusterRows}{Logical determining if rows should be arranged with
 hierarchical clustering. Alternatively, can define an \code{hclust} object.}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{Colors to use for plot. Defaults to the \code{\link[=viridis]{viridis()}}
+palette.}
 
-\item{legendColor}{Colors to use for legend labels.}
+\item{legendColor}{Colors to use for legend labels. Defaults to the
+\code{\link[=viridis]{viridis()}} palette.}
 
-\item{title}{Plot title.}
+\item{title}{\emph{Optional.} Plot title.}
+
+\item{...}{Passthrough arguments to \code{\link[pheatmap:pheatmap]{pheatmap::pheatmap()}}.}
+}
+\value{
+Show heatmap. Invisibly return \code{list} containing breaks and \code{gtable}.
 }
 \description{
 Plot Heatmap with Quantile Breaks
 }
 \details{
-This is helpful for more usefully visualizing single cell data.
+This is helpful for visualizing single cell data.
 Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 }
 \examples{
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # bcbioSingleCell ====
-plotQuantileHeatmap(pbmc_small)
+plotQuantileHeatmap(bcb_small)
+
+# seurat ====
+plotQuantileHeatmap(seurat_small)
+}
+\seealso{
+Other Plot Functions: \code{\link{plotCorrelationHeatmap}},
+  \code{\link{plotHeatmap}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

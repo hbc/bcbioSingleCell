@@ -10,7 +10,7 @@
 plotMarkers(object, ...)
 
 \S4method{plotMarkers}{seurat}(object, genes,
-  tsneColor = scale_color_viridis(),
+  tsneColor = scale_color_viridis(discrete = FALSE),
   violinFill = scale_fill_viridis(discrete = TRUE),
   dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
   dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L, title = NULL)

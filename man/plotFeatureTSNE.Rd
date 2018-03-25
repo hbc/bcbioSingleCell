@@ -51,10 +51,8 @@ Show plot or return as a \code{list}.
 Plot Feature t-SNE
 }
 \examples{
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # seurat ====
-plotFeatureTSNE(seurat_small, features = "PC1")
+plotFeatureTSNE(pbmc_small, features = "PC1")
 }
 \seealso{
 \code{\link[Seurat:FeaturePlot]{Seurat::FeaturePlot()}}.

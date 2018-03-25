@@ -11,8 +11,8 @@
 plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat,grouped_df}(object,
-  cellTypesPerCluster, color = scale_color_viridis(), dark = TRUE,
-  headerLevel = 2L)
+  cellTypesPerCluster, color = scale_color_viridis(discrete = FALSE),
+  dark = TRUE, headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
@@ -41,20 +41,19 @@ many (\code{max} cutoff) marker genes will be skipped.
 }
 \examples{
 load(system.file(
-    "extdata/knownMarkersDetected.rda",
+    "extdata/known_markers_small.rda",
     package = "bcbioSingleCell"
 ))
 load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
 # seurat ====
-cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
-glimpse(cellTypesPerCluster)
+per_cluster <- cellTypesPerCluster(known_markers_small)
+glimpse(per_cluster)
 
 # Let's plot the first row, as an example
-cellTypesPerCluster <- cellTypesPerCluster[1L, , drop = FALSE]
 plotCellTypesPerCluster(
     object = seurat_small,
-    cellTypesPerCluster = cellTypesPerCluster
+    cellTypesPerCluster = per_cluster[1L, , drop = FALSE]
 )
 }
 \seealso{

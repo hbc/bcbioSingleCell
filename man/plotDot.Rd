@@ -41,9 +41,8 @@ In the meantime, we've broken out the code into this generic to fix
 RMarkdown looping of our marker plots.
 }
 \examples{
-# seurat
-genes <- head(rownames(pbmc_small))
-plotDot(pbmc_small, genes = genes)
+# seurat ====
+plotDot(pbmc_small, genes = head(rownames(pbmc_small)))
 }
 \seealso{
 Modified version of \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}}.

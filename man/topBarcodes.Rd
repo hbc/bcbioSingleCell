@@ -28,6 +28,8 @@ topBarcodes(object, ...)
 Top Barcodes
 }
 \examples{
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+
 # bcbioSingleCell ====
 topBarcodes(bcb_small) \%>\% glimpse()
 

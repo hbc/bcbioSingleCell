@@ -28,6 +28,9 @@ plotZerosVsDepth(object, ...)
 This function helps us visualize the dropout rate.
 }
 \examples{
+load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+
 # bcbioSingleCell ====
 plotZerosVsDepth(bcb_small)
 

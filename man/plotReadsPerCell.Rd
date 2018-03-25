@@ -40,6 +40,9 @@ load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell ====
 plotReadsPerCell(bcb_small)
+
+# seurat ====
+plotReadsPerCell(pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{metrics}},

@@ -12,8 +12,8 @@ plotMarkerTSNE(object, ...)
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
   "median", "sum"), pointsAsNumbers = FALSE, pointSize = 0.5,
   pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  color = scale_color_viridis(), dark = TRUE, legend = TRUE,
-  title = NULL, subtitle = TRUE)
+  color = scale_color_viridis(discrete = FALSE), dark = TRUE,
+  legend = TRUE, title = NULL, subtitle = TRUE)
 }
 \arguments{
 \item{object}{Object.}
