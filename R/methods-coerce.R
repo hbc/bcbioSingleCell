@@ -43,7 +43,7 @@ NULL
     rawData <- assay(from)
     g2s <- gene2symbol(from)
     assertIsGene2symbol(g2s)
-    rownames <- makeNames(g2s[["geneName"]], unique = TRUE)
+    rownames <- make.names(g2s[["geneName"]], unique = TRUE)
     stopifnot(!any(duplicated(rownames)))
     names(rownames) <- g2s[["geneID"]]
     rownames(rawData) <- rownames
