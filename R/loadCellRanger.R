@@ -214,7 +214,7 @@ loadCellRanger <- function(
         "cell2sample" = cell2sample,
         "organism" = organism,
         "genomeBuild" = as.character(genomeBuild),
-        "ensemblRelease" = as.character(ensemblRelease),
+        "ensemblRelease" = as.integer(ensemblRelease),
         "rowRangesMetadata" = rowRangesMetadata,
         "umiType" = umiType,
         "allSamples" = allSamples,
