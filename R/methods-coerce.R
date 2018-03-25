@@ -1,6 +1,3 @@
-# FIXME Don't use `counts(from, convertGenesToSymbols = TRUE)`
-
-
 #' Coerce Object
 #'
 #' @name coerce
@@ -34,26 +31,36 @@ NULL
     if ("sampleNameAggregate" %in% colnames(sampleData(from))) {
         inform(paste(
             "`sampleNameAggregate` metadata column detected.",
-            "Use `aggregateReplicates()` to combine technical replicates"
+            "Use `aggregateReplicates()` to combine technical replicates.",
+            sep = "\n"
         ))
     }
 
-    # Require filtered cells and genes only
+    # Require filtering of cells and genes
     from <- .applyFilterCutoffs(from)
 
-    # Create seurat object
-    raw <- counts(from)
-    rownames(raw) <- makeNames(gene2symbol(from)[["geneName"]])
-    colData <- colData(from, return = "data.frame")
+    # Prepare counts matrix with gene symbols as rownames
+    rawData <- assay(from)
+    g2s <- gene2symbol(from)
+    assertIsGene2symbol(g2s)
+    rownames <- makeNames(g2s[["geneName"]], unique = TRUE)
+    stopifnot(!any(duplicated(rownames)))
+    names(rownames) <- g2s[["geneID"]]
+    rownames(rawData) <- rownames
+
+    # Prepare metadata data.frame
+    metaData <- colData(from, return = "data.frame")
+
+    # New seurat object
     seurat <- CreateSeuratObject(
-        raw.data = raw,
+        raw.data = rawData,
         project = "bcbioSingleCell",
         # Already applied filtering cutoffs for cells and genes
         min.cells = 0L,
         min.genes = 0L,
         # Default for UMI datasets
         is.expr = 0L,
-        meta.data = colData
+        meta.data = metaData
     )
 
     # Check that the dimensions match exactly
