@@ -120,7 +120,7 @@
         facets <- "sampleNameAggregate"
     }
     if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_y")
+        p <- p + facet_wrap(facets = facets, scales = "free")
     }
 
     p

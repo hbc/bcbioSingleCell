@@ -81,7 +81,7 @@ NULL
         facets <- c(facets, "sampleNameAggregate")
     }
     if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_x")
+        p <- p + facet_wrap(facets = facets, scales = "free")
     }
 
     p

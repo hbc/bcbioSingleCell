@@ -52,7 +52,7 @@ NULL
         )
     ) +
         geom_point(size = 0.8, alpha = 0.8) +
-        scale_x_log10() +
+        scale_x_continuous(trans = "log10") +
         labs(x = "library size (depth)", y = "dropout rate")
 
     # Wrap aggregated samples
@@ -61,7 +61,7 @@ NULL
         facets <- "sampleNameAggregate"
     }
     if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_y")
+        p <- p + facet_wrap(facets = facets, scales = "free")
     }
 
     p
