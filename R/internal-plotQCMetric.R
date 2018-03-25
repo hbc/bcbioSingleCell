@@ -102,9 +102,9 @@
     # Median labels
     if (geom != "histogram") {
         if (metricCol %in% c("log10GenesPerUMI", "mitoRatio")) {
-            digits <- 2
+            digits <- 2L
         } else {
-            digits <- 0
+            digits <- 0L
         }
         p <- p +
             .medianLabels(
