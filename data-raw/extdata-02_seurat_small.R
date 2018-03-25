@@ -1,12 +1,19 @@
+# bcb_small dataset
+# 2018-03-25
+library(devtools)
+library(Seurat)
+load_all()
+load("inst/extdata/bcb_small.rda")
+
 # seurat_small =================================================================
-dimsUse <- seq_len(20L)
-seurat_small <- as(indrop_small, "seurat") %>%
+dims_use <- seq_len(20L)
+seurat_small <- as(bcb_small, "seurat") %>%
     NormalizeData() %>%
     FindVariableGenes(do.plot = FALSE) %>%
     ScaleData() %>%
     RunPCA(do.print = FALSE) %>%
-    FindClusters(dims.use = dimsUse) %>%
-    RunTSNE(dims.use = dimsUse, do.fast = TRUE)
+    FindClusters(dims.use = dims_use) %>%
+    RunTSNE(dims.use = dims_use, do.fast = TRUE)
 
 # all_markers_small ============================================================
 all_markers_small <- FindAllMarkers(seurat_small)
@@ -17,7 +24,7 @@ all_markers_small <- sanitizeMarkers(
 
 # known_markers_small ==========================================================
 known_markers_small <- knownMarkersDetected(
-    all = all_markers_small_sanitized,
+    all = all_markers_small,
     known = cellTypeMarkers[["homoSapiens"]]
 )
 
