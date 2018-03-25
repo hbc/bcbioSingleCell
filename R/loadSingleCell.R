@@ -364,7 +364,6 @@ loadSingleCell <- function(
         "projectDir" = projectDir,
         "template" = template,
         "runDate" = runDate,
-        "yamlFile" = yamlFile,
         "yaml" = yaml,
         "tx2gene" = tx2gene,
         "dataVersions" = dataVersions,
