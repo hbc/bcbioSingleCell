@@ -10,14 +10,21 @@
 \usage{
 plotZerosVsDepth(object, ...)
 
-\S4method{plotZerosVsDepth}{bcbioSingleCell}(object)
+\S4method{plotZerosVsDepth}{bcbioSingleCell}(object,
+  color = scale_color_viridis(discrete = TRUE))
 
-\S4method{plotZerosVsDepth}{seurat}(object)
+\S4method{plotZerosVsDepth}{seurat}(object,
+  color = scale_color_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
+
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
 \item{metrics}{Metrics \code{data.frame}.}
 }

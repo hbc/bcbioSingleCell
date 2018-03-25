@@ -33,8 +33,11 @@ and Ensembl gene identifiers for rows.
 load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
 
 # bcbioSingleCell ====
-sampleData(bcb_small) \%>\% glimpse()
-selectSamples(bcb_small, sampleName = "M1_seq_rep_1")
+sampleName <- sampleData(bcb_small) \%>\%
+    .[1L, "sampleName"] \%>\%
+    as.character()
+print(sampleName)
+selectSamples(bcb_small, sampleName = sampleName)
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
