@@ -1,6 +1,7 @@
 #' @importFrom assertive assert_all_are_dirs
 #' @importFrom assertive assert_all_are_existing_files
 #' @importFrom assertive assert_all_are_greater_than_or_equal_to
+#' @importFrom assertive assert_all_are_in_left_open_range
 #' @importFrom assertive assert_all_are_matching_regex
 #' @importFrom assertive assert_all_are_non_negative
 #' @importFrom assertive assert_all_are_positive
@@ -8,6 +9,7 @@
 #' @importFrom assertive assert_are_disjoint_sets
 #' @importFrom assertive assert_are_intersecting_sets
 #' @importFrom assertive assert_are_identical
+#' @importFrom assertive assert_has_dimnames
 #' @importFrom assertive assert_has_no_duplicates
 #' @importFrom assertive assert_has_names
 #' @importFrom assertive assert_has_rows
@@ -49,7 +51,7 @@ NULL
 
 
 
-.checkAggregate <- function(object, stop = FALSE) {
+.isAggregate <- function(object, stop = FALSE) {
     logical <- "sampleNameAggregate" %in% colnames(object)
     if (
         identical(logical, FALSE) &&
@@ -58,31 +60,6 @@ NULL
         abort("`sampleNameAggregate` column is required")
     }
     logical
-}
-
-
-
-.checkFilterParams <- function(object) {
-    params <- metadata(object)[["filterParams"]]
-    if (is.null(params)) {
-        abort("`filterCells()` hasn't been applied to this dataset")
-    }
-
-    # `filterParams` metadata was stored as a named numeric vector up until
-    # v0.0.28. We changed to storing as a list in v0.0.29, to allow for per
-    # sample cutoffs.
-    if (is.numeric(params)) {
-        params <- as.list(params)
-    }
-
-    # Ensure all params are numeric
-    if (!all(vapply(
-        X = params,
-        FUN = is.numeric,
-        FUN.VALUE = logical(1L)
-    ))) {
-        abort("Filter parameters must be numeric")
-    }
 }
 
 
@@ -99,33 +76,23 @@ NULL
 #' @param stop Stop on failure, instead of returning `FALSE`.
 #'
 #' @return `TRUE` if sanitized, `FALSE` if not.
-.checkSanitizedMarkers <- function(
+.isSanitizedMarkers <- function(
     object,
-    package = "Seurat",
-    stop = FALSE
+    package = "Seurat"
 ) {
+    package <- match.arg(package)
+
     # General checks ===========================================================
     if (!is(object, "grouped_df")) {
-        if (isTRUE(stop)) {
-            abort("Object must be `grouped_df` class")
-        } else {
-            return(FALSE)
-        }
+        return(FALSE)
     }
-    if (is.null(attr(object, "vars")) |
-        attr(object, "vars") != "cluster") {
-        if (isTRUE(stop)) {
-            abort("Object must be grouped by `cluster` column")
-        } else {
-            return(FALSE)
-        }
-    }
-    if (!"geneID" %in% colnames(object)) {
-        if (isTRUE(stop)) {
-            abort("Object missing `geneID` column")
-        } else {
-            return(FALSE)
-        }
+    else if (
+        is.null(attr(object, "vars")) ||
+        attr(object, "vars") != "cluster"
+    ) {
+        return(FALSE)
+    } else if (!"geneID" %in% colnames(object)) {
+        return(FALSE)
     }
 
     # Package-specific checks ==================================================
@@ -143,24 +110,9 @@ NULL
             "pct.2"
         )
         if (any(seuratBlacklist %in% colnames(object))) {
-            # Original
-            sanitized <- FALSE
+            return(FALSE)
         } else {
-            # Sanitized
-            sanitized <- TRUE
+            return(TRUE)
         }
-    } else {
-        abort("Unsupported package")
-    }
-
-    # Return or stop
-    # Silent return if sanitized = TRUE and stop = FALSE
-    if (identical(stop, FALSE)) {
-        sanitized
-    } else if (identical(stop, TRUE) & identical(sanitized, FALSE)) {
-        abort(paste(
-            "Markers table doesn't pass sanitization checks.",
-            "Ensure that `sanitizeMarkers()` has been run."
-        ))
     }
 }
