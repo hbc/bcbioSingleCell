@@ -82,63 +82,63 @@ setValidity(
         # - lanes
         # - tx2gene
         #
+        # bcbio-specific:
+        # - bcbioCommandsLog: character
+        # - bcbioLog: character
+        # - dataVersions: tbl_df
+        # - gffFile: character
+        # - programVersions: tbl_df
+        # - projectDir: character
+        # - runDate: Date
+        # - template: character
+        # - yaml: list
+        #
         # v0.2.0
         # - loadCellRanger: call
         # - loadSingleCell: call
         # - txdb: TxDb
 
-        # Class checks (order independent)
+        # Class checks
         requiredMetadata <- list(
             "allSamples" = "logical",
-            "bcbioCommandsLog" = "character",
-            "bcbioLog" = "character",
             "cell2sample" = "factor",
-            "dataVersions" = "tbl_df",
             "date" = "Date",
             "devtoolsSessionInfo" = "session_info",
             "ensemblRelease" = "integer",
             "genomeBuild" = "character",
-            "gffFile" = "character",
             "interestingGroups" = "character",
             "isSpike" = "character",
             "level" = "character",
             "organism" = "character",
             "pipeline" = "character",
-            "programVersions" = "tbl_df",
-            "projectDir" = "character",
             "rowRangesMetadata" = "tbl_df",
-            "runDate" = "Date",
             "sampleData" = "data.frame",
             "sampleDirs" = "character",
             "sampleMetadataFile" = "character",
-            "template" = "character",
             "umiType" = "character",
             "unannotatedRows" = "character",
             "uploadDir" = "character",
             "utilsSessionInfo" = "sessionInfo",
             "version" = "package_version",
-            "wd" = "character",
-            "yaml" = "list"
+            "wd" = "character"
         )
-        classChecks <- invisible(vapply(
-            X = seq_along(requiredMetadata),
-            FUN = function(a) {
-                name <- names(requiredMetadata)[[a]]
+        classChecks <- invisible(mapply(
+            name <- names(requiredMetadata),
+            expected <- requiredMetadata,
+            MoreArgs = list(metadata = metadata),
+            FUN = function(name, expected, metadata) {
                 actual <- class(metadata[[name]])
-                expected <- requiredMetadata[[a]]
                 if (!length(intersect(expected, actual))) {
-                    warn(paste(
-                        name, "is not", toString(expected)
-                    ))
                     FALSE
                 } else {
                     TRUE
                 }
             },
-            FUN.VALUE = logical(1L),
-            USE.NAMES = FALSE
+            SIMPLIFY = TRUE,
+            USE.NAMES = TRUE
         ))
         if (!all(classChecks)) {
+            print(classChecks)
             abort(paste(
                 "Metadata class checks failed.",
                 bcbioBase::updateMessage,
