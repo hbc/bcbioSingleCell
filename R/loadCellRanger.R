@@ -205,6 +205,7 @@ loadCellRanger <- function(
     metadata <- list(
         "version" = packageVersion,
         "pipeline" = pipeline,
+        "level" = level,
         "uploadDir" = uploadDir,
         "sampleDirs" = sampleDirs,
         "sampleMetadataFile" = as.character(sampleMetadataFile),
