@@ -28,7 +28,7 @@
 #'
 #' # seurat ===
 #' top <- topMarkers(all_markers_small, n = 1L)
-#' genes <- pull(top, "geneName")
+#' genes <- pull(top, "rowname")
 #' plotMarkers(seurat_small, genes = genes)
 NULL
 
