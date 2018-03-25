@@ -43,11 +43,11 @@ colnames(mat) <- colnames
 countsPerGene <- Matrix::rowSums(mat) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
-genes <- names(countsPerGene)
+genes <- sort(names(countsPerGene))
 countsPerCell <- Matrix::colSums(mat) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
-cells <- names(countsPerCell)
+cells <- sort(names(countsPerCell))
 mat <- mat[genes, cells]
 
 # Update the `barcodes.tsv` file to match
