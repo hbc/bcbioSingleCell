@@ -28,11 +28,9 @@ NULL
 .cellTypesPerCluster <- function(
     object,
     min = 1L,
-    max = Inf) {
-    if (attr(object, "vars") != "cellType") {
-        abort("Markers tibble is not grouped by `cellType`")
-    }
-
+    max = Inf
+) {
+    assert_are_identical(attr(object, "vars"), "cellType")
     requiredCols <- c(
         "cellType",  # bcbio
         "cluster",   # Seurat
@@ -46,10 +44,8 @@ NULL
     # Note that the order is important here
     groupCols <- c("cluster", "cellType")
 
-    tbl <- object %>%
+    data <- object %>%
         ungroup() %>%
-        # Use only positive markers for this approach
-        .[.[["avgLogFC"]] > 0L, , drop = FALSE] %>%
         .[, unique(c(groupCols, colnames(.))), drop = FALSE] %>%
         group_by(!!!syms(groupCols)) %>%
         arrange(.data[["padj"]], .by_group = TRUE) %>%
@@ -64,18 +60,15 @@ NULL
         arrange(dplyr::desc(.data[["n"]]), .by_group = TRUE)
 
     # Apply minimum and maximum gene cutoffs
-    if (is.numeric(min) & min > 1L) {
-        tbl <- tbl[tbl[["n"]] >= min, , drop = FALSE]
+    if (is.numeric(min) && min > 1L) {
+        data <- data[data[["n"]] >= min, , drop = FALSE]
     }
-    if (is.numeric(max) & max > 1L) {
-        tbl <- tbl[tbl[["n"]] <= max, , drop = FALSE]
+    if (is.numeric(max) && max > 1L) {
+        data <- data[data[["n"]] <= max, , drop = FALSE]
+    }
+    assert_has_rows(data)
 
-    }
-    if (!nrow(tbl)) {
-        return(NULL)
-    }
-
-    tbl
+    data
 }
 
 
