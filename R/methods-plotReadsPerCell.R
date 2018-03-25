@@ -113,7 +113,8 @@ NULL
             color = lineColor,
             scale = "count"
         ) +
-        .medianLabels(data, medianCol = "log10Count", digits = 2L)
+        .medianLabels(data, medianCol = "log10Count", digits = 2L) +
+        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
     # Cutoff lines
     if (cutoffLine > 0L && length(cutoffLine)) {
@@ -170,7 +171,8 @@ NULL
             panel_scaling = TRUE,
             scale = 10L
         ) +
-        .medianLabels(data, medianCol = "log10Count", digits = 2L)
+        .medianLabels(data, medianCol = "log10Count", digits = 2L) +
+        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
     # Cutoff lines
     if (cutoffLine > 0L && length(cutoffLine)) {
