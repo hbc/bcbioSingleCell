@@ -6,26 +6,26 @@ library(readr)
 load_all()
 
 # Include the top 500 genes (rows) and cells (columns)
-indropDir <- "inst/extdata/harvard_indrop_v3"
+uploadDir <- "inst/extdata/harvard_indrop_v3"
 sampleName <- "multiplexed-AAAAAAAA"
 
 matFile <- file.path(
-    indropDir,
+    uploadDir,
     sampleName,
     paste0(sampleName, ".mtx")
 )
 rownamesFile <- file.path(
-    indropDir,
+    uploadDir,
     sampleName,
     paste0(sampleName, ".mtx.rownames")
 )
 colnamesFile <- file.path(
-    indropDir,
+    uploadDir,
     sampleName,
     paste0(sampleName, ".mtx.colnames")
 )
 barcodesFile <- file.path(
-    indropDir,
+    uploadDir,
     sampleName,
     paste0(sampleName, "-barcodes.tsv")
 )
@@ -64,19 +64,19 @@ write_lines(colnames(mat), path = colnamesFile)
 write_tsv(barcodes, path = barcodesFile, col_names = FALSE)
 
 # indrop_small =================================================================
-indrop_small <- loadSingleCell(
-    uploadDir = indropDir,
-    sampleMetadataFile = file.path(indropDir, "metadata.csv"),
+bcb_small <- loadSingleCell(
+    uploadDir = uploadDir,
+    sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
     organism = "Homo sapiens"
 )
 
 # Apply example filtering without excluding any cells
-indrop_small <- filterCells(
-    indrop_small,
+bcb_small <- filterCells(
+    object = bcb_small,
     minUMIs = 0,
     minGenes = 0,
     maxMitoRatio = Inf,
     minNovelty = 0
 )
 
-saveData(indrop_small, dir = "inst/extdata", compress = "xz")
+saveData(bcb_small, dir = "inst/extdata", compress = "xz")
