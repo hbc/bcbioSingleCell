@@ -23,8 +23,11 @@
 #' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
 #'
 #' # bcbioSingleCell ====
-#' sampleData(bcb_small) %>% glimpse()
-#' selectSamples(bcb_small, sampleName = "rep_1")
+#' sampleName <- sampleData(bcb_small) %>%
+#'     .[1L, "sampleName"] %>%
+#'     as.character()
+#' print(sampleName)
+#' selectSamples(bcb_small, sampleName = sampleName)
 NULL
 
 
