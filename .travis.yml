@@ -5,8 +5,8 @@ language: r
 cache: packages
 
 r:
-  - bioc-release
-  # - bioc-devel
+  # - bioc-release
+  - bioc-devel
 
 # External dependencies
 # (required for zinbwave)
@@ -38,8 +38,6 @@ r_packages:
   - covr
 bioc_packages:
   - BiocCheck
-  - BiocGenerics  # zingeR requires BiocGenerics >= 0.23.3
-  - S4Vectors
 
 after_success:
   - Rscript -e 'covr::codecov()'
