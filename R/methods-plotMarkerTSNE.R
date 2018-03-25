@@ -18,7 +18,7 @@
 #'
 #' # seurat ====
 #' # Mitochondrial genes
-#' mito <- grep("^MT_", rownames(counts(seurat_small)), value = TRUE)
+#' mito <- grep("^MT\\.", rownames(counts(seurat_small)), value = TRUE)
 #' head(mito)
 #' plotMarkerTSNE(seurat_small, genes = mito)
 NULL

@@ -57,7 +57,7 @@ load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 
 # seurat ===
 top <- topMarkers(all_markers_small, n = 1L)
-genes <- pull(top, "geneName")
+genes <- pull(top, "rowname")
 plotMarkers(seurat_small, genes = genes)
 }
 \seealso{
