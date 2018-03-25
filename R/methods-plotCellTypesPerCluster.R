@@ -1,5 +1,4 @@
 # TODO Need to update arguments to match `plotMarkerTSNE()`
-# FIXME Need to fix working example
 
 #' Plot Cell Types per Cluster
 #'
@@ -20,20 +19,19 @@
 #'
 #' @examples
 #' load(system.file(
-#'     "extdata/knownMarkersDetected.rda",
+#'     "extdata/known_markers_small.rda",
 #'     package = "bcbioSingleCell"
 #' ))
 #' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat ====
-#' cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
-#' glimpse(cellTypesPerCluster)
+#' per_cluster <- cellTypesPerCluster(known_markers_small)
+#' glimpse(per_cluster)
 #'
 #' # Let's plot the first row, as an example
-#' cellTypesPerCluster <- cellTypesPerCluster[1L, , drop = FALSE]
 #' plotCellTypesPerCluster(
 #'     object = seurat_small,
-#'     cellTypesPerCluster = cellTypesPerCluster
+#'     cellTypesPerCluster = per_cluster[1L, , drop = FALSE]
 #' )
 NULL
 
@@ -43,7 +41,7 @@ NULL
 .plotCellTypesPerCluster <- function(
     object,
     cellTypesPerCluster,
-    color = scale_color_viridis(),
+    color = scale_color_viridis(discrete = FALSE),
     dark = TRUE,
     headerLevel = 2L
 ) {
@@ -52,7 +50,7 @@ NULL
         x = group_vars(cellTypesPerCluster),
         y = "cluster"
     )
-    # FIXME Add color assert check
+    assertIsColorScaleContinuousOrNULL(color)
     assert_is_a_bool(dark)
     assertIsAHeaderLevel(headerLevel)
 
@@ -62,9 +60,7 @@ NULL
 
     # Output Markdown headers per cluster
     clusters <- levels(cellTypesPerCluster[["cluster"]])
-    if (is.null(clusters)) {
-        return(invisible())
-    }
+    assert_is_non_empty(clusters)
 
     return <- pblapply(clusters, function(cluster) {
         markdownHeader(
@@ -81,7 +77,7 @@ NULL
             genes <- pull(cellType, "geneName") %>%
                 strsplit(", ") %>%
                 .[[1L]]
-            title <- pull(cellType, "cell")
+            title <- pull(cellType, "cellType")
             markdownHeader(
                 title,
                 level = headerLevel + 1L,
