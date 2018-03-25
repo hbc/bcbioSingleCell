@@ -24,7 +24,7 @@
 #'
 #' # bcbioSingleCell ====
 #' sampleData(bcb_small) %>% glimpse()
-#' selectSamples(bcb_small, sampleName = "M1_seq_rep_1")
+#' selectSamples(bcb_small, sampleName = "rep_1")
 NULL
 
 
