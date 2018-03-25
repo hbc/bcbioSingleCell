@@ -284,9 +284,9 @@ NULL
     cat(c(
         "Filtering parameters:",
         paste("  -", printParams),
-        sepBar,
+        bcbioBase::separatorBar,
         as.character(summary),
-        sepBar,
+        bcbioBase::separatorBar,
         paste(
             length(cells), "/", ncol(object), "cells passed filtering",
             paste0("(", percent(length(cells) / ncol(object)), ")")

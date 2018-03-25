@@ -103,8 +103,7 @@ NULL
                 .data[["sampleName"]], unique = FALSE
             )
         ) %>%
-        # TODO Improve detection and handling of unique columns here
-        .[, metadataPriorityCols] %>%
+        .[, bcbioBase::metadataPriorityCols] %>%
         unique()
     if (!identical(nrow(sampleData), expected)) {
         abort("Failed to aggregate sample metadata uniquely")

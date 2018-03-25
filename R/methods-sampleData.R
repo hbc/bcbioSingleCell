@@ -30,8 +30,8 @@ NULL
 # Constructors =================================================================
 .sampleData.seurat <- function(data) {  # nolint
     # Assign the required metadata columns from `orig.ident`, if necessary
-    if (!all(metadataPriorityCols %in% colnames(data))) {
-        missing <- setdiff(metadataPriorityCols, colnames(data))
+    if (!all(bcbioBase::metadataPriorityCols %in% colnames(data))) {
+        missing <- setdiff(bcbioBase::metadataPriorityCols, colnames(data))
         for (i in seq_along(missing)) {
             data[[missing[[i]]]] <- data[["orig.ident"]]
         }

@@ -110,21 +110,21 @@ loadSingleCell <- function(
     # Directory paths ==========================================================
     projectDir <- dir(
         uploadDir,
-        pattern = projectDirPattern,
+        pattern = bcbioBase::projectDirPattern,
         full.names = FALSE,
         recursive = FALSE
     )
     assert_is_a_string(projectDir)
     inform(projectDir)
-    match <- str_match(projectDir, projectDirPattern)
+    match <- str_match(projectDir, bcbioBase::projectDirPattern)
     runDate <- as.Date(match[[2L]])
     template <- match[[3L]]
     projectDir <- file.path(uploadDir, projectDir)
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sequencing lanes =========================================================
-    if (any(grepl(lanePattern, sampleDirs))) {
-        lanes <- str_match(names(sampleDirs), lanePattern) %>%
+    if (any(grepl(bcbioBase::lanePattern, sampleDirs))) {
+        lanes <- str_match(names(sampleDirs), bcbioBase::lanePattern) %>%
             .[, 2L] %>%
             unique() %>%
             length()
