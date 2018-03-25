@@ -184,9 +184,9 @@ loadSingleCell <- function(
     # Detect gene or transcript-level output ===================================
     genemapPattern <- "--genemap (.+)-tx2gene.tsv"
     if (any(grepl(genemapPattern, bcbioCommandsLog))) {
-        level <- "gene"
+        level <- "genes"
     } else {
-        level <- "transcript"
+        level <- "transcripts"
     }
 
     # Molecular barcode (UMI) type =============================================
