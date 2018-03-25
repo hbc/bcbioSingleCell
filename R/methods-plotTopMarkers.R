@@ -55,7 +55,7 @@ NULL
     list <- pblapply(clusters, function(cluster) {
         genes <- topMarkers %>%
             .[.[["cluster"]] == cluster, , drop = FALSE] %>%
-            pull("geneName")
+            pull("rowname")
         if (!length(genes)) {
             return(invisible())
         }
