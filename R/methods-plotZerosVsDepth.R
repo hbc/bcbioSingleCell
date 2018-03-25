@@ -26,7 +26,12 @@ NULL
 
 
 # Constructors =================================================================
-.plotZerosVsDepth <- function(object) {
+.plotZerosVsDepth <- function(
+    object,
+    color = scale_color_viridis(discrete = TRUE)
+) {
+    assertIsColorScaleDiscreteOrNULL(color)
+
     counts <- counts(object)
     metrics <- metrics(object)
 
@@ -54,6 +59,10 @@ NULL
         geom_point(size = 0.8, alpha = 0.8) +
         scale_x_continuous(trans = "log10") +
         labs(x = "library size (depth)", y = "dropout rate")
+
+    if (is(color, "ScaleDiscrete")) {
+        p <- p + color
+    }
 
     # Wrap aggregated samples
     facets <- NULL
