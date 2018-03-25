@@ -77,7 +77,7 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(.checkAggregate(data))) {
+    if (.isAggregate(data)) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (is.character(facets)) {

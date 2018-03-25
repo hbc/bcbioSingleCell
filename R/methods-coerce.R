@@ -32,7 +32,10 @@ NULL
 .coerceToSeurat <- function(from) {
     # Require that technical replicates are aggregated
     if ("sampleNameAggregate" %in% colnames(sampleData(from))) {
-        inform("Use `aggregateReplicates()` to combine technical replicates")
+        inform(paste(
+            "`sampleNameAggregate` metadata column detected.",
+            "Use `aggregateReplicates()` to combine technical replicates"
+        ))
     }
 
     # Require filtered cells and genes only

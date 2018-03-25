@@ -17,6 +17,9 @@
 #'
 #' # bcbioSingleCell ====
 #' plotReadsPerCell(bcb_small)
+#'
+#' # seurat ====
+#' plotReadsPerCell(pbmc_small)
 NULL
 
 
@@ -117,7 +120,7 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(.checkAggregate(tibble))) {
+    if (.isAggregate(tibble)) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (is.character(facets)) {
@@ -164,7 +167,7 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(.checkAggregate(tibble))) {
+    if (.isAggregate(tibble)) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (is.character(facets)) {
@@ -206,7 +209,7 @@ NULL
 
     # Facets
     facets <- NULL
-    if (isTRUE(.checkAggregate(tibble))) {
+    if (.isAggregate(tibble)) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (is.character(facets)) {

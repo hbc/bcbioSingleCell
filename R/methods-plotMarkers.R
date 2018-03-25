@@ -39,8 +39,7 @@ NULL
 .plotMarker.seurat <- function(  # nolint
     object,
     gene,
-    # FIXME Change tsneColor method here to use function name?
-    tsneColor = scale_color_viridis(),
+    tsneColor = scale_color_viridis(discrete = FALSE),
     violinFill = scale_fill_viridis(discrete = TRUE),
     dotColor = scale_color_gradient(
         low = "lightgray",
@@ -53,7 +52,7 @@ NULL
 ) {
     assert_is_a_string(gene)
     assertIsColorScaleContinuousOrNULL(tsneColor)
-    assertIsColorScaleDiscreteOrNULL(violinFill)
+    assertIsFillScaleDiscreteOrNULL(violinFill)
     assertIsColorScaleContinuousOrNULL(dotColor)
     assert_is_a_bool(dark)
     assert_is_a_bool(pointsAsNumbers)
@@ -114,8 +113,7 @@ NULL
 .plotMarkers.seurat <- function(  # nolint
     object,
     genes,
-    # FIXME Change tsneColor method?
-    tsneColor = scale_color_viridis(),
+    tsneColor = scale_color_viridis(discrete = FALSE),
     violinFill = scale_fill_viridis(discrete = TRUE),
     dotColor = scale_color_gradient(
         low = "lightgray",
@@ -126,10 +124,11 @@ NULL
     headerLevel = 2L,
     title = NULL
 ) {
-    assertIsAHeaderLevel(headerLevel)
-
-    # Abort on missing genes
+    # Passthrough: tsneColor, violinFill, dotColor, dark, pointsAsNumbers,
+    # title
+    assert_is_character(genes)
     assert_is_subset(genes, rownames(object))
+    assertIsAHeaderLevel(headerLevel)
 
     list <- lapply(genes, function(gene) {
         markdownHeader(gene, level = headerLevel, asis = TRUE)

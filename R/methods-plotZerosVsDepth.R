@@ -12,6 +12,9 @@
 #' @return `ggplot`.
 #'
 #' @examples
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell ====
 #' plotZerosVsDepth(bcb_small)
 #'
@@ -54,7 +57,7 @@ NULL
 
     # Wrap aggregated samples
     facets <- NULL
-    if (isTRUE(.checkAggregate(metrics))) {
+    if (.isAggregate(metrics)) {
         facets <- "sampleNameAggregate"
     }
     if (is.character(facets)) {

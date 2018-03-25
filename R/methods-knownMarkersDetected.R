@@ -46,7 +46,7 @@ NULL
     filterPromiscuous = FALSE,
     promiscuousCutoff = 5L
 ) {
-    .checkSanitizedMarkers(all, stop = TRUE)
+    stopifnot(.isSanitizedMarkers(all))
     # Check for `geneID` column in both `all` and `known`
     assert_is_subset("geneID", colnames(all))
     assert_is_subset("geneID", colnames(known))

@@ -4,6 +4,11 @@
 #' @author Michael Steinbaugh
 #'
 #' @examples
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
+#' # assay ====
+#' assay(pbmc_small) %>% glimpse()
+#'
 #' # dimensions ====
 #' rownames(pbmc_small) %>% head()
 #' colnames(pbmc_small) %>% head()
@@ -20,6 +25,19 @@ NULL
 
 
 # Methods ======================================================================
+#' @rdname seurat
+#' @importFrom SummarizedExperiment assay
+#' @export
+setMethod(
+    "assay",
+    signature("seurat"),
+    function(x) {
+        slot(x, "raw.data")
+    }
+)
+
+
+
 #' @rdname seurat
 #' @importFrom BiocGenerics colnames
 #' @export

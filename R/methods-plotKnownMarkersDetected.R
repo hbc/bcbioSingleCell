@@ -10,21 +10,16 @@
 #'
 #' @examples
 #' load(system.file(
-#'     "extdata/all_markers_small.rda",
+#'     "extdata/known_markers_small.rda",
 #'     package = "bcbioSingleCell"
 #' ))
 #' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
 #'
 #' # seurat ====
-#' known_detected <- knownMarkersDetected(
-#'     all = all_markers_small,
-#'     known = cellTypeMarkers[["homoSapiens"]]
-#' )
-#'
 #' # Let's plot the first 2 markers, as a quick example
 #' plotKnownMarkersDetected(
 #'     object = seurat_small,
-#'     knownMarkersDetected = known_detected[seq_len(2L), ]
+#'     knownMarkersDetected = known_markers_small[seq_len(2L), ]
 #' )
 NULL
 
@@ -34,7 +29,7 @@ NULL
 .plotKnownMarkersDetected <- function(
     object,
     knownMarkersDetected,
-    tsneColor = scale_color_viridis(),
+    tsneColor = scale_color_viridis(discrete = FALSE),
     violinFill = scale_fill_viridis(discrete = TRUE),
     dotColor = scale_color_gradient(
         low = "lightgray",
@@ -45,6 +40,7 @@ NULL
     headerLevel = 2L
 ) {
     # Passthrough: tsneColor, violinFill, dotColor, dark, pointsAsNumbers
+    assert_has_rows(knownMarkersDetected)
     assertIsAHeaderLevel(headerLevel)
     assert_has_rows(knownMarkersDetected)
     assert_is_subset("cellType", colnames(knownMarkersDetected))
@@ -72,7 +68,7 @@ NULL
         subheaderLevel <- headerLevel + 1L
 
         plotMarkers(
-            object,
+            object = object,
             genes = genes,
             tsneColor = tsneColor,
             violinFill = violinFill,

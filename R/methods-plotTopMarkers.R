@@ -11,10 +11,16 @@
 #'
 #' @inherit plotMarkers
 #'
-#' @param topMarkers Top markers `tibble` grouped by cluster, returned by
+#' @param topMarkers `grouped_df` grouped by "`cluster`", returned by
 #'   [topMarkers()].
 #'
 #' @examples
+#' load(system.file(
+#'     "extdata/all_markers_small.rda",
+#'     package = "bcbioSingleCell"
+#' ))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
 #' # seurat, grouped_df ====
 #' plotTopMarkers(
 #'     object = seurat_small,
@@ -28,7 +34,7 @@ NULL
 .plotTopMarkers <- function(
     object,
     topMarkers,
-    tsneColor = scale_color_viridis(),
+    tsneColor = scale_color_viridis(discrete = FALSE),
     violinFill = scale_fill_viridis(discrete = TRUE),
     dotColor = scale_color_gradient(
         low = "lightgray",
@@ -38,31 +44,31 @@ NULL
     pointsAsNumbers = FALSE,
     headerLevel = 2L
 ) {
-    .checkSanitizedMarkers(topMarkers)
+    validObject(object)
+    stopifnot(.isSanitizedMarkers(topMarkers))
+    assertIsAHeaderLevel(headerLevel)
+
     clusters <- levels(topMarkers[["cluster"]])
-    list <- pblapply(seq_along(clusters), function(a) {
-        cluster <- clusters[[a]]
-        # We're matching against the `geneName` column here
+
+    list <- pblapply(clusters, function(cluster) {
         genes <- topMarkers %>%
-            as.data.frame() %>%
-            .[.[["cluster"]] == cluster, "geneName", drop = TRUE]
-        if (!length(genes)) return(invisible())
+            .[.[["cluster"]] == cluster, , drop = FALSE] %>%
+            pull("geneName")
+        if (!length(genes)) {
+            return(invisible())
+        }
         if (length(genes) > 10L) {
             warn("Maximum of 10 genes per cluster is recommended")
         }
-        if (!is.null(headerLevel)) {
-            markdownHeader(
-                paste("Cluster", cluster),
-                level = headerLevel,
-                tabset = TRUE,
-                asis = TRUE
-            )
-            subheaderLevel <- headerLevel + 1L
-        } else {
-            subheaderLevel <- NULL
-        }
+        markdownHeader(
+            paste("Cluster", cluster),
+            level = headerLevel,
+            tabset = TRUE,
+            asis = TRUE
+        )
+        subheaderLevel <- headerLevel + 1L
         plotMarkers(
-            object,
+            object = object,
             genes = genes,
             tsneColor = tsneColor,
             violinFill = violinFill,
@@ -72,6 +78,7 @@ NULL
             headerLevel = subheaderLevel
         )
     })
+
     invisible(list)
 }
 

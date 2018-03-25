@@ -46,10 +46,13 @@
 #' @export
 #'
 #' @examples
-#' extdataDir <- system.file("extdata", package = "bcbioSingleCell")
+#' uploadDir <- system.file(
+#'     "extdata/harvard_indrop_v3",
+#'     package = "bcbioSingleCell"
+#' )
 #' loadSingleCell(
-#'     uploadDir = file.path(extdataDir, "harvard_indrop_v3"),
-#'     sampleMetadataFile = file.path(extdataDir, "harvard_indrop_v3.csv"),
+#'     uploadDir = uploadDir,
+#'     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
 #'     organism = "Homo sapiens"
 #' )
 loadSingleCell <- function(

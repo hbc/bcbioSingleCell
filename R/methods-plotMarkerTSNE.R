@@ -35,8 +35,7 @@ NULL
     pointAlpha = 0.8,
     label = TRUE,
     labelSize = 6L,
-    # FIXME Change color method to use function name?
-    color = scale_color_viridis(),
+    color = scale_color_viridis(discrete = FALSE),
     dark = TRUE,
     legend = TRUE,
     title = NULL,
@@ -49,7 +48,6 @@ NULL
     assert_is_a_number(pointAlpha)
     assert_is_a_bool(label)
     assert_is_a_number(labelSize)
-    # FIXME Assert check
     assertIsColorScaleContinuousOrNULL(color)
     assert_is_a_bool(dark)
     assert_is_a_bool(legend)

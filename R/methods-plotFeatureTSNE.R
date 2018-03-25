@@ -15,10 +15,8 @@
 #' @return Show plot or return as a `list`.
 #'
 #' @examples
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # seurat ====
-#' plotFeatureTSNE(seurat_small, features = "PC1")
+#' plotFeatureTSNE(pbmc_small, features = "PC1")
 NULL
 
 

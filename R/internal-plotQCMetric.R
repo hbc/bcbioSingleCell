@@ -116,7 +116,7 @@
 
     # Facets
     facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
+    if (.isAggregate(object)) {
         facets <- "sampleNameAggregate"
     }
     if (is.character(facets)) {
@@ -174,7 +174,7 @@
 
     # Facets
     facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
+    if (.isAggregate(object)) {
         facets <- c(facets, "sampleNameAggregate")
     }
     if (is.character(facets)) {

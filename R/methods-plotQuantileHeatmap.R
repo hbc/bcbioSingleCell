@@ -1,6 +1,6 @@
 #' Plot Heatmap with Quantile Breaks
 #'
-#' @details This is helpful for more usefully visualizing single cell data.
+#' @details This is helpful for visualizing single cell data.
 #'   Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 #'
 #' @name plotQuantileHeatmap
@@ -8,46 +8,18 @@
 #'
 #' @importFrom bcbioBase plotQuantileHeatmap
 #'
-#' @inheritParams general
-#' @param n The number of breaks to create.
-#' @param annotationCol *Optional.* `data.frame` that defines annotation
-#'   mappings for the columns.
-#' @param clusterCols Logical determining if columns should be arranged with
-#'   hierarchical clustering. Alternatively, can define an `hclust` object.
-#' @param clusterRows Logical determining if rows should be arranged with
-#'   hierarchical clustering. Alternatively, can define an `hclust` object.
-#' @param legendColor Colors to use for legend labels.
+#' @inherit bcbioBase::plotQuantileHeatmap
 #'
 #' @examples
+#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
+#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#'
 #' # bcbioSingleCell ====
-#' plotQuantileHeatmap(pbmc_small)
+#' plotQuantileHeatmap(bcb_small)
+#'
+#' # seurat ====
+#' plotQuantileHeatmap(seurat_small)
 NULL
-
-
-
-# Constructors =================================================================
-.plotQuantileHeatmap <- function(
-    object,
-    n = 5L,
-    annotationCol = NA,
-    clusterCols = FALSE,
-    clusterRows = FALSE,
-    color = viridis,
-    legendColor = viridis,
-    title = NULL
-) {
-    counts <- counts(object)
-    plotQuantileHeatmap(
-        object = counts,
-        n = n,
-        annotationCol = annotationCol,
-        clusterCols = clusterCols,
-        clusterRows = clusterRows,
-        color = color,
-        legendColor = legendColor,
-        title = title
-    )
-}
 
 
 
@@ -56,16 +28,6 @@ NULL
 #' @export
 setMethod(
     "plotQuantileHeatmap",
-    signature("bcbioSingleCell"),
-    .plotQuantileHeatmap
-)
-
-
-
-#' @rdname plotQuantileHeatmap
-#' @export
-setMethod(
-    "plotQuantileHeatmap",
     signature("seurat"),
-    .plotQuantileHeatmap
+    getMethod("plotQuantileHeatmap", "SummarizedExperiment")
 )

@@ -22,9 +22,8 @@
 #' @seealso Modified version of [Seurat::DotPlot()].
 #'
 #' @examples
-#' # seurat
-#' genes <- head(rownames(pbmc_small))
-#' plotDot(pbmc_small, genes = genes)
+#' # seurat ====
+#' plotDot(pbmc_small, genes = head(rownames(pbmc_small)))
 NULL
 
 
