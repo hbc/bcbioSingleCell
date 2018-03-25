@@ -13,7 +13,6 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param maxUMIs Maximum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.
@@ -63,7 +62,7 @@ NULL
         minCellsPerGene = minCellsPerGene
     )
     invisible(lapply(params, assert_is_a_number))
-    assert_all_are_positive(as.numeric(params))
+    assert_all_are_non_negative(as.numeric(params))
 
     # Filter low quality cells =================================================
     summary <- list()
