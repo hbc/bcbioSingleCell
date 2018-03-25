@@ -1,5 +1,19 @@
 .applyFilterCutoffs <- function(object) {
-    .checkFilterParams(object)
+    validObject(object)
+
+    params <- metadata(object)[["filterParams"]]
+    if (!is.list(params)) {
+        abort("`filterCells()` hasn't been applied to this dataset")
+    }
+
+    # Ensure all params are numeric
+    if (!all(vapply(
+        X = params,
+        FUN = is.numeric,
+        FUN.VALUE = logical(1L)
+    ))) {
+        abort("Filter parameters must be numeric")
+    }
 
     # Apply cell filtering cutoffs =============================================
     filterCells <- metadata(object)[["filterCells"]]
@@ -27,7 +41,7 @@
     if (is.null(genes)) {
         genes <- rownames(object)
     }
-    object <- object[genes, ]
+    object <- object[genes, , drop = FALSE]
     metadata(object)[["filterGenes"]] <- genes
 
     object
