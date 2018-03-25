@@ -21,11 +21,16 @@
 #' all_markers <- FindAllMarkers(seurat_small)
 #' all_sanitized <- sanitizeMarkers(
 #'     object = seurat_small,
-#'     markers = ident_3_markers
+#'     markers = all_markers
 #' )
 #' glimpse(all_sanitized)
-
+#'
 #' ident_3_markers <- FindMarkers(seurat_small, ident.1 = "3", ident.2 = NULL)
+#' ident_3_sanitized <- sanitizeMarkers(
+#'     object = seurat_small,
+#'     markers = ident_3_markers
+#' )
+#' glimpse(ident_3_sanitized)
 NULL
 
 
@@ -129,10 +134,10 @@ NULL
     if (isTRUE(all)) {
         # `cluster` is only present in `FindAllMarkers() return`
         data <- group_by(data, !!sym("cluster"))
-        priorityCols <- c("cluster", "rowname", requiredCols)
+        priorityCols <- c("cluster", requiredCols)
         arrangeCols <- c("cluster", "padj")
     } else {
-        priorityCols <- c("rowname", requiredCols)
+        priorityCols <- requiredCols
         arrangeCols <- "padj"
     }
 
