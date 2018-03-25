@@ -17,8 +17,17 @@
 #' @return `tibble`.
 #'
 #' @examples
+#' load(system.file(
+#'     "extdata/all_markers_small.rda",
+#'     package = "bcbioSingleCell"
+#' ))
+#'
 #' # grouped_df ====
-#' topMarkers(all_markers_small, n = 1L)
+#' topMarkers(
+#'     object = all_markers_small,
+#'     n = 2L,
+#'     direction = "positive"
+#' )
 NULL
 
 
@@ -27,28 +36,22 @@ NULL
 .topMarkers <- function(
     object,
     n = 10L,
-    direction = "positive",
+    direction = c("positive", "negative", "both"),
     coding = TRUE
 ) {
-    .checkSanitizedMarkers(object, stop = TRUE)
-    # Check to make sure `avgLogFC` column exists
-    if (!"avgLogFC" %in% colnames(object)) {
-        abort("`avgLogFC` column is missing")
-    }
-    # Check for valid direction
-    directionArgs <- c("positive", "negative", "both")
-    if (!direction %in% directionArgs) {
-        abort(paste(
-            "Valid `direction`:",
-            toString(directionArgs)
-        ))
-    }
+    stopifnot(.isSanitizedMarkers(object))
+    assert_is_subset(c("avgLogFC", "padj"), colnames(object))
+    assertIsAnImplicitInteger(n)
+    direction <- match.arg(direction)
+    assert_is_a_bool(coding)
+
     if (isTRUE(coding)) {
         object <- object %>%
             .[.[["geneBiotype"]] == "protein_coding", , drop = FALSE] %>%
             # Remove additional genes annotated as "predicted" in description
             .[!grepl("^predicted\\s", .[["description"]]), , drop = FALSE]
     }
+
     # Subset to positive or negative correlation, if desired ("direction")
     # Note that `avgDiff` has been renamed to `avgLogFC` in Seurat v2.1
     if (direction == "positive") {
@@ -56,9 +59,10 @@ NULL
     } else if (direction == "negative") {
         object <- object[object[["avgLogFC"]] < 0L, , drop = FALSE]
     }
+
     object %>%
-        # Arrange by P value
-        .[order(.[["pvalue"]]), , drop = FALSE] %>%
+        # Arrange by adjusted P value
+        arrange(!!sym("padj")) %>%
         # Take the top rows by using slice
         dplyr::slice(1L:n)
 }
