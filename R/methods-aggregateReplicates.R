@@ -104,6 +104,7 @@ NULL
             )
         ) %>%
         .[, bcbioBase::metadataPriorityCols] %>%
+        mutate_all(as.factor) %>%
         unique()
     if (!identical(nrow(sampleData), expected)) {
         abort("Failed to aggregate sample metadata uniquely")
@@ -169,7 +170,7 @@ NULL
 
     # Return ===================================================================
     .new.bcbioSingleCell(
-        assays = list(assay = counts),
+        assays = list("raw" = counts),
         rowRanges = rowRanges(object),
         colData = colData,
         metadata = metadata,
