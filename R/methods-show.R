@@ -22,7 +22,8 @@ setMethod(
         validObject(object)
         cat(
             paste(class(object), metadata(object)[["version"]]),
-            paste("samples:", ncol(object)),
+            paste("samples:", nrow(sampleData(object))),
+            paste("cells:", ncol(object)),
             paste0(metadata(object)[["level"]], ": ", nrow(object)),
             paste("organism:", metadata(object)[["organism"]]),
             paste("bcbio dir:", metadata(object)[["uploadDir"]]),
