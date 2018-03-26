@@ -40,7 +40,7 @@ test_that("Match failure", {
 
 test_that("Stop on unfiltered object", {
     expect_error(
-        selectSamples(bcb, interestingGroups = "homozygote"),
+        selectSamples(bcb_small, interestingGroups = "homozygote"),
         "`filterCells\\(\\)` hasn't been applied to this dataset"
     )
 })

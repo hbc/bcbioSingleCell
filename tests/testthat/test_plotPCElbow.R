@@ -1,8 +1,8 @@
 context("plotPCElbow")
 
-test_that("seurat", {
+test_that("seurat_small", {
     pcUse <- plotPCElbow(
-        seurat,
+        seurat_small,
         maxPct = 0.05,
         minCumPct = 0.8)
     expect_identical(

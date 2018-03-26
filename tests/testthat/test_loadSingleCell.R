@@ -3,9 +3,11 @@ context("loadSingleCell")
 test_that("Homo sapiens", {
     extdataDir <- system.file("extdata", package = "bcbioSingleCell")
     uploadDir <- file.path(extdataDir, "harvard_indrop_v3")
-    sampleMetadataFile <- file.path(extdataDir, "harvard_indrop_v3.xlsx")
-    bcb <- loadSingleCell(
+    sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
+    x <- loadSingleCell(
         uploadDir = uploadDir,
-        sampleMetadataFile = sampleMetadataFile)
-    expect_is(bcb, "bcbioSingleCell")
+        sampleMetadataFile = sampleMetadataFile,
+        organism = "Homo sapiens"
+    )
+    expect_s4_class(x, "bcbioSingleCell")
 })

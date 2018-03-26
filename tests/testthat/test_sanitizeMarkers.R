@@ -1,11 +1,11 @@
 context("sanitizeMarkers")
 
-test_that("seurat", {
+test_that("seurat_small", {
     x <- sanitizeMarkers(
-        seurat,
+        seurat_small,
         markers = seurat_all_markers_original)
     expect_is(x, "data.frame")
-    annotable <- annotable(seurat)
+    annotable <- annotable(seurat_small)
     expect_identical(
         setdiff(colnames(x), colnames(annotable)),
         c("cluster",

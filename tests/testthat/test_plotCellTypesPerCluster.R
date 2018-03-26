@@ -9,7 +9,7 @@ test_that("plotCellTypesPerCluster", {
         "NCAM1"
     )
     p <- plotCellTypesPerCluster(
-        seurat,
+        seurat_small,
         cellTypesPerCluster = x)
     expect_is(p, "list")
     expect_is(p[[1L]][[1L]], "ggplot")

@@ -1,7 +1,7 @@
 context("sampleMetadata")
 
 test_that("bcbioSingleCell", {
-    data <- sampleMetadata(bcb)
+    data <- sampleMetadata(bcb_small)
     expect_is(data, "data.frame")
     expect_identical(
         lapply(data, class),
@@ -27,15 +27,15 @@ seuratdata <- data.frame(
     row.names = "M1",
     stringsAsFactors = TRUE)
 
-test_that("seurat", {
-    data <- sampleMetadata(seurat)
+test_that("seurat_small", {
+    data <- sampleMetadata(seurat_small)
     expect_is(data, "data.frame")
     expect_identical(data, seuratdata)
 })
 
-test_that("seurat without stashed metadata", {
-    bcbio(seurat, "sampleMetadata") <- NULL
-    data <- sampleMetadata(seurat)
+test_that("seurat_small without stashed metadata", {
+    bcbio(seurat_small, "sampleMetadata") <- NULL
+    data <- sampleMetadata(seurat_small)
     expect_is(data, "data.frame")
     expect_identical(data, seuratdata)
 })

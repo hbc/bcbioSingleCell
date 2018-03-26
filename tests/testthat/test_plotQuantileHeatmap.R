@@ -1,7 +1,7 @@
 context("plotQuantileHeatmap")
 
-test_that("seurat", {
-    p <- plotQuantileHeatmap(seurat)
+test_that("seurat_small", {
+    p <- plotQuantileHeatmap(seurat_small)
     # Check for pheatmap return
     expect_is(p, "list")
     expect_identical(

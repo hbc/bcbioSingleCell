@@ -1,11 +1,11 @@
 context("plotGenesPerCell")
 
 test_that("bcbioSingleCell", {
-    p <- plotGenesPerCell(bcb)
+    p <- plotGenesPerCell(bcb_small)
     expect_is(p, "ggplot")
 })
 
-test_that("seurat", {
-    p <- plotGenesPerCell(seurat)
+test_that("seurat_small", {
+    p <- plotGenesPerCell(seurat_small)
     expect_is(p, "ggplot")
 })

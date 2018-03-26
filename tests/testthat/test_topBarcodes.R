@@ -9,7 +9,7 @@ test_that("bcbioSingleCell", {
     )
 })
 
-test_that("seurat", {
+test_that("seurat_small", {
     x <- topBarcodes(pbmc_small)
     expect_is(x, "data.frame")
     expect_identical(

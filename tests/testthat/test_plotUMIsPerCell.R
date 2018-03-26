@@ -1,11 +1,11 @@
 context("plotUMIsPerCell")
 
 test_that("bcbioSingleCell", {
-    p <- plotUMIsPerCell(bcb)
+    p <- plotUMIsPerCell(bcb_small)
     expect_is(p, "ggplot")
 })
 
-test_that("seurat", {
-    p <- plotUMIsPerCell(seurat)
+test_that("seurat_small", {
+    p <- plotUMIsPerCell(seurat_small)
     expect_is(p, "ggplot")
 })
