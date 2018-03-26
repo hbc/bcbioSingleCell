@@ -22,8 +22,7 @@ plotMarkerTSNE(object, ...)
 
 \item{genes}{Gene identifiers. Must match the rownames of the object.}
 
-\item{expression}{Calculation to apply on the aggregate marker expression.
-Supports \code{mean} (default), \code{median}, or \code{sum}.}
+\item{expression}{Calculation to apply on the aggregate marker expression.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 

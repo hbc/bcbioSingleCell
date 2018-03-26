@@ -1,20 +1,16 @@
 context("plotMarkerTSNE")
 
-genes <- counts(seurat_small) %>%
-    rownames() %>%
-    .[[1L]]
+genes <- rownames(counts(pbmc_small))[[1L]]
 
-test_that("seurat_small", {
-    expect_identical(genes, "SCYL3")
-    mean <- plotMarkerTSNE(seurat_small, genes = genes, expression = "mean")
-    median <- plotMarkerTSNE(seurat_small, genes = genes, expression = "median")
-    sum <- plotMarkerTSNE(seurat_small, genes = genes, expression = "sum")
-    invisible(lapply(
-        X = list(mean, median, sum),
-        FUN = function(p) {
-            expect_is(p, "ggplot")
-        }
-    ))
+test_that("Expression arguments", {
+    args <- methodFormals("plotMarkerTSNE", "seurat") %>%
+        .[["expression"]] %>%
+        as.character() %>%
+        .[-1L]
+    invisible(lapply(args, function(arg) {
+        p <- plotMarkerTSNE(pbmc_small, genes = genes, expression = arg)
+        expect_is(p, "ggplot")
+    }))
 })
 
 test_that("Invalid expression", {

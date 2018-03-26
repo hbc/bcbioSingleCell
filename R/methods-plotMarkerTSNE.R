@@ -8,7 +8,6 @@
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #' @param expression Calculation to apply on the aggregate marker expression.
-#'   Supports `mean` (default), `median`, or `sum`.
 #' @param subtitle Include gene identifiers as subtitles.
 #'
 #' @return `ggplot`.
@@ -26,7 +25,7 @@ NULL
 
 
 # Constructors =================================================================
-.plotMarkerTSNE <- function(
+.plotMarkerTSNE.seurat <- function(  # nolint
     object,
     genes,
     expression = c("mean", "median", "sum"),
@@ -172,5 +171,5 @@ NULL
 setMethod(
     "plotMarkerTSNE",
     signature("seurat"),
-    .plotMarkerTSNE
+    .plotMarkerTSNE.seurat
 )
