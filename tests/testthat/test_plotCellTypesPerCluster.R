@@ -1,16 +1,12 @@
 context("plotCellTypesPerCluster")
 
 test_that("plotCellTypesPerCluster", {
-    # Let's plot the first row, as an example
-    x <- cellTypesPerCluster(known_markers_detected) %>%
-        .[1L, , drop = FALSE]
-    expect_identical(
-        x[["geneName"]],
-        "NCAM1"
-    )
+    x <- cellTypesPerCluster(known_markers_small)[1L, , drop = FALSE]
+    expect_identical(x[["geneName"]], "NCAM1")
     p <- plotCellTypesPerCluster(
-        seurat_small,
-        cellTypesPerCluster = x)
+        object = seurat_small,
+        cellTypesPerCluster = x
+    )
     expect_is(p, "list")
     expect_is(p[[1L]][[1L]], "ggplot")
 })

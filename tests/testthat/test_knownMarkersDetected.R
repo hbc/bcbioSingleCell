@@ -9,9 +9,6 @@ test_that("knownMarkersDetected", {
     group <- dplyr::group_vars(x)
     expect_identical(group, "cellType")
 
-    annotable <- annotable(seurat_small)
-    colnames(annotable)
-
     # Need better way to test P values here than using round.
     # Check old code, I think there's a stringr method that works well.
     # Or we can using `format()`.

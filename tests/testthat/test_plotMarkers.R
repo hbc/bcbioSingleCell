@@ -1,10 +1,14 @@
 context("plotMarkers")
 
 test_that("symbols", {
-    genes <- dplyr::pull(top, "geneName")[[1L]]
-    expect_identical(genes, "ACTC1")
-    plotlist <- plotMarkers(seurat_small, genes = genes)
+    genes <- head(rownames(seurat_small), n = 2L)
+    plotlist <- plotMarkers(
+        object = seurat_small,
+        genes = genes
+    )
     expect_is(plotlist, "list")
+    expect_identical(length(plotlist), 2L)
+    expect_identical(names(plotlist), names(genes))
     p <- plotlist[[1L]]
     expect_is(p, "ggplot")
 })
