@@ -1,57 +1,40 @@
 context("fetchTSNEData")
 
 test_that("fetchTSNEData", {
-    data <- fetchTSNEData(seurat)
-    expect_is(data, "data.frame")
+    x <- fetchTSNEData(pbmc_small)
+    expect_is(x, "data.frame")
     expect_identical(
-        lapply(data, class),
+        lapply(x, class),
         list(
             "tSNE1" = "numeric",
             "tSNE2" = "numeric",
             "ident" = "factor",
             "nGene" = "integer",
             "nUMI" = "integer",
-            "sampleID" = "factor",
-            "nCoding" = "integer",
-            "nMito" = "integer",
-            "log10GenesPerUMI" = "numeric",
-            "mitoRatio" = "numeric",
-            "nCount" = "integer",
-            "sampleName" = "factor",
-            "description" = "factor",
-            "interestingGroups" = "factor",
             "origIdent" = "factor",
             "res0x8" = "factor",
+            "res1" = "factor",
             "centerX" = "numeric",
             "centerY" = "numeric"
         )
     )
 
-    subset <- data[1L, ] %>%
+    subset <- head(x, 1L) %>%
         rownames_to_column() %>%
         mutate_if(is.numeric, funs(round(., digits = 3L))) %>%
         column_to_rownames()
-    identLevels <- c("0", "1", "2", "3")
     target <- data.frame(
-        "tSNE1" = -3.056,
-        "tSNE2" = -4.304,
-        "ident" = factor("0", levels = identLevels),
-        "nGene" = 734L,
-        "nUMI" = 6220L,
-        "sampleID" = factor("M1"),
-        "nCoding" = 5495L,
-        "nMito" = 442L,
-        "log10GenesPerUMI" = 0.755,
-        "mitoRatio" = 0.071,
-        "nCount" = 95155L,
-        "sampleName" = factor("M1"),
-        "description" = factor("M1"),
-        "interestingGroups" = factor("M1"),
-        "origIdent" = factor("M1"),
-        "res0x8" = factor("0", levels = identLevels),
-        "centerX" = -6.651,
-        "centerY" = -4.226,
-        row.names = "M1_AAACACTA_CTTAGGTA",
+        "tSNE1" = 14.422,
+        "tSNE2" = 8.336,
+        "ident" = factor("0", levels = c("0", "1", "2", "3")),
+        "nGene" = 47L,
+        "nUMI" = 70L,
+        "origIdent" = factor("SeuratProject"),
+        "res0x8" = factor("0"),
+        "res1" = factor("0", levels = c("0", "1", "2", "3")),
+        "centerX" = -0.332,
+        "centerY" = 18.76,
+        row.names = "ATGCCAGAACGACT",
         stringsAsFactors = FALSE
     )
     expect_equal(subset, target)

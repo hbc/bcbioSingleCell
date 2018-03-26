@@ -5,13 +5,13 @@ test_that("cellTypesPerCluster", {
     expect_is(x, "grouped_df")
     group <- dplyr::group_vars(x)
     expect_identical(group, "cluster")
-    tbl <- tibble(
-        "cluster" = factor("2", levels = c("0", "1", "2", "3")),
+    y <- tibble(
+        "cluster" = factor("1", levels = c("0", "1", "2", "3", "4")),
         "cellType" = "Natural Killer Cell",
         "n" = 1L,
         "geneID" = "ENSG00000149294",
         "geneName" = "NCAM1"
     ) %>%
         dplyr::group_by(!!sym(group))
-    expect_identical(x, tbl)
+    expect_identical(x, y)
 })

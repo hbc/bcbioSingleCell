@@ -1,9 +1,9 @@
 context("fetchTSNEExpressionData")
 
-genes <- counts(seurat) %>% rownames() %>% head()
+genes <- counts(seurat_small) %>% rownames() %>% head()
 
-test_that("seurat", {
-    data <- fetchTSNEExpressionData(seurat, genes = genes)
+test_that("seurat_small", {
+    data <- fetchTSNEExpressionData(seurat_small, genes = genes)
     expect_is(data, "data.frame")
     expect_identical(
         lapply(data, class),

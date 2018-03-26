@@ -1,6 +1,6 @@
 context("bcbio")
 
-test_that("seurat", {
+test_that("bcbio : seurat_small", {
     x <- bcbio(seurat_small)
     expect_is(x, "list")
     expect_identical(
@@ -12,7 +12,7 @@ test_that("seurat", {
     )
 })
 
-test_that("seurat assignment", {
+test_that("bcbio : seurat_small assignment", {
     x <- seurat_small
     # Stash as new slot
     bcbio(x, "stash") <- "XXX"
