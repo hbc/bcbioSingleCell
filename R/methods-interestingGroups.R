@@ -48,6 +48,9 @@ NULL
         x = sampleData(object),
         interestingGroups = value
     )
+    if (is.null(metadata(object))) {
+        abort("object was not created with bcbioSingleCell")
+    }
     metadata(object)[["interestingGroups"]] <- value
     validObject(object)
     object

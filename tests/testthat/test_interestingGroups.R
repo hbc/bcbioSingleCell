@@ -1,11 +1,8 @@
 context("interestingGroups")
 
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
 test_that("bcbioSingleCell", {
     expect_identical(
-        interestingGroups(bcb),
+        interestingGroups(bcb_small),
         "sampleName"
     )
 })
@@ -16,43 +13,39 @@ test_that("Assignment of undefined interesting group", {
         "in colnames\\(x\\)"
     )
     expect_error(
-        interestingGroups(bcb) <- "XXX",
+        interestingGroups(bcb_small) <- "XXX",
         error
     )
     expect_error(
-        interestingGroups(seurat) <- "XXX",
+        interestingGroups(seurat_small) <- "XXX",
         error
     )
 })
 
 test_that("seurat", {
     expect_identical(
-        interestingGroups(seurat),
+        interestingGroups(seurat_small),
         "sampleName"
     )
-})
-
-test_that("seurat without bcbio metadata", {
-    slot(seurat, "misc") <- NULL
     expect_identical(
-        interestingGroups(seurat),
+        interestingGroups(pbmc_small),
         "sampleName"
-    )
-    expect_error(
-        interestingGroups(seurat) <- "sampleName",
-        "seurat object was not generated with bcbioSingleCell"
     )
 })
 
 test_that("Assignment method", {
-    interestingGroups(bcb) <- "sampleName"
+    interestingGroups(bcb_small) <- "sampleName"
     expect_identical(
-        interestingGroups(bcb),
+        interestingGroups(bcb_small),
         "sampleName"
     )
-    interestingGroups(seurat) <- "sampleName"
+    interestingGroups(seurat_small) <- "sampleName"
     expect_identical(
-        interestingGroups(seurat),
+        interestingGroups(seurat_small),
         "sampleName"
+    )
+    expect_error(
+        interestingGroups(pbmc_small) <- "sampleName",
+        "object was not created with bcbioSingleCell"
     )
 })
