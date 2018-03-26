@@ -12,6 +12,6 @@ test_that("cellTypesPerCluster", {
         "geneID" = "ENSG00000149294",
         "geneName" = "NCAM1"
     ) %>%
-        dplyr::group_by(!!sym(group))
+        dplyr::group_by(!!rlang::sym(group))
     expect_identical(x, y)
 })
