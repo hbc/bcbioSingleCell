@@ -5,7 +5,7 @@ test_that("cellTypesPerCluster", {
     expect_is(x, "grouped_df")
     group <- dplyr::group_vars(x)
     expect_identical(group, "cluster")
-    y <- tibble(
+    y <- tibble::tibble(
         "cluster" = factor("1", levels = c("0", "1", "2", "3", "4")),
         "cellType" = "Natural Killer Cell",
         "n" = 1L,

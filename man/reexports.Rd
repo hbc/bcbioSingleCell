@@ -11,13 +11,7 @@
 \alias{reexports}
 \alias{scale_color_hue}
 \alias{reexports}
-\alias{as_tibble}
-\alias{reexports}
-\alias{column_to_rownames}
-\alias{reexports}
 \alias{glimpse}
-\alias{reexports}
-\alias{rownames_to_column}
 \alias{reexports}
 \alias{inferno}
 \alias{reexports}
@@ -37,7 +31,7 @@ below to see their documentation.
 
   \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_gradient}}, \code{\link[ggplot2]{scale_color_hue}}}
 
-  \item{tibble}{\code{\link[tibble]{as_tibble}}, \code{\link[tibble]{column_to_rownames}}, \code{\link[tibble]{glimpse}}, \code{\link[tibble]{rownames_to_column}}}
+  \item{tibble}{\code{\link[tibble]{glimpse}}}
 
   \item{viridis}{\code{\link[viridis]{inferno}}, \code{\link[viridis]{scale_color_viridis}}, \code{\link[viridis]{scale_fill_viridis}}, \code{\link[viridis]{viridis}}}
 }}
