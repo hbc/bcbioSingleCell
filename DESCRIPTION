@@ -1,110 +1,16 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Import and analyze bcbio single-cell RNA-seq data.
-Version: 0.1.0
-Authors@R: c(
-    person(
-        given = "Michael",
-        family = "Steinbaugh",
-        email = "mike@steinbaugh.com",
-        role = c("aut", "cre"),
-        comment = c(ORCID = "0000-0002-2403-2221")
-    ),
-    person(
-        given = "Rory",
-        family = "Kirchner",
-        email = "roryk@alum.mit.edu",
-        role = "aut"
-    ),
-    person(
-        given = "Mary",
-        family = "Piper",
-        email = "mary.piper@gmail.com",
-        role = "aut"
-    ),
-    person(
-        given = "Shannan",
-        family = "Ho Sui",
-        email = "shosui@hsph.harvard.edu",
-        role = "aut"
-    ),
-    person(
-        given = "Harvard Chan Bioinformatics Core",
-        email = "bioinformatics@hsph.harvard.edu",
-        role = c("cph", "fnd")
-    ))
+Version: 0.0.0.9000
 Maintainer: Michael Steinbaugh <mike@steinbaugh.com>
-URL:
-    http://bioinformatics.sph.harvard.edu/bcbioSingleCell,
-    https://github.com/hbc/bcbioSingleCell
-BugReports: https://github.com/hbc/bcbioSingleCell/issues
-License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: TRUE
 Depends:
-    R (>= 3.4),
-    SingleCellExperiment (>= 1.0),
-    bcbioBase (>= 0.2),
-    Seurat (>= 2.0)
+    R (>= 3.4)
 Imports:
-    Biobase,
-    BiocGenerics (>= 0.24.0),
-    BiocParallel,
-    DESeq2 (>= 1.18.0),
-    GenomicFeatures,
-    Matrix (>= 1.0),
-    Matrix.utils,
-    S4Vectors (>= 0.16.0),
-    SummarizedExperiment,
-    assertive,
-    basejump (>= 0.4),
-    cowplot,
-    dendsort,
-    dplyr (>= 0.7),
-    edgeR (>= 3.20.8),
-    ggplot2 (>= 2.2.1),
-    ggridges,
-    grid,
-    jsonlite,
-    magrittr,
-    methods,
-    parallel,
-    pbapply,
-    pheatmap,
-    readr,
-    rlang,
-    scales,
-    stats,
-    stringr,
-    tibble,
-    tidyr,
-    utils,
-    viridis,
-    zinbwave (>= 1.0.0),
-    zingeR (>= 0.1.0)
-Suggests:
-    BiocStyle,
-    googlesheets,
-    lintr,
-    monocle,
-    rmarkdown,
-    roxygen2,
-    sessioninfo,
-    testthat,
-    tidyverse
+    DESeq2,
+    edgeR,
+    SingleCellExperiment,
+    Seurat,
+    zinbwave,
+    zingeR
 Remotes:
-    hbc/bcbioBase@develop,
-    statOmics/zingeR,
-    steinbaugh/basejump@develop
-biocViews:
-    DataImport,
-    DataRepresentation,
-    GeneExpression,
-    Infrastructure,
-    QualityControl,
-    ReportWriting,
-    RNASeq,
-    SingleCell,
-    Visualization
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
+    statOmics/zingeR
