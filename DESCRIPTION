@@ -8,6 +8,7 @@ Depends:
 Imports:
     DESeq2,
     edgeR,
-    SingleCellExperiment
+    SingleCellExperiment,
+    Seurat
 Remotes:
     statOmics/zingeR
