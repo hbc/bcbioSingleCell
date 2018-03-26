@@ -138,10 +138,10 @@ test_that("fetchTSNEExpressionData", {
         "centerX" = -0.332,
         "centerY" = 18.76,
         "mean" = 1.656,
-        "median" = 0,  # nolint
+        "median" = 0L,
         "sum" = 9.938,
         row.names = "ATGCCAGAACGACT",
         stringsAsFactors = TRUE
     )
-    expect_identical(subset, target)
+    expect_equal(subset, target)
 })
