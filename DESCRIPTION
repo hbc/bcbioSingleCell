@@ -9,6 +9,8 @@ Imports:
     DESeq2,
     edgeR,
     SingleCellExperiment,
-    Seurat
+    Seurat,
+    zinbwave,
+    zingeR
 Remotes:
     statOmics/zingeR
