@@ -3,13 +3,13 @@ context("gene2symbol")
 colnames <- c("geneID", "geneName")
 
 test_that("bcbioSingleCell", {
-    data <- gene2symbol(bcb)
-    expect_is(data, "data.frame")
-    expect_identical(colnames(data), colnames)
+    x <- gene2symbol(bcb_small)
+    expect_is(x, "data.frame")
+    expect_identical(colnames(x), colnames)
 })
 
-test_that("seurat", {
-    data <- gene2symbol(seurat)
-    expect_is(data, "data.frame")
-    expect_identical(colnames(data), colnames)
+test_that("seurat_small", {
+    x <- gene2symbol(seurat_small)
+    expect_is(x, "data.frame")
+    expect_identical(colnames(x), colnames)
 })

@@ -9,7 +9,7 @@ test_that("knownMarkersDetected", {
     group <- group_vars(x)
     expect_identical(group, "cell")
 
-    annotable <- annotable(seurat)
+    annotable <- annotable(seurat_small)
     colnames(annotable)
 
     # Need better way to test P values here than using round.
