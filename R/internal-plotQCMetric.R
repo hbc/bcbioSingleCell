@@ -4,7 +4,7 @@
     metricCol,
     geom = c("violin", "boxplot", "ridgeline", "histogram"),
     interestingGroups,
-    min = 0,
+    min = 0L,
     max = Inf,
     trans = "identity",
     fill = scale_fill_viridis(discrete = TRUE)
@@ -16,9 +16,15 @@
     }
     if (missing(min)) {
         min <- metadata(object)[["filterParams"]][["minGenes"]]
+        if (!is.numeric(min)) {
+            min <- 0L
+        }
     }
     if (missing(max)) {
         max <- metadata(object)[["filterParams"]][["maxGenes"]]
+        if (!is.numeric(max)) {
+            max <- Inf
+        }
     }
     assert_all_are_non_negative(c(min, max))
     # Support for per sample filtering cutoffs
@@ -28,7 +34,13 @@
     assertIsFillScaleDiscreteOrNULL(fill)
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
-    assert_is_subset(metricCol, colnames(metrics))
+    if (!metricCol %in% colnames(metrics)) {
+        warn(paste(
+            deparse(substitute(object)),
+            "does not contain", metricCol, "column in `metrics()`"
+        ))
+        return(invisible())
+    }
 
     mapping <- aes_string(fill = "interestingGroups")
     if (geom %in% c("boxplot", "violin")) {
