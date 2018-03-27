@@ -128,7 +128,7 @@ NULL
         ) +
         .qcCutoffLine(xintercept = cutoff) +
         labs(x = "pc", y = "cumulative % std dev") +
-        expand_limits(y = 0L) +
+        expand_limits(y = c(0L, 1L)) +
         scale_y_continuous(labels = percent, trans = trans)
 
     # Coordinates are relative to lower left corner

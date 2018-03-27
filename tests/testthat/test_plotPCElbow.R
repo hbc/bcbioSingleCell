@@ -1,6 +1,9 @@
 context("plotPCElbow")
 
 test_that("plotPCElbow : seurat", {
-    pcUse <- plotPCElbow(pbmc_small)
-    expect_identical(pcUse, seq_len(14L))
+    x <- plotPCElbow(seurat_small)
+    expect_identical(x, seq_len(9L))
+
+    x <- plotPCElbow(pbmc_small)
+    expect_identical(x, seq_len(11L))
 })
