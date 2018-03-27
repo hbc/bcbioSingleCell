@@ -33,7 +33,8 @@ NULL
     assertIsColorScaleDiscreteOrNULL(color)
 
     counts <- counts(object)
-    metrics <- metrics(object)
+    sampleID <- cell2sample(object)
+    sampleData <- sampleData(object)
 
     # Using a logical matrix is faster and more memory efficient
     present <- counts %>%
@@ -41,15 +42,15 @@ NULL
         as("dgCMatrix") %>%
         as("lgCMatrix")
 
-    # Add dropout rate and depth
-    metrics <- mutate(
-        metrics,
-        dropout = (nrow(present) - Matrix::colSums(present)) / nrow(present),
-        depth = Matrix::colSums(counts)
-    )
+    data <- tibble(
+        "sampleID" = sampleID,
+        "dropout" = (nrow(present) - Matrix::colSums(present)) / nrow(present),
+        "depth" = Matrix::colSums(counts)
+    ) %>%
+        left_join(sampleData, by = "sampleID")
 
     p <- ggplot(
-        data = metrics,
+        data = data,
         mapping = aes_string(
             x = "depth",
             y = "dropout",
