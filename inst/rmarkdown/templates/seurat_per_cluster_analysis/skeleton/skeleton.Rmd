@@ -7,8 +7,8 @@ params:
     seurat_file: "seurat.rda"
 ---
 
-```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-02-21
+```{r setup, cache=FALSE, message=FALSE}
+# Last modified 2018-03-27
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -26,8 +26,8 @@ interesting_groups <- interestingGroups(seurat)
 
 
 
-```{r sample_metadata}
-sampleMetadata(seurat)
+```{r sample_data}
+sampleData(seurat)
 ```
 
 

@@ -15,8 +15,8 @@ params:
     data_dir: "."
 ---
 
-```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-02-21
+```{r setup, cache=FALSE, message=FALSE}
+# Last modified 2018-03-27
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -31,8 +31,8 @@ stopifnot(is(bcb, "bcbioSingleCell"))
 
 
 
-```{r sample_metadata}
-sampleMetadata(bcb)
+```{r sample_data}
+sampleData(bcb)
 ```
 
 [bcbio][] run data was imported from **`r metadata(bcb)$uploadDir`**.
@@ -195,7 +195,8 @@ bcb_filtered <- filterCells(
 assignAndSaveData(
     name = paste(bcb_name, "filtered", sep = "_"),
     object = bcb_filtered,
-    dir = params$data_dir)
+    dir = params$data_dir
+)
 ```
 
 ```{r plot_filtered_qc}
@@ -203,7 +204,8 @@ plotQC(
     bcb_filtered,
     geom = "violin",
     return = "markdown",
-    headerLevel = 2)
+    headerLevel = 2
+)
 ```
 
 
