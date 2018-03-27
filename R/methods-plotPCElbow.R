@@ -1,18 +1,18 @@
-# FIXME Simply gate at a standard deviation of 1 cutoff
-
 #' Plot PC Elbow
 #'
-#' Calculate the principal component (PC) with either a maximum SD percentage or
-#' minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
-#' PC cutoff for either 5% SD (`maxPct`) or 90% cumulative (`minCumsum`).
+#' Calculate the principal component (PC) cutoff using a heuristic approach.
+#'
+#' Automatically return the smallest number of PCs that match the `minSD`,
+#' `minPct`, and `maxCumPct` cutoffs.
 #'
 #' @name plotPCElbow
 #' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param maxPct Maximum percent standard deviation.
-#' @param minCumPct Minimum cumulative percent standard deviation.
+#' @param minSD Minimum standard deviation.
+#' @param minPct Minimum percent standard deviation.
+#' @param maxCumPct Maximum cumulative percent standard deviation.
 #' @param plot Plot the PC standard deviations.
 #'
 #' @return
@@ -30,45 +30,72 @@ NULL
 
 
 # Constructors =================================================================
-.plotPCElbow <- function(
-    sd,
-    maxPct = 0.05,
-    minCumPct = 0.8,
+.plotPCElbow.seurat <- function(  # nolint
+    object,
+    minSD = 1L,
+    minPct = 0.025,
+    maxCumPct = 0.9,
+    trans = c("identity", "sqrt"),
     plot = TRUE
 ) {
-    xlab <- "pc"
+    assert_is_a_number(minSD)
+    assert_all_are_positive(minSD)
+    assert_is_a_number(minPct)
+    assert_is_a_number(maxCumPct)
+    assert_all_are_in_left_open_range(
+        x = c(minPct, maxCumPct),
+        lower = 0L,
+        upper = 1L
+    )
+    trans <- match.arg(trans)
+    assert_is_a_bool(plot)
 
-    # Principal component standard deviations
-    pct <- sd ^ 2L / sum(sd ^ 2L)
+    # dr: dimensionality reduction
+    # sdev: standard deviation
+    sdev <- object@dr[["pca"]]@sdev
+    assert_is_numeric(sdev)
+    pct <- sdev ^ 2L / sum(sdev ^ 2L)
     cumsum <- cumsum(pct)
+
     data <- tibble(
-        "pc" = seq_along(sd),
-        "sdev" = sd,
+        "pc" = seq_along(sdev),
+        "sdev" = sdev,
         "pct" = pct,
         "cumsum" = cumsum
     )
 
-    cutoffPct <- data %>%
-        .[.[["pct"]] >= maxPct, "pc"] %>%
+    minSDCutoff <- data %>%
+        .[.[["sdev"]] >= minSD, "pc"] %>%
         max()
-    cutoffCumPct <- data %>%
-        .[.[["cumsum"]] <= minCumPct, "pc"] %>%
+    minPctCutoff <- data %>%
+        .[.[["pct"]] >= minPct, "pc"] %>%
+        max()
+    maxCumPctCutoff <- data %>%
+        .[.[["cumsum"]] <= maxCumPct, "pc"] %>%
         max()
 
-    # Pick the larger of the two cutoffs
-    cutoff <- max(cutoffPct, cutoffCumPct)
+    # Pick the smallest value of the cutoffs
+    cutoff <- min(minSDCutoff, minPctCutoff, maxCumPctCutoff)
 
-    # Elbow plot
+    # Standard deviation =======================================================
     ggelbow <- ggplot(
         data = data,
-        mapping = aes_string(x = "pc", y = "sd")
+        mapping = aes_string(x = "pc", y = "sdev")
     ) +
         geom_point() +
         geom_line() +
+        geom_hline(
+            alpha = 0.5,
+            color = "orange",
+            size = 1.5,
+            yintercept = minSD
+        ) +
         .qcCutoffLine(xintercept = cutoff) +
-        labs(x = xlab, y = "std dev")
+        labs(x = "pc", y = "std dev") +
+        expand_limits(y = 0L) +
+        scale_y_continuous(trans = trans)
 
-    # Percentage plot
+    # Percent standard deviation ===============================================
     ggpct <- ggplot(
         data = data,
         mapping = aes_string(x = "pc", y = "pct")
@@ -79,13 +106,14 @@ NULL
             alpha = 0.5,
             color = "orange",
             size = 1.5,
-            yintercept = maxPct
+            yintercept = minPct
         ) +
         .qcCutoffLine(xintercept = cutoff) +
-        labs(x = xlab, y = "% std dev") +
-        scale_y_continuous(labels = percent)
+        labs(x = "pc", y = "% std dev") +
+        expand_limits(y = 0L) +
+        scale_y_continuous(labels = percent, trans = trans)
 
-    # Cumulative plot
+    # Cumulative percent standard deviation ====================================
     ggcumsum <- ggplot(
         data = data,
         mapping = aes_string(x = "pc", y = "cumsum")
@@ -96,14 +124,15 @@ NULL
             alpha = 0.5,
             color = "orange",
             size = 1.5,
-            yintercept = minCumPct
+            yintercept = maxCumPct
         ) +
         .qcCutoffLine(xintercept = cutoff) +
-        labs(x = xlab, y = "cumulative % std dev") +
-        scale_y_continuous(labels = percent)
+        labs(x = "pc", y = "cumulative % std dev") +
+        expand_limits(y = 0L) +
+        scale_y_continuous(labels = percent, trans = trans)
 
+    # Coordinates are relative to lower left corner
     p <- ggdraw() +
-        # Coordinates are relative to lower left corner
         draw_plot(
             plot = ggelbow,
             x = 0L,
@@ -138,24 +167,5 @@ NULL
 setMethod(
     "plotPCElbow",
     signature("seurat"),
-    function(
-        object,
-        maxPct = 0.05,
-        minCumPct = 0.9,
-        plot = TRUE
-    ) {
-        # seurat slot descriptions
-        # dr: dimensionality reduction
-        # sdev: standard deviation
-        sd <- object %>%
-            slot("dr") %>%
-            .[["pca"]] %>%
-            slot("sdev")
-        .plotPCElbow(
-            sd,
-            maxPct = maxPct,
-            minCumPct = minCumPct,
-            plot = plot
-        )
-    }
+    .plotPCElbow.seurat
 )

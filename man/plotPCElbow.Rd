@@ -9,17 +9,19 @@
 \usage{
 plotPCElbow(object, ...)
 
-\S4method{plotPCElbow}{seurat}(object, maxPct = 0.05, minCumPct = 0.9,
-  plot = TRUE)
+\S4method{plotPCElbow}{seurat}(object, minSD = 1L, minPct = 0.025,
+  maxCumPct = 0.9, trans = c("identity", "sqrt"), plot = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{maxPct}{Maximum percent standard deviation.}
+\item{minSD}{Minimum standard deviation.}
 
-\item{minCumPct}{Minimum cumulative percent standard deviation.}
+\item{minPct}{Minimum percent standard deviation.}
+
+\item{maxCumPct}{Maximum cumulative percent standard deviation.}
 
 \item{plot}{Plot the PC standard deviations.}
 }
@@ -31,9 +33,11 @@ dimensionality reduction analysis.
 }
 }
 \description{
-Calculate the principal component (PC) with either a maximum SD percentage or
-minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
-PC cutoff for either 5% SD (\code{maxPct}) or 90% cumulative (\code{minCumsum}).
+Calculate the principal component (PC) cutoff using a heuristic approach.
+}
+\details{
+Automatically return the smallest number of PCs that match the \code{minSD},
+\code{minPct}, and \code{maxCumPct} cutoffs.
 }
 \examples{
 # seurat ====
