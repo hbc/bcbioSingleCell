@@ -39,6 +39,7 @@
 #' @importFrom basejump assertIsAStringOrNULL
 #' @importFrom basejump assertIsAnImplicitInteger
 #' @importFrom basejump assertIsAnImplicitIntegerOrNULL
+#' @importFrom basejump assertIsANumberOrNULL
 #' @importFrom basejump assertIsCharacterOrNULL
 #' @importFrom basejump assertIsColorScaleContinuousOrNULL
 #' @importFrom basejump assertIsColorScaleDiscreteOrNULL

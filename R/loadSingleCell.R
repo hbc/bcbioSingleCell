@@ -233,7 +233,7 @@ loadSingleCell <- function(
     if (nrow(sampleData) < length(sampleDirs)) {
         inform("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
-        sampleDirs <- sampleDirs[rownames(sampleMetadata)]
+        sampleDirs <- sampleDirs[rownames(sampleData)]
         inform(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
@@ -253,6 +253,7 @@ loadSingleCell <- function(
     txdb <- NULL
     tx2gene <- NULL
     if (is_a_string(gffFile)) {
+        # TODO Need to sanitize rowRanges here
         txdb <- makeTxDbFromGFF(gffFile)
         rowRanges <- genes(txdb)
         # Transcript-to-gene mappings
@@ -287,7 +288,7 @@ loadSingleCell <- function(
             tx2gene <- tx2gene(
                 object = organism,
                 genomeBuild = genomeBuild,
-                release = release
+                release = ensemblRelease
             )
         }
     }

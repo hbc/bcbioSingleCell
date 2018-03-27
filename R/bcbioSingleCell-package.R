@@ -13,7 +13,7 @@
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
 #'
 #' @importFrom Biobase rowMedians
-#' @importFrom GenomicFeatures makeTxDbFromGFF
+#' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
 #' @importFrom Matrix cBind readMM
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom SingleCellExperiment isSpike isSpike<- SingleCellExperiment
@@ -22,7 +22,7 @@
 #' @importFrom basejump assignAndSaveData camel convertUCSCBuildToEnsembl
 #'   detectOrganism dynamicPlotlist ensembl initializeDirectory makeNames
 #'   markdownHeader midnightTheme readFileByExtension readYAML
-#'   sanitizeSampleData stripTranscriptVersions
+#'   sanitizeSampleData stripTranscriptVersions tx2gene
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
 #'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
 #'   uniteInterestingGroups
