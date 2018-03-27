@@ -60,7 +60,7 @@ readCellTypeMarkersFile <- function(file, gene2symbol) {
     markers %>%
         as_tibble() %>%
         .[!is.na(.[["geneID"]]), , drop = FALSE] %>%
-        .[, c("cellType", "geneName", "geneID")] %>%
+        .[, c("cellType", "geneID", "geneName")] %>%
         unique() %>%
         group_by(!!sym("cellType")) %>%
         arrange(!!sym("geneName"), .by_group = TRUE)

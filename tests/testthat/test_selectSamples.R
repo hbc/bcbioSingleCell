@@ -1,46 +1,37 @@
 context("selectSamples")
 
-test_that("selectSamples", {
-    subset <- selectSamples(filtered, sampleName = "M1")
-    expect_is(subset, "bcbioSingleCell")
+test_that("selectSamples : bcbioSingleCell", {
+    x <- selectSamples(bcb_small, sampleName = "rep_1")
+    expect_s4_class(x, "bcbioSingleCell")
+    expect_true(metadata(x)[["selectSamples"]])
     expect_identical(
-        metadata(subset)[["selectSamples"]],
-        TRUE
+        dim(x),
+        c(500L, 500L)
     )
     expect_identical(
-        dim(subset),
-        c(1000L, 243L)
-    )
-    expect_identical(
-        sampleMetadata(subset)[["sampleID"]],
-        factor("M1")
+        sampleData(x)[["sampleID"]],
+        factor("multiplexed_AAAAAAAA")
     )
     # Ensure that bcbio cellular barcodes get updated correctly
-    cb <- bcbio(subset, "cellularBarcodes")
-    ids1 <- sampleMetadata(subset) %>%
+    cb <- metadata(x)[["cellularBarcodes"]]
+    expect_is(cb, "list")
+    ids1 <- sampleData(x) %>%
         .[["sampleID"]] %>%
         as.character()
     ids2 <- names(cb)
     expect_identical(ids1, ids2)
+    # Check that tibbles are stored inside list
     expect_identical(
         lapply(cb, class) %>%
             unlist() %>%
             unique(),
-        "data.frame"
+        c("tbl_df", "tbl", "data.frame")
     )
 })
 
-# FIXME Use assertive for error
-test_that("Match failure", {
+test_that("selectSamples : Match failure", {
     expect_error(
-        selectSamples(filtered, sampleID = "XXX"),
+        selectSamples(bcb_small, sampleID = "XXX"),
         "sampleID metadata column doesn't contain XXX"
-    )
-})
-
-test_that("Stop on unfiltered object", {
-    expect_error(
-        selectSamples(bcb_small, interestingGroups = "homozygote"),
-        "`filterCells\\(\\)` hasn't been applied to this dataset"
     )
 })

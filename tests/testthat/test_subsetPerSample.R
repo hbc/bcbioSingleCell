@@ -1,18 +1,15 @@
 context("subsetPerSample")
 
-test_that("bcbioSingleCell", {
+test_that("subsetPerSample : bcbioSingleCell", {
     subsetPerSample(bcb_small, dir = "subsetPerSample")
     expect_identical(
         list.files("subsetPerSample"),
-        c(
-            "run1_AGAGGATA.rda",
-            "run2_AGAGGATA.rda"
-        )
+        "multiplexed_AAAAAAAA.rda"
     )
-    load("subsetPerSample/run1_AGAGGATA.rda")
+    load("subsetPerSample/multiplexed_AAAAAAAA.rda")
     expect_identical(
-        dim(run1_AGAGGATA),
-        c(500L, 286L)
+        dim(multiplexed_AAAAAAAA),
+        c(500L, 500L)
     )
     unlink("subsetPerSample", recursive = TRUE)
 })

@@ -9,6 +9,6 @@ test_that("grouped_df", {
     )
     expect_identical(
         dim(x),
-        c(40L, 18L)
+        c(50L, 18L)
     )
 })

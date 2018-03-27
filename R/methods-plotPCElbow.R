@@ -1,3 +1,5 @@
+# FIXME Simply gate at a standard deviation of 1 cutoff
+
 #' Plot PC Elbow
 #'
 #' Calculate the principal component (PC) with either a maximum SD percentage or

@@ -12,17 +12,3 @@ test_that("Expression arguments", {
         expect_is(p, "ggplot")
     }))
 })
-
-test_that("Invalid expression", {
-    expect_error(
-        plotMarkerTSNE(seurat_small, genes = genes, expression = "XXX"),
-        "`expression` must contain: mean, median, sum"
-    )
-})
-
-test_that("data.frame", {
-    df <- fetchTSNEExpressionData(seurat_small, genes = genes)
-    expect_is(df, "data.frame")
-    p <- plotMarkerTSNE(df, genes = genes)
-    expect_is(p, "ggplot")
-})

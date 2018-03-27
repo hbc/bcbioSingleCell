@@ -1,6 +1,9 @@
-context("plotReadsPerCell")
+context("Quality Control Functions")
 
-test_that("bcbioSingleCell", {
+
+
+# plotReadsPerCell =============================================================
+test_that("plotReadsPerCell : bcbioSingleCell", {
     # Example dataset doesn't have a cellular barcode cutoff because we removed
     # the bcbio commands log file (which conflicts with Travis CI)
     histogram <- plotReadsPerCell(bcb_small, geom = "histogram")
@@ -34,12 +37,7 @@ test_that("bcbioSingleCell", {
     )
 })
 
-test_that("filtered", {
-    p <- plotReadsPerCell(filtered)
-    expect_is(p, "ggplot")
-})
-
-test_that("seurat_small", {
+test_that("plotReadsPerCell : seurat", {
     p <- plotReadsPerCell(seurat_small)
     expect_is(p, "NULL")
 })

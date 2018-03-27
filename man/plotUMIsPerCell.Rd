@@ -50,6 +50,7 @@ plotUMIsPerCell(bcb_small)
 
 # seurat ====
 plotUMIsPerCell(seurat_small)
+plotUMIsPerCell(pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{calculateMetrics}},
