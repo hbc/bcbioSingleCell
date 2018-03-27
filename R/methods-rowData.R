@@ -14,9 +14,6 @@
 #' @return Return data as `data.frame`, or `DataFrame`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' rowData(bcb_small) %>% glimpse()
 #'

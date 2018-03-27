@@ -9,9 +9,6 @@
 #' @return `tbl_df` containing summary statistics.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' metricsPerSample(bcb_small)
 #'

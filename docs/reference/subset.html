@@ -60,9 +60,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -161,14 +158,12 @@
 
     <ul>
 <li><p><code>help("[", "base")</code>.</p></li>
-<li><p><code>selectSamples()</code> for subsetting based on sample metadata.</p></li>
+<li><p><code><a href='selectSamples.html'>selectSamples()</a></code> for subsetting based on sample metadata.</p></li>
 </ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># bcbioSingleCell ====</span>
+    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>colnames</span>(<span class='no'>bcb_small</span>), <span class='fl'>100L</span>)
 <span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG"
 #&gt; [2] "multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA"

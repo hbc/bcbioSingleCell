@@ -48,12 +48,6 @@ simply reassign first using that function. If necessary, we can add support
 for the number of genes to plot here in a future update.
 }
 \examples{
-load(system.file(
-    "extdata/all_markers_small.rda",
-    package = "bcbioSingleCell"
-))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # seurat, grouped_df ====
 plotTopMarkers(
     object = seurat_small,

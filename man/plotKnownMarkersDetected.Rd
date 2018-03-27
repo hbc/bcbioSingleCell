@@ -42,12 +42,6 @@ Show graphical output. Invisibly return \code{ggplot} plotlist.
 Plot Known Markers Detected
 }
 \examples{
-load(system.file(
-    "extdata/known_markers_small.rda",
-    package = "bcbioSingleCell"
-))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # seurat ====
 # Let's plot the first 2 markers, as a quick example
 plotKnownMarkersDetected(

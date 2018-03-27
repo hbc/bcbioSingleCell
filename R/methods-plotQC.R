@@ -17,14 +17,8 @@
 #'   - `markdown`: R Markdown report, with reports separated by headers.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' plotQC(bcb_small)
-#'
-#' # seurat ====
-#' # FIXME
-#' # plotQC(pbmc_small)
 NULL
 
 

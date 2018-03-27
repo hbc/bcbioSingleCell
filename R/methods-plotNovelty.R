@@ -11,9 +11,6 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' plotNovelty(bcb_small)
 #'

@@ -25,8 +25,6 @@ plotZerosVsDepth(object, ...)
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
-
-\item{metrics}{Metrics \code{data.frame}.}
 }
 \value{
 \code{ggplot}.
@@ -35,9 +33,6 @@ color definitions are desired, we recommend using
 This function helps us visualize the dropout rate.
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 plotZerosVsDepth(bcb_small)
 

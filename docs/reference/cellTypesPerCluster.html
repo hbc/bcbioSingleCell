@@ -60,9 +60,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -132,18 +129,14 @@ significant known makers per cell type.</p>
   <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
   <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
-  <code>plotPCA</code>, <code>plotPCElbow</code>,
+  <code><a href='plotPCA.html'>plotPCA</a></code>, <code>plotPCElbow</code>,
   <code>plotTSNE</code>, <code>plotTopMarkers</code>,
   <code>sanitizeMarkers</code>, <code>topBarcodes</code>,
   <code>topMarkers</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='st'>"extdata/known_markers_small.rda"</span>,
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>
-))
-<span class='fu'>cellTypesPerCluster</span>(<span class='no'>known_markers_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 1
+    <pre class="examples"><div class='input'><span class='fu'>cellTypesPerCluster</span>(<span class='no'>known_markers_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1
 #&gt; Variables: 5
 #&gt; $ cluster  &lt;fct&gt; 1
 #&gt; $ cellType &lt;chr&gt; "Natural Killer Cell"

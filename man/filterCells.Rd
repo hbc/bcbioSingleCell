@@ -48,8 +48,6 @@ When matching the samples, be sure to use \code{sampleID} column (i.e. the
 rownames of \code{\link[=sampleData]{sampleData()}}).
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 print(bcb_small)
 filterCells(bcb_small, minGenes = 0L)

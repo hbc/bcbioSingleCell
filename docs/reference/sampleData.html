@@ -60,9 +60,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -88,7 +85,7 @@
 
     
     <p>Metadata in columns describing the samples, which are defined in the
-rownames. Similar to <code>colData()</code>, which for <code>bcbioSingleCell</code> and
+rownames. Similar to <code><a href='colData.html'>colData()</a></code>, which for <code>bcbioSingleCell</code> and
 <code>SingleCellExperiment</code> objects describes cells in the columns, rather than
 the samples.</p>
     
@@ -119,23 +116,21 @@ formatted in <code>camel()</code> case and intersect with <code>sampleData()</co
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Functions: <code>aggregateReplicates</code>,
-  <code>cell2sample</code>, <code>colData</code>,
-  <code>counts</code>, <code>fetchGeneData</code>,
+    <p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>cell2sample</code>, <code><a href='colData.html'>colData</a></code>,
+  <code><a href='counts.html'>counts</a></code>, <code>fetchGeneData</code>,
   <code>fetchPCAData</code>, <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
-  <code>filterCells</code>, <code>gene2symbol</code>,
-  <code>interestingGroups</code>,
-  <code>readCellTypeMarkersFile</code>,
-  <code>rowData</code>, <code>selectSamples</code>,
+  <code>filterCells</code>, <code><a href='gene2symbol.html'>gene2symbol</a></code>,
+  <code><a href='interestingGroups.html'>interestingGroups</a></code>,
+  <code><a href='readCellTypeMarkersFile.html'>readCellTypeMarkersFile</a></code>,
+  <code><a href='rowData.html'>rowData</a></code>, <code><a href='selectSamples.html'>selectSamples</a></code>,
   <code>subsetPerSample</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>sampleData</span>(<span class='no'>bcb_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 1
+    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
+<span class='fu'>sampleData</span>(<span class='no'>bcb_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1
 #&gt; Variables: 9
 #&gt; $ sampleID            &lt;fct&gt; multiplexed_AAAAAAAA
 #&gt; $ sampleName          &lt;fct&gt; rep_1
@@ -147,7 +142,7 @@ formatted in <code>camel()</code> case and intersect with <code>sampleData()</co
 #&gt; $ revcomp             &lt;fct&gt; AAAAAAAA
 #&gt; $ interestingGroups   &lt;fct&gt; rep_1</div><div class='input'>
 <span class='co'># seurat ====</span>
-<span class='fu'>sampleData</span>(<span class='no'>pbmc_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 1
+<span class='fu'>sampleData</span>(<span class='no'>pbmc_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1
 #&gt; Variables: 4
 #&gt; $ sampleID          &lt;fct&gt; SeuratProject
 #&gt; $ sampleName        &lt;fct&gt; SeuratProject

@@ -11,8 +11,6 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' plotReadsPerCell(bcb_small)
 #'

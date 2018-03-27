@@ -42,9 +42,6 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 "Novelty" refers to log10 genes detected per count.
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 plotNovelty(bcb_small)
 

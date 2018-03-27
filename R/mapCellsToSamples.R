@@ -14,8 +14,6 @@
 #' @export
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' cells <- colnames(bcb_small)
 #' samples <- sampleData(bcb_small)[["sampleID"]]

@@ -12,8 +12,6 @@
 #' @return Counts matrix (typically a `dgCMatrix`).
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' counts(bcb_small) %>% glimpse()
 #'

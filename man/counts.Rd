@@ -23,8 +23,6 @@ Counts matrix (typically a \code{dgCMatrix}).
 Counts Accessor
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 counts(bcb_small) \%>\% glimpse()
 

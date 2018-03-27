@@ -20,8 +20,6 @@
 #' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' sampleName <- sampleData(bcb_small) %>%
 #'     .[1L, "sampleName"] %>%

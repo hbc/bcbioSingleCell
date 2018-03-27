@@ -16,8 +16,6 @@
 #' @return `data.frame`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' sampleData(bcb_small) %>% glimpse()
 #'

@@ -24,9 +24,6 @@ formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=
 Sample Barcode Metrics
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 metrics(bcb_small) \%>\% glimpse()
 

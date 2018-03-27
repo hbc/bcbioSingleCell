@@ -33,8 +33,6 @@ Calculate Cellular Barcode Metrics Summary
 This should only be performed during the initial run loading.
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 calculateMetrics(bcb_small) \%>\% glimpse()
 

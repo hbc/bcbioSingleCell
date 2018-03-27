@@ -60,9 +60,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -127,22 +124,20 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Functions: <code>aggregateReplicates</code>,
-  <code>cell2sample</code>, <code>colData</code>,
-  <code>counts</code>, <code>fetchGeneData</code>,
+    <p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>cell2sample</code>, <code><a href='colData.html'>colData</a></code>,
+  <code><a href='counts.html'>counts</a></code>, <code>fetchGeneData</code>,
   <code>fetchPCAData</code>, <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
-  <code>filterCells</code>, <code>gene2symbol</code>,
-  <code>interestingGroups</code>,
-  <code>readCellTypeMarkersFile</code>,
-  <code>rowData</code>, <code>sampleData</code>,
-  <code>selectSamples</code></p>
+  <code>filterCells</code>, <code><a href='gene2symbol.html'>gene2symbol</a></code>,
+  <code><a href='interestingGroups.html'>interestingGroups</a></code>,
+  <code><a href='readCellTypeMarkersFile.html'>readCellTypeMarkersFile</a></code>,
+  <code><a href='rowData.html'>rowData</a></code>, <code><a href='sampleData.html'>sampleData</a></code>,
+  <code><a href='selectSamples.html'>selectSamples</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># bcbioRNASeq ====</span>
+    <pre class="examples"><div class='input'><span class='co'># bcbioRNASeq ====</span>
 <span class='co'># This will save the subsets per sample to disk</span>
 <span class='fu'>subsetPerSample</span>(<span class='no'>bcb_small</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; <span class='message'>Saving multiplexed_AAAAAAAA to /Users/mike/GitHub/hbc/bcbioSingleCell/docs/reference/subsetPerSample</span></div><div class='output co'>#&gt;                                                                             multiplexed_AAAAAAAA 
 #&gt; "/Users/mike/GitHub/hbc/bcbioSingleCell/docs/reference/subsetPerSample/multiplexed_AAAAAAAA.rda" </div><div class='input'><span class='fu'>list.files</span>(<span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA.rda"</div><div class='input'>

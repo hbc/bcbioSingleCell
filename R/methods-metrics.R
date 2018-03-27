@@ -13,9 +13,6 @@
 #' @return `data.frame` with cellular barcodes as rows.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' metrics(bcb_small) %>% glimpse()
 #'

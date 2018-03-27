@@ -15,8 +15,6 @@
 #' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' cells <- head(colnames(bcb_small), 100L)
 #' head(cells)

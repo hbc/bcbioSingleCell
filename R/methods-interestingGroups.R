@@ -11,9 +11,6 @@
 #' @return Character vector.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' interestingGroups(bcb_small)
 #'

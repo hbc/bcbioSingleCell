@@ -60,9 +60,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -99,9 +96,9 @@
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
-  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'>scale_color_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
-  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'>scale_fill_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'>scale_color_gradient</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
+  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
   <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -160,7 +157,7 @@
   <code>plotCellTypesPerCluster</code>,
   <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkerTSNE</code>, <code>plotPCA</code>,
+  <code>plotMarkerTSNE</code>, <code><a href='plotPCA.html'>plotPCA</a></code>,
   <code>plotPCElbow</code>, <code>plotTSNE</code>,
   <code>plotTopMarkers</code>,
   <code>sanitizeMarkers</code>, <code>topBarcodes</code>,
@@ -168,15 +165,9 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='st'>"extdata/all_markers_small.rda"</span>,
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>
-))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># seurat ===</span>
+    <pre class="examples"><div class='input'><span class='co'># seurat ===</span>
 <span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>pull</span>(<span class='no'>top</span>, <span class='st'>"rowname"</span>)
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>top</span>, <span class='st'>"rowname"</span>)
 <span class='fu'>plotMarkers</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## COL1A2

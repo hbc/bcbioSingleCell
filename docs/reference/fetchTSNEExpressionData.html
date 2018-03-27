@@ -60,9 +60,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -88,7 +85,7 @@
 
     
     <p>This gets t-SNE locations, cellular metadata, expression of genes and
-the geometric mean of the gene expression from a seurat object.</p>
+the geometric mean of the gene expression from a <a href='seurat.html'>seurat</a> object.</p>
     
 
     <pre class="usage"><span class='fu'>fetchTSNEExpressionData</span>(<span class='no'>object</span>, <span class='no'>...</span>)
@@ -120,22 +117,22 @@ aggregate marker expression values (<code>mean</code>, <code>median</code>, and 
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Functions: <code>aggregateReplicates</code>,
-  <code>cell2sample</code>, <code>colData</code>,
-  <code>counts</code>, <code>fetchGeneData</code>,
+    <p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>cell2sample</code>, <code><a href='colData.html'>colData</a></code>,
+  <code><a href='counts.html'>counts</a></code>, <code>fetchGeneData</code>,
   <code>fetchPCAData</code>, <code>fetchTSNEData</code>,
-  <code>filterCells</code>, <code>gene2symbol</code>,
-  <code>interestingGroups</code>,
-  <code>readCellTypeMarkersFile</code>,
-  <code>rowData</code>, <code>sampleData</code>,
-  <code>selectSamples</code>,
+  <code>filterCells</code>, <code><a href='gene2symbol.html'>gene2symbol</a></code>,
+  <code><a href='interestingGroups.html'>interestingGroups</a></code>,
+  <code><a href='readCellTypeMarkersFile.html'>readCellTypeMarkersFile</a></code>,
+  <code><a href='rowData.html'>rowData</a></code>, <code><a href='sampleData.html'>sampleData</a></code>,
+  <code><a href='selectSamples.html'>selectSamples</a></code>,
   <code>subsetPerSample</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
 <span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>pbmc_small</span>))
-<span class='fu'>fetchTSNEExpressionData</span>(<span class='no'>pbmc_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 80
+<span class='fu'>fetchTSNEExpressionData</span>(<span class='no'>pbmc_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 80
 #&gt; Variables: 13
 #&gt; $ tSNE1     &lt;dbl&gt; 14.4219083, 16.7237708, 0.9080303, -12.2713037, 16.201709...
 #&gt; $ tSNE2     &lt;dbl&gt; 8.336022, 11.254907, 21.274887, 8.603055, 11.971182, 26.5...

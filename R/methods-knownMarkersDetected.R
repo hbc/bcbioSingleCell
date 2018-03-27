@@ -23,11 +23,6 @@
 #' @return `grouped_df`, grouped by `cellType`.
 #'
 #' @examples
-#' load(system.file(
-#'     "extdata/all_markers_small.rda",
-#'     package = "bcbioSingleCell"
-#' ))
-#'
 #' # grouped_df ====
 #' knownMarkersDetected(
 #'     all = all_markers_small,

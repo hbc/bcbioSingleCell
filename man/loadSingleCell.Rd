@@ -51,9 +51,6 @@ construct a \code{GRanges} object containing the genomic ranges (\code{\link[=ro
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
-
-\item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
-sequences (e.g. ERCCs, EGFP, TDTOMATO).}
 }
 \value{
 \code{bcbioSingleCell}.
@@ -67,10 +64,7 @@ run directory as a remote connection over
 \href{https://github.com/osxfuse/osxfuse/wiki/SSHFS}{sshfs}.
 }
 \examples{
-uploadDir <- system.file(
-    "extdata/harvard_indrop_v3",
-    package = "bcbioSingleCell"
-)
+uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
 loadSingleCell(
     uploadDir = uploadDir,
     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),

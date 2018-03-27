@@ -44,9 +44,6 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 Plot Genes per Cell
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 plotGenesPerCell(bcb_small)
 

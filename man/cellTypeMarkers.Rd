@@ -11,6 +11,9 @@ cellTypeMarkers
 \description{
 Cell-Type Markers
 }
+\seealso{
+Other Marker Data: \code{\link{cellCycleMarkers}}
+}
 \author{
 Michael Steinbaugh
 }

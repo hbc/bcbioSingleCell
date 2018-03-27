@@ -15,8 +15,6 @@
 Aggregate Replicates
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 x <- aggregateReplicates(bcb_small)
 sampleData(x)

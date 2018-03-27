@@ -60,9 +60,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -116,7 +113,7 @@ inDrop). Consult the GitHub repo for examples and additional information.</p></t
     <tr>
       <th>interestingGroups</th>
       <td><p>Character vector of interesting groups. Must be
-formatted in <code>camel()</code> case and intersect with <code>sampleData()</code> colnames.</p></td>
+formatted in <code>camel()</code> case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
       <th>isSpike</th>
@@ -139,12 +136,12 @@ sequences (e.g. ERCCs, EGFP, TDTOMATO).</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is a simplified version of <code>loadSingleCell()</code>
+    <p>This function is a simplified version of <code><a href='loadSingleCell.html'>loadSingleCell()</a></code>
 optimized for handling Cell Ranger output.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Unlike <code>loadSingleCell()</code>, the <code>organism</code>, <code>ensemblRelease</code>, and
+    <p>Unlike <code><a href='loadSingleCell.html'>loadSingleCell()</a></code>, the <code>organism</code>, <code>ensemblRelease</code>, and
 <code>genomeBuild</code> are always detected automatically, based on the 10X
 <code>refdataDir</code> YAML metadata. Therefore, these parameters cannot be set by
 the user.</p>

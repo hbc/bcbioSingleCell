@@ -7,14 +7,10 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param metrics Metrics `data.frame`.
 #'
 #' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' plotZerosVsDepth(bcb_small)
 #'

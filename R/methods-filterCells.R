@@ -28,8 +28,6 @@
 #'   [metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' print(bcb_small)
 #' filterCells(bcb_small, minGenes = 0L)

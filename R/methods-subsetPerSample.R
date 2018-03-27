@@ -11,8 +11,6 @@
 #' @return Named vector of saved `bcbioSingleCell` subset file paths.
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioRNASeq ====
 #' # This will save the subsets per sample to disk
 #' subsetPerSample(bcb_small, dir = "subsetPerSample")

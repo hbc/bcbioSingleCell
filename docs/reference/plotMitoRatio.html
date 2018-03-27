@@ -60,9 +60,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -95,12 +92,12 @@
 <span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>,
   <span class='st'>"boxplot"</span>, <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>), <span class='no'>interestingGroups</span>, <span class='no'>max</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>scale_fill_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>, <span class='st'>"boxplot"</span>,
   <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>), <span class='no'>interestingGroups</span>, <span class='no'>max</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>scale_fill_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -121,7 +118,7 @@ first argument in the vector.</p></td>
     <tr>
       <th>interestingGroups</th>
       <td><p>Character vector of interesting groups. Must be
-formatted in <code>camel()</code> case and intersect with <code>sampleData()</code> colnames.</p></td>
+formatted in <code>camel()</code> case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
       <th>max</th>
@@ -142,22 +139,19 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other Quality Control Functions: <code>calculateMetrics</code>,
-  <code>metricsPerSample</code>, <code>metrics</code>,
+  <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
   <code>plotCellCounts</code>,
   <code>plotGenesPerCell</code>,
   <code>plotMitoVsCoding</code>,
-  <code>plotNovelty</code>, <code>plotQC</code>,
-  <code>plotQuantileHeatmap</code>,
+  <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
+  <code><a href='plotQuantileHeatmap.html'>plotQuantileHeatmap</a></code>,
   <code>plotReadsPerCell</code>,
   <code>plotUMIsPerCell</code>,
   <code>plotZerosVsDepth</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># bcbioSingleCell ====</span>
+    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='fu'>plotMitoRatio</span>(<span class='no'>bcb_small</span>)</div><div class='img'><img src='plotMitoRatio-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># seurat ====</span>
 <span class='fu'>plotMitoRatio</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotMitoRatio-2.png' alt='' width='700' height='432.632880098887' /></div></pre>

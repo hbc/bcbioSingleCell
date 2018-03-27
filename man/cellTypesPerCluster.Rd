@@ -31,10 +31,6 @@ Cell Types per Cluster
 This function only returns the positive markers per cluster.
 }
 \examples{
-load(system.file(
-    "extdata/known_markers_small.rda",
-    package = "bcbioSingleCell"
-))
 cellTypesPerCluster(known_markers_small) \%>\% glimpse()
 }
 \seealso{

@@ -33,9 +33,6 @@ color definitions are desired, we recommend using
 Plot Mitochondrial Counts vs. Coding Counts
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 plotMitoVsCoding(bcb_small)
 

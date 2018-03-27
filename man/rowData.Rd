@@ -25,9 +25,6 @@ Metadata describing the genes. These annotations are obtained from
 AnnotationHub and ensembldb using \code{\link[basejump:ensembl]{basejump::ensembl()}}.
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 rowData(bcb_small) \%>\% glimpse()
 

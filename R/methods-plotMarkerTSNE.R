@@ -13,8 +13,6 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # seurat ====
 #' # Mitochondrial genes
 #' mito <- grep("^MT\\.", rownames(counts(seurat_small)), value = TRUE)

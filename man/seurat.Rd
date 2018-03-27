@@ -20,12 +20,18 @@
 
 \S4method{metadata}{seurat}(x) <- value
 }
+\arguments{
+\item{x}{Primary object.}
+
+\item{value}{Object to assign.}
+}
+\value{
+Match \code{SummarizedExperiment} method return.
+}
 \description{
-Extend S4 Methods for \code{seurat} Objects
+Provide \code{SummarizedExperiment} method support.
 }
 \examples{
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # assay ====
 assay(pbmc_small) \%>\% glimpse()
 

@@ -12,8 +12,6 @@
 #' @return Various data types.
 #'
 #' @examples
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # seurat ====
 #' names(bcbio(seurat_small))
 #'

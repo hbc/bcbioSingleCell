@@ -20,8 +20,6 @@ This function extracts \code{sampleID} from the \code{cellID} column using grep
 matching.
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 cells <- colnames(bcb_small)
 samples <- sampleData(bcb_small)[["sampleID"]]

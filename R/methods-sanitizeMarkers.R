@@ -16,8 +16,6 @@
 #' - [Seurat::FindAllMarkers()]: `grouped_df`, grouped by cluster ident.
 #'
 #' @examples
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # seurat ====
 #' all_markers <- FindAllMarkers(seurat_small)
 #' all_sanitized <- sanitizeMarkers(

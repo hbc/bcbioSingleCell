@@ -11,14 +11,6 @@ bcbio single-cell RNA-seq analysis. This class contains read counts saved as
 a sparse matrix (\code{dgCMatrix}), sample metadata, and cell quality control
 metrics.
 }
-\section{Slots}{
-
-\describe{
-\item{\code{bcbio}}{\code{SimpleList} containing additional bcbio run data with dimensions
-that don't match the count matrix. This is currently used to store all
-unfiltered cellular barcodes for quality control analysis.}
-}}
-
 \note{
 \code{bcbioSingleCell} extended \code{SummarizedExperiment} prior to v0.1.0,
 where we migrated to \code{SingleCellExperiment}.

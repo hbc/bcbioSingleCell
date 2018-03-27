@@ -17,12 +17,6 @@
 #' @return Show graphical output. Invisibly return `ggplot` plotlist.
 #'
 #' @examples
-#' load(system.file(
-#'     "extdata/all_markers_small.rda",
-#'     package = "bcbioSingleCell"
-#' ))
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-#'
 #' # seurat, grouped_df ====
 #' plotTopMarkers(
 #'     object = seurat_small,

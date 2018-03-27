@@ -45,9 +45,6 @@ This is helpful for visualizing single cell data.
 Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 plotQuantileHeatmap(bcb_small)
 

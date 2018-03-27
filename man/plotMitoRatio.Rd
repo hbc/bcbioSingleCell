@@ -42,9 +42,6 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 Plot Mitochondrial Transcript Abundance
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 plotMitoRatio(bcb_small)
 

@@ -1,11 +1,15 @@
 #' Extend S4 Methods for `seurat` Objects
 #'
+#' Provide `SummarizedExperiment` method support.
+#'
 #' @name seurat
 #' @author Michael Steinbaugh
 #'
-#' @examples
-#' load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
+#' @inheritParams general
 #'
+#' @return Match `SummarizedExperiment` method return.
+#'
+#' @examples
 #' # assay ====
 #' assay(pbmc_small) %>% glimpse()
 #'

@@ -43,14 +43,8 @@ Utility function that loops our standard quality control plots, for easy
 visualization.
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 plotQC(bcb_small)
-
-# seurat ====
-# FIXME
-# plotQC(pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{calculateMetrics}},

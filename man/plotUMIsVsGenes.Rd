@@ -33,9 +33,6 @@ color definitions are desired, we recommend using
 Plot UMI and Gene Correlation
 }
 \examples{
-load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat_small.rda", package = "bcbioSingleCell"))
-
 # bcbioSingleCell ====
 plotUMIsVsGenes(bcb_small)
 

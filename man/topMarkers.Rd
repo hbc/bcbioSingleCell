@@ -31,11 +31,6 @@ directions of association per cluster.}
 Top Markers
 }
 \examples{
-load(system.file(
-    "extdata/all_markers_small.rda",
-    package = "bcbioSingleCell"
-))
-
 # grouped_df ====
 topMarkers(
     object = all_markers_small,

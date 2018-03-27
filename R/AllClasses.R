@@ -14,10 +14,6 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 #'
 #' @author Michael Steinbaugh
 #'
-#' @slot bcbio `SimpleList` containing additional bcbio run data with dimensions
-#' that don't match the count matrix. This is currently used to store all
-#' unfiltered cellular barcodes for quality control analysis.
-#'
 #' @seealso
 #' - [loadSingleCell()], [loadCellRanger()].
 #' - [SingleCellExperiment::SingleCellExperiment()].
@@ -158,4 +154,3 @@ setValidity(
         TRUE
     }
 )
-# object@bcbio$cellularBarcodes needs to go in metadata

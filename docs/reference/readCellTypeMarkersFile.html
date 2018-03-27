@@ -60,9 +60,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -112,14 +109,14 @@ must contain <code>geneID</code> and <code>geneName</code>.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Functions: <code>aggregateReplicates</code>,
-  <code>cell2sample</code>, <code>colData</code>,
-  <code>counts</code>, <code>fetchGeneData</code>,
+    <p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>cell2sample</code>, <code><a href='colData.html'>colData</a></code>,
+  <code><a href='counts.html'>counts</a></code>, <code>fetchGeneData</code>,
   <code>fetchPCAData</code>, <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
-  <code>filterCells</code>, <code>gene2symbol</code>,
-  <code>interestingGroups</code>, <code>rowData</code>,
-  <code>sampleData</code>, <code>selectSamples</code>,
+  <code>filterCells</code>, <code><a href='gene2symbol.html'>gene2symbol</a></code>,
+  <code><a href='interestingGroups.html'>interestingGroups</a></code>, <code><a href='rowData.html'>rowData</a></code>,
+  <code><a href='sampleData.html'>sampleData</a></code>, <code><a href='selectSamples.html'>selectSamples</a></code>,
   <code>subsetPerSample</code></p>
     
 
@@ -128,7 +125,7 @@ must contain <code>geneID</code> and <code>geneName</code>.</p></td>
     <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"cell_type_markers.csv"</span>),
     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>
 )
-<span class='no'>gene2symbol</span> <span class='kw'>&lt;-</span> <span class='fu'>gene2symbol</span>(<span class='st'>"Mus musculus"</span>)</div><div class='output co'>#&gt; <span class='message'>Fetching Ensembl gene2symbol from AnnotationHub 2.10.1 (2017-10-27)</span></div><div class='output co'>#&gt; <span class='message'>hub id: "AH57770"</span>
+<span class='no'>gene2symbol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='gene2symbol.html'>gene2symbol</a></span>(<span class='st'>"Mus musculus"</span>)</div><div class='output co'>#&gt; <span class='message'>Fetching Ensembl gene2symbol from AnnotationHub 2.10.1 (2017-10-27)</span></div><div class='output co'>#&gt; <span class='message'>hub id: "AH57770"</span>
 #&gt; <span class='message'>organism: "Mus musculus"</span>
 #&gt; <span class='message'>genome build: "GRCm38"</span>
 #&gt; <span class='message'>release version: "90"</span></div><div class='input'><span class='fu'>readCellTypeMarkersFile</span>(<span class='no'>file</span>, <span class='kw'>gene2symbol</span> <span class='kw'>=</span> <span class='no'>gene2symbol</span>)</div><div class='output co'>#&gt; <span class='message'>Reading cell_type_markers.csv</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>

@@ -7,8 +7,6 @@
 #' @inheritParams general
 #'
 #' @examples
-#' load(system.file("extdata/bcb_small.rda", package = "bcbioSingleCell"))
-#'
 #' # bcbioSingleCell ====
 #' cell2sample(bcb_small) %>% table()
 #'
