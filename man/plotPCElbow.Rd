@@ -23,7 +23,7 @@ plotPCElbow(object, ...)
 
 \item{maxCumPct}{Maximum cumulative percent standard deviation.}
 
-\item{plot}{Plot the PC standard deviations.}
+\item{plot}{Include plot.}
 }
 \value{
 \itemize{

@@ -13,7 +13,7 @@
 #' @param minSD Minimum standard deviation.
 #' @param minPct Minimum percent standard deviation.
 #' @param maxCumPct Maximum cumulative percent standard deviation.
-#' @param plot Plot the PC standard deviations.
+#' @param plot Include plot.
 #'
 #' @return
 #' - Show graphical output of elbow plots.
@@ -127,7 +127,7 @@ NULL
             yintercept = maxCumPct
         ) +
         .qcCutoffLine(xintercept = cutoff) +
-        labs(x = "pc", y = "cumulative % std dev") +
+        labs(x = "pc", y = "cum % std dev") +
         expand_limits(y = c(0L, 1L)) +
         scale_y_continuous(labels = percent, trans = trans)
 
