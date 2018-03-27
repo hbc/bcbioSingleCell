@@ -95,8 +95,98 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>color</th>
+      <td><p>Desired ggplot color scale. Must supply discrete values. When
+set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+<code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>fill</th>
+      <td><p>Desired ggplot fill scale. Must supply discrete values. When set
+to <code>NULL</code>, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>gene2symbol</th>
+      <td><p><code>data.frame</code> containing gene-to-symbol mappings. Columns
+must contain <code>geneID</code> and <code>geneName</code>.</p></td>
+    </tr>
+    <tr>
+      <th>dark</th>
+      <td><p>Plot against a dark background using <code>midnightTheme()</code>.</p></td>
+    </tr>
+    <tr>
+      <th>dir</th>
+      <td><p>Output directory.</p></td>
+    </tr>
+    <tr>
+      <th>genes</th>
+      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
+    </tr>
+    <tr>
+      <th>geom</th>
+      <td><p>Plot type. Uses <code>match.arg()</code> internally and defaults to the
+first argument in the vector.</p></td>
+    </tr>
+    <tr>
+      <th>headerLevel</th>
+      <td><p>R Markdown header level.</p></td>
+    </tr>
+    <tr>
+      <th>interestingGroups</th>
+      <td><p>Character vector of interesting groups. Must be
+formatted in <code>camel()</code> case and intersect with <code>sampleData()</code> colnames.</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>Overlay a cluster identitiy label on the plot.</p></td>
+    </tr>
+    <tr>
+      <th>labelSize</th>
+      <td><p>Size of the text label.</p></td>
+    </tr>
+    <tr>
+      <th>legend</th>
+      <td><p>Include plot legend.</p></td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td><p>Recommended minimum value cutoff.</p></td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td><p>Recommended maximum value cutoff.</p></td>
+    </tr>
+    <tr>
       <th>object</th>
       <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>pipeline</th>
+      <td><p>Pipeline used to generate the samples.</p></td>
+    </tr>
+    <tr>
+      <th>pointAlpha</th>
+      <td><p>Alpha transparency level. Useful when there many cells in
+the dataset, and some cells can be masked.</p></td>
+    </tr>
+    <tr>
+      <th>pointsAsNumbers</th>
+      <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>pointSize</th>
+      <td><p>Cell point size.</p></td>
+    </tr>
+    <tr>
+      <th>return</th>
+      <td><p>Return type. Uses <code>match.arg()</code> internally and defaults to the
+first argument in the vector.</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>Plot title.</p></td>
     </tr>
     <tr>
       <th>value</th>

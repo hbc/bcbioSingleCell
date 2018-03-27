@@ -93,8 +93,8 @@
     <pre class="usage"><span class='fu'>topMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for grouped_df</span>
-<span class='fu'>topMarkers</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"positive"</span>,
-  <span class='kw'>coding</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>topMarkers</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"positive"</span>,
+  <span class='st'>"negative"</span>, <span class='st'>"both"</span>), <span class='kw'>coding</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -113,8 +113,8 @@
     </tr>
     <tr>
       <th>direction</th>
-      <td><p>Whether to include only <code>positive</code>, <code>negative</code>, or <code>both</code>
-directions of association per cluster. Defaults to <code>positive</code>.</p></td>
+      <td><p>Whether to include "<code>positive</code>", "<code>negative</code>", or "<code>both</code>"
+directions of association per cluster.</p></td>
     </tr>
     <tr>
       <th>coding</th>
@@ -124,43 +124,53 @@ directions of association per cluster. Defaults to <code>positive</code>.</p></t
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>tibble.</p>
+    <p><code>tibble</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <ul>
-<li><p><code><a href='http://dplyr.tidyverse.org/reference/slice.html'>dplyr::slice()</a></code></p></li>
+<li><p><code><a href='http://dplyr.tidyverse.org/reference/slice.html'>dplyr::slice()</a></code>.</p></li>
 <li><p><code><a href='http://dplyr.tidyverse.org/reference/top_n.html'>dplyr::top_n()</a></code>.</p></li>
 </ul>
-    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
+    <p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+  <code>knownMarkersDetected</code>,
+  <code>plotCellTypesPerCluster</code>,
+  <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkers</code>, <code>plotPCElbow</code>,
-  <code>plotTopMarkers</code>, <code>topBarcodes</code></p>
+  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code>plotPCA</code>, <code>plotPCElbow</code>,
+  <code>plotTSNE</code>, <code>plotTopMarkers</code>,
+  <code>sanitizeMarkers</code>, <code>topBarcodes</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seuratAllMarkers.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='st'>"extdata/all_markers_small.rda"</span>,
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>
+))
 
-<span class='co'># grouped_df</span>
-<span class='fu'>topMarkers</span>(<span class='no'>seuratAllMarkers</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 40
-#&gt; Variables: 17
-#&gt; $ cluster        &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1...
-#&gt; $ ensgene        &lt;chr&gt; "ENSG00000164692", "ENSG00000108821", "ENSG000001633...
-#&gt; $ symbol         &lt;chr&gt; "COL1A2", "COL1A1", "COL6A3", "FN1", "COL3A1", "LGAL...
-#&gt; $ pct1           &lt;dbl&gt; 0.990, 1.000, 0.979, 0.990, 1.000, 0.875, 0.844, 0.9...
-#&gt; $ pct2           &lt;dbl&gt; 0.537, 0.714, 0.354, 0.361, 0.748, 0.156, 0.170, 0.2...
-#&gt; $ avgLogFC       &lt;dbl&gt; 2.661597, 2.593907, 2.253253, 2.270791, 1.480821, 2....
-#&gt; $ pvalue         &lt;dbl&gt; 2.213001e-63, 9.635920e-60, 4.485043e-42, 1.498001e-...
-#&gt; $ padj           &lt;dbl&gt; 2.213001e-60, 9.635920e-57, 4.485043e-39, 1.498001e-...
-#&gt; $ description    &lt;chr&gt; "collagen type I alpha 2 chain [Source:HGNC Symbol;A...
-#&gt; $ biotype        &lt;chr&gt; "protein_coding", "protein_coding", "protein_coding"...
-#&gt; $ broadClass     &lt;chr&gt; "coding", "coding", "coding", "coding", "coding", "c...
-#&gt; $ geneSeqStart   &lt;int&gt; 94394561, 50183289, 237324003, 215360440, 188974320,...
-#&gt; $ geneSeqEnd     &lt;int&gt; 94431232, 50201632, 237414375, 215436172, 189012746,...
-#&gt; $ seqName        &lt;chr&gt; "7", "17", "2", "2", "2", "22", "2", "22", "21", "17...
-#&gt; $ seqStrand      &lt;int&gt; 1, -1, -1, -1, 1, 1, -1, 1, 1, -1, -1, -1, -1, 1, -1...
-#&gt; $ seqCoordSystem &lt;chr&gt; "chromosome", "chromosome", "chromosome", "chromosom...
-#&gt; $ entrez         &lt;list&gt; [1278, 1277, 1293, 2335, 1281, 3956, 5270, 2192, 12...</div></pre>
+<span class='co'># grouped_df ====</span>
+<span class='fu'>topMarkers</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>all_markers_small</span>,
+    <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
+    <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"positive"</span>
+)</div><div class='output co'>#&gt; # A tibble: 10 x 18
+#&gt; # Groups:   cluster [5]
+#&gt;    cluster geneID       geneName  pct1  pct2 avgLogFC     padj   pvalue rowname
+#&gt;    &lt;fct&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  
+#&gt;  1 0       ENSG0000016… COL1A2   1.00  0.465     2.56 5.31e-58 1.06e-60 COL1A2 
+#&gt;  2 0       ENSG0000010… COL1A1   1.00  0.596     2.79 1.98e-57 3.96e-60 COL1A1 
+#&gt;  3 1       ENSG0000019… S100A10  0.741 0.266     2.17 4.75e-30 9.50e-33 S100A10
+#&gt;  4 1       ENSG0000011… KRT18    0.681 0.253     1.53 9.82e-20 1.96e-22 KRT18  
+#&gt;  5 2       ENSG0000019… MYL4     0.872 0.123     2.14 3.25e-55 6.50e-58 MYL4   
+#&gt;  6 2       ENSG0000019… PLN      0.936 0.212     2.43 5.17e-55 1.03e-57 PLN    
+#&gt;  7 3       ENSG0000019… MT-ATP6  1.00  0.993     1.16 1.80e-31 3.59e-34 MT.ATP6
+#&gt;  8 3       ENSG0000019… MT-ND5   0.966 0.908     1.33 2.36e-31 4.71e-34 MT.ND5 
+#&gt;  9 4       ENSG0000016… H3F3A    1.00  0.767     1.38 3.89e-25 7.79e-28 H3F3A  
+#&gt; 10 4       ENSG0000011… STMN1    0.952 0.452     1.77 2.66e-24 5.31e-27 STMN1  
+#&gt; # ... with 9 more variables: seqnames &lt;fct&gt;, start &lt;int&gt;, end &lt;int&gt;,
+#&gt; #   width &lt;int&gt;, strand &lt;fct&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
+#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

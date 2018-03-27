@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gene to Symbol Mappings — gene2symbol • bcbioSingleCell</title>
+<title>Row Data — rowData • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,24 +83,37 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Gene to Symbol Mappings</h1>
+    <h1>Row Data</h1>
     </div>
 
     
-    <p>Gene to Symbol Mappings</p>
+    <p>Metadata describing the genes. These annotations are obtained from
+AnnotationHub and ensembldb using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/ensembl'>basejump::ensembl()</a></code>.</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for seurat</span>
-<span class='fu'>gene2symbol</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>rowData</span>(<span class='no'>x</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"DataFrame"</span>))
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>rowData</span>(<span class='no'>x</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"DataFrame"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
+      <th>x</th>
+      <td><p>Primary object.</p></td>
+    </tr>
+    <tr>
+      <th>return</th>
+      <td><p>Return type. Uses <code>match.arg()</code> internally and defaults to the
+first argument in the vector.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Return data as <code>data.frame</code>, or <code>DataFrame</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -109,11 +122,10 @@
   <code>counts</code>, <code>fetchGeneData</code>,
   <code>fetchPCAData</code>, <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
-  <code>filterCells</code>,
+  <code>filterCells</code>, <code>gene2symbol</code>,
   <code>interestingGroups</code>,
   <code>readCellTypeMarkersFile</code>,
-  <code>rowData</code>, <code>sampleData</code>,
-  <code>selectSamples</code>,
+  <code>sampleData</code>, <code>selectSamples</code>,
   <code>subsetPerSample</code></p>
     
 
@@ -121,22 +133,44 @@
     <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 <span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='co'># bcbioRNASeq ====</span>
-<span class='fu'>gene2symbol</span>(<span class='no'>bcb_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 500
-#&gt; Variables: 2
-#&gt; $ geneID   &lt;chr&gt; "ENSG00000000457", "ENSG00000002586", "ENSG00000004939", "...
-#&gt; $ geneName &lt;chr&gt; "SCYL3", "CD99", "SLC4A1", "SLC25A5", "DHX33", "RPS20", "C...</div><div class='input'>
+<span class='co'># bcbioSingleCell ====</span>
+<span class='fu'>rowData</span>(<span class='no'>bcb_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 500
+#&gt; Variables: 12
+#&gt; $ seqnames       &lt;fct&gt; 1, X, 17, X, 17, 8, 1, 12, 2, 10, 2, 5, 9, 11, 1, 12...
+#&gt; $ start          &lt;int&gt; 169849631, 2691179, 44248385, 119468400, 5440912, 56...
+#&gt; $ end            &lt;int&gt; 169894267, 2741309, 44268141, 119471319, 5469060, 56...
+#&gt; $ width          &lt;int&gt; 44637, 50131, 19757, 2920, 28149, 7287, 41764, 42640...
+#&gt; $ strand         &lt;fct&gt; -, +, -, +, -, -, -, -, +, +, +, +, -, +, +, -, +, -...
+#&gt; $ geneID         &lt;chr&gt; "ENSG00000000457", "ENSG00000002586", "ENSG000000049...
+#&gt; $ geneName       &lt;chr&gt; "SCYL3", "CD99", "SLC4A1", "SLC25A5", "DHX33", "RPS2...
+#&gt; $ geneBiotype    &lt;fct&gt; protein_coding, protein_coding, protein_coding, prot...
+#&gt; $ description    &lt;chr&gt; "SCY1 like pseudokinase 3 [Source:HGNC Symbol;Acc:HG...
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...
+#&gt; $ entrezID       &lt;I(list)&gt; 57147,  4267,  6521,   292, 56919,  6224,  7812,...
+#&gt; $ broadClass     &lt;fct&gt; coding, coding, coding, coding, coding, coding, codi...</div><div class='input'>
 <span class='co'># seurat ====</span>
-<span class='fu'>gene2symbol</span>(<span class='no'>seurat_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 500
-#&gt; Variables: 2
-#&gt; $ geneID   &lt;chr&gt; "ENSG00000000457", "ENSG00000002586", "ENSG00000004939", "...
-#&gt; $ geneName &lt;chr&gt; "SCYL3", "CD99", "SLC4A1", "SLC25A5", "DHX33", "RPS20", "C...</div></pre>
+<span class='fu'>rowData</span>(<span class='no'>pbmc_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt;  NULL</div><div class='input'><span class='fu'>rowData</span>(<span class='no'>seurat_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 500
+#&gt; Variables: 12
+#&gt; $ seqnames       &lt;fct&gt; 1, X, 17, X, 17, 8, 1, 12, 2, 10, 2, 5, 9, 11, 1, 12...
+#&gt; $ start          &lt;int&gt; 169849631, 2691179, 44248385, 119468400, 5440912, 56...
+#&gt; $ end            &lt;int&gt; 169894267, 2741309, 44268141, 119471319, 5469060, 56...
+#&gt; $ width          &lt;int&gt; 44637, 50131, 19757, 2920, 28149, 7287, 41764, 42640...
+#&gt; $ strand         &lt;fct&gt; -, +, -, +, -, -, -, -, +, +, +, +, -, +, +, -, +, -...
+#&gt; $ geneID         &lt;chr&gt; "ENSG00000000457", "ENSG00000002586", "ENSG000000049...
+#&gt; $ geneName       &lt;chr&gt; "SCYL3", "CD99", "SLC4A1", "SLC25A5", "DHX33", "RPS2...
+#&gt; $ geneBiotype    &lt;fct&gt; protein_coding, protein_coding, protein_coding, prot...
+#&gt; $ description    &lt;chr&gt; "SCY1 like pseudokinase 3 [Source:HGNC Symbol;Acc:HG...
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...
+#&gt; $ entrezID       &lt;I(list)&gt; 57147,  4267,  6521,   292, 56919,  6224,  7812,...
+#&gt; $ broadClass     &lt;fct&gt; coding, coding, coding, coding, coding, coding, codi...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

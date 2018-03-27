@@ -94,10 +94,10 @@
 
 <span class='co'># S4 method for seurat,grouped_df</span>
 <span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>,
-  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(),
-  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span>
-  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
+  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'>scale_color_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'>scale_fill_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'>scale_color_gradient</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -108,7 +108,7 @@
     </tr>
     <tr>
       <th>topMarkers</th>
-      <td><p>Top markers tibble grouped by cluster, returned by
+      <td><p><code>grouped_df</code> grouped by "<code>cluster</code>", returned by
 <code>topMarkers()</code>.</p></td>
     </tr>
     <tr>
@@ -129,7 +129,7 @@
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot the TSNE against a dark background.</p></td>
+      <td><p>Plot against a dark background using <code>midnightTheme()</code>.</p></td>
     </tr>
     <tr>
       <th>pointsAsNumbers</th>
@@ -137,13 +137,13 @@
     </tr>
     <tr>
       <th>headerLevel</th>
-      <td><p>Include a Markdown header for each gene.</p></td>
+      <td><p>R Markdown header level.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>No value, only graphical output.</p>
+    <p>Show graphical output. Invisibly return <code>ggplot</code> plotlist.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -154,29 +154,64 @@ for the number of genes to plot here in a future update.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
+    <p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+  <code>knownMarkersDetected</code>,
+  <code>plotCellTypesPerCluster</code>,
+  <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkers</code>, <code>plotPCElbow</code>,
+  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code>plotPCA</code>, <code>plotPCElbow</code>,
+  <code>plotTSNE</code>, <code>sanitizeMarkers</code>,
   <code>topBarcodes</code>, <code>topMarkers</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/topMarkers.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='st'>"extdata/all_markers_small.rda"</span>,
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>
+))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='co'># seurat, grouped_df</span>
-<span class='co'># Let's plot the top 2 markers from cluster 0, as a quick example</span>
-<span class='fu'>plotTopMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>topMarkers</span> <span class='kw'>=</span> <span class='no'>topMarkers</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ])</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
+<span class='co'># seurat, grouped_df ====</span>
+<span class='fu'>plotTopMarkers</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
+    <span class='kw'>topMarkers</span> <span class='kw'>=</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
+)</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
 #&gt; 
 #&gt; ## Cluster 0 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
-#&gt; ### ACTC1
-#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
+#&gt; ### COL1A2
+#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~06s          
 #&gt; 
-#&gt; ### MYL7
-#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |+++++++++                                         | 17% ~20s             |+++++++++++++++++                                 | 33% ~08s             |+++++++++++++++++++++++++                         | 50% ~04s             |++++++++++++++++++++++++++++++++++                | 67% ~02s             |++++++++++++++++++++++++++++++++++++++++++        | 83% ~01s             |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 04s</div></pre>
+#&gt; ## Cluster 1 {.tabset}
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; ### S100A10
+#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~07s          
+#&gt; 
+#&gt; ## Cluster 2 {.tabset}
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; ### MYL4
+#&gt; </div><div class='img'><img src='plotTopMarkers-3.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++                    | 60% ~05s          
+#&gt; 
+#&gt; ## Cluster 3 {.tabset}
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; ### MT.ATP6
+#&gt; </div><div class='img'><img src='plotTopMarkers-4.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++         | 80% ~03s          
+#&gt; 
+#&gt; ## Cluster 4 {.tabset}
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; ### H3F3A
+#&gt; </div><div class='img'><img src='plotTopMarkers-5.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 14s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

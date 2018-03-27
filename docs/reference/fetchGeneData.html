@@ -108,30 +108,36 @@
     </tr>
     <tr>
       <th>genes</th>
-      <td><p>Gene identifiers (matrix rownames).</p></td>
+      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>matrix.</p>
+    <p><code>matrix</code>.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p>Other Data Functions: <code>aggregateReplicates</code>,
+  <code>cell2sample</code>, <code>colData</code>,
+  <code>counts</code>, <code>fetchPCAData</code>,
+  <code>fetchTSNEData</code>,
+  <code>fetchTSNEExpressionData</code>,
+  <code>filterCells</code>, <code>gene2symbol</code>,
+  <code>interestingGroups</code>,
+  <code>readCellTypeMarkersFile</code>,
+  <code>rowData</code>, <code>sampleData</code>,
+  <code>selectSamples</code>,
+  <code>subsetPerSample</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># seurat</span>
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>slot</span>(<span class='no'>seurat</span>, <span class='st'>"data"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span>
-    <span class='fu'>head</span>()
-<span class='fu'>fetchGeneData</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>head</span>()</div><div class='output co'>#&gt;                          SCYL3      CD99 TMEM176A   SLC4A1  SLC25A5    DHX33
-#&gt; M1_AAACACTA_CTTAGGTA 0.9584751 1.7618415 0.000000 2.505854 0.000000 1.761842
-#&gt; M1_AAACACTA_CTTCGATT 2.5202846 0.7125992 2.231549 1.124465 1.823972 0.000000
-#&gt; M1_AAACCGCC_GAGTTTCG 2.8227342 0.0000000 1.836456 1.836456 1.836456 0.000000
-#&gt; M1_AAACCGCC_TAGCCTCG 2.7106050 1.7368557 0.000000 0.000000 1.736856 2.337847
-#&gt; M1_AAACGATC_TTTACCCT 2.4129392 1.9601005 1.622688 1.109667 2.412939 3.060277
-#&gt; M1_AAACTACA_CCACATTA 2.2671086 2.1482704 1.857416 1.445576 2.148270 1.672549</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>pbmc_small</span>))
+<span class='fu'>fetchGeneData</span>(<span class='no'>pbmc_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt;  num [1:80, 1:6] 0 0 0 0 0 0 0 0 0 0 ...
+#&gt;  - attr(*, "dimnames")=List of 2
+#&gt;   ..$ : chr [1:80] "ATGCCAGAACGACT" "CATGGCCTGTGCAT" "GAACCTGATGAACC" "TGACTGGATTCTCA" ...
+#&gt;   ..$ : chr [1:6] "MS4A1" "CD79B" "CD79A" "HLA-DRA" ...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -139,9 +145,15 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
+
+    <h2>Author</h2>
+    
+Michael Steinbaugh
 
   </div>
 </div>

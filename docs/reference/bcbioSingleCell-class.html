@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>bcbioSingleCell Object Class — bcbioSingleCell-class • bcbioSingleCell</title>
+<title>bcbioSingleCell Class — bcbioSingleCell-class • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,14 +83,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>bcbioSingleCell Object Class</h1>
+    <h1>bcbioSingleCell Class</h1>
     </div>
 
     
-    <p><code>bcbioSingleCell</code> is an extension of <code>SummarizedExperiment</code> designed to store
-bcbio single-cell RNA-seq counts. This class contains read counts save as a
-sparse matrix (<code>dgCMatrix</code>), sample barcodes, run metadata, and barcode
-summary statistics for each sample analyzed.</p>
+    <p><code>bcbioSingleCell</code> extends <code>SingleCellExperiment</code> and designed to store a
+bcbio single-cell RNA-seq analysis. This class contains read counts saved as
+a sparse matrix (<code>dgCMatrix</code>), sample metadata, and cell quality control
+metrics.</p>
     
 
         
@@ -105,13 +105,14 @@ unfiltered cellular barcodes for quality control analysis.</p></dd>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code>bcbioSingleCell</code> extended <code>SummarizedExperiment</code> until v0.0.31 of
-this package, when we migrated over to using <code>SingleCellExperiment</code>.</p>
+    <p><code>bcbioSingleCell</code> extended <code>SummarizedExperiment</code> prior to v0.1.0,
+where we migrated to <code>SingleCellExperiment</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <ul>
-<li><p><code><a href='http://www.rdocumentation.org/packages/SummarizedExperiment/topics/RangedSummarizedExperiment-class'>SummarizedExperiment::SummarizedExperiment()</a></code>.</p></li>
+<li><p><code>loadSingleCell()</code>, <code>loadCellRanger()</code>.</p></li>
+<li><p><code><a href='http://www.rdocumentation.org/packages/SingleCellExperiment/topics/SingleCellExperiment'>SingleCellExperiment::SingleCellExperiment()</a></code>.</p></li>
 <li><p><code>.S4methods(class = "bcbioSingleCell")</code>.</p></li>
 </ul>
     

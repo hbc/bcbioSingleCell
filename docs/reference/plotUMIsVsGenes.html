@@ -94,15 +94,11 @@
 
 <span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>samplesOnYAxis</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
-
-<span class='co'># S4 method for data.frame</span>
-<span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>scale_color_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>scale_color_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -117,69 +113,33 @@
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Interesting group, to use for colors.</p></td>
-    </tr>
-    <tr>
-      <th>samplesOnYAxis</th>
-      <td><p>Plot the samples on the y axis. Doesn't apply to
-histogram.</p></td>
+      <td><p>Character vector of interesting groups. Must be
+formatted in <code>camel()</code> case and intersect with <code>sampleData()</code> colnames.</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p><em>Only applies to scatterplot</em>. Desired ggplot color scale.
-Defaults to <code><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>viridis::scale_color_viridis()</a></code>. Must supply discrete values.
-When set to <code>NULL</code>, the default ggplot2 color palette will be used. If
-manual color definitions are desired, we recommend using
+      <td><p>Desired ggplot color scale. Must supply discrete values. When
+set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
 <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a>.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>A violin plot is a comact display of a continuous distribution. It
-is a blend of <code>geom_boxplot()</code> and <code>geom_density()</code>: a violin plot is a
-mirrored density plot displayed in the same way as a boxplot.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <p>Other Quality Control Metrics: <code><a href='metrics.html'>metrics</a></code>,
-  <code>plotCellCounts</code>,
-  <code>plotGenesPerCell</code>,
-  <code>plotMitoRatio</code>,
-  <code>plotMitoVsCoding</code>,
-  <code>plotNovelty</code>,
-  <code>plotReadsPerCell</code>,
-  <code>plotUMIsPerCell</code>,
-  <code>plotZerosVsDepth</code></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='co'># bcbioSingleCell</span>
-<span class='fu'>plotUMIsVsGenes</span>(<span class='no'>bcb</span>)</div><div class='img'><img src='plotUMIsVsGenes-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='co'># seurat</span>
-<span class='fu'>plotUMIsVsGenes</span>(<span class='no'>seurat</span>)</div><div class='img'><img src='plotUMIsVsGenes-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='co'># data.frame</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics.html'>metrics</a></span>(<span class='no'>bcb</span>)
-<span class='fu'>plotUMIsPerCell</span>(<span class='no'>df</span>)</div><div class='img'><img src='plotUMIsVsGenes-3.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='co'># bcbioSingleCell ====</span>
+<span class='fu'>plotUMIsVsGenes</span>(<span class='no'>bcb_small</span>)</div><div class='img'><img src='plotUMIsVsGenes-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># seurat ====</span>
+<span class='fu'>plotUMIsVsGenes</span>(<span class='no'>pbmc_small</span>)</div><div class='img'><img src='plotUMIsVsGenes-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plotUMIsVsGenes</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotUMIsVsGenes-3.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

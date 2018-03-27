@@ -91,9 +91,9 @@
     
 
     <pre class="usage"><span class='co'># S4 method for seurat</span>
-<span class='fu'>plotDot</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
-  <span class='kw'>colMin</span> <span class='kw'>=</span> -<span class='fl'>2.5</span>, <span class='kw'>colMax</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>dotMin</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>dotScale</span> <span class='kw'>=</span> <span class='fl'>6L</span>)</pre>
+<span class='fu'>plotDot</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>scale_color_gradient</span>(<span class='kw'>low</span> <span class='kw'>=</span>
+  <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>), <span class='kw'>colMin</span> <span class='kw'>=</span> -<span class='fl'>2.5</span>, <span class='kw'>colMax</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>dotMin</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
+  <span class='kw'>dotScale</span> <span class='kw'>=</span> <span class='fl'>6L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -104,11 +104,14 @@
     </tr>
     <tr>
       <th>genes</th>
-      <td><p>Gene identifiers to plot.</p></td>
+      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Color palette. If <code>NULL</code>, uses default ggplot2 colors.</p></td>
+      <td><p>Desired ggplot color scale. Must supply discrete values. When
+set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+<code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
     </tr>
     <tr>
       <th>colMin</th>
@@ -141,14 +144,12 @@ RMarkdown looping of our marker plots.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Modified version of <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/DotPlot'>Seurat::DotPlot()</a></code>.</p>
+<p>Other Gene Expression Functions: <code>plotViolin</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># seurat</span>
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>slot</span>(<span class='no'>seurat</span>, <span class='st'>"data"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span> <span class='fu'>head</span>()
-<span class='fu'>plotDot</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='img'><img src='plotDot-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
+<span class='fu'>plotDot</span>(<span class='no'>pbmc_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>pbmc_small</span>)))</div><div class='img'><img src='plotDot-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

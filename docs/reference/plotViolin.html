@@ -92,8 +92,8 @@
 
     <pre class="usage"><span class='co'># S4 method for seurat</span>
 <span class='fu'>plotViolin</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>,
-  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>scale_fill_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
+  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>, <span class='st'>"list"</span>, <span class='st'>"markdown"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -104,321 +104,55 @@
     </tr>
     <tr>
       <th>genes</th>
-      <td><p>Gene identifiers to plot.</p></td>
+      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>Fill color palette. Defaults to viridis.</p></td>
-    </tr>
-    <tr>
-      <th>return</th>
-      <td><p>Return type. "grid", "list", and "markdown" are supported.</p></td>
+      <td><p>Desired ggplot fill scale. Must supply discrete values. When set
+to <code>NULL</code>, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
-      <td><p>Markdown header level. Only applicable when
-<code>return = "markdown"</code>.</p></td>
+      <td><p>R Markdown header level.</p></td>
+    </tr>
+    <tr>
+      <th>return</th>
+      <td><p>Return type. Uses <code>match.arg()</code> internally and defaults to the
+first argument in the vector.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p>Other Gene Expression Functions: <code>plotDot</code></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>slot</span>(<span class='no'>pbmc_small</span>, <span class='st'>"raw.data"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span> <span class='fu'>head</span>(<span class='fl'>2L</span>)
 
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>slot</span>(<span class='no'>seurat</span>, <span class='st'>"raw.data"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span> <span class='no'>.</span>[<span class='fl'>1</span>:<span class='fl'>2</span>]
-<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; ENSG00000000457 ENSG00000002586 
-#&gt;         "SCYL3"          "CD99" </div><div class='input'>
 <span class='co'># grid</span>
-<span class='fu'>plotViolin</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)</div><div class='img'><img src='plotViolin-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plotViolin</span>(<span class='no'>pbmc_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)</div><div class='img'><img src='plotViolin-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># list</span>
-<span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'>plotViolin</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"list"</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>list</span>)</div><div class='output co'>#&gt; List of 2
-#&gt;  $ SCYL3:List of 10
-#&gt;   ..$ data       :Classes 'grouped_df', 'tbl_df', 'tbl' and 'data.frame':	243 obs. of  4 variables:
-#&gt;   .. ..$ cell      : chr [1:243] "M1_AAACACTA_CTTAGGTA" "M1_AAACACTA_CTTCGATT" "M1_AAACCGCC_GAGTTTCG" "M1_AAACCGCC_TAGCCTCG" ...
-#&gt;   .. ..$ ident     : Factor w/ 4 levels "0","1","2","3": 1 2 2 4 3 2 4 1 2 3 ...
-#&gt;   .. ..$ gene      : chr [1:243] "SCYL3" "SCYL3" "SCYL3" "SCYL3" ...
-#&gt;   .. ..$ expression: num [1:243] 0.958 2.52 2.823 2.711 2.413 ...
-#&gt;   .. ..- attr(*, "vars")= chr "gene"
-#&gt;   .. ..- attr(*, "drop")= logi TRUE
-#&gt;   .. ..- attr(*, "indices")=List of 1
-#&gt;   .. ..- attr(*, "group_sizes")= int 243
-#&gt;   .. ..- attr(*, "biggest_group_size")= int 243
-#&gt;   .. ..- attr(*, "labels")='data.frame':	1 obs. of  1 variable:
-#&gt;   .. .. ..- attr(*, "vars")= chr "gene"
-#&gt;   .. .. ..- attr(*, "drop")= logi TRUE
-#&gt;   ..$ layers     :List of 1
-#&gt;   .. ..$ :Classes 'LayerInstance', 'Layer', 'ggproto' &lt;ggproto object: Class LayerInstance, Layer&gt;
-#&gt;     aes_params: list
-#&gt;     compute_aesthetics: function
-#&gt;     compute_geom_1: function
-#&gt;     compute_geom_2: function
-#&gt;     compute_position: function
-#&gt;     compute_statistic: function
-#&gt;     data: waiver
-#&gt;     draw_geom: function
-#&gt;     finish_statistics: function
-#&gt;     geom: &lt;ggproto object: Class GeomViolin, Geom&gt;
-#&gt;         aesthetics: function
-#&gt;         default_aes: uneval
-#&gt;         draw_group: function
-#&gt;         draw_key: function
-#&gt;         draw_layer: function
-#&gt;         draw_panel: function
-#&gt;         extra_params: na.rm
-#&gt;         handle_na: function
-#&gt;         non_missing_aes: 
-#&gt;         optional_aes: 
-#&gt;         parameters: function
-#&gt;         required_aes: x y
-#&gt;         setup_data: function
-#&gt;         use_defaults: function
-#&gt;         super:  &lt;ggproto object: Class Geom&gt;
-#&gt;     geom_params: list
-#&gt;     inherit.aes: TRUE
-#&gt;     layer_data: function
-#&gt;     map_statistic: function
-#&gt;     mapping: NULL
-#&gt;     position: &lt;ggproto object: Class PositionDodge, Position&gt;
-#&gt;         compute_layer: function
-#&gt;         compute_panel: function
-#&gt;         required_aes: x
-#&gt;         setup_data: function
-#&gt;         setup_params: function
-#&gt;         width: NULL
-#&gt;         super:  &lt;ggproto object: Class Position&gt;
-#&gt;     print: function
-#&gt;     show.legend: NA
-#&gt;     stat: &lt;ggproto object: Class StatYdensity, Stat&gt;
-#&gt;         aesthetics: function
-#&gt;         compute_group: function
-#&gt;         compute_layer: function
-#&gt;         compute_panel: function
-#&gt;         default_aes: uneval
-#&gt;         extra_params: na.rm
-#&gt;         finish_layer: function
-#&gt;         non_missing_aes: weight
-#&gt;         parameters: function
-#&gt;         required_aes: x y
-#&gt;         retransform: TRUE
-#&gt;         setup_data: function
-#&gt;         setup_params: function
-#&gt;         super:  &lt;ggproto object: Class Stat&gt;
-#&gt;     stat_params: list
-#&gt;     subset: NULL
-#&gt;     super:  &lt;ggproto object: Class Layer&gt; 
-#&gt;   ..$ scales     :Classes 'ScalesList', 'ggproto' &lt;ggproto object: Class ScalesList&gt;
-#&gt;     add: function
-#&gt;     clone: function
-#&gt;     find: function
-#&gt;     get_scales: function
-#&gt;     has_scale: function
-#&gt;     input: function
-#&gt;     n: function
-#&gt;     non_position_scales: function
-#&gt;     scales: list
-#&gt;     super:  &lt;ggproto object: Class ScalesList&gt; 
-#&gt;   ..$ mapping    :List of 3
-#&gt;   .. ..$ fill: symbol ident
-#&gt;   .. ..$ x   : symbol ident
-#&gt;   .. ..$ y   : symbol expression
-#&gt;   ..$ theme      : list()
-#&gt;   ..$ coordinates:Classes 'CoordCartesian', 'Coord', 'ggproto' &lt;ggproto object: Class CoordCartesian, Coord&gt;
-#&gt;     aspect: function
-#&gt;     distance: function
-#&gt;     expand: TRUE
-#&gt;     is_linear: function
-#&gt;     labels: function
-#&gt;     limits: list
-#&gt;     range: function
-#&gt;     render_axis_h: function
-#&gt;     render_axis_v: function
-#&gt;     render_bg: function
-#&gt;     render_fg: function
-#&gt;     train: function
-#&gt;     transform: function
-#&gt;     super:  &lt;ggproto object: Class CoordCartesian, Coord&gt; 
-#&gt;   ..$ facet      :Classes 'FacetNull', 'Facet', 'ggproto' &lt;ggproto object: Class FacetNull, Facet&gt;
-#&gt;     compute_layout: function
-#&gt;     draw_back: function
-#&gt;     draw_front: function
-#&gt;     draw_labels: function
-#&gt;     draw_panels: function
-#&gt;     finish_data: function
-#&gt;     init_scales: function
-#&gt;     map: function
-#&gt;     map_data: function
-#&gt;     params: list
-#&gt;     render_back: function
-#&gt;     render_front: function
-#&gt;     render_panels: function
-#&gt;     setup_data: function
-#&gt;     setup_params: function
-#&gt;     shrink: TRUE
-#&gt;     train: function
-#&gt;     train_positions: function
-#&gt;     train_scales: function
-#&gt;     vars: function
-#&gt;     super:  &lt;ggproto object: Class FacetNull, Facet&gt; 
-#&gt;   ..$ plot_env   :&lt;environment: 0x14a70e8d8&gt; 
-#&gt;   ..$ labels     :List of 4
-#&gt;   .. ..$ title: chr "SCYL3"
-#&gt;   .. ..$ fill : chr "ident"
-#&gt;   .. ..$ x    : chr "ident"
-#&gt;   .. ..$ y    : chr "expression"
-#&gt;   ..$ guides     :List of 1
-#&gt;   .. ..$ fill: logi FALSE
-#&gt;   ..- attr(*, "class")= chr [1:2] "gg" "ggplot"
-#&gt;  $ CD99 :List of 10
-#&gt;   ..$ data       :Classes 'grouped_df', 'tbl_df', 'tbl' and 'data.frame':	243 obs. of  4 variables:
-#&gt;   .. ..$ cell      : chr [1:243] "M1_AAACACTA_CTTAGGTA" "M1_AAACACTA_CTTCGATT" "M1_AAACCGCC_GAGTTTCG" "M1_AAACCGCC_TAGCCTCG" ...
-#&gt;   .. ..$ ident     : Factor w/ 4 levels "0","1","2","3": 1 2 2 4 3 2 4 1 2 3 ...
-#&gt;   .. ..$ gene      : chr [1:243] "CD99" "CD99" "CD99" "CD99" ...
-#&gt;   .. ..$ expression: num [1:243] 1.762 0.713 0 1.737 1.96 ...
-#&gt;   .. ..- attr(*, "vars")= chr "gene"
-#&gt;   .. ..- attr(*, "drop")= logi TRUE
-#&gt;   .. ..- attr(*, "indices")=List of 1
-#&gt;   .. ..- attr(*, "group_sizes")= int 243
-#&gt;   .. ..- attr(*, "biggest_group_size")= int 243
-#&gt;   .. ..- attr(*, "labels")='data.frame':	1 obs. of  1 variable:
-#&gt;   .. .. ..- attr(*, "vars")= chr "gene"
-#&gt;   .. .. ..- attr(*, "drop")= logi TRUE
-#&gt;   ..$ layers     :List of 1
-#&gt;   .. ..$ :Classes 'LayerInstance', 'Layer', 'ggproto' &lt;ggproto object: Class LayerInstance, Layer&gt;
-#&gt;     aes_params: list
-#&gt;     compute_aesthetics: function
-#&gt;     compute_geom_1: function
-#&gt;     compute_geom_2: function
-#&gt;     compute_position: function
-#&gt;     compute_statistic: function
-#&gt;     data: waiver
-#&gt;     draw_geom: function
-#&gt;     finish_statistics: function
-#&gt;     geom: &lt;ggproto object: Class GeomViolin, Geom&gt;
-#&gt;         aesthetics: function
-#&gt;         default_aes: uneval
-#&gt;         draw_group: function
-#&gt;         draw_key: function
-#&gt;         draw_layer: function
-#&gt;         draw_panel: function
-#&gt;         extra_params: na.rm
-#&gt;         handle_na: function
-#&gt;         non_missing_aes: 
-#&gt;         optional_aes: 
-#&gt;         parameters: function
-#&gt;         required_aes: x y
-#&gt;         setup_data: function
-#&gt;         use_defaults: function
-#&gt;         super:  &lt;ggproto object: Class Geom&gt;
-#&gt;     geom_params: list
-#&gt;     inherit.aes: TRUE
-#&gt;     layer_data: function
-#&gt;     map_statistic: function
-#&gt;     mapping: NULL
-#&gt;     position: &lt;ggproto object: Class PositionDodge, Position&gt;
-#&gt;         compute_layer: function
-#&gt;         compute_panel: function
-#&gt;         required_aes: x
-#&gt;         setup_data: function
-#&gt;         setup_params: function
-#&gt;         width: NULL
-#&gt;         super:  &lt;ggproto object: Class Position&gt;
-#&gt;     print: function
-#&gt;     show.legend: NA
-#&gt;     stat: &lt;ggproto object: Class StatYdensity, Stat&gt;
-#&gt;         aesthetics: function
-#&gt;         compute_group: function
-#&gt;         compute_layer: function
-#&gt;         compute_panel: function
-#&gt;         default_aes: uneval
-#&gt;         extra_params: na.rm
-#&gt;         finish_layer: function
-#&gt;         non_missing_aes: weight
-#&gt;         parameters: function
-#&gt;         required_aes: x y
-#&gt;         retransform: TRUE
-#&gt;         setup_data: function
-#&gt;         setup_params: function
-#&gt;         super:  &lt;ggproto object: Class Stat&gt;
-#&gt;     stat_params: list
-#&gt;     subset: NULL
-#&gt;     super:  &lt;ggproto object: Class Layer&gt; 
-#&gt;   ..$ scales     :Classes 'ScalesList', 'ggproto' &lt;ggproto object: Class ScalesList&gt;
-#&gt;     add: function
-#&gt;     clone: function
-#&gt;     find: function
-#&gt;     get_scales: function
-#&gt;     has_scale: function
-#&gt;     input: function
-#&gt;     n: function
-#&gt;     non_position_scales: function
-#&gt;     scales: list
-#&gt;     super:  &lt;ggproto object: Class ScalesList&gt; 
-#&gt;   ..$ mapping    :List of 3
-#&gt;   .. ..$ fill: symbol ident
-#&gt;   .. ..$ x   : symbol ident
-#&gt;   .. ..$ y   : symbol expression
-#&gt;   ..$ theme      : list()
-#&gt;   ..$ coordinates:Classes 'CoordCartesian', 'Coord', 'ggproto' &lt;ggproto object: Class CoordCartesian, Coord&gt;
-#&gt;     aspect: function
-#&gt;     distance: function
-#&gt;     expand: TRUE
-#&gt;     is_linear: function
-#&gt;     labels: function
-#&gt;     limits: list
-#&gt;     range: function
-#&gt;     render_axis_h: function
-#&gt;     render_axis_v: function
-#&gt;     render_bg: function
-#&gt;     render_fg: function
-#&gt;     train: function
-#&gt;     transform: function
-#&gt;     super:  &lt;ggproto object: Class CoordCartesian, Coord&gt; 
-#&gt;   ..$ facet      :Classes 'FacetNull', 'Facet', 'ggproto' &lt;ggproto object: Class FacetNull, Facet&gt;
-#&gt;     compute_layout: function
-#&gt;     draw_back: function
-#&gt;     draw_front: function
-#&gt;     draw_labels: function
-#&gt;     draw_panels: function
-#&gt;     finish_data: function
-#&gt;     init_scales: function
-#&gt;     map: function
-#&gt;     map_data: function
-#&gt;     params: list
-#&gt;     render_back: function
-#&gt;     render_front: function
-#&gt;     render_panels: function
-#&gt;     setup_data: function
-#&gt;     setup_params: function
-#&gt;     shrink: TRUE
-#&gt;     train: function
-#&gt;     train_positions: function
-#&gt;     train_scales: function
-#&gt;     vars: function
-#&gt;     super:  &lt;ggproto object: Class FacetNull, Facet&gt; 
-#&gt;   ..$ plot_env   :&lt;environment: 0x130559ee8&gt; 
-#&gt;   ..$ labels     :List of 4
-#&gt;   .. ..$ title: chr "CD99"
-#&gt;   .. ..$ fill : chr "ident"
-#&gt;   .. ..$ x    : chr "ident"
-#&gt;   .. ..$ y    : chr "expression"
-#&gt;   ..$ guides     :List of 1
-#&gt;   .. ..$ fill: logi FALSE
-#&gt;   ..- attr(*, "class")= chr [1:2] "gg" "ggplot"</div><div class='input'>
+<span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'>plotViolin</span>(<span class='no'>pbmc_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"list"</span>)
+<span class='fu'>names</span>(<span class='no'>list</span>)</div><div class='output co'>#&gt; [1] "MS4A1" "CD79B"</div><div class='input'>
 <span class='co'># markdown</span>
-<span class='fu'>plotViolin</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"markdown"</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>plotViolin</span>(<span class='no'>pbmc_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"markdown"</span>)</div><div class='output co'>#&gt; 
 #&gt; 
-#&gt; ## SCYL3
+#&gt; ## MS4A1
 #&gt; </div><div class='img'><img src='plotViolin-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
 #&gt; 
-#&gt; ## CD99
+#&gt; ## CD79B
 #&gt; </div><div class='img'><img src='plotViolin-3.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

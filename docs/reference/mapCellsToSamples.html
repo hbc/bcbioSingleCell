@@ -108,24 +108,24 @@ matching.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Named factor containing cell IDs as the names, and samples as the
+    <p>Named <code>factor</code> containing cell IDs as the names, and samples as the
 factor levels.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>bcb</span>)
-<span class='no'>samples</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sampleMetadata.html'>sampleMetadata</a></span>(<span class='no'>bcb</span>)<span class='kw'>[[</span><span class='st'>"sampleID"</span>]]
-
+<span class='co'># bcbioSingleCell ====</span>
+<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>bcb_small</span>)
+<span class='no'>samples</span> <span class='kw'>&lt;-</span> <span class='fu'>sampleData</span>(<span class='no'>bcb_small</span>)<span class='kw'>[[</span><span class='st'>"sampleID"</span>]]
 <span class='no'>map</span> <span class='kw'>&lt;-</span> <span class='fu'>mapCellsToSamples</span>(<span class='no'>cells</span>, <span class='no'>samples</span>)
-<span class='fu'>head</span>(<span class='no'>map</span>)</div><div class='output co'>#&gt; run1_AGAGGATA_AAACACTA_CTTAGGTA run1_AGAGGATA_AAACACTA_CTTCGATT 
-#&gt;                   run1_AGAGGATA                   run1_AGAGGATA 
-#&gt; run1_AGAGGATA_AAACCGCC_GAGTTTCG run1_AGAGGATA_AAACCGCC_TAGCCTCG 
-#&gt;                   run1_AGAGGATA                   run1_AGAGGATA 
-#&gt; run1_AGAGGATA_AAACGATC_TTTACCCT run1_AGAGGATA_AAACTACA_CCACATTA 
-#&gt;                   run1_AGAGGATA                   run1_AGAGGATA 
-#&gt; Levels: run1_AGAGGATA run2_AGAGGATA</div><div class='input'><span class='fu'>levels</span>(<span class='no'>map</span>)</div><div class='output co'>#&gt; [1] "run1_AGAGGATA" "run2_AGAGGATA"</div></pre>
+<span class='fu'>head</span>(<span class='no'>map</span>)</div><div class='output co'>#&gt; multiplexed_AAAAAAAA_AAACACTA_ATCCCACG multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA 
+#&gt;                   multiplexed_AAAAAAAA                   multiplexed_AAAAAAAA 
+#&gt; multiplexed_AAAAAAAA_AAACACTA_CTTCGATT multiplexed_AAAAAAAA_AAACCGCC_GAGTTTCG 
+#&gt;                   multiplexed_AAAAAAAA                   multiplexed_AAAAAAAA 
+#&gt; multiplexed_AAAAAAAA_AAACCGCC_TAGCCTCG multiplexed_AAAAAAAA_AAACGATC_TTTACCCT 
+#&gt;                   multiplexed_AAAAAAAA                   multiplexed_AAAAAAAA 
+#&gt; Levels: multiplexed_AAAAAAAA</div><div class='input'><span class='fu'>levels</span>(<span class='no'>map</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -99,11 +99,10 @@
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
-  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(),
-  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span>
-  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'>scale_color_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'>scale_fill_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'>scale_color_gradient</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -118,8 +117,7 @@
     </tr>
     <tr>
       <th>genes</th>
-      <td><p>Genes identifiers (matching the rownames in the object),
-of which to get expression data.</p></td>
+      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
     </tr>
     <tr>
       <th>tsneColor</th>
@@ -135,7 +133,7 @@ of which to get expression data.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot the TSNE against a dark background.</p></td>
+      <td><p>Plot against a dark background using <code>midnightTheme()</code>.</p></td>
     </tr>
     <tr>
       <th>pointsAsNumbers</th>
@@ -143,7 +141,7 @@ of which to get expression data.</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
-      <td><p>Include a Markdown header for each gene.</p></td>
+      <td><p>R Markdown header level.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -153,29 +151,48 @@ of which to get expression data.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>No value, only graphical output.</p>
+    <p>Show graphical output. Invisibly return <code>ggplot</code> plotlist.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
+    <p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+  <code>knownMarkersDetected</code>,
+  <code>plotCellTypesPerCluster</code>,
+  <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotPCElbow</code>, <code>plotTopMarkers</code>,
-  <code>topBarcodes</code>, <code>topMarkers</code></p>
+  <code>plotMarkerTSNE</code>, <code>plotPCA</code>,
+  <code>plotPCElbow</code>, <code>plotTSNE</code>,
+  <code>plotTopMarkers</code>,
+  <code>sanitizeMarkers</code>, <code>topBarcodes</code>,
+  <code>topMarkers</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/topMarkers.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='st'>"extdata/all_markers_small.rda"</span>,
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>
+))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='co'># seurat</span>
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>topMarkers</span>, <span class='st'>"symbol"</span>), <span class='fl'>2L</span>)
-<span class='fu'>plotMarkers</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='output co'>#&gt; 
+<span class='co'># seurat ===</span>
+<span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>pull</span>(<span class='no'>top</span>, <span class='st'>"rowname"</span>)
+<span class='fu'>plotMarkers</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='output co'>#&gt; 
 #&gt; 
-#&gt; ## ACTC1
+#&gt; ## COL1A2
 #&gt; </div><div class='img'><img src='plotMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
 #&gt; 
-#&gt; ## MYL7
-#&gt; </div><div class='img'><img src='plotMarkers-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
+#&gt; ## S100A10
+#&gt; </div><div class='img'><img src='plotMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; ## MYL4
+#&gt; </div><div class='img'><img src='plotMarkers-3.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; ## MT.ATP6
+#&gt; </div><div class='img'><img src='plotMarkers-4.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; ## H3F3A
+#&gt; </div><div class='img'><img src='plotMarkers-5.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

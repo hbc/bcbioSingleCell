@@ -135,18 +135,22 @@ dimensionality reduction analysis.</p></li>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='http://www.rdocumentation.org/packages/Seurat/topics/PCElbowPlot'>Seurat::PCElbowPlot</a>.</p>
-<p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
+    <p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/PCElbowPlot'>Seurat::PCElbowPlot()</a></code>.</p>
+<p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+  <code>knownMarkersDetected</code>,
+  <code>plotCellTypesPerCluster</code>,
+  <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkers</code>, <code>plotTopMarkers</code>,
-  <code>topBarcodes</code>, <code>topMarkers</code></p>
+  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code>plotPCA</code>, <code>plotTSNE</code>,
+  <code>plotTopMarkers</code>,
+  <code>sanitizeMarkers</code>, <code>topBarcodes</code>,
+  <code>topMarkers</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># seurat</span>
-<span class='no'>pcUse</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCElbow</span>(<span class='no'>seurat</span>)</div><div class='img'><img src='plotPCElbow-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>pcUse</span></div><div class='output co'>#&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
+<span class='fu'>plotPCElbow</span>(<span class='no'>pbmc_small</span>)</div><div class='img'><img src='plotPCElbow-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -94,10 +94,10 @@
 
 <span class='co'># S4 method for seurat,grouped_df</span>
 <span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>,
-  <span class='no'>knownMarkersDetected</span>, <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(),
-  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span>
-  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
+  <span class='no'>knownMarkersDetected</span>, <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'>scale_color_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'>scale_fill_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'>scale_color_gradient</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -108,8 +108,7 @@
     </tr>
     <tr>
       <th>knownMarkersDetected</th>
-      <td><p><code>knownMarkersDetected()</code> return tibble grouped
-by cluster.</p></td>
+      <td><p><code>grouped_df</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -129,7 +128,7 @@ by cluster.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot the TSNE against a dark background.</p></td>
+      <td><p>Plot against a dark background using <code>midnightTheme()</code>.</p></td>
     </tr>
     <tr>
       <th>pointsAsNumbers</th>
@@ -137,31 +136,40 @@ by cluster.</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
-      <td><p>Include a Markdown header for each gene.</p></td>
+      <td><p>R Markdown header level.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>No value, only graphical output.</p>
+    <p>Show graphical output. Invisibly return <code>ggplot</code> plotlist.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
-  <code>plotMarkers</code>, <code>plotPCElbow</code>,
-  <code>plotTopMarkers</code>, <code>topBarcodes</code>,
+    <p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+  <code>knownMarkersDetected</code>,
+  <code>plotCellTypesPerCluster</code>,
+  <code>plotFeatureTSNE</code>,
+  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code>plotPCA</code>, <code>plotPCElbow</code>,
+  <code>plotTSNE</code>, <code>plotTopMarkers</code>,
+  <code>sanitizeMarkers</code>, <code>topBarcodes</code>,
   <code>topMarkers</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/knownMarkersDetected.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='st'>"extdata/known_markers_small.rda"</span>,
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>
+))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='co'># seurat</span>
+<span class='co'># seurat ====</span>
 <span class='co'># Let's plot the first 2 markers, as a quick example</span>
 <span class='fu'>plotKnownMarkersDetected</span>(
-    <span class='no'>seurat</span>,
-    <span class='kw'>knownMarkersDetected</span> <span class='kw'>=</span> <span class='no'>knownMarkersDetected</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ])</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
+    <span class='kw'>knownMarkersDetected</span> <span class='kw'>=</span> <span class='no'>known_markers_small</span>[<span class='fu'>seq_len</span>(<span class='fl'>2L</span>), ]
+)</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
 #&gt; 
 #&gt; ## Natural Killer Cell {.tabset}
 #&gt; 

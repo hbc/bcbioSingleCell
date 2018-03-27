@@ -96,8 +96,8 @@ many (<code>max</code> cutoff) marker genes will be skipped.</p>
 
 <span class='co'># S4 method for seurat,grouped_df</span>
 <span class='fu'>plotCellTypesPerCluster</span>(<span class='no'>object</span>,
-  <span class='no'>cellTypesPerCluster</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='no'>cellTypesPerCluster</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>scale_color_viridis</span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -108,8 +108,8 @@ many (<code>max</code> cutoff) marker genes will be skipped.</p>
     </tr>
     <tr>
       <th>cellTypesPerCluster</th>
-      <td><p>Cell types per cluster grouped tibble. This must
-be the return from <code>cellTypesPerCluster()</code>.</p></td>
+      <td><p>Cell types per cluster <code>grouped_df</code>. This must be
+the return from <code>cellTypesPerCluster()</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -117,48 +117,66 @@ be the return from <code>cellTypesPerCluster()</code>.</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Color palette.</p></td>
+      <td><p>Desired ggplot color scale. Must supply discrete values. When
+set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+<code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot the TSNE against a dark background.</p></td>
+      <td><p>Plot against a dark background using <code>midnightTheme()</code>.</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
-      <td><p>Include a Markdown header for each gene.</p></td>
+      <td><p>R Markdown header level.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Show graphical output. Invisibly return <a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a> plotlist.</p>
+    <p>Show graphical output. Invisibly return <code>ggplot</code> plotlist.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
+    <p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+  <code>knownMarkersDetected</code>,
+  <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotPCElbow</code>, <code>plotTopMarkers</code>,
-  <code>topBarcodes</code>, <code>topMarkers</code></p>
+  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code>plotPCA</code>, <code>plotPCElbow</code>,
+  <code>plotTSNE</code>, <code>plotTopMarkers</code>,
+  <code>sanitizeMarkers</code>, <code>topBarcodes</code>,
+  <code>topMarkers</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/knownMarkersDetected.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='st'>"extdata/known_markers_small.rda"</span>,
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>
+))
+<span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='no'>cellTypesPerCluster</span> <span class='kw'>&lt;-</span> <span class='fu'>cellTypesPerCluster</span>(<span class='no'>knownMarkersDetected</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>cellTypesPerCluster</span>)</div><div class='output co'>#&gt; Observations: 1
+<span class='co'># seurat ====</span>
+<span class='no'>per_cluster</span> <span class='kw'>&lt;-</span> <span class='fu'>cellTypesPerCluster</span>(<span class='no'>known_markers_small</span>)
+<span class='fu'>glimpse</span>(<span class='no'>per_cluster</span>)</div><div class='output co'>#&gt; Observations: 1
 #&gt; Variables: 5
-#&gt; $ cluster &lt;fct&gt; 2
-#&gt; $ cell    &lt;chr&gt; "Natural Killer Cell"
-#&gt; $ n       &lt;int&gt; 1
-#&gt; $ symbol  &lt;chr&gt; "NCAM1"
-#&gt; $ ensgene &lt;chr&gt; "ENSG00000149294"</div><div class='input'>
-<span class='co'># seurat</span>
+#&gt; $ cluster  &lt;fct&gt; 1
+#&gt; $ cellType &lt;chr&gt; "Natural Killer Cell"
+#&gt; $ n        &lt;int&gt; 1
+#&gt; $ geneID   &lt;chr&gt; "ENSG00000149294"
+#&gt; $ geneName &lt;chr&gt; "NCAM1"</div><div class='input'>
 <span class='co'># Let's plot the first row, as an example</span>
-<span class='no'>cellTypesPerCluster</span> <span class='kw'>&lt;-</span> <span class='no'>cellTypesPerCluster</span>[<span class='fl'>1</span>, , <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>]
 <span class='fu'>plotCellTypesPerCluster</span>(
-    <span class='no'>seurat</span>,
-    <span class='kw'>cellTypesPerCluster</span> <span class='kw'>=</span> <span class='no'>cellTypesPerCluster</span>)</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  </div><div class='img'><img src='plotCellTypesPerCluster-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 01s</div></pre>
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
+    <span class='kw'>cellTypesPerCluster</span> <span class='kw'>=</span> <span class='no'>per_cluster</span>[<span class='fl'>1L</span>, , <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>]
+)</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
+#&gt; 
+#&gt; ## Cluster 1 {.tabset}
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; ### Natural Killer Cell {.tabset}
+#&gt; </div><div class='img'><img src='plotCellTypesPerCluster-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 01s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

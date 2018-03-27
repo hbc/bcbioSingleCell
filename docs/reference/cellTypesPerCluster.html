@@ -118,24 +118,38 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>tibble grouped by cluster, containing the count (<code>n</code>) of
+    <p><code>tibble</code> grouped by cluster, containing the count (<code>n</code>) of
 significant known makers per cell type.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>This function only returns the positive markers per cluster.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p>Other Clustering Functions: <code>knownMarkersDetected</code>,
+  <code>plotCellTypesPerCluster</code>,
+  <code>plotFeatureTSNE</code>,
+  <code>plotKnownMarkersDetected</code>,
+  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code>plotPCA</code>, <code>plotPCElbow</code>,
+  <code>plotTSNE</code>, <code>plotTopMarkers</code>,
+  <code>sanitizeMarkers</code>, <code>topBarcodes</code>,
+  <code>topMarkers</code></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/knownMarkersDetected.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='fu'>cellTypesPerCluster</span>(<span class='no'>knownMarkersDetected</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='st'>"extdata/known_markers_small.rda"</span>,
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>
+))
+<span class='fu'>cellTypesPerCluster</span>(<span class='no'>known_markers_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 1
 #&gt; Variables: 5
-#&gt; $ cluster &lt;fct&gt; 2
-#&gt; $ cell    &lt;chr&gt; "Natural Killer Cell"
-#&gt; $ n       &lt;int&gt; 1
-#&gt; $ symbol  &lt;chr&gt; "NCAM1"
-#&gt; $ ensgene &lt;chr&gt; "ENSG00000149294"</div></pre>
+#&gt; $ cluster  &lt;fct&gt; 1
+#&gt; $ cellType &lt;chr&gt; "Natural Killer Cell"
+#&gt; $ n        &lt;int&gt; 1
+#&gt; $ geneID   &lt;chr&gt; "ENSG00000149294"
+#&gt; $ geneName &lt;chr&gt; "NCAM1"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -145,6 +159,8 @@ significant known makers per cell type.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#note">Note</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

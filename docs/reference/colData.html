@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><code>bcbioSCFiltered</code> — bcbioSCFiltered-class • bcbioSingleCell</title>
+<title>Column Data — colData • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,21 +83,77 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1><code>bcbioSCFiltered</code></h1>
+    <h1>Column Data</h1>
     </div>
 
     
-    <p>This class will be deprecated in favor of <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> in a future
-release.</p>
+    <p>Column Data</p>
     
 
-        
+    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>colData</span>(<span class='no'>x</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"DataFrame"</span>))
 
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>colData</span>(<span class='no'>x</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"DataFrame"</span>))</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>Primary object.</p></td>
+    </tr>
+    <tr>
+      <th>return</th>
+      <td><p>Return data as <code>data.frame</code> or <code>DataFrame</code>.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Data describing the columns (cells).</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p>Other Data Functions: <code>aggregateReplicates</code>,
+  <code>cell2sample</code>, <code>counts</code>,
+  <code>fetchGeneData</code>, <code>fetchPCAData</code>,
+  <code>fetchTSNEData</code>,
+  <code>fetchTSNEExpressionData</code>,
+  <code>filterCells</code>, <code>gene2symbol</code>,
+  <code>interestingGroups</code>,
+  <code>readCellTypeMarkersFile</code>,
+  <code>rowData</code>, <code>sampleData</code>,
+  <code>selectSamples</code>,
+  <code>subsetPerSample</code></p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
+<span class='fu'>colData</span>(<span class='no'>pbmc_small</span>)</div><div class='output co'>#&gt;                nGene nUMI     origIdent res0x8 res1
+#&gt; ATGCCAGAACGACT    47   70 SeuratProject      0    0
+#&gt; CATGGCCTGTGCAT    52   85 SeuratProject      0    0
+#&gt; GAACCTGATGAACC    50   87 SeuratProject      0    0
+#&gt; TGACTGGATTCTCA    56  127 SeuratProject      0    0
+#&gt; AGTCAGACTGCACA    53  173 SeuratProject      0    0
+#&gt; TCTGATACACGTGT    48   70 SeuratProject      0    0
+#&gt; TGGTATCTAAACAG    36   64 SeuratProject      0    0
+#&gt; GCAGCTCTGTTTCT    45   72 SeuratProject      0    0
+#&gt; GATATAACACGCAT    36   52 SeuratProject      0    0
+#&gt; AATGTTGACAGTCA    41  100 SeuratProject      0    0
+#&gt;  [ reached getOption("max.print") -- omitted 70 rows ]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

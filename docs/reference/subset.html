@@ -87,7 +87,7 @@
     </div>
 
     
-    <p>Extract genes by row and cells by column from a <a href='bcbioSingleCell-class.html'>bcbioSingleCell</a> object.</p>
+    <p>Extract genes by row and cells by column from a <code>bcbioSingleCell</code> object.</p>
     
 
     <pre class="usage"># S4 method for bcbioSingleCell,ANY,ANY,ANY
@@ -155,61 +155,56 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='bcbioSingleCell-class.html'>bcbioSingleCell</a>.</p>
+    <p><code>bcbioSingleCell</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <ul>
 <li><p><code>help("[", "base")</code>.</p></li>
-<li><p><code><a href='selectSamples.html'>selectSamples()</a></code> for subsetting based on sample metadata.</p></li>
+<li><p><code>selectSamples()</code> for subsetting based on sample metadata.</p></li>
 </ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>bcb</span>)[<span class='fl'>1</span>:<span class='fl'>100</span>]
-<span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "run1_AGAGGATA_AAACACTA_CTTAGGTA" "run1_AGAGGATA_AAACACTA_CTTCGATT"
-#&gt; [3] "run1_AGAGGATA_AAACCGCC_GAGTTTCG" "run1_AGAGGATA_AAACCGCC_TAGCCTCG"
-#&gt; [5] "run1_AGAGGATA_AAACGATC_TTTACCCT" "run1_AGAGGATA_AAACTACA_CCACATTA"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>bcb</span>)[<span class='fl'>1</span>:<span class='fl'>100</span>]
-<span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457" "ENSG00000002586" "ENSG00000002933" "ENSG00000004939"
-#&gt; [5] "ENSG00000005022" "ENSG00000005100"</div><div class='input'>
+<span class='co'># bcbioSingleCell ====</span>
+<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>colnames</span>(<span class='no'>bcb_small</span>), <span class='fl'>100L</span>)
+<span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG"
+#&gt; [2] "multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA"
+#&gt; [3] "multiplexed_AAAAAAAA_AAACACTA_CTTCGATT"
+#&gt; [4] "multiplexed_AAAAAAAA_AAACCGCC_GAGTTTCG"
+#&gt; [5] "multiplexed_AAAAAAAA_AAACCGCC_TAGCCTCG"
+#&gt; [6] "multiplexed_AAAAAAAA_AAACGATC_TTTACCCT"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>bcb_small</span>), <span class='fl'>100L</span>)
+<span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457" "ENSG00000002586" "ENSG00000004939" "ENSG00000005022"
+#&gt; [5] "ENSG00000005100" "ENSG00000008988"</div><div class='input'>
 <span class='co'># Subset by cell identifiers</span>
-<span class='no'>bcb</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; class: bcbioSingleCell 
-#&gt; dim: 1000 100 
-#&gt; metadata(34): version pipeline ... subset originalVersion
-#&gt; assays(1): assay
-#&gt; rownames(1000): ENSG00000000457 ENSG00000002586 ... ENSG00000283957
-#&gt;   ENSG00000284526
-#&gt; rowData names(11): ensgene symbol ... seqCoordSystem entrez
-#&gt; colnames(100): run1_AGAGGATA_AAACACTA_CTTAGGTA
-#&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run1_AGAGGATA_CCTATTTA_TGCAAGGG
-#&gt;   run1_AGAGGATA_CGATGGCA_TCCCGTAG
-#&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div><div class='input'>
+<span class='no'>bcb_small</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
+#&gt; samples: 1
+#&gt; cells: 100
+#&gt; genes: 500
+#&gt; organism: Homo sapiens
+#&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/harvard_indrop_v3
+#&gt; bcbio date: 2018-01-01
+#&gt; load date: 2018-03-27</div><div class='input'>
 <span class='co'># Subset by genes</span>
-<span class='no'>bcb</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; class: bcbioSingleCell 
-#&gt; dim: 100 500 
-#&gt; metadata(34): version pipeline ... subset originalVersion
-#&gt; assays(1): assay
-#&gt; rownames(100): ENSG00000000457 ENSG00000002586 ... ENSG00000091136
-#&gt;   ENSG00000091436
-#&gt; rowData names(11): ensgene symbol ... seqCoordSystem entrez
-#&gt; colnames(500): run1_AGAGGATA_AAACACTA_CTTAGGTA
-#&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run2_AGAGGATA_TGTTATCA_ACGCAGAG
-#&gt;   run2_AGAGGATA_TGTTATCA_CAAGTCAT
-#&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div><div class='input'>
+<span class='no'>bcb_small</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
+#&gt; samples: 1
+#&gt; cells: 500
+#&gt; genes: 100
+#&gt; organism: Homo sapiens
+#&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/harvard_indrop_v3
+#&gt; bcbio date: 2018-01-01
+#&gt; load date: 2018-03-27</div><div class='input'>
 <span class='co'># Subset by both genes and cells</span>
-<span class='no'>bcb</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; class: bcbioSingleCell 
-#&gt; dim: 100 100 
-#&gt; metadata(34): version pipeline ... subset originalVersion
-#&gt; assays(1): assay
-#&gt; rownames(100): ENSG00000000457 ENSG00000002586 ... ENSG00000091136
-#&gt;   ENSG00000091436
-#&gt; rowData names(11): ensgene symbol ... seqCoordSystem entrez
-#&gt; colnames(100): run1_AGAGGATA_AAACACTA_CTTAGGTA
-#&gt;   run1_AGAGGATA_AAACACTA_CTTCGATT ... run1_AGAGGATA_CCTATTTA_TGCAAGGG
-#&gt;   run1_AGAGGATA_CGATGGCA_TCCCGTAG
-#&gt; colData names(7): nUMI nGene ... mitoRatio nCount</div></pre>
+<span class='no'>bcb_small</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
+#&gt; samples: 1
+#&gt; cells: 100
+#&gt; genes: 100
+#&gt; organism: Homo sapiens
+#&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/harvard_indrop_v3
+#&gt; bcbio date: 2018-01-01
+#&gt; load date: 2018-03-27</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

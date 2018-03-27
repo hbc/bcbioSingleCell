@@ -105,8 +105,8 @@
     </tr>
     <tr>
       <th>known</th>
-      <td><p>Known markers data.frame imported by
-<code>readCellTypeMarkersFile()</code> or pulled from internal <a href='cellCycleMarkers.html'>cellCycleMarkers</a>
+      <td><p>Known markers <code>data.frame</code> imported by
+<code>readCellTypeMarkersFile()</code> or pulled from internal cellCycleMarkers
 data.</p></td>
     </tr>
     <tr>
@@ -131,53 +131,60 @@ gene marker promiscuous.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Grouped tibble.</p>
+    <p><code>grouped_df</code>, grouped by <code>cellType</code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Both the <code>all</code> and <code>known</code> objects must contain Ensembl gene
-identifiers in the <code>ensgene</code> column. We must avoid any matching operations
-based on the gene symbols, since these change often and can mismatch
+identifiers in the <code>geneID</code> column. We must avoid any matching operations
+based on the gene names, since these change often and can mismatch
 easily.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Clustering Utilities: <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkers</code>, <code>plotPCElbow</code>,
-  <code>plotTopMarkers</code>, <code>topBarcodes</code>,
+    <p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+  <code>plotCellTypesPerCluster</code>,
+  <code>plotFeatureTSNE</code>,
+  <code>plotKnownMarkersDetected</code>,
+  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code>plotPCA</code>, <code>plotPCElbow</code>,
+  <code>plotTSNE</code>, <code>plotTopMarkers</code>,
+  <code>sanitizeMarkers</code>, <code>topBarcodes</code>,
   <code>topMarkers</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seuratAllMarkers.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
+    <span class='st'>"extdata/all_markers_small.rda"</span>,
+    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>
+))
 
-<span class='co'># Use internal known markers for Homo sapiens</span>
-<span class='no'>knownMarkers</span> <span class='kw'>&lt;-</span> <span class='no'>cellTypeMarkers</span><span class='kw'>[[</span><span class='st'>"homoSapiens"</span>]]
-
-<span class='co'># grouped_df</span>
+<span class='co'># grouped_df ====</span>
 <span class='fu'>knownMarkersDetected</span>(
-    <span class='kw'>all</span> <span class='kw'>=</span> <span class='no'>seuratAllMarkers</span>,
-    <span class='kw'>known</span> <span class='kw'>=</span> <span class='no'>knownMarkers</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 2
-#&gt; Variables: 18
-#&gt; $ cell           &lt;chr&gt; "Natural Killer Cell", "Natural Killer Cell"
-#&gt; $ cluster        &lt;fct&gt; 1, 2
-#&gt; $ ensgene        &lt;chr&gt; "ENSG00000149294", "ENSG00000149294"
-#&gt; $ symbol         &lt;chr&gt; "NCAM1", "NCAM1"
-#&gt; $ pct1           &lt;dbl&gt; 0.613, 0.848
-#&gt; $ pct2           &lt;dbl&gt; 0.862, 0.787
-#&gt; $ avgLogFC       &lt;dbl&gt; -1.0176323, 0.5827054
-#&gt; $ pvalue         &lt;dbl&gt; 3.611922e-11, 7.177981e-06
-#&gt; $ padj           &lt;dbl&gt; 3.611922e-08, 7.177981e-03
+    <span class='kw'>all</span> <span class='kw'>=</span> <span class='no'>all_markers_small</span>,
+    <span class='kw'>known</span> <span class='kw'>=</span> <span class='no'>cellTypeMarkers</span><span class='kw'>[[</span><span class='st'>"homoSapiens"</span>]]
+) <span class='kw'>%&gt;%</span>
+    <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 1
+#&gt; Variables: 19
+#&gt; $ cellType       &lt;chr&gt; "Natural Killer Cell"
+#&gt; $ cluster        &lt;fct&gt; 1
+#&gt; $ geneID         &lt;chr&gt; "ENSG00000149294"
+#&gt; $ geneName       &lt;chr&gt; "NCAM1"
+#&gt; $ pct1           &lt;dbl&gt; 0.466
+#&gt; $ pct2           &lt;dbl&gt; 0.701
+#&gt; $ avgLogFC       &lt;dbl&gt; -0.9537856
+#&gt; $ padj           &lt;dbl&gt; 2.248247e-07
+#&gt; $ pvalue         &lt;dbl&gt; 4.496495e-10
+#&gt; $ rowname        &lt;chr&gt; "NCAM1"
+#&gt; $ seqnames       &lt;fct&gt; 11
+#&gt; $ start          &lt;int&gt; 112961247
+#&gt; $ end            &lt;int&gt; 113278436
+#&gt; $ width          &lt;int&gt; 317190
+#&gt; $ strand         &lt;fct&gt; +
+#&gt; $ geneBiotype    &lt;fct&gt; protein_coding
 #&gt; $ description    &lt;chr&gt; "neural cell adhesion molecule 1 [Source:HGNC Symbol...
-#&gt; $ biotype        &lt;chr&gt; "protein_coding", "protein_coding"
-#&gt; $ broadClass     &lt;chr&gt; "coding", "coding"
-#&gt; $ geneSeqStart   &lt;int&gt; 112961247, 112961247
-#&gt; $ geneSeqEnd     &lt;int&gt; 113278436, 113278436
-#&gt; $ seqName        &lt;chr&gt; "11", "11"
-#&gt; $ seqStrand      &lt;int&gt; 1, 1
-#&gt; $ seqCoordSystem &lt;chr&gt; "chromosome", "chromosome"
-#&gt; $ entrez         &lt;list&gt; [4684, 4684]</div></pre>
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome
+#&gt; $ broadClass     &lt;fct&gt; coding</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

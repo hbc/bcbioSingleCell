@@ -60,31 +60,57 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div id="bcbiosinglecell" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#bcbiosinglecell" class="anchor"></a>bcbioSingleCell</h1></div>
-<p><a href="https://travis-ci.org/hbc/bcbioSingleCell"><img src="https://travis-ci.org/hbc/bcbioSingleCell.svg?branch=master" alt="Build Status"></a> <a href="http://www.repostatus.org/#wip"><img src="http://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a> <a href="https://codecov.io/gh/hbc/bcbioSingleCell"><img src="https://codecov.io/gh/hbc/bcbioSingleCell/branch/master/graph/badge.svg" alt="codecov"></a></p>
+    <div class="section level1">
+<div class="page-header"><h1>bcbioSingleCell</h1></div>
+
 <p>Import and analyze <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> single-cell RNA-seq data.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2>Installation</h2>
 <p>This is an <a href="https://www.r-project.org">R</a> package.</p>
-<div id="bioconductor-method" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bioconductor-method" class="anchor"></a><a href="https://bioconductor.org">Bioconductor</a> method</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)
-<span class="kw">biocLite</span>(
-    <span class="st">"hbc/bcbioSingleCell"</span>,
-    <span class="dt">dependencies =</span> <span class="kw">c</span>(<span class="st">"Depends"</span>, <span class="st">"Imports"</span>, <span class="st">"Suggests"</span>)
-)</code></pre></div>
+<div class="section level3">
+<h3>
+<a href="https://bioconductor.org">Bioconductor</a> method</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">biocLite</span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">biocLite</span>(<span class="st">"GenomeInfoDbData"</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">biocLite</span>(</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="st">"hbc/bcbioSingleCell"</span>,</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="dt">dependencies =</span> <span class="kw">c</span>(<span class="st">"Depends"</span>, <span class="st">"Imports"</span>, <span class="st">"Suggests"</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">)</a></code></pre></div>
+</div>
+<div class="section level3">
+<h3>
+<a href="https://conda.io">conda</a> method</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">conda</span> install -c bioconda r-bcbiosinglecell</a></code></pre></div>
 </div>
 </div>
-<div id="sample-metadata-examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sample-metadata-examples" class="anchor"></a>Sample metadata examples</h2>
-<div id="fastq-files-with-samples-multiplexed-by-index-barcode" class="section level3">
-<h3 class="hasAnchor">
-<a href="#fastq-files-with-samples-multiplexed-by-index-barcode" class="anchor"></a>FASTQ files with samples multiplexed by index barcode</h3>
+<div class="section level2">
+<h2>Load <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> run</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(bcbioSingleCell)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">bcb &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bcbioSingleCell/topics/loadSingleCell">loadSingleCell</a></span>(</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">uploadDir =</span> <span class="st">"bcbio_indrop_rnaseq/final"</span>,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="dt">interestingGroups =</span> <span class="kw">c</span>(<span class="st">"genotype"</span>, <span class="st">"treatment"</span>),</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">sampleMetadataFile =</span> <span class="st">"meta/sample_metadata.xlsx"</span>,</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="dt">ensemblVersion =</span> 90L</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw">saveData</span>(bcb, <span class="dt">dir =</span> <span class="kw">file.path</span>(<span class="st">"data"</span>, <span class="kw">Sys.Date</span>()))</a></code></pre></div>
+<p>This will return a <code>bcbioSingleCell</code> object, which is an extension of the <a href="https://bioconductor.org">Bioconductor</a> <a href="https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment">SingleCellExperiment</a> container class.</p>
+<p>Parameters:</p>
+<ul>
+<li>
+<code>uploadDir</code>: Path to the <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> final upload directory.</li>
+<li>
+<code>interestingGroups</code>: Character vector of the column names of interest in the sample metadata, which is stored in the <code><a href="http://www.rdocumentation.org/packages/bcbioSingleCell/topics/sampleData">sampleData()</a></code> accessor slot of the <code>bcbioSingleCell</code> object. These values should be formatted in camelCase, and can be reassigned in the object after creation (e.g. <code>interestingGroups(bcb) &lt;- c("batch", "age")</code>). They are used for data visualization in the quality control utility functions.</li>
+<li>
+<code>organism</code>: Organism name. Use the full latin name (e.g. “Homo sapiens”).</li>
+</ul>
+<p>Consult <code>help("loadSingleCell", "bcbioSingleCell")</code> for additional documentation.</p>
+</div>
+<div class="section level2">
+<h2>Sample metadata examples</h2>
+<div class="section level3">
+<h3>FASTQ files with samples multiplexed by index barcode</h3>
 <p>This is our current method for handling inDrop samples.</p>
 <table class="table">
 <thead><tr class="header">
@@ -97,59 +123,58 @@
 <tbody>
 <tr class="odd">
 <td>170201_R1.fastq.gz</td>
-<td>run1</td>
+<td>run_1</td>
 <td>17</td>
 <td>GGAGGTAA</td>
-<td>sample1</td>
+<td>sample_1</td>
 </tr>
 <tr class="even">
 <td>170201_R1.fastq.gz</td>
-<td>run1</td>
+<td>run_1</td>
 <td>18</td>
 <td>CATAACTG</td>
-<td>sample2</td>
+<td>sample_2</td>
 </tr>
 <tr class="odd">
 <td>170620_R1.fastq.gz</td>
-<td>run2</td>
+<td>run_2</td>
 <td>12</td>
 <td>GCGTAAGA</td>
-<td>sample3</td>
+<td>sample_3</td>
 </tr>
 <tr class="even">
 <td>170620_R1.fastq.gz</td>
-<td>run2</td>
+<td>run_2</td>
 <td>13</td>
 <td>CTATTAAG</td>
-<td>sample4</td>
+<td>sample_4</td>
 </tr>
 <tr class="odd">
 <td>170620_R1.fastq.gz</td>
-<td>run2</td>
+<td>run_2</td>
 <td>14</td>
 <td>AAGGCTAT</td>
-<td>sample5</td>
+<td>sample_5</td>
 </tr>
 <tr class="even">
 <td>170620_R1.fastq.gz</td>
-<td>run2</td>
+<td>run_2</td>
 <td>15</td>
 <td>GAGCCTTA</td>
-<td>sample6</td>
+<td>sample_6</td>
 </tr>
 <tr class="odd">
 <td>170620_R1.fastq.gz</td>
-<td>run2</td>
+<td>run_2</td>
 <td>16</td>
 <td>TTATGCGA</td>
-<td>sample7</td>
+<td>sample_7</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="fastq-files-demultiplexed-per-sample" class="section level3">
-<h3 class="hasAnchor">
-<a href="#fastq-files-demultiplexed-per-sample" class="anchor"></a>FASTQ files demultiplexed per sample</h3>
+<div class="section level3">
+<h3>FASTQ files demultiplexed per sample</h3>
 <p>This is our current method for handling 10X and SureCell samples.</p>
 <table class="table">
 <thead><tr class="header">
@@ -158,31 +183,30 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>sample1_170620_R1.fastq.gz</td>
-<td>sample1</td>
+<td>S1_170620_R1.fastq.gz</td>
+<td>sample_1</td>
 </tr>
 <tr class="even">
-<td>sample2_170620_R1.fastq.gz</td>
-<td>sample2</td>
+<td>S2_170620_R1.fastq.gz</td>
+<td>sample_2</td>
 </tr>
 <tr class="odd">
-<td>sample3_170620_R1.fastq.gz</td>
-<td>sample3</td>
+<td>S3_170620_R1.fastq.gz</td>
+<td>sample_3</td>
 </tr>
 <tr class="even">
-<td>sample4_170620_R1.fastq.gz</td>
-<td>sample4</td>
+<td>S4_170620_R1.fastq.gz</td>
+<td>sample_4</td>
 </tr>
 <tr class="odd">
-<td>sample5_170620_R1.fastq.gz</td>
-<td>sample5</td>
+<td>S5_170620_R1.fastq.gz</td>
+<td>sample_5</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="technical-replicates" class="section level3">
-<h3 class="hasAnchor">
-<a href="#technical-replicates" class="anchor"></a>Technical replicates</h3>
+<div class="section level3">
+<h3>Technical replicates</h3>
 <p>Use <code>sampleNameAggregate</code> to assign groupings for technical replicates:</p>
 <table class="table">
 <thead><tr class="header">
@@ -235,22 +259,19 @@
 </table>
 </div>
 </div>
-<div id="troubleshooting" class="section level2">
-<h2 class="hasAnchor">
-<a href="#troubleshooting" class="anchor"></a>Troubleshooting</h2>
-<div id="maximal-number-of-dlls-reached" class="section level3">
-<h3 class="hasAnchor">
-<a href="#maximal-number-of-dlls-reached" class="anchor"></a>Maximal number of DLLs reached</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Error<span class="op">:</span><span class="st"> </span>package or namespace load failed <span class="cf">for</span> <span class="st">'bcbioSingleCell'</span> <span class="cf">in</span> <span class="kw">dyn.load</span>(file, <span class="dt">DLLpath =</span> DLLpath, ...)<span class="op">:</span>
-<span class="st">  </span>maximal number of DLLs reached...</code></pre></div>
+<div class="section level2">
+<h2>Troubleshooting</h2>
+<div class="section level3">
+<h3>Maximal number of DLLs reached</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Error<span class="op">:</span><span class="st"> </span>package or namespace load failed <span class="cf">for</span> <span class="st">'bcbioSingleCell'</span> <span class="cf">in</span> <span class="kw">dyn.load</span>(file, <span class="dt">DLLpath =</span> DLLpath, ...)<span class="op">:</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span>maximal number of DLLs reached...</a></code></pre></div>
 <p>Depending on your operating system, you may encounter this error about hitting the DLL limit in <a href="https://www.r-project.org">R</a>. This issue is becoming more common as RNA-seq analysis packages grow increasingly complex. Luckily, we can configure <a href="https://www.r-project.org">R</a> to increase the DLL limit. Append this line to your <code>~/.Renviron</code> file:</p>
 <pre><code>R_MAX_NUM_DLLS=150</code></pre>
 <p>For more information on this issue, consult <code>help("dyn.load")</code> in the <a href="https://www.r-project.org">R</a> documentation. The number of loaded DLLs in an <a href="https://www.r-project.org">R</a> session can be obtained with <code>getLoadedDLLs()</code>.</p>
 </div>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2">
+<h2>References</h2>
 <p>The papers and software cited in our workflows are available as a <a href="https://paperpile.com/shared/C8EMxl">shared library</a> on <a href="https://paperpile.com">Paperpile</a>.</p>
 </div>
 </div>
@@ -269,7 +290,8 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="http://steinbaugh.com">Michael Steinbaugh</a> <br><small class="roles"> Author, maintainer </small> </li>
+<a href="http://steinbaugh.com">Michael Steinbaugh</a> <br><small class="roles"> Author, maintainer </small> <br><small>(0000-0002-2403-2221)</small>
+</li>
 <li>
 <a href="https://github.com/roryk">Rory Kirchner</a> <br><small class="roles"> Author </small> </li>
 <li>
@@ -278,6 +300,14 @@
 <a href="https://github.com/sjhosui">Shannan Ho Sui</a> <br><small class="roles"> Author </small> </li>
 <li>
 <a href="http://bioinformatics.sph.harvard.edu">Harvard Chan Bioinformatics Core</a> <br><small class="roles"> Copyright holder, funder </small> </li>
+</ul>
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.org/hbc/bcbioSingleCell"><img src="https://travis-ci.org/hbc/bcbioSingleCell.svg?branch=master" alt="Travis CI"></a></li>
+<li><a href="https://ci.appveyor.com/project/mjsteinbaugh/bcbiosinglecell/branch/master"><img src="https://ci.appveyor.com/api/projects/status/npy0mhfjn9saqv4g/branch/master?svg=true" alt="AppVeyor CI"></a></li>
+<li><a href="https://codecov.io/gh/hbc/bcbioSingleCell"><img src="https://codecov.io/gh/hbc/bcbioSingleCell/branch/master/graph/badge.svg" alt="Codecov"></a></li>
+<li><a href="https://anaconda.org/bioconda/r-bcbiosinglecell"><img src="https://anaconda.org/bioconda/r-bcbiosinglecell/badges/version.svg" alt="Anaconda-Server Badge"></a></li>
+<li><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed."></a></li>
 </ul>
 </div>
 </div>

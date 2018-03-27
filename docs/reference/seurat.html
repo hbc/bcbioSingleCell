@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Additional bcbio Run Data Accessor — bcbio • bcbioSingleCell</title>
+<title>Extend S4 Methods for <code>seurat</code> Objects — seurat • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,56 +83,73 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Additional bcbio Run Data Accessor</h1>
+    <h1>Extend S4 Methods for <code>seurat</code> Objects</h1>
     </div>
 
     
-    <p>Additional bcbio Run Data Accessor</p>
+    <p>Extend S4 Methods for <code>seurat</code> Objects</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for seurat</span>
-<span class='fu'>bcbio</span>(<span class='no'>object</span>, <span class='no'>slot</span>)
+    <pre class="usage"><span class='co'># S4 method for seurat,ANY</span>
+<span class='fu'>assay</span>(<span class='no'>x</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>bcbio</span>(<span class='no'>object</span>, <span class='no'>slot</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>slot</th>
-      <td><p>Slot name of data inside accessor.</p></td>
-    </tr>
-    <tr>
-      <th>value</th>
-      <td><p>Object to assign.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+<span class='fu'>colnames</span>(<span class='no'>x</span>)
 
-    <p>Various data types.</p>
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>metadata</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>rownames</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>metadata</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
+        
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code>getMethod("metadata&lt;-", "Annotated")</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/seurat_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
 
-<span class='co'># seurat ====</span>
-<span class='fu'>names</span>(<span class='fu'>bcbio</span>(<span class='no'>seurat_small</span>))</div><div class='output co'>#&gt; [1] "rowRanges" "metadata" </div><div class='input'>
+<span class='co'># assay ====</span>
+<span class='fu'>assay</span>(<span class='no'>pbmc_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Formal class 'dgTMatrix' [package "Matrix"] with 6 slots
+#&gt;   ..@ i       : int [1:4456] 1 5 8 11 22 30 33 34 36 38 ...
+#&gt;   ..@ j       : int [1:4456] 0 0 0 0 0 0 0 0 0 0 ...
+#&gt;   ..@ Dim     : int [1:2] 230 80
+#&gt;   ..@ Dimnames:List of 2
+#&gt;   .. ..$ : chr [1:230] "MS4A1" "CD79B" "CD79A" "HLA-DRA" ...
+#&gt;   .. ..$ : chr [1:80] "ATGCCAGAACGACT" "CATGGCCTGTGCAT" "GAACCTGATGAACC" "TGACTGGATTCTCA" ...
+#&gt;   ..@ x       : num [1:4456] 1 1 3 1 1 4 1 5 1 1 ...
+#&gt;   ..@ factors : list()</div><div class='input'>
+<span class='co'># dimensions ====</span>
+<span class='fu'>rownames</span>(<span class='no'>pbmc_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>head</span>()</div><div class='output co'>#&gt; [1] "MS4A1"    "CD79B"    "CD79A"    "HLA-DRA"  "TCL1A"    "HLA-DQB1"</div><div class='input'><span class='fu'>colnames</span>(<span class='no'>pbmc_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>head</span>()</div><div class='output co'>#&gt; [1] "ATGCCAGAACGACT" "CATGGCCTGTGCAT" "GAACCTGATGAACC" "TGACTGGATTCTCA"
+#&gt; [5] "AGTCAGACTGCACA" "TCTGATACACGTGT"</div><div class='input'>
+<span class='co'># metadata ====</span>
+<span class='co'># Only works for objects created with bcbioSingleCell</span>
+<span class='fu'>names</span>(<span class='fu'>metadata</span>(<span class='no'>seurat_small</span>))</div><div class='output co'>#&gt;  [1] "version"               "pipeline"              "level"                
+#&gt;  [4] "uploadDir"             "sampleDirs"            "sampleMetadataFile"   
+#&gt;  [7] "interestingGroups"     "organism"              "genomeBuild"          
+#&gt; [10] "ensemblRelease"        "rowRangesMetadata"     "sampleData"           
+#&gt; [13] "cell2sample"           "umiType"               "allSamples"           
+#&gt; [16] "prefilter"             "projectDir"            "template"             
+#&gt; [19] "runDate"               "yaml"                  "gffFile"              
+#&gt; [22] "dataVersions"          "programVersions"       "bcbioLog"             
+#&gt; [25] "bcbioCommandsLog"      "cellularBarcodes"      "cellularBarcodeCutoff"
+#&gt; [28] "loadSingleCell"        "date"                  "wd"                   
+#&gt; [31] "utilsSessionInfo"      "devtoolsSessionInfo"   "isSpike"              
+#&gt; [34] "unannotatedRows"       "filterCells"           "filterGenes"          
+#&gt; [37] "filterParams"          "filterSummary"        </div><div class='input'>
 <span class='co'># Assignment method support</span>
-<span class='fu'>bcbio</span>(<span class='no'>seurat_small</span>, <span class='st'>"metadata"</span>)<span class='kw'>[[</span><span class='st'>"stash"</span>]] <span class='kw'>&lt;-</span> <span class='st'>"XXX"</span>
-<span class='fu'>bcbio</span>(<span class='no'>seurat_small</span>, <span class='st'>"metadata"</span>)<span class='kw'>[[</span><span class='st'>"stash"</span>]]</div><div class='output co'>#&gt; [1] "XXX"</div></pre>
+<span class='fu'>metadata</span>(<span class='no'>seurat_small</span>)<span class='kw'>[[</span><span class='st'>"stash"</span>]] <span class='kw'>&lt;-</span> <span class='st'>"XXX"</span>
+<span class='fu'>metadata</span>(<span class='no'>seurat_small</span>)<span class='kw'>[[</span><span class='st'>"stash"</span>]]</div><div class='output co'>#&gt; [1] "XXX"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

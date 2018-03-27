@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Flat Files from S4 Object — flatFiles • bcbioSingleCell</title>
+<title>Show an Object — show • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,36 +83,59 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Flat Files from S4 Object</h1>
+    <h1>Show an Object</h1>
     </div>
 
     
-    <p>Prepare an unstructured list of information saved in the S4 object,
-for improved archival data storage.</p>
+    <p>Show an Object</p>
     
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>flatFiles</span>(<span class='no'>object</span>)</pre>
+<span class='fu'>show</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Object.</p></td>
+      <td><p>Any R object</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>list.</p>
+    <p><code>show</code> returns an invisible <code>NULL</code>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Objects from an S4 class (a class defined by a call to
+  <code>setClass</code>) will be displayed automatically is if by a
+  call to <code>show</code>.  S4 objects that occur as attributes of S3
+objects will also be displayed in this form; conversely, S3 objects
+encountered as slots in S4 objects will be printed using the S3
+convention, as if by a call to <code>print</code>.</p>
+<p>Methods defined for <code>show</code> will only be inherited  by simple
+inheritance, since otherwise the method would not receive the
+complete, original object, with misleading results.  See the
+<code>simpleInheritanceOnly</code> argument to <code>setGeneric</code> and
+the discussion in <code>setIs</code> for the general concept.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code>showMethods</code> prints all the methods for one or more
+  functions.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># bcbioSingleCell</span>
-<span class='fu'>flatFiles</span>(<span class='no'>bcb</span>) <span class='kw'>%&gt;%</span> <span class='fu'>names</span>()</div><div class='output co'>#&gt; [1] "assays"   "rowData"  "colData"  "metadata" "bcbio"   </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(<span class='st'>"extdata/bcb_small.rda"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
+<span class='fu'>show</span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
+#&gt; samples: 1
+#&gt; cells: 500
+#&gt; genes: 500
+#&gt; organism: Homo sapiens
+#&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/harvard_indrop_v3
+#&gt; bcbio date: 2018-01-01
+#&gt; load date: 2018-03-25</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -120,13 +143,17 @@ for improved archival data storage.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
     
-Michael Steinbaugh, Rory Kirchner
+Michael Steinbuagh
 
   </div>
 </div>
