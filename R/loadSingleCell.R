@@ -240,32 +240,23 @@ loadSingleCell <- function(
     }
 
     # Assays ===================================================================
-    inform(paste("Reading counts at", level, "level"))
-    sparseCountsList <- .sparseCountsList(
+    inform(paste("Reading counts as", level))
+    countsList <- .sparseCountsList(
         sampleDirs = sampleDirs,
         pipeline = pipeline,
         umiType = umiType
     )
-    counts <- do.call(cBind, sparseCountsList)
+    # Ensure samples with empty matrices (`NULL`) are filtered
+    countsList <- Filter(Negate(is.null), countsList)
+    counts <- do.call(cBind, countsList)
 
     # Row data =================================================================
     rowRangesMetadata <- NULL
-    txdb <- NULL
     tx2gene <- NULL
     if (is_a_string(gffFile)) {
-        # TODO Need to sanitize rowRanges here
-        txdb <- makeTxDbFromGFF(gffFile)
-        rowRanges <- genes(txdb)
-        # Transcript-to-gene mappings
+        rowRanges <- rowRangesFromGFF(gffFile, level = level)
         if (level == "transcripts") {
-            transcripts <- transcripts(
-                object = txdb,
-                columns = c("tx_name", "gene_id")
-            )
-            tx2gene <- mcols(transcripts) %>%
-                as.data.frame() %>%
-                set_colnames(c("txID", "geneID")) %>%
-                set_rownames(.[["txID"]])
+            tx2gene <- tx2geneFromGFF(gffFile)
         }
     } else {
         # ah = AnnotationHub
@@ -293,11 +284,10 @@ loadSingleCell <- function(
         }
     }
 
-    # Check for gene-to-symbol mappings
+    # Require gene-to-symbol mappings
     assert_is_subset(
         x = c("geneID", "geneName"),
-        y = names(mcols(rowRanges)),
-        severity = "warning"
+        y = names(mcols(rowRanges))
     )
 
     rowData <- as.data.frame(rowRanges)
@@ -349,7 +339,6 @@ loadSingleCell <- function(
         "rowRangesMetadata" = rowRangesMetadata,
         "sampleData" = sampleData,
         "cell2sample" = cell2sample,
-        "txdb" = txdb,
         "umiType" = umiType,
         "allSamples" = allSamples,
         "prefilter" = prefilter,

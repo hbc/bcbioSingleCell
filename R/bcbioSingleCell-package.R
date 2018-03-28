@@ -21,8 +21,8 @@
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
 #' @importFrom basejump assignAndSaveData camel convertUCSCBuildToEnsembl
 #'   detectOrganism dynamicPlotlist ensembl initializeDirectory makeNames
-#'   markdownHeader midnightTheme readFileByExtension readYAML
-#'   sanitizeSampleData stripTranscriptVersions tx2gene
+#'   markdownHeader midnightTheme readFileByExtension readYAML rowRangesFromGFF
+#'   sanitizeSampleData stripTranscriptVersions tx2gene tx2geneFromGFF
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
 #'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
 #'   uniteInterestingGroups
