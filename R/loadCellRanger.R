@@ -1,7 +1,3 @@
-# TODO Build an EnsDb for the old release (84) currently used by cellranger
-
-
-
 #' Load 10X Genomics Cell Ranger Data
 #'
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
@@ -136,11 +132,10 @@ loadCellRanger <- function(
     rowRangesMetadata <- ah[["metadata"]]
     assert_is_data.frame(rowRangesMetadata)
 
-    # Check for gene-to-symbol mappings
+    # Require gene-to-symbol mappings
     assert_is_subset(
         x = c("geneID", "geneName"),
-        y = names(mcols(rowRanges)),
-        severity = "warning"
+        y = names(mcols(rowRanges))
     )
 
     rowData <- as.data.frame(rowRanges)
