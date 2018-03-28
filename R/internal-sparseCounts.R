@@ -65,39 +65,51 @@
     # Check that all files exist
     assert_all_are_existing_files(c(matrixFile, colFile, rowFile))
 
-    # Read the MatrixMarket file. Column names are molecular identifiers. Row
-    # names are gene/transcript identifiers (depending on pipeline).
-    counts <- readMM(matrixFile) %>%
-        # Ensure dgCMatrix, for improved memory overhead
-        as("dgCMatrix")
-
+    # Attempt to load the column and rowname files first. If they're empty,
+    # skip loading the MatrixMarket file, which will error otherwise. The bcbio
+    # pipeline outputs empty files.
     if (pipeline == "bcbio") {
         colnames <- read_lines(colFile)
         rownames <- read_lines(rowFile)
     } else if (pipeline == "cellranger") {
-        # Named `barcodes.tsv` but not actually tab delimited
-        colnames <- read_tsv(
-                file = colFile,
-                col_names = "barcode",
-                col_types = "c"
-            ) %>%
-            pull("barcode")
+        # `barcodes.tsv` is not tab delimited
+        colnames <- read_lines(colFile)
+
+        # `genes.tsv` is tab delimited
         rownames <- read_tsv(
                 file = rowFile,
                 col_names = c("geneID", "geneName"),
                 col_types = "cc"
-            ) %>%
-            pull("geneID")
+            )
+        assert_has_rows(rownames)
+        rownames <- pull(rownames, "geneID")
     }
+
+    # Early return on empty colnames
+    if (!length(colnames)) {
+        warn(paste(
+            sampleID, "does not contain any cells"
+        ))
+        return(NULL)
+    }
+
+    # Read the MatrixMarket file.
+    # Column names are molecular identifiers.
+    # Row names are gene/transcript identifiers.
+    # Always return dgCMatrix, for consistency and improved memory overhead.
+    counts <- readMM(matrixFile) %>%
+        as("dgCMatrix")
 
     # Integrity checks
     assert_are_identical(length(colnames), ncol(counts))
     assert_are_identical(length(rownames), nrow(counts))
 
+    # Append `sampleID` to colnames and make valid
     colnames(counts) <- colnames %>%
-        # Append sample name
         paste(sampleID, ., sep = "_") %>%
         makeNames(unique = TRUE)
+
+    # Ensure rownames are valid
     rownames(counts) <- makeNames(rownames, unique = TRUE)
 
     counts
