@@ -241,13 +241,9 @@ loadSingleCell <- function(
     }
 
     # Row data =================================================================
-    tx2gene <- NULL
     if (is_a_string(gffFile)) {
-        rowRanges <- rowRangesFromGFF(gffFile, level = level)
+        rowRanges <- rowRangesFromGFF(gffFile, level = "genes")
         rowRangesMetadata <- NULL
-        if (level == "transcripts") {
-            tx2gene <- tx2geneFromGFF(gffFile)
-        }
     } else {
         # ah = AnnotationHub
         ah <- ensembl(
@@ -264,14 +260,6 @@ loadSingleCell <- function(
         assert_is_all_of(rowRanges, "GRanges")
         rowRangesMetadata <- ah[["metadata"]]
         assert_is_data.frame(rowRangesMetadata)
-        if (level == "transcripts") {
-            tx2gene <- ensembl(
-                organism = organism,
-                format = "tx2gene",
-                genomeBuild = genomeBuild,
-                release = ensemblRelease
-            )
-        }
     }
 
     # Require gene-to-symbol mappings
@@ -294,20 +282,47 @@ loadSingleCell <- function(
     countsList <- Filter(Negate(is.null), countsList)
     counts <- do.call(cBind, countsList)
 
-    # Transcript to gene level counts (legacy)
-    # Now recommended to provide GTF file during the bcbio run instead
-    if (level == "transcript") {
+    # Transcript to gene conversion (legacy) ===================================
+    if (level == "transcripts") {
         inform("Converting transcripts to genes")
-        assert_is_subset(rownames(counts), rownames(tx2gene))
+
+        # Generate tx2gene
+        if (is_a_string(gffFile)) {
+            tx2gene <- tx2geneFromGFF(gffFile)
+        } else {
+            tx2gene <- ensembl(
+                organism = organism,
+                format = "tx2gene",
+                genomeBuild = genomeBuild,
+                release = ensemblRelease
+            )
+        }
+
+        # Add spike-ins to tx2gene, if necessary
+        if (is.character(isSpike)) {
+            assert_are_disjoint_sets(rownames(tx2gene), isSpike)
+            spike <- data.frame(
+                "txID" = isSpike,
+                "geneID" = isSpike,
+                row.names = isSpike,
+                stringsAsFactors = FALSE
+            )
+            tx2gene <- rbind(spike, tx2gene)
+        }
+
         # Resize the tx2gene to match the matrix rownames
+        assert_is_subset(rownames(counts), rownames(tx2gene))
         tx2gene <- tx2gene[rownames(counts), , drop = FALSE]
-        assert_are_identical(rownames(counts), rownames(tx2gene))
+
+        # Now we're ready to assign `geneID` and aggregate
         rownames(counts) <- tx2gene[["geneID"]]
         counts <- aggregate.Matrix(
             x = counts,
             groupings = rownames(counts),
             fun = "sum"
         )
+    } else {
+        tx2gene <- NULL
     }
 
     # Unfiltered cellular barcode distributions ================================
