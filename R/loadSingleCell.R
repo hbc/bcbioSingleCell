@@ -282,7 +282,7 @@ loadSingleCell <- function(
     countsList <- Filter(Negate(is.null), countsList)
     counts <- do.call(cBind, countsList)
 
-    # Transcript to gene conversion (legacy) ===================================
+    # Require transcript to gene conversion (legacy) ===========================
     if (level == "transcripts") {
         inform("Converting transcripts to genes")
 
@@ -321,6 +321,7 @@ loadSingleCell <- function(
             groupings = rownames(counts),
             fun = "sum"
         )
+        level <- "genes"
     } else {
         tx2gene <- NULL
     }
