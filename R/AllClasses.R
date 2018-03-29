@@ -75,8 +75,9 @@ setValidity(
         # - filterGenes
         # - filterParams
         # - filterSummary
-        # - lanes
-        # - tx2gene
+        # - lanes: integer
+        # - rowRangesMetadata: tbl_df
+        # - tx2gene: data.frame
         #
         # bcbio-specific:
         # - bcbioCommandsLog: character
@@ -107,7 +108,6 @@ setValidity(
             "level" = "character",
             "organism" = "character",
             "pipeline" = "character",
-            "rowRangesMetadata" = "tbl_df",
             "sampleData" = "data.frame",
             "sampleDirs" = "character",
             "sampleMetadataFile" = "character",
