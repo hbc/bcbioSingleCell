@@ -240,21 +240,14 @@ loadSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Assays ===================================================================
-    inform(paste("Reading counts as", level))
-    countsList <- .sparseCountsList(
-        sampleDirs = sampleDirs,
-        pipeline = pipeline,
-        umiType = umiType
-    )
-    # Ensure samples with empty matrices (`NULL`) are filtered
-    countsList <- Filter(Negate(is.null), countsList)
-    counts <- do.call(cBind, countsList)
-
     # Row data =================================================================
+    tx2gene <- NULL
     if (is_a_string(gffFile)) {
         rowRanges <- rowRangesFromGFF(gffFile, level = level)
         rowRangesMetadata <- NULL
+        if (level == "transcripts") {
+            tx2gene <- tx2geneFromGFF(gffFile)
+        }
     } else {
         # ah = AnnotationHub
         ah <- ensembl(
@@ -271,6 +264,14 @@ loadSingleCell <- function(
         assert_is_all_of(rowRanges, "GRanges")
         rowRangesMetadata <- ah[["metadata"]]
         assert_is_data.frame(rowRangesMetadata)
+        if (level == "transcripts") {
+            tx2gene <- ensembl(
+                organism = organism,
+                format = "tx2gene",
+                genomeBuild = genomeBuild,
+                release = ensemblRelease
+            )
+        }
     }
 
     # Require gene-to-symbol mappings
@@ -282,12 +283,31 @@ loadSingleCell <- function(
     rowData <- as.data.frame(rowRanges)
     rownames(rowData) <- names(rowRanges)
 
-    # Transcript to gene level counts (legacy) =================================
+    # Assays ===================================================================
+    inform(paste("Reading counts as", level))
+    countsList <- .sparseCountsList(
+        sampleDirs = sampleDirs,
+        pipeline = pipeline,
+        umiType = umiType
+    )
+    # Ensure samples with empty matrices (`NULL`) are filtered
+    countsList <- Filter(Negate(is.null), countsList)
+    counts <- do.call(cBind, countsList)
+
+    # Transcript to gene level counts (legacy)
+    # Now recommended to provide GTF file during the bcbio run instead
     if (level == "transcript") {
-        tx2gene <- readTx2gene(file.path(projectDir, "tx2gene.csv"))
-        counts <- .transcriptToGeneLevelCounts(counts, tx2gene)
-    } else {
-        tx2gene <- NULL
+        inform("Converting transcripts to genes")
+        assert_is_subset(rownames(counts), rownames(tx2gene))
+        # Resize the tx2gene to match the matrix rownames
+        tx2gene <- tx2gene[rownames(counts), , drop = FALSE]
+        assert_are_identical(rownames(counts), rownames(tx2gene))
+        rownames(counts) <- tx2gene[["geneID"]]
+        counts <- aggregate.Matrix(
+            x = counts,
+            groupings = rownames(counts),
+            fun = "sum"
+        )
     }
 
     # Unfiltered cellular barcode distributions ================================
@@ -301,8 +321,8 @@ loadSingleCell <- function(
         prefilter = prefilter
     )
 
+    # Prefilter very low quailty cells, if desired
     if (isTRUE(prefilter)) {
-        # Subset the counts matrix to match the cells that passed prefiltering
         counts <- counts[, rownames(colData), drop = FALSE]
     }
 
