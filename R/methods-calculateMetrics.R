@@ -31,20 +31,24 @@ NULL
     prefilter = TRUE
 ) {
     rowData <- as.data.frame(rowData)
-    assert_is_subset(rownames(object), rownames(rowData))
+    # Allow resizing of the rowData here to support spike-ins
+    assert_are_intersecting_sets(rownames(object), rownames(rowData))
     rowData <- rowData[rownames(object), , drop = FALSE]
+    rownames(rowData) <- rownames(object)
     assert_is_a_bool(prefilter)
 
     inform("Calculating cellular barcode metrics")
     inform(paste(ncol(object), "cells detected"))
 
     codingGenes <- rowData %>%
-        .[.[["broadClass"]] == "coding", "geneID", drop = TRUE]
+        .[.[["broadClass"]] == "coding", "geneID", drop = TRUE] %>%
+        na.omit()
     assert_all_are_non_missing_nor_empty_character(codingGenes)
     inform(paste(length(codingGenes), "coding genes detected"))
 
     mitoGenes <- rowData %>%
-        .[.[["broadClass"]] == "mito", "geneID", drop = TRUE]
+        .[.[["broadClass"]] == "mito", "geneID", drop = TRUE] %>%
+        na.omit()
     assert_all_are_non_missing_nor_empty_character(mitoGenes)
     inform(paste(length(mitoGenes), "mitochondrial genes detected"))
 
