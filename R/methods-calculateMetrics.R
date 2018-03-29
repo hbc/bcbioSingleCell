@@ -5,7 +5,6 @@
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param rowData Data describing the rows of the object.
 #' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
 #'
@@ -31,59 +30,36 @@ NULL
     rowData,
     prefilter = TRUE
 ) {
-    assert_is_any_of(rowData, c("data.frame", "DataFrame"))
     rowData <- as.data.frame(rowData)
-    assert_are_intersecting_sets(rownames(object), rownames(rowData))
+    assert_is_subset(rownames(object), rownames(rowData))
+    rowData <- rowData[rownames(object), , drop = FALSE]
     assert_is_a_bool(prefilter)
 
     inform("Calculating cellular barcode metrics")
     inform(paste(ncol(object), "cells detected"))
 
-    intersect <- intersect(rownames(object), rownames(rowData))
-    setdiff <- setdiff(rownames(object), rownames(rowData))
-    if (length(setdiff)) {
-        warn(paste(
-            length(setdiff),
-            "genes missing in rowData",
-            paste0("(", percent(length(setdiff) / nrow(object)), "):"),
-            toString(setdiff)
-        ))
-    }
-    rowData <- rowData[intersect, , drop = FALSE]
+    codingGenes <- rowData %>%
+        .[.[["broadClass"]] == "coding", "geneID", drop = TRUE]
+    assert_all_are_non_missing_nor_empty_character(codingGenes)
+    inform(paste(length(codingGenes), "coding genes detected"))
 
-    # Obtain detected coding and mitochondrial genes, using rowData
-    codingGenesDetected <- rowData %>%
-        .[.[["broadClass"]] == "coding", , drop = FALSE] %>%
-        pull("geneID")
-    if (!length(codingGenesDetected)) {
-        abort("No coding genes detected")
-    }
-    inform(paste(
-        length(codingGenesDetected),
-        "coding genes detected"
-    ))
-    mitoGenesDetected <- rowData %>%
-        .[.[["broadClass"]] == "mito", , drop = FALSE] %>%
-        pull("geneID")
-    if (!length(mitoGenesDetected)) {
-        abort("No mitochondrial genes detected")
-    }
-    inform(paste(
-        length(mitoGenesDetected),
-        "mitochondrial genes detected"
-    ))
+    mitoGenes <- rowData %>%
+        .[.[["broadClass"]] == "mito", "geneID", drop = TRUE]
+    assert_all_are_non_missing_nor_empty_character(mitoGenes)
+    inform(paste(length(mitoGenes), "mitochondrial genes detected"))
 
     metrics <- tibble(
-        rowname = colnames(object),
+        "rowname" = colnames(object),
         # Follow the Seurat `seurat@data.info` conventions
-        nUMI = Matrix::colSums(object),
-        nGene = Matrix::colSums(object > 0L),
-        nCoding = Matrix::colSums(
-            object[codingGenesDetected, , drop = FALSE]
+        "nUMI" = Matrix::colSums(object),
+        "nGene" = Matrix::colSums(object > 0L),
+        "nCoding" = Matrix::colSums(
+            object[codingGenes, , drop = FALSE]
         ),
-        nMito = Matrix::colSums(
-            object[mitoGenesDetected, , drop = FALSE])
-        ) %>%
+        "nMito" = Matrix::colSums(
+            object[mitoGenes, , drop = FALSE]
+        )
+    ) %>%
         mutate(
             log10GenesPerUMI = log10(.data[["nGene"]]) /
                 log10(.data[["nUMI"]]),
