@@ -48,7 +48,7 @@ NULL
     assert_all_are_non_missing_nor_empty_character(mitoGenes)
     inform(paste(length(mitoGenes), "mitochondrial genes detected"))
 
-    metrics <- tibble(
+    data <- tibble(
         "rowname" = colnames(object),
         # Follow the Seurat `seurat@data.info` conventions
         "nUMI" = Matrix::colSums(object),
@@ -72,17 +72,17 @@ NULL
     # Apply low stringency cellular barcode pre-filtering, if desired
     if (isTRUE(prefilter)) {
         # Here we're only keeping cellular barcodes that have a gene detected
-        metrics <- metrics %>%
+        data <- data %>%
             .[.[["nUMI"]] > 0L, , drop = FALSE] %>%
             .[.[["nGene"]] > 0L, , drop = FALSE] %>%
             .[!is.na(.[["log10GenesPerUMI"]]), , drop = FALSE]
         inform(paste(
-            nrow(metrics), "cellular barcodes passed pre-filtering",
-            paste0("(", percent(nrow(metrics) / ncol(object)), ")")
+            nrow(data), "cellular barcodes passed pre-filtering",
+            paste0("(", percent(nrow(data) / ncol(object)), ")")
         ))
     }
 
-    metrics %>%
+    data %>%
         as.data.frame() %>%
         column_to_rownames()
 }
