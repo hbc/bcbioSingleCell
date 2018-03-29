@@ -134,7 +134,8 @@ loadSingleCell <- function(
 
     # bcbio run information ====================================================
     dataVersions <- readDataVersions(
-        file = file.path(projectDir, "data_versions.csv"))
+        file = file.path(projectDir, "data_versions.csv")
+    )
     assert_is_tbl_df(dataVersions)
 
     programVersions <- readProgramVersions(
@@ -251,13 +252,9 @@ loadSingleCell <- function(
     counts <- do.call(cBind, countsList)
 
     # Row data =================================================================
-    rowRangesMetadata <- NULL
-    tx2gene <- NULL
     if (is_a_string(gffFile)) {
         rowRanges <- rowRangesFromGFF(gffFile, level = level)
-        if (level == "transcripts") {
-            tx2gene <- tx2geneFromGFF(gffFile)
-        }
+        rowRangesMetadata <- NULL
     } else {
         # ah = AnnotationHub
         ah <- ensembl(
@@ -274,14 +271,6 @@ loadSingleCell <- function(
         assert_is_all_of(rowRanges, "GRanges")
         rowRangesMetadata <- ah[["metadata"]]
         assert_is_data.frame(rowRangesMetadata)
-        # Transcript-to-gene mappings
-        if (level == "transcripts") {
-            tx2gene <- tx2gene(
-                object = organism,
-                genomeBuild = genomeBuild,
-                release = ensemblRelease
-            )
-        }
     }
 
     # Require gene-to-symbol mappings
@@ -295,7 +284,10 @@ loadSingleCell <- function(
 
     # Transcript to gene level counts (legacy) =================================
     if (level == "transcript") {
+        tx2gene <- readTx2gene(file.path(projectDir, "tx2gene.csv"))
         counts <- .transcriptToGeneLevelCounts(counts, tx2gene)
+    } else {
+        tx2gene <- NULL
     }
 
     # Unfiltered cellular barcode distributions ================================

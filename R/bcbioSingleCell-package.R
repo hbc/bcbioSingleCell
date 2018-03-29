@@ -24,8 +24,8 @@
 #'   markdownHeader midnightTheme readFileByExtension readYAML rowRangesFromGFF
 #'   sanitizeSampleData stripTranscriptVersions tx2gene tx2geneFromGFF
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
-#'   readLogFile readProgramVersions readSampleMetadataFile sampleYAMLMetadata
-#'   uniteInterestingGroups
+#'   readLogFile readProgramVersions readSampleMetadataFile readTx2gene
+#'   sampleYAMLMetadata uniteInterestingGroups
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows group_by group_vars left_join mutate
 #'   mutate_all mutate_if n pull select_if summarize summarize_all ungroup
