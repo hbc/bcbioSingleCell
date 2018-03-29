@@ -369,7 +369,7 @@ loadSingleCell <- function(
         "umiType" = umiType,
         "allSamples" = allSamples,
         "prefilter" = prefilter,
-        # bcbio pipeline-specific ==============================================
+        # bcbio pipeline-specific ----------------------------------------------
         "projectDir" = projectDir,
         "template" = template,
         "runDate" = runDate,

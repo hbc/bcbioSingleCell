@@ -214,7 +214,7 @@ loadCellRanger <- function(
         "umiType" = umiType,
         "allSamples" = allSamples,
         "prefilter" = prefilter,
-        # cellranger pipeline-specific =========================================
+        # cellranger pipeline-specific -----------------------------------------
         "refdataDir" = refdataDir,
         "refJSON" = refJSON,
         "loadCellRanger" = match.call()
