@@ -89,9 +89,7 @@ NULL
         metrics <- metrics %>%
             .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
     }
-    if (!nrow(metrics)) {
-        abort("No cells passed `minUMIs` cutoff")
-    }
+    assert_has_rows(metrics)
     summary[["minUMIs"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
         "|",
@@ -104,7 +102,6 @@ NULL
         if (!all(names(maxUMIs) %in% sampleIDs)) {
             abort("`maxUMIs` names don't match sample IDs")
         }
-        # FIXME Switch to `mapply()` method to loop across names
         list <- lapply(seq_along(names(maxUMIs)), function(a) {
             sampleID <- names(maxUMIs)[[a]]
             cutoff <- maxUMIs[[a]]
@@ -118,9 +115,7 @@ NULL
         metrics <- metrics %>%
             .[.[["nUMI"]] <= maxUMIs, , drop = FALSE]
     }
-    if (!nrow(metrics)) {
-        abort("No cells passed `maxUMIs` cutoff")
-    }
+    assert_has_rows(metrics)
     summary[["maxUMIs"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
         "|",
@@ -146,9 +141,7 @@ NULL
         metrics <- metrics %>%
             .[.[["nGene"]] >= minGenes, , drop = FALSE]
     }
-    if (!nrow(metrics)) {
-        abort("No cells passed `minGenes` cutoff")
-    }
+    assert_has_rows(metrics)
     summary[["minGenes"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
         "|",
@@ -174,9 +167,7 @@ NULL
         metrics <- metrics %>%
             .[.[["nGene"]] <= maxGenes, , drop = FALSE]
     }
-    if (!nrow(metrics)) {
-        abort("No cells passed `maxGenes` cutoff")
-    }
+    assert_has_rows(metrics)
     summary[["maxGenes"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
         "|",
@@ -202,9 +193,7 @@ NULL
         metrics <- metrics %>%
             .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
     }
-    if (!nrow(metrics)) {
-        abort("No cells passed `maxMitoRatio` cutoff")
-    }
+    assert_has_rows(metrics)
     summary[["maxMitoRatio"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
         "|",
@@ -230,9 +219,7 @@ NULL
         metrics <- metrics %>%
             .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
     }
-    if (!nrow(metrics)) {
-        abort("No cells passed `minNovelty` cutoff")
-    }
+    assert_has_rows(metrics)
     summary[["minNovelty"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
         "|",
@@ -240,13 +227,7 @@ NULL
     )
 
     cells <- sort(rownames(metrics))
-
-    # Check to make sure the cells are valid
-    if (!all(cells %in% colnames(object))) {
-        # The tidyverse chain of tools has a tendency to drop rownames. Be
-        # sure to use base R methods above for our filtering cutoffs.
-        abort("Cell vector unexpectedly doens't match IDs in object colnames")
-    }
+    assert_is_subset(cells, colnames(object))
 
     # Filter low quality genes =================================================
     if (minCellsPerGene > 0L) {
@@ -256,18 +237,12 @@ NULL
     } else {
         genes <- sort(rownames(object))
     }
-    if (!length(genes)) {
-        abort("No genes passed `minCellsPerGene` cutoff")
-    }
+    assert_is_non_empty(genes)
     summary[["minCellsPerGene"]] <- paste(
         paste(.paddedCount(length(genes)), "genes"),
         "|",
         paste("minCellsPerGene", "<=", as.character(minCellsPerGene))
     )
-    if (!length(genes)) {
-        warn("No genes passed filtering")
-        return(NULL)
-    }
 
     # Summary ==================================================================
     printParams <- c(
