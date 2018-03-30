@@ -84,7 +84,10 @@
             scale_y_continuous(trans = trans)
     }
 
-    p <- p + theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+    # Rotate the x-axis 90 degrees
+    if (geom != "ridgeline") {
+        p <- p + theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+    }
 
     # Cutoff lines
     if (geom %in% c("boxplot", "violin")) {
