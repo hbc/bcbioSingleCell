@@ -295,7 +295,7 @@ loadSingleCell <- function(
 
     # Row data =================================================================
     if (is_a_string(gffFile)) {
-        rowRanges <- makeGRangesFromGFF(gffFile, level = "genes")
+        rowRanges <- makeGRangesFromGFF(gffFile, format = "genes")
         rowRangesMetadata <- NULL
     } else {
         # ah = AnnotationHub
@@ -304,7 +304,6 @@ loadSingleCell <- function(
             format = "genes",
             genomeBuild = genomeBuild,
             release = ensemblRelease,
-            return = "GRanges",
             metadata = TRUE
         )
         assert_is_list(ah)

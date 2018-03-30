@@ -114,15 +114,15 @@ loadCellRanger <- function(
     ))
 
     # Gene annotations =========================================================
-    rowRangesMetadata <- NULL
-    # ah = AnnotationHub
-    # Don't warn about old Ensembl release version (expected)
-    ah <- suppressWarnings(ensembl(
+    # CellRanger uses Ensembl refdata internally. Here we're fetching the
+    # annotations with AnnotationHub rather than pulling from the GTF file
+    # in the refdata directory. It will also drop genes that are now dead in the
+    # current Ensembl release. Don't warn about old Ensembl release version.
+    ah <- suppressWarnings(makeGRangesFromEnsembl(
         organism = organism,
         format = level,
         genomeBuild = genomeBuild,
         release = ensemblRelease,
-        return = "GRanges",
         metadata = TRUE
     ))
     assert_is_list(ah)
