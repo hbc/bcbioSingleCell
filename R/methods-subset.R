@@ -126,7 +126,6 @@ NULL
     }
 
     # Return ===================================================================
-    isSpike <-
     .new.bcbioSingleCell(
         assays = assays(sce),
         rowRanges <- rowRanges(sce),
