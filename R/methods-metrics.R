@@ -29,12 +29,11 @@ NULL
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
 
-    colData <- colData(object) %>%
-        as.data.frame()
+    colData <- colData(object, return = "data.frame")
     # Bind `sampleID` column to colData
     sampleID <- cell2sample(object)
     assert_are_identical(rownames(colData), names(sampleID))
-    colData <- cbind(sampleID, colData)
+    colData <- cbind(colData, sampleID)
     colData <- rownames_to_column(colData, "cellID")
 
     sampleData <- sampleData(object)
@@ -46,6 +45,8 @@ NULL
         all.x = TRUE
     ) %>%
         .sanitizeMetrics() %>%
+        # Ensure the metrics (colData) columns appear first
+        .[, unique(c(colnames(colData), colnames(.)))] %>%
         column_to_rownames("cellID")
 }
 
