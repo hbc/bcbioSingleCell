@@ -16,7 +16,7 @@ must contain \code{filtered_gene_bc_matrices*} as a child directory.}
 \item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-inDrop). Consult the GitHub repo for examples and additional information.}
+inDrop).}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
