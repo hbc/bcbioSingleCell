@@ -5,7 +5,7 @@ test_that("readCellTypeMarkers : Mus musculus", {
         file.path("extdata", "cell_type_markers.csv"),
         package = "bcbioSingleCell"
     )
-    gene2symbol <- gene2symbol("Mus musculus")
+    gene2symbol <- makeGene2symbolFromEnsembl("Mus musculus")
     x <- readCellTypeMarkers(
         file = file,
         gene2symbol = gene2symbol
