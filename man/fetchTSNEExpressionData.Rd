@@ -39,9 +39,8 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
   \code{\link{filterCells}}, \code{\link{gene2symbol}},
   \code{\link{interestingGroups}},
-  \code{\link{readCellTypeMarkersFile}},
-  \code{\link{rowData}}, \code{\link{sampleData}},
-  \code{\link{selectSamples}},
+  \code{\link{readCellTypeMarkers}}, \code{\link{rowData}},
+  \code{\link{sampleData}}, \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}
 }
 \author{

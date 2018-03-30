@@ -31,8 +31,8 @@ seurat_all_markers_name <- paste(seurat_name, "markers", sep = "_")
 # updated or the desired organism isn't yet supported.
 if (!is.null(params$cell_type_markers_file)) {
     gene2symbol <- gene2symbol(seurat)
-    cell_type_markers <- readCellTypeMarkersFile(
-        params$cell_type_markers_file,
+    cell_type_markers <- readCellTypeMarkers(
+        file = params$cell_type_markers_file,
         gene2symbol = gene2symbol
     )
 } else {

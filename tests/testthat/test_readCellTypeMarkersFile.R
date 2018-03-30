@@ -1,12 +1,12 @@
-context("readCellTypeMarkersFile")
+context("readCellTypeMarkers")
 
-test_that("readCellTypeMarkersFile : Mus musculus", {
+test_that("readCellTypeMarkers : Mus musculus", {
     file <- system.file(
         file.path("extdata", "cell_type_markers.csv"),
         package = "bcbioSingleCell"
     )
     gene2symbol <- gene2symbol("Mus musculus")
-    x <- readCellTypeMarkersFile(
+    x <- readCellTypeMarkers(
         file = file,
         gene2symbol = gene2symbol
     )

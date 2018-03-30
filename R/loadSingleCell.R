@@ -143,12 +143,12 @@ loadSingleCell <- function(
     )
     assert_is_tbl_df(programVersions)
 
-    bcbioLog <- readLogFile(
+    bcbioLog <- readLog(
         file = file.path(projectDir, "bcbio-nextgen.log")
     )
     assert_is_character(bcbioLog)
 
-    bcbioCommandsLog <- readLogFile(
+    bcbioCommandsLog <- readLog(
         file = file.path(projectDir, "bcbio-nextgen-commands.log")
     )
     assert_is_character(bcbioCommandsLog)
@@ -200,7 +200,7 @@ loadSingleCell <- function(
 
     # Sample metadata ==========================================================
     if (is_a_string(sampleMetadataFile)) {
-        sampleData <- readSampleMetadataFile(sampleMetadataFile)
+        sampleData <- readSampleData(sampleMetadataFile)
     } else {
         sampleData <- sampleYAMLMetadata(yaml)
     }

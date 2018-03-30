@@ -64,7 +64,7 @@ loadCellRanger <- function(
     sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
 
     # Sample metadata ==========================================================
-    sampleData <- readSampleMetadataFile(sampleMetadataFile)
+    sampleData <- readSampleData(sampleMetadataFile)
     assert_is_subset(sampleData[["description"]], basename(sampleDirs))
     sampleData <- sanitizeSampleData(sampleData)
 

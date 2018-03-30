@@ -11,6 +11,8 @@
 \alias{quantileHeatmap}
 \alias{plotKnownMarkers}
 \alias{readMarkers}
+\alias{readMarkersFile}
+\alias{readCellTypeMarkersFile}
 \title{Deprecated Functions}
 \usage{
 plotClusters(...)
@@ -30,6 +32,10 @@ quantileHeatmap(...)
 plotKnownMarkers(object, knownMarkers, ...)
 
 readMarkers(...)
+
+readMarkersFile(...)
+
+readCellTypeMarkersFile(...)
 }
 \arguments{
 \item{...}{Additional arguments.}

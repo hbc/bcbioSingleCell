@@ -94,14 +94,26 @@ plotKnownMarkers <- function(object, knownMarkers, ...) {
 #' @rdname deprecated
 #' @export
 readMarkers <- function(...) {
-    .Deprecated("readCellTypeMarkersFile")
-    readCellTypeMarkersFile(...)
+    .Deprecated("readCellTypeMarkers")
+    readCellTypeMarkers(...)
 }
 
 
 
 # v0.0.26 ======================================================================
+#' @rdname deprecated
+#' @export
 readMarkersFile <- function(...) {
-    .Deprecated("readCellTypeMarkersFile")
-    readCellTypeMarkersFile(...)
+    .Deprecated("readCellTypeMarkers")
+    readCellTypeMarkers(...)
+}
+
+
+
+# V0.1.0 =======================================================================
+#' @rdname deprecated
+#' @export
+readCellTypeMarkersFile <- function(...) {
+    .Deprecated("readCellTypeMarkers")
+    readCellTypeMarkers(...)
 }

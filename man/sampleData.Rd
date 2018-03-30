@@ -41,8 +41,8 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}}, \code{\link{gene2symbol}},
   \code{\link{interestingGroups}},
-  \code{\link{readCellTypeMarkersFile}},
-  \code{\link{rowData}}, \code{\link{selectSamples}},
+  \code{\link{readCellTypeMarkers}}, \code{\link{rowData}},
+  \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}
 }
 \author{

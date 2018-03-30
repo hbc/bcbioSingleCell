@@ -25,7 +25,7 @@
 #'   midnightTheme readFileByExtension readYAML sanitizeSampleData
 #'   tx2geneFromGFF
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
-#'   readLogFile readProgramVersions readSampleMetadataFile readTx2gene
+#'   readLog readProgramVersions readSampleData readTx2gene
 #'   sampleYAMLMetadata uniteInterestingGroups
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows group_by group_vars left_join mutate
