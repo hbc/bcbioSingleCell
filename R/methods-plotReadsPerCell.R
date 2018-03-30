@@ -169,13 +169,11 @@ NULL
             panel_scaling = TRUE,
             scale = 10L
         ) +
-        .medianLabels(data, medianCol = "log10Count", digits = 2L) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+        .medianLabels(data, medianCol = "log10Count", digits = 2L)
 
     # Cutoff lines
     if (cutoffLine > 0L && length(cutoffLine)) {
-        p <- p +
-            .qcCutoffLine(xintercept = cutoffLine)
+        p <- p + .qcCutoffLine(xintercept = cutoffLine)
     }
 
     # Color palette
