@@ -21,8 +21,7 @@ first argument in the vector.}
 Return data as \code{data.frame}, or \code{DataFrame}.
 }
 \description{
-Metadata describing the genes. These annotations are obtained from
-AnnotationHub and ensembldb using \code{\link[basejump:ensembl]{basejump::ensembl()}}.
+Metadata describing the genes.
 }
 \examples{
 # bcbioSingleCell ====

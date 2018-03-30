@@ -4,7 +4,7 @@
 #' @family Data Functions
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump gene2symbol
+#' @importFrom bcbioBase gene2symbol
 #'
 #' @inheritParams general
 #'

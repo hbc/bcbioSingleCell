@@ -1,7 +1,6 @@
 #' Row Data
 #'
-#' Metadata describing the genes. These annotations are obtained from
-#' AnnotationHub and ensembldb using [basejump::ensembl()].
+#' Metadata describing the genes.
 #'
 #' @name rowData
 #' @family Data Functions

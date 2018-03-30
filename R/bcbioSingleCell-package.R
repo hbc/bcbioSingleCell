@@ -20,9 +20,10 @@
 #' @importFrom Seurat CreateSeuratObject FetchData
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
 #' @importFrom basejump assignAndSaveData camel convertUCSCBuildToEnsembl
-#'   detectOrganism dynamicPlotlist ensembl initializeDirectory makeNames
-#'   markdownHeader midnightTheme readFileByExtension readYAML rowRangesFromGFF
-#'   sanitizeSampleData stripTranscriptVersions tx2gene tx2geneFromGFF
+#'   detectOrganism dynamicPlotlist initializeDirectory makeGRangesFromEnsembl
+#'   makeGRangesFromGFF makeNames makeTx2geneFromGFF markdownHeader
+#'   midnightTheme readFileByExtension readYAML sanitizeSampleData
+#'   tx2geneFromGFF
 #' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
 #'   readLogFile readProgramVersions readSampleMetadataFile readTx2gene
 #'   sampleYAMLMetadata uniteInterestingGroups
