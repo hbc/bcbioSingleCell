@@ -126,12 +126,13 @@ NULL
     }
 
     # Return ===================================================================
+    isSpike <-
     .new.bcbioSingleCell(
         assays = assays(sce),
         rowRanges <- rowRanges(sce),
         colData <- colData(sce),
         metadata = metadata,
-        isSpike <- isSpike(sce)
+        isSpike <- rownames(sce)[isSpike(sce)]
     )
 }
 
