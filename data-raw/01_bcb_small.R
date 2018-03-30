@@ -79,4 +79,4 @@ bcb_small <- filterCells(
     minNovelty = 0
 )
 
-saveData(bcb_small, dir = "inst/extdata", compress = "xz")
+use_data(bcb_small, compress = "xz", overwrite = TRUE)

@@ -29,10 +29,10 @@ known_markers_small <- knownMarkersDetected(
 )
 
 # save =========================================================================
-saveData(
+use_data(
     seurat_small,
     all_markers_small,
     known_markers_small,
-    dir = "inst/extdata",
-    compress = "xz"
+    compress = "xz",
+    overwrite = TRUE
 )

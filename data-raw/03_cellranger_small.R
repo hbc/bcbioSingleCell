@@ -70,4 +70,4 @@ cellranger_small <- filterCells(
     minNovelty = 0
 )
 
-saveData(cellranger_small, dir = "inst/extdata", compress = "xz")
+use_data(cellranger_small, compress = "xz", overwrite = TRUE)
