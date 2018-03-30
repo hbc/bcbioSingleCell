@@ -199,11 +199,20 @@ loadSingleCell <- function(
     inform(paste("UMI type:", umiType))
 
     # Sample metadata ==========================================================
-    if (is_a_string(sampleMetadataFile)) {
-        sampleData <- readSampleData(sampleMetadataFile)
-    } else {
-        sampleData <- sampleYAMLMetadata(yaml)
+    # External file required for inDrop
+    if (grepl("indrop", umiType) && missing(sampleMetadataFile)) {
+        abort(paste(
+            "inDrop samples require `sampleMetadataFile`",
+            "containing the index barcode sequences"
+        ))
     }
+
+    if (missing(sampleMetadataFile)) {
+        sampleData <- sampleYAMLMetadata(yaml)
+    } else if (is_a_string(sampleMetadataFile)) {
+        sampleData <- readSampleData(sampleMetadataFile)
+    }
+
     # Check for reverse complement input
     if ("sequence" %in% colnames(sampleData)) {
         sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
