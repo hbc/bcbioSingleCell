@@ -240,37 +240,6 @@ loadSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Row data =================================================================
-    if (is_a_string(gffFile)) {
-        rowRanges <- rowRangesFromGFF(gffFile, level = "genes")
-        rowRangesMetadata <- NULL
-    } else {
-        # ah = AnnotationHub
-        ah <- ensembl(
-            organism = organism,
-            format = "genes",
-            genomeBuild = genomeBuild,
-            release = ensemblRelease,
-            return = "GRanges",
-            metadata = TRUE
-        )
-        assert_is_list(ah)
-        assert_are_identical(names(ah), c("data", "metadata"))
-        rowRanges <- ah[["data"]]
-        assert_is_all_of(rowRanges, "GRanges")
-        rowRangesMetadata <- ah[["metadata"]]
-        assert_is_data.frame(rowRangesMetadata)
-    }
-
-    # Require gene-to-symbol mappings
-    assert_is_subset(
-        x = c("geneID", "geneName"),
-        y = names(mcols(rowRanges))
-    )
-
-    rowData <- as.data.frame(rowRanges)
-    rownames(rowData) <- names(rowRanges)
-
     # Assays ===================================================================
     inform(paste("Reading counts as", level))
     countsList <- .sparseCountsList(
@@ -286,17 +255,11 @@ loadSingleCell <- function(
     if (level == "transcripts") {
         inform("Converting transcripts to genes")
 
-        # Generate tx2gene
-        if (is_a_string(gffFile)) {
-            tx2gene <- tx2geneFromGFF(gffFile)
-        } else {
-            tx2gene <- ensembl(
-                organism = organism,
-                format = "tx2gene",
-                genomeBuild = genomeBuild,
-                release = ensemblRelease
-            )
+        if (!is_a_string(gffFile)) {
+            abort("GFF is required to convert transcripts to genes")
         }
+
+        tx2gene <- makeTx2geneFromGFF(gffFile)
 
         # Add spike-ins to tx2gene, if necessary
         if (is.character(isSpike)) {
@@ -329,6 +292,37 @@ loadSingleCell <- function(
     # Unfiltered cellular barcode distributions ================================
     cbList <- .cellularBarcodesList(sampleDirs)
     cbData <- .bindCellularBarcodes(cbList)
+
+    # Row data =================================================================
+    if (is_a_string(gffFile)) {
+        rowRanges <- makeGRangesFromGFF(gffFile, level = "genes")
+        rowRangesMetadata <- NULL
+    } else {
+        # ah = AnnotationHub
+        ah <- makeGRangesFromEnsembl(
+            organism = organism,
+            format = "genes",
+            genomeBuild = genomeBuild,
+            release = ensemblRelease,
+            return = "GRanges",
+            metadata = TRUE
+        )
+        assert_is_list(ah)
+        assert_are_identical(names(ah), c("data", "metadata"))
+        rowRanges <- ah[["data"]]
+        assert_is_all_of(rowRanges, "GRanges")
+        rowRangesMetadata <- ah[["metadata"]]
+        assert_is_data.frame(rowRangesMetadata)
+    }
+
+    # Require gene-to-symbol mappings
+    assert_is_subset(
+        x = c("geneID", "geneName"),
+        y = names(mcols(rowRanges))
+    )
+
+    rowData <- as.data.frame(rowRanges)
+    rownames(rowData) <- names(rowRanges)
 
     # Column data ==============================================================
     colData <- calculateMetrics(
