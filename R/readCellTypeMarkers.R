@@ -1,6 +1,6 @@
 #' Read Cell Type Markers File
 #'
-#' @name readCellTypeMarkersFile
+#' @name readCellTypeMarkers
 #' @family Data Functions
 #' @author Michael Steinbaugh
 #'
@@ -16,8 +16,8 @@
 #'     package = "bcbioSingleCell"
 #' )
 #' gene2symbol <- gene2symbol("Mus musculus")
-#' readCellTypeMarkersFile(file, gene2symbol = gene2symbol)
-readCellTypeMarkersFile <- function(file, gene2symbol) {
+#' readCellTypeMarkers(file, gene2symbol = gene2symbol)
+readCellTypeMarkers <- function(file, gene2symbol) {
     assertIsGene2symbol(gene2symbol)
     markers <- readFileByExtension(file) %>%
         camel(strict = FALSE)
