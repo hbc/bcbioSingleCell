@@ -19,11 +19,12 @@ must contain \code{geneID} and \code{geneName}.}
 Read Cell Type Markers File
 }
 \examples{
+# Homo sapiens
 file <- system.file(
     file.path("extdata", "cell_type_markers.csv"),
     package = "bcbioSingleCell"
 )
-gene2symbol <- gene2symbol("Mus musculus")
+gene2symbol <- makeGene2symbolFromEnsembl("Homo sapiens")
 readCellTypeMarkers(file, gene2symbol = gene2symbol)
 }
 \seealso{

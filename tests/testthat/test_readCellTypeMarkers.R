@@ -5,7 +5,7 @@ test_that("readCellTypeMarkers : Mus musculus", {
         file.path("extdata", "cell_type_markers.csv"),
         package = "bcbioSingleCell"
     )
-    gene2symbol <- makeGene2symbolFromEnsembl("Mus musculus")
+    gene2symbol <- makeGene2symbolFromEnsembl("Homo sapiens")
     x <- readCellTypeMarkers(
         file = file,
         gene2symbol = gene2symbol
@@ -15,8 +15,8 @@ test_that("readCellTypeMarkers : Mus musculus", {
     x <- x[1L, ]
     y <- tibble::tibble(
         "cellType" = "B Cell",
-        "geneID" = "ENSMUSG00000061132",
-        "geneName" = "Blnk"
+        "geneID" = "ENSG00000177455",
+        "geneName" = "CD19"
     ) %>%
         dplyr::group_by(!!rlang::sym("cellType"))
     expect_identical(x, y)

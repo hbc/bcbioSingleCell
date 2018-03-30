@@ -11,56 +11,32 @@
 #' @export
 #'
 #' @examples
+#' # Homo sapiens
 #' file <- system.file(
 #'     file.path("extdata", "cell_type_markers.csv"),
 #'     package = "bcbioSingleCell"
 #' )
-#' gene2symbol <- gene2symbol("Mus musculus")
+#' gene2symbol <- makeGene2symbolFromEnsembl("Homo sapiens")
 #' readCellTypeMarkers(file, gene2symbol = gene2symbol)
 readCellTypeMarkers <- function(file, gene2symbol) {
     assertIsGene2symbol(gene2symbol)
-    markers <- readFileByExtension(file) %>%
-        camel(strict = FALSE)
+    data <- readFileByExtension(file) %>%
+        camel()
 
-    # Match the markers file by Ensembl gene identifier, otherwise use name
+    # Require matching by Ensembl gene ID, not symbol
+    markerCols <- c("cellType", "geneID")
     assert_are_intersecting_sets(
-        x = c("geneID", "geneName"),
-        y = colnames(markers)
+        x = markerCols,
+        y = colnames(data)
     )
-    if ("geneID" %in% colnames(markers)) {
-        inform("Matching by gene identifier")
-        markers <- markers %>%
-            .[, c("cellType", "geneID")] %>%
-            .[!is.na(.[["geneID"]]), , drop = FALSE] %>%
-            left_join(gene2symbol, by = "geneID")
-        # Check for bad identifiers
-        if (any(is.na(markers[["geneName"]]))) {
-            missing <- markers %>%
-                .[is.na(.[["geneName"]]), "geneID", drop = TRUE] %>%
-                sort() %>%
-                unique()
-            abort(paste("Invalid genes:", toString(missing)))
-        }
-    } else if ("geneName" %in% colnames(markers)) {
-        inform("Matching by gene name (symbol)")
-        markers <- markers %>%
-            .[, c("cellType", "geneName")] %>%
-            .[!is.na(.[["geneName"]]), ] %>%
-            left_join(gene2symbol, by = "geneName")
-        # Check for bad identifiers
-        if (any(is.na(markers[["geneID"]]))) {
-            missing <- markers %>%
-                .[is.na(.[["geneID"]]), "geneName", drop = TRUE] %>%
-                sort() %>%
-                unique()
-            abort(paste("Invalid genes:", toString(missing)))
-        }
-    }
 
-    markers %>%
+    data <- data[, markerCols] %>%
+        .[complete.cases(.), , drop = FALSE]
+
+    assert_is_subset(data[["geneID"]], gene2symbol[["geneID"]])
+
+    left_join(data, gene2symbol, by = "geneID") %>%
         as_tibble() %>%
-        .[!is.na(.[["geneID"]]), , drop = FALSE] %>%
-        .[, c("cellType", "geneID", "geneName")] %>%
         unique() %>%
         group_by(!!sym("cellType")) %>%
         arrange(!!sym("geneName"), .by_group = TRUE)
