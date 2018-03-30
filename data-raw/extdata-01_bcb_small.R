@@ -6,7 +6,7 @@ library(readr)
 load_all()
 
 # Include the top 500 genes (rows) and cells (columns)
-uploadDir <- "inst/extdata/harvard_indrop_v3"
+uploadDir <- "inst/extdata/indrop"
 sampleName <- "multiplexed-AAAAAAAA"
 
 matFile <- file.path(
