@@ -14,6 +14,7 @@
 #' @param minPct Minimum percent standard deviation.
 #' @param maxCumPct Maximum cumulative percent standard deviation.
 #' @param plot Include plot.
+#' @inheritParams ggplot2::scale_x_continuous
 #'
 #' @return
 #' - Show graphical output of elbow plots.

@@ -23,6 +23,17 @@ plotPCElbow(object, ...)
 
 \item{maxCumPct}{Maximum cumulative percent standard deviation.}
 
+\item{trans}{Either the name of a transformation object, or the
+  object itself. Built-in transformations include "asn", "atanh",
+  "boxcox", "exp", "identity", "log", "log10", "log1p", "log2",
+  "logit", "probability", "probit", "reciprocal", "reverse" and "sqrt".
+
+  A transformation object bundles together a transform, it's inverse,
+  and methods for generating breaks and labels. Transformation objects
+  are defined in the scales package, and are called \code{name_trans}, e.g.
+  \code{\link[scales]{boxcox_trans}}. You can create your own
+  transformation with \code{\link[scales]{trans_new}}.}
+
 \item{plot}{Include plot.}
 }
 \value{
