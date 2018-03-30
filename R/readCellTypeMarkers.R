@@ -24,13 +24,12 @@ readCellTypeMarkers <- function(file, gene2symbol) {
         camel()
 
     # Require matching by Ensembl gene ID, not symbol
-    markerCols <- c("cellType", "geneID")
     assert_are_intersecting_sets(
-        x = markerCols,
+        x = c("cellType", "geneID"),
         y = colnames(data)
     )
 
-    data <- data[, markerCols] %>%
+    data <- data[, c("cellType", "geneID")] %>%
         .[complete.cases(.), , drop = FALSE]
 
     assert_is_subset(data[["geneID"]], gene2symbol[["geneID"]])
