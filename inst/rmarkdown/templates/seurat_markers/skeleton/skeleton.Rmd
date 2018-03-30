@@ -23,6 +23,7 @@ dir.create(params$results_dir, recursive = TRUE, showWarnings = FALSE)
 seurat_name <- load(params$seurat_file)
 seurat <- get(seurat_name, inherits = FALSE)
 stopifnot(is(seurat, "seurat"))
+invisible(validObject(seurat))
 
 seurat_all_markers_name <- paste(seurat_name, "markers", sep = "_")
 

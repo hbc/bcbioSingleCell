@@ -22,6 +22,7 @@ source("_setup.R")
 bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
 stopifnot(is(bcb, "bcbioSingleCell"))
+invisible(validObject(bcb))
 
 # Vector to use for plot looping
 group_by <- unique(c(
