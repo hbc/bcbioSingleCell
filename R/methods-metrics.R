@@ -28,16 +28,23 @@ NULL
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
-    colData <- colData(object)
+
+    colData <- colData(object) %>%
+        as.data.frame()
+    # Bind `sampleID` column to colData
     sampleID <- cell2sample(object)
     assert_are_identical(rownames(colData), names(sampleID))
-    sampleData <- sampleData(object, interestingGroups)
-    cbind(
-        as.data.frame(sampleID),
-        as.data.frame(colData)
+    colData <- cbind(sampleID, colData)
+    colData <- rownames_to_column(colData, "cellID")
+
+    sampleData <- sampleData(object)
+
+    merge(
+        x = colData,
+        y = sampleData,
+        by = "sampleID",
+        all.x = TRUE
     ) %>%
-        rownames_to_column("cellID") %>%
-        left_join(sampleData, by = "sampleID") %>%
         .sanitizeMetrics() %>%
         column_to_rownames("cellID")
 }
