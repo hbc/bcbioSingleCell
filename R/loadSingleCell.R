@@ -12,7 +12,7 @@
 #' @param sampleMetadataFile Sample barcode metadata file. Optional for runs
 #'   with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 #'   for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-#'   inDrop). Consult the GitHub repo for examples and additional information.
+#'   inDrop).
 #' @param organism Organism name. Use the full latin name (e.g.
 #'   "Homo sapiens"), since this will be input downstream to
 #'   AnnotationHub and ensembldb, unless `gffFile` is set.
@@ -63,10 +63,10 @@ loadSingleCell <- function(
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
-    if (!missing(sampleMetadataFile)) {
-        assert_is_a_string(sampleMetadataFile)
-        # Allow for metadata from URL, so don't check if exists here
+    if (missing(sampleMetadataFile)) {
+        sampleMetadataFile <- NULL
     }
+    assertIsAStringOrNULL(sampleMetadataFile)
     assert_is_character(interestingGroups)
     assert_is_a_string(organism)
     assertIsAStringOrNULL(genomeBuild)
@@ -200,20 +200,20 @@ loadSingleCell <- function(
 
     # Sample metadata ==========================================================
     # External file required for inDrop
-    if (grepl("indrop", umiType) && missing(sampleMetadataFile)) {
+    if (grepl("indrop", umiType) && is.null(sampleMetadataFile)) {
         abort(paste(
             "inDrop samples require `sampleMetadataFile`",
             "containing the index barcode sequences"
         ))
     }
 
-    if (missing(sampleMetadataFile)) {
-        sampleData <- sampleYAMLMetadata(yaml)
-    } else if (is_a_string(sampleMetadataFile)) {
+    if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile)
+    } else {
+        sampleData <- sampleYAMLMetadata(yaml)
     }
 
-    # Check for reverse complement input
+    # Check for incorrect reverse complement input
     if ("sequence" %in% colnames(sampleData)) {
         sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
         if (identical(
@@ -229,6 +229,7 @@ loadSingleCell <- function(
             ))
         }
     }
+
     assert_is_subset(rownames(sampleData), names(sampleDirs))
     sampleData <- sanitizeSampleData(sampleData)
 
