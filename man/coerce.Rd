@@ -2,10 +2,11 @@
 % Please edit documentation in R/methods-coerce.R
 \name{coerce}
 \alias{coerce}
+\alias{coerce-bcbioSingleCell-list}
 \alias{coerce-bcbioSingleCell-seurat}
 \title{Coerce Object}
-\arguments{
-\item{from}{Class for which the coerce method will perform coercion.}
+\value{
+New class, specified by the "\code{to}" argument.
 }
 \description{
 Coerce Object
@@ -20,11 +21,18 @@ coercion.
 }
 
 \examples{
-# bcbioSingleCell to seurat
-as(bcb_small, "seurat")
+# bcbioSingleCell to list ====
+x <- as(bcb_small, "list")
+class(x)
+names(x)
+
+# bcbioSingleCell to seurat ====
+x <- as(bcb_small, "seurat")
+class(x)
+print(x)
 }
 \seealso{
-\code{help(topic = "coerce", package = "methods")}.
+\code{help("coerce", "methods")}.
 }
 \author{
 Michael Steinbaugh

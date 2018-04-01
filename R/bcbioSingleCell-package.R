@@ -24,7 +24,7 @@
 #'   makeGRangesFromGFF makeNames makeTx2geneFromGFF markdownHeader
 #'   midnightTheme readFileByExtension readYAML sanitizeSampleData
 #'   tx2geneFromGFF
-#' @importFrom bcbioBase prepareSummarizedExperiment readDataVersions
+#' @importFrom bcbioBase flatFiles prepareSummarizedExperiment readDataVersions
 #'   readLog readProgramVersions readSampleData readTx2gene
 #'   sampleYAMLMetadata uniteInterestingGroups
 #' @importFrom cowplot draw_plot ggdraw plot_grid
