@@ -1,4 +1,4 @@
-#' Calculate Knee Plot Inflection Point
+#' Calculate the Cellular Barcode Read Depth Inflection Point
 #'
 #' @name inflectionPoint
 #' @family Quality Control Functions

@@ -6,7 +6,7 @@
 \alias{inflectionPoint}
 \alias{inflectionPoint,bcbioSingleCell-method}
 \alias{inflectionPoint,seurat-method}
-\title{Calculate Knee Plot Inflection Point}
+\title{Calculate the Cellular Barcode Read Depth Inflection Point}
 \usage{
 inflectionPoint(object, ...)
 
@@ -23,7 +23,7 @@ inflectionPoint(object, ...)
 compute the inflection point.}
 }
 \description{
-Calculate Knee Plot Inflection Point
+Calculate the Cellular Barcode Read Depth Inflection Point
 }
 \examples{
 # bcbioSingleCell ====
