@@ -21,108 +21,134 @@ NULL
 
 
 # Constructors =================================================================
-#' Raw Cellular Barcodes Tibble
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @return `tibble` grouped by `sampleID`, containing `log10Count` values.
-.rawCBTibble <- function(cellularBarcodes, sampleData) {
-    sampleData <- sampleData[, c("sampleID", "sampleName")]
-    cellularBarcodes %>%
-        mutate(
-            log10Count = log10(.data[["nCount"]]),
-            cellularBarcode = NULL,
-            nCount = NULL
-        ) %>%
-        left_join(sampleData, by = "sampleID") %>%
-        group_by(!!sym("sampleID"))
-}
-
-
-
-#' Proportional Cellular Barcodes Tibble
-#'
-#' @author Rory Kirchner, Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @param rawTibble [.rawCBTibble()] return.
-#' @param sampleData [sampleData()] return with `sampleID` columns
-#'   that match the `rawTibble`.
-#'
-#' @details Modified version of Allon Klein Lab MATLAB code.
-#'
-#' @return `tibble`.
-.proportionalCBTibble <- function(
-    rawTibble,
-    sampleData,
-    breaks = 100L
-) {
-    assert_is_an_integer(breaks)
-    # Ensure `sampleID` is set as factor across both data frames
-    rawTibble[["sampleID"]] <- as.factor(rawTibble[["sampleID"]])
-    sampleData[["sampleID"]] <- as.factor(sampleData[["sampleID"]])
-    sampleIDs <- levels(rawTibble[["sampleID"]])
-    mclapply(sampleIDs, function(sampleID) {
-        cb <- rawTibble %>%
-            .[.[["sampleID"]] == sampleID, , drop = FALSE]
-        cbHist <- hist(cb[["log10Count"]], n = breaks, plot = FALSE)
-        # `counts = fLog` in MATLAB version
-        counts <- cbHist[["counts"]]
-        # `mids = xLog` in MATLAB version
-        mids <-  cbHist[["mids"]]
-        tibble(
-            "sampleID" = sampleID,
-            # log10 reads per cell
-            "log10Count" = mids,
-            # Proportion of cells
-            "proportion" = counts * (10L ^ mids) / sum(counts * (10L ^ mids))
-        )
-    }) %>%
-        bind_rows() %>%
-        mutate(sampleID = as.factor(.data[["sampleID"]])) %>%
-        left_join(sampleData, by = "sampleID")
-}
-
-
-
-.plotRawCBViolin <- function(
-    data,
-    interestingGroups = "sampleName",
-    cutoffLine = 2L,
+.plotReadsPerCell <- function(
+    object,
+    geom = c("histogram", "ridgeline", "violin"),
+    interestingGroups,
+    color = scale_color_viridis(discrete = TRUE),
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    assertFormalInterestingGroups(data, interestingGroups)
-    assertIsANumberOrNULL(cutoffLine)
-    assertIsFillScaleDiscreteOrNULL(fill)
+    validObject(object)
+    geom <- match.arg(geom)
 
-    # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
-    # plot gets dominated by cellular barcodes with low read counts.
-    data <- data[data[["log10Count"]] >= 2L, , drop = FALSE]
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
+
+    # Obtain the sample metadata
+    sampleData <- sampleData(object, interestingGroups = interestingGroups)
+
+    # Obtain the read counts. Use the unfiltered reads stashed in the metadata
+    # if available, otherwise use the metrics return.
+    cbList <- metadata(object)[["cellularBarcodes"]]
+    if (is.list(cbList)) {
+        data <- .bindCellularBarcodes(cbList)
+    } else {
+        data <- metrics(object)
+    }
+    countsCol <- c("nCount", "nUMI")
+    assert_are_intersecting_sets(countsCol, colnames(data))
+    if (!"nCount" %in% colnames(data)) {
+        inform("Using UMI counts instead of raw read counts")
+        assert_is_subset("nUMI", colnames(data))
+        data[["nCount"]] <- data[["nUMI"]]
+    }
+    data <- left_join(
+        x = data[, c("sampleID", "nCount")],
+        y = sampleData,
+        by = "sampleID"
+    ) %>%
+        as_tibble() %>%
+        group_by(!!sym("sampleID"))
+
+    # bcbio cell cutoff and inflection point values
+    cutoff <- metadata(object)[["cellularBarcodeCutoff"]]
+    if (!is.numeric(cutoff)) {
+        cutoff <- 0L
+    }
+    inflection <- inflectionPoint(object)
+
+    if (geom == "histogram") {
+        data <- .proportionalReadsPerCell(
+            data = data,
+            sampleData = sampleData
+        )
+        p <- .plotReadsPerCellHistogram(
+            data = data,
+            cutoff = cutoff,
+            inflection = inflection,
+            color = color
+        )
+    } else if (geom == "ridgeline") {
+        p <- .plotReadsPerCellRidgeline(
+            data = data,
+            cutoff = cutoff,
+            inflection = inflection,
+            fill = fill
+        )
+    } else if (geom == "violin") {
+        p <- .plotReadsPerCellViolin(
+            data = data,
+            cutoff = cutoff,
+            inflection = inflection,
+            fill = fill
+        )
+    }
+
+    # Add title and subtitle containing cutoff information
+    p <- p +
+        labs(
+            title = "reads per cell",
+            subtitle = paste(
+                paste("cutoff", cutoff, sep = " = "),
+                paste("inflection", inflection, sep = " = "),
+                sep = "\n"
+            )
+        )
+
+    p
+}
+
+
+
+# Standard (raw) ---------------------------------------------------------------
+.plotReadsPerCellViolin <- function(
+    data,
+    cutoff = 0L,
+    inflection = 0L,
+    fill = scale_fill_viridis(discrete = TRUE)
+) {
+    assert_is_a_number(cutoff)
+    assert_is_a_number(inflection)
+    assertIsFillScaleDiscreteOrNULL(fill)
 
     p <- ggplot(
         data = data,
         mapping = aes_string(
             x = "sampleName",
-            y = "log10Count",
-            fill = interestingGroups
+            y = "nCount",
+            fill = "interestingGroups"
         )
     ) +
-        labs(y = "log10 reads per cell") +
         geom_violin(
             alpha = qcPlotAlpha,
             color = lineColor,
             scale = "count"
         ) +
-        .medianLabels(data, medianCol = "log10Count", digits = 2L) +
+        scale_y_continuous(trans = "log10") +
+        .medianLabels(data, medianCol = "nCount", digits = 0L) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
     # Cutoff lines
-    if (cutoffLine > 0L && length(cutoffLine)) {
+    if (cutoff > 0L) {
+        p <- p + .qcCutoffLine(yintercept = cutoff)
+    }
+    if (inflection > 0L) {
         p <- p +
-            .qcCutoffLine(yintercept = cutoffLine)
+            .qcCutoffLine(
+                yintercept = inflection,
+                color = inflectionColor
+            )
     }
 
     # Color palette
@@ -144,41 +170,43 @@ NULL
 
 
 
-.plotRawCBRidgeline <- function(
+.plotReadsPerCellRidgeline <- function(
     data,
-    interestingGroups = "sampleName",
-    cutoffLine = 2L,
+    cutoff = 0L,
+    inflection = 0L,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    assertFormalInterestingGroups(data, interestingGroups)
-    assertIsANumberOrNULL(cutoffLine)
+    assert_is_a_number(cutoff)
+    assert_is_a_number(inflection)
     assertIsFillScaleDiscreteOrNULL(fill)
-
-    # Only plot a minimum of 100 reads per cell (2 on X axis). Otherwise the
-    # plot gets dominated by cellular barcodes with low read counts.
-    data <- data %>%
-        .[.[["log10Count"]] >= 2L, , drop = FALSE]
 
     p <- ggplot(
         data = data,
         mapping = aes_string(
-            x = "log10Count",
+            x = "nCount",
             y = "sampleName",
-            fill = interestingGroups
+            fill = "interestingGroups"
         )
     ) +
-        labs(x = "log10 reads per cell") +
         geom_density_ridges(
             alpha = qcPlotAlpha,
             color = lineColor,
             panel_scaling = TRUE,
             scale = 10L
         ) +
-        .medianLabels(data, medianCol = "log10Count", digits = 2L)
+        scale_x_continuous(trans = "log10") +
+        .medianLabels(data, medianCol = "nCount", digits = 0L)
 
     # Cutoff lines
-    if (cutoffLine > 0L && length(cutoffLine)) {
-        p <- p + .qcCutoffLine(xintercept = cutoffLine)
+    if (cutoff > 0L && length(cutoff)) {
+        p <- p + .qcCutoffLine(xintercept = cutoff)
+    }
+    if (inflection > 0L) {
+        p <- p +
+            .qcCutoffLine(
+                xintercept = inflection,
+                color = inflectionColor
+            )
     }
 
     # Color palette
@@ -200,14 +228,66 @@ NULL
 
 
 
-.plotProportionalCBHistogram <- function(
+# Proportional -----------------------------------------------------------------
+#' Proportional Cellular Barcodes Data
+#'
+#' Modified version of Allon Klein Lab MATLAB code.
+#'
+#' @author Rory Kirchner, Michael Steinbaugh
+#' @keywords internal
+#' @noRd
+#'
+#' @param data Cellular barcodes tibble containing the raw read counts.
+#'
+#' @return `grouped_df`, grouped by `sampleID`.
+.proportionalReadsPerCell <- function(
     data,
-    interestingGroups = "sampleName",
-    cutoffLine = NULL,
+    sampleData,
+    breaks = 100L
+) {
+    assert_is_all_of(data, "grouped_df")
+    assert_is_subset(c("nCount", "sampleID"), colnames(data))
+    assert_is_integer(data[["nCount"]])
+    assert_is_factor(data[["sampleID"]])
+    assert_is_an_integer(breaks)
+    mclapply(
+        X = levels(data[["sampleID"]]),
+        FUN = function(sampleID) {
+            subset <- data[data[["sampleID"]] == sampleID, , drop = FALSE]
+            # Histogram of log10-transformed counts
+            h <- hist(
+                x = log10(subset[["nCount"]]),
+                n = breaks,
+                plot = FALSE
+            )
+            # Klein Lab MATLAB code reference
+            # counts: fLog
+            # mids: xLog
+            proportion <- h[["counts"]] * (10L ^ h[["mids"]]) /
+                sum(h[["counts"]] * (10L ^ h[["mids"]]))
+            tibble(
+                "sampleID" = sampleID,
+                "log10Count" = h[["mids"]],
+                "proportion" = proportion
+            )
+        }
+    ) %>%
+        bind_rows() %>%
+        mutate_if(is.character, as.factor) %>%
+        group_by(!!sym("sampleID")) %>%
+        left_join(sampleData, by = "sampleID")
+}
+
+
+
+.plotReadsPerCellHistogram <- function(
+    data,
+    cutoff = 0L,
+    inflection = 0L,
     color = scale_color_viridis(discrete = TRUE)
 ) {
-    assertFormalInterestingGroups(data, interestingGroups)
-    assertIsANumberOrNULL(cutoffLine)
+    assert_is_a_number(cutoff)
+    assert_is_a_number(inflection)
     assertIsColorScaleDiscreteOrNULL(color)
 
     p <- ggplot(
@@ -215,7 +295,7 @@ NULL
         mapping = aes_string(
             x = "log10Count",
             y = "proportion",
-            color = interestingGroups
+            color = "interestingGroups"
         )
     ) +
         geom_line(
@@ -228,8 +308,15 @@ NULL
         )
 
     # Cutoff lines
-    if (is.numeric(cutoffLine)) {
-        p <- p + .qcCutoffLine(xintercept = cutoffLine)
+    if (cutoff > 0L) {
+        p <- p + .qcCutoffLine(xintercept = log10(cutoff))
+    }
+    if (inflection > 0L) {
+        p <- p +
+            .qcCutoffLine(
+                xintercept = log10(inflection),
+                color = inflectionColor
+            )
     }
 
     # Color palette
@@ -257,67 +344,7 @@ NULL
 setMethod(
     "plotReadsPerCell",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        geom = c("histogram", "violin", "ridgeline"),
-        interestingGroups,
-        color = scale_color_viridis(discrete = TRUE),
-        fill = scale_fill_viridis(discrete = TRUE)
-    ) {
-        validObject(object)
-        geom <- match.arg(geom)
-
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-
-        # Obtain the sample metadata
-        sampleData <- sampleData(object, interestingGroups = interestingGroups)
-
-        # Obtain the cellular barcode distributions
-        cbList <- metadata(object)[["cellularBarcodes"]]
-        assert_is_list(cbList)
-
-        # Transform cellular barcodes to log10 scale and set up grouping
-        rawTibble <- .rawCBTibble(
-            cellularBarcodes = .bindCellularBarcodes(cbList),
-            sampleData = sampleData
-        )
-        if (geom == "histogram") {
-            proportionalTibble <- .proportionalCBTibble(
-                rawTibble = rawTibble,
-                sampleData = sampleData
-            )
-        }
-
-        # Define the log10 cutoff line (to match plot axis)
-        cutoffLine <- metadata(object)[["cellularBarcodeCutoff"]]
-        assert_is_a_number(cutoffLine)
-        cutoffLine <- log10(cutoffLine)
-
-        if (geom == "histogram") {
-            .plotProportionalCBHistogram(
-                data = proportionalTibble,
-                interestingGroups = interestingGroups,
-                cutoffLine = cutoffLine,
-                color = color
-            )
-        } else if (geom == "ridgeline") {
-            .plotRawCBRidgeline(
-                data = rawTibble,
-                interestingGroups = interestingGroups,
-                cutoffLine = cutoffLine,
-                fill = fill
-            )
-        } else if (geom == "violin") {
-            .plotRawCBViolin(
-                data = rawTibble,
-                interestingGroups = interestingGroups,
-                cutoffLine = cutoffLine,
-                fill = fill
-            )
-        }
-    }
+    .plotReadsPerCell
 )
 
 
@@ -327,8 +354,5 @@ setMethod(
 setMethod(
     "plotReadsPerCell",
     signature("seurat"),
-    function(object, ...) {
-        message("Raw reads not stored in object")
-        invisible()
-    }
+    .plotReadsPerCell
 )
