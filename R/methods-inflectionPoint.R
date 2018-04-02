@@ -28,14 +28,11 @@ NULL
     maxCells = 100000L
 ) {
     validObject(object)
+    assertIsAnImplicitInteger(maxCells)
 
-    # Get the read counts. Use the raw reads by default. Fall back to plotting
-    # UMI count distributions for cellranger and seurat.
-    metrics <- metrics(object)
-    countsCol <- c("nCount", "nUMI")
-    assert_are_intersecting_sets(countsCol, colnames(metrics))
-    countsCol <- intersect(countsCol, colnames(metrics))[[1L]]
-    counts <- metrics[[countsCol]]
+    data <- .readsPerCell(object)
+    assert_is_subset("nCount", colnames(data))
+    counts <- data[["nCount"]]
 
     # Define the upper boundary cutoff, gated by `maxCells` if necessary
     maxCells <- min(length(counts), maxCells)
