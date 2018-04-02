@@ -36,7 +36,7 @@ plotTopMarkers(object, topMarkers, ...)
 \item{headerLevel}{R Markdown header level.}
 }
 \value{
-Show graphical output. Invisibly return \code{ggplot} plotlist.
+Show graphical output. Invisibly return \code{ggplot} \code{list}.
 }
 \description{
 Plot Top Markers

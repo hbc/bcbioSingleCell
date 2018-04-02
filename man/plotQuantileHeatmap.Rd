@@ -52,7 +52,9 @@ plotQuantileHeatmap(bcb_small)
 plotQuantileHeatmap(seurat_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{plotCellCounts}},
+Other Quality Control Functions: \code{\link{inflectionPoint}},
+  \code{\link{plotCellCounts}},
+  \code{\link{plotCumulativeReadsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},

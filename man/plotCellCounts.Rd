@@ -43,7 +43,9 @@ plotCellCounts(seurat_small)
 plotCellCounts(pbmc_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{plotGenesPerCell}},
+Other Quality Control Functions: \code{\link{inflectionPoint}},
+  \code{\link{plotCumulativeReadsPerCell}},
+  \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
