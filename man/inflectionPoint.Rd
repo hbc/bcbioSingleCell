@@ -5,11 +5,14 @@
 \alias{inflectionPoint}
 \alias{inflectionPoint}
 \alias{inflectionPoint,bcbioSingleCell-method}
+\alias{inflectionPoint,seurat-method}
 \title{Calculate Knee Plot Inflection Point}
 \usage{
 inflectionPoint(object, ...)
 
 \S4method{inflectionPoint}{bcbioSingleCell}(object, maxCells = 100000L)
+
+\S4method{inflectionPoint}{seurat}(object, maxCells = 100000L)
 }
 \arguments{
 \item{object}{Object.}
@@ -23,7 +26,13 @@ compute the inflection point.}
 Calculate Knee Plot Inflection Point
 }
 \examples{
+# bcbioSingleCell ====
 inflectionPoint(bcb_small)
+inflectionPoint(cellranger_small)
+
+# seurat ====
+inflectionPoint(seurat_small)
+inflectionPoint(pbmc_small)
 }
 \seealso{
 Modified version of \code{dropbead::estimateCellNumber()}.

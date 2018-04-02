@@ -6,6 +6,7 @@
 \alias{plotCumulativeReadsPerCell}
 \alias{plotCumulativeReadsPerCell}
 \alias{plotCumulativeReadsPerCell,bcbioSingleCell-method}
+\alias{plotCumulativeReadsPerCell,seurat-method}
 \alias{plotKnee}
 \title{Plot Cumulative Frequency of Reads Per Cell}
 \usage{
@@ -13,6 +14,8 @@ plotCumulativeReadsPerCell(object, ...)
 
 \S4method{plotCumulativeReadsPerCell}{bcbioSingleCell}(object,
   maxCells = 100000L)
+
+\S4method{plotCumulativeReadsPerCell}{seurat}(object, maxCells = 100000L)
 
 plotKnee(...)
 }
@@ -34,8 +37,10 @@ present in single-cell barcode distributions.
 \examples{
 # bcbioSingleCell ====
 plotCumulativeReadsPerCell(bcb_small)
+plotCumulativeReadsPerCell(cellranger_small)
 
 # seurat ====
+plotCumulativeReadsPerCell(seurat_small)
 plotCumulativeReadsPerCell(pbmc_small)
 }
 \seealso{
