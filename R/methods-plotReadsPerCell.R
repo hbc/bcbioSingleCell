@@ -23,7 +23,7 @@ NULL
 # Constructors =================================================================
 .plotReadsPerCell <- function(
     object,
-    geom = c("histogram", "ridgeline", "violin"),
+    geom = c("histogram", "ecdf", "ridgeline", "violin"),
     interestingGroups,
     color = scale_color_viridis(discrete = TRUE),
     fill = scale_fill_viridis(discrete = TRUE)
@@ -79,6 +79,13 @@ NULL
             inflection = inflection,
             color = color
         )
+    } else if (geom == "ecdf") {
+        p <- .plotReadsPerCellECDF(
+            data = data,
+            cutoff = cutoff,
+            inflection = inflection,
+            color = color
+        )
     } else if (geom == "ridgeline") {
         p <- .plotReadsPerCellRidgeline(
             data = data,
@@ -112,6 +119,57 @@ NULL
 
 
 # Standard (raw) ---------------------------------------------------------------
+.plotReadsPerCellECDF <- function(
+    data,
+    cutoff = 0L,
+    inflection = 0L,
+    color = scale_color_viridis(discrete = TRUE)
+) {
+    assert_is_a_number(cutoff)
+    assert_is_a_number(inflection)
+    assertIsColorScaleDiscreteOrNULL(color)
+
+    p <- ggplot(
+        data = data,
+        mapping = aes_string(
+            x = "nCount",
+            color = "interestingGroups"
+        )
+    ) +
+        stat_ecdf(geom = "step") +
+        scale_x_continuous(trans = "log10")
+
+    # Cutoff lines
+    if (cutoff > 0L) {
+        p <- p + .qcCutoffLine(xintercept = cutoff)
+    }
+    if (inflection > 0L) {
+        p <- p +
+            .qcCutoffLine(
+                xintercept = inflection,
+                color = inflectionColor
+            )
+    }
+
+    # Color palette
+    if (is(color, "ScaleDiscrete")) {
+        p <- p + color
+    }
+
+    # Facets
+    facets <- NULL
+    if (.isAggregate(data)) {
+        facets <- c(facets, "sampleNameAggregate")
+    }
+    if (is.character(facets)) {
+        p <- p + facet_wrap(facets = facets, scales = "free")
+    }
+
+    p
+}
+
+
+
 .plotReadsPerCellViolin <- function(
     data,
     cutoff = 0L,

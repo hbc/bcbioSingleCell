@@ -11,12 +11,13 @@
 plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = c("histogram",
-  "ridgeline", "violin"), interestingGroups,
+  "ecdf", "ridgeline", "violin"), interestingGroups,
   color = scale_color_viridis(discrete = TRUE),
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotReadsPerCell}{seurat}(object, geom = c("histogram", "ridgeline",
-  "violin"), interestingGroups, color = scale_color_viridis(discrete = TRUE),
+\S4method{plotReadsPerCell}{seurat}(object, geom = c("histogram", "ecdf",
+  "ridgeline", "violin"), interestingGroups,
+  color = scale_color_viridis(discrete = TRUE),
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
