@@ -4,6 +4,7 @@
 #'
 #' @name seurat
 #' @author Michael Steinbaugh
+#' @keywords internal
 #'
 #' @inheritParams general
 #'

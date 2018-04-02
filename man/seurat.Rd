@@ -53,3 +53,4 @@ metadata(seurat_small)[["stash"]]
 \author{
 Michael Steinbaugh
 }
+\keyword{internal}
