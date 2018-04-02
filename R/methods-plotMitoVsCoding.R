@@ -1,10 +1,12 @@
-#' Plot Mitochondrial Counts vs. Coding Counts
+#' Plot Mitochondrial vs. Coding Counts
 #'
 #' @name plotMitoVsCoding
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
+#'
+#' @return `ggplot`.
 #'
 #' @examples
 #' # bcbioSingleCell ====

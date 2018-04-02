@@ -25,7 +25,7 @@ directions of association per cluster.}
 \item{coding}{Only include protein coding genes.}
 }
 \value{
-\code{tibble}.
+\code{grouped_df}.
 }
 \description{
 Top Markers
@@ -52,7 +52,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
   \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}}
+  \code{\link{sanitizeMarkers}}
 }
 \author{
 Michael Steinbaugh

@@ -19,7 +19,7 @@ for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop).}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{organism}{Organism name. Use the full latin name (e.g.
 "Homo sapiens"), since this will be input downstream to

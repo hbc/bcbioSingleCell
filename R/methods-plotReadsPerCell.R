@@ -1,12 +1,12 @@
 #' Plot Read Counts per Cell
 #'
+#' Plot the distribution of read counts for all unfiltered cellular barcodes.
+#'
 #' @name plotReadsPerCell
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
-#'
-#' @note Here by "cell" we mean "cellular barcode".
 #'
 #' @return `ggplot`.
 #'
@@ -55,7 +55,12 @@ NULL
 #' @details Modified version of Allon Klein Lab MATLAB code.
 #'
 #' @return `tibble`.
-.proportionalCBTibble <- function(rawTibble, sampleData) {
+.proportionalCBTibble <- function(
+    rawTibble,
+    sampleData,
+    breaks = 100L
+) {
+    assert_is_a_bool(breaks)
     # Ensure `sampleID` is set as factor across both data frames
     rawTibble[["sampleID"]] <- as.factor(rawTibble[["sampleID"]])
     sampleData[["sampleID"]] <- as.factor(sampleData[["sampleID"]])
@@ -63,7 +68,7 @@ NULL
     mclapply(sampleIDs, function(sampleID) {
         cb <- rawTibble %>%
             .[.[["sampleID"]] == sampleID, , drop = FALSE]
-        cbHist <- hist(cb[["log10Count"]], n = 100L, plot = FALSE)
+        cbHist <- hist(cb[["log10Count"]], n = breaks, plot = FALSE)
         # `counts = fLog` in MATLAB version
         counts <- cbHist[["counts"]]
         # `mids = xLog` in MATLAB version

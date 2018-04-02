@@ -1,14 +1,14 @@
 #' Calculate Cellular Barcode Metrics Summary
 #'
 #' @name calculateMetrics
-#' @family Quality Control Functions
+#' @family Data Functions
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
 #' @param rowData Data describing the rows of the object.
 #' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
 #'
-#' @note This should only be performed during the initial run loading.
+#' @note This step is performed automatically during the initial load.
 #'
 #' @return `data.frame`.
 #'

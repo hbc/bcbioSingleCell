@@ -13,7 +13,7 @@
 #'
 #' @seealso [Seurat::FeaturePlot()].
 #'
-#' @return Show plot or return as a `list`.
+#' @return `ggplot` or `list`.
 #'
 #' @examples
 #' # seurat ====

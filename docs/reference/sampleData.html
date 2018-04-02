@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,15 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Sample Data — sampleData" />
+
+<meta property="og:description" content="Metadata in columns describing the samples, which are defined in the
+rownames. Similar to colData(), which for bcbioSingleCell and
+SingleCellExperiment objects describes cells in the columns, rather than
+the samples." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +43,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +60,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -70,6 +87,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -77,10 +95,11 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sample Data</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-sampleData.R'><code>R/methods-sampleData.R</code></a></small>
     </div>
 
     
@@ -96,7 +115,7 @@ the samples.</p>
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -106,7 +125,7 @@ the samples.</p>
     <tr>
       <th>interestingGroups</th>
       <td><p>Character vector of interesting groups. Must be
-formatted in <code>camel()</code> case and intersect with <code>sampleData()</code> colnames.</p></td>
+formatted in camel case and intersect with <code>sampleData()</code> colnames.</p></td>
     </tr>
     </table>
     
@@ -116,16 +135,18 @@ formatted in <code>camel()</code> case and intersect with <code>sampleData()</co
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>calculateMetrics</code>,
   <code>cell2sample</code>, <code><a href='colData.html'>colData</a></code>,
   <code><a href='counts.html'>counts</a></code>, <code>fetchGeneData</code>,
   <code>fetchPCAData</code>, <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
   <code>filterCells</code>, <code><a href='gene2symbol.html'>gene2symbol</a></code>,
   <code><a href='interestingGroups.html'>interestingGroups</a></code>,
-  <code><a href='readCellTypeMarkersFile.html'>readCellTypeMarkersFile</a></code>,
+  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
+  <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
   <code><a href='rowData.html'>rowData</a></code>, <code><a href='selectSamples.html'>selectSamples</a></code>,
-  <code>subsetPerSample</code></p>
+  <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -180,5 +201,8 @@ Michael Steinbaugh
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

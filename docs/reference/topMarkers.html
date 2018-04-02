@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Top Markers — topMarkers" />
+
+<meta property="og:description" content="Top Markers" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -70,6 +84,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -77,10 +92,11 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Top Markers</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-topMarkers.R'><code>R/methods-topMarkers.R</code></a></small>
     </div>
 
     
@@ -93,7 +109,7 @@
 <span class='fu'>topMarkers</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"positive"</span>,
   <span class='st'>"negative"</span>, <span class='st'>"both"</span>), <span class='kw'>coding</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -121,15 +137,15 @@ directions of association per cluster.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>tibble</code>.</p>
+    <p><code>grouped_df</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <ul>
+    <div class='dont-index'><ul>
 <li><p><code><a href='http://dplyr.tidyverse.org/reference/slice.html'>dplyr::slice()</a></code>.</p></li>
 <li><p><code><a href='http://dplyr.tidyverse.org/reference/top_n.html'>dplyr::top_n()</a></code>.</p></li>
-</ul>
-    <p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+</ul></div>
+    <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
   <code>knownMarkersDetected</code>,
   <code>plotCellTypesPerCluster</code>,
   <code>plotFeatureTSNE</code>,
@@ -137,7 +153,7 @@ directions of association per cluster.</p></td>
   <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
   <code><a href='plotPCA.html'>plotPCA</a></code>, <code>plotPCElbow</code>,
   <code>plotTSNE</code>, <code>plotTopMarkers</code>,
-  <code>sanitizeMarkers</code>, <code>topBarcodes</code></p>
+  <code>sanitizeMarkers</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -148,18 +164,18 @@ directions of association per cluster.</p></td>
     <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"positive"</span>
 )</div><div class='output co'>#&gt; # A tibble: 10 x 18
 #&gt; # Groups:   cluster [5]
-#&gt;    cluster geneID       geneName  pct1  pct2 avgLogFC     padj   pvalue rowname
-#&gt;    &lt;fct&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  
-#&gt;  1 0       ENSG0000016… COL1A2   1.00  0.465     2.56 5.31e-58 1.06e-60 COL1A2 
-#&gt;  2 0       ENSG0000010… COL1A1   1.00  0.596     2.79 1.98e-57 3.96e-60 COL1A1 
-#&gt;  3 1       ENSG0000019… S100A10  0.741 0.266     2.17 4.75e-30 9.50e-33 S100A10
-#&gt;  4 1       ENSG0000011… KRT18    0.681 0.253     1.53 9.82e-20 1.96e-22 KRT18  
-#&gt;  5 2       ENSG0000019… MYL4     0.872 0.123     2.14 3.25e-55 6.50e-58 MYL4   
-#&gt;  6 2       ENSG0000019… PLN      0.936 0.212     2.43 5.17e-55 1.03e-57 PLN    
-#&gt;  7 3       ENSG0000019… MT-ATP6  1.00  0.993     1.16 1.80e-31 3.59e-34 MT.ATP6
-#&gt;  8 3       ENSG0000019… MT-ND5   0.966 0.908     1.33 2.36e-31 4.71e-34 MT.ND5 
-#&gt;  9 4       ENSG0000016… H3F3A    1.00  0.767     1.38 3.89e-25 7.79e-28 H3F3A  
-#&gt; 10 4       ENSG0000011… STMN1    0.952 0.452     1.77 2.66e-24 5.31e-27 STMN1  
+#&gt;    cluster geneID geneName  pct1  pct2 avgLogFC     padj   pvalue rowname
+#&gt;    &lt;fct&gt;   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  
+#&gt;  1 0       ENSG0… COL1A2   1.00  0.465     2.56 5.31e-58 1.06e-60 COL1A2 
+#&gt;  2 0       ENSG0… COL1A1   1.00  0.596     2.79 1.98e-57 3.96e-60 COL1A1 
+#&gt;  3 1       ENSG0… S100A10  0.741 0.266     2.17 4.75e-30 9.50e-33 S100A10
+#&gt;  4 1       ENSG0… KRT18    0.681 0.253     1.53 9.82e-20 1.96e-22 KRT18  
+#&gt;  5 2       ENSG0… MYL4     0.872 0.123     2.14 3.25e-55 6.50e-58 MYL4   
+#&gt;  6 2       ENSG0… PLN      0.936 0.212     2.43 5.17e-55 1.03e-57 PLN    
+#&gt;  7 3       ENSG0… MT-ATP6  1.00  0.993     1.16 1.80e-31 3.59e-34 MT.ATP6
+#&gt;  8 3       ENSG0… MT-ND5   0.966 0.908     1.33 2.36e-31 4.71e-34 MT.ND5 
+#&gt;  9 4       ENSG0… H3F3A    1.00  0.767     1.38 3.89e-25 7.79e-28 H3F3A  
+#&gt; 10 4       ENSG0… STMN1    0.952 0.452     1.77 2.66e-24 5.31e-27 STMN1  
 #&gt; # ... with 9 more variables: seqnames &lt;fct&gt;, start &lt;int&gt;, end &lt;int&gt;,
 #&gt; #   width &lt;int&gt;, strand &lt;fct&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
 #&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div></pre>
@@ -195,5 +211,8 @@ Michael Steinbaugh
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

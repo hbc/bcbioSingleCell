@@ -16,7 +16,7 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 \item{gene2symbol}{\code{data.frame} containing gene-to-symbol mappings. Columns
 must contain \code{geneID} and \code{geneName}.}
 
-\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{dir}{Output directory.}
 
@@ -28,7 +28,7 @@ first argument in the vector.}
 \item{headerLevel}{R Markdown header level.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{label}{Overlay a cluster identitiy label on the plot.}
 
@@ -51,8 +51,8 @@ the dataset, and some cells can be masked.}
 
 \item{pointSize}{Cell point size.}
 
-\item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
-first argument in the vector.}
+\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
+to the first argument in the vector.}
 
 \item{title}{Plot title.}
 

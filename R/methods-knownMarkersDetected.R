@@ -19,7 +19,7 @@
 #' @param promiscuousCutoff Minimum number of clusters required to consider a
 #'   gene marker promiscuous.
 #'
-#' @return `grouped_df`, grouped by `cellType`.
+#' @return `grouped_df`, grouped by "`cellType`" column.
 #'
 #' @examples
 #' # grouped_df ====

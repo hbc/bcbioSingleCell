@@ -20,7 +20,7 @@ plotTSNE(object, ...)
 \item{...}{Additional arguments.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
@@ -38,7 +38,7 @@ set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{title}{Plot title.}
 }
@@ -61,8 +61,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
   \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
   \code{\link{plotTopMarkers}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

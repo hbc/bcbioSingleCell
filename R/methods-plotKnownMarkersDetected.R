@@ -8,7 +8,7 @@
 #' @inheritParams general
 #' @param knownMarkersDetected `grouped_df`.
 #'
-#' @return Show graphical output. Invisibly return `ggplot` plotlist.
+#' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
 #' # seurat ====

@@ -15,7 +15,7 @@
 \item{object}{Object.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \code{data.frame} with cellular barcodes as rows.
@@ -34,17 +34,18 @@ metrics(pbmc_small) \%>\% glimpse()
 \seealso{
 \code{\link[=sampleData]{sampleData()}}.
 
-Other Quality Control Functions: \code{\link{calculateMetrics}},
-  \code{\link{metricsPerSample}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{calculateMetrics}},
+  \code{\link{cell2sample}}, \code{\link{colData}},
+  \code{\link{counts}}, \code{\link{fetchGeneData}},
+  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}}, \code{\link{gene2symbol}},
+  \code{\link{interestingGroups}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{rowData}},
+  \code{\link{sampleData}}, \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

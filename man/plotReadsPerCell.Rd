@@ -26,7 +26,7 @@ plotReadsPerCell(object, ...)
 first argument in the vector.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
@@ -41,10 +41,7 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 \code{ggplot}.
 }
 \description{
-Plot Read Counts per Cell
-}
-\note{
-Here by "cell" we mean "cellular barcode".
+Plot the distribution of read counts for all unfiltered cellular barcodes.
 }
 \examples{
 # bcbioSingleCell ====
@@ -54,9 +51,7 @@ plotReadsPerCell(bcb_small)
 plotReadsPerCell(pbmc_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{calculateMetrics}},
-  \code{\link{metricsPerSample}}, \code{\link{metrics}},
-  \code{\link{plotCellCounts}},
+Other Quality Control Functions: \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},

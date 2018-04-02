@@ -27,12 +27,12 @@ set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{headerLevel}{R Markdown header level.}
 }
 \value{
-Show graphical output. Invisibly return \code{ggplot} plotlist.
+Show graphical output. Invisibly return \code{ggplot} \code{list}.
 }
 \description{
 Plot the geometric mean of the significant marker genes for every known cell
@@ -58,8 +58,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
   \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

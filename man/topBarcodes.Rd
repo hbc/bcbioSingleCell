@@ -35,15 +35,19 @@ topBarcodes(bcb_small) \%>\% glimpse()
 topBarcodes(pbmc_small) \%>\% glimpse()
 }
 \seealso{
-Other Clustering Functions: \code{\link{cellTypesPerCluster}},
-  \code{\link{knownMarkersDetected}},
-  \code{\link{plotCellTypesPerCluster}},
-  \code{\link{plotFeatureTSNE}},
-  \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
-  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
-  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{calculateMetrics}},
+  \code{\link{cell2sample}}, \code{\link{colData}},
+  \code{\link{counts}}, \code{\link{fetchGeneData}},
+  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}}, \code{\link{gene2symbol}},
+  \code{\link{interestingGroups}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{rowData}}, \code{\link{sampleData}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}
 }
 \author{
 Michael Steinbaugh

@@ -33,16 +33,18 @@ metricsPerSample(bcb_small)
 metricsPerSample(seurat_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{calculateMetrics}},
-  \code{\link{metrics}}, \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{calculateMetrics}},
+  \code{\link{cell2sample}}, \code{\link{colData}},
+  \code{\link{counts}}, \code{\link{fetchGeneData}},
+  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}}, \code{\link{gene2symbol}},
+  \code{\link{interestingGroups}},
+  \code{\link{mapCellsToSamples}}, \code{\link{metrics}},
+  \code{\link{rowData}}, \code{\link{sampleData}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh

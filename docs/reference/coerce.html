@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Coerce Object — coerce" />
+
+<meta property="og:description" content="Coerce Object" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -70,6 +84,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -77,25 +92,21 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Coerce Object</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-coerce.R'><code>R/methods-coerce.R</code></a></small>
     </div>
 
     
     <p>Coerce Object</p>
     
 
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>from</th>
-      <td><p>Class for which the coerce method will perform coercion.</p></td>
-    </tr>
-    </table>
+        
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>New class, specified by the "<code>to</code>" argument.</p>
     
     <h2 class="hasAnchor" id="bcbiosinglecell-to-seurat"><a class="anchor" href="#bcbiosinglecell-to-seurat"></a>bcbioSingleCell to seurat</h2>
 
@@ -108,20 +119,29 @@ coercion.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>help(topic = "coerce", package = "methods")</code>.</p>
+    <div class='dont-index'><p><code>help("coerce", "methods")</code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell to seurat</span>
-<span class='fu'>as</span>(<span class='no'>bcb_small</span>, <span class='st'>"seurat"</span>)</div><div class='output co'>#&gt; <span class='message'>`sampleNameAggregate` metadata column detected.</span>
-#&gt; <span class='message'>Use `aggregateReplicates()` to combine technical replicates.</span></div><div class='output co'>#&gt; An object of class seurat in project bcbioSingleCell 
+    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell to list ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>bcb_small</span>, <span class='st'>"list"</span>)
+<span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "list"</div><div class='input'><span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;  [1] "int_elementMetadata" "int_colData"         "int_metadata"       
+#&gt;  [4] "reducedDims"         "rowRanges"           "colData"            
+#&gt;  [7] "assays"              "NAMES"               "elementMetadata"    
+#&gt; [10] "metadata"           </div><div class='input'>
+<span class='co'># bcbioSingleCell to seurat ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>bcb_small</span>, <span class='st'>"seurat"</span>)</div><div class='output co'>#&gt; <span class='message'>`sampleNameAggregate` metadata column detected.</span>
+#&gt; <span class='message'>Use `aggregateReplicates()` to combine technical replicates.</span></div><div class='input'><span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "seurat"
+#&gt; attr(,"package")
+#&gt; [1] "Seurat"</div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; An object of class seurat in project bcbioSingleCell 
 #&gt;  500 genes across 500 samples.</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#bcbiosinglecell-to-seurat">bcbioSingleCell to seurat</a></li>
 
       <li><a href="#see-also">See also</a></li>
@@ -148,5 +168,8 @@ Michael Steinbaugh
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

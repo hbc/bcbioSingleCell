@@ -28,7 +28,7 @@ plotMarkers(object, ...)
 
 \item{dotColor}{Color palette to use for dot plot.}
 
-\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
@@ -37,7 +37,7 @@ plotMarkers(object, ...)
 \item{title}{Plot title.}
 }
 \value{
-Show graphical output. Invisibly return \code{ggplot} plotlist.
+Show graphical output. Invisibly return \code{ggplot} \code{list}.
 }
 \description{
 Plot gene expression per cell in multiple formats:
@@ -63,8 +63,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotPCA}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
   \code{\link{plotTopMarkers}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Plot Top Markers — plotTopMarkers" />
+
+<meta property="og:description" content="Plot Top Markers" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -70,6 +84,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -77,10 +92,11 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Top Markers</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotTopMarkers.R'><code>R/methods-plotTopMarkers.R</code></a></small>
     </div>
 
     
@@ -96,7 +112,7 @@
   <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
   <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -126,7 +142,7 @@
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot against a dark background using <code>midnightTheme()</code>.</p></td>
+      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/midnightTheme'>basejump::midnightTheme()</a></code>.</p></td>
     </tr>
     <tr>
       <th>pointsAsNumbers</th>
@@ -151,7 +167,7 @@ for the number of genes to plot here in a future update.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+    <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
   <code>knownMarkersDetected</code>,
   <code>plotCellTypesPerCluster</code>,
   <code>plotFeatureTSNE</code>,
@@ -159,7 +175,7 @@ for the number of genes to plot here in a future update.</p>
   <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
   <code><a href='plotPCA.html'>plotPCA</a></code>, <code>plotPCElbow</code>,
   <code>plotTSNE</code>, <code>sanitizeMarkers</code>,
-  <code>topBarcodes</code>, <code>topMarkers</code></p>
+  <code>topMarkers</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -174,35 +190,35 @@ for the number of genes to plot here in a future update.</p>
 #&gt; 
 #&gt; 
 #&gt; ### COL1A2
-#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~13s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~08s          
 #&gt; 
 #&gt; ## Cluster 1 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### S100A10
-#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~12s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~08s          
 #&gt; 
 #&gt; ## Cluster 2 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### MYL4
-#&gt; </div><div class='img'><img src='plotTopMarkers-3.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++                    | 60% ~08s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++                    | 60% ~06s          
 #&gt; 
 #&gt; ## Cluster 3 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### MT.ATP6
-#&gt; </div><div class='img'><img src='plotTopMarkers-4.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++         | 80% ~04s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++         | 80% ~03s          
 #&gt; 
 #&gt; ## Cluster 4 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### H3F3A
-#&gt; </div><div class='img'><img src='plotTopMarkers-5.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 18s</div></pre>
+#&gt; </div><div class='img'><img src='plotTopMarkers-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 17s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -237,5 +253,8 @@ Michael Steinbaugh
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

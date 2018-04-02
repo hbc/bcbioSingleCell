@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Function reference" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +37,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +54,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -70,6 +81,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -77,424 +89,551 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.1.0</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="aggregateReplicates.html">aggregateReplicates</a></code> </p>
-          </td>
-          <td><p>Aggregate Replicates</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="all_markers_small.html">all_markers_small</a></code> </p>
-          </td>
-          <td><p>Sanitized Markers Example</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bcb_small.html">bcb_small</a></code> </p>
-          </td>
-          <td><p>inDrop Example</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bcbioSingleCell-class.html">bcbioSingleCell-class</a></code> </p>
-          </td>
-          <td><p>bcbioSingleCell Class</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bcbioSingleCell-package.html">bcbioSingleCell-package</a></code> </p>
-          </td>
-          <td><p>bcbioSingleCell</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="calculateMetrics.html">calculateMetrics</a></code> </p>
-          </td>
-          <td><p>Calculate Cellular Barcode Metrics Summary</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="cell2sample.html">cell2sample</a></code> </p>
-          </td>
-          <td><p>Cell to Sample Mappings</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="cellCycleMarkers.html">cellCycleMarkers</a></code> </p>
-          </td>
-          <td><p>Cell-Cycle Markers</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="cellranger_small.html">cellranger_small</a></code> </p>
-          </td>
-          <td><p>CellRanger Example</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="cellTypeMarkers.html">cellTypeMarkers</a></code> </p>
-          </td>
-          <td><p>Cell-Type Markers</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="cellTypesPerCluster.html">cellTypesPerCluster</a></code> </p>
-          </td>
-          <td><p>Cell Types per Cluster</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="coerce.html">coerce</a></code> </p>
-          </td>
-          <td><p>Coerce Object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="colData.html">colData</a></code> </p>
-          </td>
-          <td><p>Column Data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="counts.html">counts</a></code> </p>
-          </td>
-          <td><p>Counts Accessor</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="diffExp.html">diffExp</a></code> </p>
-          </td>
-          <td><p>Differential Expression</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="fetchGeneData.html">fetchGeneData</a></code> </p>
-          </td>
-          <td><p>Fetch Gene Expression Data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="fetchPCAData.html">fetchPCAData</a></code> </p>
-          </td>
-          <td><p>Fetch PCA Dimensions and Cellular Metadata</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="fetchTSNEData.html">fetchTSNEData</a></code> </p>
-          </td>
-          <td><p>Fetch t-SNE Locations and Cellular Metadata</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="fetchTSNEExpressionData.html">fetchTSNEExpressionData</a></code> </p>
-          </td>
-          <td><p>Fetch t-SNE Locations, Cellular Metadata and Expression of Genes</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="filterCells.html">filterCells</a></code> </p>
-          </td>
-          <td><p>Filter Cells</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="gene2symbol.html">gene2symbol</a></code> </p>
-          </td>
-          <td><p>Gene to Symbol Mappings</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="interestingGroups.html">interestingGroups</a></code> <code><a href="interestingGroups.html">interestingGroups<-</a></code> </p>
-          </td>
-          <td><p>Interesting Groups</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="known_markers_small.html">known_markers_small</a></code> </p>
-          </td>
-          <td><p>Known Markers Example</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="knownMarkersDetected.html">knownMarkersDetected</a></code> </p>
-          </td>
-          <td><p>Known Markers Detected</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="loadCellRanger.html">loadCellRanger</a></code> </p>
-          </td>
-          <td><p>Load 10X Genomics Cell Ranger Data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="loadSingleCell.html">loadSingleCell</a></code> </p>
-          </td>
-          <td><p>Load bcbio Single-Cell RNA-Seq Data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mapCellsToSamples.html">mapCellsToSamples</a></code> </p>
-          </td>
-          <td><p>Define Cell to Sample Mappings</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="metrics.html">metrics</a></code> </p>
-          </td>
-          <td><p>Sample Barcode Metrics</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="metricsPerSample.html">metricsPerSample</a></code> </p>
-          </td>
-          <td><p>Metrics per Sample</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotCellCounts.html">plotCellCounts</a></code> </p>
-          </td>
-          <td><p>Plot Cell Counts</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotCellTypesPerCluster.html">plotCellTypesPerCluster</a></code> </p>
-          </td>
-          <td><p>Plot Cell Types per Cluster</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotDot.html">plotDot</a></code> </p>
-          </td>
-          <td><p>Plot Dot</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotFeatureTSNE.html">plotFeatureTSNE</a></code> </p>
-          </td>
-          <td><p>Plot Feature t-SNE</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotGenesPerCell.html">plotGenesPerCell</a></code> </p>
-          </td>
-          <td><p>Plot Genes per Cell</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotKnownMarkersDetected.html">plotKnownMarkersDetected</a></code> </p>
-          </td>
-          <td><p>Plot Known Markers Detected</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotMarkers.html">plotMarkers</a></code> </p>
-          </td>
-          <td><p>Plot Cell-Type Gene Markers</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotMarkerTSNE.html">plotMarkerTSNE</a></code> </p>
-          </td>
-          <td><p>Plot Marker t-SNE</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotMitoRatio.html">plotMitoRatio</a></code> </p>
-          </td>
-          <td><p>Plot Mitochondrial Transcript Abundance</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotMitoVsCoding.html">plotMitoVsCoding</a></code> </p>
-          </td>
-          <td><p>Plot Mitochondrial Counts vs. Coding Counts</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotNovelty.html">plotNovelty</a></code> </p>
-          </td>
-          <td><p>Plot Novelty Score</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotPCA.html">plotPCA</a></code> </p>
-          </td>
-          <td><p>Plot Principal Component Analysis (PCA)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotPCElbow.html">plotPCElbow</a></code> </p>
-          </td>
-          <td><p>Plot PC Elbow</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotQC.html">plotQC</a></code> </p>
-          </td>
-          <td><p>Quality Control Plots</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotQuantileHeatmap.html">plotQuantileHeatmap</a></code> </p>
-          </td>
-          <td><p>Plot Heatmap with Quantile Breaks</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotReadsPerCell.html">plotReadsPerCell</a></code> </p>
-          </td>
-          <td><p>Plot Read Counts per Cell</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotTopMarkers.html">plotTopMarkers</a></code> </p>
-          </td>
-          <td><p>Plot Top Markers</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotTSNE.html">plotTSNE</a></code> </p>
-          </td>
-          <td><p>Plot t-SNE</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotUMIsPerCell.html">plotUMIsPerCell</a></code> </p>
-          </td>
-          <td><p>Plot UMIs per Cell</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotUMIsVsGenes.html">plotUMIsVsGenes</a></code> </p>
-          </td>
-          <td><p>Plot UMI and Gene Correlation</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotViolin.html">plotViolin</a></code> </p>
-          </td>
-          <td><p>Plot Violin</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotZerosVsDepth.html">plotZerosVsDepth</a></code> </p>
-          </td>
-          <td><p>Plot Percentage of Zeros vs. Library Depth</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="prepareSingleCellTemplate.html">prepareSingleCellTemplate</a></code> </p>
-          </td>
-          <td><p>Prepare Single-Cell RNA-Seq RMarkdown Template</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="readCellTypeMarkersFile.html">readCellTypeMarkersFile</a></code> </p>
-          </td>
-          <td><p>Read Cell Type Markers File</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rowData.html">rowData</a></code> </p>
-          </td>
-          <td><p>Row Data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="sampleData.html">sampleData</a></code> </p>
-          </td>
-          <td><p>Sample Data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="sanitizeMarkers.html">sanitizeMarkers</a></code> </p>
-          </td>
-          <td><p>Sanitize Markers Output</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="selectSamples.html">selectSamples</a></code> </p>
-          </td>
-          <td><p>Select Samples</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="seurat_small.html">seurat_small</a></code> </p>
-          </td>
-          <td><p>Seurat Example</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="seurat.html">assay</a></code> <code><a href="seurat.html">colnames</a></code> <code><a href="seurat.html">metadata</a></code> <code><a href="seurat.html">rownames</a></code> <code><a href="seurat.html">metadata<-</a></code> </p>
-          </td>
-          <td><p>Extend S4 Methods for <code>seurat</code> Objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="show.html">show</a></code> </p>
-          </td>
-          <td><p>Show an Object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="subset.html">subset</a></code> </p>
-          </td>
-          <td><p>Bracket-Based Subsetting</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="subsetPerSample.html">subsetPerSample</a></code> </p>
-          </td>
-          <td><p>Subset Per Sample</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="topBarcodes.html">topBarcodes</a></code> </p>
-          </td>
-          <td><p>Top Barcodes</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="topMarkers.html">topMarkers</a></code> </p>
-          </td>
-          <td><p>Top Markers</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-s-class-definition" class="hasAnchor"><a href="#section-s-class-definition" class="anchor"></a>S4 Class Definition</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="bcbioSingleCell-class.html">bcbioSingleCell-class</a></code> </p>
+        </td>
+        <td><p>bcbioSingleCell Class</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="subset.html">`[`(<i>&lt;bcbioSingleCell&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Bracket-Based Subsetting</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="coerce.html">coerce</a></code> </p>
+        </td>
+        <td><p>Coerce Object</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="colData.html">colData(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="colData.html">colData(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Column Data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="rowData.html">rowData(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="rowData.html">rowData(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Row Data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="sampleData.html">sampleData(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="sampleData.html">sampleData(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Sample Data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="show.html">show(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Show an Object</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-read-functions" class="hasAnchor"><a href="#section-read-functions" class="anchor"></a>Read Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="loadCellRanger.html">loadCellRanger()</a></code> </p>
+        </td>
+        <td><p>Load 10X Genomics Cell Ranger Data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="loadSingleCell.html">loadSingleCell()</a></code> </p>
+        </td>
+        <td><p>Load bcbio Single-Cell RNA-Seq Data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="readCellTypeMarkers.html">readCellTypeMarkers()</a></code> </p>
+        </td>
+        <td><p>Read Cell Type Markers File</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-data-functions" class="hasAnchor"><a href="#section-data-functions" class="anchor"></a>Data Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="aggregateReplicates.html">aggregateReplicates(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Aggregate Replicates</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="cell2sample.html">cell2sample()</a></code> </p>
+        </td>
+        <td><p>Cell to Sample Mappings</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="counts.html">counts(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="counts.html">counts(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Counts Accessor</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="fetchGeneData.html">fetchGeneData()</a></code> </p>
+        </td>
+        <td><p>Fetch Gene Expression Data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="fetchPCAData.html">fetchPCAData()</a></code> </p>
+        </td>
+        <td><p>Fetch PCA Dimensions and Cellular Metadata</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="fetchTSNEData.html">fetchTSNEData()</a></code> </p>
+        </td>
+        <td><p>Fetch t-SNE Locations and Cellular Metadata</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="fetchTSNEExpressionData.html">fetchTSNEExpressionData()</a></code> </p>
+        </td>
+        <td><p>Fetch t-SNE Locations, Cellular Metadata and Expression of Genes</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="filterCells.html">filterCells()</a></code> </p>
+        </td>
+        <td><p>Filter Cells</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="gene2symbol.html">gene2symbol(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Gene to Symbol Mappings</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="interestingGroups.html">interestingGroups(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="interestingGroups.html">interestingGroups(<i>&lt;seurat&gt;</i>)</a></code> <code><a href="interestingGroups.html">`interestingGroups<-`(<i>&lt;bcbioSingleCell&gt;</i>,<i>&lt;character&gt;</i>)</a></code> <code><a href="interestingGroups.html">`interestingGroups<-`(<i>&lt;seurat&gt;</i>,<i>&lt;character&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Interesting Groups</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="mapCellsToSamples.html">mapCellsToSamples()</a></code> </p>
+        </td>
+        <td><p>Define Cell to Sample Mappings</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="selectSamples.html">selectSamples(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Select Samples</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="subsetPerSample.html">subsetPerSample()</a></code> </p>
+        </td>
+        <td><p>Subset Per Sample</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="topBarcodes.html">topBarcodes()</a></code> </p>
+        </td>
+        <td><p>Top Barcodes</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-metrics-functions" class="hasAnchor"><a href="#section-metrics-functions" class="anchor"></a>Metrics Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="calculateMetrics.html">calculateMetrics()</a></code> </p>
+        </td>
+        <td><p>Calculate Cellular Barcode Metrics Summary</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="metrics.html">metrics(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Sample Barcode Metrics</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="metricsPerSample.html">metricsPerSample()</a></code> </p>
+        </td>
+        <td><p>Metrics per Sample</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-quality-control-functions" class="hasAnchor"><a href="#section-quality-control-functions" class="anchor"></a>Quality Control Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotQC.html">plotQC(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="plotQC.html">plotQC(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Quality Control Plots</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-clustering-functions" class="hasAnchor"><a href="#section-clustering-functions" class="anchor"></a>Clustering Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="cellTypesPerCluster.html">cellTypesPerCluster()</a></code> </p>
+        </td>
+        <td><p>Cell Types per Cluster</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotCellTypesPerCluster.html">plotCellTypesPerCluster()</a></code> </p>
+        </td>
+        <td><p>Plot Cell Types per Cluster</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="fetchPCAData.html">fetchPCAData()</a></code> </p>
+        </td>
+        <td><p>Fetch PCA Dimensions and Cellular Metadata</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotPCA.html">plotPCA(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot Principal Component Analysis (PCA)</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="fetchTSNEData.html">fetchTSNEData()</a></code> </p>
+        </td>
+        <td><p>Fetch t-SNE Locations and Cellular Metadata</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="fetchTSNEExpressionData.html">fetchTSNEExpressionData()</a></code> </p>
+        </td>
+        <td><p>Fetch t-SNE Locations, Cellular Metadata and Expression of Genes</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotFeatureTSNE.html">plotFeatureTSNE()</a></code> </p>
+        </td>
+        <td><p>Plot Feature t-SNE</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotMarkerTSNE.html">plotMarkerTSNE()</a></code> </p>
+        </td>
+        <td><p>Plot Marker t-SNE</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotTSNE.html">plotTSNE()</a></code> </p>
+        </td>
+        <td><p>Plot t-SNE</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-differential-expression-functions" class="hasAnchor"><a href="#section-differential-expression-functions" class="anchor"></a>Differential Expression Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="diffExp.html">diffExp()</a></code> </p>
+        </td>
+        <td><p>Differential Expression</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="knownMarkersDetected.html">knownMarkersDetected()</a></code> </p>
+        </td>
+        <td><p>Known Markers Detected</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="sanitizeMarkers.html">sanitizeMarkers()</a></code> </p>
+        </td>
+        <td><p>Sanitize Markers Output</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="topMarkers.html">topMarkers()</a></code> </p>
+        </td>
+        <td><p>Top Markers</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-plot-functions" class="hasAnchor"><a href="#section-plot-functions" class="anchor"></a>Plot Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotCellCounts.html">plotCellCounts()</a></code> </p>
+        </td>
+        <td><p>Plot Cell Counts</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotCellTypesPerCluster.html">plotCellTypesPerCluster()</a></code> </p>
+        </td>
+        <td><p>Plot Cell Types per Cluster</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotDot.html">plotDot(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot Dot</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotFeatureTSNE.html">plotFeatureTSNE()</a></code> </p>
+        </td>
+        <td><p>Plot Feature t-SNE</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotGenesPerCell.html">plotGenesPerCell()</a></code> </p>
+        </td>
+        <td><p>Plot Genes per Cell</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotKnownMarkersDetected.html">plotKnownMarkersDetected()</a></code> </p>
+        </td>
+        <td><p>Plot Known Markers Detected</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotMarkerTSNE.html">plotMarkerTSNE()</a></code> </p>
+        </td>
+        <td><p>Plot Marker t-SNE</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotMarkers.html">plotMarkers()</a></code> </p>
+        </td>
+        <td><p>Plot Cell-Type Gene Markers</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotMitoRatio.html">plotMitoRatio()</a></code> </p>
+        </td>
+        <td><p>Plot Mitochondrial Transcript Abundance</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotMitoVsCoding.html">plotMitoVsCoding()</a></code> </p>
+        </td>
+        <td><p>Plot Mitochondrial vs. Coding Counts</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotNovelty.html">plotNovelty()</a></code> </p>
+        </td>
+        <td><p>Plot Novelty Score</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotPCA.html">plotPCA(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot Principal Component Analysis (PCA)</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotPCElbow.html">plotPCElbow()</a></code> </p>
+        </td>
+        <td><p>Plot PC Elbow</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotQC.html">plotQC(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="plotQC.html">plotQC(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Quality Control Plots</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotQuantileHeatmap.html">plotQuantileHeatmap(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot Heatmap with Quantile Breaks</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotReadsPerCell.html">plotReadsPerCell()</a></code> </p>
+        </td>
+        <td><p>Plot Read Counts per Cell</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotTSNE.html">plotTSNE()</a></code> </p>
+        </td>
+        <td><p>Plot t-SNE</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotTopMarkers.html">plotTopMarkers()</a></code> </p>
+        </td>
+        <td><p>Plot Top Markers</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotUMIsPerCell.html">plotUMIsPerCell()</a></code> </p>
+        </td>
+        <td><p>Plot UMIs per Cell</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotUMIsVsGenes.html">plotUMIsVsGenes()</a></code> </p>
+        </td>
+        <td><p>Plot UMI and Gene Correlation</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotViolin.html">plotViolin(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot Violin</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plotZerosVsDepth.html">plotZerosVsDepth()</a></code> </p>
+        </td>
+        <td><p>Plot Percentage of Zeros vs. Library Depth</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-r-markdown-functions" class="hasAnchor"><a href="#section-r-markdown-functions" class="anchor"></a>R Markdown Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="prepareSingleCellTemplate.html">prepareSingleCellTemplate()</a></code> </p>
+        </td>
+        <td><p>Prepare Single-Cell RNA-Seq RMarkdown Template</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-internal-data" class="hasAnchor"><a href="#section-internal-data" class="anchor"></a>Internal Data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="cellCycleMarkers.html">cellCycleMarkers</a></code> </p>
+        </td>
+        <td><p>Cell-Cycle Markers</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="cellTypeMarkers.html">cellTypeMarkers</a></code> </p>
+        </td>
+        <td><p>Cell-Type Markers</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-example-data" class="hasAnchor"><a href="#section-example-data" class="anchor"></a>Example Data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="all_markers_small.html">all_markers_small</a></code> </p>
+        </td>
+        <td><p>Sanitized Markers Example</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="bcb_small.html">bcb_small</a></code> </p>
+        </td>
+        <td><p>inDrop Example</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="cellranger_small.html">cellranger_small</a></code> </p>
+        </td>
+        <td><p>CellRanger Example</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="known_markers_small.html">known_markers_small</a></code> </p>
+        </td>
+        <td><p>Known Markers Example</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="seurat_small.html">seurat_small</a></code> </p>
+        </td>
+        <td><p>Seurat Example</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-s-class-definition">S4 Class Definition</a></li>
+      <li><a href="#section-read-functions">Read Functions</a></li>
+      <li><a href="#section-data-functions">Data Functions</a></li>
+      <li><a href="#section-metrics-functions">Metrics Functions</a></li>
+      <li><a href="#section-quality-control-functions">Quality Control Functions</a></li>
+      <li><a href="#section-clustering-functions">Clustering Functions</a></li>
+      <li><a href="#section-differential-expression-functions">Differential Expression Functions</a></li>
+      <li><a href="#section-plot-functions">Plot Functions</a></li>
+      <li><a href="#section-r-markdown-functions">R Markdown Functions</a></li>
+      <li><a href="#section-internal-data">Internal Data</a></li>
+      <li><a href="#section-example-data">Example Data</a></li>
     </ul>
   </div>
 </div>
@@ -511,5 +650,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

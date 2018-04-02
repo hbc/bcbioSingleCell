@@ -14,7 +14,7 @@
 #' @param topMarkers `grouped_df` grouped by "`cluster`", returned by
 #'   [topMarkers()].
 #'
-#' @return Show graphical output. Invisibly return `ggplot` plotlist.
+#' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
 #' # seurat, grouped_df ====

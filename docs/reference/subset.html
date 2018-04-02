@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Bracket-Based Subsetting — subset" />
+
+<meta property="og:description" content="Extract genes by row and cells by column from a bcbioSingleCell object." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -70,6 +84,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -77,10 +92,11 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Bracket-Based Subsetting</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-subset.R'><code>R/methods-subset.R</code></a></small>
     </div>
 
     
@@ -90,7 +106,7 @@
     <pre class="usage"># S4 method for bcbioSingleCell,ANY,ANY,ANY
 [(x, i, j, ..., drop = FALSE)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -156,10 +172,10 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <ul>
+    <div class='dont-index'><ul>
 <li><p><code>help("[", "base")</code>.</p></li>
 <li><p><code><a href='selectSamples.html'>selectSamples()</a></code> for subsetting based on sample metadata.</p></li>
-</ul>
+</ul></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -171,35 +187,35 @@
 #&gt; [4] "multiplexed_AAAAAAAA_AAACCGCC_GAGTTTCG"
 #&gt; [5] "multiplexed_AAAAAAAA_AAACCGCC_TAGCCTCG"
 #&gt; [6] "multiplexed_AAAAAAAA_AAACGATC_TTTACCCT"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>bcb_small</span>), <span class='fl'>100L</span>)
-<span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457" "ENSG00000002586" "ENSG00000004939" "ENSG00000005022"
-#&gt; [5] "ENSG00000005100" "ENSG00000008988"</div><div class='input'>
+<span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457" "ENSG00000002586" "ENSG00000004939"
+#&gt; [4] "ENSG00000005022" "ENSG00000005100" "ENSG00000008988"</div><div class='input'>
 <span class='co'># Subset by cell identifiers</span>
 <span class='no'>bcb_small</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
 #&gt; samples: 1
 #&gt; cells: 100
 #&gt; genes: 500
 #&gt; organism: Homo sapiens
-#&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/harvard_indrop_v3
+#&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
 #&gt; bcbio date: 2018-01-01
-#&gt; load date: 2018-03-27</div><div class='input'>
+#&gt; load date: 2018-04-02</div><div class='input'>
 <span class='co'># Subset by genes</span>
 <span class='no'>bcb_small</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
 #&gt; samples: 1
 #&gt; cells: 500
 #&gt; genes: 100
 #&gt; organism: Homo sapiens
-#&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/harvard_indrop_v3
+#&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
 #&gt; bcbio date: 2018-01-01
-#&gt; load date: 2018-03-27</div><div class='input'>
+#&gt; load date: 2018-04-02</div><div class='input'>
 <span class='co'># Subset by both genes and cells</span>
 <span class='no'>bcb_small</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
 #&gt; samples: 1
 #&gt; cells: 100
 #&gt; genes: 100
 #&gt; organism: Homo sapiens
-#&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/harvard_indrop_v3
+#&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
 #&gt; bcbio date: 2018-01-01
-#&gt; load date: 2018-03-27</div></pre>
+#&gt; load date: 2018-04-02</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -232,5 +248,8 @@ Michael Steinbaugh
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -1,9 +1,5 @@
 #' Plot Dot
 #'
-#' @note [Seurat::DotPlot()] is still plotting even when `do.return = TRUE`.
-#' In the meantime, we've broken out the code into this generic to fix
-#' RMarkdown looping of our marker plots.
-#'
 #' @name plotDot
 #' @family Gene Expression Functions
 #' @author Michael Steinbaugh

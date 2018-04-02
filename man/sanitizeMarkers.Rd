@@ -19,11 +19,7 @@ sanitizeMarkers(object, markers, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-Tibble arranged by adjusted P value.
-\itemize{
-\item 
-\item \code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}}: \code{grouped_df}, grouped by cluster ident.
-}
+\code{tbl_df} arranged by adjusted P value:
 }
 \description{
 Sanitize Markers Output
@@ -58,7 +54,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
   \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
-  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

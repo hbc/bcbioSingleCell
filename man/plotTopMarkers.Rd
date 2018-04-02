@@ -29,7 +29,7 @@ plotTopMarkers(object, topMarkers, ...)
 
 \item{dotColor}{Color palette to use for dot plot.}
 
-\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
@@ -63,7 +63,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
   \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{sanitizeMarkers}},
-  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

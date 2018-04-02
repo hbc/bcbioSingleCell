@@ -3,9 +3,8 @@
 #' Import and analyze [bcbio](http://bcbio-nextgen.readthedocs.io) single-cell
 #' RNA-seq data.
 #'
-#' @rdname bcbioSingleCell-package
-#' @name bcbioSingleCell-package
-#' @docType package
+#' @name bcbioRNASeq-package
+#' @keywords internal
 #'
 #' @import methods S4Vectors
 #'

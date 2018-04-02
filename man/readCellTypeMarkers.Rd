@@ -13,7 +13,7 @@ readCellTypeMarkers(file, gene2symbol)
 must contain \code{geneID} and \code{geneName}.}
 }
 \value{
-\code{grouped_df}, grouped by \code{cellType}.
+\code{grouped_df}, grouped by "\code{cellType}" column.
 }
 \description{
 Read Cell Type Markers File
@@ -26,17 +26,6 @@ file <- system.file(
 )
 gene2symbol <- makeGene2symbolFromEnsembl("Homo sapiens")
 readCellTypeMarkers(file, gene2symbol = gene2symbol)
-}
-\seealso{
-Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{cell2sample}}, \code{\link{colData}},
-  \code{\link{counts}}, \code{\link{fetchGeneData}},
-  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
-  \code{\link{fetchTSNEExpressionData}},
-  \code{\link{filterCells}}, \code{\link{gene2symbol}},
-  \code{\link{interestingGroups}}, \code{\link{rowData}},
-  \code{\link{sampleData}}, \code{\link{selectSamples}},
-  \code{\link{subsetPerSample}}
 }
 \author{
 Michael Steinbaugh

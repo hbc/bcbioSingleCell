@@ -1,7 +1,5 @@
 #' Cell Types per Cluster
 #'
-#' @note This function only returns the positive markers per cluster.
-#'
 #' @name cellTypesPerCluster
 #' @family Clustering Functions
 #' @author Michael Steinbaugh
@@ -11,7 +9,7 @@
 #' @param min Minimum number of marker genes per cluster.
 #' @param max Maximum number of marker genes per cluster.
 #'
-#' @return `tibble` grouped by cluster, containing the count (`n`) of
+#' @return `grouped_df` grouped by "`cluster`", containing the count (`n`) of
 #'   significant known makers per cell type.
 #'
 #' @examples

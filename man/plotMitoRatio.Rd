@@ -27,7 +27,7 @@ plotMitoRatio(object, ...)
 first argument in the vector.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{max}{Recommended maximum value cutoff.}
 
@@ -49,9 +49,7 @@ plotMitoRatio(bcb_small)
 plotMitoRatio(seurat_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{calculateMetrics}},
-  \code{\link{metricsPerSample}}, \code{\link{metrics}},
-  \code{\link{plotCellCounts}},
+Other Quality Control Functions: \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},

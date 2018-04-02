@@ -1,13 +1,13 @@
 #' Read Cell Type Markers File
 #'
 #' @name readCellTypeMarkers
-#' @family Data Functions
+#' @family Read Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
 #' @param file Gene markers file (CSV or Excel).
 #'
-#' @return `grouped_df`, grouped by `cellType`.
+#' @return `grouped_df`, grouped by "`cellType`" column.
 #' @export
 #'
 #' @examples

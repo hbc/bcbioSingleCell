@@ -1,7 +1,7 @@
 #' Metrics per Sample
 #'
 #' @name metricsPerSample
-#' @family Quality Control Functions
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

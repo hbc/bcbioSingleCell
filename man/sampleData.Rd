@@ -15,7 +15,7 @@
 \item{object}{Object.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \code{data.frame}.
@@ -35,15 +35,17 @@ sampleData(pbmc_small) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{calculateMetrics}},
   \code{\link{cell2sample}}, \code{\link{colData}},
   \code{\link{counts}}, \code{\link{fetchGeneData}},
   \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}}, \code{\link{gene2symbol}},
   \code{\link{interestingGroups}},
-  \code{\link{readCellTypeMarkers}}, \code{\link{rowData}},
-  \code{\link{selectSamples}},
-  \code{\link{subsetPerSample}}
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{rowData}}, \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh

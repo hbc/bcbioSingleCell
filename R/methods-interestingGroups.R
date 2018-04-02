@@ -8,7 +8,7 @@
 #'
 #' @inheritParams general
 #'
-#' @return Character vector.
+#' @return `character`.
 #'
 #' @examples
 #' # bcbioSingleCell ====

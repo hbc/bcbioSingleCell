@@ -17,7 +17,7 @@
 #' @param violinFill Color palette to use for violin plot.
 #' @param dotColor Color palette to use for dot plot.
 #'
-#' @return Show graphical output. Invisibly return `ggplot` plotlist.
+#' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
 #' # seurat ===

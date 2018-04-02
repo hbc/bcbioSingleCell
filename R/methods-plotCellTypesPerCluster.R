@@ -12,7 +12,7 @@
 #' @param cellTypesPerCluster Cell types per cluster `grouped_df`. This must be
 #'   the return from [cellTypesPerCluster()].
 #'
-#' @return Show graphical output. Invisibly return `ggplot` plotlist.
+#' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
 #' # seurat ====

@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Row Data — rowData" />
+
+<meta property="og:description" content="Metadata describing the genes." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -70,6 +84,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -77,15 +92,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Row Data</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-rowData.R'><code>R/methods-rowData.R</code></a></small>
     </div>
 
     
-    <p>Metadata describing the genes. These annotations are obtained from
-AnnotationHub and ensembldb using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/ensembl'>basejump::ensembl()</a></code>.</p>
+    <p>Metadata describing the genes.</p>
     
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
@@ -94,7 +109,7 @@ AnnotationHub and ensembldb using <code><a href='http://www.rdocumentation.org/p
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>rowData</span>(<span class='no'>x</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"DataFrame"</span>))</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -103,8 +118,8 @@ AnnotationHub and ensembldb using <code><a href='http://www.rdocumentation.org/p
     </tr>
     <tr>
       <th>return</th>
-      <td><p>Return type. Uses <code>match.arg()</code> internally and defaults to the
-first argument in the vector.</p></td>
+      <td><p>Return type. Uses <code><a href='http://www.rdocumentation.org/packages/base/topics/match.arg'>base::match.arg()</a></code> internally and defaults
+to the first argument in the vector.</p></td>
     </tr>
     </table>
     
@@ -114,49 +129,51 @@ first argument in the vector.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>calculateMetrics</code>,
   <code>cell2sample</code>, <code><a href='colData.html'>colData</a></code>,
   <code><a href='counts.html'>counts</a></code>, <code>fetchGeneData</code>,
   <code>fetchPCAData</code>, <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
   <code>filterCells</code>, <code><a href='gene2symbol.html'>gene2symbol</a></code>,
   <code><a href='interestingGroups.html'>interestingGroups</a></code>,
-  <code><a href='readCellTypeMarkersFile.html'>readCellTypeMarkersFile</a></code>,
+  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
+  <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
   <code><a href='sampleData.html'>sampleData</a></code>, <code><a href='selectSamples.html'>selectSamples</a></code>,
-  <code>subsetPerSample</code></p>
+  <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='fu'>rowData</span>(<span class='no'>bcb_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 12
-#&gt; $ seqnames       &lt;fct&gt; 1, X, 17, X, 17, 8, 1, 12, 2, 10, 2, 5, 9, 11, 1, 12...
-#&gt; $ start          &lt;int&gt; 169849631, 2691179, 44248385, 119468400, 5440912, 56...
-#&gt; $ end            &lt;int&gt; 169894267, 2741309, 44268141, 119471319, 5469060, 56...
-#&gt; $ width          &lt;int&gt; 44637, 50131, 19757, 2920, 28149, 7287, 41764, 42640...
-#&gt; $ strand         &lt;fct&gt; -, +, -, +, -, -, -, -, +, +, +, +, -, +, +, -, +, -...
-#&gt; $ geneID         &lt;chr&gt; "ENSG00000000457", "ENSG00000002586", "ENSG000000049...
-#&gt; $ geneName       &lt;chr&gt; "SCYL3", "CD99", "SLC4A1", "SLC25A5", "DHX33", "RPS2...
-#&gt; $ geneBiotype    &lt;fct&gt; protein_coding, protein_coding, protein_coding, prot...
-#&gt; $ description    &lt;chr&gt; "SCY1 like pseudokinase 3 [Source:HGNC Symbol;Acc:HG...
-#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...
-#&gt; $ entrezID       &lt;I(list)&gt; 57147,  4267,  6521,   292, 56919,  6224,  7812,...
-#&gt; $ broadClass     &lt;fct&gt; coding, coding, coding, coding, coding, coding, codi...</div><div class='input'>
+#&gt; $ seqnames       &lt;fct&gt; 1, X, 17, X, 17, 8, 1, 12, 2, 10, 2, 5, 9, 11,...
+#&gt; $ start          &lt;int&gt; 169849631, 2691179, 44248385, 119468400, 54409...
+#&gt; $ end            &lt;int&gt; 169894267, 2741309, 44268141, 119471319, 54690...
+#&gt; $ width          &lt;int&gt; 44637, 50131, 19757, 2920, 28149, 7287, 41764,...
+#&gt; $ strand         &lt;fct&gt; -, +, -, +, -, -, -, -, +, +, +, +, -, +, +, -...
+#&gt; $ geneID         &lt;chr&gt; "ENSG00000000457", "ENSG00000002586", "ENSG000...
+#&gt; $ geneName       &lt;chr&gt; "SCYL3", "CD99", "SLC4A1", "SLC25A5", "DHX33",...
+#&gt; $ geneBiotype    &lt;fct&gt; protein_coding, protein_coding, protein_coding...
+#&gt; $ description    &lt;chr&gt; "SCY1 like pseudokinase 3 [Source:HGNC Symbol;...
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome...
+#&gt; $ entrezID       &lt;I(list)&gt; 57147,  4267,  6521,   292, 56919,  6224, ...
+#&gt; $ broadClass     &lt;fct&gt; coding, coding, coding, coding, coding, coding...</div><div class='input'>
 <span class='co'># seurat ====</span>
 <span class='fu'>rowData</span>(<span class='no'>pbmc_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt;  NULL</div><div class='input'><span class='fu'>rowData</span>(<span class='no'>seurat_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 12
-#&gt; $ seqnames       &lt;fct&gt; 1, X, 17, X, 17, 8, 1, 12, 2, 10, 2, 5, 9, 11, 1, 12...
-#&gt; $ start          &lt;int&gt; 169849631, 2691179, 44248385, 119468400, 5440912, 56...
-#&gt; $ end            &lt;int&gt; 169894267, 2741309, 44268141, 119471319, 5469060, 56...
-#&gt; $ width          &lt;int&gt; 44637, 50131, 19757, 2920, 28149, 7287, 41764, 42640...
-#&gt; $ strand         &lt;fct&gt; -, +, -, +, -, -, -, -, +, +, +, +, -, +, +, -, +, -...
-#&gt; $ geneID         &lt;chr&gt; "ENSG00000000457", "ENSG00000002586", "ENSG000000049...
-#&gt; $ geneName       &lt;chr&gt; "SCYL3", "CD99", "SLC4A1", "SLC25A5", "DHX33", "RPS2...
-#&gt; $ geneBiotype    &lt;fct&gt; protein_coding, protein_coding, protein_coding, prot...
-#&gt; $ description    &lt;chr&gt; "SCY1 like pseudokinase 3 [Source:HGNC Symbol;Acc:HG...
-#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...
-#&gt; $ entrezID       &lt;I(list)&gt; 57147,  4267,  6521,   292, 56919,  6224,  7812,...
-#&gt; $ broadClass     &lt;fct&gt; coding, coding, coding, coding, coding, coding, codi...</div></pre>
+#&gt; $ seqnames       &lt;fct&gt; 1, X, 17, X, 17, 8, 1, 12, 2, 10, 2, 5, 9, 11,...
+#&gt; $ start          &lt;int&gt; 169849631, 2691179, 44248385, 119468400, 54409...
+#&gt; $ end            &lt;int&gt; 169894267, 2741309, 44268141, 119471319, 54690...
+#&gt; $ width          &lt;int&gt; 44637, 50131, 19757, 2920, 28149, 7287, 41764,...
+#&gt; $ strand         &lt;fct&gt; -, +, -, +, -, -, -, -, +, +, +, +, -, +, +, -...
+#&gt; $ geneID         &lt;chr&gt; "ENSG00000000457", "ENSG00000002586", "ENSG000...
+#&gt; $ geneName       &lt;chr&gt; "SCYL3", "CD99", "SLC4A1", "SLC25A5", "DHX33",...
+#&gt; $ geneBiotype    &lt;fct&gt; protein_coding, protein_coding, protein_coding...
+#&gt; $ description    &lt;chr&gt; "SCY1 like pseudokinase 3 [Source:HGNC Symbol;...
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome...
+#&gt; $ entrezID       &lt;I(list)&gt; 57147,  4267,  6521,   292, 56919,  6224, ...
+#&gt; $ broadClass     &lt;fct&gt; coding, coding, coding, coding, coding, coding...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -189,5 +206,8 @@ Michael Steinbaugh
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

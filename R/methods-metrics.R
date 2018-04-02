@@ -1,7 +1,7 @@
 #' Sample Barcode Metrics
 #'
 #' @name metrics
-#' @family Quality Control Functions
+#' @family Data Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @importFrom bcbioBase metrics

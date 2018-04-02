@@ -29,6 +29,7 @@
 #' information.
 #'
 #' @name diffExp
+#' @family Differential Expression Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams zingeR::zeroWeightsLS

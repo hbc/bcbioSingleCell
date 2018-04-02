@@ -35,11 +35,6 @@ drawn.}
 \description{
 Plot Dot
 }
-\note{
-\code{\link[Seurat:DotPlot]{Seurat::DotPlot()}} is still plotting even when \code{do.return = TRUE}.
-In the meantime, we've broken out the code into this generic to fix
-RMarkdown looping of our marker plots.
-}
 \examples{
 # seurat ====
 plotDot(pbmc_small, genes = head(rownames(pbmc_small)))

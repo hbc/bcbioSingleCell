@@ -1,3 +1,5 @@
+# TODO Need to suppress progress bar in working example
+
 #' Sanitize Markers Output
 #'
 #' @note [Seurat::FindAllMarkers()] maps the counts matrix rownames correctly in
@@ -11,9 +13,7 @@
 #' @inheritParams general
 #' @param markers Original [Seurat::FindAllMarkers()] `data.frame`.
 #'
-#' @return Tibble arranged by adjusted P value.
-#' - [Seurat::FindMarkers()]: `tbl_df`.
-#' - [Seurat::FindAllMarkers()]: `grouped_df`, grouped by cluster ident.
+#' @return `tbl_df` arranged by adjusted P value:
 #'
 #' @examples
 #' # seurat ====

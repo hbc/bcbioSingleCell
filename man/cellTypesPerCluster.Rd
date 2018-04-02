@@ -21,14 +21,11 @@ cellTypesPerCluster(object, ...)
 \item{max}{Maximum number of marker genes per cluster.}
 }
 \value{
-\code{tibble} grouped by cluster, containing the count (\code{n}) of
+\code{grouped_df} grouped by "\code{cluster}", containing the count (\code{n}) of
 significant known makers per cell type.
 }
 \description{
 Cell Types per Cluster
-}
-\note{
-This function only returns the positive markers per cluster.
 }
 \examples{
 cellTypesPerCluster(known_markers_small) \%>\% glimpse()
@@ -41,8 +38,7 @@ Other Clustering Functions: \code{\link{knownMarkersDetected}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
   \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

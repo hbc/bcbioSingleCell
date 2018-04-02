@@ -14,7 +14,7 @@
 #' - [dplyr::slice()].
 #' - [dplyr::top_n()].
 #'
-#' @return `tibble`.
+#' @return `grouped_df`.
 #'
 #' @examples
 #' # grouped_df ====

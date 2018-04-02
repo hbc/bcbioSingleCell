@@ -19,7 +19,7 @@ for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop).}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
 sequences (e.g. ERCCs, EGFP, TDTOMATO).}

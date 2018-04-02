@@ -41,9 +41,7 @@ plotZerosVsDepth(pbmc_small)
 plotZerosVsDepth(seurat_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{calculateMetrics}},
-  \code{\link{metricsPerSample}}, \code{\link{metrics}},
-  \code{\link{plotCellCounts}},
+Other Quality Control Functions: \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},

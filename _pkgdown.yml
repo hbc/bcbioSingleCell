@@ -1,6 +1,7 @@
 template:
     params:
         bootswatch: readable
+
 authors:
     Michael Steinbaugh:
         href: http://steinbaugh.com
@@ -12,3 +13,61 @@ authors:
         href: https://github.com/sjhosui
     Harvard Chan Bioinformatics Core:
         href: http://bioinformatics.sph.harvard.edu
+
+reference:
+  - title: S4 Class Definition
+    contents:
+    - bcbioSingleCell-class
+    - subset
+    - coerce
+    - colData
+    - rowData
+    - sampleData
+    - show
+  - title: Read Functions
+    contents:
+    - starts_with("load")
+    - starts_with("read")
+  - title: Data Functions
+    contents:
+    - starts_with("aggregate")
+    - cell2sample
+    - counts
+    - starts_with("fetch")
+    - starts_with("filter")
+    - matches("2")
+    - interestingGroups
+    - starts_with("map")
+    - starts_with("select")
+    - subsetPerSample
+    - topBarcodes
+  - title: Metrics Functions
+    contents:
+    - matches("[Mm]etrics")
+  - title: Quality Control Functions
+    contents:
+    - matches("QC")
+  - title: Clustering Functions
+    contents:
+    - matches("Cluster")
+    - matches("PCA")
+    - matches("TSNE")
+  - title: Differential Expression Functions
+    contents:
+    - diffExp
+    - knownMarkersDetected
+    - sanitizeMarkers
+    - topMarkers
+  - title: Plot Functions
+    contents:
+    - starts_with("plot")
+  - title: R Markdown Functions
+    contents:
+    - ends_with("Template")
+  - title: Internal Data
+    contents:
+    - cellCycleMarkers
+    - cellTypeMarkers
+  - title: Example Data
+    contents:
+    - ends_with("_small")

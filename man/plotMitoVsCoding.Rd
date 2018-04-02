@@ -6,7 +6,7 @@
 \alias{plotMitoVsCoding}
 \alias{plotMitoVsCoding,bcbioSingleCell-method}
 \alias{plotMitoVsCoding,seurat-method}
-\title{Plot Mitochondrial Counts vs. Coding Counts}
+\title{Plot Mitochondrial vs. Coding Counts}
 \usage{
 plotMitoVsCoding(object, ...)
 
@@ -22,15 +22,18 @@ plotMitoVsCoding(object, ...)
 \item{...}{Additional arguments.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in \code{\link[=camel]{camel()}} case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 }
+\value{
+\code{ggplot}.
+}
 \description{
-Plot Mitochondrial Counts vs. Coding Counts
+Plot Mitochondrial vs. Coding Counts
 }
 \examples{
 # bcbioSingleCell ====
@@ -40,9 +43,7 @@ plotMitoVsCoding(bcb_small)
 plotMitoVsCoding(seurat_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{calculateMetrics}},
-  \code{\link{metricsPerSample}}, \code{\link{metrics}},
-  \code{\link{plotCellCounts}},
+Other Quality Control Functions: \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
   \code{\link{plotQC}}, \code{\link{plotQuantileHeatmap}},

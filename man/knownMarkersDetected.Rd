@@ -29,7 +29,7 @@ present in as many clusters as defined by \code{promiscuousCutoff}.}
 gene marker promiscuous.}
 }
 \value{
-\code{grouped_df}, grouped by \code{cellType}.
+\code{grouped_df}, grouped by "\code{cellType}" column.
 }
 \description{
 Known Markers Detected
@@ -56,8 +56,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
   \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

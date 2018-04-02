@@ -32,7 +32,7 @@ set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Plot against a dark background using \code{\link[=midnightTheme]{midnightTheme()}}.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{label}{Overlay a cluster identitiy label on the plot.}
 
@@ -41,11 +41,11 @@ color definitions are desired, we recommend using
 \item{legend}{Show legends in paneled plots. Defaults to \code{FALSE} because
 typically these look too busy and the legends can get cut off.}
 
-\item{return}{Return type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
-first argument in the vector.}
+\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
+to the first argument in the vector.}
 }
 \value{
-Show plot or return as a \code{list}.
+\code{ggplot} or \code{list}.
 }
 \description{
 Plot Feature t-SNE
@@ -64,8 +64,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
   \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

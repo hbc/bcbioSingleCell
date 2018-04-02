@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Plot PC Elbow — plotPCElbow" />
+
+<meta property="og:description" content="Calculate the principal component (PC) cutoff using a heuristic approach." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -70,6 +84,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -77,25 +92,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot PC Elbow</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotPCElbow.R'><code>R/methods-plotPCElbow.R</code></a></small>
     </div>
 
     
-    <p>Calculate the principal component (PC) with either a maximum SD percentage or
-minimum <!-- % SD cumulative sum cutoff value. This defaults to keeping the larger -->
-PC cutoff for either 5<!-- % SD (\code{maxPct}) or 90% cumulative (\code{minCumsum}). --></p>
+    <p>Calculate the principal component (PC) cutoff using a heuristic approach.</p>
     
 
     <pre class="usage"><span class='fu'>plotPCElbow</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotPCElbow</span>(<span class='no'>object</span>, <span class='kw'>maxPct</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>minCumPct</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>plotPCElbow</span>(<span class='no'>object</span>, <span class='kw'>minSD</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>minPct</span> <span class='kw'>=</span> <span class='fl'>0.025</span>,
+  <span class='kw'>maxCumPct</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"identity"</span>, <span class='st'>"sqrt"</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -107,16 +121,26 @@ PC cutoff for either 5<!-- % SD (\code{maxPct}) or 90% cumulative (\code{minCums
       <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
-      <th>maxPct</th>
-      <td><p>Maximum percent standard deviation.</p></td>
+      <th>minSD</th>
+      <td><p>Minimum standard deviation.</p></td>
     </tr>
     <tr>
-      <th>minCumPct</th>
-      <td><p>Minimum cumulative percent standard deviation.</p></td>
+      <th>minPct</th>
+      <td><p>Minimum percent standard deviation.</p></td>
+    </tr>
+    <tr>
+      <th>maxCumPct</th>
+      <td><p>Maximum cumulative percent standard deviation.</p></td>
+    </tr>
+    <tr>
+      <th>trans</th>
+      <td><p>Name of the transformation to apply. Supports "<code>identity</code>"
+(unmodified) or "<code>sqrt</code>". See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous'>ggplot2::scale_y_continuous()</a></code> for more
+information.</p></td>
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>Plot the PC standard deviations.</p></td>
+      <td><p>Include plot.</p></td>
     </tr>
     </table>
     
@@ -130,10 +154,18 @@ dimensionality reduction analysis.</p></li>
 </ul>
 
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Automatically return the smallest number of PCs that match the <code>minSD</code>,
+<code>minPct</code>, and <code>maxCumPct</code> cutoffs.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/PCElbowPlot'>Seurat::PCElbowPlot()</a></code>.</p>
-<p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+    <div class='dont-index'><ul>
+<li><p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/PCElbowPlot'>Seurat::PCElbowPlot()</a></code>.</p></li>
+<li><p><code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous'>ggplot2::scale_y_continuous()</a></code>.</p></li>
+</ul></div>
+    <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
   <code>knownMarkersDetected</code>,
   <code>plotCellTypesPerCluster</code>,
   <code>plotFeatureTSNE</code>,
@@ -141,13 +173,12 @@ dimensionality reduction analysis.</p></li>
   <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
   <code><a href='plotPCA.html'>plotPCA</a></code>, <code>plotTSNE</code>,
   <code>plotTopMarkers</code>,
-  <code>sanitizeMarkers</code>, <code>topBarcodes</code>,
-  <code>topMarkers</code></p>
+  <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='fu'>plotPCElbow</span>(<span class='no'>pbmc_small</span>)</div><div class='img'><img src='plotPCElbow-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plotPCElbow</span>(<span class='no'>pbmc_small</span>)</div><div class='img'><img src='plotPCElbow-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -155,6 +186,8 @@ dimensionality reduction analysis.</p></li>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
@@ -180,5 +213,8 @@ Michael Steinbaugh
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
