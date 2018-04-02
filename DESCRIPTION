@@ -51,13 +51,13 @@ Depends:
     Seurat (>= 2.0)
 Imports:
     Biobase,
-    BiocGenerics (>= 0.24.0),
+    BiocGenerics,
     BiocParallel,
     DESeq2 (>= 1.18.0),
     GenomicFeatures,
     Matrix (>= 1.0),
     Matrix.utils,
-    S4Vectors (>= 0.16.0),
+    S4Vectors,
     SummarizedExperiment,
     assertive,
     basejump (>= 0.4),
