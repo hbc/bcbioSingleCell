@@ -60,7 +60,7 @@ NULL
     sampleData,
     breaks = 100L
 ) {
-    assert_is_a_bool(breaks)
+    assert_is_an_integer(breaks)
     # Ensure `sampleID` is set as factor across both data frames
     rawTibble[["sampleID"]] <- as.factor(rawTibble[["sampleID"]])
     sampleData[["sampleID"]] <- as.factor(sampleData[["sampleID"]])
