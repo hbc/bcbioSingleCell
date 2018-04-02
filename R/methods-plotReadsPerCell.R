@@ -21,16 +21,7 @@ NULL
 
 
 # Constructors =================================================================
-.plotReadsPerCell <- function(
-    object,
-    geom = c("histogram", "ecdf", "ridgeline", "violin"),
-    interestingGroups,
-    color = scale_color_viridis(discrete = TRUE),
-    fill = scale_fill_viridis(discrete = TRUE)
-) {
-    validObject(object)
-    geom <- match.arg(geom)
-
+.readsPerCell <- function(object, interestingGroups) {
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
@@ -46,20 +37,44 @@ NULL
     } else {
         data <- metrics(object)
     }
+
+    # Use raw read counts but fall back to UMI counts if necessary
     countsCol <- c("nCount", "nUMI")
     assert_are_intersecting_sets(countsCol, colnames(data))
     if (!"nCount" %in% colnames(data)) {
-        inform("Using UMI counts instead of raw read counts")
         assert_is_subset("nUMI", colnames(data))
         data[["nCount"]] <- data[["nUMI"]]
     }
-    data <- left_join(
+
+    left_join(
         x = data[, c("sampleID", "nCount")],
         y = sampleData,
         by = "sampleID"
     ) %>%
         as_tibble() %>%
         group_by(!!sym("sampleID"))
+}
+
+
+
+.plotReadsPerCell <- function(
+    object,
+    interestingGroups,
+    geom = c("histogram", "ecdf", "ridgeline", "violin"),
+    color = scale_color_viridis(discrete = TRUE),
+    fill = scale_fill_viridis(discrete = TRUE)
+) {
+    # Passthrough: color, fill
+    validObject(object)
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
+    geom <- match.arg(geom)
+
+    data <- .readsPerCell(
+        object = object,
+        interestingGroups = interestingGroups
+    )
 
     # bcbio cell cutoff and inflection point values
     cutoff <- metadata(object)[["cellularBarcodeCutoff"]]
@@ -69,6 +84,7 @@ NULL
     inflection <- inflectionPoint(object)
 
     if (geom == "histogram") {
+        sampleData <- sampleData(object, interestingGroups = interestingGroups)
         data <- .proportionalReadsPerCell(
             data = data,
             sampleData = sampleData

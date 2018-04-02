@@ -10,13 +10,13 @@
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = c("histogram",
-  "ecdf", "ridgeline", "violin"), interestingGroups,
+\S4method{plotReadsPerCell}{bcbioSingleCell}(object, interestingGroups,
+  geom = c("histogram", "ecdf", "ridgeline", "violin"),
   color = scale_color_viridis(discrete = TRUE),
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotReadsPerCell}{seurat}(object, geom = c("histogram", "ecdf",
-  "ridgeline", "violin"), interestingGroups,
+\S4method{plotReadsPerCell}{seurat}(object, interestingGroups,
+  geom = c("histogram", "ecdf", "ridgeline", "violin"),
   color = scale_color_viridis(discrete = TRUE),
   fill = scale_fill_viridis(discrete = TRUE))
 }
@@ -25,11 +25,11 @@ plotReadsPerCell(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
-first argument in the vector.}
-
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
 
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual

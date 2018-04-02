@@ -13,9 +13,10 @@
 plotCumulativeReadsPerCell(object, ...)
 
 \S4method{plotCumulativeReadsPerCell}{bcbioSingleCell}(object,
-  maxCells = 100000L)
+  trans = c("log10", "log2", "sqrt", "identity"))
 
-\S4method{plotCumulativeReadsPerCell}{seurat}(object, maxCells = 100000L)
+\S4method{plotCumulativeReadsPerCell}{seurat}(object, trans = c("log10",
+  "log2", "sqrt", "identity"))
 
 plotKnee(...)
 }
@@ -23,9 +24,6 @@ plotKnee(...)
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
-
-\item{maxCells}{The number of cells to consider as an upper bound and to
-compute the inflection point.}
 }
 \value{
 \code{ggplot}.
@@ -33,6 +31,10 @@ compute the inflection point.}
 \description{
 Cumulative frequency plot that helps visualize the inflection point that is
 present in single-cell barcode distributions.
+}
+\details{
+These calculates apply to all cellular barcodes in the dataset and are not
+grouped by sample.
 }
 \examples{
 # bcbioSingleCell ====
