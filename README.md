@@ -1,7 +1,6 @@
 # bcbioSingleCell
 
 [![Travis CI](https://travis-ci.org/hbc/bcbioSingleCell.svg?branch=master)](https://travis-ci.org/hbc/bcbioSingleCell)
-[![AppVeyor CI](https://ci.appveyor.com/api/projects/status/npy0mhfjn9saqv4g/branch/master?svg=true)](https://ci.appveyor.com/project/mjsteinbaugh/bcbiosinglecell/branch/master)
 [![Codecov](https://codecov.io/gh/hbc/bcbioSingleCell/branch/master/graph/badge.svg)](https://codecov.io/gh/hbc/bcbioSingleCell)
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
