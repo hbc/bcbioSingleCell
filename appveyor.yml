@@ -19,15 +19,19 @@ environment:
   global:
     R_ARCH: x64
     R_MAX_NUM_DLLS: 150
+    R_VERSION: devel
 
 build_script:
   - travis-tool.sh install_bioc GenomeInfoDbData
   - travis-tool.sh install_deps
-  - travis-tool.sh install_bioc edgeR
-  - travis-tool.sh install_bioc DESeq2
-  - travis-tool.sh install_bioc SingleCellExperiment
-  - travis-tool.sh install_bioc zinbwave
+  - travis-tool.sh install_github Bioconductor/BiocGenerics
+  - travis-tool.sh install_github Bioconductor/S4Vectors
+  - travis-tool.sh install_github Bioconductor/SummarizedExperiment
+  - travis-tool.sh install_github drisso/SingleCellExperiment
+  - travis-tool.sh install_github drisso/zinbwave
   - travis-tool.sh install_github statOmics/zingeR
+  - travis-tool.sh install_github mikelove/DESeq2
+  - travis-tool.sh install_bioc edgeR
 
 test_script:
   - travis-tool.sh run_tests
