@@ -22,16 +22,14 @@ environment:
     R_VERSION: devel
 
 build_script:
+  - travis-tool.sh install_bioc BiocGenerics S4Vectors
+  - travis-tool.sh install_bioc GenomicFeatures
   - travis-tool.sh install_bioc GenomeInfoDbData
+  - travis-tool.sh install_bioc AnnotationHub ensembldb
+  - travis-tool.sh install_bioc SummarizedExperiment SingleCellExperiment
   - travis-tool.sh install_deps
-  - travis-tool.sh install_github Bioconductor/BiocGenerics
-  - travis-tool.sh install_github Bioconductor/S4Vectors
-  - travis-tool.sh install_github Bioconductor/SummarizedExperiment
-  - travis-tool.sh install_github drisso/SingleCellExperiment
-  - travis-tool.sh install_github drisso/zinbwave
+  - travis-tool.sh install_bioc DESeq2 edgeR zinbwave
   - travis-tool.sh install_github statOmics/zingeR
-  - travis-tool.sh install_github mikelove/DESeq2
-  - travis-tool.sh install_bioc edgeR
 
 test_script:
   - travis-tool.sh run_tests
