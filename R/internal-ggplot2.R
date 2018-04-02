@@ -30,25 +30,36 @@ qcLineType <- "dashed"
 # Plot label separator
 labelSep <- ": "
 
+inflectionColor <- "orange"
+
 
 
 # Internal functions ===========================================================
-.qcCutoffLine <- function(xintercept, yintercept) {
-    if (!missing(xintercept)) {
+.qcCutoffLine <- function(
+    xintercept,
+    yintercept,
+    alpha = qcLineAlpha,
+    color = qcCutoffColor,
+    linetype = qcLineType,
+    size = qcLineSize
+) {
+    if (!missing(xintercept) && !missing(yintercept)) {
+        abort("Specify only `xintercept` or `intercept`")
+    } else if (!missing(xintercept)) {
         geom_vline(
-            alpha = qcLineAlpha,
-            color = qcCutoffColor,
-            linetype = qcLineType,
-            size = qcLineSize,
-            xintercept = xintercept
+            xintercept = xintercept,
+            alpha = alpha,
+            color = color,
+            linetype = linetype,
+            size = size
         )
     } else if (!missing(yintercept)) {
         geom_hline(
-            alpha = qcLineAlpha,
-            color = qcCutoffColor,
-            linetype = qcLineType,
-            size = qcLineSize,
-            yintercept = yintercept
+            yintercept = yintercept,
+            alpha = alpha,
+            color = color,
+            linetype = linetype,
+            size = size
         )
     } else {
         abort("`xintercept` or `yintercept` value required")
