@@ -10,17 +10,14 @@
 \usage{
 inflectionPoint(object, ...)
 
-\S4method{inflectionPoint}{bcbioSingleCell}(object, maxCells = 100000L)
+\S4method{inflectionPoint}{bcbioSingleCell}(object)
 
-\S4method{inflectionPoint}{seurat}(object, maxCells = 100000L)
+\S4method{inflectionPoint}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
-
-\item{maxCells}{The number of cells to consider as an upper bound and to
-compute the inflection point.}
 }
 \description{
 Calculate the Cellular Barcode Read Depth Inflection Point
