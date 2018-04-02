@@ -11,7 +11,13 @@
 #' @seealso Modified version of `dropbead::estimateCellNumber()`.
 #'
 #' @examples
+#' # bcbioSingleCell ====
 #' inflectionPoint(bcb_small)
+#' inflectionPoint(cellranger_small)
+#'
+#' # seurat ====
+#' inflectionPoint(seurat_small)
+#' inflectionPoint(pbmc_small)
 NULL
 
 
@@ -23,31 +29,34 @@ NULL
 ) {
     validObject(object)
 
-    # Get the read counts
+    # Get the read counts. Use the raw reads by default. Fall back to plotting
+    # UMI count distributions for cellranger and seurat.
     metrics <- metrics(object)
     countsCol <- c("nCount", "nUMI")
     assert_are_intersecting_sets(countsCol, colnames(metrics))
     countsCol <- intersect(countsCol, colnames(metrics))[[1L]]
     counts <- metrics[[countsCol]]
 
-    # Apply the upper boundary cutoff defined by `maxCells`
-    cutoff <- min(length(counts), maxCells)
-    counts <- counts[seq_len(cutoff)]
+    # Define the upper boundary cutoff, gated by `maxCells` if necessary
+    maxCells <- min(length(counts), maxCells)
+    counts <- counts[seq_len(maxCells)]
 
-    # Apply trigonometric calculations
+    # Trigonometric calculations
     xdata <- seq_along(counts) / length(counts)
     cs <- cumsum(counts / sum(counts))
-    m <- (cs[[cutoff]] - cs[[1L]]) / (cutoff - xdata[[1L]])
+    m <- (cs[[maxCells]] - cs[[1L]]) / (maxCells - xdata[[1L]])
     dists <- vapply(
-        X = seq_len(cutoff),
+        X = seq_len(maxCells),
         FUN = function(cell) {
             sin(atan(m)) * abs(cs[[cell]] - xdata[[cell]])
         },
         FUN.VALUE = numeric(1L)
     )
 
-    # Return the count cutoff threshold (not the cell/row number)
-    counts[which.max(dists)]
+    # Return the inflection point as the expression value
+    inflection <- counts[which.max(dists)]
+    names(inflection) <- countsCol
+    inflection
 }
 
 
@@ -58,5 +67,13 @@ NULL
 setMethod(
     "inflectionPoint",
     signature("bcbioSingleCell"),
+    .inflectionPoint
+)
+
+#' @rdname inflectionPoint
+#' @export
+setMethod(
+    "inflectionPoint",
+    signature("seurat"),
     .inflectionPoint
 )
