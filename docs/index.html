@@ -84,26 +84,21 @@
 <a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="dt">dependencies =</span> <span class="kw">c</span>(<span class="st">"Depends"</span>, <span class="st">"Imports"</span>, <span class="st">"Suggests"</span>)</a>
 <a class="sourceLine" id="cb1-7" data-line-number="7">)</a></code></pre></div>
 </div>
-<div id="conda-method" class="section level3">
-<h3 class="hasAnchor">
-<a href="#conda-method" class="anchor"></a><a href="https://conda.io">conda</a> method</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">conda</span> install -c bioconda r-bcbiosinglecell</a></code></pre></div>
-</div>
 </div>
 <div id="load-bcbio-run" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-bcbio-run" class="anchor"></a>Load <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> run</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(bcbioSingleCell)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/loadSingleCell.html">loadSingleCell</a></span>(</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">uploadDir =</span> <span class="st">"bcbio_indrop/final"</span>,</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="dt">interestingGroups =</span> <span class="kw">c</span>(<span class="st">"genotype"</span>, <span class="st">"treatment"</span>),</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">sampleMetadataFile =</span> <span class="st">"sample_metadata.csv"</span>,</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="dt">ensemblVersion =</span> 90L</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co"># Back up all data inside bcbioSingleCell object</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">flatFiles &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw">saveData</span>(bcb, flatFiles)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(bcbioSingleCell)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/loadSingleCell.html">loadSingleCell</a></span>(</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="dt">uploadDir =</span> <span class="st">"bcbio_indrop/final"</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="dt">interestingGroups =</span> <span class="kw">c</span>(<span class="st">"genotype"</span>, <span class="st">"treatment"</span>),</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">sampleMetadataFile =</span> <span class="st">"sample_metadata.csv"</span>,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="dt">ensemblVersion =</span> 90L</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co"># Back up all data inside bcbioSingleCell object</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">flatFiles &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw">saveData</span>(bcb, flatFiles)</a></code></pre></div>
 <p>This will return a <code>bcbioSingleCell</code> object, which is an extension of the <a href="https://bioconductor.org">Bioconductor</a> <a href="https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment">SingleCellExperiment</a> container class.</p>
 <p>Parameters:</p>
 <ul>

@@ -23,12 +23,6 @@ biocLite(
 )
 ```
 
-### [conda][] method
-
-```bash
-conda install -c bioconda r-bcbiosinglecell
-```
-
 
 ## Load [bcbio][] run
 
