@@ -46,4 +46,8 @@ test_that("plotReadsPerCell : seurat", {
         plotReadsPerCell(pbmc_small),
         "object does not contain nCount column in `metrics\\(\\)`"
     )
+    expect_is(
+        suppressWarnings(plotReadsPerCell(pbmc_small)),
+        "NULL"
+    )
 })
