@@ -271,10 +271,12 @@ NULL
     ), sep = "\n")
 
     # Metadata =================================================================
+    metadata(object)[["cellularBarcodes"]] <- NULL
     metadata(object)[["filterCells"]] <- cells
     metadata(object)[["filterGenes"]] <- genes
     metadata(object)[["filterParams"]] <- params
     metadata(object)[["filterSummary"]] <- summary
+    metadata <- Filter(Negate(is.null), metadata)
 
     .applyFilterCutoffs(object)
 }
