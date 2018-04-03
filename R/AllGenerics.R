@@ -154,12 +154,12 @@ setGeneric(
 
 
 
-#' @rdname plotCumulativeReadsPerCell
+#' @rdname plotCumulativeUMIsPerCell
 #' @export
 setGeneric(
-    "plotCumulativeReadsPerCell",
+    "plotCumulativeUMIsPerCell",
     function(object, ...) {
-        standardGeneric("plotCumulativeReadsPerCell")
+        standardGeneric("plotCumulativeUMIsPerCell")
     }
 )
 
