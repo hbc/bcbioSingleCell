@@ -296,7 +296,6 @@ NULL
     metadata(object)[["filterGenes"]] <- genes
     metadata(object)[["filterParams"]] <- params
     metadata(object)[["filterSummary"]] <- summary
-    metadata <- Filter(Negate(is.null), metadata)
 
     .applyFilterCutoffs(object)
 }
