@@ -15,13 +15,14 @@
 #' plotReadsPerCell(bcb_small)
 #'
 #' # seurat ====
-#' plotReadsPerCell(pbmc_small)
+#' plotReadsPerCell(bcb_small)
 NULL
 
 
 
 # Constructors =================================================================
 .readsPerCell <- function(object, interestingGroups) {
+    validObject(object)
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
@@ -38,12 +39,10 @@ NULL
         data <- metrics(object)
     }
 
-    # Use raw read counts but fall back to UMI counts if necessary
-    countsCol <- c("nCount", "nUMI")
-    assert_are_intersecting_sets(countsCol, colnames(data))
+    # Return `NULL` if `nCount` isn't present
     if (!"nCount" %in% colnames(data)) {
-        assert_is_subset("nUMI", colnames(data))
-        data[["nCount"]] <- data[["nUMI"]]
+        warn("object does not contain nCount column in `metrics()`")
+        return(NULL)
     }
 
     left_join(
@@ -75,13 +74,12 @@ NULL
         object = object,
         interestingGroups = interestingGroups
     )
-
-    # bcbio cell cutoff and inflection point values
-    cutoff <- metadata(object)[["cellularBarcodeCutoff"]]
-    if (!is.numeric(cutoff)) {
-        cutoff <- 0L
+    if (!is.data.frame(data)) {
+        return(invisible())
     }
-    inflection <- inflectionPoint(object)
+
+    cutoff <- metadata(object)[["cellularBarcodeCutoff"]]
+    assert_is_an_integer(cutoff)
 
     if (geom == "histogram") {
         sampleData <- sampleData(object, interestingGroups = interestingGroups)
@@ -92,28 +90,24 @@ NULL
         p <- .plotReadsPerCellHistogram(
             data = data,
             cutoff = cutoff,
-            inflection = inflection,
             color = color
         )
     } else if (geom == "ecdf") {
         p <- .plotReadsPerCellECDF(
             data = data,
             cutoff = cutoff,
-            inflection = inflection,
             color = color
         )
     } else if (geom == "ridgeline") {
         p <- .plotReadsPerCellRidgeline(
             data = data,
             cutoff = cutoff,
-            inflection = inflection,
             fill = fill
         )
     } else if (geom == "violin") {
         p <- .plotReadsPerCellViolin(
             data = data,
             cutoff = cutoff,
-            inflection = inflection,
             fill = fill
         )
     }
@@ -121,12 +115,10 @@ NULL
     # Add title and subtitle containing cutoff information
     p <- p +
         labs(
+            color = "",
+            fill = "",
             title = "reads per cell",
-            subtitle = paste(
-                paste("cutoff", cutoff, sep = " = "),
-                paste("inflection", inflection, sep = " = "),
-                sep = "\n"
-            )
+            subtitle = paste("cutoff", cutoff, sep = " = ")
         )
 
     p
@@ -138,11 +130,9 @@ NULL
 .plotReadsPerCellECDF <- function(
     data,
     cutoff = 0L,
-    inflection = 0L,
     color = scale_color_viridis(discrete = TRUE)
 ) {
     assert_is_a_number(cutoff)
-    assert_is_a_number(inflection)
     assertIsColorScaleDiscreteOrNULL(color)
 
     p <- ggplot(
@@ -158,13 +148,6 @@ NULL
     # Cutoff lines
     if (cutoff > 0L) {
         p <- p + .qcCutoffLine(xintercept = cutoff)
-    }
-    if (inflection > 0L) {
-        p <- p +
-            .qcCutoffLine(
-                xintercept = inflection,
-                color = inflectionColor
-            )
     }
 
     # Color palette
@@ -189,11 +172,9 @@ NULL
 .plotReadsPerCellViolin <- function(
     data,
     cutoff = 0L,
-    inflection = 0L,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
     assert_is_a_number(cutoff)
-    assert_is_a_number(inflection)
     assertIsFillScaleDiscreteOrNULL(fill)
 
     p <- ggplot(
@@ -216,13 +197,6 @@ NULL
     # Cutoff lines
     if (cutoff > 0L) {
         p <- p + .qcCutoffLine(yintercept = cutoff)
-    }
-    if (inflection > 0L) {
-        p <- p +
-            .qcCutoffLine(
-                yintercept = inflection,
-                color = inflectionColor
-            )
     }
 
     # Color palette
@@ -247,11 +221,9 @@ NULL
 .plotReadsPerCellRidgeline <- function(
     data,
     cutoff = 0L,
-    inflection = 0L,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
     assert_is_a_number(cutoff)
-    assert_is_a_number(inflection)
     assertIsFillScaleDiscreteOrNULL(fill)
 
     p <- ggplot(
@@ -274,13 +246,6 @@ NULL
     # Cutoff lines
     if (cutoff > 0L && length(cutoff)) {
         p <- p + .qcCutoffLine(xintercept = cutoff)
-    }
-    if (inflection > 0L) {
-        p <- p +
-            .qcCutoffLine(
-                xintercept = inflection,
-                color = inflectionColor
-            )
     }
 
     # Color palette
@@ -357,11 +322,9 @@ NULL
 .plotReadsPerCellHistogram <- function(
     data,
     cutoff = 0L,
-    inflection = 0L,
     color = scale_color_viridis(discrete = TRUE)
 ) {
     assert_is_a_number(cutoff)
-    assert_is_a_number(inflection)
     assertIsColorScaleDiscreteOrNULL(color)
 
     p <- ggplot(
@@ -384,13 +347,6 @@ NULL
     # Cutoff lines
     if (cutoff > 0L) {
         p <- p + .qcCutoffLine(xintercept = log10(cutoff))
-    }
-    if (inflection > 0L) {
-        p <- p +
-            .qcCutoffLine(
-                xintercept = log10(inflection),
-                color = inflectionColor
-            )
     }
 
     # Color palette
