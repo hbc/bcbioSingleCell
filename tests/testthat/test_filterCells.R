@@ -55,11 +55,11 @@ test_that("Per sample cutoffs", {
     # Get the count of sample1 (run1_AGAGGATA)
     # We're applying no filtering to that sample
     metrics <- metrics(bcb_small)
-    sampleID <- levels(metrics[["sampleID"]])[[1L]]
-    expect_identical(sampleID, "multiplexed_AAAAAAAA")
-    nCells <- length(which(metrics[["sampleID"]] == sampleID))
+    sample <- levels(metrics[["sampleID"]])[[1L]]
+    expect_identical(sample, "multiplexed_AAAAAAAA")
+    nCells <- length(which(metrics[["sampleID"]] == sample))
     x <- filterCells(
-        bcb_small,
+        object = bcb_small,
         minUMIs = c("multiplexed_AAAAAAAA" = 0L),
         maxUMIs = c("multiplexed_AAAAAAAA" = Inf),
         minGenes = c("multiplexed_AAAAAAAA" = 0L),
