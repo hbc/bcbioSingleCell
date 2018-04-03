@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot UMIs per Cell — plotUMIsPerCell • bcbioSingleCell</title>
+<title>Plot Cumulative Frequency of UMIs Per Cell — plotCumulativeUMIsPerCell • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,9 +27,10 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Plot UMIs per Cell — plotUMIsPerCell" />
+<meta property="og:title" content="Plot Cumulative Frequency of UMIs Per Cell — plotCumulativeUMIsPerCell" />
 
-<meta property="og:description" content="Plot the universal molecular identifiers (UMIs) per cell." />
+<meta property="og:description" content="Cumulative frequency plot that helps visualize the inflection point that is
+present in single-cell barcode distributions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -95,25 +96,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot UMIs per Cell</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotUMIsPerCell.R'><code>R/methods-plotUMIsPerCell.R</code></a></small>
+    <h1>Plot Cumulative Frequency of UMIs Per Cell</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotCumulativeUMIsPerCell.R'><code>R/methods-plotCumulativeUMIsPerCell.R</code></a></small>
     </div>
 
     
-    <p>Plot the universal molecular identifiers (UMIs) per cell.</p>
+    <p>Cumulative frequency plot that helps visualize the inflection point that is
+present in single-cell barcode distributions.</p>
     
 
-    <pre class="usage"><span class='fu'>plotUMIsPerCell</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>plotUMIsPerCell</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>,
-  <span class='st'>"boxplot"</span>, <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>), <span class='no'>interestingGroups</span>, <span class='no'>min</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+<span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>object</span>,
+  <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"identity"</span>, <span class='st'>"log10"</span>, <span class='st'>"log2"</span>, <span class='st'>"sqrt"</span>))
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotUMIsPerCell</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>, <span class='st'>"boxplot"</span>,
-  <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>), <span class='no'>interestingGroups</span>, <span class='no'>min</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
+<span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>object</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"identity"</span>,
+  <span class='st'>"log10"</span>, <span class='st'>"log2"</span>, <span class='st'>"sqrt"</span>))
+
+<span class='fu'>plotKnee</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,24 +129,9 @@
       <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
-      <th>geom</th>
-      <td><p>Plot type. Uses <code>match.arg()</code> internally and defaults to the
-first argument in the vector.</p></td>
-    </tr>
-    <tr>
-      <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td><p>Recommended minimum value cutoff.</p></td>
-    </tr>
-    <tr>
-      <th>fill</th>
-      <td><p>Desired ggplot fill scale. Must supply discrete values. When set
-to <code>NULL</code>, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
+      <th>trans</th>
+      <td><p>Name of the axis scale transformation to apply. See
+<code>help("scale_x_continuous", "ggplot2")</code> for more information.</p></td>
     </tr>
     </table>
     
@@ -152,25 +139,30 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
 
     <p><code>ggplot</code>.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>These calculates apply to all cellular barcodes in the dataset and are not
+grouped by sample.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Quality Control Functions: <code>inflectionPoint</code>,
   <code>plotCellCounts</code>,
-  <code>plotCumulativeUMIsPerCell</code>,
   <code>plotGenesPerCell</code>,
   <code>plotMitoRatio</code>,
   <code>plotMitoVsCoding</code>,
   <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
   <code><a href='plotQuantileHeatmap.html'>plotQuantileHeatmap</a></code>,
   <code>plotReadsPerCell</code>,
+  <code>plotUMIsPerCell</code>,
   <code>plotZerosVsDepth</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>plotUMIsPerCell</span>(<span class='no'>bcb_small</span>)</div><div class='img'><img src='plotUMIsPerCell-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>bcb_small</span>)</div><div class='img'><img src='plotCumulativeUMIsPerCell-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>cellranger_small</span>)</div><div class='img'><img src='plotCumulativeUMIsPerCell-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># seurat ====</span>
-<span class='fu'>plotUMIsPerCell</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotUMIsPerCell-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>pbmc_small</span>)</div><div class='img'><img src='plotUMIsPerCell-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotCumulativeUMIsPerCell-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>pbmc_small</span>)</div><div class='img'><img src='plotCumulativeUMIsPerCell-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -179,6 +171,8 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
@@ -186,7 +180,7 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
 
     <h2>Author</h2>
     
-Michael Steinbaugh, Rory Kirchner
+Michael Steinbaugh
 
   </div>
 </div>

@@ -95,13 +95,15 @@
 <a href="#load-bcbio-run" class="anchor"></a>Load <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> run</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(bcbioSingleCell)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/loadSingleCell.html">loadSingleCell</a></span>(</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">uploadDir =</span> <span class="st">"bcbio_indrop_rnaseq/final"</span>,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">uploadDir =</span> <span class="st">"bcbio_indrop/final"</span>,</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="dt">interestingGroups =</span> <span class="kw">c</span>(<span class="st">"genotype"</span>, <span class="st">"treatment"</span>),</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">sampleMetadataFile =</span> <span class="st">"meta/sample_metadata.xlsx"</span>,</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">sampleMetadataFile =</span> <span class="st">"sample_metadata.csv"</span>,</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
 <a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="dt">ensemblVersion =</span> 90L</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw">saveData</span>(bcb, <span class="dt">dir =</span> <span class="kw">file.path</span>(<span class="st">"data"</span>, <span class="kw">Sys.Date</span>()))</a></code></pre></div>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co"># Back up all data inside bcbioSingleCell object</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">flatFiles &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw">saveData</span>(bcb, flatFiles, <span class="dt">dir =</span> <span class="st">"data"</span>)</a></code></pre></div>
 <p>This will return a <code>bcbioSingleCell</code> object, which is an extension of the <a href="https://bioconductor.org">Bioconductor</a> <a href="https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment">SingleCellExperiment</a> container class.</p>
 <p>Parameters:</p>
 <ul>
@@ -276,8 +278,8 @@
 <div id="maximal-number-of-dlls-reached" class="section level3">
 <h3 class="hasAnchor">
 <a href="#maximal-number-of-dlls-reached" class="anchor"></a>Maximal number of DLLs reached</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Error<span class="op">:</span><span class="st"> </span>package or namespace load failed <span class="cf">for</span> <span class="st">'bcbioSingleCell'</span> <span class="cf">in</span> <span class="kw">dyn.load</span>(file, <span class="dt">DLLpath =</span> DLLpath, ...)<span class="op">:</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span>maximal number of DLLs reached...</a></code></pre></div>
+<pre><code>Error: package or namespace load failed for 'bcbioSingleCell' in dyn.load(file, DLLpath = DLLpath, ...):
+  maximal number of DLLs reached...</code></pre>
 <p>Depending on your operating system, you may encounter this error about hitting the DLL limit in <a href="https://www.r-project.org">R</a>. This issue is becoming more common as RNA-seq analysis packages grow increasingly complex. Luckily, we can configure <a href="https://www.r-project.org">R</a> to increase the DLL limit. Append this line to your <code>~/.Renviron</code> file:</p>
 <pre><code>R_MAX_NUM_DLLS=150</code></pre>
 <p>For more information on this issue, consult <code>help("dyn.load")</code> in the <a href="https://www.r-project.org">R</a> documentation. The number of loaded DLLs in an <a href="https://www.r-project.org">R</a> session can be obtained with <code>getLoadedDLLs()</code>.</p>

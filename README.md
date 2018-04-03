@@ -35,13 +35,15 @@ conda install -c bioconda r-bcbiosinglecell
 ```r
 library(bcbioSingleCell)
 bcb <- loadSingleCell(
-    uploadDir = "bcbio_indrop_rnaseq/final",
+    uploadDir = "bcbio_indrop/final",
     interestingGroups = c("genotype", "treatment"),
-    sampleMetadataFile = "meta/sample_metadata.xlsx",
+    sampleMetadataFile = "sample_metadata.csv",
     organism = "Homo sapiens",
     ensemblVersion = 90L
 )
-saveData(bcb, dir = file.path("data", Sys.Date()))
+# Back up all data inside bcbioSingleCell object
+flatFiles <- flatFiles(bcb)
+saveData(bcb, flatFiles, dir = "data")
 ```
 
 This will return a `bcbioSingleCell` object, which is an extension of the [Bioconductor][] [SingleCellExperiment][SCE] container class.
@@ -103,7 +105,7 @@ Use `sampleNameAggregate` to assign groupings for technical replicates:
 
 ### Maximal number of DLLs reached
 
-```r
+```
 Error: package or namespace load failed for 'bcbioSingleCell' in dyn.load(file, DLLpath = DLLpath, ...):
   maximal number of DLLs reached...
 ```

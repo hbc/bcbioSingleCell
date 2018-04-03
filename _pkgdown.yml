@@ -46,6 +46,7 @@ reference:
     - matches("[Mm]etrics")
   - title: Quality Control Functions
     contents:
+    - inflectionPoint
     - matches("QC")
   - title: Clustering Functions
     contents:

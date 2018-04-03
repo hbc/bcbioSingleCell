@@ -186,16 +186,16 @@ rownames of <code><a href='sampleData.html'>sampleData()</a></code>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>print</span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
+<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
 #&gt; samples: 1
 #&gt; cells: 500
 #&gt; genes: 500
 #&gt; organism: Homo sapiens
 #&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
 #&gt; bcbio date: 2018-01-01
-#&gt; load date: 2018-03-30</div><div class='input'><span class='fu'>filterCells</span>(<span class='no'>bcb_small</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Filtering parameters:
-#&gt;   - &gt;= 1000 UMI counts per cell
-#&gt;   - &lt;= Inf UMI counts per cell
+#&gt; R load date: 2018-03-30</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>bcb_small</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Filtering parameters:
+#&gt;   - &gt;= 1000 UMIs per cell
+#&gt;   - &lt;= Inf UMIs per cell
 #&gt;   - &gt;= 0 genes per cell
 #&gt;   - &lt;= Inf genes per cell
 #&gt;   - &lt;= 0.1 mitochondrial abundance
@@ -212,14 +212,14 @@ rownames of <code><a href='sampleData.html'>sampleData()</a></code>).</p>
 #&gt;      500 genes | minCellsPerGene &lt;= 3
 #&gt; ============================================================
 #&gt; 132 / 500 cells passed filtering (26.4%)
-#&gt; 500 / 500 genes passed filtering (100%)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
+#&gt; 500 / 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
 #&gt; samples: 1
 #&gt; cells: 132
 #&gt; genes: 500
 #&gt; organism: Homo sapiens
 #&gt; bcbio dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
 #&gt; bcbio date: 2018-01-01
-#&gt; load date: 2018-04-02</div></pre>
+#&gt; R load date: 2018-04-03</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
