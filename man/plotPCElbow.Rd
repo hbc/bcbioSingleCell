@@ -23,9 +23,8 @@ plotPCElbow(object, ...)
 
 \item{maxCumPct}{Maximum cumulative percent standard deviation.}
 
-\item{trans}{Name of the transformation to apply. Supports "\code{identity}"
-(unmodified) or "\code{sqrt}". See \code{\link[ggplot2:scale_y_continuous]{ggplot2::scale_y_continuous()}} for more
-information.}
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
 
 \item{plot}{Include plot.}
 }

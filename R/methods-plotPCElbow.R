@@ -14,9 +14,6 @@
 #' @param minPct Minimum percent standard deviation.
 #' @param maxCumPct Maximum cumulative percent standard deviation.
 #' @param plot Include plot.
-#' @param trans Name of the transformation to apply. Supports "`identity`"
-#'   (unmodified) or "`sqrt`". See [ggplot2::scale_y_continuous()] for more
-#'   information.
 #'
 #' @return
 #' - Show graphical output of elbow plots.

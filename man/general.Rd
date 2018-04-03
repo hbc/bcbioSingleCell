@@ -56,6 +56,9 @@ to the first argument in the vector.}
 
 \item{title}{Plot title.}
 
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
+
 \item{value}{Object to assign.}
 
 \item{x}{Primary object.}

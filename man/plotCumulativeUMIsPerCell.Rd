@@ -24,6 +24,9 @@ plotKnee(...)
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
+
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
 }
 \value{
 \code{ggplot}.

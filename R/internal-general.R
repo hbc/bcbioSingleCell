@@ -34,6 +34,8 @@
 #' @param return Return type. Uses [base::match.arg()] internally and defaults
 #'   to the first argument in the vector.
 #' @param title Plot title.
+#' @param trans Name of the axis scale transformation to apply. See
+#'   `help("scale_x_continuous", "ggplot2")` for more information.
 #' @param value Object to assign.
 #' @param x Primary object.
 #' @param y Secondary object.
