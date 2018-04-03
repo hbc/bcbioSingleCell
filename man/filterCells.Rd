@@ -9,8 +9,8 @@
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{bcbioSingleCell}(object, minUMI = 1000L,
-  maxUMI = Inf, minGenes = 500L, maxGenes = Inf, maxMitoRatio = 0.1,
+\S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000L,
+  maxUMIs = Inf, minGenes = 500L, maxGenes = Inf, maxMitoRatio = 0.1,
   minNovelty = 0.75, minCellsPerGene = 3L)
 }
 \arguments{
@@ -18,9 +18,9 @@ filterCells(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{minUMI}{Minimum number of UMI disambiguated counts per cell.}
+\item{minUMIs}{Minimum number of UMI disambiguated counts per cell.}
 
-\item{maxUMI}{Maximum number of UMI disambiguated counts per cell.}
+\item{maxUMIs}{Maximum number of UMI disambiguated counts per cell.}
 
 \item{minGenes}{Minimum number of genes detected.}
 

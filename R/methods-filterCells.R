@@ -13,8 +13,8 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param minUMI Minimum number of UMI disambiguated counts per cell.
-#' @param maxUMI Maximum number of UMI disambiguated counts per cell.
+#' @param minUMIs Minimum number of UMI disambiguated counts per cell.
+#' @param maxUMIs Maximum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.
 #' @param maxGenes Maximum number of genes detected.
 #' @param maxMitoRatio Maximum relative mitochondrial abundance (`0-1` scale).
@@ -39,8 +39,8 @@ NULL
 # Constructors =================================================================
 .filterCells <- function(
     object,
-    minUMI = 1000L,
-    maxUMI = Inf,
+    minUMIs = 1000L,
+    maxUMIs = Inf,
     minGenes = 500L,
     maxGenes = Inf,
     maxMitoRatio = 0.1,
@@ -51,23 +51,10 @@ NULL
     metrics <- metrics(object)
     samples <- levels(metrics[["sampleID"]])
 
-    # Legacy arguments =========================================================
-    call <- match.call(expand.dots = TRUE)
-    # maxUMIs
-    if ("maxUMIs" %in% names(call)) {
-        warn("Use `maxUMI` instead of `maxUMIs`")
-        maxUMI <- call[["maxUMIs"]]
-    }
-    # minUMIs
-    if ("minUMIs" %in% names(call)) {
-        warn("Use `minUMI` instead of `minUMIs`")
-        minUMI <- call[["minUMIs"]]
-    }
-
     # Parameter integrity checks ===============================================
     params <- list(
-        minUMI = minUMI,
-        maxUMI = maxUMI,
+        minUMIs = minUMIs,
+        maxUMIs = maxUMIs,
         minGenes = minGenes,
         maxGenes = maxGenes,
         maxMitoRatio = maxMitoRatio,
@@ -85,13 +72,13 @@ NULL
         ncol(object), "cells"
     )
 
-    # minUMI -------------------------------------------------------------------
-    if (!is.null(names(minUMI))) {
+    # minUMIs ------------------------------------------------------------------
+    if (!is.null(names(minUMIs))) {
         # Per sample mode
-        assert_is_subset(names(minUMI), samples)
+        assert_is_subset(names(minUMIs), samples)
         list <- mapply(
-            sample = names(minUMI),
-            cutoff = minUMI,
+            sample = names(minUMIs),
+            cutoff = minUMIs,
             FUN = function(sample, cutoff) {
                 metrics %>%
                     .[.[["sampleID"]] == sample, , drop = FALSE] %>%
@@ -103,22 +90,22 @@ NULL
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
-            .[.[["nUMI"]] >= minUMI, , drop = FALSE]
+            .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
     }
     assert_has_rows(metrics)
-    summary[["minUMI"]] <- paste(
+    summary[["minUMIs"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
         "|",
-        paste("minUMI", ">=", toString(minUMI))
+        paste("minUMIs", ">=", toString(minUMIs))
     )
 
-    # maxUMI -------------------------------------------------------------------
-    if (!is.null(names(maxUMI))) {
+    # maxUMIs ------------------------------------------------------------------
+    if (!is.null(names(maxUMIs))) {
         # Per sample mode
-        assert_is_subset(names(maxUMI), samples)
+        assert_is_subset(names(maxUMIs), samples)
         list <- mapply(
-            sample = names(maxUMI),
-            cutoff = maxUMI,
+            sample = names(maxUMIs),
+            cutoff = maxUMIs,
             FUN = function(sample, cutoff) {
                 metrics %>%
                     .[.[["sampleID"]] == sample, , drop = FALSE] %>%
@@ -130,13 +117,13 @@ NULL
     } else {
         # Fixed cutoff value
         metrics <- metrics %>%
-            .[.[["nUMI"]] <= maxUMI, , drop = FALSE]
+            .[.[["nUMI"]] <= maxUMIs, , drop = FALSE]
     }
     assert_has_rows(metrics)
-    summary[["maxUMI"]] <- paste(
+    summary[["maxUMIs"]] <- paste(
         paste(.paddedCount(nrow(metrics)), "cells"),
         "|",
-        paste("maxUMI", "<=", toString(maxUMI))
+        paste("maxUMIs", "<=", toString(maxUMIs))
     )
 
     # minGenes -----------------------------------------------------------------
@@ -267,8 +254,8 @@ NULL
 
     # Summary ==================================================================
     printParams <- c(
-        paste(">=", toString(minUMI), "UMI per cell"),
-        paste("<=", toString(maxUMI), "UMI per cell"),
+        paste(">=", toString(minUMIs), "UMIs per cell"),
+        paste("<=", toString(maxUMIs), "UMIs per cell"),
         paste(">=", toString(minGenes), "genes per cell"),
         paste("<=", toString(maxGenes), "genes per cell"),
         paste("<=", toString(maxMitoRatio), "mitochondrial abundance"),
