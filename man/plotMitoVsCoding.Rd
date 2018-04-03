@@ -45,7 +45,7 @@ plotMitoVsCoding(seurat_small)
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeReadsPerCell}},
+  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
   \code{\link{plotQC}}, \code{\link{plotQuantileHeatmap}},
