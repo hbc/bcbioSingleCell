@@ -23,9 +23,9 @@ NULL
 # Constructors =================================================================
 .inflectionPoint <- function(object) {
     validObject(object)
-    data <- .readsPerCell(object)
-    assert_is_subset("nCount", colnames(data))
-    counts <- sort(data[["nCount"]])
+    metrics <- metrics(object)
+    assert_is_subset("nUMI", colnames(metrics))
+    counts <- sort(metrics[["nUMI"]])
 
     # Trigonometric calculations
     xdata <- seq_along(counts) / length(counts)
@@ -43,7 +43,9 @@ NULL
     )
 
     # Return the inflection point as the expression value
-    counts[which.max(dists)]
+    inflection <- counts[which.max(dists)]
+    names(inflection) <- "nUMI"
+    inflection
 }
 
 
