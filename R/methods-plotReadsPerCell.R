@@ -15,7 +15,7 @@
 #' plotReadsPerCell(bcb_small)
 #'
 #' # seurat ====
-#' plotReadsPerCell(bcb_small)
+#' plotReadsPerCell(seurat_small)
 NULL
 
 

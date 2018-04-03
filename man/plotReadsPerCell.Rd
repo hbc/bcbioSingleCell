@@ -51,7 +51,7 @@ Plot the distribution of read counts for all unfiltered cellular barcodes.
 plotReadsPerCell(bcb_small)
 
 # seurat ====
-plotReadsPerCell(pbmc_small)
+plotReadsPerCell(seurat_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},
