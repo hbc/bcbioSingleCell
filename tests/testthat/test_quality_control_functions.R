@@ -39,5 +39,11 @@ test_that("plotReadsPerCell : bcbioSingleCell", {
 
 test_that("plotReadsPerCell : seurat", {
     p <- plotReadsPerCell(seurat_small)
-    expect_is(p, "NULL")
+    expect_is(p, "ggplot")
+
+    # seurat object not created by bcbioSingleCell
+    expect_warning(
+        plotReadsPerCell(pbmc_small),
+        "object does not contain nCount column in `metrics\\(\\)`"
+    )
 })
