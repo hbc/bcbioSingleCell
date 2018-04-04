@@ -1,14 +1,3 @@
-#' @rdname calculateMetrics
-#' @export
-setGeneric(
-    "calculateMetrics",
-    function(object, ...) {
-        standardGeneric("calculateMetrics")
-    }
-)
-
-
-
 #' @rdname cell2sample
 #' @export
 setGeneric(

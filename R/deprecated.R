@@ -110,7 +110,16 @@ readMarkersFile <- function(...) {
 
 
 
-# V0.1.0 =======================================================================
+# v0.1.0 =======================================================================
+#' @rdname deprecated
+#' @export
+calculateMetrics <- function(...) {
+    .Deprecated("metrics")
+    metrics(...)
+}
+
+
+
 #' @rdname deprecated
 #' @export
 readCellTypeMarkersFile <- function(...) {
