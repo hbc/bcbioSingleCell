@@ -19,10 +19,12 @@ test_that("plotCellCounts : seurat", {
 test_that("plotCellTypesPerCluster : seurat", {
     x <- cellTypesPerCluster(known_markers_small)[1L, , drop = FALSE]
     expect_identical(x[["geneName"]], "NCAM1")
-    p <- plotCellTypesPerCluster(
-        object = seurat_small,
-        cellTypesPerCluster = x
-    )
+    invisible(capture.output(
+        p <- plotCellTypesPerCluster(
+            object = seurat_small,
+            cellTypesPerCluster = x
+        )
+    ))
     expect_is(p, "list")
     expect_is(p[[1L]][[1L]], "ggplot")
 })
@@ -52,10 +54,12 @@ test_that("plotFeatureTSNE : seurat", {
 
 # plotKnownMarkersDetected =====================================================
 test_that("plotKnownMarkersDetected : seurat", {
-    p <- plotKnownMarkersDetected(
-        object = seurat_small,
-        markers = known_markers_small
-    )
+    invisible(capture.output(
+        p <- plotKnownMarkersDetected(
+            object = seurat_small,
+            markers = known_markers_small
+        )
+    ))
     expect_is(p, "list")
 })
 
@@ -79,10 +83,12 @@ test_that("plotMarkerTSNE : seurat", {
 # plotMarkers ==================================================================
 test_that("plotMarkers : seurat", {
     genes <- head(rownames(seurat_small), n = 2L)
-    plotlist <- plotMarkers(
-        object = seurat_small,
-        genes = genes
-    )
+    invisible(capture.output(
+        plotlist <- plotMarkers(
+            object = seurat_small,
+            genes = genes
+        )
+    ))
     expect_is(plotlist, "list")
     expect_identical(length(plotlist), 2L)
     expect_identical(names(plotlist), names(genes))
@@ -258,7 +264,9 @@ test_that("plotTopMarkers : seurat", {
     expect_is(top, "grouped_df")
     expect_identical(nrow(top), 5L)
     top <- top[seq_len(2L), ]
-    x <- plotTopMarkers(seurat_small, topMarkers = top)
+    invisible(capture.output(
+        x <- plotTopMarkers(seurat_small, topMarkers = top)
+    ))
     expect_is(x, "list")
     expect_is(x[[1L]][[1L]], "ggplot")
 })

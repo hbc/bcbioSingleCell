@@ -85,7 +85,9 @@ test_that("sanitizeMarkers : seurat", {
     )
 
     # FindAllMarkers
-    all <- FindAllMarkers(seurat_small)
+    invisible(capture.output(
+        all <- FindAllMarkers(seurat_small)
+    ))
     x <- sanitizeMarkers(
         object = seurat_small,
         markers = all
@@ -93,7 +95,9 @@ test_that("sanitizeMarkers : seurat", {
     expect_is(x, "grouped_df")
 
     # FindMarkers
-    ident3 <- FindMarkers(seurat_small, ident.1 = "3", ident.2 = NULL)
+    invisible(capture.output(
+        ident3 <- FindMarkers(seurat_small, ident.1 = "3", ident.2 = NULL)
+    ))
     x <- sanitizeMarkers(
         object = seurat_small,
         markers = ident3
