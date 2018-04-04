@@ -6,7 +6,7 @@
 #' the samples.
 #'
 #' @name sampleData
-#' @family Data Functions
+#' @family S4 Class Definitions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase sampleData
