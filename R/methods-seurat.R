@@ -67,6 +67,52 @@ setMethod(
 
 
 #' @rdname seurat
+#' @importFrom bcbioBase interestingGroups
+#' @export
+#' @examples
+#' # interestingGroups ====
+#' interestingGroups(seurat_small)
+#' interestingGroups(seurat_small) <- "sampleID"
+#' interestingGroups(seurat_small)
+setMethod(
+    "interestingGroups",
+    signature("seurat"),
+    function(object) {
+        validObject(object)
+        x <- metadata(object)[["interestingGroups"]]
+        if (is.null(x)) {
+            x <- "sampleName"
+        }
+        x
+    }
+)
+
+#' @rdname seurat
+#' @importFrom bcbioBase interestingGroups<-
+#' @export
+setMethod(
+    "interestingGroups<-",
+    signature(
+        object = "seurat",
+        value = "character"
+    ),
+    function(object, value) {
+        assertFormalInterestingGroups(
+            x = sampleData(object),
+            interestingGroups = value
+        )
+        if (is.null(metadata(object))) {
+            abort("object was not created with bcbioSingleCell")
+        }
+        metadata(object)[["interestingGroups"]] <- value
+        validObject(object)
+        object
+    }
+)
+
+
+
+#' @rdname seurat
 #' @export
 #' @examples
 #' # metadata ====
