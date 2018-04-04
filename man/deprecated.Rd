@@ -12,6 +12,7 @@
 \alias{plotKnownMarkers}
 \alias{readMarkers}
 \alias{readMarkersFile}
+\alias{calculateMetrics}
 \alias{readCellTypeMarkersFile}
 \title{Deprecated Functions}
 \usage{
@@ -34,6 +35,8 @@ plotKnownMarkers(object, knownMarkers, ...)
 readMarkers(...)
 
 readMarkersFile(...)
+
+calculateMetrics(...)
 
 readCellTypeMarkersFile(...)
 }

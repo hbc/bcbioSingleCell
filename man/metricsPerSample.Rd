@@ -34,7 +34,6 @@ metricsPerSample(seurat_small)
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{calculateMetrics}},
   \code{\link{cell2sample}}, \code{\link{counts}},
   \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
   \code{\link{fetchTSNEData}},

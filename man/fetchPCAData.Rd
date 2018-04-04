@@ -30,7 +30,6 @@ fetchPCAData(pbmc_small) \%>\% glimpse()
 \code{\link[Seurat:PCAPlot]{Seurat::PCAPlot()}}.
 
 Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{calculateMetrics}},
   \code{\link{cell2sample}}, \code{\link{counts}},
   \code{\link{fetchGeneData}}, \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},

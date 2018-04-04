@@ -3,19 +3,20 @@
 \docType{methods}
 \name{sampleData}
 \alias{sampleData}
-\alias{sampleData,bcbioSingleCell-method}
+\alias{sampleData,SingleCellExperiment-method}
 \alias{sampleData,seurat-method}
 \title{Sample Data}
 \usage{
-\S4method{sampleData}{bcbioSingleCell}(object, interestingGroups)
+\S4method{sampleData}{SingleCellExperiment}(object, return = c("DataFrame",
+  "data.frame", "kable"))
 
-\S4method{sampleData}{seurat}(object, interestingGroups)
+\S4method{sampleData}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
+to the first argument in the vector.}
 }
 \value{
 \code{data.frame}.
@@ -35,7 +36,6 @@ sampleData(pbmc_small) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{calculateMetrics}},
   \code{\link{cell2sample}}, \code{\link{counts}},
   \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
   \code{\link{fetchTSNEData}},

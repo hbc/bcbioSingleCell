@@ -32,7 +32,6 @@ counts(pbmc_small, normalized = TRUE) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{calculateMetrics}},
   \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
   \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},

@@ -3,19 +3,23 @@
 \docType{methods}
 \name{metrics}
 \alias{metrics}
-\alias{metrics,bcbioSingleCell-method}
+\alias{metrics,dgCMatrix-method}
+\alias{metrics,SingleCellExperiment-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{bcbioSingleCell}(object, interestingGroups)
+\S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = TRUE)
 
-\S4method{metrics}{seurat}(object, interestingGroups)
+\S4method{metrics}{SingleCellExperiment}(object)
+
+\S4method{metrics}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{rowData}{Data describing the rows of the object.}
+
+\item{prefilter}{Whether to apply pre-filtering to the cellular barcodes.}
 }
 \value{
 \code{data.frame} with cellular barcodes as rows.
@@ -30,12 +34,13 @@ metrics(bcb_small) \%>\% glimpse()
 # seurat ====
 metrics(seurat_small) \%>\% glimpse()
 metrics(pbmc_small) \%>\% glimpse()
+
+# dgCMatrix ====
+mat <- counts(bcb_small)
+metrics(mat) \%>\% glimpse()
 }
 \seealso{
-\code{\link[=sampleData]{sampleData()}}.
-
 Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{calculateMetrics}},
   \code{\link{cell2sample}}, \code{\link{counts}},
   \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
   \code{\link{fetchTSNEData}},
