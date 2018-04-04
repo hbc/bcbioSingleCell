@@ -52,8 +52,6 @@ Depends:
 Imports:
     Biobase,
     BiocGenerics,
-    BiocParallel,
-    DESeq2 (>= 1.18),
     GenomicFeatures,
     Matrix (>= 1.0),
     Matrix.utils,
@@ -62,11 +60,11 @@ Imports:
     assertive,
     basejump (>= 0.4),
     cowplot,
-    dendsort,
     dplyr (>= 0.7),
     edgeR (>= 3.20.9),
     ggplot2 (>= 2.2.1),
     ggridges,
+    graphics,
     grid,
     jsonlite,
     knitr,
@@ -74,7 +72,6 @@ Imports:
     methods,
     parallel,
     pbapply,
-    pheatmap,
     readr,
     rlang,
     scales,
@@ -84,10 +81,10 @@ Imports:
     tidyr,
     utils,
     viridis,
-    zinbwave (>= 1.0),
     zingeR (>= 0.1)
 Suggests:
     BiocStyle,
+    DESeq2,
     googlesheets,
     lintr,
     monocle,
@@ -95,7 +92,8 @@ Suggests:
     roxygen2,
     sessioninfo,
     testthat,
-    tidyverse
+    tidyverse,
+    zinbwave
 Remotes:
     hbc/bcbioBase,
     statOmics/zingeR,
@@ -104,7 +102,6 @@ biocViews:
     DataImport,
     DataRepresentation,
     GeneExpression,
-    Infrastructure,
     QualityControl,
     ReportWriting,
     RNASeq,
