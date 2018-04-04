@@ -11,8 +11,8 @@
 #' plotUMIsVsGenes(bcb_small)
 #'
 #' # seurat ====
-#' plotUMIsVsGenes(pbmc_small)
 #' plotUMIsVsGenes(seurat_small)
+#' plotUMIsVsGenes(pbmc_small)
 NULL
 
 
