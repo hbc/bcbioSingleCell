@@ -9,22 +9,6 @@
 #' @inheritParams general
 #'
 #' @return Match `SummarizedExperiment` method return.
-#'
-#' @examples
-#' # assay ====
-#' assay(pbmc_small) %>% glimpse()
-#'
-#' # dimensions ====
-#' rownames(pbmc_small) %>% head()
-#' colnames(pbmc_small) %>% head()
-#'
-#' # metadata ====
-#' # Only works for objects created with bcbioSingleCell
-#' names(metadata(seurat_small))
-#'
-#' # Assignment method support
-#' metadata(seurat_small)[["stash"]] <- "XXX"
-#' metadata(seurat_small)[["stash"]]
 NULL
 
 
@@ -33,6 +17,9 @@ NULL
 #' @rdname seurat
 #' @importFrom SummarizedExperiment assay
 #' @export
+#' @examples
+#' # assay ====
+#' assay(pbmc_small) %>% glimpse()
 setMethod(
     "assay",
     signature("seurat"),
@@ -46,6 +33,9 @@ setMethod(
 #' @rdname seurat
 #' @importFrom BiocGenerics colnames
 #' @export
+#' @examples
+#' # colnames ====
+#' colnames(pbmc_small) %>% head()
 setMethod(
     "colnames",
     signature("seurat"),
@@ -57,7 +47,32 @@ setMethod(
 
 
 #' @rdname seurat
+#' @importFrom bcbioBase gene2symbol
 #' @export
+#' @examples
+#' # gene2symbol ====
+#' gene2symbol(seurat_small) %>% glimpse()
+setMethod(
+    "gene2symbol",
+    signature("seurat"),
+    function(object) {
+        rowData <- rowData(object)
+        assert_is_non_empty(rowData)
+        cols <- c("geneID", "geneName")
+        assert_is_subset(cols, colnames(rowData))
+        rowData[, cols]
+    }
+)
+
+
+
+#' @rdname seurat
+#' @export
+#' @examples
+#' # metadata ====
+#' names(metadata(seurat_small))
+#' metadata(seurat_small)[["stash"]] <- "XXX"
+#' metadata(seurat_small)[["stash"]]
 setMethod(
     "metadata",
     signature("seurat"),
@@ -68,20 +83,6 @@ setMethod(
 
 
 
-#' @rdname seurat
-#' @importFrom BiocGenerics rownames
-#' @export
-setMethod(
-    "rownames",
-    signature("seurat"),
-    function(x) {
-        rownames(counts(x))
-    }
-)
-
-
-
-# Assignment methods ===========================================================
 #' @rdname seurat
 #' @seealso `getMethod("metadata<-", "Annotated")`
 #' @export
@@ -100,5 +101,21 @@ setMethod(
         }
         bcbio(x, "metadata") <- value
         x
+    }
+)
+
+
+
+#' @rdname seurat
+#' @importFrom BiocGenerics rownames
+#' @export
+#' @examples
+#' # rownames ====
+#' rownames(pbmc_small) %>% head()
+setMethod(
+    "rownames",
+    signature("seurat"),
+    function(x) {
+        rownames(counts(x))
     }
 )

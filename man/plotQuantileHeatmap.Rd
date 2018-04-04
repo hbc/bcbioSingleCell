@@ -6,9 +6,9 @@
 \alias{plotQuantileHeatmap,seurat-method}
 \title{Plot Heatmap with Quantile Breaks}
 \usage{
-\S4method{plotQuantileHeatmap}{seurat}(object, n = 5L, annotationCol = NA,
-  clusterCols = FALSE, clusterRows = FALSE, color = viridis,
-  legendColor = viridis, title = NULL, ...)
+\S4method{plotQuantileHeatmap}{seurat}(object, n = 5L, annotationCol,
+  clusterCols = TRUE, clusterRows = TRUE, color = viridis,
+  legendColor = viridis, borderColor = NULL, title = NULL, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -30,12 +30,15 @@ palette.}
 \item{legendColor}{Colors to use for legend labels. Defaults to the
 \code{\link[=viridis]{viridis()}} palette.}
 
+\item{borderColor}{Border color.}
+
 \item{title}{\emph{Optional.} Plot title.}
 
-\item{...}{Passthrough arguments to \code{\link[pheatmap:pheatmap]{pheatmap::pheatmap()}}.}
+\item{...}{Passthrough arguments to \code{\link[pheatmap:pheatmap]{pheatmap::pheatmap()}}. The names of the
+arguments must be formatted in camel case, not snake case.}
 }
 \value{
-Show heatmap. Invisibly return \code{list} containing breaks and \code{gtable}.
+Show heatmap and invisibly return a \code{list} of the components.
 }
 \description{
 Plot Heatmap with Quantile Breaks

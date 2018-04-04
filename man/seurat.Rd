@@ -5,23 +5,28 @@
 \alias{seurat}
 \alias{assay,seurat,ANY-method}
 \alias{colnames,seurat-method}
+\alias{gene2symbol,seurat-method}
 \alias{metadata,seurat-method}
-\alias{rownames,seurat-method}
 \alias{metadata<-,seurat-method}
+\alias{rownames,seurat-method}
 \title{Extend S4 Methods for \code{seurat} Objects}
 \usage{
 \S4method{assay}{seurat,ANY}(x)
 
 \S4method{colnames}{seurat}(x)
 
+\S4method{gene2symbol}{seurat}(object)
+
 \S4method{metadata}{seurat}(x)
 
-\S4method{rownames}{seurat}(x)
-
 \S4method{metadata}{seurat}(x) <- value
+
+\S4method{rownames}{seurat}(x)
 }
 \arguments{
 \item{x}{Primary object.}
+
+\item{object}{Object.}
 
 \item{value}{Object to assign.}
 }
@@ -34,18 +39,16 @@ Provide \code{SummarizedExperiment} method support.
 \examples{
 # assay ====
 assay(pbmc_small) \%>\% glimpse()
-
-# dimensions ====
-rownames(pbmc_small) \%>\% head()
+# colnames ====
 colnames(pbmc_small) \%>\% head()
-
+# gene2symbol ====
+gene2symbol(seurat_small) \%>\% glimpse()
 # metadata ====
-# Only works for objects created with bcbioSingleCell
 names(metadata(seurat_small))
-
-# Assignment method support
 metadata(seurat_small)[["stash"]] <- "XXX"
 metadata(seurat_small)[["stash"]]
+# rownames ====
+rownames(pbmc_small) \%>\% head()
 }
 \seealso{
 \code{getMethod("metadata<-", "Annotated")}
