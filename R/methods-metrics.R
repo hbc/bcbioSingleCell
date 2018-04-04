@@ -98,7 +98,7 @@ NULL
 
 
 
-.metrics.SE <- function(object) {  # nolint
+.metrics.SCE <- function(object) {  # nolint
     interestingGroups <- interestingGroups(object)
     sampleData <- sampleData(object)
     colData <- colData(object)
@@ -150,7 +150,7 @@ setMethod(
 setMethod(
     "metrics",
     signature("SingleCellExperiment"),
-    .metrics.SE
+    .metrics.SCE
 )
 
 
@@ -161,7 +161,7 @@ setMethod(
     "metrics",
     signature("seurat"),
     function(object) {
-        data <- .metrics.SE(object)
+        data <- .metrics.SCE(object)
         # Ensure ident column is added
         assert_are_disjoint_sets(colnames(data), "ident")
         ident <- slot(object, "ident")
