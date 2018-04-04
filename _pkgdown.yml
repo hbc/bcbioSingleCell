@@ -1,10 +1,6 @@
-template:
-    params:
-        bootswatch: readable
-
 authors:
     Michael Steinbaugh:
-        href: http://steinbaugh.com
+        href: https://steinbaugh.com
     Rory Kirchner:
         href: https://github.com/roryk
     Mary Piper:
