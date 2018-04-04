@@ -37,7 +37,7 @@
         camel() %>%
         # Move rownames before performing tidyverse operations
         rownames_to_column() %>%
-        .sanitizeMetrics() %>%
+        .tidyMetrics() %>%
         # Group by ident here for center calculations
         group_by(!!sym("ident")) %>%
         mutate(
