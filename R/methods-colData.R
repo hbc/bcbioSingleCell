@@ -1,7 +1,10 @@
 #' Column Data
 #'
+#' @name colData
 #' @family S4 Class Definition
 #' @author Michael Steinbaugh
+#'
+#' @importFrom SummarizedExperiment colData
 #'
 #' @inheritParams general
 #'
@@ -20,7 +23,9 @@ setMethod(
     signature("bcbioSingleCell"),
     function(x) {
         colData <- slot(x, "colData")
-        sampleID <- DataFrame("sampleID" = cell2sample(x))
+        cell2sample <- metadata(x)[["cell2sample"]]
+        assert_is_factor(cell2sample)
+        sampleID <- DataFrame("sampleID" = cell2sample)
         colData <- cbind(colData, sampleID)
         colData[["rowname"]] <- rownames(colData)
         sampleData <- as(metadata(x)[["sampleData"]], "DataFrame")

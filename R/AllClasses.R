@@ -33,7 +33,6 @@ setValidity(
     function(object) {
         stopifnot(metadata(object)[["version"]] >= 0.1)
         assert_is_all_of(object, "SingleCellExperiment")
-        assert_has_dimnames(object)
         stopifnot(!.hasSlot(object, "bcbio"))
 
         # Assays ===============================================================
@@ -51,7 +50,7 @@ setValidity(
         # Column data ==========================================================
         # Check that all of the columns are numeric
         colDataCheck <- vapply(
-            X = colData(object),
+            X = slot(object, "colData"),
             FUN = is.numeric,
             FUN.VALUE = logical(1L),
             USE.NAMES = TRUE

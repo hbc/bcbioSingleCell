@@ -68,7 +68,7 @@ setAs(
         rownames(rawData) <- rownames
 
         # Prepare metadata data.frame
-        metaData <- as.data.frame(colData(from))
+        metaData <- as.data.frame(slot(from, "colData"))
 
         # New seurat object
         seurat <- CreateSeuratObject(
