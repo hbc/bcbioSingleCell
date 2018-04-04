@@ -158,18 +158,34 @@ setMethod(
 #' @export
 #' @examples
 #' # rowData ====
-#' rowData(pbmc_small) %>% glimpse()
 #' rowData(seurat_small) %>% glimpse()
+#' rowData(pbmc_small) %>% glimpse()
 setMethod(
     "rowData",
     signature("seurat"),
     function(x) {
-        rowRanges <- bcbio(x, "rowRanges")
+        rowRanges <- rowRanges(x)
         if (is(rowRanges, "GRanges")) {
             as(rowRanges, "DataFrame")
         } else {
             NULL
         }
+    }
+)
+
+
+
+#' @rdname seurat
+#' @export
+#' @examples
+#' # rowRanges ====
+#' rowRanges(seurat_small) %>% glimpse()
+#' rowRanges(pbmc_small) %>% glimpse()
+setMethod(
+    "rowRanges",
+    signature("seurat"),
+    function(x) {
+        bcbio(x, "rowRanges")
     }
 )
 
