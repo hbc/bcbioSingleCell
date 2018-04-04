@@ -1,5 +1,8 @@
-context("prepareSingleCellTemplate")
+context("R Markdown Functions")
 
+
+
+# prepareSingleCellTemplate ====================================================
 test_that("prepareSingleCellTemplate", {
     files <- c(
         "_footer.Rmd",
