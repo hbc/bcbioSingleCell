@@ -21,6 +21,8 @@ plotKnownMarkersDetected(object, ...)
 
 \item{...}{Additional arguments.}
 
+\item{markers}{\code{grouped_df} of known marker genes.}
+
 \item{tsneColor}{Color palette to use for tSNE plot.}
 
 \item{violinFill}{Color palette to use for violin plot.}
@@ -32,8 +34,6 @@ plotKnownMarkersDetected(object, ...)
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{headerLevel}{R Markdown header level.}
-
-\item{knownMarkersDetected}{\code{grouped_df}.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.

@@ -6,7 +6,7 @@
 #'
 #' @inheritParams plotMarkers
 #' @inheritParams general
-#' @param knownMarkersDetected `grouped_df`.
+#' @param markers `grouped_df` of known marker genes.
 #'
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
