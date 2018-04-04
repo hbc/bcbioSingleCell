@@ -31,41 +31,6 @@ setMethod(
 
 
 #' @rdname seurat
-#' @export
-#' @examples
-#' # seurat ====
-#' colData(pbmc_small)
-setMethod(
-    "colData",
-    signature("seurat"),
-    function(x) {
-        data <- slot(x, "meta.data")
-        assert_is_data.frame(data)
-        # Sanitize column names
-        data <- camel(data)
-
-        # Legacy: ensure colData doesn't contain sample metadata
-        meta <- sampleData(x)
-        drop <- intersect(
-            x = colnames(data),
-            y = c(colnames(meta), "cellularBarcode")
-        )
-        if (length(drop)) {
-            data <- data[, setdiff(colnames(data), drop)]
-        }
-
-        data %>%
-            rownames_to_column() %>%
-            mutate_if(is.character, as.factor) %>%
-            mutate_if(is.factor, droplevels) %>%
-            column_to_rownames() %>%
-            as("DataFrame")
-    }
-)
-
-
-
-#' @rdname seurat
 #' @importFrom BiocGenerics colnames
 #' @export
 #' @examples
