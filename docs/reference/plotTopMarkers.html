@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -97,15 +97,16 @@
     <div class="page-header">
     <h1>Plot Top Markers</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotTopMarkers.R'><code>R/methods-plotTopMarkers.R</code></a></small>
+    <p class="hidden name"><code>plotTopMarkers.Rd</code></p>
     </div>
 
     
     <p>Plot Top Markers</p>
     
 
-    <pre class="usage"><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for seurat,grouped_df</span>
+<span class='co'># S4 method for seurat</span>
 <span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>,
   <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
   <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
@@ -120,13 +121,13 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
+    </tr>
+    <tr>
       <th>topMarkers</th>
       <td><p><code>grouped_df</code> grouped by "<code>cluster</code>", returned by
 <code>topMarkers()</code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>tsneColor</th>
@@ -179,7 +180,7 @@ for the number of genes to plot here in a future update.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># seurat, grouped_df ====</span>
+    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
 <span class='fu'>plotTopMarkers</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
     <span class='kw'>topMarkers</span> <span class='kw'>=</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
@@ -190,21 +191,21 @@ for the number of genes to plot here in a future update.</p>
 #&gt; 
 #&gt; 
 #&gt; ### COL1A2
-#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~09s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~07s          
 #&gt; 
 #&gt; ## Cluster 1 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### S100A10
-#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~09s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~07s          
 #&gt; 
 #&gt; ## Cluster 2 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### MYL4
-#&gt; </div><div class='img'><img src='plotTopMarkers-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++                    | 60% ~06s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++                    | 60% ~05s          
 #&gt; 
 #&gt; ## Cluster 3 {.tabset}
 #&gt; 
@@ -218,7 +219,7 @@ for the number of genes to plot here in a future update.</p>
 #&gt; 
 #&gt; 
 #&gt; ### H3F3A
-#&gt; </div><div class='img'><img src='plotTopMarkers-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 17s</div></pre>
+#&gt; </div><div class='img'><img src='plotTopMarkers-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 13s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -243,7 +244,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

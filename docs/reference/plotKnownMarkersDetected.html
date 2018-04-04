@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -97,17 +97,18 @@
     <div class="page-header">
     <h1>Plot Known Markers Detected</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotKnownMarkersDetected.R'><code>R/methods-plotKnownMarkersDetected.R</code></a></small>
+    <p class="hidden name"><code>plotKnownMarkersDetected.Rd</code></p>
     </div>
 
     
     <p>Plot Known Markers Detected</p>
     
 
-    <pre class="usage"><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>knownMarkersDetected</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for seurat,grouped_df</span>
-<span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>,
-  <span class='no'>knownMarkersDetected</span>, <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>markers</span>,
+  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
   <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
   <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
   <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
@@ -118,10 +119,6 @@
     <tr>
       <th>object</th>
       <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>knownMarkersDetected</th>
-      <td><p><code>grouped_df</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -151,6 +148,10 @@
       <th>headerLevel</th>
       <td><p>R Markdown header level.</p></td>
     </tr>
+    <tr>
+      <th>knownMarkersDetected</th>
+      <td><p><code>grouped_df</code>.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -174,7 +175,7 @@
 <span class='co'># Let's plot the first 2 markers, as a quick example</span>
 <span class='fu'>plotKnownMarkersDetected</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
-    <span class='kw'>knownMarkersDetected</span> <span class='kw'>=</span> <span class='no'>known_markers_small</span>[<span class='fu'>seq_len</span>(<span class='fl'>2L</span>), ]
+    <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>known_markers_small</span>[<span class='fu'>seq_len</span>(<span class='fl'>2L</span>), ]
 )</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
 #&gt; 
 #&gt; ## Natural Killer Cell {.tabset}
@@ -205,7 +206,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

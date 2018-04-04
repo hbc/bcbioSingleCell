@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -130,19 +130,7 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="colData.html">colData(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="colData.html">colData(<i>&lt;seurat&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Column Data</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="rowData.html">rowData(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="rowData.html">rowData(<i>&lt;seurat&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Row Data</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="sampleData.html">sampleData(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="sampleData.html">sampleData(<i>&lt;seurat&gt;</i>)</a></code> </p>
+          <p><code><a href="sampleData.html">sampleData(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="sampleData.html">sampleData(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Sample Data</p></td>
       </tr><tr>
@@ -194,6 +182,12 @@
       </tr><tr>
         <!--  -->
         <td>
+          <p><code><a href="bcbio.html">bcbio(<i>&lt;seurat&gt;</i>)</a></code> <code><a href="bcbio.html">`bcbio<-`(<i>&lt;seurat&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Additional bcbio Run Data Accessor</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
           <p><code><a href="cell2sample.html">cell2sample()</a></code> </p>
         </td>
         <td><p>Cell to Sample Mappings</p></td>
@@ -236,18 +230,6 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="gene2symbol.html">gene2symbol(<i>&lt;seurat&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Gene to Symbol Mappings</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="interestingGroups.html">interestingGroups(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="interestingGroups.html">interestingGroups(<i>&lt;seurat&gt;</i>)</a></code> <code><a href="interestingGroups.html">`interestingGroups<-`(<i>&lt;bcbioSingleCell&gt;</i>,<i>&lt;character&gt;</i>)</a></code> <code><a href="interestingGroups.html">`interestingGroups<-`(<i>&lt;seurat&gt;</i>,<i>&lt;character&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Interesting Groups</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
           <p><code><a href="mapCellsToSamples.html">mapCellsToSamples()</a></code> </p>
         </td>
         <td><p>Define Cell to Sample Mappings</p></td>
@@ -280,13 +262,7 @@
       <tr>
         <!--  -->
         <td>
-          <p><code><a href="calculateMetrics.html">calculateMetrics()</a></code> </p>
-        </td>
-        <td><p>Calculate Cellular Barcode Metrics Summary</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="metrics.html">metrics(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;seurat&gt;</i>)</a></code> </p>
+          <p><code><a href="metrics.html">metrics(<i>&lt;dgCMatrix&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Sample Barcode Metrics</p></td>
       </tr><tr>
@@ -652,7 +628,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

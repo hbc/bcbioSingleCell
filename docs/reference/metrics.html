@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -97,13 +97,17 @@
     <div class="page-header">
     <h1>Sample Barcode Metrics</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-metrics.R'><code>R/methods-metrics.R</code></a></small>
+    <p class="hidden name"><code>metrics.Rd</code></p>
     </div>
 
     
     <p>Sample Barcode Metrics</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
+    <pre class="usage"><span class='co'># S4 method for dgCMatrix</span>
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)
 
 <span class='co'># S4 method for seurat</span>
@@ -115,6 +119,14 @@
     <tr>
       <th>object</th>
       <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>rowData</th>
+      <td><p>Data describing the rows of the object.</p></td>
+    </tr>
+    <tr>
+      <th>prefilter</th>
+      <td><p>Whether to apply pre-filtering to the cellular barcodes.</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
@@ -129,18 +141,15 @@ formatted in camel case and intersect with <code><a href='sampleData.html'>sampl
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='sampleData.html'>sampleData()</a></code>.</p>
-<p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code>calculateMetrics</code>,
-  <code>cell2sample</code>, <code><a href='colData.html'>colData</a></code>,
-  <code><a href='counts.html'>counts</a></code>, <code>fetchGeneData</code>,
-  <code>fetchPCAData</code>, <code>fetchTSNEData</code>,
+    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>cell2sample</code>, <code><a href='counts.html'>counts</a></code>,
+  <code>fetchGeneData</code>, <code>fetchPCAData</code>,
+  <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
-  <code>filterCells</code>, <code><a href='gene2symbol.html'>gene2symbol</a></code>,
-  <code><a href='interestingGroups.html'>interestingGroups</a></code>,
+  <code>filterCells</code>,
   <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
-  <code>metricsPerSample</code>, <code><a href='rowData.html'>rowData</a></code>,
-  <code><a href='sampleData.html'>sampleData</a></code>, <code><a href='selectSamples.html'>selectSamples</a></code>,
+  <code>metricsPerSample</code>,
+  <code><a href='selectSamples.html'>selectSamples</a></code>,
   <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
     
 
@@ -196,7 +205,17 @@ formatted in camel case and intersect with <code><a href='sampleData.html'>sampl
 #&gt; $ sampleName        &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
 #&gt; $ description       &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
 #&gt; $ interestingGroups &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
-#&gt; $ ident             &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0...</div></pre>
+#&gt; $ ident             &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0...</div><div class='input'>
+<span class='co'># dgCMatrix ====</span>
+<span class='no'>mat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>bcb_small</span>)
+<span class='fu'>metrics</span>(<span class='no'>mat</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>500 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; Observations: 500
+#&gt; Variables: 6
+#&gt; $ nUMI             &lt;int&gt; 1199, 2766, 4399, 1485, 1771, 2208, 4095, 1406, 15...
+#&gt; $ nGene            &lt;int&gt; 289, 405, 423, 337, 350, 378, 442, 217, 332, 405, ...
+#&gt; $ nCoding          &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+#&gt; $ nMito            &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+#&gt; $ log10GenesPerUMI &lt;dbl&gt; 0.7992992, 0.7575732, 0.7208579, 0.7969256, 0.7832...
+#&gt; $ mitoRatio        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -219,7 +238,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -97,6 +97,7 @@
     <div class="page-header">
     <h1>Column Data</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-colData.R'><code>R/methods-colData.R</code></a></small>
+    <p class="hidden name"><code>colData.Rd</code></p>
     </div>
 
     
@@ -104,10 +105,7 @@
     
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>colData</span>(<span class='no'>x</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"DataFrame"</span>))
-
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>colData</span>(<span class='no'>x</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"DataFrame"</span>))</pre>
+<span class='fu'>colData</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -116,57 +114,85 @@
       <th>x</th>
       <td><p>Primary object.</p></td>
     </tr>
-    <tr>
-      <th>return</th>
-      <td><p>Return data as <code>data.frame</code> or <code>DataFrame</code>.</p></td>
-    </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Data describing the columns (cells).</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code>calculateMetrics</code>,
-  <code>cell2sample</code>, <code><a href='counts.html'>counts</a></code>,
-  <code>fetchGeneData</code>, <code>fetchPCAData</code>,
-  <code>fetchTSNEData</code>,
-  <code>fetchTSNEExpressionData</code>,
-  <code>filterCells</code>, <code><a href='gene2symbol.html'>gene2symbol</a></code>,
-  <code><a href='interestingGroups.html'>interestingGroups</a></code>,
-  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
-  <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
-  <code><a href='rowData.html'>rowData</a></code>, <code><a href='sampleData.html'>sampleData</a></code>,
-  <code><a href='selectSamples.html'>selectSamples</a></code>,
-  <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='fu'>colData</span>(<span class='no'>pbmc_small</span>)</div><div class='output co'>#&gt;                nGene nUMI     origIdent res0x8 res1
-#&gt; ATGCCAGAACGACT    47   70 SeuratProject      0    0
-#&gt; CATGGCCTGTGCAT    52   85 SeuratProject      0    0
-#&gt; GAACCTGATGAACC    50   87 SeuratProject      0    0
-#&gt; TGACTGGATTCTCA    56  127 SeuratProject      0    0
-#&gt; AGTCAGACTGCACA    53  173 SeuratProject      0    0
-#&gt; TCTGATACACGTGT    48   70 SeuratProject      0    0
-#&gt; TGGTATCTAAACAG    36   64 SeuratProject      0    0
-#&gt; GCAGCTCTGTTTCT    45   72 SeuratProject      0    0
-#&gt; GATATAACACGCAT    36   52 SeuratProject      0    0
-#&gt; AATGTTGACAGTCA    41  100 SeuratProject      0    0
-#&gt;  [ reached getOption("max.print") -- omitted 70 rows ]</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
+<span class='fu'>colData</span>(<span class='no'>bcb_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ rownames       : chr [1:500] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG" "multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA" "multiplexed_AAAAAAAA_AAACACTA_CTTCGATT" "multiplexed_AAAAAAAA_AAACCGCC_GAGTTTCG" ...
+#&gt;   ..@ nrows          : int 500
+#&gt;   ..@ listData       :List of 16
+#&gt;   .. ..$ nCount             : int [1:500] 25114 55337 71802 34607 34005 44760 76590 37290 41090 55103 ...
+#&gt;   .. ..$ nUMI               : int [1:500] 1199 2766 4399 1485 1771 2208 4095 1406 1564 2690 ...
+#&gt;   .. ..$ nGene              : int [1:500] 289 405 423 337 350 378 442 217 332 405 ...
+#&gt;   .. ..$ nCoding            : int [1:500] 1105 2385 3864 1296 1574 1599 3630 695 1171 2318 ...
+#&gt;   .. ..$ nMito              : int [1:500] 24 241 234 103 83 452 234 556 246 225 ...
+#&gt;   .. ..$ log10GenesPerUMI   : num [1:500] 0.799 0.758 0.721 0.797 0.783 ...
+#&gt;   .. ..$ mitoRatio          : num [1:500] 0.02 0.0871 0.0532 0.0694 0.0469 ...
+#&gt;   .. ..$ sampleID           : Factor w/ 1 level "multiplexed_AAAAAAAA": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ sampleName         : Factor w/ 1 level "rep_1": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ description        : Factor w/ 1 level "multiplexed": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ fileName           : Factor w/ 1 level "multiplexed.fastq.gz": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ index              : Factor w/ 1 level "1": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ sequence           : Factor w/ 1 level "TTTTTTTT": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ sampleNameAggregate: Factor w/ 1 level "sample": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ revcomp            : Factor w/ 1 level "AAAAAAAA": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ interestingGroups  : Factor w/ 1 level "rep_1": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   ..@ elementType    : chr "ANY"
+#&gt;   ..@ elementMetadata: NULL
+#&gt;   ..@ metadata       : list()</div><div class='input'>
+<span class='co'># seurat ====</span>
+<span class='fu'>colData</span>(<span class='no'>seurat_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ rownames       : chr [1:500] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG" "multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA" "multiplexed_AAAAAAAA_AAACACTA_CTTCGATT" "multiplexed_AAAAAAAA_AAACCGCC_GAGTTTCG" ...
+#&gt;   ..@ nrows          : int 500
+#&gt;   ..@ listData       :List of 19
+#&gt;   .. ..$ nGene              : int [1:500] 289 405 423 337 350 378 442 217 332 405 ...
+#&gt;   .. ..$ nUMI               : int [1:500] 1199 2766 4399 1485 1771 2208 4095 1406 1564 2690 ...
+#&gt;   .. ..$ nCount             : int [1:500] 25114 55337 71802 34607 34005 44760 76590 37290 41090 55103 ...
+#&gt;   .. ..$ nCoding            : int [1:500] 1105 2385 3864 1296 1574 1599 3630 695 1171 2318 ...
+#&gt;   .. ..$ nMito              : int [1:500] 24 241 234 103 83 452 234 556 246 225 ...
+#&gt;   .. ..$ log10GenesPerUMI   : num [1:500] 0.799 0.758 0.721 0.797 0.783 ...
+#&gt;   .. ..$ mitoRatio          : num [1:500] 0.02 0.0871 0.0532 0.0694 0.0469 ...
+#&gt;   .. ..$ origIdent          : Factor w/ 1 level "multiplexed": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ res0x8             : chr [1:500] "4" "0" "1" "1" ...
+#&gt;   .. ..$ sampleID           : Factor w/ 1 level "multiplexed_AAAAAAAA": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ sampleName         : Factor w/ 1 level "rep_1": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ description        : Factor w/ 1 level "multiplexed": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ fileName           : Factor w/ 1 level "multiplexed.fastq.gz": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ index              : Factor w/ 1 level "1": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ sequence           : Factor w/ 1 level "TTTTTTTT": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ sampleNameAggregate: Factor w/ 1 level "sample": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ revcomp            : Factor w/ 1 level "AAAAAAAA": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ interestingGroups  : Factor w/ 1 level "rep_1": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ ident              : Factor w/ 5 levels "0","1","2","3",..: 5 1 2 2 5 3 2 2 5 1 ...
+#&gt;   .. .. ..- attr(*, "names")= chr [1:500] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG" "multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA" "multiplexed_AAAAAAAA_AAACACTA_CTTCGATT" "multiplexed_AAAAAAAA_AAACCGCC_GAGTTTCG" ...
+#&gt;   ..@ elementType    : chr "ANY"
+#&gt;   ..@ elementMetadata: NULL
+#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>colData</span>(<span class='no'>pbmc_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ rownames       : chr [1:80] "ATGCCAGAACGACT" "CATGGCCTGTGCAT" "GAACCTGATGAACC" "TGACTGGATTCTCA" ...
+#&gt;   ..@ nrows          : int 80
+#&gt;   ..@ listData       :List of 10
+#&gt;   .. ..$ nGene            : int [1:80] 47 52 50 56 53 48 36 45 36 41 ...
+#&gt;   .. ..$ nUMI             : num [1:80] 70 85 87 127 173 70 64 72 52 100 ...
+#&gt;   .. ..$ origIdent        : Factor w/ 1 level "SeuratProject": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ res0x8           : chr [1:80] "0" "0" "0" "0" ...
+#&gt;   .. ..$ res1             : chr [1:80] "0" "0" "0" "0" ...
+#&gt;   .. ..$ sampleID         : Factor w/ 1 level "SeuratProject": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ sampleName       : Factor w/ 1 level "SeuratProject": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ description      : Factor w/ 1 level "SeuratProject": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "SeuratProject": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. ..$ ident            : Factor w/ 4 levels "0","1","2","3": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   .. .. ..- attr(*, "names")= chr [1:80] "ATGCCAGAACGACT" "CATGGCCTGTGCAT" "GAACCTGATGAACC" "TGACTGGATTCTCA" ...
+#&gt;   ..@ elementType    : chr "ANY"
+#&gt;   ..@ elementMetadata: NULL
+#&gt;   ..@ metadata       : list()</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -179,7 +205,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">
