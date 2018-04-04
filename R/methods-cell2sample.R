@@ -37,7 +37,7 @@ NULL
 #' @export
 setMethod(
     "cell2sample",
-    signature("bcbioSingleCell"),
+    signature("SingleCellExperiment"),
     .cell2sample
 )
 
