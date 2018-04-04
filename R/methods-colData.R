@@ -39,6 +39,9 @@ setMethod(
         data <- data[, unique(c(colnames(colData), colnames(data)))]
         rownames(data) <- data[["rowname"]]
         data[["rowname"]] <- NULL
+        # Add `interestingGroups` column
+        interestingGroups <- metadata(x)[["interestingGroups"]]
+        data <- uniteInterestingGroups(data, interestingGroups)
         data
     }
 )
