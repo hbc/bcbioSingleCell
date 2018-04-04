@@ -91,11 +91,13 @@ setMethod(
     "gene2symbol",
     signature("seurat"),
     function(object) {
-        rowData <- rowData(object)
-        assert_is_non_empty(rowData)
+        data <- as.data.frame(rowData(object))
+        assert_is_non_empty(data)
         cols <- c("geneID", "geneName")
-        assert_is_subset(cols, colnames(rowData))
-        rowData[, cols]
+        assert_is_subset(cols, colnames(data))
+        data <- data[, cols]
+        rownames(data) <- data[["geneID"]]
+        data
     }
 )
 
