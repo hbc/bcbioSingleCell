@@ -20,8 +20,6 @@ reference:
     - bcbioSingleCell-class
     - subset
     - coerce
-    - colData
-    - rowData
     - sampleData
     - show
   - title: Read Functions
@@ -31,6 +29,7 @@ reference:
   - title: Data Functions
     contents:
     - starts_with("aggregate")
+    - bcbio
     - cell2sample
     - counts
     - starts_with("fetch")
