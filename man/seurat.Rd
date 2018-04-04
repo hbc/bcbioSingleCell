@@ -6,6 +6,8 @@
 \alias{assay,seurat,ANY-method}
 \alias{colnames,seurat-method}
 \alias{gene2symbol,seurat-method}
+\alias{interestingGroups,seurat-method}
+\alias{interestingGroups<-,seurat,character-method}
 \alias{metadata,seurat-method}
 \alias{metadata<-,seurat-method}
 \alias{rownames,seurat-method}
@@ -16,6 +18,10 @@
 \S4method{colnames}{seurat}(x)
 
 \S4method{gene2symbol}{seurat}(object)
+
+\S4method{interestingGroups}{seurat}(object)
+
+\S4method{interestingGroups}{seurat,character}(object) <- value
 
 \S4method{metadata}{seurat}(x)
 
@@ -43,6 +49,10 @@ assay(pbmc_small) \%>\% glimpse()
 colnames(pbmc_small) \%>\% head()
 # gene2symbol ====
 gene2symbol(seurat_small) \%>\% glimpse()
+# interestingGroups ====
+interestingGroups(seurat_small)
+interestingGroups(seurat_small) <- "sampleID"
+interestingGroups(seurat_small)
 # metadata ====
 names(metadata(seurat_small))
 metadata(seurat_small)[["stash"]] <- "XXX"
