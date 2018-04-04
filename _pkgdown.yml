@@ -31,7 +31,6 @@ reference:
     - starts_with("fetch")
     - starts_with("filter")
     - matches("2")
-    - interestingGroups
     - starts_with("map")
     - starts_with("select")
     - subsetPerSample
