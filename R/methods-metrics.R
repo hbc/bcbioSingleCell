@@ -29,7 +29,7 @@ NULL
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
 
-    colData <- colData(object, return = "data.frame")
+    colData <- as.data.frame(colData(object))
     # Bind `sampleID` column to colData
     sampleID <- cell2sample(object)
     assert_are_identical(rownames(colData), names(sampleID))

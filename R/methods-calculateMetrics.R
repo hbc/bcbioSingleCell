@@ -31,6 +31,7 @@ NULL
     prefilter = TRUE
 ) {
     rowData <- as.data.frame(rowData)
+    rownames(rowData) <- rowData[[1L]]
     # Allow resizing of the rowData here to support spike-ins
     assert_are_intersecting_sets(rownames(object), rownames(rowData))
     rowData <- rowData[rownames(object), , drop = FALSE]
