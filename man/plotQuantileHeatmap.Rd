@@ -26,10 +26,18 @@ Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 }
 \examples{
 # bcbioSingleCell ====
-plotQuantileHeatmap(bcb_small)
+plotQuantileHeatmap(
+    object = bcb_small,
+    showColnames = FALSE,
+    showRownames = FALSE
+)
 
 # seurat ====
-plotQuantileHeatmap(seurat_small)
+plotQuantileHeatmap(
+    object = seurat_small,
+    showColnames = FALSE,
+    showRownames = FALSE
+)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},

@@ -13,10 +13,18 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotQuantileHeatmap(bcb_small)
+#' plotQuantileHeatmap(
+#'     object = bcb_small,
+#'     showColnames = FALSE,
+#'     showRownames = FALSE
+#' )
 #'
 #' # seurat ====
-#' plotQuantileHeatmap(seurat_small)
+#' plotQuantileHeatmap(
+#'     object = seurat_small,
+#'     showColnames = FALSE,
+#'     showRownames = FALSE
+#' )
 NULL
 
 
