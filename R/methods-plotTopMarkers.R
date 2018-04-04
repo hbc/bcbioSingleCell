@@ -17,7 +17,7 @@
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
-#' # seurat, grouped_df ====
+#' # seurat ====
 #' plotTopMarkers(
 #'     object = seurat_small,
 #'     topMarkers = topMarkers(all_markers_small, n = 1L)
@@ -26,68 +26,61 @@ NULL
 
 
 
-# Constructors =================================================================
-.plotTopMarkers <- function(
-    object,
-    topMarkers,
-    tsneColor = scale_color_viridis(discrete = FALSE),
-    violinFill = scale_fill_viridis(discrete = TRUE),
-    dotColor = scale_color_gradient(
-        low = "lightgray",
-        high = "purple"
-    ),
-    dark = TRUE,
-    pointsAsNumbers = FALSE,
-    headerLevel = 2L
-) {
-    validObject(object)
-    stopifnot(.isSanitizedMarkers(topMarkers))
-    assertIsAHeaderLevel(headerLevel)
-
-    clusters <- levels(topMarkers[["cluster"]])
-
-    list <- pblapply(clusters, function(cluster) {
-        genes <- topMarkers %>%
-            .[.[["cluster"]] == cluster, , drop = FALSE] %>%
-            pull("rowname")
-        if (!length(genes)) {
-            return(invisible())
-        }
-        if (length(genes) > 10L) {
-            warn("Maximum of 10 genes per cluster is recommended")
-        }
-        markdownHeader(
-            paste("Cluster", cluster),
-            level = headerLevel,
-            tabset = TRUE,
-            asis = TRUE
-        )
-        subheaderLevel <- headerLevel + 1L
-        plotMarkers(
-            object = object,
-            genes = genes,
-            tsneColor = tsneColor,
-            violinFill = violinFill,
-            dotColor = dotColor,
-            dark = dark,
-            pointsAsNumbers = pointsAsNumbers,
-            headerLevel = subheaderLevel
-        )
-    })
-
-    invisible(list)
-}
-
-
-
 # Methods ======================================================================
 #' @rdname plotTopMarkers
 #' @export
 setMethod(
     "plotTopMarkers",
-    signature(
-        object = "seurat",
-        topMarkers = "grouped_df"
-    ),
-    .plotTopMarkers
+    signature("seurat"),
+    function(
+        object,
+        topMarkers,
+        tsneColor = scale_color_viridis(discrete = FALSE),
+        violinFill = scale_fill_viridis(discrete = TRUE),
+        dotColor = scale_color_gradient(
+            low = "lightgray",
+            high = "purple"
+        ),
+        dark = TRUE,
+        pointsAsNumbers = FALSE,
+        headerLevel = 2L
+    ) {
+        validObject(object)
+        stopifnot(is(topMarkers, "grouped_df"))
+        stopifnot(.isSanitizedMarkers(topMarkers))
+        assertIsAHeaderLevel(headerLevel)
+
+        clusters <- levels(topMarkers[["cluster"]])
+
+        list <- pblapply(clusters, function(cluster) {
+            genes <- topMarkers %>%
+                .[.[["cluster"]] == cluster, , drop = FALSE] %>%
+                pull("rowname")
+            if (!length(genes)) {
+                return(invisible())
+            }
+            if (length(genes) > 10L) {
+                warn("Maximum of 10 genes per cluster is recommended")
+            }
+            markdownHeader(
+                paste("Cluster", cluster),
+                level = headerLevel,
+                tabset = TRUE,
+                asis = TRUE
+            )
+            subheaderLevel <- headerLevel + 1L
+            plotMarkers(
+                object = object,
+                genes = genes,
+                tsneColor = tsneColor,
+                violinFill = violinFill,
+                dotColor = dotColor,
+                dark = dark,
+                pointsAsNumbers = pointsAsNumbers,
+                headerLevel = subheaderLevel
+            )
+        })
+
+        invisible(list)
+    }
 )

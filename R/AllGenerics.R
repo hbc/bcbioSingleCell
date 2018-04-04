@@ -130,12 +130,11 @@ setGeneric(
 
 
 
-# FIXME
 #' @rdname plotCellTypesPerCluster
 #' @export
 setGeneric(
     "plotCellTypesPerCluster",
-    function(object, cellTypesPerCluster, ...) {
+    function(object, ...) {
         standardGeneric("plotCellTypesPerCluster")
     }
 )
@@ -175,7 +174,6 @@ setGeneric(
 
 
 
-# FIXME
 #' @rdname plotKnownMarkersDetected
 #' @export
 setGeneric(
@@ -264,12 +262,11 @@ setGeneric(
 
 
 
-# FIXME
 #' @rdname plotTopMarkers
 #' @export
 setGeneric(
     "plotTopMarkers",
-    function(object, topMarkers, ...) {
+    function(object, ...) {
         standardGeneric("plotTopMarkers")
     }
 )

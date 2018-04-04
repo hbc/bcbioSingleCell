@@ -5,22 +5,22 @@
 \name{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster}
-\alias{plotCellTypesPerCluster,seurat,grouped_df-method}
+\alias{plotCellTypesPerCluster,seurat-method}
 \title{Plot Cell Types per Cluster}
 \usage{
-plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
+plotCellTypesPerCluster(object, ...)
 
-\S4method{plotCellTypesPerCluster}{seurat,grouped_df}(object,
-  cellTypesPerCluster, color = scale_color_viridis(discrete = FALSE),
-  dark = TRUE, headerLevel = 2L)
+\S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
+  color = scale_color_viridis(discrete = FALSE), dark = TRUE,
+  headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
 
+\item{...}{Additional arguments.}
+
 \item{cellTypesPerCluster}{Cell types per cluster \code{grouped_df}. This must be
 the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
-
-\item{...}{Additional arguments.}
 
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual

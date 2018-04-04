@@ -4,12 +4,12 @@
 \name{plotTopMarkers}
 \alias{plotTopMarkers}
 \alias{plotTopMarkers}
-\alias{plotTopMarkers,seurat,grouped_df-method}
+\alias{plotTopMarkers,seurat-method}
 \title{Plot Top Markers}
 \usage{
-plotTopMarkers(object, topMarkers, ...)
+plotTopMarkers(object, ...)
 
-\S4method{plotTopMarkers}{seurat,grouped_df}(object, topMarkers,
+\S4method{plotTopMarkers}{seurat}(object, topMarkers,
   tsneColor = scale_color_viridis(discrete = FALSE),
   violinFill = scale_fill_viridis(discrete = TRUE),
   dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
@@ -18,10 +18,10 @@ plotTopMarkers(object, topMarkers, ...)
 \arguments{
 \item{object}{Object.}
 
+\item{...}{Additional arguments.}
+
 \item{topMarkers}{\code{grouped_df} grouped by "\code{cluster}", returned by
 \code{\link[=topMarkers]{topMarkers()}}.}
-
-\item{...}{Additional arguments.}
 
 \item{tsneColor}{Color palette to use for tSNE plot.}
 
@@ -48,7 +48,7 @@ simply reassign first using that function. If necessary, we can add support
 for the number of genes to plot here in a future update.
 }
 \examples{
-# seurat, grouped_df ====
+# seurat ====
 plotTopMarkers(
     object = seurat_small,
     topMarkers = topMarkers(all_markers_small, n = 1L)
