@@ -4,16 +4,20 @@
 \name{seurat}
 \alias{seurat}
 \alias{assay,seurat,ANY-method}
+\alias{colData,seurat-method}
 \alias{colnames,seurat-method}
 \alias{gene2symbol,seurat-method}
 \alias{interestingGroups,seurat-method}
 \alias{interestingGroups<-,seurat,character-method}
 \alias{metadata,seurat-method}
 \alias{metadata<-,seurat-method}
+\alias{rowData,seurat-method}
 \alias{rownames,seurat-method}
 \title{Extend S4 Methods for \code{seurat} Objects}
 \usage{
 \S4method{assay}{seurat,ANY}(x)
+
+\S4method{colData}{seurat}(x)
 
 \S4method{colnames}{seurat}(x)
 
@@ -26,6 +30,8 @@
 \S4method{metadata}{seurat}(x)
 
 \S4method{metadata}{seurat}(x) <- value
+
+\S4method{rowData}{seurat}(x)
 
 \S4method{rownames}{seurat}(x)
 }
@@ -45,6 +51,8 @@ Provide \code{SummarizedExperiment} method support.
 \examples{
 # assay ====
 assay(pbmc_small) \%>\% glimpse()
+# seurat ====
+colData(pbmc_small)
 # colnames ====
 colnames(pbmc_small) \%>\% head()
 # gene2symbol ====
@@ -57,6 +65,9 @@ interestingGroups(seurat_small)
 names(metadata(seurat_small))
 metadata(seurat_small)[["stash"]] <- "XXX"
 metadata(seurat_small)[["stash"]]
+# rowData ====
+rowData(pbmc_small) \%>\% glimpse()
+rowData(seurat_small) \%>\% glimpse()
 # rownames ====
 rownames(pbmc_small) \%>\% head()
 }

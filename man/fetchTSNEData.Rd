@@ -31,15 +31,13 @@ fetchTSNEData(pbmc_small) \%>\% glimpse()
 
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{calculateMetrics}},
-  \code{\link{cell2sample}}, \code{\link{colData}},
-  \code{\link{counts}}, \code{\link{fetchGeneData}},
-  \code{\link{fetchPCAData}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
-  \code{\link{rowData}}, \code{\link{sampleData}},
-  \code{\link{selectSamples}},
+  \code{\link{sampleData}}, \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{

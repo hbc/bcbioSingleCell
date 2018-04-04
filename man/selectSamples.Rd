@@ -40,15 +40,15 @@ selectSamples(bcb_small, sampleName = sampleName)
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{calculateMetrics}},
-  \code{\link{cell2sample}}, \code{\link{colData}},
-  \code{\link{counts}}, \code{\link{fetchGeneData}},
-  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
+  \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
-  \code{\link{rowData}}, \code{\link{sampleData}},
-  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
+  \code{\link{sampleData}}, \code{\link{subsetPerSample}},
+  \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh
