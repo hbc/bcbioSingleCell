@@ -321,6 +321,6 @@ NULL
 #' @export
 setMethod(
     "filterCells",
-    signature("bcbioSingleCell"),
+    signature("SingleCellExperiment"),
     .filterCells
 )

@@ -25,7 +25,7 @@ NULL
 #' @export
 setMethod(
     "colData",
-    signature("bcbioSingleCell"),
+    signature("SingleCellExperiment"),
     function(x) {
         sampleData <- as(metadata(x)[["sampleData"]], "DataFrame")
         colData <- slot(x, "colData")
@@ -51,49 +51,6 @@ setMethod(
         # Add `interestingGroups` column
         interestingGroups <- metadata(x)[["interestingGroups"]]
         data <- uniteInterestingGroups(data, interestingGroups)
-        data
-    }
-)
-
-
-
-#' @rdname seurat
-#' @export
-setMethod(
-    "colData",
-    signature("seurat"),
-    function(x) {
-        sampleData <- sampleData(x, return = "DataFrame")
-        colData <- slot(x, "meta.data")
-        assert_is_data.frame(colData)
-        colData <- as(colData, "DataFrame")
-        assert_are_disjoint_sets(
-            x = colnames(sampleData),
-            y = colnames(colData)
-        )
-        colData <- camel(colData)
-        cell2sample <- cell2sample(x)
-        sampleID <- DataFrame("sampleID" = cell2sample)
-        colData <- cbind(colData, sampleID)
-        colData[["rowname"]] <- rownames(colData)
-        data <- merge(
-            x = colData,
-            y = sampleData,
-            by = "sampleID",
-            all.x = TRUE
-        )
-        # Ensure the numeric metrics columns appear first
-        data <- data[, unique(c(colnames(colData), colnames(data)))]
-        rownames(data) <- data[["rowname"]]
-        data[["rowname"]] <- NULL
-        # Add `interestingGroups` column
-        interestingGroups <- interestingGroups(x)
-        data <- uniteInterestingGroups(data, interestingGroups)
-        # Add `ident` column
-        ident <- slot(x, "ident")
-        assert_is_factor(ident)
-        ident <- DataFrame("ident" = ident)
-        data <- cbind(data, ident)
         data
     }
 )

@@ -106,20 +106,6 @@ NULL
 
 
 
-.metrics.SCE <- function(object, interestingGroups) {
-    if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
-    }
-    colData(object) %>%
-        as.data.frame() %>%
-        rownames_to_column() %>%
-        .tidyMetrics() %>%
-        uniteInterestingGroups(interestingGroups) %>%
-        column_to_rownames()
-}
-
-
-
 # Methods ======================================================================
 #' @rdname metrics
 #' @export
@@ -135,8 +121,18 @@ setMethod(
 #' @export
 setMethod(
     "metrics",
-    signature("bcbioSingleCell"),
-    .metrics.SCE
+    signature("SingleCellExperiment"),
+    function(object, interestingGroups) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        colData(object) %>%
+            as.data.frame() %>%
+            rownames_to_column() %>%
+            .tidyMetrics() %>%
+            uniteInterestingGroups(interestingGroups) %>%
+            column_to_rownames()
+    }
 )
 
 
@@ -146,5 +142,5 @@ setMethod(
 setMethod(
     "metrics",
     signature("seurat"),
-    .metrics.SCE
+    getMethod("metrics", "SingleCellExperiment")
 )
