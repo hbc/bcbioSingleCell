@@ -1,6 +1,6 @@
 .tidyMetrics <- function(object) {
+    stopifnot(!hasRownames(object))
     assert_is_data.frame(object)
-    # Ensure that rownames are set as a column before performing this chain
     object %>%
         # Enforce count columns as integers (e.g. `nUMI`)
         mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%

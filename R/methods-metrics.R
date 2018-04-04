@@ -110,9 +110,12 @@ NULL
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
-    data <- colData(object)
-    data <- uniteInterestingGroups(data, interestingGroups)
-    as.data.frame(data)
+    colData(object) %>%
+        as.data.frame() %>%
+        rownames_to_column() %>%
+        .tidyMetrics() %>%
+        uniteInterestingGroups(interestingGroups) %>%
+        column_to_rownames()
 }
 
 

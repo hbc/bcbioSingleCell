@@ -49,6 +49,7 @@
 #' @importFrom basejump assertIsFillScaleDiscreteOrNULL
 #' @importFrom basejump assertIsGene2symbol
 #' @importFrom basejump assertIsTx2gene
+#' @importFrom basejump hasRownames
 #'
 #' @importFrom bcbioBase assertFormalInterestingGroups
 NULL
