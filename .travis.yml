@@ -37,9 +37,6 @@ notifications:
 r_packages:
   - covr
 bioc_packages:
-  - BiocGenerics
-  - S4Vectors
-  - SingleCellExperiment
   - BiocCheck
 
 after_success:
