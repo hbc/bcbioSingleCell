@@ -10,9 +10,9 @@
 \usage{
 \S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = TRUE)
 
-\S4method{metrics}{SingleCellExperiment}(object)
+\S4method{metrics}{SingleCellExperiment}(object, interestingGroups)
 
-\S4method{metrics}{seurat}(object)
+\S4method{metrics}{seurat}(object, interestingGroups)
 }
 \arguments{
 \item{object}{Object.}
@@ -20,6 +20,9 @@
 \item{rowData}{Data describing the rows of the object.}
 
 \item{prefilter}{Whether to apply pre-filtering to the cellular barcodes.}
+
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \code{data.frame} with cellular barcodes as rows.

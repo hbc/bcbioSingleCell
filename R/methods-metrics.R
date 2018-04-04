@@ -98,8 +98,10 @@ NULL
 
 
 
-.metrics.SCE <- function(object) {  # nolint
-    interestingGroups <- interestingGroups(object)
+.metrics.SCE <- function(object, interestingGroups) {  # nolint
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
     sampleData <- sampleData(object)
     colData <- colData(object)
     colData[["cellID"]] <- rownames(colData)
@@ -160,8 +162,14 @@ setMethod(
 setMethod(
     "metrics",
     signature("seurat"),
-    function(object) {
-        data <- .metrics.SCE(object)
+    function(object, interestingGroups) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        data <- .metrics.SCE(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         # Ensure ident column is added
         assert_are_disjoint_sets(colnames(data), "ident")
         ident <- slot(object, "ident")
