@@ -98,40 +98,13 @@ NULL
 
 
 
-.metrics.SCE <- function(object, interestingGroups) {  # nolint
+.metrics.SCE <- function(object, interestingGroups) {
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
-    sampleData <- sampleData(object)
-    colData <- colData(object)
-    colData[["cellID"]] <- rownames(colData)
-    sampleID <- DataFrame("sampleID" = cell2sample(object))
-    colData <- cbind(colData, sampleID)
-    data <- merge(
-        x = colData,
-        y = sampleData,
-        by = "sampleID",
-        all.x = TRUE
-    )
-    data %>%
-        as.data.frame() %>%
-        .tidyMetrics() %>%
-        # Ensure the metrics (colData) columns appear first
-        .[, unique(c(colnames(colData), colnames(.)))] %>%
-        column_to_rownames("cellID")
-}
-
-
-
-.tidyMetrics <- function(object) {
-    assert_is_data.frame(object)
-    # Ensure that rownames are set as a column before performing this chain
-    object %>%
-        # Enforce count columns as integers (e.g. `nUMI`)
-        mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
-        # Coerce character vectors to factors, and drop levels
-        mutate_if(is.character, as.factor) %>%
-        mutate_if(is.factor, droplevels)
+    data <- colData(object)
+    data <- uniteInterestingGroups(data, interestingGroups)
+    as.data.frame(data)
 }
 
 
@@ -151,7 +124,7 @@ setMethod(
 #' @export
 setMethod(
     "metrics",
-    signature("SingleCellExperiment"),
+    signature("bcbioSingleCell"),
     .metrics.SCE
 )
 
@@ -162,17 +135,5 @@ setMethod(
 setMethod(
     "metrics",
     signature("seurat"),
-    function(object, interestingGroups) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        data <- .metrics.SCE(
-            object = object,
-            interestingGroups = interestingGroups
-        )
-        # Ensure ident column is added
-        assert_are_disjoint_sets(colnames(data), "ident")
-        ident <- slot(object, "ident")
-        cbind(data, ident)
-    }
+    .metrics.SCE
 )
