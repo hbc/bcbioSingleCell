@@ -11,6 +11,7 @@
 #'   `refdataDir` YAML metadata. Therefore, these parameters cannot be set by
 #'   the user.
 #'
+#' @family Read Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams loadSingleCell

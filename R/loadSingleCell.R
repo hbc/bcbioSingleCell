@@ -4,6 +4,7 @@
 #'   run directory as a remote connection over
 #'   [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
 #'
+#' @family Read Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
