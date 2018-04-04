@@ -76,6 +76,7 @@ NULL
 
     # sampleData
     sampleData <- sampleData(x) %>%
+        as.data.frame() %>%
         .[levels(cell2sample), , drop = FALSE] %>%
         mutate_all(as.factor) %>%
         mutate_all(droplevels) %>%
