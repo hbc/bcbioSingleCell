@@ -35,4 +35,3 @@ bcbio(seurat_small, "metadata")[["stash"]]
 \author{
 Michael Steinbaugh
 }
-\keyword{internal}

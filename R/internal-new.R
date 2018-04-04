@@ -15,6 +15,7 @@
         isSpike = isSpike
     )
 
+    # Coerce to SingleCellExperiment
     sce <- SingleCellExperiment(
         assays = assays(rse),
         rowRanges = rowRanges(rse),
