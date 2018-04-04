@@ -6,33 +6,10 @@
 \alias{plotQuantileHeatmap,seurat-method}
 \title{Plot Heatmap with Quantile Breaks}
 \usage{
-\S4method{plotQuantileHeatmap}{seurat}(object, n = 5L, annotationCol,
-  clusterCols = TRUE, clusterRows = TRUE, color = viridis,
-  legendColor = viridis, borderColor = NULL, title = NULL, ...)
+\S4method{plotQuantileHeatmap}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
-
-\item{n}{The number of breaks to create.}
-
-\item{annotationCol}{\emph{Optional.} \code{data.frame} that defines annotation
-mappings for the columns.}
-
-\item{clusterCols}{Logical determining if columns should be arranged with
-hierarchical clustering. Alternatively, can define an \code{hclust} object.}
-
-\item{clusterRows}{Logical determining if rows should be arranged with
-hierarchical clustering. Alternatively, can define an \code{hclust} object.}
-
-\item{color}{Colors to use for plot. Defaults to the \code{\link[=viridis]{viridis()}}
-palette.}
-
-\item{legendColor}{Colors to use for legend labels. Defaults to the
-\code{\link[=viridis]{viridis()}} palette.}
-
-\item{borderColor}{Border color.}
-
-\item{title}{\emph{Optional.} Plot title.}
 
 \item{...}{Passthrough arguments to \code{\link[pheatmap:pheatmap]{pheatmap::pheatmap()}}. The names of the
 arguments must be formatted in camel case, not snake case.}
