@@ -1,6 +1,6 @@
 context("filterCells")
 
-test_that("Default parameters", {
+test_that("filterCells : Default parameters", {
     x <- filterCells(bcb_small, minGenes = 0L)
     expect_s4_class(x, "bcbioSingleCell")
     expect_identical(
@@ -25,7 +25,7 @@ test_that("Default parameters", {
     )
 })
 
-test_that("Maximum parameters", {
+test_that("filterCells : Maximum parameters", {
     # This should return an object with the same dimensions
     x <- filterCells(
         bcb_small,
@@ -44,14 +44,14 @@ test_that("Maximum parameters", {
     )
 })
 
-test_that("Cutoff failures", {
+test_that("filterCells : Cutoff failures", {
     expect_error(
         filterCells(bcb_small, minUMIs = Inf),
         "No cells passed `minUMIs` cutoff"
     )
 })
 
-test_that("Per sample cutoffs", {
+test_that("filterCells : Per sample cutoffs", {
     # Get the count of sample1 (run1_AGAGGATA)
     # We're applying no filtering to that sample
     metrics <- metrics(bcb_small)
