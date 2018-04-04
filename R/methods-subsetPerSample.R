@@ -38,11 +38,12 @@ setMethod(
         assert_all_are_positive(minCells)
         assert_is_environment(envir)
         dir <- initializeDirectory(dir)
-        sampleIDs <- sampleData(object) %>%
-            pull("sampleID") %>%
+        samples <- sampleData(object) %>%
+            .[, "sampleID", drop = TRUE] %>%
             as.character()
-        files <- mapply(
-            FUN = function(object, sampleID, minCells, envir, dir) {
+        files <- lapply(
+            X = samples,
+            FUN = function(sampleID) {
                 subset <- selectSamples(object, sampleID = sampleID)
                 # Skip if subset doesn't have enough cells
                 if (ncol(subset) < minCells) {
@@ -54,17 +55,9 @@ setMethod(
                     object = subset,
                     dir = dir
                 )
-            },
-            sampleID = sampleIDs,
-            MoreArgs = list(
-                object = object,
-                minCells = minCells,
-                envir = envir,
-                dir = dir
-            ),
-            SIMPLIFY = FALSE,
-            USE.NAMES = TRUE
+            }
         )
+        names(files) <- samples
         files <- Filter(Negate(is.null), files)
         names <- names(files)
         files <- unlist(files)

@@ -30,7 +30,7 @@ NULL
 
     counts <- counts(object)
     sampleID <- cell2sample(object)
-    sampleData <- sampleData(object)
+    sampleData <- sampleData(object, return = "data.frame")
 
     # Using a logical matrix is faster and more memory efficient
     present <- counts %>%

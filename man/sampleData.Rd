@@ -7,13 +7,17 @@
 \alias{sampleData,seurat-method}
 \title{Sample Data}
 \usage{
-\S4method{sampleData}{SingleCellExperiment}(object, return = c("DataFrame",
-  "data.frame", "kable"))
+\S4method{sampleData}{SingleCellExperiment}(object, interestingGroups,
+  return = c("DataFrame", "data.frame", "kable"))
 
-\S4method{sampleData}{seurat}(object)
+\S4method{sampleData}{seurat}(object, interestingGroups,
+  return = c("DataFrame", "data.frame"))
 }
 \arguments{
 \item{object}{Object.}
+
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
 to the first argument in the vector.}

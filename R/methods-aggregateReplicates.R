@@ -20,7 +20,7 @@ NULL
 .aggregateReplicates <- function(object) {
     validObject(object)
     metadata <- metadata(object)
-    sampleData <- as.data.frame(sampleData(object))
+    sampleData <- sampleData(object, return = "data.frame")
     assert_is_subset("sampleNameAggregate", colnames(sampleData))
     # We'll end up replacing `sampleID` and `sampleName` columns with the
     # corresponding `*Aggregate` columns.

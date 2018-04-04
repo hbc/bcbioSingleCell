@@ -33,10 +33,13 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
+        interestingGroups,
         return = c("DataFrame", "data.frame", "kable")
     ) {
         validObject(object)
-        interestingGroups <- interestingGroups(object)
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
         return <- match.arg(return)
         data <- metadata(object)[["sampleData"]]
         assert_is_any_of(data, c("DataFrame", "data.frame"))
@@ -66,10 +69,17 @@ setMethod(
 setMethod(
     "sampleData",
     signature("seurat"),
-    function(object) {
+    function(
+        object,
+        interestingGroups,
+        return = c("DataFrame", "data.frame")
+    ) {
         validObject(object)
         stopifnot(.hasSlot(object, "version"))
-        interestingGroups <- interestingGroups(object)
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        return <- match.arg(return)
         data <- metadata(object)[["sampleData"]]
         if (is.null(data)) {
             data <- slot(object, "meta.data")
@@ -108,6 +118,6 @@ setMethod(
         data <- uniteInterestingGroups(data, interestingGroups)
         data <- sanitizeSampleData(data)
         assertHasRownames(data)
-        as(data, "DataFrame")
+        as(data, return)
     }
 )

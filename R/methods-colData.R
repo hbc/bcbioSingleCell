@@ -62,9 +62,10 @@ setMethod(
     "colData",
     signature("seurat"),
     function(x) {
-        sampleData <- sampleData(x)
+        sampleData <- sampleData(x, return = "DataFrame")
         colData <- slot(x, "meta.data")
         assert_is_data.frame(colData)
+        colData <- as(colData, "DataFrame")
         assert_are_disjoint_sets(
             x = colnames(sampleData),
             y = colnames(colData)

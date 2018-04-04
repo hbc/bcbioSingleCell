@@ -31,12 +31,12 @@ NULL
     assertIsFillScaleDiscreteOrNULL(fill)
 
     metrics <- metrics(object, interestingGroups)
-    sampleData <- sampleData(object, interestingGroups)
+    sampleData <- sampleData(object, interestingGroups, return = "data.frame")
 
     data <- metrics %>%
         group_by(!!sym("sampleID")) %>%
         summarize(nCells = n()) %>%
-        merge(sampleData, by = "sampleID", all.x = TRUE)
+        left_join(sampleData, by = "sampleID")
 
     p <- ggplot(
         data = data,

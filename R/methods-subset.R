@@ -75,14 +75,17 @@ NULL
     metadata[["cell2sample"]] <- cell2sample
 
     # sampleData
-    sampleData <- sampleData(x) %>%
-        as.data.frame() %>%
+    sampleData <- metadata(x)[["sampleData"]]
+    assert_is_data.frame(sampleData)
+    sampleData <- sampleData %>%
+        rownames_to_column() %>%
         .[levels(cell2sample), , drop = FALSE] %>%
         mutate_all(as.factor) %>%
         mutate_all(droplevels) %>%
-        set_rownames(.[["sampleID"]])
+        column_to_rownames()
     metadata[["sampleData"]] <- sampleData
 
+    # sampleIDs
     sampleIDs <- as.character(sampleData[["sampleID"]])
 
     # aggregateReplicates
