@@ -181,7 +181,7 @@ setGeneric(
 #' @export
 setGeneric(
     "plotKnownMarkersDetected",
-    function(object, knownMarkersDetected, ...) {
+    function(object, ...) {
         standardGeneric("plotKnownMarkersDetected")
     }
 )

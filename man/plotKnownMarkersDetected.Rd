@@ -5,21 +5,19 @@
 \name{plotKnownMarkersDetected}
 \alias{plotKnownMarkersDetected}
 \alias{plotKnownMarkersDetected}
-\alias{plotKnownMarkersDetected,seurat,grouped_df-method}
+\alias{plotKnownMarkersDetected,seurat-method}
 \title{Plot Known Markers Detected}
 \usage{
-plotKnownMarkersDetected(object, knownMarkersDetected, ...)
+plotKnownMarkersDetected(object, ...)
 
-\S4method{plotKnownMarkersDetected}{seurat,grouped_df}(object,
-  knownMarkersDetected, tsneColor = scale_color_viridis(discrete = FALSE),
+\S4method{plotKnownMarkersDetected}{seurat}(object, markers,
+  tsneColor = scale_color_viridis(discrete = FALSE),
   violinFill = scale_fill_viridis(discrete = TRUE),
   dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
   dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
-
-\item{knownMarkersDetected}{\code{grouped_df}.}
 
 \item{...}{Additional arguments.}
 
@@ -34,6 +32,8 @@ plotKnownMarkersDetected(object, knownMarkersDetected, ...)
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{headerLevel}{R Markdown header level.}
+
+\item{knownMarkersDetected}{\code{grouped_df}.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.
@@ -46,7 +46,7 @@ Plot Known Markers Detected
 # Let's plot the first 2 markers, as a quick example
 plotKnownMarkersDetected(
     object = seurat_small,
-    knownMarkersDetected = known_markers_small[seq_len(2L), ]
+    markers = known_markers_small[seq_len(2L), ]
 )
 }
 \seealso{
