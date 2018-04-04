@@ -24,7 +24,7 @@ test_that("cellTypesPerCluster", {
 # knownMarkersDetected =========================================================
 test_that("knownMarkersDetected", {
     x <- knownMarkersDetected(
-        all = all_markers_small,
+        object = all_markers_small,
         known = cellTypeMarkers[["homoSapiens"]]
     )
     expect_is(x, "grouped_df")
@@ -98,7 +98,8 @@ test_that("sanitizeMarkers : seurat", {
         object = seurat_small,
         markers = ident3
     )
-    expect_is(x, "grouped_df")
+    expect_is(x, "data.frame")
+    expect_true(tibble::has_rownames(x))
 })
 
 
