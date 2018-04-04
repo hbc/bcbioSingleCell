@@ -25,19 +25,14 @@ This is helpful for visualizing single cell data.
 Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 }
 \examples{
-# bcbioSingleCell ====
-plotQuantileHeatmap(
-    object = bcb_small,
-    showColnames = FALSE,
-    showRownames = FALSE
-)
-
 # seurat ====
+\dontrun{
 plotQuantileHeatmap(
     object = seurat_small,
     showColnames = FALSE,
     showRownames = FALSE
 )
+}
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},

@@ -15,8 +15,8 @@
 #' plotZerosVsDepth(bcb_small)
 #'
 #' # seurat ====
-#' plotZerosVsDepth(pbmc_small)
 #' plotZerosVsDepth(seurat_small)
+#' plotZerosVsDepth(pbmc_small)
 NULL
 
 

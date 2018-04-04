@@ -25,3 +25,4 @@ colData(pbmc_small) \%>\% glimpse()
 \author{
 Michael Steinbaugh
 }
+\keyword{internal}

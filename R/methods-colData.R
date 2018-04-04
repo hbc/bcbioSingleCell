@@ -3,6 +3,7 @@
 #' @name colData
 #' @family S4 Class Definition
 #' @author Michael Steinbaugh
+#' @keywords internal
 #'
 #' @importFrom SummarizedExperiment colData
 #'

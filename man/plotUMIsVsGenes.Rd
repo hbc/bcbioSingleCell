@@ -37,8 +37,8 @@ Plot UMI and Gene Correlation
 plotUMIsVsGenes(bcb_small)
 
 # seurat ====
-plotUMIsVsGenes(pbmc_small)
 plotUMIsVsGenes(seurat_small)
+plotUMIsVsGenes(pbmc_small)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

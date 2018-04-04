@@ -37,8 +37,8 @@ This function helps us visualize the dropout rate.
 plotZerosVsDepth(bcb_small)
 
 # seurat ====
-plotZerosVsDepth(pbmc_small)
 plotZerosVsDepth(seurat_small)
+plotZerosVsDepth(pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},
