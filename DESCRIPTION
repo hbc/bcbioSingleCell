@@ -46,7 +46,7 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4),
-    SingleCellExperiment (>= 1.0),
+    SingleCellExperiment,
     bcbioBase (>= 0.2),
     Seurat (>= 2.0)
 Imports:
@@ -84,8 +84,8 @@ Imports:
     tidyr,
     utils,
     viridis,
-    zinbwave (>= 1.0.0),
-    zingeR (>= 0.1.0)
+    zinbwave (>= 1.0),
+    zingeR (>= 0.1)
 Suggests:
     BiocStyle,
     googlesheets,
@@ -97,9 +97,9 @@ Suggests:
     testthat,
     tidyverse
 Remotes:
-    hbc/bcbioBase@develop,
+    hbc/bcbioBase,
     statOmics/zingeR,
-    steinbaugh/basejump@develop
+    steinbaugh/basejump
 biocViews:
     DataImport,
     DataRepresentation,
