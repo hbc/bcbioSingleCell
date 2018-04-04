@@ -6,14 +6,18 @@
 \alias{plotViolin,seurat-method}
 \title{Plot Violin}
 \usage{
-\S4method{plotViolin}{seurat}(object, genes,
-  fill = scale_fill_viridis(discrete = TRUE), headerLevel = 2L,
+\S4method{plotViolin}{seurat}(object, genes, scale = c("count", "width",
+  "area"), fill = scale_fill_viridis(discrete = TRUE), headerLevel = 2L,
   return = c("grid", "list", "markdown"))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{genes}{Gene identifiers. Must match the rownames of the object.}
+
+\item{scale}{if "area" (default), all violins have the same area (before trimming
+the tails). If "count", areas are scaled proportionally to the number of
+observations. If "width", all violins have the same maximum width.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
@@ -29,7 +33,8 @@ Plot Violin
 }
 \examples{
 # seurat ====
-genes <- slot(pbmc_small, "raw.data") \%>\% rownames() \%>\% head(2L)
+genes <- head(rownames(pbmc_small), 2L)
+print(genes)
 
 # grid
 plotViolin(pbmc_small, genes = genes, return = "grid")
