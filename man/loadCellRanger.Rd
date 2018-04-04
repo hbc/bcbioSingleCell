@@ -29,7 +29,7 @@ sequences (e.g. ERCCs, EGFP, TDTOMATO).}
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
 \value{
-\code{bcbioSingleCell}.
+\code{SingleCellExperiment}.
 }
 \description{
 Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} cell

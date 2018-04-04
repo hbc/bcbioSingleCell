@@ -20,7 +20,7 @@
 #'   must contain `filtered_gene_bc_matrices*` as a child directory.
 #' @param refdataDir Directory path to Cell Ranger reference annotation data.
 #'
-#' @return `bcbioSingleCell`.
+#' @return `SingleCellExperiment`.
 #' @export
 #'
 #' @examples
@@ -227,7 +227,7 @@ loadCellRanger <- function(
     }
 
     # Return ===================================================================
-    .new.bcbioSingleCell(
+    .new.SingleCellExperiment(
         assays = list("raw" = counts),
         rowRanges = rowRanges,
         colData = colData,

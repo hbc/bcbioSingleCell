@@ -1,12 +1,12 @@
-.new.bcbioSingleCell <- function(  # nolint
+.new.SingleCellExperiment <- function(  # nolint
     assays,
     rowRanges,
     colData,
     metadata,
     isSpike
 ) {
-    # Prepare RangedSummarizedExperiment, with automatic resizing of rowRanges
-    # and support for FASTA spike-ins
+    # Prepare RangedSummarizedExperiment. Supports automatic resizing of
+    # rowRanges and helps slot FASTA spike-ins.
     rse <- prepareSummarizedExperiment(
         assays = assays,
         rowRanges = rowRanges,
@@ -30,5 +30,13 @@
         }
     }
 
-    new("bcbioSingleCell", sce)
+    sce
 }
+
+
+
+.new.bcbioSingleCell <-  # nolint
+    function(...) {
+        sce <- .new.SingleCellExperiment(...)
+        new("bcbioSingleCell", sce)
+    }
