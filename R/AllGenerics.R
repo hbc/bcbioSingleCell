@@ -97,12 +97,11 @@ setGeneric(
 
 
 
-# FIXME
 #' @rdname knownMarkersDetected
 #' @export
 setGeneric(
     "knownMarkersDetected",
-    function(all, known, ...) {
+    function(object, ...) {
         standardGeneric("knownMarkersDetected")
     }
 )
