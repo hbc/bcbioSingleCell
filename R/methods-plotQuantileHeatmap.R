@@ -12,19 +12,14 @@
 #' @inherit bcbioBase::plotQuantileHeatmap
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotQuantileHeatmap(
-#'     object = bcb_small,
-#'     showColnames = FALSE,
-#'     showRownames = FALSE
-#' )
-#'
 #' # seurat ====
+#' \dontrun{
 #' plotQuantileHeatmap(
 #'     object = seurat_small,
 #'     showColnames = FALSE,
 #'     showRownames = FALSE
 #' )
+#' }
 NULL
 
 
