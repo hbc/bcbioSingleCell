@@ -1,8 +1,8 @@
-#' Extend S4 Methods for `seurat` Objects
+#' Extend S4 Methods for `seurat` Class
 #'
-#' Provide `SummarizedExperiment` method support.
+#' Provide limited `SingleCellExperiment`-like method support.
 #'
-#' @name seurat
+#' @name seurat-SingleCellExperiment
 #' @author Michael Steinbaugh
 #' @keywords internal
 #'
@@ -14,7 +14,7 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname seurat
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom SummarizedExperiment assay
 #' @export
 #' @examples
@@ -30,7 +30,55 @@ setMethod(
 
 
 
-#' @rdname seurat
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom SummarizedExperiment colData
+#' @export
+#' @examples
+#' # colData ====
+#' colData(seurat_small) %>% glimpse()
+#' colData(pbmc_small) %>% glimpse()
+setMethod(
+    "colData",
+    signature("seurat"),
+    function(x) {
+        sampleData <- sampleData(x, return = "DataFrame")
+        colData <- slot(x, "meta.data")
+        assert_is_data.frame(colData)
+        colData <- as(colData, "DataFrame")
+        assert_are_disjoint_sets(
+            x = colnames(sampleData),
+            y = colnames(colData)
+        )
+        colData <- camel(colData)
+        cell2sample <- cell2sample(x)
+        sampleID <- DataFrame("sampleID" = cell2sample)
+        colData <- cbind(colData, sampleID)
+        colData[["rowname"]] <- rownames(colData)
+        data <- merge(
+            x = colData,
+            y = sampleData,
+            by = "sampleID",
+            all.x = TRUE
+        )
+        # Ensure the numeric metrics columns appear first
+        data <- data[, unique(c(colnames(colData), colnames(data)))]
+        rownames(data) <- data[["rowname"]]
+        data[["rowname"]] <- NULL
+        # Add `interestingGroups` column
+        interestingGroups <- interestingGroups(x)
+        data <- uniteInterestingGroups(data, interestingGroups)
+        # Add `ident` column
+        ident <- slot(x, "ident")
+        assert_is_factor(ident)
+        ident <- DataFrame("ident" = ident)
+        data <- cbind(data, ident)
+        data
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom BiocGenerics colnames
 #' @export
 #' @examples
@@ -46,7 +94,7 @@ setMethod(
 
 
 
-#' @rdname seurat
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom bcbioBase gene2symbol
 #' @export
 #' @examples
@@ -68,7 +116,7 @@ setMethod(
 
 
 
-#' @rdname seurat
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom bcbioBase interestingGroups
 #' @export
 #' @examples
@@ -89,7 +137,7 @@ setMethod(
     }
 )
 
-#' @rdname seurat
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom bcbioBase interestingGroups<-
 #' @export
 setMethod(
@@ -114,7 +162,7 @@ setMethod(
 
 
 
-#' @rdname seurat
+#' @rdname seurat-SingleCellExperiment
 #' @export
 #' @examples
 #' # metadata ====
@@ -131,7 +179,7 @@ setMethod(
 
 
 
-#' @rdname seurat
+#' @rdname seurat-SingleCellExperiment
 #' @seealso `getMethod("metadata<-", "Annotated")`
 #' @export
 setMethod(
@@ -154,7 +202,7 @@ setMethod(
 
 
 
-#' @rdname seurat
+#' @rdname seurat-SingleCellExperiment
 #' @export
 #' @examples
 #' # rowData ====
@@ -175,7 +223,7 @@ setMethod(
 
 
 
-#' @rdname seurat
+#' @rdname seurat-SingleCellExperiment
 #' @export
 #' @examples
 #' # rowRanges ====
@@ -191,7 +239,7 @@ setMethod(
 
 
 
-#' @rdname seurat
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom BiocGenerics rownames
 #' @export
 #' @examples
