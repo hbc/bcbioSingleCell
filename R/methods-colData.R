@@ -88,6 +88,11 @@ setMethod(
         # Add `interestingGroups` column
         interestingGroups <- interestingGroups(x)
         data <- uniteInterestingGroups(data, interestingGroups)
+        # Add `ident` column
+        ident <- slot(x, "ident")
+        assert_is_factor(ident)
+        ident <- DataFrame("ident" = ident)
+        data <- cbind(data, ident)
         data
     }
 )
