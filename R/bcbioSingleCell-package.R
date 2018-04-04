@@ -6,7 +6,7 @@
 #' @name bcbioRNASeq-package
 #' @keywords internal
 #'
-#' @import methods S4Vectors
+#' @import S4Vectors methods
 #'
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
