@@ -40,11 +40,11 @@ rownames(mat) <- rownames
 colnames(mat) <- colnames
 
 # Subset the matrix to include only the top genes and cells
-countsPerGene <- Matrix::rowSums(mat) %>%
+countsPerGene <- rowSums(mat) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
 genes <- sort(names(countsPerGene))
-countsPerCell <- Matrix::colSums(mat) %>%
+countsPerCell <- colSums(mat) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
 cells <- sort(names(countsPerCell))

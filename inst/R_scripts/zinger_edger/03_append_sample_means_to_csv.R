@@ -55,7 +55,7 @@ pblapply(seq_along(csv), function(a) {
         if (ncol(counts) == 1L) {
             as.numeric(counts)
         } else {
-            Matrix::rowMeans(counts)
+            rowMeans(counts)
         }
     }) %>%
         set_names(samples) %>%
