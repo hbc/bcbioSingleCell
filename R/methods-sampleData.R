@@ -25,46 +25,6 @@ NULL
 
 
 
-# Constructors =================================================================
-.sampleData.seurat <- function(data) {  # nolint
-    # Assign the required metadata columns from `orig.ident`, if necessary
-    if (!all(bcbioBase::metadataPriorityCols %in% colnames(data))) {
-        missing <- setdiff(bcbioBase::metadataPriorityCols, colnames(data))
-        for (i in seq_along(missing)) {
-            data[[missing[[i]]]] <- data[["orig.ident"]]
-        }
-    }
-
-    blacklist <- paste(
-        c(
-            "cellularBarcode",
-            "orig.ident",
-            "Phase",
-            "^res\\.[0-9]"
-        ),
-        collapse = "|"
-    )
-
-    data <- data %>%
-        remove_rownames() %>%
-        .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
-        mutate_if(is.character, as.factor) %>%
-        select_if(is.factor) %>%
-        mutate_all(droplevels) %>%
-        unique() %>%
-        camel()
-
-    # Check for failure to make rows distinct (by `sampleName`)
-    if (any(duplicated(data[["sampleName"]]))) {
-        abort("Failed to make `sampleName` column unique")
-    }
-
-    rownames(data) <- data[["sampleID"]]
-    data
-}
-
-
-
 # Methods ======================================================================
 #' @rdname sampleData
 #' @export
@@ -92,31 +52,45 @@ setMethod(
     "sampleData",
     signature("seurat"),
     function(object, interestingGroups) {
+        validObject(object)
+        stopifnot(.hasSlot(object, "version"))
         data <- metadata(object)[["sampleData"]]
-        # Define interesting groups
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
         if (is.null(data)) {
-            # Fall back to constructing metadata from cellular barcode info
-            if (!.hasSlot(object, "version")) {
-                abort("Failed to detect seurat version")
+            data <- slot(object, "meta.data")
+            assert_is_data.frame(data)
+            # Create priority columns from `orig.ident`, if necessary
+            if (!all(bcbioBase::metadataPriorityCols %in% colnames(data))) {
+                missing <- setdiff(
+                    x = bcbioBase::metadataPriorityCols,
+                    y = colnames(data)
+                )
+                for (i in seq_along(missing)) {
+                    data[[missing[[i]]]] <- data[["orig.ident"]]
+                }
             }
-            # Access the metadata
-            if (.hasSlot(object, "meta.data")) {
-                data <- slot(object, "meta.data") %>%
-                    .sampleData.seurat()
-            } else if (.hasSlot(object, "data.info")) {
-                # Legacy support for older seurat objects (e.g. pbmc33k)
-                data <- slot(object, "data.info") %>%
-                    .sampleData.seurat()
-            } else {
-                abort("Failed to locate metadata in seurat object")
-            }
-            # Define interesting groups
-            if (missing(interestingGroups)) {
-                interestingGroups <- "sampleName"
-            }
+            blacklist <- paste(
+                c(
+                    "cellularBarcode",
+                    "orig.ident",
+                    "Phase",
+                    "^res\\.[0-9]"
+                ),
+                collapse = "|"
+            )
+            data <- data %>%
+                remove_rownames() %>%
+                .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
+                mutate_if(is.character, as.factor) %>%
+                select_if(is.factor) %>%
+                mutate_all(droplevels) %>%
+                unique() %>%
+                camel()
+            assert_has_no_duplicates(data[["sampleName"]])
+            rownames(data) <- data[["sampleID"]]
+            data
         }
         data <- uniteInterestingGroups(data, interestingGroups)
         data <- sanitizeSampleData(data)
