@@ -75,11 +75,11 @@ NULL
     metadata[["cell2sample"]] <- cell2sample
 
     # sampleData
-    sampleData <- metadata(x)[["sampleData"]]
+    sampleData <- metadata[["sampleData"]]
     assert_is_data.frame(sampleData)
     sampleData <- sampleData %>%
-        rownames_to_column() %>%
         .[levels(cell2sample), , drop = FALSE] %>%
+        rownames_to_column() %>%
         mutate_all(as.factor) %>%
         mutate_all(droplevels) %>%
         column_to_rownames()
