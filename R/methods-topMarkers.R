@@ -1,74 +1,65 @@
 #' Top Markers
 #'
-#' @rdname topMarkers
 #' @name topMarkers
-#' @family Clustering Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param n Number of genes per cluster.
-#' @param direction Whether to include only `positive`, `negative`, or `both`
-#'   directions of association per cluster. Defaults to `positive`.
+#' @param direction Whether to include "`positive`", "`negative`", or "`both`"
+#'   directions of association per cluster.
 #' @param coding Only include protein coding genes.
 #'
 #' @seealso
-#' - [dplyr::slice()]
+#' - [dplyr::slice()].
 #' - [dplyr::top_n()].
 #'
-#' @return [tibble].
-#' @export
+#' @return `grouped_df`.
 #'
 #' @examples
-#' load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
-#'
-#' # grouped_df
-#' topMarkers(seuratAllMarkers) %>% glimpse()
+#' # grouped_df ====
+#' topMarkers(
+#'     object = all_markers_small,
+#'     n = 2L,
+#'     direction = "positive"
+#' )
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom dplyr arrange filter slice
-#' @importFrom rlang !! sym
 .topMarkers <- function(
     object,
     n = 10L,
-    direction = "positive",
-    coding = TRUE) {
-    .checkSanitizedMarkers(object, stop = TRUE)
-    # Check to make sure `avgLogFC` column exists
-    if (!"avgLogFC" %in% colnames(object)) {
-        abort("`avgLogFC` column is missing")
-    }
-    # Check for valid direction
-    directionArgs <- c("positive", "negative", "both")
-    if (!direction %in% directionArgs) {
-        abort(paste(
-            "Valid `direction`:",
-            toString(directionArgs)
-        ))
-    }
+    direction = c("positive", "negative", "both"),
+    coding = TRUE
+) {
+    stopifnot(.isSanitizedMarkers(object))
+    assert_is_subset(c("avgLogFC", "padj"), colnames(object))
+    assertIsAnImplicitInteger(n)
+    direction <- match.arg(direction)
+    assert_is_a_bool(coding)
+
     if (isTRUE(coding)) {
         object <- object %>%
-            filter(.data[["biotype"]] == "protein_coding") %>%
+            .[.[["geneBiotype"]] == "protein_coding", , drop = FALSE] %>%
             # Remove additional genes annotated as "predicted" in description
-            filter(!grepl(
-                x = .data[["description"]], pattern = "^predicted\\s"
-            ))
+            .[!grepl("^predicted\\s", .[["description"]]), , drop = FALSE]
     }
+
     # Subset to positive or negative correlation, if desired ("direction")
     # Note that `avgDiff` has been renamed to `avgLogFC` in Seurat v2.1
     if (direction == "positive") {
-        object <- filter(object, .data[["avgLogFC"]] > 0L)
+        object <- object[object[["avgLogFC"]] > 0L, , drop = FALSE]
     } else if (direction == "negative") {
-        object <- filter(object, .data[["avgLogFC"]] < 0L)
+        object <- object[object[["avgLogFC"]] < 0L, , drop = FALSE]
     }
+
     object %>%
-        # Arrange by P value
-        arrange(!!sym("pvalue")) %>%
+        # Arrange by adjusted P value
+        arrange(!!sym("padj")) %>%
         # Take the top rows by using slice
-        slice(1L:n)
+        dplyr::slice(1L:n)
 }
 
 
@@ -79,4 +70,5 @@ NULL
 setMethod(
     "topMarkers",
     signature("grouped_df"),
-    .topMarkers)
+    .topMarkers
+)

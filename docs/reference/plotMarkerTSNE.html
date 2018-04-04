@@ -11,13 +11,15 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Plot Marker t-SNE — plotMarkerTSNE" />
+
+<meta property="og:description" content="Plot Marker t-SNE" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -60,9 +74,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -73,6 +84,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,10 +92,12 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Marker t-SNE</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotMarkerTSNE.R'><code>R/methods-plotMarkerTSNE.R</code></a></small>
+    <p class="hidden name"><code>plotMarkerTSNE.Rd</code></p>
     </div>
 
     
@@ -92,19 +106,14 @@
 
     <pre class="usage"><span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for data.frame</span>
-<span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(),
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(),
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
+  <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -113,17 +122,15 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>genes</th>
-      <td><p>Genes identifiers (matching the rownames in the object),
-of which to get expression data.</p></td>
+      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
     </tr>
     <tr>
       <th>expression</th>
-      <td><p>Calculation to apply on the aggregate marker expression.
-Supports <code>mean</code> (default), <code>median</code>, or <code>sum</code>.</p></td>
+      <td><p>Calculation to apply on the aggregate marker expression.</p></td>
     </tr>
     <tr>
       <th>pointsAsNumbers</th>
@@ -148,17 +155,18 @@ the dataset, and some cells can be masked.</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Color palette to use for points. Defaults to the viridis color
-palette. Use <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>ggplot2::scale_color_gradient()</a></code> to easily define your own
-low/high gradient.</p></td>
+      <td><p>Desired ggplot color scale. Must supply discrete values. When
+set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+<code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Enable dark mode.</p></td>
+      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/midnightTheme'>basejump::midnightTheme()</a></code>.</p></td>
     </tr>
     <tr>
       <th>legend</th>
-      <td><p>Show plot legend.</p></td>
+      <td><p>Include plot legend.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -166,36 +174,35 @@ low/high gradient.</p></td>
     </tr>
     <tr>
       <th>subtitle</th>
-      <td><p>Include gene(s) in the subtitle.</p></td>
+      <td><p>Include gene identifiers as subtitles.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a>.</p>
+    <p><code>ggplot</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other t-SNE Utilities: <code>fetchTSNEData</code>,
-  <code>fetchTSNEExpressionData</code>,
-  <code>plotTSNE</code></p>
+    <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+  <code>knownMarkersDetected</code>,
+  <code>plotCellTypesPerCluster</code>,
+  <code>plotFeatureTSNE</code>,
+  <code>plotKnownMarkersDetected</code>,
+  <code>plotMarkers</code>, <code><a href='plotPCA.html'>plotPCA</a></code>,
+  <code>plotPCElbow</code>, <code>plotTSNE</code>,
+  <code>plotTopMarkers</code>,
+  <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>seurat</span>) <span class='kw'>%&gt;%</span> <span class='fu'>rownames</span>() <span class='kw'>%&gt;%</span> <span class='fu'>head</span>()
-<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; ENSG00000000457 ENSG00000002586 ENSG00000002933 ENSG00000004939 ENSG00000005022 
-#&gt;         "SCYL3"          "CD99"      "TMEM176A"        "SLC4A1"       "SLC25A5" 
-#&gt; ENSG00000005100 
-#&gt;         "DHX33" </div><div class='input'>
-<span class='co'># seurat</span>
-<span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='co'># data.frame</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>fetchTSNEExpressionData</span>(<span class='no'>seurat</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)
-<span class='fu'>plotMarkerTSNE</span>(<span class='no'>df</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='img'><img src='plotMarkerTSNE-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
+    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
+<span class='co'># Mitochondrial genes</span>
+<span class='no'>mito</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT\\."</span>, <span class='fu'>rownames</span>(<span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>seurat_small</span>)), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>head</span>(<span class='no'>mito</span>)</div><div class='output co'>#&gt; ENSG00000198695 ENSG00000198712 ENSG00000198727 ENSG00000198763 ENSG00000198786 
+#&gt;        "MT.ND6"        "MT.CO2"        "MT.CYB"        "MT.ND2"        "MT.ND5" 
+#&gt; ENSG00000198804 
+#&gt;        "MT.CO1" </div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>)</div><div class='output co'>#&gt; <span class='error'>Error in grid.Call.graphics(C_setviewport, vp, TRUE): non-finite location and/or size for viewport</span></div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -218,7 +225,7 @@ Rory Kirchner, Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">
@@ -228,5 +235,8 @@ Rory Kirchner, Michael Steinbaugh
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

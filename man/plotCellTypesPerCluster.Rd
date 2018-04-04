@@ -5,31 +5,34 @@
 \name{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster}
-\alias{plotCellTypesPerCluster,seurat,grouped_df-method}
+\alias{plotCellTypesPerCluster,seurat-method}
 \title{Plot Cell Types per Cluster}
 \usage{
-plotCellTypesPerCluster(object, cellTypesPerCluster, ...)
+plotCellTypesPerCluster(object, ...)
 
-\S4method{plotCellTypesPerCluster}{seurat,grouped_df}(object,
-  cellTypesPerCluster, color = viridis::scale_color_viridis(), dark = TRUE,
-  headerLevel = NULL)
+\S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
+  color = scale_color_viridis(discrete = FALSE), dark = TRUE,
+  headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{cellTypesPerCluster}{Cell types per cluster grouped \link{tibble}. This must
-be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
-
 \item{...}{Additional arguments.}
 
-\item{color}{Color palette.}
+\item{cellTypesPerCluster}{Cell types per cluster \code{grouped_df}. This must be
+the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
-\item{dark}{Plot the TSNE against a dark background.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{headerLevel}{Include a Markdown header for each gene.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
+
+\item{headerLevel}{R Markdown header level.}
 }
 \value{
-Show graphical output. Invisibly return \link{ggplot} plotlist.
+Show graphical output. Invisibly return \code{ggplot} \code{list}.
 }
 \description{
 Plot the geometric mean of the significant marker genes for every known cell
@@ -37,24 +40,25 @@ type (per unbiased cluster). Cell types with too few (\code{min} cutoff) or too
 many (\code{max} cutoff) marker genes will be skipped.
 }
 \examples{
-load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# seurat ====
+per_cluster <- cellTypesPerCluster(known_markers_small)
+glimpse(per_cluster)
 
-cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
-glimpse(cellTypesPerCluster)
-
-# seurat
 # Let's plot the first row, as an example
-cellTypesPerCluster <- cellTypesPerCluster[1, , drop = FALSE]
 plotCellTypesPerCluster(
-    seurat,
-    cellTypesPerCluster = cellTypesPerCluster)
+    object = seurat_small,
+    cellTypesPerCluster = per_cluster[1L, , drop = FALSE]
+)
 }
 \seealso{
-Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotPCElbow}}, \code{\link{plotTopMarkers}},
-  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

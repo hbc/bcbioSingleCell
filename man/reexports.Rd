@@ -5,9 +5,11 @@
 \alias{reexports}
 \alias{pull}
 \alias{reexports}
-\alias{funs}
-\alias{reexports}
 \alias{ggplot}
+\alias{reexports}
+\alias{scale_color_gradient}
+\alias{reexports}
+\alias{scale_color_hue}
 \alias{reexports}
 \alias{glimpse}
 \alias{reexports}
@@ -25,9 +27,9 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{pull}}, \code{\link[dplyr]{funs}}}
+  \item{dplyr}{\code{\link[dplyr]{pull}}}
 
-  \item{ggplot2}{\code{\link[ggplot2]{ggplot}}}
+  \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_gradient}}, \code{\link[ggplot2]{scale_color_hue}}}
 
   \item{tibble}{\code{\link[tibble]{glimpse}}}
 

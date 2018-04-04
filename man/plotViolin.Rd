@@ -6,40 +6,48 @@
 \alias{plotViolin,seurat-method}
 \title{Plot Violin}
 \usage{
-\S4method{plotViolin}{seurat}(object, genes,
-  fill = viridis::scale_fill_viridis(discrete = TRUE), return = "grid",
-  headerLevel = 2L)
+\S4method{plotViolin}{seurat}(object, genes, scale = c("count", "width",
+  "area"), fill = scale_fill_viridis(discrete = TRUE), headerLevel = 2L,
+  return = c("grid", "list", "markdown"))
 }
 \arguments{
 \item{object}{Object.}
 
-\item{genes}{Gene identifiers to plot.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
-\item{fill}{Fill color palette. Defaults to viridis.}
+\item{scale}{if "area" (default), all violins have the same area (before trimming
+the tails). If "count", areas are scaled proportionally to the number of
+observations. If "width", all violins have the same maximum width.}
 
-\item{return}{Return type. "grid", "list", and "markdown" are supported.}
+\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
+to \code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 
-\item{headerLevel}{Markdown header level. Only applicable when
-\code{return = "markdown"}.}
+\item{headerLevel}{R Markdown header level.}
+
+\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
+to the first argument in the vector.}
 }
 \description{
 Plot Violin
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-genes <- slot(seurat, "raw.data") \%>\% rownames() \%>\% .[1:2]
+# seurat ====
+genes <- head(rownames(pbmc_small), 2L)
 print(genes)
 
 # grid
-plotViolin(seurat, genes = genes, return = "grid")
+plotViolin(pbmc_small, genes = genes, return = "grid")
 
 # list
-list <- plotViolin(seurat, genes = genes, return = "list")
-glimpse(list)
+list <- plotViolin(pbmc_small, genes = genes, return = "list")
+names(list)
 
 # markdown
-plotViolin(seurat, genes = genes, return = "markdown")
+plotViolin(pbmc_small, genes = genes, return = "markdown")
+}
+\seealso{
+Other Gene Expression Functions: \code{\link{plotDot}}
 }
 \author{
 Michael Steinbaugh

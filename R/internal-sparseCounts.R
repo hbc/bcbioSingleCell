@@ -2,8 +2,8 @@
 #'
 #' Read single-cell RNA-seq counts saved as a
 #' [MatrixMarket](https://people.sc.fsu.edu/~jburkardt/data/mm/mm.html) file
-#' into a sparse counts matrix (`dgCMatrix`). Transcript ([rownames]) and
-#' molecular barcodes ([colnames]) identifiers are set from the corresponding
+#' into a sparse counts matrix (`dgCMatrix`). Transcript ([rownames()]) and
+#' molecular barcodes ([colnames()]) identifiers are set from the corresponding
 #' dependency files automatically.
 #'
 #' This function supports automatic handling of compressed matrix files.
@@ -11,35 +11,31 @@
 #' @note bcbio-nextgen outputs counts at transcript level. 10X Chromium
 #'   CellRanger outputs counts at gene level.
 #'
-#' @importFrom dplyr pull
-#' @importFrom Matrix readMM
-#' @importFrom readr read_lines read_tsv
-#'
 #' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
 #'
+#' @inheritParams general
 #' @param sampleID Sample identifier. Must match the `sampleID` column of the
-#'   sample metadata [data.frame].
+#'   sample metadata `data.frame`.
 #' @param sampleDir Named character vector of sample directory containing the
 #'   MatrixMart file.
-#' @param pipeline Pipeline used to generate the MatrixMarket file. Defaults to
-#'   bcbio-nextgen (`bcbio`). Also supports 10X Chromium CellRanger
-#'   (`cellranger`).
 #' @param umiType UMI type.
 #'
 #' @seealso `help("dgCMatrix-class")`
 #'
 #' @return `dgCMatrix`.
-#' @noRd
 .readSparseCounts <- function(
     sampleID,
     sampleDir,
-    pipeline,
-    umiType) {
+    pipeline = c("bcbio", "cellranger"),
+    umiType
+) {
     assert_is_a_string(sampleID)
     assert_is_a_string(sampleDir)
     assert_all_are_dirs(sampleDir)
     assert_is_a_string(pipeline)
-    assert_is_subset(pipeline, c("bcbio", "cellranger"))
+    pipeline <- match.arg(pipeline)
     assert_is_a_string(umiType)
 
     if (pipeline == "bcbio") {
@@ -52,7 +48,8 @@
             sampleDir,
             pattern = "matrix.mtx",
             full.names = TRUE,
-            recursive = TRUE)
+            recursive = TRUE
+        )
         # Ensure we're using the filtered matrix
         matrixFile <- matrixFile[grepl(
             x = matrixFile,
@@ -68,68 +65,72 @@
     # Check that all files exist
     assert_all_are_existing_files(c(matrixFile, colFile, rowFile))
 
-    # Read the MatrixMarket file. Column names are molecular identifiers. Row
-    # names are gene/transcript identifiers (depending on pipeline).
-    counts <- readMM(matrixFile) %>%
-        # Ensure dgCMatrix, for improved memory overhead
-        as("dgCMatrix")
-
+    # Attempt to load the column and rowname files first. If they're empty,
+    # skip loading the MatrixMarket file, which will error otherwise. The bcbio
+    # pipeline outputs empty files.
     if (pipeline == "bcbio") {
         colnames <- read_lines(colFile)
         rownames <- read_lines(rowFile)
     } else if (pipeline == "cellranger") {
-        # Named `barcodes.tsv` but not actually tab delimited
-        colnames <- read_tsv(
-                file = colFile,
-                col_names = "barcode",
-                col_types = "c") %>%
-            pull("barcode")
+        # `barcodes.tsv` is not tab delimited
+        colnames <- read_lines(colFile)
+
+        # `genes.tsv` is tab delimited
         rownames <- read_tsv(
                 file = rowFile,
-                col_names = c("ensgene", "symbol"),
-                col_types = "cc") %>%
-            pull("ensgene")
+                col_names = c("geneID", "geneName"),
+                col_types = "cc"
+            )
+        assert_has_rows(rownames)
+        rownames <- pull(rownames, "geneID")
     }
+
+    # Early return on empty colnames
+    if (!length(colnames)) {
+        warn(paste(
+            sampleID, "does not contain any cells"
+        ))
+        return(NULL)
+    }
+
+    # Read the MatrixMarket file.
+    # Column names are molecular identifiers.
+    # Row names are gene/transcript identifiers.
+    # Always return dgCMatrix, for consistency and improved memory overhead.
+    counts <- readMM(matrixFile) %>%
+        as("dgCMatrix")
 
     # Integrity checks
     assert_are_identical(length(colnames), ncol(counts))
     assert_are_identical(length(rownames), nrow(counts))
 
+    # Append `sampleID` to colnames and make valid
     colnames(counts) <- colnames %>%
-        # Append sample name
         paste(sampleID, ., sep = "_") %>%
-        # Convert dashes to underscores
-        gsub(
-            x = .,
-            pattern = "-",
-            replacement = "_") %>%
-        make.names(unique = TRUE)
-    rownames(counts) <- rownames %>%
-        # Convert dashes to underscores
-        gsub(
-            x = .,
-            pattern = "-",
-            replacement = "_") %>%
-        make.names(unique = TRUE)
+        makeNames(unique = TRUE)
+
+    # Ensure rownames are valid
+    rownames(counts) <- makeNames(rownames, unique = TRUE)
 
     counts
 }
 
 
 
-#' @importFrom BiocParallel bpmapply
 .sparseCountsList <- function(sampleDirs, pipeline, umiType) {
-    bpmapply(
+    mcmapply(
+        sampleID = names(sampleDirs),
+        sampleDir = sampleDirs,
+        MoreArgs = list(pipeline = pipeline, umiType = umiType),
         FUN = function(sampleID, sampleDir, pipeline, umiType) {
             .readSparseCounts(
                 sampleID = sampleID,
                 sampleDir = sampleDir,
                 pipeline = pipeline,
-                umiType = umiType)
+                umiType = umiType
+            )
         },
-        sampleID = names(sampleDirs),
-        sampleDir = sampleDirs,
-        MoreArgs = list(pipeline = pipeline, umiType = umiType),
         SIMPLIFY = FALSE,
-        USE.NAMES = TRUE)
+        USE.NAMES = TRUE
+    )
 }

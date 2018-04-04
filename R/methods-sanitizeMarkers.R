@@ -1,160 +1,42 @@
 #' Sanitize Markers Output
 #'
-#' @rdname sanitizeMarkers
+#' @note [Seurat::FindAllMarkers()] maps the counts matrix rownames correctly in
+#'   the `gene` column, whereas [Seurat::FindMarkers()] maps them correctly in
+#'   the rownames of the returned marker `data.frame`.
+#'
 #' @name sanitizeMarkers
+#' @family Clustering Functions
+#' @author Michael Steinbaugh
 #'
 #' @inheritParams general
+#' @param markers Original [Seurat::FindAllMarkers()] `data.frame`.
 #'
-#' @param markers [Seurat::FindAllMarkers()] return.
-#'
-#' @return [grouped_df], grouped by cluster ident.
+#' @return `data.frame`, arranged by adjusted P value.
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seuratAllMarkersOriginal.rda", package = "bcbioSingleCell"))
+#' # seurat ====
+#' invisible(capture.output(
+#'     all_markers <- FindAllMarkers(seurat_small)
+#' ))
+#' all_sanitized <- sanitizeMarkers(
+#'     object = seurat_small,
+#'     markers = all_markers
+#' )
+#' glimpse(all_sanitized)
 #'
-#' # seurat
-#' sanitizeMarkers(
-#'     seurat,
-#'     markers = seuratAllMarkersOriginal) %>%
-#'     glimpse()
+#' invisible(capture.output(
+#'     ident_3_markers <- FindMarkers(
+#'         object = seurat_small,
+#'         ident.1 = "3",
+#'         ident.2 = NULL
+#'     )
+#' ))
+#' ident_3_sanitized <- sanitizeMarkers(
+#'     object = seurat_small,
+#'     markers = ident_3_markers
+#' )
+#' glimpse(ident_3_sanitized)
 NULL
-
-
-
-# Constructors =================================================================
-#' @importFrom basejump camel
-#' @importFrom dplyr arrange everything group_by left_join mutate rename select
-#' @importFrom rlang !! sym
-#' @importFrom tibble as_tibble remove_rownames
-.sanitizeMarkersSeurat <- function(
-    object,
-    markers) {
-    sanitizedMarkers <- .checkSanitizedMarkers(markers, package = "Seurat")
-    # Message and return unmodified, if already sanitized
-    if (isTRUE(sanitizedMarkers)) {
-        inform("Markers are already sanitized")
-        return(markers)
-    }
-
-    # Update legacy columns
-    if ("avg_diff" %in% colnames(markers)) {
-        inform(paste(
-            "Renaming legacy `avg_diff` column to `avg_logFC`",
-            "(changed in Seurat v2.1)"
-        ))
-    }
-
-    # Rename specific columns prior to camelCase
-    if ("gene" %in% colnames(markers)) {
-        inform("Renaming `gene` column to `symbol`")
-        markers <- rename(markers, symbol = .data[["gene"]])
-    }
-    if ("p_val" %in% colnames(markers)) {
-        inform(paste(
-            "Renaming `p_val` column to `pvalue`",
-            "(matching DESeq2)"
-        ))
-        markers <- rename(markers, pvalue = .data[["p_val"]])
-    }
-    if ("p_val_adj" %in% colnames(markers)) {
-        inform(paste(
-            "Renaming `p_val_adj` column to `padj`",
-            "(matching DESeq2)"
-        ))
-        markers <- rename(markers, padj = .data[["p_val_adj"]])
-    }
-
-    # Sanitize column names into lowerCamelCase
-    inform("Converting columns into camelCase")
-    markers <- camel(markers)
-
-    # Check for ensgene and add from `gene2symbol` if necessary
-    if (!"ensgene" %in% colnames(markers)) {
-        inform("Adding stashed Ensembl gene identifiers")
-        # When creating the seurat object using the `as()` coercion method, we
-        # stashed the gene2symbol identifier mappings both in (1) the rownames
-        # of the seurat counts matrix, and (2) the bcbio list of the misc slot.
-        # Here we're using the rownames of the counts matrix. The way this
-        # works is the gene symbol (`symbol`) is defined as the rowname, and
-        # the Ensembl gene identifier (`ensgene`) is defined as the name
-        # (`names()`) of the rowname.
-        gene2symbol <- data.frame(
-            ensgene = names(rownames(slot(object, "raw.data"))),
-            symbol = rownames(slot(object, "raw.data")),
-            stringsAsFactors = FALSE)
-
-        # Check to make sure these values are unique
-        if (any(duplicated(gene2symbol[["ensgene"]]))) {
-            abort(paste(
-                "seurat object doesn't appear to have",
-                "stashed gene identifier mappings"
-            ))
-        }
-
-        markers <- left_join(markers, gene2symbol, by = "symbol")
-
-        # Ensure all the symbols matched
-        if (any(is.na(markers[["ensgene"]]))) {
-            abort("gene2symbol failed to match all genes")
-        }
-    }
-
-    # Check for annotable annotations and add if necessary
-    if (!"description" %in% colnames(markers)) {
-        inform("Adding stashed Ensembl annotations")
-        annotable <- bcbio(object)[["annotable"]]
-        # Drop the symbols from annotable before join to avoid mismatch
-        annotable[["symbol"]] <- NULL
-        # Ensure Entrez IDs nested as a list get sanitized to string
-        if (is.list(annotable[["entrez"]])) {
-            annotable[["entrez"]] <- vapply(
-                annotable[["entrez"]],
-                FUN = toString,
-                FUN.VALUE = character(1L))
-        }
-        markers <- left_join(markers, annotable, by = "ensgene")
-    }
-
-    # Ensure that required columns are present
-    requiredCols <- c(
-        "avgLogFC",     # Seurat v2.1
-        "biotype",      # Ensembl annotations
-        "cluster",      # Unmodified
-        "description",  # Ensembl annotations
-        "ensgene",      # Ensembl annotations
-        "pvalue",       # Renamed from `p_val`
-        "symbol"        # Renamed from `gene`
-    )
-    if (!all(requiredCols %in% colnames(markers))) {
-        abort(paste(
-            "Marker data.frame must contain:",
-            toString(requiredCols)
-        ))
-    }
-
-    # Return as a tibble
-    # Grouped by cluster
-    # Arranged by P value (per cluster)
-    markers %>%
-        remove_rownames() %>%
-        as_tibble() %>%
-        # Ensure all the annotations added are camelCase
-        camel(strict = FALSE) %>%
-        # `padj` should come at the end, but isn't in legacy output
-        select(c(
-            "cluster",
-            "ensgene",
-            "symbol",
-            "pct1",
-            "pct2",
-            "avgLogFC",
-            "pvalue"
-        ), everything()) %>%
-        group_by(.data[["cluster"]]) %>%
-        # Arrange by P value
-        arrange(!!sym("pvalue"), .by_group = TRUE)
-}
 
 
 
@@ -163,7 +45,120 @@ NULL
 #' @export
 setMethod(
     "sanitizeMarkers",
-    signature(
-        object = "seurat",
-        markers = "data.frame"),
-    .sanitizeMarkersSeurat)
+    signature("seurat"),
+    function(object, markers) {
+        validObject(object)
+        assert_is_data.frame(markers)
+        assert_has_rows(markers)
+
+        # Early return on sanitized data
+        if (.isSanitizedMarkers(markers, package = "Seurat")) {
+            inform("Markers are already sanitized")
+            return(markers)
+        }
+
+        assertHasRownames(markers)
+        data <- markers
+
+        # Map the matrix rownames to `rownames` column in tibble
+        if ("cluster" %in% colnames(data)) {
+            # `FindAllMarkers()` return
+            all <- TRUE
+            assert_is_subset("gene", colnames(data))
+            data[["rowname"]] <- data[["gene"]]
+            data[["gene"]] <- NULL
+        } else {
+            # `FindMarkers()` return
+            all <- FALSE
+            data <- rownames_to_column(data)
+        }
+
+        # Now ready to coerce
+        data <- data %>%
+            as_tibble() %>%
+            # Sanitize column names into lowerCamelCase
+            camel()
+
+        # Update legacy columns
+        if ("avgDiff" %in% colnames(data)) {
+            inform(paste(
+                "Renaming legacy `avgDiff` column to `avgLogFC`",
+                "(changed in Seurat v2.1)"
+            ))
+            data[["avgLogFC"]] <- data[["avgDiff"]]
+            data[["avgDiff"]] <- NULL
+        }
+
+        # Rename P value columns to match DESeq2 conventions
+        if ("pVal" %in% colnames(data)) {
+            inform("Renaming `pVal` column to `pvalue` (matching DESeq2)")
+            data[["pvalue"]] <- data[["pVal"]]
+            data[["pVal"]] <- NULL
+        }
+        if ("pValAdj" %in% colnames(data)) {
+            inform("Renaming `pValAdj` column to `padj` (matching DESeq2)")
+            data[["padj"]] <- data[["pValAdj"]]
+            data[["pValAdj"]] <- NULL
+        }
+
+        # Add Ensembl gene IDs
+        rownames <- rownames(object)
+        assert_has_names(rownames)
+        map <- tibble(
+            "rowname" = rownames,
+            "geneID" = names(rownames)
+        )
+        data <- left_join(data, map, by = "rowname")
+
+        # Add genomic ranges, if available
+        rowRanges <- rowRanges(object)
+        rowData <- as.data.frame(rowRanges)
+        rowData <- camel(rowData)
+        if (length(rowData)) {
+            assert_is_subset("geneID", colnames(rowData))
+            # Ensure any nested list columns are dropped
+            cols <- vapply(
+                X = rowData,
+                FUN = function(x) {
+                    !is.list(x)
+                },
+                FUN.VALUE = logical(1L)
+            )
+            rowData <- rowData[, cols]
+            data <- left_join(data, rowData, by = "geneID")
+        }
+
+        # Ensure that required columns are present
+        requiredCols <- c(
+            "geneID",       # Ensembl annotations
+            "geneName",     # Renamed from `gene`
+            "pct1",
+            "pct2",
+            "avgLogFC",     # Seurat v2.1
+            "padj",
+            "pvalue"        # Renamed from `p_val`
+        )
+        assert_is_subset(requiredCols, colnames(data))
+
+        if (isTRUE(all)) {
+            # `cluster` is only present in `FindAllMarkers() return`
+            data <- group_by(data, !!sym("cluster"))
+            priorityCols <- c("cluster", requiredCols)
+            arrangeCols <- c("cluster", "padj")
+        } else {
+            priorityCols <- requiredCols
+            arrangeCols <- "padj"
+        }
+
+        data <- data %>%
+            .[, unique(c(priorityCols, colnames(.))), drop = FALSE] %>%
+            arrange(!!!syms(arrangeCols))
+
+        if (!isTRUE(all)) {
+            data <- as.data.frame(data)
+            rownames(data) <- data[["geneID"]]
+        }
+
+        data
+    }
+)

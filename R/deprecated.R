@@ -1,12 +1,11 @@
 #' Deprecated Functions
 #'
-#' @rdname deprecated
 #' @name deprecated
 #' @keywords internal
 #'
 #' @inheritParams general
 #'
-#' @return Soft deprecation to new functions.
+#' @return [.Defunct()] or [.Deprecated()].
 NULL
 
 
@@ -52,11 +51,10 @@ plotFeatures <- function(object, features, ...) {
 
 # v0.0.24 ======================================================================
 #' @rdname deprecated
-#' @importFrom basejump midnightTheme
 #' @export
 darkTheme <- function(...) {
-    .Deprecated("midnightTheme")
-    midnightTheme(...)
+    .Deprecated("basejump::midnightTheme")
+    basejump::midnightTheme(...)
 }
 
 
@@ -82,15 +80,13 @@ quantileHeatmap <- function(...) {
 # v0.0.25 ======================================================================
 #' @rdname deprecated
 #' @export
-plotKnownMarkers <- function(
-    object,
-    knownMarkers,
-    ...) {
+plotKnownMarkers <- function(object, knownMarkers, ...) {
     .Deprecated("plotKnownMarkersDetected")
     plotKnownMarkersDetected(
         object,
         knownMarkersDetected = knownMarkers,
-        ...)
+        ...
+    )
 }
 
 
@@ -98,14 +94,35 @@ plotKnownMarkers <- function(
 #' @rdname deprecated
 #' @export
 readMarkers <- function(...) {
-    .Deprecated("readCellTypeMarkersFile")
-    readCellTypeMarkersFile(...)
+    .Deprecated("readCellTypeMarkers")
+    readCellTypeMarkers(...)
 }
 
 
 
 # v0.0.26 ======================================================================
+#' @rdname deprecated
+#' @export
 readMarkersFile <- function(...) {
-    .Deprecated("readCellTypeMarkersFile")
-    readCellTypeMarkersFile(...)
+    .Deprecated("readCellTypeMarkers")
+    readCellTypeMarkers(...)
+}
+
+
+
+# v0.1.0 =======================================================================
+#' @rdname deprecated
+#' @export
+calculateMetrics <- function(...) {
+    .Deprecated("metrics")
+    metrics(...)
+}
+
+
+
+#' @rdname deprecated
+#' @export
+readCellTypeMarkersFile <- function(...) {
+    .Deprecated("readCellTypeMarkers")
+    readCellTypeMarkers(...)
 }

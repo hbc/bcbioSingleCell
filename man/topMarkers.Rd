@@ -9,8 +9,8 @@
 \usage{
 topMarkers(object, ...)
 
-\S4method{topMarkers}{grouped_df}(object, n = 10L, direction = "positive",
-  coding = TRUE)
+\S4method{topMarkers}{grouped_df}(object, n = 10L, direction = c("positive",
+  "negative", "both"), coding = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,33 +19,40 @@ topMarkers(object, ...)
 
 \item{n}{Number of genes per cluster.}
 
-\item{direction}{Whether to include only \code{positive}, \code{negative}, or \code{both}
-directions of association per cluster. Defaults to \code{positive}.}
+\item{direction}{Whether to include "\code{positive}", "\code{negative}", or "\code{both}"
+directions of association per cluster.}
 
 \item{coding}{Only include protein coding genes.}
 }
 \value{
-\link{tibble}.
+\code{grouped_df}.
 }
 \description{
 Top Markers
 }
 \examples{
-load(system.file("extdata/seuratAllMarkers.rda", package = "bcbioSingleCell"))
-
-# grouped_df
-topMarkers(seuratAllMarkers) \%>\% glimpse()
+# grouped_df ====
+topMarkers(
+    object = all_markers_small,
+    n = 2L,
+    direction = "positive"
+)
 }
 \seealso{
 \itemize{
-\item \code{\link[dplyr:slice]{dplyr::slice()}}
+\item \code{\link[dplyr:slice]{dplyr::slice()}}.
 \item \code{\link[dplyr:top_n]{dplyr::top_n()}}.
 }
 
-Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
-  \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}}
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}
 }
 \author{
 Michael Steinbaugh

@@ -8,69 +8,49 @@
 #' 3. Ridgeline plot
 #' 4. Dot plot
 #'
-#' @rdname plotMarkers
 #' @name plotMarkers
-#' @family Clustering Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @inheritParams plotMarkerTSNE
-#'
 #' @param tsneColor Color palette to use for tSNE plot.
 #' @param violinFill Color palette to use for violin plot.
 #' @param dotColor Color palette to use for dot plot.
-#' @param dark Plot the TSNE against a dark background.
-#' @param headerLevel Include a Markdown header for each gene.
-#' @param title Plot title.
 #'
-#' @return No value, only graphical output.
+#' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/topMarkers.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' genes <- pull(topMarkers, "symbol")
-#' print(genes)
-#' plotMarkers(seurat, genes = genes)
+#' # seurat ===
+#' top <- topMarkers(all_markers_small, n = 1L)
+#' genes <- pull(top, "rowname")
+#' plotMarkers(seurat_small, genes = genes)
 NULL
 
 
 
 # Constructors =================================================================
-#' Plot Marker Seurat Constructor
-#'
-#' @keywords internal
-#' @noRd
-#'
-#' @importFrom cowplot plot_grid
-#' @importFrom dplyr filter
-#' @importFrom ggplot2 aes_string coord_flip element_blank geom_violin ggplot
-#'   theme
-#' @importFrom viridis scale_fill_viridis viridis
-#'
-#' @param returnAsList Return the `gg` objects as a list.
 .plotMarker.seurat <- function(  # nolint
     object,
     gene,
-    tsneColor = viridis::scale_color_viridis(),
-    violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-    dotColor = ggplot2::scale_color_gradient(
+    tsneColor = scale_color_viridis(discrete = FALSE),
+    violinFill = scale_fill_viridis(discrete = TRUE),
+    dotColor = scale_color_gradient(
         low = "lightgray",
-        high = "purple"),
+        high = "purple"
+    ),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     title = NULL,
-    return = "grid") {
-    # Parameter integrity ======================================================
-    if (!is_a_string(gene)) {
-        abort("`gene` must be a string")
-    }
-    # return
-    validReturn <- c("grid", "list")
-    if (!return %in% validReturn) {
-        abort(paste("`return` must contain:", toString(validReturn)))
-    }
+    return = c("grid", "list")
+) {
+    assert_is_a_string(gene)
+    assertIsColorScaleContinuousOrNULL(tsneColor)
+    assertIsFillScaleDiscreteOrNULL(violinFill)
+    assertIsColorScaleContinuousOrNULL(dotColor)
+    assert_is_a_bool(dark)
+    assert_is_a_bool(pointsAsNumbers)
+    assertIsAStringOrNULL(title)
+    return <- match.arg(return)
 
     # Plots ====================================================================
     tsne <- plotMarkerTSNE(
@@ -81,15 +61,18 @@ NULL
         dark = dark,
         pointsAsNumbers = pointsAsNumbers,
         title = gene,
-        subtitle = FALSE)
+        subtitle = FALSE
+    )
     violin <- plotViolin(
         object,
         genes = gene,
-        fill = violinFill)
+        fill = violinFill
+    )
     dot <- plotDot(
         object,
         genes = gene,
-        color = dotColor)
+        color = dotColor
+    )
 
     # Return ===================================================================
     if (return == "grid") {
@@ -98,7 +81,8 @@ NULL
             coord_flip() +
             theme(
                 axis.text.y = element_text(angle = 90L, hjust = 0.5),
-                legend.position = "none")
+                legend.position = "none"
+            )
         plot_grid(
             tsne,
             violin,
@@ -119,31 +103,30 @@ NULL
 
 
 
-#' @importFrom basejump markdownHeader
-#' @importFrom viridis scale_color_viridis
 .plotMarkers.seurat <- function(  # nolint
     object,
     genes,
-    tsneColor = viridis::scale_color_viridis(),
-    violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-    dotColor = ggplot2::scale_color_gradient(
+    tsneColor = scale_color_viridis(discrete = FALSE),
+    violinFill = scale_fill_viridis(discrete = TRUE),
+    dotColor = scale_color_gradient(
         low = "lightgray",
-        high = "purple"),
+        high = "purple"
+    ),
     dark = TRUE,
     pointsAsNumbers = FALSE,
     headerLevel = 2L,
-    title = NULL) {
-    list <- lapply(seq_along(genes), function(a) {
-        gene <- genes[[a]]
-        # Skip and warn if gene is missing
-        if (!gene %in% rownames(slot(object, "data"))) {
-            return(warn(paste(gene, "missing")))
-        }
-        if (!is.null(headerLevel)) {
-            markdownHeader(gene, level = headerLevel, asis = TRUE)
-        }
+    title = NULL
+) {
+    # Passthrough: tsneColor, violinFill, dotColor, dark, pointsAsNumbers,
+    # title
+    assert_is_character(genes)
+    assert_is_subset(genes, rownames(object))
+    assertIsAHeaderLevel(headerLevel)
+
+    list <- lapply(genes, function(gene) {
+        markdownHeader(gene, level = headerLevel, asis = TRUE)
         p <- .plotMarker.seurat(
-            object,
+            object = object,
             gene = gene,
             tsneColor = tsneColor,
             violinFill = violinFill,
@@ -151,10 +134,12 @@ NULL
             dark = dark,
             pointsAsNumbers = pointsAsNumbers,
             title = title,
-            return = "grid")
+            return = "grid"
+        )
         show(p)
-        p
+        invisible(p)
     })
+
     invisible(list)
 }
 
@@ -166,4 +151,5 @@ NULL
 setMethod(
     "plotMarkers",
     signature("seurat"),
-    .plotMarkers.seurat)
+    .plotMarkers.seurat
+)

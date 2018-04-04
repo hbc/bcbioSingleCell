@@ -1,24 +1,12 @@
 .applyFilterCutoffs <- function(object) {
     validObject(object)
+
     params <- metadata(object)[["filterParams"]]
-
-    # Warn and early return
-    if (is.null(params)) {
-        warn("Use `filterCells()` to apply filtering cutoffs")
-        return(object)
+    if (!is.list(params)) {
+        abort("`filterCells()` hasn't been applied to this dataset")
     }
-
-    # TODO Require user to `updateObject()` for this in the future
-    # `filterParams` metadata was stored as a named numeric vector up until
-    # v0.0.28. We changed to storing as a list in v0.0.29, to allow for per
-    # sample cutoffs.
-    if (is.numeric(params)) {
-        params <- as.list(params)
-    }
-    assert_is_list(params)
 
     # Ensure all params are numeric
-    # TODO Switch to assertive method here
     if (!all(vapply(
         X = params,
         FUN = is.numeric,
@@ -32,8 +20,9 @@
     assert_is_character(filterCells)
     assert_is_non_empty(filterCells)
     cells <- intersect(
-        colnames(object),
-        metadata(object)[["filterCells"]]) %>%
+        x = colnames(object),
+        y = metadata(object)[["filterCells"]]
+    ) %>%
         sort()
     assert_is_non_empty(cells)
     object <- object[, cells]
@@ -41,18 +30,18 @@
 
     # Apply gene filtering cutoffs =============================================
     filterGenes <- metadata(object)[["filterGenes"]]
-    # Warn here instead of stop, since we didn't define in earlier versions
-    assert_is_character(filterCells, severity = "warning")
-    assert_is_non_empty(filterGenes, severity = "warning")
+    assert_is_character(filterGenes)
+    assert_is_non_empty(filterGenes)
     genes <- intersect(
-        rownames(object),
-        metadata(object)[["filterGenes"]]) %>%
+        x = rownames(object),
+        y = metadata(object)[["filterGenes"]]
+    ) %>%
         sort()
     assert_is_non_empty(genes, severity = "warning")
     if (is.null(genes)) {
         genes <- rownames(object)
     }
-    object <- object[genes, ]
+    object <- object[genes, , drop = FALSE]
     metadata(object)[["filterGenes"]] <- genes
 
     object

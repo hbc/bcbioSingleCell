@@ -1,25 +1,44 @@
-# R for travis
+# Travis-CI configuration for Bioconductor packages
 # https://docs.travis-ci.com/user/languages/r
 
 language: r
-sudo: false
 cache: packages
-warnings_are_errors: false
-
-# Temporarily enable to cache R packages
-# script: true
-
-# Need to increase DLLs above default of 100
-env:
-  global:
-    - R_MAX_NUM_DLLS=150
 
 r:
   - bioc-release
   # - bioc-devel
+
+# External dependencies
+# (required for zinbwave)
+addons:
+  apt:
+    packages:
+      - gsl-bin
+      - libgsl-dev
+
+env:
+  global:
+    - R_MAX_NUM_DLLS=150
+
+# r_build_args: "--no-build-vignettes"
+# r_check_args: "--no-vignettes"
+
+# Set true before submission to Bioconductor
+warnings_are_errors: false
+
+# Temporarily enable to cache packages
+# script: true
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
 r_packages:
   - covr
-  - rlang
+bioc_packages:
+  - BiocCheck
 
 after_success:
   - Rscript -e 'covr::codecov()'
+  - R CMD BiocCheck .

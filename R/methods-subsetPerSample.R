@@ -1,25 +1,22 @@
 #' Subset Per Sample
 #'
-#' @rdname subsetPerSample
 #' @name subsetPerSample
-#' @family Data Management Utilities
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param minCells Minimum number of cells required per sample.
-#' @param dir Output directory where to save the subset data.
+#' @param envir Environment where to assign the subsets.
 #'
-#' @return Character vector of saved [bcbioSingleCell] subsets.
+#' @return Named vector of saved `bcbioSingleCell` subset file paths.
 #'
 #' @examples
-#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-#'
+#' # bcbioRNASeq ====
 #' # This will save the subsets per sample to disk
-#' subsetPerSample(filtered, dir = "subsetPerSample")
-#' dir("subsetPerSample")
+#' subsetPerSample(bcb_small, dir = "subsetPerSample")
+#' list.files("subsetPerSample")
 #'
-#' # Cleanup
+#' # Clean up
 #' unlink("subsetPerSample", recursive = TRUE)
 NULL
 
@@ -27,8 +24,6 @@ NULL
 
 # Methods ======================================================================
 #' @rdname subsetPerSample
-#' @importFrom dplyr pull
-#' @importFrom pbapply pblapply
 #' @export
 setMethod(
     "subsetPerSample",
@@ -36,27 +31,38 @@ setMethod(
     function(
         object,
         minCells = 200L,
-        dir = getwd()) {
-        dir.create(dir, recursive = TRUE, showWarnings = FALSE)
-        sampleIDs <- sampleMetadata(object) %>%
-            pull("sampleID") %>%
+        envir = parent.frame(),
+        dir = "."
+    ) {
+        assertIsAnImplicitInteger(minCells)
+        assert_all_are_positive(minCells)
+        assert_is_environment(envir)
+        dir <- initializeDirectory(dir)
+        samples <- sampleData(object) %>%
+            .[, "sampleID", drop = TRUE] %>%
             as.character()
-        pblapply(seq_along(sampleIDs), function(a) {
-            sampleID <- sampleIDs[[a]]
-            subset <- selectSamples(
-                object,
-                sampleID = sampleID)
-            # Skip if subset doesn't have enough cells
-            if (dim(subset)[[2L]] < minCells) {
-                warn(paste(sampleID, "didn't pass minimum cell cutoff"))
-                return(NULL)
+        files <- lapply(
+            X = samples,
+            FUN = function(sampleID) {
+                subset <- selectSamples(object, sampleID = sampleID)
+                # Skip if subset doesn't have enough cells
+                if (ncol(subset) < minCells) {
+                    warn(paste(sampleID, "didn't pass minimum cell cutoff"))
+                    return(NULL)
+                }
+                assignAndSaveData(
+                    name = sampleID,
+                    object = subset,
+                    dir = dir
+                )
             }
-            assign(sampleID, subset)
-            save(
-                list = sampleID,
-                file = file.path(dir, paste0(sampleID, ".rda")))
-            sampleID
-        }) %>%
-            na.omit() %>%
-            as.character()
-    })
+        )
+        names(files) <- samples
+        files <- Filter(Negate(is.null), files)
+        names <- names(files)
+        files <- unlist(files)
+        files <- normalizePath(files, winslash = "/", mustWork = TRUE)
+        names(files) <- names
+        files
+    }
+)

@@ -4,69 +4,70 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom dplyr bind_rows group_by mutate
-#' @importFrom parallel mclapply
-#' @importFrom rlang !!
-#' @importFrom tibble column_to_rownames
-#'
 #' @param list List of cellular barcodes.
 #'
-#' @return [data.frame].
+#' @return `data.frame`.
 .bindCellularBarcodes <- function(list) {
-    list <- mclapply(seq_along(list), function(a) {
-        # Add the sampleID as a column
-        sampleID <- names(list)[[a]]
-        list[[a]] %>%
-            mutate(sampleID = !!sampleID)
-    })
-    df <- list %>%
+    assert_is_list(list)
+    mcmapply(
+        sampleID = names(list),
+        x = list,
+        FUN = function(x, sampleID) {
+            assert_is_data.frame(x)
+            # Add the sampleID as a column
+            x[["sampleID"]] <- sampleID
+            x
+        },
+        USE.NAMES = TRUE,
+        SIMPLIFY = FALSE
+    ) %>%
         bind_rows() %>%
-        as.data.frame() %>%
         mutate(
             rowname = paste(
                 .data[["sampleID"]],
                 .data[["cellularBarcode"]],
-                sep = "_"),
+                sep = "_"
+            ),
             sampleID = as.factor(.data[["sampleID"]])
         ) %>%
+        as.data.frame() %>%
         column_to_rownames() %>%
+        # Reorder the columns before return
         .[, c("sampleID", "cellularBarcode", "nCount")]
-    df
 }
 
 
 
-#' Cellular Barcode Distributions
+#' Cellular Barcodes List
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
 #'
-#' @importFrom pbapply pblapply
-#' @importFrom readr read_tsv
-#'
 #' @param sampleDirs Sample directories.
 #'
-#' @return [list].
+#' @return `list`.
 .cellularBarcodesList <- function(sampleDirs) {
     files <- file.path(
-        normalizePath(sampleDirs),
+        normalizePath(sampleDirs, winslash = "/", mustWork = TRUE),
         paste(basename(sampleDirs), "barcodes.tsv", sep = "-")
     )
     names(files) <- names(sampleDirs)
-    if (!all(file.exists(files))) {
-        abort("Cellular barcode file missing")
-    }
+    assert_all_are_existing_files(files)
     inform("Reading cellular barcode distributions")
-    list <- pblapply(seq_along(files), function(a) {
+    list <- mclapply(files, function(file) {
         read_tsv(
-            file = files[[a]],
+            file = file,
             col_names = c("cellularBarcode", "nCount"),
-            col_types = "ci") %>%
-            mutate(cellularBarcode = gsub(
-                x = .data[["cellularBarcode"]],
-                pattern = "-",
-                replacement = "_"))
+            col_types = "ci"
+        ) %>%
+            mutate(
+                cellularBarcode = gsub(
+                    pattern = "-",
+                    replacement = "_",
+                    x = .data[["cellularBarcode"]]
+                )
+            )
     })
     names(list) <- names(sampleDirs)
     list

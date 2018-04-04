@@ -2,41 +2,34 @@
 % Please edit documentation in R/loadCellRanger.R
 \name{loadCellRanger}
 \alias{loadCellRanger}
-\title{Load 10X Genomics CellRanger Data}
+\title{Load 10X Genomics Cell Ranger Data}
 \usage{
-loadCellRanger(uploadDir, refdataDir, interestingGroups = "sampleName",
-  sampleMetadataFile = NULL, annotable = TRUE, prefilter = TRUE, ...)
+loadCellRanger(uploadDir, refdataDir, sampleMetadataFile,
+  interestingGroups = "sampleName", isSpike = NULL, prefilter = TRUE, ...)
 }
 \arguments{
-\item{uploadDir}{Path to CellRanger output directory. This directory path
+\item{uploadDir}{Path to Cell Ranger output directory. This directory path
 must contain \code{filtered_gene_bc_matrices*} as a child directory.}
 
-\item{refdataDir}{Directory path to cellranger reference annotation data.}
-
-\item{interestingGroups}{Character vector of interesting groups. First entry
-is used for plot colors during quality control (QC) analysis. Entire vector
-is used for PCA and heatmap QC functions.}
+\item{refdataDir}{Directory path to Cell Ranger reference annotation data.}
 
 \item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-inDrop). Consult the GitHub repo for examples and additional information.}
+inDrop).}
 
-\item{annotable}{User-defined gene annotations (a.k.a. "annotable"), which
-will be slotted into \code{\link[=rowData]{rowData()}}. Typically this should be left set to
-\code{TRUE}. By default, the function will automatically generate an annotable
-from the annotations available on Ensembl. If set \code{FALSE}, then \code{\link[=rowData]{rowData()}}
-inside the resulting \link{bcbioSingleCell} object will be left empty. This is
-recommended for projects dealing with genes or transcripts that are poorly
-annotated. Additionally, a manually constructed annotable can be passed in
-as a \link{data.frame}, but this isn't generally recommended.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
+sequences (e.g. ERCCs, EGFP, TDTOMATO).}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
 \value{
-\link{bcbioSingleCell}.
+\code{bcbioSingleCell}.
 }
 \description{
 Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} cell
@@ -44,23 +37,25 @@ counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 }
 \details{
 This function is a simplified version of \code{\link[=loadSingleCell]{loadSingleCell()}}
-optimized for handling CellRanger output.
+optimized for handling Cell Ranger output.
 }
 \note{
-Unlike \code{\link[=loadSingleCell]{loadSingleCell()}}, the \code{organism}, \code{ensemblVersion}, and
-\code{genomeBuild} are always detected automatically, based on the \code{refdataDir}
-YAML metadata. Therefore, these parameters cannot be set by the user.
+Unlike \code{\link[=loadSingleCell]{loadSingleCell()}}, the \code{organism}, \code{ensemblRelease}, and
+\code{genomeBuild} are always detected automatically, based on the 10X
+\code{refdataDir} YAML metadata. Therefore, these parameters cannot be set by
+the user.
 }
 \examples{
-extdataDir <- system.file("extdata", package = "bcbioSingleCell")
-uploadDir <- file.path(extdataDir, "cellranger")
-refdataDir <- file.path(extdataDir, "refdata-cellranger-hg19-1.2.0")
-sampleMetadataFile <- file.path(extdataDir, "cellranger.csv")
-bcb <- loadCellRanger(
+uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
+loadCellRanger(
     uploadDir = uploadDir,
-    refdataDir = refdataDir,
-    sampleMetadataFile = sampleMetadataFile)
-print(bcb)
+    refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
+    sampleMetadataFile = file.path(uploadDir, "metadata.csv")
+)
+}
+\seealso{
+Other Read Functions: \code{\link{loadSingleCell}},
+  \code{\link{readCellTypeMarkers}}
 }
 \author{
 Michael Steinbaugh

@@ -4,30 +4,26 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seurat_file: "data/YYYY-MM-DD/seurat.rda"
+    seurat_file: "seurat.rda"
     cell_type_markers_file: NULL
     organism: NULL
-    output_dir: "."
+    data_dir: "."
+    results_dir: "results/markers"
 ---
 
-```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-02-12
+```{r setup, cache=FALSE, message=FALSE}
+# Last modified 2018-03-27
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
 # Directory paths
-data_dir <- file.path(params$output_dir, "data", Sys.Date())
-results_dir <- file.path(params$output_dir, "results", Sys.Date(), "markers")
-invisible(mapply(
-    FUN = dir.create,
-    list(data_dir, results_dir),
-    MoreArgs = list(recursive = TRUE, showWarnings = FALSE)
-))
+dir.create(params$results_dir, recursive = TRUE, showWarnings = FALSE)
 
 # Load seurat object
 seurat_name <- load(params$seurat_file)
 seurat <- get(seurat_name, inherits = FALSE)
 stopifnot(is(seurat, "seurat"))
+invisible(validObject(seurat))
 
 seurat_all_markers_name <- paste(seurat_name, "markers", sep = "_")
 
@@ -36,9 +32,10 @@ seurat_all_markers_name <- paste(seurat_name, "markers", sep = "_")
 # updated or the desired organism isn't yet supported.
 if (!is.null(params$cell_type_markers_file)) {
     gene2symbol <- gene2symbol(seurat)
-    cell_type_markers <- readCellTypeMarkersFile(
-        params$cell_type_markers_file,
-        gene2symbol = gene2symbol)
+    cell_type_markers <- readCellTypeMarkers(
+        file = params$cell_type_markers_file,
+        gene2symbol = gene2symbol
+    )
 } else {
     if (is.null(params$organism)) {
         organism <- detectOrganism(seurat)
@@ -49,18 +46,21 @@ stopifnot(is.data.frame(cell_type_markers))
 assignAndSaveData(
     name = paste(seurat_name, "cell_type_markers", sep = "_"),
     object = cell_type_markers,
-    dir = data_dir)
+    dir = params$data_dir
+)
 
 # knitr arguments (for `rmarkdown::render()` looping)
 opts_chunk$set(
     cache.path = paste(
         seurat_all_markers_name,
         "cache/",
-        sep = "_"),
+        sep = "_"
+    ),
     fig.path = paste(
         seurat_all_markers_name,
         "files/",
-        sep = "_")
+        sep = "_"
+    )
 )
 ```
 
@@ -70,8 +70,8 @@ opts_chunk$set(
 
 
 
-```{r sample_metadata}
-sampleMetadata(seurat)
+```{r sample_data}
+sampleData(seurat)
 ```
 
 This workflow is adapted from the following sources:
@@ -97,15 +97,21 @@ seurat_all_markers <- FindAllMarkers(seurat)
 assignAndSaveData(
     name = paste(seurat_all_markers_name, "original", sep = "_"),
     object = seurat_all_markers,
-    dir = data_dir)
+    dir = params$data_dir
+)
 seurat_all_markers <- sanitizeMarkers(seurat, markers = seurat_all_markers)
 assignAndSaveData(
     name = seurat_all_markers_name,
     object = seurat_all_markers,
-    dir = data_dir)
+    dir = params$data_dir
+)
 write_csv(
     seurat_all_markers,
-    path = file.path(results_dir, paste0(seurat_all_markers_name, ".csv.gz")))
+    path = file.path(
+        params$results_dir,
+        paste0(seurat_all_markers_name, ".csv.gz")
+    )
+)
 ```
 
 
@@ -121,7 +127,8 @@ top_markers
 plotTopMarkers(
     seurat,
     topMarkers = top_markers,
-    headerLevel = 2)
+    headerLevel = 2
+)
 ```
 
 
@@ -141,7 +148,8 @@ DoHeatmap(
     col.high = viridis(3)[[3]],
     remove.key = FALSE,
     rotate.key = TRUE,
-    slim.col.label = TRUE)
+    slim.col.label = TRUE
+)
 ```
 
 
@@ -151,19 +159,22 @@ DoHeatmap(
 ```{r known_markers_detected, fig.height=14.5, fig.width=10, results="asis"}
 known_markers_detected <- knownMarkersDetected(
     all = seurat_all_markers,
-    known = cell_type_markers)
+    known = cell_type_markers
+)
 known_markers_detected
 assignAndSaveData(
     name = paste(seurat_all_markers_name, "by_cell_type", sep = "_"),
     object = known_markers_detected,
-    dir = data_dir)
+    dir = params$data_dir
+)
 ```
 
 ```{r plot_known_markers_detected, fig.height=14.5, fig.width=10, results="asis"}
 plotKnownMarkersDetected(
     seurat,
     knownMarkers = known_markers_detected,
-    headerLevel = 2)
+    headerLevel = 2
+)
 ```
 
 
@@ -176,14 +187,16 @@ cell_types_per_cluster
 assignAndSaveData(
     name = paste(seurat_all_markers_name, "cell_types_per_cluster", sep = "_"),
     object = cell_types_per_cluster,
-    dir = data_dir)
+    dir = params$data_dir
+)
 ```
 
 ```{r plot_cell_types_per_cluster, results="asis"}
 plotCellTypesPerCluster(
     seurat,
     cellTypesPerCluster = cell_types_per_cluster,
-    headerLevel = 2)
+    headerLevel = 2
+)
 ```
 
 

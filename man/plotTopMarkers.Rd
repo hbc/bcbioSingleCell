@@ -4,24 +4,24 @@
 \name{plotTopMarkers}
 \alias{plotTopMarkers}
 \alias{plotTopMarkers}
-\alias{plotTopMarkers,seurat,grouped_df-method}
+\alias{plotTopMarkers,seurat-method}
 \title{Plot Top Markers}
 \usage{
-plotTopMarkers(object, topMarkers, ...)
+plotTopMarkers(object, ...)
 
-\S4method{plotTopMarkers}{seurat,grouped_df}(object, topMarkers,
-  tsneColor = viridis::scale_color_viridis(),
-  violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-  dotColor = ggplot2::scale_color_gradient(low = "lightgray", high =
-  "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L)
+\S4method{plotTopMarkers}{seurat}(object, topMarkers,
+  tsneColor = scale_color_viridis(discrete = FALSE),
+  violinFill = scale_fill_viridis(discrete = TRUE),
+  dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
+  dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{topMarkers}{Top markers \link{tibble} grouped by cluster, returned by
-\code{\link[=topMarkers]{topMarkers()}}.}
-
 \item{...}{Additional arguments.}
+
+\item{topMarkers}{\code{grouped_df} grouped by "\code{cluster}", returned by
+\code{\link[=topMarkers]{topMarkers()}}.}
 
 \item{tsneColor}{Color palette to use for tSNE plot.}
 
@@ -29,14 +29,14 @@ plotTopMarkers(object, topMarkers, ...)
 
 \item{dotColor}{Color palette to use for dot plot.}
 
-\item{dark}{Plot the TSNE against a dark background.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
-\item{headerLevel}{Include a Markdown header for each gene.}
+\item{headerLevel}{R Markdown header level.}
 }
 \value{
-No value, only graphical output.
+Show graphical output. Invisibly return \code{ggplot} \code{list}.
 }
 \description{
 Plot Top Markers
@@ -48,18 +48,22 @@ simply reassign first using that function. If necessary, we can add support
 for the number of genes to plot here in a future update.
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/topMarkers.rda", package = "bcbioSingleCell"))
-
-# seurat, grouped_df
-# Let's plot the top 2 markers from cluster 0, as a quick example
-plotTopMarkers(seurat, topMarkers = topMarkers[1:2, ])
+# seurat ====
+plotTopMarkers(
+    object = seurat_small,
+    topMarkers = topMarkers(all_markers_small, n = 1L)
+)
 }
 \seealso{
-Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
-  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTSNE}}, \code{\link{sanitizeMarkers}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

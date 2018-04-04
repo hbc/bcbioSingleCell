@@ -10,48 +10,59 @@
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSingleCell}(object, geom = "histogram",
-  interestingGroups)
+\S4method{plotReadsPerCell}{bcbioSingleCell}(object, interestingGroups,
+  geom = c("histogram", "ecdf", "ridgeline", "violin"),
+  color = scale_color_viridis(discrete = TRUE),
+  fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotReadsPerCell}{seurat}(object, ...)
+\S4method{plotReadsPerCell}{seurat}(object, interestingGroups,
+  geom = c("histogram", "ecdf", "ridgeline", "violin"),
+  color = scale_color_viridis(discrete = TRUE),
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{geom}{Plot type. Supported formats: proportional \code{histogram}
-(\emph{recommended}), raw \code{ridgeline}, and raw \code{violin}.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
+
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
+\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
+to \code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
-Plot Read Counts per Cell
-}
-\note{
-Here by "cell" we mean "cellular barcode".
+Plot the distribution of read counts for all unfiltered cellular barcodes.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotReadsPerCell(bcb_small)
 
-# bcbioSingleCell
-plotReadsPerCell(bcb)
-
-# seurat
-plotReadsPerCell(seurat)
+# seurat ====
+plotReadsPerCell(seurat_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{metrics}},
+Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
+  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}}, \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotQuantileHeatmap}},
+  \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}
 }
 \author{

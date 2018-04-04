@@ -15,7 +15,7 @@
 vector containing the column name and the grep pattern.}
 }
 \value{
-\link{bcbioSingleCell}.
+\code{bcbioSingleCell}.
 }
 \description{
 Select Samples
@@ -25,16 +25,29 @@ Internally, pattern matching against sample and file names is
 applied using logical grep matching.
 }
 \note{
-Bracket based subsetting with \code{[} also works on [bcbioSingleCell]
+Bracket based subsetting with \code{[} also works on \code{bcbioSingleCell}
 objects. In this case, provide cellular barcode identifiers for columns
 and Ensembl gene identifiers for rows.
-
-[` also works on [bcbioSingleCell]: R:%60%20also%20works%20on%20[bcbioSingleCell
 }
 \examples{
-load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-
-# bcbioSingleCell
-# Quality control filtering must be applied first!
-selectSamples(filtered, sampleName = "M1")
+# bcbioSingleCell ====
+sampleName <- sampleData(bcb_small) \%>\%
+    .[1L, "sampleName"] \%>\%
+    as.character()
+print(sampleName)
+selectSamples(bcb_small, sampleName = sampleName)
+}
+\seealso{
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
+  \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
+}
+\author{
+Michael Steinbaugh
 }

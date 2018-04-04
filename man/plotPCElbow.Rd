@@ -9,19 +9,24 @@
 \usage{
 plotPCElbow(object, ...)
 
-\S4method{plotPCElbow}{seurat}(object, maxPct = 0.05, minCumPct = 0.9,
-  plot = TRUE)
+\S4method{plotPCElbow}{seurat}(object, minSD = 1L, minPct = 0.025,
+  maxCumPct = 0.9, trans = c("identity", "sqrt"), plot = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{maxPct}{Maximum percent standard deviation.}
+\item{minSD}{Minimum standard deviation.}
 
-\item{minCumPct}{Minimum cumulative percent standard deviation.}
+\item{minPct}{Minimum percent standard deviation.}
 
-\item{plot}{Plot the PC standard deviations.}
+\item{maxCumPct}{Maximum cumulative percent standard deviation.}
+
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
+
+\item{plot}{Include plot.}
 }
 \value{
 \itemize{
@@ -31,24 +36,31 @@ dimensionality reduction analysis.
 }
 }
 \description{
-Calculate the principal component (PC) with either a maximum SD percentage or
-minimum % SD cumulative sum cutoff value. This defaults to keeping the larger
-PC cutoff for either 5% SD (\code{maxPct}) or 90% cumulative (\code{minCumsum}).
+Calculate the principal component (PC) cutoff using a heuristic approach.
+}
+\details{
+Automatically return the smallest number of PCs that match the \code{minSD},
+\code{minPct}, and \code{maxCumPct} cutoffs.
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-pcUse <- plotPCElbow(seurat)
-pcUse
+# seurat ====
+plotPCElbow(pbmc_small)
 }
 \seealso{
-\link[Seurat:PCElbowPlot]{Seurat::PCElbowPlot}.
+\itemize{
+\item \code{\link[Seurat:PCElbowPlot]{Seurat::PCElbowPlot()}}.
+\item \code{\link[ggplot2:scale_y_continuous]{ggplot2::scale_y_continuous()}}.
+}
 
-Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotMarkers}}, \code{\link{plotTopMarkers}},
-  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotTSNE}},
+  \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

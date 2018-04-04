@@ -12,7 +12,7 @@ mapCellsToSamples(cells, samples)
 \item{samples}{Sample identifiers.}
 }
 \value{
-Named factor containing cell IDs as the names, and samples as the
+Named \code{factor} containing cells as the names, and samples as the
 factor levels.
 }
 \description{
@@ -20,14 +20,23 @@ This function extracts \code{sampleID} from the \code{cellID} column using grep
 matching.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-
-cells <- colnames(bcb)
-samples <- sampleMetadata(bcb)[["sampleID"]]
-
+# bcbioSingleCell ====
+cells <- colnames(bcb_small)
+samples <- sampleData(bcb_small)[["sampleID"]]
 map <- mapCellsToSamples(cells, samples)
 head(map)
 levels(map)
+}
+\seealso{
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
+  \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh

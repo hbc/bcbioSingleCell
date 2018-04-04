@@ -22,26 +22,29 @@ topBarcodes(object, ...)
 \item{n}{Number of barcodes to return per sample.}
 }
 \value{
-\link{data.frame}
+\code{data.frame}.
 }
 \description{
 Top Barcodes
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+topBarcodes(bcb_small) \%>\% glimpse()
 
-# bcbioSingleCell
-topBarcodes(bcb) \%>\% glimpse()
-
-# seurat
-topBarcodes(seurat) \%>\% glimpse()
+# seurat ====
+topBarcodes(pbmc_small) \%>\% glimpse()
 }
 \seealso{
-Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
-  \code{\link{plotTopMarkers}}, \code{\link{topMarkers}}
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
+  \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}
 }
 \author{
 Michael Steinbaugh

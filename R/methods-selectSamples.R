@@ -1,38 +1,36 @@
 #' Select Samples
 #'
-#' @rdname selectSamples
-#' @name selectSamples
-#'
-#' @importFrom bcbioBase selectSamples
-#'
 #' @details Internally, pattern matching against sample and file names is
 #'   applied using logical grep matching.
 #'
-#' @note Bracket based subsetting with `[` also works on [bcbioSingleCell]
+#' @note Bracket based subsetting with `[` also works on `bcbioSingleCell`
 #'   objects. In this case, provide cellular barcode identifiers for columns
 #'   and Ensembl gene identifiers for rows.
 #'
-#' @inheritParams general
+#' @name selectSamples
+#' @family Data Functions
+#' @author Michael Steinbaugh
 #'
+#' @importFrom bcbioBase selectSamples
+#'
+#' @inheritParams general
 #' @param ... Columns to use for grep pattern matching. Supply a named character
 #'   vector containing the column name and the grep pattern.
 #'
-#' @return [bcbioSingleCell].
+#' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-#'
-#' # bcbioSingleCell
-#' # Quality control filtering must be applied first!
-#' selectSamples(filtered, sampleName = "M1")
+#' # bcbioSingleCell ====
+#' sampleName <- sampleData(bcb_small) %>%
+#'     .[1L, "sampleName"] %>%
+#'     as.character()
+#' print(sampleName)
+#' selectSamples(bcb_small, sampleName = sampleName)
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom bcbioBase prepareSummarizedExperiment
-#' @importFrom dplyr mutate_if
-#' @importFrom magrittr set_rownames
 .selectSamples <- function(object, ...) {
     object <- .applyFilterCutoffs(object)
     metadata(object)[["selectSamples"]] <- TRUE
@@ -52,31 +50,31 @@ NULL
     }
 
     # Match the arguments against the sample metadata
-    sampleMetadata <- sampleMetadata(object)
+    sampleData <- sampleData(object)
     list <- lapply(seq_along(arguments), function(a) {
         column <- names(arguments)[[a]]
         # Check that column is present
-        if (!column %in% colnames(sampleMetadata)) {
+        if (!column %in% colnames(sampleData)) {
             abort(paste(column, "isn't present in metadata colnames"))
         }
         argument <- arguments[[a]]
         # Check that all items in argument are present
-        if (!all(argument %in% sampleMetadata[[column]])) {
-            missing <- argument[which(!argument %in% sampleMetadata[[column]])]
+        if (!all(argument %in% sampleData[[column]])) {
+            missing <- argument[which(!argument %in% sampleData[[column]])]
             abort(paste(
                 column,
                 "metadata column doesn't contain",
                 toString(missing)
             ))
         }
-        sampleMetadata %>%
+        sampleData %>%
             .[.[[column]] %in% argument, "sampleID", drop = TRUE]
     })
     sampleIDs <- Reduce(f = intersect, x = list)
 
     # Output to the user which samples matched, using the `sampleName` metadata
     # column, which is more descriptive than `sampleID`
-    sampleNames <- sampleMetadata %>%
+    sampleNames <- sampleData %>%
         .[.[["sampleID"]] %in% sampleIDs, "sampleName", drop = TRUE] %>%
         as.character() %>%
         sort() %>%
@@ -106,4 +104,5 @@ NULL
 setMethod(
     "selectSamples",
     signature("bcbioSingleCell"),
-    .selectSamples)
+    .selectSamples
+)

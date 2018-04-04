@@ -11,13 +11,15 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Sanitize Markers Output — sanitizeMarkers" />
+
+<meta property="og:description" content="Sanitize Markers Output" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -60,9 +74,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -73,6 +84,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,22 +92,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sanitize Markers Output</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-sanitizeMarkers.R'><code>R/methods-sanitizeMarkers.R</code></a></small>
+    <p class="hidden name"><code>sanitizeMarkers.Rd</code></p>
     </div>
 
     
     <p>Sanitize Markers Output</p>
     
 
-    <pre class="usage"><span class='fu'>sanitizeMarkers</span>(<span class='no'>object</span>, <span class='no'>markers</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>sanitizeMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for seurat,data.frame</span>
+<span class='co'># S4 method for seurat</span>
 <span class='fu'>sanitizeMarkers</span>(<span class='no'>object</span>, <span class='no'>markers</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -103,51 +117,95 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>markers</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/FindAllMarkers'>Seurat::FindAllMarkers()</a></code> return.</p></td>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <th>markers</th>
+      <td><p>Original <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/FindAllMarkers'>Seurat::FindAllMarkers()</a></code> <code>data.frame</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>grouped_df, grouped by cluster ident.</p>
+    <p><code>data.frame</code>, arranged by adjusted P value.</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/FindAllMarkers'>Seurat::FindAllMarkers()</a></code> maps the counts matrix rownames correctly in
+the <code>gene</code> column, whereas <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/FindMarkers'>Seurat::FindMarkers()</a></code> maps them correctly in
+the rownames of the returned marker <code>data.frame</code>.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
+  <code>knownMarkersDetected</code>,
+  <code>plotCellTypesPerCluster</code>,
+  <code>plotFeatureTSNE</code>,
+  <code>plotKnownMarkersDetected</code>,
+  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code><a href='plotPCA.html'>plotPCA</a></code>, <code>plotPCElbow</code>,
+  <code>plotTSNE</code>, <code>plotTopMarkers</code>,
+  <code>topMarkers</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seuratAllMarkersOriginal.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># seurat</span>
-<span class='fu'>sanitizeMarkers</span>(
-    <span class='no'>seurat</span>,
-    <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>seuratAllMarkersOriginal</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; <span class='message'>Renaming `gene` column to `symbol`</span></div><div class='output co'>#&gt; <span class='message'>Renaming `p_val` column to `pvalue` (matching DESeq2)</span></div><div class='output co'>#&gt; <span class='message'>Renaming `p_val_adj` column to `padj` (matching DESeq2)</span></div><div class='output co'>#&gt; <span class='message'>Converting columns into camelCase</span></div><div class='output co'>#&gt; <span class='message'>Adding stashed Ensembl gene identifiers</span></div><div class='output co'>#&gt; <span class='message'>Adding stashed Ensembl annotations</span></div><div class='output co'>#&gt; Observations: 1,419
-#&gt; Variables: 17
+    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
+<span class='fu'>invisible</span>(<span class='fu'>capture.output</span>(
+    <span class='no'>all_markers</span> <span class='kw'>&lt;-</span> <span class='fu'>FindAllMarkers</span>(<span class='no'>seurat_small</span>)
+))
+<span class='no'>all_sanitized</span> <span class='kw'>&lt;-</span> <span class='fu'>sanitizeMarkers</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
+    <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>all_markers</span>
+)</div><div class='output co'>#&gt; <span class='message'>Renaming `pVal` column to `pvalue` (matching DESeq2)</span></div><div class='output co'>#&gt; <span class='message'>Renaming `pValAdj` column to `padj` (matching DESeq2)</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>all_sanitized</span>)</div><div class='output co'>#&gt; Observations: 1,380
+#&gt; Variables: 18
 #&gt; $ cluster        &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-#&gt; $ ensgene        &lt;chr&gt; "ENSG00000164692", "ENSG00000108821", "ENSG000001633...
-#&gt; $ symbol         &lt;chr&gt; "COL1A2", "COL1A1", "COL6A3", "FN1", "COL3A1", "LGAL...
-#&gt; $ pct1           &lt;dbl&gt; 0.990, 1.000, 0.979, 0.990, 1.000, 0.875, 0.844, 0.9...
-#&gt; $ pct2           &lt;dbl&gt; 0.537, 0.714, 0.354, 0.361, 0.748, 0.156, 0.170, 0.2...
-#&gt; $ avgLogFC       &lt;dbl&gt; 2.6615971, 2.5939070, 2.2532530, 2.2707911, 1.480821...
-#&gt; $ pvalue         &lt;dbl&gt; 2.213001e-63, 9.635920e-60, 4.485043e-42, 1.498001e-...
-#&gt; $ padj           &lt;dbl&gt; 2.213001e-60, 9.635920e-57, 4.485043e-39, 1.498001e-...
+#&gt; $ geneID         &lt;chr&gt; "ENSG00000164692", "ENSG00000108821", "ENSG000001000...
+#&gt; $ geneName       &lt;chr&gt; "COL1A2", "COL1A1", "LGALS1", "SERPINE2", "COL6A3", ...
+#&gt; $ pct1           &lt;dbl&gt; 1.000, 1.000, 0.806, 0.831, 0.927, 0.976, 0.766, 1.0...
+#&gt; $ pct2           &lt;dbl&gt; 0.465, 0.596, 0.098, 0.125, 0.229, 0.306, 0.096, 0.5...
+#&gt; $ avgLogFC       &lt;dbl&gt; 2.5553118, 2.7949173, 2.2995216, 2.4224445, 2.284212...
+#&gt; $ padj           &lt;dbl&gt; 5.313721e-58, 1.979923e-57, 1.215935e-54, 1.019308e-...
+#&gt; $ pvalue         &lt;dbl&gt; 1.062744e-60, 3.959847e-60, 2.431870e-57, 2.038616e-...
+#&gt; $ rowname        &lt;chr&gt; "COL1A2", "COL1A1", "LGALS1", "SERPINE2", "COL6A3", ...
+#&gt; $ seqnames       &lt;fct&gt; 7, 17, 22, 2, 2, 2, 14, 2, 22, 17, 9, 21, 5, 7, 8, 1...
+#&gt; $ start          &lt;int&gt; 94394561, 50183289, 37675608, 223975112, 237324003, ...
+#&gt; $ end            &lt;int&gt; 94431232, 50201632, 37679806, 224039319, 237414375, ...
+#&gt; $ width          &lt;int&gt; 36672, 18344, 4199, 64208, 90373, 75733, 12520, 3842...
+#&gt; $ strand         &lt;fct&gt; +, -, +, -, -, -, +, +, +, -, +, +, -, -, -, +, +, +...
+#&gt; $ geneBiotype    &lt;fct&gt; protein_coding, protein_coding, protein_coding, prot...
 #&gt; $ description    &lt;chr&gt; "collagen type I alpha 2 chain [Source:HGNC Symbol;A...
-#&gt; $ biotype        &lt;chr&gt; "protein_coding", "protein_coding", "protein_coding"...
-#&gt; $ broadClass     &lt;chr&gt; "coding", "coding", "coding", "coding", "coding", "c...
-#&gt; $ geneSeqStart   &lt;int&gt; 94394561, 50183289, 237324003, 215360440, 188974320,...
-#&gt; $ geneSeqEnd     &lt;int&gt; 94431232, 50201632, 237414375, 215436172, 189012746,...
-#&gt; $ seqName        &lt;chr&gt; "7", "17", "2", "2", "2", "22", "2", "22", "21", "17...
-#&gt; $ seqStrand      &lt;int&gt; 1, -1, -1, -1, 1, 1, -1, 1, 1, -1, 1, 1, -1, 1, 1, 1...
-#&gt; $ seqCoordSystem &lt;chr&gt; "chromosome", "chromosome", "chromosome", "chromosom...
-#&gt; $ entrez         &lt;chr&gt; "1278", "1277", "1293", "2335", "1281", "3956", "527...</div></pre>
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...
+#&gt; $ broadClass     &lt;fct&gt; coding, coding, coding, coding, coding, coding, codi...</div><div class='input'>
+<span class='fu'>invisible</span>(<span class='fu'>capture.output</span>(
+    <span class='no'>ident_3_markers</span> <span class='kw'>&lt;-</span> <span class='fu'>FindMarkers</span>(
+        <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
+        <span class='kw'>ident.1</span> <span class='kw'>=</span> <span class='st'>"3"</span>,
+        <span class='kw'>ident.2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+    )
+))
+<span class='no'>ident_3_sanitized</span> <span class='kw'>&lt;-</span> <span class='fu'>sanitizeMarkers</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
+    <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>ident_3_markers</span>
+)</div><div class='output co'>#&gt; <span class='message'>Renaming `pVal` column to `pvalue` (matching DESeq2)</span></div><div class='output co'>#&gt; <span class='message'>Renaming `pValAdj` column to `padj` (matching DESeq2)</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>ident_3_sanitized</span>)</div><div class='output co'>#&gt; Observations: 427
+#&gt; Variables: 17
+#&gt; $ geneID         &lt;chr&gt; "ENSG00000156508", "ENSG00000198899", "ENSG000002485...
+#&gt; $ geneName       &lt;chr&gt; "EEF1A1", "MT-ATP6", "MTATP6P1", "MT-ND5", "MTND1P23...
+#&gt; $ pct1           &lt;dbl&gt; 0.865, 1.000, 1.000, 0.966, 0.989, 1.000, 0.989, 0.9...
+#&gt; $ pct2           &lt;dbl&gt; 0.985, 0.993, 0.988, 0.908, 0.959, 0.976, 0.988, 0.9...
+#&gt; $ avgLogFC       &lt;dbl&gt; -1.709205, 1.159734, 1.173533, 1.326033, 1.269361, 1...
+#&gt; $ padj           &lt;dbl&gt; 2.710328e-32, 1.796991e-31, 1.869653e-31, 2.357196e-...
+#&gt; $ pvalue         &lt;dbl&gt; 5.420656e-35, 3.593981e-34, 3.739306e-34, 4.714391e-...
+#&gt; $ rowname        &lt;chr&gt; "EEF1A1", "MT.ATP6", "MTATP6P1", "MT.ND5", "MTND1P23...
+#&gt; $ seqnames       &lt;fct&gt; 6, MT, 1, MT, 1, MT, MT, MT, MT, MT, X, MT, 16, MT, ...
+#&gt; $ start          &lt;int&gt; 73515750, 8527, 633696, 12337, 629062, 14747, 9207, ...
+#&gt; $ end            &lt;int&gt; 73523797, 9207, 634376, 14148, 629433, 15887, 9990, ...
+#&gt; $ width          &lt;int&gt; 8048, 681, 681, 1812, 372, 1141, 784, 1042, 1378, 95...
+#&gt; $ strand         &lt;fct&gt; -, +, +, +, +, +, +, +, +, +, +, +, -, -, +, +, +, -...
+#&gt; $ geneBiotype    &lt;fct&gt; protein_coding, protein_coding, unprocessed_pseudoge...
+#&gt; $ description    &lt;chr&gt; "eukaryotic translation elongation factor 1 alpha 1 ...
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...
+#&gt; $ broadClass     &lt;fct&gt; coding, mito, pseudo, mito, pseudo, mito, mito, mito...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -155,16 +213,24 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
+
+    <h2>Author</h2>
+    
+Michael Steinbaugh
 
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">
@@ -174,5 +240,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

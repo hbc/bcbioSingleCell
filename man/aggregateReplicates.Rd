@@ -15,16 +15,20 @@
 Aggregate Replicates
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-
-# bcbioSingleCell
-print(bcb)
-aggregateReplicates(bcb)
+# bcbioSingleCell ====
+x <- aggregateReplicates(bcb_small)
+sampleData(x)
 }
 \seealso{
-Other Data Management Utilities: \code{\link{filterCells}},
-  \code{\link{readCellTypeMarkersFile}},
-  \code{\link{subsetPerSample}}
+Other Data Functions: \code{\link{cell2sample}},
+  \code{\link{counts}}, \code{\link{fetchGeneData}},
+  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

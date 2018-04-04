@@ -1,32 +1,25 @@
 #' Top Barcodes
 #'
-#' @rdname topBarcodes
 #' @name topBarcodes
-#' @family Clustering Utilities
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#'
 #' @param n Number of barcodes to return per sample.
 #'
-#' @return [data.frame]
+#' @return `data.frame`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' topBarcodes(bcb_small) %>% glimpse()
 #'
-#' # bcbioSingleCell
-#' topBarcodes(bcb) %>% glimpse()
-#'
-#' # seurat
-#' topBarcodes(seurat) %>% glimpse()
+#' # seurat ====
+#' topBarcodes(pbmc_small) %>% glimpse()
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom dplyr slice
-#' @importFrom tibble as_tibble column_to_rownames rownames_to_column
 .topBarcodes <- function(object, n = 10L) {
     col <- "nUMI"
     metrics <- metrics(object)
@@ -39,7 +32,7 @@ NULL
         as_tibble() %>%
         .[order(.[[col]], decreasing = TRUE), , drop = FALSE] %>%
         # Take the top rows by using slice
-        slice(1L:n) %>%
+        dplyr::slice(1L:n) %>%
         as.data.frame() %>%
         column_to_rownames()
 }
@@ -52,7 +45,8 @@ NULL
 setMethod(
     "topBarcodes",
     signature("bcbioSingleCell"),
-    .topBarcodes)
+    .topBarcodes
+)
 
 
 
@@ -62,4 +56,5 @@ setMethod(
 setMethod(
     "topBarcodes",
     signature("seurat"),
-    .topBarcodes)
+    .topBarcodes
+)

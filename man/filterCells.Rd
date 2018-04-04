@@ -5,16 +5,13 @@
 \alias{filterCells}
 \alias{filterCells}
 \alias{filterCells,bcbioSingleCell-method}
-\alias{filterCells,bcbioSCDataSet-method}
 \title{Filter Cells}
 \usage{
 filterCells(object, ...)
 
 \S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000L,
   maxUMIs = Inf, minGenes = 500L, maxGenes = Inf, maxMitoRatio = 0.1,
-  minNovelty = 0.75, minCellsPerGene = 3L, quiet = FALSE)
-
-\S4method{filterCells}{bcbioSCDataSet}(object)
+  minNovelty = 0.75, minCellsPerGene = 3L)
 }
 \arguments{
 \item{object}{Object.}
@@ -35,11 +32,9 @@ filterCells(object, ...)
 
 \item{minCellsPerGene}{Include genes with non-zero expression in at least
 this many cells.}
-
-\item{quiet}{If \code{TRUE}, don't show the filtering parameter summary.}
 }
 \value{
-\link{bcbioSingleCell} object, with filtering information slotted into
+\code{bcbioSingleCell}, with filtering information slotted into
 \code{\link[=metadata]{metadata()}} as \code{filterCells} and \code{filterParams}.
 }
 \description{
@@ -50,21 +45,26 @@ cellular barcodes.
 The filtering cutoff values now support a named numeric vector. By
 default we recommend applying the same filtering cutoff to all samples.
 When matching the samples, be sure to use \code{sampleID} column (i.e. the
-rownames of \code{\link[=sampleMetadata]{sampleMetadata()}}).
+rownames of \code{\link[=sampleData]{sampleData()}}).
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-
-# bcbioSingleCell
-print(bcb)
-filterCells(bcb)
+# bcbioSingleCell ====
+show(bcb_small)
+x <- filterCells(bcb_small, minGenes = 0L)
+show(x)
 }
 \seealso{
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
 
-Other Data Management Utilities: \code{\link{aggregateReplicates}},
-  \code{\link{readCellTypeMarkersFile}},
-  \code{\link{subsetPerSample}}
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
+  \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh

@@ -2,15 +2,19 @@
 #' @export
 dplyr::pull
 
-#' @importFrom dplyr funs
-#' @export
-dplyr::funs
-
 
 
 #' @importFrom ggplot2 ggplot
 #' @export
 ggplot2::ggplot
+
+#' @importFrom ggplot2 scale_color_gradient
+#' @export
+ggplot2::scale_color_gradient
+
+#' @importFrom ggplot2 scale_color_hue
+#' @export
+ggplot2::scale_color_hue
 
 
 

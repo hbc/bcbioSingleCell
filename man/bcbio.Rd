@@ -3,56 +3,34 @@
 \docType{methods}
 \name{bcbio}
 \alias{bcbio}
-\alias{bcbio,bcbioSingleCell-method}
 \alias{bcbio,seurat-method}
-\alias{bcbio<-,bcbioSingleCell-method}
 \alias{bcbio<-,seurat-method}
-\alias{bcbio,bcbioSCDataSet-method}
-\alias{bcbio<-,bcbioSCDataSet-method}
 \title{Additional bcbio Run Data Accessor}
 \usage{
-\S4method{bcbio}{bcbioSingleCell}(object, type)
+\S4method{bcbio}{seurat}(object, slot)
 
-\S4method{bcbio}{seurat}(object, type)
-
-\S4method{bcbio}{bcbioSingleCell}(object, type) <- value
-
-\S4method{bcbio}{seurat}(object, type) <- value
-
-\S4method{bcbio}{bcbioSCDataSet}(object, type)
-
-\S4method{bcbio}{bcbioSCDataSet}(object, type) <- value
+\S4method{bcbio}{seurat}(object, slot) <- value
 }
 \arguments{
 \item{object}{Object.}
 
-\item{type}{Type of count data to retrieve.}
+\item{slot}{Slot name of data inside accessor.}
 
 \item{value}{Object to assign.}
 }
 \value{
-\link{bcbioSingleCell}.
+Various data types.
 }
 \description{
 Additional bcbio Run Data Accessor
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# bcbioSingleCell
-bcbio(bcb) \%>\% names()
+# seurat ====
+names(bcbio(seurat_small))
 
 # Assignment method support
-bcbio(bcb, "stash") <- "testing"
-bcbio(bcb, "stash")
-
-# seurat
-bcbio(seurat) \%>\% names()
-
-# Assignment method support
-bcbio(seurat, "stash") <- "testing"
-bcbio(seurat, "stash")
+bcbio(seurat_small, "metadata")[["stash"]] <- "XXX"
+bcbio(seurat_small, "metadata")[["stash"]]
 }
 \author{
 Michael Steinbaugh

@@ -4,32 +4,25 @@
 \name{plotMarkerTSNE}
 \alias{plotMarkerTSNE}
 \alias{plotMarkerTSNE}
-\alias{plotMarkerTSNE,data.frame-method}
 \alias{plotMarkerTSNE,seurat-method}
 \title{Plot Marker t-SNE}
 \usage{
 plotMarkerTSNE(object, ...)
 
-\S4method{plotMarkerTSNE}{data.frame}(object, genes, expression = "mean",
-  pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
-  dark = TRUE, legend = TRUE, title = NULL, subtitle = TRUE)
-
-\S4method{plotMarkerTSNE}{seurat}(object, genes, expression = "mean",
-  pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, color = viridis::scale_color_viridis(),
-  dark = TRUE, title = NULL, subtitle = TRUE)
+\S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
+  "median", "sum"), pointsAsNumbers = FALSE, pointSize = 0.5,
+  pointAlpha = 0.8, label = TRUE, labelSize = 6L,
+  color = scale_color_viridis(discrete = FALSE), dark = TRUE,
+  legend = TRUE, title = NULL, subtitle = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Genes identifiers (matching the rownames in the object),
-of which to get expression data.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
-\item{expression}{Calculation to apply on the aggregate marker expression.
-Supports \code{mean} (default), \code{median}, or \code{sum}.}
+\item{expression}{Calculation to apply on the aggregate marker expression.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
@@ -42,41 +35,42 @@ the dataset, and some cells can be masked.}
 
 \item{labelSize}{Size of the text label.}
 
-\item{color}{Color palette to use for points. Defaults to the viridis color
-palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
-low/high gradient.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Enable dark mode.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
-\item{legend}{Show plot legend.}
+\item{legend}{Include plot legend.}
 
 \item{title}{Plot title.}
 
-\item{subtitle}{Include gene(s) in the subtitle.}
+\item{subtitle}{Include gene identifiers as subtitles.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Plot Marker t-SNE
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-genes <- counts(seurat) \%>\% rownames() \%>\% head()
-print(genes)
-
-# seurat
-plotMarkerTSNE(seurat, genes = genes)
-
-# data.frame
-df <- fetchTSNEExpressionData(seurat, genes = genes)
-plotMarkerTSNE(df, genes = genes)
+# seurat ====
+# Mitochondrial genes
+mito <- grep("^MT\\\\.", rownames(counts(seurat_small)), value = TRUE)
+head(mito)
+plotMarkerTSNE(seurat_small, genes = mito)
 }
 \seealso{
-Other t-SNE Utilities: \code{\link{fetchTSNEData}},
-  \code{\link{fetchTSNEExpressionData}},
-  \code{\link{plotTSNE}}
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotMarkers}}, \code{\link{plotPCA}},
+  \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
+  \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

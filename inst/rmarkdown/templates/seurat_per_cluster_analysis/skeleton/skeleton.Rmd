@@ -4,11 +4,11 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seurat_file: "data/YYYY-MM-DD/seurat.rda"
+    seurat_file: "seurat.rda"
 ---
 
-```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-02-12
+```{r setup, cache=FALSE, message=FALSE}
+# Last modified 2018-03-27
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -16,6 +16,7 @@ source("_setup.R")
 seurat_name <- load(params$seurat_file)
 seurat <- get(seurat_name, inherits = FALSE)
 stopifnot(is(seurat, "seurat"))
+invisible(validObject(seurat))
 
 idents <- levels(seurat@ident)
 interesting_groups <- interestingGroups(seurat)
@@ -26,8 +27,8 @@ interesting_groups <- interestingGroups(seurat)
 
 
 
-```{r sample_metadata}
-sampleMetadata(seurat)
+```{r sample_data}
+sampleData(seurat)
 ```
 
 

@@ -5,22 +5,17 @@
 \alias{plotGenesPerCell}
 \alias{plotGenesPerCell}
 \alias{plotGenesPerCell,bcbioSingleCell-method}
-\alias{plotGenesPerCell,data.frame-method}
 \alias{plotGenesPerCell,seurat-method}
 \title{Plot Genes per Cell}
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = "violin", min,
-  max, interestingGroups, samplesOnYAxis = TRUE,
+\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = c("violin",
+  "boxplot", "histogram", "ridgeline"), interestingGroups, min, max,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotGenesPerCell}{data.frame}(object, geom = "violin", min = 0L,
-  max = Inf, interestingGroups, samplesOnYAxis = TRUE,
-  fill = scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotGenesPerCell}{seurat}(object, geom = "violin", min, max,
-  interestingGroups, samplesOnYAxis = TRUE,
+\S4method{plotGenesPerCell}{seurat}(object, geom = c("violin", "boxplot",
+  "histogram", "ridgeline"), interestingGroups, min, max,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
@@ -28,58 +23,43 @@ plotGenesPerCell(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{geom}{Plot type. Supported formats: \code{boxplot}, \code{histogram},
-\code{ridgeline}, and \code{violin}. Applies to \code{\link[=plotUMIsPerCell]{plotUMIsPerCell()}},
-\code{\link[=plotGenesPerCell]{plotGenesPerCell()}}, \code{\link[=plotMitoRatio]{plotMitoRatio()}}, and \code{\link[=plotNovelty]{plotNovelty()}} output.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
+
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{min}{Recommended minimum value cutoff.}
 
 \item{max}{Recommended maximum value cutoff.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
-histogram.}
-
-\item{fill}{Desired ggplot fill scale. Defaults to
-\code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
-\code{NULL}, the default ggplot2 color palette will be used. If manual color
+\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
+to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Plot Genes per Cell
 }
-\details{
-A violin plot is a comact display of a continuous distribution. It
-is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_density]{geom_density()}}: a violin plot is a
-mirrored density plot displayed in the same way as a boxplot.
-}
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotGenesPerCell(bcb_small)
 
-# bcbioSingleCell
-plotGenesPerCell(bcb)
-
-# seurat
-plotGenesPerCell(seurat)
-
-# data.frame
-df <- metrics(bcb)
-plotGenesPerCell(df)
+# seurat ====
+plotGenesPerCell(seurat_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{metrics}},
+Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
+  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}},
   \code{\link{plotZerosVsDepth}}
 }
 \author{

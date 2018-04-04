@@ -1,88 +1,132 @@
-#' @rdname calculateMetrics
-#' @export
-setGeneric("calculateMetrics", function(object, ...) {
-    standardGeneric("calculateMetrics")
-})
-
-
-
 #' @rdname cell2sample
 #' @export
-setGeneric("cell2sample", function(object, ...) {
-    standardGeneric("cell2sample")
-})
+setGeneric(
+    "cell2sample",
+    function(object, ...) {
+        standardGeneric("cell2sample")
+    }
+)
 
 
 
 #' @rdname cellTypesPerCluster
 #' @export
-setGeneric("cellTypesPerCluster", function(object, ...) {
-    standardGeneric("cellTypesPerCluster")
-})
+setGeneric(
+    "cellTypesPerCluster",
+    function(object, ...) {
+        standardGeneric("cellTypesPerCluster")
+    }
+)
+
+
+
+#' @rdname diffExp
+#' @export
+setGeneric(
+    "diffExp",
+    function(object, ...) {
+        standardGeneric("diffExp")
+    }
+)
 
 
 
 #' @rdname fetchGeneData
 #' @export
-setGeneric("fetchGeneData", function(object, ...) {
-    standardGeneric("fetchGeneData")
-})
+setGeneric(
+    "fetchGeneData",
+    function(object, ...) {
+        standardGeneric("fetchGeneData")
+    }
+)
 
 
 
 #' @rdname fetchPCAData
 #' @export
-setGeneric("fetchPCAData", function(object, ...) {
-    standardGeneric("fetchPCAData")
-})
+setGeneric(
+    "fetchPCAData",
+    function(object, ...) {
+        standardGeneric("fetchPCAData")
+    }
+)
 
 
 
 #' @rdname fetchTSNEData
 #' @export
-setGeneric("fetchTSNEData", function(object, ...) {
-    standardGeneric("fetchTSNEData")
-})
+setGeneric(
+    "fetchTSNEData",
+    function(object, ...) {
+        standardGeneric("fetchTSNEData")
+    }
+)
 
 
 
 #' @rdname fetchTSNEExpressionData
 #' @export
-setGeneric("fetchTSNEExpressionData", function(object, ...) {
-    standardGeneric("fetchTSNEExpressionData")
-})
+setGeneric(
+    "fetchTSNEExpressionData",
+    function(object, ...) {
+        standardGeneric("fetchTSNEExpressionData")
+    }
+)
 
 
 
 #' @rdname filterCells
 #' @export
-setGeneric("filterCells", function(object, ...) {
-    standardGeneric("filterCells")
-})
+setGeneric(
+    "filterCells",
+    function(object, ...) {
+        standardGeneric("filterCells")
+    }
+)
+
+
+
+#' @rdname inflectionPoint
+#' @export
+setGeneric(
+    "inflectionPoint",
+    function(object, ...) {
+        standardGeneric("inflectionPoint")
+    }
+)
 
 
 
 #' @rdname knownMarkersDetected
 #' @export
-setGeneric("knownMarkersDetected", function(all, known, ...) {
-    standardGeneric("knownMarkersDetected")
-})
+setGeneric(
+    "knownMarkersDetected",
+    function(object, ...) {
+        standardGeneric("knownMarkersDetected")
+    }
+)
 
 
 
 #' @rdname metricsPerSample
 #' @export
-setGeneric("metricsPerSample", function(object, ...) {
-    standardGeneric("metricsPerSample")
-})
+setGeneric(
+    "metricsPerSample",
+    function(object, ...) {
+        standardGeneric("metricsPerSample")
+    }
+)
 
 
 
 #' @rdname plotCellCounts
 #' @export
-setGeneric("plotCellCounts", function(object, ...) {
-    standardGeneric("plotCellCounts")
-})
+setGeneric(
+    "plotCellCounts",
+    function(object, ...) {
+        standardGeneric("plotCellCounts")
+    }
+)
 
 
 
@@ -90,25 +134,43 @@ setGeneric("plotCellCounts", function(object, ...) {
 #' @export
 setGeneric(
     "plotCellTypesPerCluster",
-    function(object, cellTypesPerCluster, ...) {
+    function(object, ...) {
         standardGeneric("plotCellTypesPerCluster")
-    })
+    }
+)
+
+
+
+#' @rdname plotCumulativeUMIsPerCell
+#' @export
+setGeneric(
+    "plotCumulativeUMIsPerCell",
+    function(object, ...) {
+        standardGeneric("plotCumulativeUMIsPerCell")
+    }
+)
 
 
 
 #' @rdname plotFeatureTSNE
 #' @export
-setGeneric("plotFeatureTSNE", function(object, ...) {
-    standardGeneric("plotFeatureTSNE")
-})
+setGeneric(
+    "plotFeatureTSNE",
+    function(object, ...) {
+        standardGeneric("plotFeatureTSNE")
+    }
+)
 
 
 
 #' @rdname plotGenesPerCell
 #' @export
-setGeneric("plotGenesPerCell", function(object, ...) {
-    standardGeneric("plotGenesPerCell")
-})
+setGeneric(
+    "plotGenesPerCell",
+    function(object, ...) {
+        standardGeneric("plotGenesPerCell")
+    }
+)
 
 
 
@@ -116,150 +178,183 @@ setGeneric("plotGenesPerCell", function(object, ...) {
 #' @export
 setGeneric(
     "plotKnownMarkersDetected",
-    function(object, knownMarkersDetected, ...) {
+    function(object, ...) {
         standardGeneric("plotKnownMarkersDetected")
-    })
+    }
+)
 
 
 
 #' @rdname plotMarkers
 #' @export
-setGeneric("plotMarkers", function(object, ...) {
-    standardGeneric("plotMarkers")
-})
+setGeneric(
+    "plotMarkers",
+    function(object, ...) {
+        standardGeneric("plotMarkers")
+    }
+)
 
 
 
 #' @rdname plotMarkerTSNE
 #' @export
-setGeneric("plotMarkerTSNE", function(object, ...) {
-    standardGeneric("plotMarkerTSNE")
-})
+setGeneric(
+    "plotMarkerTSNE",
+    function(object, ...) {
+        standardGeneric("plotMarkerTSNE")
+    }
+)
 
 
 
 #' @rdname plotMitoRatio
 #' @export
-setGeneric("plotMitoRatio", function(object, ...) {
-    standardGeneric("plotMitoRatio")
-})
+setGeneric(
+    "plotMitoRatio",
+    function(object, ...) {
+        standardGeneric("plotMitoRatio")
+    }
+)
 
 
 
 #' @rdname plotMitoVsCoding
 #' @export
-setGeneric("plotMitoVsCoding", function(object, ...) {
-    standardGeneric("plotMitoVsCoding")
-})
+setGeneric(
+    "plotMitoVsCoding",
+    function(object, ...) {
+        standardGeneric("plotMitoVsCoding")
+    }
+)
 
 
 
 #' @rdname plotNovelty
 #' @export
-setGeneric("plotNovelty", function(object, ...) {
-    standardGeneric("plotNovelty")
-})
+setGeneric(
+    "plotNovelty",
+    function(object, ...) {
+        standardGeneric("plotNovelty")
+    }
+)
 
 
 
 #' @rdname plotPCElbow
 #' @export
-setGeneric("plotPCElbow", function(object, ...) {
-    standardGeneric("plotPCElbow")
-})
+setGeneric(
+    "plotPCElbow",
+    function(object, ...) {
+        standardGeneric("plotPCElbow")
+    }
+)
 
 
 
 #' @rdname plotReadsPerCell
 #' @export
-setGeneric("plotReadsPerCell", function(object, ...) {
-    standardGeneric("plotReadsPerCell")
-})
+setGeneric(
+    "plotReadsPerCell",
+    function(object, ...) {
+        standardGeneric("plotReadsPerCell")
+    }
+)
 
 
 
 #' @rdname plotTopMarkers
 #' @export
-setGeneric("plotTopMarkers", function(object, topMarkers, ...) {
-    standardGeneric("plotTopMarkers")
-})
+setGeneric(
+    "plotTopMarkers",
+    function(object, ...) {
+        standardGeneric("plotTopMarkers")
+    }
+)
 
 
 
 #' @rdname plotTSNE
 #' @export
-setGeneric("plotTSNE", function(object, ...) {
-    standardGeneric("plotTSNE")
-})
+setGeneric(
+    "plotTSNE",
+    function(object, ...) {
+        standardGeneric("plotTSNE")
+    }
+)
 
 
 
 #' @rdname plotUMIsPerCell
 #' @export
-setGeneric("plotUMIsPerCell", function(object, ...) {
-    standardGeneric("plotUMIsPerCell")
-})
+setGeneric(
+    "plotUMIsPerCell",
+    function(object, ...) {
+        standardGeneric("plotUMIsPerCell")
+    }
+)
 
 
 
 #' @rdname plotUMIsVsGenes
 #' @export
-setGeneric("plotUMIsVsGenes", function(object, ...) {
-    standardGeneric("plotUMIsVsGenes")
-})
+setGeneric(
+    "plotUMIsVsGenes",
+    function(object, ...) {
+        standardGeneric("plotUMIsVsGenes")
+    }
+)
 
 
 
 #' @rdname plotZerosVsDepth
 #' @export
-setGeneric("plotZerosVsDepth", function(object, ...) {
-    standardGeneric("plotZerosVsDepth")
-})
-
-
-
-#' @rdname prepareSingleCellTemplate
-#' @export
-setGeneric("prepareSingleCellTemplate", function(object, ...) {
-    standardGeneric("prepareSingleCellTemplate")
-})
-
-
-
-#' @rdname readCellTypeMarkersFile
-#' @export
-setGeneric("readCellTypeMarkersFile", function(object, ...) {
-    standardGeneric("readCellTypeMarkersFile")
-})
+setGeneric(
+    "plotZerosVsDepth",
+    function(object, ...) {
+        standardGeneric("plotZerosVsDepth")
+    }
+)
 
 
 
 #' @rdname sanitizeMarkers
 #' @export
-setGeneric("sanitizeMarkers", function(object, markers, ...) {
-    standardGeneric("sanitizeMarkers")
-})
+setGeneric(
+    "sanitizeMarkers",
+    function(object, ...) {
+        standardGeneric("sanitizeMarkers")
+    }
+)
 
 
 
 #' @rdname subsetPerSample
 #' @export
-setGeneric("subsetPerSample", function(object, ...) {
-    standardGeneric("subsetPerSample")
-})
+setGeneric(
+    "subsetPerSample",
+    function(object, ...) {
+        standardGeneric("subsetPerSample")
+    }
+)
 
 
 
 #' @rdname topBarcodes
 #' @export
-setGeneric("topBarcodes", function(object, ...) {
-    standardGeneric("topBarcodes")
-})
+setGeneric(
+    "topBarcodes",
+    function(object, ...) {
+        standardGeneric("topBarcodes")
+    }
+)
 
 
 
 #' @rdname topMarkers
 #' @export
-setGeneric("topMarkers", function(object, ...) {
-    standardGeneric("topMarkers")
-})
+setGeneric(
+    "topMarkers",
+    function(object, ...) {
+        standardGeneric("topMarkers")
+    }
+)

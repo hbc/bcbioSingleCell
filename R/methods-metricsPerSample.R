@@ -1,36 +1,27 @@
 #' Metrics per Sample
 #'
-#' @rdname metricsPerSample
 #' @name metricsPerSample
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
 #'
-#' @return [tibble] containing summary statistics.
+#' @return `tbl_df` containing summary statistics.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' metricsPerSample(bcb_small)
 #'
-#' # bcbioSingleCell
-#' metricsPerSample(bcb)
-#'
-#' # seurat
-#' metricsPerSample(seurat)
+#' # seurat ====
+#' metricsPerSample(seurat_small)
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom dplyr group_by summarize_all
 .metricsPerSample <- function(object) {
     metrics(object) %>%
-        .[, c(
-            "sampleName",
-            "nUMI",
-            "nGene",
-            "nCoding"
-        ), drop = FALSE] %>%
+        .[, c("sampleName", "nUMI", "nGene", "nCoding"), drop = FALSE] %>%
         group_by(!!sym("sampleName")) %>%
         summarize_all(sum)
 }
@@ -43,7 +34,8 @@ NULL
 setMethod(
     "metricsPerSample",
     signature("bcbioSingleCell"),
-    .metricsPerSample)
+    .metricsPerSample
+)
 
 
 
@@ -52,4 +44,5 @@ setMethod(
 setMethod(
     "metricsPerSample",
     signature("seurat"),
-    .metricsPerSample)
+    .metricsPerSample
+)

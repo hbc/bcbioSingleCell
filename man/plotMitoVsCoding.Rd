@@ -5,67 +5,52 @@
 \alias{plotMitoVsCoding}
 \alias{plotMitoVsCoding}
 \alias{plotMitoVsCoding,bcbioSingleCell-method}
-\alias{plotMitoVsCoding,data.frame-method}
 \alias{plotMitoVsCoding,seurat-method}
-\title{Plot Mitochondrial Counts vs. Coding Counts}
+\title{Plot Mitochondrial vs. Coding Counts}
 \usage{
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{bcbioSingleCell}(object, interestingGroups,
-  color = viridis::scale_color_viridis(discrete = TRUE))
-
-\S4method{plotMitoVsCoding}{data.frame}(object, interestingGroups,
-  color = viridis::scale_color_viridis(discrete = TRUE))
+  color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
-  color = viridis::scale_color_viridis(discrete = TRUE))
+  color = scale_color_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{color}{\emph{Only applies to scatterplot}. Desired ggplot color scale.
-Defaults to \code{\link[viridis:scale_color_viridis]{viridis::scale_color_viridis()}}. Must supply discrete values.
-When set to \code{NULL}, the default ggplot2 color palette will be used. If
-manual color definitions are desired, we recommend using
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
-Plot Mitochondrial Counts vs. Coding Counts
-}
-\details{
-A violin plot is a comact display of a continuous distribution. It
-is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_density]{geom_density()}}: a violin plot is a
-mirrored density plot displayed in the same way as a boxplot.
+Plot Mitochondrial vs. Coding Counts
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotMitoVsCoding(bcb_small)
 
-# bcbioSingleCell
-plotMitoVsCoding(bcb)
-
-# seurat
-plotMitoVsCoding(seurat)
-
-# data.frame
-df <- metrics(bcb)
-plotMitoVsCoding(df)
+# seurat ====
+plotMitoVsCoding(seurat_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{metrics}},
+Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
+  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
+  \code{\link{plotQC}}, \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}},
   \code{\link{plotZerosVsDepth}}
 }
 \author{

@@ -10,7 +10,7 @@
 subsetPerSample(object, ...)
 
 \S4method{subsetPerSample}{bcbioSingleCell}(object, minCells = 200L,
-  dir = getwd())
+  envir = parent.frame(), dir = ".")
 }
 \arguments{
 \item{object}{Object.}
@@ -19,28 +19,35 @@ subsetPerSample(object, ...)
 
 \item{minCells}{Minimum number of cells required per sample.}
 
-\item{dir}{Output directory where to save the subset data.}
+\item{envir}{Environment where to assign the subsets.}
+
+\item{dir}{Output directory.}
 }
 \value{
-Character vector of saved \link{bcbioSingleCell} subsets.
+Named vector of saved \code{bcbioSingleCell} subset file paths.
 }
 \description{
 Subset Per Sample
 }
 \examples{
-load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-
+# bcbioRNASeq ====
 # This will save the subsets per sample to disk
-subsetPerSample(filtered, dir = "subsetPerSample")
-dir("subsetPerSample")
+subsetPerSample(bcb_small, dir = "subsetPerSample")
+list.files("subsetPerSample")
 
-# Cleanup
+# Clean up
 unlink("subsetPerSample", recursive = TRUE)
 }
 \seealso{
-Other Data Management Utilities: \code{\link{aggregateReplicates}},
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
+  \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{readCellTypeMarkersFile}}
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{selectSamples}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh

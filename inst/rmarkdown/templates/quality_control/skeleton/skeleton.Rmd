@@ -4,7 +4,7 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    bcb_file: "data/YYYY-MM-DD/bcb.rda"
+    bcb_file: "bcb.rda"
     min_umis: 1000
     max_umis: !r Inf
     min_genes: 500
@@ -12,21 +12,19 @@ params:
     max_mito_ratio: 0.1
     min_novelty: 0.75
     min_cells_per_gene: 3
-    output_dir: "."
+    data_dir: "."
 ---
 
-```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-02-12
+```{r setup, cache=FALSE, message=FALSE}
+# Last modified 2018-03-27
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
-
-# Directory paths
-data_dir <- file.path(params$output_dir, "data", Sys.Date())
 
 # Load bcbioSingleCell object
 bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
 stopifnot(is(bcb, "bcbioSingleCell"))
+invisible(validObject(bcb))
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -34,8 +32,8 @@ stopifnot(is(bcb, "bcbioSingleCell"))
 
 
 
-```{r sample_metadata}
-sampleMetadata(bcb)
+```{r sample_data}
+sampleData(bcb)
 ```
 
 [bcbio][] run data was imported from **`r metadata(bcb)$uploadDir`**.
@@ -198,7 +196,8 @@ bcb_filtered <- filterCells(
 assignAndSaveData(
     name = paste(bcb_name, "filtered", sep = "_"),
     object = bcb_filtered,
-    dir = data_dir)
+    dir = params$data_dir
+)
 ```
 
 ```{r plot_filtered_qc}
@@ -206,7 +205,8 @@ plotQC(
     bcb_filtered,
     geom = "violin",
     return = "markdown",
-    headerLevel = 2)
+    headerLevel = 2
+)
 ```
 
 

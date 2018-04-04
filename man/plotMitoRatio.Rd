@@ -5,79 +5,59 @@
 \alias{plotMitoRatio}
 \alias{plotMitoRatio}
 \alias{plotMitoRatio,bcbioSingleCell-method}
-\alias{plotMitoRatio,data.frame-method}
 \alias{plotMitoRatio,seurat-method}
 \title{Plot Mitochondrial Transcript Abundance}
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = "violin", max,
-  interestingGroups, samplesOnYAxis = TRUE,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotMitoRatio}{data.frame}(object, geom = "violin", max = Inf,
-  interestingGroups, samplesOnYAxis = TRUE,
+\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = c("violin",
+  "boxplot", "histogram", "ridgeline"), interestingGroups, max,
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotMitoRatio}{seurat}(object, geom = "violin", max,
-  interestingGroups, samplesOnYAxis = TRUE,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
+\S4method{plotMitoRatio}{seurat}(object, geom = c("violin", "boxplot",
+  "histogram", "ridgeline"), interestingGroups, max,
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{geom}{Plot type. Supported formats: \code{boxplot}, \code{histogram},
-\code{ridgeline}, and \code{violin}. Applies to \code{\link[=plotUMIsPerCell]{plotUMIsPerCell()}},
-\code{\link[=plotGenesPerCell]{plotGenesPerCell()}}, \code{\link[=plotMitoRatio]{plotMitoRatio()}}, and \code{\link[=plotNovelty]{plotNovelty()}} output.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
+first argument in the vector.}
+
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{max}{Recommended maximum value cutoff.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
-
-\item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
-histogram.}
-
-\item{fill}{Desired ggplot fill scale. Defaults to
-\code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
-\code{NULL}, the default ggplot2 color palette will be used. If manual color
+\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
+to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Plot Mitochondrial Transcript Abundance
 }
-\details{
-A violin plot is a comact display of a continuous distribution. It
-is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_density]{geom_density()}}: a violin plot is a
-mirrored density plot displayed in the same way as a boxplot.
-}
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotMitoRatio(bcb_small)
 
-# bcbioSingleCell
-plotMitoRatio(bcb)
-
-# seurat
-plotMitoRatio(seurat)
-
-# data.frame
-df <- metrics(bcb)
-plotMitoRatio(df)
+# seurat ====
+plotMitoRatio(seurat_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{metrics}},
+Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
+  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}},
   \code{\link{plotZerosVsDepth}}
 }
 \author{

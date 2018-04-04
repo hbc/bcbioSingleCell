@@ -3,52 +3,48 @@
 \docType{methods}
 \name{plotQuantileHeatmap}
 \alias{plotQuantileHeatmap}
-\alias{plotQuantileHeatmap,bcbioSingleCell-method}
 \alias{plotQuantileHeatmap,seurat-method}
 \title{Plot Heatmap with Quantile Breaks}
 \usage{
-\S4method{plotQuantileHeatmap}{bcbioSingleCell}(object, n = 5L,
-  annotationCol = NA, clusterCols = FALSE, clusterRows = FALSE,
-  color = viridis::viridis, legendColor = viridis::viridis, title = NULL)
-
-\S4method{plotQuantileHeatmap}{seurat}(object, n = 5L, annotationCol = NA,
-  clusterCols = FALSE, clusterRows = FALSE, color = viridis::viridis,
-  legendColor = viridis::viridis, title = NULL)
+\S4method{plotQuantileHeatmap}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{n}{The number of breaks to create.}
-
-\item{annotationCol}{\emph{Optional.} \link{data.frame} that defines annotation
-mappings for the columns.}
-
-\item{clusterCols}{Logical determining if columns should be arranged with
-hierarchical clustering. Alternatively, can define an \code{hclust} object.}
-
-\item{clusterRows}{Logical determining if rows should be arranged with
-hierarchical clustering. Alternatively, can define an \code{hclust} object.}
-
-\item{color}{Colors to use for plot. Defaults to the \code{\link[viridis:viridis]{viridis::viridis()}}
-palette.}
-
-\item{legendColor}{Colors to use for legend labels. Defaults to the
-\code{\link[viridis:viridis]{viridis::viridis()}} palette.}
-
-\item{title}{\emph{Optional.} Plot title.}
+\item{...}{Passthrough arguments to \code{\link[pheatmap:pheatmap]{pheatmap::pheatmap()}}. The names of the
+arguments must be formatted in camel case, not snake case.}
+}
+\value{
+Show heatmap and invisibly return a \code{list} of the components.
 }
 \description{
 Plot Heatmap with Quantile Breaks
 }
 \details{
-This is helpful for more usefully visualizing single cell data.
+This is helpful for visualizing single cell data.
 Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/
 }
 \examples{
-load(system.file("extdata/filtered.rda", package = "bcbioSingleCell"))
-
-# bcbioSingleCell
-plotQuantileHeatmap(filtered)
+# seurat ====
+\dontrun{
+plotQuantileHeatmap(
+    object = seurat_small,
+    showColnames = FALSE,
+    showRownames = FALSE
+)
+}
+}
+\seealso{
+Other Quality Control Functions: \code{\link{inflectionPoint}},
+  \code{\link{plotCellCounts}},
+  \code{\link{plotCumulativeUMIsPerCell}},
+  \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
+  \code{\link{plotZerosVsDepth}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

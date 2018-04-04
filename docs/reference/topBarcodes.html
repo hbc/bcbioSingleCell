@@ -11,13 +11,15 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Top Barcodes — topBarcodes" />
+
+<meta property="og:description" content="Top Barcodes" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">bcbioSingleCell</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -60,9 +74,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -73,6 +84,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,10 +92,12 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Top Barcodes</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-topBarcodes.R'><code>R/methods-topBarcodes.R</code></a></small>
+    <p class="hidden name"><code>topBarcodes.Rd</code></p>
     </div>
 
     
@@ -98,7 +112,7 @@
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10L</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -107,7 +121,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p><em>Additional arguments (for the S4 generic definition).</em></p></td>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>n</th>
@@ -117,59 +131,55 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data.frame</p>
+    <p><code>data.frame</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other Clustering Utilities: <code>knownMarkersDetected</code>,
-  <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkers</code>, <code>plotPCElbow</code>,
-  <code>plotTopMarkers</code>, <code>topMarkers</code></p>
+    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>cell2sample</code>, <code><a href='counts.html'>counts</a></code>,
+  <code>fetchGeneData</code>, <code>fetchPCAData</code>,
+  <code>fetchTSNEData</code>,
+  <code>fetchTSNEExpressionData</code>,
+  <code>filterCells</code>,
+  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
+  <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
+  <code><a href='selectSamples.html'>selectSamples</a></code>,
+  <code>subsetPerSample</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"bcb.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-<span class='fu'>load</span>(<span class='fu'>system.file</span>(
-    <span class='fu'>file.path</span>(<span class='st'>"extdata"</span>, <span class='st'>"seurat.rda"</span>),
-    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>))
-
-<span class='co'># bcbioSingleCell</span>
-<span class='fu'>topBarcodes</span>(<span class='no'>bcb</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
+    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
+<span class='fu'>topBarcodes</span>(<span class='no'>bcb_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
 #&gt; Variables: 16
-#&gt; $ sampleID            &lt;fct&gt; run1_AGAGGATA, run1_AGAGGATA, run1_AGAGGATA, ru...
-#&gt; $ nUMI                &lt;int&gt; 14095, 14053, 13083, 12909, 12660, 12541, 12359...
-#&gt; $ nGene               &lt;int&gt; 4230, 4146, 3623, 3916, 4275, 4108, 3891, 3991,...
-#&gt; $ nCoding             &lt;int&gt; 12405, 11895, 12101, 11533, 11627, 11527, 11261...
-#&gt; $ nMito               &lt;int&gt; 781, 1251, 324, 476, 410, 482, 338, 494, 239, 213
-#&gt; $ log10GenesPerUMI    &lt;dbl&gt; 0.8740139, 0.8721868, 0.8645425, 0.8739812, 0.8...
-#&gt; $ mitoRatio           &lt;dbl&gt; 0.05540972, 0.08902014, 0.02476496, 0.03687350,...
-#&gt; $ nCount              &lt;int&gt; 128690, 126962, 111183, 118717, 120160, 110058,...
-#&gt; $ sampleName          &lt;fct&gt; M1_seq_rep_1, M1_seq_rep_1, M1_seq_rep_1, M1_se...
-#&gt; $ description         &lt;fct&gt; run1, run1, run1, run1, run1, run1, run1, run1,...
-#&gt; $ fileName            &lt;fct&gt; 20170915_Pool_ZG4780-1_S1_R1_001.fastq.gz, 2017...
-#&gt; $ index               &lt;fct&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
-#&gt; $ sequence            &lt;fct&gt; TATCCTCT, TATCCTCT, TATCCTCT, TATCCTCT, TATCCTC...
-#&gt; $ sampleNameAggregate &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
-#&gt; $ revcomp             &lt;fct&gt; AGAGGATA, AGAGGATA, AGAGGATA, AGAGGATA, AGAGGAT...
-#&gt; $ interestingGroups   &lt;fct&gt; M1_seq_rep_1, M1_seq_rep_1, M1_seq_rep_1, M1_se...</div><div class='input'>
-<span class='co'># seurat</span>
-<span class='fu'>topBarcodes</span>(<span class='no'>seurat</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
-#&gt; Variables: 13
-#&gt; $ nGene             &lt;int&gt; 866, 841, 849, 854, 815, 846, 852, 815, 871, 854
-#&gt; $ nUMI              &lt;int&gt; 15210, 14600, 14395, 13512, 13511, 13094, 13077, ...
-#&gt; $ sampleID          &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
-#&gt; $ nCoding           &lt;int&gt; 12617, 13258, 10832, 11505, 12323, 11888, 11618, ...
-#&gt; $ nMito             &lt;int&gt; 1430, 584, 2334, 889, 444, 396, 624, 279, 771, 885
-#&gt; $ log10GenesPerUMI  &lt;dbl&gt; 0.7023977, 0.7023411, 0.7043671, 0.7096724, 0.704...
-#&gt; $ mitoRatio         &lt;dbl&gt; 0.09401709, 0.04000000, 0.16213963, 0.06579337, 0...
-#&gt; $ nCount            &lt;int&gt; 224684, 191688, 219262, 206429, 193003, 173779, 2...
-#&gt; $ sampleName        &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
-#&gt; $ description       &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
-#&gt; $ origIdent         &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1
-#&gt; $ res0x8            &lt;fct&gt; 1, 0, 1, 1, 0, 0, 0, 0, 1, 0
-#&gt; $ interestingGroups &lt;fct&gt; M1, M1, M1, M1, M1, M1, M1, M1, M1, M1</div></pre>
+#&gt; $ nCount              &lt;int&gt; 90582, 128690, 111183, 126962, 111111, 124799, ...
+#&gt; $ nUMI                &lt;int&gt; 9323, 6978, 6933, 6467, 6387, 6137, 6102, 6008,...
+#&gt; $ nGene               &lt;int&gt; 184, 451, 442, 440, 445, 448, 448, 455, 431, 433
+#&gt; $ nCoding             &lt;int&gt; 789, 5617, 6261, 4634, 5808, 5388, 5115, 5422, ...
+#&gt; $ nMito               &lt;int&gt; 6578, 781, 324, 1251, 239, 338, 476, 213, 137, 190
+#&gt; $ log10GenesPerUMI    &lt;dbl&gt; 0.5705469, 0.6905209, 0.6887468, 0.6936916, 0.6...
+#&gt; $ mitoRatio           &lt;dbl&gt; 0.70556688, 0.11192319, 0.04673302, 0.19344364,...
+#&gt; $ sampleID            &lt;fct&gt; multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, mul...
+#&gt; $ sampleName          &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1...
+#&gt; $ description         &lt;fct&gt; multiplexed, multiplexed, multiplexed, multiple...
+#&gt; $ fileName            &lt;fct&gt; multiplexed.fastq.gz, multiplexed.fastq.gz, mul...
+#&gt; $ index               &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+#&gt; $ sequence            &lt;fct&gt; TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTT...
+#&gt; $ sampleNameAggregate &lt;fct&gt; sample, sample, sample, sample, sample, sample,...
+#&gt; $ revcomp             &lt;fct&gt; AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAA...
+#&gt; $ interestingGroups   &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1...</div><div class='input'>
+<span class='co'># seurat ====</span>
+<span class='fu'>topBarcodes</span>(<span class='no'>pbmc_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
+#&gt; Variables: 10
+#&gt; $ nGene             &lt;int&gt; 96, 88, 83, 84, 94, 69, 47, 81, 77, 86
+#&gt; $ nUMI              &lt;int&gt; 872, 787, 754, 745, 709, 612, 527, 502, 463, 462
+#&gt; $ origIdent         &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
+#&gt; $ res0x8            &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+#&gt; $ res1              &lt;fct&gt; 1, 1, 1, 1, 1, 0, 3, 2, 1, 1
+#&gt; $ sampleID          &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
+#&gt; $ sampleName        &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
+#&gt; $ description       &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
+#&gt; $ interestingGroups &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
+#&gt; $ ident             &lt;fct&gt; 1, 1, 1, 1, 1, 0, 3, 2, 1, 1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -192,7 +202,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">
@@ -202,5 +212,8 @@ Michael Steinbaugh
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

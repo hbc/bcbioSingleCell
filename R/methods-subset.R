@@ -1,79 +1,65 @@
 #' Bracket-Based Subsetting
 #'
-#' Extract genes by row and cells by column from a [bcbioSingleCell] object.
+#' Extract genes by row and cells by column from a `bcbioSingleCell` object.
 #'
-#' @rdname subset
 #' @name subset
-#'
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams base::`[`
-#'
 #' @param ... Additional arguments.
 #'
 #' @seealso
 #' - `help("[", "base")`.
 #' - `selectSamples()` for subsetting based on sample metadata.
 #'
-#' @return [bcbioSingleCell].
+#' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#'
-#' cells <- colnames(bcb)[1:100]
+#' # bcbioSingleCell ====
+#' cells <- head(colnames(bcb_small), 100L)
 #' head(cells)
-#' genes <- rownames(bcb)[1:100]
+#' genes <- head(rownames(bcb_small), 100L)
 #' head(genes)
 #'
 #' # Subset by cell identifiers
-#' bcb[, cells]
+#' bcb_small[, cells]
 #'
 #' # Subset by genes
-#' bcb[genes, ]
+#' bcb_small[genes, ]
 #'
 #' # Subset by both genes and cells
-#' bcb[genes, cells]
+#' bcb_small[genes, cells]
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom dplyr mutate_if
-#' @importFrom magrittr set_rownames
-#' @importFrom S4Vectors metadata SimpleList
 .subset <- function(x, i, j, ..., drop = FALSE) {
+    validObject(x)
+
+    # Genes
     if (missing(i)) {
         i <- 1L:nrow(x)
     }
+    # Cells
     if (missing(j)) {
         j <- 1L:ncol(x)
     }
 
     # Early return if dimensions are unmodified
-    if (identical(dim(x), c(length(i), length(j)))) return(x)
-
-    # Regenerate and subset SummarizedExperiment
-    se <- as(x, "SummarizedExperiment")
-    se <- se[i, j, drop = drop]
-
-    genes <- rownames(se)
-    cells <- colnames(se)
-
-    # Assays ===================================================================
-    assays <- assays(se)
-
-    # Row data =================================================================
-    rowData <- rowData(se)
-    if (!is.null(rowData)) {
-        rownames(rowData) <- slot(se, "NAMES")
+    if (identical(dim(x), c(length(i), length(j)))) {
+        return(x)
     }
 
-    # Column data ==============================================================
-    # Don't need to relevel factors here currently
-    colData <- colData(se)
+    # Regenerate and subset SummarizedExperiment
+    sce <- as(x, "SingleCellExperiment")
+    sce <- sce[i, j, drop = drop]
+
+    genes <- rownames(sce)
+    cells <- colnames(sce)
 
     # Metadata =================================================================
-    metadata <- metadata(se)
+    metadata <- metadata(sce)
     metadata[["subset"]] <- TRUE
     # Update version, if necessary
     if (!identical(metadata[["version"]], packageVersion)) {
@@ -83,19 +69,24 @@ NULL
 
     # cell2sample
     cell2sample <- metadata[["cell2sample"]]
-    assert_is_factor(cell2sample)
-    # Note that we're subsetting `sampleMetadata` by the factor levels in
+    # Note that we're subsetting `sampleData` by the factor levels in
     # `cell2sample`, so this must come first
     cell2sample <- droplevels(cell2sample[cells])
     metadata[["cell2sample"]] <- cell2sample
 
-    # sampleMetadata
-    sampleMetadata <- sampleMetadata(x) %>%
-        .[levels(cell2sample), ] %>%
-        mutate_if(is.factor, droplevels) %>%
-        set_rownames(.[["sampleID"]])
-    metadata[["sampleMetadata"]] <- sampleMetadata
-    sampleIDs <- as.character(sampleMetadata[["sampleID"]])
+    # sampleData
+    sampleData <- metadata[["sampleData"]]
+    assert_is_data.frame(sampleData)
+    sampleData <- sampleData %>%
+        .[levels(cell2sample), , drop = FALSE] %>%
+        rownames_to_column() %>%
+        mutate_all(as.factor) %>%
+        mutate_all(droplevels) %>%
+        column_to_rownames()
+    metadata[["sampleData"]] <- sampleData
+
+    # sampleIDs
+    sampleIDs <- as.character(sampleData[["sampleID"]])
 
     # aggregateReplicates
     aggregateReplicates <- metadata[["aggregateReplicates"]]
@@ -120,39 +111,32 @@ NULL
         metadata[["filterGenes"]] <- filterGenes
     }
 
-    # bcbio ====================================================================
-    bcbio <- bcbio(x)
-    if (is(bcbio, "SimpleList") & length(bcbio)) {
-        # Cellular barcodes
-        cb <- bcbio[["cellularBarcodes"]]
-        # Bind barcodes into a single `data.frame`, which we can subset
-        if (!is.null(cb)) {
-            if (is.list(cb)) {
-                cb <- .bindCellularBarcodes(cb)
-            }
-            cb <- cb[cells, , drop = FALSE]
-            cbList <- lapply(seq_along(sampleIDs), function(a) {
-                cb %>%
-                    ungroup() %>%
-                    filter(.data[["sampleID"]] == sampleIDs[[a]]) %>%
-                    mutate(sampleID = NULL)
-            })
-            names(cbList) <- sampleIDs
-        }
-        # Return the SimpleList
-        bcbio <- list(
-            cellularBarcodes = cbList) %>%
-            as("SimpleList")
+    # Unfiltered cellular barcodes
+    cb <- metadata[["cellularBarcodes"]]
+    # Bind barcodes into a single `data.frame`, which we can subset
+    if (!is.null(cb)) {
+        assert_is_list(cb)
+        df <- cb %>%
+            .bindCellularBarcodes() %>%
+            .[cells, , drop = FALSE]
+        cb <- mclapply(seq_along(sampleIDs), function(a) {
+            df %>%
+                ungroup() %>%
+                .[.[["sampleID"]] == sampleIDs[[a]], , drop = FALSE] %>%
+                mutate(sampleID = NULL)
+        })
+        names(cb) <- sampleIDs
+        metadata[["cellularBarcodes"]] <- cb
     }
 
     # Return ===================================================================
-    new("bcbioSingleCell",
-        SummarizedExperiment(
-            assays = assays,
-            rowData = rowData,
-            colData = colData,
-            metadata = metadata),
-        bcbio = bcbio)
+    .new.bcbioSingleCell(
+        assays = assays(sce),
+        rowRanges <- rowRanges(sce),
+        colData <- colData(sce),
+        metadata = metadata,
+        isSpike <- rownames(sce)[isSpike(sce)]
+    )
 }
 
 
@@ -165,7 +149,8 @@ setMethod(
     signature(
         x = "bcbioSingleCell",
         i = "ANY",
-        j = "ANY"),
-    function(x, i, j, ..., drop = FALSE) {
-        .subset(x, i, j, ..., drop)
-    })
+        j = "ANY",
+        drop = "ANY"
+    ),
+    .subset
+)

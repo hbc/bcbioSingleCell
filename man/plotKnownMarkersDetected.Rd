@@ -5,24 +5,23 @@
 \name{plotKnownMarkersDetected}
 \alias{plotKnownMarkersDetected}
 \alias{plotKnownMarkersDetected}
-\alias{plotKnownMarkersDetected,seurat,grouped_df-method}
+\alias{plotKnownMarkersDetected,seurat-method}
 \title{Plot Known Markers Detected}
 \usage{
-plotKnownMarkersDetected(object, knownMarkersDetected, ...)
+plotKnownMarkersDetected(object, ...)
 
-\S4method{plotKnownMarkersDetected}{seurat,grouped_df}(object,
-  knownMarkersDetected, tsneColor = viridis::scale_color_viridis(),
-  violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-  dotColor = ggplot2::scale_color_gradient(low = "lightgray", high =
-  "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L)
+\S4method{plotKnownMarkersDetected}{seurat}(object, markers,
+  tsneColor = scale_color_viridis(discrete = FALSE),
+  violinFill = scale_fill_viridis(discrete = TRUE),
+  dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
+  dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{knownMarkersDetected}{\code{\link[=knownMarkersDetected]{knownMarkersDetected()}} return \link{tibble} grouped
-by cluster.}
-
 \item{...}{Additional arguments.}
+
+\item{markers}{\code{grouped_df} of known marker genes.}
 
 \item{tsneColor}{Color palette to use for tSNE plot.}
 
@@ -30,33 +29,35 @@ by cluster.}
 
 \item{dotColor}{Color palette to use for dot plot.}
 
-\item{dark}{Plot the TSNE against a dark background.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
-\item{headerLevel}{Include a Markdown header for each gene.}
+\item{headerLevel}{R Markdown header level.}
 }
 \value{
-No value, only graphical output.
+Show graphical output. Invisibly return \code{ggplot} \code{list}.
 }
 \description{
 Plot Known Markers Detected
 }
 \examples{
-load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
+# seurat ====
 # Let's plot the first 2 markers, as a quick example
 plotKnownMarkersDetected(
-    seurat,
-    knownMarkersDetected = knownMarkersDetected[1:2, ])
+    object = seurat_small,
+    markers = known_markers_small[seq_len(2L), ]
+)
 }
 \seealso{
-Other Clustering Utilities: \code{\link{knownMarkersDetected}},
-  \code{\link{plotMarkers}}, \code{\link{plotPCElbow}},
-  \code{\link{plotTopMarkers}}, \code{\link{topBarcodes}},
-  \code{\link{topMarkers}}
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

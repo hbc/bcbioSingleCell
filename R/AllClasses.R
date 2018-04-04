@@ -2,73 +2,154 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 
 
-#' bcbioSingleCell Object Class
+#' bcbioSingleCell Class
 #'
-#' `bcbioSingleCell` is an extension of `SummarizedExperiment` designed to store
-#' bcbio single-cell RNA-seq counts. This class contains read counts save as a
-#' sparse matrix (`dgCMatrix`), sample barcodes, run metadata, and barcode
-#' summary statistics for each sample analyzed.
+#' `bcbioSingleCell` extends `SingleCellExperiment` and designed to store a
+#' bcbio single-cell RNA-seq analysis. This class contains read counts saved as
+#' a sparse matrix (`dgCMatrix`), sample metadata, and cell quality control
+#' metrics.
 #'
-#' @note `bcbioSingleCell` extended `SummarizedExperiment` until v0.0.31 of
-#' this package, when we migrated over to using `SingleCellExperiment`.
+#' @note `bcbioSingleCell` extended `SummarizedExperiment` prior to v0.1.0,
+#'   where we migrated to `SingleCellExperiment`.
 #'
 #' @author Michael Steinbaugh
 #'
-#' @slot bcbio `SimpleList` containing additional bcbio run data with dimensions
-#' that don't match the count matrix. This is currently used to store all
-#' unfiltered cellular barcodes for quality control analysis.
-#'
 #' @seealso
-#' - [SummarizedExperiment::SummarizedExperiment()].
+#' - [loadSingleCell()], [loadCellRanger()].
+#' - [SingleCellExperiment::SingleCellExperiment()].
 #' - `.S4methods(class = "bcbioSingleCell")`.
 #'
 #' @export
 bcbioSingleCell <- setClass(
     "bcbioSingleCell",
-    contains = "SummarizedExperiment",
-    slots = c(bcbio = "SimpleList")
+    contains = "SingleCellExperiment"
 )
+
+
+
+# Validity =====================================================================
 setValidity(
     "bcbioSingleCell",
     function(object) {
+        stopifnot(metadata(object)[["version"]] >= 0.1)
+        assert_is_all_of(object, "SingleCellExperiment")
+        stopifnot(!.hasSlot(object, "bcbio"))
+
+        # Assays ===============================================================
+        assert_are_identical("raw", names(assays(object)))
+
+        # Row data =============================================================
+        assert_is_all_of(rowRanges(object), "GRanges")
+        assert_is_all_of(rowData(object), "DataFrame")
+        # Require gene-to-symbol mappings
+        assert_is_subset(
+            x = c("geneID", "geneName"),
+            y = colnames(rowData(object))
+        )
+
+        # Column data ==========================================================
+        # Check that all of the columns are numeric
+        colDataCheck <- vapply(
+            X = slot(object, "colData"),
+            FUN = is.numeric,
+            FUN.VALUE = logical(1L),
+            USE.NAMES = TRUE
+        )
+        if (!all(colDataCheck)) {
+            abort(paste(
+                paste(
+                    "Non-numeric colData columns:",
+                    toString(names(colDataCheck[!colDataCheck]))
+                ),
+                bcbioBase::updateMessage,
+                sep = "\n"
+            ))
+        }
+
+        # Metadata =============================================================
+        metadata <- metadata(object)
+
+        # Optional metadata:
+        # - filterCells
+        # - filterGenes
+        # - filterParams
+        # - filterSummary
+        # - lanes: integer
+        # - rowRangesMetadata: tbl_df
+        # - tx2gene: data.frame
+        #
+        # bcbio-specific:
+        # - bcbioCommandsLog: character
+        # - bcbioLog: character
+        # - dataVersions: tbl_df
+        # - gffFile: character
+        # - programVersions: tbl_df
+        # - projectDir: character
+        # - runDate: Date
+        # - template: character
+        # - yaml: list
+        #
+        # v0.2.0
+        # - loadCellRanger: call
+        # - loadSingleCell: call
+        # - txdb: TxDb
+
+        # Class checks
+        requiredMetadata <- list(
+            "allSamples" = "logical",
+            "cell2sample" = "factor",
+            "date" = "Date",
+            "devtoolsSessionInfo" = "session_info",
+            "ensemblRelease" = "integer",
+            "genomeBuild" = "character",
+            "interestingGroups" = "character",
+            "isSpike" = "character",
+            "level" = "character",
+            "organism" = "character",
+            "pipeline" = "character",
+            "sampleData" = "data.frame",
+            "sampleDirs" = "character",
+            "sampleMetadataFile" = "character",
+            "umiType" = "character",
+            "unannotatedRows" = "character",
+            "uploadDir" = "character",
+            "utilsSessionInfo" = "sessionInfo",
+            "version" = "package_version",
+            "wd" = "character"
+        )
+        classChecks <- invisible(mapply(
+            name <- names(requiredMetadata),
+            expected <- requiredMetadata,
+            MoreArgs = list(metadata = metadata),
+            FUN = function(name, expected, metadata) {
+                actual <- class(metadata[[name]])
+                if (!length(intersect(expected, actual))) {
+                    FALSE
+                } else {
+                    TRUE
+                }
+            },
+            SIMPLIFY = TRUE,
+            USE.NAMES = TRUE
+        ))
+        if (!all(classChecks)) {
+            print(classChecks)
+            abort(paste(
+                "Metadata class checks failed.",
+                bcbioBase::updateMessage,
+                sep = "\n"
+            ))
+        }
+
+        # level
+        assert_is_subset(
+            x = metadata[["level"]],
+            y = c("genes", "transcripts")
+        )
+
+        # sampleData
+        invisible(lapply(metadata[["sampleData"]], assert_is_factor))
+
         TRUE
     }
 )
-
-
-
-# Legacy classes ===============================================================
-#' `bcbioSCDataSet`
-#'
-#' This class will be deprecated in favor of [bcbioSingleCell] in a future
-#' release.
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#'
-#' @slot callers [SimpleList] containing additional bcbio run data with
-#'   dimensions that don't match the count matrix. This is currently used to
-#'   store all unfiltered cellular barcodes for quality control analysis.
-#'
-#' @export
-bcbioSCDataSet <- setClass(
-    "bcbioSCDataSet",
-    contains = "SummarizedExperiment",
-    slots = c(callers = "SimpleList"))
-setValidity("bcbioSCDataSet", function(object) TRUE)
-
-
-
-#' `bcbioSCFiltered`
-#'
-#' This class will be deprecated in favor of [bcbioSingleCell] in a future
-#' release.
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#'
-#' @export
-bcbioSCFiltered <- setClass(
-    "bcbioSCFiltered",
-    contains = "SummarizedExperiment")
-setValidity("bcbioSCFiltered", function(object) TRUE)

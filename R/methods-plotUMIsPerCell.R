@@ -2,149 +2,60 @@
 #'
 #' Plot the universal molecular identifiers (UMIs) per cell.
 #'
-#' @rdname plotUMIsPerCell
 #' @name plotUMIsPerCell
-#' @family Quality Control Metrics
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' plotUMIsPerCell(bcb_small)
 #'
-#' # bcbioSingleCell
-#' plotUMIsPerCell(bcb)
-#'
-#' # seurat
-#' plotUMIsPerCell(seurat)
-#'
-#' # data.frame
-#' df <- metrics(bcb)
-#' plotUMIsPerCell(df)
+#' # seurat ====
+#' plotUMIsPerCell(seurat_small)
+#' plotUMIsPerCell(pbmc_small)
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom viridis scale_fill_viridis
 .plotUMIsPerCell <- function(
     object,
-    geom = "violin",
-    min = 0L,
+    geom = c("violin", "boxplot", "histogram", "ridgeline"),
     interestingGroups,
-    samplesOnYAxis = TRUE,
-    fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-    metricCol <- "nUMI"
-    p <- .plotQCGeom(
-        object,
+    min,
+    fill = scale_fill_viridis(discrete = TRUE)
+) {
+    geom <- match.arg(geom)
+    .plotQCMetric(
+        object = object,
+        metricCol = "nUMI",
         geom = geom,
-        metricCol = metricCol,
-        min = min)
-
-    # Label interesting groups
-    if (!missing(interestingGroups)) {
-        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
-    } else {
-        p <- p + labs(fill = NULL)
-    }
-
-    # Color palette
-    if (!is.null(fill)) {
-        p <- p + fill
-    }
-
-    # Median labels
-    if (geom %in% validMedianGeom) {
-        p <- p + .medianLabels(object, medianCol = metricCol)
-    }
-
-    # Wrap aggregated samples
-    facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
-        facets <- "sampleNameAggregate"
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_y")
-    }
-
-    if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
-        p <- p + coord_flip()
-    }
-
-    p
+        interestingGroups = interestingGroups,
+        min = min,
+        trans = "identity",
+        fill = fill
+    )
 }
 
 
 
 # Methods ======================================================================
 #' @rdname plotUMIsPerCell
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotUMIsPerCell",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        geom = "violin",
-        min,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(min)) {
-            min <- metadata(object)[["filterParams"]][["minUMIs"]]
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups)
-        .plotUMIsPerCell(
-            object = metrics,
-            geom = geom,
-            min = min,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
+    .plotUMIsPerCell
+)
 
 
 
 #' @rdname plotUMIsPerCell
-#' @export
-setMethod(
-    "plotUMIsPerCell",
-    signature("data.frame"),
-    .plotUMIsPerCell)
-
-
-
-#' @rdname plotUMIsPerCell
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotUMIsPerCell",
     signature("seurat"),
-    function(
-        object,
-        geom = "violin",
-        min,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(min)) {
-            min <- bcbio(object)[["filterParams"]][["minUMIs"]]
-        }
-        metrics <- metrics(object, interestingGroups = interestingGroups)
-        .plotUMIsPerCell(
-            object = metrics,
-            geom = geom,
-            min = min,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
+    .plotUMIsPerCell
+)

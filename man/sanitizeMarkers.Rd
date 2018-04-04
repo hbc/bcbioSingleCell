@@ -4,33 +4,66 @@
 \name{sanitizeMarkers}
 \alias{sanitizeMarkers}
 \alias{sanitizeMarkers}
-\alias{sanitizeMarkers,seurat,data.frame-method}
+\alias{sanitizeMarkers,seurat-method}
 \title{Sanitize Markers Output}
 \usage{
-sanitizeMarkers(object, markers, ...)
+sanitizeMarkers(object, ...)
 
-\S4method{sanitizeMarkers}{seurat,data.frame}(object, markers)
+\S4method{sanitizeMarkers}{seurat}(object, markers)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{markers}{\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} return.}
-
 \item{...}{Additional arguments.}
+
+\item{markers}{Original \code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} \code{data.frame}.}
 }
 \value{
-\link{grouped_df}, grouped by cluster ident.
+\code{data.frame}, arranged by adjusted P value.
 }
 \description{
 Sanitize Markers Output
 }
+\note{
+\code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} maps the counts matrix rownames correctly in
+the \code{gene} column, whereas \code{\link[Seurat:FindMarkers]{Seurat::FindMarkers()}} maps them correctly in
+the rownames of the returned marker \code{data.frame}.
+}
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seuratAllMarkersOriginal.rda", package = "bcbioSingleCell"))
+# seurat ====
+invisible(capture.output(
+    all_markers <- FindAllMarkers(seurat_small)
+))
+all_sanitized <- sanitizeMarkers(
+    object = seurat_small,
+    markers = all_markers
+)
+glimpse(all_sanitized)
 
-# seurat
-sanitizeMarkers(
-    seurat,
-    markers = seuratAllMarkersOriginal) \%>\%
-    glimpse()
+invisible(capture.output(
+    ident_3_markers <- FindMarkers(
+        object = seurat_small,
+        ident.1 = "3",
+        ident.2 = NULL
+    )
+))
+ident_3_sanitized <- sanitizeMarkers(
+    object = seurat_small,
+    markers = ident_3_markers
+)
+glimpse(ident_3_sanitized)
+}
+\seealso{
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
+  \code{\link{topMarkers}}
+}
+\author{
+Michael Steinbaugh
 }

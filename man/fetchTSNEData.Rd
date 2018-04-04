@@ -17,22 +17,27 @@ fetchTSNEData(object, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\link{data.frame} of t-SNE points and metadata for each cell.
+\code{data.frame} of t-SNE points and metadata for each cell.
 }
 \description{
 Fetch t-SNE Locations and Cellular Metadata
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-fetchTSNEData(seurat) \%>\% glimpse()
+# seurat ====
+fetchTSNEData(pbmc_small) \%>\% glimpse()
 }
 \seealso{
 \code{\link[Seurat:TSNEPlot]{Seurat::TSNEPlot()}}.
 
-Other t-SNE Utilities: \code{\link{fetchTSNEExpressionData}},
-  \code{\link{plotMarkerTSNE}}, \code{\link{plotTSNE}}
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

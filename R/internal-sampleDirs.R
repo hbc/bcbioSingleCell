@@ -1,37 +1,25 @@
 #' Detect Sample Directories
 #'
 #' @author Michael Steinbaugh
+#' @keywords internal
+#' @noRd
 #'
-#' @param uploadDir Upload directory.
-#' @param pipeline Pipeline used to generate the samples.
+#' @importFrom basejump makeNames
+#' @importFrom bcbioBase sampleDirs
+#'
+#' @param uploadDir Path to final upload directory.
 #'
 #' @return Named character vector containing sample directory paths. Function
-#'   will [abort()] if no complete sample directories match.
-#' @noRd
+#'   will abort if no complete sample directories match.
 .sampleDirs <- function(
     uploadDir,
-    pipeline = "bcbio") {
-    # Check that uploadDir exists
-    if (!dir.exists(uploadDir)) {
-        abort("`uploadDir` does not exist")
-    }
-    uploadDir <- normalizePath(uploadDir)
+    pipeline = c("bcbio", "cellranger")
+) {
+    assert_all_are_dirs(uploadDir)
+    pipeline <- match.arg(pipeline)
+
     if (pipeline == "bcbio") {
-        sampleDirs <- list.dirs(uploadDir, full.names = TRUE, recursive = FALSE)
-
-        # Remove the nested `projectDir`
-        if (any(grepl(projectDirPattern, basename(sampleDirs)))) {
-            sampleDirs <- sampleDirs %>%
-                .[!grepl(projectDirPattern, basename(.))]
-        }
-
-        if (length(sampleDirs) == 0L) {
-            abort("Failed to detect any sample directories")
-        }
-
-        names(sampleDirs) <- basename(sampleDirs) %>%
-            gsub("-", "_", .) %>%
-            make.names(unique = TRUE)
+        sampleDirs <- sampleDirs(uploadDir)
     } else if (pipeline == "cellranger") {
         inform(paste(
             "CellRanger output directory structure:",
@@ -51,7 +39,8 @@
             pattern = "matrix.mtx",
             include.dirs = FALSE,
             full.names = TRUE,
-            recursive = TRUE)
+            recursive = TRUE
+        )
         # Subset to only include `filtered_gene_bc_matrices*`. Note that
         # aggregation output is labeled `filtered_gene_bc_matrices_mex` by
         # default.
@@ -63,11 +52,12 @@
                 "outs",
                 "filtered_gene_bc_matrices([^/]+)?",
                 "[^/]+", # genomeBuild
-                paste0("matrix.mtx", "$"))
-            )]
+                paste0("matrix.mtx", "$")
+            )
+        )]
 
         # Check to ensure that matrices match standardized cellranger export
-        if (length(matrixFiles) == 0L) {
+        if (!length(matrixFiles)) {
             abort("Failed to detect any sample directories")
         }
 
@@ -77,11 +67,10 @@
             dirname() %>%
             dirname() %>%
             dirname()
-        names(sampleDirs) <- make.names(basename(sampleDirs), unique = TRUE)
-    } else {
-        abort("Unsupported pipeline")
+        names(sampleDirs) <- makeNames(basename(sampleDirs), unique = TRUE)
+
+        inform(paste(length(sampleDirs), "samples detected"))
     }
 
-    inform(paste(length(sampleDirs), "samples detected"))
     sampleDirs
 }

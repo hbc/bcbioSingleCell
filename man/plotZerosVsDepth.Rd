@@ -5,59 +5,52 @@
 \alias{plotZerosVsDepth}
 \alias{plotZerosVsDepth}
 \alias{plotZerosVsDepth,bcbioSingleCell-method}
-\alias{plotZerosVsDepth,dgCMatrix-method}
-\alias{plotZerosVsDepth,matrix-method}
 \alias{plotZerosVsDepth,seurat-method}
 \title{Plot Percentage of Zeros vs. Library Depth}
 \usage{
 plotZerosVsDepth(object, ...)
 
-\S4method{plotZerosVsDepth}{bcbioSingleCell}(object)
+\S4method{plotZerosVsDepth}{bcbioSingleCell}(object,
+  color = scale_color_viridis(discrete = TRUE))
 
-\S4method{plotZerosVsDepth}{dgCMatrix}(object, metrics)
-
-\S4method{plotZerosVsDepth}{matrix}(object, metrics)
-
-\S4method{plotZerosVsDepth}{seurat}(object)
+\S4method{plotZerosVsDepth}{seurat}(object,
+  color = scale_color_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{metrics}{Metrics \link{data.frame}.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 This function helps us visualize the dropout rate.
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotZerosVsDepth(bcb_small)
 
-# bcbioSingleCell
-plotZerosVsDepth(bcb)
-
-# dgCMatrix
-counts <- counts(bcb)
-metrics <- metrics(bcb)
-plotZerosVsDepth(counts, metrics = metrics)
-
-# seurat
-plotZerosVsDepth(seurat)
+# seurat ====
+plotZerosVsDepth(seurat_small)
+plotZerosVsDepth(pbmc_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{metrics}},
+Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
+  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}}
+  \code{\link{plotUMIsPerCell}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

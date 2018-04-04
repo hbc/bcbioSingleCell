@@ -11,6 +11,9 @@
 \alias{quantileHeatmap}
 \alias{plotKnownMarkers}
 \alias{readMarkers}
+\alias{readMarkersFile}
+\alias{calculateMetrics}
+\alias{readCellTypeMarkersFile}
 \title{Deprecated Functions}
 \usage{
 plotClusters(...)
@@ -30,6 +33,12 @@ quantileHeatmap(...)
 plotKnownMarkers(object, knownMarkers, ...)
 
 readMarkers(...)
+
+readMarkersFile(...)
+
+calculateMetrics(...)
+
+readCellTypeMarkersFile(...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -37,7 +46,7 @@ readMarkers(...)
 \item{object}{Object.}
 }
 \value{
-Soft deprecation to new functions.
+\code{\link[=.Defunct]{.Defunct()}} or \code{\link[=.Deprecated]{.Deprecated()}}.
 }
 \description{
 Deprecated Functions

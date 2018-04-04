@@ -10,9 +10,9 @@
 plotFeatureTSNE(object, ...)
 
 \S4method{plotFeatureTSNE}{seurat}(object, features, pointSize = 0.5,
-  pointAlpha = 0.8, color = ggplot2::scale_color_gradient(low = "lightgray",
-  high = "purple"), dark = FALSE, label = TRUE, labelSize = 6L,
-  legend = FALSE, returnAsList = FALSE)
+  pointAlpha = 0.8, color = scale_color_gradient(low = "lightgray", high =
+  "purple"), dark = FALSE, label = TRUE, labelSize = 6L, legend = FALSE,
+  return = c("ggplot", "list"))
 }
 \arguments{
 \item{object}{Object.}
@@ -27,11 +27,12 @@ scores, number of genes detected).}
 \item{pointAlpha}{Alpha transparency level. Useful when there many cells in
 the dataset, and some cells can be masked.}
 
-\item{color}{Color palette to use for points. Defaults to the viridis color
-palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
-low/high gradient.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Enable dark mode.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{label}{Overlay a cluster identitiy label on the plot.}
 
@@ -40,22 +41,30 @@ low/high gradient.}
 \item{legend}{Show legends in paneled plots. Defaults to \code{FALSE} because
 typically these look too busy and the legends can get cut off.}
 
-\item{returnAsList}{Return plots as a list.}
+\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
+to the first argument in the vector.}
 }
 \value{
-No return, only graphical output.
+\code{ggplot} or \code{list}.
 }
 \description{
 Plot Feature t-SNE
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-plotFeatureTSNE(seurat, features = "PC1")
+# seurat ====
+plotFeatureTSNE(pbmc_small, features = "PC1")
 }
 \seealso{
 \code{\link[Seurat:FeaturePlot]{Seurat::FeaturePlot()}}.
+
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

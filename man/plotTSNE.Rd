@@ -11,15 +11,16 @@ plotTSNE(object, ...)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
   pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, color = ggplot2::scale_color_hue(),
-  dark = TRUE, title = NULL)
+  label = TRUE, labelSize = 6L, color = scale_color_hue(), dark = TRUE,
+  title = NULL)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{interestingGroups}{Interesting group to use for plot colors.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
@@ -32,30 +33,35 @@ the dataset, and some cells can be masked.}
 
 \item{labelSize}{Size of the text label.}
 
-\item{color}{Color palette to use for points. Defaults to the viridis color
-palette. Use \code{\link[ggplot2:scale_color_gradient]{ggplot2::scale_color_gradient()}} to easily define your own
-low/high gradient.}
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Enable dark mode.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{title}{Plot title.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-plotTSNE(seurat)
+# seurat ====
+plotTSNE(pbmc_small)
 }
 \seealso{
-Other t-SNE Utilities: \code{\link{fetchTSNEData}},
-  \code{\link{fetchTSNEExpressionData}},
-  \code{\link{plotMarkerTSNE}}
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotKnownMarkersDetected}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
+  \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

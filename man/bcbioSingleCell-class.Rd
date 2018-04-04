@@ -4,28 +4,21 @@
 \name{bcbioSingleCell-class}
 \alias{bcbioSingleCell-class}
 \alias{bcbioSingleCell}
-\title{bcbioSingleCell Object Class}
+\title{bcbioSingleCell Class}
 \description{
-\code{bcbioSingleCell} is an extension of \code{SummarizedExperiment} designed to store
-bcbio single-cell RNA-seq counts. This class contains read counts save as a
-sparse matrix (\code{dgCMatrix}), sample barcodes, run metadata, and barcode
-summary statistics for each sample analyzed.
+\code{bcbioSingleCell} extends \code{SingleCellExperiment} and designed to store a
+bcbio single-cell RNA-seq analysis. This class contains read counts saved as
+a sparse matrix (\code{dgCMatrix}), sample metadata, and cell quality control
+metrics.
 }
-\section{Slots}{
-
-\describe{
-\item{\code{bcbio}}{\code{SimpleList} containing additional bcbio run data with dimensions
-that don't match the count matrix. This is currently used to store all
-unfiltered cellular barcodes for quality control analysis.}
-}}
-
 \note{
-\code{bcbioSingleCell} extended \code{SummarizedExperiment} until v0.0.31 of
-this package, when we migrated over to using \code{SingleCellExperiment}.
+\code{bcbioSingleCell} extended \code{SummarizedExperiment} prior to v0.1.0,
+where we migrated to \code{SingleCellExperiment}.
 }
 \seealso{
 \itemize{
-\item \code{\link[SummarizedExperiment:SummarizedExperiment]{SummarizedExperiment::SummarizedExperiment()}}.
+\item \code{\link[=loadSingleCell]{loadSingleCell()}}, \code{\link[=loadCellRanger]{loadCellRanger()}}.
+\item \code{\link[SingleCellExperiment:SingleCellExperiment]{SingleCellExperiment::SingleCellExperiment()}}.
 \item \code{.S4methods(class = "bcbioSingleCell")}.
 }
 }

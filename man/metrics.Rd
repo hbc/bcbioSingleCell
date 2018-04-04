@@ -3,10 +3,13 @@
 \docType{methods}
 \name{metrics}
 \alias{metrics}
+\alias{metrics,dgCMatrix-method}
 \alias{metrics,bcbioSingleCell-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
+\S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = TRUE)
+
 \S4method{metrics}{bcbioSingleCell}(object, interestingGroups)
 
 \S4method{metrics}{seurat}(object, interestingGroups)
@@ -14,36 +17,42 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{rowData}{Data describing the rows of the object.}
+
+\item{prefilter}{Whether to apply pre-filtering to the cellular barcodes.}
+
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
-\link{data.frame} with cellular barcodes as rows.
+\code{data.frame} with cellular barcodes as rows.
 }
 \description{
 Sample Barcode Metrics
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+metrics(bcb_small) \%>\% glimpse()
 
-# bcbioSingleCell
-metrics(bcb) \%>\% glimpse()
+# seurat ====
+metrics(seurat_small) \%>\% glimpse()
+metrics(pbmc_small) \%>\% glimpse()
 
-# seurat
-metrics(seurat) \%>\% glimpse()
+# dgCMatrix ====
+mat <- counts(bcb_small)
+metrics(mat) \%>\% glimpse()
 }
 \seealso{
-\code{\link[=sampleMetadata]{sampleMetadata()}}.
-
-Other Quality Control Metrics: \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}},
-  \code{\link{plotZerosVsDepth}}
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
+  \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

@@ -1,81 +1,23 @@
 #' Plot Known Markers Detected
 #'
-#' @rdname plotKnownMarkersDetected
 #' @name plotKnownMarkersDetected
-#' @family Clustering Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
-#' @inherit plotMarkers
+#' @inheritParams plotMarkers
+#' @inheritParams general
+#' @param markers `grouped_df` of known marker genes.
 #'
-#' @param knownMarkersDetected [knownMarkersDetected()] return [tibble] grouped
-#'   by cluster.
+#' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
-#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
+#' # seurat ====
 #' # Let's plot the first 2 markers, as a quick example
 #' plotKnownMarkersDetected(
-#'     seurat,
-#'     knownMarkersDetected = knownMarkersDetected[1:2, ])
+#'     object = seurat_small,
+#'     markers = known_markers_small[seq_len(2L), ]
+#' )
 NULL
-
-
-
-# Constructors =================================================================
-#' @importFrom basejump markdownHeader
-#' @importFrom dplyr pull
-#' @importFrom stats na.omit
-#' @importFrom viridis scale_color_viridis
-.plotKnownMarkersDetected <- function(
-    object,
-    knownMarkersDetected,
-    tsneColor = viridis::scale_color_viridis(),
-    violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-    dotColor = ggplot2::scale_color_gradient(
-        low = "lightgray",
-        high = "purple"),
-    dark = TRUE,
-    pointsAsNumbers = FALSE,
-    headerLevel = 2L) {
-    if (!nrow(knownMarkersDetected)) return(NULL)
-    cellTypes <- knownMarkersDetected %>%
-        pull("cell") %>%
-        unique() %>%
-        na.omit()
-    if (is.null(cellTypes)) return(NULL)
-    list <- pblapply(seq_along(cellTypes), function(a) {
-        cellType <- cellTypes[[a]]
-        genes <- knownMarkersDetected %>%
-            .[.[["cell"]] == cellType, ] %>%
-            pull("symbol") %>%
-            unique() %>%
-            na.omit()
-        if (is.null(genes)) return(NULL)
-        if (!is.null(headerLevel)) {
-            markdownHeader(
-                cellType,
-                level = headerLevel,
-                tabset = TRUE,
-                asis = TRUE)
-            subheaderLevel <- headerLevel + 1L
-        } else {
-            subheaderLevel <- NULL
-        }
-        plotMarkers(
-            object,
-            genes = genes,
-            tsneColor = tsneColor,
-            violinFill = violinFill,
-            dotColor = dotColor,
-            dark = dark,
-            pointsAsNumbers = pointsAsNumbers,
-            headerLevel = subheaderLevel,
-            title = cellType)
-    })
-    invisible(list)
-}
 
 
 
@@ -84,7 +26,62 @@ NULL
 #' @export
 setMethod(
     "plotKnownMarkersDetected",
-    signature(
-        object = "seurat",
-        knownMarkersDetected = "grouped_df"),
-    .plotKnownMarkersDetected)
+    signature("seurat"),
+    function(
+        object,
+        markers,
+        tsneColor = scale_color_viridis(discrete = FALSE),
+        violinFill = scale_fill_viridis(discrete = TRUE),
+        dotColor = scale_color_gradient(
+            low = "lightgray",
+            high = "purple"
+        ),
+        dark = TRUE,
+        pointsAsNumbers = FALSE,
+        headerLevel = 2L
+    ) {
+        # Passthrough: tsneColor, violinFill, dotColor, dark, pointsAsNumbers
+        assert_has_rows(markers)
+        assertIsAHeaderLevel(headerLevel)
+        stopifnot(is(markers, "grouped_df"))
+        assert_has_rows(markers)
+        assert_is_subset("cellType", colnames(markers))
+
+        cellTypes <- markers %>%
+            pull("cellType") %>%
+            na.omit() %>%
+            unique()
+        assert_is_non_empty(cellTypes)
+
+        list <- pblapply(cellTypes, function(cellType) {
+            genes <- markers %>%
+                .[.[["cellType"]] == cellType, , drop = FALSE] %>%
+                pull("geneName") %>%
+                na.omit() %>%
+                unique()
+            assert_is_non_empty(genes)
+
+            markdownHeader(
+                cellType,
+                level = headerLevel,
+                tabset = TRUE,
+                asis = TRUE
+            )
+            subheaderLevel <- headerLevel + 1L
+
+            plotMarkers(
+                object = object,
+                genes = genes,
+                tsneColor = tsneColor,
+                violinFill = violinFill,
+                dotColor = dotColor,
+                dark = dark,
+                pointsAsNumbers = pointsAsNumbers,
+                headerLevel = subheaderLevel,
+                title = cellType
+            )
+        })
+
+        invisible(list)
+    }
+)

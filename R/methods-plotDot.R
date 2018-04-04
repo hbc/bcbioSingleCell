@@ -1,16 +1,12 @@
 #' Plot Dot
 #'
-#' @rdname plotDot
 #' @name plotDot
-#'
+#' @family Gene Expression Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom bcbioBase plotDot
 #'
 #' @inheritParams general
-#'
-#' @param genes Gene identifiers to plot.
-#' @param color Color palette. If `NULL`, uses default ggplot2 colors.
 #' @param colMin Minimum scaled average expression threshold. Everything
 #'   smaller will be set to this.
 #' @param colMax Maximum scaled average expression threshold. Everything larger
@@ -20,25 +16,18 @@
 #'   drawn.
 #' @param dotScale Scale the size of the points, similar to `cex`.
 #'
-#' @note [Seurat::DotPlot()] is still plotting even when `do.return = TRUE`.
-#' In the meantime, we've broken out the code into this generic to fix
-#' RMarkdown looping of our marker plots.
-#'
 #' @seealso Modified version of [Seurat::DotPlot()].
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' genes <- slot(seurat, "data") %>% rownames() %>% head()
-#' plotDot(seurat, genes = genes)
+#' # seurat ====
+#' plotDot(pbmc_small, genes = head(rownames(pbmc_small)))
 NULL
 
 
 
 # Constructors =================================================================
 #' Min Max
-#' @seealso `Seurat:::MinMax()`
+#' @seealso [Seurat:::MinMax()].
 #' @noRd
 .minMax <- function(data, min, max) {
     data2 <- data
@@ -50,7 +39,7 @@ NULL
 
 
 #' Percent Above
-#' @seealso `Seurat:::PercentAbove()`
+#' @seealso [Seurat:::PercentAbove()].
 #' @noRd
 .percentAbove <- function(x, threshold) {
     length(x[x > threshold]) / length(x)
@@ -58,23 +47,25 @@ NULL
 
 
 
-#' @importFrom dplyr group_by mutate summarize ungroup
-#' @importFrom ggplot2 aes_string geom_point labs scale_color_gradient
-#'   scale_radius
-#' @importFrom tibble rownames_to_column
-#' @importFrom rlang !! !!! sym syms
-#' @importFrom tibble as_tibble
-#' @importFrom tidyr gather
 .plotDot.seurat <- function(  # nolint
     object,
     genes,
-    color = ggplot2::scale_color_gradient(
+    color = scale_color_gradient(
         low = "lightgray",
-        high = "purple"),
+        high = "purple"
+    ),
     colMin = -2.5,
     colMax = 2.5,
     dotMin = 0L,
-    dotScale = 6L) {
+    dotScale = 6L
+) {
+    assert_is_character(genes)
+    assertIsColorScaleContinuousOrNULL(color)
+    assert_is_a_number(colMin)
+    assert_is_a_number(colMax)
+    assert_is_a_number(dotMin)
+    assert_is_a_number(dotScale)
+
     ident <- slot(object, "ident")
     data <- fetchGeneData(object, genes = genes) %>%
         as.data.frame() %>%
@@ -84,7 +75,8 @@ NULL
         gather(
             key = "gene",
             value = "expression",
-            !!genes) %>%
+            !!genes
+        ) %>%
         group_by(!!!syms(c("ident", "gene"))) %>%
         summarize(
             avgExp = mean(expm1(.data[["expression"]])),
@@ -93,11 +85,12 @@ NULL
         ungroup() %>%
         group_by(!!sym("gene")) %>%
         mutate(
-            avgExpScale = scale(.data[["avgExp"]]),
+            avgExpScale = scale(!!sym("avgExp")),
             avgExpScale = .minMax(
-                .data[["avgExpScale"]],
+                !!sym("avgExpScale"),
                 max = colMax,
-                min = colMin)
+                min = colMin
+            )
         )
     data[["pctExp"]][data[["pctExp"]] < dotMin] <- NA
 
@@ -126,4 +119,5 @@ NULL
 setMethod(
     "plotDot",
     signature("seurat"),
-    .plotDot.seurat)
+    .plotDot.seurat
+)

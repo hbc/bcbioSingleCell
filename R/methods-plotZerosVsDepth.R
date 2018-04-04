@@ -2,59 +2,69 @@
 #'
 #' This function helps us visualize the dropout rate.
 #'
-#' @rdname plotZerosVsDepth
 #' @name plotZerosVsDepth
-#' @family Quality Control Metrics
+#' @family Quality Control Functions
 #' @author Rory Kirchner, Michael Steinbaugh
 #'
 #' @inheritParams general
 #'
-#' @param metrics Metrics [data.frame].
-#'
-#' @return [ggplot].
+#' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' plotZerosVsDepth(bcb_small)
 #'
-#' # bcbioSingleCell
-#' plotZerosVsDepth(bcb)
-#'
-#' # dgCMatrix
-#' counts <- counts(bcb)
-#' metrics <- metrics(bcb)
-#' plotZerosVsDepth(counts, metrics = metrics)
-#'
-#' # seurat
-#' plotZerosVsDepth(seurat)
+#' # seurat ====
+#' plotZerosVsDepth(seurat_small)
+#' plotZerosVsDepth(pbmc_small)
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom ggplot2 aes_string facet_wrap geom_point ggplot labs
-#'   scale_x_log10
-#' @importFrom Matrix colSums
-.plotZerosVsDepth <- function(object, metrics) {
-    # Using a logical matrix is fast and memory efficient
-    present <- as(object, "lgCMatrix")
-    df <- data.frame(
-        dropout = (nrow(present) - Matrix::colSums(present)) / nrow(present),
-        depth = Matrix::colSums(object),
-        description = metrics[["description"]]
-    )
+.plotZerosVsDepth <- function(
+    object,
+    color = scale_color_viridis(discrete = TRUE)
+) {
+    assertIsColorScaleDiscreteOrNULL(color)
+
+    counts <- counts(object)
+    sampleID <- cell2sample(object)
+    sampleData <- sampleData(object, return = "data.frame")
+
+    # Using a logical matrix is faster and more memory efficient
+    present <- counts %>%
+        # Ensure dgTMatrix gets coereced (e.g. pbmc_small)
+        as("dgCMatrix") %>%
+        as("lgCMatrix")
+
+    data <- tibble(
+        "sampleID" = sampleID,
+        "dropout" = (nrow(present) - Matrix::colSums(present)) / nrow(present),
+        "depth" = Matrix::colSums(counts)
+    ) %>%
+        left_join(sampleData, by = "sampleID")
+
     p <- ggplot(
-        df,
-        mapping = aes_string(x = "depth", y = "dropout")
+        data = data,
+        mapping = aes_string(
+            x = "depth",
+            y = "dropout",
+            color = "sampleName"
+        )
     ) +
-        geom_point(size = 0.8, alpha = 0.3) +
-        scale_x_log10() +
+        geom_point(size = 0.8, alpha = 0.8) +
+        scale_x_continuous(trans = "log10") +
         labs(x = "library size (depth)", y = "dropout rate")
 
-    # Facets
+    if (is(color, "ScaleDiscrete")) {
+        p <- p + color
+    }
+
+    # Wrap aggregated samples
     facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
-        facets <- c(facets, "sampleNameAggregate")
+    if (.isAggregate(metrics)) {
+        facets <- "sampleNameAggregate"
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
@@ -71,30 +81,8 @@ NULL
 setMethod(
     "plotZerosVsDepth",
     signature("bcbioSingleCell"),
-    function(object) {
-        .plotZerosVsDepth(
-            object = counts(object),
-            metrics = metrics(object)
-        )
-    })
-
-
-
-#' @rdname plotZerosVsDepth
-#' @export
-setMethod(
-    "plotZerosVsDepth",
-    signature("dgCMatrix"),
-    .plotZerosVsDepth)
-
-
-
-#' @rdname plotZerosVsDepth
-#' @export
-setMethod(
-    "plotZerosVsDepth",
-    signature("matrix"),
-    .plotZerosVsDepth)
+    .plotZerosVsDepth
+)
 
 
 
@@ -103,10 +91,5 @@ setMethod(
 setMethod(
     "plotZerosVsDepth",
     signature("seurat"),
-    function(object) {
-        .plotZerosVsDepth(
-            object = counts(object),
-            metrics = metrics(object)
-        )
-    }
+    .plotZerosVsDepth
 )

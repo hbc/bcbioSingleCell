@@ -7,20 +7,22 @@ library(tidyverse)
 # Load up the Seurat object
 loadData(seurat)
 
-degTableDir <-
-    file.path("results",
-              "differential_expression",
-              "zinger_edger")
+degTableDir <- file.path(
+    "results",
+    "differential_expression",
+    "zinger_edger"
+)
 dir.exists(degTableDir)
 
-newTableDir <-
-    file.path("results",
-              "differential_expression",
-              "zinger_edger_with_counts")
+newTableDir <- file.path(
+    "results",
+    "differential_expression",
+    "zinger_edger_with_counts"
+)
 dir.create(newTableDir, recursive = TRUE, showWarnings = FALSE)
 
 # Let's get a list of the CSV files per cluster
-csv <- dir(degTableDir, pattern = "*.csv.gz", full.names = TRUE)
+csv <- list.files(degTableDir, pattern = "*.csv.gz", full.names = TRUE)
 
 # Now we can loop across the CSV files
 pblapply(seq_along(csv), function(a) {
@@ -45,7 +47,7 @@ pblapply(seq_along(csv), function(a) {
         # The log normalized counts from Seurat are in the `@data` slot. Don't
         # use `@raw.data` or `@scale.data`.
         counts <- subset@data[, cells, drop = FALSE]
-        # Substitute the ensgene for symbol in the rownames. We'll use this
+        # Substitute the geneID for symbol in the rownames. We'll use this
         # later for easier joining back to the zingeR/edgeR CSV
         rownames(counts) <- names(rownames(counts))
         # Calculate the mean expression across the cells. If there is only
@@ -53,12 +55,12 @@ pblapply(seq_along(csv), function(a) {
         if (ncol(counts) == 1L) {
             as.numeric(counts)
         } else {
-            Matrix::rowMeans(counts)
+            rowMeans(counts)
         }
     }) %>%
         set_names(samples) %>%
         as.data.frame() %>%
-        rownames_to_column("ensgene")
+        rownames_to_column("geneID")
 
     # Load and subset the data frame. The annotated CSVs we're loading haven't
     # been filtered by P value.
@@ -68,8 +70,8 @@ pblapply(seq_along(csv), function(a) {
         # Remove rows with an adjusted P value >= 0.05
         dplyr::filter(padjFilter < 0.05) %>%
         # Now arrange by adjusted P value
-        arrange(padjFilter, symbol) %>%
-        left_join(means, by = "ensgene")
+        arrange(padjFilter, geneName) %>%
+        left_join(means, by = "geneID")
     write_csv(df, file.path(newTableDir, basename(file)))
 }) %>%
     invisible()

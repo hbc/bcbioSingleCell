@@ -5,16 +5,12 @@
 \alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes,bcbioSingleCell-method}
-\alias{plotUMIsVsGenes,data.frame-method}
 \alias{plotUMIsVsGenes,seurat-method}
 \title{Plot UMI and Gene Correlation}
 \usage{
 plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{bcbioSingleCell}(object, interestingGroups,
-  samplesOnYAxis = TRUE, color = scale_color_viridis(discrete = TRUE))
-
-\S4method{plotUMIsVsGenes}{data.frame}(object, interestingGroups,
   color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotUMIsVsGenes}{seurat}(object, interestingGroups,
@@ -25,52 +21,24 @@ plotUMIsVsGenes(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{samplesOnYAxis}{Plot the samples on the y axis. Doesn't apply to
-histogram.}
-
-\item{color}{\emph{Only applies to scatterplot}. Desired ggplot color scale.
-Defaults to \code{\link[viridis:scale_color_viridis]{viridis::scale_color_viridis()}}. Must supply discrete values.
-When set to \code{NULL}, the default ggplot2 color palette will be used. If
-manual color definitions are desired, we recommend using
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
-}
-\value{
-\link{ggplot}.
 }
 \description{
 Plot UMI and Gene Correlation
 }
-\details{
-A violin plot is a comact display of a continuous distribution. It
-is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_density]{geom_density()}}: a violin plot is a
-mirrored density plot displayed in the same way as a boxplot.
-}
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotUMIsVsGenes(bcb_small)
 
-# bcbioSingleCell
-plotUMIsVsGenes(bcb)
-
-# seurat
-plotUMIsVsGenes(seurat)
-
-# data.frame
-df <- metrics(bcb)
-plotUMIsPerCell(df)
-}
-\seealso{
-Other Quality Control Metrics: \code{\link{metrics}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+# seurat ====
+plotUMIsVsGenes(seurat_small)
+plotUMIsVsGenes(pbmc_small)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

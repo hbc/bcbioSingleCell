@@ -1,101 +1,30 @@
-# FIXME Need to update arguments to match `plotMarkerTSNE()`
-
 #' Plot Cell Types per Cluster
 #'
 #' Plot the geometric mean of the significant marker genes for every known cell
 #' type (per unbiased cluster). Cell types with too few (`min` cutoff) or too
 #' many (`max` cutoff) marker genes will be skipped.
 #'
-#' @rdname plotCellTypesPerCluster
 #' @name plotCellTypesPerCluster
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
-#' @inherit plotMarkers
+#' @inheritParams general
+#' @param cellTypesPerCluster Cell types per cluster `grouped_df`. This must be
+#'   the return from [cellTypesPerCluster()].
 #'
-#' @param cellTypesPerCluster Cell types per cluster grouped [tibble]. This must
-#'   be the return from [cellTypesPerCluster()].
-#' @param color Color palette.
-#'
-#' @return Show graphical output. Invisibly return [ggplot] plotlist.
+#' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
-#' load(system.file("extdata/knownMarkersDetected.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # seurat ====
+#' per_cluster <- cellTypesPerCluster(known_markers_small)
+#' glimpse(per_cluster)
 #'
-#' cellTypesPerCluster <- cellTypesPerCluster(knownMarkersDetected)
-#' glimpse(cellTypesPerCluster)
-#'
-#' # seurat
 #' # Let's plot the first row, as an example
-#' cellTypesPerCluster <- cellTypesPerCluster[1, , drop = FALSE]
 #' plotCellTypesPerCluster(
-#'     seurat,
-#'     cellTypesPerCluster = cellTypesPerCluster)
+#'     object = seurat_small,
+#'     cellTypesPerCluster = per_cluster[1L, , drop = FALSE]
+#' )
 NULL
-
-
-
-# Constructors =================================================================
-#' @importFrom basejump markdownHeader
-#' @importFrom dplyr group_vars mutate_if pull
-#' @importFrom pbapply pblapply
-.plotCellTypesPerCluster <- function(
-    object,
-    cellTypesPerCluster,
-    color = viridis::scale_color_viridis(),
-    dark = TRUE,
-    headerLevel = NULL) {
-    if (!nrow(cellTypesPerCluster)) return(NULL)
-    if (group_vars(cellTypesPerCluster) != "cluster") {
-        abort("cellTypesPerCluster must be grouped by `cluster` column")
-    }
-    cellTypesPerCluster <- cellTypesPerCluster %>%
-        ungroup() %>%
-        mutate_if(is.factor, droplevels)
-    # Output Markdown headers per cluster
-    clusters <- levels(cellTypesPerCluster[["cluster"]])
-    if (is.null(clusters)) return(NULL)
-    return <- pblapply(seq_along(clusters), function(a) {
-        cluster <- clusters[[a]]
-        if (!is.null(headerLevel)) {
-            markdownHeader(
-                paste("Cluster", cluster),
-                level = headerLevel,
-                tabset = TRUE,
-                asis = TRUE)
-        }
-        subset <- cellTypesPerCluster %>%
-                .[.[["cluster"]] == cluster, , drop = FALSE]
-        lapply(seq_len(nrow(subset)), function(b) {
-            cellType <- subset[b, , drop = FALSE]
-            genes <- pull(cellType, "symbol") %>%
-                strsplit(", ") %>%
-                .[[1L]]
-            title <- pull(cellType, "cell")
-            if (!is.null(headerLevel)) {
-                markdownHeader(
-                    title,
-                    level = headerLevel + 1L,
-                    tabset = TRUE,
-                    asis = TRUE)
-            }
-            # Modify the title by adding the cluster number (for the plot)
-            title <- paste(paste0("Cluster ", cluster, ":"), title)
-            p <- plotMarkerTSNE(
-                object = object,
-                genes = genes,
-                expression = "mean",
-                color = color,
-                dark = dark,
-                pointsAsNumbers = FALSE,
-                label = TRUE,
-                title = title)
-            show(p)
-            p
-        })
-    })
-    invisible(return)
-}
 
 
 
@@ -104,7 +33,71 @@ NULL
 #' @export
 setMethod(
     "plotCellTypesPerCluster",
-    signature(
-        object = "seurat",
-        cellTypesPerCluster = "grouped_df"),
-    .plotCellTypesPerCluster)
+    signature("seurat"),
+    function(
+        object,
+        cellTypesPerCluster,
+        color = scale_color_viridis(discrete = FALSE),
+        dark = TRUE,
+        headerLevel = 2L
+    ) {
+        validObject(object)
+        stopifnot(is(cellTypesPerCluster, "grouped_df"))
+        assert_has_rows(cellTypesPerCluster)
+        assert_are_identical(
+            x = group_vars(cellTypesPerCluster),
+            y = "cluster"
+        )
+        assertIsColorScaleContinuousOrNULL(color)
+        assert_is_a_bool(dark)
+        assertIsAHeaderLevel(headerLevel)
+
+        cellTypesPerCluster <- cellTypesPerCluster %>%
+            ungroup() %>%
+            mutate_if(is.factor, droplevels)
+
+        # Output Markdown headers per cluster
+        clusters <- levels(cellTypesPerCluster[["cluster"]])
+        assert_is_non_empty(clusters)
+
+        return <- pblapply(clusters, function(cluster) {
+            markdownHeader(
+                paste("Cluster", cluster),
+                level = headerLevel,
+                tabset = TRUE,
+                asis = TRUE
+            )
+            subset <- cellTypesPerCluster %>%
+                .[.[["cluster"]] == cluster, , drop = FALSE]
+            assert_has_rows(subset)
+            lapply(seq_len(nrow(subset)), function(x) {
+                cellType <- subset[x, , drop = FALSE]
+                genes <- pull(cellType, "geneName") %>%
+                    strsplit(", ") %>%
+                    .[[1L]]
+                title <- pull(cellType, "cellType")
+                markdownHeader(
+                    title,
+                    level = headerLevel + 1L,
+                    tabset = TRUE,
+                    asis = TRUE
+                )
+                # Modify the title by adding the cluster number (for the plot)
+                title <- paste(paste0("Cluster ", cluster, ":"), title)
+                p <- plotMarkerTSNE(
+                    object = object,
+                    genes = genes,
+                    expression = "mean",
+                    color = color,
+                    dark = dark,
+                    pointsAsNumbers = FALSE,
+                    label = TRUE,
+                    title = title
+                )
+                show(p)
+                invisible(p)
+            })
+        })
+        invisible(return)
+    }
+)

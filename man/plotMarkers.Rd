@@ -10,19 +10,17 @@
 plotMarkers(object, ...)
 
 \S4method{plotMarkers}{seurat}(object, genes,
-  tsneColor = viridis::scale_color_viridis(),
-  violinFill = viridis::scale_fill_viridis(discrete = TRUE),
-  dotColor = ggplot2::scale_color_gradient(low = "lightgray", high =
-  "purple"), dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L,
-  title = NULL)
+  tsneColor = scale_color_viridis(discrete = FALSE),
+  violinFill = scale_fill_viridis(discrete = TRUE),
+  dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
+  dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Genes identifiers (matching the rownames in the object),
-of which to get expression data.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
 \item{tsneColor}{Color palette to use for tSNE plot.}
 
@@ -30,16 +28,16 @@ of which to get expression data.}
 
 \item{dotColor}{Color palette to use for dot plot.}
 
-\item{dark}{Plot the TSNE against a dark background.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
-\item{headerLevel}{Include a Markdown header for each gene.}
+\item{headerLevel}{R Markdown header level.}
 
 \item{title}{Plot title.}
 }
 \value{
-No value, only graphical output.
+Show graphical output. Invisibly return \code{ggplot} \code{list}.
 }
 \description{
 Plot gene expression per cell in multiple formats:
@@ -51,19 +49,21 @@ Plot gene expression per cell in multiple formats:
 }
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/topMarkers.rda", package = "bcbioSingleCell"))
-
-# seurat
-genes <- pull(topMarkers, "symbol")
-print(genes)
-plotMarkers(seurat, genes = genes)
+# seurat ===
+top <- topMarkers(all_markers_small, n = 1L)
+genes <- pull(top, "rowname")
+plotMarkers(seurat_small, genes = genes)
 }
 \seealso{
-Other Clustering Utilities: \code{\link{knownMarkersDetected}},
+Other Clustering Functions: \code{\link{cellTypesPerCluster}},
+  \code{\link{knownMarkersDetected}},
+  \code{\link{plotCellTypesPerCluster}},
+  \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotPCElbow}}, \code{\link{plotTopMarkers}},
-  \code{\link{topBarcodes}}, \code{\link{topMarkers}}
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotPCA}},
+  \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
+  \code{\link{plotTopMarkers}},
+  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

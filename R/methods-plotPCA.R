@@ -1,28 +1,25 @@
 #' Plot Principal Component Analysis (PCA)
 #'
-#' @rdname plotPCA
 #' @name plotPCA
-#' @family PCA Utilities
+#' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom BiocGenerics plotPCA
 #'
-#' @inherit plotTSNE
+#' @inheritParams plotTSNE
+#' @inheritParams general
 #'
-#' @seealso [plotTSNE()].
+#' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-#'
-#' # seurat
-#' plotPCA(seurat)
+#' # seurat ====
+#' plotPCA(pbmc_small)
 NULL
 
 
 
 # Methods ======================================================================
 #' @rdname plotPCA
-#' @importFrom ggplot2 scale_color_hue
 #' @export
 setMethod(
     "plotPCA",
@@ -35,9 +32,10 @@ setMethod(
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        color = ggplot2::scale_color_hue(),
+        color = scale_color_hue(),
         dark = TRUE,
-        title = NULL) {
+        title = NULL
+    ) {
         pca <- fetchPCAData(object)
         .plotDR(
             pca,
@@ -50,5 +48,7 @@ setMethod(
             labelSize = labelSize,
             color = color,
             dark = dark,
-            title = title)
-    })
+            title = title
+        )
+    }
+)

@@ -16,21 +16,30 @@ fetchGeneData(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Gene identifiers (matrix rownames).}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
 }
 \value{
-\link{matrix}.
+\code{matrix}.
 }
 \description{
 Fetch Gene Expression Data
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-genes <- slot(seurat, "data") \%>\%
-    rownames() \%>\%
-    head()
-fetchGeneData(seurat, genes = genes) \%>\%
-    head()
+# seurat ====
+genes <- head(rownames(pbmc_small))
+fetchGeneData(pbmc_small, genes = genes) \%>\% glimpse()
+}
+\seealso{
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
+}
+\author{
+Michael Steinbaugh
 }

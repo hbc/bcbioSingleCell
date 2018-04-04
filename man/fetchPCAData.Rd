@@ -17,21 +17,27 @@ fetchPCAData(object, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\link{data.frame} of PCA points and metadata for each cell.
+\code{data.frame} of PCA points and metadata for each cell.
 }
 \description{
 Fetch PCA Dimensions and Cellular Metadata
 }
 \examples{
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
-
-# seurat
-fetchPCAData(seurat) \%>\% glimpse()
+# seurat ====
+fetchPCAData(pbmc_small) \%>\% glimpse()
 }
 \seealso{
 \code{\link[Seurat:PCAPlot]{Seurat::PCAPlot()}}.
 
-Other PCA Utilities: \code{\link{plotPCA}}
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh

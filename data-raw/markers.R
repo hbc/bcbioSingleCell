@@ -1,26 +1,26 @@
 # Cell Markers
 #
-# Last updated: 2017-11-09
+# Last updated: 2018-03-11
 # Gene annotations: Ensembl Genes 90
 #
 # This code is derived from:
 #   - Tirosh et al, 2015
 #   - http://satijalab.org/seurat/cell_cycle_vignette.html
-
-devtools::load_all()
+library(devtools)
 library(googlesheets)
 library(tidyverse)
+load_all()
 
 # Ensembl release version
-release <- 90
+release <- 90L
 
-# Here we're matching the stored Ensembl identifiers (`ensgene`) using
+# Here we're matching the stored Ensembl identifiers (`geneID`) using
 # ensembldb to obtain the latest symbol names from Ensembl.
 
 # Allow tidyverse to access Google Sheets
 gs_ls()
 
-# Cell Cycle Markers ===========================================================
+# Cell cycle markers ===========================================================
 # Download the Google sheet (gs)
 gs <- gs_key("1qA5ktYeimNGpZF1UPSQZATbpzEqgyxN6daoMOjv6YYw")
 
@@ -28,22 +28,22 @@ gs <- gs_key("1qA5ktYeimNGpZF1UPSQZATbpzEqgyxN6daoMOjv6YYw")
 ws <- gs_ws_ls(gs)
 print(ws)
 
-cellCycleMarkers <- lapply(seq_along(ws), function(a) {
+cellCycleMarkers <- lapply(ws, function(ws) {
     gs %>%
-        gs_read(ws = ws[[a]]) %>%
-        dplyr::select(phase, ensgene) %>%
+        gs_read(ws = ws) %>%
+        select(phase, geneID) %>%
         mutate(
-            symbol = convertGenesToSymbols(
-                ensgene,
-                organism = ws[[a]],
+            geneName = convertGenesToSymbols(
+                geneID,
+                organism = ws,
                 release = release)
         ) %>%
         group_by(phase) %>%
-        arrange(symbol, .by_group = TRUE)
+        arrange(geneName, .by_group = TRUE)
 })
 names(cellCycleMarkers) <- camel(ws)
 
-# Cell Type Markers ============================================================
+# Cell type markers ============================================================
 # Download the Google sheet (gs)
 gs <- gs_key("1vGNU2CCxpaoTCLvzOxK1hf5gjULrf2-CpgCp9bOfGJ0")
 
@@ -53,24 +53,26 @@ ws <- gs_ws_ls(gs) %>%
     .[!str_detect(., "^_")]
 print(ws)
 
-cellTypeMarkers <- lapply(seq_along(ws), function(a) {
+cellTypeMarkers <- lapply(ws, function(ws) {
     gs %>%
-        gs_read(ws = ws[[a]]) %>%
-        dplyr::select(cell, ensgene) %>%
+        gs_read(ws = ws) %>%
+        select(cellType, geneID) %>%
         mutate(
-            symbol = convertGenesToSymbols(
-                ensgene,
-                organism = ws[[a]],
-                release = release)
+            geneName = convertGenesToSymbols(
+                geneID,
+                organism = ws,
+                release = release
+            )
         ) %>%
-        group_by(cell) %>%
-        arrange(symbol, .by_group = TRUE)
+        group_by(cellType) %>%
+        arrange(geneName, .by_group = TRUE)
 })
 names(cellTypeMarkers) <- camel(ws)
 
-# Save RData ===================================================================
-devtools::use_data(
+# Save R data ==================================================================
+use_data(
     cellCycleMarkers,
     cellTypeMarkers,
     compress = "xz",
-    overwrite = TRUE)
+    overwrite = TRUE
+)

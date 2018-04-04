@@ -4,28 +4,25 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    bcb_file: "data/YYYY-MM-DD/bcb_filtered.rda"
+    bcb_file: "bcb_filtered.rda"
     seurat_name: "seurat"
     pc_compute: 20
     pc_use: FALSE
     vars_to_regress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
     resolution: 1
-    output_dir: "."
+    data_dir: "."
 ---
 
-```{r setup, cache=FALSE, message=FALSE, warning=FALSE}
-# Last modified 2018-02-12
+```{r setup, cache=FALSE, message=FALSE}
+# Last modified 2018-03-27
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
-
-# Directory paths
-data_dir <- file.path(params$output_dir, "data", Sys.Date())
-dir.create(data_dir, recursive = TRUE, showWarnings = FALSE)
 
 # Load bcbioSingleCell object
 bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
 stopifnot(is(bcb, "bcbioSingleCell"))
+invisible(validObject(bcb))
 
 # Vector to use for plot looping
 group_by <- unique(c(
@@ -38,12 +35,14 @@ opts_chunk$set(
         params$seurat_name,
         "clustering",
         "cache/",
-        sep = "_"),
+        sep = "_"
+    ),
     fig.path = paste(
         params$seurat_name,
         "clustering",
         "files/",
-        sep = "_")
+        sep = "_"
+    )
 )
 ```
 
@@ -52,8 +51,8 @@ opts_chunk$set(
 
 
 
-```{r sample_metadata}
-sampleMetadata(bcb)
+```{r sample_data}
+sampleData(bcb)
 ```
 
 This workflow is adapted from the following sources:
@@ -86,11 +85,13 @@ First, let's create a `seurat` object using the raw counts from the cells that h
 seurat <- as(bcb, "seurat") %>%
     NormalizeData(
         normalization.method = "LogNormalize",
-        scale.factor = 10000) %>%
+        scale.factor = 10000
+    ) %>%
     FindVariableGenes(
         mean.function = ExpMean,
         dispersion.function = LogVMR,
-        do.plot = FALSE) %>%
+        do.plot = FALSE
+    ) %>%
     ScaleData(model.use = "linear")
 ```
 
@@ -132,19 +133,21 @@ g2m_genes <- cell_cycle_markers %>%
     pull("symbol")
 print(g2m_genes)
 
-saveData(cell_cycle_markers, s_genes, g2m_genes, dir = data_dir)
+saveData(cell_cycle_markers, s_genes, g2m_genes, dir = params$data_dir)
 ```
 
 ```{r cell_cycle_scoring}
 seurat <- CellCycleScoring(
     seurat,
     g2m.genes = g2m_genes,
-    s.genes = s_genes)
+    s.genes = s_genes
+)
 # Cell-cycle `Phase` column should now be added to `seurat@meta.data`
 assignAndSaveData(
     name = paste(params$seurat_name, "preregress", sep = "_"),
     object = seurat,
-    dir = data_dir)
+    dir = params$data_dir
+)
 ```
 
 Here we are checking to see if the cells are grouping by cell cycle. If we don't see clear grouping of the cells into `G1`, `G2M`, and `S` clusters on the PCA plot, then it is recommended that we don't regress out cell-cycle variation. When this is the case, remove `S.Score` and `G2M.Score` from the variables to regress (`vars_to_regress`) in the R Markdown YAML parameters.
@@ -153,7 +156,8 @@ Here we are checking to see if the cells are grouping by cell cycle. If we don't
 RunPCA(
     seurat,
     pc.genes = c(s_genes, g2m_genes),
-    do.print = FALSE) %>%
+    do.print = FALSE
+) %>%
     plotPCA(interestingGroups = "phase", label = FALSE)
 ```
 
@@ -177,7 +181,8 @@ Now that regression has been applied, let's recheck to see if the cells are no l
 RunPCA(
     seurat,
     pc.genes = c(s_genes, g2m_genes),
-    do.print = FALSE) %>%
+    do.print = FALSE
+) %>%
     plotPCA(interestingGroups = "phase", label = FALSE)
 ```
 
@@ -204,11 +209,13 @@ PCHeatmap(
     col.use = CustomPalette(
         low = viridis(3)[[1]],
         mid = viridis(3)[[2]],
-        high = viridis(3)[[3]]),
+        high = viridis(3)[[3]]
+    ),
     do.balanced = TRUE,
     label.columns = FALSE,
     pc.use = 1:params$pc_compute,
-    remove.key = TRUE)
+    remove.key = TRUE
+)
 ```
 
 
@@ -219,16 +226,15 @@ VizPCA(
     seurat,
     pcs.use = 1:params$pc_compute,
     do.balanced = TRUE,
-    nCol = 2)
+    nCol = 2
+)
 ```
 
 
 ## `PrintPCA()`
 
 ```{r print_pca}
-PrintPCA(
-    seurat,
-    pcs.print = 1:params$pc_compute)
+PrintPCA(seurat, pcs.print = 1:params$pc_compute)
 ```
 
 
@@ -254,7 +260,7 @@ This methodology is also commonly used for PC covariate analysis on bulk RNA-seq
 # Allow for user-defined PCs to use, otherwise calculate using a PC elbow plot
 pc_use <- params$pc_use
 if (!is.numeric(params$pc_use)) {
-    pc_use <- plotPCElbow(seurat, maxPct = 0.05, minCumPct = 0.9)
+    pc_use <- plotPCElbow(seurat)
 }
 ```
 
@@ -277,7 +283,8 @@ seurat <- FindClusters(
     force.recalc = TRUE,
     print.output = TRUE,
     resolution = params$resolution,
-    save.SNN = TRUE)
+    save.SNN = TRUE
+)
 ```
 
 A useful feature in [Seurat][] v2.0 is the ability to recall the parameters that were used in the latest function calls for commonly used functions. For FindClusters, we provide the function PrintFindClustersParams to print a nicely formatted formatted summary of the parameters that were chosen.
@@ -296,11 +303,13 @@ PrintFindClustersParams(seurat)
 seurat <- RunTSNE(
     seurat,
     dims.use = pc_use,
-    do.fast = TRUE)
+    do.fast = TRUE
+)
 assignAndSaveData(
     name = params$seurat_name,
     object = seurat,
-    dir = data_dir)
+    dir = params$data_dir
+)
 ```
 
 ```{r print_tsne_params}
@@ -308,22 +317,23 @@ PrintTSNEParams(seurat)
 ```
 
 ```{r dim_reduction_plots, results="asis"}
-lapply(seq_along(group_by), function(a) {
-    markdownHeader(group_by[[a]], level = 2, asis = TRUE, tabset = TRUE)
+invisible(lapply(group_by, function(group) {
+    markdownHeader(group, level = 2, asis = TRUE, tabset = TRUE)
     markdownHeader("tSNE", level = 3, asis = TRUE)
     plotTSNE(
         seurat,
-        interestingGroups = group_by[[a]],
-        label = TRUE) %>%
+        interestingGroups = group,
+        label = TRUE
+    ) %>%
         show()
     markdownHeader("PCA", level = 3, asis = TRUE)
     plotPCA(
         seurat,
-        interestingGroups = group_by[[a]],
-        label = TRUE) %>%
+        interestingGroups = group,
+        label = TRUE
+    ) %>%
         show()
-}) %>%
-    invisible()
+}))
 ```
 
 Note that tSNE is not PCA! The measurement of distance in a tSNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.

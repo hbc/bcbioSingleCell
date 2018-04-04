@@ -2,151 +2,61 @@
 #'
 #' "Novelty" refers to log10 genes detected per count.
 #'
-#' @rdname plotNovelty
 #' @name plotNovelty
-#' @family Quality Control Metrics
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
-#' @inherit plotGenesPerCell
+#' @inheritParams general
+#'
+#' @return `ggplot`.
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' plotNovelty(bcb_small)
 #'
-#' # bcbioSingleCell
-#' plotNovelty(bcb)
-#'
-#' # seurat
-#' plotNovelty(seurat)
-#'
-#' # data.frame
-#' df <- metrics(bcb)
-#' plotNovelty(df)
+#' # seurat ====
+#' plotNovelty(seurat_small)
 NULL
 
 
 
 # Constructors =================================================================
-#' @importFrom viridis scale_fill_viridis
 .plotNovelty <- function(
     object,
-    geom = "violin",
-    min = 0L,
+    geom = c("violin", "boxplot", "histogram", "ridgeline"),
     interestingGroups,
-    samplesOnYAxis = TRUE,
-    fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-    metricCol <- "log10GenesPerUMI"
-    p <- .plotQCGeom(
-        object,
+    min,
+    fill = scale_fill_viridis(discrete = TRUE)
+) {
+    geom <- match.arg(geom)
+    .plotQCMetric(
+        object = object,
+        metricCol = "log10GenesPerUMI",
         geom = geom,
-        metricCol = metricCol,
-        min = min)
-
-    # Label interesting groups
-    if (!missing(interestingGroups)) {
-        p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
-    } else {
-        p <- p + labs(color = NULL, fill = NULL)
-    }
-
-    # Color palette
-    if (!is.null(fill)) {
-        p <- p + fill
-    }
-
-    # Median labels
-    if (geom %in% validMedianGeom) {
-        p <- p + .medianLabels(object, medianCol = metricCol, digits = 2L)
-    }
-
-    # Facets
-    facets <- NULL
-    if (isTRUE(.checkAggregate(object))) {
-        facets <- "sampleNameAggregate"
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free_y")
-    }
-
-    if (isTRUE(samplesOnYAxis) & geom %in% validQCGeomFlip) {
-        p <- p + coord_flip()
-    }
-
-    p
+        interestingGroups = interestingGroups,
+        min = min,
+        trans = "sqrt",
+        fill = fill
+    )
 }
 
 
 
 # Methods ======================================================================
 #' @rdname plotNovelty
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotNovelty",
     signature("bcbioSingleCell"),
-    function(
-        object,
-        geom = "violin",
-        min,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(min)) {
-            min <- metadata(object)[["filterParams"]][["minNovelty"]]
-        }
-        metrics <- metrics(
-            object,
-            interestingGroups = interestingGroups)
-        .plotNovelty(
-            object = metrics,
-            geom = geom,
-            min = min,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
+    .plotNovelty
+)
 
 
 
 #' @rdname plotNovelty
-#' @export
-setMethod(
-    "plotNovelty",
-    signature("data.frame"),
-    .plotNovelty)
-
-
-
-#' @rdname plotNovelty
-#' @importFrom bcbioBase interestingGroups
-#' @importFrom viridis scale_fill_viridis
 #' @export
 setMethod(
     "plotNovelty",
     signature("seurat"),
-    function(
-        object,
-        geom = "violin",
-        min,
-        interestingGroups,
-        samplesOnYAxis = TRUE,
-        fill = viridis::scale_fill_viridis(discrete = TRUE)) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (missing(min)) {
-            min <- bcbio(object)[["filterParams"]][["minNovelty"]]
-        }
-        metrics <- metrics(object, interestingGroups = interestingGroups)
-        .plotNovelty(
-            object = metrics,
-            geom = geom,
-            min = min,
-            interestingGroups = interestingGroups,
-            samplesOnYAxis = samplesOnYAxis,
-            fill = fill)
-    })
+    .plotNovelty
+)

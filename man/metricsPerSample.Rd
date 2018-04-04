@@ -20,20 +20,28 @@ metricsPerSample(object, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-\link{tibble} containing summary statistics.
+\code{tbl_df} containing summary statistics.
 }
 \description{
 Metrics per Sample
 }
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+metricsPerSample(bcb_small)
 
-# bcbioSingleCell
-metricsPerSample(bcb)
-
-# seurat
-metricsPerSample(seurat)
+# seurat ====
+metricsPerSample(seurat_small)
+}
+\seealso{
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{counts}},
+  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
+  \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{mapCellsToSamples}}, \code{\link{metrics}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh

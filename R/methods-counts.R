@@ -1,77 +1,38 @@
 #' Counts Accessor
 #'
-#' @rdname counts
 #' @name counts
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom BiocGenerics counts
 #'
 #' @inheritParams general
-#'
-#' @param gene2symbol Convert Ensembl gene identifiers (rownames) to gene
-#'   symbols. Recommended for passing counts to Seurat.
 #' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
 #'
-#' @return Counts matrix.
+#' @return Counts matrix (typically a `dgCMatrix`).
 #'
 #' @examples
-#' load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-#' load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+#' # bcbioSingleCell ====
+#' counts(bcb_small) %>% glimpse()
 #'
-#' # bcbioSingleCell
-#' counts(bcb, gene2symbol = FALSE) %>% glimpse()
-#' counts(bcb, gene2symbol = TRUE) %>% glimpse()
-#'
-#' # seurat
-#' counts(seurat, normalized = FALSE) %>% glimpse()
-#' counts(seurat, normalized = TRUE) %>% glimpse()
+#' # seurat ====
+#' counts(pbmc_small, normalized = FALSE) %>% glimpse()
+#' counts(pbmc_small, normalized = TRUE) %>% glimpse()
 NULL
-
-
-
-# Constructors =================================================================
-#' @importFrom dplyr pull
-#' @importFrom magrittr set_rownames
-.counts <- function(
-    object,
-    gene2symbol = FALSE) {
-    counts <- assay(object)
-    if (isTRUE(gene2symbol)) {
-        g2s <- metadata(object)[["gene2symbol"]]
-        if (!all(rownames(counts) %in% rownames(g2s))) {
-            # Resize the gene2symbol data.frame
-            g2s <- g2s %>%
-                .[rownames(counts), , drop = FALSE] %>%
-                set_rownames(rownames(counts))
-            matched <- g2s %>%
-                .[!is.na(.[["symbol"]]), , drop = FALSE]
-            unmatched <- g2s %>%
-                .[is.na(.[["symbol"]]), , drop = FALSE]
-            warn(paste(
-                "Unmatched in gene2symbol:",
-                toString(rownames(unmatched))
-            ))
-            unmatched[["ensgene"]] <- rownames(unmatched)
-            unmatched[["symbol"]] <- rownames(unmatched)
-            g2s <- rbind(matched, unmatched)
-        }
-        g2s <- g2s[rownames(counts), , drop = FALSE]
-        rows <- pull(g2s, "symbol")
-        names(rows) <- rownames(g2s)
-        rownames(counts) <- rows
-    }
-    counts
-}
 
 
 
 # Methods ======================================================================
 #' @rdname counts
+#' @importFrom basejump makeNames
 #' @export
 setMethod(
     "counts",
     signature("bcbioSingleCell"),
-    .counts)
+    function(object) {
+        assay(object)
+    }
+)
 
 
 
@@ -81,15 +42,12 @@ setMethod(
     "counts",
     signature("seurat"),
     function(object, normalized = FALSE) {
+        assert_is_a_bool(normalized)
+        # seurat also stashes scaled counts in `scale.data`
         if (identical(normalized, FALSE)) {
             slot(object, "raw.data")
         } else if (identical(normalized, TRUE)) {
             slot(object, "data")
-        } else if (normalized == "scaled") {
-            slot(object, "scale.data")
-        } else {
-            warn("Unsupported `normalized` argument")
-            return(NULL)
         }
     }
 )

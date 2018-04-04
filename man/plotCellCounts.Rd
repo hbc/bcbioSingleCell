@@ -5,70 +5,53 @@
 \alias{plotCellCounts}
 \alias{plotCellCounts}
 \alias{plotCellCounts,bcbioSingleCell-method}
-\alias{plotCellCounts,data.frame-method}
 \alias{plotCellCounts,seurat-method}
 \title{Plot Cell Counts}
 \usage{
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{bcbioSingleCell}(object, interestingGroups,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotCellCounts}{data.frame}(object, metadata, interestingGroups,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotCellCounts}{seurat}(object, interestingGroups,
-  fill = viridis::scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{interestingGroups}{Interesting group, to use for colors.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{fill}{Desired ggplot fill scale. Defaults to
-\code{\link[viridis:scale_fill_viridis]{viridis::scale_fill_viridis()}}. Must supply discrete values. When set to
-\code{NULL}, the default ggplot2 color palette will be used. If manual color
+\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
+to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
-
-\item{metadata}{Sample metadata \link{data.frame}.}
 }
 \value{
-\link{ggplot}.
+\code{ggplot}.
 }
 \description{
 Plot Cell Counts
 }
-\details{
-A violin plot is a comact display of a continuous distribution. It
-is a blend of \code{\link[=geom_boxplot]{geom_boxplot()}} and \code{\link[=geom_density]{geom_density()}}: a violin plot is a
-mirrored density plot displayed in the same way as a boxplot.
-}
 \examples{
-load(system.file("extdata/bcb.rda", package = "bcbioSingleCell"))
-load(system.file("extdata/seurat.rda", package = "bcbioSingleCell"))
+# bcbioSingleCell ====
+plotCellCounts(bcb_small)
 
-# bcbioSingleCell
-plotCellCounts(bcb)
-
-# seurat
-plotCellCounts(seurat)
-
-# data.frame
-df <- metrics(bcb)
-metadata <- sampleMetadata(bcb)
-plotCellCounts(df, metadata = metadata)
+# seurat ====
+plotCellCounts(seurat_small)
+plotCellCounts(pbmc_small)
 }
 \seealso{
-Other Quality Control Metrics: \code{\link{metrics}},
+Other Quality Control Functions: \code{\link{inflectionPoint}},
+  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
-  \code{\link{plotUMIsVsGenes}},
   \code{\link{plotZerosVsDepth}}
 }
 \author{

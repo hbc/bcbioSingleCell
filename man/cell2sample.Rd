@@ -22,3 +22,24 @@ cell2sample(object, ...)
 \description{
 Cell to Sample Mappings
 }
+\examples{
+# bcbioSingleCell ====
+cell2sample(bcb_small) \%>\% table()
+
+# seurat ====
+cell2sample(pbmc_small) \%>\% table()
+}
+\seealso{
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{counts}}, \code{\link{fetchGeneData}},
+  \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
+  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{filterCells}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
+}
+\author{
+Michael Steinbaugh
+}
