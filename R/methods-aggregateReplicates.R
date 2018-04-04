@@ -73,11 +73,10 @@ NULL
 
     # Column data ==============================================================
     rowData <- rowData(object)
+    rownames(rowData) <- rownames(object)
     prefilter <- metadata[["prefilter"]]
-
-    # Rather than recalculating, we need to just remap the rownames
-    colData <- calculateMetrics(
-        counts,
+    colData <- metrics(
+        object = counts,
         rowData = rowData,
         prefilter = prefilter
     )

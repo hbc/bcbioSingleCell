@@ -334,7 +334,7 @@ loadSingleCell <- function(
     rownames(rowData) <- names(rowRanges)
 
     # Column data ==============================================================
-    colData <- calculateMetrics(
+    colData <- metrics(
         object = counts,
         rowData = rowData,
         prefilter = prefilter

@@ -151,7 +151,7 @@ loadCellRanger <- function(
     counts <- do.call(cBind, sparseCountsList)
 
     # Column data ==============================================================
-    colData <- calculateMetrics(
+    colData <- metrics(
         object = counts,
         rowData = rowData,
         prefilter = prefilter
