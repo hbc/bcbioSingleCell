@@ -30,17 +30,32 @@ NULL
 #' @export
 setMethod(
     "sampleData",
-    signature("bcbioSingleCell"),
-    function(object, interestingGroups) {
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        return = c("DataFrame", "data.frame", "kable")
+    ) {
         validObject(object)
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
+        interestingGroups <- interestingGroups(object)
+        return <- match.arg(return)
         data <- metadata(object)[["sampleData"]]
+        assert_is_any_of(data, c("DataFrame", "data.frame"))
         data <- uniteInterestingGroups(data, interestingGroups)
         data <- sanitizeSampleData(data)
         assertHasRownames(data)
-        data
+        if (return == "kable") {
+            blacklist <- c("description", "fileName", "sampleID")
+            data %>%
+                as.data.frame() %>%
+                .[, setdiff(colnames(.), blacklist), drop = FALSE] %>%
+                # Ensure `sampleName` is first
+                .[, unique(c("sampleName", colnames(.))), drop = FALSE] %>%
+                # Arrange by `sampleName`
+                .[order(.[["sampleName"]]), , drop = FALSE] %>%
+                kable(row.names = FALSE)
+        } else {
+            as(data, return)
+        }
     }
 )
 
@@ -51,13 +66,11 @@ setMethod(
 setMethod(
     "sampleData",
     signature("seurat"),
-    function(object, interestingGroups) {
+    function(object) {
         validObject(object)
         stopifnot(.hasSlot(object, "version"))
+        interestingGroups <- interestingGroups(object)
         data <- metadata(object)[["sampleData"]]
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
         if (is.null(data)) {
             data <- slot(object, "meta.data")
             assert_is_data.frame(data)
@@ -95,6 +108,6 @@ setMethod(
         data <- uniteInterestingGroups(data, interestingGroups)
         data <- sanitizeSampleData(data)
         assertHasRownames(data)
-        data
+        as(data, "DataFrame")
     }
 )

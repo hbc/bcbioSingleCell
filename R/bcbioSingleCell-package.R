@@ -40,6 +40,7 @@
 #' @importFrom graphics hist
 #' @importFrom grid unit
 #' @importFrom jsonlite read_json
+#' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_names set_rownames
 #' @importFrom parallel mclapply mcmapply
 #' @importFrom pbapply pblapply

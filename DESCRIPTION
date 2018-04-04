@@ -69,6 +69,7 @@ Imports:
     ggridges,
     grid,
     jsonlite,
+    knitr,
     magrittr,
     methods,
     parallel,
