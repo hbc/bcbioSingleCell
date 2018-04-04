@@ -41,7 +41,15 @@ NULL
 
     if (!is.null(rowData)) {
         assertHasRownames(rowData)
-        assert_are_identical(rownames(object), rownames(rowData))
+        assert_are_intersecting_sets(
+            x = rownames(object),
+            y = rownames(rowData)
+        )
+        cols <- c("geneID", "broadClass")
+        assert_is_subset(cols, colnames(rowData))
+        rowData <- rowData %>%
+            .[rownames(object), cols, drop = FALSE] %>%
+            .[complete.cases(.), , drop = FALSE]
         codingGenes <- rowData %>%
             .[.[["broadClass"]] == "coding", "geneID", drop = TRUE] %>%
             na.omit()
