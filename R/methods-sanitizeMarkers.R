@@ -50,7 +50,6 @@ setMethod(
         validObject(object)
         assert_is_data.frame(markers)
         assert_has_rows(markers)
-        assertHasRownames(markers)
 
         # Early return on sanitized data
         if (.isSanitizedMarkers(markers, package = "Seurat")) {
@@ -58,6 +57,7 @@ setMethod(
             return(markers)
         }
 
+        assertHasRownames(markers)
         data <- markers
 
         # Map the matrix rownames to `rownames` column in tibble
