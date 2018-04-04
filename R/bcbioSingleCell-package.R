@@ -13,7 +13,7 @@
 #'
 #' @importFrom Biobase rowMedians
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
-#' @importFrom Matrix cBind readMM
+#' @importFrom Matrix readMM
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom SingleCellExperiment isSpike isSpike<- SingleCellExperiment
 #' @importFrom Seurat CreateSeuratObject FetchData

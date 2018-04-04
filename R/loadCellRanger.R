@@ -148,7 +148,7 @@ loadCellRanger <- function(
         pipeline = pipeline,
         umiType = umiType
     )
-    counts <- do.call(cBind, sparseCountsList)
+    counts <- do.call(cbind, sparseCountsList)
 
     # Column data ==============================================================
     colData <- metrics(

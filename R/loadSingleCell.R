@@ -259,7 +259,7 @@ loadSingleCell <- function(
     )
     # Ensure samples with empty matrices (`NULL`) are filtered
     countsList <- Filter(Negate(is.null), countsList)
-    counts <- do.call(cBind, countsList)
+    counts <- do.call(cbind, countsList)
 
     # Require transcript to gene conversion (legacy) ===========================
     if (level == "transcripts") {
