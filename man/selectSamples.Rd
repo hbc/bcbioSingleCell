@@ -46,8 +46,7 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{filterCells}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
-  \code{\link{sampleData}}, \code{\link{subsetPerSample}},
-  \code{\link{topBarcodes}}
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh

@@ -53,6 +53,10 @@ loadCellRanger(
     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 )
 }
+\seealso{
+Other Read Functions: \code{\link{loadSingleCell}},
+  \code{\link{readCellTypeMarkers}}
+}
 \author{
 Michael Steinbaugh
 }

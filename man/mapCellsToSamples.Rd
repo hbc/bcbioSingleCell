@@ -35,7 +35,7 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
-  \code{\link{sampleData}}, \code{\link{selectSamples}},
+  \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{

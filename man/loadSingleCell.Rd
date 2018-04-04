@@ -71,6 +71,10 @@ loadSingleCell(
     organism = "Homo sapiens"
 )
 }
+\seealso{
+Other Read Functions: \code{\link{loadCellRanger}},
+  \code{\link{readCellTypeMarkers}}
+}
 \author{
 Michael Steinbaugh, Rory Kirchner
 }

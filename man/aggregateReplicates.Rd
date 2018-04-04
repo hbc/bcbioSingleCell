@@ -27,7 +27,7 @@ Other Data Functions: \code{\link{cell2sample}},
   \code{\link{filterCells}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
-  \code{\link{sampleData}}, \code{\link{selectSamples}},
+  \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{

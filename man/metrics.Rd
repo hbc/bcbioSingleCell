@@ -50,7 +50,7 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
   \code{\link{mapCellsToSamples}},
-  \code{\link{metricsPerSample}}, \code{\link{sampleData}},
+  \code{\link{metricsPerSample}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
