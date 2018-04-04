@@ -19,7 +19,7 @@ sanitizeMarkers(object, ...)
 \item{markers}{Original \code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} \code{data.frame}.}
 }
 \value{
-\code{tbl_df} arranged by adjusted P value:
+\code{data.frame}, arranged by adjusted P value.
 }
 \description{
 Sanitize Markers Output

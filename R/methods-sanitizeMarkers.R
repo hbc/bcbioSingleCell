@@ -11,7 +11,7 @@
 #' @inheritParams general
 #' @param markers Original [Seurat::FindAllMarkers()] `data.frame`.
 #'
-#' @return `tbl_df` arranged by adjusted P value:
+#' @return `data.frame`, arranged by adjusted P value.
 #'
 #' @examples
 #' # seurat ====
@@ -150,8 +150,15 @@ setMethod(
             arrangeCols <- "padj"
         }
 
-        data %>%
+        data <- data %>%
             .[, unique(c(priorityCols, colnames(.))), drop = FALSE] %>%
             arrange(!!!syms(arrangeCols))
+
+        if (!isTRUE(all)) {
+            data <- as.data.frame(data)
+            rownames(data) <- data[["geneID"]]
+        }
+
+        data
     }
 )
