@@ -12,6 +12,7 @@
 \alias{metadata,seurat-method}
 \alias{metadata<-,seurat-method}
 \alias{rowData,seurat-method}
+\alias{rowRanges,seurat-method}
 \alias{rownames,seurat-method}
 \title{Extend S4 Methods for \code{seurat} Objects}
 \usage{
@@ -32,6 +33,8 @@
 \S4method{metadata}{seurat}(x) <- value
 
 \S4method{rowData}{seurat}(x)
+
+\S4method{rowRanges}{seurat}(x)
 
 \S4method{rownames}{seurat}(x)
 }
@@ -64,8 +67,11 @@ names(metadata(seurat_small))
 metadata(seurat_small)[["stash"]] <- "XXX"
 metadata(seurat_small)[["stash"]]
 # rowData ====
-rowData(pbmc_small) \%>\% glimpse()
 rowData(seurat_small) \%>\% glimpse()
+rowData(pbmc_small) \%>\% glimpse()
+# rowRanges ====
+rowRanges(seurat_small) \%>\% glimpse()
+rowRanges(pbmc_small) \%>\% glimpse()
 # rownames ====
 rownames(pbmc_small) \%>\% head()
 }

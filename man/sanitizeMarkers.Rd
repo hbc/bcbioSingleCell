@@ -4,19 +4,19 @@
 \name{sanitizeMarkers}
 \alias{sanitizeMarkers}
 \alias{sanitizeMarkers}
-\alias{sanitizeMarkers,seurat,data.frame-method}
+\alias{sanitizeMarkers,seurat-method}
 \title{Sanitize Markers Output}
 \usage{
-sanitizeMarkers(object, markers, ...)
+sanitizeMarkers(object, ...)
 
-\S4method{sanitizeMarkers}{seurat,data.frame}(object, markers)
+\S4method{sanitizeMarkers}{seurat}(object, markers)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{markers}{Original \code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} \code{data.frame}.}
-
 \item{...}{Additional arguments.}
+
+\item{markers}{Original \code{\link[Seurat:FindAllMarkers]{Seurat::FindAllMarkers()}} \code{data.frame}.}
 }
 \value{
 \code{tbl_df} arranged by adjusted P value:
@@ -31,14 +31,22 @@ the rownames of the returned marker \code{data.frame}.
 }
 \examples{
 # seurat ====
-all_markers <- FindAllMarkers(seurat_small)
+invisible(capture.output(
+    all_markers <- FindAllMarkers(seurat_small)
+))
 all_sanitized <- sanitizeMarkers(
     object = seurat_small,
     markers = all_markers
 )
 glimpse(all_sanitized)
 
-ident_3_markers <- FindMarkers(seurat_small, ident.1 = "3", ident.2 = NULL)
+invisible(capture.output(
+    ident_3_markers <- FindMarkers(
+        object = seurat_small,
+        ident.1 = "3",
+        ident.2 = NULL
+    )
+))
 ident_3_sanitized <- sanitizeMarkers(
     object = seurat_small,
     markers = ident_3_markers

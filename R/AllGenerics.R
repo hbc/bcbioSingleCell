@@ -321,12 +321,11 @@ setGeneric(
 
 
 
-# FIXME
 #' @rdname sanitizeMarkers
 #' @export
 setGeneric(
     "sanitizeMarkers",
-    function(object, markers, ...) {
+    function(object, ...) {
         standardGeneric("sanitizeMarkers")
     }
 )
