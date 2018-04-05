@@ -231,3 +231,13 @@ setMethod(
     signature("seurat"),
     getMethod("plotCellCounts", "SingleCellExperiment")
 )
+
+
+
+#' @rdname plotCumulativeUMIsPerCell
+#' @export
+setMethod(
+    "plotCumulativeUMIsPerCell",
+    signature("seurat"),
+    getMethod("plotCumulativeUMIsPerCell", "SingleCellExperiment")
+)
