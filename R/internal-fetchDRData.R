@@ -15,19 +15,16 @@
 #'
 #' @examples
 #' .fetchDRData.seurat(
-#'     pbmc_small,
+#'     object = pbmc_small,
 #'     dimCode = c(x = "tSNE_1", y = "tSNE_2")
-#' ) %>%
-#'     glimpse()
+#' )
 .fetchDRData.seurat <- function(object, dimCode) {  # nolint
-    fetch <- Seurat::FetchData(object, vars.all = dimCode)
+    fetch <- FetchData(object, vars.all = dimCode)
     ident <- slot(object, "ident")
     metadata <- slot(object, "meta.data")
     assert_are_identical(rownames(fetch), names(ident))
     assert_are_identical(rownames(fetch), rownames(metadata))
-
-    # Bind into a single data.frame
-    data <- cbind(
+    cbind(
         fetch,
         as.data.frame(ident),
         metadata
@@ -47,5 +44,4 @@
         ungroup() %>%
         as.data.frame() %>%
         column_to_rownames()
-    data
 }
