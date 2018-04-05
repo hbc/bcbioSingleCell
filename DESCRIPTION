@@ -87,18 +87,14 @@ Suggests:
     BiocStyle,
     DESeq2,
     googlesheets,
-    lintr,
     monocle,
     rmarkdown,
-    roxygen2,
+    scater,
+    scran,
     sessioninfo,
     testthat,
     tidyverse,
     zinbwave
-Remotes:
-    hbc/bcbioBase@develop,
-    statOmics/zingeR,
-    steinbaugh/basejump@develop
 biocViews:
     DataImport,
     DataRepresentation,
@@ -107,6 +103,7 @@ biocViews:
     ReportWriting,
     RNASeq,
     SingleCell,
+    Transcription,
     Visualization
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
