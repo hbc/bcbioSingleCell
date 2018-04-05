@@ -8,12 +8,12 @@
 #' @seealso `help("coerce", "methods")`.
 #'
 #' @examples
-#' # bcbioSingleCell to list ====
+#' # SingleCellExperiment to list ====
 #' x <- as(bcb_small, "list")
 #' class(x)
 #' names(x)
 #'
-#' # bcbioSingleCell to seurat ====
+#' # SingleCellExperiment to seurat ====
 #' x <- as(bcb_small, "seurat")
 #' class(x)
 #' print(x)
@@ -23,9 +23,9 @@ NULL
 
 # Methods ======================================================================
 #' @rdname coerce
-#' @name coerce-bcbioSingleCell-list
+#' @name coerce-SingleCellExperiment-list
 setAs(
-    from = "bcbioSingleCell",
+    from = "SingleCellExperiment",
     to = "list",
     function(from) {
         flatFiles(from)
@@ -35,7 +35,7 @@ setAs(
 
 
 #' @rdname coerce
-#' @name coerce-bcbioSingleCell-seurat
+#' @name coerce-SingleCellExperiment-seurat
 #' @section bcbioSingleCell to seurat:
 #' Interally [Seurat::CreateSeuratObject()] is called without applying any
 #' additional filtering cutoffs, since we have already defined them during our
@@ -43,7 +43,7 @@ setAs(
 #' the filtered cells into a new `seurat` class object, using [as()] object
 #' coercion.
 setAs(
-    from = "bcbioSingleCell",
+    from = "SingleCellExperiment",
     to = "seurat",
     function(from) {
         # Require that technical replicates are aggregated
@@ -83,11 +83,12 @@ setAs(
         )
 
         # Check that the dimensions match exactly
-        if (!identical(dim(from), dim(slot(seurat, "raw.data")))) {
-            abort("Dimension mismatch between bcbioSingleCell and seurat")
-        }
+        assert_are_identical(
+            x = dim(from),
+            y = dim(slot(seurat, "raw.data"))
+        )
 
-        # Stash bcbio run metadata into `misc` slot
+        # Stash metadata and rowRanges into `misc` slot
         bcbio <- list(
             "rowRanges" = rowRanges(from),
             "metadata" = metadata(from)

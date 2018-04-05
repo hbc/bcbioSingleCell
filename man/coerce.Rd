@@ -2,8 +2,8 @@
 % Please edit documentation in R/methods-coerce.R
 \name{coerce}
 \alias{coerce}
-\alias{coerce-bcbioSingleCell-list}
-\alias{coerce-bcbioSingleCell-seurat}
+\alias{coerce-SingleCellExperiment-list}
+\alias{coerce-SingleCellExperiment-seurat}
 \title{Coerce Object}
 \value{
 New class, specified by the "\code{to}" argument.
@@ -21,12 +21,12 @@ coercion.
 }
 
 \examples{
-# bcbioSingleCell to list ====
+# SingleCellExperiment to list ====
 x <- as(bcb_small, "list")
 class(x)
 names(x)
 
-# bcbioSingleCell to seurat ====
+# SingleCellExperiment to seurat ====
 x <- as(bcb_small, "seurat")
 class(x)
 print(x)
