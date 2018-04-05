@@ -13,13 +13,10 @@ NULL
 
 
 
-# Methods ======================================================================
+# SingleCellExperiment =========================================================
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom SummarizedExperiment assay
 #' @export
-#' @examples
-#' # assay ====
-#' assay(pbmc_small) %>% glimpse()
 setMethod(
     "assay",
     signature("seurat"),
@@ -33,46 +30,22 @@ setMethod(
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom SummarizedExperiment colData
 #' @export
-#' @examples
-#' # colData ====
-#' colData(seurat_small) %>% glimpse()
-#' colData(pbmc_small) %>% glimpse()
 setMethod(
     "colData",
     signature("seurat"),
     function(x) {
-        sampleData <- sampleData(x, return = "DataFrame")
         colData <- slot(x, "meta.data")
         assert_is_data.frame(colData)
         colData <- as(colData, "DataFrame")
+
+        # Abort if sample-level metadata is present
+        sampleData <- sampleData(x)
         assert_are_disjoint_sets(
             x = colnames(sampleData),
             y = colnames(colData)
         )
-        colData <- camel(colData)
-        cell2sample <- cell2sample(x)
-        sampleID <- DataFrame("sampleID" = cell2sample)
-        colData <- cbind(colData, sampleID)
-        colData[["rowname"]] <- rownames(colData)
-        data <- merge(
-            x = colData,
-            y = sampleData,
-            by = "sampleID",
-            all.x = TRUE
-        )
-        # Ensure the numeric metrics columns appear first
-        data <- data[, unique(c(colnames(colData), colnames(data)))]
-        rownames(data) <- data[["rowname"]]
-        data[["rowname"]] <- NULL
-        # Add `interestingGroups` column
-        interestingGroups <- interestingGroups(x)
-        data <- uniteInterestingGroups(data, interestingGroups)
-        # Add `ident` column
-        ident <- slot(x, "ident")
-        assert_is_factor(ident)
-        ident <- DataFrame("ident" = ident)
-        data <- cbind(data, ident)
-        data
+
+        colData
     }
 )
 
@@ -81,9 +54,6 @@ setMethod(
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom BiocGenerics colnames
 #' @export
-#' @examples
-#' # colnames ====
-#' colnames(pbmc_small) %>% head()
 setMethod(
     "colnames",
     signature("seurat"),
@@ -95,80 +65,7 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
-#' @importFrom bcbioBase gene2symbol
 #' @export
-#' @examples
-#' # gene2symbol ====
-#' gene2symbol(seurat_small) %>% glimpse()
-setMethod(
-    "gene2symbol",
-    signature("seurat"),
-    function(object) {
-        data <- as.data.frame(rowData(object))
-        assert_is_non_empty(data)
-        cols <- c("geneID", "geneName")
-        assert_is_subset(cols, colnames(data))
-        data <- data[, cols]
-        rownames(data) <- data[["geneID"]]
-        data
-    }
-)
-
-
-
-#' @rdname seurat-SingleCellExperiment
-#' @importFrom bcbioBase interestingGroups
-#' @export
-#' @examples
-#' # interestingGroups ====
-#' interestingGroups(seurat_small)
-#' interestingGroups(seurat_small) <- "sampleID"
-#' interestingGroups(seurat_small)
-setMethod(
-    "interestingGroups",
-    signature("seurat"),
-    function(object) {
-        validObject(object)
-        x <- metadata(object)[["interestingGroups"]]
-        if (is.null(x)) {
-            x <- "sampleName"
-        }
-        x
-    }
-)
-
-#' @rdname seurat-SingleCellExperiment
-#' @importFrom bcbioBase interestingGroups<-
-#' @export
-setMethod(
-    "interestingGroups<-",
-    signature(
-        object = "seurat",
-        value = "character"
-    ),
-    function(object, value) {
-        assertFormalInterestingGroups(
-            x = sampleData(object),
-            interestingGroups = value
-        )
-        if (is.null(metadata(object))) {
-            abort("object was not created with bcbioSingleCell")
-        }
-        metadata(object)[["interestingGroups"]] <- value
-        validObject(object)
-        object
-    }
-)
-
-
-
-#' @rdname seurat-SingleCellExperiment
-#' @export
-#' @examples
-#' # metadata ====
-#' names(metadata(seurat_small))
-#' metadata(seurat_small)[["stash"]] <- "XXX"
-#' metadata(seurat_small)[["stash"]]
 setMethod(
     "metadata",
     signature("seurat"),
@@ -204,10 +101,6 @@ setMethod(
 
 #' @rdname seurat-SingleCellExperiment
 #' @export
-#' @examples
-#' # rowData ====
-#' rowData(seurat_small) %>% glimpse()
-#' rowData(pbmc_small) %>% glimpse()
 setMethod(
     "rowData",
     signature("seurat"),
@@ -225,10 +118,6 @@ setMethod(
 
 #' @rdname seurat-SingleCellExperiment
 #' @export
-#' @examples
-#' # rowRanges ====
-#' rowRanges(seurat_small) %>% glimpse()
-#' rowRanges(pbmc_small) %>% glimpse()
 setMethod(
     "rowRanges",
     signature("seurat"),
@@ -242,13 +131,113 @@ setMethod(
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom BiocGenerics rownames
 #' @export
-#' @examples
-#' # rownames ====
-#' rownames(pbmc_small) %>% head()
 setMethod(
     "rownames",
     signature("seurat"),
     function(x) {
         rownames(counts(x))
     }
+)
+
+
+
+# bcbioSingleCell Methods ======================================================
+#' @rdname seurat-SingleCellExperiment
+#' @export
+setMethod(
+    "cell2sample",
+    signature("seurat"),
+    getMethod("cell2sample", "SingleCellExperiment")
+)
+
+
+
+#' @rdname diffExp
+#' @export
+setMethod(
+    "diffExp",
+    signature("seurat"),
+    getMethod("diffExp", "SingleCellExperiment")
+)
+
+
+
+#' @rdname fetchGeneData
+#' @export
+setMethod(
+    "fetchGeneData",
+    signature("seurat"),
+    getMethod("fetchGeneData", "SingleCellExperiment")
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom bcbioBase gene2symbol
+#' @export
+setMethod(
+    "gene2symbol",
+    signature("seurat"),
+    function(object) {
+        data <- as.data.frame(rowData(object))
+        assert_is_non_empty(data)
+        cols <- c("geneID", "geneName")
+        assert_is_subset(cols, colnames(data))
+        data <- data[, cols]
+        rownames(data) <- data[["geneID"]]
+        data
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom bcbioBase interestingGroups
+#' @export
+setMethod(
+    "interestingGroups",
+    signature("seurat"),
+    function(object) {
+        validObject(object)
+        x <- metadata(object)[["interestingGroups"]]
+        if (is.null(x)) {
+            x <- "sampleName"
+        }
+        x
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom bcbioBase interestingGroups<-
+#' @export
+setMethod(
+    "interestingGroups<-",
+    signature(
+        object = "seurat",
+        value = "character"
+    ),
+    function(object, value) {
+        assertFormalInterestingGroups(
+            x = sampleData(object),
+            interestingGroups = value
+        )
+        if (is.null(metadata(object))) {
+            abort("object was not created with bcbioSingleCell")
+        }
+        metadata(object)[["interestingGroups"]] <- value
+        validObject(object)
+        object
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @export
+setMethod(
+    "plotCellCounts",
+    signature("seurat"),
+    getMethod("plotCellCounts", "SingleCellExperiment")
 )
