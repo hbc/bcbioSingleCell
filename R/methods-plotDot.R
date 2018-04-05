@@ -20,7 +20,8 @@
 #'
 #' @examples
 #' # seurat ====
-#' plotDot(pbmc_small, genes = head(rownames(pbmc_small)))
+#' genes <- head(rownames(seurat_small))
+#' plotDot(seurat_small, genes = genes)
 NULL
 
 
@@ -47,77 +48,74 @@ NULL
 
 
 
-.plotDot.seurat <- function(  # nolint
-    object,
-    genes,
-    color = scale_color_gradient(
-        low = "lightgray",
-        high = "purple"
-    ),
-    colMin = -2.5,
-    colMax = 2.5,
-    dotMin = 0L,
-    dotScale = 6L
-) {
-    assert_is_character(genes)
-    assertIsColorScaleContinuousOrNULL(color)
-    assert_is_a_number(colMin)
-    assert_is_a_number(colMax)
-    assert_is_a_number(dotMin)
-    assert_is_a_number(dotScale)
-
-    ident <- slot(object, "ident")
-    data <- fetchGeneData(object, genes = genes) %>%
-        as.data.frame() %>%
-        cbind(ident) %>%
-        rownames_to_column("cell") %>%
-        as_tibble() %>%
-        gather(
-            key = "gene",
-            value = "expression",
-            !!genes
-        ) %>%
-        group_by(!!!syms(c("ident", "gene"))) %>%
-        summarize(
-            avgExp = mean(expm1(.data[["expression"]])),
-            pctExp = .percentAbove(.data[["expression"]], threshold = 0L)
-        ) %>%
-        ungroup() %>%
-        group_by(!!sym("gene")) %>%
-        mutate(
-            avgExpScale = scale(!!sym("avgExp")),
-            avgExpScale = .minMax(
-                !!sym("avgExpScale"),
-                max = colMax,
-                min = colMin
-            )
-        )
-    data[["pctExp"]][data[["pctExp"]] < dotMin] <- NA
-
-    p <- ggplot(
-        data = data,
-        mapping = aes_string(x = "gene", y = "ident")
-    ) +
-        geom_point(
-            mapping = aes_string(color = "avgExpScale", size = "pctExp")
-        ) +
-        scale_radius(range = c(0L, dotScale)) +
-        labs(x = "gene", y = "ident")
-    if (is(color, "ScaleContinuous")) {
-        p <- p + color
-    }
-
-    p
-}
-
-
-
-
 # Methods ======================================================================
 #' @rdname plotDot
 #' @export
 setMethod(
     "plotDot",
     signature("seurat"),
-    .plotDot.seurat
+    function(
+        object,
+        genes,
+        color = scale_color_gradient(
+            low = "lightgray",
+            high = "purple"
+        ),
+        colMin = -2.5,
+        colMax = 2.5,
+        dotMin = 0L,
+        dotScale = 6L
+    ) {
+        assert_is_character(genes)
+        assertIsColorScaleContinuousOrNULL(color)
+        assert_is_a_number(colMin)
+        assert_is_a_number(colMax)
+        assert_is_a_number(dotMin)
+        assert_is_a_number(dotScale)
+
+        ident <- slot(object, "ident")
+        data <- fetchGeneData(object, genes = genes) %>%
+            as.data.frame() %>%
+            cbind(ident) %>%
+            rownames_to_column("cell") %>%
+            as_tibble() %>%
+            gather(
+                key = "gene",
+                value = "expression",
+                !!genes
+            ) %>%
+            group_by(!!!syms(c("ident", "gene"))) %>%
+            summarize(
+                avgExp = mean(expm1(.data[["expression"]])),
+                pctExp = .percentAbove(.data[["expression"]], threshold = 0L)
+            ) %>%
+            ungroup() %>%
+            group_by(!!sym("gene")) %>%
+            mutate(
+                avgExpScale = scale(!!sym("avgExp")),
+                avgExpScale = .minMax(
+                    !!sym("avgExpScale"),
+                    max = colMax,
+                    min = colMin
+                )
+            )
+        data[["pctExp"]][data[["pctExp"]] < dotMin] <- NA
+
+        p <- ggplot(
+            data = data,
+            mapping = aes_string(x = "gene", y = "ident")
+        ) +
+            geom_point(
+                mapping = aes_string(color = "avgExpScale", size = "pctExp")
+            ) +
+            scale_radius(range = c(0L, dotScale)) +
+            labs(x = "gene", y = "ident") +
+            theme(axis.text.x = element_text(angle = 90L))
+
+        if (is(color, "ScaleContinuous")) {
+            p <- p + color
+        }
+
+        p
+    }
 )

@@ -37,7 +37,8 @@ Plot Dot
 }
 \examples{
 # seurat ====
-plotDot(pbmc_small, genes = head(rownames(pbmc_small)))
+genes <- head(rownames(seurat_small))
+plotDot(seurat_small, genes = genes)
 }
 \seealso{
 Modified version of \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}}.
