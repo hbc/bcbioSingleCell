@@ -4,13 +4,13 @@
 \name{diffExp}
 \alias{diffExp}
 \alias{diffExp}
-\alias{diffExp,bcbioSingleCell-method}
+\alias{diffExp,SingleCellExperiment-method}
 \alias{diffExp,seurat-method}
 \title{Differential Expression}
 \usage{
 diffExp(object, ...)
 
-\S4method{diffExp}{bcbioSingleCell}(object, numerator, denominator,
+\S4method{diffExp}{SingleCellExperiment}(object, numerator, denominator,
   minCells = 10L, maxit = 1000L)
 
 \S4method{diffExp}{seurat}(object, numerator, denominator, minCells = 10L,
@@ -64,12 +64,24 @@ information.
 }
 
 \examples{
+# SingleCellExperiment ====
+x <- metrics(cellranger_small)
+numerator <- rownames(x)[which(x[["sampleName"]] == "proximal")]
+denominator <- rownames(x)[which(x[["sampleName"]] == "distal")]
+lrt <- diffExp(
+    object = cellranger_small,
+    numerator = numerator,
+    denominator = denominator,
+    maxit = 100L
+)
+glimpse(lrt[["table"]])
+
 # seurat ====
 # Expression in cluster 3 relative to cluster 2
 numerator <- Seurat::WhichCells(pbmc_small, ident = 3L)
 denominator <- Seurat::WhichCells(pbmc_small, ident = 2L)
 lrt <- diffExp(
-    pbmc_small,
+    object = pbmc_small,
     numerator = numerator,
     denominator = denominator,
     maxit = 100L
