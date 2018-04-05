@@ -12,9 +12,8 @@
 #' # bcbioSingleCell ====
 #' plotCellCounts(bcb_small)
 #'
-#' # seurat ====
-#' plotCellCounts(seurat_small)
-#' plotCellCounts(pbmc_small)
+#' # SingleCellExperiment ====
+#' plotCellCounts(cellranger_small)
 NULL
 
 
@@ -91,16 +90,6 @@ NULL
 #' @export
 setMethod(
     "plotCellCounts",
-    signature("bcbioSingleCell"),
-    .plotCellCounts
-)
-
-
-
-#' @rdname plotCellCounts
-#' @export
-setMethod(
-    "plotCellCounts",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     .plotCellCounts
 )

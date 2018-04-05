@@ -9,13 +9,9 @@
 #' @return `matrix`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
+#' # SingleCellExperiment ====
 #' genes <- rownames(bcb_small) %>% head(2L)
 #' fetchGeneData(bcb_small, genes = genes) %>% glimpse()
-#'
-#' # seurat ====
-#' genes <- rownames(pbmc_small) %>% head(2L)
-#' fetchGeneData(pbmc_small, genes = genes) %>% glimpse()
 NULL
 
 
@@ -33,14 +29,4 @@ setMethod(
             as.matrix() %>%
             t()
     }
-)
-
-
-
-#' @rdname fetchGeneData
-#' @export
-setMethod(
-    "fetchGeneData",
-    signature("seurat"),
-    getMethod("fetchGeneData", "SingleCellExperiment")
 )
