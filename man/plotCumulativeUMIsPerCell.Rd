@@ -14,17 +14,19 @@
 plotCumulativeUMIsPerCell(object, ...)
 
 \S4method{plotCumulativeUMIsPerCell}{SingleCellExperiment}(object,
-  trans = c("identity", "log10", "log2", "sqrt"))
+  inflectionPoint = FALSE, trans = c("identity", "log10", "log2", "sqrt"))
 
 plotKnee(...)
 
-\S4method{plotCumulativeUMIsPerCell}{seurat}(object, trans = c("identity",
-  "log10", "log2", "sqrt"))
+\S4method{plotCumulativeUMIsPerCell}{seurat}(object, inflectionPoint = FALSE,
+  trans = c("identity", "log10", "log2", "sqrt"))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
+
+\item{inflectionPoint}{Attempt to determine and label the inflection point.}
 
 \item{trans}{Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}

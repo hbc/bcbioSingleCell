@@ -11,6 +11,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
+#' @param inflectionPoint Attempt to determine and label the inflection point.
 #'
 #' @return `ggplot`.
 #'
@@ -30,6 +31,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
+        inflectionPoint = FALSE,
         trans = c("identity", "log10", "log2", "sqrt")
     ) {
         validObject(object)
@@ -43,8 +45,6 @@ setMethod(
                 freq = !!sym("cumsum") / max(!!sym("cumsum"))
             )
 
-        inflection <- inflectionPoint(object)
-
         p <- ggplot(
             data = data,
             mapping = aes_string(
@@ -56,18 +56,19 @@ setMethod(
             scale_x_continuous(trans = trans) +
             labs(
                 title = "cumulative UMIs per cell",
-                subtitle = paste("inflection", inflection, sep = " = "),
                 x = "nUMI per cell",
                 y = "cumulative frequency"
             ) +
             expand_limits(y = 0L)
 
-        if (inflection > 0L) {
+        if (isTRUE(inflectionPoint)) {
+            inflection <- inflectionPoint(object)
             p <- p +
                 .qcCutoffLine(
                     xintercept = inflection,
                     color = inflectionColor
-                )
+                ) +
+                labs(subtitle = paste("inflection", inflection, sep = " = "))
         }
 
         p
