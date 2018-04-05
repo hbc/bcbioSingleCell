@@ -228,7 +228,7 @@ loadCellRanger <- function(
 
     # Return ===================================================================
     .new.SingleCellExperiment(
-        assays = list("raw" = counts),
+        assays = list("counts" = counts),
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
