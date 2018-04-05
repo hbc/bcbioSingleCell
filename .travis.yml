@@ -6,7 +6,12 @@ cache: packages
 
 r:
   - bioc-release
-  # - bioc-devel
+  - bioc-devel
+
+# blocklist
+branches:
+  except:
+  - develop
 
 # External dependencies
 # (required for zinbwave)
