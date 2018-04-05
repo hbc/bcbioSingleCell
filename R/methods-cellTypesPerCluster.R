@@ -13,6 +13,7 @@
 #'   significant known makers per cell type.
 #'
 #' @examples
+#' # grouped_df ====
 #' cellTypesPerCluster(known_markers_small) %>% glimpse()
 NULL
 
