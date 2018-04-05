@@ -9,7 +9,7 @@
 #' @family S4 Class Definitions
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase sampleData
+#' @importFrom bcbioBase sampleData sampleData<-
 #'
 #' @inheritParams general
 #'
