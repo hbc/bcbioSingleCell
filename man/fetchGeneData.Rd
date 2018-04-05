@@ -4,10 +4,13 @@
 \name{fetchGeneData}
 \alias{fetchGeneData}
 \alias{fetchGeneData}
+\alias{fetchGeneData,SingleCellExperiment-method}
 \alias{fetchGeneData,seurat-method}
 \title{Fetch Gene Expression Data}
 \usage{
 fetchGeneData(object, ...)
+
+\S4method{fetchGeneData}{SingleCellExperiment}(object, genes)
 
 \S4method{fetchGeneData}{seurat}(object, genes)
 }
@@ -25,8 +28,12 @@ fetchGeneData(object, ...)
 Fetch Gene Expression Data
 }
 \examples{
+# bcbioSingleCell ====
+genes <- rownames(bcb_small) \%>\% head(2L)
+fetchGeneData(bcb_small, genes = genes) \%>\% glimpse()
+
 # seurat ====
-genes <- head(rownames(pbmc_small))
+genes <- rownames(pbmc_small) \%>\% head(2L)
 fetchGeneData(pbmc_small, genes = genes) \%>\% glimpse()
 }
 \seealso{

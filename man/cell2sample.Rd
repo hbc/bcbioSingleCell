@@ -4,13 +4,13 @@
 \name{cell2sample}
 \alias{cell2sample}
 \alias{cell2sample}
-\alias{cell2sample,bcbioSingleCell-method}
+\alias{cell2sample,SingleCellExperiment-method}
 \alias{cell2sample,seurat-method}
 \title{Cell to Sample Mappings}
 \usage{
 cell2sample(object, ...)
 
-\S4method{cell2sample}{bcbioSingleCell}(object)
+\S4method{cell2sample}{SingleCellExperiment}(object)
 
 \S4method{cell2sample}{seurat}(object)
 }
@@ -25,6 +25,9 @@ Cell to Sample Mappings
 \examples{
 # bcbioSingleCell ====
 cell2sample(bcb_small) \%>\% table()
+
+# SingleCellExperiment ====
+cell2sample(cellranger_small) \%>\% table()
 
 # seurat ====
 cell2sample(pbmc_small) \%>\% table()

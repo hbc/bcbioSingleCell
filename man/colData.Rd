@@ -3,10 +3,10 @@
 \docType{methods}
 \name{colData}
 \alias{colData}
-\alias{colData,bcbioSingleCell-method}
+\alias{colData,SingleCellExperiment-method}
 \title{Column Data}
 \usage{
-\S4method{colData}{bcbioSingleCell}(x)
+\S4method{colData}{SingleCellExperiment}(x)
 }
 \arguments{
 \item{x}{Primary object.}

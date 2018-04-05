@@ -4,13 +4,13 @@
 \name{metrics}
 \alias{metrics}
 \alias{metrics,dgCMatrix-method}
-\alias{metrics,bcbioSingleCell-method}
+\alias{metrics,SingleCellExperiment-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
 \S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = TRUE)
 
-\S4method{metrics}{bcbioSingleCell}(object, interestingGroups)
+\S4method{metrics}{SingleCellExperiment}(object, interestingGroups)
 
 \S4method{metrics}{seurat}(object, interestingGroups)
 }

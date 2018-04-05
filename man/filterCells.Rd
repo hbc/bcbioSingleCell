@@ -4,12 +4,12 @@
 \name{filterCells}
 \alias{filterCells}
 \alias{filterCells}
-\alias{filterCells,bcbioSingleCell-method}
+\alias{filterCells,SingleCellExperiment-method}
 \title{Filter Cells}
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000L,
+\S4method{filterCells}{SingleCellExperiment}(object, minUMIs = 1000L,
   maxUMIs = Inf, minGenes = 500L, maxGenes = Inf, maxMitoRatio = 0.1,
   minNovelty = 0.75, minCellsPerGene = 3L)
 }

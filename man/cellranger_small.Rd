@@ -4,7 +4,7 @@
 \name{cellranger_small}
 \alias{cellranger_small}
 \title{CellRanger Example}
-\format{An object of class \code{bcbioSingleCell} with 500 rows and 500 columns.}
+\format{An object of class \code{SingleCellExperiment} with 500 rows and 500 columns.}
 \usage{
 cellranger_small
 }
