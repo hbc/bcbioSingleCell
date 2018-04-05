@@ -10,25 +10,12 @@
 #' # bcbioSingleCell ====
 #' cell2sample(bcb_small) %>% table()
 #'
+#' # SingleCellExperiment ====
+#' cell2sample(cellranger_small) %>% table()
+#'
 #' # seurat ====
 #' cell2sample(pbmc_small) %>% table()
 NULL
-
-
-
-# Constructors =================================================================
-.cell2sample <- function(object) {
-    validObject(object)
-    cell2sample <- metadata(object)[["cell2sample"]]
-    if (!is.factor(cell2sample)) {
-        cells <- colnames(object)
-        samples <- rownames(sampleData(object))
-        cell2sample <- mapCellsToSamples(cells = cells, samples = samples)
-    }
-    cell2sample %>%
-        .[colnames(object)] %>%
-        droplevels()
-}
 
 
 
@@ -38,7 +25,18 @@ NULL
 setMethod(
     "cell2sample",
     signature("SingleCellExperiment"),
-    .cell2sample
+    function(object) {
+        validObject(object)
+        cell2sample <- metadata(object)[["cell2sample"]]
+        if (!is.factor(cell2sample)) {
+            cells <- colnames(object)
+            samples <- rownames(sampleData(object))
+            cell2sample <- mapCellsToSamples(cells = cells, samples = samples)
+        }
+        cell2sample %>%
+            .[colnames(object)] %>%
+            droplevels()
+    }
 )
 
 
@@ -48,5 +46,5 @@ setMethod(
 setMethod(
     "cell2sample",
     signature("seurat"),
-    .cell2sample
+    getMethod("cell2sample", "SingleCellExperiment")
 )
