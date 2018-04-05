@@ -10,12 +10,14 @@
 \usage{
 plotUMIsPerCell(object, ...)
 
-\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), interestingGroups, min,
+\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = c("ecdf",
+  "histogram", "boxplot", "ridgeline", "violin"), interestingGroups, min,
+  trans = "log10", color = scale_color_viridis(discrete = TRUE),
   fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotUMIsPerCell}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), interestingGroups, min,
+\S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "histogram",
+  "boxplot", "ridgeline", "violin"), interestingGroups, min, trans = "log10",
+  color = scale_color_viridis(discrete = TRUE),
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{

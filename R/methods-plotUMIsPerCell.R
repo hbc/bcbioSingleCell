@@ -22,9 +22,11 @@ NULL
 # Constructors =================================================================
 .plotUMIsPerCell <- function(
     object,
-    geom = c("violin", "boxplot", "histogram", "ridgeline"),
+    geom = c("ecdf", "histogram", "boxplot", "ridgeline", "violin"),
     interestingGroups,
     min,
+    trans = "log10",
+    color = scale_color_viridis(discrete = TRUE),
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
     geom <- match.arg(geom)
@@ -34,7 +36,7 @@ NULL
         geom = geom,
         interestingGroups = interestingGroups,
         min = min,
-        trans = "identity",
+        trans = trans,
         fill = fill
     )
 }
