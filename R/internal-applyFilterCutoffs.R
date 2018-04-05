@@ -41,7 +41,7 @@
     if (is.null(genes)) {
         genes <- rownames(object)
     }
-    object <- object[genes, , drop = FALSE]
+    object <- object[genes, ]
     metadata(object)[["filterGenes"]] <- genes
 
     object
