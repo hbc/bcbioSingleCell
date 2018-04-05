@@ -45,13 +45,14 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 Depends:
-    R (>= 3.4),
+    R (>= 3.5),
     SingleCellExperiment,
     bcbioBase (>= 0.2),
     Seurat (>= 2.0)
 Imports:
     Biobase,
     BiocGenerics,
+    DropletUtils,
     GenomicFeatures,
     Matrix (>= 1.0),
     Matrix.utils,
