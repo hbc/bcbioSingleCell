@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Import and analyze bcbio single-cell RNA-seq data.
-Version: 0.1.1
+Version: 0.99.0
 Authors@R: c(
     person(
         given = "Michael",
@@ -47,22 +47,22 @@ LazyData: TRUE
 Depends:
     R (>= 3.5),
     SingleCellExperiment,
-    bcbioBase (>= 0.2),
+    bcbioBase (>= 0.99),
     Seurat (>= 2.0)
 Imports:
     Biobase,
     BiocGenerics,
     DropletUtils,
     GenomicFeatures,
-    Matrix (>= 1.0),
+    Matrix,
     Matrix.utils,
     S4Vectors,
     SummarizedExperiment,
     assertive,
-    basejump (>= 0.4),
+    basejump (>= 0.99),
     cowplot,
     dplyr (>= 0.7),
-    edgeR (>= 3.20.9),
+    edgeR (>= 3.21),
     ggplot2 (>= 2.2.1),
     ggridges,
     graphics,
@@ -96,9 +96,9 @@ Suggests:
     tidyverse,
     zinbwave
 Remotes:
-    hbc/bcbioBase,
+    hbc/bcbioBase@develop,
     statOmics/zingeR,
-    steinbaugh/basejump
+    steinbaugh/basejump@develop
 biocViews:
     DataImport,
     DataRepresentation,
