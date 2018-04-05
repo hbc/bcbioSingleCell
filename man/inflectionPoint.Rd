@@ -4,13 +4,13 @@
 \name{inflectionPoint}
 \alias{inflectionPoint}
 \alias{inflectionPoint}
-\alias{inflectionPoint,bcbioSingleCell-method}
+\alias{inflectionPoint,SingleCellExperiment-method}
 \alias{inflectionPoint,seurat-method}
 \title{Calculate the Cellular Barcode Read Depth Inflection Point}
 \usage{
 inflectionPoint(object, ...)
 
-\S4method{inflectionPoint}{bcbioSingleCell}(object)
+\S4method{inflectionPoint}{SingleCellExperiment}(object)
 
 \S4method{inflectionPoint}{seurat}(object)
 }

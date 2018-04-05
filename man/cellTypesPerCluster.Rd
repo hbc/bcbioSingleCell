@@ -28,6 +28,7 @@ significant known makers per cell type.
 Cell Types per Cluster
 }
 \examples{
+# grouped_df ====
 cellTypesPerCluster(known_markers_small) \%>\% glimpse()
 }
 \seealso{

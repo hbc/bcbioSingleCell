@@ -6,14 +6,16 @@
 \alias{assay,seurat,ANY-method}
 \alias{colData,seurat-method}
 \alias{colnames,seurat-method}
-\alias{gene2symbol,seurat-method}
-\alias{interestingGroups,seurat-method}
-\alias{interestingGroups<-,seurat,character-method}
 \alias{metadata,seurat-method}
 \alias{metadata<-,seurat-method}
 \alias{rowData,seurat-method}
 \alias{rowRanges,seurat-method}
 \alias{rownames,seurat-method}
+\alias{cell2sample,seurat-method}
+\alias{gene2symbol,seurat-method}
+\alias{interestingGroups,seurat-method}
+\alias{interestingGroups<-,seurat,character-method}
+\alias{plotCellCounts,seurat-method}
 \title{Extend S4 Methods for \code{seurat} Class}
 \usage{
 \S4method{assay}{seurat,ANY}(x)
@@ -21,12 +23,6 @@
 \S4method{colData}{seurat}(x)
 
 \S4method{colnames}{seurat}(x)
-
-\S4method{gene2symbol}{seurat}(object)
-
-\S4method{interestingGroups}{seurat}(object)
-
-\S4method{interestingGroups}{seurat,character}(object) <- value
 
 \S4method{metadata}{seurat}(x)
 
@@ -37,46 +33,37 @@
 \S4method{rowRanges}{seurat}(x)
 
 \S4method{rownames}{seurat}(x)
+
+\S4method{cell2sample}{seurat}(object)
+
+\S4method{gene2symbol}{seurat}(object)
+
+\S4method{interestingGroups}{seurat}(object)
+
+\S4method{interestingGroups}{seurat,character}(object) <- value
+
+\S4method{plotCellCounts}{seurat}(object, interestingGroups,
+  fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{x}{Primary object.}
 
+\item{value}{Object to assign.}
+
 \item{object}{Object.}
 
-\item{value}{Object to assign.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
+to \code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 }
 \value{
 Match \code{SummarizedExperiment} method return.
 }
 \description{
 Provide limited \code{SingleCellExperiment}-like method support.
-}
-\examples{
-# assay ====
-assay(pbmc_small) \%>\% glimpse()
-# colData ====
-colData(seurat_small) \%>\% glimpse()
-colData(pbmc_small) \%>\% glimpse()
-# colnames ====
-colnames(pbmc_small) \%>\% head()
-# gene2symbol ====
-gene2symbol(seurat_small) \%>\% glimpse()
-# interestingGroups ====
-interestingGroups(seurat_small)
-interestingGroups(seurat_small) <- "sampleID"
-interestingGroups(seurat_small)
-# metadata ====
-names(metadata(seurat_small))
-metadata(seurat_small)[["stash"]] <- "XXX"
-metadata(seurat_small)[["stash"]]
-# rowData ====
-rowData(seurat_small) \%>\% glimpse()
-rowData(pbmc_small) \%>\% glimpse()
-# rowRanges ====
-rowRanges(seurat_small) \%>\% glimpse()
-rowRanges(pbmc_small) \%>\% glimpse()
-# rownames ====
-rownames(pbmc_small) \%>\% head()
 }
 \seealso{
 \code{getMethod("metadata<-", "Annotated")}

@@ -52,6 +52,11 @@ rownames of \code{\link[=sampleData]{sampleData()}}).
 show(bcb_small)
 x <- filterCells(bcb_small, minGenes = 0L)
 show(x)
+
+# SingleCellExperiment ====
+show(cellranger_small)
+x <- filterCells(cellranger_small, minNovelty = 0L)
+show(x)
 }
 \seealso{
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.

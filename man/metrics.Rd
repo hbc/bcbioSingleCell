@@ -4,11 +4,14 @@
 \name{metrics}
 \alias{metrics}
 \alias{metrics,dgCMatrix-method}
+\alias{metrics,dgTMatrix-method}
 \alias{metrics,SingleCellExperiment-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
 \S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = TRUE)
+
+\S4method{metrics}{dgTMatrix}(object, rowData = NULL, prefilter = TRUE)
 
 \S4method{metrics}{SingleCellExperiment}(object, interestingGroups)
 
@@ -34,12 +37,21 @@ Sample Barcode Metrics
 # bcbioSingleCell ====
 metrics(bcb_small) \%>\% glimpse()
 
+# SingleCellExperiment ====
+metrics(cellranger_small) \%>\% glimpse()
+
 # seurat ====
 metrics(seurat_small) \%>\% glimpse()
 metrics(pbmc_small) \%>\% glimpse()
 
 # dgCMatrix ====
 mat <- counts(bcb_small)
+class(mat)
+metrics(mat) \%>\% glimpse()
+
+# dgTMatrix ====
+mat <- counts(pbmc_small)
+class(mat)
 metrics(mat) \%>\% glimpse()
 }
 \seealso{

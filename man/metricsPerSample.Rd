@@ -4,33 +4,43 @@
 \name{metricsPerSample}
 \alias{metricsPerSample}
 \alias{metricsPerSample}
-\alias{metricsPerSample,bcbioSingleCell-method}
+\alias{metricsPerSample,SingleCellExperiment-method}
 \alias{metricsPerSample,seurat-method}
 \title{Metrics per Sample}
 \usage{
 metricsPerSample(object, ...)
 
-\S4method{metricsPerSample}{bcbioSingleCell}(object)
+\S4method{metricsPerSample}{SingleCellExperiment}(object, f = c("mean",
+  "median", "sum"))
 
-\S4method{metricsPerSample}{seurat}(object)
+\S4method{metricsPerSample}{seurat}(object, f = c("mean", "median", "sum"))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
+
+\item{f}{Mathematical function to apply. Defaults to "\code{sum}".}
 }
 \value{
-\code{tbl_df} containing summary statistics.
+\code{data.frame}.
 }
 \description{
-Metrics per Sample
+Calculate summary statistics per sample.
 }
 \examples{
-# bcbioSingleCell ====
-metricsPerSample(bcb_small)
+# SingleCellExperiment ====
+# mean
+x <- metricsPerSample(bcb_small, f = "mean")
+head(x)
 
-# seurat ====
-metricsPerSample(seurat_small)
+# median
+x <- metricsPerSample(bcb_small, f = "median")
+head(x)
+
+# sum
+x <- metricsPerSample(bcb_small, f = "sum")
+head(x)
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},

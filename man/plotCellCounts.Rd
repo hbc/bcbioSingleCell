@@ -4,16 +4,12 @@
 \name{plotCellCounts}
 \alias{plotCellCounts}
 \alias{plotCellCounts}
-\alias{plotCellCounts,bcbioSingleCell-method}
-\alias{plotCellCounts,seurat-method}
+\alias{plotCellCounts,SingleCellExperiment-method}
 \title{Plot Cell Counts}
 \usage{
 plotCellCounts(object, ...)
 
-\S4method{plotCellCounts}{bcbioSingleCell}(object, interestingGroups,
-  fill = scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotCellCounts}{seurat}(object, interestingGroups,
+\S4method{plotCellCounts}{SingleCellExperiment}(object, interestingGroups,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
@@ -38,9 +34,8 @@ Plot Cell Counts
 # bcbioSingleCell ====
 plotCellCounts(bcb_small)
 
-# seurat ====
-plotCellCounts(seurat_small)
-plotCellCounts(pbmc_small)
+# SingleCellExperiment ====
+plotCellCounts(cellranger_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},
