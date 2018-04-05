@@ -5,6 +5,8 @@
 \alias{sampleData}
 \alias{sampleData,SingleCellExperiment-method}
 \alias{sampleData,seurat-method}
+\alias{sampleData<-,SingleCellExperiment-method}
+\alias{sampleData<-,seurat-method}
 \title{Sample Data}
 \usage{
 \S4method{sampleData}{SingleCellExperiment}(object, interestingGroups,
@@ -12,6 +14,10 @@
 
 \S4method{sampleData}{seurat}(object, interestingGroups,
   return = c("DataFrame", "data.frame"))
+
+\S4method{sampleData}{SingleCellExperiment}(object) <- value
+
+\S4method{sampleData}{seurat}(object) <- value
 }
 \arguments{
 \item{object}{Object.}
@@ -21,6 +27,8 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 
 \item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
 to the first argument in the vector.}
+
+\item{value}{Object to assign.}
 }
 \value{
 \code{data.frame}.
@@ -33,10 +41,16 @@ the samples.
 }
 \examples{
 # bcbioSingleCell ====
-sampleData(bcb_small) \%>\% glimpse()
+x <- bcb_small
+sampleData(x) \%>\% glimpse()
+sampleData(x)[["batch"]] <- 1L
+sampleData(x) \%>\% glimpse()
 
 # seurat ====
-sampleData(pbmc_small) \%>\% glimpse()
+x <- seurat_small
+sampleData(x) \%>\% glimpse()
+sampleData(x)[["batch"]] <- 1L
+sampleData(x) \%>\% glimpse()
 }
 \author{
 Michael Steinbaugh

@@ -17,10 +17,16 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' sampleData(bcb_small) %>% glimpse()
+#' x <- bcb_small
+#' sampleData(x) %>% glimpse()
+#' sampleData(x)[["batch"]] <- 1L
+#' sampleData(x) %>% glimpse()
 #'
 #' # seurat ====
-#' sampleData(pbmc_small) %>% glimpse()
+#' x <- seurat_small
+#' sampleData(x) %>% glimpse()
+#' sampleData(x)[["batch"]] <- 1L
+#' sampleData(x) %>% glimpse()
 NULL
 
 
@@ -120,4 +126,38 @@ setMethod(
         assertHasRownames(data)
         as(data, return)
     }
+)
+
+
+
+# Assignment methods ===========================================================
+#' @rdname sampleData
+#' @export
+setMethod(
+    "sampleData<-",
+    signature(
+        object = "SingleCellExperiment",
+        value = "ANY"
+    ),
+    function(object, value) {
+        # TODO Switch to storing as DataFrame class internally
+        value <- as.data.frame(value)
+        # Ensure all columns are factors
+        value <- sanitizeSampleData(value)
+        metadata(object)[["sampleData"]] <- value
+        object
+    }
+)
+
+
+
+#' @rdname sampleData
+#' @export
+setMethod(
+    "sampleData<-",
+    signature(
+        object = "seurat",
+        value = "ANY"
+    ),
+    getMethod("sampleData<-", "SingleCellExperiment")
 )
