@@ -12,8 +12,9 @@
 #' @return Counts matrix (typically a `dgCMatrix`).
 #'
 #' @examples
-#' # bcbioSingleCell ====
+#' # SingleCellExperiment ====
 #' counts(bcb_small) %>% glimpse()
+#' counts(cellranger_small) %>% glimpse()
 #'
 #' # seurat ====
 #' counts(pbmc_small, normalized = FALSE) %>% glimpse()
@@ -23,19 +24,6 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname counts
-#' @importFrom basejump makeNames
-#' @export
-setMethod(
-    "counts",
-    signature("bcbioSingleCell"),
-    function(object) {
-        assay(object)
-    }
-)
-
-
-
 #' @rdname counts
 #' @export
 setMethod(

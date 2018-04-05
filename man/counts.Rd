@@ -3,12 +3,9 @@
 \docType{methods}
 \name{counts}
 \alias{counts}
-\alias{counts,bcbioSingleCell-method}
 \alias{counts,seurat-method}
 \title{Counts Accessor}
 \usage{
-\S4method{counts}{bcbioSingleCell}(object)
-
 \S4method{counts}{seurat}(object, normalized = FALSE)
 }
 \arguments{
@@ -23,8 +20,9 @@ Counts matrix (typically a \code{dgCMatrix}).
 Counts Accessor
 }
 \examples{
-# bcbioSingleCell ====
+# SingleCellExperiment ====
 counts(bcb_small) \%>\% glimpse()
+counts(cellranger_small) \%>\% glimpse()
 
 # seurat ====
 counts(pbmc_small, normalized = FALSE) \%>\% glimpse()
