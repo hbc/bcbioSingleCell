@@ -16,19 +16,28 @@
 #' # bcbioSingleCell ====
 #' metrics(bcb_small) %>% glimpse()
 #'
+#' # SingleCellExperiment ====
+#' metrics(cellranger_small) %>% glimpse()
+#'
 #' # seurat ====
 #' metrics(seurat_small) %>% glimpse()
 #' metrics(pbmc_small) %>% glimpse()
 #'
 #' # dgCMatrix ====
 #' mat <- counts(bcb_small)
+#' class(mat)
+#' metrics(mat) %>% glimpse()
+#'
+#' # dgTMatrix ====
+#' mat <- counts(pbmc_small)
+#' class(mat)
 #' metrics(mat) %>% glimpse()
 NULL
 
 
 
 # Constructors =================================================================
-.metrics.dgCMatrix <- function(  # nolint
+.metrics.sparse <- function(  # nolint
     object,
     rowData = NULL,
     prefilter = TRUE
@@ -112,7 +121,17 @@ NULL
 setMethod(
     "metrics",
     signature("dgCMatrix"),
-    .metrics.dgCMatrix
+    .metrics.sparse
+)
+
+
+
+#' @rdname metrics
+#' @export
+setMethod(
+    "metrics",
+    signature("dgTMatrix"),
+    .metrics.sparse
 )
 
 
