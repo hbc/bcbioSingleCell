@@ -241,3 +241,13 @@ setMethod(
     signature("seurat"),
     getMethod("plotCumulativeUMIsPerCell", "SingleCellExperiment")
 )
+
+
+
+#' @rdname plotReadsPerCell
+#' @export
+setMethod(
+    "plotReadsPerCell",
+    signature("seurat"),
+    getMethod("plotReadsPerCell", "SingleCellExperiment")
+)
