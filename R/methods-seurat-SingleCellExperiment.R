@@ -251,3 +251,11 @@ setMethod(
     signature("seurat"),
     getMethod("plotReadsPerCell", "SingleCellExperiment")
 )
+
+#' @rdname plotZerosVsDepth
+#' @export
+setMethod(
+    "plotZerosVsDepth",
+    signature("seurat"),
+    getMethod("plotZerosVsDepth", "SingleCellExperiment")
+)
