@@ -85,7 +85,7 @@ Imports:
     zingeR (>= 0.1)
 Suggests:
     BiocStyle,
-    DESeq2,
+    DESeq2 (>= 1.19),
     googlesheets,
     monocle,
     rmarkdown,
@@ -93,7 +93,7 @@ Suggests:
     scran,
     sessioninfo,
     testthat,
-    tidyverse,
+    tidyverse (>= 1.2),
     zinbwave
 biocViews:
     DataImport,
