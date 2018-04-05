@@ -115,6 +115,60 @@ NULL
 
 
 
+.metrics.SCE <- function(  # nolint
+    object,
+    interestingGroups
+) {
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    }
+    sampleData <- sampleData(object)
+    colData <- colData(object)
+    assert_are_disjoint_sets(
+        x = colnames(sampleData),
+        y = colnames(colData)
+    )
+    cell2sample <- cell2sample(object)
+    assert_is_factor(cell2sample)
+    sampleID <- DataFrame("sampleID" = cell2sample)
+    colData <- cbind(colData, sampleID)
+    colData[["rowname"]] <- rownames(colData)
+    data <- merge(
+        x = colData,
+        y = sampleData,
+        by = "sampleID",
+        all.x = TRUE
+    )
+    # Ensure the numeric metrics columns appear first
+    data <- data[, unique(c(colnames(colData), colnames(data)))]
+    rownames(data) <- data[["rowname"]]
+    data[["rowname"]] <- NULL
+    # Add `interestingGroups` column
+    interestingGroups <- interestingGroups(object)
+    data <- uniteInterestingGroups(data, interestingGroups)
+
+    # Ensure all columns are sanitized, and return as data.frame
+    .tidyMetrics(data)
+}
+
+
+
+.tidyMetrics <- function(object) {
+    stopifnot(hasRownames(object))
+    object %>%
+        as.data.frame() %>%
+        camel() %>%
+        rownames_to_column() %>%
+        # Enforce count columns as integers (e.g. `nUMI`)
+        mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
+        # Coerce character vectors to factors, and drop levels
+        mutate_if(is.character, as.factor) %>%
+        mutate_if(is.factor, droplevels) %>%
+        column_to_rownames()
+}
+
+
+
 # Methods ======================================================================
 #' @rdname metrics
 #' @export
@@ -141,17 +195,7 @@ setMethod(
 setMethod(
     "metrics",
     signature("SingleCellExperiment"),
-    function(object, interestingGroups) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        colData(object) %>%
-            as.data.frame() %>%
-            rownames_to_column() %>%
-            .tidyMetrics() %>%
-            uniteInterestingGroups(interestingGroups) %>%
-            column_to_rownames()
-    }
+    .metrics.SCE
 )
 
 
@@ -161,5 +205,10 @@ setMethod(
 setMethod(
     "metrics",
     signature("seurat"),
-    getMethod("metrics", "SingleCellExperiment")
+    function(object, interestingGroups) {
+        data <- .metrics.SCE(object, interestingGroups)
+        # Add ident column
+        data[["ident"]] <- slot(object, "ident")
+        data
+    }
 )
