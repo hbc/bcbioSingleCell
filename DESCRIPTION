@@ -36,7 +36,6 @@ Authors@R: c(
         email = "bioinformatics@hsph.harvard.edu",
         role = c("cph", "fnd")
     ))
-Maintainer: Michael Steinbaugh <mike@steinbaugh.com>
 URL:
     http://bioinformatics.sph.harvard.edu/bcbioSingleCell,
     https://github.com/hbc/bcbioSingleCell
