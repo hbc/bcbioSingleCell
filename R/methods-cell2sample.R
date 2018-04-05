@@ -7,14 +7,9 @@
 #' @inheritParams general
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' cell2sample(bcb_small) %>% table()
-#'
 #' # SingleCellExperiment ====
+#' cell2sample(bcb_small) %>% table()
 #' cell2sample(cellranger_small) %>% table()
-#'
-#' # seurat ====
-#' cell2sample(pbmc_small) %>% table()
 NULL
 
 
@@ -37,14 +32,4 @@ setMethod(
             .[colnames(object)] %>%
             droplevels()
     }
-)
-
-
-
-#' @rdname cell2sample
-#' @export
-setMethod(
-    "cell2sample",
-    signature("seurat"),
-    getMethod("cell2sample", "SingleCellExperiment")
 )
