@@ -9,8 +9,12 @@
 #' @return `matrix`.
 #'
 #' @examples
+#' # bcbioSingleCell ====
+#' genes <- rownames(bcb_small) %>% head(2L)
+#' fetchGeneData(bcb_small, genes = genes) %>% glimpse()
+#'
 #' # seurat ====
-#' genes <- head(rownames(pbmc_small))
+#' genes <- rownames(pbmc_small) %>% head(2L)
 #' fetchGeneData(pbmc_small, genes = genes) %>% glimpse()
 NULL
 
@@ -21,14 +25,22 @@ NULL
 #' @export
 setMethod(
     "fetchGeneData",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(object, genes) {
         assert_is_character(genes)
-        data <- Seurat::FetchData(object, vars.all = genes)
-        assert_are_identical(
-            x = as.character(genes),
-            y = as.character(colnames(data))
-        )
-        data
+        counts(object) %>%
+            .[genes, , drop = FALSE] %>%
+            as.matrix() %>%
+            t()
     }
+)
+
+
+
+#' @rdname fetchGeneData
+#' @export
+setMethod(
+    "fetchGeneData",
+    signature("seurat"),
+    getMethod("fetchGeneData", "SingleCellExperiment")
 )
