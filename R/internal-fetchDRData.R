@@ -14,27 +14,18 @@
 #' @return `data.frame`.
 #'
 #' @examples
-#' .fetchDRData.seurat(
+#' x <- .fetchDRData.seurat(
 #'     object = pbmc_small,
 #'     dimCode = c(x = "tSNE_1", y = "tSNE_2")
 #' )
+#' glimpse(x)
 .fetchDRData.seurat <- function(object, dimCode) {  # nolint
     fetch <- FetchData(object, vars.all = dimCode)
-    ident <- slot(object, "ident")
-    metadata <- slot(object, "meta.data")
-    assert_are_identical(rownames(fetch), names(ident))
-    assert_are_identical(rownames(fetch), rownames(metadata))
-    cbind(
-        fetch,
-        as.data.frame(ident),
-        metadata
-    ) %>%
-        # Note that this step may make the resolution columns confusing
-        # (e.g. `res08` instead of `res.0.8`)
-        camel() %>%
-        # Move rownames before performing tidyverse operations
+    metrics <- metrics(object)
+    assert_are_identical(rownames(fetch), rownames(metrics))
+    cbind(fetch, metrics) %>%
         rownames_to_column() %>%
-        .tidyMetrics() %>%
+        camel() %>%
         # Group by ident here for center calculations
         group_by(!!sym("ident")) %>%
         mutate(
