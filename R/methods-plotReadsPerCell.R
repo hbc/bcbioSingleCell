@@ -76,6 +76,7 @@ NULL
         )
     ) +
         stat_ecdf(geom = "step") +
+        labs(y = "frequency") +
         scale_x_continuous(trans = "log10")
 
     # Color palette
