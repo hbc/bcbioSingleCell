@@ -34,18 +34,8 @@ setMethod(
     "colData",
     signature("seurat"),
     function(x) {
-        colData <- slot(x, "meta.data")
-        assert_is_data.frame(colData)
-        colData <- as(colData, "DataFrame")
-
-        # Abort if sample-level metadata is present
-        sampleData <- sampleData(x)
-        assert_are_disjoint_sets(
-            x = colnames(sampleData),
-            y = colnames(colData)
-        )
-
-        colData
+        data <- slot(x, "meta.data")
+        as(data, "DataFrame")
     }
 )
 
