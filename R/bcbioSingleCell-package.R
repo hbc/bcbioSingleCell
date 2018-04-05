@@ -27,8 +27,9 @@
 #'   readLog readProgramVersions readSampleData readTx2gene
 #'   sampleYAMLMetadata uniteInterestingGroups
 #' @importFrom cowplot draw_plot ggdraw plot_grid
-#' @importFrom dplyr arrange bind_rows group_by group_vars left_join mutate
-#'   mutate_all mutate_if n pull select_if summarize summarize_all ungroup
+#' @importFrom dplyr arrange bind_rows group_by group_vars left_join matches
+#'   mutate mutate_all mutate_if n pull select_if summarize summarize_all
+#'   ungroup
 #' @importFrom edgeR calcNormFactors DGEList estimateDisp glmFit
 #' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_line
 #'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
