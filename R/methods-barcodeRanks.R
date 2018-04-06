@@ -105,5 +105,5 @@ setMethod(
 .reorder <- function(vals, lens, o) {
     out <- rep(vals, lens)
     out[o] <- out
-    return(out)
+    out
 }
