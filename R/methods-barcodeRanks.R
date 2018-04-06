@@ -34,19 +34,29 @@ setMethod(
         fitBounds = NULL,
         df = 20L
     ) {
+        validObject(object)
+        assertIsAnImplicitInteger(lower)
+        assert_is_any_of(fitBounds, c("numeric", "NULL"))
+        if (is.numeric(fitBounds)) {
+            assert_is_of_length(fitBounds, 2L)
+        }
+        assertIsAnImplicitInteger(df)
+
+        # Use the raw counts matrix
         counts <- counts(object)
 
         # Calculate the total number of UMIs per cell (nUMI)
         totals <- Matrix::colSums(counts)
-        o <- order(totals, decreasing = TRUE)
 
         # Run length encoding
+        o <- order(totals, decreasing = TRUE)
         rle <- rle(totals[o])
 
         # Get mid-rank of each run
-        runRank <- cumsum(rle[["lengths"]]) - (rle[["lengths"]] - 1L) / 2L
         runTotals <- rle[["values"]]
+        runRank <- cumsum(rle[["lengths"]]) - (rle[["lengths"]] - 1L) / 2L
 
+        # Apply lower limit
         keep <- runTotals > lower
         if (sum(keep) < 3L) {
             abort("Insufficient points for computing knee/inflection")
@@ -77,34 +87,44 @@ setMethod(
             y = y[newKeep],
             df = df
         )
+        fitNames <- names(y[newKeep])
+
+        # Fitted values
+        fittedVals <- rep(NA_real_, length(keep))
+        fittedVals[keep][newKeep] <- 10L ^ fitted(fit)
+        names(fittedVals) <- names(keep)
 
         # Calculate derivatives
         d1 <- predict(fit, deriv = 1L)[["y"]]
+        names(d1) <- fitNames
         d2 <- predict(fit, deriv = 2L)[["y"]]
+        names(d2) <- fitNames
         curvature <- d2 / (1L + d1 ^ 2L) ^ 1.5
+        names(curvature) <- fitNames
 
         # Knee point
         knee <- 10L ^ (y[which.min(curvature)])
 
-        # Taking the right edge to get the total for the inflection point. We
-        # use the numerical derivative as the spline is optimized for the knee.
+        # Take the right edge to get the total for the inflection point.
+        # Use the numerical derivative as the spline is optimized for the knee.
         inflection <- 10L ^ (y[rightEdge])
 
-        # Returning a whole stack of useful stats
-        fittedVals <- rep(NA_real_, length(keep))
-        fittedVals[keep][newKeep] <- 10L ^ fitted(fit)
-
         list(
-            rank = .reorder(runRank, rle$lengths, o),
-            total = .reorder(runTotals, rle$lengths, o),
-            fitted = .reorder(fittedVals, rle$lengths, o),
-            knee = knee,
-            inflection = inflection
+            "sum" = .reorder(runTotals, rle[["lengths"]], o),
+            "midrank" = .reorder(runRank, rle[["lengths"]], o),
+            "fitted" = .reorder(fittedVals, rle[["lengths"]], o),
+            "fit" = fit,
+            "d1" = d1,
+            "d2" = d2,
+            "curvature" = curvature,
+            "knee" = knee,
+            "inflection" = inflection
         )
     }
 )
 
 .reorder <- function(vals, lens, o) {
+    assert_has_names(vals)
     out <- rep(vals, lens)
     out[o] <- out
     out
