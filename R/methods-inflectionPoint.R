@@ -28,14 +28,16 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object) {
         validObject(object)
-        metrics <- metrics(object)
-        assert_is_subset("nUMI", colnames(metrics))
-        counts <- sort(metrics[["nUMI"]])
+        counts <- counts(object)
+
+        # Calculate the total number of UMIs per cell (nUMI)
+        totals <- Matrix::colSums(counts) %>%
+            sort(decreasing = FALSE)
 
         # Trigonometric calculations
-        xdata <- seq_along(counts) / length(counts)
-        cs <- cumsum(counts / sum(counts))
-        m <- max(cs) / length(counts)
+        xdata <- seq_along(totals) / length(totals)
+        cs <- cumsum(totals / sum(totals))
+        m <- max(cs) / length(totals)
         dists <- mcmapply(
             xdata = xdata,
             cs = cs,
@@ -48,7 +50,7 @@ setMethod(
         )
 
         # Return the inflection point as the expression value
-        inflection <- counts[which.max(dists)]
+        inflection <- totals[which.max(dists)]
         names(inflection) <- "nUMI"
         inflection
     }
