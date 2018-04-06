@@ -3,14 +3,12 @@
 #' Import and analyze [bcbio](http://bcbio-nextgen.readthedocs.io) single-cell
 #' RNA-seq data.
 #'
-#' @name bcbioRNASeq-package
+#' @name bcbioSingleCell-package
 #' @keywords internal
 #'
-#' @import S4Vectors methods
-#'
+#' @import methods
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
-#'
 #' @importFrom Biobase rowMedians
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
 #' @importFrom Matrix readMM
