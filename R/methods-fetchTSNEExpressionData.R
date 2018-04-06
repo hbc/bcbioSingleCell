@@ -30,9 +30,9 @@ setMethod(
         assert_is_character(genes)
         tsne <- fetchTSNEData(object)
         data <- fetchGeneData(object, genes = genes)
-        mean <- Matrix::rowMeans(data)
+        mean <- rowMeans(data)
         median <- rowMedians(data)
-        sum <- Matrix::rowSums(data)
+        sum <- rowSums(data)
         cbind(tsne, mean, median, sum)
     }
 )

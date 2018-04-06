@@ -31,7 +31,7 @@ setMethod(
         counts <- counts(object)
 
         # Calculate the total number of UMIs per cell (nUMI)
-        totals <- Matrix::colSums(counts) %>%
+        totals <- colSums(counts) %>%
             sort(decreasing = FALSE)
 
         # Trigonometric calculations

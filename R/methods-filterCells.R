@@ -263,7 +263,7 @@ NULL
     # Filter low quality genes =================================================
     if (minCellsPerGene > 0L) {
         counts <- assay(object)
-        numCells <- Matrix::rowSums(counts > 0L)
+        numCells <- rowSums(counts > 0L)
         genes <- names(numCells[which(numCells >= minCellsPerGene)])
     } else {
         genes <- sort(rownames(object))

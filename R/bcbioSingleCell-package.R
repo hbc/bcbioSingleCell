@@ -6,13 +6,13 @@
 #' @name bcbioSingleCell-package
 #' @keywords internal
 #'
-#' @import methods
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
 #' @importFrom Biobase rowMedians
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
-#' @importFrom Matrix readMM
+#' @importFrom Matrix colSums readMM rowMeans rowSums
 #' @importFrom Matrix.utils aggregate.Matrix
+#' @importFrom S4Vectors aggregate complete.cases metadata metadata<- na.omit
 #' @importFrom SingleCellExperiment isSpike isSpike<- SingleCellExperiment
 #' @importFrom Seurat CreateSeuratObject FetchData
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
@@ -40,6 +40,7 @@
 #' @importFrom jsonlite read_json
 #' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_names set_rownames
+#' @importFrom methods .hasSlot as is new show slot slot<- validObject
 #' @importFrom parallel mclapply mcmapply
 #' @importFrom pbapply pblapply
 #' @importFrom readr read_lines read_tsv

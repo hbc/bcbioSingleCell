@@ -46,7 +46,7 @@ setMethod(
         counts <- counts(object)
 
         # Calculate the total number of UMIs per cell (nUMI)
-        totals <- Matrix::colSums(counts)
+        totals <- colSums(counts)
 
         # Run length encoding
         o <- order(totals, decreasing = TRUE)

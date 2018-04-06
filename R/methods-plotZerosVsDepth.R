@@ -42,8 +42,8 @@ setMethod(
 
         data <- tibble(
             "sampleID" = sampleID,
-            "dropout" = (nrow(present) - Matrix::colSums(present)) / nrow(present),
-            "depth" = Matrix::colSums(counts)
+            "dropout" = (nrow(present) - colSums(present)) / nrow(present),
+            "depth" = colSums(counts)
         ) %>%
             left_join(sampleData, by = "sampleID")
 

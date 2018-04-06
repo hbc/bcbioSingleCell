@@ -77,14 +77,10 @@ NULL
     data <- tibble(
         "rowname" = colnames(object),
         # Follow the Seurat `seurat@data.info` conventions
-        "nUMI" = Matrix::colSums(object),
-        "nGene" = Matrix::colSums(object > 0L),
-        "nCoding" = Matrix::colSums(
-            object[codingGenes, , drop = FALSE]
-        ),
-        "nMito" = Matrix::colSums(
-            object[mitoGenes, , drop = FALSE]
-        )
+        "nUMI" = colSums(object),
+        "nGene" = colSums(object > 0L),
+        "nCoding" = colSums(object[codingGenes, , drop = FALSE]),
+        "nMito" = colSums(object[mitoGenes, , drop = FALSE])
     ) %>%
         mutate(
             log10GenesPerUMI = log10(.data[["nGene"]]) /
