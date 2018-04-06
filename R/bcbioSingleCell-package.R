@@ -48,7 +48,8 @@
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! !!! .data abort inform sym syms warn
 #' @importFrom scales percent
-#' @importFrom stats as.formula median model.matrix relevel reorder
+#' @importFrom stats as.formula fitted median model.matrix predict relevel
+#'   reorder smooth.spline
 #' @importFrom stringr str_extract str_match str_pad str_split
 #' @importFrom tibble as_tibble column_to_rownames remove_rownames
 #'   rownames_to_column tibble
