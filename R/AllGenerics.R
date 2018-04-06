@@ -1,3 +1,14 @@
+#' @rdname barcodeRanks
+#' @export
+setGeneric(
+    "barcodeRanks",
+    function(object, ...) {
+        standardGeneric("barcodeRanks")
+    }
+)
+
+
+
 #' @rdname cell2sample
 #' @export
 setGeneric(
