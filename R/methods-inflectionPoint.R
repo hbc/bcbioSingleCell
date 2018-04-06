@@ -50,9 +50,7 @@ setMethod(
         )
 
         # Return the inflection point as the expression value
-        inflection <- totals[which.max(dists)]
-        names(inflection) <- "nUMI"
-        inflection
+        totals[which.max(dists)]
     }
 )
 
