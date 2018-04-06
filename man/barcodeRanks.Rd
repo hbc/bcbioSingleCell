@@ -27,8 +27,9 @@ x[["knee"]]
 x[["inflection"]]
 }
 \seealso{
-Modified version of \code{DropletUtils::barcodeRanks()}.
+Modified version of \code{DropletUtils::barcodeRanks()} that works on
+a \code{SingleCellExperiment} object instead of a matrix.
 }
 \author{
-Aaron Lun
+Aaron Lun, Michael Steinbaugh
 }

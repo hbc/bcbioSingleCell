@@ -8,7 +8,8 @@
 #' @name barcodeRanks
 #' @author Aaron Lun, Michael Steinbaugh
 #'
-#' @seealso Modified version of `DropletUtils::barcodeRanks()`.
+#' @seealso Modified version of `DropletUtils::barcodeRanks()` that works on
+#'   a `SingleCellExperiment` object instead of a matrix.
 #'
 #' @return `list`.
 #' @examples
