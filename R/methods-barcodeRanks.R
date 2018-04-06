@@ -34,8 +34,10 @@ setMethod(
         fitBounds = NULL,
         df = 20L
     ) {
-        m <- counts(object)
-        totals <- Matrix::colSums(m)
+        counts <- counts(object)
+
+        # Calculate the total number of UMIs per cell (nUMI)
+        totals <- Matrix::colSums(counts)
         o <- order(totals, decreasing = TRUE)
 
         # Run length encoding
@@ -47,7 +49,7 @@ setMethod(
 
         keep <- runTotals > lower
         if (sum(keep) < 3L) {
-            abort("Insufficient totals for computing knee/inflection points")
+            abort("Insufficient points for computing knee/inflection")
         }
         y <- log10(runTotals[keep])
         x <- log10(runRank[keep])
