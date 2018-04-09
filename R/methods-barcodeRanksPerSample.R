@@ -20,7 +20,15 @@ setMethod(
     "barcodeRanksPerSample",
     signature("SingleCellExperiment"),
     function(object) {
-        objects <- subsetPerSample(object, assignAndSave = FALSE)
-        lapply(objects, barcodeRanks)
+        counts <- counts(object)
+        cell2sample <- cell2sample(object)
+        samples <- levels(cell2sample)
+        perSampleCounts <- lapply(samples, function(sample) {
+            cells <- names(cell2sample)[which(cell2sample == sample)]
+            counts[, cells]
+        })
+        ranks <- lapply(perSampleCounts, barcodeRanks)
+        names(ranks) <- samples
+        ranks
     }
 )
