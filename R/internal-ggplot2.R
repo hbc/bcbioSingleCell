@@ -44,7 +44,7 @@ inflectionColor <- "orange"
     size = qcLineSize
 ) {
     if (!missing(xintercept) && !missing(yintercept)) {
-        abort("Specify only `xintercept` or `intercept`")
+        stop("Specify only `xintercept` or `intercept`")
     } else if (!missing(xintercept)) {
         geom_vline(
             xintercept = xintercept,
@@ -62,6 +62,6 @@ inflectionColor <- "orange"
             size = size
         )
     } else {
-        abort("`xintercept` or `yintercept` value required")
+        stop("`xintercept` or `yintercept` value required")
     }
 }

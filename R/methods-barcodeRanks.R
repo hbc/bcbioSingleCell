@@ -58,7 +58,7 @@ setMethod(
         # Apply lower limit
         keep <- runTotals > lower
         if (sum(keep) < 3L) {
-            abort("Insufficient points for computing knee/inflection")
+            stop("Insufficient points for computing knee/inflection")
         }
         y <- log10(runTotals[keep])
         x <- log10(runRank[keep])

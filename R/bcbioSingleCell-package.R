@@ -42,7 +42,7 @@
 #' @importFrom parallel mclapply mcmapply
 #' @importFrom pbapply pblapply
 #' @importFrom readr read_lines read_tsv
-#' @importFrom rlang !! !!! .data abort inform sym syms warn
+#' @importFrom rlang !! !!! .data sym syms
 #' @importFrom scales percent
 #' @importFrom stats as.formula fitted median model.matrix predict relevel
 #'   reorder smooth.spline

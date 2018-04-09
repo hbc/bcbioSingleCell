@@ -36,7 +36,7 @@
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
     if (!metricCol %in% colnames(metrics)) {
-        warn(paste(
+        warning(paste(
             deparse(substitute(object)),
             "does not contain", metricCol, "column in `metrics()`"
         ))
@@ -178,7 +178,7 @@
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
     if (!all(c(xCol, yCol) %in% colnames(metrics))) {
-        warn(paste(
+        warning(paste(
             deparse(substitute(object)), "must contain",
             toString(c(xCol, yCol)),
             "columns in `metrics()`"

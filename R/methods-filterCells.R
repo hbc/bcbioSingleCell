@@ -111,7 +111,7 @@ setMethod(
                 .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
         }
         if (!nrow(metrics)) {
-            abort("No cells passed `minUMIs` cutoff")
+            stop("No cells passed `minUMIs` cutoff")
         }
         summary[["minUMIs"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
@@ -141,7 +141,7 @@ setMethod(
                 .[.[["nUMI"]] <= maxUMIs, , drop = FALSE]
         }
         if (!nrow(metrics)) {
-            abort("No cells passed `maxUMIs` cutoff")
+            stop("No cells passed `maxUMIs` cutoff")
         }
         summary[["maxUMIs"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
@@ -171,7 +171,7 @@ setMethod(
                 .[.[["nGene"]] >= minGenes, , drop = FALSE]
         }
         if (!nrow(metrics)) {
-            abort("No cells passed `minGenes` cutoff")
+            stop("No cells passed `minGenes` cutoff")
         }
         summary[["minGenes"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
@@ -201,7 +201,7 @@ setMethod(
                 .[.[["nGene"]] <= maxGenes, , drop = FALSE]
         }
         if (!nrow(metrics)) {
-            abort("No cells passed `maxGenes` cutoff")
+            stop("No cells passed `maxGenes` cutoff")
         }
         summary[["maxGenes"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
@@ -231,7 +231,7 @@ setMethod(
                 .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
         }
         if (!nrow(metrics)) {
-            abort("No cells passed `maxMitoRatio` cutoff")
+            stop("No cells passed `maxMitoRatio` cutoff")
         }
         summary[["maxMitoRatio"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
@@ -261,7 +261,7 @@ setMethod(
                 .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
         }
         if (!nrow(metrics)) {
-            abort("No cells passed `minNovelty` cutoff")
+            stop("No cells passed `minNovelty` cutoff")
         }
         summary[["minNovelty"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
@@ -281,7 +281,7 @@ setMethod(
             genes <- sort(rownames(object))
         }
         if (!length(genes)) {
-            abort("No genes passed `minCellsPerGene` cutoff")
+            stop("No genes passed `minCellsPerGene` cutoff")
         }
         summary[["minCellsPerGene"]] <- paste(
             paste(.paddedCount(length(genes)), "genes"),

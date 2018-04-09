@@ -60,7 +60,7 @@ setMethod(
                 return(invisible())
             }
             if (length(genes) > 10L) {
-                warn("Maximum of 10 genes per cluster is recommended")
+                warning("Maximum of 10 genes per cluster is recommended")
             }
             markdownHeader(
                 paste("Cluster", cluster),

@@ -62,7 +62,7 @@ NULL
         identical(logical, FALSE) &&
         identical(stop, TRUE)
     ) {
-        abort("`sampleNameAggregate` column is required")
+        stop("`sampleNameAggregate` column is required")
     }
     logical
 }

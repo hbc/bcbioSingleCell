@@ -54,7 +54,7 @@ NULL
 
     # Return `NULL` if `nCount` isn't present
     if (!"nCount" %in% colnames(data)) {
-        warn("object does not contain nCount column in `metrics()`")
+        warning("object does not contain nCount column in `metrics()`")
         return(NULL)
     }
 

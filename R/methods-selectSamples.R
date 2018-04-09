@@ -37,7 +37,6 @@ setMethod(
     "selectSamples",
     signature("bcbioSingleCell"),
     function(object, ...) {
-        object <- .applyFilterCutoffs(object)
         metadata(object)[["selectSamples"]] <- TRUE
 
         # Here the `arguments` are captured as a named character vector. The
@@ -51,7 +50,7 @@ setMethod(
             FUN.VALUE = logical(1L)
         )
         if (!all(isTRUE(as.logical(checkCharacter)))) {
-            abort("Arguments must be character vectors")
+            stop("Arguments must be character vectors")
         }
 
         # Match the arguments against the sample metadata
@@ -60,13 +59,13 @@ setMethod(
             column <- names(arguments)[[a]]
             # Check that column is present
             if (!column %in% colnames(sampleData)) {
-                abort(paste(column, "isn't present in metadata colnames"))
+                stop(paste(column, "isn't present in metadata colnames"))
             }
             argument <- arguments[[a]]
             # Check that all items in argument are present
             if (!all(argument %in% sampleData[[column]])) {
                 missing <- argument[which(!argument %in% sampleData[[column]])]
-                abort(paste(
+                stop(paste(
                     column,
                     "metadata column doesn't contain",
                     toString(missing)
@@ -84,7 +83,8 @@ setMethod(
             as.character() %>%
             sort() %>%
             unique()
-        inform(paste(
+
+        message(paste(
             length(sampleNames), "sample(s) matched:",
             toString(sampleNames)
         ))
@@ -93,9 +93,9 @@ setMethod(
         metrics <- metrics(object) %>%
             .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
         if (!nrow(metrics)) {
-            abort("Failed to match metrics")
+            stop("Failed to match metrics")
         }
-        inform(paste(nrow(metrics), "cells matched"))
+        message(paste(nrow(metrics), "cells matched"))
         cells <- rownames(metrics)
 
         object[, cells]

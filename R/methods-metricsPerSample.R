@@ -39,7 +39,7 @@ setMethod(
         f = c("mean", "median", "sum")
     ) {
         f <- match.arg(f)
-        inform(paste("Calculating", f, "per sample"))
+        message(paste("Calculating", f, "per sample"))
         fxn <- get(f)
         assert_is_function(fxn)
         assert_is_subset("sampleName", colnames(metrics(object)))

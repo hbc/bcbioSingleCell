@@ -47,7 +47,7 @@ setMethod(
                 subset <- selectSamples(object, sampleID = sampleID)
                 # Skip if subset doesn't have enough cells
                 if (ncol(subset) < minCells) {
-                    warn(paste(sampleID, "didn't pass minimum cell cutoff"))
+                    warning(paste(sampleID, "didn't pass minimum cell cutoff"))
                     return(NULL)
                 }
                 assignAndSaveData(
