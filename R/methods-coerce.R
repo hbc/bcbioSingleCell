@@ -86,7 +86,7 @@ setAs(
         metaData <- as.data.frame(slot(from, "colData"))
 
         # New seurat object
-        seurat <- CreateSeuratObject(
+        seurat <- Seurat::CreateSeuratObject(
             raw.data = rawData,
             project = "bcbioSingleCell",
             # Already applied filtering cutoffs for cells and genes

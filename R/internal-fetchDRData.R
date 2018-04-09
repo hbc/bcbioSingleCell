@@ -20,7 +20,7 @@
 #' )
 #' glimpse(x)
 .fetchDRData.seurat <- function(object, dimCode) {  # nolint
-    fetch <- FetchData(object, vars.all = dimCode)
+    fetch <- Seurat::FetchData(object, vars.all = dimCode)
     metrics <- metrics(object)
     assert_are_identical(rownames(fetch), rownames(metrics))
     cbind(fetch, metrics) %>%

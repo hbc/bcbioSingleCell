@@ -46,8 +46,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment,
-    bcbioBase (>= 0.2.1),
-    Seurat (>= 2.0)
+    bcbioBase (>= 0.2.1)
 Imports:
     Biobase,
     BiocGenerics,
@@ -83,6 +82,7 @@ Suggests:
     BiocStyle,
     DESeq2 (>= 1.19),
     edgeR (>= 3.20.9),
+    Seurat (>= 2.0),
     googlesheets,
     monocle,
     rmarkdown,

@@ -14,7 +14,6 @@
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom S4Vectors aggregate complete.cases metadata metadata<- na.omit
 #' @importFrom SingleCellExperiment isSpike isSpike<- SingleCellExperiment
-#' @importFrom Seurat CreateSeuratObject FetchData
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
 #' @importFrom basejump assignAndSaveData camel convertUCSCBuildToEnsembl
 #'   detectOrganism dynamicPlotlist initializeDirectory makeGRangesFromEnsembl
