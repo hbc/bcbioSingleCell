@@ -177,6 +177,14 @@
     assertIsColorScaleDiscreteOrNULL(color)
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
+    if (!all(c(xCol, yCol) %in% colnames(metrics))) {
+        warn(paste(
+            deparse(substitute(object)), "must contain",
+            toString(c(xCol, yCol)),
+            "columns in `metrics()`"
+        ))
+        return(invisible())
+    }
 
     p <- ggplot(
         data = metrics,

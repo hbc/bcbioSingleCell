@@ -44,7 +44,10 @@ plotMitoVsCoding(bcb_small)
 plotMitoVsCoding(cellranger_small)
 
 # seurat ====
-plotMitoVsCoding(seurat_small)
+# `object@meta.data` must contain `nCoding`, `mitoRatio`
+\dontrun{
+plotMitoVsCoding(Seurat::pbmc_small)
+}
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},

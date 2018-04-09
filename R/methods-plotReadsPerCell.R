@@ -15,10 +15,16 @@
 #' plotReadsPerCell(bcb_small)
 #'
 #' # SingleCellExperiment ====
+#' # Only contains UMI counts
+#' \dontrun{
 #' plotReadsPerCell(cellranger_small)
+#' }
 #'
 #' # seurat ====
+#' # Only contains UMI counts
+#' \dontrun{
 #' plotReadsPerCell(Seurat::pbmc_small)
+#' }
 NULL
 
 

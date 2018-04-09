@@ -16,7 +16,10 @@
 #' plotMitoVsCoding(cellranger_small)
 #'
 #' # seurat ====
+#' # `object@meta.data` must contain `nCoding`, `mitoRatio`
+#' \dontrun{
 #' plotMitoVsCoding(Seurat::pbmc_small)
+#' }
 NULL
 
 

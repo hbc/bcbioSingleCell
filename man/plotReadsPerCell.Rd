@@ -50,6 +50,18 @@ Plot the distribution of read counts for all unfiltered cellular barcodes.
 \examples{
 # bcbioSingleCell ====
 plotReadsPerCell(bcb_small)
+
+# SingleCellExperiment ====
+# Only contains UMI counts
+\dontrun{
+plotReadsPerCell(cellranger_small)
+}
+
+# seurat ====
+# Only contains UMI counts
+\dontrun{
+plotReadsPerCell(Seurat::pbmc_small)
+}
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},

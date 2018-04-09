@@ -50,7 +50,10 @@ plotMitoRatio(bcb_small)
 plotMitoRatio(cellranger_small)
 
 # seurat ====
-plotMitoRatio(seurat_small)
+# `object@meta.data` must contain `mitoRatio`
+\dontrun{
+plotMitoRatio(Seurat::pbmc_small)
+}
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},
