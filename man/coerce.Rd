@@ -3,8 +3,8 @@
 \name{coerce}
 \alias{coerce}
 \alias{coerce-SingleCellExperiment-list}
-\alias{coerce-bcbioSingleCell-SummarizedExperiment}
 \alias{coerce-SingleCellExperiment-seurat}
+\alias{coerce-bcbioSingleCell-SummarizedExperiment}
 \title{Coerce Object}
 \value{
 New class, specified by the "\code{to}" argument.
