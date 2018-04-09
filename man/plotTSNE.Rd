@@ -50,7 +50,7 @@ Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.
 }
 \examples{
 # seurat ====
-plotTSNE(pbmc_small)
+plotTSNE(Seurat::pbmc_small)
 }
 \seealso{
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},

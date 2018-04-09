@@ -25,8 +25,8 @@ counts(bcb_small) \%>\% glimpse()
 counts(cellranger_small) \%>\% glimpse()
 
 # seurat ====
-counts(pbmc_small, normalized = FALSE) \%>\% glimpse()
-counts(pbmc_small, normalized = TRUE) \%>\% glimpse()
+counts(Seurat::pbmc_small, normalized = FALSE) \%>\% glimpse()
+counts(Seurat::pbmc_small, normalized = TRUE) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},

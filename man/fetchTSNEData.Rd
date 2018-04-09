@@ -24,7 +24,7 @@ Fetch t-SNE Locations and Cellular Metadata
 }
 \examples{
 # seurat ====
-fetchTSNEData(pbmc_small) \%>\% glimpse()
+fetchTSNEData(Seurat::pbmc_small) \%>\% glimpse()
 }
 \seealso{
 \code{\link[Seurat:TSNEPlot]{Seurat::TSNEPlot()}}.

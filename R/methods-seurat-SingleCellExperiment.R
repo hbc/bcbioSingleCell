@@ -280,6 +280,46 @@ setMethod(
 
 
 
+#' @rdname plotGenesPerCell
+#' @export
+setMethod(
+    "plotGenesPerCell",
+    signature("seurat"),
+    getMethod("plotGenesPerCell", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMitoRatio
+#' @export
+setMethod(
+    "plotMitoRatio",
+    signature("seurat"),
+    getMethod("plotMitoRatio", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMitoVsCoding
+#' @export
+setMethod(
+    "plotMitoVsCoding",
+    signature("seurat"),
+    getMethod("plotMitoVsCoding", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotNovelty
+#' @export
+setMethod(
+    "plotNovelty",
+    signature("seurat"),
+    getMethod("plotNovelty", "SingleCellExperiment")
+)
+
+
+
 #' @rdname plotQuantileHeatmap
 #' @export
 setMethod(

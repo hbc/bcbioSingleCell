@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' x <- .fetchDRData.seurat(
-#'     object = pbmc_small,
+#'     object = Seurat::pbmc_small,
 #'     dimCode = c(x = "tSNE_1", y = "tSNE_2")
 #' )
 #' glimpse(x)

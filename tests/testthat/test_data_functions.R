@@ -51,7 +51,7 @@ test_that("bcbio : seurat_small assignment", {
 
 # fetchPCAData =================================================================
 test_that("fetchPCAData", {
-    x <- fetchPCAData(pbmc_small)
+    x <- fetchPCAData(Seurat::pbmc_small)
     expect_is(x, "data.frame")
     expect_identical(
         lapply(x, class),
@@ -97,7 +97,7 @@ test_that("fetchPCAData", {
 
 # fetchTSNEData ================================================================
 test_that("fetchTSNEData", {
-    x <- fetchTSNEData(pbmc_small)
+    x <- fetchTSNEData(Seurat::pbmc_small)
     expect_is(x, "data.frame")
     expect_identical(
         lapply(x, class),
@@ -144,8 +144,8 @@ test_that("fetchTSNEData", {
 # fetchTSNEExpressionData ======================================================
 test_that("fetchTSNEExpressionData", {
     x <- fetchTSNEExpressionData(
-        object = pbmc_small,
-        genes = head(rownames(pbmc_small))
+        object = Seurat::pbmc_small,
+        genes = head(rownames(Seurat::pbmc_small))
     )
     expect_is(x, "data.frame")
     expect_identical(
@@ -301,7 +301,7 @@ test_that("metrics : bcbioSingleCell", {
 })
 
 test_that("metrics : seurat", {
-    x <- metrics(pbmc_small)
+    x <- metrics(Seurat::pbmc_small)
     expect_identical(
         lapply(x, class),
         list(
@@ -388,7 +388,7 @@ test_that("topBarcodes : bcbioSingleCell", {
 })
 
 test_that("topBarcodes : seurat", {
-    x <- topBarcodes(pbmc_small)
+    x <- topBarcodes(Seurat::pbmc_small)
     expect_is(x, "data.frame")
     expect_identical(
         rownames(x)[[1L]],

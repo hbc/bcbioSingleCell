@@ -67,13 +67,13 @@ test_that("plotKnownMarkersDetected : seurat", {
 
 # plotMarkerTSNE ===============================================================
 test_that("plotMarkerTSNE : seurat", {
-    genes <- rownames(counts(pbmc_small))[[1L]]
+    genes <- rownames(counts(Seurat::pbmc_small))[[1L]]
     args <- methodFormals("plotMarkerTSNE", "seurat") %>%
         .[["expression"]] %>%
         as.character() %>%
         .[-1L]
     invisible(lapply(args, function(arg) {
-        p <- plotMarkerTSNE(pbmc_small, genes = genes, expression = arg)
+        p <- plotMarkerTSNE(Seurat::pbmc_small, genes = genes, expression = arg)
         expect_is(p, "ggplot")
     }))
 })
@@ -150,7 +150,7 @@ test_that("plotPCElbow : seurat", {
     x <- plotPCElbow(seurat_small)
     expect_identical(x, seq_len(9L))
 
-    x <- plotPCElbow(pbmc_small)
+    x <- plotPCElbow(Seurat::pbmc_small)
     expect_identical(x, seq_len(11L))
 })
 
@@ -247,11 +247,11 @@ test_that("plotReadsPerCell : seurat", {
 
     # seurat object not created by bcbioSingleCell
     expect_warning(
-        plotReadsPerCell(pbmc_small),
+        plotReadsPerCell(Seurat::pbmc_small),
         "object does not contain nCount column in `metrics\\(\\)`"
     )
     expect_is(
-        suppressWarnings(plotReadsPerCell(pbmc_small)),
+        suppressWarnings(plotReadsPerCell(Seurat::pbmc_small)),
         "NULL"
     )
 })
@@ -275,7 +275,7 @@ test_that("plotTopMarkers : seurat", {
 
 # plotTSNE =====================================================================
 test_that("plotTSNE : seurat", {
-    p <- plotTSNE(pbmc_small)
+    p <- plotTSNE(Seurat::pbmc_small)
     expect_is(p, "ggplot")
 })
 
@@ -304,7 +304,7 @@ test_that("plotUMIsVsGenes : seurat", {
     p <- plotUMIsVsGenes(seurat_small)
     expect_is(p, "ggplot")
 
-    p <- plotUMIsVsGenes(pbmc_small)
+    p <- plotUMIsVsGenes(Seurat::pbmc_small)
     expect_is(p, "ggplot")
 })
 
@@ -317,6 +317,6 @@ test_that("plotZerosVsDepth : bcbioSingleCell", {
 })
 
 test_that("plotZerosVsDepth : seurat", {
-    p <- plotZerosVsDepth(pbmc_small)
+    p <- plotZerosVsDepth(Seurat::pbmc_small)
     expect_is(p, "ggplot")
 })

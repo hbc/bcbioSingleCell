@@ -14,7 +14,7 @@
 #' topBarcodes(bcb_small) %>% glimpse()
 #'
 #' # seurat ====
-#' topBarcodes(pbmc_small) %>% glimpse()
+#' topBarcodes(Seurat::pbmc_small) %>% glimpse()
 NULL
 
 

@@ -50,7 +50,7 @@ metrics(counts) \%>\% glimpse()
 
 # seurat ====
 metrics(seurat_small) \%>\% glimpse()
-metrics(pbmc_small) \%>\% glimpse()
+metrics(Seurat::pbmc_small) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},

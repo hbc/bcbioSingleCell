@@ -66,10 +66,10 @@
 #'
 #' # seurat ====
 #' # Expression in cluster 3 relative to cluster 2
-#' numerator <- Seurat::WhichCells(pbmc_small, ident = 3L)
-#' denominator <- Seurat::WhichCells(pbmc_small, ident = 2L)
+#' numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
+#' denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
 #' lrt <- diffExp(
-#'     object = pbmc_small,
+#'     object = Seurat::pbmc_small,
 #'     numerator = numerator,
 #'     denominator = denominator,
 #'     maxit = 100L

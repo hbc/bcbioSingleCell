@@ -12,18 +12,18 @@
 #'
 #' @examples
 #' # seurat ====
-#' genes <- head(rownames(pbmc_small), 2L)
+#' genes <- head(rownames(Seurat::pbmc_small), 2L)
 #' print(genes)
 #'
 #' # grid
-#' plotViolin(pbmc_small, genes = genes, return = "grid")
+#' plotViolin(Seurat::pbmc_small, genes = genes, return = "grid")
 #'
 #' # list
-#' list <- plotViolin(pbmc_small, genes = genes, return = "list")
+#' list <- plotViolin(Seurat::pbmc_small, genes = genes, return = "list")
 #' names(list)
 #'
 #' # markdown
-#' plotViolin(pbmc_small, genes = genes, return = "markdown")
+#' plotViolin(Seurat::pbmc_small, genes = genes, return = "markdown")
 NULL
 
 

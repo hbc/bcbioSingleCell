@@ -45,7 +45,7 @@ Plot Principal Component Analysis (PCA)
 }
 \examples{
 # seurat ====
-plotPCA(pbmc_small)
+plotPCA(Seurat::pbmc_small)
 }
 \seealso{
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},

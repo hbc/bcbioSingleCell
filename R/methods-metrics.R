@@ -26,7 +26,7 @@
 #'
 #' # seurat ====
 #' metrics(seurat_small) %>% glimpse()
-#' metrics(pbmc_small) %>% glimpse()
+#' metrics(Seurat::pbmc_small) %>% glimpse()
 NULL
 
 

@@ -38,7 +38,7 @@ plotUMIsVsGenes(bcb_small)
 
 # seurat ====
 plotUMIsVsGenes(seurat_small)
-plotUMIsVsGenes(pbmc_small)
+plotUMIsVsGenes(Seurat::pbmc_small)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

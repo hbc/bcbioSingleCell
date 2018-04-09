@@ -53,7 +53,7 @@ Plot Feature t-SNE
 }
 \examples{
 # seurat ====
-plotFeatureTSNE(pbmc_small, features = "PC1")
+plotFeatureTSNE(Seurat::pbmc_small, features = "PC1")
 }
 \seealso{
 \code{\link[Seurat:FeaturePlot]{Seurat::FeaturePlot()}}.

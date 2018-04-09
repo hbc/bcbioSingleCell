@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' # seurat ====
-#' fetchPCAData(pbmc_small) %>% glimpse()
+#' fetchPCAData(Seurat::pbmc_small) %>% glimpse()
 NULL
 
 

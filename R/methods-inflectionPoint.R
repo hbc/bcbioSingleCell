@@ -15,7 +15,7 @@
 #'
 #' # seurat ====
 #' inflectionPoint(seurat_small)
-#' inflectionPoint(pbmc_small)
+#' inflectionPoint(Seurat::pbmc_small)
 NULL
 
 

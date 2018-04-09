@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' # seurat ====
-#' fetchTSNEData(pbmc_small) %>% glimpse()
+#' fetchTSNEData(Seurat::pbmc_small) %>% glimpse()
 NULL
 
 

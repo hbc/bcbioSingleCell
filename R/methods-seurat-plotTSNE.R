@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' # seurat ====
-#' plotTSNE(pbmc_small)
+#' plotTSNE(Seurat::pbmc_small)
 NULL
 
 

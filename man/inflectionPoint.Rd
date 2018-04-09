@@ -30,7 +30,7 @@ inflectionPoint(cellranger_small)
 
 # seurat ====
 inflectionPoint(seurat_small)
-inflectionPoint(pbmc_small)
+inflectionPoint(Seurat::pbmc_small)
 }
 \seealso{
 Modified version of \code{dropbead::estimateCellNumber()}.

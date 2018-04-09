@@ -12,26 +12,12 @@
 #' # bcbioSingleCell ====
 #' plotMitoVsCoding(bcb_small)
 #'
+#' # SingleCellExperiment ====
+#' plotMitoVsCoding(cellranger_small)
+#'
 #' # seurat ====
 #' plotMitoVsCoding(seurat_small)
 NULL
-
-
-
-# Constructors =================================================================
-.plotMitoVsCoding <- function(
-    object,
-    interestingGroups,
-    color = scale_color_viridis(discrete = TRUE)
-) {
-    .plotQCScatterplot(
-        object = object,
-        xCol = "nCoding",
-        yCol = "nMito",
-        xTrans = "log2",
-        yTrans = "log2"
-    )
-}
 
 
 
@@ -40,16 +26,18 @@ NULL
 #' @export
 setMethod(
     "plotMitoVsCoding",
-    signature("bcbioSingleCell"),
-    .plotMitoVsCoding
-)
-
-
-
-#' @rdname plotMitoVsCoding
-#' @export
-setMethod(
-    "plotMitoVsCoding",
-    signature("seurat"),
-    .plotMitoVsCoding
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        interestingGroups,
+        color = scale_color_viridis(discrete = TRUE)
+    ) {
+        .plotQCScatterplot(
+            object = object,
+            xCol = "nCoding",
+            yCol = "nMito",
+            xTrans = "log2",
+            yTrans = "log2"
+        )
+    }
 )

@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' # seurat ====
-#' plotFeatureTSNE(pbmc_small, features = "PC1")
+#' plotFeatureTSNE(Seurat::pbmc_small, features = "PC1")
 NULL
 
 

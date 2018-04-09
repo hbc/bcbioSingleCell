@@ -14,7 +14,7 @@
 #'
 #' # seurat ====
 #' plotUMIsPerCell(seurat_small)
-#' plotUMIsPerCell(pbmc_small)
+#' plotUMIsPerCell(Seurat::pbmc_small)
 NULL
 
 

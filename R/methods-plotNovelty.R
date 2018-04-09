@@ -14,31 +14,12 @@
 #' # bcbioSingleCell ====
 #' plotNovelty(bcb_small)
 #'
+#' # SingleCellExperiment ====
+#' plotNovelty(cellranger_small)
+#'
 #' # seurat ====
 #' plotNovelty(seurat_small)
 NULL
-
-
-
-# Constructors =================================================================
-.plotNovelty <- function(
-    object,
-    geom = c("violin", "boxplot", "histogram", "ridgeline"),
-    interestingGroups,
-    min,
-    fill = scale_fill_viridis(discrete = TRUE)
-) {
-    geom <- match.arg(geom)
-    .plotQCMetric(
-        object = object,
-        metricCol = "log10GenesPerUMI",
-        geom = geom,
-        interestingGroups = interestingGroups,
-        min = min,
-        trans = "sqrt",
-        fill = fill
-    )
-}
 
 
 
@@ -47,8 +28,25 @@ NULL
 #' @export
 setMethod(
     "plotNovelty",
-    signature("bcbioSingleCell"),
-    .plotNovelty
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        geom = c("violin", "boxplot", "histogram", "ridgeline"),
+        interestingGroups,
+        min,
+        fill = scale_fill_viridis(discrete = TRUE)
+    ) {
+        geom <- match.arg(geom)
+        .plotQCMetric(
+            object = object,
+            metricCol = "log10GenesPerUMI",
+            geom = geom,
+            interestingGroups = interestingGroups,
+            min = min,
+            trans = "sqrt",
+            fill = fill
+        )
+    }
 )
 
 
@@ -58,5 +56,5 @@ setMethod(
 setMethod(
     "plotNovelty",
     signature("seurat"),
-    .plotNovelty
+    getMethod("plotNovelty", "SingleCellExperiment")
 )

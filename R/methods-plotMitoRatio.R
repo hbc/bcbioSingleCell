@@ -12,31 +12,12 @@
 #' # bcbioSingleCell ====
 #' plotMitoRatio(bcb_small)
 #'
+#' # SingleCellExperiment ====
+#' plotMitoRatio(cellranger_small)
+#'
 #' # seurat ====
 #' plotMitoRatio(seurat_small)
 NULL
-
-
-
-# Constructors =================================================================
-.plotMitoRatio <- function(
-    object,
-    geom = c("violin", "boxplot", "histogram", "ridgeline"),
-    interestingGroups,
-    max,
-    fill = scale_fill_viridis(discrete = TRUE)
-) {
-    geom <- match.arg(geom)
-    .plotQCMetric(
-        object = object,
-        metricCol = "mitoRatio",
-        geom = geom,
-        interestingGroups = interestingGroups,
-        max = max,
-        trans = "identity",
-        fill = fill
-    )
-}
 
 
 
@@ -45,16 +26,23 @@ NULL
 #' @export
 setMethod(
     "plotMitoRatio",
-    signature("bcbioSingleCell"),
-    .plotMitoRatio
-)
-
-
-
-#' @rdname plotMitoRatio
-#' @export
-setMethod(
-    "plotMitoRatio",
-    signature("seurat"),
-    .plotMitoRatio
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        geom = c("violin", "boxplot", "histogram", "ridgeline"),
+        interestingGroups,
+        max,
+        fill = scale_fill_viridis(discrete = TRUE)
+    ) {
+        geom <- match.arg(geom)
+        .plotQCMetric(
+            object = object,
+            metricCol = "mitoRatio",
+            geom = geom,
+            interestingGroups = interestingGroups,
+            max = max,
+            trans = "identity",
+            fill = fill
+        )
+    }
 )
