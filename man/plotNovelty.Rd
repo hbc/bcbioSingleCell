@@ -7,17 +7,12 @@
 \alias{plotNovelty}
 \alias{plotNovelty,SingleCellExperiment-method}
 \alias{plotNovelty,seurat-method}
-\alias{plotNovelty,seurat-method}
 \title{Plot Novelty Score}
 \usage{
 plotNovelty(object, ...)
 
 \S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("violin",
   "boxplot", "histogram", "ridgeline"), interestingGroups, min,
-  fill = scale_fill_viridis(discrete = TRUE))
-
-\S4method{plotNovelty}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), interestingGroups, min,
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotNovelty}{seurat}(object, geom = c("violin", "boxplot",
