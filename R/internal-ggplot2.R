@@ -37,16 +37,18 @@ kneeColor <- "orange"
 
 # Internal functions ===========================================================
 .qcCutoffLine <- function(
-    xintercept,
-    yintercept,
+    xintercept = NULL,
+    yintercept = NULL,
     alpha = qcLineAlpha,
     color = qcCutoffColor,
     linetype = qcLineType,
     size = qcLineSize
 ) {
-    if (!missing(xintercept) && !missing(yintercept)) {
-        stop("Specify only `xintercept` or `intercept`")
-    } else if (!missing(xintercept)) {
+    if (is.null(xintercept) && is.null(yintercept)) {
+        stop("`xintercept` and `yintercept` are both NULL")
+    } else if (is.numeric(xintercept) && is.numeric(yintercept)) {
+        stop("Specifcly only `xintercept` or `yintercept` as numeric")
+    } else if (is.numeric(xintercept)) {
         geom_vline(
             xintercept = xintercept,
             alpha = alpha,
@@ -54,7 +56,7 @@ kneeColor <- "orange"
             linetype = linetype,
             size = size
         )
-    } else if (!missing(yintercept)) {
+    } else if (is.numeric(yintercept)) {
         geom_hline(
             yintercept = yintercept,
             alpha = alpha,
@@ -62,7 +64,5 @@ kneeColor <- "orange"
             linetype = linetype,
             size = size
         )
-    } else {
-        stop("`xintercept` or `yintercept` value required")
     }
 }
