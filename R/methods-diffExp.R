@@ -152,7 +152,7 @@ setMethod(
         dge[["weights"]] <- weights
         dge <- edgeR::estimateDisp(dge, design = design)
         fit <- edgeR::glmFit(dge, design = design)
-        lrt <- edgeR::glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
+        lrt <- zingeR::glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
         lrt
     }
 )
