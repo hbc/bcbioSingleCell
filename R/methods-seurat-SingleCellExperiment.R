@@ -396,6 +396,9 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
+        if (!is.character(interestingGroups)) {
+            interestingGroups <- "sampleName"
+        }
         return <- match.arg(return)
         data <- metadata(object)[["sampleData"]]
         if (is.null(data)) {

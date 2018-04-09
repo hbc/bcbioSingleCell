@@ -38,6 +38,10 @@ NULL
     if (has_rownames(data)) {
         data <- rownames_to_column(data)
     }
+    assert_is_subset("sampleName", colnames(data))
+    if ("interestingGroups" %in% colnames(data)) {
+        data[["interestingGroups"]] <- data[["sampleName"]]
+    }
     data %>%
         # Enforce count columns as integers (e.g. `nUMI`)
         mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%

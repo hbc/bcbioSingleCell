@@ -46,12 +46,13 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
+        if (!is.character(interestingGroups)) {
+            interestingGroups <- "sampleName"
+        }
         return <- match.arg(return)
         data <- metadata(object)[["sampleData"]]
         assert_is_any_of(data, c("DataFrame", "data.frame"))
-        if (is.character(interestingGroups)) {
-            data <- uniteInterestingGroups(data, interestingGroups)
-        }
+        data <- uniteInterestingGroups(data, interestingGroups)
         data <- sanitizeSampleData(data)
         assertHasRownames(data)
         if (return == "kable") {
