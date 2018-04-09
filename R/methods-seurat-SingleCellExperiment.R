@@ -432,7 +432,9 @@ setMethod(
             rownames(data) <- data[["sampleID"]]
             data
         }
-        data <- uniteInterestingGroups(data, interestingGroups)
+        if (is.character(interestingGroups)) {
+            data <- uniteInterestingGroups(data, interestingGroups)
+        }
         data <- sanitizeSampleData(data)
         assertHasRownames(data)
         as(data, return)
