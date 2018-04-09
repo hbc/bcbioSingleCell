@@ -92,6 +92,9 @@ setMethod(
         minCells = 10L,
         maxit = 1000L
     ) {
+        requireNamespace("zingeR")
+        requireNamespace("edgeR")
+
         assert_is_character(numerator)
         assert_is_character(denominator)
         assert_are_disjoint_sets(numerator, denominator)
