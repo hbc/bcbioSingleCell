@@ -35,21 +35,6 @@ setAs(
 
 
 #' @rdname coerce
-#' @name coerce-bcbioSingleCell-SummarizedExperiment
-setAs(
-    from = "bcbioSingleCell",
-    to = "SummarizedExperiment",
-    function(from) {
-        # Otherwise rowData will be NULL
-        rse <- as(from, "RangedSummarizedExperiment")
-        se <- as(rse, "SummarizedExperiment")
-        se
-    }
-)
-
-
-
-#' @rdname coerce
 #' @name coerce-SingleCellExperiment-seurat
 #' @section bcbioSingleCell to seurat:
 #' Interally [Seurat::CreateSeuratObject()] is called without applying any
@@ -108,5 +93,20 @@ setAs(
         slot(seurat, "misc")[["bcbio"]] <- bcbio
 
         seurat
+    }
+)
+
+
+
+#' @rdname coerce
+#' @name coerce-bcbioSingleCell-SummarizedExperiment
+setAs(
+    from = "bcbioSingleCell",
+    to = "SummarizedExperiment",
+    function(from) {
+        # Otherwise rowData will be NULL
+        rse <- as(from, "RangedSummarizedExperiment")
+        se <- as(rse, "SummarizedExperiment")
+        se
     }
 )
