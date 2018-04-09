@@ -70,66 +70,6 @@ setMethod(
 
 
 
-#' @rdname sampleData
-#' @export
-setMethod(
-    "sampleData",
-    signature("seurat"),
-    function(
-        object,
-        interestingGroups,
-        return = c("DataFrame", "data.frame")
-    ) {
-        validObject(object)
-        stopifnot(.hasSlot(object, "version"))
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        return <- match.arg(return)
-        data <- metadata(object)[["sampleData"]]
-        if (is.null(data)) {
-            data <- slot(object, "meta.data")
-            assert_is_data.frame(data)
-            # Create priority columns from `orig.ident`, if necessary
-            if (!all(bcbioBase::metadataPriorityCols %in% colnames(data))) {
-                missing <- setdiff(
-                    x = bcbioBase::metadataPriorityCols,
-                    y = colnames(data)
-                )
-                for (i in seq_along(missing)) {
-                    data[[missing[[i]]]] <- data[["orig.ident"]]
-                }
-            }
-            blacklist <- paste(
-                c(
-                    "cellularBarcode",
-                    "orig.ident",
-                    "Phase",
-                    "^res\\.[0-9]"
-                ),
-                collapse = "|"
-            )
-            data <- data %>%
-                remove_rownames() %>%
-                .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
-                mutate_if(is.character, as.factor) %>%
-                select_if(is.factor) %>%
-                mutate_all(droplevels) %>%
-                unique() %>%
-                camel()
-            assert_has_no_duplicates(data[["sampleName"]])
-            rownames(data) <- data[["sampleID"]]
-            data
-        }
-        data <- uniteInterestingGroups(data, interestingGroups)
-        data <- sanitizeSampleData(data)
-        assertHasRownames(data)
-        as(data, return)
-    }
-)
-
-
-
 # Assignment methods ===========================================================
 #' @rdname sampleData
 #' @export
@@ -140,24 +80,11 @@ setMethod(
         value = "ANY"
     ),
     function(object, value) {
-        # TODO Switch to storing as DataFrame class internally
+        # TODO Switch to storing as DataFrame
         value <- as.data.frame(value)
         # Ensure all columns are factors
         value <- sanitizeSampleData(value)
         metadata(object)[["sampleData"]] <- value
         object
     }
-)
-
-
-
-#' @rdname sampleData
-#' @export
-setMethod(
-    "sampleData<-",
-    signature(
-        object = "seurat",
-        value = "ANY"
-    ),
-    getMethod("sampleData<-", "SingleCellExperiment")
 )

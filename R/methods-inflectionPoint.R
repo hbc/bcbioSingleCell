@@ -53,13 +53,3 @@ setMethod(
         totals[which.max(dists)]
     }
 )
-
-
-
-#' @rdname inflectionPoint
-#' @export
-setMethod(
-    "inflectionPoint",
-    signature("seurat"),
-    getMethod("inflectionPoint", "SingleCellExperiment")
-)

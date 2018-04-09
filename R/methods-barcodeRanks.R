@@ -42,7 +42,6 @@ setMethod(
         }
         assertIsAnImplicitInteger(df)
 
-        # Use the raw counts matrix
         counts <- counts(object)
 
         # Calculate the total number of UMIs per cell (nUMI)
