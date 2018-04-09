@@ -68,25 +68,37 @@ setMethod(
             ) +
             expand_limits(y = 0L)
 
+        subtitle <- NULL
+
         if (isTRUE(inflection)) {
-            inflection <- barcodeRanks(object)[["inflection"]]
+            inflectionPoint <- barcodeRanks(object)[["inflection"]]
             p <- p +
                 .qcCutoffLine(
-                    xintercept = inflection,
+                    xintercept = inflectionPoint,
                     color = inflectionColor
-                ) +
-                labs(subtitle = paste("inflection", inflection, sep = " = "))
+                )
+            subtitle <- paste(
+                subtitle,
+                paste("inflection", inflectionPoint, sep = " = "),
+                sep = "\n"
+            )
         }
 
         if (isTRUE(knee)) {
-            knee <- barcodeRanks(object)[["knee"]]
+            kneePoint <- barcodeRanks(object)[["knee"]]
             p <- p +
                 .qcCutoffLine(
-                    xintercept = knee,
-                    color = inflectionColor
-                ) +
-                labs(subtitle = paste("knee", knee, sep = " = "))
+                    xintercept = kneePoint,
+                    color = kneeColor
+                )
+            subtitle <- paste(
+                subtitle,
+                paste("knee", kneePoint, sep = " = "),
+                sep = "\n"
+            )
         }
+
+        p <- p + labs(subtitle = subtitle)
 
         p
     }

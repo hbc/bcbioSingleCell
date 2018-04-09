@@ -30,7 +30,8 @@ qcLineType <- "dashed"
 # Plot label separator
 labelSep <- ": "
 
-inflectionColor <- "orange"
+inflectionColor <- "red"
+kneeColor <- "orange"
 
 
 
