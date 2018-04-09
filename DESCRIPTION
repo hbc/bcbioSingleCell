@@ -46,7 +46,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment,
-    bcbioBase (>= 0.99),
+    bcbioBase (>= 0.2.1),
     Seurat (>= 2.0)
 Imports:
     Biobase,
@@ -57,10 +57,9 @@ Imports:
     S4Vectors,
     SummarizedExperiment,
     assertive,
-    basejump (>= 0.99),
+    basejump (>= 0.5),
     cowplot,
     dplyr (>= 0.7),
-    edgeR (>= 3.20.9),
     ggplot2 (>= 2.2.1),
     ggridges,
     graphics,
@@ -79,11 +78,11 @@ Imports:
     tibble,
     tidyr,
     utils,
-    viridis,
-    zingeR (>= 0.1)
+    viridis
 Suggests:
     BiocStyle,
     DESeq2 (>= 1.19),
+    edgeR (>= 3.20.9),
     googlesheets,
     monocle,
     rmarkdown,
@@ -92,7 +91,8 @@ Suggests:
     sessioninfo,
     testthat,
     tidyverse (>= 1.2),
-    zinbwave
+    zinbwave (>= 1.0),
+    zingeR (>= 0.1)
 biocViews:
     DataImport,
     DataRepresentation,
