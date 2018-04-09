@@ -11,7 +11,8 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param inflectionPoint Attempt to determine and label the inflection point.
+#' @param inflection Label the inflection point.
+#' @param knee Label the knee point.
 #'
 #' @return `ggplot`.
 #'
@@ -36,7 +37,8 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        inflectionPoint = FALSE,
+        inflection = TRUE,
+        knee = TRUE,
         trans = c("identity", "log10", "log2", "sqrt")
     ) {
         validObject(object)
@@ -66,14 +68,24 @@ setMethod(
             ) +
             expand_limits(y = 0L)
 
-        if (isTRUE(inflectionPoint)) {
-            inflection <- inflectionPoint(object)
+        if (isTRUE(inflection)) {
+            inflection <- barcodeRanks(object)[["inflection"]]
             p <- p +
                 .qcCutoffLine(
                     xintercept = inflection,
                     color = inflectionColor
                 ) +
                 labs(subtitle = paste("inflection", inflection, sep = " = "))
+        }
+
+        if (isTRUE(knee)) {
+            knee <- barcodeRanks(object)[["knee"]]
+            p <- p +
+                .qcCutoffLine(
+                    xintercept = knee,
+                    color = inflectionColor
+                ) +
+                labs(subtitle = paste("knee", knee, sep = " = "))
         }
 
         p
