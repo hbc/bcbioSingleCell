@@ -181,6 +181,16 @@ setMethod(
 
 
 
+#' @rdname inflectionPoint
+#' @export
+setMethod(
+    "inflectionPoint",
+    signature("seurat"),
+    getMethod("inflectionPoint", "SingleCellExperiment")
+)
+
+
+
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom bcbioBase interestingGroups
 #' @export
@@ -224,6 +234,32 @@ setMethod(
 
 
 
+#' @rdname metrics
+#' @export
+setMethod(
+    "metrics",
+    signature("seurat"),
+    function(object, ...) {
+        fun <- getMethod("metrics", "SingleCellExperiment")
+        data <- fun(object, ...)
+        # Add ident column
+        data[["ident"]] <- slot(object, "ident")
+        data
+    }
+)
+
+
+
+#' @rdname metricsPerSample
+#' @export
+setMethod(
+    "metricsPerSample",
+    signature("seurat"),
+    getMethod("metricsPerSample", "SingleCellExperiment")
+)
+
+
+
 #' @rdname seurat-SingleCellExperiment
 #' @export
 setMethod(
@@ -240,6 +276,16 @@ setMethod(
     "plotCumulativeUMIsPerCell",
     signature("seurat"),
     getMethod("plotCumulativeUMIsPerCell", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotQuantileHeatmap
+#' @export
+setMethod(
+    "plotQuantileHeatmap",
+    signature("seurat"),
+    getMethod("plotQuantileHeatmap", "SummarizedExperiment")
 )
 
 
