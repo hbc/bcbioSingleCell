@@ -10,7 +10,7 @@
 subsetPerSample(object, ...)
 
 \S4method{subsetPerSample}{bcbioSingleCell}(object, minCells = 200L,
-  envir = parent.frame(), dir = ".")
+  assignAndSave = FALSE, envir = parent.frame(), dir = ".")
 }
 \arguments{
 \item{object}{Object.}
@@ -18,6 +18,8 @@ subsetPerSample(object, ...)
 \item{...}{Additional arguments.}
 
 \item{minCells}{Minimum number of cells required per sample.}
+
+\item{assignAndSave}{Assign the individual datasets}
 
 \item{envir}{Environment where to assign the subsets.}
 

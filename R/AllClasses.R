@@ -56,7 +56,7 @@ setValidity(
             USE.NAMES = TRUE
         )
         if (!all(colDataCheck)) {
-            abort(paste(
+            stop(paste(
                 paste(
                     "Non-numeric colData columns:",
                     toString(names(colDataCheck[!colDataCheck]))
@@ -133,7 +133,7 @@ setValidity(
         ))
         if (!all(classChecks)) {
             print(classChecks)
-            abort(paste(
+            stop(paste(
                 "Metadata class checks failed.",
                 bcbioBase::updateMessage,
                 sep = "\n"

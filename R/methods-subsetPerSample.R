@@ -6,14 +6,28 @@
 #'
 #' @inheritParams general
 #' @param minCells Minimum number of cells required per sample.
-#' @param envir Environment where to assign the subsets.
+#' @param assignAndSave Assign and save the individual datasets.
+#' @param envir Environment where to assign the subsets. Only applicable when
+#'   `assignAndSave = TRUE`.
+#' @param dir Output directory. Only applicable when `assignAndSave = TRUE`.
 #'
-#' @return Named vector of saved `bcbioSingleCell` subset file paths.
+#' @return
+#' - `assignAndSave = FALSE`: Per sample objects in a `list`.
+#' - `assignAndSave = TRUE`: Subset file paths.
 #'
 #' @examples
-#' # bcbioRNASeq ====
-#' # This will save the subsets per sample to disk
-#' subsetPerSample(bcb_small, dir = "subsetPerSample")
+#' # bcbioSingleCell ====
+#' # List mode (default)
+#' list <- subsetPerSample(bcb_small, assignAndSave = FALSE)
+#' names(list)
+#'
+#' # Assign and save mode (useful for large datasets)
+#' subsetPerSample(
+#'     object = bcb_small,
+#'     assignAndSave = TRUE,
+#'     envir = parent.frame(),
+#'     dir = "subsetPerSample"
+#' )
 #' list.files("subsetPerSample")
 #'
 #' # Clean up
@@ -31,6 +45,7 @@ setMethod(
     function(
         object,
         minCells = 200L,
+        assignAndSave = FALSE,
         envir = parent.frame(),
         dir = "."
     ) {
@@ -38,10 +53,10 @@ setMethod(
         assert_all_are_positive(minCells)
         assert_is_environment(envir)
         dir <- initializeDirectory(dir)
-        samples <- sampleData(object) %>%
-            .[, "sampleID", drop = TRUE] %>%
-            as.character()
-        files <- lapply(
+        samples <- levels(cell2sample(object))
+
+        # Return objects or file paths
+        return <- lapply(
             X = samples,
             FUN = function(sampleID) {
                 subset <- selectSamples(object, sampleID = sampleID)
@@ -50,19 +65,30 @@ setMethod(
                     warning(paste(sampleID, "didn't pass minimum cell cutoff"))
                     return(NULL)
                 }
-                assignAndSaveData(
-                    name = sampleID,
-                    object = subset,
-                    dir = dir
-                )
+                if (isTRUE(assignAndSave)) {
+                    assignAndSaveData(
+                        name = sampleID,
+                        object = subset,
+                        dir = dir
+                    )
+                } else {
+                    subset
+                }
             }
         )
-        names(files) <- samples
-        files <- Filter(Negate(is.null), files)
-        names <- names(files)
-        files <- unlist(files)
-        files <- normalizePath(files, winslash = "/", mustWork = TRUE)
-        names(files) <- names
-        files
+        names(return) <- samples
+        return <- Filter(Negate(is.null), return)
+
+        if (isTRUE(assignAndSave)) {
+            # File paths
+            names <- names(return)
+            return <- unlist(return)
+            return <- normalizePath(return, winslash = "/", mustWork = TRUE)
+            names(return) <- names
+            invisible(return)
+        } else {
+            # Individual objects
+            return
+        }
     }
 )
