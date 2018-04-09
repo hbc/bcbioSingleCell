@@ -47,7 +47,7 @@ setMethod(
         data <- metrics %>%
             group_by(!!sym("sampleID")) %>%
             summarize(nCells = n()) %>%
-            left_join(sampleData, by = "sampleID")
+            merge(sampleData, all.x = TRUE)
 
         p <- ggplot(
             data = data,
