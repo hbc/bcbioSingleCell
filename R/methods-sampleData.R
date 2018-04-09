@@ -49,7 +49,9 @@ setMethod(
         return <- match.arg(return)
         data <- metadata(object)[["sampleData"]]
         assert_is_any_of(data, c("DataFrame", "data.frame"))
-        data <- uniteInterestingGroups(data, interestingGroups)
+        if (is.character(interestingGroups)) {
+            data <- uniteInterestingGroups(data, interestingGroups)
+        }
         data <- sanitizeSampleData(data)
         assertHasRownames(data)
         if (return == "kable") {
@@ -57,10 +59,6 @@ setMethod(
             data %>%
                 as.data.frame() %>%
                 .[, setdiff(colnames(.), blacklist), drop = FALSE] %>%
-                # Ensure `sampleName` is first
-                .[, unique(c("sampleName", colnames(.))), drop = FALSE] %>%
-                # Arrange by `sampleName`
-                .[order(.[["sampleName"]]), , drop = FALSE] %>%
                 kable(row.names = FALSE)
         } else {
             as(data, return)
@@ -80,7 +78,6 @@ setMethod(
         value = "ANY"
     ),
     function(object, value) {
-        # TODO Switch to storing as DataFrame
         value <- as.data.frame(value)
         # Ensure all columns are factors
         value <- sanitizeSampleData(value)

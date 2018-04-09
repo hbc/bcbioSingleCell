@@ -38,7 +38,11 @@ setMethod(
         assertIsFillScaleDiscreteOrNULL(fill)
 
         metrics <- metrics(object, interestingGroups)
-        sampleData <- sampleData(object, interestingGroups, return = "data.frame")
+        sampleData <- sampleData(
+            object = object,
+            interestingGroups = interestingGroups,
+            return = "data.frame"
+        )
 
         data <- metrics %>%
             group_by(!!sym("sampleID")) %>%

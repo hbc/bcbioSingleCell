@@ -145,11 +145,10 @@ setMethod(
     "metrics",
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-
-        sampleData <- sampleData(object)
+        sampleData <- sampleData(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         colData <- colData(object)
         assert_are_disjoint_sets(
             x = colnames(sampleData),
@@ -173,10 +172,6 @@ setMethod(
 
         # Ensure the numeric metrics columns appear first
         data <- data[, unique(c(colnames(colData), colnames(data)))]
-
-        if (is.character(interestingGroups)) {
-            data <- uniteInterestingGroups(data, interestingGroups)
-        }
 
         .tidyMetrics(data)
     }
