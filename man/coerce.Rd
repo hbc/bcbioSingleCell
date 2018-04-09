@@ -3,6 +3,7 @@
 \name{coerce}
 \alias{coerce}
 \alias{coerce-SingleCellExperiment-list}
+\alias{coerce-bcbioSingleCell-SummarizedExperiment}
 \alias{coerce-SingleCellExperiment-seurat}
 \title{Coerce Object}
 \value{
