@@ -144,37 +144,39 @@ setMethod(
 setMethod(
     "metrics",
     signature("SingleCellExperiment"),
-    function(
-        object,
-        interestingGroups
-    ) {
+    function(object, interestingGroups) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
+
         sampleData <- sampleData(object)
         colData <- colData(object)
         assert_are_disjoint_sets(
             x = colnames(sampleData),
             y = colnames(colData)
         )
+
         cell2sample <- cell2sample(object)
         assert_is_factor(cell2sample)
+
         sampleID <- DataFrame("sampleID" = cell2sample)
+
         colData <- cbind(colData, sampleID)
         colData[["rowname"]] <- rownames(colData)
+
         data <- merge(
             x = colData,
             y = sampleData,
             by = "sampleID",
             all.x = TRUE
         )
+
         # Ensure the numeric metrics columns appear first
         data <- data[, unique(c(colnames(colData), colnames(data)))]
-        rownames(data) <- data[["rowname"]]
-        data[["rowname"]] <- NULL
-        # Add `interestingGroups` column
-        interestingGroups <- interestingGroups(object)
-        data <- uniteInterestingGroups(data, interestingGroups)
+
+        if (is.character(interestingGroups)) {
+            data <- uniteInterestingGroups(data, interestingGroups)
+        }
 
         .tidyMetrics(data)
     }
