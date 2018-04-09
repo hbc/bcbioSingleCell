@@ -138,11 +138,11 @@ setMethod(
         # zingeR + edgeR analysis
         # Note that TMM needs to be consistently applied for both
         # `calcNormFactors()` and `zeroWeightsLS()`
-        dge <- DGEList(counts, group = group)
-        dge <- calcNormFactors(dge, method = "TMM")
+        dge <- edgeR::DGEList(counts, group = group)
+        dge <- edgeR::calcNormFactors(dge, method = "TMM")
 
         # This is the zingeR step that is computationally expensive
-        weights <- zeroWeightsLS(
+        weights <- zingeR::zeroWeightsLS(
             counts = dge[["counts"]],
             design = design,
             maxit = maxit,
@@ -150,10 +150,9 @@ setMethod(
         )
 
         dge[["weights"]] <- weights
-        dge <- estimateDisp(dge, design = design)
-
-        fit <- glmFit(dge, design = design)
-        lrt <- glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
+        dge <- edgeR::estimateDisp(dge, design = design)
+        fit <- edgeR::glmFit(dge, design = design)
+        lrt <- edgeR::glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
         lrt
     }
 )
