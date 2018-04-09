@@ -50,9 +50,6 @@ Plot the distribution of read counts for all unfiltered cellular barcodes.
 \examples{
 # bcbioSingleCell ====
 plotReadsPerCell(bcb_small)
-
-# SingleCellExperiment ====
-plotReadsPerCell(cellranger_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},

@@ -200,10 +200,11 @@ setMethod(
     function(object) {
         validObject(object)
         x <- metadata(object)[["interestingGroups"]]
-        if (is.null(x)) {
-            x <- "sampleName"
+        if (is.character(x)) {
+            x
+        } else {
+            NULL
         }
-        x
     }
 )
 
@@ -310,6 +311,16 @@ setMethod(
 
 
 
+#' @rdname plotQC
+#' @export
+setMethod(
+    "plotQC",
+    signature("seurat"),
+    getMethod("plotQC", "SingleCellExperiment")
+)
+
+
+
 #' @rdname plotNovelty
 #' @export
 setMethod(
@@ -336,6 +347,26 @@ setMethod(
     "plotReadsPerCell",
     signature("seurat"),
     getMethod("plotReadsPerCell", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotUMIsPerCell
+#' @export
+setMethod(
+    "plotUMIsPerCell",
+    signature("seurat"),
+    getMethod("plotUMIsPerCell", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotUMIsVsGenes
+#' @export
+setMethod(
+    "plotUMIsVsGenes",
+    signature("seurat"),
+    getMethod("plotUMIsVsGenes", "SingleCellExperiment")
 )
 
 

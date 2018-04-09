@@ -16,7 +16,7 @@
 #' plotMitoRatio(cellranger_small)
 #'
 #' # seurat ====
-#' plotMitoRatio(seurat_small)
+#' plotMitoRatio(Seurat::pbmc_small)
 NULL
 
 

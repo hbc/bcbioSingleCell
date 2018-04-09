@@ -36,6 +36,9 @@ plotCellCounts(bcb_small)
 
 # SingleCellExperiment ====
 plotCellCounts(cellranger_small)
+
+# seurat ====
+plotCellCounts(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},

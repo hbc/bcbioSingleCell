@@ -10,27 +10,12 @@
 #' # bcbioSingleCell ====
 #' plotUMIsVsGenes(bcb_small)
 #'
+#' # SingleCellExperiment ====
+#' plotUMIsVsGenes(cellranger_small)
+#'
 #' # seurat ====
-#' plotUMIsVsGenes(seurat_small)
 #' plotUMIsVsGenes(Seurat::pbmc_small)
 NULL
-
-
-
-# Constructors =================================================================
-.plotUMIsVsGenes <- function(
-    object,
-    interestingGroups,
-    color = scale_color_viridis(discrete = TRUE)
-) {
-    .plotQCScatterplot(
-        object = object,
-        xCol = "nUMI",
-        yCol = "nGene",
-        xTrans = "log2",
-        yTrans = "log2"
-    )
-}
 
 
 
@@ -39,16 +24,18 @@ NULL
 #' @export
 setMethod(
     "plotUMIsVsGenes",
-    signature("bcbioSingleCell"),
-    .plotUMIsVsGenes
-)
-
-
-
-#' @rdname plotUMIsVsGenes
-#' @export
-setMethod(
-    "plotUMIsVsGenes",
-    signature("seurat"),
-    .plotUMIsVsGenes
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        interestingGroups,
+        color = scale_color_viridis(discrete = TRUE)
+    ) {
+        .plotQCScatterplot(
+            object = object,
+            xCol = "nUMI",
+            yCol = "nGene",
+            xTrans = "log2",
+            yTrans = "log2"
+        )
+    }
 )

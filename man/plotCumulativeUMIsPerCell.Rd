@@ -43,9 +43,14 @@ These calculates apply to all cellular barcodes in the dataset and are not
 grouped by sample.
 }
 \examples{
-# SingleCellExperiment ====
+# bcbioSingleCell ====
 plotCumulativeUMIsPerCell(bcb_small)
+
+# SingleCellExperiment ====
 plotCumulativeUMIsPerCell(cellranger_small)
+
+# seurat ====
+plotCumulativeUMIsPerCell(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},

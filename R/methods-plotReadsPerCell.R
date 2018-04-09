@@ -16,6 +16,9 @@
 #'
 #' # SingleCellExperiment ====
 #' plotReadsPerCell(cellranger_small)
+#'
+#' # seurat ====
+#' plotReadsPerCell(Seurat::pbmc_small)
 NULL
 
 

@@ -18,7 +18,7 @@
 #' plotNovelty(cellranger_small)
 #'
 #' # seurat ====
-#' plotNovelty(seurat_small)
+#' plotNovelty(Seurat::pbmc_small)
 NULL
 
 

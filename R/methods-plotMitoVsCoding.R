@@ -16,7 +16,7 @@
 #' plotMitoVsCoding(cellranger_small)
 #'
 #' # seurat ====
-#' plotMitoVsCoding(seurat_small)
+#' plotMitoVsCoding(Seurat::pbmc_small)
 NULL
 
 

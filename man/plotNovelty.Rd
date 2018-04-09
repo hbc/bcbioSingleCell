@@ -50,7 +50,7 @@ plotNovelty(bcb_small)
 plotNovelty(cellranger_small)
 
 # seurat ====
-plotNovelty(seurat_small)
+plotNovelty(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},

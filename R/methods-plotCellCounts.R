@@ -14,6 +14,9 @@
 #'
 #' # SingleCellExperiment ====
 #' plotCellCounts(cellranger_small)
+#'
+#' # seurat ====
+#' plotCellCounts(Seurat::pbmc_small)
 NULL
 
 

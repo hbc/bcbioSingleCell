@@ -16,9 +16,14 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
+#' # bcbioSingleCell ====
 #' plotCumulativeUMIsPerCell(bcb_small)
+#'
+#' # SingleCellExperiment ====
 #' plotCumulativeUMIsPerCell(cellranger_small)
+#'
+#' # seurat ====
+#' plotCumulativeUMIsPerCell(Seurat::pbmc_small)
 NULL
 
 

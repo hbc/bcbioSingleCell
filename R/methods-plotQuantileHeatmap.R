@@ -28,7 +28,7 @@
 #'
 #' # seurat ====
 #' plotQuantileHeatmap(
-#'     object = seurat_small,
+#'     object = Seurat::pbmc_small,
 #'     showColnames = FALSE,
 #'     showRownames = FALSE
 #' )

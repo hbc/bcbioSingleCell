@@ -12,34 +12,12 @@
 #' # bcbioSingleCell ====
 #' plotUMIsPerCell(bcb_small)
 #'
+#' # SingleCellExperiment ====
+#' plotUMIsPerCell(cellranger_small)
+#'
 #' # seurat ====
-#' plotUMIsPerCell(seurat_small)
 #' plotUMIsPerCell(Seurat::pbmc_small)
 NULL
-
-
-
-# Constructors =================================================================
-.plotUMIsPerCell <- function(
-    object,
-    geom = c("ecdf", "histogram", "boxplot", "ridgeline", "violin"),
-    interestingGroups,
-    min,
-    trans = "log10",
-    color = scale_color_viridis(discrete = TRUE),
-    fill = scale_fill_viridis(discrete = TRUE)
-) {
-    geom <- match.arg(geom)
-    .plotQCMetric(
-        object = object,
-        metricCol = "nUMI",
-        geom = geom,
-        interestingGroups = interestingGroups,
-        min = min,
-        trans = trans,
-        fill = fill
-    )
-}
 
 
 
@@ -48,16 +26,25 @@ NULL
 #' @export
 setMethod(
     "plotUMIsPerCell",
-    signature("bcbioSingleCell"),
-    .plotUMIsPerCell
-)
-
-
-
-#' @rdname plotUMIsPerCell
-#' @export
-setMethod(
-    "plotUMIsPerCell",
-    signature("seurat"),
-    .plotUMIsPerCell
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        geom = c("ecdf", "histogram", "boxplot", "ridgeline", "violin"),
+        interestingGroups,
+        min,
+        trans = "log10",
+        color = scale_color_viridis(discrete = TRUE),
+        fill = scale_fill_viridis(discrete = TRUE)
+    ) {
+        geom <- match.arg(geom)
+        .plotQCMetric(
+            object = object,
+            metricCol = "nUMI",
+            geom = geom,
+            interestingGroups = interestingGroups,
+            min = min,
+            trans = trans,
+            fill = fill
+        )
+    }
 )

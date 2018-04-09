@@ -52,7 +52,7 @@ plotGenesPerCell(bcb_small)
 plotGenesPerCell(cellranger_small)
 
 # seurat ====
-plotGenesPerCell(seurat_small)
+plotGenesPerCell(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},

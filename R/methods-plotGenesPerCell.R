@@ -16,7 +16,7 @@
 #' plotGenesPerCell(cellranger_small)
 #'
 #' # seurat ====
-#' plotGenesPerCell(seurat_small)
+#' plotGenesPerCell(Seurat::pbmc_small)
 NULL
 
 
