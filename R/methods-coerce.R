@@ -74,27 +74,24 @@ setAs(
         from <- .applyFilterCutoffs(from)
 
         # Prepare counts matrix with gene symbols as rownames
-        rawData <- assay(from)
+        counts <- counts(from)
         g2s <- gene2symbol(from)
         assertIsGene2symbol(g2s)
         rownames <- make.names(g2s[["geneName"]], unique = TRUE)
         stopifnot(!any(duplicated(rownames)))
         names(rownames) <- g2s[["geneID"]]
-        rownames(rawData) <- rownames
-
-        # Prepare metadata data.frame
-        metaData <- as.data.frame(slot(from, "colData"))
+        rownames(counts) <- rownames
 
         # New seurat object
         seurat <- Seurat::CreateSeuratObject(
-            raw.data = rawData,
+            raw.data = counts,
             project = "bcbioSingleCell",
             # Already applied filtering cutoffs for cells and genes
             min.cells = 0L,
             min.genes = 0L,
             # Default for UMI datasets
             is.expr = 0L,
-            meta.data = metaData
+            meta.data = metrics(from)
         )
 
         # Check that the dimensions match exactly
