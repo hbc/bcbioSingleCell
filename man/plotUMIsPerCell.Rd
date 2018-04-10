@@ -12,12 +12,14 @@
 plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
-  "histogram", "boxplot", "ridgeline", "violin"), interestingGroups, min,
+  "histogram", "ridgeline", "boxplot", "violin"), interestingGroups, min,
+  point = c("knee", "inflection"), pointsPerSample = TRUE,
   trans = "log10", color = scale_color_viridis(discrete = TRUE),
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "histogram",
-  "boxplot", "ridgeline", "violin"), interestingGroups, min, trans = "log10",
+  "ridgeline", "boxplot", "violin"), interestingGroups, min, point = c("knee",
+  "inflection"), pointsPerSample = TRUE, trans = "log10",
   color = scale_color_viridis(discrete = TRUE),
   fill = scale_fill_viridis(discrete = TRUE))
 }
@@ -33,6 +35,12 @@ first argument in the vector.}
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{min}{Recommended minimum value cutoff.}
+
+\item{point}{Label either the "\code{knee}" or "\code{inflection}" point.}
+
+\item{pointsPerSample}{Calculate the barcode ranks individually per sample.
+Generally recommended unless there's a reason to use a single cutoff point
+across all samples in the analysis.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
@@ -57,7 +65,6 @@ plotUMIsPerCell(Seurat::pbmc_small)
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
