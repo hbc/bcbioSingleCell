@@ -67,7 +67,7 @@
             scale_y_continuous(trans = trans)
     } else if (geom == "ecdf") {
         p <- p +
-            stat_ecdf(geom = "step") +
+            stat_ecdf(geom = "step", size = 1L) +
             scale_x_continuous(trans = trans) +
             labs(y = "frequency")
     } else if (geom == "histogram") {

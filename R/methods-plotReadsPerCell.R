@@ -260,9 +260,9 @@ NULL
             color = "interestingGroups"
         )
     ) +
-        geom_line(
+        geom_step(
             alpha = qcPlotAlpha,
-            size = 1.5
+            size = 1L
         ) +
         labs(
             x = "log10 reads per cell",
