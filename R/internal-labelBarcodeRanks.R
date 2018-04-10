@@ -5,7 +5,9 @@
     point = c("knee", "inflection")
 ) {
     point <- match.arg(point)
-
+    ranks <- barcodeRanks(object)
+    inflection <- ranks[["inflection"]]
+    knee <- ranks[["knee"]]
 
     if (point == "inflection") {
         if (geom %in% c("boxplot", "violin")) {
