@@ -15,18 +15,6 @@
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
-    if (missing(min)) {
-        min <- metadata(object)[["filterParams"]][["minGenes"]]
-        if (!is.numeric(min)) {
-            min <- 0L
-        }
-    }
-    if (missing(max)) {
-        max <- metadata(object)[["filterParams"]][["maxGenes"]]
-        if (!is.numeric(max)) {
-            max <- Inf
-        }
-    }
     assert_all_are_non_negative(c(min, max))
     # Support for per sample filtering cutoffs
     min <- min(min)
