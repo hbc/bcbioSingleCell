@@ -58,10 +58,10 @@ setMethod(
         object,
         minUMIs = 1000L,
         maxUMIs = Inf,
-        minGenes = 500L,
+        minGenes = 100L,
         maxGenes = Inf,
         maxMitoRatio = 0.1,
-        minNovelty = 0.75,
+        minNovelty = 0.7,
         minCellsPerGene = 3L
     ) {
         validObject(object)
