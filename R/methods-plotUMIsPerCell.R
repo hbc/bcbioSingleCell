@@ -47,7 +47,7 @@ setMethod(
     ) {
         geom <- match.arg(geom)
         assert_is_a_bool(barcodeRanks)
-        assert_is_a_bool(pointsPerSample)
+        assert_is_a_bool(ranksPerSample)
         labelPoint <- match.arg(labelPoint)
 
         p <- .plotQCMetric(
