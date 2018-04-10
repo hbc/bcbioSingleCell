@@ -163,17 +163,6 @@ setGeneric(
 
 
 
-#' @rdname plotCumulativeUMIsPerCell
-#' @export
-setGeneric(
-    "plotCumulativeUMIsPerCell",
-    function(object, ...) {
-        standardGeneric("plotCumulativeUMIsPerCell")
-    }
-)
-
-
-
 #' @rdname plotFeatureTSNE
 #' @export
 setGeneric(
