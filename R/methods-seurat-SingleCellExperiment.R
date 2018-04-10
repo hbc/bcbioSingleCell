@@ -235,22 +235,6 @@ setMethod(
 
 
 
-#' @rdname metrics
-#' @export
-setMethod(
-    "metrics",
-    signature("seurat"),
-    function(object, ...) {
-        fun <- getMethod("metrics", "SingleCellExperiment")
-        data <- fun(object, ...)
-        # Add ident column
-        data[["ident"]] <- slot(object, "ident")
-        data
-    }
-)
-
-
-
 #' @rdname metricsPerSample
 #' @export
 setMethod(

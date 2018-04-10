@@ -154,6 +154,10 @@ setMethod(
             interestingGroups = interestingGroups
         )
         colData <- colData(object)
+        # Drop any duplicate metadata columns from colData, if necessary.
+        # This step was added so we can slot rich metadata in seurat objects
+        # inside `object@meta.data`, otherwise this line can be removed.
+        colData <- colData[setdiff(colnames(colData), colnames(sampleData))]
         assert_are_disjoint_sets(
             x = colnames(sampleData),
             y = colnames(colData)
@@ -178,5 +182,21 @@ setMethod(
         data <- data[, unique(c(colnames(colData), colnames(data)))]
 
         .tidyMetrics(data)
+    }
+)
+
+
+
+#' @rdname metrics
+#' @export
+setMethod(
+    "metrics",
+    signature("seurat"),
+    function(object, ...) {
+        fun <- getMethod("metrics", "SingleCellExperiment")
+        data <- fun(object, ...)
+        # Add ident column
+        data[["ident"]] <- slot(object, "ident")
+        data
     }
 )
