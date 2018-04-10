@@ -36,8 +36,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        inflection = TRUE,
-        knee = TRUE,
+        point = c("knee", "inflection"),
         trans = c("identity", "log10", "log2", "sqrt")
     ) {
         validObject(object)
@@ -72,8 +71,7 @@ setMethod(
             p = p,
             object = object,
             geom = geom,
-            inflection = inflection,
-            knee = knee
+            point = point
         )
 
         p
