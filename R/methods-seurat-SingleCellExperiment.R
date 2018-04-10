@@ -271,16 +271,6 @@ setMethod(
 
 
 
-#' @rdname plotCumulativeUMIsPerCell
-#' @export
-setMethod(
-    "plotCumulativeUMIsPerCell",
-    signature("seurat"),
-    getMethod("plotCumulativeUMIsPerCell", "SingleCellExperiment")
-)
-
-
-
 #' @rdname plotGenesPerCell
 #' @export
 setMethod(
