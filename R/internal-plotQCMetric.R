@@ -72,7 +72,10 @@
             labs(y = "frequency")
     } else if (geom == "histogram") {
         p <- p +
-            geom_histogram(bins = bins) +
+            geom_histogram(
+                bins = bins,
+                color = FALSE
+            ) +
             scale_x_continuous(trans = trans) +
             scale_y_continuous(trans = trans)
     } else if (geom == "ridgeline") {
