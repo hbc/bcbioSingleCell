@@ -24,7 +24,7 @@ NULL
     col <- "nUMI"
     metrics <- metrics(object)
     if (!col %in% colnames(metrics)) {
-        warn(paste0("`", col, "` column missing from metrics"))
+        warning(paste0("`", col, "` column missing from metrics"))
         return(NULL)
     }
     metrics %>%

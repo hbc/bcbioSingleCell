@@ -67,8 +67,8 @@ setMethod(
         assert_has_rows(object)
         assert_is_a_bool(prefilter)
 
-        inform("Calculating cellular barcode metrics")
-        inform(paste(ncol(object), "cells detected"))
+        message("Calculating cellular barcode metrics")
+        message(paste(ncol(object), "cells detected"))
 
         if (!is.null(rowData)) {
             assertHasRownames(rowData)
@@ -85,12 +85,12 @@ setMethod(
                 .[.[["broadClass"]] == "coding", "geneID", drop = TRUE] %>%
                 na.omit()
             assert_all_are_non_missing_nor_empty_character(codingGenes)
-            inform(paste(length(codingGenes), "coding genes detected"))
+            message(paste(length(codingGenes), "coding genes detected"))
             mitoGenes <- rowData %>%
                 .[.[["broadClass"]] == "mito", "geneID", drop = TRUE] %>%
                 na.omit()
             assert_all_are_non_missing_nor_empty_character(mitoGenes)
-            inform(paste(length(mitoGenes), "mitochondrial genes detected"))
+            message(paste(length(mitoGenes), "mitochondrial genes detected"))
         } else {
             codingGenes <- character()
             mitoGenes <- character()
@@ -121,7 +121,7 @@ setMethod(
                 .[.[["nUMI"]] > 0L, , drop = FALSE] %>%
                 .[.[["nGene"]] > 0L, , drop = FALSE] %>%
                 .[!is.na(.[["log10GenesPerUMI"]]), , drop = FALSE]
-            inform(paste(
+            message(paste(
                 nrow(data), "cellular barcodes passed pre-filtering",
                 paste0("(", percent(nrow(data) / ncol(object)), ")")
             ))

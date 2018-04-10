@@ -57,7 +57,7 @@ loadCellRanger <- function(
     # Legacy arguments =========================================================
     # annotable
     if ("annotable" %in% names(call)) {
-        abort("`annotable` argument is defunct")
+        stop("`annotable` argument is defunct")
     }
     dots <- Filter(Negate(is.null), dots)
 
@@ -76,11 +76,11 @@ loadCellRanger <- function(
 
     # Subset sample directories by metadata ====================================
     if (nrow(sampleData) < length(sampleDirs)) {
-        inform("Loading a subset of samples, defined by the metadata file")
+        message("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
         sampleDirs <- sampleDirs %>%
             .[names(sampleDirs) %in% rownames(sampleData)]
-        inform(paste(length(sampleDirs), "samples matched by metadata"))
+        message(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
     }
@@ -107,7 +107,7 @@ loadCellRanger <- function(
         as.integer()
     assert_is_an_integer(ensemblRelease)
     assert_all_are_positive(ensemblRelease)
-    inform(paste(
+    message(paste(
         paste("Organism:", deparse(organism)),
         paste("Genome build:", deparse(genomeBuild)),
         paste("Ensembl release:", deparse(ensemblRelease)),
@@ -143,7 +143,7 @@ loadCellRanger <- function(
     rownames(rowData) <- names(rowRanges)
 
     # Counts ===================================================================
-    inform("Reading counts at gene level")
+    message("Reading counts at gene level")
     sparseCountsList <- .sparseCountsList(
         sampleDirs = sampleDirs,
         pipeline = pipeline,
@@ -168,7 +168,7 @@ loadCellRanger <- function(
     # number (e.g. `-2$`, which we're sanitizing to `_2$`).
     if (any(grepl(x = colnames(counts), pattern = "_2$"))) {
         if (!"index" %in% colnames(sampleData)) {
-            abort(paste(
+            stop(paste(
                 "`index` column must be defined using",
                 "`sampleMetadataFile` for multiplexed samples"
             ))

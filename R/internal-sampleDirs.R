@@ -21,7 +21,7 @@
     if (pipeline == "bcbio") {
         sampleDirs <- sampleDirs(uploadDir)
     } else if (pipeline == "cellranger") {
-        inform(paste(
+        message(paste(
             "CellRanger output directory structure:",
             file.path(
                 "<uploadDir>",
@@ -58,7 +58,7 @@
 
         # Check to ensure that matrices match standardized cellranger export
         if (!length(matrixFiles)) {
-            abort("Failed to detect any sample directories")
+            stop("Failed to detect any sample directories")
         }
 
         # Sample directories nest the matrix files 4 levels deep
@@ -69,7 +69,7 @@
             dirname()
         names(sampleDirs) <- makeNames(basename(sampleDirs), unique = TRUE)
 
-        inform(paste(length(sampleDirs), "samples detected"))
+        message(paste(length(sampleDirs), "samples detected"))
     }
 
     sampleDirs

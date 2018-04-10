@@ -77,7 +77,7 @@ setMethod(
     ),
     function(x, value) {
         if (!is.list(value)) {
-            abort("replacement 'metadata' value must be a list")
+            stop("replacement 'metadata' value must be a list")
         }
         if (!length(value)) {
             names(value) <- NULL
@@ -225,7 +225,7 @@ setMethod(
             interestingGroups = value
         )
         if (is.null(metadata(object))) {
-            abort("object was not created with bcbioSingleCell")
+            stop("object was not created with bcbioSingleCell")
         }
         metadata(object)[["interestingGroups"]] <- value
         validObject(object)
@@ -267,16 +267,6 @@ setMethod(
     "plotCellCounts",
     signature("seurat"),
     getMethod("plotCellCounts", "SingleCellExperiment")
-)
-
-
-
-#' @rdname plotCumulativeUMIsPerCell
-#' @export
-setMethod(
-    "plotCumulativeUMIsPerCell",
-    signature("seurat"),
-    getMethod("plotCumulativeUMIsPerCell", "SingleCellExperiment")
 )
 
 

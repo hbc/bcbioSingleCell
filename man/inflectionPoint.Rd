@@ -36,7 +36,6 @@ inflectionPoint(Seurat::pbmc_small)
 Modified version of \code{dropbead::estimateCellNumber()}.
 
 Other Quality Control Functions: \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},

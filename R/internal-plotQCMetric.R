@@ -36,7 +36,7 @@
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
     if (!metricCol %in% colnames(metrics)) {
-        warn(paste(
+        warning(paste(
             deparse(substitute(object)),
             "does not contain", metricCol, "column in `metrics()`"
         ))
@@ -67,7 +67,7 @@
             scale_y_continuous(trans = trans)
     } else if (geom == "ecdf") {
         p <- p +
-            stat_ecdf(geom = "step") +
+            stat_ecdf(geom = "step", size = 1L) +
             scale_x_continuous(trans = trans) +
             labs(y = "frequency")
     } else if (geom == "histogram") {
@@ -182,7 +182,7 @@
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
     if (!all(c(xCol, yCol) %in% colnames(metrics))) {
-        warn(paste(
+        warning(paste(
             deparse(substitute(object)), "must contain",
             toString(c(xCol, yCol)),
             "columns in `metrics()`"

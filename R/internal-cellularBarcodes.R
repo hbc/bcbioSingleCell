@@ -54,7 +54,7 @@
     )
     names(files) <- names(sampleDirs)
     assert_all_are_existing_files(files)
-    inform("Reading cellular barcode distributions")
+    message("Reading cellular barcode distributions")
     list <- mclapply(files, function(file) {
         read_tsv(
             file = file,

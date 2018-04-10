@@ -7,6 +7,10 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell
+#' @param point Label either the "`knee`" or "`inflection`" point.
+#' @param pointsPerSample Calculate the barcode ranks individually per sample.
+#'   Generally recommended unless there's a reason to use a single cutoff point
+#'   across all samples in the analysis.
 #'
 #' @examples
 #' # bcbioSingleCell ====
@@ -29,15 +33,20 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        geom = c("ecdf", "histogram", "boxplot", "ridgeline", "violin"),
+        geom = c("ecdf", "histogram", "ridgeline", "boxplot", "violin"),
         interestingGroups,
         min,
+        point = c("knee", "inflection"),
+        pointsPerSample = TRUE,
         trans = "log10",
         color = scale_color_viridis(discrete = TRUE),
         fill = scale_fill_viridis(discrete = TRUE)
     ) {
         geom <- match.arg(geom)
-        .plotQCMetric(
+        point <- match.arg(point)
+        assert_is_a_bool(pointsPerSample)
+
+        p <- .plotQCMetric(
             object = object,
             metricCol = "nUMI",
             geom = geom,
@@ -46,5 +55,20 @@ setMethod(
             trans = trans,
             fill = fill
         )
+
+        if (isTRUE(pointsPerSample)) {
+            FUN <- .labelBarcodeRanksPerSample
+        } else {
+            FUN <- .labelBarcodeRanks
+        }
+
+        p <- FUN(
+            p = p,
+            object = object,
+            geom = geom,
+            point = point
+        )
+
+        p
     }
 )

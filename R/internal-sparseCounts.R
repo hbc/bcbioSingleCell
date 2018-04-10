@@ -56,7 +56,7 @@
             pattern = "filtered_gene_bc_matrices"
         )]
         if (length(matrixFile) != 1L) {
-            abort("Failed to detect filtered matrix file")
+            stop("Failed to detect filtered matrix file")
         }
         colFile <- file.path(dirname(matrixFile), "barcodes.tsv")
         rowFile <- file.path(dirname(matrixFile), "genes.tsv")
@@ -87,7 +87,7 @@
 
     # Early return on empty colnames
     if (!length(colnames)) {
-        warn(paste(
+        warning(paste(
             sampleID, "does not contain any cells"
         ))
         return(NULL)

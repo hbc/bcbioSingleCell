@@ -46,11 +46,11 @@ setMethod(
 
         # Message the new sample IDs
         newIDs <- unique(map[["sampleIDAggregate"]])
-        inform(paste(
+        message(paste(
             "New sample IDs:", toString(newIDs)
         ))
 
-        inform("Remapping cellular barcodes to aggregate sample IDs")
+        message("Remapping cellular barcodes to aggregate sample IDs")
         cell2sample <- cell2sample(object)
         sampleID <- data.frame("sampleID" = cell2sample)
         remap <- left_join(
@@ -68,11 +68,11 @@ setMethod(
             as.factor()
 
         # Assays ===============================================================
-        inform("Aggregating counts")
+        message("Aggregating counts")
         counts <- aggregateReplicates(assay(object), groupings = groupings)
         # Check that the count number of counts matches
         if (!identical(sum(assay(object)), sum(counts))) {
-            abort("Aggregated counts sum doens't match the original")
+            stop("Aggregated counts sum doens't match the original")
         }
 
         # Column data ==========================================================
@@ -92,7 +92,7 @@ setMethod(
         }
 
         # Metadata =============================================================
-        inform("Updating metadata")
+        message("Updating metadata")
 
         # sampleData
         expected <- length(unique(sampleData[["sampleNameAggregate"]]))
@@ -108,7 +108,7 @@ setMethod(
             mutate_all(as.factor) %>%
             unique()
         if (!identical(nrow(sampleData), expected)) {
-            abort("Failed to aggregate sample metadata uniquely")
+            stop("Failed to aggregate sample metadata uniquely")
         }
         rownames(sampleData) <- sampleData[["sampleID"]]
         metadata[["sampleData"]] <- sampleData

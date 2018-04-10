@@ -85,17 +85,17 @@ loadSingleCell <- function(
     call <- match.call(expand.dots = TRUE)
     # annotable
     if ("annotable" %in% names(call)) {
-        abort("Use `gffFile` instead of `annotable`")
+        stop("Use `gffFile` instead of `annotable`")
     }
     # ensemblVersion
     if ("ensemblVersion" %in% names(call)) {
-        warn("Use `ensemblRelease` instead of `ensemblVersion`")
+        warning("Use `ensemblRelease` instead of `ensemblVersion`")
         ensemblRelease <- call[["ensemblVersion"]]
         dots[["ensemblVersion"]] <- NULL
     }
     # gtfFile
     if ("gtfFile" %in% names(call)) {
-        warn("Use `gffFile` instead of `gtfFile`")
+        warning("Use `gffFile` instead of `gtfFile`")
         gffFile <- call[["gtfFile"]]
         dots[["gtfFile"]] <- NULL
     }
@@ -109,7 +109,7 @@ loadSingleCell <- function(
         recursive = FALSE
     )
     assert_is_a_string(projectDir)
-    inform(projectDir)
+    message(projectDir)
     match <- str_match(projectDir, bcbioBase::projectDirPattern)
     runDate <- as.Date(match[[2L]])
     template <- match[[3L]]
@@ -122,7 +122,7 @@ loadSingleCell <- function(
             .[, 2L] %>%
             unique() %>%
             length()
-        inform(paste(
+        message(paste(
             lanes, "sequencing lane detected", "(technical replicates)"
         ))
     } else {
@@ -171,7 +171,7 @@ loadSingleCell <- function(
         as.integer()
     assert_is_an_integer(cellularBarcodeCutoff)
 
-    inform(paste(
+    message(paste(
         cellularBarcodeCutoff,
         "reads per cellular barcode cutoff detected"
     ))
@@ -197,12 +197,12 @@ loadSingleCell <- function(
             x = .
         )
     assert_is_a_string(umiType)
-    inform(paste("UMI type:", umiType))
+    message(paste("UMI type:", umiType))
 
     # Sample metadata ==========================================================
     # External file required for inDrop
     if (grepl("indrop", umiType) && is.null(sampleMetadataFile)) {
-        abort(paste(
+        stop(paste(
             "inDrop samples require `sampleMetadataFile`",
             "containing the index barcode sequences"
         ))
@@ -221,7 +221,7 @@ loadSingleCell <- function(
             sort(sampleDirSequence),
             sort(as.character(sampleData[["sequence"]]))
         )) {
-            abort(paste(
+            stop(paste(
                 "It appears that the reverse complement sequence of the",
                 "i5 index barcodes were input into the sample metadata",
                 "`sequence` column. bcbio outputs the revcomp into the",
@@ -243,16 +243,16 @@ loadSingleCell <- function(
     # Check to see if a subset of samples is requested via the metadata file.
     # This matches by the reverse complement sequence of the index barcode.
     if (nrow(sampleData) < length(sampleDirs)) {
-        inform("Loading a subset of samples, defined by the metadata file")
+        message("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
         sampleDirs <- sampleDirs[rownames(sampleData)]
-        inform(paste(length(sampleDirs), "samples matched by metadata"))
+        message(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
     }
 
     # Assays ===================================================================
-    inform(paste("Reading counts as", level))
+    message(paste("Reading counts as", level))
     countsList <- .sparseCountsList(
         sampleDirs = sampleDirs,
         pipeline = pipeline,
@@ -264,10 +264,10 @@ loadSingleCell <- function(
 
     # Require transcript to gene conversion (legacy) ===========================
     if (level == "transcripts") {
-        inform("Converting transcripts to genes")
+        message("Converting transcripts to genes")
 
         if (!is_a_string(gffFile)) {
-            abort("GFF is required to convert transcripts to genes")
+            stop("GFF is required to convert transcripts to genes")
         }
 
         tx2gene <- makeTx2geneFromGFF(gffFile)
