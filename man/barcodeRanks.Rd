@@ -4,13 +4,24 @@
 \name{barcodeRanks}
 \alias{barcodeRanks}
 \alias{barcodeRanks}
+\alias{barcodeRanks,matrix-method}
+\alias{barcodeRanks,dgCMatrix-method}
+\alias{barcodeRanks,dgTMatrix-method}
 \alias{barcodeRanks,SingleCellExperiment-method}
 \title{Barcode Ranks}
 \usage{
 barcodeRanks(object, ...)
 
-\S4method{barcodeRanks}{SingleCellExperiment}(object, lower = 100L,
-  fitBounds = NULL, df = 20L)
+\S4method{barcodeRanks}{matrix}(object, lower = 100L, fitBounds = NULL,
+  df = 20L)
+
+\S4method{barcodeRanks}{dgCMatrix}(object, lower = 100L, fitBounds = NULL,
+  df = 20L)
+
+\S4method{barcodeRanks}{dgTMatrix}(object, lower = 100L, fitBounds = NULL,
+  df = 20L)
+
+\S4method{barcodeRanks}{SingleCellExperiment}(object, ...)
 }
 \value{
 \code{list}.

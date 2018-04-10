@@ -50,7 +50,6 @@ plotQuantileHeatmap(
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
