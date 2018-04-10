@@ -31,8 +31,8 @@ setMethod(
         object,
         geom = c("violin", "boxplot", "histogram", "ridgeline"),
         interestingGroups,
-        min,
-        max,
+        min = 0L,
+        max = Inf,
         fill = scale_fill_viridis(discrete = TRUE)
     ) {
         geom <- match.arg(geom)

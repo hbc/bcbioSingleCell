@@ -34,10 +34,11 @@ setMethod(
         object,
         geom = c("violin", "boxplot", "histogram", "ridgeline"),
         interestingGroups,
-        max,
+        max = 1L,
         fill = scale_fill_viridis(discrete = TRUE)
     ) {
         geom <- match.arg(geom)
+        assert_all_are_in_left_open_range(max, lower = 0L, upper = 1L)
         .plotQCMetric(
             object = object,
             metricCol = "mitoRatio",

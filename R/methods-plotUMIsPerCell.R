@@ -37,7 +37,7 @@ setMethod(
         object,
         geom = c("ecdf", "histogram", "ridgeline", "boxplot", "violin"),
         interestingGroups,
-        min,
+        min = 0L,
         barcodeRanks = FALSE,
         ranksPerSample = TRUE,
         labelPoint = c("knee", "inflection"),
