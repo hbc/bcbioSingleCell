@@ -13,15 +13,15 @@ plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
   "histogram", "ridgeline", "boxplot", "violin"), interestingGroups, min,
-  point = c("knee", "inflection"), pointsPerSample = TRUE,
-  trans = "log10", color = scale_color_viridis(discrete = TRUE),
-  fill = scale_fill_viridis(discrete = TRUE))
+  barcodeRanks = FALSE, ranksPerSample = TRUE, labelPoint = c("knee",
+  "inflection"), trans = "log10", color = scale_color_viridis(discrete =
+  TRUE), fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "histogram",
-  "ridgeline", "boxplot", "violin"), interestingGroups, min, point = c("knee",
-  "inflection"), pointsPerSample = TRUE, trans = "log10",
-  color = scale_color_viridis(discrete = TRUE),
-  fill = scale_fill_viridis(discrete = TRUE))
+  "ridgeline", "boxplot", "violin"), interestingGroups, min,
+  barcodeRanks = FALSE, ranksPerSample = TRUE, labelPoint = c("knee",
+  "inflection"), trans = "log10", color = scale_color_viridis(discrete =
+  TRUE), fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -36,15 +36,18 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 
 \item{min}{Recommended minimum value cutoff.}
 
-\item{point}{Label either the "\code{knee}" or "\code{inflection}" point.}
+\item{barcodeRanks}{Calculate barcode ranks to label knee or inflection
+points.}
 
-\item{pointsPerSample}{Calculate the barcode ranks individually per sample.
+\item{ranksPerSample}{Calculate the barcode ranks individually per sample.
 Generally recommended unless there's a reason to use a single cutoff point
 across all samples in the analysis.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{point}{Label either the "\code{knee}" or "\code{inflection}" point.}
 }
 \value{
 \code{ggplot}.
