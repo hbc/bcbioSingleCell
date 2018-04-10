@@ -11,8 +11,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param inflection Label the inflection point.
-#' @param knee Label the knee point.
+#' @inheritParams plotUMIsPerCell
 #'
 #' @return `ggplot`.
 #'
@@ -42,6 +41,7 @@ setMethod(
         trans = c("identity", "log10", "log2", "sqrt")
     ) {
         validObject(object)
+        geom <- "cumfreq"
         trans <- match.arg(trans)
 
         data <- metrics(object) %>%
@@ -59,7 +59,7 @@ setMethod(
                 y = "freq"
             )
         ) +
-            geom_line() +
+            geom_line(size = 1L) +
             scale_x_continuous(trans = trans) +
             labs(
                 title = "cumulative UMIs per cell",
@@ -68,37 +68,13 @@ setMethod(
             ) +
             expand_limits(y = 0L)
 
-        subtitle <- NULL
-
-        if (isTRUE(inflection)) {
-            inflectionPoint <- barcodeRanks(object)[["inflection"]]
-            p <- p +
-                .qcCutoffLine(
-                    xintercept = inflectionPoint,
-                    color = inflectionColor
-                )
-            subtitle <- paste(
-                subtitle,
-                paste("inflection", inflectionPoint, sep = " = "),
-                sep = "\n"
-            )
-        }
-
-        if (isTRUE(knee)) {
-            kneePoint <- barcodeRanks(object)[["knee"]]
-            p <- p +
-                .qcCutoffLine(
-                    xintercept = kneePoint,
-                    color = kneeColor
-                )
-            subtitle <- paste(
-                subtitle,
-                paste("knee", kneePoint, sep = " = "),
-                sep = "\n"
-            )
-        }
-
-        p <- p + labs(subtitle = subtitle)
+        p <- .labelBarcodeRanks(
+            p = p,
+            object = object,
+            geom = geom,
+            inflection = inflection,
+            knee = knee
+        )
 
         p
     }
