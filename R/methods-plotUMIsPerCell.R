@@ -61,17 +61,19 @@ setMethod(
         )
 
         # Calculate barcode ranks and label inflection or knee point
-        if (isTRUE(ranksPerSample)) {
-            FUN <- .labelBarcodeRanksPerSample
-        } else {
-            FUN <- .labelBarcodeRanks
+        if (isTRUE(barcodeRanks)) {
+            if (isTRUE(ranksPerSample)) {
+                FUN <- .labelBarcodeRanksPerSample
+            } else {
+                FUN <- .labelBarcodeRanks
+            }
+            p <- FUN(
+                p = p,
+                object = object,
+                geom = geom,
+                point = labelPoint
+            )
         }
-        p <- FUN(
-            p = p,
-            object = object,
-            geom = geom,
-            point = labelPoint
-        )
 
         p
     }
