@@ -115,7 +115,11 @@
     }
 
     # Label interesting groups
-    p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
+    p <- p +
+        labs(
+            color = paste(interestingGroups, collapse = ":\n"),
+            fill = paste(interestingGroups, collapse = ":\n")
+        )
 
     # Color palette
     if (geom == "ecdf") {
