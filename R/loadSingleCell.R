@@ -47,7 +47,7 @@
 #' uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
 #' loadSingleCell(
 #'     uploadDir = uploadDir,
-#'     organism = "Homo sapiens"
+#'     organism = "Homo sapiens",
 #'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
 loadSingleCell <- function(
