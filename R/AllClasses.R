@@ -103,7 +103,6 @@ setValidity(
             "ensemblRelease" = "integer",
             "genomeBuild" = "character",
             "interestingGroups" = "character",
-            "isSpike" = "character",
             "level" = "character",
             "organism" = "character",
             "pipeline" = "character",
