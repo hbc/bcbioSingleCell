@@ -3,7 +3,8 @@
     rowRanges,
     colData,
     metadata,
-    isSpike
+    transgeneNames,
+    spikeNames
 ) {
     # Prepare RangedSummarizedExperiment. Supports automatic resizing of
     # rowRanges and helps slot FASTA spike-ins.
@@ -12,7 +13,8 @@
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
-        isSpike = isSpike
+        transgeneNames = transgeneNames,
+        spikeNames = spikeNames
     )
 
     # Coerce to SingleCellExperiment

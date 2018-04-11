@@ -4,14 +4,18 @@
 \alias{loadSingleCell}
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
-loadSingleCell(uploadDir, sampleMetadataFile,
-  interestingGroups = "sampleName", organism, genomeBuild = NULL,
-  ensemblRelease = NULL, isSpike = NULL, gffFile = NULL,
-  prefilter = TRUE, ...)
+loadSingleCell(uploadDir, organism, sampleMetadataFile,
+  interestingGroups = "sampleName", genomeBuild = NULL,
+  ensemblRelease = NULL, transgeneNames = NULL, spikeNames = NULL,
+  gffFile = NULL, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
 running \code{bcbio_nextgen -w template}.}
+
+\item{organism}{Organism name. Use the full latin name (e.g.
+"Homo sapiens"), since this will be input downstream to
+AnnotationHub and ensembldb, unless \code{gffFile} is set.}
 
 \item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
@@ -20,10 +24,6 @@ inDrop).}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
-
-\item{organism}{Organism name. Use the full latin name (e.g.
-"Homo sapiens"), since this will be input downstream to
-AnnotationHub and ensembldb, unless \code{gffFile} is set.}
 
 \item{genomeBuild}{\emph{Optional.} Ensembl genome build name (e.g. "GRCh38").
 This will be passed to AnnotationHub for \code{EnsDb} annotation matching,
@@ -34,8 +34,11 @@ defaults to current release, and does not typically need to be
 user-defined. Passed to AnnotationHub for \code{EnsDb} annotation matching,
 unless \code{gffFile} is set.}
 
-\item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
-sequences (e.g. ERCCs, EGFP, TDTOMATO).}
+\item{transgeneNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows
+denote transgenes (e.g. EGFP, TDTOMATO).}
+
+\item{spikeNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows denote
+spike-in sequences (e.g. ERCCs).}
 
 \item{gffFile}{\emph{Optional, not recommended.} By default, we recommend leaving
 this \code{NULL} for genomes that are supported on Ensembl. In this case, the
@@ -48,7 +51,9 @@ possible, although all GFF formats are supported. The function will
 internally generate a \code{TxDb} containing transcript-to-gene mappings and
 construct a \code{GRanges} object containing the genomic ranges (\code{\link[=rowRanges]{rowRanges()}}).}
 
-\item{prefilter}{Prefilter counts prior to quality control analysis.}
+\item{prefilter}{Prefilter counts prior to quality control analysis. This
+applies very minimal filtering to the dataset, dropping only cells that
+don't contain any genes, and is generally recommended.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
@@ -67,8 +72,8 @@ run directory as a remote connection over
 uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
 loadSingleCell(
     uploadDir = uploadDir,
-    sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
     organism = "Homo sapiens"
+    sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 )
 }
 \seealso{

@@ -21,10 +21,9 @@ inDrop).}
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
-sequences (e.g. ERCCs, EGFP, TDTOMATO).}
-
-\item{prefilter}{Prefilter counts prior to quality control analysis.}
+\item{prefilter}{Prefilter counts prior to quality control analysis. This
+applies very minimal filtering to the dataset, dropping only cells that
+don't contain any genes, and is generally recommended.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }

@@ -7,16 +7,17 @@
 #' @family Read Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
+#' @inheritParams bcbioBase::prepareSummarizedExperiment
 #' @inheritParams general
 #' @param uploadDir Path to final upload directory. This path is set when
 #'   running `bcbio_nextgen -w template`.
+#' @param organism Organism name. Use the full latin name (e.g.
+#'   "Homo sapiens"), since this will be input downstream to
+#'   AnnotationHub and ensembldb, unless `gffFile` is set.
 #' @param sampleMetadataFile Sample barcode metadata file. Optional for runs
 #'   with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 #'   for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 #'   inDrop).
-#' @param organism Organism name. Use the full latin name (e.g.
-#'   "Homo sapiens"), since this will be input downstream to
-#'   AnnotationHub and ensembldb, unless `gffFile` is set.
 #' @param genomeBuild *Optional.* Ensembl genome build name (e.g. "GRCh38").
 #'   This will be passed to AnnotationHub for `EnsDb` annotation matching,
 #'   unless `gffFile` is set.
@@ -24,8 +25,6 @@
 #'   defaults to current release, and does not typically need to be
 #'   user-defined. Passed to AnnotationHub for `EnsDb` annotation matching,
 #'   unless `gffFile` is set.
-#' @param isSpike *Optional.* Gene names corresponding to FASTA spike-in
-#'   sequences (e.g. ERCCs, EGFP, TDTOMATO).
 #' @param gffFile *Optional, not recommended.* By default, we recommend leaving
 #'   this `NULL` for genomes that are supported on Ensembl. In this case, the
 #'   row annotations ([rowRanges()]) will be obtained automatically from Ensembl
@@ -36,7 +35,9 @@
 #'   possible, although all GFF formats are supported. The function will
 #'   internally generate a `TxDb` containing transcript-to-gene mappings and
 #'   construct a `GRanges` object containing the genomic ranges ([rowRanges()]).
-#' @param prefilter Prefilter counts prior to quality control analysis.
+#' @param prefilter Prefilter counts prior to quality control analysis. This
+#'   applies very minimal filtering to the dataset, dropping only cells that
+#'   don't contain any genes, and is generally recommended.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return `bcbioSingleCell`.
@@ -46,17 +47,18 @@
 #' uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
 #' loadSingleCell(
 #'     uploadDir = uploadDir,
-#'     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
 #'     organism = "Homo sapiens"
+#'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
 loadSingleCell <- function(
     uploadDir,
+    organism,
     sampleMetadataFile,
     interestingGroups = "sampleName",
-    organism,
     genomeBuild = NULL,
     ensemblRelease = NULL,
-    isSpike = NULL,
+    transgeneNames = NULL,
+    spikeNames = NULL,
     gffFile = NULL,
     prefilter = TRUE,
     ...
@@ -72,7 +74,8 @@ loadSingleCell <- function(
     assert_is_a_string(organism)
     assertIsAStringOrNULL(genomeBuild)
     assertIsAnImplicitIntegerOrNULL(ensemblRelease)
-    assertIsCharacterOrNULL(isSpike)
+    assertIsCharacterOrNULL(transgeneNames)
+    assertIsCharacterOrNULL(spikeNames)
     assertIsAStringOrNULL(gffFile)
     if (is_a_string(gffFile)) {
         assert_all_are_existing_files(gffFile)
@@ -365,7 +368,7 @@ loadSingleCell <- function(
         "sampleDirs" = sampleDirs,
         "sampleMetadataFile" = as.character(sampleMetadataFile),
         "interestingGroups" = interestingGroups,
-        "organism" = organism,
+        "organism" = as.character(organism),
         "genomeBuild" = as.character(genomeBuild),
         "ensemblRelease" = as.integer(ensemblRelease),
         "rowRangesMetadata" = rowRangesMetadata,
@@ -401,6 +404,7 @@ loadSingleCell <- function(
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
-        isSpike = isSpike
+        transgeneNames = transgeneNames,
+        spikeNames = spikeNames
     )
 }
