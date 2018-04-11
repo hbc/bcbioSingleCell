@@ -15,7 +15,16 @@
 #' plotReadsPerCell(bcb_small)
 #'
 #' # SingleCellExperiment ====
+#' # Only contains UMI counts
+#' \dontrun{
 #' plotReadsPerCell(cellranger_small)
+#' }
+#'
+#' # seurat ====
+#' # Only contains UMI counts
+#' \dontrun{
+#' plotReadsPerCell(Seurat::pbmc_small)
+#' }
 NULL
 
 
@@ -45,7 +54,7 @@ NULL
 
     # Return `NULL` if `nCount` isn't present
     if (!"nCount" %in% colnames(data)) {
-        warn("object does not contain nCount column in `metrics()`")
+        warning("object does not contain nCount column in `metrics()`")
         return(NULL)
     }
 
@@ -251,9 +260,9 @@ NULL
             color = "interestingGroups"
         )
     ) +
-        geom_line(
+        geom_step(
             alpha = qcPlotAlpha,
-            size = 1.5
+            size = 1L
         ) +
         labs(
             x = "log10 reads per cell",

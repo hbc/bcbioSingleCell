@@ -73,7 +73,7 @@ setMethod(
                 summarize(n = n()) %>%
                 .[.[["n"]] >= promiscuousCutoff, "geneID", drop = TRUE]
             if (length(promiscuous)) {
-                inform(paste(
+                message(paste(
                     "Promiscuous markers:", toString(promiscuous)
                 ))
                 markers <- markers %>%

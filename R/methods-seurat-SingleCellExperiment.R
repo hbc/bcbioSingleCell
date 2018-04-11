@@ -77,7 +77,7 @@ setMethod(
     ),
     function(x, value) {
         if (!is.list(value)) {
-            abort("replacement 'metadata' value must be a list")
+            stop("replacement 'metadata' value must be a list")
         }
         if (!length(value)) {
             names(value) <- NULL
@@ -131,7 +131,7 @@ setMethod(
 
 
 
-# bcbioSingleCell Methods ======================================================
+# bcbio Methods ================================================================
 #' @rdname seurat-SingleCellExperiment
 #' @export
 setMethod(
@@ -181,6 +181,16 @@ setMethod(
 
 
 
+#' @rdname inflectionPoint
+#' @export
+setMethod(
+    "inflectionPoint",
+    signature("seurat"),
+    getMethod("inflectionPoint", "SingleCellExperiment")
+)
+
+
+
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom bcbioBase interestingGroups
 #' @export
@@ -190,10 +200,11 @@ setMethod(
     function(object) {
         validObject(object)
         x <- metadata(object)[["interestingGroups"]]
-        if (is.null(x)) {
-            x <- "sampleName"
+        if (is.character(x)) {
+            x
+        } else {
+            NULL
         }
-        x
     }
 )
 
@@ -214,12 +225,22 @@ setMethod(
             interestingGroups = value
         )
         if (is.null(metadata(object))) {
-            abort("object was not created with bcbioSingleCell")
+            stop("object was not created with bcbioSingleCell")
         }
         metadata(object)[["interestingGroups"]] <- value
         validObject(object)
         object
     }
+)
+
+
+
+#' @rdname metricsPerSample
+#' @export
+setMethod(
+    "metricsPerSample",
+    signature("seurat"),
+    getMethod("metricsPerSample", "SingleCellExperiment")
 )
 
 
@@ -234,12 +255,62 @@ setMethod(
 
 
 
-#' @rdname plotCumulativeUMIsPerCell
+#' @rdname plotGenesPerCell
 #' @export
 setMethod(
-    "plotCumulativeUMIsPerCell",
+    "plotGenesPerCell",
     signature("seurat"),
-    getMethod("plotCumulativeUMIsPerCell", "SingleCellExperiment")
+    getMethod("plotGenesPerCell", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMitoRatio
+#' @export
+setMethod(
+    "plotMitoRatio",
+    signature("seurat"),
+    getMethod("plotMitoRatio", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMitoVsCoding
+#' @export
+setMethod(
+    "plotMitoVsCoding",
+    signature("seurat"),
+    getMethod("plotMitoVsCoding", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotQC
+#' @export
+setMethod(
+    "plotQC",
+    signature("seurat"),
+    getMethod("plotQC", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotNovelty
+#' @export
+setMethod(
+    "plotNovelty",
+    signature("seurat"),
+    getMethod("plotNovelty", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotQuantileHeatmap
+#' @export
+setMethod(
+    "plotQuantileHeatmap",
+    signature("seurat"),
+    getMethod("plotQuantileHeatmap", "SummarizedExperiment")
 )
 
 
@@ -252,10 +323,110 @@ setMethod(
     getMethod("plotReadsPerCell", "SingleCellExperiment")
 )
 
+
+
+#' @rdname plotUMIsPerCell
+#' @export
+setMethod(
+    "plotUMIsPerCell",
+    signature("seurat"),
+    getMethod("plotUMIsPerCell", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotUMIsVsGenes
+#' @export
+setMethod(
+    "plotUMIsVsGenes",
+    signature("seurat"),
+    getMethod("plotUMIsVsGenes", "SingleCellExperiment")
+)
+
+
+
 #' @rdname plotZerosVsDepth
 #' @export
 setMethod(
     "plotZerosVsDepth",
     signature("seurat"),
     getMethod("plotZerosVsDepth", "SingleCellExperiment")
+)
+
+
+
+#' @rdname sampleData
+#' @export
+setMethod(
+    "sampleData",
+    signature("seurat"),
+    function(
+        object,
+        interestingGroups,
+        return = c("DataFrame", "data.frame")
+    ) {
+        validObject(object)
+        stopifnot(.hasSlot(object, "version"))
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        if (!is.character(interestingGroups)) {
+            interestingGroups <- "sampleName"
+        }
+        return <- match.arg(return)
+        data <- metadata(object)[["sampleData"]]
+        if (is.null(data)) {
+            data <- slot(object, "meta.data")
+            assert_is_data.frame(data)
+            # Create priority columns from `orig.ident`, if necessary
+            if (!all(bcbioBase::metadataPriorityCols %in% colnames(data))) {
+                missing <- setdiff(
+                    x = bcbioBase::metadataPriorityCols,
+                    y = colnames(data)
+                )
+                for (i in seq_along(missing)) {
+                    data[[missing[[i]]]] <- data[["orig.ident"]]
+                }
+            }
+            blacklist <- paste(
+                c(
+                    "cellularBarcode",
+                    "orig.ident",
+                    "Phase",
+                    "^res\\.[0-9]"
+                ),
+                collapse = "|"
+            )
+            data <- data %>%
+                remove_rownames() %>%
+                .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
+                mutate_if(is.character, as.factor) %>%
+                select_if(is.factor) %>%
+                mutate_all(droplevels) %>%
+                unique() %>%
+                camel()
+            assert_has_no_duplicates(data[["sampleName"]])
+            rownames(data) <- data[["sampleID"]]
+            data
+        }
+        if (is.character(interestingGroups)) {
+            data <- uniteInterestingGroups(data, interestingGroups)
+        }
+        data <- sanitizeSampleData(data)
+        assertHasRownames(data)
+        as(data, return)
+    }
+)
+
+
+
+#' @rdname sampleData
+#' @export
+setMethod(
+    "sampleData<-",
+    signature(
+        object = "seurat",
+        value = "ANY"
+    ),
+    getMethod("sampleData<-", "SingleCellExperiment")
 )

@@ -15,7 +15,7 @@
 #'
 #' # seurat ====
 #' inflectionPoint(seurat_small)
-#' inflectionPoint(pbmc_small)
+#' inflectionPoint(Seurat::pbmc_small)
 NULL
 
 
@@ -52,14 +52,4 @@ setMethod(
         # Return the inflection point as the expression value
         totals[which.max(dists)]
     }
-)
-
-
-
-#' @rdname inflectionPoint
-#' @export
-setMethod(
-    "inflectionPoint",
-    signature("seurat"),
-    getMethod("inflectionPoint", "SingleCellExperiment")
 )

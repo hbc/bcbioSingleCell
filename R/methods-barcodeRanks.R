@@ -22,19 +22,28 @@ NULL
 
 
 
+# Constructors =================================================================
+.reorder <- function(vals, lens, o) {
+    assert_has_names(vals)
+    out <- rep(vals, lens)
+    out[o] <- out
+    out
+}
+
+
+
 # Methods ======================================================================
 #' @rdname barcodeRanks
 #' @export
 setMethod(
     "barcodeRanks",
-    signature("SingleCellExperiment"),
+    signature("matrix"),
     function(
         object,
         lower = 100L,
         fitBounds = NULL,
         df = 20L
     ) {
-        validObject(object)
         assertIsAnImplicitInteger(lower)
         assert_is_any_of(fitBounds, c("numeric", "NULL"))
         if (is.numeric(fitBounds)) {
@@ -42,11 +51,8 @@ setMethod(
         }
         assertIsAnImplicitInteger(df)
 
-        # Use the raw counts matrix
-        counts <- counts(object)
-
         # Calculate the total number of UMIs per cell (nUMI)
-        totals <- colSums(counts)
+        totals <- colSums(object)
 
         # Run length encoding
         o <- order(totals, decreasing = TRUE)
@@ -59,7 +65,7 @@ setMethod(
         # Apply lower limit
         keep <- runTotals > lower
         if (sum(keep) < 3L) {
-            abort("Insufficient points for computing knee/inflection")
+            stop("Insufficient points for computing knee/inflection")
         }
         y <- log10(runTotals[keep])
         x <- log10(runRank[keep])
@@ -123,9 +129,36 @@ setMethod(
     }
 )
 
-.reorder <- function(vals, lens, o) {
-    assert_has_names(vals)
-    out <- rep(vals, lens)
-    out[o] <- out
-    out
-}
+
+
+#' @rdname barcodeRanks
+#' @export
+setMethod(
+    "barcodeRanks",
+    signature("dgCMatrix"),
+    getMethod("barcodeRanks", "matrix")
+)
+
+
+
+#' @rdname barcodeRanks
+#' @export
+setMethod(
+    "barcodeRanks",
+    signature("dgTMatrix"),
+    getMethod("barcodeRanks", "matrix")
+)
+
+
+
+#' @rdname barcodeRanks
+#' @export
+setMethod(
+    "barcodeRanks",
+    signature("SingleCellExperiment"),
+    function(object, ...) {
+        validObject(object)
+        counts <- counts(object)
+        barcodeRanks(counts, ...)
+    }
+)

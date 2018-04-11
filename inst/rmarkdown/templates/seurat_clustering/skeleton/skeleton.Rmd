@@ -4,13 +4,13 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    bcb_file: "bcb_filtered.rda"
+    bcb_file: "data/YYYY-MM-DD/bcb_filtered.rda"
     seurat_name: "seurat"
     pc_compute: 20
     pc_use: FALSE
     vars_to_regress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
     resolution: 1
-    data_dir: "."
+    data_dir: !r file.path("data", Sys.Date())
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
@@ -124,13 +124,13 @@ stopifnot(is.data.frame(cell_cycle_markers))
 markdownHeader("S phase markers", level = 3)
 s_genes <- cell_cycle_markers %>%
     filter(phase == "S") %>%
-    pull("symbol")
+    pull("geneName")
 print(s_genes)
 
 markdownHeader("G2/M phase markers", level = 3)
 g2m_genes <- cell_cycle_markers %>%
     filter(phase == "G2/M") %>%
-    pull("symbol")
+    pull("geneName")
 print(g2m_genes)
 
 saveData(cell_cycle_markers, s_genes, g2m_genes, dir = params$data_dir)

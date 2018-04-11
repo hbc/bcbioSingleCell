@@ -49,7 +49,7 @@ test_that("interestingGroups : seurat", {
         "sampleName"
     )
     expect_identical(
-        interestingGroups(pbmc_small),
+        interestingGroups(Seurat::pbmc_small),
         "sampleName"
     )
 })
@@ -66,7 +66,7 @@ test_that("interestingGroups<- : seurat", {
         "sampleName"
     )
     expect_error(
-        interestingGroups(pbmc_small) <- "sampleName",
+        interestingGroups(Seurat::pbmc_small) <- "sampleName",
         "object was not created with bcbioSingleCell"
     )
 })
@@ -111,7 +111,7 @@ test_that("sampleData : seurat", {
     x <- sampleData(seurat_small)
     expect_identical(x, target)
 
-    x <- sampleData(pbmc_small)
+    x <- sampleData(Seurat::pbmc_small)
     y <- DataFrame(
         "sampleID" = factor("SeuratProject"),
         "sampleName" = factor("SeuratProject"),

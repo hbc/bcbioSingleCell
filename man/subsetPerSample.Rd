@@ -10,7 +10,7 @@
 subsetPerSample(object, ...)
 
 \S4method{subsetPerSample}{bcbioSingleCell}(object, minCells = 200L,
-  envir = parent.frame(), dir = ".")
+  assignAndSave = FALSE, envir = parent.frame(), dir = ".")
 }
 \arguments{
 \item{object}{Object.}
@@ -19,20 +19,35 @@ subsetPerSample(object, ...)
 
 \item{minCells}{Minimum number of cells required per sample.}
 
-\item{envir}{Environment where to assign the subsets.}
+\item{assignAndSave}{Assign and save the individual datasets.}
 
-\item{dir}{Output directory.}
+\item{envir}{Environment where to assign the subsets. Only applicable when
+\code{assignAndSave = TRUE}.}
+
+\item{dir}{Output directory. Only applicable when \code{assignAndSave = TRUE}.}
 }
 \value{
-Named vector of saved \code{bcbioSingleCell} subset file paths.
+\itemize{
+\item \code{assignAndSave = FALSE}: Per sample objects in a \code{list}.
+\item \code{assignAndSave = TRUE}: Subset file paths.
+}
 }
 \description{
 Subset Per Sample
 }
 \examples{
-# bcbioRNASeq ====
-# This will save the subsets per sample to disk
-subsetPerSample(bcb_small, dir = "subsetPerSample")
+# bcbioSingleCell ====
+# List mode (default)
+list <- subsetPerSample(bcb_small, assignAndSave = FALSE)
+names(list)
+
+# Assign and save mode (useful for large datasets)
+subsetPerSample(
+    object = bcb_small,
+    assignAndSave = TRUE,
+    envir = parent.frame(),
+    dir = "subsetPerSample"
+)
 list.files("subsetPerSample")
 
 # Clean up

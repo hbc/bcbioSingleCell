@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' # seurat ====
-#' plotPCA(pbmc_small)
+#' plotPCA(Seurat::pbmc_small)
 NULL
 
 

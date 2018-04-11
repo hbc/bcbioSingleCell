@@ -14,8 +14,8 @@
 #'
 #' @examples
 #' # seurat ====
-#' genes <- head(rownames(pbmc_small))
-#' fetchTSNEExpressionData(pbmc_small, genes = genes) %>% glimpse()
+#' genes <- head(rownames(Seurat::pbmc_small))
+#' fetchTSNEExpressionData(Seurat::pbmc_small, genes = genes) %>% glimpse()
 NULL
 
 

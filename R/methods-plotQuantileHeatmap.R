@@ -12,23 +12,24 @@
 #' @inherit bcbioBase::plotQuantileHeatmap
 #'
 #' @examples
-#' # seurat ====
-#' \dontrun{
+#' # bcbioSingleCell ====
 #' plotQuantileHeatmap(
-#'     object = seurat_small,
+#'     object = bcb_small,
 #'     showColnames = FALSE,
 #'     showRownames = FALSE
 #' )
-#' }
+#'
+#' # SingleCellExperiment ====
+#' plotQuantileHeatmap(
+#'     object = cellranger_small,
+#'     showColnames = FALSE,
+#'     showRownames = FALSE
+#' )
+#'
+#' # seurat ====
+#' plotQuantileHeatmap(
+#'     object = Seurat::pbmc_small,
+#'     showColnames = FALSE,
+#'     showRownames = FALSE
+#' )
 NULL
-
-
-
-# Methods ======================================================================
-#' @rdname plotQuantileHeatmap
-#' @export
-setMethod(
-    "plotQuantileHeatmap",
-    signature("seurat"),
-    getMethod("plotQuantileHeatmap", "SummarizedExperiment")
-)

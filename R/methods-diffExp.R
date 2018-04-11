@@ -66,10 +66,10 @@
 #'
 #' # seurat ====
 #' # Expression in cluster 3 relative to cluster 2
-#' numerator <- Seurat::WhichCells(pbmc_small, ident = 3L)
-#' denominator <- Seurat::WhichCells(pbmc_small, ident = 2L)
+#' numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
+#' denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
 #' lrt <- diffExp(
-#'     object = pbmc_small,
+#'     object = Seurat::pbmc_small,
 #'     numerator = numerator,
 #'     denominator = denominator,
 #'     maxit = 100L
@@ -92,6 +92,9 @@ setMethod(
         minCells = 10L,
         maxit = 1000L
     ) {
+        requireNamespace("zingeR")
+        requireNamespace("edgeR")
+
         assert_is_character(numerator)
         assert_is_character(denominator)
         assert_are_disjoint_sets(numerator, denominator)
@@ -135,11 +138,11 @@ setMethod(
         # zingeR + edgeR analysis
         # Note that TMM needs to be consistently applied for both
         # `calcNormFactors()` and `zeroWeightsLS()`
-        dge <- DGEList(counts, group = group)
-        dge <- calcNormFactors(dge, method = "TMM")
+        dge <- edgeR::DGEList(counts, group = group)
+        dge <- edgeR::calcNormFactors(dge, method = "TMM")
 
         # This is the zingeR step that is computationally expensive
-        weights <- zeroWeightsLS(
+        weights <- zingeR::zeroWeightsLS(
             counts = dge[["counts"]],
             design = design,
             maxit = maxit,
@@ -147,10 +150,9 @@ setMethod(
         )
 
         dge[["weights"]] <- weights
-        dge <- estimateDisp(dge, design = design)
-
-        fit <- glmFit(dge, design = design)
-        lrt <- glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
+        dge <- edgeR::estimateDisp(dge, design = design)
+        fit <- edgeR::glmFit(dge, design = design)
+        lrt <- zingeR::glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
         lrt
     }
 )

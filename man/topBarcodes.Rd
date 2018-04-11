@@ -32,7 +32,7 @@ Top Barcodes
 topBarcodes(bcb_small) \%>\% glimpse()
 
 # seurat ====
-topBarcodes(pbmc_small) \%>\% glimpse()
+topBarcodes(Seurat::pbmc_small) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},

@@ -34,14 +34,18 @@ color definitions are desired, we recommend using
 This function helps us visualize the dropout rate.
 }
 \examples{
-# SingleCellExperiment ====
+# bcbioSingleCell ====
 plotZerosVsDepth(bcb_small)
+
+# SingleCellExperiment ====
 plotZerosVsDepth(cellranger_small)
+
+# seurat ====
+plotZerosVsDepth(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},

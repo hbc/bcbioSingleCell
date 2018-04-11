@@ -53,7 +53,7 @@ setMethod(
 
         # Early return on sanitized data
         if (.isSanitizedMarkers(markers, package = "Seurat")) {
-            inform("Markers are already sanitized")
+            message("Markers are already sanitized")
             return(markers)
         }
 
@@ -81,7 +81,7 @@ setMethod(
 
         # Update legacy columns
         if ("avgDiff" %in% colnames(data)) {
-            inform(paste(
+            message(paste(
                 "Renaming legacy `avgDiff` column to `avgLogFC`",
                 "(changed in Seurat v2.1)"
             ))
@@ -91,12 +91,12 @@ setMethod(
 
         # Rename P value columns to match DESeq2 conventions
         if ("pVal" %in% colnames(data)) {
-            inform("Renaming `pVal` column to `pvalue` (matching DESeq2)")
+            message("Renaming `pVal` column to `pvalue` (matching DESeq2)")
             data[["pvalue"]] <- data[["pVal"]]
             data[["pVal"]] <- NULL
         }
         if ("pValAdj" %in% colnames(data)) {
-            inform("Renaming `pValAdj` column to `padj` (matching DESeq2)")
+            message("Renaming `pValAdj` column to `padj` (matching DESeq2)")
             data[["padj"]] <- data[["pValAdj"]]
             data[["pValAdj"]] <- NULL
         }

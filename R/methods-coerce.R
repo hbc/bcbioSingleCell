@@ -48,7 +48,7 @@ setAs(
     function(from) {
         # Require that technical replicates are aggregated
         if ("sampleNameAggregate" %in% colnames(sampleData(from))) {
-            inform(paste(
+            message(paste(
                 "`sampleNameAggregate` metadata column detected.",
                 "Use `aggregateReplicates()` to combine technical replicates.",
                 sep = "\n"
@@ -59,27 +59,24 @@ setAs(
         from <- .applyFilterCutoffs(from)
 
         # Prepare counts matrix with gene symbols as rownames
-        rawData <- assay(from)
+        counts <- counts(from)
         g2s <- gene2symbol(from)
         assertIsGene2symbol(g2s)
         rownames <- make.names(g2s[["geneName"]], unique = TRUE)
         stopifnot(!any(duplicated(rownames)))
         names(rownames) <- g2s[["geneID"]]
-        rownames(rawData) <- rownames
-
-        # Prepare metadata data.frame
-        metaData <- as.data.frame(slot(from, "colData"))
+        rownames(counts) <- rownames
 
         # New seurat object
-        seurat <- CreateSeuratObject(
-            raw.data = rawData,
+        seurat <- Seurat::CreateSeuratObject(
+            raw.data = counts,
             project = "bcbioSingleCell",
             # Already applied filtering cutoffs for cells and genes
             min.cells = 0L,
             min.genes = 0L,
             # Default for UMI datasets
             is.expr = 0L,
-            meta.data = metaData
+            meta.data = metrics(from)
         )
 
         # Check that the dimensions match exactly
@@ -96,5 +93,20 @@ setAs(
         slot(seurat, "misc")[["bcbio"]] <- bcbio
 
         seurat
+    }
+)
+
+
+
+#' @rdname coerce
+#' @name coerce-bcbioSingleCell-SummarizedExperiment
+setAs(
+    from = "bcbioSingleCell",
+    to = "SummarizedExperiment",
+    function(from) {
+        # Otherwise rowData will be NULL
+        rse <- as(from, "RangedSummarizedExperiment")
+        se <- as(rse, "SummarizedExperiment")
+        se
     }
 )

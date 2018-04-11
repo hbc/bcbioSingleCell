@@ -1,7 +1,9 @@
+library(bcbioSingleCell)
+library(Seurat)
+
 library(knitr)
 library(rmarkdown)
 library(tidyverse)
-library(bcbioSingleCell)
 
 # Set seed for reproducibility
 set.seed(1454944673L)
@@ -16,10 +18,12 @@ opts_chunk[["set"]](
     fig.width = 10L,
     message = FALSE,
     tidy = TRUE,
-    warning = TRUE)
+    warning = TRUE
+)
 
 theme_set(
-    theme_light(base_size = 14L))
-theme_update(
-    legend.justification = "center",
-    legend.position = "bottom")
+    theme_paperwhite(
+        base_size = 14L,
+        legend_position = "bottom"
+    )
+)

@@ -15,18 +15,6 @@
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
     }
-    if (missing(min)) {
-        min <- metadata(object)[["filterParams"]][["minGenes"]]
-        if (!is.numeric(min)) {
-            min <- 0L
-        }
-    }
-    if (missing(max)) {
-        max <- metadata(object)[["filterParams"]][["maxGenes"]]
-        if (!is.numeric(max)) {
-            max <- Inf
-        }
-    }
     assert_all_are_non_negative(c(min, max))
     # Support for per sample filtering cutoffs
     min <- min(min)
@@ -36,7 +24,7 @@
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
     if (!metricCol %in% colnames(metrics)) {
-        warn(paste(
+        warning(paste(
             deparse(substitute(object)),
             "does not contain", metricCol, "column in `metrics()`"
         ))
@@ -67,12 +55,15 @@
             scale_y_continuous(trans = trans)
     } else if (geom == "ecdf") {
         p <- p +
-            stat_ecdf(geom = "step") +
+            stat_ecdf(geom = "step", size = 1L) +
             scale_x_continuous(trans = trans) +
             labs(y = "frequency")
     } else if (geom == "histogram") {
         p <- p +
-            geom_histogram(bins = bins) +
+            geom_histogram(
+                bins = bins,
+                color = FALSE
+            ) +
             scale_x_continuous(trans = trans) +
             scale_y_continuous(trans = trans)
     } else if (geom == "ridgeline") {
@@ -115,7 +106,11 @@
     }
 
     # Label interesting groups
-    p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
+    p <- p +
+        labs(
+            color = paste(interestingGroups, collapse = ":\n"),
+            fill = paste(interestingGroups, collapse = ":\n")
+        )
 
     # Color palette
     if (geom == "ecdf") {
@@ -177,6 +172,14 @@
     assertIsColorScaleDiscreteOrNULL(color)
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
+    if (!all(c(xCol, yCol) %in% colnames(metrics))) {
+        warning(paste(
+            deparse(substitute(object)), "must contain",
+            toString(c(xCol, yCol)),
+            "columns in `metrics()`"
+        ))
+        return(invisible())
+    }
 
     p <- ggplot(
         data = metrics,

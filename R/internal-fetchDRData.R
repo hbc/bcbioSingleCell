@@ -15,12 +15,12 @@
 #'
 #' @examples
 #' x <- .fetchDRData.seurat(
-#'     object = pbmc_small,
+#'     object = Seurat::pbmc_small,
 #'     dimCode = c(x = "tSNE_1", y = "tSNE_2")
 #' )
 #' glimpse(x)
 .fetchDRData.seurat <- function(object, dimCode) {  # nolint
-    fetch <- FetchData(object, vars.all = dimCode)
+    fetch <- Seurat::FetchData(object, vars.all = dimCode)
     metrics <- metrics(object)
     assert_are_identical(rownames(fetch), rownames(metrics))
     cbind(fetch, metrics) %>%

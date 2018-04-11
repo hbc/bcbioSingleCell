@@ -2,6 +2,7 @@
 #' @importFrom assertive assert_all_are_existing_files
 #' @importFrom assertive assert_all_are_greater_than_or_equal_to
 #' @importFrom assertive assert_all_are_in_left_open_range
+#' @importFrom assertive assert_all_are_in_right_open_range
 #' @importFrom assertive assert_all_are_matching_regex
 #' @importFrom assertive assert_all_are_non_missing_nor_empty_character
 #' @importFrom assertive assert_all_are_non_negative
@@ -62,7 +63,7 @@ NULL
         identical(logical, FALSE) &&
         identical(stop, TRUE)
     ) {
-        abort("`sampleNameAggregate` column is required")
+        stop("`sampleNameAggregate` column is required")
     }
     logical
 }

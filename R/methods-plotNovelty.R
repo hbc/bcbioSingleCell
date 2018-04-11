@@ -14,31 +14,15 @@
 #' # bcbioSingleCell ====
 #' plotNovelty(bcb_small)
 #'
+#' # SingleCellExperiment ====
+#' plotNovelty(cellranger_small)
+#'
 #' # seurat ====
-#' plotNovelty(seurat_small)
+#' # `object@meta.data` must contain `log10GenesPerUMI`
+#' \dontrun{
+#' plotNovelty(Seurat::pbmc_small)
+#' }
 NULL
-
-
-
-# Constructors =================================================================
-.plotNovelty <- function(
-    object,
-    geom = c("violin", "boxplot", "histogram", "ridgeline"),
-    interestingGroups,
-    min,
-    fill = scale_fill_viridis(discrete = TRUE)
-) {
-    geom <- match.arg(geom)
-    .plotQCMetric(
-        object = object,
-        metricCol = "log10GenesPerUMI",
-        geom = geom,
-        interestingGroups = interestingGroups,
-        min = min,
-        trans = "sqrt",
-        fill = fill
-    )
-}
 
 
 
@@ -47,16 +31,24 @@ NULL
 #' @export
 setMethod(
     "plotNovelty",
-    signature("bcbioSingleCell"),
-    .plotNovelty
-)
-
-
-
-#' @rdname plotNovelty
-#' @export
-setMethod(
-    "plotNovelty",
-    signature("seurat"),
-    .plotNovelty
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        geom = c("violin", "boxplot", "histogram", "ridgeline"),
+        interestingGroups,
+        min = 0L,
+        fill = scale_fill_viridis(discrete = TRUE)
+    ) {
+        assert_all_are_in_right_open_range(min, lower = 0L, upper = 1L)
+        geom <- match.arg(geom)
+        .plotQCMetric(
+            object = object,
+            metricCol = "log10GenesPerUMI",
+            geom = geom,
+            interestingGroups = interestingGroups,
+            min = min,
+            trans = "sqrt",
+            fill = fill
+        )
+    }
 )

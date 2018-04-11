@@ -15,7 +15,7 @@
 
 \S4method{metrics}{SingleCellExperiment}(object, interestingGroups)
 
-\S4method{metrics}{seurat}(object, interestingGroups)
+\S4method{metrics}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -26,6 +26,8 @@
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{data.frame} with cellular barcodes as rows.
@@ -40,19 +42,14 @@ metrics(bcb_small) \%>\% glimpse()
 # SingleCellExperiment ====
 metrics(cellranger_small) \%>\% glimpse()
 
+# dgCMatrix ====
+counts <- counts(bcb_small)
+class(counts)
+metrics(counts) \%>\% glimpse()
+
 # seurat ====
 metrics(seurat_small) \%>\% glimpse()
-metrics(pbmc_small) \%>\% glimpse()
-
-# dgCMatrix ====
-mat <- counts(bcb_small)
-class(mat)
-metrics(mat) \%>\% glimpse()
-
-# dgTMatrix ====
-mat <- counts(pbmc_small)
-class(mat)
-metrics(mat) \%>\% glimpse()
+metrics(Seurat::pbmc_small) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
