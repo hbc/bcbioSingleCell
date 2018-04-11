@@ -48,7 +48,8 @@
 #' loadSingleCell(
 #'     uploadDir = uploadDir,
 #'     organism = "Homo sapiens",
-#'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
+#'     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
+#'     ensemblRelease = 87L
 #' )
 loadSingleCell <- function(
     uploadDir,
