@@ -70,12 +70,13 @@ run directory as a remote connection over
 }
 \examples{
 uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
-loadSingleCell(
+x <- loadSingleCell(
     uploadDir = uploadDir,
     organism = "Homo sapiens",
     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
     ensemblRelease = 87L
 )
+show(x)
 }
 \seealso{
 Other Read Functions: \code{\link{loadCellRanger}},
