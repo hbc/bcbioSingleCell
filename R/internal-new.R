@@ -3,8 +3,8 @@
     rowRanges,
     colData,
     metadata,
-    transgeneNames,
-    spikeNames
+    transgeneNames = NULL,
+    spikeNames = NULL
 ) {
     # Prepare RangedSummarizedExperiment first.
     # Supports automatic resizing of rowRanges and helps slot FASTA spike-ins.
