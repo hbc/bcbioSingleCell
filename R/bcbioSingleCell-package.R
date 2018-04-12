@@ -13,7 +13,8 @@
 #' @importFrom Matrix colSums readMM rowMeans rowSums
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom S4Vectors aggregate complete.cases metadata metadata<- na.omit
-#' @importFrom SingleCellExperiment isSpike isSpike<- SingleCellExperiment
+#' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
+#'   spikeNames
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
 #' @importFrom basejump assignAndSaveData camel convertUCSCBuildToEnsembl
 #'   detectOrganism dynamicPlotlist initializeDirectory makeGRangesFromEnsembl
