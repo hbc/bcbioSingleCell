@@ -23,7 +23,7 @@
     fetch <- Seurat::FetchData(object, vars.all = dimCode)
     metrics <- metrics(object)
     assert_are_identical(rownames(fetch), rownames(metrics))
-    cbind(fetch, metrics) %>%
+    cbind(metrics, fetch) %>%
         rownames_to_column() %>%
         camel() %>%
         # Group by ident here for center calculations
