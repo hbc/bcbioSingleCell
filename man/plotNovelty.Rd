@@ -60,7 +60,6 @@ Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}

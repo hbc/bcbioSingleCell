@@ -39,7 +39,6 @@ Other Quality Control Functions: \code{\link{plotCellCounts}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}

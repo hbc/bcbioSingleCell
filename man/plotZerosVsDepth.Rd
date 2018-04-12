@@ -49,7 +49,6 @@ Other Quality Control Functions: \code{\link{inflectionPoint}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}}
 }
