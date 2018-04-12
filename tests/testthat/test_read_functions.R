@@ -8,16 +8,13 @@ test_that("loadCellRanger", {
     uploadDir <- file.path(extdataDir, "cellranger")
     refdataDir <- file.path(uploadDir, "refdata-cellranger-hg19-1.2.0")
     sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
-    # This will warn about missing reference GTF
     x <- loadCellRanger(
         uploadDir = uploadDir,
         refdataDir = refdataDir,
         sampleMetadataFile = sampleMetadataFile
     )
-    expect_identical(
-        dim(x),
-        c(500L, 500L)
-    )
+    expect_is(x, "SingleCellExperiment")
+    expect_identical(dim(x), c(500L, 500L))
     expect_identical(
         colnames(x)[1L:2L],
         c("aggregation_AAACCTGGTTTACTCT_1",
@@ -53,9 +50,7 @@ test_that("loadCellRanger", {
             "date" = "Date",
             "wd" = "character",
             "utilsSessionInfo" = "sessionInfo",
-            "devtoolsSessionInfo" = "session_info",
-            "isSpike" = "character",
-            "unannotatedRows" = "character"
+            "devtoolsSessionInfo" = "session_info"
         )
     )
 })

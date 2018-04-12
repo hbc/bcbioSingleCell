@@ -194,18 +194,6 @@ test_that("plotQC : seurat", {
 
 
 
-# plotQuantileHeatmap ==========================================================
-test_that("plotQuantileHeatmap : seurat", {
-    p <- plotQuantileHeatmap(seurat_small)
-    expect_is(p, "list")
-    expect_identical(
-        names(p),
-        c("tree_row", "tree_col", "kmeans", "gtable")
-    )
-})
-
-
-
 # plotReadsPerCell =============================================================
 test_that("plotReadsPerCell : bcbioSingleCell", {
     # Example dataset doesn't have a cellular barcode cutoff because we removed
