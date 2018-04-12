@@ -33,3 +33,13 @@
 #'     showRownames = FALSE
 #' )
 NULL
+
+
+
+#' @rdname plotQuantileHeatmap
+#' @export
+setMethod(
+    "plotQuantileHeatmap",
+    signature("seurat"),
+    getMethod("plotQuantileHeatmap", "SummarizedExperiment")
+)

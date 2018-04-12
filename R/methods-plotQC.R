@@ -164,3 +164,13 @@ setMethod(
         }
     }
 )
+
+
+
+#' @rdname plotQC
+#' @export
+setMethod(
+    "plotQC",
+    signature("seurat"),
+    getMethod("plotQC", "SingleCellExperiment")
+)

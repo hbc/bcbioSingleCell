@@ -363,3 +363,13 @@ setMethod(
         p
     }
 )
+
+
+
+#' @rdname plotReadsPerCell
+#' @export
+setMethod(
+    "plotReadsPerCell",
+    signature("seurat"),
+    getMethod("plotReadsPerCell", "SingleCellExperiment")
+)

@@ -48,3 +48,13 @@ setMethod(
         )
     }
 )
+
+
+
+#' @rdname plotGenesPerCell
+#' @export
+setMethod(
+    "plotGenesPerCell",
+    signature("seurat"),
+    getMethod("plotGenesPerCell", "SingleCellExperiment")
+)

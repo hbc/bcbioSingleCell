@@ -78,3 +78,13 @@ setMethod(
         p
     }
 )
+
+
+
+#' @rdname plotUMIsPerCell
+#' @export
+setMethod(
+    "plotUMIsPerCell",
+    signature("seurat"),
+    getMethod("plotUMIsPerCell", "SingleCellExperiment")
+)

@@ -95,3 +95,13 @@ setMethod(
         p
     }
 )
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @export
+setMethod(
+    "plotCellCounts",
+    signature("seurat"),
+    getMethod("plotCellCounts", "SingleCellExperiment")
+)

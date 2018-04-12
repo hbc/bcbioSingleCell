@@ -80,3 +80,13 @@ setMethod(
         p
     }
 )
+
+
+
+#' @rdname plotZerosVsDepth
+#' @export
+setMethod(
+    "plotZerosVsDepth",
+    signature("seurat"),
+    getMethod("plotZerosVsDepth", "SingleCellExperiment")
+)

@@ -30,3 +30,13 @@ setMethod(
             t()
     }
 )
+
+
+
+#' @rdname fetchGeneData
+#' @export
+setMethod(
+    "fetchGeneData",
+    signature("seurat"),
+    getMethod("fetchGeneData", "SingleCellExperiment")
+)

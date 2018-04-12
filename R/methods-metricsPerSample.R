@@ -62,3 +62,13 @@ setMethod(
             column_to_rownames()
     }
 )
+
+
+
+#' @rdname metricsPerSample
+#' @export
+setMethod(
+    "metricsPerSample",
+    signature("seurat"),
+    getMethod("metricsPerSample", "SingleCellExperiment")
+)

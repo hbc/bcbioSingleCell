@@ -27,6 +27,8 @@ setMethod(
     "inflectionPoint",
     signature("SingleCellExperiment"),
     function(object) {
+        .Deprecated("barcodeRanks")
+
         validObject(object)
         counts <- counts(object)
 
@@ -52,4 +54,14 @@ setMethod(
         # Return the inflection point as the expression value
         totals[which.max(dists)]
     }
+)
+
+
+
+#' @rdname inflectionPoint
+#' @export
+setMethod(
+    "inflectionPoint",
+    signature("seurat"),
+    getMethod("inflectionPoint", "SingleCellExperiment")
 )

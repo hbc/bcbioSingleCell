@@ -156,3 +156,13 @@ setMethod(
         lrt
     }
 )
+
+
+
+#' @rdname diffExp
+#' @export
+setMethod(
+    "diffExp",
+    signature("seurat"),
+    getMethod("diffExp", "SingleCellExperiment")
+)

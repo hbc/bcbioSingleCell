@@ -52,3 +52,13 @@ setMethod(
         )
     }
 )
+
+
+
+#' @rdname plotNovelty
+#' @export
+setMethod(
+    "plotNovelty",
+    signature("seurat"),
+    getMethod("plotNovelty", "SingleCellExperiment")
+)
