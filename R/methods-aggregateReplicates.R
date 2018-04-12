@@ -175,7 +175,7 @@ setMethod(
             rowRanges = rowRanges(object),
             colData = colData,
             metadata = metadata,
-            isSpike = isSpike(object)
+            spikeNames = spikeNames(object)
         )
     }
 )
