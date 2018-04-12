@@ -5,7 +5,8 @@
 \title{Load 10X Genomics Cell Ranger Data}
 \usage{
 loadCellRanger(uploadDir, refdataDir, sampleMetadataFile,
-  interestingGroups = "sampleName", isSpike = NULL, prefilter = TRUE, ...)
+  interestingGroups = "sampleName", transgeneNames = NULL,
+  spikeNames = NULL, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to Cell Ranger output directory. This directory path
@@ -20,6 +21,12 @@ inDrop).}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{transgeneNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows
+denote transgenes (e.g. EGFP, TDTOMATO).}
+
+\item{spikeNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows denote
+spike-in sequences (e.g. ERCCs).}
 
 \item{prefilter}{Prefilter counts prior to quality control analysis. This
 applies very minimal filtering to the dataset, dropping only cells that

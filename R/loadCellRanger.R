@@ -35,7 +35,8 @@ loadCellRanger <- function(
     refdataDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
-    isSpike = NULL,
+    transgeneNames = NULL,
+    spikeNames = NULL,
     prefilter = TRUE,
     ...
 ) {
@@ -232,6 +233,7 @@ loadCellRanger <- function(
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
-        isSpike = isSpike
+        transgeneNames = transgeneNames,
+        spikeNames = spikeNames
     )
 }
