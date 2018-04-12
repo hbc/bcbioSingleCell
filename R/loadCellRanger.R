@@ -48,7 +48,8 @@ loadCellRanger <- function(
     refdataDir <- normalizePath(refdataDir, winslash = "/", mustWork = TRUE)
     assert_is_character(interestingGroups)
     assert_is_a_string(sampleMetadataFile)
-    assertIsCharacterOrNULL(isSpike)
+    assertIsCharacterOrNULL(transgeneNames)
+    assertIsCharacterOrNULL(spikeNames)
     assert_is_a_bool(prefilter)
     dots <- list(...)
     pipeline <- "cellranger"
