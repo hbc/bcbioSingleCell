@@ -56,19 +56,23 @@ test_that("fetchPCAData", {
     expect_identical(
         lapply(x, class),
         list(
-            "pc1" = "numeric",
-            "pc2" = "numeric",
-            "ident" = "factor",
             "nGene" = "integer",
             "nUMI" = "integer",
             "origIdent" = "factor",
             "res0x8" = "factor",
             "res1" = "factor",
+            "sampleID" = "factor",
+            "sampleName" = "factor",
+            "description" = "factor",
+            "interestingGroups" = "factor",
+            "ident" = "factor",
+            "pc1" = "numeric",
+            "pc2" = "numeric",
             "centerX" = "numeric",
             "centerY" = "numeric"
         )
     )
-    subset <- x[1L, ] %>%
+    subset <- head(x, 1L) %>%
         tibble::rownames_to_column(.) %>%
         dplyr::mutate_if(
             is.numeric,
@@ -76,14 +80,18 @@ test_that("fetchPCAData", {
         ) %>%
         tibble::column_to_rownames(.)
     target <- data.frame(
-        "pc1" = 0.443,
-        "pc2" = -1.575,
-        "ident" = factor("0", levels = c("0", "1", "2", "3")),
         "nGene" = 47L,
         "nUMI" = 70L,
         "origIdent" = factor("SeuratProject"),
         "res0x8" = factor("0", levels = "0"),
         "res1" = factor("0", levels = c("0", "1", "2", "3")),
+        "sampleID" = factor("SeuratProject"),
+        "sampleName" = factor("SeuratProject"),
+        "description" = factor("SeuratProject"),
+        "interestingGroups" = factor("SeuratProject"),
+        "ident" = factor("0", levels = c("0", "1", "2", "3")),
+        "pc1" = 0.443,
+        "pc2" = -1.575,
         "centerX" = -1.176,
         "centerY" = -1.683,
         row.names = "ATGCCAGAACGACT",
@@ -102,19 +110,22 @@ test_that("fetchTSNEData", {
     expect_identical(
         lapply(x, class),
         list(
-            "tSNE1" = "numeric",
-            "tSNE2" = "numeric",
-            "ident" = "factor",
             "nGene" = "integer",
             "nUMI" = "integer",
             "origIdent" = "factor",
             "res0x8" = "factor",
             "res1" = "factor",
+            "sampleID" = "factor",
+            "sampleName" = "factor",
+            "description" = "factor",
+            "interestingGroups" = "factor",
+            "ident" = "factor",
+            "tSNE1" = "numeric",
+            "tSNE2" = "numeric",
             "centerX" = "numeric",
             "centerY" = "numeric"
         )
     )
-
     subset <- head(x, 1L) %>%
         tibble::rownames_to_column(.) %>%
         dplyr::mutate_if(
@@ -123,14 +134,18 @@ test_that("fetchTSNEData", {
         ) %>%
         tibble::column_to_rownames(.)
     target <- data.frame(
-        "tSNE1" = 14.422,
-        "tSNE2" = 8.336,
-        "ident" = factor("0", levels = c("0", "1", "2", "3")),
         "nGene" = 47L,
         "nUMI" = 70L,
         "origIdent" = factor("SeuratProject"),
         "res0x8" = factor("0"),
         "res1" = factor("0", levels = c("0", "1", "2", "3")),
+        "sampleID" = factor("SeuratProject"),
+        "sampleName" = factor("SeuratProject"),
+        "description" = factor("SeuratProject"),
+        "interestingGroups" = factor("SeuratProject"),
+        "ident" = factor("0", levels = c("0", "1", "2", "3")),
+        "tSNE1" = 14.422,
+        "tSNE2" = 8.336,
         "centerX" = -0.332,
         "centerY" = 18.76,
         row.names = "ATGCCAGAACGACT",
@@ -151,14 +166,18 @@ test_that("fetchTSNEExpressionData", {
     expect_identical(
         lapply(x, class),
         list(
-            "tSNE1" = "numeric",
-            "tSNE2" = "numeric",
-            "ident" = "factor",
             "nGene" = "integer",
             "nUMI" = "integer",
             "origIdent" = "factor",
             "res0x8" = "factor",
             "res1" = "factor",
+            "sampleID" = "factor",
+            "sampleName" = "factor",
+            "description" = "factor",
+            "interestingGroups" = "factor",
+            "ident" = "factor",
+            "tSNE1" = "numeric",
+            "tSNE2" = "numeric",
             "centerX" = "numeric",
             "centerY" = "numeric",
             "mean" = "numeric",
@@ -166,27 +185,30 @@ test_that("fetchTSNEExpressionData", {
             "sum" = "numeric"
         )
     )
-
-    subset <- x[1L, ] %>%
+    subset <- head(x, 1L) %>%
         tibble::rownames_to_column(.) %>%
         dplyr::mutate_if(is.numeric, dplyr::funs(round(., digits = 3L))) %>%
         tibble::column_to_rownames(.)
     # The round function will coerce integers to numerics. This is the rationale
     # for the `as.numeric()` usage below.
     target <- data.frame(
-        "tSNE1" = 14.422,
-        "tSNE2" = 8.336,
-        "ident" = factor("0", levels = c("0", "1", "2", "3")),
-        "nGene" = as.numeric(47L),
-        "nUMI" = as.numeric(70L),
+        "nGene" = 47L,
+        "nUMI" = 70L,
         "origIdent" = factor("SeuratProject"),
         "res0x8" = factor("0"),
         "res1" = factor("0", levels = c("0", "1", "2", "3")),
+        "sampleID" = factor("SeuratProject"),
+        "sampleName" = factor("SeuratProject"),
+        "description" = factor("SeuratProject"),
+        "interestingGroups" = factor("SeuratProject"),
+        "ident" = factor("0", levels = c("0", "1", "2", "3")),
+        "tSNE1" = 14.422,
+        "tSNE2" = 8.336,
         "centerX" = -0.332,
         "centerY" = 18.76,
-        "mean" = 1.656,
+        "mean" = 0.333,
         "median" = 0L,
-        "sum" = 9.938,
+        "sum" = 2L,
         row.names = "ATGCCAGAACGACT",
         stringsAsFactors = TRUE
     )
@@ -201,26 +223,11 @@ test_that("filterCells", {
         x <- filterCells(bcb_small, minGenes = 0L)
     ))
     expect_s4_class(x, "bcbioSingleCell")
-    expect_identical(
-        dim(x),
-        c(500L, 132L)
-    )
-    expect_is(
-        metadata(x)[["filterParams"]],
-        "list"
-    )
-    expect_is(
-        metadata(x)[["filterCells"]],
-        "character"
-    )
-    expect_is(
-        metadata(x)[["filterGenes"]],
-        "character"
-    )
-    expect_identical(
-        metadata(x)[["subset"]],
-        TRUE
-    )
+    expect_identical(dim(x), c(500L, 205L))
+    expect_is(metadata(x)[["filterParams"]], "list")
+    expect_is(metadata(x)[["filterCells"]], "character")
+    expect_is(metadata(x)[["filterGenes"]], "character")
+    expect_identical(metadata(x)[["subset"]], TRUE)
 })
 
 test_that("filterCells : Maximum parameters", {
@@ -238,10 +245,7 @@ test_that("filterCells : Maximum parameters", {
         )
     ))
     expect_s4_class(x, "bcbioSingleCell")
-    expect_identical(
-        dim(x),
-        dim(bcb_small)
-    )
+    expect_identical(dim(x), dim(bcb_small))
 })
 
 test_that("filterCells : Cutoff failures", {
@@ -326,29 +330,26 @@ test_that("selectSamples : bcbioSingleCell", {
     x <- selectSamples(bcb_small, sampleName = "rep_1")
     expect_s4_class(x, "bcbioSingleCell")
     expect_true(metadata(x)[["selectSamples"]])
-    expect_identical(
-        dim(x),
-        c(500L, 500L)
-    )
+    expect_identical(dim(x), c(500L, 500L))
     expect_identical(
         sampleData(x)[["sampleID"]],
         factor("multiplexed_AAAAAAAA")
     )
-    # Ensure that bcbio cellular barcodes get updated correctly
-    cb <- metadata(x)[["cellularBarcodes"]]
-    expect_is(cb, "list")
-    ids1 <- sampleData(x) %>%
-        .[["sampleID"]] %>%
-        as.character()
-    ids2 <- names(cb)
-    expect_identical(ids1, ids2)
-    # Check that tibbles are stored inside list
-    expect_identical(
-        lapply(cb, class) %>%
-            unlist() %>%
-            unique(),
-        c("tbl_df", "tbl", "data.frame")
-    )
+    # # Ensure that bcbio cellular barcodes get updated correctly
+    # cb <- metadata(x)[["cellularBarcodes"]]
+    # expect_is(cb, "list")
+    # ids1 <- sampleData(x) %>%
+    #     .[["sampleID"]] %>%
+    #     as.character()
+    # ids2 <- names(cb)
+    # expect_identical(ids1, ids2)
+    # # Check that tibbles are stored inside list
+    # expect_identical(
+    #     lapply(cb, class) %>%
+    #         unlist() %>%
+    #         unique(),
+    #     c("tbl_df", "tbl", "data.frame")
+    # )
 })
 
 test_that("selectSamples : Match failure", {
@@ -362,7 +363,14 @@ test_that("selectSamples : Match failure", {
 
 # subsetPerSample ==============================================================
 test_that("subsetPerSample : bcbioSingleCell", {
-    subsetPerSample(bcb_small, dir = "subsetPerSample")
+    x <- subsetPerSample(bcb_small, assignAndSave = FALSE)
+    expect_is(x, "list")
+    expect_identical(names(x), "multiplexed_AAAAAAAA")
+    subsetPerSample(
+        object = bcb_small,
+        assignAndSave = TRUE,
+        dir = "subsetPerSample"
+    )
     expect_identical(
         list.files("subsetPerSample"),
         "multiplexed_AAAAAAAA.rda"
