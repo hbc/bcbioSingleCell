@@ -16,7 +16,7 @@
 #' @examples
 #' # seurat ====
 #' invisible(capture.output(
-#'     all_markers <- FindAllMarkers(seurat_small)
+#'     all_markers <- Seurat::FindAllMarkers(seurat_small)
 #' ))
 #' all_sanitized <- sanitizeMarkers(
 #'     object = seurat_small,
@@ -25,7 +25,7 @@
 #' glimpse(all_sanitized)
 #'
 #' invisible(capture.output(
-#'     ident_3_markers <- FindMarkers(
+#'     ident_3_markers <- Seurat::FindMarkers(
 #'         object = seurat_small,
 #'         ident.1 = "3",
 #'         ident.2 = NULL
