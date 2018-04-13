@@ -53,8 +53,8 @@ plotFeatures <- function(object, features, ...) {
 #' @rdname deprecated
 #' @export
 darkTheme <- function(...) {
-    .Deprecated("basejump::midnightTheme")
-    basejump::midnightTheme(...)
+    .Deprecated("basejump::theme_midnight")
+    basejump::theme_midnight(...)
 }
 
 
