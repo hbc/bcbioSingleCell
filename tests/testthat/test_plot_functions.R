@@ -195,37 +195,51 @@ test_that("plotQC : seurat", {
 
 
 # plotReadsPerCell =============================================================
+# Example dataset doesn't have a cellular barcode cutoff because we removed the
+# bcbio commands log file (which conflicts with Travis CI)
 test_that("plotReadsPerCell : bcbioSingleCell", {
-    # Example dataset doesn't have a cellular barcode cutoff because we removed
-    # the bcbio commands log file (which conflicts with Travis CI)
-    histogram <- plotReadsPerCell(bcb_small, geom = "histogram")
-    expect_is(histogram, "ggplot")
+    # Histogram
+    x <- plotReadsPerCell(bcb_small, geom = "histogram")
+    expect_is(x, "ggplot")
     expect_is(
-        histogram %>%
+        x %>%
             .[["layers"]] %>%
             .[[1L]] %>%
             .[["geom"]],
-        "GeomLine"
+        "GeomStep"
     )
 
-    ridgeline <- plotReadsPerCell(bcb_small, geom = "ridgeline")
-    expect_is(ridgeline, "ggplot")
+    # Ridgeline
+    x <- plotReadsPerCell(bcb_small, geom = "ridgeline")
+    expect_is(x, "ggplot")
     expect_is(
-        ridgeline %>%
+        x %>%
             .[["layers"]] %>%
             .[[1L]] %>%
             .[["geom"]],
         "GeomDensityRidges"
     )
 
-    violin <- plotReadsPerCell(bcb_small, geom = "violin")
-    expect_is(violin, "ggplot")
+    # Violin
+    x <- plotReadsPerCell(bcb_small, geom = "violin")
+    expect_is(x, "ggplot")
     expect_is(
-        violin %>%
+        x %>%
             .[["layers"]] %>%
             .[[1L]] %>%
             .[["geom"]],
         "GeomViolin"
+    )
+
+    # ECDF
+    x <- plotReadsPerCell(bcb_small, geom = "ecdf")
+    expect_is(x, "ggplot")
+    expect_is(
+        x %>%
+            .[["layers"]] %>%
+            .[[1L]] %>%
+            .[["geom"]],
+        "GeomStep"
     )
 })
 
