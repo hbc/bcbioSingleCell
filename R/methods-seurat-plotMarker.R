@@ -44,7 +44,7 @@ setMethod(
     function(
         object,
         gene,
-        dark = TRUE,
+        dark = FALSE,
         return = c("grid", "list"),
         ...
     ) {
@@ -148,7 +148,7 @@ setMethod(
             low = "lightgray",
             high = "orange"
         ),
-        dark = TRUE,
+        dark = FALSE,
         pointsAsNumbers = FALSE,
         headerLevel = 2L,
         title = NULL

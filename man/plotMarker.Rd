@@ -13,13 +13,13 @@ plotMarker(object, ...)
 
 plotMarkers(object, ...)
 
-\S4method{plotMarker}{seurat}(object, gene, dark = TRUE, return = c("grid",
+\S4method{plotMarker}{seurat}(object, gene, dark = FALSE, return = c("grid",
   "list"), ...)
 
 \S4method{plotMarkers}{seurat}(object, genes, tsneColor,
   violinFill = scale_fill_viridis(discrete = TRUE),
   dotColor = scale_color_gradient(low = "lightgray", high = "orange"),
-  dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L, title = NULL)
+  dark = FALSE, pointsAsNumbers = FALSE, headerLevel = 2L, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
