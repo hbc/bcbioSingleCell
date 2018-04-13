@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <div class="page-header">
     <h1>Plot Read Counts per Cell</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotReadsPerCell.R'><code>R/methods-plotReadsPerCell.R</code></a></small>
-    <p class="hidden name"><code>plotReadsPerCell.Rd</code></p>
+    <div class="hidden name"><code>plotReadsPerCell.Rd</code></div>
     </div>
 
     
@@ -106,7 +106,7 @@
 
     <pre class="usage"><span class='fu'>plotReadsPerCell</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSingleCell</span>
+<span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotReadsPerCell</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
   <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"histogram"</span>, <span class='st'>"ecdf"</span>, <span class='st'>"ridgeline"</span>, <span class='st'>"violin"</span>),
   <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
@@ -162,12 +162,10 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
 
     <div class='dont-index'><p>Other Quality Control Functions: <code>inflectionPoint</code>,
   <code>plotCellCounts</code>,
-  <code>plotCumulativeUMIsPerCell</code>,
   <code>plotGenesPerCell</code>,
   <code>plotMitoRatio</code>,
   <code>plotMitoVsCoding</code>,
   <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
-  <code><a href='plotQuantileHeatmap.html'>plotQuantileHeatmap</a></code>,
   <code>plotUMIsPerCell</code>,
   <code>plotZerosVsDepth</code></p></div>
     
@@ -175,8 +173,16 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='fu'>plotReadsPerCell</span>(<span class='no'>bcb_small</span>)</div><div class='img'><img src='plotReadsPerCell-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># seurat ====</span>
-<span class='fu'>plotReadsPerCell</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotReadsPerCell-2.png' alt='' width='700' height='433' /></div></pre>
+# SingleCellExperiment ====
+# Only contains UMI counts
+</div><span class='co'># NOT RUN {</span>
+<span class='fu'>plotReadsPerCell</span>(<span class='no'>cellranger_small</span>)
+<span class='co'># }</span><div class='input'>
+# seurat ====
+# Only contains UMI counts
+</div><span class='co'># NOT RUN {</span>
+<span class='fu'>plotReadsPerCell</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

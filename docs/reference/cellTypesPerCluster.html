@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -96,8 +96,8 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Cell Types per Cluster</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-cellTypesPerCluster.R'><code>R/methods-cellTypesPerCluster.R</code></a></small>
-    <p class="hidden name"><code>cellTypesPerCluster.Rd</code></p>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-cellTypesPerCluster.R'><code>R/methods-seurat-cellTypesPerCluster.R</code></a></small>
+    <div class="hidden name"><code>cellTypesPerCluster.Rd</code></div>
     </div>
 
     
@@ -141,14 +141,15 @@ significant known makers per cell type.</p>
   <code>plotCellTypesPerCluster</code>,
   <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code>plotMarkerTSNE</code>, <code>plotMarker</code>,
   <code><a href='plotPCA.html'>plotPCA</a></code>, <code>plotPCElbow</code>,
   <code>plotTSNE</code>, <code>plotTopMarkers</code>,
   <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>cellTypesPerCluster</span>(<span class='no'>known_markers_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1
+    <pre class="examples"><div class='input'><span class='co'># grouped_df ====</span>
+<span class='fu'>cellTypesPerCluster</span>(<span class='no'>known_markers_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1
 #&gt; Variables: 5
 #&gt; $ cluster  &lt;fct&gt; 1
 #&gt; $ cellType &lt;chr&gt; "Natural Killer Cell"

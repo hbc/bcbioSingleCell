@@ -56,7 +56,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="sampleData.html">sampleData(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="sampleData.html">sampleData(<i>&lt;seurat&gt;</i>)</a></code> </p>
+          <p><code><a href="sampleData.html">sampleData(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="sampleData.html">sampleData(<i>&lt;seurat&gt;</i>)</a></code> <code><a href="sampleData.html">`sampleData<-`(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="sampleData.html">`sampleData<-`(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Sample Data</p></td>
       </tr><tr>
@@ -194,7 +194,7 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="counts.html">counts(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="counts.html">counts(<i>&lt;seurat&gt;</i>)</a></code> </p>
+          <p><code><a href="counts.html">counts(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Counts Accessor</p></td>
       </tr><tr>
@@ -262,7 +262,7 @@
       <tr>
         <!--  -->
         <td>
-          <p><code><a href="metrics.html">metrics(<i>&lt;dgCMatrix&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;seurat&gt;</i>)</a></code> </p>
+          <p><code><a href="metrics.html">metrics(<i>&lt;dgCMatrix&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;dgTMatrix&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Sample Barcode Metrics</p></td>
       </tr><tr>
@@ -288,7 +288,7 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="plotQC.html">plotQC(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="plotQC.html">plotQC(<i>&lt;seurat&gt;</i>)</a></code> </p>
+          <p><code><a href="plotQC.html">plotQC(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="plotQC.html">plotQC(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Quality Control Plots</p></td>
       </tr>
@@ -408,12 +408,6 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="plotCumulativeUMIsPerCell.html">plotCumulativeUMIsPerCell()</a></code> <code><a href="plotCumulativeUMIsPerCell.html">plotKnee()</a></code> </p>
-        </td>
-        <td><p>Plot Cumulative Frequency of UMIs Per Cell</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
           <p><code><a href="plotDot.html">plotDot(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot Dot</p></td>
@@ -438,15 +432,15 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="plotMarkerTSNE.html">plotMarkerTSNE()</a></code> </p>
+          <p><code><a href="plotMarker.html">plotMarker()</a></code> <code><a href="plotMarker.html">plotMarkers()</a></code> </p>
         </td>
-        <td><p>Plot Marker t-SNE</p></td>
+        <td><p>Plot Cell-Type Gene Marker(s)</p></td>
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="plotMarkers.html">plotMarkers()</a></code> </p>
+          <p><code><a href="plotMarkerTSNE.html">plotMarkerTSNE()</a></code> </p>
         </td>
-        <td><p>Plot Cell-Type Gene Markers</p></td>
+        <td><p>Plot Marker t-SNE</p></td>
       </tr><tr>
         <!--  -->
         <td>
@@ -480,15 +474,9 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="plotQC.html">plotQC(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> <code><a href="plotQC.html">plotQC(<i>&lt;seurat&gt;</i>)</a></code> </p>
+          <p><code><a href="plotQC.html">plotQC(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="plotQC.html">plotQC(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Quality Control Plots</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="plotQuantileHeatmap.html">plotQuantileHeatmap(<i>&lt;seurat&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot Heatmap with Quantile Breaks</p></td>
       </tr><tr>
         <!--  -->
         <td>

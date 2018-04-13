@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Cell-Type Gene Markers — plotMarkers • bcbioSingleCell</title>
+<title>Plot Cell-Type Gene Marker(s) — plotMarker • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,7 +27,7 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Plot Cell-Type Gene Markers — plotMarkers" />
+<meta property="og:title" content="Plot Cell-Type Gene Marker(s) — plotMarker" />
 
 <meta property="og:description" content="Plot gene expression per cell in multiple formats:
 t-SNE plot
@@ -64,7 +64,7 @@ Dot plot
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -100,9 +100,9 @@ Dot plot
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Cell-Type Gene Markers</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotMarkers.R'><code>R/methods-plotMarkers.R</code></a></small>
-    <p class="hidden name"><code>plotMarkers.Rd</code></p>
+    <h1>Plot Cell-Type Gene Marker(s)</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-plotMarker.R'><code>R/methods-seurat-plotMarker.R</code></a></small>
+    <div class="hidden name"><code>plotMarker.Rd</code></div>
     </div>
 
     
@@ -114,7 +114,17 @@ Dot plot
 </ol>
     
 
-    <pre class="usage"><span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotMarker</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotMarker</span>(<span class='no'>object</span>, <span class='no'>gene</span>,
+  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>,
+  <span class='st'>"list"</span>))
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
@@ -135,10 +145,6 @@ Dot plot
       <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
-      <th>genes</th>
-      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
-    </tr>
-    <tr>
       <th>tsneColor</th>
       <td><p>Color palette to use for tSNE plot.</p></td>
     </tr>
@@ -152,19 +158,28 @@ Dot plot
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/midnightTheme'>basejump::midnightTheme()</a></code>.</p></td>
+      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
     </tr>
     <tr>
       <th>pointsAsNumbers</th>
       <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
     </tr>
     <tr>
-      <th>headerLevel</th>
-      <td><p>R Markdown header level.</p></td>
-    </tr>
-    <tr>
       <th>title</th>
       <td><p>Plot title.</p></td>
+    </tr>
+    <tr>
+      <th>return</th>
+      <td><p>Return type. Uses <code><a href='http://www.rdocumentation.org/packages/base/topics/match.arg'>base::match.arg()</a></code> internally and defaults
+to the first argument in the vector.</p></td>
+    </tr>
+    <tr>
+      <th>genes</th>
+      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
+    </tr>
+    <tr>
+      <th>headerLevel</th>
+      <td><p>R Markdown header level.</p></td>
     </tr>
     </table>
     
@@ -189,22 +204,27 @@ Dot plot
     <pre class="examples"><div class='input'><span class='co'># seurat ===</span>
 <span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
 <span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>top</span>, <span class='st'>"rowname"</span>)
+
+<span class='co'># Individual gene</span>
+<span class='no'>gene</span> <span class='kw'>&lt;-</span> <span class='no'>genes</span><span class='kw'>[[</span><span class='fl'>1L</span>]]
+<span class='fu'>plotMarker</span>(<span class='no'>seurat_small</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='no'>gene</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plotMarker-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotMarker</span>(<span class='no'>seurat_small</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='no'>gene</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotMarker-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Multiple genes</span>
 <span class='fu'>plotMarkers</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## COL1A2
-#&gt; </div><div class='img'><img src='plotMarkers-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; </div><div class='img'><img src='plotMarker-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## S100A10
-#&gt; </div><div class='img'><img src='plotMarkers-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; </div><div class='img'><img src='plotMarker-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## MYL4
-#&gt; </div><div class='img'><img src='plotMarkers-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; </div><div class='img'><img src='plotMarker-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## MT.ATP6
-#&gt; </div><div class='img'><img src='plotMarkers-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; </div><div class='img'><img src='plotMarker-6.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## H3F3A
-#&gt; </div><div class='img'><img src='plotMarkers-5.png' alt='' width='700' height='433' /></div></pre>
+#&gt; </div><div class='img'><img src='plotMarker-7.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

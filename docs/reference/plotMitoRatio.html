@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <div class="page-header">
     <h1>Plot Mitochondrial Transcript Abundance</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotMitoRatio.R'><code>R/methods-plotMitoRatio.R</code></a></small>
-    <p class="hidden name"><code>plotMitoRatio.Rd</code></p>
+    <div class="hidden name"><code>plotMitoRatio.Rd</code></div>
     </div>
 
     
@@ -106,14 +106,14 @@
 
     <pre class="usage"><span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSingleCell</span>
+<span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>,
-  <span class='st'>"boxplot"</span>, <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>), <span class='no'>interestingGroups</span>, <span class='no'>max</span>,
+  <span class='st'>"boxplot"</span>, <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>, <span class='st'>"boxplot"</span>,
-  <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>), <span class='no'>interestingGroups</span>, <span class='no'>max</span>,
+  <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -157,11 +157,9 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
 
     <div class='dont-index'><p>Other Quality Control Functions: <code>inflectionPoint</code>,
   <code>plotCellCounts</code>,
-  <code>plotCumulativeUMIsPerCell</code>,
   <code>plotGenesPerCell</code>,
   <code>plotMitoVsCoding</code>,
   <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
-  <code><a href='plotQuantileHeatmap.html'>plotQuantileHeatmap</a></code>,
   <code>plotReadsPerCell</code>,
   <code>plotUMIsPerCell</code>,
   <code>plotZerosVsDepth</code></p></div>
@@ -170,8 +168,13 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='fu'>plotMitoRatio</span>(<span class='no'>bcb_small</span>)</div><div class='img'><img src='plotMitoRatio-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># seurat ====</span>
-<span class='fu'>plotMitoRatio</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotMitoRatio-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'># SingleCellExperiment ====</span>
+<span class='fu'>plotMitoRatio</span>(<span class='no'>cellranger_small</span>)</div><div class='img'><img src='plotMitoRatio-2.png' alt='' width='700' height='433' /></div><div class='input'>
+# seurat ====
+# `object@meta.data` must contain `mitoRatio`
+</div><span class='co'># NOT RUN {</span>
+<span class='fu'>plotMitoRatio</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

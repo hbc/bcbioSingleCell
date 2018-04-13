@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Heatmap with Quantile Breaks — plotQuantileHeatmap • bcbioSingleCell</title>
+<title>Extend S4 Methods for <code>seurat</code> Class — cell2sample,seurat-method • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,9 +27,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Plot Heatmap with Quantile Breaks — plotQuantileHeatmap" />
+<meta property="og:title" content="Extend S4 Methods for <code>seurat</code> Class — cell2sample,seurat-method" />
 
-<meta property="og:description" content="Plot Heatmap with Quantile Breaks" />
+<meta property="og:description" content="Provide limited SingleCellExperiment-like method support." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -95,17 +95,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Heatmap with Quantile Breaks</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotQuantileHeatmap.R'><code>R/methods-plotQuantileHeatmap.R</code></a></small>
-    <p class="hidden name"><code>plotQuantileHeatmap.Rd</code></p>
+    <h1>Extend S4 Methods for <code>seurat</code> Class</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-cell2sample.R'><code>R/methods-cell2sample.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotCellCounts.R'><code>R/methods-plotCellCounts.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-SingleCellExperiment.R'><code>R/methods-seurat-SingleCellExperiment.R</code></a></small>
+    <div class="hidden name"><code>seurat-SingleCellExperiment.Rd</code></div>
     </div>
 
     
-    <p>Plot Heatmap with Quantile Breaks</p>
+    <p>Provide limited <code>SingleCellExperiment</code>-like method support.</p>
     
 
     <pre class="usage"><span class='co'># S4 method for seurat</span>
-<span class='fu'>plotQuantileHeatmap</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>cell2sample</span>(<span class='no'>object</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotCellCounts</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+
+<span class='co'># S4 method for seurat,ANY</span>
+<span class='fu'>assay</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>colData</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>colnames</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'><a href='metadata.html'>metadata</a></span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'><a href='metadata.html'>metadata</a></span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>rowData</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>rowRanges</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>rownames</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>gene2symbol</span>(<span class='no'>object</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>interestingGroups</span>(<span class='no'>object</span>)
+
+<span class='co'># S4 method for seurat,character</span>
+<span class='fu'>interestingGroups</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -115,44 +152,35 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Passthrough arguments to <code><a href='http://www.rdocumentation.org/packages/pheatmap/topics/pheatmap'>pheatmap::pheatmap()</a></code>. The names of the
-arguments must be formatted in camel case, not snake case.</p></td>
+      <th>interestingGroups</th>
+      <td><p>Character vector of interesting groups. Must be
+formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+    </tr>
+    <tr>
+      <th>fill</th>
+      <td><p>Desired ggplot fill scale. Must supply discrete values. When set
+to <code>NULL</code>, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Primary object.</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p>Object to assign.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Show heatmap and invisibly return a <code>list</code> of the components.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This is helpful for visualizing single cell data.
-Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
+    <p>Match <code>SummarizedExperiment</code> method return.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Quality Control Functions: <code>inflectionPoint</code>,
-  <code>plotCellCounts</code>,
-  <code>plotCumulativeUMIsPerCell</code>,
-  <code>plotGenesPerCell</code>,
-  <code>plotMitoRatio</code>,
-  <code>plotMitoVsCoding</code>,
-  <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
-  <code>plotReadsPerCell</code>,
-  <code>plotUMIsPerCell</code>,
-  <code>plotZerosVsDepth</code></p></div>
+    <div class='dont-index'><p><code>getMethod("metadata&lt;-", "Annotated")</code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># seurat ====
-</div><span class='co'># NOT RUN {</span>
-<span class='fu'>plotQuantileHeatmap</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
-    <span class='kw'>showColnames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>showRownames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -161,16 +189,12 @@ Ideas and code from: http://slowkow.com/notes/heatmap-tutorial/</p>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
     <h2>Author</h2>
     
-Rory Kirchner, Michael Steinbaugh
+Michael Steinbaugh
 
   </div>
 </div>

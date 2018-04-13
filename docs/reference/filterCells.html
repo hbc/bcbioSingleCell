@@ -60,7 +60,7 @@ cellular barcodes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@ cellular barcodes." />
     <div class="page-header">
     <h1>Filter Cells</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-filterCells.R'><code>R/methods-filterCells.R</code></a></small>
-    <p class="hidden name"><code>filterCells.Rd</code></p>
+    <div class="hidden name"><code>filterCells.Rd</code></div>
     </div>
 
     
@@ -108,10 +108,10 @@ cellular barcodes.</p>
 
     <pre class="usage"><span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSingleCell</span>
+<span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1000L</span>,
-  <span class='kw'>maxUMIs</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>500L</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>3L</span>)</pre>
+  <span class='kw'>maxUMIs</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>3L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,7 +158,7 @@ this many cells.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>bcbioSingleCell</code>, with filtering information slotted into
-<code>metadata()</code> as <code>filterCells</code> and <code>filterParams</code>.</p>
+<code><a href='metadata.html'>metadata()</a></code> as <code>filterCells</code> and <code>filterParams</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -183,20 +183,23 @@ rownames of <code><a href='sampleData.html'>sampleData()</a></code>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
-#&gt; samples: 1
-#&gt; cells: 500
-#&gt; genes: 500
-#&gt; organism: Homo sapiens
-#&gt; upload dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
-#&gt; upload date: 2018-01-01
-#&gt; R load date: 2018-03-30</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>bcb_small</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Filtering parameters:
+<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+#&gt; Samples: 1
+#&gt; Cells: 500
+#&gt; Genes: 500
+#&gt; Organism: Homo sapiens
+#&gt; AnnotationHub: AH57757
+#&gt; Ensembl Release: 90
+#&gt; Genome Build: GRCh38
+#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
+#&gt; Upload Date: 2018-01-01
+#&gt; R Load Date: 2018-04-06</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>bcb_small</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Filtering parameters:
 #&gt;   - &gt;= 1000 UMIs per cell
 #&gt;   - &lt;= Inf UMIs per cell
 #&gt;   - &gt;= 0 genes per cell
 #&gt;   - &lt;= Inf genes per cell
 #&gt;   - &lt;= 0.1 mitochondrial abundance
-#&gt;   - &gt;= 0.75 novelty score
+#&gt;   - &gt;= 0.7 novelty score
 #&gt;   - &gt;= 3 cells per gene
 #&gt; ============================================================
 #&gt; 500 genes / 500 cells
@@ -205,18 +208,66 @@ rownames of <code><a href='sampleData.html'>sampleData()</a></code>).</p>
 #&gt;      466 cells | minGenes &gt;= 0
 #&gt;      466 cells | maxGenes &lt;= Inf
 #&gt;      212 cells | maxMitoRatio &lt;= 0.1
-#&gt;      132 cells | minNovelty &lt;= 0.75
+#&gt;      205 cells | minNovelty &lt;= 0.7
 #&gt;      500 genes | minCellsPerGene &lt;= 3
 #&gt; ============================================================
-#&gt; 132 / 500 cells passed filtering (26.4%)
-#&gt; 500 / 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
-#&gt; samples: 1
-#&gt; cells: 132
-#&gt; genes: 500
-#&gt; organism: Homo sapiens
-#&gt; upload dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
-#&gt; upload date: 2018-01-01
-#&gt; R load date: 2018-04-04</div></pre>
+#&gt; 205 / 500 cells passed filtering (41%)
+#&gt; 500 / 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.1
+#&gt; Samples: 1
+#&gt; Cells: 205
+#&gt; Genes: 500
+#&gt; Organism: Homo sapiens
+#&gt; AnnotationHub: AH57757
+#&gt; Ensembl Release: 90
+#&gt; Genome Build: GRCh38
+#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
+#&gt; Upload Date: 2018-01-01
+#&gt; R Load Date: 2018-04-13</div><div class='input'>
+<span class='co'># SingleCellExperiment ====</span>
+<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>cellranger_small</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(28): version pipeline ... filterParams filterSummary
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
+#&gt;   ENSG00000269893
+#&gt; rowData names(6): geneID geneName ... entrezID broadClass
+#&gt; colnames(500): aggregation_AAACCTGGTTTACTCT_1
+#&gt;   aggregation_AAACGGGGTATCTGCA_1 ... aggregation_TTTGTCACACAACGTT_2
+#&gt;   aggregation_TTTGTCACACTCGACG_2
+#&gt; colData names(6): nUMI nGene ... log10GenesPerUMI mitoRatio
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>cellranger_small</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Filtering parameters:
+#&gt;   - &gt;= 1000 UMIs per cell
+#&gt;   - &lt;= Inf UMIs per cell
+#&gt;   - &gt;= 100 genes per cell
+#&gt;   - &lt;= Inf genes per cell
+#&gt;   - &lt;= 0.1 mitochondrial abundance
+#&gt;   - &gt;= 0 novelty score
+#&gt;   - &gt;= 3 cells per gene
+#&gt; ============================================================
+#&gt; 500 genes / 500 cells
+#&gt;      500 cells | minUMIs &gt;= 1000
+#&gt;      500 cells | maxUMIs &lt;= Inf
+#&gt;      500 cells | minGenes &gt;= 100
+#&gt;      500 cells | maxGenes &lt;= Inf
+#&gt;      390 cells | maxMitoRatio &lt;= 0.1
+#&gt;      390 cells | minNovelty &lt;= 0
+#&gt;      500 genes | minCellsPerGene &lt;= 3
+#&gt; ============================================================
+#&gt; 390 / 500 cells passed filtering (78%)
+#&gt; 500 / 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 390 
+#&gt; metadata(28): version pipeline ... filterParams filterSummary
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
+#&gt;   ENSG00000269893
+#&gt; rowData names(6): geneID geneName ... entrezID broadClass
+#&gt; colnames(390): aggregation_AAACGGGGTATCTGCA_1
+#&gt;   aggregation_AAACGGGTCGGCATCG_1 ... aggregation_TTTGTCACACAACGTT_2
+#&gt;   aggregation_TTTGTCACACTCGACG_2
+#&gt; colData names(6): nUMI nGene ... log10GenesPerUMI mitoRatio
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

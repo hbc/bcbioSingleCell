@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Cumulative Frequency of UMIs Per Cell — plotCumulativeUMIsPerCell • bcbioSingleCell</title>
+<title>Barcode Ranks — barcodeRanks • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,10 +27,10 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Plot Cumulative Frequency of UMIs Per Cell — plotCumulativeUMIsPerCell" />
+<meta property="og:title" content="Barcode Ranks — barcodeRanks" />
 
-<meta property="og:description" content="Cumulative frequency plot that helps visualize the inflection point that is
-present in single-cell barcode distributions." />
+<meta property="og:description" content="Return statistics to construct a barcode-rank plot. Also calculates the knee
+and inflection points for further use." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -60,7 +60,7 @@ present in single-cell barcode distributions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -96,85 +96,56 @@ present in single-cell barcode distributions." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Cumulative Frequency of UMIs Per Cell</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotCumulativeUMIsPerCell.R'><code>R/methods-plotCumulativeUMIsPerCell.R</code></a></small>
-    <p class="hidden name"><code>plotCumulativeUMIsPerCell.Rd</code></p>
+    <h1>Barcode Ranks</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-barcodeRanks.R'><code>R/methods-barcodeRanks.R</code></a></small>
+    <div class="hidden name"><code>barcodeRanks.Rd</code></div>
     </div>
 
     
-    <p>Cumulative frequency plot that helps visualize the inflection point that is
-present in single-cell barcode distributions.</p>
+    <p>Return statistics to construct a barcode-rank plot. Also calculates the knee
+and inflection points for further use.</p>
     
 
-    <pre class="usage"><span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>barcodeRanks</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>object</span>,
-  <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"identity"</span>, <span class='st'>"log10"</span>, <span class='st'>"log2"</span>, <span class='st'>"sqrt"</span>))
+<span class='co'># S4 method for matrix</span>
+<span class='fu'>barcodeRanks</span>(<span class='no'>object</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>fitBounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>20L</span>)
 
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>object</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"identity"</span>,
-  <span class='st'>"log10"</span>, <span class='st'>"log2"</span>, <span class='st'>"sqrt"</span>))
+<span class='co'># S4 method for dgCMatrix</span>
+<span class='fu'>barcodeRanks</span>(<span class='no'>object</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>fitBounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>20L</span>)
 
-<span class='fu'>plotKnee</span>(<span class='no'>...</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
-    </tr>
-    <tr>
-      <th>trans</th>
-      <td><p>Name of the axis scale transformation to apply. See
-<code>help("scale_x_continuous", "ggplot2")</code> for more information.</p></td>
-    </tr>
-    </table>
-    
+<span class='co'># S4 method for dgTMatrix</span>
+<span class='fu'>barcodeRanks</span>(<span class='no'>object</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>fitBounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>20L</span>)
+
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>barcodeRanks</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+        
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ggplot</code>.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>These calculates apply to all cellular barcodes in the dataset and are not
-grouped by sample.</p>
+    <p><code>list</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Quality Control Functions: <code>inflectionPoint</code>,
-  <code>plotCellCounts</code>,
-  <code>plotGenesPerCell</code>,
-  <code>plotMitoRatio</code>,
-  <code>plotMitoVsCoding</code>,
-  <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
-  <code><a href='plotQuantileHeatmap.html'>plotQuantileHeatmap</a></code>,
-  <code>plotReadsPerCell</code>,
-  <code>plotUMIsPerCell</code>,
-  <code>plotZerosVsDepth</code></p></div>
+    <div class='dont-index'><p>Modified version of <code>DropletUtils::barcodeRanks()</code> that works on
+a <code>SingleCellExperiment</code> object instead of a matrix.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; <span class='error'>Error in grid.Call.graphics(C_setviewport, vp, TRUE): non-finite location and/or size for viewport</span></div><div class='img'><img src='plotCumulativeUMIsPerCell-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>cellranger_small</span>)
-
-<span class='co'># seurat ====</span>
-<span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>seurat_small</span>)
-<span class='fu'>plotCumulativeUMIsPerCell</span>(<span class='no'>Seurat::pbmc_small</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanks</span>(<span class='no'>bcb_small</span>)
+<span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "sum"        "midrank"    "fitted"     "fit"        "d1"        
+#&gt; [6] "d2"         "curvature"  "knee"       "inflection"</div><div class='input'><span class='no'>x</span><span class='kw'>[[</span><span class='st'>"knee"</span>]]</div><div class='output co'>#&gt; multiplexed_AAAAAAAA_AATGTATG_ATACTCTT 
+#&gt;                                   1188 </div><div class='input'><span class='no'>x</span><span class='kw'>[[</span><span class='st'>"inflection"</span>]]</div><div class='output co'>#&gt; multiplexed_AAAAAAAA_GAAATACG_CAGTCCCT 
+#&gt;                                    556 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
@@ -183,7 +154,7 @@ grouped by sample.</p>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Aaron Lun, Michael Steinbaugh
 
   </div>
 </div>

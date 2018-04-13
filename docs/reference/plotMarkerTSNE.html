@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -96,8 +96,8 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Marker t-SNE</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotMarkerTSNE.R'><code>R/methods-plotMarkerTSNE.R</code></a></small>
-    <p class="hidden name"><code>plotMarkerTSNE.Rd</code></p>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-plotMarkerTSNE.R'><code>R/methods-seurat-plotMarkerTSNE.R</code></a></small>
+    <div class="hidden name"><code>plotMarkerTSNE.Rd</code></div>
     </div>
 
     
@@ -162,7 +162,7 @@ color definitions are desired, we recommend using
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/midnightTheme'>basejump::midnightTheme()</a></code>.</p></td>
+      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
     </tr>
     <tr>
       <th>legend</th>
@@ -189,7 +189,7 @@ color definitions are desired, we recommend using
   <code>plotCellTypesPerCluster</code>,
   <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkers</code>, <code><a href='plotPCA.html'>plotPCA</a></code>,
+  <code>plotMarker</code>, <code><a href='plotPCA.html'>plotPCA</a></code>,
   <code>plotPCElbow</code>, <code>plotTSNE</code>,
   <code>plotTopMarkers</code>,
   <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
@@ -202,7 +202,7 @@ color definitions are desired, we recommend using
 <span class='fu'>head</span>(<span class='no'>mito</span>)</div><div class='output co'>#&gt; ENSG00000198695 ENSG00000198712 ENSG00000198727 ENSG00000198763 ENSG00000198786 
 #&gt;        "MT.ND6"        "MT.CO2"        "MT.CYB"        "MT.ND2"        "MT.ND5" 
 #&gt; ENSG00000198804 
-#&gt;        "MT.CO1" </div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>)</div><div class='output co'>#&gt; <span class='error'>Error in grid.Call.graphics(C_setviewport, vp, TRUE): non-finite location and/or size for viewport</span></div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt;        "MT.CO1" </div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
