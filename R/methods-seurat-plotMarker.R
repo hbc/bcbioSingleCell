@@ -79,6 +79,7 @@ setMethod(
         violin <- plotViolin(
             object,
             genes = gene,
+            scale = "width",
             fill = violinFill,
             dark = dark,
             return = "list"
