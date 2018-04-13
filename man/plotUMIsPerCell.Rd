@@ -42,11 +42,19 @@ points.}
 Generally recommended unless there's a reason to use a single cutoff point
 across all samples in the analysis.}
 
+\item{labelPoint}{Label either the "\code{knee}" or "\code{inflection}" point.}
+
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
+
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
-
-\item{point}{Label either the "\code{knee}" or "\code{inflection}" point.}
 }
 \value{
 \code{ggplot}.

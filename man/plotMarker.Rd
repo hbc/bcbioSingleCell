@@ -31,6 +31,8 @@ plotMarkers(object, ...)
 
 \item{...}{Additional arguments.}
 
+\item{gene}{Gene identifier. Must intersect with \code{\link[=rownames]{rownames()}}.}
+
 \item{tsneColor}{Color palette to use for tSNE plot.}
 
 \item{violinFill}{Color palette to use for violin plot.}

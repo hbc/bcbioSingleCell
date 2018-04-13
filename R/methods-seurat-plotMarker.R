@@ -13,6 +13,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
+#' @param gene Gene identifier. Must intersect with [rownames()].
 #' @param tsneColor Color palette to use for tSNE plot.
 #' @param violinFill Color palette to use for violin plot.
 #' @param dotColor Color palette to use for dot plot.

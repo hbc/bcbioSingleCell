@@ -7,12 +7,14 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inherit plotGenesPerCell
+#'
+#' @inheritParams general
 #' @param barcodeRanks Calculate barcode ranks to label knee or inflection
 #'   points.
 #' @param ranksPerSample Calculate the barcode ranks individually per sample.
 #'   Generally recommended unless there's a reason to use a single cutoff point
 #'   across all samples in the analysis.
-#' @param point Label either the "`knee`" or "`inflection`" point.
+#' @param labelPoint Label either the "`knee`" or "`inflection`" point.
 #'
 #' @examples
 #' # bcbioSingleCell ====
