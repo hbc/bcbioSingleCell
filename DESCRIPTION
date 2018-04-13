@@ -82,6 +82,7 @@ Imports:
 Suggests:
     BiocStyle,
     DESeq2 (>= 1.19),
+    EnsDb.Hsapiens.v75,
     edgeR (>= 3.20.9),
     googlesheets,
     monocle,

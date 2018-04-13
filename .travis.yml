@@ -43,6 +43,7 @@ r_packages:
   - covr
 bioc_packages:
   - BiocCheck
+  - EnsDb.Hsapiens.v75
 
 after_success:
   - Rscript -e 'covr::codecov()'
