@@ -9,6 +9,15 @@
 #' @family Quality Control Functions
 #' @author Aaron Lun, Michael Steinbaugh
 #'
+#' @inheritParams general
+#' @param lower `integer` scalar specifying the lower bound on the total UMI
+#'   count, at or below which all barcodes are assumed to correspond to empty
+#'   droplets.
+#' @param fitBounds `numeric` vector of length 2, specifying the lower and upper
+#'   bounds on the total UMI count for spline fitting.
+#' @param df `integer` scalar specifying the number of degress of freedom to
+#'   use for spline fitting with [stats::smooth.spline()].
+#'
 #' @seealso Modified version of `DropletUtils::barcodeRanks()` that works on
 #'   a `SingleCellExperiment` object instead of a matrix.
 #'

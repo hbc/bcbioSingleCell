@@ -10,7 +10,15 @@
 \usage{
 barcodeRanksPerSample(object, ...)
 
-\S4method{barcodeRanksPerSample}{SingleCellExperiment}(object)
+\S4method{barcodeRanksPerSample}{SingleCellExperiment}(object, ...)
+}
+\arguments{
+\item{object}{Object.}
+
+\item{...}{Passthrough arguments to \code{\link[=barcodeRanks]{barcodeRanks()}}.}
+}
+\value{
+\code{list}.
 }
 \description{
 Barcode Ranks per Sample

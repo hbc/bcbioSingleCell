@@ -23,6 +23,21 @@ barcodeRanks(object, ...)
 
 \S4method{barcodeRanks}{SingleCellExperiment}(object, ...)
 }
+\arguments{
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
+
+\item{lower}{\code{integer} scalar specifying the lower bound on the total UMI
+count, at or below which all barcodes are assumed to correspond to empty
+droplets.}
+
+\item{fitBounds}{\code{numeric} vector of length 2, specifying the lower and upper
+bounds on the total UMI count for spline fitting.}
+
+\item{df}{\code{integer} scalar specifying the number of degress of freedom to
+use for spline fitting with \code{\link[stats:smooth.spline]{stats::smooth.spline()}}.}
+}
 \value{
 \code{list}.
 }

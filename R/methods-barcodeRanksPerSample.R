@@ -4,7 +4,8 @@
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams barcodeRanks
+#' @inherit barcodeRanks
+#' @param ... Passthrough arguments to [barcodeRanks()].
 #'
 #' @examples
 #' # bcbioSingleCell ====
@@ -20,7 +21,7 @@ NULL
 setMethod(
     "barcodeRanksPerSample",
     signature("SingleCellExperiment"),
-    function(object) {
+    function(object, ...) {
         counts <- counts(object)
         cell2sample <- cell2sample(object)
         samples <- levels(cell2sample)
@@ -28,7 +29,9 @@ setMethod(
             cells <- names(cell2sample)[which(cell2sample == sample)]
             counts[, cells]
         })
-        ranks <- lapply(perSampleCounts, barcodeRanks)
+        ranks <- lapply(perSampleCounts, function(object) {
+            barcodeRanks(object, ...)
+        })
         names(ranks) <- samples
         ranks
     }
