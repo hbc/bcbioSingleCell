@@ -41,7 +41,7 @@ set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
 \item{legend}{Include plot legend.}
 
@@ -68,7 +68,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotMarkers}}, \code{\link{plotPCA}},
+  \code{\link{plotMarker}}, \code{\link{plotPCA}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
   \code{\link{plotTopMarkers}},
   \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}

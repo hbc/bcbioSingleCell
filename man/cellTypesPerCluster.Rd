@@ -37,7 +37,7 @@ Other Clustering Functions: \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarker}},
   \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
   \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}

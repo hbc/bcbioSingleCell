@@ -7,8 +7,8 @@
 \title{Plot Dot}
 \usage{
 \S4method{plotDot}{seurat}(object, genes, color = scale_color_gradient(low =
-  "lightgray", high = "purple"), colMin = -2.5, colMax = 2.5, dotMin = 0L,
-  dotScale = 6L)
+  "lightgray", high = "purple"), dark = FALSE, colMin = -2.5,
+  colMax = 2.5, dotMin = 0L, dotScale = 6L)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,6 +19,8 @@
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
+\item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
 \item{colMin}{Minimum scaled average expression threshold. Everything
 smaller will be set to this.}

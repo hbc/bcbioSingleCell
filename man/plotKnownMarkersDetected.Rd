@@ -29,7 +29,7 @@ plotKnownMarkersDetected(object, ...)
 
 \item{dotColor}{Color palette to use for dot plot.}
 
-\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
+\item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
@@ -54,7 +54,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
-  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarkers}},
+  \code{\link{plotMarkerTSNE}}, \code{\link{plotMarker}},
   \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
   \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
