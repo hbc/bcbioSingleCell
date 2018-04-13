@@ -13,17 +13,12 @@ plotMarker(object, ...)
 
 plotMarkers(object, ...)
 
-\S4method{plotMarker}{seurat}(object, gene,
-  tsneColor = scale_color_viridis(option = "plasma", discrete = FALSE),
+\S4method{plotMarker}{seurat}(object, gene, dark = TRUE, return = c("grid",
+  "list"), ...)
+
+\S4method{plotMarkers}{seurat}(object, genes, tsneColor,
   violinFill = scale_fill_viridis(discrete = TRUE),
   dotColor = scale_color_gradient(low = "lightgray", high = "orange"),
-  dark = TRUE, pointsAsNumbers = FALSE, title = NULL, return = c("grid",
-  "list"))
-
-\S4method{plotMarkers}{seurat}(object, genes,
-  tsneColor = scale_color_viridis(discrete = FALSE),
-  violinFill = scale_fill_viridis(discrete = TRUE),
-  dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
   dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L, title = NULL)
 }
 \arguments{
@@ -31,24 +26,24 @@ plotMarkers(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{tsneColor}{Color palette to use for tSNE plot.}
-
-\item{violinFill}{Color palette to use for violin plot.}
-
-\item{dotColor}{Color palette to use for dot plot.}
-
 \item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
-
-\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
-
-\item{title}{Plot title.}
 
 \item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
 to the first argument in the vector.}
 
 \item{genes}{Gene identifiers. Must match the rownames of the object.}
 
+\item{tsneColor}{Color palette to use for tSNE plot.}
+
+\item{violinFill}{Color palette to use for violin plot.}
+
+\item{dotColor}{Color palette to use for dot plot.}
+
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+
 \item{headerLevel}{R Markdown header level.}
+
+\item{title}{Plot title.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.

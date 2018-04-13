@@ -44,36 +44,45 @@ setMethod(
     function(
         object,
         gene,
-        tsneColor = scale_color_viridis(option = "plasma", discrete = FALSE),
-        violinFill = scale_fill_viridis(discrete = TRUE),
-        dotColor = scale_color_gradient(
-            low = "lightgray",
-            high = "orange"
-        ),
         dark = TRUE,
-        pointsAsNumbers = FALSE,
-        title = NULL,
-        return = c("grid", "list")
+        return = c("grid", "list"),
+        ...
     ) {
         assert_is_a_string(gene)
-        assertIsColorScaleContinuousOrNULL(tsneColor)
-        assertIsFillScaleDiscreteOrNULL(violinFill)
-        assertIsColorScaleContinuousOrNULL(dotColor)
         assert_is_a_bool(dark)
-        assert_is_a_bool(pointsAsNumbers)
-        assertIsAStringOrNULL(title)
         return <- match.arg(return)
 
         # Plots ================================================================
+        if (isTRUE(dark)) {
+            violinFill <- "white"
+            dotColor <- scale_color_gradient(
+                low = "black",
+                high = "white"
+            )
+        } else {
+            violinFill <- "black"
+            dotColor <- scale_color_gradient(
+                low = "white",
+                high = "black"
+            )
+        }
+
         tsne <- plotMarkerTSNE(
             object,
             genes = gene,
             expression = "sum",
-            color = tsneColor,
             dark = dark,
-            pointsAsNumbers = pointsAsNumbers,
+            legend = TRUE,
             title = gene,
-            subtitle = FALSE
+            subtitle = FALSE,
+            ...
+        )
+
+        dot <- plotDot(
+            object,
+            genes = gene,
+            color = dotColor,
+            dark = dark
         )
 
         violin <- plotViolin(
@@ -87,13 +96,6 @@ setMethod(
             # Get the ggplot object from the list return
             .[[1L]]
 
-        dot <- plotDot(
-            object,
-            genes = gene,
-            color = dotColor,
-            dark = dark
-        )
-
         # Return ===============================================================
         if (return == "grid") {
             violin <- violin +
@@ -101,15 +103,25 @@ setMethod(
             dot <- dot +
                 coord_flip() +
                 .minimalAxes()
-            plot_grid(
+            p <- plot_grid(
                 tsne,
-                violin,
                 dot,
+                violin,
                 labels = NULL,
                 ncol = 1L,
                 nrow = 3L,
-                rel_heights = c(1L, 0.3, 0.15)
+                rel_heights = c(1L, 0.1, 0.1)
             )
+            if (isTRUE(dark)) {
+                p <- p + theme(
+                    plot.background = element_rect(color = NA, fill = "black")
+                )
+            } else {
+                p <- p + theme(
+                    plot.background = element_rect(color = NA, fill = "white")
+                )
+            }
+            p
         } else if (return == "list") {
             list(
                 "tsne" = tsne,
@@ -130,11 +142,11 @@ setMethod(
     function(
         object,
         genes,
-        tsneColor = scale_color_viridis(discrete = FALSE),
+        tsneColor,
         violinFill = scale_fill_viridis(discrete = TRUE),
         dotColor = scale_color_gradient(
             low = "lightgray",
-            high = "purple"
+            high = "orange"
         ),
         dark = TRUE,
         pointsAsNumbers = FALSE,

@@ -20,6 +20,7 @@
     label = TRUE,
     labelSize = 6L,
     dark = TRUE,
+    aspectRatio = 1L,
     title = NULL
 ) {
     assert_is_data.frame(object)
@@ -54,7 +55,9 @@
 
     # Put the dark theme call before the other ggplot aesthetics
     if (isTRUE(dark)) {
-        p <- p + theme_midnight()
+        p <- p + theme_midnight(aspect_ratio = aspectRatio)
+    } else {
+        p <- p + theme_paperwhite(aspect_ratio = aspectRatio)
     }
 
     if (isTRUE(pointsAsNumbers)) {

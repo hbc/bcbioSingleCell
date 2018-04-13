@@ -33,6 +33,7 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         dark = TRUE,
+        aspectRatio = 1L,
         title = NULL
     ) {
         tsne <- fetchTSNEData(object)
@@ -47,6 +48,7 @@ setMethod(
             label = label,
             labelSize = labelSize,
             dark = dark,
+            aspectRatio = aspectRatio,
             title = title
         )
     }

@@ -34,6 +34,7 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         dark = TRUE,
+        aspectRatio = 1L,
         title = NULL
     ) {
         pca <- fetchPCAData(object)
@@ -48,6 +49,7 @@ setMethod(
             label = label,
             labelSize = labelSize,
             dark = dark,
+            aspectRatio = aspectRatio,
             title = title
         )
     }

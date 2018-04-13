@@ -40,6 +40,7 @@ setMethod(
         labelSize = 6L,
         dark = TRUE,
         legend = TRUE,
+        aspectRatio = 1L,
         title = NULL,
         subtitle = TRUE
     ) {
@@ -91,7 +92,7 @@ setMethod(
         )
 
         if (isTRUE(dark)) {
-            p <- p + theme_midnight()
+            p <- p + theme_midnight(aspect_ratio = aspectRatio)
             if (missing(color)) {
                 color <- scale_color_viridis(
                     option = "plasma",
@@ -99,7 +100,7 @@ setMethod(
                 )
             }
         } else {
-            p <- p + theme_paperwhite()
+            p <- p + theme_paperwhite(aspect_ratio = aspectRatio)
             if (missing(color)) {
                 color <- scale_color_gradient(
                     low = "lightgray",
