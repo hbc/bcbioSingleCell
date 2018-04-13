@@ -44,7 +44,11 @@ setMethod(
         return = c("grid", "list", "markdown")
     ) {
         scale <- match.arg(scale)
-        assertIsFillScaleDiscreteOrNULL(fill)
+        assert_is_any_of(fill, c("ScaleDiscrete", "character", "NULL"))
+        if (is.character(fill)) {
+            assert_is_a_string(fill)
+        }
+        assert_is_a_bool(dark)
         assertIsAHeaderLevel(headerLevel)
         return <- match.arg(return)
 
@@ -67,20 +71,33 @@ setMethod(
             gene <- genes[[a]]
             data <- data[data[["gene"]] == gene, , drop = FALSE]
 
+            # Dynamically provide mapped or single color support
+            if (is_a_string(fill)) {
+                fillArg <- fill
+            } else {
+                fillArg <- NULL
+            }
+
+            violin <- geom_violin(
+                mapping = aes_string(fill = "ident"),
+                # never include a color border
+                color = NA,
+                scale = scale,
+                adjust = 1L,
+                trim = TRUE
+            )
+            if (is_a_string(fill)) {
+                violin[["aes_params"]][["fill"]] <- fill
+            }
+
             p <- ggplot(
                 data,
                 mapping = aes_string(
                     x = "ident",
-                    y = "expression",
-                    fill = "ident"
+                    y = "expression"
                 )
             ) +
-                geom_violin(
-                    color = NA,
-                    scale = scale,
-                    adjust = 1L,
-                    trim = TRUE
-                ) +
+                violin +
                 labs(title = gene) +
                 guides(fill = FALSE)
 
