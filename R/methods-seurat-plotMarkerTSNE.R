@@ -28,16 +28,16 @@ NULL
 setMethod(
     "plotMarkerTSNE",
     signature("seurat"),
-    .plotMarkerTSNE.seurat <- function(  # nolint
+    function(
         object,
         genes,
         expression = c("mean", "median", "sum"),
+        color,
         pointsAsNumbers = FALSE,
         pointSize = 0.5,
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        color = scale_color_viridis(discrete = FALSE),
         dark = TRUE,
         legend = TRUE,
         title = NULL,
@@ -45,12 +45,14 @@ setMethod(
     ) {
         assert_is_character(genes)
         expression <- match.arg(expression)
+        if (!missing(color)) {
+            assertIsColorScaleContinuousOrNULL(color)
+        }
         assert_is_a_bool(pointsAsNumbers)
         assert_is_a_number(pointSize)
         assert_is_a_number(pointAlpha)
         assert_is_a_bool(label)
         assert_is_a_number(labelSize)
-        assertIsColorScaleContinuousOrNULL(color)
         assert_is_a_bool(dark)
         assert_is_a_bool(legend)
         assertIsCharacterOrNULL(title)
@@ -90,8 +92,20 @@ setMethod(
 
         if (isTRUE(dark)) {
             p <- p + theme_midnight()
+            if (missing(color)) {
+                color <- scale_color_viridis(
+                    option = "plasma",
+                    discrete = FALSE
+                )
+            }
         } else {
             p <- p + theme_paperwhite()
+            if (missing(color)) {
+                color <- scale_color_gradient(
+                    low = "lightgray",
+                    high = "purple"
+                )
+            }
         }
 
         # Labels

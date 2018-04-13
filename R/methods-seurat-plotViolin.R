@@ -67,12 +67,6 @@ setMethod(
             gene <- genes[[a]]
             data <- data[data[["gene"]] == gene, , drop = FALSE]
 
-            if (isTRUE(dark)) {
-                color <- "white"
-            } else {
-                color <- "black"
-            }
-
             p <- ggplot(
                 data,
                 mapping = aes_string(
@@ -82,7 +76,7 @@ setMethod(
                 )
             ) +
                 geom_violin(
-                    color = color,
+                    color = NA,
                     scale = scale,
                     adjust = 1L,
                     trim = TRUE

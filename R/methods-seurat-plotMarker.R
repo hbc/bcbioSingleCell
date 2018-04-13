@@ -44,11 +44,11 @@ setMethod(
     function(
         object,
         gene,
-        tsneColor = scale_color_viridis(discrete = FALSE),
+        tsneColor = scale_color_viridis(option = "plasma", discrete = FALSE),
         violinFill = scale_fill_viridis(discrete = TRUE),
         dotColor = scale_color_gradient(
             low = "lightgray",
-            high = "purple"
+            high = "orange"
         ),
         dark = TRUE,
         pointsAsNumbers = FALSE,

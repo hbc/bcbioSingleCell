@@ -14,9 +14,9 @@ plotMarker(object, ...)
 plotMarkers(object, ...)
 
 \S4method{plotMarker}{seurat}(object, gene,
-  tsneColor = scale_color_viridis(discrete = FALSE),
+  tsneColor = scale_color_viridis(option = "plasma", discrete = FALSE),
   violinFill = scale_fill_viridis(discrete = TRUE),
-  dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
+  dotColor = scale_color_gradient(low = "lightgray", high = "orange"),
   dark = TRUE, pointsAsNumbers = FALSE, title = NULL, return = c("grid",
   "list"))
 

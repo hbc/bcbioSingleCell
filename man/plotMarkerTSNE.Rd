@@ -11,9 +11,8 @@
 plotMarkerTSNE(object, ...)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), pointsAsNumbers = FALSE, pointSize = 0.5,
-  pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  color = scale_color_viridis(discrete = FALSE), dark = TRUE,
+  "median", "sum"), color, pointsAsNumbers = FALSE, pointSize = 0.5,
+  pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = TRUE,
   legend = TRUE, title = NULL, subtitle = TRUE)
 }
 \arguments{
@@ -25,6 +24,11 @@ plotMarkerTSNE(object, ...)
 
 \item{expression}{Calculation to apply on the aggregate marker expression.}
 
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{pointSize}{Cell point size.}
@@ -35,11 +39,6 @@ the dataset, and some cells can be masked.}
 \item{label}{Overlay a cluster identitiy label on the plot.}
 
 \item{labelSize}{Size of the text label.}
-
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
 \item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 

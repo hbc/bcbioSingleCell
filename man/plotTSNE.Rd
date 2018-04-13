@@ -10,8 +10,8 @@
 plotTSNE(object, ...)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
-  pointsAsNumbers = FALSE, pointSize = 0.5, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, color = scale_color_hue(), dark = TRUE,
+  color = scale_color_hue(), pointsAsNumbers = FALSE, pointSize = 0.5,
+  pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = TRUE,
   title = NULL)
 }
 \arguments{
@@ -21,6 +21,11 @@ plotTSNE(object, ...)
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
@@ -32,11 +37,6 @@ the dataset, and some cells can be masked.}
 \item{label}{Overlay a cluster identitiy label on the plot.}
 
 \item{labelSize}{Size of the text label.}
-
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
 \item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
