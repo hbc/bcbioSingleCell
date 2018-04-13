@@ -19,8 +19,8 @@
 #' @importFrom basejump assignAndSaveData camel convertUCSCBuildToEnsembl
 #'   detectOrganism dynamicPlotlist initializeDirectory makeGRangesFromEnsembl
 #'   makeGRangesFromGFF makeNames makeTx2geneFromGFF markdownHeader
-#'   midnightTheme readFileByExtension readYAML sanitizeSampleData
-#'   tx2geneFromGFF
+#'   readFileByExtension readYAML sanitizeSampleData theme_midnight
+#'   theme_paperwhite tx2geneFromGFF
 #' @importFrom bcbioBase flatFiles prepareSummarizedExperiment readDataVersions
 #'   readLog readProgramVersions readSampleData readTx2gene
 #'   sampleYAMLMetadata uniteInterestingGroups
