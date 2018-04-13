@@ -71,8 +71,8 @@ pcCutoff <- function(...) {
 #' @rdname deprecated
 #' @export
 quantileHeatmap <- function(...) {
-    .Deprecated("plotQuantileHeatmap")
-    plotQuantileHeatmap(...)
+    .Deprecated("bcbioBase::plotQuantileHeatmap")
+    bcbioBase::plotQuantileHeatmap(...)
 }
 
 
