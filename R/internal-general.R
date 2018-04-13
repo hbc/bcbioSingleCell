@@ -12,7 +12,7 @@
 #'   definitions are desired, we recommend using [ggplot2::scale_fill_manual()].
 #' @param gene2symbol `data.frame` containing gene-to-symbol mappings. Columns
 #'   must contain `geneID` and `geneName`.
-#' @param dark Plot against a dark background using [basejump::midnightTheme()].
+#' @param dark Plot against a dark background using [basejump::theme_midnight()].
 #' @param dir Output directory.
 #' @param genes Gene identifiers. Must match the rownames of the object.
 #' @param geom Plot type. Uses [match.arg()] internally and defaults to the

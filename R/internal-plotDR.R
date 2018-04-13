@@ -54,7 +54,7 @@
 
     # Put the dark theme call before the other ggplot aesthetics
     if (isTRUE(dark)) {
-        p <- p + midnightTheme()
+        p <- p + theme_midnight()
     }
 
     if (isTRUE(pointsAsNumbers)) {

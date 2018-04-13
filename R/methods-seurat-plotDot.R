@@ -61,6 +61,7 @@ setMethod(
             low = "lightgray",
             high = "purple"
         ),
+        dark = FALSE,
         colMin = -2.5,
         colMax = 2.5,
         dotMin = 0L,
@@ -114,6 +115,12 @@ setMethod(
 
         if (is(color, "ScaleContinuous")) {
             p <- p + color
+        }
+
+        if (isTRUE(dark)) {
+            p <- p + theme_midnight()
+        } else {
+            p <- p + theme_paperwhite()
         }
 
         p

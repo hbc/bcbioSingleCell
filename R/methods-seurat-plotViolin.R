@@ -39,6 +39,7 @@ setMethod(
         genes,
         scale = c("count", "width", "area"),
         fill = scale_fill_viridis(discrete = TRUE),
+        dark = FALSE,
         headerLevel = 2L,
         return = c("grid", "list", "markdown")
     ) {
@@ -65,6 +66,13 @@ setMethod(
         plotlist <- lapply(seq_along(genes), function(a) {
             gene <- genes[[a]]
             data <- data[data[["gene"]] == gene, , drop = FALSE]
+
+            if (isTRUE(dark)) {
+                color <- "white"
+            } else {
+                color <- "black"
+            }
+
             p <- ggplot(
                 data,
                 mapping = aes_string(
@@ -74,16 +82,24 @@ setMethod(
                 )
             ) +
                 geom_violin(
-                    color = "black",
+                    color = color,
                     scale = scale,
                     adjust = 1L,
                     trim = TRUE
                 ) +
                 labs(title = gene) +
                 guides(fill = FALSE)
+
             if (is(fill, "ScaleDiscrete")) {
                 p <- p + fill
             }
+
+            if (isTRUE(dark)) {
+                p <- p + theme_midnight()
+            } else {
+                p <- p + theme_paperwhite()
+            }
+
             p
         })
         names(plotlist) <- genes

@@ -63,7 +63,7 @@ setMethod(
             )
 
             if (isTRUE(dark)) {
-                p <- p + midnightTheme()
+                p <- p + theme_midnight()
             }
 
             p <- p +
