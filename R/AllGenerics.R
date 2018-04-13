@@ -196,7 +196,18 @@ setGeneric(
 
 
 
-#' @rdname plotMarkers
+#' @rdname plotMarker
+#' @export
+setGeneric(
+    "plotMarker",
+    function(object, ...) {
+        standardGeneric("plotMarker")
+    }
+)
+
+
+
+#' @rdname plotMarker
 #' @export
 setGeneric(
     "plotMarkers",
