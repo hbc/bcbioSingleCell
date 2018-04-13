@@ -12,7 +12,8 @@
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
 #' @importFrom Matrix colSums readMM rowMeans rowSums
 #' @importFrom Matrix.utils aggregate.Matrix
-#' @importFrom S4Vectors aggregate complete.cases metadata metadata<- na.omit
+#' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
+#'   complete.cases mcols metadata metadata<- na.omit
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
 #'   spikeNames
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
@@ -40,7 +41,8 @@
 #' @importFrom jsonlite read_json
 #' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_names set_rownames
-#' @importFrom methods .hasSlot as is new show slot slot<- validObject
+#' @importFrom methods .hasSlot as as<- getMethod is new show slot slot<-
+#'   validObject
 #' @importFrom parallel mclapply mcmapply
 #' @importFrom pbapply pblapply
 #' @importFrom readr read_lines read_tsv
