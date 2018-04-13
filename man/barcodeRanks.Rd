@@ -40,6 +40,17 @@ x[["inflection"]]
 \seealso{
 Modified version of \code{DropletUtils::barcodeRanks()} that works on
 a \code{SingleCellExperiment} object instead of a matrix.
+
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{inflectionPoint}},
+  \code{\link{plotCellCounts}},
+  \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
+  \code{\link{plotZerosVsDepth}}
 }
 \author{
 Aaron Lun, Michael Steinbaugh

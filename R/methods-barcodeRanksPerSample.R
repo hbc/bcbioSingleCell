@@ -1,6 +1,7 @@
 #' Barcode Ranks per Sample
 #'
 #' @name barcodeRanksPerSample
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams barcodeRanks

@@ -20,6 +20,18 @@ Barcode Ranks per Sample
 x <- barcodeRanksPerSample(bcb_small)
 names(x)
 }
+\seealso{
+Other Quality Control Functions: \code{\link{barcodeRanks}},
+  \code{\link{inflectionPoint}},
+  \code{\link{plotCellCounts}},
+  \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
+  \code{\link{plotZerosVsDepth}}
+}
 \author{
 Michael Steinbaugh
 }

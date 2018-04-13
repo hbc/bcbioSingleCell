@@ -6,6 +6,7 @@
 #' and inflection points for further use.
 #'
 #' @name barcodeRanks
+#' @family Quality Control Functions
 #' @author Aaron Lun, Michael Steinbaugh
 #'
 #' @seealso Modified version of `DropletUtils::barcodeRanks()` that works on
