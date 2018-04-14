@@ -6,5 +6,4 @@ Maintainer: Michael Steinbaugh <mike@steinbaugh.com>
 Depends:
     R (>= 3.4)
 Imports:
-    SingleCellExperiment,
-    Seurat
+    SingleCellExperiment
