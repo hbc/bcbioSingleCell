@@ -18,12 +18,12 @@
 #'   with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 #'   for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 #'   inDrop).
-#' @param genomeBuild *Optional.* Ensembl genome build name (e.g. "GRCh38").
-#'   This will be passed to AnnotationHub for `EnsDb` annotation matching,
-#'   unless `gffFile` is set.
 #' @param ensemblRelease *Optional.* Ensembl release version. If `NULL`,
 #'   defaults to current release, and does not typically need to be
 #'   user-defined. Passed to AnnotationHub for `EnsDb` annotation matching,
+#'   unless `gffFile` is set.
+#' @param genomeBuild *Optional.* Ensembl genome build name (e.g. "GRCh38").
+#'   This will be passed to AnnotationHub for `EnsDb` annotation matching,
 #'   unless `gffFile` is set.
 #' @param gffFile *Optional, not recommended.* By default, we recommend leaving
 #'   this `NULL` for genomes that are supported on Ensembl. In this case, the
@@ -57,32 +57,14 @@ loadSingleCell <- function(
     organism,
     sampleMetadataFile,
     interestingGroups = "sampleName",
-    genomeBuild = NULL,
     ensemblRelease = NULL,
+    genomeBuild = NULL,
     transgeneNames = NULL,
     spikeNames = NULL,
     gffFile = NULL,
     prefilter = TRUE,
     ...
 ) {
-    assert_is_a_string(uploadDir)
-    assert_all_are_dirs(uploadDir)
-    uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
-    if (missing(sampleMetadataFile)) {
-        sampleMetadataFile <- NULL
-    }
-    assertIsAStringOrNULL(sampleMetadataFile)
-    assert_is_character(interestingGroups)
-    assert_is_a_string(organism)
-    assertIsAStringOrNULL(genomeBuild)
-    assertIsAnImplicitIntegerOrNULL(ensemblRelease)
-    assertIsCharacterOrNULL(transgeneNames)
-    assertIsCharacterOrNULL(spikeNames)
-    assertIsAStringOrNULL(gffFile)
-    if (is_a_string(gffFile)) {
-        assert_all_are_existing_files(gffFile)
-    }
-    assert_is_a_bool(prefilter)
     dots <- list(...)
     pipeline <- "bcbio"
 
@@ -98,6 +80,10 @@ loadSingleCell <- function(
         ensemblRelease <- call[["ensemblVersion"]]
         dots[["ensemblVersion"]] <- NULL
     }
+    # organism missing
+    if (!"organism" %in% names(call)) {
+        stop("`organism` is now required")
+    }
     # gtfFile
     if ("gtfFile" %in% names(call)) {
         warning("Use `gffFile` instead of `gtfFile`")
@@ -106,7 +92,27 @@ loadSingleCell <- function(
     }
     dots <- Filter(Negate(is.null), dots)
 
+    # Assert checks ============================================================
+    assert_is_a_string(uploadDir)
+    assert_all_are_dirs(uploadDir)
+    if (missing(sampleMetadataFile)) {
+        sampleMetadataFile <- NULL
+    }
+    assertIsAStringOrNULL(sampleMetadataFile)
+    assert_is_character(interestingGroups)
+    assertIsAStringOrNULL(organism)
+    assertIsAnImplicitIntegerOrNULL(ensemblRelease)
+    assertIsAStringOrNULL(genomeBuild)
+    assertIsCharacterOrNULL(transgeneNames)
+    assertIsCharacterOrNULL(spikeNames)
+    assertIsAStringOrNULL(gffFile)
+    if (is_a_string(gffFile)) {
+        assert_all_are_existing_files(gffFile)
+    }
+    assert_is_a_bool(prefilter)
+
     # Directory paths ==========================================================
+    uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
     projectDir <- dir(
         uploadDir,
         pattern = bcbioBase::projectDirPattern,
@@ -310,11 +316,11 @@ loadSingleCell <- function(
     cbData <- .bindCellularBarcodes(cbList)
 
     # Row data =================================================================
+    rowRangesMetadata <- NULL
     if (is_a_string(gffFile)) {
         rowRanges <- makeGRangesFromGFF(gffFile, format = "genes")
-        rowRangesMetadata <- NULL
-    } else {
-        # ah = AnnotationHub
+    } else if (is_a_string(organism)) {
+        # ah: AnnotationHub
         ah <- makeGRangesFromEnsembl(
             organism = organism,
             format = "genes",
@@ -328,13 +334,9 @@ loadSingleCell <- function(
         assert_is_all_of(rowRanges, "GRanges")
         rowRangesMetadata <- ah[["metadata"]]
         assert_is_data.frame(rowRangesMetadata)
+    } else {
+        rowRanges <- emptyRanges(rownames(counts))
     }
-
-    # Require gene-to-symbol mappings
-    assert_is_subset(
-        x = c("geneID", "geneName"),
-        y = names(mcols(rowRanges))
-    )
 
     rowData <- as.data.frame(rowRanges)
     rownames(rowData) <- names(rowRanges)

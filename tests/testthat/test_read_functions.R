@@ -61,6 +61,8 @@ test_that("loadCellRanger", {
 test_that("loadSingleCell", {
     uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
     sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
+
+    # Organism
     x <- loadSingleCell(
         uploadDir = uploadDir,
         sampleMetadataFile = sampleMetadataFile,

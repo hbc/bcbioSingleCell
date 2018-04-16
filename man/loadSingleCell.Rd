@@ -5,8 +5,8 @@
 \title{Load bcbio Single-Cell RNA-Seq Data}
 \usage{
 loadSingleCell(uploadDir, organism, sampleMetadataFile,
-  interestingGroups = "sampleName", genomeBuild = NULL,
-  ensemblRelease = NULL, transgeneNames = NULL, spikeNames = NULL,
+  interestingGroups = "sampleName", ensemblRelease = NULL,
+  genomeBuild = NULL, transgeneNames = NULL, spikeNames = NULL,
   gffFile = NULL, prefilter = TRUE, ...)
 }
 \arguments{
@@ -25,13 +25,13 @@ inDrop).}
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{genomeBuild}{\emph{Optional.} Ensembl genome build name (e.g. "GRCh38").
-This will be passed to AnnotationHub for \code{EnsDb} annotation matching,
-unless \code{gffFile} is set.}
-
 \item{ensemblRelease}{\emph{Optional.} Ensembl release version. If \code{NULL},
 defaults to current release, and does not typically need to be
 user-defined. Passed to AnnotationHub for \code{EnsDb} annotation matching,
+unless \code{gffFile} is set.}
+
+\item{genomeBuild}{\emph{Optional.} Ensembl genome build name (e.g. "GRCh38").
+This will be passed to AnnotationHub for \code{EnsDb} annotation matching,
 unless \code{gffFile} is set.}
 
 \item{transgeneNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows

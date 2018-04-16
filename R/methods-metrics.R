@@ -66,30 +66,31 @@ setMethod(
         message("Calculating cellular barcode metrics")
         message(paste(ncol(object), "cells detected"))
 
+        codingGenes <- character()
+        mitoGenes <- character()
+
         if (!is.null(rowData)) {
-            assertHasRownames(rowData)
             assert_are_intersecting_sets(
                 x = rownames(object),
                 y = rownames(rowData)
             )
-            cols <- c("geneID", "broadClass")
-            assert_is_subset(cols, colnames(rowData))
-            rowData <- rowData %>%
-                .[rownames(object), cols, drop = FALSE] %>%
-                .[complete.cases(.), , drop = FALSE]
+
+            # Subset rowData to match counts matrix
+            rowData <- rowData[rownames(object), , drop = FALSE]
+
+            # Coding genes
             codingGenes <- rowData %>%
-                .[.[["broadClass"]] == "coding", "geneID", drop = TRUE] %>%
+                .[.[["broadClass"]] == "coding", , drop = FALSE] %>%
+                rownames() %>%
                 na.omit()
-            assert_all_are_non_missing_nor_empty_character(codingGenes)
             message(paste(length(codingGenes), "coding genes detected"))
+
+            # Mitochondrial genes
             mitoGenes <- rowData %>%
-                .[.[["broadClass"]] == "mito", "geneID", drop = TRUE] %>%
+                .[.[["broadClass"]] == "mito", , drop = FALSE] %>%
+                rownames() %>%
                 na.omit()
-            assert_all_are_non_missing_nor_empty_character(mitoGenes)
             message(paste(length(mitoGenes), "mitochondrial genes detected"))
-        } else {
-            codingGenes <- character()
-            mitoGenes <- character()
         }
 
         data <- tibble(
