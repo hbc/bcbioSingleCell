@@ -58,8 +58,8 @@ setMethod(
         object,
         genes,
         color = scale_color_gradient(
-            low = "lightgray",
-            high = "purple"
+            low = "gray90",
+            high = "black"
         ),
         dark = FALSE,
         colMin = -2.5,

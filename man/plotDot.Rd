@@ -7,8 +7,8 @@
 \title{Plot Dot}
 \usage{
 \S4method{plotDot}{seurat}(object, genes, color = scale_color_gradient(low =
-  "lightgray", high = "purple"), dark = FALSE, colMin = -2.5,
-  colMax = 2.5, dotMin = 0L, dotScale = 6L)
+  "gray90", high = "black"), dark = FALSE, colMin = -2.5, colMax = 2.5,
+  dotMin = 0L, dotScale = 6L)
 }
 \arguments{
 \item{object}{Object.}
