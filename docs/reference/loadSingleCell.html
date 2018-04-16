@@ -105,8 +105,8 @@
     
 
     <pre class="usage"><span class='fu'>loadSingleCell</span>(<span class='no'>uploadDir</span>, <span class='no'>organism</span>, <span class='no'>sampleMetadataFile</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>genomeBuild</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ensemblRelease</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>ensemblRelease</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>genomeBuild</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>gffFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -136,16 +136,16 @@ inDrop).</p></td>
 formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
-      <th>genomeBuild</th>
-      <td><p><em>Optional.</em> Ensembl genome build name (e.g. "GRCh38").
-This will be passed to AnnotationHub for <code>EnsDb</code> annotation matching,
-unless <code>gffFile</code> is set.</p></td>
-    </tr>
-    <tr>
       <th>ensemblRelease</th>
       <td><p><em>Optional.</em> Ensembl release version. If <code>NULL</code>,
 defaults to current release, and does not typically need to be
 user-defined. Passed to AnnotationHub for <code>EnsDb</code> annotation matching,
+unless <code>gffFile</code> is set.</p></td>
+    </tr>
+    <tr>
+      <th>genomeBuild</th>
+      <td><p><em>Optional.</em> Ensembl genome build name (e.g. "GRCh38").
+This will be passed to AnnotationHub for <code>EnsDb</code> annotation matching,
 unless <code>gffFile</code> is set.</p></td>
     </tr>
     <tr>
