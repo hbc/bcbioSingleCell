@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate the Cellular Barcode Read Depth Inflection Point — inflectionPoint • bcbioSingleCell</title>
+<title>Interesting Groups — interestingGroups • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,9 +27,9 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Calculate the Cellular Barcode Read Depth Inflection Point — inflectionPoint" />
+<meta property="og:title" content="Interesting Groups — interestingGroups" />
 
-<meta property="og:description" content="Calculate the Cellular Barcode Read Depth Inflection Point" />
+<meta property="og:description" content="Interesting Groups" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -95,22 +95,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate the Cellular Barcode Read Depth Inflection Point</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-inflectionPoint.R'><code>R/methods-inflectionPoint.R</code></a></small>
-    <div class="hidden name"><code>inflectionPoint.Rd</code></div>
+    <h1>Interesting Groups</h1>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-interestingGroups.R'><code>R/methods-interestingGroups.R</code></a></small>
+    <div class="hidden name"><code>interestingGroups.Rd</code></div>
     </div>
 
     
-    <p>Calculate the Cellular Barcode Read Depth Inflection Point</p>
+    <p>Interesting Groups</p>
     
 
-    <pre class="usage"><span class='fu'>inflectionPoint</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>inflectionPoint</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>inflectionPoint</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='co'># S4 method for SingleCellExperiment,character</span>
+<span class='fu'>interestingGroups</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -120,41 +115,29 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
+      <th>value</th>
+      <td><p>Object to assign.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Modified version of <code>dropbead::estimateCellNumber()</code>.</p>
-<p>Other Quality Control Functions: <code>plotCellCounts</code>,
-  <code>plotGenesPerCell</code>,
-  <code>plotMitoRatio</code>,
-  <code>plotMitoVsCoding</code>,
-  <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
-  <code>plotReadsPerCell</code>,
-  <code>plotUMIsPerCell</code>,
-  <code>plotZerosVsDepth</code></p></div>
+    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>cell2sample</code>, <code><a href='counts.html'>counts</a></code>,
+  <code>fetchGeneData</code>, <code>fetchPCAData</code>,
+  <code>fetchTSNEData</code>,
+  <code>fetchTSNEExpressionData</code>,
+  <code>filterCells</code>,
+  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
+  <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
+  <code><a href='selectSamples.html'>selectSamples</a></code>,
+  <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>inflectionPoint</span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '.local' is deprecated.</span>
-#&gt; <span class='warning'>Use 'barcodeRanks' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated")</span></div><div class='output co'>#&gt; multiplexed_AAAAAAAA_GAGGGTCA_GCAGTCGA 
-#&gt;                                   2194 </div><div class='input'><span class='fu'>inflectionPoint</span>(<span class='no'>cellranger_small</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '.local' is deprecated.</span>
-#&gt; <span class='warning'>Use 'barcodeRanks' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated")</span></div><div class='output co'>#&gt; aggregation_GGCCGATAGGCAAAGA_1 
-#&gt;                          42017 </div><div class='input'>
-<span class='co'># seurat ====</span>
-<span class='fu'>inflectionPoint</span>(<span class='no'>seurat_small</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '.local' is deprecated.</span>
-#&gt; <span class='warning'>Use 'barcodeRanks' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated")</span></div><div class='output co'>#&gt; multiplexed_AAAAAAAA_GAGGGTCA_GCAGTCGA 
-#&gt;                                   2194 </div><div class='input'><span class='fu'>inflectionPoint</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '.local' is deprecated.</span>
-#&gt; <span class='warning'>Use 'barcodeRanks' instead.</span>
-#&gt; <span class='warning'>See help("Deprecated")</span></div><div class='output co'>#&gt; CTTGATTGATCTTC 
-#&gt;            233 </div></pre>
+<span class='fu'>interestingGroups</span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; [1] "sampleName"</div><div class='input'><span class='fu'>interestingGroups</span>(<span class='no'>bcb_small</span>) <span class='kw'>&lt;-</span> <span class='st'>"sampleName"</span>
+<span class='fu'>interestingGroups</span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; [1] "sampleName"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

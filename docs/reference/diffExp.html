@@ -195,7 +195,13 @@ for additional information.</p></li>
     <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
     <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
     <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>
-)</div><div class='output co'>#&gt; <span class='message'>converting counts to integer mode</span></div><div class='output co'>#&gt; iteration: 1. mean conv.: 0
+)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: zingeR</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: edgeR</span></div><div class='output co'>#&gt; <span class='message'>converting counts to integer mode</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: edgeR</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: limma</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'limma'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:BiocGenerics':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    plotMA</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'edgeR'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:SingleCellExperiment':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    cpm</span></div><div class='output co'>#&gt; iteration: 1. mean conv.: 0
 #&gt; iteration: 2. mean conv.: 0.16
 #&gt; iteration: 3. mean conv.: 0.958
 #&gt; iteration: 4. mean conv.: 0.986
@@ -205,7 +211,10 @@ for additional information.</p></li>
 #&gt; iteration: 8. mean conv.: 1
 #&gt; iteration: 9. mean conv.: 0.98
 #&gt; iteration: 10. mean conv.: 1
-#&gt; converged. </div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>lrt</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt; Observations: 500
+#&gt; converged. </div><div class='output co'>#&gt; <span class='message'>Loading required package: genefilter</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'genefilter'</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:matrixStats':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    rowSds, rowVars</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>lrt</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 5
 #&gt; $ logFC      &lt;dbl&gt; 0.17740165, 0.67929074, 1.25917593, -0.53085841, -1.4541...
 #&gt; $ logCPM     &lt;dbl&gt; 10.050208, 8.730282, 10.027433, 12.389401, 8.905963, 8.6...
