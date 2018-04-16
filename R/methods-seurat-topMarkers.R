@@ -48,7 +48,7 @@ setMethod(
         if (isTRUE(coding)) {
             object <- object %>%
                 .[.[["geneBiotype"]] == "protein_coding", , drop = FALSE] %>%
-                # Remove additional genes annotated as "predicted" in description
+                # Remove genes annotated as "predicted"
                 .[!grepl("^predicted\\s", .[["description"]]), , drop = FALSE]
         }
 

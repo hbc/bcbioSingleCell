@@ -1,7 +1,3 @@
-# TODO Add method for SingleCellExperiment
-
-
-
 #' Differential Expression
 #'
 #' @section zingeR-edgeR:

@@ -1,5 +1,3 @@
-# TODO Import DropletUtils when Bioc 3.7 is released
-
 #' Barcode Ranks
 #'
 #' Return statistics to construct a barcode-rank plot. Also calculates the knee

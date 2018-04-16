@@ -85,8 +85,8 @@ setMethod(
         )
 
         # Remove any `NULL` plots. This is useful for nuking the
-        # `plotReadsPerCell()` return on an object that doesn't contain raw cellular
-        # barcode counts.
+        # `plotReadsPerCell()` return on an object that doesn't contain raw
+        # cellular barcode counts.
         plotlist <- Filter(Negate(is.null), plotlist)
 
         # Hide the legends, if desired
