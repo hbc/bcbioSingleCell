@@ -107,11 +107,7 @@
     <pre class="usage"><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>,
-  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
-  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
+<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -128,26 +124,6 @@
       <th>topMarkers</th>
       <td><p><code>grouped_df</code> grouped by "<code>cluster</code>", returned by
 <code>topMarkers()</code>.</p></td>
-    </tr>
-    <tr>
-      <th>tsneColor</th>
-      <td><p>Color palette to use for tSNE plot.</p></td>
-    </tr>
-    <tr>
-      <th>violinFill</th>
-      <td><p>Color palette to use for violin plot.</p></td>
-    </tr>
-    <tr>
-      <th>dotColor</th>
-      <td><p>Color palette to use for dot plot.</p></td>
-    </tr>
-    <tr>
-      <th>dark</th>
-      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>pointsAsNumbers</th>
-      <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
@@ -191,14 +167,14 @@ for the number of genes to plot here in a future update.</p>
 #&gt; 
 #&gt; 
 #&gt; ### COL1A2
-#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~07s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~05s          
 #&gt; 
 #&gt; ## Cluster 1 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### S100A10
-#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~05s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~04s          
 #&gt; 
 #&gt; ## Cluster 2 {.tabset}
 #&gt; 

@@ -157,14 +157,26 @@ Generally recommended unless there's a reason to use a single cutoff point
 across all samples in the analysis.</p></td>
     </tr>
     <tr>
+      <th>labelPoint</th>
+      <td><p>Label either the "<code>knee</code>" or "<code>inflection</code>" point.</p></td>
+    </tr>
+    <tr>
+      <th>trans</th>
+      <td><p>Name of the axis scale transformation to apply. See
+<code>help("scale_x_continuous", "ggplot2")</code> for more information.</p></td>
+    </tr>
+    <tr>
+      <th>color</th>
+      <td><p>Desired ggplot color scale. Must supply discrete values. When
+set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+<code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
+    </tr>
+    <tr>
       <th>fill</th>
       <td><p>Desired ggplot fill scale. Must supply discrete values. When set
 to <code>NULL</code>, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>point</th>
-      <td><p>Label either the "<code>knee</code>" or "<code>inflection</code>" point.</p></td>
     </tr>
     </table>
     
@@ -174,8 +186,8 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Quality Control Functions: <code>inflectionPoint</code>,
-  <code>plotCellCounts</code>,
+    <div class='dont-index'><p>Other Quality Control Functions: <code>barcodeRanksPerSample</code>,
+  <code>barcodeRanks</code>, <code>plotCellCounts</code>,
   <code>plotGenesPerCell</code>,
   <code>plotMitoRatio</code>,
   <code>plotMitoVsCoding</code>,

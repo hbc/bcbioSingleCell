@@ -119,19 +119,11 @@ Dot plot
 <span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotMarker</span>(<span class='no'>object</span>, <span class='no'>gene</span>,
-  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
-  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>,
-  <span class='st'>"list"</span>))
+<span class='fu'>plotMarker</span>(<span class='no'>object</span>, <span class='no'>gene</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>,
+  <span class='st'>"list"</span>), <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
-  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
-  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,28 +137,12 @@ Dot plot
       <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
-      <th>tsneColor</th>
-      <td><p>Color palette to use for tSNE plot.</p></td>
-    </tr>
-    <tr>
-      <th>violinFill</th>
-      <td><p>Color palette to use for violin plot.</p></td>
-    </tr>
-    <tr>
-      <th>dotColor</th>
-      <td><p>Color palette to use for dot plot.</p></td>
+      <th>gene</th>
+      <td><p>Gene identifier. Must intersect with <code>rownames()</code>.</p></td>
     </tr>
     <tr>
       <th>dark</th>
       <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>pointsAsNumbers</th>
-      <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
-    </tr>
-    <tr>
-      <th>title</th>
-      <td><p>Plot title.</p></td>
     </tr>
     <tr>
       <th>return</th>
@@ -189,6 +165,11 @@ to the first argument in the vector.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><ul>
+<li><p><code>plotMarkerTSNE()</code>.</p></li>
+<li><p><code><a href='plotDot.html'>plotDot()</a></code>.</p></li>
+<li><p><code><a href='plotViolin.html'>plotViolin()</a></code>.</p></li>
+</ul></div>
     <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
   <code>knownMarkersDetected</code>,
   <code>plotCellTypesPerCluster</code>,

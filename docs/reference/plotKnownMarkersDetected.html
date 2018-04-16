@@ -107,11 +107,8 @@
     <pre class="usage"><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>markers</span>,
-  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
-  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
+<span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>markers</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,26 +124,6 @@
     <tr>
       <th>markers</th>
       <td><p><code>grouped_df</code> of known marker genes.</p></td>
-    </tr>
-    <tr>
-      <th>tsneColor</th>
-      <td><p>Color palette to use for tSNE plot.</p></td>
-    </tr>
-    <tr>
-      <th>violinFill</th>
-      <td><p>Color palette to use for violin plot.</p></td>
-    </tr>
-    <tr>
-      <th>dotColor</th>
-      <td><p>Color palette to use for dot plot.</p></td>
-    </tr>
-    <tr>
-      <th>dark</th>
-      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>pointsAsNumbers</th>
-      <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
@@ -172,10 +149,10 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='co'># Let's plot the first 2 markers, as a quick example</span>
+<span class='co'># Let's plot the first known marker, as a quick example</span>
 <span class='fu'>plotKnownMarkersDetected</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
-    <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>known_markers_small</span>[<span class='fu'>seq_len</span>(<span class='fl'>2L</span>), ]
+    <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>known_markers_small</span>[<span class='fl'>1L</span>, , <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>]
 )</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
 #&gt; 
 #&gt; ## Natural Killer Cell {.tabset}
