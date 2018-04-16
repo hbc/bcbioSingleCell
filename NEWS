@@ -1,3 +1,45 @@
+## bcbioSingleCell 0.1.1 (2018-04-16)
+
+### Major changes
+
+- Added support for calculating `barcodeRanks()` and `barcodeRanksPerSample()`.
+- Now exporting `plotMarker()` in addition to `plotMarkers()`.
+- Primary counts matrix slotted into `assay()` is named `counts` instead of `raw`, for better consistency with `SingleCellExperiment` class. The `counts()` generic requires that the primary assay slot is named `counts` to work correctly. Nothing else here has changed, just the name.
+- `loadCellRanger()` now returns a `SingleCellExperiment` object instead of a `bcbioSingleCell` object.
+- Added support for `transgeneNames` and `spikeNames` when loading up a dataset.
+- Datasets from a poorly annotated genome can now be loaded up using `organism = NULL` during the `loadSingleCell()` call.
+- Methods now dispatch on `SingleCellExperiment` rather than `bcbioSingleCell` where applicable, providing support for `SingleCellExperiment` objects created elsewhere.
+
+### Minor changes
+
+- Added support for labeling barcode ranks, such as elbow or inflection point on UMI counts per cell plots.
+- Added support for plotting metrics using an empirical distribution function (ECDF) plot.
+- Use `theme_midnight()` and `theme_paperwhite()` internally for dimensionality reduction plots.
+- TSNE and PCA plots now use an aspect ratio of 1 by default.
+- Improved imports from Matrix, S4Vectors, and methods.
+- Switched back to using base `stop()`, `warning()`, and `message()`.
+- `inflectionPoint()` has been made defunct, in favor of using `barcodeRanks()`.
+- Moved internal constructors into S4 methods, where applicable.
+
+
+## bcbioSingleCell 0.1.0 (2018-04-04)
+
+### Major changes
+
+- `bcbioSingleCell` S4 class now extends `SingleCellExperiment` instead of `SummarizedExperiment`. This requires definition of `rowRanges()` inside the object instead of `rowData()`. Similar functionality was added to the bcbioRNASeq package. Upgrade support will be provided using `updateObject()` in a future release.
+- Added a differential expression utility function named `diffExp()`, which uses zingeR/edgeR internally to calculate gene expression changes across cell groups.
+
+### Minor changes
+
+- Added `plotCumulativeUMIsPerCell()` utility. This may be removed in a future update in favor of adding this plot into `plotUMIsPerCell()` using an ECDF plot.
+- Now using `readCellTypeMarkers()` to load marker data.frames, instead of `readCellTypeMarkersFile()`. This matches the conventions used in the bcbioBase package.
+
+
+## bcbioSingleCell 0.0.32 (2018-03-12)
+
+- Fixes for object subsetting and loadSingleCell() organism calls
+
+
 ## bcbioSingleCell 0.0.31 (2018-02-21)
 
 - Improved handling of old Ensembl release version for CellRanger output.
@@ -5,7 +47,7 @@
 - `prepareSingleCellTemplate()` now uses `_setup.R` instead of `setup.R`.
 - Updated unit tests to work with new assert checks.
 - Export `mapCellsToSamples()` instead of `cell2sample()`. `cell2sample()` now simply acts as an accessor function, returning the internally stored cell2sample mappings rather than trying to calculate. `mapCellsToSamples()` performs the actual mapping from cellular barcodes to sample identifiers.
-- Export `metricsPerSample()` 
+- Export `metricsPerSample()`
 - Now using BiocParallel bpmapply to loop across the sparse matrix files per sample internally in the `.sparseCountsList()` function, which is shared between `loadSingleCell()` and `loadCellRanger()`.
 - Updated assert checks.
 - Updated `prepareSingleCellTemplate()` to explicitly state which files to include for each R Markdown template, rather than inheriting from `bcbioBase::prepareTemplate()`.
