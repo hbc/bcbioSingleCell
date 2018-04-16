@@ -13,13 +13,10 @@ plotMarker(object, ...)
 
 plotMarkers(object, ...)
 
-\S4method{plotMarker}{seurat}(object, gene, dark = FALSE, return = c("grid",
+\S4method{plotMarker}{seurat}(object, gene, dark = TRUE, return = c("grid",
   "list"), ...)
 
-\S4method{plotMarkers}{seurat}(object, genes, tsneColor,
-  violinFill = scale_fill_viridis(discrete = TRUE),
-  dotColor = scale_color_gradient(low = "lightgray", high = "orange"),
-  dark = FALSE, pointsAsNumbers = FALSE, headerLevel = 2L, title = NULL)
+\S4method{plotMarkers}{seurat}(object, genes, headerLevel = 2L, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -35,17 +32,7 @@ to the first argument in the vector.}
 
 \item{genes}{Gene identifiers. Must match the rownames of the object.}
 
-\item{tsneColor}{Color palette to use for tSNE plot.}
-
-\item{violinFill}{Color palette to use for violin plot.}
-
-\item{dotColor}{Color palette to use for dot plot.}
-
-\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
-
 \item{headerLevel}{R Markdown header level.}
-
-\item{title}{Plot title.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.
@@ -73,6 +60,12 @@ plotMarker(seurat_small, gene = gene, dark = FALSE)
 plotMarkers(seurat_small, genes = genes)
 }
 \seealso{
+\itemize{
+\item \code{\link[=plotMarkerTSNE]{plotMarkerTSNE()}}.
+\item \code{\link[=plotDot]{plotDot()}}.
+\item \code{\link[=plotViolin]{plotViolin()}}.
+}
+
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
