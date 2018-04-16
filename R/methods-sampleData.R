@@ -9,7 +9,7 @@
 #' @family S4 Class Definitions
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase sampleData
+#' @importFrom bcbioBase sampleData sampleData<-
 #'
 #' @inheritParams general
 #'
@@ -17,10 +17,16 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' sampleData(bcb_small) %>% glimpse()
+#' x <- bcb_small
+#' sampleData(x) %>% glimpse()
+#' sampleData(x)[["batch"]] <- 1L
+#' sampleData(x) %>% glimpse()
 #'
 #' # seurat ====
-#' sampleData(pbmc_small) %>% glimpse()
+#' x <- seurat_small
+#' sampleData(x) %>% glimpse()
+#' sampleData(x)[["batch"]] <- 1L
+#' sampleData(x) %>% glimpse()
 NULL
 
 
@@ -40,6 +46,9 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
+        if (!is.character(interestingGroups)) {
+            interestingGroups <- "sampleName"
+        }
         return <- match.arg(return)
         data <- metadata(object)[["sampleData"]]
         assert_is_any_of(data, c("DataFrame", "data.frame"))
@@ -51,10 +60,6 @@ setMethod(
             data %>%
                 as.data.frame() %>%
                 .[, setdiff(colnames(.), blacklist), drop = FALSE] %>%
-                # Ensure `sampleName` is first
-                .[, unique(c("sampleName", colnames(.))), drop = FALSE] %>%
-                # Arrange by `sampleName`
-                .[order(.[["sampleName"]]), , drop = FALSE] %>%
                 kable(row.names = FALSE)
         } else {
             as(data, return)
@@ -78,6 +83,9 @@ setMethod(
         stopifnot(.hasSlot(object, "version"))
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        if (!is.character(interestingGroups)) {
+            interestingGroups <- "sampleName"
         }
         return <- match.arg(return)
         data <- metadata(object)[["sampleData"]]
@@ -115,9 +123,44 @@ setMethod(
             rownames(data) <- data[["sampleID"]]
             data
         }
-        data <- uniteInterestingGroups(data, interestingGroups)
+        if (is.character(interestingGroups)) {
+            data <- uniteInterestingGroups(data, interestingGroups)
+        }
         data <- sanitizeSampleData(data)
         assertHasRownames(data)
         as(data, return)
     }
+)
+
+
+
+# Assignment methods ===========================================================
+#' @rdname sampleData
+#' @export
+setMethod(
+    "sampleData<-",
+    signature(
+        object = "SingleCellExperiment",
+        value = "ANY"
+    ),
+    function(object, value) {
+        value <- as.data.frame(value)
+        # Ensure all columns are factors
+        value <- sanitizeSampleData(value)
+        metadata(object)[["sampleData"]] <- value
+        object
+    }
+)
+
+
+
+#' @rdname sampleData
+#' @export
+setMethod(
+    "sampleData<-",
+    signature(
+        object = "seurat",
+        value = "ANY"
+    ),
+    getMethod("sampleData<-", "SingleCellExperiment")
 )

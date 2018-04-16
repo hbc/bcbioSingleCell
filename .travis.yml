@@ -5,8 +5,13 @@ language: r
 cache: packages
 
 r:
-  # - bioc-release
+  - bioc-release
   - bioc-devel
+
+# blocklist
+branches:
+  except:
+  - develop
 
 # External dependencies
 # (required for zinbwave)
@@ -27,7 +32,7 @@ env:
 warnings_are_errors: false
 
 # Temporarily enable to cache packages
-script: true
+# script: true
 
 notifications:
   email:
@@ -38,6 +43,7 @@ r_packages:
   - covr
 bioc_packages:
   - BiocCheck
+  - EnsDb.Hsapiens.v75
 
 after_success:
   - Rscript -e 'covr::codecov()'

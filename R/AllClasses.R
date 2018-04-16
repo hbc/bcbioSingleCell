@@ -36,16 +36,11 @@ setValidity(
         stopifnot(!.hasSlot(object, "bcbio"))
 
         # Assays ===============================================================
-        assert_are_identical("raw", names(assays(object)))
+        assert_are_identical("counts", names(assays(object)))
 
         # Row data =============================================================
         assert_is_all_of(rowRanges(object), "GRanges")
         assert_is_all_of(rowData(object), "DataFrame")
-        # Require gene-to-symbol mappings
-        assert_is_subset(
-            x = c("geneID", "geneName"),
-            y = colnames(rowData(object))
-        )
 
         # Column data ==========================================================
         # Check that all of the columns are numeric
@@ -56,7 +51,7 @@ setValidity(
             USE.NAMES = TRUE
         )
         if (!all(colDataCheck)) {
-            abort(paste(
+            stop(paste(
                 paste(
                     "Non-numeric colData columns:",
                     toString(names(colDataCheck[!colDataCheck]))
@@ -103,7 +98,6 @@ setValidity(
             "ensemblRelease" = "integer",
             "genomeBuild" = "character",
             "interestingGroups" = "character",
-            "isSpike" = "character",
             "level" = "character",
             "organism" = "character",
             "pipeline" = "character",
@@ -111,7 +105,6 @@ setValidity(
             "sampleDirs" = "character",
             "sampleMetadataFile" = "character",
             "umiType" = "character",
-            "unannotatedRows" = "character",
             "uploadDir" = "character",
             "utilsSessionInfo" = "sessionInfo",
             "version" = "package_version",
@@ -134,7 +127,7 @@ setValidity(
         ))
         if (!all(classChecks)) {
             print(classChecks)
-            abort(paste(
+            stop(paste(
                 "Metadata class checks failed.",
                 bcbioBase::updateMessage,
                 sep = "\n"

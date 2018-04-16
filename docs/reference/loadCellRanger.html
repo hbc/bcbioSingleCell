@@ -60,7 +60,7 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
     <div class="page-header">
     <h1>Load 10X Genomics Cell Ranger Data</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/loadCellRanger.R'><code>R/loadCellRanger.R</code></a></small>
-    <p class="hidden name"><code>loadCellRanger.Rd</code></p>
+    <div class="hidden name"><code>loadCellRanger.Rd</code></div>
     </div>
 
     
@@ -107,7 +107,8 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
     
 
     <pre class="usage"><span class='fu'>loadCellRanger</span>(<span class='no'>uploadDir</span>, <span class='no'>refdataDir</span>, <span class='no'>sampleMetadataFile</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>isSpike</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,23 +135,30 @@ inDrop).</p></td>
 formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
-      <th>isSpike</th>
-      <td><p><em>Optional.</em> Gene names corresponding to FASTA spike-in
-sequences (e.g. ERCCs, EGFP, TDTOMATO).</p></td>
+      <th>transgeneNames</th>
+      <td><p><code>character</code> vector indicating which <code>assay()</code> rows
+denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
+    </tr>
+    <tr>
+      <th>spikeNames</th>
+      <td><p><code>character</code> vector indicating which <code>assay()</code> rows denote
+spike-in sequences (e.g. ERCCs).</p></td>
     </tr>
     <tr>
       <th>prefilter</th>
-      <td><p>Prefilter counts prior to quality control analysis.</p></td>
+      <td><p>Prefilter counts prior to quality control analysis. This
+applies very minimal filtering to the dataset, dropping only cells that
+don't contain any genes, and is generally recommended.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments, to be stashed in the <code>metadata()</code> slot.</p></td>
+      <td><p>Additional arguments, to be stashed in the <code><a href='metadata.html'>metadata()</a></code> slot.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>bcbioSingleCell</code>.</p>
+    <p><code>SingleCellExperiment</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -185,24 +193,23 @@ the user.</p>
 #&gt; <span class='message'>  index = col_integer()</span>
 #&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>Multiplexed samples detected</span></div><div class='output co'>#&gt; <span class='message'>Organism: "Homo sapiens"</span>
 #&gt; <span class='message'>Genome build: "GRCh37"</span>
-#&gt; <span class='message'>Ensembl release: 82L</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: EnsDb.Hsapiens.v75</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ensembldb</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: GenomicFeatures</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: AnnotationDbi</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: AnnotationFilter</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'AnnotationFilter'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:testthat':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    not</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'ensembldb'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:stats':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter</span></div><div class='output co'>#&gt; <span class='message'>id: "EnsDb.Hsapiens.v75"</span>
+#&gt; <span class='message'>Ensembl release: 82L</span></div><div class='output co'>#&gt; <span class='message'>id: "EnsDb.Hsapiens.v75"</span>
 #&gt; <span class='message'>organism: "Homo sapiens"</span>
 #&gt; <span class='message'>build: "GRCh37"</span>
 #&gt; <span class='message'>release: "75"</span>
-#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Using geneName instead of symbol</span></div><div class='output co'>#&gt; <span class='message'>Setting geneBiotype as factor</span></div><div class='output co'>#&gt; <span class='message'>Setting seqCoordSystem as factor</span></div><div class='output co'>#&gt; <span class='message'>Defining broadClass using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>484 coding genes detected</span></div><div class='output co'>#&gt; <span class='message'>11 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>500 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.0
-#&gt; samples: 2
-#&gt; cells: 500
-#&gt; genes: 500
-#&gt; organism: Homo sapiens
-#&gt; upload dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/cellranger
-#&gt; upload date: 
-#&gt; R load date: 2018-04-04</div></pre>
+#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Using geneName instead of symbol</span></div><div class='output co'>#&gt; <span class='message'>Setting geneBiotype as factor</span></div><div class='output co'>#&gt; <span class='message'>Setting seqCoordSystem as factor</span></div><div class='output co'>#&gt; <span class='message'>Defining broadClass using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>484 coding genes detected</span></div><div class='output co'>#&gt; <span class='message'>11 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>500 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(23): version pipeline ... utilsSessionInfo devtoolsSessionInfo
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
+#&gt;   ENSG00000269893
+#&gt; rowData names(6): geneID geneName ... entrezID broadClass
+#&gt; colnames(500): aggregation_AAACCTGGTTTACTCT_1
+#&gt;   aggregation_AAACGGGGTATCTGCA_1 ... aggregation_TTTGTCACACAACGTT_2
+#&gt;   aggregation_TTTGTCACACTCGACG_2
+#&gt; colData names(6): nUMI nGene ... log10GenesPerUMI mitoRatio
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

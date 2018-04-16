@@ -5,7 +5,8 @@
 \title{Load 10X Genomics Cell Ranger Data}
 \usage{
 loadCellRanger(uploadDir, refdataDir, sampleMetadataFile,
-  interestingGroups = "sampleName", isSpike = NULL, prefilter = TRUE, ...)
+  interestingGroups = "sampleName", transgeneNames = NULL,
+  spikeNames = NULL, prefilter = TRUE, ...)
 }
 \arguments{
 \item{uploadDir}{Path to Cell Ranger output directory. This directory path
@@ -21,15 +22,20 @@ inDrop).}
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{isSpike}{\emph{Optional.} Gene names corresponding to FASTA spike-in
-sequences (e.g. ERCCs, EGFP, TDTOMATO).}
+\item{transgeneNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows
+denote transgenes (e.g. EGFP, TDTOMATO).}
 
-\item{prefilter}{Prefilter counts prior to quality control analysis.}
+\item{spikeNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows denote
+spike-in sequences (e.g. ERCCs).}
+
+\item{prefilter}{Prefilter counts prior to quality control analysis. This
+applies very minimal filtering to the dataset, dropping only cells that
+don't contain any genes, and is generally recommended.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
 \value{
-\code{bcbioSingleCell}.
+\code{SingleCellExperiment}.
 }
 \description{
 Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} cell

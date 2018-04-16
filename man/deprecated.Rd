@@ -14,6 +14,8 @@
 \alias{readMarkersFile}
 \alias{calculateMetrics}
 \alias{readCellTypeMarkersFile}
+\alias{inflectionPoint}
+\alias{plotCumulativeUMIsPerCell}
 \title{Deprecated Functions}
 \usage{
 plotClusters(...)
@@ -39,6 +41,10 @@ readMarkersFile(...)
 calculateMetrics(...)
 
 readCellTypeMarkersFile(...)
+
+inflectionPoint(...)
+
+plotCumulativeUMIsPerCell(...)
 }
 \arguments{
 \item{...}{Additional arguments.}

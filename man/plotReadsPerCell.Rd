@@ -4,13 +4,13 @@
 \name{plotReadsPerCell}
 \alias{plotReadsPerCell}
 \alias{plotReadsPerCell}
-\alias{plotReadsPerCell,bcbioSingleCell-method}
+\alias{plotReadsPerCell,SingleCellExperiment-method}
 \alias{plotReadsPerCell,seurat-method}
 \title{Plot Read Counts per Cell}
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{bcbioSingleCell}(object, interestingGroups,
+\S4method{plotReadsPerCell}{SingleCellExperiment}(object, interestingGroups,
   geom = c("histogram", "ecdf", "ridgeline", "violin"),
   color = scale_color_viridis(discrete = TRUE),
   fill = scale_fill_viridis(discrete = TRUE))
@@ -50,18 +50,25 @@ Plot the distribution of read counts for all unfiltered cellular barcodes.
 # bcbioSingleCell ====
 plotReadsPerCell(bcb_small)
 
+# SingleCellExperiment ====
+# Only contains UMI counts
+\dontrun{
+plotReadsPerCell(cellranger_small)
+}
+
 # seurat ====
-plotReadsPerCell(seurat_small)
+# Only contains UMI counts
+\dontrun{
+plotReadsPerCell(Seurat::pbmc_small)
+}
 }
 \seealso{
-Other Quality Control Functions: \code{\link{inflectionPoint}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}
 }

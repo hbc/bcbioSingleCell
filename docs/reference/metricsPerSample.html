@@ -29,7 +29,7 @@
   
 <meta property="og:title" content="Metrics per Sample — metricsPerSample" />
 
-<meta property="og:description" content="Metrics per Sample" />
+<meta property="og:description" content="Calculate summary statistics per sample." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -97,20 +97,21 @@
     <div class="page-header">
     <h1>Metrics per Sample</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-metricsPerSample.R'><code>R/methods-metricsPerSample.R</code></a></small>
-    <p class="hidden name"><code>metricsPerSample.Rd</code></p>
+    <div class="hidden name"><code>metricsPerSample.Rd</code></div>
     </div>
 
     
-    <p>Metrics per Sample</p>
+    <p>Calculate summary statistics per sample.</p>
     
 
     <pre class="usage"><span class='fu'>metricsPerSample</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>metricsPerSample</span>(<span class='no'>object</span>)
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>metricsPerSample</span>(<span class='no'>object</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
+  <span class='st'>"median"</span>, <span class='st'>"sum"</span>))
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>metricsPerSample</span>(<span class='no'>object</span>)</pre>
+<span class='fu'>metricsPerSample</span>(<span class='no'>object</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"median"</span>, <span class='st'>"sum"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -123,11 +124,15 @@
       <th>...</th>
       <td><p>Additional arguments.</p></td>
     </tr>
+    <tr>
+      <th>f</th>
+      <td><p>Mathematical function to apply. Defaults to "<code>sum</code>".</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>tbl_df</code> containing summary statistics.</p>
+    <p><code>data.frame</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -137,22 +142,23 @@
   <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
   <code>filterCells</code>,
+  <code><a href='interestingGroups.html'>interestingGroups</a></code>,
   <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>, <code><a href='metrics.html'>metrics</a></code>,
   <code><a href='selectSamples.html'>selectSamples</a></code>,
   <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>metricsPerSample</span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
-#&gt;   sampleName    nUMI  nGene nCoding
-#&gt;   &lt;fct&gt;        &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
-#&gt; 1 rep_1      1101884 160365  820418</div><div class='input'>
-<span class='co'># seurat ====</span>
-<span class='fu'>metricsPerSample</span>(<span class='no'>seurat_small</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
-#&gt;   sampleName    nUMI  nGene nCoding
-#&gt;   &lt;fct&gt;        &lt;int&gt;  &lt;int&gt;   &lt;int&gt;
-#&gt; 1 rep_1      1101884 160365  820418</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
+<span class='co'># mean</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>bcb_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating mean per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;         nCount     nUMI  nGene  nCoding  nMito log10GenesPerUMI mitoRatio
+#&gt; rep_1 42565.34 2203.768 320.73 1640.836 374.53        0.7600619 0.1954493</div><div class='input'>
+<span class='co'># median</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>bcb_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"median"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating median per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;        nCount   nUMI nGene nCoding nMito log10GenesPerUMI mitoRatio
+#&gt; rep_1 36119.5 1790.5   330  1263.5   256         0.763051 0.1154283</div><div class='input'>
+<span class='co'># sum</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>bcb_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"sum"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating sum per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;         nCount    nUMI  nGene nCoding  nMito
+#&gt; rep_1 21282671 1101884 160365  820418 187265</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

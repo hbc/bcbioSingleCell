@@ -4,10 +4,13 @@
 \name{fetchGeneData}
 \alias{fetchGeneData}
 \alias{fetchGeneData}
+\alias{fetchGeneData,SingleCellExperiment-method}
 \alias{fetchGeneData,seurat-method}
 \title{Fetch Gene Expression Data}
 \usage{
 fetchGeneData(object, ...)
+
+\S4method{fetchGeneData}{SingleCellExperiment}(object, genes)
 
 \S4method{fetchGeneData}{seurat}(object, genes)
 }
@@ -25,9 +28,9 @@ fetchGeneData(object, ...)
 Fetch Gene Expression Data
 }
 \examples{
-# seurat ====
-genes <- head(rownames(pbmc_small))
-fetchGeneData(pbmc_small, genes = genes) \%>\% glimpse()
+# SingleCellExperiment ====
+genes <- rownames(bcb_small) \%>\% head(2L)
+fetchGeneData(bcb_small, genes = genes) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
@@ -35,6 +38,7 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
+  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},

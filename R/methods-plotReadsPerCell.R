@@ -14,8 +14,17 @@
 #' # bcbioSingleCell ====
 #' plotReadsPerCell(bcb_small)
 #'
+#' # SingleCellExperiment ====
+#' # Only contains UMI counts
+#' \dontrun{
+#' plotReadsPerCell(cellranger_small)
+#' }
+#'
 #' # seurat ====
-#' plotReadsPerCell(seurat_small)
+#' # Only contains UMI counts
+#' \dontrun{
+#' plotReadsPerCell(Seurat::pbmc_small)
+#' }
 NULL
 
 
@@ -45,7 +54,7 @@ NULL
 
     # Return `NULL` if `nCount` isn't present
     if (!"nCount" %in% colnames(data)) {
-        warn("object does not contain nCount column in `metrics()`")
+        warning("object does not contain nCount column in `metrics()`")
         return(NULL)
     }
 
@@ -60,87 +69,12 @@ NULL
 
 
 
-.plotReadsPerCell <- function(
-    object,
-    interestingGroups,
-    geom = c("histogram", "ecdf", "ridgeline", "violin"),
-    color = scale_color_viridis(discrete = TRUE),
-    fill = scale_fill_viridis(discrete = TRUE)
-) {
-    # Passthrough: color, fill
-    validObject(object)
-    if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
-    }
-    geom <- match.arg(geom)
-
-    data <- .readsPerCell(
-        object = object,
-        interestingGroups = interestingGroups
-    )
-    if (!is.data.frame(data)) {
-        return(invisible())
-    }
-
-    cutoff <- metadata(object)[["cellularBarcodeCutoff"]]
-    assert_is_an_integer(cutoff)
-
-    if (geom == "histogram") {
-        sampleData <- sampleData(
-            object = object,
-            interestingGroups = interestingGroups,
-            return = "data.frame"
-        )
-        data <- .proportionalReadsPerCell(
-            data = data,
-            sampleData = sampleData
-        )
-        p <- .plotReadsPerCellHistogram(
-            data = data,
-            cutoff = cutoff,
-            color = color
-        )
-    } else if (geom == "ecdf") {
-        p <- .plotReadsPerCellECDF(
-            data = data,
-            cutoff = cutoff,
-            color = color
-        )
-    } else if (geom == "ridgeline") {
-        p <- .plotReadsPerCellRidgeline(
-            data = data,
-            cutoff = cutoff,
-            fill = fill
-        )
-    } else if (geom == "violin") {
-        p <- .plotReadsPerCellViolin(
-            data = data,
-            cutoff = cutoff,
-            fill = fill
-        )
-    }
-
-    # Add title and subtitle containing cutoff information
-    p <- p +
-        labs(
-            color = "",
-            fill = "",
-            title = "reads per cell",
-            subtitle = paste("cutoff", cutoff, sep = " = ")
-        )
-
-    p
-}
-
-
-
 # Standard (raw) ---------------------------------------------------------------
 .plotReadsPerCellECDF <- function(
     data,
-    cutoff = 0L,
     color = scale_color_viridis(discrete = TRUE)
 ) {
-    assert_is_a_number(cutoff)
+    assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
 
     p <- ggplot(
@@ -151,12 +85,8 @@ NULL
         )
     ) +
         stat_ecdf(geom = "step") +
+        labs(y = "frequency") +
         scale_x_continuous(trans = "log10")
-
-    # Cutoff lines
-    if (cutoff > 0L) {
-        p <- p + .qcCutoffLine(xintercept = cutoff)
-    }
 
     # Color palette
     if (is(color, "ScaleDiscrete")) {
@@ -179,10 +109,9 @@ NULL
 
 .plotReadsPerCellViolin <- function(
     data,
-    cutoff = 0L,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    assert_is_a_number(cutoff)
+    assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
 
     p <- ggplot(
@@ -201,11 +130,6 @@ NULL
         scale_y_continuous(trans = "log10") +
         .medianLabels(data, medianCol = "nCount", digits = 0L) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-
-    # Cutoff lines
-    if (cutoff > 0L) {
-        p <- p + .qcCutoffLine(yintercept = cutoff)
-    }
 
     # Color palette
     if (is(fill, "ScaleDiscrete")) {
@@ -228,10 +152,9 @@ NULL
 
 .plotReadsPerCellRidgeline <- function(
     data,
-    cutoff = 0L,
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
-    assert_is_a_number(cutoff)
+    assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
 
     p <- ggplot(
@@ -250,11 +173,6 @@ NULL
         ) +
         scale_x_continuous(trans = "log10") +
         .medianLabels(data, medianCol = "nCount", digits = 0L)
-
-    # Cutoff lines
-    if (cutoff > 0L && length(cutoff)) {
-        p <- p + .qcCutoffLine(xintercept = cutoff)
-    }
 
     # Color palette
     if (is(fill, "ScaleDiscrete")) {
@@ -329,10 +247,9 @@ NULL
 
 .plotReadsPerCellHistogram <- function(
     data,
-    cutoff = 0L,
     color = scale_color_viridis(discrete = TRUE)
 ) {
-    assert_is_a_number(cutoff)
+    assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
 
     p <- ggplot(
@@ -343,19 +260,14 @@ NULL
             color = "interestingGroups"
         )
     ) +
-        geom_line(
+        geom_step(
             alpha = qcPlotAlpha,
-            size = 1.5
+            size = 1L
         ) +
         labs(
             x = "log10 reads per cell",
             y = "proportion of cells"
         )
-
-    # Cutoff lines
-    if (cutoff > 0L) {
-        p <- p + .qcCutoffLine(xintercept = log10(cutoff))
-    }
 
     # Color palette
     if (is(color, "ScaleDiscrete")) {
@@ -381,8 +293,75 @@ NULL
 #' @export
 setMethod(
     "plotReadsPerCell",
-    signature("bcbioSingleCell"),
-    .plotReadsPerCell
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        interestingGroups,
+        geom = c("histogram", "ecdf", "ridgeline", "violin"),
+        color = scale_color_viridis(discrete = TRUE),
+        fill = scale_fill_viridis(discrete = TRUE)
+    ) {
+        # Passthrough: color, fill
+        validObject(object)
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        geom <- match.arg(geom)
+
+        data <- .readsPerCell(
+            object = object,
+            interestingGroups = interestingGroups
+        )
+        if (!is.data.frame(data)) {
+            return(invisible())
+        }
+
+        if (geom == "histogram") {
+            sampleData <- sampleData(
+                object = object,
+                interestingGroups = interestingGroups,
+                return = "data.frame"
+            )
+            data <- .proportionalReadsPerCell(
+                data = data,
+                sampleData = sampleData
+            )
+            p <- .plotReadsPerCellHistogram(
+                data = data,
+                color = color
+            )
+        } else if (geom == "ecdf") {
+            p <- .plotReadsPerCellECDF(
+                data = data,
+                color = color
+            )
+        } else if (geom == "ridgeline") {
+            p <- .plotReadsPerCellRidgeline(
+                data = data,
+                fill = fill
+            )
+        } else if (geom == "violin") {
+            p <- .plotReadsPerCellViolin(
+                data = data,
+                fill = fill
+            )
+        }
+
+        # Display bcbio pipeline cutoff in subtitle
+        cutoff <- metadata(object)[["cellularBarcodeCutoff"]]
+        assert_is_an_integer(cutoff)
+
+        # Add title and subtitle containing cutoff information
+        p <- p +
+            labs(
+                color = "",
+                fill = "",
+                title = "reads per cell",
+                subtitle = paste("cutoff", cutoff, sep = " = ")
+            )
+
+        p
+    }
 )
 
 
@@ -392,5 +371,5 @@ setMethod(
 setMethod(
     "plotReadsPerCell",
     signature("seurat"),
-    .plotReadsPerCell
+    getMethod("plotReadsPerCell", "SingleCellExperiment")
 )

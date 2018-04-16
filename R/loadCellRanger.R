@@ -20,7 +20,7 @@
 #'   must contain `filtered_gene_bc_matrices*` as a child directory.
 #' @param refdataDir Directory path to Cell Ranger reference annotation data.
 #'
-#' @return `bcbioSingleCell`.
+#' @return `SingleCellExperiment`.
 #' @export
 #'
 #' @examples
@@ -35,7 +35,8 @@ loadCellRanger <- function(
     refdataDir,
     sampleMetadataFile,
     interestingGroups = "sampleName",
-    isSpike = NULL,
+    transgeneNames = NULL,
+    spikeNames = NULL,
     prefilter = TRUE,
     ...
 ) {
@@ -47,7 +48,8 @@ loadCellRanger <- function(
     refdataDir <- normalizePath(refdataDir, winslash = "/", mustWork = TRUE)
     assert_is_character(interestingGroups)
     assert_is_a_string(sampleMetadataFile)
-    assertIsCharacterOrNULL(isSpike)
+    assertIsCharacterOrNULL(transgeneNames)
+    assertIsCharacterOrNULL(spikeNames)
     assert_is_a_bool(prefilter)
     dots <- list(...)
     pipeline <- "cellranger"
@@ -57,7 +59,7 @@ loadCellRanger <- function(
     # Legacy arguments =========================================================
     # annotable
     if ("annotable" %in% names(call)) {
-        abort("`annotable` argument is defunct")
+        stop("`annotable` argument is defunct")
     }
     dots <- Filter(Negate(is.null), dots)
 
@@ -76,11 +78,11 @@ loadCellRanger <- function(
 
     # Subset sample directories by metadata ====================================
     if (nrow(sampleData) < length(sampleDirs)) {
-        inform("Loading a subset of samples, defined by the metadata file")
+        message("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
         sampleDirs <- sampleDirs %>%
             .[names(sampleDirs) %in% rownames(sampleData)]
-        inform(paste(length(sampleDirs), "samples matched by metadata"))
+        message(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
     }
@@ -107,7 +109,7 @@ loadCellRanger <- function(
         as.integer()
     assert_is_an_integer(ensemblRelease)
     assert_all_are_positive(ensemblRelease)
-    inform(paste(
+    message(paste(
         paste("Organism:", deparse(organism)),
         paste("Genome build:", deparse(genomeBuild)),
         paste("Ensembl release:", deparse(ensemblRelease)),
@@ -143,7 +145,7 @@ loadCellRanger <- function(
     rownames(rowData) <- names(rowRanges)
 
     # Counts ===================================================================
-    inform("Reading counts at gene level")
+    message("Reading counts at gene level")
     sparseCountsList <- .sparseCountsList(
         sampleDirs = sampleDirs,
         pipeline = pipeline,
@@ -168,7 +170,7 @@ loadCellRanger <- function(
     # number (e.g. `-2$`, which we're sanitizing to `_2$`).
     if (any(grepl(x = colnames(counts), pattern = "_2$"))) {
         if (!"index" %in% colnames(sampleData)) {
-            abort(paste(
+            stop(paste(
                 "`index` column must be defined using",
                 "`sampleMetadataFile` for multiplexed samples"
             ))
@@ -227,11 +229,12 @@ loadCellRanger <- function(
     }
 
     # Return ===================================================================
-    .new.bcbioSingleCell(
-        assays = list("raw" = counts),
+    .new.SingleCellExperiment(
+        assays = list("counts" = counts),
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
-        isSpike = isSpike
+        transgeneNames = transgeneNames,
+        spikeNames = spikeNames
     )
 }

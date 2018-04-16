@@ -4,18 +4,18 @@
 \name{plotMitoRatio}
 \alias{plotMitoRatio}
 \alias{plotMitoRatio}
-\alias{plotMitoRatio,bcbioSingleCell-method}
+\alias{plotMitoRatio,SingleCellExperiment-method}
 \alias{plotMitoRatio,seurat-method}
 \title{Plot Mitochondrial Transcript Abundance}
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), interestingGroups, max,
+\S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("violin",
+  "boxplot", "histogram", "ridgeline"), interestingGroups, max = 1L,
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotMitoRatio}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), interestingGroups, max,
+  "histogram", "ridgeline"), interestingGroups, max = 1L,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
@@ -45,17 +45,21 @@ Plot Mitochondrial Transcript Abundance
 # bcbioSingleCell ====
 plotMitoRatio(bcb_small)
 
+# SingleCellExperiment ====
+plotMitoRatio(cellranger_small)
+
 # seurat ====
-plotMitoRatio(seurat_small)
+# `object@meta.data` must contain `mitoRatio`
+\dontrun{
+plotMitoRatio(Seurat::pbmc_small)
+}
 }
 \seealso{
-Other Quality Control Functions: \code{\link{inflectionPoint}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}

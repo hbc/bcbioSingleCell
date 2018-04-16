@@ -3,11 +3,11 @@
 \docType{methods}
 \name{plotQC}
 \alias{plotQC}
-\alias{plotQC,bcbioSingleCell-method}
+\alias{plotQC,SingleCellExperiment-method}
 \alias{plotQC,seurat-method}
 \title{Quality Control Plots}
 \usage{
-\S4method{plotQC}{bcbioSingleCell}(object, interestingGroups,
+\S4method{plotQC}{SingleCellExperiment}(object, interestingGroups,
   geom = c("violin", "boxplot", "histogram", "ridgeline"), headerLevel = 2L,
   legend = FALSE, return = c("grid", "list", "markdown"))
 
@@ -45,16 +45,20 @@ visualization.
 \examples{
 # bcbioSingleCell ====
 plotQC(bcb_small)
+
+# SingleCellExperiment ====
+suppressWarnings(plotQC(cellranger_small))
+
+# seurat ====
+suppressWarnings(plotQC(Seurat::pbmc_small))
 }
 \seealso{
-Other Quality Control Functions: \code{\link{inflectionPoint}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}},
-  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}

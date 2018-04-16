@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -96,8 +96,8 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Feature t-SNE</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotFeatureTSNE.R'><code>R/methods-plotFeatureTSNE.R</code></a></small>
-    <p class="hidden name"><code>plotFeatureTSNE.Rd</code></p>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-plotFeatureTSNE.R'><code>R/methods-seurat-plotFeatureTSNE.R</code></a></small>
+    <div class="hidden name"><code>plotFeatureTSNE.Rd</code></div>
     </div>
 
     
@@ -109,7 +109,7 @@
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>features</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
   <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span>
-  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ggplot"</span>, <span class='st'>"list"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -146,7 +146,7 @@ color definitions are desired, we recommend using
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/midnightTheme'>basejump::midnightTheme()</a></code>.</p></td>
+      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -179,7 +179,7 @@ to the first argument in the vector.</p></td>
   <code>knownMarkersDetected</code>,
   <code>plotCellTypesPerCluster</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code>plotMarkerTSNE</code>, <code>plotMarker</code>,
   <code><a href='plotPCA.html'>plotPCA</a></code>, <code>plotPCElbow</code>,
   <code>plotTSNE</code>, <code>plotTopMarkers</code>,
   <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
@@ -187,7 +187,7 @@ to the first argument in the vector.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='fu'>plotFeatureTSNE</span>(<span class='no'>pbmc_small</span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='st'>"PC1"</span>)</div><div class='img'><img src='plotFeatureTSNE-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plotFeatureTSNE</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='kw'>features</span> <span class='kw'>=</span> <span class='st'>"PC1"</span>)</div><div class='img'><img src='plotFeatureTSNE-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -8,36 +8,27 @@
 #'
 #' @inherit plotGenesPerCell
 #'
+#' @inheritParams general
+#' @param barcodeRanks Calculate barcode ranks to label knee or inflection
+#'   points.
+#' @param ranksPerSample Calculate the barcode ranks individually per sample.
+#'   Generally recommended unless there's a reason to use a single cutoff point
+#'   across all samples in the analysis.
+#' @param labelPoint Label either the "`knee`" or "`inflection`" point.
+#'
 #' @examples
 #' # bcbioSingleCell ====
 #' plotUMIsPerCell(bcb_small)
 #'
+#' # Label the barcode ranks
+#' plotUMIsPerCell(bcb_small, barcodeRanks = TRUE)
+#'
+#' # SingleCellExperiment ====
+#' plotUMIsPerCell(cellranger_small)
+#'
 #' # seurat ====
-#' plotUMIsPerCell(seurat_small)
-#' plotUMIsPerCell(pbmc_small)
+#' plotUMIsPerCell(Seurat::pbmc_small)
 NULL
-
-
-
-# Constructors =================================================================
-.plotUMIsPerCell <- function(
-    object,
-    geom = c("violin", "boxplot", "histogram", "ridgeline"),
-    interestingGroups,
-    min,
-    fill = scale_fill_viridis(discrete = TRUE)
-) {
-    geom <- match.arg(geom)
-    .plotQCMetric(
-        object = object,
-        metricCol = "nUMI",
-        geom = geom,
-        interestingGroups = interestingGroups,
-        min = min,
-        trans = "identity",
-        fill = fill
-    )
-}
 
 
 
@@ -46,8 +37,52 @@ NULL
 #' @export
 setMethod(
     "plotUMIsPerCell",
-    signature("bcbioSingleCell"),
-    .plotUMIsPerCell
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        geom = c("ecdf", "histogram", "ridgeline", "boxplot", "violin"),
+        interestingGroups,
+        min = 0L,
+        barcodeRanks = FALSE,
+        ranksPerSample = TRUE,
+        labelPoint = c("knee", "inflection"),
+        trans = "log10",
+        color = scale_color_viridis(discrete = TRUE),
+        fill = scale_fill_viridis(discrete = TRUE)
+    ) {
+        geom <- match.arg(geom)
+        assert_is_a_bool(barcodeRanks)
+        assert_is_a_bool(ranksPerSample)
+        labelPoint <- match.arg(labelPoint)
+
+        p <- .plotQCMetric(
+            object = object,
+            metricCol = "nUMI",
+            geom = geom,
+            interestingGroups = interestingGroups,
+            min = min,
+            trans = trans,
+            color = color,
+            fill = fill
+        )
+
+        # Calculate barcode ranks and label inflection or knee point
+        if (isTRUE(barcodeRanks)) {
+            if (isTRUE(ranksPerSample)) {
+                fun <- .labelBarcodeRanksPerSample
+            } else {
+                fun <- .labelBarcodeRanks
+            }
+            p <- fun(
+                p = p,
+                object = object,
+                geom = geom,
+                point = labelPoint
+            )
+        }
+
+        p
+    }
 )
 
 
@@ -57,5 +92,5 @@ setMethod(
 setMethod(
     "plotUMIsPerCell",
     signature("seurat"),
-    .plotUMIsPerCell
+    getMethod("plotUMIsPerCell", "SingleCellExperiment")
 )

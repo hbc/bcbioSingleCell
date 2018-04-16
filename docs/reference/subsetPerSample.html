@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <div class="page-header">
     <h1>Subset Per Sample</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-subsetPerSample.R'><code>R/methods-subsetPerSample.R</code></a></small>
-    <p class="hidden name"><code>subsetPerSample.Rd</code></p>
+    <div class="hidden name"><code>subsetPerSample.Rd</code></div>
     </div>
 
     
@@ -108,7 +108,7 @@
 
 <span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>subsetPerSample</span>(<span class='no'>object</span>, <span class='kw'>minCells</span> <span class='kw'>=</span> <span class='fl'>200L</span>,
-  <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>(), <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>)</pre>
+  <span class='kw'>assignAndSave</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>(), <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -126,18 +126,28 @@
       <td><p>Minimum number of cells required per sample.</p></td>
     </tr>
     <tr>
+      <th>assignAndSave</th>
+      <td><p>Assign and save the individual datasets.</p></td>
+    </tr>
+    <tr>
       <th>envir</th>
-      <td><p>Environment where to assign the subsets.</p></td>
+      <td><p>Environment where to assign the subsets. Only applicable when
+<code>assignAndSave = TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>dir</th>
-      <td><p>Output directory.</p></td>
+      <td><p>Output directory. Only applicable when <code>assignAndSave = TRUE</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Named vector of saved <code>bcbioSingleCell</code> subset file paths.</p>
+    
+<ul>
+<li><p><code>assignAndSave = FALSE</code>: Per sample objects in a <code>list</code>.</p></li>
+<li><p><code>assignAndSave = TRUE</code>: Subset file paths.</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -147,16 +157,23 @@
   <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
   <code>filterCells</code>,
+  <code><a href='interestingGroups.html'>interestingGroups</a></code>,
   <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
   <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
   <code><a href='selectSamples.html'>selectSamples</a></code>, <code>topBarcodes</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioRNASeq ====</span>
-<span class='co'># This will save the subsets per sample to disk</span>
-<span class='fu'>subsetPerSample</span>(<span class='no'>bcb_small</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; <span class='message'>Saving multiplexed_AAAAAAAA to /Users/mike/GitHub/hbc/bcbioSingleCell/docs/reference/subsetPerSample</span></div><div class='output co'>#&gt;                                                                             multiplexed_AAAAAAAA 
-#&gt; "/Users/mike/GitHub/hbc/bcbioSingleCell/docs/reference/subsetPerSample/multiplexed_AAAAAAAA.rda" </div><div class='input'><span class='fu'>list.files</span>(<span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA.rda"</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
+<span class='co'># List mode (default)</span>
+<span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'>subsetPerSample</span>(<span class='no'>bcb_small</span>, <span class='kw'>assignAndSave</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='input'><span class='fu'>names</span>(<span class='no'>list</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div><div class='input'>
+<span class='co'># Assign and save mode (useful for large datasets)</span>
+<span class='fu'>subsetPerSample</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>bcb_small</span>,
+    <span class='kw'>assignAndSave</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>(),
+    <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"subsetPerSample"</span>
+)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; <span class='message'>Saving multiplexed_AAAAAAAA to /Users/mike/GitHub/hbc/bcbioSingleCell/docs/reference/subsetPerSample</span></div><div class='input'><span class='fu'>list.files</span>(<span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA.rda"</div><div class='input'>
 <span class='co'># Clean up</span>
 <span class='fu'>unlink</span>(<span class='st'>"subsetPerSample"</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>

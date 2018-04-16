@@ -4,13 +4,13 @@
 \name{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
-\alias{plotUMIsVsGenes,bcbioSingleCell-method}
+\alias{plotUMIsVsGenes,SingleCellExperiment-method}
 \alias{plotUMIsVsGenes,seurat-method}
 \title{Plot UMI and Gene Correlation}
 \usage{
 plotUMIsVsGenes(object, ...)
 
-\S4method{plotUMIsVsGenes}{bcbioSingleCell}(object, interestingGroups,
+\S4method{plotUMIsVsGenes}{SingleCellExperiment}(object, interestingGroups,
   color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotUMIsVsGenes}{seurat}(object, interestingGroups,
@@ -36,9 +36,11 @@ Plot UMI and Gene Correlation
 # bcbioSingleCell ====
 plotUMIsVsGenes(bcb_small)
 
+# SingleCellExperiment ====
+plotUMIsVsGenes(cellranger_small)
+
 # seurat ====
-plotUMIsVsGenes(seurat_small)
-plotUMIsVsGenes(pbmc_small)
+plotUMIsVsGenes(Seurat::pbmc_small)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

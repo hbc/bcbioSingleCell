@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -96,8 +96,8 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Top Markers</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotTopMarkers.R'><code>R/methods-plotTopMarkers.R</code></a></small>
-    <p class="hidden name"><code>plotTopMarkers.Rd</code></p>
+    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-plotTopMarkers.R'><code>R/methods-seurat-plotTopMarkers.R</code></a></small>
+    <div class="hidden name"><code>plotTopMarkers.Rd</code></div>
     </div>
 
     
@@ -107,11 +107,7 @@
     <pre class="usage"><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>,
-  <span class='kw'>tsneColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_color_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
-  <span class='kw'>violinFill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>discrete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>dotColor</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"purple"</span>),
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
+<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -128,26 +124,6 @@
       <th>topMarkers</th>
       <td><p><code>grouped_df</code> grouped by "<code>cluster</code>", returned by
 <code>topMarkers()</code>.</p></td>
-    </tr>
-    <tr>
-      <th>tsneColor</th>
-      <td><p>Color palette to use for tSNE plot.</p></td>
-    </tr>
-    <tr>
-      <th>violinFill</th>
-      <td><p>Color palette to use for violin plot.</p></td>
-    </tr>
-    <tr>
-      <th>dotColor</th>
-      <td><p>Color palette to use for dot plot.</p></td>
-    </tr>
-    <tr>
-      <th>dark</th>
-      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/midnightTheme'>basejump::midnightTheme()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>pointsAsNumbers</th>
-      <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
@@ -173,7 +149,7 @@ for the number of genes to plot here in a future update.</p>
   <code>plotCellTypesPerCluster</code>,
   <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkerTSNE</code>, <code>plotMarkers</code>,
+  <code>plotMarkerTSNE</code>, <code>plotMarker</code>,
   <code><a href='plotPCA.html'>plotPCA</a></code>, <code>plotPCElbow</code>,
   <code>plotTSNE</code>, <code>sanitizeMarkers</code>,
   <code>topMarkers</code></p></div>
@@ -191,35 +167,35 @@ for the number of genes to plot here in a future update.</p>
 #&gt; 
 #&gt; 
 #&gt; ### COL1A2
-#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~07s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~09s          
 #&gt; 
 #&gt; ## Cluster 1 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### S100A10
-#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~07s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~06s          
 #&gt; 
 #&gt; ## Cluster 2 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### MYL4
-#&gt; </div><div class='img'><img src='plotTopMarkers-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++                    | 60% ~05s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++                    | 60% ~04s          
 #&gt; 
 #&gt; ## Cluster 3 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### MT.ATP6
-#&gt; </div><div class='img'><img src='plotTopMarkers-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++         | 80% ~03s          
+#&gt; </div><div class='img'><img src='plotTopMarkers-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++         | 80% ~02s          
 #&gt; 
 #&gt; ## Cluster 4 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### H3F3A
-#&gt; </div><div class='img'><img src='plotTopMarkers-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 13s</div></pre>
+#&gt; </div><div class='img'><img src='plotTopMarkers-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 08s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

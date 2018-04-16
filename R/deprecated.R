@@ -53,8 +53,8 @@ plotFeatures <- function(object, features, ...) {
 #' @rdname deprecated
 #' @export
 darkTheme <- function(...) {
-    .Deprecated("basejump::midnightTheme")
-    basejump::midnightTheme(...)
+    .Deprecated("basejump::theme_midnight")
+    basejump::theme_midnight(...)
 }
 
 
@@ -71,8 +71,8 @@ pcCutoff <- function(...) {
 #' @rdname deprecated
 #' @export
 quantileHeatmap <- function(...) {
-    .Deprecated("plotQuantileHeatmap")
-    plotQuantileHeatmap(...)
+    .Deprecated("bcbioBase::plotQuantileHeatmap")
+    bcbioBase::plotQuantileHeatmap(...)
 }
 
 
@@ -125,4 +125,19 @@ calculateMetrics <- function(...) {
 readCellTypeMarkersFile <- function(...) {
     .Deprecated("readCellTypeMarkers")
     readCellTypeMarkers(...)
+}
+
+
+
+# v0.1.1 =======================================================================
+#' @rdname deprecated
+#' @export
+inflectionPoint <- function(...) {
+    .Defunct("barcodeRanks")
+}
+
+#' @rdname deprecated
+#' @export
+plotCumulativeUMIsPerCell <- function(...) {
+    .Defunct("plotUMIsPerCell")
 }

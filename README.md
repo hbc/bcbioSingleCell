@@ -16,11 +16,7 @@ This is an [R][] package.
 ```r
 source("https://bioconductor.org/biocLite.R")
 biocLite("devtools")
-biocLite("GenomeInfoDbData")
-biocLite(
-    "hbc/bcbioSingleCell",
-    dependencies = c("Depends", "Imports", "Suggests")
-)
+biocLite("hbc/bcbioSingleCell")
 ```
 
 
@@ -59,13 +55,13 @@ This is our current method for handling inDrop samples.
 
 | fileName           | description | index | sequence | sampleName |
 | -------------------|-------------|-------|----------|------------|
-| 170201_R1.fastq.gz | run_1       | 17    | GGAGGTAA | sample_1   |
-| 170201_R1.fastq.gz | run_1       | 18    | CATAACTG | sample_2   |
-| 170620_R1.fastq.gz | run_2       | 12    | GCGTAAGA | sample_3   |
-| 170620_R1.fastq.gz | run_2       | 13    | CTATTAAG | sample_4   |
-| 170620_R1.fastq.gz | run_2       | 14    | AAGGCTAT | sample_5   |
-| 170620_R1.fastq.gz | run_2       | 15    | GAGCCTTA | sample_6   |
-| 170620_R1.fastq.gz | run_2       | 16    | TTATGCGA | sample_7   |
+| 170201_R1.fastq.gz | run1        | 17    | GGAGGTAA | sample1    |
+| 170201_R1.fastq.gz | run1        | 18    | CATAACTG | sample2    |
+| 170620_R1.fastq.gz | run2        | 12    | GCGTAAGA | sample3    |
+| 170620_R1.fastq.gz | run2        | 13    | CTATTAAG | sample4    |
+| 170620_R1.fastq.gz | run2        | 14    | AAGGCTAT | sample5    |
+| 170620_R1.fastq.gz | run2        | 15    | GAGCCTTA | sample6    |
+| 170620_R1.fastq.gz | run2        | 16    | TTATGCGA | sample7    |
 
 ### FASTQ files demultiplexed per sample
 
@@ -73,11 +69,11 @@ This is our current method for handling 10X and SureCell samples.
 
 | fileName              | description |
 |-----------------------|-------------|
-| S1_170620_R1.fastq.gz | sample_1    |
-| S2_170620_R1.fastq.gz | sample_2    |
-| S3_170620_R1.fastq.gz | sample_3    |
-| S4_170620_R1.fastq.gz | sample_4    |
-| S5_170620_R1.fastq.gz | sample_5    |
+| S1_170620_R1.fastq.gz | sample1     |
+| S2_170620_R1.fastq.gz | sample2     |
+| S3_170620_R1.fastq.gz | sample3     |
+| S4_170620_R1.fastq.gz | sample4     |
+| S5_170620_R1.fastq.gz | sample5     |
 
 ### Technical replicates
 

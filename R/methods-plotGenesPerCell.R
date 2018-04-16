@@ -12,33 +12,12 @@
 #' # bcbioSingleCell ====
 #' plotGenesPerCell(bcb_small)
 #'
+#' # SingleCellExperiment ====
+#' plotGenesPerCell(cellranger_small)
+#'
 #' # seurat ====
-#' plotGenesPerCell(seurat_small)
+#' plotGenesPerCell(Seurat::pbmc_small)
 NULL
-
-
-
-# Constructors =================================================================
-.plotGenesPerCell <- function(
-    object,
-    geom = c("violin", "boxplot", "histogram", "ridgeline"),
-    interestingGroups,
-    min,
-    max,
-    fill = scale_fill_viridis(discrete = TRUE)
-) {
-    geom <- match.arg(geom)
-    .plotQCMetric(
-        object = object,
-        metricCol = "nGene",
-        geom = geom,
-        interestingGroups = interestingGroups,
-        min = min,
-        max = max,
-        trans = "identity",
-        fill = fill
-    )
-}
 
 
 
@@ -47,8 +26,27 @@ NULL
 #' @export
 setMethod(
     "plotGenesPerCell",
-    signature("bcbioSingleCell"),
-    .plotGenesPerCell
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        geom = c("violin", "boxplot", "histogram", "ridgeline"),
+        interestingGroups,
+        min = 0L,
+        max = Inf,
+        fill = scale_fill_viridis(discrete = TRUE)
+    ) {
+        geom <- match.arg(geom)
+        .plotQCMetric(
+            object = object,
+            metricCol = "nGene",
+            geom = geom,
+            interestingGroups = interestingGroups,
+            min = min,
+            max = max,
+            trans = "identity",
+            fill = fill
+        )
+    }
 )
 
 
@@ -58,5 +56,5 @@ setMethod(
 setMethod(
     "plotGenesPerCell",
     signature("seurat"),
-    .plotGenesPerCell
+    getMethod("plotGenesPerCell", "SingleCellExperiment")
 )

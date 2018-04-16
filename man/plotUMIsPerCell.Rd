@@ -4,19 +4,23 @@
 \name{plotUMIsPerCell}
 \alias{plotUMIsPerCell}
 \alias{plotUMIsPerCell}
-\alias{plotUMIsPerCell,bcbioSingleCell-method}
+\alias{plotUMIsPerCell,SingleCellExperiment-method}
 \alias{plotUMIsPerCell,seurat-method}
 \title{Plot UMIs per Cell}
 \usage{
 plotUMIsPerCell(object, ...)
 
-\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), interestingGroups, min,
-  fill = scale_fill_viridis(discrete = TRUE))
+\S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
+  "histogram", "ridgeline", "boxplot", "violin"), interestingGroups, min = 0L,
+  barcodeRanks = FALSE, ranksPerSample = TRUE, labelPoint = c("knee",
+  "inflection"), trans = "log10", color = scale_color_viridis(discrete =
+  TRUE), fill = scale_fill_viridis(discrete = TRUE))
 
-\S4method{plotUMIsPerCell}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), interestingGroups, min,
-  fill = scale_fill_viridis(discrete = TRUE))
+\S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "histogram",
+  "ridgeline", "boxplot", "violin"), interestingGroups, min = 0L,
+  barcodeRanks = FALSE, ranksPerSample = TRUE, labelPoint = c("knee",
+  "inflection"), trans = "log10", color = scale_color_viridis(discrete =
+  TRUE), fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -30,6 +34,23 @@ first argument in the vector.}
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{min}{Recommended minimum value cutoff.}
+
+\item{barcodeRanks}{Calculate barcode ranks to label knee or inflection
+points.}
+
+\item{ranksPerSample}{Calculate the barcode ranks individually per sample.
+Generally recommended unless there's a reason to use a single cutoff point
+across all samples in the analysis.}
+
+\item{labelPoint}{Label either the "\code{knee}" or "\code{inflection}" point.}
+
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
+
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
@@ -45,19 +66,22 @@ Plot the universal molecular identifiers (UMIs) per cell.
 # bcbioSingleCell ====
 plotUMIsPerCell(bcb_small)
 
+# Label the barcode ranks
+plotUMIsPerCell(bcb_small, barcodeRanks = TRUE)
+
+# SingleCellExperiment ====
+plotUMIsPerCell(cellranger_small)
+
 # seurat ====
-plotUMIsPerCell(seurat_small)
-plotUMIsPerCell(pbmc_small)
+plotUMIsPerCell(Seurat::pbmc_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{inflectionPoint}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotZerosVsDepth}}
 }

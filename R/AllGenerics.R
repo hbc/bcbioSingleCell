@@ -1,3 +1,25 @@
+#' @rdname barcodeRanks
+#' @export
+setGeneric(
+    "barcodeRanks",
+    function(object, ...) {
+        standardGeneric("barcodeRanks")
+    }
+)
+
+
+
+#' @rdname barcodeRanksPerSample
+#' @export
+setGeneric(
+    "barcodeRanksPerSample",
+    function(object, ...) {
+        standardGeneric("barcodeRanksPerSample")
+    }
+)
+
+
+
 #' @rdname cell2sample
 #' @export
 setGeneric(
@@ -86,17 +108,6 @@ setGeneric(
 
 
 
-#' @rdname inflectionPoint
-#' @export
-setGeneric(
-    "inflectionPoint",
-    function(object, ...) {
-        standardGeneric("inflectionPoint")
-    }
-)
-
-
-
 #' @rdname knownMarkersDetected
 #' @export
 setGeneric(
@@ -141,17 +152,6 @@ setGeneric(
 
 
 
-#' @rdname plotCumulativeUMIsPerCell
-#' @export
-setGeneric(
-    "plotCumulativeUMIsPerCell",
-    function(object, ...) {
-        standardGeneric("plotCumulativeUMIsPerCell")
-    }
-)
-
-
-
 #' @rdname plotFeatureTSNE
 #' @export
 setGeneric(
@@ -185,7 +185,18 @@ setGeneric(
 
 
 
-#' @rdname plotMarkers
+#' @rdname plotMarker
+#' @export
+setGeneric(
+    "plotMarker",
+    function(object, ...) {
+        standardGeneric("plotMarker")
+    }
+)
+
+
+
+#' @rdname plotMarker
 #' @export
 setGeneric(
     "plotMarkers",

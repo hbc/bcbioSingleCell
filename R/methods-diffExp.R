@@ -1,7 +1,3 @@
-# TODO Add method for SingleCellExperiment
-
-
-
 #' Differential Expression
 #'
 #' @section zingeR-edgeR:
@@ -52,12 +48,24 @@
 #' @return `DEGLRT`.
 #'
 #' @examples
+#' # SingleCellExperiment ====
+#' x <- metrics(cellranger_small)
+#' numerator <- rownames(x)[which(x[["sampleName"]] == "proximal")]
+#' denominator <- rownames(x)[which(x[["sampleName"]] == "distal")]
+#' lrt <- diffExp(
+#'     object = cellranger_small,
+#'     numerator = numerator,
+#'     denominator = denominator,
+#'     maxit = 100L
+#' )
+#' glimpse(lrt[["table"]])
+#'
 #' # seurat ====
 #' # Expression in cluster 3 relative to cluster 2
-#' numerator <- Seurat::WhichCells(pbmc_small, ident = 3L)
-#' denominator <- Seurat::WhichCells(pbmc_small, ident = 2L)
+#' numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
+#' denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
 #' lrt <- diffExp(
-#'     pbmc_small,
+#'     object = Seurat::pbmc_small,
 #'     numerator = numerator,
 #'     denominator = denominator,
 #'     maxit = 100L
@@ -67,85 +75,82 @@ NULL
 
 
 
-# Constructors =================================================================
-.zingeR.edgeR <- function(  # nolint
-    object,
-    numerator,
-    denominator,
-    minCells = 10L,
-    maxit = 1000L
-) {
-    assert_is_character(numerator)
-    assert_is_character(denominator)
-    assert_are_disjoint_sets(numerator, denominator)
-    assertIsAnImplicitInteger(minCells)
-    assert_all_are_greater_than_or_equal_to(
-        x = c(length(numerator), length(denominator)),
-        y = minCells
-    )
-    assertIsAnImplicitInteger(maxit)
-
-    # Counts matrix
-    cells <- c(numerator, denominator)
-    counts <- counts(object, normalized = FALSE)
-    counts <- counts[, cells]
-    assert_has_dimnames(counts)
-
-    # Create a cell factor to define the group for `DGEList()`
-    numeratorFactor <- replicate(
-        n = length(numerator),
-        expr = "numerator"
-    ) %>%
-        factor() %>%
-        set_names(numerator)
-    denominatorFactor <- replicate(
-        n = length(denominator),
-        expr = "denominator"
-    ) %>%
-        factor() %>%
-        set_names(denominator)
-    group <- factor(c(
-        as.character(numeratorFactor),
-        as.character(denominatorFactor)
-    ))
-    names(group) <- c(names(numeratorFactor), names(denominatorFactor))
-    # Ensure denominator is set as reference
-    group <- relevel(group, ref = "denominator")
-
-    # Set up the design matrix
-    design <- model.matrix(~group)
-
-    # zingeR + edgeR analysis
-    # Note that TMM needs to be consistently applied for both
-    # `calcNormFactors()` and `zeroWeightsLS()`
-    dge <- DGEList(counts, group = group)
-    dge <- calcNormFactors(dge, method = "TMM")
-
-    # This is the zingeR step that is computationally expensive
-    weights <- zeroWeightsLS(
-        counts = dge[["counts"]],
-        design = design,
-        maxit = maxit,
-        normalization = "TMM"
-    )
-
-    dge[["weights"]] <- weights
-    dge <- estimateDisp(dge, design = design)
-
-    fit <- glmFit(dge, design = design)
-    lrt <- glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
-    lrt
-}
-
-
-
 # Methods ======================================================================
 #' @rdname diffExp
 #' @export
 setMethod(
     "diffExp",
-    signature("bcbioSingleCell"),
-    .zingeR.edgeR
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        numerator,
+        denominator,
+        minCells = 10L,
+        maxit = 1000L
+    ) {
+        requireNamespace("zingeR")
+        requireNamespace("edgeR")
+
+        assert_is_character(numerator)
+        assert_is_character(denominator)
+        assert_are_disjoint_sets(numerator, denominator)
+        assertIsAnImplicitInteger(minCells)
+        assert_all_are_greater_than_or_equal_to(
+            x = c(length(numerator), length(denominator)),
+            y = minCells
+        )
+        assertIsAnImplicitInteger(maxit)
+
+        # Counts matrix
+        cells <- c(numerator, denominator)
+        counts <- assay(object)
+        counts <- counts[, cells]
+        assert_has_dimnames(counts)
+
+        # Create a cell factor to define the group for `DGEList()`
+        numeratorFactor <- replicate(
+            n = length(numerator),
+            expr = "numerator"
+        ) %>%
+            factor() %>%
+            set_names(numerator)
+        denominatorFactor <- replicate(
+            n = length(denominator),
+            expr = "denominator"
+        ) %>%
+            factor() %>%
+            set_names(denominator)
+        group <- factor(c(
+            as.character(numeratorFactor),
+            as.character(denominatorFactor)
+        ))
+        names(group) <- c(names(numeratorFactor), names(denominatorFactor))
+        # Ensure denominator is set as reference
+        group <- relevel(group, ref = "denominator")
+
+        # Set up the design matrix
+        design <- model.matrix(~group)
+
+        # zingeR + edgeR analysis
+        # Note that TMM needs to be consistently applied for both
+        # `calcNormFactors()` and `zeroWeightsLS()`
+        dge <- edgeR::DGEList(counts, group = group)
+        dge <- edgeR::calcNormFactors(dge, method = "TMM")
+
+        # This is the zingeR step that is computationally expensive
+        weights <- zingeR::zeroWeightsLS(
+            counts = dge[["counts"]],
+            design = design,
+            maxit = maxit,
+            normalization = "TMM"
+        )
+
+        dge[["weights"]] <- weights
+        dge <- edgeR::estimateDisp(dge, design = design)
+        fit <- edgeR::glmFit(dge, design = design)
+        lrt <- zingeR::glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
+        lrt
+    }
 )
 
 
@@ -155,5 +160,5 @@ setMethod(
 setMethod(
     "diffExp",
     signature("seurat"),
-    .zingeR.edgeR
+    getMethod("diffExp", "SingleCellExperiment")
 )

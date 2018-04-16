@@ -30,22 +30,40 @@ qcLineType <- "dashed"
 # Plot label separator
 labelSep <- ": "
 
-inflectionColor <- "orange"
+inflectionColor <- "red"
+kneeColor <- "orange"
 
 
 
 # Internal functions ===========================================================
+.minimalAxes <- function() {
+    theme(
+        axis.line = element_blank(),
+        # axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        panel.grid = element_blank(),
+        title = element_blank()
+    )
+}
+
+
 .qcCutoffLine <- function(
-    xintercept,
-    yintercept,
+    xintercept = NULL,
+    yintercept = NULL,
     alpha = qcLineAlpha,
     color = qcCutoffColor,
     linetype = qcLineType,
     size = qcLineSize
 ) {
-    if (!missing(xintercept) && !missing(yintercept)) {
-        abort("Specify only `xintercept` or `intercept`")
-    } else if (!missing(xintercept)) {
+    if (is.null(xintercept) && is.null(yintercept)) {
+        stop("`xintercept` and `yintercept` are both NULL")
+    } else if (is.numeric(xintercept) && is.numeric(yintercept)) {
+        stop("Specifcly only `xintercept` or `yintercept` as numeric")
+    } else if (is.numeric(xintercept)) {
         geom_vline(
             xintercept = xintercept,
             alpha = alpha,
@@ -53,7 +71,7 @@ inflectionColor <- "orange"
             linetype = linetype,
             size = size
         )
-    } else if (!missing(yintercept)) {
+    } else if (is.numeric(yintercept)) {
         geom_hline(
             yintercept = yintercept,
             alpha = alpha,
@@ -61,7 +79,5 @@ inflectionColor <- "orange"
             linetype = linetype,
             size = size
         )
-    } else {
-        abort("`xintercept` or `yintercept` value required")
     }
 }

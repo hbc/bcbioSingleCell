@@ -4,18 +4,18 @@
 \name{plotNovelty}
 \alias{plotNovelty}
 \alias{plotNovelty}
-\alias{plotNovelty,bcbioSingleCell-method}
+\alias{plotNovelty,SingleCellExperiment-method}
 \alias{plotNovelty,seurat-method}
 \title{Plot Novelty Score}
 \usage{
 plotNovelty(object, ...)
 
-\S4method{plotNovelty}{bcbioSingleCell}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), interestingGroups, min,
+\S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("violin",
+  "boxplot", "histogram", "ridgeline"), interestingGroups, min = 0L,
   fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotNovelty}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), interestingGroups, min,
+  "histogram", "ridgeline"), interestingGroups, min = 0L,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
@@ -45,17 +45,21 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 # bcbioSingleCell ====
 plotNovelty(bcb_small)
 
+# SingleCellExperiment ====
+plotNovelty(cellranger_small)
+
 # seurat ====
-plotNovelty(seurat_small)
+# `object@meta.data` must contain `log10GenesPerUMI`
+\dontrun{
+plotNovelty(Seurat::pbmc_small)
+}
 }
 \seealso{
-Other Quality Control Functions: \code{\link{inflectionPoint}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}

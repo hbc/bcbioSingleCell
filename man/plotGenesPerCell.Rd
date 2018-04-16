@@ -4,18 +4,18 @@
 \name{plotGenesPerCell}
 \alias{plotGenesPerCell}
 \alias{plotGenesPerCell}
-\alias{plotGenesPerCell,bcbioSingleCell-method}
+\alias{plotGenesPerCell,SingleCellExperiment-method}
 \alias{plotGenesPerCell,seurat-method}
 \title{Plot Genes per Cell}
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{bcbioSingleCell}(object, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), interestingGroups, min, max,
-  fill = scale_fill_viridis(discrete = TRUE))
+\S4method{plotGenesPerCell}{SingleCellExperiment}(object, geom = c("violin",
+  "boxplot", "histogram", "ridgeline"), interestingGroups, min = 0L,
+  max = Inf, fill = scale_fill_viridis(discrete = TRUE))
 
 \S4method{plotGenesPerCell}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), interestingGroups, min, max,
+  "histogram", "ridgeline"), interestingGroups, min = 0L, max = Inf,
   fill = scale_fill_viridis(discrete = TRUE))
 }
 \arguments{
@@ -47,17 +47,18 @@ Plot Genes per Cell
 # bcbioSingleCell ====
 plotGenesPerCell(bcb_small)
 
+# SingleCellExperiment ====
+plotGenesPerCell(cellranger_small)
+
 # seurat ====
-plotGenesPerCell(seurat_small)
+plotGenesPerCell(Seurat::pbmc_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{inflectionPoint}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}

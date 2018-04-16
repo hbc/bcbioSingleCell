@@ -4,14 +4,14 @@
 \name{filterCells}
 \alias{filterCells}
 \alias{filterCells}
-\alias{filterCells,bcbioSingleCell-method}
+\alias{filterCells,SingleCellExperiment-method}
 \title{Filter Cells}
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{bcbioSingleCell}(object, minUMIs = 1000L,
-  maxUMIs = Inf, minGenes = 500L, maxGenes = Inf, maxMitoRatio = 0.1,
-  minNovelty = 0.75, minCellsPerGene = 3L)
+\S4method{filterCells}{SingleCellExperiment}(object, minUMIs = 1000L,
+  maxUMIs = Inf, minGenes = 100L, maxGenes = Inf, maxMitoRatio = 0.1,
+  minNovelty = 0.7, minCellsPerGene = 3L)
 }
 \arguments{
 \item{object}{Object.}
@@ -52,6 +52,11 @@ rownames of \code{\link[=sampleData]{sampleData()}}).
 show(bcb_small)
 x <- filterCells(bcb_small, minGenes = 0L)
 show(x)
+
+# SingleCellExperiment ====
+show(cellranger_small)
+x <- filterCells(cellranger_small, minNovelty = 0L)
+show(x)
 }
 \seealso{
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
@@ -61,6 +66,7 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
   \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
+  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},

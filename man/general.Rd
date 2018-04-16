@@ -4,6 +4,8 @@
 \alias{general}
 \title{General Arguments}
 \arguments{
+\item{aspectRatio}{Aspect ratio.}
+
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
@@ -16,7 +18,8 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 \item{gene2symbol}{\code{data.frame} containing gene-to-symbol mappings. Columns
 must contain \code{geneID} and \code{geneName}.}
 
-\item{dark}{Plot against a dark background using \code{\link[basejump:midnightTheme]{basejump::midnightTheme()}}.}
+\item{dark}{Plot against a dark background using
+\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
 \item{dir}{Output directory.}
 

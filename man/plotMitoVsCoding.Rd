@@ -4,13 +4,13 @@
 \name{plotMitoVsCoding}
 \alias{plotMitoVsCoding}
 \alias{plotMitoVsCoding}
-\alias{plotMitoVsCoding,bcbioSingleCell-method}
+\alias{plotMitoVsCoding,SingleCellExperiment-method}
 \alias{plotMitoVsCoding,seurat-method}
 \title{Plot Mitochondrial vs. Coding Counts}
 \usage{
 plotMitoVsCoding(object, ...)
 
-\S4method{plotMitoVsCoding}{bcbioSingleCell}(object, interestingGroups,
+\S4method{plotMitoVsCoding}{SingleCellExperiment}(object, interestingGroups,
   color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
@@ -39,17 +39,21 @@ Plot Mitochondrial vs. Coding Counts
 # bcbioSingleCell ====
 plotMitoVsCoding(bcb_small)
 
+# SingleCellExperiment ====
+plotMitoVsCoding(cellranger_small)
+
 # seurat ====
-plotMitoVsCoding(seurat_small)
+# `object@meta.data` must contain `nCoding`, `mitoRatio`
+\dontrun{
+plotMitoVsCoding(Seurat::pbmc_small)
+}
 }
 \seealso{
-Other Quality Control Functions: \code{\link{inflectionPoint}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
-  \code{\link{plotQC}}, \code{\link{plotQuantileHeatmap}},
-  \code{\link{plotReadsPerCell}},
+  \code{\link{plotQC}}, \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}},
   \code{\link{plotZerosVsDepth}}
 }

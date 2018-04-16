@@ -1,30 +1,30 @@
 #' Metrics per Sample
 #'
+#' Calculate summary statistics per sample.
+#'
 #' @name metricsPerSample
 #' @family Data Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
+#' @param f Mathematical function to apply. Defaults to "`sum`".
 #'
-#' @return `tbl_df` containing summary statistics.
+#' @return `data.frame`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' metricsPerSample(bcb_small)
+#' # SingleCellExperiment ====
+#' # mean
+#' x <- metricsPerSample(bcb_small, f = "mean")
+#' head(x)
 #'
-#' # seurat ====
-#' metricsPerSample(seurat_small)
+#' # median
+#' x <- metricsPerSample(bcb_small, f = "median")
+#' head(x)
+#'
+#' # sum
+#' x <- metricsPerSample(bcb_small, f = "sum")
+#' head(x)
 NULL
-
-
-
-# Constructors =================================================================
-.metricsPerSample <- function(object) {
-    metrics(object) %>%
-        .[, c("sampleName", "nUMI", "nGene", "nCoding"), drop = FALSE] %>%
-        group_by(!!sym("sampleName")) %>%
-        summarize_all(sum)
-}
 
 
 
@@ -33,8 +33,34 @@ NULL
 #' @export
 setMethod(
     "metricsPerSample",
-    signature("bcbioSingleCell"),
-    .metricsPerSample
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        f = c("mean", "median", "sum")
+    ) {
+        f <- match.arg(f)
+        message(paste("Calculating", f, "per sample"))
+        fxn <- get(f)
+        assert_is_function(fxn)
+        assert_is_subset("sampleName", colnames(metrics(object)))
+        metrics <- metrics(object)
+        if (f == "sum") {
+            # Sum only the `n*` columns containing counts
+            data <- select(metrics, matches("^n[A-Z]"))
+        } else {
+            # Summarize all numeric columns
+            data <- select_if(metrics, is.numeric)
+        }
+        assert_is_non_empty(data)
+        data[["rowname"]] <- metrics[["sampleName"]]
+        data %>%
+            group_by(!!sym("rowname")) %>%
+            summarize_all(fxn) %>%
+            arrange(!!sym("rowname")) %>%
+            ungroup() %>%
+            as.data.frame() %>%
+            column_to_rownames()
+    }
 )
 
 
@@ -44,5 +70,5 @@ setMethod(
 setMethod(
     "metricsPerSample",
     signature("seurat"),
-    .metricsPerSample
+    getMethod("metricsPerSample", "SingleCellExperiment")
 )

@@ -2,29 +2,18 @@
 .plotQCMetric <- function(
     object,
     metricCol,
-    geom = c("violin", "boxplot", "ridgeline", "histogram"),
+    geom = c("boxplot", "ecdf", "histogram", "ridgeline", "violin"),
     interestingGroups,
     min = 0L,
     max = Inf,
     trans = "identity",
+    color = scale_color_viridis(discrete = TRUE),
     fill = scale_fill_viridis(discrete = TRUE)
 ) {
     assert_is_a_string(metricCol)
     geom <- match.arg(geom)
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
-    }
-    if (missing(min)) {
-        min <- metadata(object)[["filterParams"]][["minGenes"]]
-        if (!is.numeric(min)) {
-            min <- 0L
-        }
-    }
-    if (missing(max)) {
-        max <- metadata(object)[["filterParams"]][["maxGenes"]]
-        if (!is.numeric(max)) {
-            max <- Inf
-        }
     }
     assert_all_are_non_negative(c(min, max))
     # Support for per sample filtering cutoffs
@@ -35,14 +24,18 @@
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
     if (!metricCol %in% colnames(metrics)) {
-        warn(paste(
+        warning(paste(
             deparse(substitute(object)),
             "does not contain", metricCol, "column in `metrics()`"
         ))
         return(invisible())
     }
 
-    mapping <- aes_string(fill = "interestingGroups")
+    mapping <- aes_string(
+        color = "interestingGroups",
+        fill = "interestingGroups"
+    )
+
     if (geom %in% c("boxplot", "violin")) {
         mapping[["x"]] <- as.symbol("sampleName")
         mapping[["y"]] <- as.symbol(metricCol)
@@ -50,7 +43,7 @@
         # ridgeline flips the axes
         mapping[["x"]] <- as.symbol(metricCol)
         mapping[["y"]] <- as.symbol("sampleName")
-    } else if (geom == "histogram") {
+    } else if (geom %in% c("ecdf", "histogram")) {
         mapping[["x"]] <- as.symbol(metricCol)
     }
 
@@ -60,9 +53,17 @@
         p <- p +
             geom_boxplot(color = lineColor, outlier.shape = NA) +
             scale_y_continuous(trans = trans)
+    } else if (geom == "ecdf") {
+        p <- p +
+            stat_ecdf(geom = "step", size = 1L) +
+            scale_x_continuous(trans = trans) +
+            labs(y = "frequency")
     } else if (geom == "histogram") {
         p <- p +
-            geom_histogram(bins = bins) +
+            geom_histogram(
+                bins = bins,
+                color = FALSE
+            ) +
             scale_x_continuous(trans = trans) +
             scale_y_continuous(trans = trans)
     } else if (geom == "ridgeline") {
@@ -105,15 +106,25 @@
     }
 
     # Label interesting groups
-    p <- p + labs(fill = paste(interestingGroups, collapse = ":\n"))
+    p <- p +
+        labs(
+            color = paste(interestingGroups, collapse = ":\n"),
+            fill = paste(interestingGroups, collapse = ":\n")
+        )
 
     # Color palette
-    if (is(fill, "ScaleDiscrete")) {
-        p <- p + fill
+    if (geom == "ecdf") {
+        if (is(color, "ScaleDiscrete")) {
+            p <- p + color
+        }
+    } else {
+        if (is(fill, "ScaleDiscrete")) {
+            p <- p + fill
+        }
     }
 
     # Median labels
-    if (geom != "histogram") {
+    if (!geom %in% c("ecdf", "histogram")) {
         if (metricCol %in% c("log10GenesPerUMI", "mitoRatio")) {
             digits <- 2L
         } else {
@@ -161,6 +172,14 @@
     assertIsColorScaleDiscreteOrNULL(color)
 
     metrics <- metrics(object, interestingGroups = interestingGroups)
+    if (!all(c(xCol, yCol) %in% colnames(metrics))) {
+        warning(paste(
+            deparse(substitute(object)), "must contain",
+            toString(c(xCol, yCol)),
+            "columns in `metrics()`"
+        ))
+        return(invisible())
+    }
 
     p <- ggplot(
         data = metrics,

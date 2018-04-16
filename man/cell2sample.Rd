@@ -4,15 +4,12 @@
 \name{cell2sample}
 \alias{cell2sample}
 \alias{cell2sample}
-\alias{cell2sample,bcbioSingleCell-method}
-\alias{cell2sample,seurat-method}
+\alias{cell2sample,SingleCellExperiment-method}
 \title{Cell to Sample Mappings}
 \usage{
 cell2sample(object, ...)
 
-\S4method{cell2sample}{bcbioSingleCell}(object)
-
-\S4method{cell2sample}{seurat}(object)
+\S4method{cell2sample}{SingleCellExperiment}(object)
 }
 \arguments{
 \item{object}{Object.}
@@ -23,11 +20,9 @@ cell2sample(object, ...)
 Cell to Sample Mappings
 }
 \examples{
-# bcbioSingleCell ====
+# SingleCellExperiment ====
 cell2sample(bcb_small) \%>\% table()
-
-# seurat ====
-cell2sample(pbmc_small) \%>\% table()
+cell2sample(cellranger_small) \%>\% table()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
@@ -35,6 +30,7 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
+  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},

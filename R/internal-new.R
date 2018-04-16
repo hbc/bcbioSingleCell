@@ -1,21 +1,22 @@
-.new.bcbioSingleCell <- function(  # nolint
+.new.SingleCellExperiment <- function(  # nolint
     assays,
     rowRanges,
     colData,
     metadata,
-    isSpike
+    transgeneNames = NULL,
+    spikeNames = NULL
 ) {
-    # Prepare RangedSummarizedExperiment, with automatic resizing of rowRanges
-    # and support for FASTA spike-ins
+    # Prepare RangedSummarizedExperiment first.
+    # Supports automatic resizing of rowRanges and helps slot FASTA spike-ins.
     rse <- prepareSummarizedExperiment(
         assays = assays,
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
-        isSpike = isSpike
+        transgeneNames = transgeneNames,
+        spikeNames = spikeNames
     )
-
-    # Coerce to SingleCellExperiment
+    # Then coerce to SingleCellExperiment
     sce <- SingleCellExperiment(
         assays = assays(rse),
         rowRanges = rowRanges(rse),
@@ -23,12 +24,20 @@
         metadata = metadata(rse)
     )
 
-    # Define spikeNames for spike-in sequences
-    if (is.character(isSpike)) {
-        for (i in seq_along(isSpike)) {
-            isSpike(sce, isSpike[[i]]) <- isSpike[[i]]
+    # Optionally, use `isSpike` internally to define the `spikeNames`
+    if (is.character(spikeNames)) {
+        for (i in seq_along(spikeNames)) {
+            isSpike(sce, spikeNames[[i]]) <- spikeNames[[i]]
         }
     }
 
-    new("bcbioSingleCell", sce)
+    sce
 }
+
+
+
+.new.bcbioSingleCell <-  # nolint
+    function(...) {
+        sce <- .new.SingleCellExperiment(...)
+        new("bcbioSingleCell", sce)
+    }

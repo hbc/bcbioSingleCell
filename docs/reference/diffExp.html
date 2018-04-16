@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <div class="page-header">
     <h1>Differential Expression</h1>
     <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-diffExp.R'><code>R/methods-diffExp.R</code></a></small>
-    <p class="hidden name"><code>diffExp.Rd</code></p>
+    <div class="hidden name"><code>diffExp.Rd</code></div>
     </div>
 
     
@@ -106,7 +106,7 @@
 
     <pre class="usage"><span class='fu'>diffExp</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for bcbioSingleCell</span>
+<span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>diffExp</span>(<span class='no'>object</span>, <span class='no'>numerator</span>, <span class='no'>denominator</span>,
   <span class='kw'>minCells</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1000L</span>)
 
@@ -186,22 +186,42 @@ for additional information.</p></li>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='co'># Expression in cluster 3 relative to cluster 2</span>
-<span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>pbmc_small</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>3L</span>)
-<span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>pbmc_small</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics.html'>metrics</a></span>(<span class='no'>cellranger_small</span>)
+<span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>x</span>)[<span class='fu'>which</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"proximal"</span>)]
+<span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>x</span>)[<span class='fu'>which</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"distal"</span>)]
 <span class='no'>lrt</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
-    <span class='no'>pbmc_small</span>,
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>cellranger_small</span>,
     <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
     <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
     <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>
-)</div><div class='output co'>#&gt; <span class='message'>converting counts to integer mode</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: edgeR</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: limma</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'limma'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:BiocGenerics':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    plotMA</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'edgeR'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:SingleCellExperiment':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    cpm</span></div><div class='output co'>#&gt; iteration: 1. mean conv.: 0
+)</div><div class='output co'>#&gt; <span class='message'>converting counts to integer mode</span></div><div class='output co'>#&gt; iteration: 1. mean conv.: 0
+#&gt; iteration: 2. mean conv.: 0.16
+#&gt; iteration: 3. mean conv.: 0.958
+#&gt; iteration: 4. mean conv.: 0.986
+#&gt; iteration: 5. mean conv.: 0.994
+#&gt; iteration: 6. mean conv.: 0.998
+#&gt; iteration: 7. mean conv.: 0.998
+#&gt; iteration: 8. mean conv.: 1
+#&gt; iteration: 9. mean conv.: 0.98
+#&gt; iteration: 10. mean conv.: 1
+#&gt; converged. </div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>lrt</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt; Observations: 500
+#&gt; Variables: 5
+#&gt; $ logFC      &lt;dbl&gt; 0.17740165, 0.67929074, 1.25917593, -0.53085841, -1.4541...
+#&gt; $ logCPM     &lt;dbl&gt; 10.050208, 8.730282, 10.027433, 12.389401, 8.905963, 8.6...
+#&gt; $ LR         &lt;dbl&gt; 9.1513701, 106.3974491, 168.5623434, 309.4309766, 25.178...
+#&gt; $ PValue     &lt;dbl&gt; 2.612343e-03, 9.251915e-23, 1.893677e-33, 2.417904e-54, ...
+#&gt; $ padjFilter &lt;dbl&gt; 3.178032e-03, 2.141647e-22, 6.667875e-33, 2.281041e-53, ...</div><div class='input'>
+<span class='co'># seurat ====</span>
+<span class='co'># Expression in cluster 3 relative to cluster 2</span>
+<span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>3L</span>)
+<span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
+<span class='no'>lrt</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>,
+    <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
+    <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
+    <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>
+)</div><div class='output co'>#&gt; <span class='message'>converting counts to integer mode</span></div><div class='output co'>#&gt; iteration: 1. mean conv.: 0
 #&gt; iteration: 2. mean conv.: 0.1913
 #&gt; iteration: 3. mean conv.: 0.18696
 #&gt; iteration: 4. mean conv.: 0.1913
@@ -300,10 +320,7 @@ for additional information.</p></li>
 #&gt; iteration: 97. mean conv.: 0.9913
 #&gt; iteration: 98. mean conv.: 0.99565
 #&gt; iteration: 99. mean conv.: 0.99565
-#&gt; iteration: 100. mean conv.: 1</div><div class='output co'>#&gt; <span class='message'>Loading required package: genefilter</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'genefilter'</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:matrixStats':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    rowSds, rowVars</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>lrt</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt; Observations: 230
+#&gt; iteration: 100. mean conv.: 1</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>lrt</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt; Observations: 230
 #&gt; Variables: 5
 #&gt; $ logFC      &lt;dbl&gt; 0.0000000, -1.4941343, 0.0000000, 0.8996484, 0.0000000, ...
 #&gt; $ logCPM     &lt;dbl&gt; 12.98492, 13.08969, 12.98492, 13.71783, 12.98492, 13.005...

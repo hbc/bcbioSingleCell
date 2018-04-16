@@ -4,15 +4,18 @@
 \name{metrics}
 \alias{metrics}
 \alias{metrics,dgCMatrix-method}
-\alias{metrics,bcbioSingleCell-method}
+\alias{metrics,dgTMatrix-method}
+\alias{metrics,SingleCellExperiment-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
 \S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = TRUE)
 
-\S4method{metrics}{bcbioSingleCell}(object, interestingGroups)
+\S4method{metrics}{dgTMatrix}(object, rowData = NULL, prefilter = TRUE)
 
-\S4method{metrics}{seurat}(object, interestingGroups)
+\S4method{metrics}{SingleCellExperiment}(object, interestingGroups)
+
+\S4method{metrics}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -23,6 +26,8 @@
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{data.frame} with cellular barcodes as rows.
@@ -34,13 +39,17 @@ Sample Barcode Metrics
 # bcbioSingleCell ====
 metrics(bcb_small) \%>\% glimpse()
 
-# seurat ====
-metrics(seurat_small) \%>\% glimpse()
-metrics(pbmc_small) \%>\% glimpse()
+# SingleCellExperiment ====
+metrics(cellranger_small) \%>\% glimpse()
 
 # dgCMatrix ====
-mat <- counts(bcb_small)
-metrics(mat) \%>\% glimpse()
+counts <- counts(bcb_small)
+class(counts)
+metrics(counts) \%>\% glimpse()
+
+# seurat ====
+metrics(seurat_small) \%>\% glimpse()
+metrics(Seurat::pbmc_small) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
@@ -49,6 +58,7 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
+  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}},
   \code{\link{selectSamples}},

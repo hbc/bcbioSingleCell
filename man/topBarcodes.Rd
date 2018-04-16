@@ -32,7 +32,7 @@ Top Barcodes
 topBarcodes(bcb_small) \%>\% glimpse()
 
 # seurat ====
-topBarcodes(pbmc_small) \%>\% glimpse()
+topBarcodes(Seurat::pbmc_small) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
@@ -41,6 +41,7 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
+  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},

@@ -12,77 +12,12 @@
 #' # bcbioSingleCell ====
 #' plotCellCounts(bcb_small)
 #'
+#' # SingleCellExperiment ====
+#' plotCellCounts(cellranger_small)
+#'
 #' # seurat ====
-#' plotCellCounts(seurat_small)
-#' plotCellCounts(pbmc_small)
+#' plotCellCounts(Seurat::pbmc_small)
 NULL
-
-
-
-# Constructors =================================================================
-.plotCellCounts <- function(
-    object,
-    interestingGroups,
-    fill = scale_fill_viridis(discrete = TRUE)
-) {
-    if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
-    }
-    assertIsFillScaleDiscreteOrNULL(fill)
-
-    metrics <- metrics(object, interestingGroups)
-    sampleData <- sampleData(object, interestingGroups, return = "data.frame")
-
-    data <- metrics %>%
-        group_by(!!sym("sampleID")) %>%
-        summarize(nCells = n()) %>%
-        left_join(sampleData, by = "sampleID")
-
-    p <- ggplot(
-        data = data,
-        mapping = aes_string(
-            x = "sampleName",
-            y = "nCells",
-            fill = "interestingGroups"
-        )
-    ) +
-        geom_bar(stat = "identity") +
-        labs(fill = paste(interestingGroups, collapse = ":\n")) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
-
-    # Color palette
-    if (!is.null(fill)) {
-        p <- p + fill
-    }
-
-    # Labels
-    if (nrow(data) <= qcLabelMaxNum) {
-        p <- p + geom_label(
-            data = data,
-            mapping = aes_string(label = "nCells"),
-            alpha = qcLabelAlpha,
-            color = qcLabelColor,
-            fill = qcLabelFill,
-            fontface = qcLabelFontface,
-            label.padding = qcLabelPadding,
-            label.size = qcLabelSize,
-            show.legend = FALSE,
-            # Align the label just under the top of the bar
-            vjust = 1.25
-        )
-    }
-
-    # Facets
-    facets <- NULL
-    if (.isAggregate(data)) {
-        facets <- c(facets, "sampleNameAggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free")
-    }
-
-    p
-}
 
 
 
@@ -91,16 +26,82 @@ NULL
 #' @export
 setMethod(
     "plotCellCounts",
-    signature("bcbioSingleCell"),
-    .plotCellCounts
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        interestingGroups,
+        fill = scale_fill_viridis(discrete = TRUE)
+    ) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        assertIsFillScaleDiscreteOrNULL(fill)
+
+        metrics <- metrics(object, interestingGroups)
+        sampleData <- sampleData(
+            object = object,
+            interestingGroups = interestingGroups,
+            return = "data.frame"
+        )
+
+        data <- metrics %>%
+            group_by(!!sym("sampleID")) %>%
+            summarize(nCells = n()) %>%
+            merge(sampleData, all.x = TRUE)
+
+        p <- ggplot(
+            data = data,
+            mapping = aes_string(
+                x = "sampleName",
+                y = "nCells",
+                fill = "interestingGroups"
+            )
+        ) +
+            geom_bar(stat = "identity") +
+            labs(fill = paste(interestingGroups, collapse = ":\n")) +
+            theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+
+        # Color palette
+        if (!is.null(fill)) {
+            p <- p + fill
+        }
+
+        # Labels
+        if (nrow(data) <= qcLabelMaxNum) {
+            p <- p + geom_label(
+                data = data,
+                mapping = aes_string(label = "nCells"),
+                alpha = qcLabelAlpha,
+                color = qcLabelColor,
+                fill = qcLabelFill,
+                fontface = qcLabelFontface,
+                label.padding = qcLabelPadding,
+                label.size = qcLabelSize,
+                show.legend = FALSE,
+                # Align the label just under the top of the bar
+                vjust = 1.25
+            )
+        }
+
+        # Facets
+        facets <- NULL
+        if (.isAggregate(data)) {
+            facets <- c(facets, "sampleNameAggregate")
+        }
+        if (is.character(facets)) {
+            p <- p + facet_wrap(facets = facets, scales = "free")
+        }
+
+        p
+    }
 )
 
 
 
-#' @rdname plotCellCounts
+#' @rdname seurat-SingleCellExperiment
 #' @export
 setMethod(
     "plotCellCounts",
     signature("seurat"),
-    .plotCellCounts
+    getMethod("plotCellCounts", "SingleCellExperiment")
 )

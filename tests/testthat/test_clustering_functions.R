@@ -53,13 +53,13 @@ test_that("knownMarkersDetected", {
         "pct1" = 0.466,
         "pct2" = 0.701,
         "avgLogFC" = -0.954,
-        "pvalue" = 0,
-        "padj" = 0,
+        "pvalue" = 0,  # nolint
+        "padj" = 0,  # nolint
         "rowname" = "NCAM1",
         "seqnames" = factor("11", levels = seqnamesLevels),
-        "start" = 112961247,
-        "end" = 113278436,
-        "width" = 317190,
+        "start" = 112961247,  # nolint
+        "end" = 113278436,  # nolint
+        "width" = 317190,  # nolint
         "strand" = factor("+", levels = strandLevels),
         "geneBiotype" = factor("protein_coding", levels = geneBiotypeLevels),
         "description" = paste(
@@ -86,17 +86,18 @@ test_that("sanitizeMarkers : seurat", {
 
     # FindAllMarkers
     invisible(capture.output(
-        all <- FindAllMarkers(seurat_small)
+        all <- Seurat::FindAllMarkers(seurat_small)
     ))
-    x <- sanitizeMarkers(
-        object = seurat_small,
-        markers = all
-    )
+    x <- sanitizeMarkers(object = seurat_small, markers = all)
     expect_is(x, "grouped_df")
 
     # FindMarkers
     invisible(capture.output(
-        ident3 <- FindMarkers(seurat_small, ident.1 = "3", ident.2 = NULL)
+        ident3 <- Seurat::FindMarkers(
+            seurat_small,
+            ident.1 = "3",
+            ident.2 = NULL
+        )
     ))
     x <- sanitizeMarkers(
         object = seurat_small,

@@ -4,13 +4,13 @@
 \name{plotZerosVsDepth}
 \alias{plotZerosVsDepth}
 \alias{plotZerosVsDepth}
-\alias{plotZerosVsDepth,bcbioSingleCell-method}
+\alias{plotZerosVsDepth,SingleCellExperiment-method}
 \alias{plotZerosVsDepth,seurat-method}
 \title{Plot Percentage of Zeros vs. Library Depth}
 \usage{
 plotZerosVsDepth(object, ...)
 
-\S4method{plotZerosVsDepth}{bcbioSingleCell}(object,
+\S4method{plotZerosVsDepth}{SingleCellExperiment}(object,
   color = scale_color_viridis(discrete = TRUE))
 
 \S4method{plotZerosVsDepth}{seurat}(object,
@@ -36,19 +36,19 @@ This function helps us visualize the dropout rate.
 # bcbioSingleCell ====
 plotZerosVsDepth(bcb_small)
 
+# SingleCellExperiment ====
+plotZerosVsDepth(cellranger_small)
+
 # seurat ====
-plotZerosVsDepth(seurat_small)
-plotZerosVsDepth(pbmc_small)
+plotZerosVsDepth(Seurat::pbmc_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{inflectionPoint}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotCumulativeUMIsPerCell}},
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotQuantileHeatmap}},
   \code{\link{plotReadsPerCell}},
   \code{\link{plotUMIsPerCell}}
 }
