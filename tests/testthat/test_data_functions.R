@@ -335,21 +335,6 @@ test_that("selectSamples : bcbioSingleCell", {
         sampleData(x)[["sampleID"]],
         factor("multiplexed_AAAAAAAA")
     )
-    # # Ensure that bcbio cellular barcodes get updated correctly
-    # cb <- metadata(x)[["cellularBarcodes"]]
-    # expect_is(cb, "list")
-    # ids1 <- sampleData(x) %>%
-    #     .[["sampleID"]] %>%
-    #     as.character()
-    # ids2 <- names(cb)
-    # expect_identical(ids1, ids2)
-    # # Check that tibbles are stored inside list
-    # expect_identical(
-    #     lapply(cb, class) %>%
-    #         unlist() %>%
-    #         unique(),
-    #     c("tbl_df", "tbl", "data.frame")
-    # )
 })
 
 test_that("selectSamples : Match failure", {
