@@ -3,6 +3,7 @@
 #' @name general
 #' @keywords internal
 #'
+#' @param aspectRatio Aspect ratio.
 #' @param color Desired ggplot color scale. Must supply discrete values. When
 #'   set to `NULL`, the default ggplot2 color palette will be used. If manual
 #'   color definitions are desired, we recommend using

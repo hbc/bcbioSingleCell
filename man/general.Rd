@@ -4,6 +4,8 @@
 \alias{general}
 \title{General Arguments}
 \arguments{
+\item{aspectRatio}{Aspect ratio.}
+
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
