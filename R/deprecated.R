@@ -135,3 +135,9 @@ readCellTypeMarkersFile <- function(...) {
 inflectionPoint <- function(...) {
     .Defunct("barcodeRanks")
 }
+
+#' @rdname deprecated
+#' @export
+plotCumulativeUMIsPerCell <- function(...) {
+    .Defunct("plotUMIsPerCell")
+}
