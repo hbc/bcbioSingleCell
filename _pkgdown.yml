@@ -41,7 +41,6 @@ reference:
   - title: Quality Control Functions
     contents:
     - starts_with("barcodeRanks")
-    - inflectionPoint
     - matches("QC")
   - title: Clustering Functions
     contents:
