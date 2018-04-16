@@ -24,12 +24,6 @@ plotTopMarkers(object, ...)
 \item{topMarkers}{\code{grouped_df} grouped by "\code{cluster}", returned by
 \code{\link[=topMarkers]{topMarkers()}}.}
 
-\item{tsneColor}{Color palette to use for tSNE plot.}
-
-\item{violinFill}{Color palette to use for violin plot.}
-
-\item{dotColor}{Color palette to use for dot plot.}
-
 \item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}

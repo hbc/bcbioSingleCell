@@ -37,7 +37,7 @@ setMethod(
             low = "lightgray",
             high = "purple"
         ),
-        dark = FALSE,
+        dark = TRUE,
         label = TRUE,
         labelSize = 6L,
         legend = FALSE,

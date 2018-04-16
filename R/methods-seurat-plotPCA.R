@@ -33,7 +33,7 @@ setMethod(
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        dark = FALSE,
+        dark = TRUE,
         aspectRatio = 1L,
         title = NULL
     ) {

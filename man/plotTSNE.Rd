@@ -11,7 +11,7 @@ plotTSNE(object, ...)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
   color = scale_color_hue(), pointsAsNumbers = FALSE, pointSize = 0.5,
-  pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = FALSE,
+  pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = TRUE,
   aspectRatio = 1L, title = NULL)
 }
 \arguments{
