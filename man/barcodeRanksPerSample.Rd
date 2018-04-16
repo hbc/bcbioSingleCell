@@ -30,7 +30,6 @@ names(x)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanks}},
-  \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},

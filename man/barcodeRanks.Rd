@@ -57,7 +57,6 @@ Modified version of \code{DropletUtils::barcodeRanks()} that works on
 a \code{SingleCellExperiment} object instead of a matrix.
 
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{inflectionPoint}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
