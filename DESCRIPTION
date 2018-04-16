@@ -45,8 +45,8 @@ Encoding: UTF-8
 LazyData: TRUE
 Depends:
     R (>= 3.4),
-    SingleCellExperiment,
-    bcbioBase (>= 0.2.1)
+    SingleCellExperiment (>= 1.0),
+    bcbioBase (>= 0.2.2)
 Imports:
     Biobase,
     BiocGenerics,
@@ -54,10 +54,10 @@ Imports:
     Matrix,
     Matrix.utils,
     S4Vectors,
-    Seurat (>= 2.0),
+    Seurat (>= 2.3),
     SummarizedExperiment,
     assertive,
-    basejump (>= 0.5),
+    basejump (>= 0.5.1),
     cowplot,
     dplyr (>= 0.7),
     ggplot2 (>= 2.2.1),
@@ -81,19 +81,18 @@ Imports:
     viridis
 Suggests:
     BiocStyle,
-    DESeq2 (>= 1.19),
     EnsDb.Hsapiens.v75,
     edgeR (>= 3.20.9),
     googlesheets,
-    monocle,
     rmarkdown,
-    scater,
-    scran,
     sessioninfo,
     testthat,
     tidyverse (>= 1.2),
-    zinbwave (>= 1.0),
     zingeR (>= 0.1)
+Remotes:
+    hbc/bcbioBase,
+    statOmics/zingeR,
+    steinbaugh/basejump
 biocViews:
     DataImport,
     DataRepresentation,
