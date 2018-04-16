@@ -35,15 +35,8 @@ setMethod(
     function(
         object,
         topMarkers,
-        tsneColor = scale_color_viridis(discrete = FALSE),
-        violinFill = scale_fill_viridis(discrete = TRUE),
-        dotColor = scale_color_gradient(
-            low = "lightgray",
-            high = "purple"
-        ),
-        dark = TRUE,
-        pointsAsNumbers = FALSE,
-        headerLevel = 2L
+        headerLevel = 2L,
+        ...
     ) {
         validObject(object)
         stopifnot(is(topMarkers, "grouped_df"))
@@ -72,12 +65,8 @@ setMethod(
             plotMarkers(
                 object = object,
                 genes = genes,
-                tsneColor = tsneColor,
-                violinFill = violinFill,
-                dotColor = dotColor,
-                dark = dark,
-                pointsAsNumbers = pointsAsNumbers,
-                headerLevel = subheaderLevel
+                headerLevel = subheaderLevel,
+                ...
             )
         })
 

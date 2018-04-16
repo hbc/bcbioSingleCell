@@ -10,11 +10,7 @@
 \usage{
 plotTopMarkers(object, ...)
 
-\S4method{plotTopMarkers}{seurat}(object, topMarkers,
-  tsneColor = scale_color_viridis(discrete = FALSE),
-  violinFill = scale_fill_viridis(discrete = TRUE),
-  dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
-  dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L)
+\S4method{plotTopMarkers}{seurat}(object, topMarkers, headerLevel = 2L, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -23,10 +19,6 @@ plotTopMarkers(object, ...)
 
 \item{topMarkers}{\code{grouped_df} grouped by "\code{cluster}", returned by
 \code{\link[=topMarkers]{topMarkers()}}.}
-
-\item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
-
-\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{headerLevel}{R Markdown header level.}
 }
