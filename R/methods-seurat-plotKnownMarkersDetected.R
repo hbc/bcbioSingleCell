@@ -12,10 +12,10 @@
 #'
 #' @examples
 #' # seurat ====
-#' # Let's plot the first 2 markers, as a quick example
+#' # Let's plot the first known marker, as a quick example
 #' plotKnownMarkersDetected(
 #'     object = seurat_small,
-#'     markers = known_markers_small[seq_len(2L), ]
+#'     markers = known_markers_small[1L, , drop = FALSE]
 #' )
 NULL
 
@@ -30,15 +30,8 @@ setMethod(
     function(
         object,
         markers,
-        tsneColor = scale_color_viridis(discrete = FALSE),
-        violinFill = scale_fill_viridis(discrete = TRUE),
-        dotColor = scale_color_gradient(
-            low = "lightgray",
-            high = "purple"
-        ),
-        dark = TRUE,
-        pointsAsNumbers = FALSE,
-        headerLevel = 2L
+        headerLevel = 2L,
+        ...
     ) {
         # Passthrough: tsneColor, violinFill, dotColor, dark, pointsAsNumbers
         assert_has_rows(markers)
@@ -62,7 +55,7 @@ setMethod(
             assert_is_non_empty(genes)
 
             markdownHeader(
-                cellType,
+                object = cellType,
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE
@@ -72,13 +65,8 @@ setMethod(
             plotMarkers(
                 object = object,
                 genes = genes,
-                tsneColor = tsneColor,
-                violinFill = violinFill,
-                dotColor = dotColor,
-                dark = dark,
-                pointsAsNumbers = pointsAsNumbers,
                 headerLevel = subheaderLevel,
-                title = cellType
+                ...
             )
         })
 

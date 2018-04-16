@@ -10,11 +10,8 @@
 \usage{
 plotKnownMarkersDetected(object, ...)
 
-\S4method{plotKnownMarkersDetected}{seurat}(object, markers,
-  tsneColor = scale_color_viridis(discrete = FALSE),
-  violinFill = scale_fill_viridis(discrete = TRUE),
-  dotColor = scale_color_gradient(low = "lightgray", high = "purple"),
-  dark = TRUE, pointsAsNumbers = FALSE, headerLevel = 2L)
+\S4method{plotKnownMarkersDetected}{seurat}(object, markers, headerLevel = 2L,
+  ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -22,10 +19,6 @@ plotKnownMarkersDetected(object, ...)
 \item{...}{Additional arguments.}
 
 \item{markers}{\code{grouped_df} of known marker genes.}
-
-\item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
-
-\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{headerLevel}{R Markdown header level.}
 }
@@ -37,10 +30,10 @@ Plot Known Markers Detected
 }
 \examples{
 # seurat ====
-# Let's plot the first 2 markers, as a quick example
+# Let's plot the first known marker, as a quick example
 plotKnownMarkersDetected(
     object = seurat_small,
-    markers = known_markers_small[seq_len(2L), ]
+    markers = known_markers_small[1L, , drop = FALSE]
 )
 }
 \seealso{
