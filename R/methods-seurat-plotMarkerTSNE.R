@@ -102,11 +102,9 @@ setMethod(
         } else {
             p <- p + theme_paperwhite(aspect_ratio = aspectRatio)
             if (missing(color)) {
-                color <- scale_colour_gradient2(
+                color <- scale_color_gradient(
                     low = "gray90",
-                    mid = "gray50",
-                    high = "red",
-                    midpoint = 300L
+                    high = "black"
                 )
             }
         }
