@@ -66,6 +66,9 @@ Plot the universal molecular identifiers (UMIs) per cell.
 # bcbioSingleCell ====
 plotUMIsPerCell(bcb_small)
 
+# Label the barcode ranks
+plotUMIsPerCell(bcb_small, barcodeRanks = TRUE)
+
 # SingleCellExperiment ====
 plotUMIsPerCell(cellranger_small)
 

@@ -68,12 +68,8 @@
 
     labels <- paste(sampleNames, points, sep = " = ")
 
-    # FIXME Need to figure out how to replace scale cleanly or suppress
-    # the message
-    p <- p + scale_color_viridis(
-        discrete = TRUE,
-        breaks = sampleNames,
-        labels = labels
+    p <- p + labs(
+        subtitle = paste(labels, collapse = "\n")
     )
 
     p

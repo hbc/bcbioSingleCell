@@ -20,6 +20,9 @@
 #' # bcbioSingleCell ====
 #' plotUMIsPerCell(bcb_small)
 #'
+#' # Label the barcode ranks
+#' plotUMIsPerCell(bcb_small, barcodeRanks = TRUE)
+#'
 #' # SingleCellExperiment ====
 #' plotUMIsPerCell(cellranger_small)
 #'
@@ -59,6 +62,7 @@ setMethod(
             interestingGroups = interestingGroups,
             min = min,
             trans = trans,
+            color = color,
             fill = fill
         )
 
