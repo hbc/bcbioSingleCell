@@ -14,11 +14,13 @@
 #'
 #' @inheritParams general
 #' @param gene Gene identifier. Must intersect with [rownames()].
-#' @param tsneColor Color palette to use for tSNE plot.
-#' @param violinFill Color palette to use for violin plot.
-#' @param dotColor Color palette to use for dot plot.
 #'
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
+#'
+#' @seealso
+#' - [plotMarkerTSNE()].
+#' - [plotDot()].
+#' - [plotViolin()].
 #'
 #' @examples
 #' # seurat ===
@@ -45,7 +47,7 @@ setMethod(
     function(
         object,
         gene,
-        dark = FALSE,
+        dark = TRUE,
         return = c("grid", "list"),
         ...
     ) {
@@ -143,16 +145,8 @@ setMethod(
     function(
         object,
         genes,
-        tsneColor,
-        violinFill = scale_fill_viridis(discrete = TRUE),
-        dotColor = scale_color_gradient(
-            low = "lightgray",
-            high = "orange"
-        ),
-        dark = FALSE,
-        pointsAsNumbers = FALSE,
         headerLevel = 2L,
-        title = NULL
+        ...
     ) {
         assert_is_character(genes)
         assert_is_subset(genes, rownames(object))
@@ -163,13 +157,7 @@ setMethod(
             p <- plotMarker(
                 object = object,
                 gene = gene,
-                tsneColor = tsneColor,
-                violinFill = violinFill,
-                dotColor = dotColor,
-                dark = dark,
-                pointsAsNumbers = pointsAsNumbers,
-                title = title,
-                return = "grid"
+                ...
             )
             show(p)
             invisible(p)
