@@ -67,6 +67,14 @@ test_that("loadSingleCell", {
         organism = "Homo sapiens"
     )
     expect_s4_class(x, "bcbioSingleCell")
+
+    # NULL organism
+    x <- loadSingleCell(
+        uploadDir = uploadDir,
+        sampleMetadataFile = sampleMetadataFile,
+        organism = NULL
+    )
+    expect_s4_class(x, "bcbioSingleCell")
 })
 
 
