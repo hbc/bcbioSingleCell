@@ -33,8 +33,8 @@
 #'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
 #'   geom_histogram geom_hline geom_label geom_line geom_point geom_smooth
 #'   geom_step geom_text geom_violin geom_vline ggtitle guide_colorbar
-#'   guide_legend guides labs qplot scale_radius scale_x_continuous
-#'   scale_y_continuous stat_ecdf theme xlab xlim ylab
+#'   guide_legend guides labs qplot scale_radius scale_colour_gradient2
+#'   scale_x_continuous scale_y_continuous stat_ecdf theme xlab xlim ylab
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom graphics hist
 #' @importFrom grid unit

@@ -27,13 +27,14 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
+        color = scale_color_hue(),
         pointsAsNumbers = FALSE,
         pointSize = 0.5,
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        color = scale_color_hue(),
-        dark = TRUE,
+        dark = FALSE,
+        aspectRatio = 1L,
         title = NULL
     ) {
         pca <- fetchPCAData(object)
@@ -41,13 +42,14 @@ setMethod(
             pca,
             axes = c(x = "pc1", y = "pc2"),
             interestingGroups = interestingGroups,
+            color = color,
             pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             pointAlpha = pointAlpha,
             label = label,
             labelSize = labelSize,
-            color = color,
             dark = dark,
+            aspectRatio = aspectRatio,
             title = title
         )
     }

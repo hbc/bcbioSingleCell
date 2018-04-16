@@ -13,13 +13,14 @@
     object,
     axes,
     interestingGroups = "ident",
+    color = scale_color_hue(),
     pointsAsNumbers = FALSE,
     pointSize = 0.5,
     pointAlpha = 0.8,
     label = TRUE,
     labelSize = 6L,
-    color = scale_color_hue(),
     dark = TRUE,
+    aspectRatio = 1L,
     title = NULL
 ) {
     assert_is_data.frame(object)
@@ -27,12 +28,12 @@
     assert_is_subset(axes, colnames(object))
     assert_is_a_string(interestingGroups)
     assert_is_subset(interestingGroups, colnames(object))
+    assertIsColorScaleDiscreteOrNULL(color)
     assert_is_a_bool(pointsAsNumbers)
     assert_is_a_number(pointSize)
     assert_is_a_number(pointAlpha)
     assert_is_a_bool(label)
     assert_is_a_number(labelSize)
-    assertIsColorScaleDiscreteOrNULL(color)
     assert_is_a_bool(dark)
     assertIsAStringOrNULL(title)
 
@@ -54,7 +55,9 @@
 
     # Put the dark theme call before the other ggplot aesthetics
     if (isTRUE(dark)) {
-        p <- p + theme_midnight()
+        p <- p + theme_midnight(aspect_ratio = aspectRatio)
+    } else {
+        p <- p + theme_paperwhite(aspect_ratio = aspectRatio)
     }
 
     if (isTRUE(pointsAsNumbers)) {
