@@ -108,17 +108,6 @@ setGeneric(
 
 
 
-#' @rdname inflectionPoint
-#' @export
-setGeneric(
-    "inflectionPoint",
-    function(object, ...) {
-        standardGeneric("inflectionPoint")
-    }
-)
-
-
-
 #' @rdname knownMarkersDetected
 #' @export
 setGeneric(

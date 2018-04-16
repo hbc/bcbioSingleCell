@@ -126,3 +126,12 @@ readCellTypeMarkersFile <- function(...) {
     .Deprecated("readCellTypeMarkers")
     readCellTypeMarkers(...)
 }
+
+
+
+# v0.1.1 =======================================================================
+#' @rdname deprecated
+#' @export
+inflectionPoint <- function(...) {
+    .Defunct("barcodeRanks")
+}
