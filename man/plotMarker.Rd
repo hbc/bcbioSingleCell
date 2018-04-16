@@ -25,7 +25,8 @@ plotMarkers(object, ...)
 
 \item{gene}{Gene identifier. Must intersect with \code{\link[=rownames]{rownames()}}.}
 
-\item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
+\item{dark}{Plot against a dark background using
+\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
 \item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
 to the first argument in the vector.}

@@ -38,7 +38,8 @@ the dataset, and some cells can be masked.}
 
 \item{labelSize}{Size of the text label.}
 
-\item{dark}{Plot against a dark background using \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
+\item{dark}{Plot against a dark background using
+\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
 \item{aspectRatio}{Aspect ratio.}
 
