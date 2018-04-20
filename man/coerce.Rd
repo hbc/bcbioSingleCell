@@ -4,7 +4,6 @@
 \alias{coerce}
 \alias{coerce-SingleCellExperiment-list}
 \alias{coerce-SingleCellExperiment-seurat}
-\alias{coerce-bcbioSingleCell-SummarizedExperiment}
 \title{Coerce Object}
 \value{
 New class, specified by the "\code{to}" argument.
