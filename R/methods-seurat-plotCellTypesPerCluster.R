@@ -37,10 +37,11 @@ setMethod(
     function(
         object,
         cellTypesPerCluster,
-        color = scale_color_viridis(discrete = FALSE),
+        color = "auto",
         dark = TRUE,
         headerLevel = 2L
     ) {
+        # Passthrough: color, dark
         validObject(object)
         stopifnot(is(cellTypesPerCluster, "grouped_df"))
         assert_has_rows(cellTypesPerCluster)
@@ -48,8 +49,6 @@ setMethod(
             x = group_vars(cellTypesPerCluster),
             y = "cluster"
         )
-        assertIsColorScaleContinuousOrNULL(color)
-        assert_is_a_bool(dark)
         assertIsAHeaderLevel(headerLevel)
 
         cellTypesPerCluster <- cellTypesPerCluster %>%
