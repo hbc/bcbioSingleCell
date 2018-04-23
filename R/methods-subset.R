@@ -4,6 +4,7 @@
 #'
 #' @name subset
 #' @author Michael Steinbaugh
+#' @keywords internal
 #'
 #' @inheritParams base::`[`
 #' @param ... Additional arguments.
