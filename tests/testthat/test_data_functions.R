@@ -332,15 +332,15 @@ test_that("selectSamples : bcbioSingleCell", {
     expect_true(metadata(x)[["selectSamples"]])
     expect_identical(dim(x), c(500L, 500L))
     expect_identical(
-        sampleData(x)[["sampleID"]],
-        factor("multiplexed_AAAAAAAA")
+        rownames(sampleData(x)),
+        "multiplexed_AAAAAAAA"
     )
 })
 
 test_that("selectSamples : Match failure", {
     expect_error(
-        selectSamples(bcb_small, sampleID = "XXX"),
-        "sampleID metadata column doesn't contain XXX"
+        selectSamples(bcb_small, sampleName = "XXX"),
+        "\"sampleName\" metadata column doesn't contain XXX"
     )
 })
 
