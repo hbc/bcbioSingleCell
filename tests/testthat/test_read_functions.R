@@ -2,13 +2,39 @@ context("Read Functions")
 
 
 
-# loadCellRanger ===============================================================
-test_that("loadCellRanger", {
+# bcbioSingleCell ==============================================================
+test_that("bcbioSingleCell", {
+    uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
+    sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
+
+    # Organism
+    x <- bcbioSingleCell(
+        uploadDir = uploadDir,
+        sampleMetadataFile = sampleMetadataFile,
+        organism = "Homo sapiens"
+    )
+    expect_s4_class(x, "bcbioSingleCell")
+
+    # NULL organism
+    x <- suppressWarnings(
+        bcbioSingleCell(
+            uploadDir = uploadDir,
+            sampleMetadataFile = sampleMetadataFile,
+            organism = NULL
+        )
+    )
+    expect_s4_class(x, "bcbioSingleCell")
+})
+
+
+
+# readCellRanger ===============================================================
+test_that("readCellRanger", {
     extdataDir <- system.file("extdata", package = "bcbioSingleCell")
     uploadDir <- file.path(extdataDir, "cellranger")
     refdataDir <- file.path(uploadDir, "refdata-cellranger-hg19-1.2.0")
     sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
-    x <- loadCellRanger(
+    x <- readCellRanger(
         uploadDir = uploadDir,
         refdataDir = refdataDir,
         sampleMetadataFile = sampleMetadataFile
@@ -46,37 +72,13 @@ test_that("loadCellRanger", {
             "prefilter" = "logical",
             "refdataDir" = "character",
             "refJSON" = "list",
-            "loadCellRanger" = "call",
+            "call" = "call",
             "date" = "Date",
             "wd" = "character",
             "utilsSessionInfo" = "sessionInfo",
             "devtoolsSessionInfo" = "session_info"
         )
     )
-})
-
-
-
-# loadSingleCell ===============================================================
-test_that("loadSingleCell", {
-    uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
-    sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
-
-    # Organism
-    x <- loadSingleCell(
-        uploadDir = uploadDir,
-        sampleMetadataFile = sampleMetadataFile,
-        organism = "Homo sapiens"
-    )
-    expect_s4_class(x, "bcbioSingleCell")
-
-    # NULL organism
-    x <- loadSingleCell(
-        uploadDir = uploadDir,
-        sampleMetadataFile = sampleMetadataFile,
-        organism = NULL
-    )
-    expect_s4_class(x, "bcbioSingleCell")
 })
 
 
