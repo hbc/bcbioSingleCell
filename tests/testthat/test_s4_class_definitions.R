@@ -82,7 +82,7 @@ target <- DataFrame(
     "fileName" = factor("multiplexed.fastq.gz"),
     "index" = factor("1"),
     "sequence" = factor("TTTTTTTT"),
-    "sampleNameAggregate" = factor("sample"),
+    "aggregate" = factor("sample"),
     "revcomp" = factor("AAAAAAAA"),
     "interestingGroups" = factor("rep_1"),
     row.names = factor("multiplexed_AAAAAAAA")
@@ -100,7 +100,7 @@ test_that("sampleData : bcbioSingleCell", {
             "fileName" = "factor",
             "index" = "factor",
             "sequence" = "factor",
-            "sampleNameAggregate" = "factor",
+            "aggregate" = "factor",
             "revcomp" = "factor",
             "interestingGroups" = "factor"
         )

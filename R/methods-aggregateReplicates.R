@@ -26,19 +26,19 @@ setMethod(
         validObject(object)
         metadata <- metadata(object)
         sampleData <- sampleData(object, return = "data.frame")
-        assert_is_subset("sampleNameAggregate", colnames(sampleData))
+        assert_is_subset("aggregate", colnames(sampleData))
         # We'll end up replacing `sampleID` and `sampleName` columns with the
         # corresponding `*Aggregate` columns.
         map <- sampleData %>%
-            .[, c("sampleID", "sampleName", "sampleNameAggregate")] %>%
+            .[, c("sampleID", "sampleName", "aggregate")] %>%
             mutate(sampleIDAggregate = makeNames(
-                .data[["sampleNameAggregate"]],
+                .data[["aggregate"]],
                 unique = FALSE
             )) %>%
             mutate_all(as.factor) %>%
             .[, c(
                 "sampleIDAggregate", "sampleID",
-                "sampleNameAggregate",
+                "aggregate",
                 "sampleName"
             )] %>%
             arrange(.data[["sampleIDAggregate"]], .data[["sampleID"]]) %>%
@@ -95,10 +95,10 @@ setMethod(
         message("Updating metadata")
 
         # sampleData
-        expected <- length(unique(sampleData[["sampleNameAggregate"]]))
+        expected <- length(unique(sampleData[["aggregate"]]))
         sampleData <- sampleData %>%
             mutate(
-                sampleName = .data[["sampleNameAggregate"]],
+                sampleName = .data[["aggregate"]],
                 description = .data[["sampleName"]],
                 sampleID = makeNames(
                     .data[["sampleName"]], unique = FALSE

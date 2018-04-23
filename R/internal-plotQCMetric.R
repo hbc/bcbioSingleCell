@@ -141,7 +141,7 @@
     # Facets
     facets <- NULL
     if (.isAggregate(object)) {
-        facets <- "sampleNameAggregate"
+        facets <- "aggregate"
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
@@ -207,7 +207,7 @@
     # Facets
     facets <- NULL
     if (.isAggregate(object)) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
