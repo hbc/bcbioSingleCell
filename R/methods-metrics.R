@@ -61,7 +61,6 @@ setMethod(
         prefilter = TRUE
     ) {
         assert_has_rows(object)
-        assert_is_any_of(rowData, c("DataFrame", "NULL"))
         assert_is_a_bool(prefilter)
 
         message("Calculating cellular barcode metrics")
