@@ -1,5 +1,5 @@
 # harvard_indrop_v3 dataset
-# 2018-04-06
+# 2018-04-23
 library(devtools)
 library(Matrix)
 library(readr)
@@ -64,7 +64,7 @@ write_lines(colnames(mat), path = colnamesFile)
 write_tsv(barcodes, path = barcodesFile, col_names = FALSE)
 
 # indrop_small =================================================================
-bcb_small <- loadSingleCell(
+bcb_small <- bcbioSingleCell(
     uploadDir = uploadDir,
     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
     organism = "Homo sapiens"
