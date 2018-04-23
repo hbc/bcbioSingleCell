@@ -23,14 +23,15 @@
     fetch <- Seurat::FetchData(object, vars.all = dimCode)
     metrics <- metrics(object)
     assert_are_identical(rownames(fetch), rownames(metrics))
+    dimCode <- camel(dimCode)
     cbind(metrics, fetch) %>%
         rownames_to_column() %>%
         camel() %>%
         # Group by ident here for center calculations
         group_by(!!sym("ident")) %>%
         mutate(
-            centerX = median(.data[[camel(dimCode[[1L]], strict = FALSE)]]),
-            centerY = median(.data[[camel(dimCode[[2L]], strict = FALSE)]])
+            centerX = median(!!sym(dimCode[[1L]])),
+            centerY = median(!!sym(dimCode[[2L]]))
         ) %>%
         ungroup() %>%
         as.data.frame() %>%
