@@ -66,9 +66,10 @@ setMethod(
             }
             # Check that all items in argument are present
             if (!all(value %in% sampleData[[col]])) {
-                missing <- argument[which(!argument %in% sampleData[[col]])]
+                missing <- value[which(!value %in% sampleData[[col]])]
                 stop(paste(
-                    col, "metadata column doesn't contain",
+                    deparse(col),
+                    "metadata column doesn't contain",
                     toString(missing)
                 ))
             }

@@ -31,9 +31,8 @@ and Ensembl gene identifiers for rows.
 }
 \examples{
 # bcbioSingleCell ====
-sampleName <- sampleData(bcb_small) \%>\%
-    .[1L, "sampleName"] \%>\%
-    as.character()
+colnames(sampleData(bcb_small))
+sampleName <- sampleData(bcb_small)[1L, "sampleName"]
 print(sampleName)
 selectSamples(bcb_small, sampleName = sampleName)
 }
