@@ -33,7 +33,7 @@
         as.data.frame() %>%
         column_to_rownames() %>%
         # Reorder the columns before return
-        select(!!!syms(c("sampleID", "cellularBarcode", "nCount"))
+        select(!!!syms(c("sampleID", "cellularBarcode", "nCount")))
 }
 
 
