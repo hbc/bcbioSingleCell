@@ -21,9 +21,9 @@
     )
     data[["roundedMedian"]] <- round(data[[medianCol]], digits = digits)
 
-    # Add `sampleNameAggregate` column for facet wrapping, if necessary
-    if ("sampleNameAggregate" %in% colnames(metrics)) {
-        sampleFacet <- metrics[, c("sampleName", "sampleNameAggregate")] %>%
+    # Add `aggregate` column for facet wrapping, if necessary
+    if ("aggregate" %in% colnames(metrics)) {
+        sampleFacet <- metrics[, c("sampleName", "aggregate")] %>%
         unique()
         data <- left_join(data, sampleFacet, by = "sampleName")
     }

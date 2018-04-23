@@ -71,7 +71,7 @@ setMethod(
         # Wrap aggregated samples
         facets <- NULL
         if (.isAggregate(metrics)) {
-            facets <- "sampleNameAggregate"
+            facets <- "aggregate"
         }
         if (is.character(facets)) {
             p <- p + facet_wrap(facets = facets, scales = "free")

@@ -96,7 +96,7 @@ NULL
     # Facets
     facets <- NULL
     if (.isAggregate(data)) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
@@ -139,7 +139,7 @@ NULL
     # Facets
     facets <- NULL
     if (.isAggregate(data)) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
@@ -182,7 +182,7 @@ NULL
     # Facets
     facets <- NULL
     if (.isAggregate(data)) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
@@ -277,7 +277,7 @@ NULL
     # Facets
     facets <- NULL
     if (.isAggregate(data)) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")

@@ -47,9 +47,9 @@ setAs(
     to = "seurat",
     function(from) {
         # Require that technical replicates are aggregated
-        if ("sampleNameAggregate" %in% colnames(sampleData(from))) {
+        if ("aggregate" %in% colnames(sampleData(from))) {
             message(paste(
-                "`sampleNameAggregate` metadata column detected.",
+                "`aggregate` metadata column detected.",
                 "Use `aggregateReplicates()` to combine technical replicates.",
                 sep = "\n"
             ))

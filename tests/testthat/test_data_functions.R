@@ -297,7 +297,7 @@ test_that("metrics : bcbioSingleCell", {
             "fileName" = "factor",
             "index" = "factor",
             "sequence" = "factor",
-            "sampleNameAggregate" = "factor",
+            "aggregate" = "factor",
             "revcomp" = "factor",
             "interestingGroups" = "factor"
         )
