@@ -43,7 +43,7 @@ setMethod(
             interestingGroups = interestingGroups,
             return = "data.frame"
         )
-
+        sampleData[["sampleID"]] <- rownames(sampleData)
         data <- metrics %>%
             group_by(!!sym("sampleID")) %>%
             summarize(nCells = n()) %>%
