@@ -16,7 +16,10 @@ This is an [R][] package.
 ```r
 source("https://bioconductor.org/biocLite.R")
 biocLite("devtools")
-biocLite("hbc/bcbioSingleCell")
+biocLite(
+    "hbc/bcbioSingleCell",
+    dependencies = c("Depends", "Imports", "Suggests")
+)
 ```
 
 
@@ -24,7 +27,7 @@ biocLite("hbc/bcbioSingleCell")
 
 ```r
 library(bcbioSingleCell)
-bcb <- loadSingleCell(
+bcb <- bcbioSingleCell(
     uploadDir = "bcbio_indrop/final",
     interestingGroups = c("genotype", "treatment"),
     sampleMetadataFile = "sample_metadata.csv",
@@ -44,7 +47,7 @@ Parameters:
 - `interestingGroups`: Character vector of the column names of interest in the sample metadata, which is stored in the `sampleData()` accessor slot of the `bcbioSingleCell` object. These values should be formatted in camelCase, and can be reassigned in the object after creation (e.g. `interestingGroups(bcb) <- c("batch", "age")`). They are used for data visualization in the quality control utility functions.
 - `organism`: Organism name. Use the full latin name (e.g. "Homo sapiens").
 
-Consult `help("loadSingleCell", "bcbioSingleCell")` for additional documentation.
+Consult `help("bcbioSingleCell", "bcbioSingleCell")` for additional documentation.
 
 
 ## Sample metadata examples

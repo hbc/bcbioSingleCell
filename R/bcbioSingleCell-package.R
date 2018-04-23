@@ -4,7 +4,7 @@
 #' RNA-seq data.
 #'
 #' @name bcbioSingleCell-package
-#' @keywords internal
+#' @docType package
 #'
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment

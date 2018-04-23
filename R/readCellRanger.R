@@ -1,4 +1,4 @@
-#' Load 10X Genomics Cell Ranger Data
+#' Read 10X Genomics Cell Ranger Data
 #'
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
 #' counts from `barcodes.tsv`, `genes.tsv`, and `matrix.mtx` files.
@@ -14,7 +14,7 @@
 #' @family Read Functions
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams loadSingleCell
+#' @inheritParams bcbioSingleCell
 #' @inheritParams general
 #' @param uploadDir Path to Cell Ranger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices*` as a child directory.
@@ -25,12 +25,12 @@
 #'
 #' @examples
 #' uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
-#' loadCellRanger(
+#' readCellRanger(
 #'     uploadDir = uploadDir,
 #'     refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
 #'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
-loadCellRanger <- function(
+readCellRanger <- function(
     uploadDir,
     refdataDir,
     sampleMetadataFile,

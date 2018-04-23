@@ -28,8 +28,7 @@ gene2symbol <- makeGene2symbolFromEnsembl("Homo sapiens")
 readCellTypeMarkers(file, gene2symbol = gene2symbol)
 }
 \seealso{
-Other Read Functions: \code{\link{loadCellRanger}},
-  \code{\link{loadSingleCell}}
+Other Read Functions: \code{\link{loadCellRanger}}
 }
 \author{
 Michael Steinbaugh

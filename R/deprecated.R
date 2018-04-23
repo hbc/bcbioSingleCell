@@ -141,3 +141,22 @@ inflectionPoint <- function(...) {
 plotCumulativeUMIsPerCell <- function(...) {
     .Defunct("plotUMIsPerCell")
 }
+
+
+
+# v0.1.2 =======================================================================
+#' @rdname readCellRanger
+#' @usage NULL
+#' @export
+loadCellRanger <- function(...) {
+    .Deprecated("readCellRanger")
+    readCellRanger(...)
+}
+
+#' @rdname bcbioSingleCell-class
+#' @usage NULL
+#' @export
+loadSingleCell <- function(...) {
+    .Deprecated("bcbioSingleCell")
+    bcbioSingleCell(...)
+}
