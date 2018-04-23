@@ -56,6 +56,8 @@ setMethod(
 
         # Match the arguments against the sample metadata
         sampleData <- sampleData(object)
+        sampleData[["sampleID"]] <- rownames(sampleData)
+
         list <- mapply(
             col = names(args),
             value = args,
