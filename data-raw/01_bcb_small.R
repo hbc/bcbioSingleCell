@@ -67,7 +67,8 @@ write_tsv(barcodes, path = barcodesFile, col_names = FALSE)
 bcb_small <- bcbioSingleCell(
     uploadDir = uploadDir,
     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
-    organism = "Homo sapiens"
+    organism = "Homo sapiens",
+    ensemblRelease = 90L
 )
 
 # Apply example filtering without excluding any cells
