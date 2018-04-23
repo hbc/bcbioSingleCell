@@ -12,13 +12,11 @@ plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{SingleCellExperiment}(object, interestingGroups,
   geom = c("histogram", "ecdf", "ridgeline", "violin"),
-  color = scale_color_viridis(discrete = TRUE),
-  fill = scale_fill_viridis(discrete = TRUE))
+  color = scale_color_hue(), fill = scale_fill_hue())
 
 \S4method{plotReadsPerCell}{seurat}(object, interestingGroups,
   geom = c("histogram", "ecdf", "ridgeline", "violin"),
-  color = scale_color_viridis(discrete = TRUE),
-  fill = scale_fill_viridis(discrete = TRUE))
+  color = scale_color_hue(), fill = scale_fill_hue())
 }
 \arguments{
 \item{object}{Object.}

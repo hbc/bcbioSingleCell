@@ -7,8 +7,8 @@
 \title{Plot Violin}
 \usage{
 \S4method{plotViolin}{seurat}(object, genes, scale = c("count", "width",
-  "area"), fill = scale_fill_viridis(discrete = TRUE), dark = FALSE,
-  headerLevel = 2L, return = c("grid", "list", "markdown"))
+  "area"), fill = scale_fill_hue(), dark = FALSE, headerLevel = 2L,
+  return = c("grid", "list", "markdown"))
 }
 \arguments{
 \item{object}{Object.}

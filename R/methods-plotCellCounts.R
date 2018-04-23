@@ -30,7 +30,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        fill = scale_fill_viridis(discrete = TRUE)
+        fill = scale_fill_hue()
     ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
@@ -57,7 +57,10 @@ setMethod(
                 fill = "interestingGroups"
             )
         ) +
-            geom_bar(stat = "identity") +
+            geom_bar(
+                color = "black",
+                stat = "identity"
+            ) +
             labs(fill = paste(interestingGroups, collapse = ":\n")) +
             theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 

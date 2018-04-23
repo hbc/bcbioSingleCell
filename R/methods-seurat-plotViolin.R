@@ -38,7 +38,7 @@ setMethod(
         object,
         genes,
         scale = c("count", "width", "area"),
-        fill = scale_fill_viridis(discrete = TRUE),
+        fill = scale_fill_hue(),
         dark = FALSE,
         headerLevel = 2L,
         return = c("grid", "list", "markdown")

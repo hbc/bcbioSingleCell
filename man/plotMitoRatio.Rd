@@ -12,11 +12,11 @@ plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("violin",
   "boxplot", "histogram", "ridgeline"), interestingGroups, max = 1L,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_hue())
 
 \S4method{plotMitoRatio}{seurat}(object, geom = c("violin", "boxplot",
   "histogram", "ridgeline"), interestingGroups, max = 1L,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_hue())
 }
 \arguments{
 \item{object}{Object.}

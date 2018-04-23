@@ -11,9 +11,10 @@
 plotMarkerTSNE(object, ...)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color, pointsAsNumbers = FALSE, pointSize = 0.5,
-  pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = TRUE,
-  legend = TRUE, aspectRatio = 1L, title = NULL, subtitle = TRUE)
+  "median", "sum"), color = "auto", pointsAsNumbers = FALSE,
+  pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
+  dark = TRUE, legend = TRUE, aspectRatio = 1L, title = NULL,
+  subtitle = TRUE)
 }
 \arguments{
 \item{object}{Object.}

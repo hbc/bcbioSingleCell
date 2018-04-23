@@ -28,7 +28,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        color = scale_color_viridis(discrete = TRUE)
+        color = scale_color_hue()
     ) {
         .plotQCScatterplot(
             object = object,

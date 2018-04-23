@@ -37,7 +37,7 @@ setMethod(
         geom = c("violin", "boxplot", "histogram", "ridgeline"),
         interestingGroups,
         min = 0L,
-        fill = scale_fill_viridis(discrete = TRUE)
+        fill = scale_fill_hue()
     ) {
         assert_all_are_in_right_open_range(min, lower = 0L, upper = 1L)
         geom <- match.arg(geom)

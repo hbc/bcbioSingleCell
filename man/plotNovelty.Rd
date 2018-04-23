@@ -12,11 +12,11 @@ plotNovelty(object, ...)
 
 \S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("violin",
   "boxplot", "histogram", "ridgeline"), interestingGroups, min = 0L,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_hue())
 
 \S4method{plotNovelty}{seurat}(object, geom = c("violin", "boxplot",
   "histogram", "ridgeline"), interestingGroups, min = 0L,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_hue())
 }
 \arguments{
 \item{object}{Object.}

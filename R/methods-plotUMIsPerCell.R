@@ -47,8 +47,8 @@ setMethod(
         ranksPerSample = TRUE,
         labelPoint = c("knee", "inflection"),
         trans = "log10",
-        color = scale_color_viridis(discrete = TRUE),
-        fill = scale_fill_viridis(discrete = TRUE)
+        color = scale_color_hue(),
+        fill = scale_fill_hue()
     ) {
         geom <- match.arg(geom)
         assert_is_a_bool(barcodeRanks)

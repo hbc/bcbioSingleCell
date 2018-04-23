@@ -11,8 +11,7 @@
 plotCellTypesPerCluster(object, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
-  color = scale_color_viridis(discrete = FALSE), dark = TRUE,
-  headerLevel = 2L)
+  color = "auto", dark = TRUE, headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}

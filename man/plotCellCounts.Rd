@@ -10,7 +10,7 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{SingleCellExperiment}(object, interestingGroups,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_hue())
 }
 \arguments{
 \item{object}{Object.}

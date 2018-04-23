@@ -73,7 +73,7 @@ NULL
 # Standard (raw) ---------------------------------------------------------------
 .plotReadsPerCellECDF <- function(
     data,
-    color = scale_color_viridis(discrete = TRUE)
+    color = scale_color_hue()
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
@@ -110,7 +110,7 @@ NULL
 
 .plotReadsPerCellViolin <- function(
     data,
-    fill = scale_fill_viridis(discrete = TRUE)
+    fill = scale_fill_hue()
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -153,7 +153,7 @@ NULL
 
 .plotReadsPerCellRidgeline <- function(
     data,
-    fill = scale_fill_viridis(discrete = TRUE)
+    fill = scale_fill_hue()
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -248,7 +248,7 @@ NULL
 
 .plotReadsPerCellHistogram <- function(
     data,
-    color = scale_color_viridis(discrete = TRUE)
+    color = scale_color_hue()
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
@@ -299,8 +299,8 @@ setMethod(
         object,
         interestingGroups,
         geom = c("histogram", "ecdf", "ridgeline", "violin"),
-        color = scale_color_viridis(discrete = TRUE),
-        fill = scale_fill_viridis(discrete = TRUE)
+        color = scale_color_hue(),
+        fill = scale_fill_hue()
     ) {
         # Passthrough: color, fill
         validObject(object)

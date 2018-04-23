@@ -31,7 +31,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        color = scale_color_viridis(discrete = TRUE)
+        color = scale_color_hue()
     ) {
         assertIsColorScaleDiscreteOrNULL(color)
 
