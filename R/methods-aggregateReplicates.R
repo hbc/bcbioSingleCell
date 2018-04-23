@@ -26,42 +26,40 @@ setMethod(
         validObject(object)
         metadata <- metadata(object)
         sampleData <- sampleData(object, return = "data.frame")
+        if ("sampleNameAggregate" %in% colnames(sampleData)) {
+            warning("Use `aggregate` instead of `sampleNameAggregate`")
+            sampleData[["aggregate"]] <- sampleData[["sampleNameAggregate"]]
+        }
         assert_is_subset("aggregate", colnames(sampleData))
-        # We'll end up replacing `sampleID` and `sampleName` columns with the
-        # corresponding `*Aggregate` columns.
+
+        # This step will replace the `sampleName` column with the `aggregate`
+        # column metadata.
         map <- sampleData %>%
-            .[, c("sampleID", "sampleName", "aggregate")] %>%
+            rownames_to_column("sampleID") %>%
+            select(!!!syms(c("sampleID", "aggregate"))) %>%
             mutate(sampleIDAggregate = makeNames(
-                .data[["aggregate"]],
-                unique = FALSE
+                !!sym("aggregate"), unique = FALSE
             )) %>%
+            select(-!!sym("aggregate")) %>%
+            arrange(!!!syms(c("sampleID", "sampleIDAggregate"))) %>%
             mutate_all(as.factor) %>%
-            .[, c(
-                "sampleIDAggregate", "sampleID",
-                "aggregate",
-                "sampleName"
-            )] %>%
-            arrange(.data[["sampleIDAggregate"]], .data[["sampleID"]]) %>%
             mutate_all(reorder)
 
         # Message the new sample IDs
         newIDs <- unique(map[["sampleIDAggregate"]])
-        message(paste(
-            "New sample IDs:", toString(newIDs)
-        ))
+        message(paste("New sample IDs:", toString(newIDs)))
 
         message("Remapping cellular barcodes to aggregate sample IDs")
         cell2sample <- cell2sample(object)
-        sampleID <- data.frame("sampleID" = cell2sample)
-        remap <- left_join(
-            x = sampleID,
-            y = map,
-            by = "sampleID"
-        )
-        rownames(remap) <- names(cell2sample)
+        remap <- tibble(
+            "cellID" = names(cell2sample),
+            "sampleID" = cell2sample
+        ) %>%
+            left_join(map, by = "sampleID")
+
         groupings <- mapply(
             FUN = gsub,
-            x = rownames(remap),
+            x = remap[["cellID"]],
             pattern = paste0("^", remap[["sampleID"]]),
             replacement = remap[["sampleIDAggregate"]]
         ) %>%
@@ -72,12 +70,14 @@ setMethod(
         counts <- aggregateReplicates(assay(object), groupings = groupings)
         # Check that the count number of counts matches
         if (!identical(sum(assay(object)), sum(counts))) {
-            stop("Aggregated counts sum doens't match the original")
+            stop("Aggregated counts sum isn't identical to original")
         }
 
-        # Column data ==========================================================
+        # Row data =============================================================
         rowData <- rowData(object)
         rownames(rowData) <- rownames(object)
+
+        # Column data ==========================================================
         prefilter <- metadata[["prefilter"]]
         colData <- metrics(
             object = counts,
@@ -95,16 +95,14 @@ setMethod(
         message("Updating metadata")
 
         # sampleData
-        expected <- length(unique(sampleData[["aggregate"]]))
+        expected <- length(levels(sampleData[["aggregate"]]))
         sampleData <- sampleData %>%
             mutate(
-                sampleName = .data[["aggregate"]],
-                description = .data[["sampleName"]],
-                sampleID = makeNames(
-                    .data[["sampleName"]], unique = FALSE
-                )
+                sampleName = !!sym("aggregate"),
+                description = !!sym("sampleName"),
+                sampleID = makeNames(!!sym("sampleName"), unique = FALSE)
             ) %>%
-            .[, bcbioBase::metadataPriorityCols] %>%
+            select(!!!syms(bcbioBase::metadataPriorityCols)) %>%
             mutate_all(as.factor) %>%
             unique()
         if (!identical(nrow(sampleData), expected)) {
@@ -128,7 +126,7 @@ setMethod(
             # Aggregate and split back out as a list?
             colnames <- c("sampleID", colnames(cb[[1L]]))
             cb <- .bindCellularBarcodes(cb)
-            cb <- cb[, colnames]
+            cb <- cb[, colnames, drop = FALSE]
             # Now let's remap the barcode reads for the aggregated samples
             cbAggregateData <- cb %>%
                 # Now we need to map the new sampleIDs
@@ -138,7 +136,7 @@ setMethod(
                 ) %>%
                 ungroup() %>%
                 mutate(
-                    sampleID = .data[["sampleIDAggregate"]],
+                    sampleID = !!sym("sampleIDAggregate"),
                     sampleIDAggregate = NULL
                 ) %>%
                 # Here we're grouping per cellular barcode
@@ -146,10 +144,10 @@ setMethod(
                 # Now sum the counts for each unique barcode.
                 # This step is CPU intensive when there's many samples and we
                 # may want to add a progress bar here in a future update.
-                summarize(nCount = sum(.data[["nCount"]])) %>%
+                summarize(nCount = sum(!!sym("nCount"))) %>%
                 ungroup() %>%
-                group_by(.data[["sampleID"]]) %>%
-                arrange(dplyr::desc(.data[["nCount"]]), .by_group = TRUE)
+                group_by(!!sym("sampleID")) %>%
+                arrange(desc(!!sym("nCount")), .by_group = TRUE)
             # Group and sum the counts
             # Now split this back out into a list to match the original data
             # structure
