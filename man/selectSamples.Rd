@@ -38,6 +38,8 @@ print(sampleName)
 selectSamples(bcb_small, sampleName = sampleName)
 }
 \seealso{
+\code{\link[=sampleData]{sampleData()}}.
+
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{cell2sample}}, \code{\link{counts}},
   \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
