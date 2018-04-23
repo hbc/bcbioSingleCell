@@ -39,6 +39,7 @@ NULL
         data <- rownames_to_column(data)
     }
     data %>%
+        camel() %>%
         # Enforce count columns as integers (e.g. `nUMI`)
         mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
         # Coerce character vectors to factors, and drop levels
