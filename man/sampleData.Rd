@@ -5,8 +5,8 @@
 \alias{sampleData}
 \alias{sampleData,SingleCellExperiment-method}
 \alias{sampleData,seurat-method}
-\alias{sampleData<-,SingleCellExperiment-method}
-\alias{sampleData<-,seurat-method}
+\alias{sampleData<-,SingleCellExperiment,DataFrame-method}
+\alias{sampleData<-,seurat,DataFrame-method}
 \title{Sample Data}
 \usage{
 \S4method{sampleData}{SingleCellExperiment}(object, interestingGroups,
@@ -15,9 +15,9 @@
 \S4method{sampleData}{seurat}(object, interestingGroups,
   return = c("DataFrame", "data.frame"))
 
-\S4method{sampleData}{SingleCellExperiment}(object) <- value
+\S4method{sampleData}{SingleCellExperiment,DataFrame}(object) <- value
 
-\S4method{sampleData}{seurat}(object) <- value
+\S4method{sampleData}{seurat,DataFrame}(object) <- value
 }
 \arguments{
 \item{object}{Object.}

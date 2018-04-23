@@ -141,7 +141,7 @@ setMethod(
     "sampleData<-",
     signature(
         object = "SingleCellExperiment",
-        value = "ANY"
+        value = "DataFrame"
     ),
     function(object, value) {
         value <- as.data.frame(value)
@@ -160,7 +160,13 @@ setMethod(
     "sampleData<-",
     signature(
         object = "seurat",
-        value = "ANY"
+        value = "DataFrame"
     ),
-    getMethod("sampleData<-", "SingleCellExperiment")
+    getMethod(
+        "sampleData<-",
+        signature(
+            object = "SingleCellExperiment",
+            value = "DataFrame"
+        )
+    )
 )
