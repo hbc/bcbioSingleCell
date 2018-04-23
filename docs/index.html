@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -78,14 +78,17 @@
 <a href="#bioconductor-method" class="anchor"></a><a href="https://bioconductor.org">Bioconductor</a> method</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">biocLite</span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">biocLite</span>(<span class="st">"hbc/bcbioSingleCell"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">biocLite</span>(</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="st">"hbc/bcbioSingleCell"</span>,</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="dt">dependencies =</span> <span class="kw">c</span>(<span class="st">"Depends"</span>, <span class="st">"Imports"</span>, <span class="st">"Suggests"</span>)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">)</a></code></pre></div>
 </div>
 </div>
 <div id="load-bcbio-run" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-bcbio-run" class="anchor"></a>Load <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> run</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(bcbioSingleCell)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/loadSingleCell.html">loadSingleCell</a></span>(</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/bcbioSingleCell-class.html">bcbioSingleCell</a></span>(</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="dt">uploadDir =</span> <span class="st">"bcbio_indrop/final"</span>,</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="dt">interestingGroups =</span> <span class="kw">c</span>(<span class="st">"genotype"</span>, <span class="st">"treatment"</span>),</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">sampleMetadataFile =</span> <span class="st">"sample_metadata.csv"</span>,</a>
@@ -105,7 +108,7 @@
 <li>
 <code>organism</code>: Organism name. Use the full latin name (e.g. “Homo sapiens”).</li>
 </ul>
-<p>Consult <code>help("loadSingleCell", "bcbioSingleCell")</code> for additional documentation.</p>
+<p>Consult <code>help("bcbioSingleCell", "bcbioSingleCell")</code> for additional documentation.</p>
 </div>
 <div id="sample-metadata-examples" class="section level2">
 <h2 class="hasAnchor">
@@ -204,60 +207,6 @@
 <tr class="odd">
 <td>S5_170620_R1.fastq.gz</td>
 <td>sample5</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="technical-replicates" class="section level3">
-<h3 class="hasAnchor">
-<a href="#technical-replicates" class="anchor"></a>Technical replicates</h3>
-<p>Use <code>sampleNameAggregate</code> to assign groupings for technical replicates:</p>
-<table class="table">
-<thead><tr class="header">
-<th>fileName</th>
-<th>description</th>
-<th>sampleNameAggregate</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>wildtype_L001_R1.fastq.gz</td>
-<td>wildtype_L001</td>
-<td>wildtype</td>
-</tr>
-<tr class="even">
-<td>wildtype_L002_R1.fastq.gz</td>
-<td>wildtype_L002</td>
-<td>wildtype</td>
-</tr>
-<tr class="odd">
-<td>wildtype_L003_R1.fastq.gz</td>
-<td>wildtype_L003</td>
-<td>wildtype</td>
-</tr>
-<tr class="even">
-<td>wildtype_L004_R1.fastq.gz</td>
-<td>wildtype_L004</td>
-<td>wildtype</td>
-</tr>
-<tr class="odd">
-<td>mutant_L001_R1.fastq.gz</td>
-<td>mutant_L001</td>
-<td>mutant</td>
-</tr>
-<tr class="even">
-<td>mutant_L002_R1.fastq.gz</td>
-<td>mutant_L002</td>
-<td>mutant</td>
-</tr>
-<tr class="odd">
-<td>mutant_L003_R1.fastq.gz</td>
-<td>mutant_L003</td>
-<td>mutant</td>
-</tr>
-<tr class="even">
-<td>mutant_L004_R1.fastq.gz</td>
-<td>mutant_L004</td>
-<td>mutant</td>
 </tr>
 </tbody>
 </table>

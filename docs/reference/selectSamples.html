@@ -21,6 +21,8 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
@@ -59,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -96,13 +98,15 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Select Samples</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-selectSamples.R'><code>R/methods-selectSamples.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-selectSamples.R'><code>R/methods-selectSamples.R</code></a></small>
     <div class="hidden name"><code>selectSamples.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Select Samples</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>selectSamples</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
@@ -138,7 +142,8 @@ and Ensembl gene identifiers for rows.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+    <div class='dont-index'><p><code><a href='sampleData.html'>sampleData()</a></code>.</p>
+<p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
   <code>cell2sample</code>, <code><a href='counts.html'>counts</a></code>,
   <code>fetchGeneData</code>, <code>fetchPCAData</code>,
   <code>fetchTSNEData</code>,
@@ -152,10 +157,11 @@ and Ensembl gene identifiers for rows.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='no'>sampleName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>bcb_small</span>) <span class='kw'>%&gt;%</span>
-    <span class='no'>.</span>[<span class='fl'>1L</span>, <span class='st'>"sampleName"</span>] <span class='kw'>%&gt;%</span>
-    <span class='fu'>as.character</span>()
-<span class='fu'>print</span>(<span class='no'>sampleName</span>)</div><div class='output co'>#&gt; [1] "rep_1"</div><div class='input'><span class='fu'>selectSamples</span>(<span class='no'>bcb_small</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='no'>sampleName</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+<span class='fu'>colnames</span>(<span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>bcb_small</span>))</div><div class='output co'>#&gt; [1] "sampleName"        "description"       "fileName"         
+#&gt; [4] "index"             "sequence"          "aggregate"        
+#&gt; [7] "revcomp"           "interestingGroups"</div><div class='input'><span class='no'>sampleName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>bcb_small</span>)[<span class='fl'>1L</span>, <span class='st'>"sampleName"</span>]
+<span class='fu'>print</span>(<span class='no'>sampleName</span>)</div><div class='output co'>#&gt; [1] rep_1
+#&gt; Levels: rep_1</div><div class='input'><span class='fu'>selectSamples</span>(<span class='no'>bcb_small</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='no'>sampleName</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.2
 #&gt; Samples: 1
 #&gt; Cells: 500
 #&gt; Genes: 500
@@ -165,7 +171,7 @@ and Ensembl gene identifiers for rows.</p>
 #&gt; Genome Build: GRCh38
 #&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-04-06</div></pre>
+#&gt; R Load Date: 2018-04-23</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
