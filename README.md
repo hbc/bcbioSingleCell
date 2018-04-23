@@ -75,21 +75,6 @@ This is our current method for handling 10X and SureCell samples.
 | S4_170620_R1.fastq.gz | sample4     |
 | S5_170620_R1.fastq.gz | sample5     |
 
-### Technical replicates
-
-Use `sampleNameAggregate` to assign groupings for technical replicates:
-
-| fileName                  | description   | sampleNameAggregate |
-|---------------------------|---------------|---------------------|
-| wildtype_L001_R1.fastq.gz | wildtype_L001 | wildtype            |
-| wildtype_L002_R1.fastq.gz | wildtype_L002 | wildtype            |
-| wildtype_L003_R1.fastq.gz | wildtype_L003 | wildtype            |
-| wildtype_L004_R1.fastq.gz | wildtype_L004 | wildtype            |
-| mutant_L001_R1.fastq.gz   | mutant_L001   | mutant              |
-| mutant_L002_R1.fastq.gz   | mutant_L002   | mutant              |
-| mutant_L003_R1.fastq.gz   | mutant_L003   | mutant              |
-| mutant_L004_R1.fastq.gz   | mutant_L004   | mutant              |
-
 
 ## Troubleshooting
 
