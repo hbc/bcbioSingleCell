@@ -192,7 +192,7 @@ readCellRanger <- function(
             mutate_all(as.factor) %>%
             # Note that we can't use minimal sample metadata here
             left_join(sampleDataMap, by = c("description", "index"))
-        cell2sample <- map[["sampleID"]]
+        cell2sample <- as.factor(map[["sampleID"]])
         names(cell2sample) <- map[["cellID"]]
     } else {
         cell2sample <- mapCellsToSamples(
