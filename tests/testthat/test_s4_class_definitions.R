@@ -2,6 +2,32 @@ context("S4 Class Definitions")
 
 
 
+# bcbioSingleCell ==============================================================
+test_that("bcbioSingleCell", {
+    uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
+    sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
+
+    # Organism
+    x <- bcbioSingleCell(
+        uploadDir = uploadDir,
+        sampleMetadataFile = sampleMetadataFile,
+        organism = "Homo sapiens"
+    )
+    expect_s4_class(x, "bcbioSingleCell")
+
+    # NULL organism
+    x <- suppressWarnings(
+        bcbioSingleCell(
+            uploadDir = uploadDir,
+            sampleMetadataFile = sampleMetadataFile,
+            organism = NULL
+        )
+    )
+    expect_s4_class(x, "bcbioSingleCell")
+})
+
+
+
 # gene2symbol ==================================================================
 colnames <- c("geneID", "geneName")
 
@@ -76,7 +102,6 @@ test_that("interestingGroups<- : seurat", {
 
 # sampleData ===================================================================
 target <- DataFrame(
-    "sampleID" = factor("multiplexed_AAAAAAAA"),
     "sampleName" = factor("rep_1"),
     "description" = factor("multiplexed"),
     "fileName" = factor("multiplexed.fastq.gz"),
@@ -94,7 +119,6 @@ test_that("sampleData : bcbioSingleCell", {
     expect_identical(
         lapply(x, class),
         list(
-            "sampleID" = "factor",
             "sampleName"  = "factor",
             "description" = "factor",
             "fileName" = "factor",
@@ -114,7 +138,6 @@ test_that("sampleData : seurat", {
 
     x <- sampleData(Seurat::pbmc_small)
     y <- DataFrame(
-        "sampleID" = factor("SeuratProject"),
         "sampleName" = factor("SeuratProject"),
         "description" = factor("SeuratProject"),
         "interestingGroups" = factor("SeuratProject"),

@@ -2,32 +2,6 @@ context("Read Functions")
 
 
 
-# bcbioSingleCell ==============================================================
-test_that("bcbioSingleCell", {
-    uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
-    sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
-
-    # Organism
-    x <- bcbioSingleCell(
-        uploadDir = uploadDir,
-        sampleMetadataFile = sampleMetadataFile,
-        organism = "Homo sapiens"
-    )
-    expect_s4_class(x, "bcbioSingleCell")
-
-    # NULL organism
-    x <- suppressWarnings(
-        bcbioSingleCell(
-            uploadDir = uploadDir,
-            sampleMetadataFile = sampleMetadataFile,
-            organism = NULL
-        )
-    )
-    expect_s4_class(x, "bcbioSingleCell")
-})
-
-
-
 # readCellRanger ===============================================================
 test_that("readCellRanger", {
     extdataDir <- system.file("extdata", package = "bcbioSingleCell")
