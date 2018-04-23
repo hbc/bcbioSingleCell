@@ -36,17 +36,17 @@ setMethod(
         assertIsColorScaleDiscreteOrNULL(color)
 
         counts <- assay(object)
-        sampleID <- cell2sample(object)
-        sampleData <- sampleData(object, return = "data.frame")
-
         # Using a logical matrix is faster and more memory efficient
         present <- counts %>%
             # Ensure dgTMatrix gets coereced (e.g. Seurat::pbmc_small)
             as("dgCMatrix") %>%
             as("lgCMatrix")
 
+        sampleData <- sampleData(object, return = "data.frame")
+        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+
         data <- tibble(
-            "sampleID" = sampleID,
+            "sampleID" = cell2sample(object),
             "dropout" = (nrow(present) - colSums(present)) / nrow(present),
             "depth" = colSums(counts)
         ) %>%

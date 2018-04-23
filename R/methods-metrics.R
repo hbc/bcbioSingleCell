@@ -167,7 +167,11 @@ setMethod(
         sampleData[["sampleID"]] <- rownames(sampleData)
 
         colData <- colData(object)
-        assert_are_disjoint_sets(colnames(sampleData), colnames(colData))
+        # Drop any duplicate metadata columns from colData, if necessary.
+        # This step was added so we can slot rich metadata in seurat objects
+        # inside `object@meta.data`, otherwise this line can be removed.
+        colData <- colData[setdiff(colnames(colData), colnames(sampleData))]
+
         cell2sample <- cell2sample(object)
         colData[["sampleID"]] <- cell2sample
         # Stash the rownames, which will get dropped during merge

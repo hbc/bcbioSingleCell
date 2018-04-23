@@ -42,6 +42,7 @@ NULL
         interestingGroups = interestingGroups,
         return = "data.frame"
     )
+    sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
     # Obtain the read counts. Use the unfiltered reads stashed in the metadata
     # if available, otherwise use the metrics return.
@@ -322,10 +323,13 @@ setMethod(
                 interestingGroups = interestingGroups,
                 return = "data.frame"
             )
+            sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+
             data <- .proportionalReadsPerCell(
                 data = data,
                 sampleData = sampleData
             )
+
             p <- .plotReadsPerCellHistogram(
                 data = data,
                 color = color
