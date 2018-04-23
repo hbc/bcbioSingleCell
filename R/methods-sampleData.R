@@ -80,7 +80,6 @@ setMethod(
         return = c("DataFrame", "data.frame")
     ) {
         validObject(object)
-        stopifnot(.hasSlot(object, "version"))
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
@@ -105,22 +104,22 @@ setMethod(
             blacklist <- paste(
                 c(
                     "cellularBarcode",
-                    "orig.ident",
-                    "Phase",
-                    "^res\\.[0-9]"
+                    "origIdent",
+                    "phase",
+                    "^res[0-9]"
                 ),
                 collapse = "|"
             )
             data <- data %>%
                 remove_rownames() %>%
+                camel() %>%
                 .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
                 mutate_if(is.character, as.factor) %>%
                 select_if(is.factor) %>%
                 mutate_all(droplevels) %>%
-                unique() %>%
-                camel()
+                unique()
             assert_has_no_duplicates(data[["sampleName"]])
-            rownames(data) <- data[["sampleID"]]
+            rownames(data) <- makeNames(data[["sampleName"]], unique = TRUE)
             data
         }
         if (is.character(interestingGroups)) {
