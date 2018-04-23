@@ -220,7 +220,7 @@ readCellRanger <- function(
         # cellranger pipeline-specific -----------------------------------------
         "refdataDir" = refdataDir,
         "refJSON" = refJSON,
-        "loadCellRanger" = match.call()
+        "call" = match.call()
     )
     # Add user-defined custom metadata, if specified
     if (length(dots)) {

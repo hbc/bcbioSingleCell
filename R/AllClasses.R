@@ -428,7 +428,7 @@ bcbioSingleCell <- function(
         "bcbioCommandsLog" = bcbioCommandsLog,
         "cellularBarcodes" = cbList,
         "cellularBarcodeCutoff" = cellularBarcodeCutoff,
-        "loadSingleCell" = match.call()
+        "call" = match.call()
     )
     # Add user-defined custom metadata, if specified
     if (length(dots)) {
@@ -505,11 +505,6 @@ setValidity(
         # - runDate: Date
         # - template: character
         # - yaml: list
-        #
-        # v0.2.0
-        # - loadCellRanger: call
-        # - loadSingleCell: call
-        # - txdb: TxDb
 
         # Class checks
         requiredMetadata <- list(
