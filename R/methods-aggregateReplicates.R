@@ -99,8 +99,7 @@ setMethod(
         sampleData <- sampleData %>%
             mutate(
                 sampleName = !!sym("aggregate"),
-                description = !!sym("sampleName"),
-                sampleID = makeNames(!!sym("sampleName"), unique = FALSE)
+                description = !!sym("sampleName")
             ) %>%
             select(!!!syms(bcbioBase::metadataPriorityCols)) %>%
             mutate_all(as.factor) %>%
@@ -108,7 +107,7 @@ setMethod(
         if (!identical(nrow(sampleData), expected)) {
             stop("Failed to aggregate sample metadata uniquely")
         }
-        rownames(sampleData) <- sampleData[["sampleID"]]
+        rownames(sampleData) <- makeNames(sampleData[["sampleName"]])
         metadata[["sampleData"]] <- sampleData
 
         # cell2sample
