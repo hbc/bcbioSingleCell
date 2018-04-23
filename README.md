@@ -77,9 +77,9 @@ This is our current method for handling 10X and SureCell samples.
 
 ### Technical replicates
 
-Use `sampleNameAggregate` to assign groupings for technical replicates:
+Use `aggregate` to assign groupings for technical replicates:
 
-| fileName                  | description   | sampleNameAggregate |
+| fileName                  | description   | aggregate           |
 |---------------------------|---------------|---------------------|
 | wildtype_L001_R1.fastq.gz | wildtype_L001 | wildtype            |
 | wildtype_L002_R1.fastq.gz | wildtype_L002 | wildtype            |
