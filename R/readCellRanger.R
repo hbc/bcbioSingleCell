@@ -175,6 +175,8 @@ readCellRanger <- function(
                 "`sampleMetadataFile` for multiplexed samples"
             ))
         }
+        sampleDataMap <- sampleData %>%
+            rownames_to_column("sampleID")
         # Prepare data.frame of barcode mappings
         map <- str_match(
             string = colnames(counts),
@@ -189,7 +191,7 @@ readCellRanger <- function(
             )) %>%
             mutate_all(as.factor) %>%
             # Note that we can't use minimal sample metadata here
-            left_join(sampleData, by = c("description", "index"))
+            left_join(sampleDataMap, by = c("description", "index"))
         cell2sample <- map[["sampleID"]]
         names(cell2sample) <- map[["cellID"]]
     } else {
