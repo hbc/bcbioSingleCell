@@ -1,5 +1,5 @@
 # cellranger dataset
-# 2018-04-04
+# 2018-04-23
 library(devtools)
 library(Matrix)
 library(readr)
@@ -55,7 +55,7 @@ write_tsv(gene2symbol, path = genesFile, col_names = FALSE)
 write_lines(colnames(mat), path = barcodesFile)
 
 # cellranger_small =============================================================
-cellranger_small <- loadCellRanger(
+cellranger_small <- readCellRanger(
     uploadDir = uploadDir,
     refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
