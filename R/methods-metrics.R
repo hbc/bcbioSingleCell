@@ -107,10 +107,9 @@ setMethod(
             "nMito" = colSums(object[mitoGenes, , drop = FALSE])
         ) %>%
             mutate(
-                log10GenesPerUMI = log10(.data[["nGene"]]) /
-                    log10(.data[["nUMI"]]),
+                log10GenesPerUMI = log10(!!sym("nGene")) / log10(!!sym("nUMI")),
                 # Using `nUMI` here like in Seurat example
-                mitoRatio = .data[["nMito"]] / .data[["nUMI"]]
+                mitoRatio = !!sym("nMito") / !!sym("nUMI")
             ) %>%
             # Ensure count columns are integer.
             # `colSums()` outputs as numeric.
