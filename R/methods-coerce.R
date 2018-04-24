@@ -1,18 +1,16 @@
-#' Coerce Object
+#' Methods for Coercing an Object to a Class
 #'
 #' @name coerce
+#' @aliases as
 #' @author Michael Steinbaugh
 #'
-#' @return New class, specified by the "`to`" argument.
+#' @inherit bcbioBase::coerce
 #'
-#' @seealso `help("coerce", "methods")`.
+#' @seealso
+#' - [methods::as()].
+#' - [methods::coerce()].
 #'
 #' @examples
-#' # SingleCellExperiment to list ====
-#' x <- as(bcb_small, "list")
-#' class(x)
-#' names(x)
-#'
 #' # SingleCellExperiment to seurat ====
 #' x <- as(bcb_small, "seurat")
 #' class(x)
@@ -23,27 +21,14 @@ NULL
 
 # Methods ======================================================================
 #' @rdname coerce
-#' @name coerce-SingleCellExperiment-list
-setAs(
-    from = "SingleCellExperiment",
-    to = "list",
-    function(from) {
-        flatFiles(from)
-    }
-)
-
-
-
-#' @rdname coerce
-#' @name coerce-SingleCellExperiment-seurat
+#' @name coerce-bcbioSingleCell-seurat
 #' @section bcbioSingleCell to seurat:
 #' Interally [Seurat::CreateSeuratObject()] is called without applying any
 #' additional filtering cutoffs, since we have already defined them during our
 #' quality control analysis. Here we are passing the raw gene-level counts of
-#' the filtered cells into a new `seurat` class object, using [as()] object
-#' coercion.
+#' the filtered cells into a new `seurat` class object.
 setAs(
-    from = "SingleCellExperiment",
+    from = "bcbioSingleCell",
     to = "seurat",
     function(from) {
         # Require that technical replicates are aggregated

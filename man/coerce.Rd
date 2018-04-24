@@ -2,37 +2,34 @@
 % Please edit documentation in R/methods-coerce.R
 \name{coerce}
 \alias{coerce}
-\alias{coerce-SingleCellExperiment-list}
-\alias{coerce-SingleCellExperiment-seurat}
-\title{Coerce Object}
+\alias{as}
+\alias{coerce-bcbioSingleCell-seurat}
+\title{Methods for Coercing an Object to a Class}
 \value{
-New class, specified by the "\code{to}" argument.
+Object of new class.
 }
 \description{
-Coerce Object
+Methods for Coercing an Object to a Class
 }
 \section{bcbioSingleCell to seurat}{
 
 Interally \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}} is called without applying any
 additional filtering cutoffs, since we have already defined them during our
 quality control analysis. Here we are passing the raw gene-level counts of
-the filtered cells into a new \code{seurat} class object, using \code{\link[=as]{as()}} object
-coercion.
+the filtered cells into a new \code{seurat} class object.
 }
 
 \examples{
-# SingleCellExperiment to list ====
-x <- as(bcb_small, "list")
-class(x)
-names(x)
-
 # SingleCellExperiment to seurat ====
 x <- as(bcb_small, "seurat")
 class(x)
 print(x)
 }
 \seealso{
-\code{help("coerce", "methods")}.
+\itemize{
+\item \code{\link[methods:as]{methods::as()}}.
+\item \code{\link[methods:coerce]{methods::coerce()}}.
+}
 }
 \author{
 Michael Steinbaugh
