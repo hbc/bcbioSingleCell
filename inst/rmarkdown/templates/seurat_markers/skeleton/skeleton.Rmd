@@ -69,11 +69,6 @@ opts_chunk$set(
 
 
 
-
-```{r sample_data}
-sampleData(seurat)
-```
-
 This workflow is adapted from the following sources:
 
 - Satija Lab: [Seurat v2 Guided Clustering Tutorial](http://satijalab.org/seurat/pbmc3k_tutorial.html)
