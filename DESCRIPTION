@@ -1,13 +1,107 @@
 Package: bcbioSingleCell
-Title: TRAVIS BIOCONDUCTOR CACHE
-Description: TRAVIS BIOCONDUCTOR CACHE
-Version: 0.0.0.9000
+Title: Single-Cell RNA-Seq Utilities
+Description: Import and analyze bcbio single-cell RNA-seq data.
+Version: 0.1.1
+Authors@R: c(
+    person(
+        given = "Michael",
+        family = "Steinbaugh",
+        email = "mike@steinbaugh.com",
+        role = c("aut", "cre"),
+        comment = c(ORCID = "0000-0002-2403-2221")
+    ),
+    person(
+        given = "Rory",
+        family = "Kirchner",
+        email = "roryk@alum.mit.edu",
+        role = "aut",
+        comment = c(ORCID = "0000-0003-4814-5885")
+    ),
+    person(
+        given = "Mary",
+        family = "Piper",
+        email = "mary.piper@gmail.com",
+        role = "aut",
+        comment = c(ORCID = "0000-0003-2699-3840")
+    ),
+    person(
+        given = "Shannan",
+        family = "Ho Sui",
+        email = "shosui@hsph.harvard.edu",
+        role = "aut",
+        comment = c(ORCID = "0000-0002-6191-4709")
+    ),
+    person(
+        given = "Harvard Chan Bioinformatics Core",
+        email = "bioinformatics@hsph.harvard.edu",
+        role = c("cph", "fnd")
+    ))
+URL:
+    http://bioinformatics.sph.harvard.edu/bcbioSingleCell,
+    https://github.com/hbc/bcbioSingleCell
+BugReports: https://github.com/hbc/bcbioSingleCell/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: TRUE
 Depends:
-    R (>= 3.4)
+    R (>= 3.4),
+    SingleCellExperiment (>= 1.0),
+    bcbioBase (>= 0.2.2)
 Imports:
-    DESeq2,
-    edgeR,
-    zinbwave,
-    zingeR
+    Biobase,
+    BiocGenerics,
+    GenomicFeatures,
+    Matrix,
+    Matrix.utils,
+    S4Vectors,
+    Seurat (>= 2.3),
+    SummarizedExperiment,
+    assertive,
+    basejump (>= 0.5.1),
+    cowplot,
+    dplyr (>= 0.7),
+    ggplot2 (>= 2.2.1),
+    ggridges,
+    graphics,
+    grid,
+    jsonlite,
+    knitr,
+    magrittr,
+    methods,
+    parallel,
+    pbapply,
+    readr,
+    rlang,
+    scales,
+    stats,
+    stringr,
+    tibble,
+    tidyr,
+    utils,
+    viridis
+Suggests:
+    BiocStyle,
+    EnsDb.Hsapiens.v75,
+    edgeR (>= 3.20.9),
+    googlesheets,
+    rmarkdown,
+    sessioninfo,
+    testthat,
+    tidyverse (>= 1.2),
+    zingeR (>= 0.1)
 Remotes:
-    statOmics/zingeR
+    hbc/bcbioBase,
+    statOmics/zingeR,
+    steinbaugh/basejump
+biocViews:
+    DataImport,
+    DataRepresentation,
+    GeneExpression,
+    QualityControl,
+    ReportWriting,
+    RNASeq,
+    SingleCell,
+    Transcription,
+    Visualization
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1
