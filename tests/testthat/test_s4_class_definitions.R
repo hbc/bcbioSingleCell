@@ -139,7 +139,6 @@ test_that("sampleData : seurat", {
     x <- sampleData(Seurat::pbmc_small)
     y <- DataFrame(
         "sampleName" = factor("SeuratProject"),
-        "description" = factor("SeuratProject"),
         "interestingGroups" = factor("SeuratProject"),
         row.names = "SeuratProject"
     )
