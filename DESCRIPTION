@@ -1,13 +1,8 @@
 Package: bcbioSingleCell
 Title: TRAVIS BIOCONDUCTOR CACHE
 Description: TRAVIS BIOCONDUCTOR CACHE
-Version: 0.0.99
+Version: 0.0.0.9000
 Depends:
-    R (>= 3.4),
-    SingleCellExperiment
+    R (>= 3.4)
 Imports:
-    Biobase,
-    BiocGenerics,
-    GenomicFeatures,
-    S4Vectors,
-    SummarizedExperiment
+    Seurat
