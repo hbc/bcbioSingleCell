@@ -5,6 +5,4 @@ Version: 0.0.0.9000
 Depends:
     R (>= 3.4)
 Imports:
-    SingleCellExperiment,
-    Rcpp,
-    dplyr
+    Seurat
