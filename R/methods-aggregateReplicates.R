@@ -97,11 +97,8 @@ setMethod(
         # sampleData
         expected <- length(levels(sampleData[["aggregate"]]))
         sampleData <- sampleData %>%
-            mutate(
-                sampleName = !!sym("aggregate"),
-                description = !!sym("sampleName")
-            ) %>%
-            select(!!!syms(bcbioBase::metadataPriorityCols)) %>%
+            mutate(sampleName = !!sym("aggregate")) %>%
+            select(!!sym("sampleName")) %>%
             mutate_all(as.factor) %>%
             unique()
         if (!identical(nrow(sampleData), expected)) {
