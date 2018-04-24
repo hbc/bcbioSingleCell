@@ -56,11 +56,9 @@ setMethod(
         data <- sanitizeSampleData(data)
         assertHasRownames(data)
         if (return == "kable") {
-            blacklist <- c("description", "fileName", "sampleID")
-            data %>%
-                as.data.frame() %>%
-                .[, setdiff(colnames(.), blacklist), drop = FALSE] %>%
-                kable(row.names = FALSE)
+            blacklist <- c("description", "sampleID")
+            data <- data[, setdiff(colnames(data), blacklist), drop = FALSE]
+            kable(as.data.frame(data), row.names = FALSE)
         } else {
             as(data, return)
         }
@@ -92,20 +90,14 @@ setMethod(
             data <- slot(object, "meta.data")
             assert_is_data.frame(data)
             # Create priority columns from `orig.ident`, if necessary
-            if (!all(bcbioBase::metadataPriorityCols %in% colnames(data))) {
-                missing <- setdiff(
-                    x = bcbioBase::metadataPriorityCols,
-                    y = colnames(data)
-                )
-                for (i in seq_along(missing)) {
-                    data[[missing[[i]]]] <- data[["orig.ident"]]
-                }
+            if (!"sampleName" %in% colnames(data)) {
+                data[["sampleName"]] <- data[["orig.ident"]]
             }
             blacklist <- paste(
                 c(
-                    "cellularBarcode",
-                    "origIdent",
-                    "phase",
+                    "^cellularBarcode$",
+                    "^origIdent$",
+                    "^phase$",
                     "^res[0-9]"
                 ),
                 collapse = "|"
