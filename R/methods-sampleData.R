@@ -135,10 +135,8 @@ setMethod(
         value = "DataFrame"
     ),
     function(object, value) {
-        value <- as.data.frame(value)
-        # Ensure all columns are factors
         value <- sanitizeSampleData(value)
-        metadata(object)[["sampleData"]] <- value
+        metadata(object)[["sampleData"]] <- as.data.frame(value)
         object
     }
 )
