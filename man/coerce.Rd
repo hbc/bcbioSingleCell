@@ -3,7 +3,7 @@
 \name{coerce}
 \alias{coerce}
 \alias{as}
-\alias{coerce-bcbioSingleCell-seurat}
+\alias{coerce-SingleCellExperiment-seurat}
 \title{Methods for Coercing an Object to a Class}
 \value{
 Object of new class.
@@ -11,7 +11,7 @@ Object of new class.
 \description{
 Methods for Coercing an Object to a Class
 }
-\section{bcbioSingleCell to seurat}{
+\section{SingleCellExperiment to seurat}{
 
 Interally \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}} is called without applying any
 additional filtering cutoffs, since we have already defined them during our

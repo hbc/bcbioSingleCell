@@ -21,14 +21,14 @@ NULL
 
 # Methods ======================================================================
 #' @rdname coerce
-#' @name coerce-bcbioSingleCell-seurat
-#' @section bcbioSingleCell to seurat:
+#' @name coerce-SingleCellExperiment-seurat
+#' @section SingleCellExperiment to seurat:
 #' Interally [Seurat::CreateSeuratObject()] is called without applying any
 #' additional filtering cutoffs, since we have already defined them during our
 #' quality control analysis. Here we are passing the raw gene-level counts of
 #' the filtered cells into a new `seurat` class object.
 setAs(
-    from = "bcbioSingleCell",
+    from = "SingleCellExperiment",
     to = "seurat",
     function(from) {
         # Require that technical replicates are aggregated
@@ -40,21 +40,12 @@ setAs(
             ))
         }
 
-        # Require filtering of cells and genes
-        from <- .applyFilterCutoffs(from)
+        # Convert gene identifiers to symbols
+        from <- convertGenesToSymbols(from)
 
-        # Prepare counts matrix with gene symbols as rownames
-        counts <- counts(from)
-        g2s <- gene2symbol(from)
-        assertIsGene2symbol(g2s)
-        rownames <- make.names(g2s[["geneName"]], unique = TRUE)
-        stopifnot(!any(duplicated(rownames)))
-        names(rownames) <- g2s[["geneID"]]
-        rownames(counts) <- rownames
-
-        # New seurat object
-        seurat <- Seurat::CreateSeuratObject(
-            raw.data = counts,
+        # Create the seurat object
+        to <- Seurat::CreateSeuratObject(
+            raw.data = counts(from),
             project = "bcbioSingleCell",
             # Already applied filtering cutoffs for cells and genes
             min.cells = 0L,
@@ -67,7 +58,7 @@ setAs(
         # Check that the dimensions match exactly
         assert_are_identical(
             x = dim(from),
-            y = dim(slot(seurat, "raw.data"))
+            y = dim(slot(to, "raw.data"))
         )
 
         # Stash metadata and rowRanges into `misc` slot
@@ -75,8 +66,8 @@ setAs(
             "rowRanges" = rowRanges(from),
             "metadata" = metadata(from)
         )
-        slot(seurat, "misc")[["bcbio"]] <- bcbio
+        slot(to, "misc")[["bcbio"]] <- bcbio
 
-        seurat
+        to
     }
 )

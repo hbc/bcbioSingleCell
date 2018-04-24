@@ -17,11 +17,11 @@
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
 #'   spikeNames
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
-#' @importFrom basejump assignAndSaveData camel convertUCSCBuildToEnsembl
-#'   detectOrganism dynamicPlotlist emptyRanges initializeDirectory
-#'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames makeTx2geneFromGFF
-#'   markdownHeader readFileByExtension readYAML sanitizeSampleData
-#'   theme_midnight theme_paperwhite tx2geneFromGFF
+#' @importFrom basejump assignAndSaveData camel convertGenesToSymbols
+#'   convertUCSCBuildToEnsembl detectOrganism dynamicPlotlist emptyRanges
+#'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
+#'   makeTx2geneFromGFF markdownHeader readFileByExtension readYAML
+#'   sanitizeSampleData theme_midnight theme_paperwhite tx2geneFromGFF
 #' @importFrom bcbioBase flatFiles prepareSummarizedExperiment readDataVersions
 #'   readLog readProgramVersions readSampleData readTx2gene
 #'   sampleYAMLMetadata uniteInterestingGroups
