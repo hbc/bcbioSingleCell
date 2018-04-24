@@ -54,29 +54,32 @@ Consult `help("bcbioSingleCell", "bcbioSingleCell")` for additional documentatio
 
 ### FASTQ files with samples multiplexed by index barcode
 
-This is our current method for handling inDrop samples.
+This is our current recommended method for analyzing an [inDrops][] dataset. The sample index barcodes are multiplexed per FASTQ set. For Illumina sequencing data, the raw binary base call (BCL) data must be converted into FASTQs (split into `R1`-`R4` files) using [bcl2fastq][].
 
-| fileName           | description | index | sequence | sampleName |
-| -------------------|-------------|-------|----------|------------|
-| 170201_R1.fastq.gz | run1        | 17    | GGAGGTAA | sample1    |
-| 170201_R1.fastq.gz | run1        | 18    | CATAACTG | sample2    |
-| 170620_R1.fastq.gz | run2        | 12    | GCGTAAGA | sample3    |
-| 170620_R1.fastq.gz | run2        | 13    | CTATTAAG | sample4    |
-| 170620_R1.fastq.gz | run2        | 14    | AAGGCTAT | sample5    |
-| 170620_R1.fastq.gz | run2        | 15    | GAGCCTTA | sample6    |
-| 170620_R1.fastq.gz | run2        | 16    | TTATGCGA | sample7    |
+The [inDrops][] library version is automatically detected by [bcbio][], but ensure that the sample index sequences provided match the library version when attempting to create a `bcbioSingleCell` object. A current list of [inDrops v3 index barcodes](https://github.com/seqcloud/seqcloud/blob/master/workflows/bcbio/scrnaseq/harvard_indrop_v3/index_barcodes.csv) is available from [seqcloud][].
+
+Consult the [bcbio][] documentation for more information on how to configure an [inDrops][] run prior to loading into [R][] with the `bcbioSingleCell()` function.
+
+| fileName                 | description | index | sequence | sampleName |
+| -------------------------|-------------|-------|----------|------------|
+| indrops_run1_R1.fastq.gz | run1        | 17    | GGAGGTAA | sample1    |
+| indrops_run1_R1.fastq.gz | run1        | 18    | CATAACTG | sample2    |
+| indrops_run2_R1.fastq.gz | run2        | 12    | GCGTAAGA | sample3    |
+| indrops_run2_R1.fastq.gz | run2        | 13    | CTATTAAG | sample4    |
+| indrops_run2_R1.fastq.gz | run2        | 14    | AAGGCTAT | sample5    |
+| indrops_run2_R1.fastq.gz | run2        | 15    | GAGCCTTA | sample6    |
+| indrops_run2_R1.fastq.gz | run2        | 16    | TTATGCGA | sample7    |
 
 ### FASTQ files demultiplexed per sample
 
-This is our current method for handling 10X and SureCell samples.
+This is our current method for handling [10X Genomics CellRanger][cellranger] output (using `readCellRanger()`) and [Illumina SureCell][surecell] sample data.
 
-| fileName              | description |
-|-----------------------|-------------|
-| S1_170620_R1.fastq.gz | sample1     |
-| S2_170620_R1.fastq.gz | sample2     |
-| S3_170620_R1.fastq.gz | sample3     |
-| S4_170620_R1.fastq.gz | sample4     |
-| S5_170620_R1.fastq.gz | sample5     |
+| fileName                | description | genotype |
+|-------------------------|-------------|----------|
+| 10x_sample1_R1.fastq.gz | sample1     | wildtype |
+| 10x_sample2_R1.fastq.gz | sample2     | knockout |
+| 10x_sample3_R1.fastq.gz | sample3     | wildtype |
+| 10x_sample4_R1.fastq.gz | sample4     | knockout |
 
 
 ## Troubleshooting
@@ -103,9 +106,14 @@ The papers and software cited in our workflows are available as a [shared librar
 
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io
+[bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
 [Bioconductor]: https://bioconductor.org
+[CellRanger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
 [conda]: https://conda.io
 [devtools]: https://cran.r-project.org/package=devtools
+[inDrops]: https://github.com/indrops/indrops
 [Paperpile]: https://paperpile.com
 [R]: https://www.r-project.org
 [SCE]: https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment
+[SureCell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
+[seqcloud]: http://seq.cloud
