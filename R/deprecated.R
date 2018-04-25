@@ -153,7 +153,7 @@ loadCellRanger <- function(...) {
     readCellRanger(...)
 }
 
-#' @rdname bcbioSingleCell-class
+#' @rdname bcbioSingleCell
 #' @usage NULL
 #' @export
 loadSingleCell <- function(...) {

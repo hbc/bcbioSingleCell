@@ -2,7 +2,7 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 
 
-#' @rdname bcbioSingleCell-class
+#' @rdname bcbioSingleCell
 #' @aliases NULL
 #' @exportClass bcbioSingleCell
 #' @usage NULL
@@ -30,7 +30,7 @@ bcbioSingleCell <- setClass(
 #' @note `bcbioSingleCell` extended `SummarizedExperiment` prior to v0.1.0,
 #'   where we migrated to `SingleCellExperiment`.
 #'
-#' @rdname bcbioSingleCell-class
+#' @rdname bcbioSingleCell
 #' @aliases bcbioSingleCell-class
 #' @family S4 Class Definition
 #' @docType class
