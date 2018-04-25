@@ -3,13 +3,13 @@
 \docType{data}
 \name{bcb_small}
 \alias{bcb_small}
-\title{inDrop Example}
+\title{inDrops Example}
 \format{An object of class \code{bcbioSingleCell} with 500 rows and 500 columns.}
 \usage{
 bcb_small
 }
 \description{
-inDrop Example
+inDrops Example
 }
 \seealso{
 Other Minimal Example Data: \code{\link{all_markers_small}},
