@@ -90,7 +90,7 @@ Suggests:
     tidyverse (>= 1.2),
     zingeR (>= 0.1)
 Remotes:
-    hbc/bcbioBase@develop,
+    hbc/bcbioBase,
     statOmics/zingeR,
     steinbaugh/basejump
 biocViews:
