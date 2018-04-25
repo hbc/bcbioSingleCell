@@ -46,7 +46,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment (>= 1.0),
-    bcbioBase (>= 0.2.7)
+    bcbioBase (>= 0.2.8)
 Imports:
     Biobase,
     BiocGenerics,
@@ -56,7 +56,13 @@ Imports:
     S4Vectors,
     Seurat (>= 2.3),
     SummarizedExperiment,
-    assertive,
+    assertive.base,
+    assertive.files,
+    assertive.numbers,
+    assertive.properties,
+    assertive.sets,
+    assertive.strings,
+    assertive.types,
     basejump (>= 0.5.2),
     cowplot,
     dplyr (>= 0.7),
