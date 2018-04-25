@@ -19,11 +19,12 @@
 #'
 #' @return `bcbioSingleCell`.
 #'
+#' @seealso [sampleData()].
+#'
 #' @examples
 #' # bcbioSingleCell ====
-#' sampleName <- sampleData(bcb_small) %>%
-#'     .[1L, "sampleName"] %>%
-#'     as.character()
+#' colnames(sampleData(bcb_small))
+#' sampleName <- sampleData(bcb_small)[1L, "sampleName"]
 #' print(sampleName)
 #' selectSamples(bcb_small, sampleName = sampleName)
 NULL
@@ -39,47 +40,51 @@ setMethod(
     function(object, ...) {
         metadata(object)[["selectSamples"]] <- TRUE
 
-        # Here the `arguments` are captured as a named character vector. The
+        # Here the `args` are captured as a named character vector. The
         # names of the arguments represent the column names. The value of the
         # arguments should be a string that can be used for logical grep
         # matching here internally.
-        arguments <- list(...)
-        checkCharacter <- vapply(
-            X = arguments,
-            FUN = is.character,
+        args <- list(...)
+        checkAtomic <- vapply(
+            X = args,
+            FUN = is.atomic,
             FUN.VALUE = logical(1L)
         )
-        if (!all(isTRUE(as.logical(checkCharacter)))) {
-            stop("Arguments must be character vectors")
+        if (!all(isTRUE(as.logical(checkAtomic)))) {
+            stop("Arguments must be atomic vectors")
         }
 
         # Match the arguments against the sample metadata
         sampleData <- sampleData(object)
-        list <- lapply(seq_along(arguments), function(a) {
-            column <- names(arguments)[[a]]
+        sampleData[["sampleID"]] <- rownames(sampleData)
+
+        list <- mapply(
+            col = names(args),
+            value = args,
+            function(col, value) {
             # Check that column is present
-            if (!column %in% colnames(sampleData)) {
-                stop(paste(column, "isn't present in metadata colnames"))
+            if (!col %in% colnames(sampleData)) {
+                stop(paste(col, "isn't present in metadata colnames"))
             }
-            argument <- arguments[[a]]
             # Check that all items in argument are present
-            if (!all(argument %in% sampleData[[column]])) {
-                missing <- argument[which(!argument %in% sampleData[[column]])]
+            if (!all(value %in% sampleData[[col]])) {
+                missing <- value[which(!value %in% sampleData[[col]])]
                 stop(paste(
-                    column,
+                    deparse(col),
                     "metadata column doesn't contain",
                     toString(missing)
                 ))
             }
             sampleData %>%
-                .[.[[column]] %in% argument, "sampleID", drop = TRUE]
+                .[.[[col]] == value, , drop = FALSE] %>%
+                rownames()
         })
         sampleIDs <- Reduce(f = intersect, x = list)
 
         # Output to the user which samples matched, using the `sampleName`
         # metadata column, which is more descriptive than `sampleID`
         sampleNames <- sampleData %>%
-            .[.[["sampleID"]] %in% sampleIDs, "sampleName", drop = TRUE] %>%
+            .[sampleIDs, "sampleName", drop = TRUE] %>%
             as.character() %>%
             sort() %>%
             unique()

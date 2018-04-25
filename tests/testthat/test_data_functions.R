@@ -25,6 +25,7 @@ test_that("bcbio : seurat_small", {
     expect_identical(
         lapply(x, class),
         list(
+            "rownames" = "character",
             "rowRanges" = structure("GRanges", package = "GenomicRanges"),
             "metadata" = "list"
         )
@@ -63,7 +64,6 @@ test_that("fetchPCAData", {
             "res1" = "factor",
             "sampleID" = "factor",
             "sampleName" = "factor",
-            "description" = "factor",
             "interestingGroups" = "factor",
             "ident" = "factor",
             "pc1" = "numeric",
@@ -87,7 +87,6 @@ test_that("fetchPCAData", {
         "res1" = factor("0", levels = c("0", "1", "2", "3")),
         "sampleID" = factor("SeuratProject"),
         "sampleName" = factor("SeuratProject"),
-        "description" = factor("SeuratProject"),
         "interestingGroups" = factor("SeuratProject"),
         "ident" = factor("0", levels = c("0", "1", "2", "3")),
         "pc1" = 0.443,
@@ -95,7 +94,7 @@ test_that("fetchPCAData", {
         "centerX" = -1.176,
         "centerY" = -1.683,
         row.names = "ATGCCAGAACGACT",
-        stringsAsFactors = FALSE
+        stringsAsFactors = TRUE
     )
     # Use `glimpse()` to compare the rounded numbers
     expect_equal(subset, target)
@@ -117,7 +116,6 @@ test_that("fetchTSNEData", {
             "res1" = "factor",
             "sampleID" = "factor",
             "sampleName" = "factor",
-            "description" = "factor",
             "interestingGroups" = "factor",
             "ident" = "factor",
             "tSNE1" = "numeric",
@@ -141,7 +139,6 @@ test_that("fetchTSNEData", {
         "res1" = factor("0", levels = c("0", "1", "2", "3")),
         "sampleID" = factor("SeuratProject"),
         "sampleName" = factor("SeuratProject"),
-        "description" = factor("SeuratProject"),
         "interestingGroups" = factor("SeuratProject"),
         "ident" = factor("0", levels = c("0", "1", "2", "3")),
         "tSNE1" = 14.422,
@@ -149,7 +146,7 @@ test_that("fetchTSNEData", {
         "centerX" = -0.332,
         "centerY" = 18.76,
         row.names = "ATGCCAGAACGACT",
-        stringsAsFactors = FALSE
+        stringsAsFactors = TRUE
     )
     expect_equal(subset, target)
 })
@@ -173,7 +170,6 @@ test_that("fetchTSNEExpressionData", {
             "res1" = "factor",
             "sampleID" = "factor",
             "sampleName" = "factor",
-            "description" = "factor",
             "interestingGroups" = "factor",
             "ident" = "factor",
             "tSNE1" = "numeric",
@@ -199,7 +195,6 @@ test_that("fetchTSNEExpressionData", {
         "res1" = factor("0", levels = c("0", "1", "2", "3")),
         "sampleID" = factor("SeuratProject"),
         "sampleName" = factor("SeuratProject"),
-        "description" = factor("SeuratProject"),
         "interestingGroups" = factor("SeuratProject"),
         "ident" = factor("0", levels = c("0", "1", "2", "3")),
         "tSNE1" = 14.422,
@@ -293,11 +288,11 @@ test_that("metrics : bcbioSingleCell", {
             "mitoRatio" = "numeric",
             "sampleID" = "factor",
             "sampleName" = "factor",
-            "description" = "factor",
             "fileName" = "factor",
+            "description" = "factor",
             "index" = "factor",
             "sequence" = "factor",
-            "sampleNameAggregate" = "factor",
+            "aggregate" = "factor",
             "revcomp" = "factor",
             "interestingGroups" = "factor"
         )
@@ -316,7 +311,6 @@ test_that("metrics : seurat", {
             "res1" = "factor",
             "sampleID" = "factor",
             "sampleName" = "factor",
-            "description" = "factor",
             "interestingGroups" = "factor",
             "ident" = "factor"
         )
@@ -332,15 +326,15 @@ test_that("selectSamples : bcbioSingleCell", {
     expect_true(metadata(x)[["selectSamples"]])
     expect_identical(dim(x), c(500L, 500L))
     expect_identical(
-        sampleData(x)[["sampleID"]],
-        factor("multiplexed_AAAAAAAA")
+        rownames(sampleData(x)),
+        "multiplexed_AAAAAAAA"
     )
 })
 
 test_that("selectSamples : Match failure", {
     expect_error(
-        selectSamples(bcb_small, sampleID = "XXX"),
-        "sampleID metadata column doesn't contain XXX"
+        selectSamples(bcb_small, sampleName = "XXX"),
+        "\"sampleName\" metadata column doesn't contain XXX"
     )
 })
 

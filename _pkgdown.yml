@@ -14,7 +14,6 @@ reference:
   - title: S4 Class Definition
     contents:
     - bcbioSingleCell-class
-    - subset
     - coerce
     - sampleData
     - show

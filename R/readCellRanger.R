@@ -1,20 +1,20 @@
-#' Load 10X Genomics Cell Ranger Data
+#' Read 10X Genomics Cell Ranger Data
 #'
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
 #' counts from `barcodes.tsv`, `genes.tsv`, and `matrix.mtx` files.
 #'
-#' @details This function is a simplified version of [loadSingleCell()]
-#'   optimized for handling Cell Ranger output.
+#' @details This function is a variant of the main [bcbioSingleCell()]
+#'   constructor, but optimized for handling Cell Ranger output.
 #'
-#' @note Unlike [loadSingleCell()], the `organism`, `ensemblRelease`, and
-#'   `genomeBuild` are always detected automatically, based on the 10X
-#'   `refdataDir` YAML metadata. Therefore, these parameters cannot be set by
-#'   the user.
+#' @note Unlike the [bcbioSingleCell()] function, here the `organism`,
+#'   `ensemblRelease`, and `genomeBuild` are always detected automatically,
+#'   based on the 10X `refdataDir` YAML metadata. Therefore, these parameters
+#'   cannot be set by the user.
 #'
 #' @family Read Functions
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams loadSingleCell
+#' @inheritParams bcbioSingleCell
 #' @inheritParams general
 #' @param uploadDir Path to Cell Ranger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices*` as a child directory.
@@ -25,12 +25,12 @@
 #'
 #' @examples
 #' uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
-#' loadCellRanger(
+#' readCellRanger(
 #'     uploadDir = uploadDir,
 #'     refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
 #'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
-loadCellRanger <- function(
+readCellRanger <- function(
     uploadDir,
     refdataDir,
     sampleMetadataFile,
@@ -175,6 +175,8 @@ loadCellRanger <- function(
                 "`sampleMetadataFile` for multiplexed samples"
             ))
         }
+        sampleDataMap <- sampleData %>%
+            rownames_to_column("sampleID")
         # Prepare data.frame of barcode mappings
         map <- str_match(
             string = colnames(counts),
@@ -189,8 +191,8 @@ loadCellRanger <- function(
             )) %>%
             mutate_all(as.factor) %>%
             # Note that we can't use minimal sample metadata here
-            left_join(sampleData, by = c("description", "index"))
-        cell2sample <- map[["sampleID"]]
+            left_join(sampleDataMap, by = c("description", "index"))
+        cell2sample <- as.factor(map[["sampleID"]])
         names(cell2sample) <- map[["cellID"]]
     } else {
         cell2sample <- mapCellsToSamples(
@@ -220,7 +222,7 @@ loadCellRanger <- function(
         # cellranger pipeline-specific -----------------------------------------
         "refdataDir" = refdataDir,
         "refJSON" = refJSON,
-        "loadCellRanger" = match.call()
+        "call" = match.call()
     )
     # Add user-defined custom metadata, if specified
     if (length(dots)) {

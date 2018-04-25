@@ -2,6 +2,32 @@ context("S4 Class Definitions")
 
 
 
+# bcbioSingleCell ==============================================================
+test_that("bcbioSingleCell", {
+    uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
+    sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
+
+    # Organism
+    x <- bcbioSingleCell(
+        uploadDir = uploadDir,
+        sampleMetadataFile = sampleMetadataFile,
+        organism = "Homo sapiens"
+    )
+    expect_s4_class(x, "bcbioSingleCell")
+
+    # NULL organism
+    x <- suppressWarnings(
+        bcbioSingleCell(
+            uploadDir = uploadDir,
+            sampleMetadataFile = sampleMetadataFile,
+            organism = NULL
+        )
+    )
+    expect_s4_class(x, "bcbioSingleCell")
+})
+
+
+
 # gene2symbol ==================================================================
 colnames <- c("geneID", "geneName")
 
@@ -76,13 +102,12 @@ test_that("interestingGroups<- : seurat", {
 
 # sampleData ===================================================================
 target <- DataFrame(
-    "sampleID" = factor("multiplexed_AAAAAAAA"),
     "sampleName" = factor("rep_1"),
-    "description" = factor("multiplexed"),
     "fileName" = factor("multiplexed.fastq.gz"),
+    "description" = factor("multiplexed"),
     "index" = factor("1"),
     "sequence" = factor("TTTTTTTT"),
-    "sampleNameAggregate" = factor("sample"),
+    "aggregate" = factor("sample"),
     "revcomp" = factor("AAAAAAAA"),
     "interestingGroups" = factor("rep_1"),
     row.names = factor("multiplexed_AAAAAAAA")
@@ -94,13 +119,12 @@ test_that("sampleData : bcbioSingleCell", {
     expect_identical(
         lapply(x, class),
         list(
-            "sampleID" = "factor",
             "sampleName"  = "factor",
-            "description" = "factor",
             "fileName" = "factor",
+            "description" = "factor",
             "index" = "factor",
             "sequence" = "factor",
-            "sampleNameAggregate" = "factor",
+            "aggregate" = "factor",
             "revcomp" = "factor",
             "interestingGroups" = "factor"
         )
@@ -114,9 +138,7 @@ test_that("sampleData : seurat", {
 
     x <- sampleData(Seurat::pbmc_small)
     y <- DataFrame(
-        "sampleID" = factor("SeuratProject"),
         "sampleName" = factor("SeuratProject"),
-        "description" = factor("SeuratProject"),
         "interestingGroups" = factor("SeuratProject"),
         row.names = "SeuratProject"
     )

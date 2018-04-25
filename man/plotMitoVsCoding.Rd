@@ -11,10 +11,10 @@
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{SingleCellExperiment}(object, interestingGroups,
-  color = scale_color_viridis(discrete = TRUE))
+  color = scale_color_hue())
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
-  color = scale_color_viridis(discrete = TRUE))
+  color = scale_color_hue())
 }
 \arguments{
 \item{object}{Object.}

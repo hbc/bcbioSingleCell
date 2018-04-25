@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Sanitize Markers Output — sanitizeMarkers" />
@@ -42,8 +45,6 @@
 <![endif]-->
 
 
-
-
   </head>
 
   <body>
@@ -59,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -96,13 +97,15 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sanitize Markers Output</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-sanitizeMarkers.R'><code>R/methods-seurat-sanitizeMarkers.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-sanitizeMarkers.R'><code>R/methods-seurat-sanitizeMarkers.R</code></a></small>
     <div class="hidden name"><code>sanitizeMarkers.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Sanitize Markers Output</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>sanitizeMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
@@ -160,6 +163,7 @@ the rownames of the returned marker <code>data.frame</code>.</p>
 )</div><div class='output co'>#&gt; <span class='message'>Renaming `pVal` column to `pvalue` (matching DESeq2)</span></div><div class='output co'>#&gt; <span class='message'>Renaming `pValAdj` column to `padj` (matching DESeq2)</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>all_sanitized</span>)</div><div class='output co'>#&gt; Observations: 1,380
 #&gt; Variables: 18
 #&gt; $ cluster        &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+#&gt; $ rowname        &lt;chr&gt; "COL1A2", "COL1A1", "LGALS1", "SERPINE2", "COL6A3", ...
 #&gt; $ geneID         &lt;chr&gt; "ENSG00000164692", "ENSG00000108821", "ENSG000001000...
 #&gt; $ geneName       &lt;chr&gt; "COL1A2", "COL1A1", "LGALS1", "SERPINE2", "COL6A3", ...
 #&gt; $ pct1           &lt;dbl&gt; 1.000, 1.000, 0.806, 0.831, 0.927, 0.976, 0.766, 1.0...
@@ -167,7 +171,6 @@ the rownames of the returned marker <code>data.frame</code>.</p>
 #&gt; $ avgLogFC       &lt;dbl&gt; 2.5553118, 2.7949173, 2.2995216, 2.4224445, 2.284212...
 #&gt; $ padj           &lt;dbl&gt; 5.313721e-58, 1.979923e-57, 1.215935e-54, 1.019308e-...
 #&gt; $ pvalue         &lt;dbl&gt; 1.062744e-60, 3.959847e-60, 2.431870e-57, 2.038616e-...
-#&gt; $ rowname        &lt;chr&gt; "COL1A2", "COL1A1", "LGALS1", "SERPINE2", "COL6A3", ...
 #&gt; $ seqnames       &lt;fct&gt; 7, 17, 22, 2, 2, 2, 14, 2, 22, 17, 9, 21, 5, 7, 8, 1...
 #&gt; $ start          &lt;int&gt; 94394561, 50183289, 37675608, 223975112, 237324003, ...
 #&gt; $ end            &lt;int&gt; 94431232, 50201632, 37679806, 224039319, 237414375, ...
@@ -189,6 +192,7 @@ the rownames of the returned marker <code>data.frame</code>.</p>
     <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>ident_3_markers</span>
 )</div><div class='output co'>#&gt; <span class='message'>Renaming `pVal` column to `pvalue` (matching DESeq2)</span></div><div class='output co'>#&gt; <span class='message'>Renaming `pValAdj` column to `padj` (matching DESeq2)</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>ident_3_sanitized</span>)</div><div class='output co'>#&gt; Observations: 427
 #&gt; Variables: 17
+#&gt; $ rowname        &lt;chr&gt; "EEF1A1", "MT-ATP6", "MTATP6P1", "MT-ND5", "MTND1P23...
 #&gt; $ geneID         &lt;chr&gt; "ENSG00000156508", "ENSG00000198899", "ENSG000002485...
 #&gt; $ geneName       &lt;chr&gt; "EEF1A1", "MT-ATP6", "MTATP6P1", "MT-ND5", "MTND1P23...
 #&gt; $ pct1           &lt;dbl&gt; 0.865, 1.000, 1.000, 0.966, 0.989, 1.000, 0.989, 0.9...
@@ -196,7 +200,6 @@ the rownames of the returned marker <code>data.frame</code>.</p>
 #&gt; $ avgLogFC       &lt;dbl&gt; -1.709205, 1.159734, 1.173533, 1.326033, 1.269361, 1...
 #&gt; $ padj           &lt;dbl&gt; 2.710328e-32, 1.796991e-31, 1.869653e-31, 2.357196e-...
 #&gt; $ pvalue         &lt;dbl&gt; 5.420656e-35, 3.593981e-34, 3.739306e-34, 4.714391e-...
-#&gt; $ rowname        &lt;chr&gt; "EEF1A1", "MT.ATP6", "MTATP6P1", "MT.ND5", "MTND1P23...
 #&gt; $ seqnames       &lt;fct&gt; 6, MT, 1, MT, 1, MT, MT, MT, MT, MT, X, MT, 16, MT, ...
 #&gt; $ start          &lt;int&gt; 73515750, 8527, 633696, 12337, 629062, 14747, 9207, ...
 #&gt; $ end            &lt;int&gt; 73523797, 9207, 634376, 14148, 629433, 15887, 9990, ...

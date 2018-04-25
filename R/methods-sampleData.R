@@ -56,11 +56,9 @@ setMethod(
         data <- sanitizeSampleData(data)
         assertHasRownames(data)
         if (return == "kable") {
-            blacklist <- c("description", "fileName", "sampleID")
-            data %>%
-                as.data.frame() %>%
-                .[, setdiff(colnames(.), blacklist), drop = FALSE] %>%
-                kable(row.names = FALSE)
+            blacklist <- c("description", "sampleID")
+            data <- data[, setdiff(colnames(data), blacklist), drop = FALSE]
+            kable(as.data.frame(data), row.names = FALSE)
         } else {
             as(data, return)
         }
@@ -80,7 +78,6 @@ setMethod(
         return = c("DataFrame", "data.frame")
     ) {
         validObject(object)
-        stopifnot(.hasSlot(object, "version"))
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
@@ -93,34 +90,28 @@ setMethod(
             data <- slot(object, "meta.data")
             assert_is_data.frame(data)
             # Create priority columns from `orig.ident`, if necessary
-            if (!all(bcbioBase::metadataPriorityCols %in% colnames(data))) {
-                missing <- setdiff(
-                    x = bcbioBase::metadataPriorityCols,
-                    y = colnames(data)
-                )
-                for (i in seq_along(missing)) {
-                    data[[missing[[i]]]] <- data[["orig.ident"]]
-                }
+            if (!"sampleName" %in% colnames(data)) {
+                data[["sampleName"]] <- data[["orig.ident"]]
             }
             blacklist <- paste(
                 c(
-                    "cellularBarcode",
-                    "orig.ident",
-                    "Phase",
-                    "^res\\.[0-9]"
+                    "^cellularBarcode$",
+                    "^origIdent$",
+                    "^phase$",
+                    "^res[0-9]"
                 ),
                 collapse = "|"
             )
             data <- data %>%
                 remove_rownames() %>%
+                camel() %>%
                 .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
                 mutate_if(is.character, as.factor) %>%
                 select_if(is.factor) %>%
                 mutate_all(droplevels) %>%
-                unique() %>%
-                camel()
+                unique()
             assert_has_no_duplicates(data[["sampleName"]])
-            rownames(data) <- data[["sampleID"]]
+            rownames(data) <- makeNames(data[["sampleName"]], unique = TRUE)
             data
         }
         if (is.character(interestingGroups)) {
@@ -141,13 +132,11 @@ setMethod(
     "sampleData<-",
     signature(
         object = "SingleCellExperiment",
-        value = "ANY"
+        value = "DataFrame"
     ),
     function(object, value) {
-        value <- as.data.frame(value)
-        # Ensure all columns are factors
         value <- sanitizeSampleData(value)
-        metadata(object)[["sampleData"]] <- value
+        metadata(object)[["sampleData"]] <- as.data.frame(value)
         object
     }
 )
@@ -160,7 +149,13 @@ setMethod(
     "sampleData<-",
     signature(
         object = "seurat",
-        value = "ANY"
+        value = "DataFrame"
     ),
-    getMethod("sampleData<-", "SingleCellExperiment")
+    getMethod(
+        "sampleData<-",
+        signature(
+            object = "SingleCellExperiment",
+            value = "DataFrame"
+        )
+    )
 )

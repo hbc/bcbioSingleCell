@@ -13,14 +13,14 @@ plotUMIsPerCell(object, ...)
 \S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
   "histogram", "ridgeline", "boxplot", "violin"), interestingGroups, min = 0L,
   barcodeRanks = FALSE, ranksPerSample = TRUE, labelPoint = c("knee",
-  "inflection"), trans = "log10", color = scale_color_viridis(discrete =
-  TRUE), fill = scale_fill_viridis(discrete = TRUE))
+  "inflection"), trans = "log10", color = scale_color_hue(),
+  fill = scale_fill_hue())
 
 \S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "histogram",
   "ridgeline", "boxplot", "violin"), interestingGroups, min = 0L,
   barcodeRanks = FALSE, ranksPerSample = TRUE, labelPoint = c("knee",
-  "inflection"), trans = "log10", color = scale_color_viridis(discrete =
-  TRUE), fill = scale_fill_viridis(discrete = TRUE))
+  "inflection"), trans = "log10", color = scale_color_hue(),
+  fill = scale_fill_hue())
 }
 \arguments{
 \item{object}{Object.}

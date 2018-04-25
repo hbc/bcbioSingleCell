@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Plot Marker t-SNE — plotMarkerTSNE" />
@@ -42,8 +45,6 @@
 <![endif]-->
 
 
-
-
   </head>
 
   <body>
@@ -59,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -96,21 +97,24 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Marker t-SNE</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-plotMarkerTSNE.R'><code>R/methods-seurat-plotMarkerTSNE.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-plotMarkerTSNE.R'><code>R/methods-seurat-plotMarkerTSNE.R</code></a></small>
     <div class="hidden name"><code>plotMarkerTSNE.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Plot Marker t-SNE</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
-  <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='no'>color</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,7 +165,8 @@ the dataset, and some cells can be masked.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
+      <td><p>Plot against a dark background using
+<code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
     </tr>
     <tr>
       <th>legend</th>
@@ -202,10 +207,7 @@ the dataset, and some cells can be masked.</p></td>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
 <span class='co'># Mitochondrial genes</span>
 <span class='no'>mito</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT\\."</span>, <span class='fu'>rownames</span>(<span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>seurat_small</span>)), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>head</span>(<span class='no'>mito</span>)</div><div class='output co'>#&gt; ENSG00000198695 ENSG00000198712 ENSG00000198727 ENSG00000198763 ENSG00000198786 
-#&gt;        "MT.ND6"        "MT.CO2"        "MT.CYB"        "MT.ND2"        "MT.ND5" 
-#&gt; ENSG00000198804 
-#&gt;        "MT.CO1" </div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>head</span>(<span class='no'>mito</span>)</div><div class='output co'>#&gt; character(0)</div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

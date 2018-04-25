@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Filter Cells — filterCells" />
@@ -43,8 +46,6 @@ cellular barcodes." />
 <![endif]-->
 
 
-
-
   </head>
 
   <body>
@@ -60,7 +61,7 @@ cellular barcodes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -97,14 +98,16 @@ cellular barcodes." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Filter Cells</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-filterCells.R'><code>R/methods-filterCells.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-filterCells.R'><code>R/methods-filterCells.R</code></a></small>
     <div class="hidden name"><code>filterCells.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
 cellular barcodes.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
@@ -184,7 +187,7 @@ rownames of <code><a href='sampleData.html'>sampleData()</a></code>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.2
 #&gt; Samples: 1
 #&gt; Cells: 500
 #&gt; Genes: 500
@@ -194,7 +197,7 @@ rownames of <code><a href='sampleData.html'>sampleData()</a></code>).</p>
 #&gt; Genome Build: GRCh38
 #&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-04-06</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>bcb_small</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Filtering parameters:
+#&gt; R Load Date: 2018-04-24</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>bcb_small</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Filtering parameters:
 #&gt;   - &gt;= 1000 UMIs per cell
 #&gt;   - &lt;= Inf UMIs per cell
 #&gt;   - &gt;= 0 genes per cell
@@ -213,7 +216,7 @@ rownames of <code><a href='sampleData.html'>sampleData()</a></code>).</p>
 #&gt;      500 genes | minCellsPerGene &lt;= 3
 #&gt; ============================================================
 #&gt; 205 / 500 cells passed filtering (41%)
-#&gt; 500 / 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.1
+#&gt; 500 / 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.2
 #&gt; Samples: 1
 #&gt; Cells: 205
 #&gt; Genes: 500
@@ -223,11 +226,11 @@ rownames of <code><a href='sampleData.html'>sampleData()</a></code>).</p>
 #&gt; Genome Build: GRCh38
 #&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-04-16</div><div class='input'>
+#&gt; R Load Date: 2018-04-24</div><div class='input'>
 <span class='co'># SingleCellExperiment ====</span>
 <span class='fu'><a href='show.html'>show</a></span>(<span class='no'>cellranger_small</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
-#&gt; metadata(28): version pipeline ... filterParams filterSummary
+#&gt; metadata(27): version pipeline ... filterParams filterSummary
 #&gt; assays(1): counts
 #&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
 #&gt;   ENSG00000269893
@@ -258,7 +261,7 @@ rownames of <code><a href='sampleData.html'>sampleData()</a></code>).</p>
 #&gt; 390 / 500 cells passed filtering (78%)
 #&gt; 500 / 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 390 
-#&gt; metadata(28): version pipeline ... filterParams filterSummary
+#&gt; metadata(27): version pipeline ... filterParams filterSummary
 #&gt; assays(1): counts
 #&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
 #&gt;   ENSG00000269893

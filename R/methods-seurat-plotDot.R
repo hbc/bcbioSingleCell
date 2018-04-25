@@ -87,8 +87,8 @@ setMethod(
             ) %>%
             group_by(!!!syms(c("ident", "gene"))) %>%
             summarize(
-                avgExp = mean(expm1(.data[["expression"]])),
-                pctExp = .percentAbove(.data[["expression"]], threshold = 0L)
+                avgExp = mean(expm1(!!sym("expression"))),
+                pctExp = .percentAbove(!!sym("expression"), threshold = 0L)
             ) %>%
             ungroup() %>%
             group_by(!!sym("gene")) %>%

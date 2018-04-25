@@ -11,10 +11,10 @@
 plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{SingleCellExperiment}(object, interestingGroups,
-  color = scale_color_viridis(discrete = TRUE))
+  color = scale_color_hue())
 
 \S4method{plotUMIsVsGenes}{seurat}(object, interestingGroups,
-  color = scale_color_viridis(discrete = TRUE))
+  color = scale_color_hue())
 }
 \arguments{
 \item{object}{Object.}

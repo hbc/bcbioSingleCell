@@ -12,11 +12,11 @@ plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{SingleCellExperiment}(object, geom = c("violin",
   "boxplot", "histogram", "ridgeline"), interestingGroups, min = 0L,
-  max = Inf, fill = scale_fill_viridis(discrete = TRUE))
+  max = Inf, fill = scale_fill_hue())
 
 \S4method{plotGenesPerCell}{seurat}(object, geom = c("violin", "boxplot",
   "histogram", "ridgeline"), interestingGroups, min = 0L, max = Inf,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_hue())
 }
 \arguments{
 \item{object}{Object.}

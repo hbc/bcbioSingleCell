@@ -3,12 +3,15 @@
 \docType{methods}
 \name{metrics}
 \alias{metrics}
+\alias{metrics,matrix-method}
 \alias{metrics,dgCMatrix-method}
 \alias{metrics,dgTMatrix-method}
 \alias{metrics,SingleCellExperiment-method}
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
+\S4method{metrics}{matrix}(object, rowData = NULL, prefilter = TRUE)
+
 \S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = TRUE)
 
 \S4method{metrics}{dgTMatrix}(object, rowData = NULL, prefilter = TRUE)

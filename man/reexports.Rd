@@ -11,11 +11,19 @@
 \alias{reexports}
 \alias{scale_color_hue}
 \alias{reexports}
+\alias{scale_colour_gradient}
+\alias{reexports}
+\alias{scale_colour_hue}
+\alias{reexports}
+\alias{scale_fill_hue}
+\alias{reexports}
 \alias{glimpse}
 \alias{reexports}
 \alias{inferno}
 \alias{reexports}
 \alias{scale_color_viridis}
+\alias{reexports}
+\alias{scale_colour_viridis}
 \alias{reexports}
 \alias{scale_fill_viridis}
 \alias{reexports}
@@ -29,10 +37,10 @@ below to see their documentation.
 \describe{
   \item{dplyr}{\code{\link[dplyr]{pull}}}
 
-  \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_gradient}}, \code{\link[ggplot2]{scale_color_hue}}}
+  \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_gradient}}, \code{\link[ggplot2]{scale_color_hue}}, \code{\link[ggplot2]{scale_colour_gradient}}, \code{\link[ggplot2]{scale_colour_hue}}, \code{\link[ggplot2]{scale_fill_hue}}}
 
   \item{tibble}{\code{\link[tibble]{glimpse}}}
 
-  \item{viridis}{\code{\link[viridis]{inferno}}, \code{\link[viridis]{scale_color_viridis}}, \code{\link[viridis]{scale_fill_viridis}}, \code{\link[viridis]{viridis}}}
+  \item{viridis}{\code{\link[viridis]{inferno}}, \code{\link[viridis]{scale_color_viridis}}, \code{\link[viridis]{scale_colour_viridis}}, \code{\link[viridis]{scale_fill_viridis}}, \code{\link[viridis]{viridis}}}
 }}
 

@@ -34,11 +34,12 @@ NULL
 # Constructors =================================================================
 # Ensure all columns are sanitized, and return as data.frame
 .tidyMetrics <- function(data) {
-    data <- camel(as.data.frame(data))
-    if (has_rownames(data)) {
+    data <- as.data.frame(data)
+    if (hasRownames(data)) {
         data <- rownames_to_column(data)
     }
     data %>%
+        camel() %>%
         # Enforce count columns as integers (e.g. `nUMI`)
         mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
         # Coerce character vectors to factors, and drop levels
@@ -54,7 +55,7 @@ NULL
 #' @export
 setMethod(
     "metrics",
-    signature("dgCMatrix"),
+    signature("matrix"),
     function(
         object,
         rowData = NULL,
@@ -69,14 +70,18 @@ setMethod(
         codingGenes <- character()
         mitoGenes <- character()
 
-        if (!is.null(rowData)) {
-            assert_are_intersecting_sets(
-                x = rownames(object),
-                y = rownames(rowData)
-            )
+        if (length(rowData)) {
+            # Subset rowData to match counts matrix, if the rownames are
+            # defined. Note that `rowData()` return doesn't include them.
+            if (hasRownames(rowData)) {
+                rowData <- rowData[rownames(object), , drop = FALSE]
+            }
+            assert_are_identical(nrow(object), nrow(rowData))
+            rownames(rowData) <- rownames(object)
 
-            # Subset rowData to match counts matrix
-            rowData <- rowData[rownames(object), , drop = FALSE]
+            if (!"broadClass" %in% colnames(rowData)) {
+                warning("`broadClass` is not defined in rowData")
+            }
 
             # Coding genes
             codingGenes <- rowData %>%
@@ -93,7 +98,7 @@ setMethod(
             message(paste(length(mitoGenes), "mitochondrial genes detected"))
         }
 
-        data <- tibble(
+        data <- data.frame(
             "rowname" = colnames(object),
             # Follow the Seurat `seurat@data.info` conventions
             "nUMI" = colSums(object),
@@ -102,10 +107,9 @@ setMethod(
             "nMito" = colSums(object[mitoGenes, , drop = FALSE])
         ) %>%
             mutate(
-                log10GenesPerUMI = log10(.data[["nGene"]]) /
-                    log10(.data[["nUMI"]]),
+                log10GenesPerUMI = log10(!!sym("nGene")) / log10(!!sym("nUMI")),
                 # Using `nUMI` here like in Seurat example
-                mitoRatio = .data[["nMito"]] / .data[["nUMI"]]
+                mitoRatio = !!sym("nMito") / !!sym("nUMI")
             ) %>%
             # Ensure count columns are integer.
             # `colSums()` outputs as numeric.
@@ -115,9 +119,9 @@ setMethod(
         # This keeps only cellular barcodes with non-zero genes.
         if (isTRUE(prefilter)) {
             data <- data %>%
-                .[.[["nUMI"]] > 0L, , drop = FALSE] %>%
-                .[.[["nGene"]] > 0L, , drop = FALSE] %>%
-                .[!is.na(.[["log10GenesPerUMI"]]), , drop = FALSE]
+                filter(!is.na(UQ(sym("log10GenesPerUMI")))) %>%
+                filter(!!sym("nUMI") > 0L) %>%
+                filter(!!sym("nGene") > 0L)
             message(paste(
                 nrow(data), "cellular barcodes passed pre-filtering",
                 paste0("(", percent(nrow(data) / ncol(object)), ")")
@@ -134,8 +138,18 @@ setMethod(
 #' @export
 setMethod(
     "metrics",
+    signature("dgCMatrix"),
+    getMethod("metrics", "matrix")
+)
+
+
+
+#' @rdname metrics
+#' @export
+setMethod(
+    "metrics",
     signature("dgTMatrix"),
-    getMethod("metrics", "dgCMatrix")
+    getMethod("metrics", "matrix")
 )
 
 
@@ -150,22 +164,17 @@ setMethod(
             object = object,
             interestingGroups = interestingGroups
         )
+        sampleData[["sampleID"]] <- rownames(sampleData)
+
         colData <- colData(object)
         # Drop any duplicate metadata columns from colData, if necessary.
         # This step was added so we can slot rich metadata in seurat objects
         # inside `object@meta.data`, otherwise this line can be removed.
         colData <- colData[setdiff(colnames(colData), colnames(sampleData))]
-        assert_are_disjoint_sets(
-            x = colnames(sampleData),
-            y = colnames(colData)
-        )
 
         cell2sample <- cell2sample(object)
-        assert_is_factor(cell2sample)
-
-        sampleID <- DataFrame("sampleID" = cell2sample)
-
-        colData <- cbind(colData, sampleID)
+        colData[["sampleID"]] <- cell2sample
+        # Stash the rownames, which will get dropped during merge
         colData[["rowname"]] <- rownames(colData)
 
         data <- merge(

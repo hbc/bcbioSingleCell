@@ -1,18 +1,16 @@
-#' Coerce Object
+#' Methods for Coercing an Object to a Class
 #'
 #' @name coerce
+#' @aliases as
 #' @author Michael Steinbaugh
 #'
-#' @return New class, specified by the "`to`" argument.
+#' @inherit bcbioBase::coerce
 #'
-#' @seealso `help("coerce", "methods")`.
+#' @seealso
+#' - [methods::as()].
+#' - [methods::coerce()].
 #'
 #' @examples
-#' # SingleCellExperiment to list ====
-#' x <- as(bcb_small, "list")
-#' class(x)
-#' names(x)
-#'
 #' # SingleCellExperiment to seurat ====
 #' x <- as(bcb_small, "seurat")
 #' class(x)
@@ -23,53 +21,32 @@ NULL
 
 # Methods ======================================================================
 #' @rdname coerce
-#' @name coerce-SingleCellExperiment-list
-setAs(
-    from = "SingleCellExperiment",
-    to = "list",
-    function(from) {
-        flatFiles(from)
-    }
-)
-
-
-
-#' @rdname coerce
 #' @name coerce-SingleCellExperiment-seurat
-#' @section bcbioSingleCell to seurat:
+#' @section SingleCellExperiment to seurat:
 #' Interally [Seurat::CreateSeuratObject()] is called without applying any
 #' additional filtering cutoffs, since we have already defined them during our
 #' quality control analysis. Here we are passing the raw gene-level counts of
-#' the filtered cells into a new `seurat` class object, using [as()] object
-#' coercion.
+#' the filtered cells into a new `seurat` class object.
 setAs(
     from = "SingleCellExperiment",
     to = "seurat",
     function(from) {
         # Require that technical replicates are aggregated
-        if ("sampleNameAggregate" %in% colnames(sampleData(from))) {
+        if ("aggregate" %in% colnames(sampleData(from))) {
             message(paste(
-                "`sampleNameAggregate` metadata column detected.",
+                "`aggregate` metadata column detected.",
                 "Use `aggregateReplicates()` to combine technical replicates.",
                 sep = "\n"
             ))
         }
 
-        # Require filtering of cells and genes
-        from <- .applyFilterCutoffs(from)
+        # Convert gene identifiers to symbols
+        rownames <- rownames(from)
+        from <- convertGenesToSymbols(from)
 
-        # Prepare counts matrix with gene symbols as rownames
-        counts <- counts(from)
-        g2s <- gene2symbol(from)
-        assertIsGene2symbol(g2s)
-        rownames <- make.names(g2s[["geneName"]], unique = TRUE)
-        stopifnot(!any(duplicated(rownames)))
-        names(rownames) <- g2s[["geneID"]]
-        rownames(counts) <- rownames
-
-        # New seurat object
-        seurat <- Seurat::CreateSeuratObject(
-            raw.data = counts,
+        # Create the seurat object
+        to <- Seurat::CreateSeuratObject(
+            raw.data = counts(from),
             project = "bcbioSingleCell",
             # Already applied filtering cutoffs for cells and genes
             min.cells = 0L,
@@ -82,31 +59,17 @@ setAs(
         # Check that the dimensions match exactly
         assert_are_identical(
             x = dim(from),
-            y = dim(slot(seurat, "raw.data"))
+            y = dim(slot(to, "raw.data"))
         )
 
         # Stash metadata and rowRanges into `misc` slot
         bcbio <- list(
+            "rownames" = rownames,
             "rowRanges" = rowRanges(from),
             "metadata" = metadata(from)
         )
-        slot(seurat, "misc")[["bcbio"]] <- bcbio
+        slot(to, "misc")[["bcbio"]] <- bcbio
 
-        seurat
-    }
-)
-
-
-
-#' @rdname coerce
-#' @name coerce-bcbioSingleCell-SummarizedExperiment
-setAs(
-    from = "bcbioSingleCell",
-    to = "SummarizedExperiment",
-    function(from) {
-        # Otherwise rowData will be NULL
-        rse <- as(from, "RangedSummarizedExperiment")
-        se <- as(rse, "SummarizedExperiment")
-        se
+        to
     }
 )

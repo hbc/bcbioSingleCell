@@ -1,10 +1,10 @@
 .isAggregate <- function(object, stop = FALSE) {
-    logical <- "sampleNameAggregate" %in% colnames(object)
+    logical <- "aggregate" %in% colnames(object)
     if (
         identical(logical, FALSE) &&
         identical(stop, TRUE)
     ) {
-        stop("`sampleNameAggregate` column is required")
+        stop("`aggregate` column is required")
     }
     logical
 }

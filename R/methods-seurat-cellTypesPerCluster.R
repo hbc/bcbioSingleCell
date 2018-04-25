@@ -48,16 +48,16 @@ setMethod(
             ungroup() %>%
             .[, unique(c(groupCols, colnames(.))), drop = FALSE] %>%
             group_by(!!!syms(groupCols)) %>%
-            arrange(.data[["padj"]], .by_group = TRUE) %>%
+            arrange(!!sym("padj"), .by_group = TRUE) %>%
             # Use `toString()` instead of `aggregate()` for R Markdown tables
             summarize(
                 n = n(),
                 # Genes are arranged by P value
-                geneID = toString(.data[["geneID"]]),
-                geneName = toString(.data[["geneName"]])
+                geneID = toString(!!sym("geneID")),
+                geneName = toString(!!sym("geneName"))
             ) %>%
             group_by(!!sym("cluster")) %>%
-            arrange(dplyr::desc(.data[["n"]]), .by_group = TRUE)
+            arrange(desc(!!sym("n")), .by_group = TRUE)
 
         # Apply minimum and maximum gene cutoffs
         if (is.numeric(min) && min > 1L) {

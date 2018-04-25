@@ -102,36 +102,45 @@ setMethod(
         }
 
         # Add Ensembl gene IDs
-        rownames <- rownames(object)
-        assert_has_names(rownames)
-        map <- tibble(
-            "rowname" = rownames,
-            "geneID" = names(rownames)
+        geneID <- bcbio(object)[["rownames"]]
+        if (!is.character(geneID)) {
+            stop("Original rownames are not stashed in bcbio slot")
+        }
+        geneName <- rownames(object)
+        assert_are_same_length(geneID, geneName)
+        gene2symbol <- tibble(
+            "geneID" = geneID,
+            "geneName" = geneName
         )
-        data <- left_join(data, map, by = "rowname")
+        data <- left_join(
+            x = data,
+            y = gene2symbol,
+            by = c("rowname" = "geneName")
+        )
 
-        # Add genomic ranges, if available
+        # Add genomic ranges
         rowRanges <- rowRanges(object)
+        if (!is(rowRanges, "GRanges")) {
+            stop("rowRanges are not stashed in bcbio slot")
+        }
         rowData <- as.data.frame(rowRanges)
         rowData <- camel(rowData)
-        if (length(rowData)) {
-            assert_is_subset("geneID", colnames(rowData))
-            # Ensure any nested list columns are dropped
-            cols <- vapply(
-                X = rowData,
-                FUN = function(x) {
-                    !is.list(x)
-                },
-                FUN.VALUE = logical(1L)
-            )
-            rowData <- rowData[, cols]
-            data <- left_join(data, rowData, by = "geneID")
-        }
+        # Ensure any nested list columns are dropped
+        cols <- vapply(
+            X = rowData,
+            FUN = function(x) {
+                !is.list(x)
+            },
+            FUN.VALUE = logical(1L)
+        )
+        rowData <- rowData[, cols]
+        data <- left_join(data, rowData, by = "geneID")
 
         # Ensure that required columns are present
         requiredCols <- c(
-            "geneID",       # Ensembl annotations
-            "geneName",     # Renamed from `gene`
+            "rowname",
+            "geneID",
+            "geneName",
             "pct1",
             "pct2",
             "avgLogFC",     # Seurat v2.1

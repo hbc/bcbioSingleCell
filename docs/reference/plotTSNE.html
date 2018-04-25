@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Plot t-SNE — plotTSNE" />
@@ -42,8 +45,6 @@
 <![endif]-->
 
 
-
-
   </head>
 
   <body>
@@ -59,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -96,13 +97,15 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot t-SNE</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-plotTSNE.R'><code>R/methods-seurat-plotTSNE.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-plotTSNE.R'><code>R/methods-seurat-plotTSNE.R</code></a></small>
     <div class="hidden name"><code>plotTSNE.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Generate a t-distributed stochastic neighbor embedding (t-SNE) plot.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>plotTSNE</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
@@ -158,7 +161,8 @@ the dataset, and some cells can be masked.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot against a dark background using <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
+      <td><p>Plot against a dark background using
+<code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
     </tr>
     <tr>
       <th>aspectRatio</th>

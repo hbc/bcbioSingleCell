@@ -33,7 +33,7 @@ setMethod(
         interestingGroups,
         min = 0L,
         max = Inf,
-        fill = scale_fill_viridis(discrete = TRUE)
+        fill = scale_fill_hue()
     ) {
         geom <- match.arg(geom)
         .plotQCMetric(

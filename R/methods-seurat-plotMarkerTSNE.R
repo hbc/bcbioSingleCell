@@ -32,7 +32,7 @@ setMethod(
         object,
         genes,
         expression = c("mean", "median", "sum"),
-        color,
+        color = "auto",
         pointsAsNumbers = FALSE,
         pointSize = 0.5,
         pointAlpha = 0.8,
@@ -46,9 +46,6 @@ setMethod(
     ) {
         assert_is_character(genes)
         expression <- match.arg(expression)
-        if (!missing(color)) {
-            assertIsColorScaleContinuousOrNULL(color)
-        }
         assert_is_a_bool(pointsAsNumbers)
         assert_is_a_number(pointSize)
         assert_is_a_number(pointAlpha)
@@ -90,24 +87,6 @@ setMethod(
                 color = expression
             )
         )
-
-        if (isTRUE(dark)) {
-            p <- p + theme_midnight(aspect_ratio = aspectRatio)
-            if (missing(color)) {
-                color <- scale_color_viridis(
-                    option = "plasma",
-                    discrete = FALSE
-                )
-            }
-        } else {
-            p <- p + theme_paperwhite(aspect_ratio = aspectRatio)
-            if (missing(color)) {
-                color <- scale_color_gradient(
-                    low = "gray90",
-                    high = "black"
-                )
-            }
-        }
 
         # Labels
         if (isTRUE(subtitle)) {
@@ -174,6 +153,25 @@ setMethod(
                     size = labelSize,
                     fontface = "bold"
                 )
+        }
+
+        # Color palette
+        if (isTRUE(dark)) {
+            p <- p + theme_midnight(aspect_ratio = aspectRatio)
+            if (color == "auto") {
+                color <- scale_color_viridis(
+                    option = "plasma",
+                    discrete = FALSE
+                )
+            }
+        } else {
+            p <- p + theme_paperwhite(aspect_ratio = aspectRatio)
+            if (color == "auto") {
+                color <- scale_color_gradient(
+                    low = "gray90",
+                    high = "black"
+                )
+            }
         }
 
         if (is(color, "ScaleContinuous")) {

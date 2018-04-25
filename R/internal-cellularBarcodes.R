@@ -24,16 +24,16 @@
         bind_rows() %>%
         mutate(
             rowname = paste(
-                .data[["sampleID"]],
-                .data[["cellularBarcode"]],
+                !!sym("sampleID"),
+                !!sym("cellularBarcode"),
                 sep = "_"
             ),
-            sampleID = as.factor(.data[["sampleID"]])
+            sampleID = as.factor(!!sym("sampleID"))
         ) %>%
         as.data.frame() %>%
         column_to_rownames() %>%
         # Reorder the columns before return
-        .[, c("sampleID", "cellularBarcode", "nCount")]
+        select(!!!syms(c("sampleID", "cellularBarcode", "nCount")))
 }
 
 
@@ -65,7 +65,7 @@
                 cellularBarcode = gsub(
                     pattern = "-",
                     replacement = "_",
-                    x = .data[["cellularBarcode"]]
+                    x = !!sym("cellularBarcode")
                 )
             )
     })

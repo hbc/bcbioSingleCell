@@ -7,8 +7,8 @@
     min = 0L,
     max = Inf,
     trans = "identity",
-    color = scale_color_viridis(discrete = TRUE),
-    fill = scale_fill_viridis(discrete = TRUE)
+    color = scale_color_hue(),
+    fill = scale_fill_hue()
 ) {
     assert_is_a_string(metricCol)
     geom <- match.arg(geom)
@@ -141,7 +141,7 @@
     # Facets
     facets <- NULL
     if (.isAggregate(object)) {
-        facets <- "sampleNameAggregate"
+        facets <- "aggregate"
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
@@ -160,7 +160,7 @@
     xTrans = "identity",
     yTrans = "identity",
     interestingGroups,
-    color = scale_color_viridis(discrete = TRUE)
+    color = scale_color_hue()
 ) {
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
@@ -207,7 +207,7 @@
     # Facets
     facets <- NULL
     if (.isAggregate(object)) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")

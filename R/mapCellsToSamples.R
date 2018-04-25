@@ -17,7 +17,7 @@
 #' @examples
 #' # bcbioSingleCell ====
 #' cells <- colnames(bcb_small)
-#' samples <- sampleData(bcb_small)[["sampleID"]]
+#' samples <- rownames(sampleData(bcb_small))
 #' map <- mapCellsToSamples(cells, samples)
 #' head(map)
 #' levels(map)

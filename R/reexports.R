@@ -16,6 +16,18 @@ ggplot2::scale_color_gradient
 #' @export
 ggplot2::scale_color_hue
 
+#' @importFrom ggplot2 scale_colour_gradient
+#' @export
+ggplot2::scale_colour_gradient
+
+#' @importFrom ggplot2 scale_colour_hue
+#' @export
+ggplot2::scale_colour_hue
+
+#' @importFrom ggplot2 scale_fill_hue
+#' @export
+ggplot2::scale_fill_hue
+
 
 
 #' @importFrom tibble glimpse
@@ -31,6 +43,10 @@ viridis::inferno
 #' @importFrom viridis scale_color_viridis
 #' @export
 viridis::scale_color_viridis
+
+#' @importFrom viridis scale_colour_viridis
+#' @export
+viridis::scale_colour_viridis
 
 #' @importFrom viridis scale_fill_viridis
 #' @export

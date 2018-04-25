@@ -1,2 +1,2 @@
-fileName,description,index,sequence,sampleName,sampleNameAggregate
+fileName,description,index,sequence,sampleName,aggregate
 multiplexed.fastq.gz,multiplexed,1,TTTTTTTT,rep_1,sample

@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Define Cell to Sample Mappings — mapCellsToSamples" />
@@ -43,8 +46,6 @@ matching." />
 <![endif]-->
 
 
-
-
   </head>
 
   <body>
@@ -60,7 +61,7 @@ matching." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -97,14 +98,16 @@ matching." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Define Cell to Sample Mappings</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/mapCellsToSamples.R'><code>R/mapCellsToSamples.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/mapCellsToSamples.R'><code>R/mapCellsToSamples.R</code></a></small>
     <div class="hidden name"><code>mapCellsToSamples.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function extracts <code>sampleID</code> from the <code>cellID</code> column using grep
 matching.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>mapCellsToSamples</span>(<span class='no'>cells</span>, <span class='no'>samples</span>)</pre>
     
@@ -143,7 +146,7 @@ factor levels.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>bcb_small</span>)
-<span class='no'>samples</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>bcb_small</span>)<span class='kw'>[[</span><span class='st'>"sampleID"</span>]]
+<span class='no'>samples</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>bcb_small</span>))
 <span class='no'>map</span> <span class='kw'>&lt;-</span> <span class='fu'>mapCellsToSamples</span>(<span class='no'>cells</span>, <span class='no'>samples</span>)
 <span class='fu'>head</span>(<span class='no'>map</span>)</div><div class='output co'>#&gt; multiplexed_AAAAAAAA_AAACACTA_ATCCCACG multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA 
 #&gt;                   multiplexed_AAAAAAAA                   multiplexed_AAAAAAAA 

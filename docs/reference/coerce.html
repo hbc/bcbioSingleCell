@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Coerce Object — coerce • bcbioSingleCell</title>
+<title>Methods for Coercing an Object to a Class — coerce • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,11 +25,14 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Coerce Object — coerce" />
+<meta property="og:title" content="Methods for Coercing an Object to a Class — coerce" />
 
-<meta property="og:description" content="Coerce Object" />
+<meta property="og:description" content="Methods for Coercing an Object to a Class" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -40,8 +43,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -59,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -95,41 +96,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Coerce Object</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-coerce.R'><code>R/methods-coerce.R</code></a></small>
+    <h1>Methods for Coercing an Object to a Class</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-coerce.R'><code>R/methods-coerce.R</code></a></small>
     <div class="hidden name"><code>coerce.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>Coerce Object</p>
+    <p>Methods for Coercing an Object to a Class</p>
     
+    </div>
 
         
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>New class, specified by the "<code>to</code>" argument.</p>
+    <p>Object of new class.</p>
     
-    <h2 class="hasAnchor" id="bcbiosinglecell-to-seurat"><a class="anchor" href="#bcbiosinglecell-to-seurat"></a>bcbioSingleCell to seurat</h2>
+    <h2 class="hasAnchor" id="singlecellexperiment-to-seurat"><a class="anchor" href="#singlecellexperiment-to-seurat"></a>SingleCellExperiment to seurat</h2>
 
     
     <p>Interally <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/CreateSeuratObject'>Seurat::CreateSeuratObject()</a></code> is called without applying any
 additional filtering cutoffs, since we have already defined them during our
 quality control analysis. Here we are passing the raw gene-level counts of
-the filtered cells into a new <code>seurat</code> class object, using <code>as()</code> object
-coercion.</p>
+the filtered cells into a new <code>seurat</code> class object.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>help("coerce", "methods")</code>.</p></div>
+    <div class='dont-index'><ul>
+<li><p><code><a href='http://www.rdocumentation.org/packages/methods/topics/as'>methods::as()</a></code>.</p></li>
+<li><p><code><a href='http://www.rdocumentation.org/packages/methods/topics/setAs'>methods::coerce()</a></code>.</p></li>
+</ul></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment to list ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>bcb_small</span>, <span class='st'>"list"</span>)
-<span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "list"</div><div class='input'><span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "colData"         "assays"          "NAMES"           "elementMetadata"
-#&gt; [5] "metadata"       </div><div class='input'>
-<span class='co'># SingleCellExperiment to seurat ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>bcb_small</span>, <span class='st'>"seurat"</span>)</div><div class='output co'>#&gt; <span class='message'>`sampleNameAggregate` metadata column detected.</span>
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment to seurat ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>bcb_small</span>, <span class='st'>"seurat"</span>)</div><div class='output co'>#&gt; <span class='message'>`aggregate` metadata column detected.</span>
 #&gt; <span class='message'>Use `aggregateReplicates()` to combine technical replicates.</span></div><div class='input'><span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "seurat"
 #&gt; attr(,"package")
 #&gt; [1] "Seurat"</div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; An object of class seurat in project bcbioSingleCell 
@@ -141,7 +142,7 @@ coercion.</p>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#bcbiosinglecell-to-seurat">bcbioSingleCell to seurat</a></li>
+      <li><a href="#singlecellexperiment-to-seurat">SingleCellExperiment to seurat</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

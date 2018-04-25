@@ -31,22 +31,22 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        color = scale_color_viridis(discrete = TRUE)
+        color = scale_color_hue()
     ) {
         assertIsColorScaleDiscreteOrNULL(color)
 
         counts <- assay(object)
-        sampleID <- cell2sample(object)
-        sampleData <- sampleData(object, return = "data.frame")
-
         # Using a logical matrix is faster and more memory efficient
         present <- counts %>%
             # Ensure dgTMatrix gets coereced (e.g. Seurat::pbmc_small)
             as("dgCMatrix") %>%
             as("lgCMatrix")
 
+        sampleData <- sampleData(object, return = "data.frame")
+        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+
         data <- tibble(
-            "sampleID" = sampleID,
+            "sampleID" = cell2sample(object),
             "dropout" = (nrow(present) - colSums(present)) / nrow(present),
             "depth" = colSums(counts)
         ) %>%
@@ -71,7 +71,7 @@ setMethod(
         # Wrap aggregated samples
         facets <- NULL
         if (.isAggregate(metrics)) {
-            facets <- "sampleNameAggregate"
+            facets <- "aggregate"
         }
         if (is.character(facets)) {
             p <- p + facet_wrap(facets = facets, scales = "free")

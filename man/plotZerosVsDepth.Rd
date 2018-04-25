@@ -11,10 +11,9 @@
 plotZerosVsDepth(object, ...)
 
 \S4method{plotZerosVsDepth}{SingleCellExperiment}(object,
-  color = scale_color_viridis(discrete = TRUE))
+  color = scale_color_hue())
 
-\S4method{plotZerosVsDepth}{seurat}(object,
-  color = scale_color_viridis(discrete = TRUE))
+\S4method{plotZerosVsDepth}{seurat}(object, color = scale_color_hue())
 }
 \arguments{
 \item{object}{Object.}

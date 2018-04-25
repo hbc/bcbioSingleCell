@@ -4,7 +4,7 @@
 #' RNA-seq data.
 #'
 #' @name bcbioSingleCell-package
-#' @keywords internal
+#' @docType package
 #'
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
@@ -17,18 +17,18 @@
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
 #'   spikeNames
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges
-#' @importFrom basejump assignAndSaveData camel convertUCSCBuildToEnsembl
-#'   detectOrganism dynamicPlotlist initializeDirectory makeGRangesFromEnsembl
-#'   makeGRangesFromGFF makeNames makeTx2geneFromGFF markdownHeader
-#'   readFileByExtension readYAML sanitizeSampleData theme_midnight
-#'   theme_paperwhite tx2geneFromGFF
+#' @importFrom basejump assignAndSaveData camel convertGenesToSymbols
+#'   convertUCSCBuildToEnsembl detectOrganism dynamicPlotlist emptyRanges
+#'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
+#'   makeTx2geneFromGFF markdownHeader readFileByExtension readYAML
+#'   sanitizeSampleData theme_midnight theme_paperwhite tx2geneFromGFF
 #' @importFrom bcbioBase flatFiles prepareSummarizedExperiment readDataVersions
 #'   readLog readProgramVersions readSampleData readTx2gene
 #'   sampleYAMLMetadata uniteInterestingGroups
 #' @importFrom cowplot draw_plot ggdraw plot_grid
-#' @importFrom dplyr arrange bind_rows group_by group_vars left_join matches
-#'   mutate mutate_all mutate_if n select select_if summarize summarize_all
-#'   ungroup
+#' @importFrom dplyr arrange bind_rows desc filter group_by group_vars left_join
+#'   matches mutate mutate_all mutate_if n select select_if summarize
+#'   summarize_all ungroup
 #' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_line
 #'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
 #'   geom_histogram geom_hline geom_label geom_line geom_point geom_smooth
@@ -46,7 +46,7 @@
 #' @importFrom parallel mclapply mcmapply
 #' @importFrom pbapply pblapply
 #' @importFrom readr read_lines read_tsv
-#' @importFrom rlang !! !!! .data sym syms
+#' @importFrom rlang !! !!! sym syms UQ
 #' @importFrom scales percent
 #' @importFrom stats as.formula fitted median model.matrix predict relevel
 #'   reorder smooth.spline
@@ -69,6 +69,7 @@
 #' @importFrom assertive assert_are_disjoint_sets
 #' @importFrom assertive assert_are_intersecting_sets
 #' @importFrom assertive assert_are_identical
+#' @importFrom assertive assert_are_same_length
 #' @importFrom assertive assert_has_dimnames
 #' @importFrom assertive assert_has_no_duplicates
 #' @importFrom assertive assert_has_names

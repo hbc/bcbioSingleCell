@@ -22,7 +22,7 @@
 \S4method{cell2sample}{seurat}(object)
 
 \S4method{plotCellCounts}{seurat}(object, interestingGroups,
-  fill = scale_fill_viridis(discrete = TRUE))
+  fill = scale_fill_hue())
 
 \S4method{assay}{seurat,ANY}(x)
 

@@ -31,13 +31,14 @@ and Ensembl gene identifiers for rows.
 }
 \examples{
 # bcbioSingleCell ====
-sampleName <- sampleData(bcb_small) \%>\%
-    .[1L, "sampleName"] \%>\%
-    as.character()
+colnames(sampleData(bcb_small))
+sampleName <- sampleData(bcb_small)[1L, "sampleName"]
 print(sampleName)
 selectSamples(bcb_small, sampleName = sampleName)
 }
 \seealso{
+\code{\link[=sampleData]{sampleData()}}.
+
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{cell2sample}}, \code{\link{counts}},
   \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},

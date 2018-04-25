@@ -42,6 +42,7 @@ NULL
         interestingGroups = interestingGroups,
         return = "data.frame"
     )
+    sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
     # Obtain the read counts. Use the unfiltered reads stashed in the metadata
     # if available, otherwise use the metrics return.
@@ -72,7 +73,7 @@ NULL
 # Standard (raw) ---------------------------------------------------------------
 .plotReadsPerCellECDF <- function(
     data,
-    color = scale_color_viridis(discrete = TRUE)
+    color = scale_color_hue()
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
@@ -96,7 +97,7 @@ NULL
     # Facets
     facets <- NULL
     if (.isAggregate(data)) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
@@ -109,7 +110,7 @@ NULL
 
 .plotReadsPerCellViolin <- function(
     data,
-    fill = scale_fill_viridis(discrete = TRUE)
+    fill = scale_fill_hue()
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -139,7 +140,7 @@ NULL
     # Facets
     facets <- NULL
     if (.isAggregate(data)) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
@@ -152,7 +153,7 @@ NULL
 
 .plotReadsPerCellRidgeline <- function(
     data,
-    fill = scale_fill_viridis(discrete = TRUE)
+    fill = scale_fill_hue()
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -182,7 +183,7 @@ NULL
     # Facets
     facets <- NULL
     if (.isAggregate(data)) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
@@ -247,7 +248,7 @@ NULL
 
 .plotReadsPerCellHistogram <- function(
     data,
-    color = scale_color_viridis(discrete = TRUE)
+    color = scale_color_hue()
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
@@ -277,7 +278,7 @@ NULL
     # Facets
     facets <- NULL
     if (.isAggregate(data)) {
-        facets <- c(facets, "sampleNameAggregate")
+        facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = facets, scales = "free")
@@ -298,8 +299,8 @@ setMethod(
         object,
         interestingGroups,
         geom = c("histogram", "ecdf", "ridgeline", "violin"),
-        color = scale_color_viridis(discrete = TRUE),
-        fill = scale_fill_viridis(discrete = TRUE)
+        color = scale_color_hue(),
+        fill = scale_fill_hue()
     ) {
         # Passthrough: color, fill
         validObject(object)
@@ -322,10 +323,13 @@ setMethod(
                 interestingGroups = interestingGroups,
                 return = "data.frame"
             )
+            sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+
             data <- .proportionalReadsPerCell(
                 data = data,
                 sampleData = sampleData
             )
+
             p <- .plotReadsPerCellHistogram(
                 data = data,
                 color = color

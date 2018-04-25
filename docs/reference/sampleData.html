@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Sample Data — sampleData" />
@@ -45,8 +48,6 @@ the samples." />
 <![endif]-->
 
 
-
-
   </head>
 
   <body>
@@ -62,7 +63,7 @@ the samples." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -99,16 +100,18 @@ the samples." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sample Data</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-sampleData.R'><code>R/methods-sampleData.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-sampleData.R'><code>R/methods-sampleData.R</code></a></small>
     <div class="hidden name"><code>sampleData.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Metadata in columns describing the samples, which are defined in the
 rownames. Similar to <code>colData()</code>, which for <code>bcbioSingleCell</code> and
 <code>SingleCellExperiment</code> objects describes cells in the columns, rather than
 the samples.</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
@@ -118,10 +121,10 @@ the samples.</p>
 <span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
   <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>))
 
-<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='co'># S4 method for SingleCellExperiment,DataFrame</span>
 <span class='fu'>sampleData</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
 
-<span class='co'># S4 method for seurat</span>
+<span class='co'># S4 method for seurat,DataFrame</span>
 <span class='fu'>sampleData</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -158,33 +161,31 @@ to the first argument in the vector.</p></td>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 9
-#&gt;   .. ..$ sampleID           : Factor w/ 1 level "multiplexed_AAAAAAAA": 1
-#&gt;   .. ..$ sampleName         : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ description        : Factor w/ 1 level "multiplexed": 1
-#&gt;   .. ..$ fileName           : Factor w/ 1 level "multiplexed.fastq.gz": 1
-#&gt;   .. ..$ index              : Factor w/ 1 level "1": 1
-#&gt;   .. ..$ sequence           : Factor w/ 1 level "TTTTTTTT": 1
-#&gt;   .. ..$ sampleNameAggregate: Factor w/ 1 level "sample": 1
-#&gt;   .. ..$ revcomp            : Factor w/ 1 level "AAAAAAAA": 1
-#&gt;   .. ..$ interestingGroups  : Factor w/ 1 level "rep_1": 1
+#&gt;   ..@ listData       :List of 8
+#&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
+#&gt;   .. ..$ fileName         : Factor w/ 1 level "multiplexed.fastq.gz": 1
+#&gt;   .. ..$ description      : Factor w/ 1 level "multiplexed": 1
+#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
+#&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
+#&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
+#&gt;   .. ..$ revcomp          : Factor w/ 1 level "AAAAAAAA": 1
+#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
 #&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 10
-#&gt;   .. ..$ sampleID           : Factor w/ 1 level "multiplexed_AAAAAAAA": 1
-#&gt;   .. ..$ sampleName         : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ description        : Factor w/ 1 level "multiplexed": 1
-#&gt;   .. ..$ fileName           : Factor w/ 1 level "multiplexed.fastq.gz": 1
-#&gt;   .. ..$ index              : Factor w/ 1 level "1": 1
-#&gt;   .. ..$ sequence           : Factor w/ 1 level "TTTTTTTT": 1
-#&gt;   .. ..$ sampleNameAggregate: Factor w/ 1 level "sample": 1
-#&gt;   .. ..$ revcomp            : Factor w/ 1 level "AAAAAAAA": 1
-#&gt;   .. ..$ interestingGroups  : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ batch              : Factor w/ 1 level "1": 1
+#&gt;   ..@ listData       :List of 9
+#&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
+#&gt;   .. ..$ fileName         : Factor w/ 1 level "multiplexed.fastq.gz": 1
+#&gt;   .. ..$ description      : Factor w/ 1 level "multiplexed": 1
+#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
+#&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
+#&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
+#&gt;   .. ..$ revcomp          : Factor w/ 1 level "AAAAAAAA": 1
+#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
+#&gt;   .. ..$ batch            : Factor w/ 1 level "1": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
 #&gt;   ..@ metadata       : list()</div><div class='input'>
@@ -193,33 +194,31 @@ to the first argument in the vector.</p></td>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 9
-#&gt;   .. ..$ sampleID           : Factor w/ 1 level "multiplexed_AAAAAAAA": 1
-#&gt;   .. ..$ sampleName         : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ description        : Factor w/ 1 level "multiplexed": 1
-#&gt;   .. ..$ fileName           : Factor w/ 1 level "multiplexed.fastq.gz": 1
-#&gt;   .. ..$ index              : Factor w/ 1 level "1": 1
-#&gt;   .. ..$ sequence           : Factor w/ 1 level "TTTTTTTT": 1
-#&gt;   .. ..$ sampleNameAggregate: Factor w/ 1 level "sample": 1
-#&gt;   .. ..$ revcomp            : Factor w/ 1 level "AAAAAAAA": 1
-#&gt;   .. ..$ interestingGroups  : Factor w/ 1 level "rep_1": 1
+#&gt;   ..@ listData       :List of 8
+#&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
+#&gt;   .. ..$ fileName         : Factor w/ 1 level "multiplexed.fastq.gz": 1
+#&gt;   .. ..$ description      : Factor w/ 1 level "multiplexed": 1
+#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
+#&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
+#&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
+#&gt;   .. ..$ revcomp          : Factor w/ 1 level "AAAAAAAA": 1
+#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
 #&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 10
-#&gt;   .. ..$ sampleID           : Factor w/ 1 level "multiplexed_AAAAAAAA": 1
-#&gt;   .. ..$ sampleName         : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ description        : Factor w/ 1 level "multiplexed": 1
-#&gt;   .. ..$ fileName           : Factor w/ 1 level "multiplexed.fastq.gz": 1
-#&gt;   .. ..$ index              : Factor w/ 1 level "1": 1
-#&gt;   .. ..$ sequence           : Factor w/ 1 level "TTTTTTTT": 1
-#&gt;   .. ..$ sampleNameAggregate: Factor w/ 1 level "sample": 1
-#&gt;   .. ..$ revcomp            : Factor w/ 1 level "AAAAAAAA": 1
-#&gt;   .. ..$ interestingGroups  : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ batch              : Factor w/ 1 level "1": 1
+#&gt;   ..@ listData       :List of 9
+#&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
+#&gt;   .. ..$ fileName         : Factor w/ 1 level "multiplexed.fastq.gz": 1
+#&gt;   .. ..$ description      : Factor w/ 1 level "multiplexed": 1
+#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
+#&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
+#&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
+#&gt;   .. ..$ revcomp          : Factor w/ 1 level "AAAAAAAA": 1
+#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
+#&gt;   .. ..$ batch            : Factor w/ 1 level "1": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
 #&gt;   ..@ metadata       : list()</div></pre>

@@ -27,12 +27,6 @@ interesting_groups <- interestingGroups(seurat)
 
 
 
-```{r sample_data}
-sampleData(seurat)
-```
-
-
-
 # tSNE (all clusters) {.tabset}
 
 ```{r plot_tsne_all_clusters, results="asis"}

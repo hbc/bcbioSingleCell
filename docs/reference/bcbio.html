@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Additional bcbio Run Data Accessor — bcbio" />
@@ -42,8 +45,6 @@
 <![endif]-->
 
 
-
-
   </head>
 
   <body>
@@ -59,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -96,13 +97,15 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Additional bcbio Run Data Accessor</h1>
-    <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-bcbio.R'><code>R/methods-seurat-bcbio.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-bcbio.R'><code>R/methods-seurat-bcbio.R</code></a></small>
     <div class="hidden name"><code>bcbio.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Additional bcbio Run Data Accessor</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S4 method for seurat</span>
 <span class='fu'>bcbio</span>(<span class='no'>object</span>, <span class='no'>slot</span>)
@@ -134,7 +137,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='fu'>names</span>(<span class='fu'>bcbio</span>(<span class='no'>seurat_small</span>))</div><div class='output co'>#&gt; [1] "rowRanges" "metadata" </div><div class='input'>
+<span class='fu'>names</span>(<span class='fu'>bcbio</span>(<span class='no'>seurat_small</span>))</div><div class='output co'>#&gt; [1] "rownames"  "rowRanges" "metadata" </div><div class='input'>
 <span class='co'># Assignment method support</span>
 <span class='fu'>bcbio</span>(<span class='no'>seurat_small</span>, <span class='st'>"metadata"</span>)<span class='kw'>[[</span><span class='st'>"stash"</span>]] <span class='kw'>&lt;-</span> <span class='st'>"XXX"</span>
 <span class='fu'>bcbio</span>(<span class='no'>seurat_small</span>, <span class='st'>"metadata"</span>)<span class='kw'>[[</span><span class='st'>"stash"</span>]]</div><div class='output co'>#&gt; [1] "XXX"</div></pre>
