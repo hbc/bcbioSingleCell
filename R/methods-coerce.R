@@ -41,6 +41,7 @@ setAs(
         }
 
         # Convert gene identifiers to symbols
+        rownames <- rownames(from)
         from <- convertGenesToSymbols(from)
 
         # Create the seurat object
@@ -63,6 +64,7 @@ setAs(
 
         # Stash metadata and rowRanges into `misc` slot
         bcbio <- list(
+            "rownames" = rownames,
             "rowRanges" = rowRanges(from),
             "metadata" = metadata(from)
         )

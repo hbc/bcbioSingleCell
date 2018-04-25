@@ -69,6 +69,7 @@
 #' @importFrom assertive assert_are_disjoint_sets
 #' @importFrom assertive assert_are_intersecting_sets
 #' @importFrom assertive assert_are_identical
+#' @importFrom assertive assert_are_same_length
 #' @importFrom assertive assert_has_dimnames
 #' @importFrom assertive assert_has_no_duplicates
 #' @importFrom assertive assert_has_names
