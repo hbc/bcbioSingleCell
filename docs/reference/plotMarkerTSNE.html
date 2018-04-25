@@ -207,10 +207,7 @@ the dataset, and some cells can be masked.</p></td>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
 <span class='co'># Mitochondrial genes</span>
 <span class='no'>mito</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT\\."</span>, <span class='fu'>rownames</span>(<span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>seurat_small</span>)), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>head</span>(<span class='no'>mito</span>)</div><div class='output co'>#&gt; ENSG00000198695 ENSG00000198712 ENSG00000198727 ENSG00000198763 ENSG00000198786 
-#&gt;        "MT.ND6"        "MT.CO2"        "MT.CYB"        "MT.ND2"        "MT.ND5" 
-#&gt; ENSG00000198804 
-#&gt;        "MT.CO1" </div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>head</span>(<span class='no'>mito</span>)</div><div class='output co'>#&gt; character(0)</div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

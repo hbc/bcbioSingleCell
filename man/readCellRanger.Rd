@@ -43,14 +43,14 @@ Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} cell
 counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 }
 \details{
-This function is a simplified version of \code{\link[=loadSingleCell]{loadSingleCell()}}
-optimized for handling Cell Ranger output.
+This function is a variant of the main \code{\link[=bcbioSingleCell]{bcbioSingleCell()}}
+constructor, but optimized for handling Cell Ranger output.
 }
 \note{
-Unlike \code{\link[=loadSingleCell]{loadSingleCell()}}, the \code{organism}, \code{ensemblRelease}, and
-\code{genomeBuild} are always detected automatically, based on the 10X
-\code{refdataDir} YAML metadata. Therefore, these parameters cannot be set by
-the user.
+Unlike the \code{\link[=bcbioSingleCell]{bcbioSingleCell()}} function, here the \code{organism},
+\code{ensemblRelease}, and \code{genomeBuild} are always detected automatically,
+based on the 10X \code{refdataDir} YAML metadata. Therefore, these parameters
+cannot be set by the user.
 }
 \examples{
 uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")

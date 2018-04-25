@@ -3,13 +3,13 @@
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
 #' counts from `barcodes.tsv`, `genes.tsv`, and `matrix.mtx` files.
 #'
-#' @details This function is a simplified version of [loadSingleCell()]
-#'   optimized for handling Cell Ranger output.
+#' @details This function is a variant of the main [bcbioSingleCell()]
+#'   constructor, but optimized for handling Cell Ranger output.
 #'
-#' @note Unlike [loadSingleCell()], the `organism`, `ensemblRelease`, and
-#'   `genomeBuild` are always detected automatically, based on the 10X
-#'   `refdataDir` YAML metadata. Therefore, these parameters cannot be set by
-#'   the user.
+#' @note Unlike the [bcbioSingleCell()] function, here the `organism`,
+#'   `ensemblRelease`, and `genomeBuild` are always detected automatically,
+#'   based on the 10X `refdataDir` YAML metadata. Therefore, these parameters
+#'   cannot be set by the user.
 #'
 #' @family Read Functions
 #' @author Michael Steinbaugh
