@@ -97,6 +97,8 @@ validObject(x)
 \item \code{\link[SingleCellExperiment:SingleCellExperiment]{SingleCellExperiment::SingleCellExperiment()}}.
 \item \code{.S4methods(class = "bcbioSingleCell")}.
 }
+
+Other S4 Class Definition: \code{\link{[,bcbioSingleCell,ANY,ANY,ANY-method}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner
