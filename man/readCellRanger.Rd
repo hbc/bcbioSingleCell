@@ -53,12 +53,15 @@ based on the 10X \code{refdataDir} YAML metadata. Therefore, these parameters
 cannot be set by the user.
 }
 \examples{
-uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
-readCellRanger(
-    uploadDir = uploadDir,
+x <- readCellRanger(
+    uploadDir = system.file(
+        "extdata/cellranger",
+        package = "bcbioSingleCell"
+    ),
     refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 )
+show(x)
 }
 \seealso{
 Other Read Functions: \code{\link{readCellTypeMarkers}}

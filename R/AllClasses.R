@@ -411,7 +411,7 @@ bcbioSingleCell <- function(
         "ensemblRelease" = as.integer(ensemblRelease),
         "rowRangesMetadata" = rowRangesMetadata,
         "sampleData" = sampleData,
-        "cell2sample" = cell2sample,
+        "cell2sample" = as.factor(cell2sample),
         "umiType" = umiType,
         "allSamples" = allSamples,
         "prefilter" = prefilter,
