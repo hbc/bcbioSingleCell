@@ -15,7 +15,8 @@ This is an [R][] package.
 
 ```r
 source("https://bioconductor.org/biocLite.R")
-biocLite("devtools")
+biocLite("remotes")
+biocLite("GenomeInfoDbData")
 biocLite(
     "hbc/bcbioSingleCell",
     dependencies = c("Depends", "Imports", "Suggests")
