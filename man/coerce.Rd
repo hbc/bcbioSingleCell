@@ -30,6 +30,9 @@ print(x)
 \item \code{\link[methods:as]{methods::as()}}.
 \item \code{\link[methods:coerce]{methods::coerce()}}.
 }
+
+Other S4 Class Definition: \code{\link{bcbioSingleCell}},
+  \code{\link{show}}, \code{\link{subset}}
 }
 \author{
 Michael Steinbaugh

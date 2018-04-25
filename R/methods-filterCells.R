@@ -82,11 +82,11 @@ setMethod(
         assert_all_are_non_negative(as.numeric(params))
 
         # Filter low quality cells =============================================
-        summary <- list()
-        summary[["prefilter"]] <- paste(
-            nrow(object), "genes",
-            "/",
-            ncol(object), "cells"
+        summaryCells <- character()
+        summaryCells[["prefilter"]] <- paste(
+            paste(.paddedCount(ncol(object)), "cells"),
+            "prefilter",
+            sep = " | "
         )
 
         # minUMIs --------------------------------------------------------------
@@ -113,10 +113,10 @@ setMethod(
         if (!nrow(metrics)) {
             stop("No cells passed `minUMIs` cutoff")
         }
-        summary[["minUMIs"]] <- paste(
+        summaryCells[["minUMIs"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("minUMIs", ">=", toString(minUMIs))
+            paste("minUMIs", ">=", toString(minUMIs)),
+            sep = " | "
         )
 
         # maxUMIs --------------------------------------------------------------
@@ -143,10 +143,10 @@ setMethod(
         if (!nrow(metrics)) {
             stop("No cells passed `maxUMIs` cutoff")
         }
-        summary[["maxUMIs"]] <- paste(
+        summaryCells[["maxUMIs"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("maxUMIs", "<=", toString(maxUMIs))
+            paste("maxUMIs", "<=", toString(maxUMIs)),
+            sep = " | "
         )
 
         # minGenes -------------------------------------------------------------
@@ -173,10 +173,10 @@ setMethod(
         if (!nrow(metrics)) {
             stop("No cells passed `minGenes` cutoff")
         }
-        summary[["minGenes"]] <- paste(
+        summaryCells[["minGenes"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("minGenes", ">=", toString(minGenes))
+            paste("minGenes", ">=", toString(minGenes)),
+            sep = " | "
         )
 
         # maxGenes -------------------------------------------------------------
@@ -203,10 +203,10 @@ setMethod(
         if (!nrow(metrics)) {
             stop("No cells passed `maxGenes` cutoff")
         }
-        summary[["maxGenes"]] <- paste(
+        summaryCells[["maxGenes"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("maxGenes", "<=", toString(maxGenes))
+            paste("maxGenes", "<=", toString(maxGenes)),
+            sep = " | "
         )
 
         # maxMitoRatio ---------------------------------------------------------
@@ -233,10 +233,10 @@ setMethod(
         if (!nrow(metrics)) {
             stop("No cells passed `maxMitoRatio` cutoff")
         }
-        summary[["maxMitoRatio"]] <- paste(
+        summaryCells[["maxMitoRatio"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("maxMitoRatio", "<=", toString(maxMitoRatio))
+            paste("maxMitoRatio", "<=", toString(maxMitoRatio)),
+            sep = " | "
         )
 
         # minNovelty -----------------------------------------------------------
@@ -263,16 +263,22 @@ setMethod(
         if (!nrow(metrics)) {
             stop("No cells passed `minNovelty` cutoff")
         }
-        summary[["minNovelty"]] <- paste(
+        summaryCells[["minNovelty"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            "|",
-            paste("minNovelty", "<=", toString(minNovelty))
+            paste("minNovelty", "<=", toString(minNovelty)),
+            sep = " | "
         )
 
         cells <- sort(rownames(metrics))
         assert_is_subset(cells, colnames(object))
 
         # Filter low quality genes =============================================
+        summaryGenes <- character()
+        summaryGenes[["prefilter"]] <- paste(
+            paste(.paddedCount(nrow(object)), "genes"),
+            "prefilter",
+            sep = " | "
+        )
         if (minCellsPerGene > 0L) {
             counts <- assay(object)
             numCells <- rowSums(counts > 0L)
@@ -283,10 +289,10 @@ setMethod(
         if (!length(genes)) {
             stop("No genes passed `minCellsPerGene` cutoff")
         }
-        summary[["minCellsPerGene"]] <- paste(
+        summaryGenes[["minCellsPerGene"]] <- paste(
             paste(.paddedCount(length(genes)), "genes"),
-            "|",
-            paste("minCellsPerGene", "<=", as.character(minCellsPerGene))
+            paste("minCellsPerGene", "<=", as.character(minCellsPerGene)),
+            sep = " | "
         )
 
         # Summary ==============================================================
@@ -300,20 +306,32 @@ setMethod(
             paste(">=", toString(minCellsPerGene), "cells per gene")
         )
         cat(c(
-            "Filtering parameters:",
+            "Parameters:",
             paste("  -", printParams),
             bcbioBase::separatorBar,
-            as.character(summary),
+            "Cells:",
+            as.character(summaryCells),
             bcbioBase::separatorBar,
+            "Genes:",
+            as.character(summaryGenes),
+            bcbioBase::separatorBar,
+            "Summary:",
             paste(
-                length(cells), "/", ncol(object), "cells passed filtering",
+                "  -",
+                length(cells), "of", ncol(object), "cells passed filtering",
                 paste0("(", percent(length(cells) / ncol(object)), ")")
             ),
             paste(
-                length(genes), "/", nrow(object), "genes passed filtering",
+                "  -",
+                length(genes), "of", nrow(object), "genes passed filtering",
                 paste0("(", percent(length(genes) / nrow(object)), ")")
             )
         ), sep = "\n")
+
+        summary <- list(
+            "cells" = summaryCells,
+            "genes" = summaryGenes
+        )
 
         # Metadata =============================================================
         metadata(object)[["cellularBarcodes"]] <- NULL

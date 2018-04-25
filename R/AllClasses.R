@@ -2,7 +2,7 @@ setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 
 
-#' @rdname bcbioSingleCell-class
+#' @rdname bcbioSingleCell
 #' @aliases NULL
 #' @exportClass bcbioSingleCell
 #' @usage NULL
@@ -16,7 +16,7 @@ bcbioSingleCell <- setClass(
 # Constructors =================================================================
 #' `bcbioSingleCell` Object and Constructor
 #'
-#' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and
+#' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
 #' designed to store a bcbio single-cell RNA-seq analysis. This class contains
 #' read counts saved as a sparse matrix (`dgCMatrix`), sample metadata, and cell
 #' quality control metrics.
@@ -30,7 +30,7 @@ bcbioSingleCell <- setClass(
 #' @note `bcbioSingleCell` extended `SummarizedExperiment` prior to v0.1.0,
 #'   where we migrated to `SingleCellExperiment`.
 #'
-#' @rdname bcbioSingleCell-class
+#' @rdname bcbioSingleCell
 #' @aliases bcbioSingleCell-class
 #' @family S4 Class Definition
 #' @docType class
@@ -39,7 +39,7 @@ bcbioSingleCell <- setClass(
 #' @inheritParams bcbioBase::prepareSummarizedExperiment
 #' @inheritParams general
 #' @param uploadDir Path to final upload directory. This path is set when
-#'   running `bcbio_nextgen -w template`.
+#'   running "`bcbio_nextgen -w template`".
 #' @param organism Organism name. Use the full latin name (e.g.
 #'   "Homo sapiens"), since this will be input downstream to
 #'   AnnotationHub and ensembldb, unless `gffFile` is set.
@@ -411,7 +411,7 @@ bcbioSingleCell <- function(
         "ensemblRelease" = as.integer(ensemblRelease),
         "rowRangesMetadata" = rowRangesMetadata,
         "sampleData" = sampleData,
-        "cell2sample" = cell2sample,
+        "cell2sample" = as.factor(cell2sample),
         "umiType" = umiType,
         "allSamples" = allSamples,
         "prefilter" = prefilter,

@@ -35,8 +35,8 @@ the discussion in \code{\link{setIs}} for the general concept.
 show(bcb_small)
 }
 \seealso{
-\code{\link{showMethods}} prints all the methods for one or more
-  functions.
+Other S4 Class Definition: \code{\link{bcbioSingleCell}},
+  \code{\link{coerce}}, \code{\link{subset}}
 }
 \author{
 Michael Steinbuagh

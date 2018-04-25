@@ -54,11 +54,12 @@ cannot be set by the user.
 }
 \examples{
 uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
-readCellRanger(
+x <- readCellRanger(
     uploadDir = uploadDir,
     refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 )
+show(x)
 }
 \seealso{
 Other Read Functions: \code{\link{readCellTypeMarkers}}

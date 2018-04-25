@@ -25,11 +25,12 @@
 #'
 #' @examples
 #' uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
-#' readCellRanger(
+#' x <- readCellRanger(
 #'     uploadDir = uploadDir,
 #'     refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
 #'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
+#' show(x)
 readCellRanger <- function(
     uploadDir,
     refdataDir,
@@ -68,8 +69,6 @@ readCellRanger <- function(
 
     # Sample metadata ==========================================================
     sampleData <- readSampleData(sampleMetadataFile)
-    assert_is_subset(sampleData[["description"]], basename(sampleDirs))
-    sampleData <- sanitizeSampleData(sampleData)
 
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
@@ -168,7 +167,7 @@ readCellRanger <- function(
     # Cell to sample mappings ==================================================
     # Check for multiplexed samples. CellRanger outputs these with a trailing
     # number (e.g. `-2$`, which we're sanitizing to `_2$`).
-    if (any(grepl(x = colnames(counts), pattern = "_2$"))) {
+    if (any(grepl(x = colnames(counts), pattern = "_\\d+$"))) {
         if (!"index" %in% colnames(sampleData)) {
             stop(paste(
                 "`index` column must be defined using",
@@ -176,7 +175,9 @@ readCellRanger <- function(
             ))
         }
         sampleDataMap <- sampleData %>%
-            rownames_to_column("sampleID")
+            rownames_to_column("sampleID") %>%
+            mutate(description = gsub("-\\d$", "", !!sym("description"))) %>%
+            mutate_if(is.character, as.factor)
         # Prepare data.frame of barcode mappings
         map <- str_match(
             string = colnames(counts),
@@ -192,7 +193,7 @@ readCellRanger <- function(
             mutate_all(as.factor) %>%
             # Note that we can't use minimal sample metadata here
             left_join(sampleDataMap, by = c("description", "index"))
-        cell2sample <- as.factor(map[["sampleID"]])
+        cell2sample <- map[["sampleID"]]
         names(cell2sample) <- map[["cellID"]]
     } else {
         cell2sample <- mapCellsToSamples(
@@ -211,7 +212,7 @@ readCellRanger <- function(
         "sampleMetadataFile" = as.character(sampleMetadataFile),
         "sampleData" = sampleData,
         "interestingGroups" = interestingGroups,
-        "cell2sample" = cell2sample,
+        "cell2sample" = as.factor(cell2sample),
         "organism" = organism,
         "genomeBuild" = as.character(genomeBuild),
         "ensemblRelease" = as.integer(ensemblRelease),

@@ -3,11 +3,11 @@
 #' Extract genes by row and cells by column from a `bcbioSingleCell` object.
 #'
 #' @name subset
+#' @family S4 Class Definition
 #' @author Michael Steinbaugh
-#' @keywords internal
 #'
 #' @inheritParams base::`[`
-#' @param ... Additional arguments.
+#' @inheritParams general
 #'
 #' @seealso
 #' - `help("[", "base")`.

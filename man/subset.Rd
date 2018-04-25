@@ -94,8 +94,10 @@ bcb_small[genes, cells]
 \item \code{help("[", "base")}.
 \item \code{selectSamples()} for subsetting based on sample metadata.
 }
+
+Other S4 Class Definition: \code{\link{bcbioSingleCell}},
+  \code{\link{coerce}}, \code{\link{show}}
 }
 \author{
 Michael Steinbaugh
 }
-\keyword{internal}
