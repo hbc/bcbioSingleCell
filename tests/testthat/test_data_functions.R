@@ -25,6 +25,7 @@ test_that("bcbio : seurat_small", {
     expect_identical(
         lapply(x, class),
         list(
+            "rownames" = "character",
             "rowRanges" = structure("GRanges", package = "GenomicRanges"),
             "metadata" = "list"
         )
@@ -287,8 +288,8 @@ test_that("metrics : bcbioSingleCell", {
             "mitoRatio" = "numeric",
             "sampleID" = "factor",
             "sampleName" = "factor",
-            "description" = "factor",
             "fileName" = "factor",
+            "description" = "factor",
             "index" = "factor",
             "sequence" = "factor",
             "aggregate" = "factor",

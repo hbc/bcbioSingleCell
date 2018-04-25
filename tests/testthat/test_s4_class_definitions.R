@@ -103,8 +103,8 @@ test_that("interestingGroups<- : seurat", {
 # sampleData ===================================================================
 target <- DataFrame(
     "sampleName" = factor("rep_1"),
-    "description" = factor("multiplexed"),
     "fileName" = factor("multiplexed.fastq.gz"),
+    "description" = factor("multiplexed"),
     "index" = factor("1"),
     "sequence" = factor("TTTTTTTT"),
     "aggregate" = factor("sample"),
@@ -120,8 +120,8 @@ test_that("sampleData : bcbioSingleCell", {
         lapply(x, class),
         list(
             "sampleName"  = "factor",
-            "description" = "factor",
             "fileName" = "factor",
+            "description" = "factor",
             "index" = "factor",
             "sequence" = "factor",
             "aggregate" = "factor",
