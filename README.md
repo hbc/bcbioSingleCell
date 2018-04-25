@@ -72,7 +72,7 @@ Consult the [bcbio][] documentation for more information on how to configure an 
 
 ### FASTQ files demultiplexed per sample
 
-This is our current method for handling [10X Genomics CellRanger][cellranger] output (using `readCellRanger()`) and [Illumina SureCell][surecell] sample data.
+This is our current method for handling [10X Genomics Cell Ranger][cellranger] output (using `readCellRanger()`) and [Illumina SureCell][surecell] sample data.
 
 | fileName                | description | genotype |
 |-------------------------|-------------|----------|

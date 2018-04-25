@@ -16,7 +16,7 @@ bcbioSingleCell <- setClass(
 # Constructors =================================================================
 #' `bcbioSingleCell` Object and Constructor
 #'
-#' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and
+#' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
 #' designed to store a bcbio single-cell RNA-seq analysis. This class contains
 #' read counts saved as a sparse matrix (`dgCMatrix`), sample metadata, and cell
 #' quality control metrics.
@@ -39,7 +39,7 @@ bcbioSingleCell <- setClass(
 #' @inheritParams bcbioBase::prepareSummarizedExperiment
 #' @inheritParams general
 #' @param uploadDir Path to final upload directory. This path is set when
-#'   running `bcbio_nextgen -w template`.
+#'   running "`bcbio_nextgen -w template`".
 #' @param organism Organism name. Use the full latin name (e.g.
 #'   "Homo sapiens"), since this will be input downstream to
 #'   AnnotationHub and ensembldb, unless `gffFile` is set.

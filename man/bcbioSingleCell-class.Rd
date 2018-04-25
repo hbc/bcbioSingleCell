@@ -14,7 +14,7 @@ bcbioSingleCell(uploadDir, organism, sampleMetadataFile,
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
-running \code{bcbio_nextgen -w template}.}
+running "\code{bcbio_nextgen -w template}".}
 
 \item{organism}{Organism name. Use the full latin name (e.g.
 "Homo sapiens"), since this will be input downstream to
@@ -64,7 +64,7 @@ don't contain any genes, and is generally recommended.}
 \code{bcbioSingleCell}.
 }
 \description{
-\code{bcbioSingleCell} is an S4 class that extends \code{SingleCellExperiment}, and
+\code{bcbioSingleCell} is an S4 class that extends \code{SingleCellExperiment}, and is
 designed to store a bcbio single-cell RNA-seq analysis. This class contains
 read counts saved as a sparse matrix (\code{dgCMatrix}), sample metadata, and cell
 quality control metrics.
