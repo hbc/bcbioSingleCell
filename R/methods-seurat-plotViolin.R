@@ -78,10 +78,16 @@ setMethod(
                 fillArg <- NULL
             }
 
+            if (isTRUE(dark)) {
+                color <- NA
+            } else {
+                color <- "black"
+            }
+
             violin <- geom_violin(
                 mapping = aes_string(fill = "ident"),
                 # never include a color border
-                color = NA,
+                color = color,
                 scale = scale,
                 adjust = 1L,
                 trim = TRUE
