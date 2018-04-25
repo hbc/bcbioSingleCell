@@ -98,7 +98,8 @@ validObject(x)
 \item \code{.S4methods(class = "bcbioSingleCell")}.
 }
 
-Other S4 Class Definition: \code{\link{[,bcbioSingleCell,ANY,ANY,ANY-method}}
+Other S4 Class Definition: \code{\link{coerce}},
+  \code{\link{show}}, \code{\link{subset}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

@@ -2,8 +2,7 @@
 #'
 #' Extract genes by row and cells by column from a `bcbioSingleCell` object.
 #'
-#' @rdname subset
-#' @aliases subset
+#' @name subset
 #' @family S4 Class Definition
 #' @author Michael Steinbaugh
 #'
@@ -15,7 +14,6 @@
 #' - `selectSamples()` for subsetting based on sample metadata.
 #'
 #' @return `bcbioSingleCell`.
-#' @export
 #'
 #' @examples
 #' # bcbioSingleCell ====
@@ -32,6 +30,13 @@
 #'
 #' # Subset by both genes and cells
 #' bcb_small[genes, cells]
+NULL
+
+
+
+# Methods ======================================================================
+#' @rdname subset
+#' @export
 setMethod(
     "[",
     signature(

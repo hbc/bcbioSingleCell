@@ -2,6 +2,7 @@
 #'
 #' @name coerce
 #' @aliases as
+#' @family S4 Class Definition
 #' @author Michael Steinbaugh
 #'
 #' @inherit bcbioBase::coerce
