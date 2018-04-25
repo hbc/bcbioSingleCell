@@ -24,11 +24,9 @@
 #' @export
 #'
 #' @examples
+#' uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
 #' x <- readCellRanger(
-#'     uploadDir = system.file(
-#'         "extdata/cellranger",
-#'         package = "bcbioSingleCell"
-#'     ),
+#'     uploadDir = uploadDir,
 #'     refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
 #'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
