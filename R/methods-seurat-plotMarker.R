@@ -58,16 +58,8 @@ setMethod(
         # Plots ================================================================
         if (isTRUE(dark)) {
             violinFill <- "white"
-            dotColor <- scale_color_gradient(
-                low = "black",
-                high = "white"
-            )
         } else {
             violinFill <- "black"
-            dotColor <- scale_color_gradient(
-                low = "white",
-                high = "black"
-            )
         }
 
         tsne <- plotMarkerTSNE(
@@ -84,7 +76,6 @@ setMethod(
         dot <- plotDot(
             object,
             genes = gene,
-            color = dotColor,
             dark = dark
         )
 
