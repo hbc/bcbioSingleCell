@@ -39,6 +39,7 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         dark = TRUE,
+        grid = TRUE,
         legend = TRUE,
         aspectRatio = 1L,
         title = NULL,
@@ -157,7 +158,11 @@ setMethod(
 
         # Color palette
         if (isTRUE(dark)) {
-            p <- p + theme_midnight(aspect_ratio = aspectRatio)
+            p <- p +
+                theme_midnight(
+                    aspect_ratio = aspectRatio,
+                    grid = grid
+                )
             if (color == "auto") {
                 color <- scale_color_viridis(
                     option = "plasma",
@@ -165,7 +170,11 @@ setMethod(
                 )
             }
         } else {
-            p <- p + theme_paperwhite(aspect_ratio = aspectRatio)
+            p <- p +
+                theme_paperwhite(
+                    aspect_ratio = aspectRatio,
+                    grid = grid
+                )
             if (color == "auto") {
                 color <- scale_color_gradient(
                     low = "gray90",
