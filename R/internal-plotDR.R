@@ -20,6 +20,7 @@
     label = TRUE,
     labelSize = 6L,
     dark = TRUE,
+    grid = TRUE,
     aspectRatio = 1L,
     title = NULL
 ) {
@@ -55,9 +56,17 @@
 
     # Put the dark theme call before the other ggplot aesthetics
     if (isTRUE(dark)) {
-        p <- p + theme_midnight(aspect_ratio = aspectRatio)
+        p <- p +
+            theme_midnight(
+                aspect_ratio = aspectRatio,
+                grid = grid
+            )
     } else {
-        p <- p + theme_paperwhite(aspect_ratio = aspectRatio)
+        p <- p +
+            theme_paperwhite(
+                aspect_ratio = aspectRatio,
+                grid = grid
+            )
     }
 
     if (isTRUE(pointsAsNumbers)) {
@@ -102,6 +111,11 @@
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
+
+    # Improve the axis breaks
+    p <- p +
+        scale_x_continuous(breaks = pretty_breaks(n = 4L)) +
+        scale_y_continuous(breaks = pretty_breaks(n = 4L))
 
     p
 }
