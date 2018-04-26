@@ -107,11 +107,11 @@ setMethod(
             mapping = aes_string(x = "gene", y = "ident")
         ) +
             geom_point(
-                mapping = aes_string(color = "avgExpScale", size = "pctExp")
+                mapping = aes_string(color = "avgExpScale", size = "pctExp"),
+                show.legend = FALSE
             ) +
             scale_radius(range = c(0L, dotScale)) +
-            labs(x = "gene", y = "ident") +
-            theme(axis.text.x = element_text(angle = 90L))
+            labs(x = "gene", y = "ident")
 
         if (is(color, "ScaleContinuous")) {
             p <- p + color
