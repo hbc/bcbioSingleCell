@@ -57,7 +57,7 @@ setMethod(
     function(
         object,
         genes,
-        color,
+        color = "auto",
         dark = FALSE,
         grid = FALSE,
         colMin = -2.5,
@@ -112,7 +112,7 @@ setMethod(
 
         if (isTRUE(dark)) {
             p <- p + theme_midnight(grid = grid)
-            if (missing(color)) {
+            if (color == "auto") {
                 color <- scale_color_gradient(
                     low = "gray10",
                     high = "white"
@@ -120,7 +120,7 @@ setMethod(
             }
         } else {
             p <- p + theme_paperwhite(grid = grid)
-            if (missing(color)) {
+            if (color == "auto") {
                 color <- scale_color_gradient(
                     low = "gray90",
                     high = "black"
