@@ -23,9 +23,9 @@ setMethod(
     "fetchGeneData",
     signature("SingleCellExperiment"),
     function(object, genes) {
-        assert_is_character(genes)
-        counts(object) %>%
-            .[genes, , drop = FALSE] %>%
+        counts <- counts(object)
+        assert_is_subset(genes, rownames(counts))
+        counts[genes, , drop = FALSE] %>%
             as.matrix() %>%
             t()
     }
