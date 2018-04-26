@@ -24,7 +24,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, genes) {
         counts <- counts(object)
-        assert_is_subset(genes, rownames(counts))
+        assert_are_intersecting_sets(genes, rownames(counts))
         counts[genes, , drop = FALSE] %>%
             as.matrix() %>%
             t()
