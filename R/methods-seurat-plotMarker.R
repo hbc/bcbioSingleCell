@@ -95,9 +95,9 @@ setMethod(
             fill = violinFill,
             dark = dark,
             return = "list"
-        ) %>%
-            # Get the ggplot object from the list return
-            .[[1L]]
+        )
+        # Get the ggplot object from the list return
+        violin <- violin[[1L]]
 
         # Return ===============================================================
         if (return == "grid") {
