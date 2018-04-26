@@ -28,6 +28,8 @@ must contain \code{geneID} and \code{geneName}.}
 \item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
 first argument in the vector.}
 
+\item{grid}{Show major grid lines but hide axis lines.}
+
 \item{headerLevel}{R Markdown header level.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be

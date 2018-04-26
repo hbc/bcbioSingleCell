@@ -11,7 +11,7 @@
 plotCellTypesPerCluster(object, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
-  color = "auto", dark = TRUE, headerLevel = 2L)
+  color = "auto", dark = TRUE, grid = TRUE, headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
@@ -28,6 +28,8 @@ color definitions are desired, we recommend using
 
 \item{dark}{Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
+
+\item{grid}{Show major grid lines but hide axis lines.}
 
 \item{headerLevel}{R Markdown header level.}
 }

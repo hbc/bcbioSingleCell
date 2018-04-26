@@ -10,9 +10,9 @@
 \usage{
 plotFeatureTSNE(object, ...)
 
-\S4method{plotFeatureTSNE}{seurat}(object, features, pointSize = 0.5,
-  pointAlpha = 0.8, color = scale_color_gradient(low = "lightgray", high =
-  "purple"), dark = TRUE, label = TRUE, labelSize = 6L, legend = FALSE,
+\S4method{plotFeatureTSNE}{seurat}(object, features, color = "auto",
+  pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
+  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
   return = c("ggplot", "list"))
 }
 \arguments{
@@ -23,25 +23,29 @@ plotFeatureTSNE(object, ...)
 \item{features}{Character vector of features (e.g. gene expression, PC
 scores, number of genes detected).}
 
-\item{pointSize}{Cell point size.}
-
-\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.}
-
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{dark}{Plot against a dark background using
-\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
+\item{pointSize}{Cell point size.}
+
+\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
+the dataset, and some cells can be masked.}
 
 \item{label}{Overlay a cluster identitiy label on the plot.}
 
 \item{labelSize}{Size of the text label.}
 
+\item{dark}{Plot against a dark background using
+\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
+
+\item{grid}{Show major grid lines but hide axis lines.}
+
 \item{legend}{Show legends in paneled plots. Defaults to \code{FALSE} because
 typically these look too busy and the legends can get cut off.}
+
+\item{aspectRatio}{Aspect ratio.}
 
 \item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
 to the first argument in the vector.}
