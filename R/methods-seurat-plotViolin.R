@@ -96,6 +96,7 @@ setMethod(
                 adjust = 1L,
                 trim = TRUE
             )
+
             if (is_a_string(fill)) {
                 violin[["aes_params"]][["fill"]] <- fill
             }
