@@ -57,18 +57,15 @@ setMethod(
     function(
         object,
         genes,
-        color = scale_color_gradient(
-            low = "gray90",
-            high = "black"
-        ),
+        color,
         dark = FALSE,
+        grid = FALSE,
         colMin = -2.5,
         colMax = 2.5,
         dotMin = 0L,
         dotScale = 6L
     ) {
         assert_is_character(genes)
-        assertIsColorScaleContinuousOrNULL(color)
         assert_is_a_number(colMin)
         assert_is_a_number(colMax)
         assert_is_a_number(dotMin)
@@ -113,14 +110,26 @@ setMethod(
             scale_radius(range = c(0L, dotScale)) +
             labs(x = "gene", y = "ident")
 
-        if (is(color, "ScaleContinuous")) {
-            p <- p + color
+        if (isTRUE(dark)) {
+            p <- p + theme_midnight(grid = grid)
+            if (missing(color)) {
+                color <- scale_color_gradient(
+                    low = "gray10",
+                    high = "white"
+                )
+            }
+        } else {
+            p <- p + theme_paperwhite(grid = grid)
+            if (missing(color)) {
+                color <- scale_color_gradient(
+                    low = "gray90",
+                    high = "black"
+                )
+            }
         }
 
-        if (isTRUE(dark)) {
-            p <- p + theme_midnight()
-        } else {
-            p <- p + theme_paperwhite()
+        if (is(color, "ScaleContinuous")) {
+            p <- p + color
         }
 
         p
