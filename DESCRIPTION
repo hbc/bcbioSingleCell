@@ -46,7 +46,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment (>= 1.0),
-    bcbioBase (>= 0.2.8)
+    bcbioBase (>= 0.2.9)
 Imports:
     Biobase,
     BiocGenerics,
@@ -96,7 +96,7 @@ Suggests:
     tidyverse (>= 1.2),
     zingeR (>= 0.1)
 Remotes:
-    hbc/bcbioBase,
+    hbc/bcbioBase@develop,
     statOmics/zingeR,
     steinbaugh/basejump
 biocViews:
