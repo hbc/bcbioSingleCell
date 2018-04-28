@@ -139,6 +139,9 @@ setMethod(
         # Include `interestingGroups` column, if not NULL
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
+            if (is.null(interestingGroups)) {
+                interestingGroups <- "sampleName"
+            }
         }
         if (length(interestingGroups)) {
             data <- uniteInterestingGroups(data, interestingGroups)
