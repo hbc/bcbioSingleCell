@@ -55,10 +55,7 @@ test_that("interestingGroups : bcbioSingleCell", {
 })
 
 test_that("interestingGroups<- : bcbioSingleCell", {
-    error <- paste(
-        "is_subset : The element 'XXX' in interestingGroups is not",
-        "in colnames\\(x\\)"
-    )
+    error <- "The interesting groups \"XXX\" are not defined"
     expect_error(
         interestingGroups(bcb_small) <- "XXX",
         error
@@ -92,19 +89,14 @@ test_that("interestingGroups<- : seurat", {
         "sampleName"
     )
     x <- Seurat::pbmc_small
-    expect_error(
-        interestingGroups(x) <- "sampleName",
-        "object was not created with bcbioSingleCell"
-    )
+    expect_error(interestingGroups(x) <- "sampleName")
 })
 
 
 
 # sampleData ===================================================================
-target <- DataFrame(
+clean <- DataFrame(
     "sampleName" = factor("rep_1"),
-    "fileName" = factor("multiplexed.fastq.gz"),
-    "description" = factor("multiplexed"),
     "index" = factor("1"),
     "sequence" = factor("TTTTTTTT"),
     "aggregate" = factor("sample"),
@@ -113,29 +105,37 @@ target <- DataFrame(
     row.names = factor("multiplexed_AAAAAAAA")
 )
 
+all <- list(
+    "sampleName"  = "factor",
+    "fileName"  = "factor",
+    "description"  = "factor",
+    "index" = "factor",
+    "sequence" = "factor",
+    "aggregate" = "factor",
+    "revcomp" = "factor",
+    "interestingGroups" = "factor"
+)
+
 test_that("sampleData : bcbioSingleCell", {
-    x <- sampleData(bcb_small)
-    expect_is(x, "DataFrame")
-    expect_identical(
-        lapply(x, class),
-        list(
-            "sampleName"  = "factor",
-            "fileName" = "factor",
-            "description" = "factor",
-            "index" = "factor",
-            "sequence" = "factor",
-            "aggregate" = "factor",
-            "revcomp" = "factor",
-            "interestingGroups" = "factor"
-        )
-    )
-    expect_identical(x, target)
+    # Clean mode (factor columns only)
+    x <- sampleData(bcb_small, clean = TRUE)
+    expect_identical(x, clean)
+
+    # Return all columns
+    x <- sampleData(bcb_small, clean = FALSE)
+    expect_identical(lapply(x, class), all)
 })
 
 test_that("sampleData : seurat", {
-    x <- sampleData(seurat_small)
-    expect_identical(x, target)
+    # Clean mode (factor columns only)
+    x <- sampleData(seurat_small, clean = TRUE)
+    expect_identical(x, clean)
 
+    # Return all columns
+    x <- sampleData(seurat_small, clean = FALSE)
+    expect_identical(lapply(x, class), all)
+
+    # Minimal data for other seurat objects
     x <- sampleData(Seurat::pbmc_small)
     y <- DataFrame(
         "sampleName" = factor("SeuratProject"),
