@@ -8,12 +8,11 @@
 #' @name sampleData
 #' @family S4 Class Definitions
 #' @author Michael Steinbaugh
+#' @inherit bcbioBase::sampleData
 #'
 #' @importFrom bcbioBase sampleData sampleData<-
 #'
 #' @inheritParams general
-#'
-#' @return `data.frame`.
 #'
 #' @examples
 #' # bcbioSingleCell ====
@@ -40,24 +39,39 @@ setMethod(
     function(
         object,
         interestingGroups,
+        clean = TRUE,
         return = c("DataFrame", "data.frame", "kable")
     ) {
         validObject(object)
+        assert_is_a_bool(clean)
+        return <- match.arg(return)
+
+        data <- metadata(object)[["sampleData"]]
+        assert_is_data.frame(data)
+
+        # Only return factor columns, if desired
+        if (isTRUE(clean)) {
+            data <- data[, vapply(data, is.factor, logical(1L)), drop = FALSE]
+            # Drop remaining blacklisted columns
+            setdiff <- setdiff(colnames(data), bcbioBase::metadataBlacklist)
+            data <- data[, setdiff, drop = FALSE]
+        }
+
+        # Include `interestingGroups` column, if not NULL
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
-        if (!is.character(interestingGroups)) {
-            interestingGroups <- "sampleName"
+        if (length(interestingGroups)) {
+            data <- uniteInterestingGroups(data, interestingGroups)
         }
-        return <- match.arg(return)
-        data <- metadata(object)[["sampleData"]]
-        assert_is_any_of(data, c("DataFrame", "data.frame"))
-        data <- uniteInterestingGroups(data, interestingGroups)
-        data <- sanitizeSampleData(data)
-        assertHasRownames(data)
+
+        # Arrange rows by `sampleName` column, if defined
+        if ("sampleName" %in% colnames(data)) {
+            data <- data[order(data[["sampleName"]]), , drop = FALSE]
+        }
+
+        # Return
         if (return == "kable") {
-            blacklist <- c("description", "sampleID")
-            data <- data[, setdiff(colnames(data), blacklist), drop = FALSE]
             kable(as.data.frame(data), row.names = FALSE)
         } else {
             as(data, return)
@@ -75,17 +89,15 @@ setMethod(
     function(
         object,
         interestingGroups,
-        return = c("DataFrame", "data.frame")
+        clean = TRUE,
+        return = c("DataFrame", "data.frame", "kable")
     ) {
         validObject(object)
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (!is.character(interestingGroups)) {
-            interestingGroups <- "sampleName"
-        }
         return <- match.arg(return)
+
+        # Use stashed sampleData, if created with bcbioSingleCell
         data <- metadata(object)[["sampleData"]]
+        # Otherwise, generate on the fly
         if (is.null(data)) {
             data <- slot(object, "meta.data")
             assert_is_data.frame(data)
@@ -93,6 +105,7 @@ setMethod(
             if (!"sampleName" %in% colnames(data)) {
                 data[["sampleName"]] <- data[["orig.ident"]]
             }
+            # Remove columns that map to cells and aren't unique per sample
             blacklist <- paste(
                 c(
                     "^cellularBarcode$",
@@ -114,12 +127,34 @@ setMethod(
             rownames(data) <- makeNames(data[["sampleName"]], unique = TRUE)
             data
         }
-        if (is.character(interestingGroups)) {
+
+        # Only return factor columns, if desired
+        if (isTRUE(clean)) {
+            data <- data[, vapply(data, is.factor, logical(1L)), drop = FALSE]
+            # Drop remaining blacklisted columns
+            setdiff <- setdiff(colnames(data), bcbioBase::metadataBlacklist)
+            data <- data[, setdiff, drop = FALSE]
+        }
+
+        # Include `interestingGroups` column, if not NULL
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        if (length(interestingGroups)) {
             data <- uniteInterestingGroups(data, interestingGroups)
         }
-        data <- sanitizeSampleData(data)
-        assertHasRownames(data)
-        as(data, return)
+
+        # Arrange rows by `sampleName` column, if defined
+        if ("sampleName" %in% colnames(data)) {
+            data <- data[order(data[["sampleName"]]), , drop = FALSE]
+        }
+
+        # Return
+        if (return == "kable") {
+            kable(as.data.frame(data), row.names = FALSE)
+        } else {
+            as(data, return)
+        }
     }
 )
 
