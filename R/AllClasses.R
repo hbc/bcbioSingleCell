@@ -77,7 +77,7 @@ bcbioSingleCell <- setClass(
 #' - `.S4methods(class = "bcbioSingleCell")`.
 #'
 #' @examples
-#' uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
+#' uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")
 #' x <- bcbioSingleCell(
 #'     uploadDir = uploadDir,
 #'     organism = "Homo sapiens",
