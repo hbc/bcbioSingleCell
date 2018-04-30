@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotQC(bcb_small)
+#' plotQC(indrops_small)
 #'
 #' # SingleCellExperiment ====
 #' suppressWarnings(plotQC(cellranger_small))

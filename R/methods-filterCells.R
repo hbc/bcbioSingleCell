@@ -29,8 +29,8 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' show(bcb_small)
-#' x <- filterCells(bcb_small, minGenes = 0L)
+#' show(indrops_small)
+#' x <- filterCells(indrops_small, minGenes = 0L)
 #' show(x)
 #'
 #' # SingleCellExperiment ====

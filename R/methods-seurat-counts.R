@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' counts(bcb_small) %>% glimpse()
+#' counts(indrops_small) %>% glimpse()
 #' counts(cellranger_small) %>% glimpse()
 #'
 #' # seurat ====

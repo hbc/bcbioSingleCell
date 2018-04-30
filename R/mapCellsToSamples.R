@@ -16,8 +16,8 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' cells <- colnames(bcb_small)
-#' samples <- rownames(sampleData(bcb_small))
+#' cells <- colnames(indrops_small)
+#' samples <- rownames(sampleData(indrops_small))
 #' map <- mapCellsToSamples(cells, samples)
 #' head(map)
 #' levels(map)

@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotGenesPerCell(bcb_small)
+#' plotGenesPerCell(indrops_small)
 #'
 #' # SingleCellExperiment ====
 #' plotGenesPerCell(cellranger_small)

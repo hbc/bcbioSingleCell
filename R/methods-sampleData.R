@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' x <- bcb_small
+#' x <- indrops_small
 #' sampleData(x) %>% glimpse()
 #' sampleData(x)[["batch"]] <- 1L
 #' sampleData(x) %>% glimpse()

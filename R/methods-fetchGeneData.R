@@ -10,8 +10,8 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' genes <- rownames(bcb_small) %>% head(2L)
-#' fetchGeneData(bcb_small, genes = genes) %>% glimpse()
+#' genes <- rownames(indrops_small) %>% head(2L)
+#' fetchGeneData(indrops_small, genes = genes) %>% glimpse()
 NULL
 
 

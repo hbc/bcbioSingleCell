@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotReadsPerCell(bcb_small)
+#' plotReadsPerCell(indrops_small)
 #'
 #' # SingleCellExperiment ====
 #' # Only contains UMI counts

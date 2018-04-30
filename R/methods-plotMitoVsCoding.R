@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotMitoVsCoding(bcb_small)
+#' plotMitoVsCoding(indrops_small)
 #'
 #' # SingleCellExperiment ====
 #' plotMitoVsCoding(cellranger_small)
