@@ -11,10 +11,13 @@ known_markers_small
 \description{
 Known Markers Example
 }
+\examples{
+glimpse(known_markers_small)
+}
 \seealso{
 Other Minimal Example Data: \code{\link{all_markers_small}},
-  \code{\link{bcb_small}}, \code{\link{cellranger_small}},
-  \code{\link{seurat_small}}
+  \code{\link{cellranger_small}},
+  \code{\link{indrops_small}}, \code{\link{seurat_small}}
 }
 \author{
 Michael Steinbaugh

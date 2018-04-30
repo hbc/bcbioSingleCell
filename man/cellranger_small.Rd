@@ -3,17 +3,20 @@
 \docType{data}
 \name{cellranger_small}
 \alias{cellranger_small}
-\title{CellRanger Example}
+\title{Cell Ranger Example}
 \format{An object of class \code{SingleCellExperiment} with 500 rows and 500 columns.}
 \usage{
 cellranger_small
 }
 \description{
-CellRanger Example
+Cell Ranger Example
+}
+\examples{
+show(cellranger_small)
 }
 \seealso{
 Other Minimal Example Data: \code{\link{all_markers_small}},
-  \code{\link{bcb_small}},
+  \code{\link{indrops_small}},
   \code{\link{known_markers_small}},
   \code{\link{seurat_small}}
 }

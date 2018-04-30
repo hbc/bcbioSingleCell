@@ -33,7 +33,7 @@ This function helps us visualize the dropout rate.
 }
 \examples{
 # bcbioSingleCell ====
-plotZerosVsDepth(bcb_small)
+plotZerosVsDepth(indrops_small)
 
 # SingleCellExperiment ====
 plotZerosVsDepth(cellranger_small)

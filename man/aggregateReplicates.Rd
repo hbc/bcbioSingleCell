@@ -16,7 +16,7 @@ Aggregate Replicates
 }
 \examples{
 # bcbioSingleCell ====
-x <- aggregateReplicates(bcb_small)
+x <- aggregateReplicates(indrops_small)
 sampleData(x)
 }
 \seealso{

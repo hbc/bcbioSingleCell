@@ -32,7 +32,7 @@ complete, original object, with misleading results.  See the
 the discussion in \code{\link{setIs}} for the general concept.
 }
 \examples{
-show(bcb_small)
+show(indrops_small)
 }
 \seealso{
 Other S4 Class Definition: \code{\link{bcbioSingleCell}},

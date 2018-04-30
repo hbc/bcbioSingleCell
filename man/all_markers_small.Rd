@@ -11,9 +11,12 @@ all_markers_small
 \description{
 Sanitized Markers Example
 }
+\examples{
+glimpse(all_markers_small)
+}
 \seealso{
-Other Minimal Example Data: \code{\link{bcb_small}},
-  \code{\link{cellranger_small}},
+Other Minimal Example Data: \code{\link{cellranger_small}},
+  \code{\link{indrops_small}},
   \code{\link{known_markers_small}},
   \code{\link{seurat_small}}
 }

@@ -43,7 +43,7 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 }
 \examples{
 # bcbioSingleCell ====
-plotNovelty(bcb_small)
+plotNovelty(indrops_small)
 
 # SingleCellExperiment ====
 plotNovelty(cellranger_small)
