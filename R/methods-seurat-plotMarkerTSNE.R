@@ -99,22 +99,18 @@ setMethod(
 
         # Customize legend
         if (isTRUE(legend)) {
+            # Make the guide longer than normal, to improve appearance of values
+            # containing a decimal point
             p <- p +
-                # Make the guide longer than normal, to improve appearance of
-                # values containing a decimal point
                 guides(
                     color = guide_colorbar(
                         barwidth = 20L,
                         barheight = 1L,
                         direction = "horizontal"
                     )
-                ) +
-                theme(
-                    legend.justification = "center",
-                    legend.position = "bottom"
                 )
         } else {
-            p <- p + theme(legend.position = "none")
+            p <- p + guides(color = "none")
         }
 
         if (isTRUE(pointsAsNumbers)) {

@@ -116,7 +116,7 @@ setMethod(
             }
 
             if (!isTRUE(legend)) {
-                p <- p + theme(legend.position = "none")
+                p <- p + guides(color = "none")
             }
 
             p
