@@ -63,7 +63,7 @@ Imports:
     assertive.sets,
     assertive.strings,
     assertive.types,
-    basejump (>= 0.5.2),
+    basejump,
     cowplot,
     dplyr (>= 0.7),
     ggplot2 (>= 2.2.1),
