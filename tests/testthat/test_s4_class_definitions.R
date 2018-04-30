@@ -4,7 +4,7 @@ context("S4 Class Definitions")
 
 # bcbioSingleCell ==============================================================
 test_that("bcbioSingleCell", {
-    uploadDir <- system.file("extdata/indrop", package = "bcbioSingleCell")
+    uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")
     sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
 
     # Organism
@@ -73,7 +73,7 @@ test_that("interestingGroups : seurat", {
     )
     expect_identical(
         interestingGroups(Seurat::pbmc_small),
-        NULL
+        "sampleName"
     )
 })
 
