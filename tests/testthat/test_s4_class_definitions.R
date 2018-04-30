@@ -32,7 +32,7 @@ test_that("bcbioSingleCell", {
 colnames <- c("geneID", "geneName")
 
 test_that("gene2symbol : bcbioSingleCell", {
-    x <- gene2symbol(bcb_small)
+    x <- gene2symbol(indrops_small)
     expect_is(x, "data.frame")
     expect_identical(colnames(x), colnames)
 })
@@ -49,7 +49,7 @@ test_that("gene2symbol : seurat", {
 # interestingGroups ============================================================
 test_that("interestingGroups : bcbioSingleCell", {
     expect_identical(
-        interestingGroups(bcb_small),
+        interestingGroups(indrops_small),
         "sampleName"
     )
 })
@@ -57,7 +57,7 @@ test_that("interestingGroups : bcbioSingleCell", {
 test_that("interestingGroups<- : bcbioSingleCell", {
     error <- "The interesting groups \"XXX\" are not defined"
     expect_error(
-        interestingGroups(bcb_small) <- "XXX",
+        interestingGroups(indrops_small) <- "XXX",
         error
     )
     expect_error(
@@ -78,9 +78,9 @@ test_that("interestingGroups : seurat", {
 })
 
 test_that("interestingGroups<- : seurat", {
-    interestingGroups(bcb_small) <- "sampleName"
+    interestingGroups(indrops_small) <- "sampleName"
     expect_identical(
-        interestingGroups(bcb_small),
+        interestingGroups(indrops_small),
         "sampleName"
     )
     interestingGroups(seurat_small) <- "sampleName"
@@ -118,11 +118,11 @@ all <- list(
 
 test_that("sampleData : bcbioSingleCell", {
     # Clean mode (factor columns only)
-    x <- sampleData(bcb_small, clean = TRUE)
+    x <- sampleData(indrops_small, clean = TRUE)
     expect_identical(x, clean)
 
     # Return all columns
-    x <- sampleData(bcb_small, clean = FALSE)
+    x <- sampleData(indrops_small, clean = FALSE)
     expect_identical(lapply(x, class), all)
 })
 
