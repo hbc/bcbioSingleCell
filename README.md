@@ -61,26 +61,26 @@ The [inDrops][] library version is automatically detected by [bcbio][], but ensu
 
 Consult the [bcbio][] documentation for more information on how to configure an [inDrops][] run prior to loading into [R][] with the `bcbioSingleCell()` function.
 
-| fileName                 | description | index | sequence | sampleName |
-| -------------------------|-------------|-------|----------|------------|
-| indrops_run1_R1.fastq.gz | run1        | 17    | GGAGGTAA | sample1    |
-| indrops_run1_R1.fastq.gz | run1        | 18    | CATAACTG | sample2    |
-| indrops_run2_R1.fastq.gz | run2        | 12    | GCGTAAGA | sample3    |
-| indrops_run2_R1.fastq.gz | run2        | 13    | CTATTAAG | sample4    |
-| indrops_run2_R1.fastq.gz | run2        | 14    | AAGGCTAT | sample5    |
-| indrops_run2_R1.fastq.gz | run2        | 15    | GAGCCTTA | sample6    |
-| indrops_run2_R1.fastq.gz | run2        | 16    | TTATGCGA | sample7    |
+| description | index | sequence | sampleName |
+|-------------|-------|----------|------------|
+| run1        | 17    | GGAGGTAA | sample1    |
+| run1        | 18    | CATAACTG | sample2    |
+| run2        | 12    | GCGTAAGA | sample3    |
+| run2        | 13    | CTATTAAG | sample4    |
+| run2        | 14    | AAGGCTAT | sample5    |
+| run2        | 15    | GAGCCTTA | sample6    |
+| run2        | 16    | TTATGCGA | sample7    |
 
 ### FASTQ files demultiplexed per sample
 
 This is our current method for handling [10X Genomics Cell Ranger][cellranger] output (using `readCellRanger()`) and [Illumina SureCell][surecell] sample data.
 
-| fileName                | description | genotype |
-|-------------------------|-------------|----------|
-| 10x_sample1_R1.fastq.gz | sample1     | wildtype |
-| 10x_sample2_R1.fastq.gz | sample2     | knockout |
-| 10x_sample3_R1.fastq.gz | sample3     | wildtype |
-| 10x_sample4_R1.fastq.gz | sample4     | knockout |
+| description | genotype |
+|-------------|----------|
+| sample1     | wildtype |
+| sample2     | knockout |
+| sample3     | wildtype |
+| sample4     | knockout |
 
 
 ## Troubleshooting
