@@ -63,13 +63,13 @@ Consult the [bcbio][] documentation for more information on how to configure an 
 
 | description | index | sequence | sampleName |
 |-------------|-------|----------|------------|
-| run1        | 17    | GGAGGTAA | sample1    |
-| run1        | 18    | CATAACTG | sample2    |
-| run2        | 12    | GCGTAAGA | sample3    |
-| run2        | 13    | CTATTAAG | sample4    |
-| run2        | 14    | AAGGCTAT | sample5    |
-| run2        | 15    | GAGCCTTA | sample6    |
-| run2        | 16    | TTATGCGA | sample7    |
+| indrops1    | 17    | GGAGGTAA | sample1    |
+| indrops1    | 18    | CATAACTG | sample2    |
+| indrops2    | 12    | GCGTAAGA | sample3    |
+| indrops2    | 13    | CTATTAAG | sample4    |
+| indrops2    | 14    | AAGGCTAT | sample5    |
+| indrops2    | 15    | GAGCCTTA | sample6    |
+| indrops2    | 16    | TTATGCGA | sample7    |
 
 ### FASTQ files demultiplexed per sample
 
