@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
       </span>
     </div>
 
@@ -110,9 +110,9 @@
     <pre class="usage"><span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>features</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_gradient</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"lightgray"</span>, <span class='kw'>high</span> <span class='kw'>=</span>
-  <span class='st'>"purple"</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+<span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>features</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
   <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ggplot"</span>, <span class='st'>"list"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -132,15 +132,6 @@
 scores, number of genes detected).</p></td>
     </tr>
     <tr>
-      <th>pointSize</th>
-      <td><p>Cell point size.</p></td>
-    </tr>
-    <tr>
-      <th>pointAlpha</th>
-      <td><p>Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.</p></td>
-    </tr>
-    <tr>
       <th>color</th>
       <td><p>Desired ggplot color scale. Must supply discrete values. When
 set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
@@ -148,9 +139,13 @@ color definitions are desired, we recommend using
 <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>dark</th>
-      <td><p>Plot against a dark background using
-<code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
+      <th>pointSize</th>
+      <td><p>Cell point size.</p></td>
+    </tr>
+    <tr>
+      <th>pointAlpha</th>
+      <td><p>Alpha transparency level. Useful when there many cells in
+the dataset, and some cells can be masked.</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -161,9 +156,22 @@ color definitions are desired, we recommend using
       <td><p>Size of the text label.</p></td>
     </tr>
     <tr>
+      <th>dark</th>
+      <td><p>Plot against a dark background using
+<code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>grid</th>
+      <td><p>Show major grid lines but hide axis lines.</p></td>
+    </tr>
+    <tr>
       <th>legend</th>
       <td><p>Show legends in paneled plots. Defaults to <code>FALSE</code> because
 typically these look too busy and the legends can get cut off.</p></td>
+    </tr>
+    <tr>
+      <th>aspectRatio</th>
+      <td><p>Aspect ratio.</p></td>
     </tr>
     <tr>
       <th>return</th>

@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
       </span>
     </div>
 
@@ -122,7 +122,6 @@
 <p>Consult the <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> documentation for more information on how to configure an <a href="https://github.com/indrops/indrops">inDrops</a> run prior to loading into <a href="https://www.r-project.org">R</a> with the <code><a href="reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> function.</p>
 <table class="table">
 <thead><tr class="header">
-<th>fileName</th>
 <th>description</th>
 <th>index</th>
 <th>sequence</th>
@@ -130,50 +129,43 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>indrops_run1_R1.fastq.gz</td>
-<td>run1</td>
+<td>indrops1</td>
 <td>17</td>
 <td>GGAGGTAA</td>
 <td>sample1</td>
 </tr>
 <tr class="even">
-<td>indrops_run1_R1.fastq.gz</td>
-<td>run1</td>
+<td>indrops1</td>
 <td>18</td>
 <td>CATAACTG</td>
 <td>sample2</td>
 </tr>
 <tr class="odd">
-<td>indrops_run2_R1.fastq.gz</td>
-<td>run2</td>
+<td>indrops2</td>
 <td>12</td>
 <td>GCGTAAGA</td>
 <td>sample3</td>
 </tr>
 <tr class="even">
-<td>indrops_run2_R1.fastq.gz</td>
-<td>run2</td>
+<td>indrops2</td>
 <td>13</td>
 <td>CTATTAAG</td>
 <td>sample4</td>
 </tr>
 <tr class="odd">
-<td>indrops_run2_R1.fastq.gz</td>
-<td>run2</td>
+<td>indrops2</td>
 <td>14</td>
 <td>AAGGCTAT</td>
 <td>sample5</td>
 </tr>
 <tr class="even">
-<td>indrops_run2_R1.fastq.gz</td>
-<td>run2</td>
+<td>indrops2</td>
 <td>15</td>
 <td>GAGCCTTA</td>
 <td>sample6</td>
 </tr>
 <tr class="odd">
-<td>indrops_run2_R1.fastq.gz</td>
-<td>run2</td>
+<td>indrops2</td>
 <td>16</td>
 <td>TTATGCGA</td>
 <td>sample7</td>
@@ -187,28 +179,23 @@
 <p>This is our current method for handling <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">10X Genomics Cell Ranger</a> output (using <code><a href="reference/readCellRanger.html">readCellRanger()</a></code>) and <a href="https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html">Illumina SureCell</a> sample data.</p>
 <table class="table">
 <thead><tr class="header">
-<th>fileName</th>
 <th>description</th>
 <th>genotype</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>10x_sample1_R1.fastq.gz</td>
 <td>sample1</td>
 <td>wildtype</td>
 </tr>
 <tr class="even">
-<td>10x_sample2_R1.fastq.gz</td>
 <td>sample2</td>
 <td>knockout</td>
 </tr>
 <tr class="odd">
-<td>10x_sample3_R1.fastq.gz</td>
 <td>sample3</td>
 <td>wildtype</td>
 </tr>
 <tr class="even">
-<td>10x_sample4_R1.fastq.gz</td>
 <td>sample4</td>
 <td>knockout</td>
 </tr>

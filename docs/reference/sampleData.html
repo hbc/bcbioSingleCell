@@ -63,7 +63,7 @@ the samples." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
       </span>
     </div>
 
@@ -115,11 +115,11 @@ the samples.</p>
 
     <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"kable"</span>))
+  <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"kable"</span>))
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>))
+<span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"kable"</span>))
 
 <span class='co'># S4 method for SingleCellExperiment,DataFrame</span>
 <span class='fu'>sampleData</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
@@ -136,35 +136,41 @@ the samples.</p>
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code>sampleData()</code> colnames.</p></td>
+      <td><p><code>character</code> vector defining the groups of interest.</p></td>
+    </tr>
+    <tr>
+      <th>clean</th>
+      <td><p><em>Recommended.</em> Only return <code>factor</code> columns not defined in
+metadataBlacklist.</p></td>
     </tr>
     <tr>
       <th>return</th>
-      <td><p>Return type. Uses <code><a href='http://www.rdocumentation.org/packages/base/topics/match.arg'>base::match.arg()</a></code> internally and defaults
-to the first argument in the vector.</p></td>
+      <td><p>Object class to return. Uses <code>match.arg()</code> internally and picks
+the first item in the vector by default.</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>Object to assign.</p></td>
+      <td><p>Value to assign.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>data.frame</code>.</p>
+    <p>Data describing the samples.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>metadataBlacklist.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>bcb_small</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>indrops_small</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 8
+#&gt;   ..@ listData       :List of 6
 #&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ fileName         : Factor w/ 1 level "multiplexed.fastq.gz": 1
-#&gt;   .. ..$ description      : Factor w/ 1 level "multiplexed": 1
 #&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
 #&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
 #&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
@@ -176,10 +182,8 @@ to the first argument in the vector.</p></td>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 9
+#&gt;   ..@ listData       :List of 7
 #&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ fileName         : Factor w/ 1 level "multiplexed.fastq.gz": 1
-#&gt;   .. ..$ description      : Factor w/ 1 level "multiplexed": 1
 #&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
 #&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
 #&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
@@ -194,10 +198,8 @@ to the first argument in the vector.</p></td>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 8
+#&gt;   ..@ listData       :List of 6
 #&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ fileName         : Factor w/ 1 level "multiplexed.fastq.gz": 1
-#&gt;   .. ..$ description      : Factor w/ 1 level "multiplexed": 1
 #&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
 #&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
 #&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
@@ -209,10 +211,8 @@ to the first argument in the vector.</p></td>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 9
+#&gt;   ..@ listData       :List of 7
 #&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ fileName         : Factor w/ 1 level "multiplexed.fastq.gz": 1
-#&gt;   .. ..$ description      : Factor w/ 1 level "multiplexed": 1
 #&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
 #&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
 #&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
@@ -229,6 +229,8 @@ to the first argument in the vector.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

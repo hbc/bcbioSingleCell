@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
       </span>
     </div>
 
@@ -145,7 +145,6 @@
   <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
   <code>filterCells</code>,
-  <code><a href='interestingGroups.html'>interestingGroups</a></code>,
   <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>, <code><a href='metrics.html'>metrics</a></code>,
   <code><a href='selectSamples.html'>selectSamples</a></code>,
   <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
@@ -154,13 +153,13 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
 <span class='co'># mean</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>bcb_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating mean per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;         nCount     nUMI  nGene  nCoding  nMito log10GenesPerUMI mitoRatio
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>indrops_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating mean per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;         nCount     nUMI  nGene  nCoding  nMito log10GenesPerUMI mitoRatio
 #&gt; rep_1 42565.34 2203.768 320.73 1640.836 374.53        0.7600619 0.1954493</div><div class='input'>
 <span class='co'># median</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>bcb_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"median"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating median per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;        nCount   nUMI nGene nCoding nMito log10GenesPerUMI mitoRatio
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>indrops_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"median"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating median per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;        nCount   nUMI nGene nCoding nMito log10GenesPerUMI mitoRatio
 #&gt; rep_1 36119.5 1790.5   330  1263.5   256         0.763051 0.1154283</div><div class='input'>
 <span class='co'># sum</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>bcb_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"sum"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating sum per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;         nCount    nUMI  nGene nCoding  nMito
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>indrops_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"sum"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating sum per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;         nCount    nUMI  nGene nCoding  nMito
 #&gt; rep_1 21282671 1101884 160365  820418 187265</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

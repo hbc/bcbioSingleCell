@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Interesting Groups — interestingGroups • bcbioSingleCell</title>
+<title>inDrops Example — indrops_small • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Interesting Groups — interestingGroups" />
+<meta property="og:title" content="inDrops Example — indrops_small" />
 
-<meta property="og:description" content="Interesting Groups" />
+<meta property="og:description" content="inDrops Example" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
       </span>
     </div>
 
@@ -96,57 +96,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Interesting Groups</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-interestingGroups.R'><code>R/methods-interestingGroups.R</code></a></small>
-    <div class="hidden name"><code>interestingGroups.Rd</code></div>
+    <h1>inDrops Example</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <div class="hidden name"><code>indrops_small.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Interesting Groups</p>
+    <p>inDrops Example</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S4 method for SingleCellExperiment,character</span>
-<span class='fu'>interestingGroups</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>value</th>
-      <td><p>Object to assign.</p></td>
-    </tr>
-    </table>
+    <pre class="usage"><span class='no'>indrops_small</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>bcbioSingleCell</code> with 500 rows and 500 columns.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code>cell2sample</code>, <code><a href='counts.html'>counts</a></code>,
-  <code>fetchGeneData</code>, <code>fetchPCAData</code>,
-  <code>fetchTSNEData</code>,
-  <code>fetchTSNEExpressionData</code>,
-  <code>filterCells</code>,
-  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
-  <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
-  <code><a href='selectSamples.html'>selectSamples</a></code>,
-  <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
+    <div class='dont-index'><p>Other Minimal Example Data: <code><a href='all_markers_small.html'>all_markers_small</a></code>,
+  <code><a href='cellranger_small.html'>cellranger_small</a></code>,
+  <code><a href='known_markers_small.html'>known_markers_small</a></code>,
+  <code><a href='seurat_small.html'>seurat_small</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>interestingGroups</span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; [1] "sampleName"</div><div class='input'><span class='fu'>interestingGroups</span>(<span class='no'>bcb_small</span>) <span class='kw'>&lt;-</span> <span class='st'>"sampleName"</span>
-<span class='fu'>interestingGroups</span>(<span class='no'>bcb_small</span>)</div><div class='output co'>#&gt; [1] "sampleName"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.4
+#&gt; Samples: 1
+#&gt; Cells: 500
+#&gt; Genes: 500
+#&gt; Organism: Homo sapiens
+#&gt; AnnotationHub: AH57757
+#&gt; Ensembl Release: 90
+#&gt; Genome Build: GRCh38
+#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
+#&gt; Upload Date: 2018-01-01
+#&gt; R Load Date: 2018-04-30</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#format">Format</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
