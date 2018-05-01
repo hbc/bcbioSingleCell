@@ -14,12 +14,11 @@ branches:
   - develop
 
 # External dependencies
-# (required for zinbwave)
-addons:
-  apt:
-    packages:
-      - gsl-bin
-      - libgsl-dev
+# addons:
+#   apt:
+#     packages:
+#       - gsl-bin
+#       - libgsl-dev
 
 env:
   global:
