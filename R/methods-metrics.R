@@ -77,6 +77,9 @@ setMethod(
                 warning("`broadClass` is not defined in rowData")
             }
 
+            # Drop rows with NA broad class
+            rowData <- rowData[!is.na(rowData[["broadClass"]]), , drop = FALSE]
+
             # Coding genes
             codingGenes <- rowData %>%
                 .[.[["broadClass"]] == "coding", , drop = FALSE] %>%
@@ -92,7 +95,7 @@ setMethod(
             message(paste(length(mitoGenes), "mitochondrial genes detected"))
         }
 
-        data <- data.frame(
+        data <- tibble(
             "rowname" = colnames(object),
             # Follow the Seurat `seurat@data.info` conventions
             "nUMI" = colSums(object),
