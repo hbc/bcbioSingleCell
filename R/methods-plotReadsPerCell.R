@@ -30,49 +30,9 @@ NULL
 
 
 # Constructors =================================================================
-.readsPerCell <- function(object, interestingGroups) {
-    validObject(object)
-    if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
-    }
-
-    # Obtain the sample metadata
-    sampleData <- sampleData(
-        object = object,
-        interestingGroups = interestingGroups,
-        return = "data.frame"
-    )
-    sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
-
-    # Obtain the read counts. Use the unfiltered reads stashed in the metadata
-    # if available, otherwise use the metrics return.
-    cbList <- metadata(object)[["cellularBarcodes"]]
-    if (is.list(cbList)) {
-        data <- .bindCellularBarcodes(cbList)
-    } else {
-        data <- metrics(object)
-    }
-
-    # Return `NULL` if `nCount` isn't present
-    if (!"nCount" %in% colnames(data)) {
-        warning("object does not contain nCount column in `metrics()`")
-        return(NULL)
-    }
-
-    left_join(
-        x = data[, c("sampleID", "nCount")],
-        y = sampleData,
-        by = "sampleID"
-    ) %>%
-        as_tibble() %>%
-        group_by(!!sym("sampleID"))
-}
-
-
-
-# Standard (raw) ---------------------------------------------------------------
 .plotReadsPerCellECDF <- function(
     data,
+    min = 0L,
     color = scale_color_hue()
 ) {
     assert_is_data.frame(data)
@@ -85,9 +45,17 @@ NULL
             color = "interestingGroups"
         )
     ) +
-        stat_ecdf(geom = "step") +
-        labs(y = "frequency") +
+        stat_ecdf(geom = "step", size = 1L) +
+        labs(
+            x = "reads per cell",
+            y = "frequency"
+        ) +
         scale_x_continuous(trans = "log10")
+
+    # Cutoff line
+    if (min > 0L) {
+        p <- p + .qcCutoffLine(xintercept = min)
+    }
 
     # Color palette
     if (is(color, "ScaleDiscrete")) {
@@ -110,6 +78,7 @@ NULL
 
 .plotReadsPerCellViolin <- function(
     data,
+    min = 0L,
     fill = scale_fill_hue()
 ) {
     assert_is_data.frame(data)
@@ -130,7 +99,16 @@ NULL
         ) +
         scale_y_continuous(trans = "log10") +
         .medianLabels(data, medianCol = "nCount", digits = 0L) +
+        labs(
+            x = NULL,
+            y = "reads per cell"
+        ) +
         theme(axis.text.x = element_text(angle = 90L, hjust = 1L, vjust = 0.5))
+
+    # Cutoff line
+    if (min > 0L) {
+        p <- p + .qcCutoffLine(yintercept = min)
+    }
 
     # Color palette
     if (is(fill, "ScaleDiscrete")) {
@@ -153,6 +131,7 @@ NULL
 
 .plotReadsPerCellRidgeline <- function(
     data,
+    min = 0L,
     fill = scale_fill_hue()
 ) {
     assert_is_data.frame(data)
@@ -173,7 +152,16 @@ NULL
             scale = 10L
         ) +
         scale_x_continuous(trans = "log10") +
-        .medianLabels(data, medianCol = "nCount", digits = 0L)
+        .medianLabels(data, medianCol = "nCount", digits = 0L) +
+        labs(
+            x = "reads per cell",
+            y = NULL
+        )
+
+    # Cutoff line
+    if (min > 0L) {
+        p <- p + .qcCutoffLine(xintercept = min)
+    }
 
     # Color palette
     if (is(fill, "ScaleDiscrete")) {
@@ -248,6 +236,7 @@ NULL
 
 .plotReadsPerCellHistogram <- function(
     data,
+    min = 0L,
     color = scale_color_hue()
 ) {
     assert_is_data.frame(data)
@@ -269,6 +258,11 @@ NULL
             x = "log10 reads per cell",
             y = "proportion of cells"
         )
+
+    # Cutoff line
+    if (min > 0L) {
+        p <- p + .qcCutoffLine(xintercept = log10(min))
+    }
 
     # Color palette
     if (is(color, "ScaleDiscrete")) {
@@ -309,13 +303,40 @@ setMethod(
         }
         geom <- match.arg(geom)
 
-        data <- .readsPerCell(
+        # Minimum reads per barcode cutoff
+        min <- metadata(object)[["cellularBarcodeCutoff"]]
+        assert_is_an_integer(min)
+
+        # Obtain the sample metadata
+        sampleData <- sampleData(
             object = object,
-            interestingGroups = interestingGroups
+            interestingGroups = interestingGroups,
+            return = "data.frame"
         )
-        if (!is.data.frame(data)) {
+        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+
+        # Obtain the read counts. Use the unfiltered reads stashed in the
+        # metadata if available, otherwise use the metrics return.
+        cbList <- metadata(object)[["cellularBarcodes"]]
+        if (is.list(cbList)) {
+            data <- .bindCellularBarcodes(cbList)
+        } else {
+            data <- metrics(object)
+        }
+
+        # Early return NULL if `nCount` isn't present
+        if (!"nCount" %in% colnames(data)) {
+            warning("object does not contain nCount column in `metrics()`")
             return(invisible())
         }
+
+        data <- left_join(
+            x = data[, c("sampleID", "nCount")],
+            y = sampleData,
+            by = "sampleID"
+        ) %>%
+            as_tibble() %>%
+            group_by(!!sym("sampleID"))
 
         if (geom == "histogram") {
             sampleData <- sampleData(
@@ -324,44 +345,42 @@ setMethod(
                 return = "data.frame"
             )
             sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
-
             data <- .proportionalReadsPerCell(
                 data = data,
                 sampleData = sampleData
             )
-
             p <- .plotReadsPerCellHistogram(
                 data = data,
-                color = color
+                color = color,
+                min = min
             )
         } else if (geom == "ecdf") {
             p <- .plotReadsPerCellECDF(
                 data = data,
-                color = color
+                color = color,
+                min = min
             )
         } else if (geom == "ridgeline") {
             p <- .plotReadsPerCellRidgeline(
                 data = data,
-                fill = fill
+                fill = fill,
+                min = min
             )
         } else if (geom == "violin") {
             p <- .plotReadsPerCellViolin(
                 data = data,
-                fill = fill
+                fill = fill,
+                min = min
             )
         }
-
-        # Display bcbio pipeline cutoff in subtitle
-        cutoff <- metadata(object)[["cellularBarcodeCutoff"]]
-        assert_is_an_integer(cutoff)
 
         # Add title and subtitle containing cutoff information
         p <- p +
             labs(
-                color = "",
-                fill = "",
+                color = paste(interestingGroups, collapse = ":\n"),
+                fill = paste(interestingGroups, collapse = ":\n"),
                 title = "reads per cell",
-                subtitle = paste("cutoff", cutoff, sep = " = ")
+                subtitle = paste("cutoff", min, sep = " = ")
             )
 
         p
