@@ -78,7 +78,11 @@ setMethod(
         rownames(rowData) <- rownames(object)
 
         # Column data ==========================================================
-        colData <- metrics(counts, rowData = rowData)
+        # Always prefilter, removing cells with no UMIs or genes
+        colData <- metrics(counts, rowData = rowData, prefilter = TRUE)
+
+        # Subset the counts to match the prefiltered metrics
+        counts <- counts[, rownames(colData), drop = FALSE]
 
         # Metadata =============================================================
         message("Updating metadata")

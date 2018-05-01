@@ -8,6 +8,7 @@
 #'
 #' @inheritParams general
 #' @param rowData Data describing the rows of the object.
+#' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
 #'
 #' @return `data.frame` with cellular barcodes as rows.
 #'
@@ -55,8 +56,13 @@ NULL
 setMethod(
     "metrics",
     signature("matrix"),
-    function(object, rowData = NULL) {
+    function(
+        object,
+        rowData = NULL,
+        prefilter = TRUE
+    ) {
         assert_has_rows(object)
+        assert_is_a_bool(prefilter)
 
         message("Calculating cellular barcode metrics")
         message(paste(ncol(object), "cells detected"))
@@ -111,6 +117,20 @@ setMethod(
             # Ensure count columns are integer.
             # `colSums()` outputs as numeric.
             mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer)
+
+        # Apply low stringency cellular barcode pre-filtering.
+        # This keeps only cellular barcodes with non-zero genes.
+        if (isTRUE(prefilter)) {
+            data <- data %>%
+                filter(!is.na(UQ(sym("log10GenesPerUMI")))) %>%
+                filter(!!sym("nUMI") > 0L) %>%
+                filter(!!sym("nGene") > 0L)
+            message(paste(
+                nrow(data), "/", ncol(object),
+                "cellular barcodes passed pre-filtering",
+                paste0("(", percent(nrow(data) / ncol(object)), ")")
+            ))
+        }
 
         .tidyMetrics(data)
     }

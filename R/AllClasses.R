@@ -371,7 +371,11 @@ bcbioSingleCell <- function(
     rownames(rowData) <- names(rowRanges)
 
     # Column data ==============================================================
-    colData <- metrics(counts, rowData = rowData)
+    # Always prefilter, removing cells with no UMIs or genes
+    colData <- metrics(counts, rowData = rowData, prefilter = TRUE)
+
+    # Subset the counts to match the prefiltered metrics
+    counts <- counts[, rownames(colData), drop = FALSE]
 
     # Bind the `nCount` column into the colData
     nCount <- cbData[rownames(colData), "nCount", drop = FALSE]

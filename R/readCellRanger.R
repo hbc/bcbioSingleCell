@@ -151,7 +151,11 @@ readCellRanger <- function(
     counts <- do.call(cbind, sparseCountsList)
 
     # Column data ==============================================================
+    # Always prefilter, removing cells with no UMIs or genes
     colData <- metrics(counts, rowData = rowData)
+
+    # Subset the counts to match the prefiltered metrics
+    counts <- counts[, rownames(colData), drop = FALSE]
 
     # Cell to sample mappings ==================================================
     # Check for multiplexed samples. CellRanger outputs these with a trailing
