@@ -24,15 +24,13 @@
 #'
 #' @examples
 #' # seurat ===
-#' top <- topMarkers(all_markers_small, n = 1L)
-#' genes <- pull(top, "rowname")
-#'
 #' # Individual gene
-#' gene <- genes[[1L]]
-#' plotMarker(seurat_small, gene = gene, dark = TRUE)
-#' plotMarker(seurat_small, gene = gene, dark = FALSE)
+#' plotMarker(seurat_small, gene = "COL1A2", dark = TRUE)
+#' plotMarker(seurat_small, gene = "COL1A2", dark = FALSE)
 #'
 #' # Multiple genes
+#' top <- topMarkers(all_markers_small, n = 1L)
+#' genes <- pull(top, "rowname")
 #' plotMarkers(seurat_small, genes = genes)
 NULL
 
