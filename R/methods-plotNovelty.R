@@ -47,6 +47,7 @@ setMethod(
             geom = geom,
             interestingGroups = interestingGroups,
             min = min,
+            max = 1L,
             trans = "sqrt",
             ratio = TRUE,
             fill = fill
