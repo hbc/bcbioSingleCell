@@ -7,6 +7,7 @@
     min = 0L,
     max = Inf,
     trans = "identity",
+    ratio = FALSE,
     color = scale_color_hue(),
     fill = scale_fill_hue()
 ) {
@@ -19,6 +20,9 @@
     # Support for per sample filtering cutoffs
     min <- min(min)
     max <- max(max)
+    if (isTRUE(ratio)) {
+        assert_all_are_in_range(c(min, max), lower = 0L, upper = 1L)
+    }
     assert_is_a_string(trans)
     assertIsFillScaleDiscreteOrNULL(fill)
 
@@ -93,14 +97,20 @@
         if (min > 0L) {
             p <- p + .qcCutoffLine(yintercept = min)
         }
-        if (max < Inf) {
+        if (
+            (max < Inf && identical(ratio, FALSE)) ||
+            (max < 1L && identical(ratio, TRUE))
+        ) {
             p <- p + .qcCutoffLine(yintercept = max)
         }
     } else if (geom %in% c("histogram", "ridgeline")) {
         if (min > 0L) {
             p <- p + .qcCutoffLine(xintercept = min)
         }
-        if (max < Inf) {
+        if (
+            (max < Inf && identical(ratio, FALSE)) ||
+            (max < 1L && identical(ratio, TRUE))
+        ) {
             p <- p + .qcCutoffLine(xintercept = max)
         }
     }

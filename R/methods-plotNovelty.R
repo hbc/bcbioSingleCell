@@ -48,6 +48,7 @@ setMethod(
             interestingGroups = interestingGroups,
             min = min,
             trans = "sqrt",
+            ratio = TRUE,
             fill = fill
         )
     }

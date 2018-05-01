@@ -46,6 +46,7 @@ setMethod(
             interestingGroups = interestingGroups,
             max = max,
             trans = "identity",
+            ratio = TRUE,
             fill = fill
         )
     }
