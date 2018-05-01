@@ -67,9 +67,6 @@ setMethod(
             genes = gene,
             expression = "sum",
             dark = dark,
-            legend = TRUE,
-            title = gene,
-            subtitle = FALSE,
             ...
         )
 
@@ -104,7 +101,7 @@ setMethod(
                 labels = NULL,
                 ncol = 1L,
                 nrow = 3L,
-                rel_heights = c(1L, 0.1, 0.1)
+                rel_heights = c(1L, 0.1, 0.15)
             )
             if (isTRUE(dark)) {
                 p <- p + theme(

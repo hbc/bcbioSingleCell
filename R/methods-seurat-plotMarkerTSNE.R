@@ -15,6 +15,8 @@
 #' @examples
 #' # seurat ====
 #' plotMarkerTSNE(seurat_small, genes = "COL1A1")
+#' plotMarkerTSNE(seurat_small, genes = "COL1A1", dark = FALSE, grid = FALSE)
+#'
 #'
 #' # Mitochondrial genes
 #' mito <- grep("^MT\\.", rownames(counts(seurat_small)), value = TRUE)
