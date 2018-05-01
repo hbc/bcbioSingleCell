@@ -111,7 +111,6 @@ setMethod(
         ) %>%
             mutate(
                 log10GenesPerUMI = log10(!!sym("nGene")) / log10(!!sym("nUMI")),
-                # Using `nUMI` here like in Seurat example
                 mitoRatio = !!sym("nMito") / !!sym("nUMI")
             ) %>%
             # Ensure count columns are integer.
