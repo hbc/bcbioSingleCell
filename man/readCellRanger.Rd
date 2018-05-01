@@ -7,7 +7,7 @@
 \usage{
 readCellRanger(uploadDir, refdataDir, sampleMetadataFile,
   interestingGroups = "sampleName", transgeneNames = NULL,
-  spikeNames = NULL, prefilter = TRUE, ...)
+  spikeNames = NULL, ...)
 }
 \arguments{
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
@@ -30,10 +30,6 @@ denote transgenes (e.g. EGFP, TDTOMATO).}
 
 \item{spikeNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows denote
 spike-in sequences (e.g. ERCCs).}
-
-\item{prefilter}{Prefilter counts prior to quality control analysis. This
-applies very minimal filtering to the dataset, dropping only cells that
-don't contain any genes, and is generally recommended.}
 }
 \value{
 \code{SingleCellExperiment}.

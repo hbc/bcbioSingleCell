@@ -43,7 +43,6 @@ test_that("readCellRanger", {
             "rowRangesMetadata" = c("tbl_df", "tbl", "data.frame"),
             "umiType" = "character",
             "allSamples" = "logical",
-            "prefilter" = "logical",
             "refdataDir" = "character",
             "refJSON" = "list",
             "call" = "call",
