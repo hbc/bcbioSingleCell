@@ -83,7 +83,7 @@ setMethod(
             }
 
             if (isTRUE(dark)) {
-                color <- NA
+                color <- "white"
             } else {
                 color <- "black"
             }
