@@ -12,15 +12,13 @@ plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
   "histogram", "ridgeline", "boxplot", "violin"), interestingGroups, min = 0L,
-  barcodeRanks = FALSE, ranksPerSample = TRUE, labelPoint = c("knee",
-  "inflection"), trans = "log10", color = scale_color_hue(),
-  fill = scale_fill_hue())
+  barcodeRanks = TRUE, labelPoint = c("knee", "inflection"),
+  trans = "log10", color = scale_color_hue(), fill = scale_fill_hue())
 
 \S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "histogram",
   "ridgeline", "boxplot", "violin"), interestingGroups, min = 0L,
-  barcodeRanks = FALSE, ranksPerSample = TRUE, labelPoint = c("knee",
-  "inflection"), trans = "log10", color = scale_color_hue(),
-  fill = scale_fill_hue())
+  barcodeRanks = TRUE, labelPoint = c("knee", "inflection"),
+  trans = "log10", color = scale_color_hue(), fill = scale_fill_hue())
 }
 \arguments{
 \item{object}{Object.}
@@ -35,12 +33,9 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 
 \item{min}{Recommended minimum value cutoff.}
 
-\item{barcodeRanks}{Calculate barcode ranks to label knee or inflection
-points.}
-
-\item{ranksPerSample}{Calculate the barcode ranks individually per sample.
-Generally recommended unless there's a reason to use a single cutoff point
-across all samples in the analysis.}
+\item{barcodeRanks}{Calculate barcode ranks per sample to label knee or
+inflection points. If \code{TRUE}, this will overwrite the \code{interestingGroups}
+setting and always plot per sample.}
 
 \item{labelPoint}{Label either the "\code{knee}" or "\code{inflection}" point.}
 

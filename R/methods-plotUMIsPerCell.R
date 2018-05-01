@@ -9,11 +9,9 @@
 #' @inherit plotGenesPerCell
 #'
 #' @inheritParams general
-#' @param barcodeRanks Calculate barcode ranks to label knee or inflection
-#'   points.
-#' @param ranksPerSample Calculate the barcode ranks individually per sample.
-#'   Generally recommended unless there's a reason to use a single cutoff point
-#'   across all samples in the analysis.
+#' @param barcodeRanks Calculate barcode ranks per sample to label knee or
+#'   inflection points. If `TRUE`, this will overwrite the `interestingGroups`
+#'   setting and always plot per sample.
 #' @param labelPoint Label either the "`knee`" or "`inflection`" point.
 #'
 #' @examples
@@ -43,8 +41,7 @@ setMethod(
         geom = c("ecdf", "histogram", "ridgeline", "boxplot", "violin"),
         interestingGroups,
         min = 0L,
-        barcodeRanks = FALSE,
-        ranksPerSample = TRUE,
+        barcodeRanks = TRUE,
         labelPoint = c("knee", "inflection"),
         trans = "log10",
         color = scale_color_hue(),
@@ -54,6 +51,11 @@ setMethod(
         assert_is_a_bool(barcodeRanks)
         assert_is_a_bool(ranksPerSample)
         labelPoint <- match.arg(labelPoint)
+
+        # Override interestingGroups if barcodeRanks is enabled
+        if (isTRUE(barcodeRanks)) {
+            interestingGroups <- "sampleName"
+        }
 
         p <- .plotQCMetric(
             object = object,
@@ -68,12 +70,7 @@ setMethod(
 
         # Calculate barcode ranks and label inflection or knee point
         if (isTRUE(barcodeRanks)) {
-            if (isTRUE(ranksPerSample)) {
-                fun <- .labelBarcodeRanksPerSample
-            } else {
-                fun <- .labelBarcodeRanks
-            }
-            p <- fun(
+            p <- .labelBarcodeRanksPerSample(
                 p = p,
                 object = object,
                 geom = geom,

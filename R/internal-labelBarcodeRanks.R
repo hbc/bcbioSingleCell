@@ -4,6 +4,7 @@
     geom,
     point = c("knee", "inflection")
 ) {
+    .Deprecated(".labelBarcodeRanksPerSample")
     point <- match.arg(point)
     ranks <- barcodeRanks(object)
     inflection <- ranks[["inflection"]]
@@ -58,7 +59,6 @@
 ) {
     point <- match.arg(point)
     ranks <- barcodeRanksPerSample(object)
-    sampleNames <- as.character(sampleData(object)[, "sampleName"])
 
     points <- lapply(seq_along(ranks), function(x) {
         ranks[[x]][[point]]
@@ -66,11 +66,31 @@
     points <- unlist(points)
     names(points) <- names(ranks)
 
-    labels <- paste(sampleNames, points, sep = " = ")
-
-    p <- p + labs(
-        subtitle = paste(labels, collapse = "\n")
+    # TODO Use `ecdf()` to calculate y point instead
+    # This doesn't seem to be fitting quite right, work on the barcodeRanks method
+    sampleName <- sampleData(object) %>%
+        .[names(points), "sampleName"] %>%
+        as.character()
+    labelData <- data.frame(
+        "x" = points,
+        "y" = 1L,
+        "label" = paste0(sampleName, " (", points, ")"),
+        "sampleName" = sampleName
     )
+
+    # FIXME Map colors to sample names
+    p <- p +
+        geom_label_repel(
+            data = labelData,
+            mapping = aes_string(
+                x = "x",
+                y = "y",
+                label = "label",
+                color = "sampleName"
+            ),
+            fill = "white",
+            show.legend = FALSE
+        )
 
     p
 }
