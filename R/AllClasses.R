@@ -64,9 +64,6 @@ bcbioSingleCell <- setClass(
 #'   possible, although all GFF formats are supported. The function will
 #'   internally generate a `TxDb` containing transcript-to-gene mappings and
 #'   construct a `GRanges` object containing the genomic ranges ([rowRanges()]).
-#' @param prefilter Prefilter counts prior to quality control analysis. This
-#'   applies very minimal filtering to the dataset, dropping only cells that
-#'   don't contain any genes, and is generally recommended.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return `bcbioSingleCell`.
@@ -96,7 +93,6 @@ bcbioSingleCell <- function(
     transgeneNames = NULL,
     spikeNames = NULL,
     gffFile = NULL,
-    prefilter = TRUE,
     ...
 ) {
     dots <- list(...)
@@ -143,7 +139,6 @@ bcbioSingleCell <- function(
     if (is_a_string(gffFile)) {
         assert_all_are_existing_files(gffFile)
     }
-    assert_is_a_bool(prefilter)
 
     # Directory paths ==========================================================
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
@@ -376,16 +371,7 @@ bcbioSingleCell <- function(
     rownames(rowData) <- names(rowRanges)
 
     # Column data ==============================================================
-    colData <- metrics(
-        object = counts,
-        rowData = rowData,
-        prefilter = prefilter
-    )
-
-    # Prefilter very low quailty cells, if desired
-    if (isTRUE(prefilter)) {
-        counts <- counts[, rownames(colData), drop = FALSE]
-    }
+    colData <- metrics(counts, rowData = rowData)
 
     # Bind the `nCount` column into the colData
     nCount <- cbData[rownames(colData), "nCount", drop = FALSE]
@@ -414,7 +400,6 @@ bcbioSingleCell <- function(
         "cell2sample" = as.factor(cell2sample),
         "umiType" = umiType,
         "allSamples" = allSamples,
-        "prefilter" = prefilter,
         # bcbio pipeline-specific ----------------------------------------------
         "projectDir" = projectDir,
         "template" = template,

@@ -38,7 +38,6 @@ readCellRanger <- function(
     interestingGroups = "sampleName",
     transgeneNames = NULL,
     spikeNames = NULL,
-    prefilter = TRUE,
     ...
 ) {
     assert_is_a_string(uploadDir)
@@ -51,7 +50,6 @@ readCellRanger <- function(
     assert_is_a_string(sampleMetadataFile)
     assertIsCharacterOrNULL(transgeneNames)
     assertIsCharacterOrNULL(spikeNames)
-    assert_is_a_bool(prefilter)
     dots <- list(...)
     pipeline <- "cellranger"
     level <- "genes"
@@ -153,16 +151,7 @@ readCellRanger <- function(
     counts <- do.call(cbind, sparseCountsList)
 
     # Column data ==============================================================
-    colData <- metrics(
-        object = counts,
-        rowData = rowData,
-        prefilter = prefilter
-    )
-
-    if (isTRUE(prefilter)) {
-        # Subset the counts matrix to match the colData
-        counts <- counts[, rownames(colData), drop = FALSE]
-    }
+    colData <- metrics(counts, rowData = rowData)
 
     # Cell to sample mappings ==================================================
     # Check for multiplexed samples. CellRanger outputs these with a trailing
@@ -219,7 +208,6 @@ readCellRanger <- function(
         "rowRangesMetadata" = rowRangesMetadata,
         "umiType" = umiType,
         "allSamples" = allSamples,
-        "prefilter" = prefilter,
         # cellranger pipeline-specific -----------------------------------------
         "refdataDir" = refdataDir,
         "refJSON" = refJSON,

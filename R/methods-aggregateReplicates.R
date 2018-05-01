@@ -78,18 +78,7 @@ setMethod(
         rownames(rowData) <- rownames(object)
 
         # Column data ==========================================================
-        prefilter <- metadata[["prefilter"]]
-        colData <- metrics(
-            object = counts,
-            rowData = rowData,
-            prefilter = prefilter
-        )
-
-        # Prefilter very low quality cells, if desired
-        if (isTRUE(prefilter)) {
-            # Subset the counts matrix to match the colData
-            counts <- counts[, rownames(colData)]
-        }
+        colData <- metrics(counts, rowData = rowData)
 
         # Metadata =============================================================
         message("Updating metadata")
