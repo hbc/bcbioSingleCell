@@ -96,11 +96,10 @@ setMethod(
     signature("seurat"),
     function(x) {
         rowRanges <- rowRanges(x)
-        if (is(rowRanges, "GRanges")) {
-            as(rowRanges, "DataFrame")
-        } else {
-            NULL
+        if (is.null(rowRanges)) {
+            return(NULL)
         }
+        as(rowRanges, "DataFrame")
     }
 )
 
@@ -138,15 +137,7 @@ setMethod(
 setMethod(
     "gene2symbol",
     signature("seurat"),
-    function(object) {
-        data <- as.data.frame(rowData(object))
-        assert_is_non_empty(data)
-        cols <- c("geneID", "geneName")
-        assert_is_subset(cols, colnames(data))
-        data <- data[, cols]
-        rownames(data) <- data[["geneID"]]
-        data
-    }
+    getMethod("gene2symbol", "SummarizedExperiment")
 )
 
 
@@ -159,12 +150,12 @@ setMethod(
     signature("seurat"),
     function(object) {
         validObject(object)
-        x <- metadata(object)[["interestingGroups"]]
-        if (is.character(x)) {
-            x
-        } else {
-            NULL
+        value <- metadata(object)[["interestingGroups"]]
+        if (is.null(value)) {
+            value <- "sampleName"
         }
+        assertFormalInterestingGroups(object, value)
+        value
     }
 )
 
@@ -179,16 +170,11 @@ setMethod(
         object = "seurat",
         value = "character"
     ),
-    function(object, value) {
-        assertFormalInterestingGroups(
-            x = sampleData(object),
-            interestingGroups = value
+    getMethod(
+        "interestingGroups<-",
+        signature(
+            object = "SummarizedExperiment",
+            value = "character"
         )
-        if (is.null(metadata(object))) {
-            stop("object was not created with bcbioSingleCell")
-        }
-        metadata(object)[["interestingGroups"]] <- value
-        validObject(object)
-        object
-    }
+    )
 )

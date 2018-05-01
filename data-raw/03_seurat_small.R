@@ -1,13 +1,13 @@
-# bcb_small dataset
-# 2018-04-24
+# seurat_small
+# 2018-04-30
 library(devtools)
 library(Seurat)
 load_all()
-load("inst/extdata/bcb_small.rda")
 
 # seurat_small =================================================================
 dims_use <- seq_len(20L)
-seurat_small <- as(bcb_small, "seurat") %>%
+seurat_small <- indrops_small %>%
+    as("seurat") %>%
     NormalizeData() %>%
     FindVariableGenes(do.plot = FALSE) %>%
     ScaleData() %>%

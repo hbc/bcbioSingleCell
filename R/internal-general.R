@@ -19,6 +19,7 @@
 #' @param genes Gene identifiers. Must match the rownames of the object.
 #' @param geom Plot type. Uses [match.arg()] internally and defaults to the
 #'   first argument in the vector.
+#' @param grid Show major grid lines but hide axis lines.
 #' @param headerLevel R Markdown header level.
 #' @param interestingGroups Character vector of interesting groups. Must be
 #'   formatted in camel case and intersect with [sampleData()] colnames.

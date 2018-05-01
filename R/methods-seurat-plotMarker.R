@@ -58,16 +58,8 @@ setMethod(
         # Plots ================================================================
         if (isTRUE(dark)) {
             violinFill <- "white"
-            dotColor <- scale_color_gradient(
-                low = "black",
-                high = "white"
-            )
         } else {
             violinFill <- "black"
-            dotColor <- scale_color_gradient(
-                low = "white",
-                high = "black"
-            )
         }
 
         tsne <- plotMarkerTSNE(
@@ -84,7 +76,6 @@ setMethod(
         dot <- plotDot(
             object,
             genes = gene,
-            color = dotColor,
             dark = dark
         )
 
@@ -95,9 +86,9 @@ setMethod(
             fill = violinFill,
             dark = dark,
             return = "list"
-        ) %>%
-            # Get the ggplot object from the list return
-            .[[1L]]
+        )
+        # Get the ggplot object from the list return
+        violin <- violin[[1L]]
 
         # Return ===============================================================
         if (return == "grid") {

@@ -14,13 +14,13 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' metrics(bcb_small) %>% glimpse()
+#' metrics(indrops_small) %>% glimpse()
 #'
 #' # SingleCellExperiment ====
 #' metrics(cellranger_small) %>% glimpse()
 #'
 #' # dgCMatrix ====
-#' counts <- counts(bcb_small)
+#' counts <- counts(indrops_small)
 #' class(counts)
 #' metrics(counts) %>% glimpse()
 #'

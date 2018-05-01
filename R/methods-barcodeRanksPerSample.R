@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' x <- barcodeRanksPerSample(bcb_small)
+#' x <- barcodeRanksPerSample(indrops_small)
 #' names(x)
 NULL
 

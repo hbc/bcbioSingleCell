@@ -21,7 +21,7 @@ Cell to Sample Mappings
 }
 \examples{
 # SingleCellExperiment ====
-cell2sample(bcb_small) \%>\% table()
+cell2sample(indrops_small) \%>\% table()
 cell2sample(cellranger_small) \%>\% table()
 }
 \seealso{
@@ -30,7 +30,6 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},

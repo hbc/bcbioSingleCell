@@ -57,18 +57,15 @@ setMethod(
     function(
         object,
         genes,
-        color = scale_color_gradient(
-            low = "gray90",
-            high = "black"
-        ),
+        color = "auto",
         dark = FALSE,
+        grid = FALSE,
         colMin = -2.5,
         colMax = 2.5,
         dotMin = 0L,
         dotScale = 6L
     ) {
         assert_is_character(genes)
-        assertIsColorScaleContinuousOrNULL(color)
         assert_is_a_number(colMin)
         assert_is_a_number(colMax)
         assert_is_a_number(dotMin)
@@ -107,20 +104,32 @@ setMethod(
             mapping = aes_string(x = "gene", y = "ident")
         ) +
             geom_point(
-                mapping = aes_string(color = "avgExpScale", size = "pctExp")
+                mapping = aes_string(color = "avgExpScale", size = "pctExp"),
+                show.legend = FALSE
             ) +
             scale_radius(range = c(0L, dotScale)) +
-            labs(x = "gene", y = "ident") +
-            theme(axis.text.x = element_text(angle = 90L))
+            labs(x = "gene", y = "ident")
+
+        if (isTRUE(dark)) {
+            p <- p + theme_midnight(grid = grid)
+            if (color == "auto") {
+                color <- scale_color_gradient(
+                    low = "gray10",
+                    high = "white"
+                )
+            }
+        } else {
+            p <- p + theme_paperwhite(grid = grid)
+            if (color == "auto") {
+                color <- scale_color_gradient(
+                    low = "gray90",
+                    high = "black"
+                )
+            }
+        }
 
         if (is(color, "ScaleContinuous")) {
             p <- p + color
-        }
-
-        if (isTRUE(dark)) {
-            p <- p + theme_midnight()
-        } else {
-            p <- p + theme_paperwhite()
         }
 
         p

@@ -25,7 +25,7 @@ Barcode Ranks per Sample
 }
 \examples{
 # bcbioSingleCell ====
-x <- barcodeRanksPerSample(bcb_small)
+x <- barcodeRanksPerSample(indrops_small)
 names(x)
 }
 \seealso{

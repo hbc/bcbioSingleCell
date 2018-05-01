@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotReadsPerCell(bcb_small)
+#' plotReadsPerCell(indrops_small)
 #'
 #' # SingleCellExperiment ====
 #' # Only contains UMI counts
@@ -130,7 +130,7 @@ NULL
         ) +
         scale_y_continuous(trans = "log10") +
         .medianLabels(data, medianCol = "nCount", digits = 0L) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+        theme(axis.text.x = element_text(angle = 90L, hjust = 1L, vjust = 0.5))
 
     # Color palette
     if (is(fill, "ScaleDiscrete")) {

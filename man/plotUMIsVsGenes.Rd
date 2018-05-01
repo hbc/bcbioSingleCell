@@ -34,7 +34,7 @@ Plot UMI and Gene Correlation
 }
 \examples{
 # bcbioSingleCell ====
-plotUMIsVsGenes(bcb_small)
+plotUMIsVsGenes(indrops_small)
 
 # SingleCellExperiment ====
 plotUMIsVsGenes(cellranger_small)

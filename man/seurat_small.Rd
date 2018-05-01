@@ -11,9 +11,13 @@ seurat_small
 \description{
 Seurat Example
 }
+\examples{
+show(seurat_small)
+}
 \seealso{
 Other Minimal Example Data: \code{\link{all_markers_small}},
-  \code{\link{bcb_small}}, \code{\link{cellranger_small}},
+  \code{\link{cellranger_small}},
+  \code{\link{indrops_small}},
   \code{\link{known_markers_small}}
 }
 \author{

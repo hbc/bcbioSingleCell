@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotZerosVsDepth(bcb_small)
+#' plotZerosVsDepth(indrops_small)
 #'
 #' # SingleCellExperiment ====
 #' plotZerosVsDepth(cellranger_small)

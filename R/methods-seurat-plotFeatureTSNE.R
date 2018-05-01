@@ -31,16 +31,15 @@ setMethod(
     function(
         object,
         features,
+        color = "auto",
         pointSize = 0.5,
         pointAlpha = 0.8,
-        color = scale_color_gradient(
-            low = "lightgray",
-            high = "purple"
-        ),
-        dark = TRUE,
         label = TRUE,
         labelSize = 6L,
+        dark = TRUE,
+        grid = TRUE,
         legend = FALSE,
+        aspectRatio = 1L,
         return = c("ggplot", "list")
     ) {
         return <- match.arg(return)
@@ -60,13 +59,7 @@ setMethod(
                     y = "tSNE2",
                     color = feature
                 )
-            )
-
-            if (isTRUE(dark)) {
-                p <- p + theme_midnight()
-            }
-
-            p <- p +
+            ) +
                 geom_point(
                     alpha = pointAlpha,
                     size = pointSize
@@ -92,12 +85,38 @@ setMethod(
                     )
             }
 
+            if (isTRUE(dark)) {
+                p <- p +
+                    theme_midnight(
+                        aspect_ratio = aspectRatio,
+                        grid = grid
+                    )
+                if (color == "auto") {
+                    color <- scale_color_gradient(
+                        low = "gray20",
+                        high = "orange"
+                    )
+                }
+            } else {
+                p <- p +
+                    theme_paperwhite(
+                        aspect_ratio = aspectRatio,
+                        grid = grid
+                    )
+                if (color == "auto") {
+                    color <- scale_color_gradient(
+                        low = "gray80",
+                        high = "purple"
+                    )
+                }
+            }
+
             if (is(color, "ScaleContinuous")) {
                 p <- p + color
             }
 
             if (!isTRUE(legend)) {
-                p <- p + theme(legend.position = "none")
+                p <- p + guides(color = "none")
             }
 
             p

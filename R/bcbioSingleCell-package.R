@@ -47,7 +47,7 @@
 #' @importFrom pbapply pblapply
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! !!! sym syms UQ
-#' @importFrom scales percent
+#' @importFrom scales percent pretty_breaks
 #' @importFrom stats as.formula fitted median model.matrix predict relevel
 #'   reorder smooth.spline
 #' @importFrom stringr str_extract str_match str_pad str_split

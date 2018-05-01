@@ -75,19 +75,19 @@ Extract genes by row and cells by column from a \code{bcbioSingleCell} object.
 }
 \examples{
 # bcbioSingleCell ====
-cells <- head(colnames(bcb_small), 100L)
+cells <- head(colnames(indrops_small), 100L)
 head(cells)
-genes <- head(rownames(bcb_small), 100L)
+genes <- head(rownames(indrops_small), 100L)
 head(genes)
 
 # Subset by cell identifiers
-bcb_small[, cells]
+indrops_small[, cells]
 
 # Subset by genes
-bcb_small[genes, ]
+indrops_small[genes, ]
 
 # Subset by both genes and cells
-bcb_small[genes, cells]
+indrops_small[genes, cells]
 }
 \seealso{
 \itemize{

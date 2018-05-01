@@ -31,15 +31,15 @@ Calculate summary statistics per sample.
 \examples{
 # SingleCellExperiment ====
 # mean
-x <- metricsPerSample(bcb_small, f = "mean")
+x <- metricsPerSample(indrops_small, f = "mean")
 head(x)
 
 # median
-x <- metricsPerSample(bcb_small, f = "median")
+x <- metricsPerSample(indrops_small, f = "median")
 head(x)
 
 # sum
-x <- metricsPerSample(bcb_small, f = "sum")
+x <- metricsPerSample(indrops_small, f = "sum")
 head(x)
 }
 \seealso{
@@ -49,7 +49,6 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}}, \code{\link{metrics}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}

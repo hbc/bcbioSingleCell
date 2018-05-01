@@ -1,12 +1,12 @@
-# harvard_indrop_v3 dataset
-# 2018-04-24
+# indrops_small (harvard-indrop-v3)
+# 2018-04-30
 library(devtools)
 library(Matrix)
 library(readr)
 load_all()
 
 # Include the top 500 genes (rows) and cells (columns)
-uploadDir <- "inst/extdata/indrop"
+uploadDir <- "inst/extdata/indrops"
 sampleName <- "multiplexed-AAAAAAAA"
 
 matFile <- file.path(
@@ -64,7 +64,7 @@ write_lines(colnames(mat), path = colnamesFile)
 write_tsv(barcodes, path = barcodesFile, col_names = FALSE)
 
 # indrops_small ================================================================
-bcb_small <- bcbioSingleCell(
+indrops_small <- bcbioSingleCell(
     uploadDir = uploadDir,
     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
     organism = "Homo sapiens",
@@ -72,12 +72,12 @@ bcb_small <- bcbioSingleCell(
 )
 
 # Apply example filtering without excluding any cells
-bcb_small <- filterCells(
-    object = bcb_small,
+indrops_small <- filterCells(
+    object = indrops_small,
     minUMIs = 0,
     minGenes = 0,
     maxMitoRatio = Inf,
     minNovelty = 0
 )
 
-use_data(bcb_small, compress = "xz", overwrite = TRUE)
+use_data(indrops_small, compress = "xz", overwrite = TRUE)

@@ -29,8 +29,8 @@ Fetch Gene Expression Data
 }
 \examples{
 # SingleCellExperiment ====
-genes <- rownames(bcb_small) \%>\% head(2L)
-fetchGeneData(bcb_small, genes = genes) \%>\% glimpse()
+genes <- rownames(indrops_small) \%>\% head(2L)
+fetchGeneData(indrops_small, genes = genes) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
@@ -38,7 +38,6 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},

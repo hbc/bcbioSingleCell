@@ -14,15 +14,15 @@
 #' @examples
 #' # SingleCellExperiment ====
 #' # mean
-#' x <- metricsPerSample(bcb_small, f = "mean")
+#' x <- metricsPerSample(indrops_small, f = "mean")
 #' head(x)
 #'
 #' # median
-#' x <- metricsPerSample(bcb_small, f = "median")
+#' x <- metricsPerSample(indrops_small, f = "median")
 #' head(x)
 #'
 #' # sum
-#' x <- metricsPerSample(bcb_small, f = "sum")
+#' x <- metricsPerSample(indrops_small, f = "sum")
 #' head(x)
 NULL
 

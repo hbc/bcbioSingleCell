@@ -11,6 +11,9 @@ cellTypeMarkers
 \description{
 Cell-Type Markers
 }
+\examples{
+names(cellTypeMarkers)
+}
 \seealso{
 Other Marker Data: \code{\link{cellCycleMarkers}}
 }

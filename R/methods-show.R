@@ -7,7 +7,7 @@
 #' @inherit methods::show
 #'
 #' @examples
-#' show(bcb_small)
+#' show(indrops_small)
 NULL
 
 

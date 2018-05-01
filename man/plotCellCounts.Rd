@@ -32,7 +32,7 @@ Plot Cell Counts
 }
 \examples{
 # bcbioSingleCell ====
-plotCellCounts(bcb_small)
+plotCellCounts(indrops_small)
 
 # SingleCellExperiment ====
 plotCellCounts(cellranger_small)

@@ -43,7 +43,7 @@ Plot Mitochondrial Transcript Abundance
 }
 \examples{
 # bcbioSingleCell ====
-plotMitoRatio(bcb_small)
+plotMitoRatio(indrops_small)
 
 # SingleCellExperiment ====
 plotMitoRatio(cellranger_small)

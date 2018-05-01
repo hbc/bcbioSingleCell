@@ -6,9 +6,9 @@
 \alias{plotDot,seurat-method}
 \title{Plot Dot}
 \usage{
-\S4method{plotDot}{seurat}(object, genes, color = scale_color_gradient(low =
-  "gray90", high = "black"), dark = FALSE, colMin = -2.5, colMax = 2.5,
-  dotMin = 0L, dotScale = 6L)
+\S4method{plotDot}{seurat}(object, genes, color = "auto", dark = FALSE,
+  grid = FALSE, colMin = -2.5, colMax = 2.5, dotMin = 0L,
+  dotScale = 6L)
 }
 \arguments{
 \item{object}{Object.}
@@ -22,6 +22,8 @@ color definitions are desired, we recommend using
 
 \item{dark}{Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
+
+\item{grid}{Show major grid lines but hide axis lines.}
 
 \item{colMin}{Minimum scaled average expression threshold. Everything
 smaller will be set to this.}

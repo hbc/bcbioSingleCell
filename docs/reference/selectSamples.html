@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
       </span>
     </div>
 
@@ -148,7 +148,6 @@ and Ensembl gene identifiers for rows.</p>
   <code>fetchTSNEData</code>,
   <code>fetchTSNEExpressionData</code>,
   <code>filterCells</code>,
-  <code><a href='interestingGroups.html'>interestingGroups</a></code>,
   <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
   <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
   <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
@@ -156,11 +155,10 @@ and Ensembl gene identifiers for rows.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>colnames</span>(<span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>bcb_small</span>))</div><div class='output co'>#&gt; [1] "sampleName"        "fileName"          "description"      
-#&gt; [4] "index"             "sequence"          "aggregate"        
-#&gt; [7] "revcomp"           "interestingGroups"</div><div class='input'><span class='no'>sampleName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>bcb_small</span>)[<span class='fl'>1L</span>, <span class='st'>"sampleName"</span>]
+<span class='fu'>colnames</span>(<span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>indrops_small</span>))</div><div class='output co'>#&gt; [1] "sampleName"        "index"             "sequence"         
+#&gt; [4] "aggregate"         "revcomp"           "interestingGroups"</div><div class='input'><span class='no'>sampleName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>indrops_small</span>)[<span class='fl'>1L</span>, <span class='st'>"sampleName"</span>]
 <span class='fu'>print</span>(<span class='no'>sampleName</span>)</div><div class='output co'>#&gt; [1] rep_1
-#&gt; Levels: rep_1</div><div class='input'><span class='fu'>selectSamples</span>(<span class='no'>bcb_small</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='no'>sampleName</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.2
+#&gt; Levels: rep_1</div><div class='input'><span class='fu'>selectSamples</span>(<span class='no'>indrops_small</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='no'>sampleName</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.4
 #&gt; Samples: 1
 #&gt; Cells: 500
 #&gt; Genes: 500
@@ -168,9 +166,9 @@ and Ensembl gene identifiers for rows.</p>
 #&gt; AnnotationHub: AH57757
 #&gt; Ensembl Release: 90
 #&gt; Genome Build: GRCh38
-#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrop
+#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-04-24</div></pre>
+#&gt; R Load Date: 2018-04-30</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -21,7 +21,7 @@ Counts Accessor
 }
 \examples{
 # SingleCellExperiment ====
-counts(bcb_small) \%>\% glimpse()
+counts(indrops_small) \%>\% glimpse()
 counts(cellranger_small) \%>\% glimpse()
 
 # seurat ====
@@ -34,7 +34,6 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},

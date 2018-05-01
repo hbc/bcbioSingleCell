@@ -31,10 +31,10 @@ and Ensembl gene identifiers for rows.
 }
 \examples{
 # bcbioSingleCell ====
-colnames(sampleData(bcb_small))
-sampleName <- sampleData(bcb_small)[1L, "sampleName"]
+colnames(sampleData(indrops_small))
+sampleName <- sampleData(indrops_small)[1L, "sampleName"]
 print(sampleName)
-selectSamples(bcb_small, sampleName = sampleName)
+selectSamples(indrops_small, sampleName = sampleName)
 }
 \seealso{
 \code{\link[=sampleData]{sampleData()}}.
@@ -45,7 +45,6 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}

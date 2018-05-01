@@ -18,10 +18,10 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotUMIsPerCell(bcb_small)
+#' plotUMIsPerCell(indrops_small)
 #'
 #' # Label the barcode ranks
-#' plotUMIsPerCell(bcb_small, barcodeRanks = TRUE)
+#' plotUMIsPerCell(indrops_small, barcodeRanks = TRUE)
 #'
 #' # SingleCellExperiment ====
 #' plotUMIsPerCell(cellranger_small)

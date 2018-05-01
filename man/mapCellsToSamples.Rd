@@ -21,8 +21,8 @@ matching.
 }
 \examples{
 # bcbioSingleCell ====
-cells <- colnames(bcb_small)
-samples <- rownames(sampleData(bcb_small))
+cells <- colnames(indrops_small)
+samples <- rownames(sampleData(indrops_small))
 map <- mapCellsToSamples(cells, samples)
 head(map)
 levels(map)
@@ -34,7 +34,6 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}

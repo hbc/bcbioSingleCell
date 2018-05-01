@@ -39,6 +39,7 @@ setMethod(
         cellTypesPerCluster,
         color = "auto",
         dark = TRUE,
+        grid = TRUE,
         headerLevel = 2L
     ) {
         # Passthrough: color, dark
@@ -89,6 +90,7 @@ setMethod(
                     expression = "mean",
                     color = color,
                     dark = dark,
+                    grid = grid,
                     pointsAsNumbers = FALSE,
                     label = TRUE,
                     title = title

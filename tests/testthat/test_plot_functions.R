@@ -4,7 +4,7 @@ context("Plot Functions")
 
 # plotCellCounts ===============================================================
 test_that("plotCellCounts : bcbioSingleCell", {
-    p <- plotCellCounts(bcb_small)
+    p <- plotCellCounts(indrops_small)
     expect_is(p, "ggplot")
 })
 
@@ -33,7 +33,7 @@ test_that("plotCellTypesPerCluster : seurat", {
 
 # plotGenesPerCell =============================================================
 test_that("plotGenesPerCell : bcbioSingleCell", {
-    p <- plotGenesPerCell(bcb_small)
+    p <- plotGenesPerCell(indrops_small)
     expect_is(p, "ggplot")
 })
 
@@ -100,7 +100,7 @@ test_that("plotMarkers : seurat", {
 
 # plotMitoRatio ================================================================
 test_that("plotMitoRatio : bcbioSingleCell", {
-    p <- plotMitoRatio(bcb_small)
+    p <- plotMitoRatio(indrops_small)
     expect_is(p, "ggplot")
 })
 
@@ -113,7 +113,7 @@ test_that("plotMitoRatio : seurat", {
 
 # plotMitoVsCoding =============================================================
 test_that("plotMitoVsCoding : bcbioSingleCell", {
-    p <- plotMitoVsCoding(bcb_small)
+    p <- plotMitoVsCoding(indrops_small)
     expect_is(p, "ggplot")
 })
 
@@ -126,7 +126,7 @@ test_that("plotMitoVsCoding : seurat", {
 
 # plotNovelty ==================================================================
 test_that("plotNovelty : bcbioSingleCell", {
-    p <- plotNovelty(bcb_small)
+    p <- plotNovelty(indrops_small)
     expect_is(p, "ggplot")
 })
 
@@ -160,12 +160,12 @@ test_that("plotPCElbow : seurat", {
 test_that("plotQC : grid", {
     # Example dataset doesn't have a cellular barcode cutoff because we removed
     # the bcbio commands log file (which conflicts with Travis CI)
-    p <- plotQC(bcb_small, return = "grid")
+    p <- plotQC(indrops_small, return = "grid")
     expect_is(p, "ggplot")
 })
 
 test_that("plotQC : list", {
-    p <- plotQC(bcb_small, return = "list")
+    p <- plotQC(indrops_small, return = "list")
     expect_identical(
         names(p),
         c("plotReadsPerCell",
@@ -179,7 +179,7 @@ test_that("plotQC : list", {
 })
 
 test_that("plotQC : markdown", {
-    output <- capture.output(plotQC(bcb_small, return = "markdown"))
+    output <- capture.output(plotQC(indrops_small, return = "markdown"))
     sep <- c("", "", "")
     expect_identical(
         head(output, 3L),
@@ -199,7 +199,7 @@ test_that("plotQC : seurat", {
 # bcbio commands log file (which conflicts with Travis CI)
 test_that("plotReadsPerCell : bcbioSingleCell", {
     # Histogram
-    x <- plotReadsPerCell(bcb_small, geom = "histogram")
+    x <- plotReadsPerCell(indrops_small, geom = "histogram")
     expect_is(x, "ggplot")
     expect_is(
         x %>%
@@ -210,7 +210,7 @@ test_that("plotReadsPerCell : bcbioSingleCell", {
     )
 
     # Ridgeline
-    x <- plotReadsPerCell(bcb_small, geom = "ridgeline")
+    x <- plotReadsPerCell(indrops_small, geom = "ridgeline")
     expect_is(x, "ggplot")
     expect_is(
         x %>%
@@ -221,7 +221,7 @@ test_that("plotReadsPerCell : bcbioSingleCell", {
     )
 
     # Violin
-    x <- plotReadsPerCell(bcb_small, geom = "violin")
+    x <- plotReadsPerCell(indrops_small, geom = "violin")
     expect_is(x, "ggplot")
     expect_is(
         x %>%
@@ -232,7 +232,7 @@ test_that("plotReadsPerCell : bcbioSingleCell", {
     )
 
     # ECDF
-    x <- plotReadsPerCell(bcb_small, geom = "ecdf")
+    x <- plotReadsPerCell(indrops_small, geom = "ecdf")
     expect_is(x, "ggplot")
     expect_is(
         x %>%
@@ -285,7 +285,7 @@ test_that("plotTSNE : seurat", {
 
 # plotUMIsPerCell ==============================================================
 test_that("plotUMIsPerCell : bcbioSingleCell", {
-    p <- plotUMIsPerCell(bcb_small)
+    p <- plotUMIsPerCell(indrops_small)
     expect_is(p, "ggplot")
 })
 
@@ -298,7 +298,7 @@ test_that("plotUMIsPerCell : seurat", {
 
 # plotUMIsVsGenes ==============================================================
 test_that("plotUMIsVsGenes : bcbioSingleCell", {
-    p <- plotUMIsVsGenes(bcb_small)
+    p <- plotUMIsVsGenes(indrops_small)
     expect_is(p, "ggplot")
 })
 
@@ -314,7 +314,7 @@ test_that("plotUMIsVsGenes : seurat", {
 
 # plotZerosVsDepth =============================================================
 test_that("plotZerosVsDepth : bcbioSingleCell", {
-    p <- plotZerosVsDepth(bcb_small)
+    p <- plotZerosVsDepth(indrops_small)
     expect_is(p, "ggplot")
 })
 

@@ -29,7 +29,7 @@ Top Barcodes
 }
 \examples{
 # bcbioSingleCell ====
-topBarcodes(bcb_small) \%>\% glimpse()
+topBarcodes(indrops_small) \%>\% glimpse()
 
 # seurat ====
 topBarcodes(Seurat::pbmc_small) \%>\% glimpse()
@@ -41,7 +41,6 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},

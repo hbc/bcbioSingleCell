@@ -2,6 +2,9 @@
 #'
 #' @family Marker Data
 #' @author Michael Steinbaugh
+#'
+#' @examples
+#' names(cellCycleMarkers)
 "cellCycleMarkers"
 
 
@@ -10,6 +13,9 @@
 #'
 #' @family Marker Data
 #' @author Michael Steinbaugh
+#'
+#' @examples
+#' names(cellTypeMarkers)
 "cellTypeMarkers"
 
 
@@ -19,7 +25,21 @@
 #'
 #' @family Minimal Example Data
 #' @author Michael Steinbaugh
+#'
+#' @examples
+#' glimpse(all_markers_small)
 "all_markers_small"
+
+
+
+#' Cell Ranger Example
+#'
+#' @family Minimal Example Data
+#' @author Michael Steinbaugh
+#'
+#' @examples
+#' show(cellranger_small)
+"cellranger_small"
 
 
 
@@ -27,15 +47,10 @@
 #'
 #' @family Minimal Example Data
 #' @author Michael Steinbaugh
-"bcb_small"
-
-
-
-#' CellRanger Example
 #'
-#' @family Minimal Example Data
-#' @author Michael Steinbaugh
-"cellranger_small"
+#' @examples
+#' show(indrops_small)
+"indrops_small"
 
 
 
@@ -43,6 +58,9 @@
 #'
 #' @family Minimal Example Data
 #' @author Michael Steinbaugh
+#'
+#' @examples
+#' glimpse(known_markers_small)
 "known_markers_small"
 
 
@@ -51,4 +69,7 @@
 #'
 #' @family Minimal Example Data
 #' @author Michael Steinbaugh
+#'
+#' @examples
+#' show(seurat_small)
 "seurat_small"

@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' topBarcodes(bcb_small) %>% glimpse()
+#' topBarcodes(indrops_small) %>% glimpse()
 #'
 #' # seurat ====
 #' topBarcodes(Seurat::pbmc_small) %>% glimpse()

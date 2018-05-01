@@ -39,6 +39,7 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         dark = TRUE,
+        grid = TRUE,
         legend = TRUE,
         aspectRatio = 1L,
         title = NULL,
@@ -98,22 +99,18 @@ setMethod(
 
         # Customize legend
         if (isTRUE(legend)) {
+            # Make the guide longer than normal, to improve appearance of values
+            # containing a decimal point
             p <- p +
-                # Make the guide longer than normal, to improve appearance of
-                # values containing a decimal point
                 guides(
                     color = guide_colorbar(
                         barwidth = 20L,
                         barheight = 1L,
                         direction = "horizontal"
                     )
-                ) +
-                theme(
-                    legend.justification = "center",
-                    legend.position = "bottom"
                 )
         } else {
-            p <- p + theme(legend.position = "none")
+            p <- p + guides(color = "none")
         }
 
         if (isTRUE(pointsAsNumbers)) {
@@ -157,7 +154,11 @@ setMethod(
 
         # Color palette
         if (isTRUE(dark)) {
-            p <- p + theme_midnight(aspect_ratio = aspectRatio)
+            p <- p +
+                theme_midnight(
+                    aspect_ratio = aspectRatio,
+                    grid = grid
+                )
             if (color == "auto") {
                 color <- scale_color_viridis(
                     option = "plasma",
@@ -165,7 +166,11 @@ setMethod(
                 )
             }
         } else {
-            p <- p + theme_paperwhite(aspect_ratio = aspectRatio)
+            p <- p +
+                theme_paperwhite(
+                    aspect_ratio = aspectRatio,
+                    grid = grid
+                )
             if (color == "auto") {
                 color <- scale_color_gradient(
                     low = "gray90",

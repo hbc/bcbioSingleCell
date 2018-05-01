@@ -34,6 +34,7 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         dark = TRUE,
+        grid = TRUE,
         aspectRatio = 1L,
         title = NULL
     ) {
@@ -49,6 +50,7 @@ setMethod(
             label = label,
             labelSize = labelSize,
             dark = dark,
+            grid = grid,
             aspectRatio = aspectRatio,
             title = title
         )

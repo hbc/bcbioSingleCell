@@ -16,7 +16,7 @@ Aggregate Replicates
 }
 \examples{
 # bcbioSingleCell ====
-x <- aggregateReplicates(bcb_small)
+x <- aggregateReplicates(indrops_small)
 sampleData(x)
 }
 \seealso{
@@ -25,7 +25,6 @@ Other Data Functions: \code{\link{cell2sample}},
   \code{\link{fetchPCAData}}, \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},

@@ -10,8 +10,8 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' genes <- rownames(bcb_small) %>% head(2L)
-#' fetchGeneData(bcb_small, genes = genes) %>% glimpse()
+#' genes <- rownames(indrops_small) %>% head(2L)
+#' fetchGeneData(indrops_small, genes = genes) %>% glimpse()
 NULL
 
 
@@ -23,9 +23,9 @@ setMethod(
     "fetchGeneData",
     signature("SingleCellExperiment"),
     function(object, genes) {
-        assert_is_character(genes)
-        counts(object) %>%
-            .[genes, , drop = FALSE] %>%
+        counts <- counts(object)
+        assert_are_intersecting_sets(genes, rownames(counts))
+        counts[genes, , drop = FALSE] %>%
             as.matrix() %>%
             t()
     }

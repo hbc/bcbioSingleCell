@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotNovelty(bcb_small)
+#' plotNovelty(indrops_small)
 #'
 #' # SingleCellExperiment ====
 #' plotNovelty(cellranger_small)

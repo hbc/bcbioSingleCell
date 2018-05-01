@@ -47,7 +47,7 @@ and inflection points for further use.
 }
 \examples{
 # SingleCellExperiment ====
-x <- barcodeRanks(bcb_small)
+x <- barcodeRanks(indrops_small)
 names(x)
 x[["knee"]]
 x[["inflection"]]

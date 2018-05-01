@@ -4,7 +4,7 @@ context("Data Functions")
 
 # aggregateReplicates ==========================================================
 test_that("aggregateReplicates", {
-    x <- aggregateReplicates(bcb_small)
+    x <- aggregateReplicates(indrops_small)
     expect_s4_class(x, "bcbioSingleCell")
     expect_identical(
         dim(x),
@@ -215,7 +215,7 @@ test_that("fetchTSNEExpressionData", {
 # filterCells ==================================================================
 test_that("filterCells", {
     invisible(capture.output(
-        x <- filterCells(bcb_small, minGenes = 0L)
+        x <- filterCells(indrops_small, minGenes = 0L)
     ))
     expect_s4_class(x, "bcbioSingleCell")
     expect_identical(dim(x), c(500L, 205L))
@@ -229,7 +229,7 @@ test_that("filterCells : Maximum parameters", {
     # This should return an object with the same dimensions
     invisible(capture.output(
         x <- filterCells(
-            bcb_small,
+            indrops_small,
             minUMIs = 0L,
             maxUMIs = Inf,
             minGenes = 0L,
@@ -240,12 +240,12 @@ test_that("filterCells : Maximum parameters", {
         )
     ))
     expect_s4_class(x, "bcbioSingleCell")
-    expect_identical(dim(x), dim(bcb_small))
+    expect_identical(dim(x), dim(indrops_small))
 })
 
 test_that("filterCells : Cutoff failures", {
     expect_error(
-        filterCells(bcb_small, minUMIs = Inf),
+        filterCells(indrops_small, minUMIs = Inf),
         "No cells passed `minUMIs` cutoff"
     )
 })
@@ -253,13 +253,13 @@ test_that("filterCells : Cutoff failures", {
 test_that("filterCells : Per sample cutoffs", {
     # Get the count of sample1 (run1_AGAGGATA)
     # We're applying no filtering to that sample
-    metrics <- metrics(bcb_small)
+    metrics <- metrics(indrops_small)
     sample <- levels(metrics[["sampleID"]])[[1L]]
     expect_identical(sample, "multiplexed_AAAAAAAA")
     nCells <- length(which(metrics[["sampleID"]] == sample))
     invisible(capture.output(
         x <- filterCells(
-            object = bcb_small,
+            object = indrops_small,
             minUMIs = c("multiplexed_AAAAAAAA" = 0L),
             maxUMIs = c("multiplexed_AAAAAAAA" = Inf),
             minGenes = c("multiplexed_AAAAAAAA" = 0L),
@@ -275,7 +275,7 @@ test_that("filterCells : Per sample cutoffs", {
 
 # metrics ======================================================================
 test_that("metrics : bcbioSingleCell", {
-    x <- metrics(bcb_small)
+    x <- metrics(indrops_small)
     expect_identical(
         lapply(x, class),
         list(
@@ -288,8 +288,6 @@ test_that("metrics : bcbioSingleCell", {
             "mitoRatio" = "numeric",
             "sampleID" = "factor",
             "sampleName" = "factor",
-            "fileName" = "factor",
-            "description" = "factor",
             "index" = "factor",
             "sequence" = "factor",
             "aggregate" = "factor",
@@ -321,7 +319,7 @@ test_that("metrics : seurat", {
 
 # selectSamples ================================================================
 test_that("selectSamples : bcbioSingleCell", {
-    x <- selectSamples(bcb_small, sampleName = "rep_1")
+    x <- selectSamples(indrops_small, sampleName = "rep_1")
     expect_s4_class(x, "bcbioSingleCell")
     expect_true(metadata(x)[["selectSamples"]])
     expect_identical(dim(x), c(500L, 500L))
@@ -333,7 +331,7 @@ test_that("selectSamples : bcbioSingleCell", {
 
 test_that("selectSamples : Match failure", {
     expect_error(
-        selectSamples(bcb_small, sampleName = "XXX"),
+        selectSamples(indrops_small, sampleName = "XXX"),
         "\"sampleName\" metadata column doesn't contain XXX"
     )
 })
@@ -342,11 +340,11 @@ test_that("selectSamples : Match failure", {
 
 # subsetPerSample ==============================================================
 test_that("subsetPerSample : bcbioSingleCell", {
-    x <- subsetPerSample(bcb_small, assignAndSave = FALSE)
+    x <- subsetPerSample(indrops_small, assignAndSave = FALSE)
     expect_is(x, "list")
     expect_identical(names(x), "multiplexed_AAAAAAAA")
     subsetPerSample(
-        object = bcb_small,
+        object = indrops_small,
         assignAndSave = TRUE,
         dir = "subsetPerSample"
     )
@@ -366,7 +364,7 @@ test_that("subsetPerSample : bcbioSingleCell", {
 
 # topBarcodes ==================================================================
 test_that("topBarcodes : bcbioSingleCell", {
-    x <- topBarcodes(bcb_small)
+    x <- topBarcodes(indrops_small)
     expect_is(x, "data.frame")
     expect_identical(
         rownames(x)[[1L]],

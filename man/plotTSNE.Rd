@@ -12,7 +12,7 @@ plotTSNE(object, ...)
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
   color = scale_color_hue(), pointsAsNumbers = FALSE, pointSize = 0.5,
   pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = TRUE,
-  aspectRatio = 1L, title = NULL)
+  grid = TRUE, aspectRatio = 1L, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -40,6 +40,8 @@ the dataset, and some cells can be masked.}
 
 \item{dark}{Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
+
+\item{grid}{Show major grid lines but hide axis lines.}
 
 \item{aspectRatio}{Aspect ratio.}
 

@@ -40,13 +40,13 @@ Sample Barcode Metrics
 }
 \examples{
 # bcbioSingleCell ====
-metrics(bcb_small) \%>\% glimpse()
+metrics(indrops_small) \%>\% glimpse()
 
 # SingleCellExperiment ====
 metrics(cellranger_small) \%>\% glimpse()
 
 # dgCMatrix ====
-counts <- counts(bcb_small)
+counts <- counts(indrops_small)
 class(counts)
 metrics(counts) \%>\% glimpse()
 
@@ -61,7 +61,6 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}},
   \code{\link{selectSamples}},

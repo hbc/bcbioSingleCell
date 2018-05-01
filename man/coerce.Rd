@@ -21,7 +21,7 @@ the filtered cells into a new \code{seurat} class object.
 
 \examples{
 # SingleCellExperiment to seurat ====
-x <- as(bcb_small, "seurat")
+x <- as(indrops_small, "seurat")
 class(x)
 print(x)
 }

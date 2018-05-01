@@ -22,7 +22,7 @@
 #' @return `list`.
 #' @examples
 #' # SingleCellExperiment ====
-#' x <- barcodeRanks(bcb_small)
+#' x <- barcodeRanks(indrops_small)
 #' names(x)
 #' x[["knee"]]
 #' x[["inflection"]]

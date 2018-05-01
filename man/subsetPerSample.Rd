@@ -38,12 +38,12 @@ Subset Per Sample
 \examples{
 # bcbioSingleCell ====
 # List mode (default)
-list <- subsetPerSample(bcb_small, assignAndSave = FALSE)
+list <- subsetPerSample(indrops_small, assignAndSave = FALSE)
 names(list)
 
 # Assign and save mode (useful for large datasets)
 subsetPerSample(
-    object = bcb_small,
+    object = indrops_small,
     assignAndSave = TRUE,
     envir = parent.frame(),
     dir = "subsetPerSample"
@@ -60,7 +60,6 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
   \code{\link{filterCells}},
-  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}}, \code{\link{topBarcodes}}

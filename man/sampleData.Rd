@@ -10,10 +10,10 @@
 \title{Sample Data}
 \usage{
 \S4method{sampleData}{SingleCellExperiment}(object, interestingGroups,
-  return = c("DataFrame", "data.frame", "kable"))
+  clean = TRUE, return = c("DataFrame", "data.frame", "kable"))
 
-\S4method{sampleData}{seurat}(object, interestingGroups,
-  return = c("DataFrame", "data.frame"))
+\S4method{sampleData}{seurat}(object, interestingGroups, clean = TRUE,
+  return = c("DataFrame", "data.frame", "kable"))
 
 \S4method{sampleData}{SingleCellExperiment,DataFrame}(object) <- value
 
@@ -22,16 +22,18 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} vector defining the groups of interest.}
 
-\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
-to the first argument in the vector.}
+\item{clean}{\emph{Recommended.} Only return \code{factor} columns not defined in
+\link{metadataBlacklist}.}
 
-\item{value}{Object to assign.}
+\item{return}{Object class to return. Uses \code{\link[=match.arg]{match.arg()}} internally and picks
+the first item in the vector by default.}
+
+\item{value}{Value to assign.}
 }
 \value{
-\code{data.frame}.
+Data describing the samples.
 }
 \description{
 Metadata in columns describing the samples, which are defined in the
@@ -41,7 +43,7 @@ the samples.
 }
 \examples{
 # bcbioSingleCell ====
-x <- bcb_small
+x <- indrops_small
 sampleData(x) \%>\% glimpse()
 sampleData(x)[["batch"]] <- 1L
 sampleData(x) \%>\% glimpse()
@@ -51,6 +53,9 @@ x <- seurat_small
 sampleData(x) \%>\% glimpse()
 sampleData(x)[["batch"]] <- 1L
 sampleData(x) \%>\% glimpse()
+}
+\seealso{
+\link{metadataBlacklist}.
 }
 \author{
 Michael Steinbaugh

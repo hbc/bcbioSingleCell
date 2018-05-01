@@ -49,8 +49,8 @@ rownames of \code{\link[=sampleData]{sampleData()}}).
 }
 \examples{
 # bcbioSingleCell ====
-show(bcb_small)
-x <- filterCells(bcb_small, minGenes = 0L)
+show(indrops_small)
+x <- filterCells(indrops_small, minGenes = 0L)
 show(x)
 
 # SingleCellExperiment ====
@@ -66,7 +66,6 @@ Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
   \code{\link{fetchTSNEData}},
   \code{\link{fetchTSNEExpressionData}},
-  \code{\link{interestingGroups}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{metrics}},
   \code{\link{selectSamples}},

@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotCellCounts(bcb_small)
+#' plotCellCounts(indrops_small)
 #'
 #' # SingleCellExperiment ====
 #' plotCellCounts(cellranger_small)
@@ -62,7 +62,9 @@ setMethod(
                 stat = "identity"
             ) +
             labs(fill = paste(interestingGroups, collapse = ":\n")) +
-            theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
+            theme(axis.text.x = element_text(
+                angle = 90L, hjust = 1L, vjust = 0.5
+            ))
 
         # Color palette
         if (!is.null(fill)) {
