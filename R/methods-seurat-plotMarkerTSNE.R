@@ -8,7 +8,6 @@
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #' @param expression Calculation to apply on the aggregate marker expression.
-#' @param subtitle Include gene identifiers as subtitles.
 #'
 #' @return `ggplot`.
 #'

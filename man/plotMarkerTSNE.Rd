@@ -51,8 +51,6 @@ the dataset, and some cells can be masked.}
 \item{aspectRatio}{Aspect ratio.}
 
 \item{title}{Plot title.}
-
-\item{subtitle}{Include gene identifiers as subtitles.}
 }
 \value{
 \code{ggplot}.
