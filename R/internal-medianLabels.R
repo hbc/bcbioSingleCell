@@ -8,22 +8,22 @@
 #' @noRd
 #'
 #' @return ggplot2 `geom_label`.
-.medianLabels <- function(metrics, medianCol, digits = 0L) {
-    assert_is_data.frame(metrics)
+.medianLabels <- function(data, medianCol, digits = 0L) {
+    assert_is_data.frame(data)
     assert_is_a_string(medianCol)
-    assert_is_subset(medianCol, colnames(metrics))
+    assert_is_subset(medianCol, colnames(data))
     assert_is_an_integer(digits)
 
     data <- aggregate(
         formula = as.formula(paste(medianCol, "sampleName", sep = " ~ ")),
-        data = metrics,
+        data = data,
         FUN = median
     )
     data[["roundedMedian"]] <- round(data[[medianCol]], digits = digits)
 
     # Add `aggregate` column for facet wrapping, if necessary
-    if ("aggregate" %in% colnames(metrics)) {
-        sampleFacet <- metrics[, c("sampleName", "aggregate")] %>%
+    if ("aggregate" %in% colnames(data)) {
+        sampleFacet <- data[, c("sampleName", "aggregate")] %>%
         unique()
         data <- left_join(data, sampleFacet, by = "sampleName")
     }
