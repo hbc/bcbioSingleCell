@@ -38,7 +38,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        geom = c("violin", "boxplot", "histogram", "ridgeline"),
+        geom = c("violin", "histogram", "boxplot", "ridgeline"),
         headerLevel = 2L,
         legend = FALSE,
         return = c("grid", "list", "markdown")
@@ -49,21 +49,28 @@ setMethod(
         geom <- match.arg(geom)
         return <- match.arg(return)
 
+        plotCellCounts <- plotCellCounts(
+            object = object,
+            interestingGroups = interestingGroups
+        )
+        plotReadsPerCell <- NULL
+
         if (is(object, "bcbioSingleCell")) {
+            # Don't show cell counts for unfiltered bcbio datasets
+            if (!length(metadata(object)[["filterCells"]])) {
+                plotCellCounts <- NULL
+            }
+            # Raw read counts are only stashed in bcbioSingleCell objects
             plotReadsPerCell <- plotReadsPerCell(
-                object,
+                object = object,
+                geom = geom,
                 interestingGroups = interestingGroups
             )
-        } else {
-            plotReadsPerCell <- NULL
         }
 
         plotlist <- list(
+            "plotCellCounts" = plotCellCounts,
             "plotReadsPerCell" = plotReadsPerCell,
-            "plotCellCounts" = plotCellCounts(
-                object,
-                interestingGroups = interestingGroups
-            ),
             "plotUMIsPerCell" = plotUMIsPerCell(
                 object,
                 interestingGroups = interestingGroups,

@@ -8,11 +8,11 @@
 \title{Quality Control Plots}
 \usage{
 \S4method{plotQC}{SingleCellExperiment}(object, interestingGroups,
-  geom = c("violin", "boxplot", "histogram", "ridgeline"), headerLevel = 2L,
+  geom = c("violin", "histogram", "boxplot", "ridgeline"), headerLevel = 2L,
   legend = FALSE, return = c("grid", "list", "markdown"))
 
 \S4method{plotQC}{seurat}(object, interestingGroups, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), headerLevel = 2L, legend = FALSE,
+  "histogram", "boxplot", "ridgeline"), headerLevel = 2L, legend = FALSE,
   return = c("grid", "list", "markdown"))
 }
 \arguments{
