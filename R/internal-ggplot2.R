@@ -53,12 +53,18 @@ kneeColor <- "orange"
 
 
 # TODO Migrate this shared code to bcbioBase
-.geomLabel <- function(data = NULL, mapping = NULL, size = 4L) {
+.geomLabel <- function(
+    data = NULL,
+    mapping = NULL,
+    color = NULL,
+    size = 4L
+) {
     geom_label_repel(
         data = data,
         mapping = mapping,
         arrow = arrow(length = unit(0.01, "npc")),
         box.padding = unit(0.5, "lines"),
+        color = color,
         fill = "white",
         fontface = "bold",
         force = 1L,

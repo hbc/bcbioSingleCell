@@ -65,6 +65,10 @@ Note that only points with total counts above \code{lower} will be considered, r
 x <- barcodeRanksPerSample(indrops_small)
 names(x)
 
+# SingleCellExperiment ====
+x <- barcodeRanksPerSample(cellranger_small)
+names(x)
+
 # seurat ====
 x <- barcodeRanksPerSample(seurat_small)
 names(x)

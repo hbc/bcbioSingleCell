@@ -119,6 +119,17 @@ setGeneric(
 
 
 
+#' @rdname plotBarcodeRanks
+#' @export
+setGeneric(
+    "plotBarcodeRanks",
+    function(object, ...) {
+        standardGeneric("plotBarcodeRanks")
+    }
+)
+
+
+
 #' @rdname plotCellCounts
 #' @export
 setGeneric(
