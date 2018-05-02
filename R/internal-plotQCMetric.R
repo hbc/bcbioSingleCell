@@ -69,7 +69,7 @@
                 color = FALSE
             ) +
             scale_x_continuous(trans = trans) +
-            scale_y_continuous(trans = trans)
+            scale_y_continuous()
     } else if (geom == "ridgeline") {
         p <- p +
             geom_density_ridges(
