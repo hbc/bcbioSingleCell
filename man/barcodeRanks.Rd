@@ -8,6 +8,7 @@
 \alias{barcodeRanks,dgCMatrix-method}
 \alias{barcodeRanks,dgTMatrix-method}
 \alias{barcodeRanks,SingleCellExperiment-method}
+\alias{barcodeRanks,seurat-method}
 \title{Barcode Ranks}
 \usage{
 barcodeRanks(object, ...)
@@ -22,6 +23,8 @@ barcodeRanks(object, ...)
   df = 20L)
 
 \S4method{barcodeRanks}{SingleCellExperiment}(object, ...)
+
+\S4method{barcodeRanks}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -49,8 +52,13 @@ and inflection points for further use.
 # SingleCellExperiment ====
 x <- barcodeRanks(indrops_small)
 names(x)
-x[["knee"]]
-x[["inflection"]]
+x$knee
+x$inflection
+
+# seurat ====
+x <- barcodeRanks(seurat_small)
+x$knee
+x$inflection
 }
 \seealso{
 Modified version of \code{DropletUtils::barcodeRanks()} that works on

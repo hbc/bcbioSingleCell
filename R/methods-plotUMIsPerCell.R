@@ -16,16 +16,24 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotUMIsPerCell(indrops_small)
+#' # Label the inflection point per sample
+#' plotUMIsPerCell(indrops_small, point = "inflection")
 #'
-#' # Label the barcode ranks
-#' plotUMIsPerCell(indrops_small, barcodeRanks = TRUE)
+#' # Label the knee point per sample
+#' plotUMIsPerCell(indrops_small, point = "knee")
 #'
 #' # SingleCellExperiment ====
-#' plotUMIsPerCell(cellranger_small)
+#' plotUMIsPerCell(cellranger_small, point = "inflection")
+#' plotUMIsPerCell(cellranger_small, point = "knee")
+#'
+#' # Alternate geom
+#' plotUMIsPerCell(cellranger_small, geom = "histogram")
+#' plotUMIsPerCell(cellranger_small, geom = "ridgeline")
+#' plotUMIsPerCell(cellranger_small, geom = "violin")
+#' plotUMIsPerCell(cellranger_small, geom = "boxplot")
 #'
 #' # seurat ====
-#' plotUMIsPerCell(Seurat::pbmc_small)
+#' plotUMIsPerCell(seurat_small, point = "inflection")
 NULL
 
 
@@ -75,7 +83,7 @@ setMethod(
             assert_are_identical(geom, "ecdf")
 
             if (length(title)) {
-                p <- p + labs(subtitle = paste(point, "points per sample"))
+                p <- p + labs(subtitle = paste(point, "point per sample"))
             }
 
             ranks <- barcodeRanksPerSample(object)
@@ -95,7 +103,7 @@ setMethod(
                 freq <- mapply(
                     sampleID = names(points),
                     point = points,
-                    MoreArgs = list(metrics = metrics(bcb)),
+                    MoreArgs = list(metrics = metrics(object)),
                     FUN = function(metrics, sampleID, point) {
                         nUMI <- metrics[
                             metrics[["sampleID"]] == sampleID,

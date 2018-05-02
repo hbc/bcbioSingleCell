@@ -6,11 +6,14 @@
 \alias{barcodeRanksPerSample}
 \alias{barcodeRanksPerSample}
 \alias{barcodeRanksPerSample,SingleCellExperiment-method}
+\alias{barcodeRanksPerSample,seurat-method}
 \title{Barcode Ranks per Sample}
 \usage{
 barcodeRanksPerSample(object, ...)
 
 \S4method{barcodeRanksPerSample}{SingleCellExperiment}(object, ...)
+
+\S4method{barcodeRanksPerSample}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -26,6 +29,10 @@ Barcode Ranks per Sample
 \examples{
 # bcbioSingleCell ====
 x <- barcodeRanksPerSample(indrops_small)
+names(x)
+
+# seurat ====
+x <- barcodeRanksPerSample(seurat_small)
 names(x)
 }
 \seealso{

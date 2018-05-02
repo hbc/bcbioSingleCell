@@ -75,6 +75,7 @@ Imports:
     dplyr (>= 0.7),
     ggplot2 (>= 2.2.1),
     ggridges,
+    ggrepel,
     graphics,
     grid,
     jsonlite,

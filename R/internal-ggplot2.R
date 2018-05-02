@@ -52,6 +52,7 @@ kneeColor <- "orange"
 
 
 
+# TODO Migrate this shared code to bcbioBase
 .geomLabel <- function(data = NULL, mapping = NULL, size = 4L) {
     geom_label_repel(
         data = data,
@@ -70,6 +71,7 @@ kneeColor <- "orange"
 
 
 
+# TODO Migrate this shared code to bcbioBase
 .qcCutoffLine <- function(
     xintercept = NULL,
     yintercept = NULL,

@@ -63,16 +63,24 @@ Plot the universal molecular identifiers (UMIs) per cell.
 }
 \examples{
 # bcbioSingleCell ====
-plotUMIsPerCell(indrops_small)
+# Label the inflection point per sample
+plotUMIsPerCell(indrops_small, point = "inflection")
 
-# Label the barcode ranks
-plotUMIsPerCell(indrops_small, barcodeRanks = TRUE)
+# Label the knee point per sample
+plotUMIsPerCell(indrops_small, point = "knee")
 
 # SingleCellExperiment ====
-plotUMIsPerCell(cellranger_small)
+plotUMIsPerCell(cellranger_small, point = "inflection")
+plotUMIsPerCell(cellranger_small, point = "knee")
+
+# Alternate geom
+plotUMIsPerCell(cellranger_small, geom = "histogram")
+plotUMIsPerCell(cellranger_small, geom = "ridgeline")
+plotUMIsPerCell(cellranger_small, geom = "violin")
+plotUMIsPerCell(cellranger_small, geom = "boxplot")
 
 # seurat ====
-plotUMIsPerCell(Seurat::pbmc_small)
+plotUMIsPerCell(seurat_small, point = "inflection")
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

@@ -35,9 +35,10 @@
 #'   geom_step geom_text geom_violin geom_vline ggtitle guide_colorbar
 #'   guide_legend guides labs qplot scale_radius scale_x_continuous
 #'   scale_y_continuous stat_ecdf theme xlab xlim ylab
+#' @importFrom ggrepel geom_label_repel
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom graphics hist
-#' @importFrom grid unit
+#' @importFrom grid arrow unit
 #' @importFrom jsonlite read_json
 #' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_names set_rownames
