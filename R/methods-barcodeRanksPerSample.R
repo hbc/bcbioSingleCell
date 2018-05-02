@@ -11,6 +11,10 @@
 #' # bcbioSingleCell ====
 #' x <- barcodeRanksPerSample(indrops_small)
 #' names(x)
+#'
+#' # seurat ====
+#' x <- barcodeRanksPerSample(seurat_small)
+#' names(x)
 NULL
 
 
@@ -35,4 +39,14 @@ setMethod(
         names(ranks) <- samples
         ranks
     }
+)
+
+
+
+#' @rdname barcodeRanksPerSample
+#' @export
+setMethod(
+    "barcodeRanksPerSample",
+    signature("seurat"),
+    getMethod("barcodeRanksPerSample", "SingleCellExperiment")
 )

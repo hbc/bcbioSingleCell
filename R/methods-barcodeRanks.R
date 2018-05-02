@@ -24,8 +24,13 @@
 #' # SingleCellExperiment ====
 #' x <- barcodeRanks(indrops_small)
 #' names(x)
-#' x[["knee"]]
-#' x[["inflection"]]
+#' x$knee
+#' x$inflection
+#'
+#' # seurat ====
+#' x <- barcodeRanks(seurat_small)
+#' x$knee
+#' x$inflection
 NULL
 
 
@@ -169,4 +174,14 @@ setMethod(
         counts <- counts(object)
         barcodeRanks(counts, ...)
     }
+)
+
+
+
+#' @rdname barcodeRanks
+#' @export
+setMethod(
+    "barcodeRanks",
+    signature("seurat"),
+    getMethod("barcodeRanks", "SingleCellExperiment")
 )
