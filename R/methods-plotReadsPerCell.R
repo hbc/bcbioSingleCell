@@ -13,18 +13,6 @@
 #' @examples
 #' # bcbioSingleCell ====
 #' plotReadsPerCell(indrops_small)
-#'
-#' # SingleCellExperiment ====
-#' # Only contains UMI counts
-#' \dontrun{
-#' plotReadsPerCell(cellranger_small)
-#' }
-#'
-#' # seurat ====
-#' # Only contains UMI counts
-#' \dontrun{
-#' plotReadsPerCell(Seurat::pbmc_small)
-#' }
 NULL
 
 
@@ -37,6 +25,7 @@ NULL
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
+    assertIsAStringOrNULL(title)
 
     p <- ggplot(
         data = data,
@@ -288,13 +277,14 @@ NULL
 #' @export
 setMethod(
     "plotReadsPerCell",
-    signature("SingleCellExperiment"),
+    signature("bcbioSingleCell"),
     function(
         object,
         interestingGroups,
         geom = c("histogram", "ecdf", "ridgeline", "violin"),
         color = scale_color_hue(),
-        fill = scale_fill_hue()
+        fill = scale_fill_hue(),
+        title = "reads per cell"
     ) {
         # Passthrough: color, fill
         validObject(object)
@@ -302,9 +292,16 @@ setMethod(
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
         geom <- match.arg(geom)
+        assertIsAStringOrNULL(title)
 
-        # Minimum reads per barcode cutoff
-        min <- metadata(object)[["cellularBarcodeCutoff"]]
+        # Minimum reads per barcode cutoff (for unfiltered data)
+        if (length(metadata(object)[["filterCells"]])) {
+            min <- 0L
+            subtitle <- NULL
+        } else {
+            min <- metadata(object)[["cellularBarcodeCutoff"]]
+            subtitle <- paste("cutoff", min, sep = " = ")
+        }
         assert_is_an_integer(min)
 
         # Obtain the sample metadata
@@ -377,22 +374,12 @@ setMethod(
         # Add title and subtitle containing cutoff information
         p <- p +
             labs(
+                title = title,
+                subtitle = subtitle,
                 color = paste(interestingGroups, collapse = ":\n"),
-                fill = paste(interestingGroups, collapse = ":\n"),
-                title = "reads per cell",
-                subtitle = paste("cutoff", min, sep = " = ")
+                fill = paste(interestingGroups, collapse = ":\n")
             )
 
         p
     }
-)
-
-
-
-#' @rdname plotReadsPerCell
-#' @export
-setMethod(
-    "plotReadsPerCell",
-    signature("seurat"),
-    getMethod("plotReadsPerCell", "SingleCellExperiment")
 )
