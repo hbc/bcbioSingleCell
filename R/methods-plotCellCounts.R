@@ -30,12 +30,14 @@ setMethod(
     function(
         object,
         interestingGroups,
-        fill = scale_fill_hue()
+        fill = scale_fill_hue(),
+        title = "cell counts"
     ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
         assertIsFillScaleDiscreteOrNULL(fill)
+        assertIsAStringOrNULL(title)
 
         metrics <- metrics(object, interestingGroups)
         sampleData <- sampleData(
@@ -61,10 +63,11 @@ setMethod(
                 color = "black",
                 stat = "identity"
             ) +
-            labs(fill = paste(interestingGroups, collapse = ":\n")) +
-            theme(axis.text.x = element_text(
-                angle = 90L, hjust = 1L, vjust = 0.5
-            ))
+            labs(
+                title = title,
+                x = NULL,
+                fill = paste(interestingGroups, collapse = ":\n")
+            )
 
         # Color palette
         if (!is.null(fill)) {

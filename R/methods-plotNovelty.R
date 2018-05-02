@@ -37,7 +37,8 @@ setMethod(
         geom = c("violin", "boxplot", "histogram", "ridgeline"),
         interestingGroups,
         min = 0L,
-        fill = scale_fill_hue()
+        fill = scale_fill_hue(),
+        title = "genes per UMI (novelty)"
     ) {
         assert_all_are_in_right_open_range(min, lower = 0L, upper = 1L)
         geom <- match.arg(geom)
@@ -50,7 +51,8 @@ setMethod(
             max = 1L,
             trans = "sqrt",
             ratio = TRUE,
-            fill = fill
+            fill = fill,
+            title = title
         )
     }
 )

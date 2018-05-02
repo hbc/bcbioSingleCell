@@ -31,9 +31,11 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        color = scale_color_hue()
+        color = scale_color_hue(),
+        title = "dropout rate vs. library depth"
     ) {
         assertIsColorScaleDiscreteOrNULL(color)
+        assertIsAStringOrNULL(title)
 
         counts <- assay(object)
         # Using a logical matrix is faster and more memory efficient
@@ -62,7 +64,11 @@ setMethod(
         ) +
             geom_point(size = 0.8, alpha = 0.8) +
             scale_x_continuous(trans = "log10") +
-            labs(x = "library size (depth)", y = "dropout rate")
+            labs(
+                title = title,
+                x = "library size (depth)",
+                y = "dropout rate"
+            )
 
         if (is(color, "ScaleDiscrete")) {
             p <- p + color

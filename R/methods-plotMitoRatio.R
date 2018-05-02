@@ -35,7 +35,8 @@ setMethod(
         geom = c("violin", "boxplot", "histogram", "ridgeline"),
         interestingGroups,
         max = 1L,
-        fill = scale_fill_hue()
+        fill = scale_fill_hue(),
+        title = "mitochondrial abundance"
     ) {
         geom <- match.arg(geom)
         assert_all_are_in_left_open_range(max, lower = 0L, upper = 1L)
@@ -47,7 +48,8 @@ setMethod(
             max = max,
             trans = "identity",
             ratio = TRUE,
-            fill = fill
+            fill = fill,
+            title = title
         )
     }
 )
