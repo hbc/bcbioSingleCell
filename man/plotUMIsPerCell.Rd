@@ -12,13 +12,15 @@ plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
   "histogram", "ridgeline", "boxplot", "violin"), interestingGroups, min = 0L,
-  barcodeRanks = TRUE, labelPoint = c("knee", "inflection"),
-  trans = "log10", color = scale_color_hue(), fill = scale_fill_hue())
+  point = c("none", "inflection", "knee"), label = TRUE, trans = "log10",
+  color = scale_color_hue(), fill = scale_fill_hue(),
+  title = "UMIs per cell")
 
 \S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "histogram",
   "ridgeline", "boxplot", "violin"), interestingGroups, min = 0L,
-  barcodeRanks = TRUE, labelPoint = c("knee", "inflection"),
-  trans = "log10", color = scale_color_hue(), fill = scale_fill_hue())
+  point = c("none", "inflection", "knee"), label = TRUE, trans = "log10",
+  color = scale_color_hue(), fill = scale_fill_hue(),
+  title = "UMIs per cell")
 }
 \arguments{
 \item{object}{Object.}
@@ -33,11 +35,11 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 
 \item{min}{Recommended minimum value cutoff.}
 
-\item{barcodeRanks}{Calculate barcode ranks per sample to label knee or
-inflection points. If \code{TRUE}, this will overwrite the \code{interestingGroups}
-setting and always plot per sample.}
+\item{point}{Label either the "\code{knee}" or "\code{inflection}" points per sample.
+To disable, use "\code{none}".}
 
-\item{labelPoint}{Label either the "\code{knee}" or "\code{inflection}" point.}
+\item{label}{Label the points per sample on the plot. Only applies when
+\code{point} argument is defined.}
 
 \item{trans}{Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
@@ -50,6 +52,8 @@ color definitions are desired, we recommend using
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{title}{Plot title.}
 }
 \value{
 \code{ggplot}.

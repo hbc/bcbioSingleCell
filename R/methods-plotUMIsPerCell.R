@@ -9,10 +9,10 @@
 #' @inherit plotGenesPerCell
 #'
 #' @inheritParams general
-#' @param barcodeRanks Calculate barcode ranks per sample to label knee or
-#'   inflection points. If `TRUE`, this will overwrite the `interestingGroups`
-#'   setting and always plot per sample.
-#' @param labelPoint Label either the "`knee`" or "`inflection`" point.
+#' @param point Label either the "`knee`" or "`inflection`" points per sample.
+#'   To disable, use "`none`".
+#' @param label Label the points per sample on the plot. Only applies when
+#'   `point` argument is defined.
 #'
 #' @examples
 #' # bcbioSingleCell ====
@@ -41,19 +41,20 @@ setMethod(
         geom = c("ecdf", "histogram", "ridgeline", "boxplot", "violin"),
         interestingGroups,
         min = 0L,
-        barcodeRanks = TRUE,
-        labelPoint = c("knee", "inflection"),
+        point = c("none", "inflection", "knee"),
+        label = TRUE,
         trans = "log10",
         color = scale_color_hue(),
-        fill = scale_fill_hue()
+        fill = scale_fill_hue(),
+        title = "UMIs per cell"
     ) {
         geom <- match.arg(geom)
-        assert_is_a_bool(barcodeRanks)
-        assert_is_a_bool(ranksPerSample)
-        labelPoint <- match.arg(labelPoint)
+        point <- match.arg(point)
+        assert_is_a_bool(label)
+        assertIsAStringOrNULL(title)
 
-        # Override interestingGroups if barcodeRanks is enabled
-        if (isTRUE(barcodeRanks)) {
+        # Override interestingGroups if labeling points
+        if (point != "none") {
             interestingGroups <- "sampleName"
         }
 
@@ -68,15 +69,75 @@ setMethod(
             fill = fill
         )
 
-        # Calculate barcode ranks and label inflection or knee point
-        if (isTRUE(barcodeRanks)) {
-            p <- .labelBarcodeRanksPerSample(
-                p = p,
-                object = object,
-                geom = geom,
-                point = labelPoint
-            )
+        # Calculate barcode ranks and label inflection or knee points
+        if (point != "none") {
+            p <- p + labs(subtitle = paste(point, "point"))
+
+            ranks <- barcodeRanksPerSample(object)
+            # Inflection or knee points per sample
+            points <- lapply(seq_along(ranks), function(x) {
+                ranks[[x]][[point]]
+            })
+            points <- unlist(points)
+            names(points) <- names(ranks)
+
+            sampleNames <- sampleData(object) %>%
+                .[names(points), "sampleName"] %>%
+                as.character()
+
+            if (geom == "ecdf") {
+                # Calculate the y-intercept per sample
+                freq <- mapply(
+                    sampleID = names(points),
+                    point = points,
+                    MoreArgs = list(metrics = metrics(bcb)),
+                    FUN = function(metrics, sampleID, point) {
+                        nUMI <- metrics[
+                            metrics[["sampleID"]] == sampleID,
+                            "nUMI",
+                            drop = TRUE
+                            ]
+                        e <- ecdf(sort(nUMI))
+                        e(point)
+                    },
+                    SIMPLIFY = TRUE,
+                    USE.NAMES = TRUE
+                )
+                pointData <- data.frame(
+                    "x" = points,
+                    "y" = freq,
+                    "label" = paste0(sampleNames, " (", points, ")"),
+                    "sampleName" = sampleNames
+                )
+                p <- p +
+                    geom_point(
+                        data = pointData,
+                        mapping = aes_string(
+                            x = "x",
+                            y = "y",
+                            color = "sampleName"
+                        ),
+                        size = 5L,
+                        show.legend = FALSE
+                    )
+                if (isTRUE(label)) {
+                    p <- p +
+                        .geomLabel(
+                            data = pointData,
+                            mapping = aes_string(
+                                x = "x",
+                                y = "y",
+                                label = "label",
+                                color = "sampleName"
+                            )
+                        )
+                }
+            } else {
+                stop("Only ecdf geom supported at the moment")
+            }
         }
+
+        p <- p + labs(title = title)
 
         p
     }

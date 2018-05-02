@@ -51,6 +51,25 @@ kneeColor <- "orange"
 }
 
 
+
+.geomLabel <- function(data = NULL, mapping = NULL, size = 4L) {
+    geom_label_repel(
+        data = data,
+        mapping = mapping,
+        arrow = arrow(length = unit(0.01, "npc")),
+        box.padding = unit(0.5, "lines"),
+        fill = "white",
+        fontface = "bold",
+        force = 1L,
+        point.padding = unit(0.75, "lines"),
+        segment.size = 0.5,
+        show.legend = FALSE,
+        size = size
+    )
+}
+
+
+
 .qcCutoffLine <- function(
     xintercept = NULL,
     yintercept = NULL,
