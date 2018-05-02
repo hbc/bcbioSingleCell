@@ -1,3 +1,7 @@
+# TODO Add boxplot geom support
+
+
+
 #' Plot Read Counts per Cell
 #'
 #' Plot the distribution of read counts for all unfiltered cellular barcodes.
@@ -17,7 +21,56 @@ NULL
 
 
 
+# TODO Work on consolidating the code in these constructors
 # Constructors =================================================================
+.plotReadsPerCellBoxplot <- function(
+    data,
+    min = 0L,
+    fill = scale_fill_hue()
+) {
+    assert_is_data.frame(data)
+    assertIsFillScaleDiscreteOrNULL(fill)
+
+    p <- ggplot(
+        data = data,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "nCount",
+            fill = "interestingGroups"
+        )
+    ) +
+        geom_boxplot(color = lineColor, outlier.shape = NA) +
+        scale_y_continuous(trans = "log10") +
+        .medianLabels(data, medianCol = "nCount", digits = 0L) +
+        labs(
+            x = NULL,
+            y = "reads per cell"
+        )
+
+    # Cutoff line
+    if (min > 0L) {
+        p <- p + .qcCutoffLine(yintercept = min)
+    }
+
+    # Color palette
+    if (is(fill, "ScaleDiscrete")) {
+        p <- p + fill
+    }
+
+    # Facets
+    facets <- NULL
+    if (.isAggregate(data)) {
+        facets <- c(facets, "aggregate")
+    }
+    if (is.character(facets)) {
+        p <- p + facet_wrap(facets = facets, scales = "free")
+    }
+
+    p
+}
+
+
+
 .plotReadsPerCellECDF <- function(
     data,
     min = 0L,
@@ -25,7 +78,6 @@ NULL
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
-    assertIsAStringOrNULL(title)
 
     p <- ggplot(
         data = data,
@@ -49,59 +101,6 @@ NULL
     # Color palette
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
-    }
-
-    # Facets
-    facets <- NULL
-    if (.isAggregate(data)) {
-        facets <- c(facets, "aggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free")
-    }
-
-    p
-}
-
-
-
-.plotReadsPerCellViolin <- function(
-    data,
-    min = 0L,
-    fill = scale_fill_hue()
-) {
-    assert_is_data.frame(data)
-    assertIsFillScaleDiscreteOrNULL(fill)
-
-    p <- ggplot(
-        data = data,
-        mapping = aes_string(
-            x = "sampleName",
-            y = "nCount",
-            fill = "interestingGroups"
-        )
-    ) +
-        geom_violin(
-            alpha = qcPlotAlpha,
-            color = lineColor,
-            scale = "count"
-        ) +
-        scale_y_continuous(trans = "log10") +
-        .medianLabels(data, medianCol = "nCount", digits = 0L) +
-        labs(
-            x = NULL,
-            y = "reads per cell"
-        ) +
-        theme(axis.text.x = element_text(angle = 90L, hjust = 1L, vjust = 0.5))
-
-    # Cutoff line
-    if (min > 0L) {
-        p <- p + .qcCutoffLine(yintercept = min)
-    }
-
-    # Color palette
-    if (is(fill, "ScaleDiscrete")) {
-        p <- p + fill
     }
 
     # Facets
@@ -150,6 +149,57 @@ NULL
     # Cutoff line
     if (min > 0L) {
         p <- p + .qcCutoffLine(xintercept = min)
+    }
+
+    # Color palette
+    if (is(fill, "ScaleDiscrete")) {
+        p <- p + fill
+    }
+
+    # Facets
+    facets <- NULL
+    if (.isAggregate(data)) {
+        facets <- c(facets, "aggregate")
+    }
+    if (is.character(facets)) {
+        p <- p + facet_wrap(facets = facets, scales = "free")
+    }
+
+    p
+}
+
+
+
+.plotReadsPerCellViolin <- function(
+    data,
+    min = 0L,
+    fill = scale_fill_hue()
+) {
+    assert_is_data.frame(data)
+    assertIsFillScaleDiscreteOrNULL(fill)
+
+    p <- ggplot(
+        data = data,
+        mapping = aes_string(
+            x = "sampleName",
+            y = "nCount",
+            fill = "interestingGroups"
+        )
+    ) +
+        geom_violin(
+            color = lineColor,
+            scale = "count"
+        ) +
+        scale_y_continuous(trans = "log10") +
+        .medianLabels(data, medianCol = "nCount", digits = 0L) +
+        labs(
+            x = NULL,
+            y = "reads per cell"
+        )
+
+    # Cutoff line
+    if (min > 0L) {
+        p <- p + .qcCutoffLine(yintercept = min)
     }
 
     # Color palette
@@ -281,7 +331,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        geom = c("histogram", "ecdf", "ridgeline", "violin"),
+        geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
         color = scale_color_hue(),
         fill = scale_fill_hue(),
         title = "reads per cell"
@@ -335,7 +385,19 @@ setMethod(
             as_tibble() %>%
             group_by(!!sym("sampleID"))
 
-        if (geom == "histogram") {
+        if (geom == "boxplot") {
+            p <- .plotReadsPerCellBoxplot(
+                data = data,
+                fill = fill,
+                min = min
+            )
+        } else if (geom == "ecdf") {
+            p <- .plotReadsPerCellECDF(
+                data = data,
+                color = color,
+                min = min
+            )
+        } else if (geom == "histogram") {
             sampleData <- sampleData(
                 object = object,
                 interestingGroups = interestingGroups,
@@ -347,12 +409,6 @@ setMethod(
                 sampleData = sampleData
             )
             p <- .plotReadsPerCellHistogram(
-                data = data,
-                color = color,
-                min = min
-            )
-        } else if (geom == "ecdf") {
-            p <- .plotReadsPerCellECDF(
                 data = data,
                 color = color,
                 min = min

@@ -10,7 +10,7 @@
 plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object, interestingGroups,
-  geom = c("histogram", "ecdf", "ridgeline", "violin"),
+  geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   color = scale_color_hue(), fill = scale_fill_hue(),
   title = "reads per cell")
 }
