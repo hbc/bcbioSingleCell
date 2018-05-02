@@ -10,7 +10,7 @@
 #'
 #' @inheritParams general
 #' @param point Label either the "`knee`" or "`inflection`" points per sample.
-#'   To disable, use "`none`".
+#'   To disable, use "`none`". Requires `geom = "ecdf"`.
 #' @param label Label the points per sample on the plot. Only applies when
 #'   `point` argument is defined.
 #'
@@ -38,7 +38,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        geom = c("ecdf", "histogram", "ridgeline", "boxplot", "violin"),
+        geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
         interestingGroups,
         min = 0L,
         point = c("none", "inflection", "knee"),
@@ -71,7 +71,12 @@ setMethod(
 
         # Calculate barcode ranks and label inflection or knee points
         if (point != "none") {
-            p <- p + labs(subtitle = paste(point, "point"))
+            # Require ecdf geom for now
+            assert_are_identical(geom, "ecdf")
+
+            if (length(title)) {
+                p <- p + labs(subtitle = paste(point, "points per sample"))
+            }
 
             ranks <- barcodeRanksPerSample(object)
             # Inflection or knee points per sample
@@ -132,8 +137,6 @@ setMethod(
                             )
                         )
                 }
-            } else {
-                stop("Only ecdf geom supported at the moment")
             }
         }
 
