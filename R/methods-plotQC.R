@@ -49,35 +49,41 @@ setMethod(
         geom <- match.arg(geom)
         return <- match.arg(return)
 
+        if (is(object, "bcbioSingleCell")) {
+            plotReadsPerCell <- plotReadsPerCell(
+                object,
+                interestingGroups = interestingGroups
+            )
+        } else {
+            plotReadsPerCell <- NULL
+        }
+
         plotlist <- list(
-            plotReadsPerCell = plotReadsPerCell(
+            "plotReadsPerCell" = plotReadsPerCell,
+            "plotCellCounts" = plotCellCounts(
                 object,
                 interestingGroups = interestingGroups
             ),
-            plotCellCounts = plotCellCounts(
-                object,
-                interestingGroups = interestingGroups
-            ),
-            plotUMIsPerCell = plotUMIsPerCell(
+            "plotUMIsPerCell" = plotUMIsPerCell(
                 object,
                 interestingGroups = interestingGroups,
                 geom = geom
             ),
-            plotGenesPerCell = plotGenesPerCell(
+            "plotGenesPerCell" = plotGenesPerCell(
                 object,
                 interestingGroups = interestingGroups,
                 geom = geom
             ),
-            plotUMIsVsGenes = plotUMIsVsGenes(
+            "plotUMIsVsGenes" = plotUMIsVsGenes(
                 object,
                 interestingGroups = interestingGroups
             ),
-            plotMitoRatio = plotMitoRatio(
+            "plotNovelty" = plotNovelty(
                 object,
                 interestingGroups = interestingGroups,
                 geom = geom
             ),
-            plotNovelty = plotNovelty(
+            "plotMitoRatio" = plotMitoRatio(
                 object,
                 interestingGroups = interestingGroups,
                 geom = geom
