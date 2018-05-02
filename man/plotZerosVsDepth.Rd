@@ -10,16 +10,19 @@
 \usage{
 plotZerosVsDepth(object, ...)
 
-\S4method{plotZerosVsDepth}{SingleCellExperiment}(object,
+\S4method{plotZerosVsDepth}{SingleCellExperiment}(object, interestingGroups,
   color = scale_color_hue(), title = "dropout rate vs. library depth")
 
-\S4method{plotZerosVsDepth}{seurat}(object, color = scale_color_hue(),
-  title = "dropout rate vs. library depth")
+\S4method{plotZerosVsDepth}{seurat}(object, interestingGroups,
+  color = scale_color_hue(), title = "dropout rate vs. library depth")
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
+
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual

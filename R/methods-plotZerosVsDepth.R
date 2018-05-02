@@ -31,11 +31,22 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
+        interestingGroups,
         color = scale_color_hue(),
         title = "dropout rate vs. library depth"
     ) {
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
         assertIsColorScaleDiscreteOrNULL(color)
         assertIsAStringOrNULL(title)
+
+        sampleData <- sampleData(
+            object = object,
+            interestingGroups = interestingGroups,
+            return = "data.frame"
+        )
+        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
         counts <- assay(object)
         # Using a logical matrix is faster and more memory efficient
@@ -43,9 +54,6 @@ setMethod(
             # Ensure dgTMatrix gets coereced (e.g. Seurat::pbmc_small)
             as("dgCMatrix") %>%
             as("lgCMatrix")
-
-        sampleData <- sampleData(object, return = "data.frame")
-        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
         data <- tibble(
             "sampleID" = cell2sample(object),
@@ -59,7 +67,7 @@ setMethod(
             mapping = aes_string(
                 x = "depth",
                 y = "dropout",
-                color = "sampleName"
+                color = "interestingGroups"
             )
         ) +
             geom_point(size = 0.8, alpha = 0.8) +
@@ -67,7 +75,8 @@ setMethod(
             labs(
                 title = title,
                 x = "library size (depth)",
-                y = "dropout rate"
+                y = "dropout rate",
+                color = paste(interestingGroups, collapse = ":\n")
             )
 
         if (is(color, "ScaleDiscrete")) {
@@ -76,7 +85,7 @@ setMethod(
 
         # Wrap aggregated samples
         facets <- NULL
-        if (.isAggregate(metrics)) {
+        if (.isAggregate(data)) {
             facets <- "aggregate"
         }
         if (is.character(facets)) {
