@@ -14,6 +14,10 @@
 #' x <- barcodeRanksPerSample(indrops_small)
 #' names(x)
 #'
+#' # SingleCellExperiment ====
+#' x <- barcodeRanksPerSample(cellranger_small)
+#' names(x)
+#'
 #' # seurat ====
 #' x <- barcodeRanksPerSample(seurat_small)
 #' names(x)
