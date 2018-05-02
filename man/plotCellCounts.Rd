@@ -10,7 +10,7 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{SingleCellExperiment}(object, interestingGroups,
-  fill = scale_fill_hue())
+  fill = scale_fill_hue(), title = "cell counts")
 }
 \arguments{
 \item{object}{Object.}
@@ -23,6 +23,8 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{title}{Plot title.}
 }
 \value{
 \code{ggplot}.

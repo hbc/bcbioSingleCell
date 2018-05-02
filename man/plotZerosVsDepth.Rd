@@ -11,9 +11,10 @@
 plotZerosVsDepth(object, ...)
 
 \S4method{plotZerosVsDepth}{SingleCellExperiment}(object,
-  color = scale_color_hue())
+  color = scale_color_hue(), title = "dropout rate vs. library depth")
 
-\S4method{plotZerosVsDepth}{seurat}(object, color = scale_color_hue())
+\S4method{plotZerosVsDepth}{seurat}(object, color = scale_color_hue(),
+  title = "dropout rate vs. library depth")
 }
 \arguments{
 \item{object}{Object.}
@@ -24,6 +25,8 @@ plotZerosVsDepth(object, ...)
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
+\item{title}{Plot title.}
 }
 \value{
 \code{ggplot}.

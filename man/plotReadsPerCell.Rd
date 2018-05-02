@@ -4,19 +4,15 @@
 \name{plotReadsPerCell}
 \alias{plotReadsPerCell}
 \alias{plotReadsPerCell}
-\alias{plotReadsPerCell,SingleCellExperiment-method}
-\alias{plotReadsPerCell,seurat-method}
+\alias{plotReadsPerCell,bcbioSingleCell-method}
 \title{Plot Read Counts per Cell}
 \usage{
 plotReadsPerCell(object, ...)
 
-\S4method{plotReadsPerCell}{SingleCellExperiment}(object, interestingGroups,
+\S4method{plotReadsPerCell}{bcbioSingleCell}(object, interestingGroups,
   geom = c("histogram", "ecdf", "ridgeline", "violin"),
-  color = scale_color_hue(), fill = scale_fill_hue())
-
-\S4method{plotReadsPerCell}{seurat}(object, interestingGroups,
-  geom = c("histogram", "ecdf", "ridgeline", "violin"),
-  color = scale_color_hue(), fill = scale_fill_hue())
+  color = scale_color_hue(), fill = scale_fill_hue(),
+  title = "reads per cell")
 }
 \arguments{
 \item{object}{Object.}
@@ -37,6 +33,8 @@ color definitions are desired, we recommend using
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{title}{Plot title.}
 }
 \value{
 \code{ggplot}.
@@ -47,18 +45,6 @@ Plot the distribution of read counts for all unfiltered cellular barcodes.
 \examples{
 # bcbioSingleCell ====
 plotReadsPerCell(indrops_small)
-
-# SingleCellExperiment ====
-# Only contains UMI counts
-\dontrun{
-plotReadsPerCell(cellranger_small)
-}
-
-# seurat ====
-# Only contains UMI counts
-\dontrun{
-plotReadsPerCell(Seurat::pbmc_small)
-}
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

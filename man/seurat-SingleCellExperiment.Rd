@@ -22,7 +22,7 @@
 \S4method{cell2sample}{seurat}(object)
 
 \S4method{plotCellCounts}{seurat}(object, interestingGroups,
-  fill = scale_fill_hue())
+  fill = scale_fill_hue(), title = "cell counts")
 
 \S4method{assay}{seurat,ANY}(x)
 
@@ -55,6 +55,8 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{title}{Plot title.}
 
 \item{x}{Primary object.}
 
