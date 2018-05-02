@@ -83,7 +83,7 @@
         p <- p +
             geom_violin(
                 color = lineColor,
-                scale = "count",
+                scale = "area",
                 trim = TRUE
             ) +
             scale_y_continuous(trans = trans)
