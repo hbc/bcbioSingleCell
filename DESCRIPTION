@@ -51,8 +51,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 Depends:
-    R (>= 3.4),
-    SingleCellExperiment (>= 1.0),
+    R (>= 3.5),
+    SingleCellExperiment (>= 1.2),
     bcbioBase (>= 0.2.9)
 Imports:
     Biobase,
@@ -96,7 +96,7 @@ Imports:
 Suggests:
     BiocStyle,
     EnsDb.Hsapiens.v75,
-    edgeR (>= 3.20.9),
+    edgeR (>= 3.22),
     googlesheets,
     rmarkdown,
     sessioninfo,
