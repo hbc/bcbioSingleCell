@@ -4,8 +4,10 @@
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
-#' @inherit barcodeRanks
-#' @param ... Passthrough arguments to [barcodeRanks()].
+#' @inherit DropletUtils::barcodeRanks
+#' @param ... Passthrough arguments to [DropletUtils::barcodeRanks()].
+#'
+#' @seealso [DropletUtils::barcodeRanks()].
 #'
 #' @examples
 #' # bcbioSingleCell ====
@@ -34,7 +36,7 @@ setMethod(
             counts[, cells]
         })
         ranks <- lapply(perSampleCounts, function(object) {
-            barcodeRanks(object, ...)
+            barcodeRanks(as.matrix(object), ...)
         })
         names(ranks) <- samples
         ranks

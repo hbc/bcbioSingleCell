@@ -9,6 +9,7 @@
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
 #' @importFrom Biobase rowMedians
+#' @importFrom DropletUtils barcodeRanks
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
 #' @importFrom Matrix colSums readMM rowMeans rowSums
 #' @importFrom Matrix.utils aggregate.Matrix

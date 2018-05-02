@@ -57,6 +57,7 @@ Depends:
 Imports:
     Biobase,
     BiocGenerics,
+    DropletUtils,
     GenomicFeatures,
     Matrix,
     Matrix.utils,

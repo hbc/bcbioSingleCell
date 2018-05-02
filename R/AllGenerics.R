@@ -1,14 +1,3 @@
-#' @rdname barcodeRanks
-#' @export
-setGeneric(
-    "barcodeRanks",
-    function(object, ...) {
-        standardGeneric("barcodeRanks")
-    }
-)
-
-
-
 #' @rdname barcodeRanksPerSample
 #' @export
 setGeneric(
