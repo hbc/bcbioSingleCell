@@ -30,10 +30,6 @@
 
     data <- metrics(object, interestingGroups = interestingGroups)
     if (!metricCol %in% colnames(data)) {
-        warning(paste(
-            deparse(substitute(object)),
-            "does not contain", metricCol, "column in `metrics()`"
-        ))
         return(invisible())
     }
 
