@@ -59,12 +59,11 @@ kneeColor <- "orange"
     color = NULL,
     size = 4L
 ) {
-    geom_label_repel(
+    geom <- geom_label_repel(
         data = data,
         mapping = mapping,
         arrow = arrow(length = unit(0.01, "npc")),
         box.padding = unit(0.5, "lines"),
-        color = color,
         fill = "white",
         fontface = "bold",
         force = 1L,
@@ -73,6 +72,10 @@ kneeColor <- "orange"
         show.legend = FALSE,
         size = size
     )
+    if (is.character(color)) {
+        geom[["aes_params"]][["colour"]] <- color
+    }
+    geom
 }
 
 
