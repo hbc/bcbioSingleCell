@@ -21,10 +21,10 @@
 #' plotQC(indrops_small)
 #'
 #' # SingleCellExperiment ====
-#' suppressWarnings(plotQC(cellranger_small))
+#' plotQC(cellranger_small)
 #'
 #' # seurat ====
-#' suppressWarnings(plotQC(Seurat::pbmc_small))
+#' plotQC(Seurat::pbmc_small)
 NULL
 
 
@@ -94,6 +94,10 @@ setMethod(
                 object,
                 interestingGroups = interestingGroups,
                 geom = geom
+            ),
+            "plotZerosVsDepth" = plotZerosVsDepth(
+                object,
+                interestingGroups = interestingGroups
             )
         )
 
