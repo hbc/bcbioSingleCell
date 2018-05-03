@@ -453,25 +453,6 @@ setValidity(
         assert_is_all_of(rowRanges(object), "GRanges")
         assert_is_all_of(rowData(object), "DataFrame")
 
-        # Column data ==========================================================
-        # Check that all of the columns are numeric
-        colDataCheck <- vapply(
-            X = slot(object, "colData"),
-            FUN = is.numeric,
-            FUN.VALUE = logical(1L),
-            USE.NAMES = TRUE
-        )
-        if (!all(colDataCheck)) {
-            stop(paste(
-                paste(
-                    "Non-numeric colData columns:",
-                    toString(names(colDataCheck[!colDataCheck]))
-                ),
-                bcbioBase::updateMessage,
-                sep = "\n"
-            ))
-        }
-
         # Metadata =============================================================
         metadata <- metadata(object)
 
