@@ -119,6 +119,10 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>object</th>
+      <td><p>Object.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Passthrough arguments to <code><a href='http://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks'>DropletUtils::barcodeRanks()</a></code>.</p></td>
     </tr>
@@ -177,6 +181,9 @@ Note that only points with total counts above <code>lower</code> will be conside
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>indrops_small</span>)
 <span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div><div class='input'>
+<span class='co'># SingleCellExperiment ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>cellranger_small</span>)
+<span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "aggregation_1" "aggregation_2"</div><div class='input'>
 <span class='co'># seurat ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>seurat_small</span>)
 <span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div></pre>
