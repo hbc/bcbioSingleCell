@@ -78,7 +78,7 @@ setMethod(
             minNovelty = minNovelty,
             minCellsPerGene = minCellsPerGene
         )
-        invisible(lapply(params, assert_is_a_number))
+        invisible(lapply(params, assert_is_numeric))
         assert_all_are_non_negative(as.numeric(params))
 
         # Filter low quality cells =============================================
