@@ -16,6 +16,8 @@ barcodeRanksPerSample(object, ...)
 \S4method{barcodeRanksPerSample}{seurat}(object, ...)
 }
 \arguments{
+\item{object}{Object.}
+
 \item{...}{Passthrough arguments to \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.}
 }
 \value{

@@ -5,6 +5,8 @@
 #' @author Michael Steinbaugh
 #'
 #' @inherit DropletUtils::barcodeRanks
+#'
+#' @inheritParams general
 #' @param ... Passthrough arguments to [DropletUtils::barcodeRanks()].
 #'
 #' @seealso [DropletUtils::barcodeRanks()].
