@@ -5,18 +5,16 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
     bcb_file: "bcb.rda"
-    min_umis: 1000
-    max_umis: !r Inf
-    min_genes: 500
+    min_genes: 100
     max_genes: !r Inf
-    max_mito_ratio: 0.1
+    max_mito_ratio: 0.25
     min_novelty: 0.75
-    min_cells_per_gene: 3
+    min_cells_per_gene: 10
     data_dir: "."
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-01
+# Last modified 2018-05-03
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -46,20 +44,28 @@ sampleData(bcb, return = "data.frame")
 
 These are counts of how many reads are assigned to a given cellular barcode. It is normal for single cell RNA-seq data to contain a large number of low complexity barcodes. The bcbio pipeline filters out most of these barcodes, and here we have applied a threshold cutoff of a minimum of `r metadata(bcb)$cellularBarcodeCutoff` reads per cell. The unfiltered read count distributions are shown here.
 
-### Ridgeline
-
-With a ridgeline plot, we can easily determine that there are a lot of low complexity barcodes in this dataset that need to be removed prior to clustering. You can see in this plot that the majorify of cellular barcodes from the `r metadata(bcb)$umiType` platform have a low read depth.
-
-```{r plot_reads_per_cell_ridgeline}
-plotReadsPerCell(bcb, geom = "ridgeline")
-```
-
 ### ECDF
 
-Similarly, an empirical distribution function (ECDF) plot will show the frequency distribution of the reads per cell. You can see that the vast majority of low complexity barcodes plateau at a read depth below 1000 reads per cell.
+An empirical distribution function (ECDF) plot will show the frequency distribution of the reads per cell. You can see that the vast majority of low complexity barcodes plateau at a read depth below 1000 reads per cell.
 
 ```{r plot_reads_per_cell_ecdf}
-plotReadsPerCell(bcb, geom = "ecdf", interestingGroups = "sampleName")
+plotReadsPerCell(
+    object = bcb,
+    geom = "ecdf",
+    interestingGroups = "sampleName"
+)
+```
+
+### Ridgeline
+
+Alternatively, with a ridgeline plot, we can easily determine that there are a lot of low complexity barcodes in this dataset that need to be removed prior to clustering. You can see in this plot that the majorify of cellular barcodes from the `r metadata(bcb)$umiType` platform have a low read depth.
+
+```{r plot_reads_per_cell_ridgeline}
+plotReadsPerCell(
+    object = bcb,
+    geom = "ridgeline",
+    interestingGroups = "sampleName"
+)
 ```
 
 ### Histogram
@@ -69,30 +75,40 @@ For high quality data, the proportional histogram should contain a single large 
 It looks like there a lot of low complexity barcodes that need to be filtered out, but we can see cells with a usable read depth of at least 10,000 (10^4) reads per cell.
 
 ```{r plot_reads_per_cell_histogram}
-plotReadsPerCell(bcb, geom = "histogram", interestingGroups = "sampleName")
+plotReadsPerCell(
+    object = bcb,
+    geom = "histogram",
+    interestingGroups = "sampleName"
+)
 ```
 
 
 ## UMI counts per cell {.tabset}
 
-Now let's assess the distribution of unique molecular identifier (UMI)-deconvoluted counts per cell. We can see across all samples that most low complexity barcodes fall below 1000 UMIs per cell.
+Now let's assess the distribution of unique molecular identifier (UMI)-deconvoluted counts per cell. In general, the distributions should be relatively uniform per sample.
 
-A somewhat similar distribution is observed for all samples, but there does appear to be enough per sample variation to possibly warrant individual UMI cutoff values.
-
-Here's the knee points calculated per sample (see legend):
-
-```{r plot_umis_per_cell_knee_per_sample}
-plotUMIsPerCell(
-    bcb,
-    geom = "ecdf",
-    interestingGroups = "sampleName",
-    barcodeRanks = TRUE,
-    ranksPerSample = TRUE,
-    labelPoint = "knee"
-)
+```{r plot_umis_per_cell_histogram}
+plotUMIsPerCell(bcb, geom = "histogram")
 ```
 
-The per sample cutoffs might be a bit too aggressive (e.g. UC6H), so I'm going to try initial filtering and clustering using the knee point calculated across all samples.
+Now let's rank cellular barcodes based on their UMI count per cell. Note that the scale here is log10. Refer to the `DropletUtils::barcodeRanks()` documentation or the [DropletUtils vignette](https://www.bioconductor.org/packages/3.7/bioc/vignettes/DropletUtils/inst/doc/DropletUtils.html) for more information (see "Computing barcode ranks" section).
+
+The knee and inflection points on the curve here help distinguish the UMI threshold between empty droplets with little RNA and cell-containing droplets with much more RNA. The knee point is more sensitive to noise, and we generally recommend starting with the inflection point for filtering because it is more conservative. 
+
+```{r barcode_ranks}
+plotBarcodeRanks(bcb)
+```
+
+Let's view these UMI cutoffs per sample on a single ECDF plot.
+
+```{r plot_umis_per_cell_ecdf}
+plotUMIsPerCell(
+    object = bcb,
+    geom = "ecdf",
+    interestingGroups = "sampleName",
+    point = "inflection"
+)
+```
 
 
 ## UMI filtering
@@ -100,19 +116,16 @@ The per sample cutoffs might be a bit too aggressive (e.g. UC6H), so I'm going t
 Let's apply this step first and then proceed to evaluating gene detection, mitocondrial transcript abundance, and novelty scores.
 
 ```{r filter_umi}
-knee <- as.integer(barcodeRanks(bcb)[["knee"]])
-print(knee)
-
-bcb <- filterCells(
-    object = bcb,
-    minUMIs = knee,
-    maxUMIs = Inf,
-    minGenes = 0,
-    maxGenes = Inf,
-    maxMitoRatio = Inf,
-    minNovelty = 0,
-    minCellsPerGene = 0
+ranks <- barcodeRanksPerSample(bcb)
+minUMIs <- vapply(
+    X = ranks,
+    FUN = function(x) {
+        as.integer(x[["inflection"]])
+    },
+    FUN.VALUE = integer(1L)
 )
+print(minUMIs)
+bcb <- filterCells(bcb, minUMIs = minUMIs)
 ```
 
 
@@ -123,7 +136,7 @@ Here by "detected", we mean genes with a non-zero count measurement per cell. Se
 ```{r plot_genes_per_cell}
 markdownHeader("histogram", level = 3)
 plotGenesPerCell(
-    bcb,
+    object = bcb,
     geom = "histogram",
     min = min(params$min_genes),
     max = max(params$max_genes)
@@ -131,7 +144,7 @@ plotGenesPerCell(
 
 markdownHeader("violin", level = 3)
 plotGenesPerCell(
-    bcb,
+    object = bcb,
     geom = "violin",
     min = min(params$min_genes),
     max = max(params$max_genes)
@@ -139,7 +152,7 @@ plotGenesPerCell(
 
 markdownHeader("boxplot", level = 3)
 plotGenesPerCell(
-    bcb,
+    object = bcb,
     geom = "boxplot",
     min = min(params$min_genes),
     max = max(params$max_genes)
@@ -153,34 +166,6 @@ If we graph out the total number of UMI counts per cell vs. the genes detected p
 
 ```{r plot_umis_vs_genes}
 plotUMIsVsGenes(bcb)
-```
-
-
-## Mitochondrial counts ratio {.tabset}
-
-We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
-
-```{r plot_mito_ratio}
-markdownHeader("histogram", level = 3)
-plotMitoRatio(
-    bcb,
-    geom = "histogram",
-    max = max(params$max_mito_ratio)
-)
-
-markdownHeader("violin", level = 3)
-plotMitoRatio(
-    bcb,
-    geom = "violin",
-    max = max(params$max_mito_ratio)
-)
-
-markdownHeader("boxplot", level = 3)
-plotMitoRatio(
-    bcb,
-    geom = "boxplot",
-    max = max(params$max_mito_ratio)
-)
 ```
 
 
@@ -212,19 +197,46 @@ plotNovelty(
 ```
 
 
+## Mitochondrial abundance {.tabset}
+
+We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
+
+```{r plot_mito_ratio}
+markdownHeader("histogram", level = 3)
+plotMitoRatio(
+    bcb,
+    geom = "histogram",
+    max = max(params$max_mito_ratio)
+)
+
+markdownHeader("violin", level = 3)
+plotMitoRatio(
+    bcb,
+    geom = "violin",
+    max = max(params$max_mito_ratio)
+)
+
+markdownHeader("boxplot", level = 3)
+plotMitoRatio(
+    bcb,
+    geom = "boxplot",
+    max = max(params$max_mito_ratio)
+)
+```
+
+
 
 # Filter cells
 
 ```{r filter_cells}
 bcb_filtered <- filterCells(
-    bcb,
-    minUMIs = params$min_umis,
-    maxUMIs = params$max_umis,
+    object = bcb,
     minGenes = params$min_genes,
     maxGenes = params$max_genes,
     maxMitoRatio = params$max_mito_ratio,
     minNovelty = params$min_novelty,
-    minCellsPerGene = params$min_cells_per_gene)
+    minCellsPerGene = params$min_cells_per_gene
+)
 assignAndSaveData(
     name = paste(bcb_name, "filtered", sep = "_"),
     object = bcb_filtered,
