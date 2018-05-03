@@ -57,7 +57,7 @@ Depends:
 Imports:
     Biobase,
     BiocGenerics,
-    DropletUtils,
+    DropletUtils (>= 1.0),
     GenomicFeatures,
     Matrix,
     Matrix.utils,
@@ -96,13 +96,17 @@ Imports:
     viridis
 Suggests:
     BiocStyle,
+    DESeq2 (>= 1.20),
     EnsDb.Hsapiens.v75,
     edgeR (>= 3.22),
     googlesheets,
     rmarkdown,
+    scater (>= 1.8),
+    scran (>= 1.8),
     sessioninfo,
     testthat,
     tidyverse (>= 1.2),
+    zinbwave (>= 1.0),
     zingeR (>= 0.1)
 Remotes:
     hbc/bcbioBase,
