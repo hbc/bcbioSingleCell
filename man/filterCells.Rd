@@ -11,7 +11,7 @@ filterCells(object, ...)
 
 \S4method{filterCells}{SingleCellExperiment}(object, minUMIs = 100L,
   maxUMIs = Inf, minGenes = 0L, maxGenes = Inf, maxMitoRatio = 1L,
-  minNovelty = 0L, minCellsPerGene = 0L)
+  minNovelty = 0L, minCellsPerGene = 10L)
 }
 \arguments{
 \item{object}{Object.}

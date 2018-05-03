@@ -62,7 +62,7 @@ setMethod(
         maxGenes = Inf,
         maxMitoRatio = 1L,
         minNovelty = 0L,
-        minCellsPerGene = 0L
+        minCellsPerGene = 10L
     ) {
         validObject(object)
         metrics <- metrics(object)
@@ -78,8 +78,13 @@ setMethod(
             minNovelty = minNovelty,
             minCellsPerGene = minCellsPerGene
         )
-        invisible(lapply(params, assert_is_numeric))
-        assert_all_are_non_negative(as.numeric(params))
+        invisible(lapply(
+            X = params,
+            FUN = function(param) {
+                assert_is_numeric(param)
+                assert_all_are_non_negative(param)
+            }
+        ))
 
         # Filter low quality cells =============================================
         summaryCells <- character()
@@ -115,7 +120,7 @@ setMethod(
         }
         summaryCells[["minUMIs"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            paste("minUMIs", ">=", toString(minUMIs)),
+            paste("minUMIs", ">=", min(minUMIs)),
             sep = " | "
         )
 
@@ -145,7 +150,7 @@ setMethod(
         }
         summaryCells[["maxUMIs"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            paste("maxUMIs", "<=", toString(maxUMIs)),
+            paste("maxUMIs", "<=", max(maxUMIs)),
             sep = " | "
         )
 
@@ -175,7 +180,7 @@ setMethod(
         }
         summaryCells[["minGenes"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            paste("minGenes", ">=", toString(minGenes)),
+            paste("minGenes", ">=", min(minGenes)),
             sep = " | "
         )
 
@@ -205,7 +210,7 @@ setMethod(
         }
         summaryCells[["maxGenes"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            paste("maxGenes", "<=", toString(maxGenes)),
+            paste("maxGenes", "<=", max(maxGenes)),
             sep = " | "
         )
 
@@ -235,7 +240,7 @@ setMethod(
         }
         summaryCells[["maxMitoRatio"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            paste("maxMitoRatio", "<=", toString(maxMitoRatio)),
+            paste("maxMitoRatio", "<=", max(maxMitoRatio)),
             sep = " | "
         )
 
@@ -265,7 +270,7 @@ setMethod(
         }
         summaryCells[["minNovelty"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            paste("minNovelty", "<=", toString(minNovelty)),
+            paste("minNovelty", "<=", min(minNovelty)),
             sep = " | "
         )
 
@@ -297,13 +302,13 @@ setMethod(
 
         # Summary ==============================================================
         printParams <- c(
-            paste(">=", toString(minUMIs), "UMIs per cell"),
-            paste("<=", toString(maxUMIs), "UMIs per cell"),
-            paste(">=", toString(minGenes), "genes per cell"),
-            paste("<=", toString(maxGenes), "genes per cell"),
-            paste("<=", toString(maxMitoRatio), "mitochondrial abundance"),
-            paste(">=", toString(minNovelty), "novelty score"),
-            paste(">=", toString(minCellsPerGene), "cells per gene")
+            paste(">=", min(minUMIs), "UMIs per cell"),
+            paste("<=", max(maxUMIs), "UMIs per cell"),
+            paste(">=", min(minGenes), "genes per cell"),
+            paste("<=", max(maxGenes), "genes per cell"),
+            paste("<=", max(maxMitoRatio), "mitochondrial abundance"),
+            paste(">=", min(minNovelty), "novelty score"),
+            paste(">=", min(minCellsPerGene), "cells per gene")
         )
         cat(c(
             "Parameters:",
