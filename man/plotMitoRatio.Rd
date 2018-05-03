@@ -10,12 +10,12 @@
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), interestingGroups, max = 1L,
+\S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("ecdf",
+  "histogram", "ridgeline", "violin", "boxplot"), interestingGroups, max = 1L,
   fill = scale_fill_hue(), title = "mitochondrial abundance")
 
-\S4method{plotMitoRatio}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), interestingGroups, max = 1L,
+\S4method{plotMitoRatio}{seurat}(object, geom = c("ecdf", "histogram",
+  "ridgeline", "violin", "boxplot"), interestingGroups, max = 1L,
   fill = scale_fill_hue(), title = "mitochondrial abundance")
 }
 \arguments{

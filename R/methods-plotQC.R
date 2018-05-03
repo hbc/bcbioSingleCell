@@ -38,7 +38,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        geom = c("violin", "histogram", "boxplot", "ridgeline"),
+        geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
         headerLevel = 2L,
         legend = FALSE,
         return = c("grid", "list", "markdown")
