@@ -14,11 +14,11 @@ branches:
   - develop
 
 # External dependencies
-# addons:
-#   apt:
-#     packages:
-#       - gsl-bin
-#       - libgsl-dev
+addons:
+  apt:
+    packages:
+      - gsl-bin
+      - libgsl-dev
 
 env:
   global:
