@@ -56,13 +56,13 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        minUMIs = 1000L,
+        minUMIs = 100L,
         maxUMIs = Inf,
-        minGenes = 100L,
+        minGenes = 0L,
         maxGenes = Inf,
-        maxMitoRatio = 0.1,
-        minNovelty = 0.7,
-        minCellsPerGene = 3L
+        maxMitoRatio = 1L,
+        minNovelty = 0L,
+        minCellsPerGene = 0L
     ) {
         validObject(object)
         metrics <- metrics(object)
