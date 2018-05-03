@@ -25,7 +25,7 @@ setMethod(
     function(object) {
         validObject(object)
         metadata <- metadata(object)
-        sampleData <- sampleData(object, return = "data.frame")
+        sampleData <- sampleData(object, clean = FALSE, return = "data.frame")
         if ("sampleNameAggregate" %in% colnames(sampleData)) {
             warning("Use `aggregate` instead of `sampleNameAggregate`")
             sampleData[["aggregate"]] <- sampleData[["sampleNameAggregate"]]
