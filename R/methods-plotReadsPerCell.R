@@ -21,7 +21,6 @@ NULL
 
 
 
-# TODO Work on consolidating the code in these constructors
 # Constructors =================================================================
 .plotReadsPerCellBoxplot <- function(
     data,
