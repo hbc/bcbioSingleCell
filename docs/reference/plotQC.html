@@ -111,13 +111,14 @@ visualization.</p>
 
     <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotQC</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>, <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>, <span class='st'>"ridgeline"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
-  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>, <span class='st'>"list"</span>, <span class='st'>"markdown"</span>))
+  <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ecdf"</span>, <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>, <span class='st'>"violin"</span>, <span class='st'>"boxplot"</span>),
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>, <span class='st'>"list"</span>,
+  <span class='st'>"markdown"</span>))
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotQC</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>,
-  <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>, <span class='st'>"ridgeline"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>, <span class='st'>"list"</span>, <span class='st'>"markdown"</span>))</pre>
+<span class='fu'>plotQC</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ecdf"</span>,
+  <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>, <span class='st'>"violin"</span>, <span class='st'>"boxplot"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>, <span class='st'>"list"</span>, <span class='st'>"markdown"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

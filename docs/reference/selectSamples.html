@@ -155,8 +155,7 @@ and Ensembl gene identifiers for rows.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>colnames</span>(<span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>indrops_small</span>))</div><div class='output co'>#&gt; [1] "sampleName"        "index"             "sequence"         
-#&gt; [4] "aggregate"         "revcomp"           "interestingGroups"</div><div class='input'><span class='no'>sampleName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>indrops_small</span>)[<span class='fl'>1L</span>, <span class='st'>"sampleName"</span>]
+<span class='fu'>colnames</span>(<span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>indrops_small</span>))</div><div class='output co'>#&gt; [1] "sampleName"        "interestingGroups"</div><div class='input'><span class='no'>sampleName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>indrops_small</span>)[<span class='fl'>1L</span>, <span class='st'>"sampleName"</span>]
 <span class='fu'>print</span>(<span class='no'>sampleName</span>)</div><div class='output co'>#&gt; [1] rep_1
 #&gt; Levels: rep_1</div><div class='input'><span class='fu'>selectSamples</span>(<span class='no'>indrops_small</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='no'>sampleName</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.4
 #&gt; Samples: 1
