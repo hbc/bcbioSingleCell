@@ -5,11 +5,14 @@
 \alias{plotBarcodeRanks}
 \alias{plotBarcodeRanks}
 \alias{plotBarcodeRanks,SingleCellExperiment-method}
+\alias{plotBarcodeRanks,seurat-method}
 \title{Plot Barcode Ranks}
 \usage{
 plotBarcodeRanks(object, ...)
 
 \S4method{plotBarcodeRanks}{SingleCellExperiment}(object, ...)
+
+\S4method{plotBarcodeRanks}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}

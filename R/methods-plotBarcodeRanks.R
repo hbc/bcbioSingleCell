@@ -114,3 +114,13 @@ setMethod(
         plot_grid(plotlist = plotlist, labels = "AUTO")
     }
 )
+
+
+
+#' @rdname plotBarcodeRanks
+#' @export
+setMethod(
+    "plotBarcodeRanks",
+    signature("seurat"),
+    getMethod("plotBarcodeRanks", "SingleCellExperiment")
+)
