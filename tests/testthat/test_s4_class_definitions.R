@@ -95,16 +95,6 @@ test_that("interestingGroups<- : seurat", {
 
 
 # sampleData ===================================================================
-clean <- DataFrame(
-    "sampleName" = factor("rep_1"),
-    "index" = factor("1"),
-    "sequence" = factor("TTTTTTTT"),
-    "aggregate" = factor("sample"),
-    "revcomp" = factor("AAAAAAAA"),
-    "interestingGroups" = factor("rep_1"),
-    row.names = factor("multiplexed_AAAAAAAA")
-)
-
 all <- list(
     "sampleName"  = "factor",
     "fileName"  = "factor",
@@ -116,24 +106,30 @@ all <- list(
     "interestingGroups" = "factor"
 )
 
-test_that("sampleData : bcbioSingleCell", {
-    # Clean mode (factor columns only)
-    x <- sampleData(indrops_small, clean = TRUE)
-    expect_identical(x, clean)
+clean <- DataFrame(
+    "sampleName" = factor("rep_1"),
+    "interestingGroups" = factor("rep_1"),
+    row.names = factor("multiplexed_AAAAAAAA")
+)
 
+test_that("sampleData : bcbioSingleCell", {
     # Return all columns
     x <- sampleData(indrops_small, clean = FALSE)
     expect_identical(lapply(x, class), all)
+
+    # Clean mode (factor columns only)
+    x <- sampleData(indrops_small, clean = TRUE)
+    expect_identical(x, clean)
 })
 
 test_that("sampleData : seurat", {
-    # Clean mode (factor columns only)
-    x <- sampleData(seurat_small, clean = TRUE)
-    expect_identical(x, clean)
-
     # Return all columns
     x <- sampleData(seurat_small, clean = FALSE)
     expect_identical(lapply(x, class), all)
+
+    # Clean mode (factor columns only)
+    x <- sampleData(seurat_small, clean = TRUE)
+    expect_identical(x, clean)
 
     # Minimal data for other seurat objects
     x <- sampleData(Seurat::pbmc_small)

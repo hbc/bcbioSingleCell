@@ -288,10 +288,6 @@ test_that("metrics : bcbioSingleCell", {
             "mitoRatio" = "numeric",
             "sampleID" = "factor",
             "sampleName" = "factor",
-            "index" = "factor",
-            "sequence" = "factor",
-            "aggregate" = "factor",
-            "revcomp" = "factor",
             "interestingGroups" = "factor"
         )
     )
