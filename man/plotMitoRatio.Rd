@@ -12,11 +12,11 @@ plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("ecdf",
   "histogram", "ridgeline", "violin", "boxplot"), interestingGroups, max = 1L,
-  fill = scale_fill_hue(), title = "mito ratio")
+  fill = scale_fill_hue(), trans = "identity", title = "mito ratio")
 
 \S4method{plotMitoRatio}{seurat}(object, geom = c("ecdf", "histogram",
   "ridgeline", "violin", "boxplot"), interestingGroups, max = 1L,
-  fill = scale_fill_hue(), title = "mito ratio")
+  fill = scale_fill_hue(), trans = "identity", title = "mito ratio")
 }
 \arguments{
 \item{object}{Object.}
@@ -34,6 +34,9 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
 
 \item{title}{Plot title.}
 }

@@ -11,10 +11,10 @@
 plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{SingleCellExperiment}(object, interestingGroups,
-  color = scale_color_hue(), title = "UMIs vs. genes")
+  color = scale_color_hue(), trans = "log2", title = "UMIs vs. genes")
 
 \S4method{plotUMIsVsGenes}{seurat}(object, interestingGroups,
-  color = scale_color_hue(), title = "UMIs vs. genes")
+  color = scale_color_hue(), trans = "log2", title = "UMIs vs. genes")
 }
 \arguments{
 \item{object}{Object.}
@@ -28,6 +28,9 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
 
 \item{title}{Plot title.}
 }

@@ -12,11 +12,12 @@ plotGenesPerCell(object, ...)
 
 \S4method{plotGenesPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
   "histogram", "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
-  max = Inf, fill = scale_fill_hue(), title = "genes per cell")
+  max = Inf, trans = "log2", fill = scale_fill_hue(),
+  title = "genes per cell")
 
 \S4method{plotGenesPerCell}{seurat}(object, geom = c("ecdf", "histogram",
   "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L, max = Inf,
-  fill = scale_fill_hue(), title = "genes per cell")
+  trans = "log2", fill = scale_fill_hue(), title = "genes per cell")
 }
 \arguments{
 \item{object}{Object.}
@@ -32,6 +33,9 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 \item{min}{Recommended minimum value cutoff.}
 
 \item{max}{Recommended maximum value cutoff.}
+
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
 
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
