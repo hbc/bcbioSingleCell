@@ -29,14 +29,15 @@ setMethod(
         object,
         interestingGroups,
         color = scale_color_hue(),
+        trans = "log2",
         title = "UMIs vs. genes"
     ) {
         .plotQCScatterplot(
             object = object,
             xCol = "nUMI",
             yCol = "nGene",
-            xTrans = "log2",
-            yTrans = "log2",
+            xTrans = trans,
+            yTrans = trans,
             title = title
         )
     }
