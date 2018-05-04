@@ -18,10 +18,7 @@
 #' plotNovelty(cellranger_small)
 #'
 #' # seurat ====
-#' # `object@meta.data` must contain `log10GenesPerUMI`
-#' \dontrun{
-#' plotNovelty(Seurat::pbmc_small)
-#' }
+#' plotNovelty(seurat_small)
 NULL
 
 

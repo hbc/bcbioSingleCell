@@ -54,10 +54,7 @@ plotMitoRatio(indrops_small)
 plotMitoRatio(cellranger_small)
 
 # seurat ====
-# `object@meta.data` must contain `mitoRatio`
-\dontrun{
-plotMitoRatio(Seurat::pbmc_small)
-}
+plotMitoRatio(seurat_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
