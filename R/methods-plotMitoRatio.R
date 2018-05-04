@@ -36,6 +36,7 @@ setMethod(
         interestingGroups,
         max = 1L,
         fill = scale_fill_hue(),
+        trans = "identity",
         title = "mito ratio"
     ) {
         geom <- match.arg(geom)
@@ -46,7 +47,7 @@ setMethod(
             geom = geom,
             interestingGroups = interestingGroups,
             max = max,
-            trans = "identity",
+            trans = trans,
             ratio = TRUE,
             fill = fill,
             title = title
