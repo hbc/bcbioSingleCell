@@ -18,11 +18,11 @@ before_install:
 
 # External dependencies
 # dependency for gsl>copula>zinbwave
-addons:
-  apt:
-    packages:
-      - gsl-bin
-      - libgsl-dev
+# addons:
+#   apt:
+#     packages:
+#       - gsl-bin
+#       - libgsl-dev
 
 env:
   global:
