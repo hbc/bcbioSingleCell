@@ -12,11 +12,11 @@ plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("ecdf",
   "histogram", "ridgeline", "violin", "boxplot"), interestingGroups, max = 1L,
-  fill = scale_fill_hue(), title = "mitochondrial abundance")
+  fill = scale_fill_hue(), title = "mito ratio")
 
 \S4method{plotMitoRatio}{seurat}(object, geom = c("ecdf", "histogram",
   "ridgeline", "violin", "boxplot"), interestingGroups, max = 1L,
-  fill = scale_fill_hue(), title = "mitochondrial abundance")
+  fill = scale_fill_hue(), title = "mito ratio")
 }
 \arguments{
 \item{object}{Object.}
