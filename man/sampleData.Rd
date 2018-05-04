@@ -56,6 +56,8 @@ sampleData(x) \%>\% glimpse()
 }
 \seealso{
 \link{metadataBlacklist}.
+
+Other Metadata Functions: \code{\link{sampleNames}}
 }
 \author{
 Michael Steinbaugh

@@ -3,10 +3,10 @@
 \docType{methods}
 \name{selectSamples}
 \alias{selectSamples}
-\alias{selectSamples,bcbioSingleCell-method}
+\alias{selectSamples,SingleCellExperiment-method}
 \title{Select Samples}
 \usage{
-\S4method{selectSamples}{bcbioSingleCell}(object, ...)
+\S4method{selectSamples}{SingleCellExperiment}(object, ...)
 }
 \arguments{
 \item{object}{Object.}

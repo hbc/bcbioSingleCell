@@ -12,12 +12,12 @@ plotNovelty(object, ...)
 
 \S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("histogram",
   "ecdf", "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
-  fill = scale_fill_hue(), trans = "sqrt",
+  fill = scale_fill_hue(), trans = "identity",
   title = "genes per UMI (novelty)")
 
 \S4method{plotNovelty}{seurat}(object, geom = c("histogram", "ecdf",
   "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
-  fill = scale_fill_hue(), trans = "sqrt",
+  fill = scale_fill_hue(), trans = "identity",
   title = "genes per UMI (novelty)")
 }
 \arguments{

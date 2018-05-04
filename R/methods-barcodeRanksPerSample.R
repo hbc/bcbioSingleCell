@@ -34,6 +34,8 @@ setMethod(
     "barcodeRanksPerSample",
     signature("SingleCellExperiment"),
     function(object, ...) {
+        # DropletUtils requires R 3.5, which isn't on conda yet
+        requireNamespace("DropletUtils")
         counts <- counts(object)
         cell2sample <- cell2sample(object)
         samples <- levels(cell2sample)
@@ -42,7 +44,7 @@ setMethod(
             counts[, cells]
         })
         ranks <- lapply(perSampleCounts, function(object) {
-            barcodeRanks(as.matrix(object), ...)
+            DropletUtils::barcodeRanks(as.matrix(object), ...)
         })
         names(ranks) <- samples
         ranks
