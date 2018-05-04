@@ -37,7 +37,7 @@ env:
 warnings_are_errors: true
 
 # Temporarily enable to cache packages
-script: true
+# script: true
 
 notifications:
   email:
