@@ -19,8 +19,7 @@ addons:
   apt:
     packages:
       - gsl-bin
-      - libgsl2
-      # - libgsl-dev
+      - libgsl-dev
 
 env:
   global:
