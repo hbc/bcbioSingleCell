@@ -128,9 +128,9 @@ print(minUMIs)
 bcb <- filterCells(bcb, minUMIs = minUMIs)
 ```
 
-Let's take a look at the UMI per cell distributions after this filtering step. Note that we haven't applied very strict filtering here -- we're going to cut off the "low quality" cells based on the gene detection rate, novelty score, and mitochondrial abundance.
+Let's take a look at the UMI per cell distributions after this filtering step. Note that we haven't applied very strict filtering here — we're going to cut off the "low quality" cells based on the gene detection rate, novelty score, and mitochondrial abundance.
 
-```{r plot_umis_per_cell_ecdf}
+```{r plot_umis_per_cell_postfilter}
 plotUMIsPerCell(
     object = bcb,
     geom = "ecdf",
