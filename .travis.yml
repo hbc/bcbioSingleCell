@@ -14,11 +14,13 @@ branches:
   - develop
 
 # External dependencies
+# dependency for gsl>copula>zinbwave
 addons:
   apt:
     packages:
       - gsl-bin
-      - libgsl-dev
+      - libgsl2
+      # - libgsl-dev
 
 env:
   global:
