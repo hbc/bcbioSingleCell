@@ -143,11 +143,7 @@
             digits <- 0L
         }
         p <- p +
-            bcbio_geom_label_average(
-                data = data,
-                medianCol = metricCol,
-                digits = digits
-            )
+            bcbio_geom_label_average(data, col = metricCol, digits = digits)
     }
 
     # Facets
