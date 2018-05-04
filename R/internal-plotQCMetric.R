@@ -61,7 +61,6 @@
             stat_ecdf(geom = "step", size = 1L) +
             scale_x_continuous(trans = trans) +
             labs(
-                x = NULL,
                 y = "frequency"
             )
     } else if (geom == "histogram") {
