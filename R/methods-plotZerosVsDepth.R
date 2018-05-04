@@ -11,9 +11,6 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotZerosVsDepth(indrops_small)
-#'
 #' # SingleCellExperiment ====
 #' plotZerosVsDepth(cellranger_small)
 #'

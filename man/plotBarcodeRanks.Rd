@@ -23,9 +23,6 @@ plotBarcodeRanks(object, ...)
 Plot Barcode Ranks
 }
 \examples{
-# bcbioSingleCell ====
-plotBarcodeRanks(indrops_small)
-
 # SingleCellExperiment ====
 plotBarcodeRanks(cellranger_small)
 

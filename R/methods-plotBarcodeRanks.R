@@ -9,9 +9,6 @@
 #' @seealso [DropletUtils::barcodeRanks()].
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotBarcodeRanks(indrops_small)
-#'
 #' # SingleCellExperiment ====
 #' plotBarcodeRanks(cellranger_small)
 #'

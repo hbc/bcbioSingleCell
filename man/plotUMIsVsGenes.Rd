@@ -38,9 +38,6 @@ color definitions are desired, we recommend using
 Plot UMI and Gene Correlation
 }
 \examples{
-# bcbioSingleCell ====
-plotUMIsVsGenes(indrops_small)
-
 # SingleCellExperiment ====
 plotUMIsVsGenes(cellranger_small)
 

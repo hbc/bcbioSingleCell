@@ -12,7 +12,8 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotReadsPerCell(indrops_small)
+#' plotReadsPerCell(indrops_small, geom = "histogram")
+#' plotReadsPerCell(indrops_small, geom = "ecdf")
 NULL
 
 

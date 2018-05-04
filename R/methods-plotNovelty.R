@@ -11,11 +11,9 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotNovelty(indrops_small)
-#'
 #' # SingleCellExperiment ====
-#' plotNovelty(cellranger_small)
+#' plotNovelty(cellranger_small, geom = "histogram")
+#' plotNovelty(cellranger_small, geom = "ecdf")
 #'
 #' # seurat ====
 #' plotNovelty(seurat_small)

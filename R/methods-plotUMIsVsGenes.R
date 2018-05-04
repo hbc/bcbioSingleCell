@@ -7,9 +7,6 @@
 #' @inheritParams general
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotUMIsVsGenes(indrops_small)
-#'
 #' # SingleCellExperiment ====
 #' plotUMIsVsGenes(cellranger_small)
 #'

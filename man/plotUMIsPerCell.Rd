@@ -62,25 +62,21 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 Plot the universal molecular identifiers (UMIs) per cell.
 }
 \examples{
-# bcbioSingleCell ====
+# SingleCellExperiment ====
 # Label the inflection point per sample
-plotUMIsPerCell(indrops_small, point = "inflection")
+plotUMIsPerCell(cellranger_small, geom = "ecdf", point = "inflection")
 
 # Label the knee point per sample
-plotUMIsPerCell(indrops_small, point = "knee")
+plotUMIsPerCell(cellranger_small, geom = "ecdf", point = "knee")
 
-# SingleCellExperiment ====
-plotUMIsPerCell(cellranger_small, point = "inflection")
-plotUMIsPerCell(cellranger_small, point = "knee")
-
-# Alternate geom
+# Alternate geoms
 plotUMIsPerCell(cellranger_small, geom = "histogram")
 plotUMIsPerCell(cellranger_small, geom = "ridgeline")
 plotUMIsPerCell(cellranger_small, geom = "violin")
 plotUMIsPerCell(cellranger_small, geom = "boxplot")
 
 # seurat ====
-plotUMIsPerCell(seurat_small, point = "inflection")
+plotUMIsPerCell(seurat_small, geom = "ecdf", point = "inflection")
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

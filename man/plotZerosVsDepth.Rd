@@ -38,9 +38,6 @@ color definitions are desired, we recommend using
 This function helps us visualize the dropout rate.
 }
 \examples{
-# bcbioSingleCell ====
-plotZerosVsDepth(indrops_small)
-
 # SingleCellExperiment ====
 plotZerosVsDepth(cellranger_small)
 
