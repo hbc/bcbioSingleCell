@@ -259,7 +259,7 @@ assignAndSaveData(
 )
 ```
 
-```{r plot_filtered_qc}
+```{r plot_filtered_qc, results="asis"}
 plotQC(
     object = bcb_filtered,
     geom = "violin",
