@@ -36,7 +36,7 @@ NULL
 #' @export
 setMethod(
     "selectSamples",
-    signature("bcbioSingleCell"),
+    signature("SingleCellExperiment"),
     function(object, ...) {
         metadata(object)[["selectSamples"]] <- TRUE
 
@@ -60,25 +60,28 @@ setMethod(
 
         list <- mapply(
             col = names(args),
-            value = args,
-            function(col, value) {
-            # Check that column is present
-            if (!col %in% colnames(sampleData)) {
-                stop(paste(col, "isn't present in metadata colnames"))
-            }
-            # Check that all items in argument are present
-            if (!all(value %in% sampleData[[col]])) {
-                missing <- value[which(!value %in% sampleData[[col]])]
-                stop(paste(
-                    deparse(col),
-                    "metadata column doesn't contain",
-                    toString(missing)
-                ))
-            }
-            sampleData %>%
-                .[.[[col]] == value, , drop = FALSE] %>%
-                rownames()
-        })
+            arg = args,
+            function(col, arg) {
+                # Check that column is present
+                if (!col %in% colnames(sampleData)) {
+                    stop(paste(col, "isn't present in metadata colnames"))
+                }
+                # Check that all items in argument are present
+                if (!all(arg %in% sampleData[[col]])) {
+                    missing <- arg[which(!arg %in% sampleData[[col]])]
+                    stop(paste(
+                        deparse(col),
+                        "metadata column doesn't contain",
+                        toString(missing)
+                    ))
+                }
+                sampleData %>%
+                    .[.[[col]] %in% arg, , drop = FALSE] %>%
+                    rownames()
+            },
+            SIMPLIFY = FALSE,
+            USE.NAMES = TRUE
+        )
         sampleIDs <- Reduce(f = intersect, x = list)
 
         # Output to the user which samples matched, using the `sampleName`
