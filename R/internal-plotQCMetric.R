@@ -143,7 +143,7 @@
             digits <- 0L
         }
         p <- p +
-            geom_label_bcbio_average(
+            bcbio_geom_label_average(
                 data = data,
                 medianCol = metricCol,
                 digits = digits

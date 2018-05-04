@@ -76,7 +76,7 @@ setMethod(
 
         # Labels
         if (nrow(data) <= 16L) {
-            p <- p + geom_label_bcbio(
+            p <- p + bcbio_geom_label(
                 data = data,
                 mapping = aes_string(label = "nCells"),
                 # Align the label just under the top of the bar
