@@ -8,13 +8,13 @@ params:
     min_genes: 100
     max_genes: !r Inf
     max_mito_ratio: 0.25
-    min_novelty: 0.75
+    min_novelty: 0.85
     min_cells_per_gene: 10
     data_dir: "."
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-03
+# Last modified 2018-05-04
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -134,6 +134,15 @@ bcb <- filterCells(bcb, minUMIs = minUMIs)
 Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for most single-cell experiments.
 
 ```{r plot_genes_per_cell}
+markdownHeader("ecdf", level = 3)
+plotGenesPerCell(
+    object = bcb,
+    geom = "ecdf",
+    min = min(params$min_genes),
+    max = max(params$max_genes),
+    trans = "log2"
+)
+
 markdownHeader("histogram", level = 3)
 plotGenesPerCell(
     object = bcb,
@@ -146,14 +155,6 @@ markdownHeader("violin", level = 3)
 plotGenesPerCell(
     object = bcb,
     geom = "violin",
-    min = min(params$min_genes),
-    max = max(params$max_genes)
-)
-
-markdownHeader("boxplot", level = 3)
-plotGenesPerCell(
-    object = bcb,
-    geom = "boxplot",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
@@ -174,6 +175,13 @@ plotUMIsVsGenes(bcb)
 Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
 
 ```{r plot_novelty}
+markdownHeader("ecdf", level = 3)
+plotNovelty(
+    bcb,
+    geom = "ecdf",
+    min = min(params$min_novelty)
+)
+
 markdownHeader("histogram", level = 3)
 plotNovelty(
     bcb,
@@ -185,13 +193,6 @@ markdownHeader("violin", level = 3)
 plotNovelty(
     bcb,
     geom = "violin",
-    min = min(params$min_novelty)
-)
-
-markdownHeader("boxplot", level = 3)
-plotNovelty(
-    bcb,
-    geom = "boxplot",
     min = min(params$min_novelty)
 )
 ```
@@ -202,6 +203,13 @@ plotNovelty(
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
 
 ```{r plot_mito_ratio}
+markdownHeader("ecdf", level = 3)
+plotMitoRatio(
+    bcb,
+    geom = "ecdf",
+    max = max(params$max_mito_ratio)
+)
+
 markdownHeader("histogram", level = 3)
 plotMitoRatio(
     bcb,
@@ -213,13 +221,6 @@ markdownHeader("violin", level = 3)
 plotMitoRatio(
     bcb,
     geom = "violin",
-    max = max(params$max_mito_ratio)
-)
-
-markdownHeader("boxplot", level = 3)
-plotMitoRatio(
-    bcb,
-    geom = "boxplot",
     max = max(params$max_mito_ratio)
 )
 ```
