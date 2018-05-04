@@ -1,4 +1,4 @@
-#' Prepare Single-Cell RNA-Seq RMarkdown Template
+#' Prepare Single-Cell RNA-Seq R Markdown Template
 #'
 #' @name prepareSingleCellTemplate
 #' @family R Markdown Functions

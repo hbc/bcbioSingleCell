@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepareSingleCellTemplate.R
 \name{prepareSingleCellTemplate}
 \alias{prepareSingleCellTemplate}
-\title{Prepare Single-Cell RNA-Seq RMarkdown Template}
+\title{Prepare Single-Cell RNA-Seq R Markdown Template}
 \usage{
 prepareSingleCellTemplate()
 }
@@ -10,7 +10,7 @@ prepareSingleCellTemplate()
 No value.
 }
 \description{
-Prepare Single-Cell RNA-Seq RMarkdown Template
+Prepare Single-Cell RNA-Seq R Markdown Template
 }
 \examples{
 files <- c(
