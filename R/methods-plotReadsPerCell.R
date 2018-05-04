@@ -135,7 +135,7 @@ NULL
             scale = 10L
         ) +
         scale_x_continuous(trans = "log10") +
-        geom_label_average(data, medianCol = "nCount", digits = 0L) +
+        bcbio_geom_label_average(data, medianCol = "nCount", digits = 0L) +
         labs(
             x = "reads per cell",
             y = NULL
@@ -186,7 +186,7 @@ NULL
             scale = "count"
         ) +
         scale_y_continuous(trans = "log10") +
-        geom_label_average(data, medianCol = "nCount", digits = 0L) +
+        bcbio_geom_label_average(data, medianCol = "nCount", digits = 0L) +
         labs(
             x = NULL,
             y = "reads per cell"
