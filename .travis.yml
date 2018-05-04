@@ -13,8 +13,8 @@ branches:
   except:
   - develop
 
-before_install:
-  - sudo apt-get update
+# before_install:
+#   - sudo apt-get update
 
 # External dependencies
 # dependency for gsl>copula>zinbwave
