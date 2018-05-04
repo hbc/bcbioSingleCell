@@ -128,6 +128,21 @@ print(minUMIs)
 bcb <- filterCells(bcb, minUMIs = minUMIs)
 ```
 
+Let's take a look at the UMI per cell distributions after this filtering step. Note that we haven't applied very strict filtering here -- we're going to cut off the "low quality" cells based on the gene detection rate, novelty score, and mitochondrial abundance.
+
+```{r plot_umis_per_cell_ecdf}
+plotUMIsPerCell(
+    object = bcb,
+    geom = "ecdf",
+    interestingGroups = "sampleName"
+)
+plotUMIsPerCell(
+    object = bcb,
+    geom = "histogram",
+    interestingGroups = "sampleName"
+)
+```
+
 
 ## Genes detected per cell {.tabset}
 
@@ -139,8 +154,7 @@ plotGenesPerCell(
     object = bcb,
     geom = "ecdf",
     min = min(params$min_genes),
-    max = max(params$max_genes),
-    trans = "log2"
+    max = max(params$max_genes)
 )
 
 markdownHeader("histogram", level = 3)
@@ -177,21 +191,21 @@ Another way to QC the data is to look for less novelty, that is cells that have 
 ```{r plot_novelty}
 markdownHeader("ecdf", level = 3)
 plotNovelty(
-    bcb,
+    object = bcb,
     geom = "ecdf",
     min = min(params$min_novelty)
 )
 
 markdownHeader("histogram", level = 3)
 plotNovelty(
-    bcb,
+    object = bcb,
     geom = "histogram",
     min = min(params$min_novelty)
 )
 
 markdownHeader("violin", level = 3)
 plotNovelty(
-    bcb,
+    object = bcb,
     geom = "violin",
     min = min(params$min_novelty)
 )
@@ -205,21 +219,21 @@ We evaluate overall mitochondrial gene expression as a biomarker of cellular str
 ```{r plot_mito_ratio}
 markdownHeader("ecdf", level = 3)
 plotMitoRatio(
-    bcb,
+    object = bcb,
     geom = "ecdf",
     max = max(params$max_mito_ratio)
 )
 
 markdownHeader("histogram", level = 3)
 plotMitoRatio(
-    bcb,
+    object = bcb,
     geom = "histogram",
     max = max(params$max_mito_ratio)
 )
 
 markdownHeader("violin", level = 3)
 plotMitoRatio(
-    bcb,
+    object = bcb,
     geom = "violin",
     max = max(params$max_mito_ratio)
 )
@@ -247,7 +261,7 @@ assignAndSaveData(
 
 ```{r plot_filtered_qc}
 plotQC(
-    bcb_filtered,
+    object = bcb_filtered,
     geom = "violin",
     return = "markdown",
     headerLevel = 2
