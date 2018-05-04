@@ -15,25 +15,21 @@
 #'   `point` argument is defined.
 #'
 #' @examples
-#' # bcbioSingleCell ====
+#' # SingleCellExperiment ====
 #' # Label the inflection point per sample
-#' plotUMIsPerCell(indrops_small, point = "inflection")
+#' plotUMIsPerCell(cellranger_small, geom = "ecdf", point = "inflection")
 #'
 #' # Label the knee point per sample
-#' plotUMIsPerCell(indrops_small, point = "knee")
+#' plotUMIsPerCell(cellranger_small, geom = "ecdf", point = "knee")
 #'
-#' # SingleCellExperiment ====
-#' plotUMIsPerCell(cellranger_small, point = "inflection")
-#' plotUMIsPerCell(cellranger_small, point = "knee")
-#'
-#' # Alternate geom
+#' # Alternate geoms
 #' plotUMIsPerCell(cellranger_small, geom = "histogram")
 #' plotUMIsPerCell(cellranger_small, geom = "ridgeline")
 #' plotUMIsPerCell(cellranger_small, geom = "violin")
 #' plotUMIsPerCell(cellranger_small, geom = "boxplot")
 #'
 #' # seurat ====
-#' plotUMIsPerCell(seurat_small, point = "inflection")
+#' plotUMIsPerCell(seurat_small, geom = "ecdf", point = "inflection")
 NULL
 
 
@@ -46,7 +42,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
+        geom = c("histogram", "ecdf", "ridgeline", "violin", "boxplot"),
         interestingGroups,
         min = 0L,
         point = c("none", "inflection", "knee"),

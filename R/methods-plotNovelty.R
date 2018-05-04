@@ -11,17 +11,12 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotNovelty(indrops_small)
-#'
 #' # SingleCellExperiment ====
-#' plotNovelty(cellranger_small)
+#' plotNovelty(cellranger_small, geom = "histogram")
+#' plotNovelty(cellranger_small, geom = "ecdf")
 #'
 #' # seurat ====
-#' # `object@meta.data` must contain `log10GenesPerUMI`
-#' \dontrun{
-#' plotNovelty(Seurat::pbmc_small)
-#' }
+#' plotNovelty(seurat_small)
 NULL
 
 
@@ -34,10 +29,11 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
+        geom = c("histogram", "ecdf", "ridgeline", "violin", "boxplot"),
         interestingGroups,
         min = 0L,
         fill = scale_fill_hue(),
+        trans = "sqrt",
         title = "genes per UMI (novelty)"
     ) {
         assert_all_are_in_right_open_range(min, lower = 0L, upper = 1L)
@@ -49,7 +45,7 @@ setMethod(
             interestingGroups = interestingGroups,
             min = min,
             max = 1L,
-            trans = "sqrt",
+            trans = trans,
             ratio = TRUE,
             fill = fill,
             title = title

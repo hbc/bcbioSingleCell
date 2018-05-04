@@ -10,13 +10,15 @@
 \usage{
 plotNovelty(object, ...)
 
-\S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("ecdf",
-  "histogram", "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
-  fill = scale_fill_hue(), title = "genes per UMI (novelty)")
+\S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("histogram",
+  "ecdf", "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
+  fill = scale_fill_hue(), trans = "sqrt",
+  title = "genes per UMI (novelty)")
 
-\S4method{plotNovelty}{seurat}(object, geom = c("ecdf", "histogram",
+\S4method{plotNovelty}{seurat}(object, geom = c("histogram", "ecdf",
   "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
-  fill = scale_fill_hue(), title = "genes per UMI (novelty)")
+  fill = scale_fill_hue(), trans = "sqrt",
+  title = "genes per UMI (novelty)")
 }
 \arguments{
 \item{object}{Object.}
@@ -35,6 +37,9 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
+
 \item{title}{Plot title.}
 }
 \value{
@@ -44,17 +49,12 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 "Novelty" refers to log10 genes detected per count.
 }
 \examples{
-# bcbioSingleCell ====
-plotNovelty(indrops_small)
-
 # SingleCellExperiment ====
-plotNovelty(cellranger_small)
+plotNovelty(cellranger_small, geom = "histogram")
+plotNovelty(cellranger_small, geom = "ecdf")
 
 # seurat ====
-# `object@meta.data` must contain `log10GenesPerUMI`
-\dontrun{
-plotNovelty(Seurat::pbmc_small)
-}
+plotNovelty(seurat_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

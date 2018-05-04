@@ -7,9 +7,6 @@
 #' @inheritParams general
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotUMIsVsGenes(indrops_small)
-#'
 #' # SingleCellExperiment ====
 #' plotUMIsVsGenes(cellranger_small)
 #'
@@ -29,14 +26,15 @@ setMethod(
         object,
         interestingGroups,
         color = scale_color_hue(),
+        trans = "log2",
         title = "UMIs vs. genes"
     ) {
         .plotQCScatterplot(
             object = object,
             xCol = "nUMI",
             yCol = "nGene",
-            xTrans = "log2",
-            yTrans = "log2",
+            xTrans = trans,
+            yTrans = trans,
             title = title
         )
     }

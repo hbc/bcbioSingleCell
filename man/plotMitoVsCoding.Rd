@@ -11,10 +11,10 @@
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{SingleCellExperiment}(object, interestingGroups,
-  color = scale_color_hue())
+  color = scale_color_hue(), trans = "log2", title = "mito vs. coding")
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
-  color = scale_color_hue())
+  color = scale_color_hue(), trans = "log2", title = "mito vs. coding")
 }
 \arguments{
 \item{object}{Object.}
@@ -28,6 +28,11 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
+\item{trans}{Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
+
+\item{title}{Plot title.}
 }
 \value{
 \code{ggplot}.
@@ -43,10 +48,7 @@ plotMitoVsCoding(indrops_small)
 plotMitoVsCoding(cellranger_small)
 
 # seurat ====
-# `object@meta.data` must contain `nCoding`, `mitoRatio`
-\dontrun{
-plotMitoVsCoding(Seurat::pbmc_small)
-}
+plotMitoVsCoding(seurat_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

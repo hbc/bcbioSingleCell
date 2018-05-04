@@ -29,10 +29,11 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
+        geom = c("histogram", "ecdf", "ridgeline", "violin", "boxplot"),
         interestingGroups,
         min = 0L,
         max = Inf,
+        trans = "log2",
         fill = scale_fill_hue(),
         title = "genes per cell"
     ) {
@@ -44,7 +45,7 @@ setMethod(
             interestingGroups = interestingGroups,
             min = min,
             max = max,
-            trans = "identity",
+            trans = trans,
             fill = fill,
             title = title
         )

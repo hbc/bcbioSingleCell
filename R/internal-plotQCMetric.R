@@ -61,7 +61,6 @@
             stat_ecdf(geom = "step", size = 1L) +
             scale_x_continuous(trans = trans) +
             labs(
-                x = NULL,
                 y = "frequency"
             )
     } else if (geom == "histogram") {
@@ -143,11 +142,7 @@
             digits <- 0L
         }
         p <- p +
-            bcbio_geom_label_average(
-                data = data,
-                medianCol = metricCol,
-                digits = digits
-            )
+            bcbio_geom_label_average(data, col = metricCol, digits = digits)
     }
 
     # Facets

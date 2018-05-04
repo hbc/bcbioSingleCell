@@ -57,17 +57,27 @@ setMethod(
             j <- 1L:ncol(x)
         }
 
-        # Early return if dimensions are unmodified
-        if (identical(dim(x), c(length(i), length(j)))) {
-            return(x)
-        }
-
         # Regenerate and subset SummarizedExperiment
         sce <- as(x, "SingleCellExperiment")
         sce <- sce[i, j, drop = drop]
 
+        # Early return if dimensions are unmodified
+        if (identical(dim(sce), dim(x))) {
+            return(x)
+        }
+
         genes <- rownames(sce)
         cells <- colnames(sce)
+
+        # Column data ==========================================================
+        # Ensure factors get releveled
+        colData <- colData(sce) %>%
+            as.data.frame() %>%
+            rownames_to_column() %>%
+            mutate_if(is.character, as.factor) %>%
+            mutate_if(is.factor, droplevels) %>%
+            column_to_rownames() %>%
+            as("DataFrame")
 
         # Metadata =============================================================
         metadata <- metadata(sce)

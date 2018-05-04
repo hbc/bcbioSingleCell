@@ -21,8 +21,8 @@
 #' @importFrom basejump assignAndSaveData camel convertGenesToSymbols
 #'   convertUCSCBuildToEnsembl detectOrganism dynamicPlotlist emptyRanges
 #'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
-#'   makeTx2geneFromGFF markdownHeader readFileByExtension readYAML
-#'   sanitizeSampleData theme_midnight theme_paperwhite tx2geneFromGFF
+#'   makeTx2geneFromGFF markdownHeader markdownPlotlist readFileByExtension
+#'   readYAML sanitizeSampleData theme_midnight theme_paperwhite tx2geneFromGFF
 #' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
 #'   bcbio_geom_label_average bcbio_geom_label_repel flatFiles
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions

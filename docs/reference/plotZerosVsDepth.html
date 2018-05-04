@@ -111,11 +111,11 @@
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotZerosVsDepth</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"dropout rate vs. library depth"</span>)
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"zeros vs. depth"</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotZerosVsDepth</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"dropout rate vs. library depth"</span>)</pre>
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"zeros vs. depth"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,7 +168,7 @@ color definitions are desired, we recommend using
 <span class='co'># SingleCellExperiment ====</span>
 <span class='fu'>plotZerosVsDepth</span>(<span class='no'>cellranger_small</span>)</div><div class='img'><img src='plotZerosVsDepth-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># seurat ====</span>
-<span class='fu'>plotZerosVsDepth</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>)</div><div class='img'><img src='plotZerosVsDepth-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plotZerosVsDepth</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>)</div><div class='output co'>#&gt; <span class='error'>Error in grid.Call.graphics(C_setviewport, vp, TRUE): non-finite location and/or size for viewport</span></div><div class='img'><img src='plotZerosVsDepth-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

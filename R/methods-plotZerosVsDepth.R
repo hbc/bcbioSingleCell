@@ -11,9 +11,6 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotZerosVsDepth(indrops_small)
-#'
 #' # SingleCellExperiment ====
 #' plotZerosVsDepth(cellranger_small)
 #'
@@ -33,7 +30,7 @@ setMethod(
         object,
         interestingGroups,
         color = scale_color_hue(),
-        title = "dropout rate vs. library depth"
+        title = "zeros vs. depth"
     ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)

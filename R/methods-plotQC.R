@@ -54,6 +54,34 @@ setMethod(
             interestingGroups = interestingGroups
         )
         plotReadsPerCell <- NULL
+        plotUMIsPerCell <- plotUMIsPerCell(
+            object = object,
+            interestingGroups = interestingGroups,
+            geom = geom
+        )
+        plotGenesPerCell <- plotGenesPerCell(
+            object = object,
+            interestingGroups = interestingGroups,
+            geom = geom
+        )
+        plotUMIsVsGenes <- plotUMIsVsGenes(
+            object = object,
+            interestingGroups = interestingGroups
+        )
+        plotNovelty <- plotNovelty(
+            object = object,
+            interestingGroups = interestingGroups,
+            geom = geom
+        )
+        plotMitoRatio <- plotMitoRatio(
+            object = object,
+            interestingGroups = interestingGroups,
+            geom = geom
+        )
+        plotZerosVsDepth <- plotZerosVsDepth(
+            object = object,
+            interestingGroups = interestingGroups
+        )
 
         if (is(object, "bcbioSingleCell")) {
             # Don't show cell counts for unfiltered bcbio datasets
@@ -71,34 +99,12 @@ setMethod(
         plotlist <- list(
             "plotCellCounts" = plotCellCounts,
             "plotReadsPerCell" = plotReadsPerCell,
-            "plotUMIsPerCell" = plotUMIsPerCell(
-                object,
-                interestingGroups = interestingGroups,
-                geom = geom
-            ),
-            "plotGenesPerCell" = plotGenesPerCell(
-                object,
-                interestingGroups = interestingGroups,
-                geom = geom
-            ),
-            "plotUMIsVsGenes" = plotUMIsVsGenes(
-                object,
-                interestingGroups = interestingGroups
-            ),
-            "plotNovelty" = plotNovelty(
-                object,
-                interestingGroups = interestingGroups,
-                geom = geom
-            ),
-            "plotMitoRatio" = plotMitoRatio(
-                object,
-                interestingGroups = interestingGroups,
-                geom = geom
-            ),
-            "plotZerosVsDepth" = plotZerosVsDepth(
-                object,
-                interestingGroups = interestingGroups
-            )
+            "plotUMIsPerCell" = plotUMIsPerCell,
+            "plotGenesPerCell" = plotGenesPerCell,
+            "plotUMIsVsGenes" = plotUMIsVsGenes,
+            "plotNovelty" = plotNovelty,
+            "plotMitoRatio" = plotMitoRatio,
+            "plotZerosVsDepth" = plotZerosVsDepth
         )
 
         # Remove any `NULL` plots. This is useful for nuking the
@@ -126,58 +132,10 @@ setMethod(
                 tabset = TRUE,
                 asis = TRUE
             )
-
-            # Reads per cell currently only supported for bcbio runs
-            if (!is.null(plotlist[["plotReadsPerCell"]])) {
-                markdownHeader(
-                    "Reads per cell",
-                    level = headerLevel + 1L,
-                    asis = TRUE
-                )
-                show(plotlist[["plotReadsPerCell"]])
-            }
-
-            markdownHeader(
-                "Cell counts",
-                level = headerLevel + 1L,
-                asis = TRUE
+            markdownPlotlist(
+                plotlist = plotlist,
+                headerLevel = headerLevel + 1L
             )
-            show(plotlist[["plotCellCounts"]])
-
-            markdownHeader(
-                "UMI counts per cell",
-                level = headerLevel + 1L,
-                asis = TRUE
-            )
-            show(plotlist[["plotUMIsPerCell"]])
-
-            markdownHeader(
-                "Genes detected",
-                level = headerLevel + 1L,
-                asis = TRUE
-            )
-            show(plotlist[["plotGenesPerCell"]])
-
-            markdownHeader(
-                "UMIs vs. genes",
-                level = headerLevel + 1L,
-                asis = TRUE
-            )
-            show(plotlist[["plotUMIsVsGenes"]])
-
-            markdownHeader(
-                "Mitochondrial counts ratio",
-                level = headerLevel + 1L,
-                asis = TRUE
-            )
-            show(plotlist[["plotMitoRatio"]])
-
-            markdownHeader(
-                "Novelty",
-                level = headerLevel + 1L,
-                asis = TRUE
-            )
-            show(plotlist[["plotNovelty"]])
         }
     }
 )

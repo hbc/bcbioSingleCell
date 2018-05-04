@@ -16,10 +16,7 @@
 #' plotMitoVsCoding(cellranger_small)
 #'
 #' # seurat ====
-#' # `object@meta.data` must contain `nCoding`, `mitoRatio`
-#' \dontrun{
-#' plotMitoVsCoding(Seurat::pbmc_small)
-#' }
+#' plotMitoVsCoding(seurat_small)
 NULL
 
 
@@ -33,14 +30,17 @@ setMethod(
     function(
         object,
         interestingGroups,
-        color = scale_color_hue()
+        color = scale_color_hue(),
+        trans = "log2",
+        title = "mito vs. coding"
     ) {
         .plotQCScatterplot(
             object = object,
             xCol = "nCoding",
             yCol = "nMito",
-            xTrans = "log2",
-            yTrans = "log2"
+            xTrans = trans,
+            yTrans = trans,
+            title = title
         )
     }
 )

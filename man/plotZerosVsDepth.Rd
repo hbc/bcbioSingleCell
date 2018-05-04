@@ -11,10 +11,10 @@
 plotZerosVsDepth(object, ...)
 
 \S4method{plotZerosVsDepth}{SingleCellExperiment}(object, interestingGroups,
-  color = scale_color_hue(), title = "dropout rate vs. library depth")
+  color = scale_color_hue(), title = "zeros vs. depth")
 
 \S4method{plotZerosVsDepth}{seurat}(object, interestingGroups,
-  color = scale_color_hue(), title = "dropout rate vs. library depth")
+  color = scale_color_hue(), title = "zeros vs. depth")
 }
 \arguments{
 \item{object}{Object.}
@@ -38,9 +38,6 @@ color definitions are desired, we recommend using
 This function helps us visualize the dropout rate.
 }
 \examples{
-# bcbioSingleCell ====
-plotZerosVsDepth(indrops_small)
-
 # SingleCellExperiment ====
 plotZerosVsDepth(cellranger_small)
 

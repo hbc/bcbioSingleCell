@@ -110,14 +110,14 @@
     <pre class="usage"><span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ecdf"</span>,
-  <span class='st'>"histogram"</span>, <span class='st'>"ridgeline"</span>, <span class='st'>"violin"</span>, <span class='st'>"boxplot"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_fill_hue</a></span>(), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mitochondrial abundance"</span>)
+<span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"histogram"</span>,
+  <span class='st'>"ecdf"</span>, <span class='st'>"ridgeline"</span>, <span class='st'>"violin"</span>, <span class='st'>"boxplot"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_fill_hue</a></span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mito ratio"</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ecdf"</span>, <span class='st'>"histogram"</span>,
+<span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"histogram"</span>, <span class='st'>"ecdf"</span>,
   <span class='st'>"ridgeline"</span>, <span class='st'>"violin"</span>, <span class='st'>"boxplot"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_fill_hue</a></span>(), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mitochondrial abundance"</span>)</pre>
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_fill_hue</a></span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mito ratio"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,6 +151,11 @@ to <code>NULL</code>, the default ggplot2 color palette will be used. If manual 
 definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
     </tr>
     <tr>
+      <th>trans</th>
+      <td><p>Name of the axis scale transformation to apply. See
+<code>help("scale_x_continuous", "ggplot2")</code> for more information.</p></td>
+    </tr>
+    <tr>
       <th>title</th>
       <td><p>Plot title.</p></td>
     </tr>
@@ -177,11 +182,8 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
 <span class='fu'>plotMitoRatio</span>(<span class='no'>indrops_small</span>)</div><div class='img'><img src='plotMitoRatio-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># SingleCellExperiment ====</span>
 <span class='fu'>plotMitoRatio</span>(<span class='no'>cellranger_small</span>)</div><div class='img'><img src='plotMitoRatio-2.png' alt='' width='700' height='433' /></div><div class='input'>
-# seurat ====
-# `object@meta.data` must contain `mitoRatio`
-</div><span class='co'># NOT RUN {</span>
-<span class='fu'>plotMitoRatio</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>)
-<span class='co'># }</span></pre>
+<span class='co'># seurat ====</span>
+<span class='fu'>plotMitoRatio</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotMitoRatio-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
