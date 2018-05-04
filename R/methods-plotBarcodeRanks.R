@@ -94,7 +94,7 @@ setMethod(
                     paste("inflection", "=", ranks[["inflection"]])
                 )
                 p +
-                    geom_label_bcbio_repel(
+                    bcbio_geom_label_repel(
                         data = labelData,
                         mapping = aes_string(
                             x = "rank",
@@ -111,7 +111,7 @@ setMethod(
         # Sort the plots by sample name
         plotlist <- plotlist[sort(names(plotlist))]
 
-        plot_grid(plotlist = plotlist, labels = "AUTO")
+        plot_grid(plotlist = plotlist)
     }
 )
 

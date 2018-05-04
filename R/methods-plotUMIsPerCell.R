@@ -49,7 +49,7 @@ setMethod(
         geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
         interestingGroups,
         min = 0L,
-        point = c("none", "inflection", "knee"),
+        point = c("inflection", "knee", "none"),
         label = TRUE,
         trans = "log10",
         color = scale_color_hue(),
@@ -135,7 +135,7 @@ setMethod(
                     )
                 if (isTRUE(label)) {
                     p <- p +
-                        geom_label_bcbio_repel(
+                        bcbio_geom_label_repel(
                             data = pointData,
                             mapping = aes_string(
                                 x = "x",
