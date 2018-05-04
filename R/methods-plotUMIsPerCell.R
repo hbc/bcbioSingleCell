@@ -135,7 +135,7 @@ setMethod(
                     )
                 if (isTRUE(label)) {
                     p <- p +
-                        .geomLabel(
+                        geom_label_bcbio_repel(
                             data = pointData,
                             mapping = aes_string(
                                 x = "x",

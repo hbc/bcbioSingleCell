@@ -53,7 +53,7 @@
 
     if (geom == "boxplot") {
         p <- p +
-            geom_boxplot(color = lineColor, outlier.shape = NA) +
+            geom_boxplot(color = "black", outlier.shape = NA) +
             scale_y_continuous(trans = trans) +
             labs(x = NULL)
     } else if (geom == "ecdf") {
@@ -67,7 +67,7 @@
     } else if (geom == "histogram") {
         p <- p +
             geom_histogram(
-                bins = bins,
+                bins = 200L,
                 color = FALSE
             ) +
             scale_x_continuous(trans = trans) +
@@ -75,8 +75,8 @@
     } else if (geom == "ridgeline") {
         p <- p +
             geom_density_ridges(
-                alpha = qcPlotAlpha,
-                color = lineColor,
+                alpha = 0.75,
+                color = "black",
                 panel_scaling = TRUE,
                 scale = 10L
             ) +
@@ -85,7 +85,7 @@
     } else if (geom == "violin") {
         p <- p +
             geom_violin(
-                color = lineColor,
+                color = "black",
                 scale = "area",
                 trim = TRUE
             ) +
@@ -96,23 +96,23 @@
     # Cutoff lines
     if (geom %in% c("boxplot", "violin")) {
         if (min > 0L) {
-            p <- p + .qcCutoffLine(yintercept = min)
+            p <- p + bcbio_geom_abline(yintercept = min)
         }
         if (
             (max < Inf && identical(ratio, FALSE)) ||
             (max < 1L && identical(ratio, TRUE))
         ) {
-            p <- p + .qcCutoffLine(yintercept = max)
+            p <- p + bcbio_geom_abline(yintercept = max)
         }
     } else if (geom %in% c("histogram", "ridgeline")) {
         if (min > 0L) {
-            p <- p + .qcCutoffLine(xintercept = min)
+            p <- p + bcbio_geom_abline(xintercept = min)
         }
         if (
             (max < Inf && identical(ratio, FALSE)) ||
             (max < 1L && identical(ratio, TRUE))
         ) {
-            p <- p + .qcCutoffLine(xintercept = max)
+            p <- p + bcbio_geom_abline(xintercept = max)
         }
     }
 
@@ -143,7 +143,7 @@
             digits <- 0L
         }
         p <- p +
-            .medianLabels(
+            geom_label_bcbio_average(
                 data = data,
                 medianCol = metricCol,
                 digits = digits

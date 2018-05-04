@@ -75,17 +75,10 @@ setMethod(
         }
 
         # Labels
-        if (nrow(data) <= qcLabelMaxNum) {
-            p <- p + geom_label(
+        if (nrow(data) <= 16L) {
+            p <- p + geom_label_bcbio(
                 data = data,
                 mapping = aes_string(label = "nCells"),
-                alpha = qcLabelAlpha,
-                color = qcLabelColor,
-                fill = qcLabelFill,
-                fontface = qcLabelFontface,
-                label.padding = qcLabelPadding,
-                label.size = qcLabelSize,
-                show.legend = FALSE,
                 # Align the label just under the top of the bar
                 vjust = 1.25
             )

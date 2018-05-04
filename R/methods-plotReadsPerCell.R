@@ -1,7 +1,3 @@
-# TODO Add boxplot geom support
-
-
-
 #' Plot Read Counts per Cell
 #'
 #' Plot the distribution of read counts for all unfiltered cellular barcodes.
@@ -38,9 +34,9 @@ NULL
             fill = "interestingGroups"
         )
     ) +
-        geom_boxplot(color = lineColor, outlier.shape = NA) +
+        geom_boxplot(color = "black", outlier.shape = NA) +
         scale_y_continuous(trans = "log10") +
-        .medianLabels(data, medianCol = "nCount", digits = 0L) +
+        geom_label_bcbio_average(data, medianCol = "nCount", digits = 0L) +
         labs(
             x = NULL,
             y = "reads per cell"
@@ -48,7 +44,7 @@ NULL
 
     # Cutoff line
     if (min > 0L) {
-        p <- p + .qcCutoffLine(yintercept = min)
+        p <- p + bcbio_geom_abline(yintercept = min)
     }
 
     # Color palette
@@ -94,7 +90,7 @@ NULL
 
     # Cutoff line
     if (min > 0L) {
-        p <- p + .qcCutoffLine(xintercept = min)
+        p <- p + bcbio_geom_abline(xintercept = min)
     }
 
     # Color palette
@@ -133,13 +129,13 @@ NULL
         )
     ) +
         geom_density_ridges(
-            alpha = qcPlotAlpha,
-            color = lineColor,
+            alpha = 0.75,
+            color = "black",
             panel_scaling = TRUE,
             scale = 10L
         ) +
         scale_x_continuous(trans = "log10") +
-        .medianLabels(data, medianCol = "nCount", digits = 0L) +
+        geom_label_average(data, medianCol = "nCount", digits = 0L) +
         labs(
             x = "reads per cell",
             y = NULL
@@ -147,7 +143,7 @@ NULL
 
     # Cutoff line
     if (min > 0L) {
-        p <- p + .qcCutoffLine(xintercept = min)
+        p <- p + bcbio_geom_abline(xintercept = min)
     }
 
     # Color palette
@@ -186,11 +182,11 @@ NULL
         )
     ) +
         geom_violin(
-            color = lineColor,
+            color = "black",
             scale = "count"
         ) +
         scale_y_continuous(trans = "log10") +
-        .medianLabels(data, medianCol = "nCount", digits = 0L) +
+        geom_label_average(data, medianCol = "nCount", digits = 0L) +
         labs(
             x = NULL,
             y = "reads per cell"
@@ -198,7 +194,7 @@ NULL
 
     # Cutoff line
     if (min > 0L) {
-        p <- p + .qcCutoffLine(yintercept = min)
+        p <- p + bcbio_geom_abline(yintercept = min)
     }
 
     # Color palette
@@ -289,7 +285,7 @@ NULL
         )
     ) +
         geom_step(
-            alpha = qcPlotAlpha,
+            alpha = 0.75,
             size = 1L
         ) +
         labs(
@@ -299,7 +295,7 @@ NULL
 
     # Cutoff line
     if (min > 0L) {
-        p <- p + .qcCutoffLine(xintercept = log10(min))
+        p <- p + bcbio_geom_abline(xintercept = log10(min))
     }
 
     # Color palette

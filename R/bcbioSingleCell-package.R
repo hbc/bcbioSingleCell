@@ -23,9 +23,10 @@
 #'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
 #'   makeTx2geneFromGFF markdownHeader readFileByExtension readYAML
 #'   sanitizeSampleData theme_midnight theme_paperwhite tx2geneFromGFF
-#' @importFrom bcbioBase flatFiles prepareSummarizedExperiment readDataVersions
-#'   readLog readProgramVersions readSampleData readTx2gene
-#'   sampleYAMLMetadata uniteInterestingGroups
+#' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
+#'   bcbio_geom_label_average bcbio_geom_label_repel flatFiles
+#'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
+#'   readSampleData readTx2gene sampleYAMLMetadata uniteInterestingGroups
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows desc filter group_by group_vars left_join
 #'   matches mutate mutate_all mutate_if n select select_if summarize
@@ -36,7 +37,6 @@
 #'   geom_step geom_text geom_violin geom_vline ggtitle guide_colorbar
 #'   guide_legend guides labs qplot scale_radius scale_x_continuous
 #'   scale_y_continuous stat_ecdf theme xlab xlim ylab
-#' @importFrom ggrepel geom_label_repel
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom graphics hist
 #' @importFrom grid arrow unit
@@ -50,8 +50,7 @@
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! !!! sym syms UQ
 #' @importFrom scales percent pretty_breaks
-#' @importFrom stats as.formula ecdf fitted median model.matrix predict relevel
-#'   reorder smooth.spline
+#' @importFrom stats ecdf fitted median model.matrix predict relevel reorder smooth.spline
 #' @importFrom stringr str_extract str_match str_pad str_split
 #' @importFrom tibble as_tibble column_to_rownames has_rownames remove_rownames
 #'   rownames_to_column tibble
