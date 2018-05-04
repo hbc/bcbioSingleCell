@@ -18,7 +18,6 @@ branches:
 addons:
   apt:
     packages:
-      - gsl-bin
       - libgsl-dev
 
 env:
