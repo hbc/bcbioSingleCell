@@ -36,7 +36,7 @@ setMethod(
         interestingGroups,
         max = 1L,
         fill = scale_fill_hue(),
-        title = "mitochondrial abundance"
+        title = "mito ratio"
     ) {
         geom <- match.arg(geom)
         assert_all_are_in_left_open_range(max, lower = 0L, upper = 1L)

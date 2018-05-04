@@ -33,7 +33,7 @@ setMethod(
         object,
         interestingGroups,
         color = scale_color_hue(),
-        title = "dropout rate vs. library depth"
+        title = "zeros vs. depth"
     ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
