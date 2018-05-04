@@ -49,7 +49,7 @@ setMethod(
         geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
         interestingGroups,
         min = 0L,
-        point = c("inflection", "knee", "none"),
+        point = c("none", "inflection", "knee"),
         label = TRUE,
         trans = "log10",
         color = scale_color_hue(),
