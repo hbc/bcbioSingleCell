@@ -69,6 +69,16 @@ setMethod(
         genes <- rownames(sce)
         cells <- colnames(sce)
 
+        # Column data ==========================================================
+        # Ensure factors get releveled
+        colData <- colData(sce) %>%
+            as.data.frame() %>%
+            rownames_to_column() %>%
+            mutate_if(is.character, as.factor) %>%
+            mutate_if(is.factor, droplevels) %>%
+            column_to_rownames() %>%
+            as("DataFrame")
+
         # Metadata =============================================================
         metadata <- metadata(sce)
         metadata[["subset"]] <- TRUE
