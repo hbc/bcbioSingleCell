@@ -10,12 +10,12 @@
 \usage{
 plotNovelty(object, ...)
 
-\S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("ecdf",
-  "histogram", "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
+\S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("histogram",
+  "ecdf", "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
   fill = scale_fill_hue(), trans = "sqrt",
   title = "genes per UMI (novelty)")
 
-\S4method{plotNovelty}{seurat}(object, geom = c("ecdf", "histogram",
+\S4method{plotNovelty}{seurat}(object, geom = c("histogram", "ecdf",
   "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
   fill = scale_fill_hue(), trans = "sqrt",
   title = "genes per UMI (novelty)")
