@@ -38,6 +38,7 @@ setMethod(
         interestingGroups,
         min = 0L,
         fill = scale_fill_hue(),
+        trans = "sqrt",
         title = "genes per UMI (novelty)"
     ) {
         assert_all_are_in_right_open_range(min, lower = 0L, upper = 1L)
@@ -49,7 +50,7 @@ setMethod(
             interestingGroups = interestingGroups,
             min = min,
             max = 1L,
-            trans = "sqrt",
+            trans = trans,
             ratio = TRUE,
             fill = fill,
             title = title
