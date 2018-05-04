@@ -7,8 +7,10 @@
     min = 0L,
     max = Inf,
     trans = "identity",
+    ratio = FALSE,
     color = scale_color_hue(),
-    fill = scale_fill_hue()
+    fill = scale_fill_hue(),
+    title = NULL
 ) {
     assert_is_a_string(metricCol)
     geom <- match.arg(geom)
@@ -19,15 +21,15 @@
     # Support for per sample filtering cutoffs
     min <- min(min)
     max <- max(max)
+    if (isTRUE(ratio)) {
+        assert_all_are_in_range(c(min, max), lower = 0L, upper = 1L)
+    }
     assert_is_a_string(trans)
     assertIsFillScaleDiscreteOrNULL(fill)
+    assertIsAStringOrNULL(title)
 
-    metrics <- metrics(object, interestingGroups = interestingGroups)
-    if (!metricCol %in% colnames(metrics)) {
-        warning(paste(
-            deparse(substitute(object)),
-            "does not contain", metricCol, "column in `metrics()`"
-        ))
+    data <- metrics(object, interestingGroups = interestingGroups)
+    if (!metricCol %in% colnames(data)) {
         return(invisible())
     }
 
@@ -47,67 +49,77 @@
         mapping[["x"]] <- as.symbol(metricCol)
     }
 
-    p <- ggplot(data = metrics, mapping = mapping)
+    p <- ggplot(data = data, mapping = mapping)
 
     if (geom == "boxplot") {
         p <- p +
-            geom_boxplot(color = lineColor, outlier.shape = NA) +
-            scale_y_continuous(trans = trans)
+            geom_boxplot(color = "black", outlier.shape = NA) +
+            scale_y_continuous(trans = trans) +
+            labs(x = NULL)
     } else if (geom == "ecdf") {
         p <- p +
             stat_ecdf(geom = "step", size = 1L) +
             scale_x_continuous(trans = trans) +
-            labs(y = "frequency")
+            labs(
+                x = NULL,
+                y = "frequency"
+            )
     } else if (geom == "histogram") {
         p <- p +
             geom_histogram(
-                bins = bins,
+                bins = 200L,
                 color = FALSE
             ) +
             scale_x_continuous(trans = trans) +
-            scale_y_continuous(trans = trans)
+            scale_y_continuous()
     } else if (geom == "ridgeline") {
         p <- p +
             geom_density_ridges(
-                alpha = qcPlotAlpha,
-                color = lineColor,
+                alpha = 0.75,
+                color = "black",
                 panel_scaling = TRUE,
                 scale = 10L
             ) +
-            scale_x_continuous(trans = trans)
+            scale_x_continuous(trans = trans) +
+            labs(y = NULL)
     } else if (geom == "violin") {
         p <- p +
             geom_violin(
-                color = lineColor,
-                scale = "count",
+                color = "black",
+                scale = "area",
                 trim = TRUE
             ) +
-            scale_y_continuous(trans = trans)
+            scale_y_continuous(trans = trans) +
+            labs(x = NULL)
     }
-
-    # Rotate the x-axis 90 degrees
-    p <- p + theme(axis.text.x = element_text(angle = 90L, hjust = 1L))
 
     # Cutoff lines
     if (geom %in% c("boxplot", "violin")) {
         if (min > 0L) {
-            p <- p + .qcCutoffLine(yintercept = min)
+            p <- p + bcbio_geom_abline(yintercept = min)
         }
-        if (max < Inf) {
-            p <- p + .qcCutoffLine(yintercept = max)
+        if (
+            (max < Inf && identical(ratio, FALSE)) ||
+            (max < 1L && identical(ratio, TRUE))
+        ) {
+            p <- p + bcbio_geom_abline(yintercept = max)
         }
     } else if (geom %in% c("histogram", "ridgeline")) {
         if (min > 0L) {
-            p <- p + .qcCutoffLine(xintercept = min)
+            p <- p + bcbio_geom_abline(xintercept = min)
         }
-        if (max < Inf) {
-            p <- p + .qcCutoffLine(xintercept = max)
+        if (
+            (max < Inf && identical(ratio, FALSE)) ||
+            (max < 1L && identical(ratio, TRUE))
+        ) {
+            p <- p + bcbio_geom_abline(xintercept = max)
         }
     }
 
     # Label interesting groups
     p <- p +
         labs(
+            title = title,
             color = paste(interestingGroups, collapse = ":\n"),
             fill = paste(interestingGroups, collapse = ":\n")
         )
@@ -131,8 +143,8 @@
             digits <- 0L
         }
         p <- p +
-            .medianLabels(
-                metrics,
+            bcbio_geom_label_average(
+                data = data,
                 medianCol = metricCol,
                 digits = digits
             )
@@ -140,7 +152,7 @@
 
     # Facets
     facets <- NULL
-    if (.isAggregate(object)) {
+    if (.isAggregate(data)) {
         facets <- "aggregate"
     }
     if (is.character(facets)) {
@@ -160,7 +172,8 @@
     xTrans = "identity",
     yTrans = "identity",
     interestingGroups,
-    color = scale_color_hue()
+    color = scale_color_hue(),
+    title = NULL
 ) {
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
@@ -170,9 +183,10 @@
     assert_is_a_string(xTrans)
     assert_is_a_string(yTrans)
     assertIsColorScaleDiscreteOrNULL(color)
+    assertIsAStringOrNULL(title)
 
-    metrics <- metrics(object, interestingGroups = interestingGroups)
-    if (!all(c(xCol, yCol) %in% colnames(metrics))) {
+    data <- metrics(object, interestingGroups = interestingGroups)
+    if (!all(c(xCol, yCol) %in% colnames(data))) {
         warning(paste(
             deparse(substitute(object)), "must contain",
             toString(c(xCol, yCol)),
@@ -182,7 +196,7 @@
     }
 
     p <- ggplot(
-        data = metrics,
+        data = data,
         mapping = aes_string(
             x = xCol,
             y = yCol,
@@ -197,7 +211,10 @@
         scale_y_continuous(trans = yTrans)
 
     # Label interesting groups
-    p <- p + labs(color = paste(interestingGroups, collapse = ":\n"))
+    p <- p + labs(
+        title = title,
+        color = paste(interestingGroups, collapse = ":\n")
+    )
 
     # Color palette
     if (is(color, "ScaleDiscrete")) {
@@ -206,7 +223,7 @@
 
     # Facets
     facets <- NULL
-    if (.isAggregate(object)) {
+    if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {

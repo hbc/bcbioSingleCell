@@ -18,6 +18,12 @@
 #' @examples
 #' # seurat ====
 #' plotFeatureTSNE(Seurat::pbmc_small, features = "PC1")
+#' plotFeatureTSNE(
+#'     object = Seurat::pbmc_small,
+#'     features = "PC1",
+#'     dark = FALSE,
+#'     grid = FALSE
+#' )
 NULL
 
 

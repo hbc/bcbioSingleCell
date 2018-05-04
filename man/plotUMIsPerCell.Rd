@@ -11,16 +11,16 @@
 plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
-  "histogram", "ridgeline", "boxplot", "violin"), interestingGroups, min = 0L,
-  barcodeRanks = FALSE, ranksPerSample = TRUE, labelPoint = c("knee",
-  "inflection"), trans = "log10", color = scale_color_hue(),
-  fill = scale_fill_hue())
+  "histogram", "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
+  point = c("inflection", "knee", "none"), label = TRUE, trans = "log10",
+  color = scale_color_hue(), fill = scale_fill_hue(),
+  title = "UMIs per cell")
 
 \S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "histogram",
-  "ridgeline", "boxplot", "violin"), interestingGroups, min = 0L,
-  barcodeRanks = FALSE, ranksPerSample = TRUE, labelPoint = c("knee",
-  "inflection"), trans = "log10", color = scale_color_hue(),
-  fill = scale_fill_hue())
+  "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
+  point = c("inflection", "knee", "none"), label = TRUE, trans = "log10",
+  color = scale_color_hue(), fill = scale_fill_hue(),
+  title = "UMIs per cell")
 }
 \arguments{
 \item{object}{Object.}
@@ -35,14 +35,11 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 
 \item{min}{Recommended minimum value cutoff.}
 
-\item{barcodeRanks}{Calculate barcode ranks to label knee or inflection
-points.}
+\item{point}{Label either the "\code{knee}" or "\code{inflection}" points per sample.
+To disable, use "\code{none}". Requires \code{geom = "ecdf"}.}
 
-\item{ranksPerSample}{Calculate the barcode ranks individually per sample.
-Generally recommended unless there's a reason to use a single cutoff point
-across all samples in the analysis.}
-
-\item{labelPoint}{Label either the "\code{knee}" or "\code{inflection}" point.}
+\item{label}{Label the points per sample on the plot. Only applies when
+\code{point} argument is defined.}
 
 \item{trans}{Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
@@ -55,6 +52,8 @@ color definitions are desired, we recommend using
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{title}{Plot title.}
 }
 \value{
 \code{ggplot}.
@@ -64,20 +63,28 @@ Plot the universal molecular identifiers (UMIs) per cell.
 }
 \examples{
 # bcbioSingleCell ====
-plotUMIsPerCell(indrops_small)
+# Label the inflection point per sample
+plotUMIsPerCell(indrops_small, point = "inflection")
 
-# Label the barcode ranks
-plotUMIsPerCell(indrops_small, barcodeRanks = TRUE)
+# Label the knee point per sample
+plotUMIsPerCell(indrops_small, point = "knee")
 
 # SingleCellExperiment ====
-plotUMIsPerCell(cellranger_small)
+plotUMIsPerCell(cellranger_small, point = "inflection")
+plotUMIsPerCell(cellranger_small, point = "knee")
+
+# Alternate geom
+plotUMIsPerCell(cellranger_small, geom = "histogram")
+plotUMIsPerCell(cellranger_small, geom = "ridgeline")
+plotUMIsPerCell(cellranger_small, geom = "violin")
+plotUMIsPerCell(cellranger_small, geom = "boxplot")
 
 # seurat ====
-plotUMIsPerCell(Seurat::pbmc_small)
+plotUMIsPerCell(seurat_small, point = "inflection")
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
+  \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},

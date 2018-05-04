@@ -13,8 +13,8 @@ plotMarkerTSNE(object, ...)
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
   "median", "sum"), color = "auto", pointsAsNumbers = FALSE,
   pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = TRUE, grid = TRUE, legend = TRUE, aspectRatio = 1L,
-  title = NULL, subtitle = TRUE)
+  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
+  title = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -51,8 +51,6 @@ the dataset, and some cells can be masked.}
 \item{aspectRatio}{Aspect ratio.}
 
 \item{title}{Plot title.}
-
-\item{subtitle}{Include gene identifiers as subtitles.}
 }
 \value{
 \code{ggplot}.
@@ -62,10 +60,14 @@ Plot Marker t-SNE
 }
 \examples{
 # seurat ====
+plotMarkerTSNE(seurat_small, genes = "COL1A1")
+plotMarkerTSNE(seurat_small, genes = "COL1A1", dark = FALSE, grid = FALSE)
+
+
 # Mitochondrial genes
 mito <- grep("^MT\\\\.", rownames(counts(seurat_small)), value = TRUE)
-head(mito)
-plotMarkerTSNE(seurat_small, genes = mito)
+print(sort(mito))
+plotMarkerTSNE(seurat_small, genes = mito, title = "mitochondrial")
 }
 \seealso{
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},

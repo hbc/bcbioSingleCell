@@ -63,7 +63,7 @@ the samples." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
       </span>
     </div>
 
@@ -169,12 +169,8 @@ the first item in the vector by default.</p></td>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 6
+#&gt;   ..@ listData       :List of 2
 #&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
-#&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
-#&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
-#&gt;   .. ..$ revcomp          : Factor w/ 1 level "AAAAAAAA": 1
 #&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
@@ -182,12 +178,8 @@ the first item in the vector by default.</p></td>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 7
+#&gt;   ..@ listData       :List of 3
 #&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
-#&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
-#&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
-#&gt;   .. ..$ revcomp          : Factor w/ 1 level "AAAAAAAA": 1
 #&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
 #&gt;   .. ..$ batch            : Factor w/ 1 level "1": 1
 #&gt;   ..@ elementType    : chr "ANY"
@@ -198,12 +190,8 @@ the first item in the vector by default.</p></td>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 6
+#&gt;   ..@ listData       :List of 2
 #&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
-#&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
-#&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
-#&gt;   .. ..$ revcomp          : Factor w/ 1 level "AAAAAAAA": 1
 #&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
@@ -211,12 +199,8 @@ the first item in the vector by default.</p></td>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 7
+#&gt;   ..@ listData       :List of 3
 #&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
-#&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
-#&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
-#&gt;   .. ..$ revcomp          : Factor w/ 1 level "AAAAAAAA": 1
 #&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
 #&gt;   .. ..$ batch            : Factor w/ 1 level "1": 1
 #&gt;   ..@ elementType    : chr "ANY"
@@ -244,7 +228,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

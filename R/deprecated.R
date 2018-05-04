@@ -133,7 +133,7 @@ readCellTypeMarkersFile <- function(...) {
 #' @rdname deprecated
 #' @export
 inflectionPoint <- function(...) {
-    .Defunct("barcodeRanks")
+    .Defunct("DropletUtils::barcodeRanks")
 }
 
 #' @rdname deprecated

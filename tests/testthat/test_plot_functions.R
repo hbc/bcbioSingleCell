@@ -168,13 +168,16 @@ test_that("plotQC : list", {
     p <- plotQC(indrops_small, return = "list")
     expect_identical(
         names(p),
-        c("plotReadsPerCell",
-          "plotCellCounts",
-          "plotUMIsPerCell",
-          "plotGenesPerCell",
-          "plotUMIsVsGenes",
-          "plotMitoRatio",
-          "plotNovelty")
+        c(
+            "plotCellCounts",
+            "plotReadsPerCell",
+            "plotUMIsPerCell",
+            "plotGenesPerCell",
+            "plotUMIsVsGenes",
+            "plotNovelty",
+            "plotMitoRatio",
+            "plotZerosVsDepth"
+        )
     )
 })
 
@@ -240,21 +243,6 @@ test_that("plotReadsPerCell : bcbioSingleCell", {
             .[[1L]] %>%
             .[["geom"]],
         "GeomStep"
-    )
-})
-
-test_that("plotReadsPerCell : seurat", {
-    p <- plotReadsPerCell(seurat_small)
-    expect_is(p, "ggplot")
-
-    # seurat object not created by bcbioSingleCell
-    expect_warning(
-        plotReadsPerCell(Seurat::pbmc_small),
-        "object does not contain nCount column in `metrics\\(\\)`"
-    )
-    expect_is(
-        suppressWarnings(plotReadsPerCell(Seurat::pbmc_small)),
-        "NULL"
     )
 })
 

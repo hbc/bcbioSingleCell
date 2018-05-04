@@ -21,10 +21,10 @@
 #' plotQC(indrops_small)
 #'
 #' # SingleCellExperiment ====
-#' suppressWarnings(plotQC(cellranger_small))
+#' plotQC(cellranger_small)
 #'
 #' # seurat ====
-#' suppressWarnings(plotQC(Seurat::pbmc_small))
+#' plotQC(Seurat::pbmc_small)
 NULL
 
 
@@ -38,7 +38,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        geom = c("violin", "boxplot", "histogram", "ridgeline"),
+        geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
         headerLevel = 2L,
         legend = FALSE,
         return = c("grid", "list", "markdown")
@@ -49,38 +49,55 @@ setMethod(
         geom <- match.arg(geom)
         return <- match.arg(return)
 
+        plotCellCounts <- plotCellCounts(
+            object = object,
+            interestingGroups = interestingGroups
+        )
+        plotReadsPerCell <- NULL
+
+        if (is(object, "bcbioSingleCell")) {
+            # Don't show cell counts for unfiltered bcbio datasets
+            if (!length(metadata(object)[["filterCells"]])) {
+                plotCellCounts <- NULL
+            }
+            # Raw read counts are only stashed in bcbioSingleCell objects
+            plotReadsPerCell <- plotReadsPerCell(
+                object = object,
+                geom = geom,
+                interestingGroups = interestingGroups
+            )
+        }
+
         plotlist <- list(
-            plotReadsPerCell = plotReadsPerCell(
+            "plotCellCounts" = plotCellCounts,
+            "plotReadsPerCell" = plotReadsPerCell,
+            "plotUMIsPerCell" = plotUMIsPerCell(
+                object,
+                interestingGroups = interestingGroups,
+                geom = geom
+            ),
+            "plotGenesPerCell" = plotGenesPerCell(
+                object,
+                interestingGroups = interestingGroups,
+                geom = geom
+            ),
+            "plotUMIsVsGenes" = plotUMIsVsGenes(
                 object,
                 interestingGroups = interestingGroups
             ),
-            plotCellCounts = plotCellCounts(
+            "plotNovelty" = plotNovelty(
+                object,
+                interestingGroups = interestingGroups,
+                geom = geom
+            ),
+            "plotMitoRatio" = plotMitoRatio(
+                object,
+                interestingGroups = interestingGroups,
+                geom = geom
+            ),
+            "plotZerosVsDepth" = plotZerosVsDepth(
                 object,
                 interestingGroups = interestingGroups
-            ),
-            plotUMIsPerCell = plotUMIsPerCell(
-                object,
-                interestingGroups = interestingGroups,
-                geom = geom
-            ),
-            plotGenesPerCell = plotGenesPerCell(
-                object,
-                interestingGroups = interestingGroups,
-                geom = geom
-            ),
-            plotUMIsVsGenes = plotUMIsVsGenes(
-                object,
-                interestingGroups = interestingGroups
-            ),
-            plotMitoRatio = plotMitoRatio(
-                object,
-                interestingGroups = interestingGroups,
-                geom = geom
-            ),
-            plotNovelty = plotNovelty(
-                object,
-                interestingGroups = interestingGroups,
-                geom = geom
             )
         )
 

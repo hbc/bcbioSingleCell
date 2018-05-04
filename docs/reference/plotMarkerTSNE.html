@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
       </span>
     </div>
 
@@ -113,8 +113,8 @@
 <span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
   <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,10 +184,6 @@ the dataset, and some cells can be masked.</p></td>
       <th>title</th>
       <td><p>Plot title.</p></td>
     </tr>
-    <tr>
-      <th>subtitle</th>
-      <td><p>Include gene identifiers as subtitles.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -209,9 +205,12 @@ the dataset, and some cells can be masked.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
+<span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='st'>"COL1A1"</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='st'>"COL1A1"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotMarkerTSNE-2.png' alt='' width='700' height='433' /></div><div class='input'>
+
 <span class='co'># Mitochondrial genes</span>
 <span class='no'>mito</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT\\."</span>, <span class='fu'>rownames</span>(<span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>seurat_small</span>)), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>head</span>(<span class='no'>mito</span>)</div><div class='output co'>#&gt; [1] "MT.ND6" "MT.CO2" "MT.CYB" "MT.ND2" "MT.ND5" "MT.CO1"</div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>print</span>(<span class='fu'>sort</span>(<span class='no'>mito</span>))</div><div class='output co'>#&gt;  [1] "MT.ATP6" "MT.ATP8" "MT.CO1"  "MT.CO2"  "MT.CO3"  "MT.CYB"  "MT.ND1" 
+#&gt;  [8] "MT.ND2"  "MT.ND3"  "MT.ND4"  "MT.ND4L" "MT.ND5"  "MT.ND6" </div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mitochondrial"</span>)</div><div class='img'><img src='plotMarkerTSNE-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -234,7 +233,7 @@ Rory Kirchner, Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

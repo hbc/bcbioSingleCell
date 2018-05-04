@@ -10,13 +10,13 @@
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), interestingGroups, max = 1L,
-  fill = scale_fill_hue())
+\S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("ecdf",
+  "histogram", "ridgeline", "violin", "boxplot"), interestingGroups, max = 1L,
+  fill = scale_fill_hue(), title = "mitochondrial abundance")
 
-\S4method{plotMitoRatio}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), interestingGroups, max = 1L,
-  fill = scale_fill_hue())
+\S4method{plotMitoRatio}{seurat}(object, geom = c("ecdf", "histogram",
+  "ridgeline", "violin", "boxplot"), interestingGroups, max = 1L,
+  fill = scale_fill_hue(), title = "mitochondrial abundance")
 }
 \arguments{
 \item{object}{Object.}
@@ -34,6 +34,8 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{title}{Plot title.}
 }
 \value{
 \code{ggplot}.
@@ -56,7 +58,7 @@ plotMitoRatio(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
+  \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},

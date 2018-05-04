@@ -29,11 +29,12 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        geom = c("violin", "boxplot", "histogram", "ridgeline"),
+        geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
         interestingGroups,
         min = 0L,
         max = Inf,
-        fill = scale_fill_hue()
+        fill = scale_fill_hue(),
+        title = "genes per cell"
     ) {
         geom <- match.arg(geom)
         .plotQCMetric(
@@ -44,7 +45,8 @@ setMethod(
             min = min,
             max = max,
             trans = "identity",
-            fill = fill
+            fill = fill,
+            title = title
         )
     }
 )

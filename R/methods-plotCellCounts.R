@@ -30,12 +30,14 @@ setMethod(
     function(
         object,
         interestingGroups,
-        fill = scale_fill_hue()
+        fill = scale_fill_hue(),
+        title = "cell counts"
     ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
         assertIsFillScaleDiscreteOrNULL(fill)
+        assertIsAStringOrNULL(title)
 
         metrics <- metrics(object, interestingGroups)
         sampleData <- sampleData(
@@ -61,10 +63,11 @@ setMethod(
                 color = "black",
                 stat = "identity"
             ) +
-            labs(fill = paste(interestingGroups, collapse = ":\n")) +
-            theme(axis.text.x = element_text(
-                angle = 90L, hjust = 1L, vjust = 0.5
-            ))
+            labs(
+                title = title,
+                x = NULL,
+                fill = paste(interestingGroups, collapse = ":\n")
+            )
 
         # Color palette
         if (!is.null(fill)) {
@@ -72,17 +75,10 @@ setMethod(
         }
 
         # Labels
-        if (nrow(data) <= qcLabelMaxNum) {
-            p <- p + geom_label(
+        if (nrow(data) <= 16L) {
+            p <- p + bcbio_geom_label(
                 data = data,
                 mapping = aes_string(label = "nCells"),
-                alpha = qcLabelAlpha,
-                color = qcLabelColor,
-                fill = qcLabelFill,
-                fontface = qcLabelFontface,
-                label.padding = qcLabelPadding,
-                label.size = qcLabelSize,
-                show.legend = FALSE,
                 # Align the label just under the top of the bar
                 vjust = 1.25
             )

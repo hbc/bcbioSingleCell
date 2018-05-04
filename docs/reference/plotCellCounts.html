@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotCellCounts</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_fill_hue</a></span>())</pre>
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_fill_hue</a></span>(), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"cell counts"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,6 +135,10 @@ formatted in camel case and intersect with <code><a href='sampleData.html'>sampl
 to <code>NULL</code>, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
     </tr>
+    <tr>
+      <th>title</th>
+      <td><p>Plot title.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -144,7 +148,6 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Quality Control Functions: <code>barcodeRanksPerSample</code>,
-  <code>barcodeRanks</code>,
   <code>plotGenesPerCell</code>,
   <code>plotMitoRatio</code>,
   <code>plotMitoVsCoding</code>,
@@ -183,7 +186,7 @@ Michael Steinbaugh, Rory Kirchner
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

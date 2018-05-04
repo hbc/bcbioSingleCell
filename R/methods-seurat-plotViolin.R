@@ -1,7 +1,3 @@
-# TODO Add facet return method
-
-
-
 #' Plot Violin
 #'
 #' @name plotViolin
@@ -83,7 +79,7 @@ setMethod(
             }
 
             if (isTRUE(dark)) {
-                color <- NA
+                color <- "white"
             } else {
                 color <- "black"
             }

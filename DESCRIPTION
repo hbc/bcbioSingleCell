@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Import and analyze bcbio single-cell RNA-seq data.
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: c(
     person(
         given = "Michael",
@@ -25,6 +25,13 @@ Authors@R: c(
         comment = c(ORCID = "0000-0003-2699-3840")
     ),
     person(
+        given = "Victor",
+        family = "Barrera",
+        email = "barrera.vic@gmail.com",
+        role = "aut",
+        comment = c(ORCID = "0000-0003-0590-4634")
+    ),
+    person(
         given = "Shannan",
         family = "Ho Sui",
         email = "shosui@hsph.harvard.edu",
@@ -44,12 +51,13 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 Depends:
-    R (>= 3.4),
-    SingleCellExperiment (>= 1.0),
-    bcbioBase (>= 0.2.9)
+    R (>= 3.5),
+    SingleCellExperiment (>= 1.2),
+    bcbioBase (>= 0.2.10)
 Imports:
     Biobase,
     BiocGenerics,
+    DropletUtils (>= 1.0),
     GenomicFeatures,
     Matrix,
     Matrix.utils,
@@ -87,13 +95,17 @@ Imports:
     viridis
 Suggests:
     BiocStyle,
+    DESeq2 (>= 1.20),
     EnsDb.Hsapiens.v75,
-    edgeR (>= 3.20.9),
+    edgeR (>= 3.22),
     googlesheets,
     rmarkdown,
+    scater (>= 1.8),
+    scran (>= 1.8),
     sessioninfo,
     testthat,
     tidyverse (>= 1.2),
+    zinbwave (>= 1.0),
     zingeR (>= 0.1)
 Remotes:
     hbc/bcbioBase,

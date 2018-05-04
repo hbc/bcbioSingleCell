@@ -8,12 +8,13 @@
 \title{Quality Control Plots}
 \usage{
 \S4method{plotQC}{SingleCellExperiment}(object, interestingGroups,
-  geom = c("violin", "boxplot", "histogram", "ridgeline"), headerLevel = 2L,
-  legend = FALSE, return = c("grid", "list", "markdown"))
+  geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
+  headerLevel = 2L, legend = FALSE, return = c("grid", "list",
+  "markdown"))
 
-\S4method{plotQC}{seurat}(object, interestingGroups, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), headerLevel = 2L, legend = FALSE,
-  return = c("grid", "list", "markdown"))
+\S4method{plotQC}{seurat}(object, interestingGroups, geom = c("ecdf",
+  "histogram", "ridgeline", "violin", "boxplot"), headerLevel = 2L,
+  legend = FALSE, return = c("grid", "list", "markdown"))
 }
 \arguments{
 \item{object}{Object.}
@@ -47,14 +48,14 @@ visualization.
 plotQC(indrops_small)
 
 # SingleCellExperiment ====
-suppressWarnings(plotQC(cellranger_small))
+plotQC(cellranger_small)
 
 # seurat ====
-suppressWarnings(plotQC(Seurat::pbmc_small))
+plotQC(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
+  \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},

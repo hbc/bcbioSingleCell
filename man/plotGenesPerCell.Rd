@@ -10,13 +10,13 @@
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{SingleCellExperiment}(object, geom = c("violin",
-  "boxplot", "histogram", "ridgeline"), interestingGroups, min = 0L,
-  max = Inf, fill = scale_fill_hue())
+\S4method{plotGenesPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
+  "histogram", "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L,
+  max = Inf, fill = scale_fill_hue(), title = "genes per cell")
 
-\S4method{plotGenesPerCell}{seurat}(object, geom = c("violin", "boxplot",
-  "histogram", "ridgeline"), interestingGroups, min = 0L, max = Inf,
-  fill = scale_fill_hue())
+\S4method{plotGenesPerCell}{seurat}(object, geom = c("ecdf", "histogram",
+  "ridgeline", "violin", "boxplot"), interestingGroups, min = 0L, max = Inf,
+  fill = scale_fill_hue(), title = "genes per cell")
 }
 \arguments{
 \item{object}{Object.}
@@ -36,6 +36,8 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 \item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+
+\item{title}{Plot title.}
 }
 \value{
 \code{ggplot}.
@@ -55,7 +57,7 @@ plotGenesPerCell(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
+  \code{\link{plotCellCounts}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},

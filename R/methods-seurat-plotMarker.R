@@ -24,17 +24,33 @@
 #'
 #' @examples
 #' # seurat ===
-#' top <- topMarkers(all_markers_small, n = 1L)
-#' genes <- pull(top, "rowname")
-#'
 #' # Individual gene
-#' gene <- genes[[1L]]
-#' plotMarker(seurat_small, gene = gene, dark = TRUE)
-#' plotMarker(seurat_small, gene = gene, dark = FALSE)
+#' plotMarker(seurat_small, gene = "COL1A2", dark = TRUE)
+#' plotMarker(seurat_small, gene = "COL1A2", dark = FALSE)
 #'
 #' # Multiple genes
+#' top <- topMarkers(all_markers_small, n = 1L)
+#' genes <- pull(top, "rowname")
 #' plotMarkers(seurat_small, genes = genes)
 NULL
+
+
+
+# Constructors =================================================================
+# Strip everything except the x-axis text labels
+.minimalAxis <- function() {
+    theme(
+        axis.line = element_blank(),
+        # axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        panel.grid = element_blank(),
+        title = element_blank()
+    )
+}
 
 
 
@@ -67,9 +83,6 @@ setMethod(
             genes = gene,
             expression = "sum",
             dark = dark,
-            legend = TRUE,
-            title = gene,
-            subtitle = FALSE,
             ...
         )
 
@@ -93,10 +106,10 @@ setMethod(
         # Return ===============================================================
         if (return == "grid") {
             violin <- violin +
-                .minimalAxes()
+                .minimalAxis()
             dot <- dot +
                 coord_flip() +
-                .minimalAxes()
+                .minimalAxis()
             p <- plot_grid(
                 tsne,
                 dot,
@@ -104,7 +117,7 @@ setMethod(
                 labels = NULL,
                 ncol = 1L,
                 nrow = 3L,
-                rel_heights = c(1L, 0.1, 0.1)
+                rel_heights = c(1L, 0.1, 0.15)
             )
             if (isTRUE(dark)) {
                 p <- p + theme(

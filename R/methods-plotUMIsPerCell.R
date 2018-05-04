@@ -9,25 +9,31 @@
 #' @inherit plotGenesPerCell
 #'
 #' @inheritParams general
-#' @param barcodeRanks Calculate barcode ranks to label knee or inflection
-#'   points.
-#' @param ranksPerSample Calculate the barcode ranks individually per sample.
-#'   Generally recommended unless there's a reason to use a single cutoff point
-#'   across all samples in the analysis.
-#' @param labelPoint Label either the "`knee`" or "`inflection`" point.
+#' @param point Label either the "`knee`" or "`inflection`" points per sample.
+#'   To disable, use "`none`". Requires `geom = "ecdf"`.
+#' @param label Label the points per sample on the plot. Only applies when
+#'   `point` argument is defined.
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' plotUMIsPerCell(indrops_small)
+#' # Label the inflection point per sample
+#' plotUMIsPerCell(indrops_small, point = "inflection")
 #'
-#' # Label the barcode ranks
-#' plotUMIsPerCell(indrops_small, barcodeRanks = TRUE)
+#' # Label the knee point per sample
+#' plotUMIsPerCell(indrops_small, point = "knee")
 #'
 #' # SingleCellExperiment ====
-#' plotUMIsPerCell(cellranger_small)
+#' plotUMIsPerCell(cellranger_small, point = "inflection")
+#' plotUMIsPerCell(cellranger_small, point = "knee")
+#'
+#' # Alternate geom
+#' plotUMIsPerCell(cellranger_small, geom = "histogram")
+#' plotUMIsPerCell(cellranger_small, geom = "ridgeline")
+#' plotUMIsPerCell(cellranger_small, geom = "violin")
+#' plotUMIsPerCell(cellranger_small, geom = "boxplot")
 #'
 #' # seurat ====
-#' plotUMIsPerCell(Seurat::pbmc_small)
+#' plotUMIsPerCell(seurat_small, point = "inflection")
 NULL
 
 
@@ -40,20 +46,25 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        geom = c("ecdf", "histogram", "ridgeline", "boxplot", "violin"),
+        geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
         interestingGroups,
         min = 0L,
-        barcodeRanks = FALSE,
-        ranksPerSample = TRUE,
-        labelPoint = c("knee", "inflection"),
+        point = c("inflection", "knee", "none"),
+        label = TRUE,
         trans = "log10",
         color = scale_color_hue(),
-        fill = scale_fill_hue()
+        fill = scale_fill_hue(),
+        title = "UMIs per cell"
     ) {
         geom <- match.arg(geom)
-        assert_is_a_bool(barcodeRanks)
-        assert_is_a_bool(ranksPerSample)
-        labelPoint <- match.arg(labelPoint)
+        point <- match.arg(point)
+        assert_is_a_bool(label)
+        assertIsAStringOrNULL(title)
+
+        # Override interestingGroups if labeling points
+        if (point != "none") {
+            interestingGroups <- "sampleName"
+        }
 
         p <- .plotQCMetric(
             object = object,
@@ -66,20 +77,78 @@ setMethod(
             fill = fill
         )
 
-        # Calculate barcode ranks and label inflection or knee point
-        if (isTRUE(barcodeRanks)) {
-            if (isTRUE(ranksPerSample)) {
-                fun <- .labelBarcodeRanksPerSample
-            } else {
-                fun <- .labelBarcodeRanks
+        # Calculate barcode ranks and label inflection or knee points
+        if (point != "none") {
+            # Require ecdf geom for now
+            assert_are_identical(geom, "ecdf")
+
+            if (length(title)) {
+                p <- p + labs(subtitle = paste(point, "point per sample"))
             }
-            p <- fun(
-                p = p,
-                object = object,
-                geom = geom,
-                point = labelPoint
-            )
+
+            ranks <- barcodeRanksPerSample(object)
+            # Inflection or knee points per sample
+            points <- lapply(seq_along(ranks), function(x) {
+                ranks[[x]][[point]]
+            })
+            points <- unlist(points)
+            names(points) <- names(ranks)
+
+            sampleNames <- sampleData(object) %>%
+                .[names(points), "sampleName"] %>%
+                as.character()
+
+            if (geom == "ecdf") {
+                # Calculate the y-intercept per sample
+                freq <- mapply(
+                    sampleID = names(points),
+                    point = points,
+                    MoreArgs = list(metrics = metrics(object)),
+                    FUN = function(metrics, sampleID, point) {
+                        nUMI <- metrics[
+                            metrics[["sampleID"]] == sampleID,
+                            "nUMI",
+                            drop = TRUE
+                            ]
+                        e <- ecdf(sort(nUMI))
+                        e(point)
+                    },
+                    SIMPLIFY = TRUE,
+                    USE.NAMES = TRUE
+                )
+                pointData <- data.frame(
+                    "x" = points,
+                    "y" = freq,
+                    "label" = paste0(sampleNames, " (", points, ")"),
+                    "sampleName" = sampleNames
+                )
+                p <- p +
+                    geom_point(
+                        data = pointData,
+                        mapping = aes_string(
+                            x = "x",
+                            y = "y",
+                            color = "sampleName"
+                        ),
+                        size = 5L,
+                        show.legend = FALSE
+                    )
+                if (isTRUE(label)) {
+                    p <- p +
+                        bcbio_geom_label_repel(
+                            data = pointData,
+                            mapping = aes_string(
+                                x = "x",
+                                y = "y",
+                                label = "label",
+                                color = "sampleName"
+                            )
+                        )
+                }
+            }
         }
+
+        p <- p + labs(title = title)
 
         p
     }

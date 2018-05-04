@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='fu'>topBarcodes</span>(<span class='no'>indrops_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
-#&gt; Variables: 14
+#&gt; Variables: 10
 #&gt; $ nCount            &lt;int&gt; 90582, 128690, 111183, 126962, 111111, 124799, 11...
 #&gt; $ nUMI              &lt;int&gt; 9323, 6978, 6933, 6467, 6387, 6137, 6102, 6008, 5...
 #&gt; $ nGene             &lt;int&gt; 184, 451, 442, 440, 445, 448, 448, 455, 431, 433
@@ -163,10 +163,6 @@
 #&gt; $ mitoRatio         &lt;dbl&gt; 0.70556688, 0.11192319, 0.04673302, 0.19344364, 0...
 #&gt; $ sampleID          &lt;fct&gt; multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, multi...
 #&gt; $ sampleName        &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...
-#&gt; $ index             &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-#&gt; $ sequence          &lt;fct&gt; TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT,...
-#&gt; $ aggregate         &lt;fct&gt; sample, sample, sample, sample, sample, sample, s...
-#&gt; $ revcomp           &lt;fct&gt; AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA,...
 #&gt; $ interestingGroups &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...</div><div class='input'>
 <span class='co'># seurat ====</span>
 <span class='fu'>topBarcodes</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
@@ -202,7 +198,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

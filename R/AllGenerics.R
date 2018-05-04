@@ -1,14 +1,3 @@
-#' @rdname barcodeRanks
-#' @export
-setGeneric(
-    "barcodeRanks",
-    function(object, ...) {
-        standardGeneric("barcodeRanks")
-    }
-)
-
-
-
 #' @rdname barcodeRanksPerSample
 #' @export
 setGeneric(
@@ -125,6 +114,17 @@ setGeneric(
     "metricsPerSample",
     function(object, ...) {
         standardGeneric("metricsPerSample")
+    }
+)
+
+
+
+#' @rdname plotBarcodeRanks
+#' @export
+setGeneric(
+    "plotBarcodeRanks",
+    function(object, ...) {
+        standardGeneric("plotBarcodeRanks")
     }
 )
 

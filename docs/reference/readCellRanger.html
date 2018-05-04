@@ -61,7 +61,7 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
 
     <pre class="usage"><span class='fu'>readCellRanger</span>(<span class='no'>uploadDir</span>, <span class='no'>refdataDir</span>, <span class='no'>sampleMetadataFile</span>,
   <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,12 +150,6 @@ denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
       <th>spikeNames</th>
       <td><p><code>character</code> vector indicating which <code>assay()</code> rows denote
 spike-in sequences (e.g. ERCCs).</p></td>
-    </tr>
-    <tr>
-      <th>prefilter</th>
-      <td><p>Prefilter counts prior to quality control analysis. This
-applies very minimal filtering to the dataset, dropping only cells that
-don't contain any genes, and is generally recommended.</p></td>
     </tr>
     </table>
     
@@ -199,9 +193,9 @@ cannot be set by the user.</p>
 #&gt; <span class='message'>organism: "Homo sapiens"</span>
 #&gt; <span class='message'>build: "GRCh37"</span>
 #&gt; <span class='message'>release: "75"</span>
-#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Using geneName instead of symbol</span></div><div class='output co'>#&gt; <span class='message'>Setting geneBiotype as factor</span></div><div class='output co'>#&gt; <span class='message'>Setting seqCoordSystem as factor</span></div><div class='output co'>#&gt; <span class='message'>Defining broadClass using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>484 coding genes detected</span></div><div class='output co'>#&gt; <span class='message'>11 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Using geneName instead of symbol</span></div><div class='output co'>#&gt; <span class='message'>Setting geneBiotype as factor</span></div><div class='output co'>#&gt; <span class='message'>Setting seqCoordSystem as factor</span></div><div class='output co'>#&gt; <span class='message'>Defining broadClass using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>484 coding genes detected</span></div><div class='output co'>#&gt; <span class='message'>11 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
-#&gt; metadata(23): version pipeline ... utilsSessionInfo devtoolsSessionInfo
+#&gt; metadata(22): version pipeline ... utilsSessionInfo devtoolsSessionInfo
 #&gt; assays(1): counts
 #&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
 #&gt;   ENSG00000269893
@@ -238,7 +232,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

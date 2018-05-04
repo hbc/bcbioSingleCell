@@ -10,7 +10,7 @@
 bcbioSingleCell(uploadDir, organism, sampleMetadataFile,
   interestingGroups = "sampleName", ensemblRelease = NULL,
   genomeBuild = NULL, transgeneNames = NULL, spikeNames = NULL,
-  gffFile = NULL, prefilter = TRUE, ...)
+  gffFile = NULL, ...)
 }
 \arguments{
 \item{uploadDir}{Path to final upload directory. This path is set when
@@ -53,10 +53,6 @@ Generally, we recommend using a GTF (GFFv2) file here over a GFF3 file if
 possible, although all GFF formats are supported. The function will
 internally generate a \code{TxDb} containing transcript-to-gene mappings and
 construct a \code{GRanges} object containing the genomic ranges (\code{\link[=rowRanges]{rowRanges()}}).}
-
-\item{prefilter}{Prefilter counts prior to quality control analysis. This
-applies very minimal filtering to the dataset, dropping only cells that
-don't contain any genes, and is generally recommended.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }

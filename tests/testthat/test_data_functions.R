@@ -215,7 +215,16 @@ test_that("fetchTSNEExpressionData", {
 # filterCells ==================================================================
 test_that("filterCells", {
     invisible(capture.output(
-        x <- filterCells(indrops_small, minGenes = 0L)
+        x <- filterCells(
+            object = indrops_small,
+            minUMIs = 1000L,
+            maxUMIs = Inf,
+            minGenes = 100L,
+            maxGenes = Inf,
+            maxMitoRatio = 0.1,
+            minNovelty = 0.7,
+            minCellsPerGene = 3L
+        )
     ))
     expect_s4_class(x, "bcbioSingleCell")
     expect_identical(dim(x), c(500L, 205L))
@@ -288,10 +297,6 @@ test_that("metrics : bcbioSingleCell", {
             "mitoRatio" = "numeric",
             "sampleID" = "factor",
             "sampleName" = "factor",
-            "index" = "factor",
-            "sequence" = "factor",
-            "aggregate" = "factor",
-            "revcomp" = "factor",
             "interestingGroups" = "factor"
         )
     )

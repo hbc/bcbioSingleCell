@@ -25,7 +25,7 @@ setMethod(
     function(object) {
         validObject(object)
         metadata <- metadata(object)
-        sampleData <- sampleData(object, return = "data.frame")
+        sampleData <- sampleData(object, clean = FALSE, return = "data.frame")
         if ("sampleNameAggregate" %in% colnames(sampleData)) {
             warning("Use `aggregate` instead of `sampleNameAggregate`")
             sampleData[["aggregate"]] <- sampleData[["sampleNameAggregate"]]
@@ -78,18 +78,11 @@ setMethod(
         rownames(rowData) <- rownames(object)
 
         # Column data ==========================================================
-        prefilter <- metadata[["prefilter"]]
-        colData <- metrics(
-            object = counts,
-            rowData = rowData,
-            prefilter = prefilter
-        )
+        # Always prefilter, removing cells with no UMIs or genes
+        colData <- metrics(counts, rowData = rowData, prefilter = TRUE)
 
-        # Prefilter very low quality cells, if desired
-        if (isTRUE(prefilter)) {
-            # Subset the counts matrix to match the colData
-            counts <- counts[, rownames(colData)]
-        }
+        # Subset the counts to match the prefiltered metrics
+        counts <- counts[, rownames(colData), drop = FALSE]
 
         # Metadata =============================================================
         message("Updating metadata")

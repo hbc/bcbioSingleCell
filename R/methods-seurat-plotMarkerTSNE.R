@@ -8,16 +8,19 @@
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #' @param expression Calculation to apply on the aggregate marker expression.
-#' @param subtitle Include gene identifiers as subtitles.
 #'
 #' @return `ggplot`.
 #'
 #' @examples
 #' # seurat ====
+#' plotMarkerTSNE(seurat_small, genes = "COL1A1")
+#' plotMarkerTSNE(seurat_small, genes = "COL1A1", dark = FALSE, grid = FALSE)
+#'
+#'
 #' # Mitochondrial genes
 #' mito <- grep("^MT\\.", rownames(counts(seurat_small)), value = TRUE)
-#' head(mito)
-#' plotMarkerTSNE(seurat_small, genes = mito)
+#' print(sort(mito))
+#' plotMarkerTSNE(seurat_small, genes = mito, title = "mitochondrial")
 NULL
 
 
@@ -40,10 +43,9 @@ setMethod(
         labelSize = 6L,
         dark = TRUE,
         grid = TRUE,
-        legend = TRUE,
+        legend = FALSE,
         aspectRatio = 1L,
-        title = NULL,
-        subtitle = TRUE
+        title = TRUE
     ) {
         assert_is_character(genes)
         expression <- match.arg(expression)
@@ -54,8 +56,10 @@ setMethod(
         assert_is_a_number(labelSize)
         assert_is_a_bool(dark)
         assert_is_a_bool(legend)
-        assertIsCharacterOrNULL(title)
-        assert_is_a_bool(subtitle)
+        assert_is_any_of(title, c("character", "logical", "NULL"))
+        if (is.character(title)) {
+            assert_is_a_string(title)
+        }
 
         data <- fetchTSNEExpressionData(object, genes = genes)
         requiredCols <- c(
@@ -70,16 +74,6 @@ setMethod(
         )
         assert_is_subset(requiredCols, colnames(data))
 
-        # Automatic subtitle containing list of marker genes
-        if (isTRUE(subtitle)) {
-            subtitle <- genes
-            # Limit to the first 10 markers
-            if (length(subtitle) > 10L) {
-                subtitle <- c(subtitle[1L:10L], "...")
-            }
-            subtitle <- toString(subtitle)
-        }
-
         p <- ggplot(
             data = data,
             mapping = aes_string(
@@ -89,11 +83,22 @@ setMethod(
             )
         )
 
-        # Labels
-        if (isTRUE(subtitle)) {
-            subtitle <- genes
-        } else {
-            subtitle <- NULL
+        # Titles
+        subtitle <- NULL
+        if (isTRUE(title)) {
+            if (is_a_string(genes)) {
+                title <- genes
+            } else {
+                title <- NULL
+                subtitle <- genes
+                # Limit to the first 5 markers
+                if (length(subtitle) > 5L) {
+                    subtitle <- c(subtitle[1L:5L], "...")
+                }
+                subtitle <- toString(subtitle)
+            }
+        } else if (identical(title, FALSE)) {
+            title <- NULL
         }
         p <- p + labs(title = title, subtitle = subtitle)
 

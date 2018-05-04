@@ -10,20 +10,26 @@
 \usage{
 plotZerosVsDepth(object, ...)
 
-\S4method{plotZerosVsDepth}{SingleCellExperiment}(object,
-  color = scale_color_hue())
+\S4method{plotZerosVsDepth}{SingleCellExperiment}(object, interestingGroups,
+  color = scale_color_hue(), title = "dropout rate vs. library depth")
 
-\S4method{plotZerosVsDepth}{seurat}(object, color = scale_color_hue())
+\S4method{plotZerosVsDepth}{seurat}(object, interestingGroups,
+  color = scale_color_hue(), title = "dropout rate vs. library depth")
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
+\item{title}{Plot title.}
 }
 \value{
 \code{ggplot}.
@@ -43,7 +49,7 @@ plotZerosVsDepth(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{barcodeRanks}}, \code{\link{plotCellCounts}},
+  \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},

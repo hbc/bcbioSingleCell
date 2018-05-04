@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
       </span>
     </div>
 
@@ -110,6 +110,9 @@
     <pre class="usage"><span class='fu'>barcodeRanksPerSample</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>barcodeRanksPerSample</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for seurat</span>
 <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -121,18 +124,50 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Passthrough arguments to <code>barcodeRanks()</code>.</p></td>
+      <td><p>Passthrough arguments to <code><a href='http://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks'>DropletUtils::barcodeRanks()</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>list</code>.</p>
+    <p>A list with the following elements:</p><dl class='dl-horizontal'>
+<dt><code>rank</code>:</dt><dd><p>A numeric vector of average ranks for each column of <code>m</code>.</p></dd>
+<dt><code>total</code>:</dt><dd><p>A numeric vector of total counts for each column of <code>m</code>.</p></dd>
+<dt><code>fitted</code>:</dt><dd><p>A numeric vector of fitted total counts from the spline for each column of <code>m</code>.
+This is <code>NA</code> for points with <code>x</code> outside of <code>fit.bounds</code>.</p></dd>
+<dt><code>knee</code>:</dt><dd><p>A numeric scalar containing the total count at the knee point.</p></dd>
+<dt><code>inflection</code>:</dt><dd><p>A numeric scalar containing the total count at the inflection point.</p></dd>
+</dl>
+
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Analyses of droplet-based scRNA-seq data often show a plot of the log-total count against the log-rank of each barcode, where the highest ranks have the largest totals.
+This is equivalent to a transposed empirical cumulative density plot with log-transformed axes, which focuses on the barcodes with the largest counts.
+The <code>barcodeRanks</code> function will compute these ranks for all barcodes.
+Barcodes with the same total count receive the same average rank to avoid problems with discrete runs of the same total.</p>
+<p>The function will also identify a number of interesting points on the curve for downstream use, namely the inflection and knee points.
+Both of these points correspond to a sharp transition between two components of the total count distribution, 
+presumably reflecting the difference between empty droplets with little RNA and cell-containing droplets with much more RNA.</p><ul>
+<li><p>The inflection point is computed as the point on the rank/total curve where the first derivative is minimized.
+The derivative is computed directly from all points on the curve with total counts greater than <code>lower</code>.
+This avoids issues with erratic behaviour of the curve at lower totals.</p></li>
+<li><p>The knee point is defined as the point on the curve where the signed curvature is minimized.
+This requires calculation of the second derivative, which is much more sensitive to noise in the curve.
+To overcome this, a smooth spline is fitted to the log-total counts against the log-rank using the <code>smooth.spline</code> function.
+Derivatives are then calculated from the fitted spline using <code>predict</code>.</p></li>
+</ul><p>We supply a default setting of <code>df</code> to avoid overfitting the spline, which results in unstability in the higher derivatives (and thus the curvature).
+This and other arguments to <code>smooth.spline</code> can be tuned if the estimated knee point is not at an appropriate location.
+We also restrict the fit to lie within the bounds defined by <code>fit.bounds</code> to focus on the region containing the knee point.
+This allows us to obtain an accurate fit with low <code>df</code>, rather than attempting to model the entire curve.</p>
+<p>If <code>fit.bounds</code> is not specified, the upper bound is automatically set to the inflection point, which should lie after the knee point.
+The lower bound is set to the point at which the first derivative is closest to zero, i.e., the &#8220;plateau&#8221; region before the knee point.
+Note that only points with total counts above <code>lower</code> will be considered, regardless of how <code>fit.bounds</code> is defined.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Quality Control Functions: <code>barcodeRanks</code>,
-  <code>plotCellCounts</code>,
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks'>DropletUtils::barcodeRanks()</a></code>.</p>
+<p>Other Quality Control Functions: <code>plotCellCounts</code>,
   <code>plotGenesPerCell</code>,
   <code>plotMitoRatio</code>,
   <code>plotMitoVsCoding</code>,
@@ -145,6 +180,12 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>indrops_small</span>)
+<span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div><div class='input'>
+<span class='co'># SingleCellExperiment ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>cellranger_small</span>)
+<span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "aggregation_1" "aggregation_2"</div><div class='input'>
+<span class='co'># seurat ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>seurat_small</span>)
 <span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -153,6 +194,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
@@ -168,7 +211,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

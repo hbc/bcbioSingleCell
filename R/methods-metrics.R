@@ -83,6 +83,9 @@ setMethod(
                 warning("`broadClass` is not defined in rowData")
             }
 
+            # Drop rows with NA broad class
+            rowData <- rowData[!is.na(rowData[["broadClass"]]), , drop = FALSE]
+
             # Coding genes
             codingGenes <- rowData %>%
                 .[.[["broadClass"]] == "coding", , drop = FALSE] %>%
@@ -98,7 +101,7 @@ setMethod(
             message(paste(length(mitoGenes), "mitochondrial genes detected"))
         }
 
-        data <- data.frame(
+        data <- tibble(
             "rowname" = colnames(object),
             # Follow the Seurat `seurat@data.info` conventions
             "nUMI" = colSums(object),
@@ -108,7 +111,6 @@ setMethod(
         ) %>%
             mutate(
                 log10GenesPerUMI = log10(!!sym("nGene")) / log10(!!sym("nUMI")),
-                # Using `nUMI` here like in Seurat example
                 mitoRatio = !!sym("nMito") / !!sym("nUMI")
             ) %>%
             # Ensure count columns are integer.
@@ -123,7 +125,8 @@ setMethod(
                 filter(!!sym("nUMI") > 0L) %>%
                 filter(!!sym("nGene") > 0L)
             message(paste(
-                nrow(data), "cellular barcodes passed pre-filtering",
+                nrow(data), "/", ncol(object),
+                "cellular barcodes passed pre-filtering",
                 paste0("(", percent(nrow(data) / ncol(object)), ")")
             ))
         }

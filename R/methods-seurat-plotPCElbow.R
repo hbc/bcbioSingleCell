@@ -92,7 +92,7 @@ NULL
             size = 1.5,
             yintercept = minSD
         ) +
-        .qcCutoffLine(xintercept = cutoff) +
+        bcbio_geom_abline(xintercept = cutoff) +
         labs(x = "pc", y = "std dev") +
         expand_limits(y = 0L) +
         scale_y_continuous(trans = trans)
@@ -110,7 +110,7 @@ NULL
             size = 1.5,
             yintercept = minPct
         ) +
-        .qcCutoffLine(xintercept = cutoff) +
+        bcbio_geom_abline(xintercept = cutoff) +
         labs(x = "pc", y = "% std dev") +
         expand_limits(y = 0L) +
         scale_y_continuous(labels = percent, trans = trans)
@@ -128,7 +128,7 @@ NULL
             size = 1.5,
             yintercept = maxCumPct
         ) +
-        .qcCutoffLine(xintercept = cutoff) +
+        bcbio_geom_abline(xintercept = cutoff) +
         labs(x = "pc", y = "cum % std dev") +
         expand_limits(y = c(0L, 1L)) +
         scale_y_continuous(labels = percent, trans = trans)

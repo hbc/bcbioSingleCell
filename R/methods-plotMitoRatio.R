@@ -32,10 +32,11 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        geom = c("violin", "boxplot", "histogram", "ridgeline"),
+        geom = c("ecdf", "histogram", "ridgeline", "violin", "boxplot"),
         interestingGroups,
         max = 1L,
-        fill = scale_fill_hue()
+        fill = scale_fill_hue(),
+        title = "mitochondrial abundance"
     ) {
         geom <- match.arg(geom)
         assert_all_are_in_left_open_range(max, lower = 0L, upper = 1L)
@@ -46,7 +47,9 @@ setMethod(
             interestingGroups = interestingGroups,
             max = max,
             trans = "identity",
-            fill = fill
+            ratio = TRUE,
+            fill = fill,
+            title = title
         )
     }
 )
