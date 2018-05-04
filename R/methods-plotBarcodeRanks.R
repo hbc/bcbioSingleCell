@@ -29,7 +29,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, ...) {
         ranksPerSample <- barcodeRanksPerSample(object, ...)
-        sampleNames = sampleData(object) %>%
+        sampleNames <- sampleData(object) %>%
             .[names(ranksPerSample), "sampleName", drop = TRUE] %>%
             as.character()
 
@@ -86,8 +86,14 @@ setMethod(
 
                 # Label the knee and inflection points more clearly
                 labelData <- rbind(
-                    data[which.min(abs(data$total - ranks[["knee"]])), ],
-                    data[which.min(abs(data$total - ranks[["inflection"]])), ]
+                    data[
+                        which.min(abs(data[["total"]] - ranks[["knee"]]))
+                        ,
+                    ],
+                    data[
+                        which.min(abs(data[["total"]] - ranks[["inflection"]]))
+                        ,
+                    ]
                 )
                 labelData[["label"]] <- c(
                     paste("knee", "=", ranks[["knee"]]),
