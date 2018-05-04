@@ -103,7 +103,7 @@
         ) {
             p <- p + bcbio_geom_abline(yintercept = max)
         }
-    } else if (geom %in% c("histogram", "ridgeline")) {
+    } else {
         if (min > 0L) {
             p <- p + bcbio_geom_abline(xintercept = min)
         }
