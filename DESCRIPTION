@@ -53,7 +53,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment,
-    bcbioBase (>= 0.2.10)
+    bcbioBase (>= 0.2.11)
 Imports:
     Biobase,
     BiocGenerics,
