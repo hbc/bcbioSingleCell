@@ -251,7 +251,7 @@ bcbioSingleCell <- function(
     if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile)
     } else {
-        sampleData <- sampleYAMLMetadata(yaml)
+        sampleData <- readYAMLSampleData(yamlFile)
     }
 
     # Check for incorrect reverse complement input
