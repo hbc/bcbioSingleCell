@@ -108,7 +108,6 @@ all <- list(
 
 clean <- DataFrame(
     "sampleName" = factor("rep_1"),
-    "interestingGroups" = factor("rep_1"),
     row.names = factor("multiplexed_AAAAAAAA")
 )
 
@@ -135,7 +134,6 @@ test_that("sampleData : seurat", {
     x <- sampleData(Seurat::pbmc_small)
     y <- DataFrame(
         "sampleName" = factor("SeuratProject"),
-        "interestingGroups" = factor("SeuratProject"),
         row.names = "SeuratProject"
     )
     expect_identical(x, y)
