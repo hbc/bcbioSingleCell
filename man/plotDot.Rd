@@ -37,6 +37,9 @@ drawn.}
 
 \item{dotScale}{Scale the size of the points, similar to \code{cex}.}
 }
+\value{
+\code{ggplot}.
+}
 \description{
 Plot Dot
 }

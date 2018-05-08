@@ -11,6 +11,9 @@
 \arguments{
 \item{object}{Object.}
 }
+\value{
+\code{bcbioSingleCell}.
+}
 \description{
 Aggregate Replicates
 }

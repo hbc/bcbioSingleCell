@@ -31,6 +31,9 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 \item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
 to the first argument in the vector.}
 }
+\value{
+\code{ggplot}.
+}
 \description{
 Plot Violin
 }

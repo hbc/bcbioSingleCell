@@ -38,6 +38,9 @@ color definitions are desired, we recommend using
 
 \item{title}{Plot title.}
 }
+\value{
+\code{ggplot}.
+}
 \description{
 Plot UMI and Gene Correlation
 }

@@ -16,6 +16,10 @@ cell2sample(object, ...)
 
 \item{...}{Additional arguments.}
 }
+\value{
+Named \code{factor} containing sample IDs as the levels and cellular
+barcode IDs as the names.
+}
 \description{
 Cell to Sample Mappings
 }

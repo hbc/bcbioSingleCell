@@ -6,6 +6,9 @@
 #'
 #' @inheritParams general
 #'
+#' @return Named `factor` containing sample IDs as the levels and cellular
+#'   barcode IDs as the names.
+#'
 #' @examples
 #' # SingleCellExperiment ====
 #' cell2sample(indrops_small) %>% table()

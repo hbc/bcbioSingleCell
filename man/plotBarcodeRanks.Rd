@@ -19,6 +19,9 @@ plotBarcodeRanks(object, ...)
 
 \item{...}{Passthrough arguments to \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.}
 }
+\value{
+\code{ggplot} grid.
+}
 \description{
 Plot Barcode Ranks
 }

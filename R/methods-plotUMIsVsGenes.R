@@ -6,6 +6,8 @@
 #'
 #' @inheritParams general
 #'
+#' @return `ggplot`.
+#'
 #' @examples
 #' # SingleCellExperiment ====
 #' plotUMIsVsGenes(cellranger_small)

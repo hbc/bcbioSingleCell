@@ -10,6 +10,8 @@
 #' @inheritParams plotDot
 #' @inheritParams ggplot2::geom_violin
 #'
+#' @return `ggplot`.
+#'
 #' @examples
 #' # seurat ====
 #' genes <- head(rownames(Seurat::pbmc_small), 2L)
