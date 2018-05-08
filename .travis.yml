@@ -2,6 +2,7 @@
 # https://docs.travis-ci.com/user/languages/r
 
 language: r
+sudo: false
 cache: packages
 
 r:
@@ -13,15 +14,14 @@ branches:
   except:
   - develop
 
-before_install:
-  - sudo apt-get update
+# before_install:
+#   - sudo apt-get update
 
 # External dependencies
 # dependency for gsl>copula>zinbwave
 addons:
   apt:
     packages:
-      - gsl-bin
       - libgsl-dev
 
 env:
