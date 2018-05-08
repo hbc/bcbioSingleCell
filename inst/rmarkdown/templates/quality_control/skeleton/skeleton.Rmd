@@ -5,6 +5,8 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
     bcb_file: "data/YYYY-MM-DD/bcb.rda"
+    min_umis: 500
+    max_umis: !r Inf
     min_genes: 500
     max_genes: !r Inf
     max_mito_ratio: 0.25
@@ -56,18 +58,6 @@ plotReadsPerCell(
 )
 ```
 
-### Ridgeline
-
-Alternatively, with a ridgeline plot, we can easily determine that there are a lot of low complexity barcodes in this dataset that need to be removed prior to clustering. You can see in this plot that the majorify of cellular barcodes from the `r metadata(bcb)$umiType` platform have a low read depth.
-
-```{r plot_reads_per_cell_ridgeline}
-plotReadsPerCell(
-    object = bcb,
-    geom = "ridgeline",
-    interestingGroups = "sampleName"
-)
-```
-
 ### Histogram
 
 For high quality data, the proportional histogram should contain a single large peak that represents cells that were encapsulated. If we see a strong shoulder, or a bimodal distribution of the cells, that can indicate a couple problems. It might be that there is free floating RNA, which happens when cells are dying. It could also be that there are a set of cells that failed for some reason. Finally, it could also be that there are biologically different types of cells, and one type is much smaller than the other. If this is the case we would expect to see less RNA being sequenced from the smaller cells.
@@ -95,7 +85,7 @@ Now let's rank cellular barcodes based on their UMI count per cell. Note that th
 
 The knee and inflection points on the curve here help distinguish the UMI threshold between empty droplets with little RNA and cell-containing droplets with much more RNA. The knee point is more sensitive to noise, and we generally recommend starting with the inflection point for filtering because it is more conservative. 
 
-```{r barcode_ranks}
+```{r plot_barcode_ranks}
 plotBarcodeRanks(bcb)
 ```
 
@@ -115,7 +105,7 @@ plotUMIsPerCell(
 
 Let's apply this step first and then proceed to evaluating gene detection, mitocondrial transcript abundance, and novelty scores.
 
-```{r filter_umi}
+```{r filter_cells_by_umi_auto, eval=FALSE, include=FALSE}
 ranks <- barcodeRanksPerSample(bcb)
 minUMIs <- vapply(
     X = ranks,
@@ -126,6 +116,10 @@ minUMIs <- vapply(
 )
 print(minUMIs)
 bcb <- filterCells(bcb, minUMIs = minUMIs)
+```
+
+```{r filter_cells_by_umi_manual}
+bcb <- filterCells(bcb, minUMIs = params$min_umis)
 ```
 
 Let's take a look at the UMI per cell distributions after this filtering step. Note that we haven't applied very strict filtering here — we're going to cut off the "low quality" cells based on the gene detection rate, novelty score, and mitochondrial abundance.
