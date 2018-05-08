@@ -11,11 +11,11 @@ print(params)
 markdownHeader("`_setup.R`", level = 2)
 readr::read_lines("_setup.R") %>% writeLines()
 
-markdownHeader("`utils::sessionInfo()`", level = 2)
-sessionInfo()
-
 markdownHeader("`sessioninfo::session_info()`", level = 2)
 sessioninfo::session_info()
+
+markdownHeader("`utils::sessionInfo()`", level = 2)
+sessionInfo()
 ```
 
 
