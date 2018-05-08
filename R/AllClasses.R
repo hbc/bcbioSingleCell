@@ -373,6 +373,7 @@ bcbioSingleCell <- function(
     # Column data ==============================================================
     # Always prefilter, removing cells with no UMIs or genes
     colData <- metrics(counts, rowData = rowData, prefilter = TRUE)
+    # TODO Include sample-level columns here
 
     # Subset the counts to match the prefiltered metrics
     counts <- counts[, rownames(colData), drop = FALSE]
