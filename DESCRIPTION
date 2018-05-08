@@ -85,11 +85,14 @@ Imports:
     pbapply,
     readr,
     rlang,
+    rmarkdown,
     scales,
+    sessioninfo,
     stats,
     stringr,
     tibble,
     tidyr,
+    tidyverse (>= 1.2),
     utils,
     viridis
 Suggests:
@@ -99,12 +102,9 @@ Suggests:
     EnsDb.Hsapiens.v75,
     edgeR (>= 3.22),
     googlesheets,
-    rmarkdown,
     scater (>= 1.8),
     scran (>= 1.8),
-    sessioninfo,
     testthat,
-    tidyverse (>= 1.2),
     zinbwave (>= 1.0),
     zingeR (>= 0.1)
 Remotes:
