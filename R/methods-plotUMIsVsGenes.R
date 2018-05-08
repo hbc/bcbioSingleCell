@@ -25,12 +25,15 @@ setMethod(
     function(
         object,
         interestingGroups,
+        trendline = TRUE,
         color = scale_color_hue(),
         trans = "log2",
         title = "UMIs vs. genes"
     ) {
         .plotQCScatterplot(
             object = object,
+            interestingGroups = interestingGroups,
+            trendline = trendline,
             xCol = "nUMI",
             yCol = "nGene",
             xTrans = trans,

@@ -11,10 +11,12 @@
 plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{SingleCellExperiment}(object, interestingGroups,
-  color = scale_color_hue(), trans = "log2", title = "UMIs vs. genes")
+  trendline = TRUE, color = scale_color_hue(), trans = "log2",
+  title = "UMIs vs. genes")
 
 \S4method{plotUMIsVsGenes}{seurat}(object, interestingGroups,
-  color = scale_color_hue(), trans = "log2", title = "UMIs vs. genes")
+  trendline = TRUE, color = scale_color_hue(), trans = "log2",
+  title = "UMIs vs. genes")
 }
 \arguments{
 \item{object}{Object.}
@@ -23,6 +25,8 @@ plotUMIsVsGenes(object, ...)
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{trendline}{Include trendline on plot.}
 
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual

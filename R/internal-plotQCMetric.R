@@ -16,6 +16,8 @@
     geom <- match.arg(geom)
     if (missing(interestingGroups)) {
         interestingGroups <- bcbioBase::interestingGroups(object)
+    } else {
+        interestingGroups(object) <- interestingGroups
     }
     assert_all_are_non_negative(c(min, max))
     # Support for per sample filtering cutoffs
@@ -167,16 +169,19 @@
     xTrans = "identity",
     yTrans = "identity",
     interestingGroups,
+    trendline = TRUE,
     color = scale_color_hue(),
     title = NULL
 ) {
-    if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
-    }
     assert_is_a_string(xCol)
     assert_is_a_string(yCol)
     assert_is_a_string(xTrans)
     assert_is_a_string(yTrans)
+    if (missing(interestingGroups)) {
+        interestingGroups <- bcbioBase::interestingGroups(object)
+    } else {
+        interestingGroups(object) <- interestingGroups
+    }
     assertIsColorScaleDiscreteOrNULL(color)
     assertIsAStringOrNULL(title)
 
@@ -199,11 +204,14 @@
         )
     ) +
         geom_point(alpha = 0.5, size = 1L) +
-        # If `method = "gam"`, `mgcv` package is required.
-        # Otherwise build checks will error.
-        geom_smooth(method = "glm", se = FALSE, size = 1.5) +
         scale_x_continuous(trans = xTrans) +
         scale_y_continuous(trans = yTrans)
+
+    if (isTRUE(trendline)) {
+        # If `method = "gam"`, `mgcv` package is required.
+        # Otherwise build checks will error.
+        p <- p + geom_smooth(method = "glm", se = FALSE, size = 1L)
+    }
 
     # Label interesting groups
     p <- p + labs(

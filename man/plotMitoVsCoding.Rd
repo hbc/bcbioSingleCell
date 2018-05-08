@@ -11,10 +11,12 @@
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{SingleCellExperiment}(object, interestingGroups,
-  color = scale_color_hue(), trans = "log2", title = "mito vs. coding")
+  trendline = TRUE, color = scale_color_hue(), trans = "log2",
+  title = "mito vs. coding")
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
-  color = scale_color_hue(), trans = "log2", title = "mito vs. coding")
+  trendline = TRUE, color = scale_color_hue(), trans = "log2",
+  title = "mito vs. coding")
 }
 \arguments{
 \item{object}{Object.}
@@ -23,6 +25,8 @@ plotMitoVsCoding(object, ...)
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{trendline}{Include trendline on plot.}
 
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
