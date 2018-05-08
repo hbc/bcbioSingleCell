@@ -4,15 +4,15 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seurat_file: "seurat.rda"
+    seurat_file: "data/YYYY-MM-DD/seurat.rda"
     cell_type_markers_file: NULL
     organism: NULL
-    data_dir: "."
+    data_dir: !r file.path("data", Sys.Date())
     results_dir: "results/markers"
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-03-27
+# Last modified 2018-05-08
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -50,18 +50,18 @@ assignAndSaveData(
 )
 
 # knitr arguments (for `rmarkdown::render()` looping)
-opts_chunk$set(
-    cache.path = paste(
-        seurat_all_markers_name,
-        "cache/",
-        sep = "_"
-    ),
-    fig.path = paste(
-        seurat_all_markers_name,
-        "files/",
-        sep = "_"
-    )
-)
+# opts_chunk$set(
+#     cache.path = paste(
+#         seurat_all_markers_name,
+#         "cache/",
+#         sep = "_"
+#     ),
+#     fig.path = paste(
+#         seurat_all_markers_name,
+#         "files/",
+#         sep = "_"
+#     )
+# )
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -120,7 +120,7 @@ top_markers
 
 ```{r plot_top_markers, fig.height=14.5, fig.width=10, results="asis"}
 plotTopMarkers(
-    seurat,
+    object = seurat,
     topMarkers = top_markers,
     headerLevel = 2
 )
@@ -136,7 +136,7 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 # `slim.col.label` should display the identity class once for each group, but
 # doesn't appear to be working in Seurat v2.1 (updated 2017-11-25).
 DoHeatmap(
-    seurat,
+    object = seurat,
     genes.use = top_markers$symbol,
     col.low = viridis(3)[[1]],
     col.mid = viridis(3)[[2]],
@@ -166,7 +166,7 @@ assignAndSaveData(
 
 ```{r plot_known_markers_detected, fig.height=14.5, fig.width=10, results="asis"}
 plotKnownMarkersDetected(
-    seurat,
+    object = seurat,
     knownMarkers = known_markers_detected,
     headerLevel = 2
 )
@@ -188,7 +188,7 @@ assignAndSaveData(
 
 ```{r plot_cell_types_per_cluster, results="asis"}
 plotCellTypesPerCluster(
-    seurat,
+    object = seurat,
     cellTypesPerCluster = cell_types_per_cluster,
     headerLevel = 2
 )

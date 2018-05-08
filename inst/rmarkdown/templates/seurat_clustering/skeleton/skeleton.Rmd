@@ -14,7 +14,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-03-27
+# Last modified 2018-05-08
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -30,20 +30,20 @@ group_by <- unique(c(
 ))
 
 # knitr arguments (for `rmarkdown::render()` looping)
-opts_chunk$set(
-    cache.path = paste(
-        params$seurat_name,
-        "clustering",
-        "cache/",
-        sep = "_"
-    ),
-    fig.path = paste(
-        params$seurat_name,
-        "clustering",
-        "files/",
-        sep = "_"
-    )
-)
+# opts_chunk$set(
+#     cache.path = paste(
+#         params$seurat_name,
+#         "clustering",
+#         "cache/",
+#         sep = "_"
+#     ),
+#     fig.path = paste(
+#         params$seurat_name,
+#         "clustering",
+#         "files/",
+#         sep = "_"
+#     )
+# )
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -134,7 +134,7 @@ saveData(cell_cycle_markers, s_genes, g2m_genes, dir = params$data_dir)
 
 ```{r cell_cycle_scoring}
 seurat <- CellCycleScoring(
-    seurat,
+    object = seurat,
     g2m.genes = g2m_genes,
     s.genes = s_genes
 )
@@ -150,7 +150,7 @@ Here we are checking to see if the cells are grouping by cell cycle. If we don't
 
 ```{r cell_cycle_pca_preregress}
 RunPCA(
-    seurat,
+    object = seurat,
     pc.genes = c(s_genes, g2m_genes),
     do.print = FALSE
 ) %>%
@@ -175,7 +175,7 @@ Now that regression has been applied, let's recheck to see if the cells are no l
 
 ```{r cell_cycle_pca_postregress}
 RunPCA(
-    seurat,
+    object = seurat,
     pc.genes = c(s_genes, g2m_genes),
     do.print = FALSE
 ) %>%
@@ -201,7 +201,7 @@ In particular, `PCHeatmap()` allows for easy exploration of the primary sources 
 
 ```{r pc_heatmap, fig.height=30, fig.width=10}
 PCHeatmap(
-    seurat,
+    object = seurat,
     col.use = CustomPalette(
         low = viridis(3)[[1]],
         mid = viridis(3)[[2]],
@@ -219,7 +219,7 @@ PCHeatmap(
 
 ```{r viz_pca, fig.height=40, fig.width=8}
 VizPCA(
-    seurat,
+    object = seurat,
     pcs.use = 1:params$pc_compute,
     do.balanced = TRUE,
     nCol = 2
@@ -274,7 +274,7 @@ Regarding the value of the `resolution` argument, use a value < 1 if you want to
 
 ```{r find_clusters, results="hide"}
 seurat <- FindClusters(
-    seurat,
+    object = seurat,
     dims.use = pc_use,
     force.recalc = TRUE,
     print.output = TRUE,
@@ -297,7 +297,7 @@ PrintFindClustersParams(seurat)
 
 ```{r run_tsne}
 seurat <- RunTSNE(
-    seurat,
+    object = seurat,
     dims.use = pc_use,
     do.fast = TRUE
 )
@@ -317,14 +317,14 @@ invisible(lapply(group_by, function(group) {
     markdownHeader(group, level = 2, asis = TRUE, tabset = TRUE)
     markdownHeader("tSNE", level = 3, asis = TRUE)
     plotTSNE(
-        seurat,
+        object = seurat,
         interestingGroups = group,
         label = TRUE
     ) %>%
         show()
     markdownHeader("PCA", level = 3, asis = TRUE)
     plotPCA(
-        seurat,
+        object = seurat,
         interestingGroups = group,
         label = TRUE
     ) %>%
@@ -344,7 +344,7 @@ Let's look at the variance in the number of UMI counts (`nUMI`), gene detection 
 # Alternatively can use `Seurat::FeaturePlot()`, but it doesn't currently
 # support labeling the clusters
 plotFeatureTSNE(
-    seurat,
+    object = seurat,
     features = c(
         "nUMI",
         "nGene",
@@ -361,7 +361,7 @@ plotFeatureTSNE(
 
 ```{r plot_feature_pc}
 plotFeatureTSNE(
-    seurat,
+    object = seurat,
     features = paste0("PC", pc_use),
     pointSize = 0.8,
     labelSize = 4
