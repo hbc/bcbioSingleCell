@@ -90,9 +90,7 @@ setMethod(
             points <- unlist(points)
             names(points) <- names(ranks)
 
-            sampleNames <- sampleData(object) %>%
-                .[names(points), "sampleName"] %>%
-                as.character()
+            sampleNames <- sampleNames(object)
 
             if (geom == "ecdf") {
                 # Calculate the y-intercept per sample

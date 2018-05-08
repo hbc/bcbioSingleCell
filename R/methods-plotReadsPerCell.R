@@ -353,6 +353,7 @@ setMethod(
         # Obtain the sample metadata
         sampleData <- sampleData(
             object = object,
+            clean = FALSE,
             interestingGroups = interestingGroups,
             return = "data.frame"
         )
@@ -396,6 +397,7 @@ setMethod(
         } else if (geom == "histogram") {
             sampleData <- sampleData(
                 object = object,
+                clean = FALSE,
                 interestingGroups = interestingGroups,
                 return = "data.frame"
             )
