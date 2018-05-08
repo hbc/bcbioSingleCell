@@ -256,7 +256,6 @@ assignAndSaveData(
 ```{r plot_filtered_qc, results="asis"}
 plotQC(
     object = bcb_filtered,
-    geom = "violin",
     return = "markdown",
     headerLevel = 2
 )
