@@ -25,6 +25,10 @@ bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
 stopifnot(is(bcb, "bcbioSingleCell"))
 invisible(validObject(bcb))
+
+# Temporarily set to `sampleName`
+interesting_groups <- interestingGroups(bcb)
+interestingGroups(bcb) <- "sampleName"
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -51,11 +55,7 @@ These are counts of how many reads are assigned to a given cellular barcode. It 
 An empirical distribution function (ECDF) plot will show the frequency distribution of the reads per cell. You can see that the vast majority of low complexity barcodes plateau at a read depth below 1000 reads per cell.
 
 ```{r plot_reads_per_cell_ecdf}
-plotReadsPerCell(
-    object = bcb,
-    geom = "ecdf",
-    interestingGroups = "sampleName"
-)
+plotReadsPerCell(bcb, geom = "ecdf")
 ```
 
 ### Histogram
@@ -65,11 +65,7 @@ For high quality data, the proportional histogram should contain a single large 
 It looks like there a lot of low complexity barcodes that need to be filtered out, but we can see cells with a usable read depth of at least 10,000 (10^4) reads per cell.
 
 ```{r plot_reads_per_cell_histogram}
-plotReadsPerCell(
-    object = bcb,
-    geom = "histogram",
-    interestingGroups = "sampleName"
-)
+plotReadsPerCell(bcb, geom = "histogram")
 ```
 
 
@@ -92,12 +88,7 @@ plotBarcodeRanks(bcb)
 Let's view these UMI cutoffs per sample on a single ECDF plot.
 
 ```{r plot_umis_per_cell_ecdf}
-plotUMIsPerCell(
-    object = bcb,
-    geom = "ecdf",
-    interestingGroups = "sampleName",
-    point = "inflection"
-)
+plotUMIsPerCell(bcb, geom = "ecdf", point = "inflection")
 ```
 
 
@@ -106,6 +97,7 @@ plotUMIsPerCell(
 Let's apply this step first and then proceed to evaluating gene detection, mitocondrial transcript abundance, and novelty scores.
 
 ```{r filter_cells_by_umi_auto, eval=FALSE, include=FALSE}
+# Automatic filtering is disabled by defualt
 ranks <- barcodeRanksPerSample(bcb)
 minUMIs <- vapply(
     X = ranks,
@@ -125,16 +117,8 @@ bcb <- filterCells(bcb, minUMIs = params$min_umis)
 Let's take a look at the UMI per cell distributions after this filtering step. Note that we haven't applied very strict filtering here — we're going to cut off the "low quality" cells based on the gene detection rate, novelty score, and mitochondrial abundance.
 
 ```{r plot_umis_per_cell_postfilter}
-plotUMIsPerCell(
-    object = bcb,
-    geom = "ecdf",
-    interestingGroups = "sampleName"
-)
-plotUMIsPerCell(
-    object = bcb,
-    geom = "histogram",
-    interestingGroups = "sampleName"
-)
+plotUMIsPerCell(bcb, geom = "ecdf")
+plotUMIsPerCell(bcb, geom = "histogram")
 ```
 
 
@@ -246,11 +230,6 @@ bcb_filtered <- filterCells(
     minNovelty = params$min_novelty,
     minCellsPerGene = params$min_cells_per_gene
 )
-assignAndSaveData(
-    name = paste(bcb_name, "filtered", sep = "_"),
-    object = bcb_filtered,
-    dir = params$data_dir
-)
 ```
 
 ```{r plot_filtered_qc, results="asis"}
@@ -258,6 +237,15 @@ plotQC(
     object = bcb_filtered,
     return = "markdown",
     headerLevel = 2
+)
+```
+
+```{r save}
+interestingGroups(bcb_filtered) <- interesting_groups
+assignAndSaveData(
+    name = paste(bcb_name, "filtered", sep = "_"),
+    object = bcb_filtered,
+    dir = params$data_dir
 )
 ```
 
