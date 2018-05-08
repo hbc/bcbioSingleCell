@@ -169,7 +169,7 @@
     xTrans = "identity",
     yTrans = "identity",
     interestingGroups,
-    trendline = TRUE,
+    trendline = FALSE,
     color = scale_color_hue(),
     title = NULL
 ) {

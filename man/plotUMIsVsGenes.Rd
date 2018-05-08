@@ -11,11 +11,11 @@
 plotUMIsVsGenes(object, ...)
 
 \S4method{plotUMIsVsGenes}{SingleCellExperiment}(object, interestingGroups,
-  trendline = TRUE, color = scale_color_hue(), trans = "log2",
+  trendline = FALSE, color = scale_color_hue(), trans = "log2",
   title = "UMIs vs. genes")
 
 \S4method{plotUMIsVsGenes}{seurat}(object, interestingGroups,
-  trendline = TRUE, color = scale_color_hue(), trans = "log2",
+  trendline = FALSE, color = scale_color_hue(), trans = "log2",
   title = "UMIs vs. genes")
 }
 \arguments{

@@ -25,7 +25,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        trendline = TRUE,
+        trendline = FALSE,
         color = scale_color_hue(),
         trans = "log2",
         title = "UMIs vs. genes"

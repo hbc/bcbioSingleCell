@@ -11,11 +11,11 @@
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{SingleCellExperiment}(object, interestingGroups,
-  trendline = TRUE, color = scale_color_hue(), trans = "log2",
+  trendline = FALSE, color = scale_color_hue(), trans = "log2",
   title = "mito vs. coding")
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
-  trendline = TRUE, color = scale_color_hue(), trans = "log2",
+  trendline = FALSE, color = scale_color_hue(), trans = "log2",
   title = "mito vs. coding")
 }
 \arguments{
