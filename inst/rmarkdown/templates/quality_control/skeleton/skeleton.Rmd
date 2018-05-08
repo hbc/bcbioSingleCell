@@ -143,7 +143,7 @@ plotUMIsPerCell(
 Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for most single-cell experiments.
 
 ```{r plot_genes_per_cell}
-markdownHeader("ecdf", level = 3)
+markdownHeader("ECDF", level = 3)
 plotGenesPerCell(
     object = bcb,
     geom = "ecdf",
@@ -151,7 +151,7 @@ plotGenesPerCell(
     max = max(params$max_genes)
 )
 
-markdownHeader("histogram", level = 3)
+markdownHeader("Histogram", level = 3)
 plotGenesPerCell(
     object = bcb,
     geom = "histogram",
@@ -159,7 +159,7 @@ plotGenesPerCell(
     max = max(params$max_genes)
 )
 
-markdownHeader("violin", level = 3)
+markdownHeader("Violin", level = 3)
 plotGenesPerCell(
     object = bcb,
     geom = "violin",
@@ -183,21 +183,21 @@ plotUMIsVsGenes(bcb)
 Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
 
 ```{r plot_novelty}
-markdownHeader("ecdf", level = 3)
+markdownHeader("ECDF", level = 3)
 plotNovelty(
     object = bcb,
     geom = "ecdf",
     min = min(params$min_novelty)
 )
 
-markdownHeader("histogram", level = 3)
+markdownHeader("Histogram", level = 3)
 plotNovelty(
     object = bcb,
     geom = "histogram",
     min = min(params$min_novelty)
 )
 
-markdownHeader("violin", level = 3)
+markdownHeader("Violin", level = 3)
 plotNovelty(
     object = bcb,
     geom = "violin",
@@ -211,21 +211,21 @@ plotNovelty(
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
 
 ```{r plot_mito_ratio}
-markdownHeader("ecdf", level = 3)
+markdownHeader("ECDF", level = 3)
 plotMitoRatio(
     object = bcb,
     geom = "ecdf",
     max = max(params$max_mito_ratio)
 )
 
-markdownHeader("histogram", level = 3)
+markdownHeader("Histogram", level = 3)
 plotMitoRatio(
     object = bcb,
     geom = "histogram",
     max = max(params$max_mito_ratio)
 )
 
-markdownHeader("violin", level = 3)
+markdownHeader("Violin", level = 3)
 plotMitoRatio(
     object = bcb,
     geom = "violin",
