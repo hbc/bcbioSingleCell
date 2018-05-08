@@ -9,10 +9,10 @@
 \alias{sampleData<-,seurat,DataFrame-method}
 \title{Sample Data}
 \usage{
-\S4method{sampleData}{SingleCellExperiment}(object, interestingGroups,
-  clean = TRUE, return = c("DataFrame", "data.frame", "kable"))
+\S4method{sampleData}{SingleCellExperiment}(object, clean = TRUE,
+  interestingGroups, return = c("DataFrame", "data.frame", "kable"))
 
-\S4method{sampleData}{seurat}(object, interestingGroups, clean = TRUE,
+\S4method{sampleData}{seurat}(object, clean = TRUE, interestingGroups,
   return = c("DataFrame", "data.frame", "kable"))
 
 \S4method{sampleData}{SingleCellExperiment,DataFrame}(object) <- value
@@ -22,10 +22,10 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{\code{character} vector defining the groups of interest.}
-
 \item{clean}{\emph{Recommended.} Only return \code{factor} columns not defined in
 \link{metadataBlacklist}.}
+
+\item{interestingGroups}{\code{character} vector defining the groups of interest.}
 
 \item{return}{Object class to return. Uses \code{\link[=match.arg]{match.arg()}} internally and picks
 the first item in the vector by default.}
@@ -42,15 +42,21 @@ rownames. Similar to \code{\link[=colData]{colData()}}, which for \code{bcbioSin
 the samples.
 }
 \examples{
-# bcbioSingleCell ====
-x <- indrops_small
-sampleData(x) \%>\% glimpse()
+# SingleCellExperiment ====
+x <- cellranger_small
+sampleData(x, clean = TRUE) \%>\% glimpse()
+sampleData(x, clean = FALSE) \%>\% glimpse()
+
+# Assignment support
 sampleData(x)[["batch"]] <- 1L
 sampleData(x) \%>\% glimpse()
 
 # seurat ====
 x <- seurat_small
-sampleData(x) \%>\% glimpse()
+sampleData(x, clean = TRUE) \%>\% glimpse()
+sampleData(x, clean = FALSE) \%>\% glimpse()
+
+# Assignment support
 sampleData(x)[["batch"]] <- 1L
 sampleData(x) \%>\% glimpse()
 }
