@@ -1,18 +1,23 @@
 #' Differential Expression
 #'
-#' @section zingeR-edgeR:
+#' We now generally recommend the ZINB-WaVE method over zingeR, since it is
+#' faster, and has been show to be more sensitive for most single-cell RNA-seq
+#' datasets.
+#'
+#' @section zinbwave:
+#' We are currently using an epsilon setting of 1e12, as recommended by the
+#' ZINB-WaVE integration paper.
+#'
+#' @section zingeR:
 #' We first perform a differential expression analysis using zingeR posterior
-#' probabilities and focussing on the count component of the ZINB model. We use
-#' edgeR to model the count component.
+#' probabilities and focussing on the count component of the ZINB model. The
+#' weights are estimated with the core function of zingeR, `zeroWeightsLS()`. It
+#' is important to be consistent with the normalization procedure, i.e. if you
+#' use TMM normalization for the analysis, you should also use it for estimating
+#' the zingeR posterior probabilities.
 #'
-#' The weights are estimated with the core function of zingeR,
-#' `zeroWeightsLS()`. It is important to be consistent with the normalization
-#' procedure, i.e. if you use TMM normalization for the analysis, you should
-#' also use it for estimating the zingeR posterior probabilities. The weights
-#' can then be provided in the DGEList object which will be used for dispersion
-#' estimation in the native edgeR `estimateDisp()` function.
-#'
-#' After estimation of the dispersions and zingeR posterior probabilities, the
+#' @section edgeR:
+#' After estimation of the dispersions and posterior probabilities, the
 #' `glmWeightedF()` function is used for statistical inference. This is an
 #' adapted function from the `glmLRT()` function of edgeR. It uses an F-test for
 #' which the denominator degrees of freedom are by default adjusted according to
@@ -21,7 +26,8 @@
 #' use the independent filtering strategy that was originally implemented in
 #' DESeq2. By default, the average fitted values are used as a filter criterion.
 #'
-#' @seealso Consult the following vignettes workflows for more information:
+#' @seealso Consult the following sources for more information:
+#' - [Observation weights unlock bulk RNA-seq tools for zero inflation and single-cell applications](https://doi.org/10.1186/s13059-018-1406-4).
 #' - [zingeR vignette](https://goo.gl/4rTK1w).
 #' - [zinbwave vignette](https://bit.ly/2wtDdpS).
 #' - [zimbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
@@ -57,7 +63,7 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' # FIXME Improve this working example using colnames and colData instead
+#' # TODO Improve this working example using colnames and colData instead
 #' m <- metrics(cellranger_small)
 #' numerator <- rownames(m)[which(m[["sampleName"]] == "proximal")]
 #' denominator <- rownames(m)[which(m[["sampleName"]] == "distal")]
@@ -110,11 +116,10 @@ maxit <- 1000L
 
 
 .zinbwave <- function(object, group) {
-    # zinbFit doesn't support dgCMatrix yet, so coerce to matrix
     sce <- as(object, "SingleCellExperiment")
+    # zinbFit doesn't support dgCMatrix, so coerce counts to matrix
     assays(sce) <- list("counts" = as.matrix(counts(sce)))
     sce[["group"]] <- group
-    # epsilon setting as recommended by the ZINB-WaVE integration paper
     print(system.time({
         zinb <- zinbwave::zinbwave(
             Y = sce,
@@ -128,21 +133,21 @@ maxit <- 1000L
 
 
 
-diffExp.zinbwave.DESeq2 <- function(
+# Van De Berge and Perraudeau and others have shown the LRT may perform better
+# for null hypothesis testing, so we use the LRT. In order to use the Wald test,
+# it is recommended to set `useT = TRUE`.
+#
+# For UMI data, for which the expected counts may be very low, the likelihood
+# ratio test implemented in nbinomLRT should be used.
+#
+# DESeq2 supports `weights` in assays automatically.
+.diffExp.zinbwave.DESeq2 <- function(
     object,
     design,
     group
 ) {
     zinb <- .zinbwave(object, group = group)
     dds <- DESeq2::DESeqDataSet(zinb, design = designFormula)
-    # Van De Berge and Perraudeau and others have shown the LRT may perform
-    # better for null hypothesis testing, so we use the LRT. In order to use the
-    # Wald test, it is recommended to set `useT = TRUE`.
-    #
-    # For UMI data, for which the expected counts may be very low, the
-    # likelihood ratio test implemented in nbinomLRT should be used.
-    #
-    # DESeq2 supports `weights` in assays automatically.
     print(system.time({
         dds <- DESeq2::DESeq(
             object = dds,
@@ -154,9 +159,9 @@ diffExp.zinbwave.DESeq2 <- function(
         )
     }))
     # DESeq2 will warn if parametric trend fails to fit
-    show(plotDispEsts(dds))
+    show(DESeq2::plotDispEsts(dds))
     # We already performed low count filtering
-    res <- results(dds, independentFiltering = FALSE)
+    res <- DESeq2::results(dds, independentFiltering = FALSE)
     res
 }
 
@@ -172,10 +177,10 @@ diffExp.zinbwave.DESeq2 <- function(
     dge <- edgeR::DGEList(counts(zinb))
     dge <- edgeR::calcNormFactors(dge)
     dge[["weights"]] <- weights
-    dge <- estimateDisp(dge, design)
-    fit <- glmFit(dge, design)
-    # FIXME `independentFiltering = FALSE`?
-    lrt <- zinbwave::glmWeightedF(fit, coef = 2L)
+    dge <- edgeR::estimateDisp(dge, design)
+    fit <- edgeR::glmFit(dge, design)
+    # We already performed low count filtering
+    lrt <- zinbwave::glmWeightedF(fit, coef = 2L, independentFiltering = FALSE)
     lrt
 }
 
@@ -202,8 +207,8 @@ diffExp.zinbwave.DESeq2 <- function(
     dge <- edgeR::calcNormFactors(dge, method = "TMM")
     dge <- edgeR::estimateDisp(dge, design = design)
     fit <- edgeR::glmFit(dge, design = design)
-    # FIXME `independentFiltering = FALSE`?
-    lrt <- zingeR::glmWeightedF(fit, coef = 2L)
+    # We already performed low count filtering
+    lrt <- zingeR::glmWeightedF(fit, coef = 2L, independentFiltering = FALSE)
     lrt
 }
 
@@ -215,15 +220,9 @@ diffExp.zinbwave.DESeq2 <- function(
     group
 ) {
     counts <- as.matrix(counts(object))
-    colData <- data.frame(group = group)
-    dds <- DESeq2::DESeqDataSetFromMatrix(
-        countData = counts,
-        colData = colData,
-        design = designFormula
-    )
     print(system.time({
         weights <- zingeR::zeroWeightsLS(
-            counts = counts(dds),
+            counts = counts,
             design = design,
             maxit = maxit,
             normalization = "DESeq2_poscounts",
@@ -231,11 +230,17 @@ diffExp.zinbwave.DESeq2 <- function(
             designFormula = designFormula
         )
     }))
+    colData <- data.frame(group = group)
+    dds <- DESeq2::DESeqDataSetFromMatrix(
+        countData = counts,
+        colData = colData,
+        design = designFormula
+    )
     assays(dds)[["weights"]] <- weights
     dds <- DESeq2::estimateSizeFactors(dds, type = "poscounts")
     dds <- DESeq2::estimateDispersions(dds)
-    # FIXME LRT performs better than Wald for UMI count data.
-    # See code in zinbwave method.
+    # FIXME LRT is recommended over Wald for UMI counts. May want to switch to
+    # that approach here. See code in zinbwave method.
     dds <- DESeq2::nbinomWaldTest(
         object = dds,
         betaPrior = TRUE,
@@ -243,7 +248,7 @@ diffExp.zinbwave.DESeq2 <- function(
         df = rowSums(weights) - 2L
     )
     # DESeq2 will warn if parametric trend fails to fit
-    show(plotDispEsts(dds))
+    show(DESeq2::plotDispEsts(dds))
     # We already performed low count filtering
     res <- DESeq2::results(dds, independentFiltering = FALSE)
     res
@@ -304,6 +309,11 @@ setMethod(
             )
         }
 
+        message(paste(
+            "Performing differential expression with",
+            paste(zeroWeights, caller, sep = "-")
+        ))
+
         # Subset the SCE object to contain the desired cells
         cells <- c(numerator, denominator)
         object <- object[, cells]
@@ -341,7 +351,6 @@ setMethod(
         # Set up the design matrix
         design <- model.matrix(~group)
 
-        message(paste(zeroWeights, caller, sep = "-"))
         fun <- get(paste("", "diffExp", zeroWeights, caller, sep = "."))
         fun(
             object = object,

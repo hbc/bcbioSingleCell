@@ -41,22 +41,29 @@ shrunken results are desired.
 }
 }
 \description{
-Differential Expression
+We now generally recommend the ZINB-WaVE method over zingeR, since it is
+faster, and has been show to be more sensitive for most single-cell RNA-seq
+datasets.
 }
-\section{zingeR-edgeR}{
+\section{zinbwave}{
+
+We are currently using an epsilon setting of 1e12, as recommended by the
+ZINB-WaVE integration paper.
+}
+
+\section{zingeR}{
 
 We first perform a differential expression analysis using zingeR posterior
-probabilities and focussing on the count component of the ZINB model. We use
-edgeR to model the count component.
+probabilities and focussing on the count component of the ZINB model. The
+weights are estimated with the core function of zingeR, \code{zeroWeightsLS()}. It
+is important to be consistent with the normalization procedure, i.e. if you
+use TMM normalization for the analysis, you should also use it for estimating
+the zingeR posterior probabilities.
+}
 
-The weights are estimated with the core function of zingeR,
-\code{zeroWeightsLS()}. It is important to be consistent with the normalization
-procedure, i.e. if you use TMM normalization for the analysis, you should
-also use it for estimating the zingeR posterior probabilities. The weights
-can then be provided in the DGEList object which will be used for dispersion
-estimation in the native edgeR \code{estimateDisp()} function.
+\section{edgeR}{
 
-After estimation of the dispersions and zingeR posterior probabilities, the
+After estimation of the dispersions and posterior probabilities, the
 \code{glmWeightedF()} function is used for statistical inference. This is an
 adapted function from the \code{glmLRT()} function of edgeR. It uses an F-test for
 which the denominator degrees of freedom are by default adjusted according to
@@ -68,7 +75,7 @@ DESeq2. By default, the average fitted values are used as a filter criterion.
 
 \examples{
 # SingleCellExperiment ====
-# FIXME Improve this working example using colnames and colData instead
+# TODO Improve this working example using colnames and colData instead
 m <- metrics(cellranger_small)
 numerator <- rownames(m)[which(m[["sampleName"]] == "proximal")]
 denominator <- rownames(m)[which(m[["sampleName"]] == "distal")]
@@ -110,8 +117,9 @@ class(x)
 glimpse(x[["table"]])
 }
 \seealso{
-Consult the following vignettes workflows for more information:
+Consult the following sources for more information:
 \itemize{
+\item \href{https://doi.org/10.1186/s13059-018-1406-4}{Observation weights unlock bulk RNA-seq tools for zero inflation and single-cell applications}.
 \item \href{https://goo.gl/4rTK1w}{zingeR vignette}.
 \item \href{https://bit.ly/2wtDdpS}{zinbwave vignette}.
 \item \href{https://github.com/mikelove/zinbwave-deseq2}{zimbwave-DESeq2 workflow}.
