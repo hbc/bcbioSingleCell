@@ -11,10 +11,10 @@
 diffExp(object, ...)
 
 \S4method{diffExp}{SingleCellExperiment}(object, numerator, denominator,
-  zeroWeights = c("zingeR", "zinbwave"), caller = c("edgeR", "DESeq2"))
+  zeroWeights = c("zinbwave", "zingeR"), caller = c("edgeR", "DESeq2"))
 
 \S4method{diffExp}{seurat}(object, numerator, denominator,
-  zeroWeights = c("zingeR", "zinbwave"), caller = c("edgeR", "DESeq2"))
+  zeroWeights = c("zinbwave", "zingeR"), caller = c("edgeR", "DESeq2"))
 }
 \arguments{
 \item{object}{Object.}
@@ -68,9 +68,10 @@ DESeq2. By default, the average fitted values are used as a filter criterion.
 
 \examples{
 # SingleCellExperiment ====
-data <- metrics(cellranger_small)
-numerator <- rownames(data)[which(data[["sampleName"]] == "proximal")]
-denominator <- rownames(data)[which(data[["sampleName"]] == "distal")]
+# FIXME Improve this working example using colnames and colData instead
+m <- metrics(cellranger_small)
+numerator <- rownames(m)[which(m[["sampleName"]] == "proximal")]
+denominator <- rownames(m)[which(m[["sampleName"]] == "distal")]
 
 # zingeR-edgeR
 x <- diffExp(
@@ -82,6 +83,15 @@ x <- diffExp(
 )
 class(x)
 glimpse(x[["table"]])
+
+# zinbwave-DESeq2
+x <- diffExp(
+    object = cellranger_small,
+    numerator = numerator,
+    denominator = denominator,
+    zeroWeights = "zinbwave",
+    caller = "DESeq2"
+)
 
 # seurat ====
 # Expression in cluster 3 relative to cluster 2

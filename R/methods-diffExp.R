@@ -57,9 +57,10 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' data <- metrics(cellranger_small)
-#' numerator <- rownames(data)[which(data[["sampleName"]] == "proximal")]
-#' denominator <- rownames(data)[which(data[["sampleName"]] == "distal")]
+#' # FIXME Improve this working example using colnames and colData instead
+#' m <- metrics(cellranger_small)
+#' numerator <- rownames(m)[which(m[["sampleName"]] == "proximal")]
+#' denominator <- rownames(m)[which(m[["sampleName"]] == "distal")]
 #'
 #' # zingeR-edgeR
 #' x <- diffExp(
@@ -71,6 +72,15 @@
 #' )
 #' class(x)
 #' glimpse(x[["table"]])
+#'
+#' # zinbwave-DESeq2
+#' x <- diffExp(
+#'     object = cellranger_small,
+#'     numerator = numerator,
+#'     denominator = denominator,
+#'     zeroWeights = "zinbwave",
+#'     caller = "DESeq2"
+#' )
 #'
 #' # seurat ====
 #' # Expression in cluster 3 relative to cluster 2
@@ -164,6 +174,7 @@ diffExp.zinbwave.DESeq2 <- function(
     dge[["weights"]] <- weights
     dge <- estimateDisp(dge, design)
     fit <- glmFit(dge, design)
+    # FIXME `independentFiltering = FALSE`?
     lrt <- zinbwave::glmWeightedF(fit, coef = 2L)
     lrt
 }
@@ -191,6 +202,7 @@ diffExp.zinbwave.DESeq2 <- function(
     dge <- edgeR::calcNormFactors(dge, method = "TMM")
     dge <- edgeR::estimateDisp(dge, design = design)
     fit <- edgeR::glmFit(dge, design = design)
+    # FIXME `independentFiltering = FALSE`?
     lrt <- zingeR::glmWeightedF(fit, coef = 2L)
     lrt
 }
@@ -222,6 +234,8 @@ diffExp.zinbwave.DESeq2 <- function(
     assays(dds)[["weights"]] <- weights
     dds <- DESeq2::estimateSizeFactors(dds, type = "poscounts")
     dds <- DESeq2::estimateDispersions(dds)
+    # FIXME LRT performs better than Wald for UMI count data.
+    # See code in zinbwave method.
     dds <- DESeq2::nbinomWaldTest(
         object = dds,
         betaPrior = TRUE,
@@ -247,7 +261,7 @@ setMethod(
         object,
         numerator,
         denominator,
-        zeroWeights = c("zingeR", "zinbwave"),
+        zeroWeights = c("zinbwave", "zingeR"),
         caller = c("edgeR", "DESeq2")
     ) {
         assert_is_character(numerator)
