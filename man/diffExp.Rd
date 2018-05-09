@@ -11,10 +11,12 @@
 diffExp(object, ...)
 
 \S4method{diffExp}{SingleCellExperiment}(object, numerator, denominator,
-  zeroWeights = c("zinbwave", "zingeR"), caller = c("edgeR", "DESeq2"))
+  zeroWeights = c("zinbwave", "zingeR"), caller = c("edgeR", "DESeq2"),
+  minCellsPerGene = 25L, minCountsPerCell = 5L)
 
 \S4method{diffExp}{seurat}(object, numerator, denominator,
-  zeroWeights = c("zinbwave", "zingeR"), caller = c("edgeR", "DESeq2"))
+  zeroWeights = c("zinbwave", "zingeR"), caller = c("edgeR", "DESeq2"),
+  minCellsPerGene = 25L, minCountsPerCell = 5L)
 }
 \arguments{
 \item{object}{Object.}
@@ -30,8 +32,15 @@ diffExp(object, ...)
 \item{zeroWeights}{Package to use for zero weight calculations. Defaults to
 zinbwave but zingeR is also supported.}
 
-\item{caller}{Package to use for differential expression calling. Defaults
-to edgeR (faster for large datasets) but DESeq2 is also supported.}
+\item{caller}{Package to use for differential expression calling. Defaults to
+edgeR (faster for large datasets) but DESeq2 is also supported.}
+
+\item{minCellsPerGene}{The minimum number of cells where a gene is expressed,
+to pass low expression filtering. Set to \code{0} to disable (not recommended).}
+
+\item{minCountsPerCell}{Minimum number of counts per cell for a gene to pass
+low expression filtering. The number of cells is defined by
+\code{minCellsPerGene}. Set to \code{0} to disable (not recommended).}
 }
 \value{
 \itemize{
@@ -75,21 +84,9 @@ DESeq2. By default, the average fitted values are used as a filter criterion.
 
 \examples{
 # SingleCellExperiment ====
-# TODO Improve this working example using colnames and colData instead
 m <- metrics(cellranger_small)
 numerator <- rownames(m)[which(m[["sampleName"]] == "proximal")]
 denominator <- rownames(m)[which(m[["sampleName"]] == "distal")]
-
-# zingeR-edgeR
-x <- diffExp(
-    object = cellranger_small,
-    numerator = numerator,
-    denominator = denominator,
-    zeroWeights = "zingeR",
-    caller = "edgeR"
-)
-class(x)
-glimpse(x[["table"]])
 
 # zinbwave-DESeq2
 x <- diffExp(
@@ -99,22 +96,34 @@ x <- diffExp(
     zeroWeights = "zinbwave",
     caller = "DESeq2"
 )
+class(x)
+head(x)
+
+# zinbwave-edgeR
+x <- diffExp(
+    object = cellranger_small,
+    numerator = numerator,
+    denominator = denominator,
+    zeroWeights = "zinbwave",
+    caller = "edgeR"
+)
+class(x)
+head(x[["table"]])
 
 # seurat ====
 # Expression in cluster 3 relative to cluster 2
 numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
 denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
-
-# zingeR-edgeR
 x <- diffExp(
     object = Seurat::pbmc_small,
     numerator = numerator,
     denominator = denominator,
-    zeroWeights = "zingeR",
-    caller = "edgeR"
+    caller = "edgeR",
+    minCellsPerGene = 5L,
+    minCountsPerCell = 5L
 )
 class(x)
-glimpse(x[["table"]])
+head(x[["table"]])
 }
 \seealso{
 Consult the following sources for more information:

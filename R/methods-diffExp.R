@@ -1,3 +1,7 @@
+# TODO Improve working example using colnames and colData instead
+
+
+
 #' Differential Expression
 #'
 #' We now generally recommend the ZINB-WaVE method over zingeR, since it is
@@ -44,8 +48,13 @@
 #'   (e.g. control).
 #' @param zeroWeights Package to use for zero weight calculations. Defaults to
 #'   zinbwave but zingeR is also supported.
-#' @param caller Package to use for differential expression calling. Defaults
-#'   to edgeR (faster for large datasets) but DESeq2 is also supported.
+#' @param caller Package to use for differential expression calling. Defaults to
+#'   edgeR (faster for large datasets) but DESeq2 is also supported.
+#' @param minCellsPerGene The minimum number of cells where a gene is expressed,
+#' to pass low expression filtering. Set to `0` to disable (not recommended).
+#' @param minCountsPerCell Minimum number of counts per cell for a gene to pass
+#'   low expression filtering. The number of cells is defined by
+#'   `minCellsPerGene`. Set to `0` to disable (not recommended).
 #'
 #' @seealso
 #' - DESeq2: We're trying to follow the conventions used in DESeq2 for
@@ -63,21 +72,9 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' # TODO Improve this working example using colnames and colData instead
 #' m <- metrics(cellranger_small)
 #' numerator <- rownames(m)[which(m[["sampleName"]] == "proximal")]
 #' denominator <- rownames(m)[which(m[["sampleName"]] == "distal")]
-#'
-#' # zingeR-edgeR
-#' x <- diffExp(
-#'     object = cellranger_small,
-#'     numerator = numerator,
-#'     denominator = denominator,
-#'     zeroWeights = "zingeR",
-#'     caller = "edgeR"
-#' )
-#' class(x)
-#' glimpse(x[["table"]])
 #'
 #' # zinbwave-DESeq2
 #' x <- diffExp(
@@ -87,22 +84,34 @@
 #'     zeroWeights = "zinbwave",
 #'     caller = "DESeq2"
 #' )
+#' class(x)
+#' head(x)
+#'
+#' # zinbwave-edgeR
+#' x <- diffExp(
+#'     object = cellranger_small,
+#'     numerator = numerator,
+#'     denominator = denominator,
+#'     zeroWeights = "zinbwave",
+#'     caller = "edgeR"
+#' )
+#' class(x)
+#' head(x[["table"]])
 #'
 #' # seurat ====
 #' # Expression in cluster 3 relative to cluster 2
 #' numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
 #' denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
-#'
-#' # zingeR-edgeR
 #' x <- diffExp(
 #'     object = Seurat::pbmc_small,
 #'     numerator = numerator,
 #'     denominator = denominator,
-#'     zeroWeights = "zingeR",
-#'     caller = "edgeR"
+#'     caller = "edgeR",
+#'     minCellsPerGene = 5L,
+#'     minCountsPerCell = 5L
 #' )
 #' class(x)
-#' glimpse(x[["table"]])
+#' head(x[["table"]])
 NULL
 
 
@@ -267,8 +276,11 @@ setMethod(
         numerator,
         denominator,
         zeroWeights = c("zinbwave", "zingeR"),
-        caller = c("edgeR", "DESeq2")
+        caller = c("edgeR", "DESeq2"),
+        minCellsPerGene = 25L,
+        minCountsPerCell = 5L
     ) {
+        object <- as(object, "SingleCellExperiment")
         assert_is_character(numerator)
         assert_is_character(denominator)
         assert_are_disjoint_sets(numerator, denominator)
@@ -308,6 +320,8 @@ setMethod(
                 )
             )
         }
+        assertIsAnImplicitInteger(minCountsPerCell)
+        assertIsAnImplicitInteger(minCellsPerGene)
 
         message(paste(
             "Performing differential expression with",
@@ -320,10 +334,16 @@ setMethod(
 
         message(paste(
             "Applying low gene count filter",
-            "Requiring at least 25 cells with counts of 5 or more",
+            paste(
+                "Requiring at least",
+                minCellsPerGene,
+                "cells with counts of",
+                minCountsPerCell,
+                "or more"
+            ),
             sep = "\n"
         ))
-        genes <- rowSums(counts(object) >= 5L) >= 25L
+        genes <- rowSums(counts(object) >= minCountsPerCell) >= minCellsPerGene
         print(table(genes))
         object <- object[genes, ]
 
