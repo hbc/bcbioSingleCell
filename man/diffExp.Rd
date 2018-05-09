@@ -11,10 +11,10 @@
 diffExp(object, ...)
 
 \S4method{diffExp}{SingleCellExperiment}(object, numerator, denominator,
-  minCells = 10L, maxit = 1000L)
+  zeroWeights = c("zingeR", "zinbwave"), caller = c("edgeR", "DESeq2"))
 
-\S4method{diffExp}{seurat}(object, numerator, denominator, minCells = 10L,
-  maxit = 1000L)
+\S4method{diffExp}{seurat}(object, numerator, denominator,
+  zeroWeights = c("zingeR", "zinbwave"), caller = c("edgeR", "DESeq2"))
 }
 \arguments{
 \item{object}{Object.}
@@ -27,9 +27,11 @@ diffExp(object, ...)
 \item{denominator}{Group of cells to use in the denominator of the contrast
 (e.g. control).}
 
-\item{minCells}{Minimum number of cells required per group.}
+\item{zeroWeights}{Package to use for zero weight calculations. Defaults to
+zinbwave but zingeR is also supported.}
 
-\item{maxit}{The number of iterations for the EM-algorithm. 200 by default, but larger may be useful for large datasets (many samples). Convergence of the posterior probabilities can be checked by following the distribution of posterior probabilities over iterations with \code{plotW}. The EM-algorithm will automatically stop if convergence is achieved before the maximum number of iterations.}
+\item{caller}{Package to use for differential expression calling. Defaults
+to edgeR (faster for large datasets) but DESeq2 is also supported.}
 }
 \value{
 \code{DEGLRT}.
@@ -65,28 +67,36 @@ information.
 
 \examples{
 # SingleCellExperiment ====
-x <- metrics(cellranger_small)
-numerator <- rownames(x)[which(x[["sampleName"]] == "proximal")]
-denominator <- rownames(x)[which(x[["sampleName"]] == "distal")]
-lrt <- diffExp(
+data <- metrics(cellranger_small)
+numerator <- rownames(data)[which(data[["sampleName"]] == "proximal")]
+denominator <- rownames(data)[which(data[["sampleName"]] == "distal")]
+
+# zingeR-edgeR
+x <- diffExp(
     object = cellranger_small,
     numerator = numerator,
     denominator = denominator,
-    maxit = 100L
+    zeroWeights = "zingeR",
+    caller = "edgeR"
 )
-glimpse(lrt[["table"]])
+class(x)
+glimpse(x[["table"]])
 
 # seurat ====
 # Expression in cluster 3 relative to cluster 2
 numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
 denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
-lrt <- diffExp(
+
+# zingeR-edgeR
+x <- diffExp(
     object = Seurat::pbmc_small,
     numerator = numerator,
     denominator = denominator,
-    maxit = 100L
+    zeroWeights = "zingeR",
+    caller = "edgeR"
 )
-glimpse(lrt[["table"]])
+class(x)
+glimpse(x[["table"]])
 }
 \seealso{
 \itemize{
