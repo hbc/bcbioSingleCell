@@ -19,10 +19,10 @@ branches:
 
 # External dependencies
 # dependency for gsl>copula>zinbwave
-addons:
-  apt:
-    packages:
-      - libgsl-dev
+# addons:
+#   apt:
+#     packages:
+#       - libgsl-dev
 
 env:
   global:
