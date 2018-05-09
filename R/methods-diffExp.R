@@ -89,7 +89,50 @@ NULL
 
 
 
+# DESeq2
+designFormula <- formula("~ group")
+
+# zingeR
 maxit <- 1000L
+
+
+
+diffExp.zinbwave.DESeq2 <- function(
+    object,
+    design,
+    group
+) {
+    message("zinbwave-DESeq2")
+    # zinbFit doens't support dgCMatrix yet, so coerce to matrix
+    sce <- as(object, "SingleCellExperiment")
+    assays(sce) <- list("counts" = as.matrix(counts(sce)))
+    sce[["group"]] <- group
+    # epsilon setting as recommended by the ZINB-WaVE integration paper
+    print(system.time({
+        zinb <- zinbwave::zinbwave(
+            Y = sce,
+            K = 0L,
+            BPPARAM = SerialParam(),
+            epsilon = 1e12
+        )
+    }))
+    dds <- DESeq2::DESeqDataSet(zinb, design = designFormula)
+    print(system.time({
+        dds <- DESeq2::DESeq(
+            object = dds,
+            test = "LRT",
+            reduced = ~ 1,
+            sfType = "poscounts",
+            minmu = 1e-6,
+            minReplicatesForReplace = Inf
+        )
+    }))
+    # DESeq2 will warn if parametric trend fails to fit
+    show(plotDispEsts(dds))
+    # We already performed low count filtering
+    res <- results(dds, independentFiltering = FALSE)
+    res
+}
 
 
 
@@ -131,7 +174,6 @@ maxit <- 1000L
     message("zingeR-DESeq2")
     counts <- as.matrix(counts(object))
     colData <- data.frame(group = group)
-    designFormula <- formula("~ group")
     dds <- DESeq2::DESeqDataSetFromMatrix(
         countData = counts,
         colData = colData,
@@ -151,19 +193,21 @@ maxit <- 1000L
     dds <- DESeq2::estimateSizeFactors(dds, type = "poscounts")
     dds <- DESeq2::estimateDispersions(dds)
     dds <- DESeq2::nbinomWaldTest(
-        dds,
+        object = dds,
         betaPrior = TRUE,
         useT = TRUE,
         df = rowSums(weights) - 2L
     )
-    res <- DESeq2::results(dds)
+    # DESeq2 will warn if parametric trend fails to fit
+    show(plotDispEsts(dds))
+    # We already performed low count filtering
+    res <- DESeq2::results(dds, independentFiltering = FALSE)
     res
 }
 
 
 
 # Methods ======================================================================
-# FIXME zinbwave uses
 #' @rdname diffExp
 #' @export
 setMethod(
