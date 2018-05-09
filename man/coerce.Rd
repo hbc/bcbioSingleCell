@@ -4,6 +4,7 @@
 \alias{coerce}
 \alias{as}
 \alias{coerce-SingleCellExperiment-seurat}
+\alias{coerce-seurat-SingleCellExperiment}
 \title{Methods for Coercing an Object to a Class}
 \value{
 Object of new class.
@@ -19,9 +20,19 @@ quality control analysis. Here we are passing the raw gene-level counts of
 the filtered cells into a new \code{seurat} class object.
 }
 
+\section{seurat to SingleCellExperiment}{
+
+Super basic S4 coercion support for taking the raw counts matrix from
+a \code{seurat} class object and coercing to a \code{SingleCellExperiment}.
+}
+
 \examples{
 # SingleCellExperiment to seurat ====
 x <- as(indrops_small, "seurat")
+class(x)
+print(x)
+# seurat to SingleCellExperiment ====
+x <- as(Seurat::pbmc_small, "SingleCellExperiment")
 class(x)
 print(x)
 }
