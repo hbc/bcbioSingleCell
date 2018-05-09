@@ -36,7 +36,8 @@ to edgeR (faster for large datasets) but DESeq2 is also supported.}
 \value{
 \itemize{
 \item \code{caller = "edgeR"}: \code{DEGLRT}.
-\item \code{caller = "DESeq2"}: \code{DESeqResults}.
+\item \code{caller = "DESeq2"}: Unshrunken \code{DESeqResults}. Use \code{lfcShrink()} if
+shrunken results are desired.
 }
 }
 \description{
@@ -99,9 +100,12 @@ class(x)
 glimpse(x[["table"]])
 }
 \seealso{
-Consult the \href{https://goo.gl/4rTK1w}{zingeR vignette v2} and
-\href{https://github.com/mikelove/zinbwave-deseq2}{zimbwave-DESeq2 workflow} for
-additional information.
+Consult the following vignettes workflows for more information:
+\itemize{
+\item \href{https://goo.gl/4rTK1w}{zingeR vignette}.
+\item \href{https://bit.ly/2wtDdpS}{zinbwave vignette}.
+\item \href{https://github.com/mikelove/zinbwave-deseq2}{zimbwave-DESeq2 workflow}.
+}
 
 \itemize{
 \item DESeq2: We're trying to follow the conventions used in DESeq2 for

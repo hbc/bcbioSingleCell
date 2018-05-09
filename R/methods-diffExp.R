@@ -21,9 +21,10 @@
 #' use the independent filtering strategy that was originally implemented in
 #' DESeq2. By default, the average fitted values are used as a filter criterion.
 #'
-#' @seealso Consult the [zingeR vignette v2](https://goo.gl/4rTK1w) and
-#'   [zimbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2) for
-#'   additional information.
+#' @seealso Consult the following vignettes workflows for more information:
+#' - [zingeR vignette](https://goo.gl/4rTK1w).
+#' - [zinbwave vignette](https://bit.ly/2wtDdpS).
+#' - [zimbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
 #'
 #' @name diffExp
 #' @family Differential Expression Functions
@@ -51,7 +52,8 @@
 #'
 #' @return
 #' - `caller = "edgeR"`: `DEGLRT`.
-#' - `caller = "DESeq2"`: `DESeqResults`.
+#' - `caller = "DESeq2"`: Unshrunken `DESeqResults`. Use `lfcShrink()` if
+#'   shrunken results are desired.
 #'
 #' @examples
 #' # SingleCellExperiment ====
@@ -97,13 +99,8 @@ maxit <- 1000L
 
 
 
-diffExp.zinbwave.DESeq2 <- function(
-    object,
-    design,
-    group
-) {
-    message("zinbwave-DESeq2")
-    # zinbFit doens't support dgCMatrix yet, so coerce to matrix
+.zinbwave <- function(object, group) {
+    # zinbFit doesn't support dgCMatrix yet, so coerce to matrix
     sce <- as(object, "SingleCellExperiment")
     assays(sce) <- list("counts" = as.matrix(counts(sce)))
     sce[["group"]] <- group
@@ -116,12 +113,31 @@ diffExp.zinbwave.DESeq2 <- function(
             epsilon = 1e12
         )
     }))
+    zinb
+}
+
+
+
+diffExp.zinbwave.DESeq2 <- function(
+    object,
+    design,
+    group
+) {
+    zinb <- .zinbwave(object, group = group)
     dds <- DESeq2::DESeqDataSet(zinb, design = designFormula)
+    # Van De Berge and Perraudeau and others have shown the LRT may perform
+    # better for null hypothesis testing, so we use the LRT. In order to use the
+    # Wald test, it is recommended to set `useT = TRUE`.
+    #
+    # For UMI data, for which the expected counts may be very low, the
+    # likelihood ratio test implemented in nbinomLRT should be used.
+    #
+    # DESeq2 supports `weights` in assays automatically.
     print(system.time({
         dds <- DESeq2::DESeq(
             object = dds,
             test = "LRT",
-            reduced = ~ 1,
+            reduced = ~ 1L,
             sfType = "poscounts",
             minmu = 1e-6,
             minReplicatesForReplace = Inf
@@ -136,31 +152,46 @@ diffExp.zinbwave.DESeq2 <- function(
 
 
 
-# zingeR + edgeR analysis
+.diffExp.zinbwave.edgeR <- function(
+    object,
+    design,
+    group
+) {
+    zinb <- .zinbwave(object, group = group)
+    weights <- assay(zinb, "weights")
+    dge <- edgeR::DGEList(counts(zinb))
+    dge <- edgeR::calcNormFactors(dge)
+    dge[["weights"]] <- weights
+    dge <- estimateDisp(dge, design)
+    fit <- glmFit(dge, design)
+    lrt <- zinbwave::glmWeightedF(fit, coef = 2L)
+    lrt
+}
+
+
+
 # Note that TMM needs to be consistently applied for both
-# `calcNormFactors()` and `zeroWeightsLS()`
+# `calcNormFactors()` and `zeroWeightsLS()`.
 .diffExp.zingeR.edgeR <- function(  # nolint
     object,
     design,
     group
 ) {
-    message("zingeR-edgeR")
     counts <- as.matrix(counts(object))
-    dge <- edgeR::DGEList(counts, group = group)
-    dge <- edgeR::calcNormFactors(dge, method = "TMM")
-    # This is the zingeR step that is computationally expensive
     print(system.time({
         weights <- zingeR::zeroWeightsLS(
-            counts = dge[["counts"]],
+            counts = counts,
             design = design,
             maxit = maxit,
             normalization = "TMM"
         )
     }))
+    dge <- edgeR::DGEList(counts, group = group)
     dge[["weights"]] <- weights
+    dge <- edgeR::calcNormFactors(dge, method = "TMM")
     dge <- edgeR::estimateDisp(dge, design = design)
     fit <- edgeR::glmFit(dge, design = design)
-    lrt <- zingeR::glmWeightedF(fit, coef = 2L, independentFiltering = TRUE)
+    lrt <- zingeR::glmWeightedF(fit, coef = 2L)
     lrt
 }
 
@@ -171,7 +202,6 @@ diffExp.zinbwave.DESeq2 <- function(
     design,
     group
 ) {
-    message("zingeR-DESeq2")
     counts <- as.matrix(counts(object))
     colData <- data.frame(group = group)
     dds <- DESeq2::DESeqDataSetFromMatrix(
@@ -224,9 +254,41 @@ setMethod(
         assert_is_character(denominator)
         assert_are_disjoint_sets(numerator, denominator)
         zeroWeights <- match.arg(zeroWeights)
-        requireNamespace(zeroWeights)
+        if (zeroWeights == "zinbwave") {
+            requireNamespace(
+                package = "zinbwave",
+                versionCheck = list(
+                    op = ">=",
+                    version = package_version("1.2")
+                )
+            )
+        } else if (zeroWeights == "zingeR") {
+            requireNamespace(
+                package = "zingeR",
+                versionCheck = list(
+                    op = ">=",
+                    version = package_version("0.1")
+                )
+            )
+        }
         caller <- match.arg(caller)
-        requireNamespace(caller)
+        if (caller == "DESeq2") {
+            requireNamespace(
+                package = "DESeq2",
+                versionCheck = list(
+                    op = ">=",
+                    version = package_version("1.20")
+                )
+            )
+        } else if (zeroWeights == "edgeR") {
+            requireNamespace(
+                package = "edgeR",
+                versionCheck = list(
+                    op = ">=",
+                    version = package_version("3.22")
+                )
+            )
+        }
 
         # Subset the SCE object to contain the desired cells
         cells <- c(numerator, denominator)
@@ -265,6 +327,7 @@ setMethod(
         # Set up the design matrix
         design <- model.matrix(~group)
 
+        message(paste(zeroWeights, caller, sep = "-"))
         fun <- get(paste("", "diffExp", zeroWeights, caller, sep = "."))
         fun(
             object = object,
