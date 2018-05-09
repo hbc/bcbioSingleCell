@@ -21,8 +21,9 @@
 #' use the independent filtering strategy that was originally implemented in
 #' DESeq2. By default, the average fitted values are used as a filter criterion.
 #'
-#' Consult the [zingeR vignette v2](https://goo.gl/4rTK1w) for additional
-#' information.
+#' @seealso Consult the [zingeR vignette v2](https://goo.gl/4rTK1w) and
+#'   [zimbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2) for
+#'   additional information.
 #'
 #' @name diffExp
 #' @family Differential Expression Functions
@@ -48,7 +49,9 @@
 #'   numerator and `cells.2` for the denominator. See [Seurat::DiffExpTest()]
 #'   for additional information.
 #'
-#' @return `DEGLRT`.
+#' @return
+#' - `caller = "edgeR"`: `DEGLRT`.
+#' - `caller = "DESeq2"`: `DESeqResults`.
 #'
 #' @examples
 #' # SingleCellExperiment ====
@@ -94,21 +97,23 @@ maxit <- 1000L
 # Note that TMM needs to be consistently applied for both
 # `calcNormFactors()` and `zeroWeightsLS()`
 .diffExp.zingeR.edgeR <- function(  # nolint
-    counts,
+    object,
     design,
     group
 ) {
     message("zingeR-edgeR")
-    counts <- as.matrix(counts)
+    counts <- as.matrix(counts(object))
     dge <- edgeR::DGEList(counts, group = group)
     dge <- edgeR::calcNormFactors(dge, method = "TMM")
     # This is the zingeR step that is computationally expensive
-    weights <- zingeR::zeroWeightsLS(
-        counts = dge[["counts"]],
-        design = design,
-        maxit = maxit,
-        normalization = "TMM"
-    )
+    print(system.time({
+        weights <- zingeR::zeroWeightsLS(
+            counts = dge[["counts"]],
+            design = design,
+            maxit = maxit,
+            normalization = "TMM"
+        )
+    }))
     dge[["weights"]] <- weights
     dge <- edgeR::estimateDisp(dge, design = design)
     fit <- edgeR::glmFit(dge, design = design)
@@ -119,12 +124,12 @@ maxit <- 1000L
 
 
 .diffExp.zingeR.DESeq2 <- function(  # nolint
-    counts,
+    object,
     design,
     group
 ) {
     message("zingeR-DESeq2")
-    counts <- as.matrix(counts)
+    counts <- as.matrix(counts(object))
     colData <- data.frame(group = group)
     designFormula <- formula("~ group")
     dds <- DESeq2::DESeqDataSetFromMatrix(
@@ -132,14 +137,16 @@ maxit <- 1000L
         colData = colData,
         design = designFormula
     )
-    weights <- zingeR::zeroWeightsLS(
-        counts = counts(dds),
-        design = design,
-        maxit = maxit,
-        normalization = "DESeq2_poscounts",
-        colData = colData,
-        designFormula = designFormula
-    )
+    print(system.time({
+        weights <- zingeR::zeroWeightsLS(
+            counts = counts(dds),
+            design = design,
+            maxit = maxit,
+            normalization = "DESeq2_poscounts",
+            colData = colData,
+            designFormula = designFormula
+        )
+    }))
     assays(dds)[["weights"]] <- weights
     dds <- DESeq2::estimateSizeFactors(dds, type = "poscounts")
     dds <- DESeq2::estimateDispersions(dds)
@@ -156,6 +163,7 @@ maxit <- 1000L
 
 
 # Methods ======================================================================
+# FIXME zinbwave uses
 #' @rdname diffExp
 #' @export
 setMethod(
@@ -176,21 +184,18 @@ setMethod(
         caller <- match.arg(caller)
         requireNamespace(caller)
 
-        # Counts matrix
+        # Subset the SCE object to contain the desired cells
         cells <- c(numerator, denominator)
-        counts <- assay(object)
-        counts <- as.matrix(counts)
-        counts <- counts[, cells]
-        assert_has_dimnames(counts)
+        object <- object[, cells]
 
         message(paste(
-            "Low gene count filter",
+            "Applying low gene count filter",
             "Requiring at least 25 cells with counts of 5 or more",
             sep = "\n"
         ))
-        keep <- rowSums(counts >= 5L) >= 25L
-        print(table(keep))
-        counts <- counts[keep, ]
+        genes <- rowSums(counts(object) >= 5L) >= 25L
+        print(table(genes))
+        object <- object[genes, ]
 
         # Create a cell factor to define the group for `DGEList()`
         numeratorFactor <- replicate(
@@ -216,15 +221,9 @@ setMethod(
         # Set up the design matrix
         design <- model.matrix(~group)
 
-        fun <- get(paste(
-            "",
-            "diffExp",
-            zeroWeights,
-            caller,
-            sep = "."
-        ))
+        fun <- get(paste("", "diffExp", zeroWeights, caller, sep = "."))
         fun(
-            counts = counts,
+            object = object,
             design = design,
             group = group
         )

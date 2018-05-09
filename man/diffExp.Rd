@@ -34,7 +34,10 @@ zinbwave but zingeR is also supported.}
 to edgeR (faster for large datasets) but DESeq2 is also supported.}
 }
 \value{
-\code{DEGLRT}.
+\itemize{
+\item \code{caller = "edgeR"}: \code{DEGLRT}.
+\item \code{caller = "DESeq2"}: \code{DESeqResults}.
+}
 }
 \description{
 Differential Expression
@@ -60,9 +63,6 @@ the downweighting of excess zeros (\code{ZI = TRUE}). Also, independent filterin
 can be performed on the obtained p-values (\code{independentFiltering = TRUE}). We
 use the independent filtering strategy that was originally implemented in
 DESeq2. By default, the average fitted values are used as a filter criterion.
-
-Consult the \href{https://goo.gl/4rTK1w}{zingeR vignette v2} for additional
-information.
 }
 
 \examples{
@@ -99,6 +99,10 @@ class(x)
 glimpse(x[["table"]])
 }
 \seealso{
+Consult the \href{https://goo.gl/4rTK1w}{zingeR vignette v2} and
+\href{https://github.com/mikelove/zinbwave-deseq2}{zimbwave-DESeq2 workflow} for
+additional information.
+
 \itemize{
 \item DESeq2: We're trying to follow the conventions used in DESeq2 for
 contrasts, defining the name of the factor in the design formula,
