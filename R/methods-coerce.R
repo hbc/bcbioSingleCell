@@ -10,12 +10,6 @@
 #' @seealso
 #' - [methods::as()].
 #' - [methods::coerce()].
-#'
-#' @examples
-#' # SingleCellExperiment to seurat ====
-#' x <- as(indrops_small, "seurat")
-#' class(x)
-#' print(x)
 NULL
 
 
@@ -23,11 +17,18 @@ NULL
 # Methods ======================================================================
 #' @rdname coerce
 #' @name coerce-SingleCellExperiment-seurat
+#'
 #' @section SingleCellExperiment to seurat:
 #' Interally [Seurat::CreateSeuratObject()] is called without applying any
 #' additional filtering cutoffs, since we have already defined them during our
 #' quality control analysis. Here we are passing the raw gene-level counts of
 #' the filtered cells into a new `seurat` class object.
+#'
+#' @examples
+#' # SingleCellExperiment to seurat ====
+#' x <- as(indrops_small, "seurat")
+#' class(x)
+#' print(x)
 setAs(
     from = "SingleCellExperiment",
     to = "seurat",
@@ -75,6 +76,43 @@ setAs(
         )
         slot(to, "misc")[["bcbio"]] <- bcbio
 
+        to
+    }
+)
+
+
+
+#' @rdname coerce
+#' @name coerce-seurat-SingleCellExperiment
+#'
+#' @section seurat to SingleCellExperiment:
+#' Super basic S4 coercion support for taking the raw counts matrix from
+#' a `seurat` class object and coercing to a `SingleCellExperiment`.
+#'
+#' @examples
+#' # seurat to SingleCellExperiment ====
+#' x <- as(Seurat::pbmc_small, "SingleCellExperiment")
+#' class(x)
+#' print(x)
+setAs(
+    from = "seurat",
+    to = "SingleCellExperiment",
+    function(from) {
+        validObject(from)
+        assays <- list("counts" = counts(from))
+        rowRanges <- rowRanges(from)
+        if (is.null(rowRanges)) {
+            rowRanges <- emptyRanges(rownames(from))
+        }
+        colData <- colData(from)
+        metadata <- metadata(from)
+        to <- SingleCellExperiment(
+            assays = assays,
+            colData = colData,
+            rowRanges = rowRanges,
+            metadata = metadata
+        )
+        validObject(to)
         to
     }
 )
