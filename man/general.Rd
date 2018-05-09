@@ -64,6 +64,8 @@ to the first argument in the vector.}
 \item{trans}{Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
 
+\item{trendline}{Include trendline on plot.}
+
 \item{value}{Object to assign.}
 
 \item{x}{Primary object.}

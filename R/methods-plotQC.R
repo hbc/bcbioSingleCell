@@ -45,43 +45,20 @@ setMethod(
     ) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
+        } else {
+            interestingGroups(object) <- interestingGroups
         }
         geom <- match.arg(geom)
         return <- match.arg(return)
 
-        plotCellCounts <- plotCellCounts(
-            object = object,
-            interestingGroups = interestingGroups
-        )
+        plotCellCounts <- plotCellCounts(object)
         plotReadsPerCell <- NULL
-        plotUMIsPerCell <- plotUMIsPerCell(
-            object = object,
-            interestingGroups = interestingGroups,
-            geom = geom
-        )
-        plotGenesPerCell <- plotGenesPerCell(
-            object = object,
-            interestingGroups = interestingGroups,
-            geom = geom
-        )
-        plotUMIsVsGenes <- plotUMIsVsGenes(
-            object = object,
-            interestingGroups = interestingGroups
-        )
-        plotNovelty <- plotNovelty(
-            object = object,
-            interestingGroups = interestingGroups,
-            geom = geom
-        )
-        plotMitoRatio <- plotMitoRatio(
-            object = object,
-            interestingGroups = interestingGroups,
-            geom = geom
-        )
-        plotZerosVsDepth <- plotZerosVsDepth(
-            object = object,
-            interestingGroups = interestingGroups
-        )
+        plotUMIsPerCell <- plotUMIsPerCell(object, geom = geom)
+        plotGenesPerCell <- plotGenesPerCell(object, geom = geom)
+        plotUMIsVsGenes <- plotUMIsVsGenes(object)
+        plotNovelty <- plotNovelty(object, geom = geom)
+        plotMitoRatio <- plotMitoRatio(object, geom = geom)
+        plotZerosVsDepth <- plotZerosVsDepth(object)
 
         if (is(object, "bcbioSingleCell")) {
             # Don't show cell counts for unfiltered bcbio datasets
@@ -89,11 +66,7 @@ setMethod(
                 plotCellCounts <- NULL
             }
             # Raw read counts are only stashed in bcbioSingleCell objects
-            plotReadsPerCell <- plotReadsPerCell(
-                object = object,
-                geom = geom,
-                interestingGroups = interestingGroups
-            )
+            plotReadsPerCell <- plotReadsPerCell(object, geom = geom)
         }
 
         plotlist <- list(

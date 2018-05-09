@@ -8,6 +8,8 @@
 #'
 #' @inheritParams general
 #'
+#' @return `bcbioSingleCell`.
+#'
 #' @examples
 #' # bcbioSingleCell ====
 #' x <- aggregateReplicates(indrops_small)

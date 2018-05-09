@@ -17,7 +17,7 @@ opts_chunk[["set"]](
     fig.retina = 2L,
     fig.width = 10L,
     message = FALSE,
-    tidy = TRUE,
+    tidy = FALSE,
     warning = TRUE
 )
 

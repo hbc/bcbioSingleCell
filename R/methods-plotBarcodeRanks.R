@@ -8,6 +8,8 @@
 #'
 #' @seealso [DropletUtils::barcodeRanks()].
 #'
+#' @return `ggplot` grid.
+#'
 #' @examples
 #' # SingleCellExperiment ====
 #' plotBarcodeRanks(cellranger_small)

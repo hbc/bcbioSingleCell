@@ -178,3 +178,14 @@ setMethod(
         )
     )
 )
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom bcbioBase sampleNames
+#' @export
+setMethod(
+    "sampleNames",
+    signature("seurat"),
+    getMethod("sampleNames", "SummarizedExperiment")
+)

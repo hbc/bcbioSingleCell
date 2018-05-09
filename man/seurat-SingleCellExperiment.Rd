@@ -17,6 +17,7 @@
 \alias{gene2symbol,seurat-method}
 \alias{interestingGroups,seurat-method}
 \alias{interestingGroups<-,seurat,character-method}
+\alias{sampleNames,seurat-method}
 \title{Extend S4 Methods for \code{seurat} Class}
 \usage{
 \S4method{cell2sample}{seurat}(object)
@@ -45,6 +46,8 @@
 \S4method{interestingGroups}{seurat}(object)
 
 \S4method{interestingGroups}{seurat,character}(object) <- value
+
+\S4method{sampleNames}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}

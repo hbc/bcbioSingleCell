@@ -6,6 +6,8 @@
 #'
 #' @inheritParams general
 #'
+#' @return `ggplot`.
+#'
 #' @examples
 #' # SingleCellExperiment ====
 #' plotUMIsVsGenes(cellranger_small)
@@ -25,12 +27,15 @@ setMethod(
     function(
         object,
         interestingGroups,
+        trendline = FALSE,
         color = scale_color_hue(),
         trans = "log2",
         title = "UMIs vs. genes"
     ) {
         .plotQCScatterplot(
             object = object,
+            interestingGroups = interestingGroups,
+            trendline = trendline,
             xCol = "nUMI",
             yCol = "nGene",
             xTrans = trans,

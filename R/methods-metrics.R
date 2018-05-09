@@ -165,6 +165,7 @@ setMethod(
     function(object, interestingGroups) {
         sampleData <- sampleData(
             object = object,
+            clean = FALSE,
             interestingGroups = interestingGroups
         )
         sampleData[["sampleID"]] <- rownames(sampleData)

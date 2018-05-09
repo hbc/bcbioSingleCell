@@ -30,12 +30,15 @@ setMethod(
     function(
         object,
         interestingGroups,
+        trendline = FALSE,
         color = scale_color_hue(),
         trans = "log2",
         title = "mito vs. coding"
     ) {
         .plotQCScatterplot(
             object = object,
+            interestingGroups = interestingGroups,
+            trendline = trendline,
             xCol = "nCoding",
             yCol = "nMito",
             xTrans = trans,

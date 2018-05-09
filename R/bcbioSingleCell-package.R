@@ -21,11 +21,12 @@
 #'   convertUCSCBuildToEnsembl detectOrganism dynamicPlotlist emptyRanges
 #'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
 #'   makeTx2geneFromGFF markdownHeader markdownPlotlist readFileByExtension
-#'   readYAML sanitizeSampleData theme_midnight theme_paperwhite tx2geneFromGFF
+#'   readYAML theme_midnight theme_paperwhite tx2geneFromGFF
 #' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
 #'   bcbio_geom_label_average bcbio_geom_label_repel flatFiles
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
-#'   readSampleData readTx2gene sampleYAMLMetadata uniteInterestingGroups
+#'   readSampleData readTx2gene readYAMLSampleData sanitizeSampleData
+#'   uniteInterestingGroups
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows desc filter group_by group_vars left_join
 #'   matches mutate mutate_all mutate_if n select select_if summarize

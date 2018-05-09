@@ -15,15 +15,21 @@
 #' @inheritParams general
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' x <- indrops_small
-#' sampleData(x) %>% glimpse()
+#' # SingleCellExperiment ====
+#' x <- cellranger_small
+#' sampleData(x, clean = TRUE) %>% glimpse()
+#' sampleData(x, clean = FALSE) %>% glimpse()
+#'
+#' # Assignment support
 #' sampleData(x)[["batch"]] <- 1L
 #' sampleData(x) %>% glimpse()
 #'
 #' # seurat ====
 #' x <- seurat_small
-#' sampleData(x) %>% glimpse()
+#' sampleData(x, clean = TRUE) %>% glimpse()
+#' sampleData(x, clean = FALSE) %>% glimpse()
+#'
+#' # Assignment support
 #' sampleData(x)[["batch"]] <- 1L
 #' sampleData(x) %>% glimpse()
 NULL
@@ -38,8 +44,8 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        interestingGroups,
         clean = TRUE,
+        interestingGroups,
         return = c("DataFrame", "data.frame", "kable")
     ) {
         validObject(object)
@@ -55,14 +61,14 @@ setMethod(
             # Drop remaining blacklisted columns
             setdiff <- setdiff(colnames(data), bcbioBase::metadataBlacklist)
             data <- data[, setdiff, drop = FALSE]
-        }
-
-        # Include `interestingGroups` column, if not NULL
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (length(interestingGroups)) {
-            data <- uniteInterestingGroups(data, interestingGroups)
+        } else {
+            # Include `interestingGroups` column, if not NULL
+            if (missing(interestingGroups)) {
+                interestingGroups <- bcbioBase::interestingGroups(object)
+            }
+            if (length(interestingGroups)) {
+                data <- uniteInterestingGroups(data, interestingGroups)
+            }
         }
 
         # Arrange rows by `sampleName` column, if defined
@@ -88,8 +94,8 @@ setMethod(
     signature("seurat"),
     function(
         object,
-        interestingGroups,
         clean = TRUE,
+        interestingGroups,
         return = c("DataFrame", "data.frame", "kable")
     ) {
         validObject(object)
@@ -134,17 +140,17 @@ setMethod(
             # Drop remaining blacklisted columns
             setdiff <- setdiff(colnames(data), bcbioBase::metadataBlacklist)
             data <- data[, setdiff, drop = FALSE]
-        }
-
-        # Include `interestingGroups` column, if not NULL
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-            if (is.null(interestingGroups)) {
-                interestingGroups <- "sampleName"
+        } else {
+            # Include `interestingGroups` column, if not NULL
+            if (missing(interestingGroups)) {
+                interestingGroups <- bcbioBase::interestingGroups(object)
+                if (is.null(interestingGroups)) {
+                    interestingGroups <- "sampleName"
+                }
             }
-        }
-        if (length(interestingGroups)) {
-            data <- uniteInterestingGroups(data, interestingGroups)
+            if (length(interestingGroups)) {
+                data <- uniteInterestingGroups(data, interestingGroups)
+            }
         }
 
         # Arrange rows by `sampleName` column, if defined

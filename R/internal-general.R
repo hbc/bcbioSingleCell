@@ -39,6 +39,7 @@
 #' @param title Plot title.
 #' @param trans Name of the axis scale transformation to apply. See
 #'   `help("scale_x_continuous", "ggplot2")` for more information.
+#' @param trendline Include trendline on plot.
 #' @param value Object to assign.
 #' @param x Primary object.
 #' @param y Secondary object.

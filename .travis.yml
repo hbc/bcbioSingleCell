@@ -2,6 +2,7 @@
 # https://docs.travis-ci.com/user/languages/r
 
 language: r
+sudo: false
 cache: packages
 
 r:
@@ -21,7 +22,6 @@ branches:
 # addons:
 #   apt:
 #     packages:
-#       - gsl-bin
 #       - libgsl-dev
 
 env:

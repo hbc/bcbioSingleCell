@@ -40,6 +40,7 @@ setMethod(
 
         sampleData <- sampleData(
             object = object,
+            clean = FALSE,
             interestingGroups = interestingGroups,
             return = "data.frame"
         )
