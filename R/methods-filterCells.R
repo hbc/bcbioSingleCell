@@ -82,10 +82,7 @@ setMethod(
         assert_is_any_of(minUMIs, c("numeric", "character"))
         if (is.character(minUMIs)) {
             assert_is_a_string(minUMIs)
-            assert_is_subset(minUMIs, c("auto", "inflection", "knee"))
-            if (identical(minUMIs, "auto")) {
-                minUMIs <- "knee"
-            }
+            assert_is_subset(minUMIs, c("inflection", "knee"))
         }
         # FIXME Improve the parameter assert check here
         params <- list(
