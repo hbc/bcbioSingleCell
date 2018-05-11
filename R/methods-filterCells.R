@@ -66,7 +66,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        minUMIs = 100L,
+        minUMIs = 0L,
         maxUMIs = Inf,
         minGenes = 0L,
         maxGenes = Inf,
@@ -79,8 +79,17 @@ setMethod(
         metrics <- metrics(object)
 
         # Parameter integrity checks ===========================================
+        assert_is_any_of(minUMIs, c("numeric", "character"))
+        if (is.character(minUMIs)) {
+            assert_is_a_string(minUMIs)
+            assert_is_subset(minUMIs, c("auto", "inflection", "knee"))
+            if (identical(minUMIs, "auto")) {
+                minUMIs <- "knee"
+            }
+        }
+        # FIXME Improve the parameter assert check here
         params <- list(
-            minUMIs = minUMIs,
+            # minUMIs = minUMIs,
             maxUMIs = maxUMIs,
             minGenes = minGenes,
             maxGenes = maxGenes,
@@ -105,6 +114,18 @@ setMethod(
         )
 
         # minUMIs --------------------------------------------------------------
+        if (is_a_string(minUMIs)) {
+            ranks <- barcodeRanksPerSample(object)
+            minUMIs <- vapply(
+                X = ranks,
+                FUN = function(x) {
+                    as.integer(x[[minUMIs]])
+                },
+                FUN.VALUE = integer(1L)
+            )
+            names(minUMIs) <- sampleNames
+            minUMIs <- minUMIs[sort(names(minUMIs))]
+        }
         if (!is.null(names(minUMIs))) {
             assert_are_set_equal(names(minUMIs), sampleNames)
             message(paste(
