@@ -106,7 +106,7 @@ setMethod(
 
         # minUMIs --------------------------------------------------------------
         if (!is.null(names(minUMIs))) {
-            assert_is_subset(names(minUMIs), sampleNames)
+            assert_are_set_equal(names(minUMIs), sampleNames)
             message(paste(
                 "minUMIs: per sample mode",
                 printString(minUMIs),
@@ -139,7 +139,7 @@ setMethod(
 
         # maxUMIs --------------------------------------------------------------
         if (!is.null(names(maxUMIs))) {
-            assert_is_subset(names(maxUMIs), sampleNames)
+            assert_are_set_equal(names(maxUMIs), sampleNames)
             message(paste(
                 "maxUMIs: per sample mode",
                 printString(maxUMIs),
@@ -172,7 +172,7 @@ setMethod(
 
         # minGenes -------------------------------------------------------------
         if (!is.null(names(minGenes))) {
-            assert_is_subset(names(minGenes), sampleNames)
+            assert_are_set_equal(names(minGenes), sampleNames)
             message(paste(
                 "minGenes: per sample mode",
                 printString(minGenes),
@@ -205,7 +205,7 @@ setMethod(
 
         # maxGenes -------------------------------------------------------------
         if (!is.null(names(maxGenes))) {
-            assert_is_subset(names(maxGenes), sampleNames)
+            assert_are_set_equal(names(maxGenes), sampleNames)
             message(paste(
                 "maxGenes: per sample mode",
                 printString(maxGenes),
@@ -238,7 +238,7 @@ setMethod(
 
         # minNovelty -----------------------------------------------------------
         if (!is.null(names(minNovelty))) {
-            assert_is_subset(names(minNovelty), sampleNames)
+            assert_are_set_equal(names(minNovelty), sampleNames)
             message(paste(
                 "minNovelty: per sample mode",
                 printString(minNovelty),
@@ -271,7 +271,7 @@ setMethod(
 
         # maxMitoRatio ---------------------------------------------------------
         if (!is.null(names(maxMitoRatio))) {
-            assert_is_subset(names(maxMitoRatio), sampleNames)
+            assert_are_set_equal(names(maxMitoRatio), sampleNames)
             message(paste(
                 "maxMitoRatio: per sample mode",
                 printString(maxMitoRatio),
