@@ -267,12 +267,12 @@ test_that("filterCells : Per sample cutoffs", {
     invisible(capture.output(
         x <- filterCells(
             object = indrops_small,
-            minUMIs = c("rep_1" = 0L),
-            maxUMIs = c("rep_1" = Inf),
-            minGenes = c("rep_1" = 0L),
-            maxGenes = c("rep_1" = Inf),
-            maxMitoRatio = c("rep_1" = 0L),
-            minNovelty = c("rep_1" = 0L)
+            minUMIs = c(rep_1 = 0L),
+            maxUMIs = c(rep_1 = Inf),
+            minGenes = c(rep_1 = 0L),
+            maxGenes = c(rep_1 = Inf),
+            maxMitoRatio = c(rep_1 = 0L),
+            minNovelty = c(rep_1 = 0L)
         )
     ))
     expect_identical(
