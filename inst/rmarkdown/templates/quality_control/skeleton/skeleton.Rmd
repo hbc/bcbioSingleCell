@@ -98,21 +98,8 @@ plotUMIsPerCell(bcb, geom = "ecdf", point = "inflection")
 
 Let's apply this step first and then proceed to evaluating gene detection, mitocondrial transcript abundance, and novelty scores.
 
-```{r filter_cells_by_umi_inflection, eval=FALSE, include=FALSE}
-# Automatic filtering is disabled by defualt
-ranks <- barcodeRanksPerSample(bcb)
-minUMIs <- vapply(
-    X = ranks,
-    FUN = function(x) {
-        as.integer(x[["inflection"]])
-    },
-    FUN.VALUE = integer(1L)
-)
-print(minUMIs)
-bcb <- filterCells(bcb, minUMIs = minUMIs)
-```
-
-```{r filter_cells_by_umi_manual}
+```{r filter_cells_by_umi}
+# bcb <- filterCells(bcb, minUMIs = "knee")
 bcb <- filterCells(bcb, minUMIs = params$min_umis)
 ```
 
