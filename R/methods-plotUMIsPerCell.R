@@ -11,8 +11,6 @@
 #' @inheritParams general
 #' @param point Label either the "`knee`" or "`inflection`" points per sample.
 #'   To disable, use "`none`". Requires `geom = "ecdf"`.
-#' @param label Label the points per sample on the plot. Only applies when
-#'   `point` argument is defined.
 #'
 #' @examples
 #' # SingleCellExperiment ====
@@ -46,7 +44,6 @@ setMethod(
         interestingGroups,
         min = 0L,
         point = c("none", "inflection", "knee"),
-        label = TRUE,
         trans = "log10",
         color = scale_color_hue(),
         fill = scale_fill_hue(),
@@ -54,7 +51,6 @@ setMethod(
     ) {
         geom <- match.arg(geom)
         point <- match.arg(point)
-        assert_is_a_bool(label)
         assertIsAStringOrNULL(title)
 
         # Override interestingGroups if labeling points
@@ -82,6 +78,8 @@ setMethod(
                 p <- p + labs(subtitle = paste(point, "point per sample"))
             }
 
+            sampleNames <- sampleNames(object)
+
             ranks <- barcodeRanksPerSample(object)
             # Inflection or knee points per sample
             points <- lapply(seq_along(ranks), function(x) {
@@ -90,7 +88,10 @@ setMethod(
             points <- unlist(points)
             names(points) <- names(ranks)
 
-            sampleNames <- sampleNames(object)
+            assert_are_identical(
+                x = names(sampleNames),
+                y = names(points)
+            )
 
             if (geom == "ecdf") {
                 # Calculate the y-intercept per sample
@@ -126,19 +127,16 @@ setMethod(
                         ),
                         size = 5L,
                         show.legend = FALSE
-                    )
-                if (isTRUE(label)) {
-                    p <- p +
-                        bcbio_geom_label_repel(
-                            data = pointData,
-                            mapping = aes_string(
-                                x = "x",
-                                y = "y",
-                                label = "label",
-                                color = "sampleName"
-                            )
+                    ) +
+                    bcbio_geom_label_repel(
+                        data = pointData,
+                        mapping = aes_string(
+                            x = "x",
+                            y = "y",
+                            label = "label",
+                            color = "sampleName"
                         )
-                }
+                    )
             }
         }
 
