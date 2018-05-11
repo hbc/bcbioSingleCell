@@ -78,6 +78,7 @@
 #' @importFrom assertive.properties has_names
 #' @importFrom assertive.sets assert_are_disjoint_sets
 #' @importFrom assertive.sets assert_are_intersecting_sets
+#' @importFrom assertive.sets assert_are_set_equal
 #' @importFrom assertive.sets assert_is_subset
 #' @importFrom assertive.strings assert_all_are_matching_regex
 #' @importFrom assertive.strings assert_all_are_non_missing_nor_empty_character
