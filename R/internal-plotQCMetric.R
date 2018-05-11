@@ -68,6 +68,7 @@
     } else if (geom == "histogram") {
         p <- p +
             geom_histogram(
+                alpha = 0.75,
                 bins = 200L,
                 color = FALSE
             ) +
