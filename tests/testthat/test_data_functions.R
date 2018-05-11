@@ -262,22 +262,31 @@ test_that("filterCells : Cutoff failures", {
 test_that("filterCells : Per sample cutoffs", {
     # Get the count of sample1 (run1_AGAGGATA)
     # We're applying no filtering to that sample
-    metrics <- metrics(indrops_small)
-    sample <- levels(metrics[["sampleID"]])[[1L]]
-    expect_identical(sample, "multiplexed_AAAAAAAA")
-    nCells <- length(which(metrics[["sampleID"]] == sample))
+    sampleNames <- sampleNames(indrops_small)
+    expect_identical(sampleNames, "rep_1")
     invisible(capture.output(
         x <- filterCells(
             object = indrops_small,
-            minUMIs = c("multiplexed_AAAAAAAA" = 0L),
-            maxUMIs = c("multiplexed_AAAAAAAA" = Inf),
-            minGenes = c("multiplexed_AAAAAAAA" = 0L),
-            maxGenes = c("multiplexed_AAAAAAAA" = Inf),
-            maxMitoRatio = c("multiplexed_AAAAAAAA" = 0L),
-            minNovelty = c("multiplexed_AAAAAAAA" = 0L)
+            minUMIs = c("rep_1" = 0L),
+            maxUMIs = c("rep_1" = Inf),
+            minGenes = c("rep_1" = 0L),
+            maxGenes = c("rep_1" = Inf),
+            maxMitoRatio = c("rep_1" = 0L),
+            minNovelty = c("rep_1" = 0L)
         )
     ))
-    expect_identical(ncol(x), nCells)
+    expect_identical(
+        metadata(x)[["filterParams"]],
+        list(
+            minUMIs = c(rep_1 = 0L),
+            maxUMIs = c(rep_1 = Inf),
+            minGenes = c(rep_1 = 0L),
+            maxGenes = c(rep_1 = Inf),
+            minNovelty = c(rep_1 = 0L),
+            maxMitoRatio = c(rep_1 = 0L),
+            minCellsPerGene = 10L
+        )
+    )
 })
 
 
