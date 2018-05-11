@@ -9,7 +9,7 @@
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{SingleCellExperiment}(object, minUMIs = 100L,
+\S4method{filterCells}{SingleCellExperiment}(object, minUMIs = 0L,
   maxUMIs = Inf, minGenes = 0L, maxGenes = Inf, minNovelty = 0L,
   maxMitoRatio = 1L, minCellsPerGene = 10L)
 }

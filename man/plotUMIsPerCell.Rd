@@ -12,13 +12,13 @@ plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
   "ridgeline", "violin", "histogram", "boxplot"), interestingGroups, min = 0L,
-  point = c("none", "inflection", "knee"), label = TRUE, trans = "log10",
+  point = c("none", "inflection", "knee"), trans = "log10",
   color = scale_color_hue(), fill = scale_fill_hue(),
   title = "UMIs per cell")
 
 \S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "ridgeline",
   "violin", "histogram", "boxplot"), interestingGroups, min = 0L,
-  point = c("none", "inflection", "knee"), label = TRUE, trans = "log10",
+  point = c("none", "inflection", "knee"), trans = "log10",
   color = scale_color_hue(), fill = scale_fill_hue(),
   title = "UMIs per cell")
 }
@@ -37,9 +37,6 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 
 \item{point}{Label either the "\code{knee}" or "\code{inflection}" points per sample.
 To disable, use "\code{none}". Requires \code{geom = "ecdf"}.}
-
-\item{label}{Label the points per sample on the plot. Only applies when
-\code{point} argument is defined.}
 
 \item{trans}{Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
