@@ -1,12 +1,11 @@
 #' Filter Cells
 #'
-#' Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
-#' cellular barcodes.
-#'
-#' @details The filtering cutoff values now support a named numeric vector. By
-#' default we recommend applying the same filtering cutoff to all samples.
-#' When matching the samples, be sure to use `sampleID` column (i.e. the
-#' rownames of [sampleData()]).
+#' Apply gene detection, novelty score, and mitochondrial abundance cutoffs to
+#' cellular barcodes. By default we recommend applying the same filtering cutoff
+#' to all samples. The filtering parameters now support per-sample cutoffs,
+#' defined using a named `numeric` vector. When matching per sample, be sure to
+#' use the [sampleNames()] return values (i.e. the `sampleName` column in
+#' [sampleData()]).
 #'
 #' @name filterCells
 #' @family Data Functions
@@ -17,8 +16,8 @@
 #' @param maxUMIs Maximum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.
 #' @param maxGenes Maximum number of genes detected.
+#' @param minNovelty Minimum novelty score (log10 genes per UMI).
 #' @param maxMitoRatio Maximum relative mitochondrial abundance (`0-1` scale).
-#' @param minNovelty Minimum novelty score.
 #' @param minCellsPerGene Include genes with non-zero expression in at least
 #'   this many cells.
 #'
@@ -37,6 +36,17 @@
 #' show(cellranger_small)
 #' x <- filterCells(cellranger_small, minNovelty = 0L)
 #' show(x)
+#'
+#' # Per sample cutoffs
+#' sampleNames(cellranger_small)
+#' x <- filterCells(
+#'     object = cellranger_small,
+#'     minUMIs = c(
+#'         distal = 100,
+#'         proximal = 200
+#'     )
+#' )
+#' x
 NULL
 
 
@@ -60,13 +70,13 @@ setMethod(
         maxUMIs = Inf,
         minGenes = 0L,
         maxGenes = Inf,
-        maxMitoRatio = 1L,
         minNovelty = 0L,
+        maxMitoRatio = 1L,
         minCellsPerGene = 10L
     ) {
         validObject(object)
+        sampleNames <- sampleNames(object)
         metrics <- metrics(object)
-        samples <- levels(metrics[["sampleID"]])
 
         # Parameter integrity checks ===========================================
         params <- list(
@@ -74,8 +84,8 @@ setMethod(
             maxUMIs = maxUMIs,
             minGenes = minGenes,
             maxGenes = maxGenes,
-            maxMitoRatio = maxMitoRatio,
             minNovelty = minNovelty,
+            maxMitoRatio = maxMitoRatio,
             minCellsPerGene = minCellsPerGene
         )
         invisible(lapply(
@@ -96,14 +106,18 @@ setMethod(
 
         # minUMIs --------------------------------------------------------------
         if (!is.null(names(minUMIs))) {
-            # Per sample mode
-            assert_is_subset(names(minUMIs), samples)
+            assert_is_subset(names(minUMIs), sampleNames)
+            message(paste(
+                "minUMIs: per sample mode",
+                printString(minUMIs),
+                sep = "\n"
+            ))
             list <- mapply(
                 sample = names(minUMIs),
                 cutoff = minUMIs,
                 FUN = function(sample, cutoff) {
                     metrics %>%
-                        .[.[["sampleID"]] == sample, , drop = FALSE] %>%
+                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
                         .[.[["nUMI"]] >= cutoff, , drop = FALSE]
                 },
                 SIMPLIFY = FALSE,
@@ -111,7 +125,6 @@ setMethod(
             )
             metrics <- do.call(rbind, list)
         } else {
-            # Fixed cutoff value
             metrics <- metrics %>%
                 .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
         }
@@ -126,14 +139,18 @@ setMethod(
 
         # maxUMIs --------------------------------------------------------------
         if (!is.null(names(maxUMIs))) {
-            # Per sample mode
-            assert_is_subset(names(maxUMIs), samples)
+            assert_is_subset(names(maxUMIs), sampleNames)
+            message(paste(
+                "maxUMIs: per sample mode",
+                printString(maxUMIs),
+                sep = "\n"
+            ))
             list <- mapply(
                 sample = names(maxUMIs),
                 cutoff = maxUMIs,
                 FUN = function(sample, cutoff) {
                     metrics %>%
-                        .[.[["sampleID"]] == sample, , drop = FALSE] %>%
+                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
                         .[.[["nUMI"]] <= cutoff, , drop = FALSE]
                 },
                 SIMPLIFY = FALSE,
@@ -141,7 +158,6 @@ setMethod(
             )
             metrics <- do.call(rbind, list)
         } else {
-            # Fixed cutoff value
             metrics <- metrics %>%
                 .[.[["nUMI"]] <= maxUMIs, , drop = FALSE]
         }
@@ -156,14 +172,18 @@ setMethod(
 
         # minGenes -------------------------------------------------------------
         if (!is.null(names(minGenes))) {
-            # Per sample mode
-            assert_is_subset(names(minGenes), samples)
+            assert_is_subset(names(minGenes), sampleNames)
+            message(paste(
+                "minGenes: per sample mode",
+                printString(minGenes),
+                sep = "\n"
+            ))
             list <- mapply(
                 sample = names(minGenes),
                 cutoff = minGenes,
                 FUN = function(sample, cutoff) {
                     metrics %>%
-                        .[.[["sampleID"]] == sample, , drop = FALSE] %>%
+                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
                         .[.[["nGene"]] >= cutoff, , drop = FALSE]
                 },
                 SIMPLIFY = FALSE,
@@ -171,7 +191,6 @@ setMethod(
             )
             metrics <- do.call(rbind, list)
         } else {
-            # Fixed cutoff value
             metrics <- metrics %>%
                 .[.[["nGene"]] >= minGenes, , drop = FALSE]
         }
@@ -186,14 +205,18 @@ setMethod(
 
         # maxGenes -------------------------------------------------------------
         if (!is.null(names(maxGenes))) {
-            # Per sample mode
-            assert_is_subset(names(maxGenes), samples)
+            assert_is_subset(names(maxGenes), sampleNames)
+            message(paste(
+                "maxGenes: per sample mode",
+                printString(maxGenes),
+                sep = "\n"
+            ))
             list <- mapply(
                 sample = names(maxGenes),
                 cutoff = maxGenes,
                 FUN = function(sample, cutoff) {
                     metrics %>%
-                        .[.[["sampleID"]] == sample, , drop = FALSE] %>%
+                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
                         .[.[["nGene"]] <= cutoff, , drop = FALSE]
                 },
                 SIMPLIFY = FALSE,
@@ -201,7 +224,6 @@ setMethod(
             )
             metrics <- do.call(rbind, list)
         } else {
-            # Fixed cutoff value
             metrics <- metrics %>%
                 .[.[["nGene"]] <= maxGenes, , drop = FALSE]
         }
@@ -214,46 +236,20 @@ setMethod(
             sep = " | "
         )
 
-        # maxMitoRatio ---------------------------------------------------------
-        if (!is.null(names(maxMitoRatio))) {
-            # Per sample mode
-            assert_is_subset(names(maxMitoRatio), samples)
-            list <- mapply(
-                sample = names(maxMitoRatio),
-                cutoff = maxMitoRatio,
-                FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleID"]] == sample, , drop = FALSE] %>%
-                        .[.[["mitoRatio"]] >= cutoff, , drop = FALSE]
-                },
-                SIMPLIFY = FALSE,
-                USE.NAMES = FALSE
-            )
-            metrics <- do.call(rbind, list)
-        } else {
-            # Fixed cutoff value
-            metrics <- metrics %>%
-                .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
-        }
-        if (!nrow(metrics)) {
-            stop("No cells passed `maxMitoRatio` cutoff")
-        }
-        summaryCells[["maxMitoRatio"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
-            paste("maxMitoRatio", "<=", max(maxMitoRatio)),
-            sep = " | "
-        )
-
         # minNovelty -----------------------------------------------------------
         if (!is.null(names(minNovelty))) {
-            # Per sample mode
-            assert_is_subset(names(minNovelty), samples)
+            assert_is_subset(names(minNovelty), sampleNames)
+            message(paste(
+                "minNovelty: per sample mode",
+                printString(minNovelty),
+                sep = "\n"
+            ))
             list <- mapply(
                 sample = names(minNovelty),
                 cutoff = minNovelty,
                 FUN = function(sample, cutoff) {
                     metrics %>%
-                        .[.[["sampleID"]] == sample, , drop = FALSE] %>%
+                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
                         .[.[["log10GenesPerUMI"]] >= cutoff, , drop = FALSE]
                 },
                 SIMPLIFY = FALSE,
@@ -261,7 +257,6 @@ setMethod(
             )
             metrics <- do.call(rbind, list)
         } else {
-            # Fixed cutoff value
             metrics <- metrics %>%
                 .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
         }
@@ -271,6 +266,39 @@ setMethod(
         summaryCells[["minNovelty"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
             paste("minNovelty", "<=", min(minNovelty)),
+            sep = " | "
+        )
+
+        # maxMitoRatio ---------------------------------------------------------
+        if (!is.null(names(maxMitoRatio))) {
+            assert_is_subset(names(maxMitoRatio), sampleNames)
+            message(paste(
+                "maxMitoRatio: per sample mode",
+                printString(maxMitoRatio),
+                sep = "\n"
+            ))
+            list <- mapply(
+                sample = names(maxMitoRatio),
+                cutoff = maxMitoRatio,
+                FUN = function(sample, cutoff) {
+                    metrics %>%
+                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
+                        .[.[["mitoRatio"]] >= cutoff, , drop = FALSE]
+                },
+                SIMPLIFY = FALSE,
+                USE.NAMES = FALSE
+            )
+            metrics <- do.call(rbind, list)
+        } else {
+            metrics <- metrics %>%
+                .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
+        }
+        if (!nrow(metrics)) {
+            stop("No cells passed `maxMitoRatio` cutoff")
+        }
+        summaryCells[["maxMitoRatio"]] <- paste(
+            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste("maxMitoRatio", "<=", max(maxMitoRatio)),
             sep = " | "
         )
 
@@ -306,8 +334,8 @@ setMethod(
             paste("<=", max(maxUMIs), "UMIs per cell"),
             paste(">=", min(minGenes), "genes per cell"),
             paste("<=", max(maxGenes), "genes per cell"),
-            paste("<=", max(maxMitoRatio), "mitochondrial abundance"),
             paste(">=", min(minNovelty), "novelty score"),
+            paste("<=", max(maxMitoRatio), "mitochondrial abundance"),
             paste(">=", min(minCellsPerGene), "cells per gene")
         )
         cat(c(
