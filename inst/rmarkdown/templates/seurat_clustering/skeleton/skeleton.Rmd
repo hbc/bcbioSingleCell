@@ -7,7 +7,7 @@ params:
     bcb_file: "data/YYYY-MM-DD/bcb_filtered.rda"
     seurat_name: "seurat"
     pc_compute: 20
-    pc_use: FALSE
+    dims_use: FALSE
     vars_to_regress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
     resolution: 1
     data_dir: !r file.path("data", Sys.Date())
@@ -252,15 +252,15 @@ We're using a heuristic approach here, by calculating where the principal compon
 
 This methodology is also commonly used for PC covariate analysis on bulk RNA-seq samples.
 
-```{r pc_use}
+```{r dims_use}
 # Allow for user-defined PCs to use, otherwise calculate using a PC elbow plot
-pc_use <- params$pc_use
-if (!is.numeric(params$pc_use)) {
-    pc_use <- plotPCElbow(seurat)
+dims_use <- params$dims_use
+if (!is.numeric(params$dims_use)) {
+    dims_use <- plotPCElbow(seurat)
 }
 ```
 
-We are using `r length(pc_use)` principal components for dimensionality reduction calculations.
+We are using `r length(dims_use)` principal components for dimensionality reduction calculations.
 
 
 
@@ -275,7 +275,7 @@ Regarding the value of the `resolution` argument, use a value < 1 if you want to
 ```{r find_clusters, results="hide"}
 seurat <- FindClusters(
     object = seurat,
-    dims.use = pc_use,
+    dims.use = dims_use,
     force.recalc = TRUE,
     print.output = TRUE,
     resolution = params$resolution,
@@ -291,16 +291,76 @@ PrintFindClustersParams(seurat)
 
 
 
-# Run non-linear dimensional reduction (tSNE) {.tabset}
+# Run non-linear dimensional reduction {.tabset}
 
-[Seurat][] continues to use tSNE as a powerful tool to visualize and explore these datasets. While we no longer advise clustering directly on tSNE components, cells within the graph-based clusters determined above should co-localize on the tSNE plot. This is because the tSNE aims to place cells with similar local neighborhoods in high-dimensional space together in low-dimensional space. As input to the tSNE, we suggest using the same PCs as input to the clustering analysis, although computing the tSNE based on scaled gene expression is also supported using the `genes.use` argument.
+## t-SNE
+
+[Seurat][] continues to use t-distributed stochastic neighbor embedding (t-SNE) as a powerful tool to visualize and explore these datasets. While we no longer advise clustering directly on t-SNE components, cells within the graph-based clusters determined above should co-localize on the t-SNE plot. This is because the t-SNE aims to place cells with similar local neighborhoods in high-dimensional space together in low-dimensional space. As input to the t-SNE, we suggest using the same PCs as input to the clustering analysis, although computing the t-SNE based on scaled gene expression is also supported using the `genes.use` argument.
 
 ```{r run_tsne}
 seurat <- RunTSNE(
     object = seurat,
-    dims.use = pc_use,
-    do.fast = TRUE
+    dims.use = dims_use,
+    tsne.method = "Rtsne"
 )
+```
+
+
+## FIt-SNE
+
+Advanced, recommended for large datasets. See the [Seurat Mouse Cell Atlas vignette](https://satijalab.org/seurat/mca.html) for more details.
+
+```{bash install_fitsne, eval=FALSE}
+# http://fftw.org
+brew install fftw
+
+mkdir -p ~/R/software
+cd ~/R/software
+
+# https://github.com/KlugerLab/FIt-SNE
+git clone git@github.com:KlugerLab/FIt-SNE.git
+cd FIt-SNE
+g++ -std=c++11 -O3  src/sptree.cpp src/tsne.cpp src/nbodyfft.cpp  -o bin/fast_tsne -pthread -lfftw3 -lm
+```
+
+```{r run_fitsne, eval=FALSE}
+RunTSNE(
+    object = mca,
+    reduction.use = "pca",
+    dims.use = 1:75,
+    tsne.method = "FIt-SNE", 
+    nthreads = 4,
+    reduction.name = "FItSNE",
+    reduction.key = "FItSNE_",
+    fast_tsne_path = "~/R/software/FIt-SNE/bin/fast_tsne", 
+    max_iter = 2000
+)
+```
+
+
+## UMAP
+
+```{bash conda_install, eval=FALSE}
+conda create --name=umap umap-learn
+```
+
+```{bash conda_umap}
+conda activate umap
+```
+
+```{r run_umap}
+# Requires umap-learn
+# https://github.com/lmcinnes/umap
+# Adjusting `min_dist` and/or `n_neighbors` may help with larger datasets
+seurat <- RunUMAP(
+    object = seurat,
+    reduction.use = "pca",
+    dims.use = dims_use,
+    min_dist = 0.75
+)
+```
+
+```{r save}
 assignAndSaveData(
     name = params$seurat_name,
     object = seurat,
@@ -332,7 +392,7 @@ invisible(lapply(group_by, function(group) {
 }))
 ```
 
-Note that tSNE is not PCA! The measurement of distance in a tSNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.
+Note that t-SNE is not PCA! The measurement of distance in a t-SNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.
 
 
 
@@ -362,7 +422,7 @@ plotFeatureTSNE(
 ```{r plot_feature_pc}
 plotFeatureTSNE(
     object = seurat,
-    features = paste0("PC", pc_use),
+    features = paste0("PC", dims_use),
     pointSize = 0.8,
     labelSize = 4
 )
