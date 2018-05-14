@@ -97,7 +97,6 @@ setMethod(
         interestingGroups,
         return = c("DataFrame", "data.frame", "kable")
     ) {
-        validObject(object)
         return <- match.arg(return)
 
         # Use stashed sampleData, if created with bcbioSingleCell
