@@ -16,7 +16,8 @@ seurat_small <- indrops_small %>%
     RunTSNE(dims.use = dims_use, tsne.method = "Rtsne")
 
 # all_markers_small ============================================================
-all_markers_small <- FindAllMarkers(seurat_small)
+# MAST, zinbwave/DESeq2 are recommended
+all_markers_small <- FindAllMarkers(seurat_small, test.use = "wilcox")
 all_markers_small <- sanitizeMarkers(
     object = seurat_small,
     markers = all_markers_small
