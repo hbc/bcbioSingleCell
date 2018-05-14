@@ -61,7 +61,7 @@ Imports:
     Matrix,
     Matrix.utils,
     S4Vectors,
-    Seurat (>= 2.3),
+    Seurat (>= 2.3.1),
     SummarizedExperiment,
     assertive.base,
     assertive.files,
