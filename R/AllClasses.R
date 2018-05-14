@@ -453,12 +453,10 @@ bcbioSingleCell <- function(
 
 
 # Validity Checks ==============================================================
-# FIXME Need to update `colData()` column check
 setValidity(
     "bcbioSingleCell",
     function(object) {
         stopifnot(metadata(object)[["version"]] >= 0.1)
-        assert_is_all_of(object, "SingleCellExperiment")
         stopifnot(!.hasSlot(object, "bcbio"))
 
         # Assays ===============================================================
@@ -467,6 +465,12 @@ setValidity(
         # Row data =============================================================
         assert_is_all_of(rowRanges(object), "GRanges")
         assert_is_all_of(rowData(object), "DataFrame")
+
+        # Column data ==========================================================
+        assert_is_subset(
+            x = colnames(sampleData(object, clean = FALSE)),
+            y = colnames(colData(object))
+        )
 
         # Metadata =============================================================
         metadata <- metadata(object)
@@ -541,9 +545,6 @@ setValidity(
             x = metadata[["level"]],
             y = c("genes", "transcripts")
         )
-
-        # sampleData
-        invisible(lapply(metadata[["sampleData"]], assert_is_factor))
 
         TRUE
     }
