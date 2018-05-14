@@ -9,9 +9,9 @@
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{SingleCellExperiment}(object, minUMIs = 100L,
-  maxUMIs = Inf, minGenes = 0L, maxGenes = Inf, maxMitoRatio = 1L,
-  minNovelty = 0L, minCellsPerGene = 10L)
+\S4method{filterCells}{SingleCellExperiment}(object, minUMIs = 0L,
+  maxUMIs = Inf, minGenes = 0L, maxGenes = Inf, minNovelty = 0L,
+  maxMitoRatio = 1L, minCellsPerGene = 10L)
 }
 \arguments{
 \item{object}{Object.}
@@ -26,9 +26,9 @@ filterCells(object, ...)
 
 \item{maxGenes}{Maximum number of genes detected.}
 
-\item{maxMitoRatio}{Maximum relative mitochondrial abundance (\code{0-1} scale).}
+\item{minNovelty}{Minimum novelty score (log10 genes per UMI).}
 
-\item{minNovelty}{Minimum novelty score.}
+\item{maxMitoRatio}{Maximum relative mitochondrial abundance (\code{0-1} scale).}
 
 \item{minCellsPerGene}{Include genes with non-zero expression in at least
 this many cells.}
@@ -38,14 +38,12 @@ this many cells.}
 \code{\link[=metadata]{metadata()}} as \code{filterCells} and \code{filterParams}.
 }
 \description{
-Apply gene detection, mitochondrial abundance, and novelty score cutoffs to
-cellular barcodes.
-}
-\details{
-The filtering cutoff values now support a named numeric vector. By
-default we recommend applying the same filtering cutoff to all samples.
-When matching the samples, be sure to use \code{sampleID} column (i.e. the
-rownames of \code{\link[=sampleData]{sampleData()}}).
+Apply gene detection, novelty score, and mitochondrial abundance cutoffs to
+cellular barcodes. By default we recommend applying the same filtering cutoff
+to all samples. The filtering parameters now support per-sample cutoffs,
+defined using a named \code{numeric} vector. When matching per sample, be sure to
+use the \code{\link[=sampleNames]{sampleNames()}} return values (i.e. the \code{sampleName} column in
+\code{\link[=sampleData]{sampleData()}}).
 }
 \examples{
 # bcbioSingleCell ====
@@ -57,6 +55,17 @@ show(x)
 show(cellranger_small)
 x <- filterCells(cellranger_small, minNovelty = 0L)
 show(x)
+
+# Per sample cutoffs
+sampleNames(cellranger_small)
+x <- filterCells(
+    object = cellranger_small,
+    minUMIs = c(
+        distal = 100,
+        proximal = 200
+    )
+)
+x
 }
 \seealso{
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.

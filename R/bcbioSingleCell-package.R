@@ -8,7 +8,7 @@
 #'
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
-#' @importFrom Biobase rowMedians
+#' @importFrom Biobase rowMedians sampleNames
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
 #' @importFrom Matrix colSums readMM rowMeans rowSums
 #' @importFrom Matrix.utils aggregate.Matrix
@@ -20,8 +20,8 @@
 #' @importFrom basejump assignAndSaveData camel convertGenesToSymbols
 #'   convertUCSCBuildToEnsembl detectOrganism dynamicPlotlist emptyRanges
 #'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
-#'   makeTx2geneFromGFF markdownHeader markdownPlotlist readFileByExtension
-#'   readYAML theme_midnight theme_paperwhite tx2geneFromGFF
+#'   makeTx2geneFromGFF markdownHeader markdownPlotlist printString
+#'   readFileByExtension readYAML theme_midnight theme_paperwhite tx2geneFromGFF
 #' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
 #'   bcbio_geom_label_average bcbio_geom_label_repel flatFiles
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
@@ -78,6 +78,7 @@
 #' @importFrom assertive.properties has_names
 #' @importFrom assertive.sets assert_are_disjoint_sets
 #' @importFrom assertive.sets assert_are_intersecting_sets
+#' @importFrom assertive.sets assert_are_set_equal
 #' @importFrom assertive.sets assert_is_subset
 #' @importFrom assertive.strings assert_all_are_matching_regex
 #' @importFrom assertive.strings assert_all_are_non_missing_nor_empty_character

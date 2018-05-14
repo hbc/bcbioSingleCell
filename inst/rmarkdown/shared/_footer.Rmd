@@ -15,7 +15,7 @@ markdownHeader("`sessioninfo::session_info()`", level = 2)
 sessioninfo::session_info()
 
 markdownHeader("`utils::sessionInfo()`", level = 2)
-sessionInfo()
+utils::sessionInfo()
 ```
 
 
