@@ -35,6 +35,7 @@ NULL
 
 
 # Methods ======================================================================
+# FIXME Need to subset sample-level metadata in colData
 #' @rdname subset
 #' @export
 setMethod(
