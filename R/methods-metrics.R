@@ -163,35 +163,16 @@ setMethod(
     "metrics",
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
-        sampleData <- sampleData(
-            object = object,
-            clean = FALSE,
-            interestingGroups = interestingGroups
-        )
-        sampleData[["sampleID"]] <- rownames(sampleData)
-
-        colData <- colData(object)
-        # Drop any duplicate metadata columns from colData, if necessary.
-        # This step was added so we can slot rich metadata in seurat objects
-        # inside `object@meta.data`, otherwise this line can be removed.
-        colData <- colData[setdiff(colnames(colData), colnames(sampleData))]
-
-        cell2sample <- cell2sample(object)
-        colData[["sampleID"]] <- cell2sample
-        # Stash the rownames, which will get dropped during merge
-        colData[["rowname"]] <- rownames(colData)
-
-        data <- merge(
-            x = colData,
-            y = sampleData,
-            by = "sampleID",
-            all.x = TRUE
-        )
-
-        # Ensure the numeric metrics columns appear first
-        data <- data[, unique(c(colnames(colData), colnames(data)))]
-
-        .tidyMetrics(data)
+        validObject(object)
+        data <- colData(object)
+        # Include `interestingGroups` column, if not NULL
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        if (length(interestingGroups)) {
+            data <- uniteInterestingGroups(data, interestingGroups)
+        }
+        as.data.frame(data)
     }
 )
 
