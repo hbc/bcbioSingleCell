@@ -1,8 +1,8 @@
 # seurat_small
-# 2018-04-30
+# 2018-05-14
 library(devtools)
-library(Seurat)
 load_all()
+library(Seurat)
 
 # seurat_small =================================================================
 dims_use <- seq_len(20L)
@@ -13,7 +13,7 @@ seurat_small <- indrops_small %>%
     ScaleData() %>%
     RunPCA(do.print = FALSE) %>%
     FindClusters(dims.use = dims_use) %>%
-    RunTSNE(dims.use = dims_use, do.fast = TRUE)
+    RunTSNE(dims.use = dims_use, tsne.method = "Rtsne")
 
 # all_markers_small ============================================================
 all_markers_small <- FindAllMarkers(seurat_small)

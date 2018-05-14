@@ -1,9 +1,9 @@
-# cellranger dataset
-# 2018-04-24
+# cellranger_small
+# 2018-05-14
 library(devtools)
-library(Matrix)
-library(readr)
 load_all()
+library(tidyverse)
+library(Matrix)
 
 # Include the top 500 genes (rows) and cells (columns)
 uploadDir <- "inst/extdata/cellranger"
@@ -63,11 +63,12 @@ cellranger_small <- readCellRanger(
 
 # Apply example filtering without excluding any cells
 cellranger_small <- filterCells(
-    cellranger_small,
+    object = cellranger_small,
     minUMIs = 0,
     minGenes = 0,
+    minNovelty = 0,
     maxMitoRatio = Inf,
-    minNovelty = 0
+    minCellsPerGene = 0
 )
 
 use_data(cellranger_small, compress = "xz", overwrite = TRUE)
