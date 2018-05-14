@@ -48,7 +48,6 @@ setMethod(
         interestingGroups,
         return = c("DataFrame", "data.frame", "kable")
     ) {
-        validObject(object)
         assert_is_a_bool(clean)
         return <- match.arg(return)
 
