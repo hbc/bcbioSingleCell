@@ -38,6 +38,7 @@ setMethod(
     "selectSamples",
     signature("SingleCellExperiment"),
     function(object, ...) {
+        validObject(object)
         metadata(object)[["selectSamples"]] <- TRUE
 
         # Here the `args` are captured as a named character vector. The
@@ -56,6 +57,7 @@ setMethod(
 
         # Match the arguments against the sample metadata
         sampleData <- sampleData(object)
+        # Include sampleID for looping in other functions
         sampleData[["sampleID"]] <- rownames(sampleData)
 
         list <- mapply(
@@ -98,13 +100,11 @@ setMethod(
         ))
 
         # Use the metrics data.frame to match the cellular barcodes
-        metrics <- metrics(object) %>%
-            .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE]
-        if (!nrow(metrics)) {
-            stop("Failed to match metrics")
-        }
-        message(paste(nrow(metrics), "cells matched"))
-        cells <- rownames(metrics)
+        assert_is_subset("sampleID", colnames(colData(object)))
+        cells <- colData(object) %>%
+            .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE] %>%
+            rownames()
+        message(paste(length(cells), "cells matched"))
 
         object[, cells]
     }

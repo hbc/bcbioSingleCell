@@ -35,7 +35,6 @@ NULL
 
 
 # Methods ======================================================================
-# FIXME Need to subset sample-level metadata in colData
 #' @rdname subset
 #' @export
 setMethod(
@@ -153,7 +152,7 @@ setMethod(
         .new.bcbioSingleCell(
             assays = assays(sce),
             rowRanges <- rowRanges(sce),
-            colData <- colData(sce),
+            colData <- colData,
             metadata = metadata,
             isSpike <- rownames(sce)[isSpike(sce)]
         )
