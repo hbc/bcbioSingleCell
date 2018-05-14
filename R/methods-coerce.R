@@ -99,20 +99,6 @@ setAs(
     to = "SingleCellExperiment",
     function(from) {
         validObject(from)
-        assays <- list("counts" = counts(from))
-        rowRanges <- rowRanges(from)
-        if (is.null(rowRanges)) {
-            rowRanges <- emptyRanges(rownames(from))
-        }
-        colData <- colData(from)
-        metadata <- metadata(from)
-        to <- SingleCellExperiment(
-            assays = assays,
-            colData = colData,
-            rowRanges = rowRanges,
-            metadata = metadata
-        )
-        validObject(to)
-        to
+        Seurat::Convert(from = from, to = "sce")
     }
 )
