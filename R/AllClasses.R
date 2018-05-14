@@ -468,7 +468,7 @@ setValidity(
 
         # Column data ==========================================================
         assert_is_subset(
-            x = colnames(sampleData(object, clean = FALSE)),
+            x = colnames(metadata(object)[["sampleData"]]),
             y = colnames(colData(object))
         )
 
