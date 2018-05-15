@@ -37,7 +37,7 @@
     reductionType = c("tsne", "umap", "pca")
 ) {
     reductionType <- match.arg(reductionType)
-    data <- Seurat::GetDimReduction(
+    data <- GetDimReduction(
         object = object,
         reduction.type = reductionType,
         slot = "cell.embeddings"

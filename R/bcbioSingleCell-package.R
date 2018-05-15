@@ -14,6 +14,7 @@
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
 #'   complete.cases mcols metadata metadata<- na.omit
+#' @importFrom Seurat Convert CreateSeuratObject FetchData GetDimReduction
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
 #'   spikeNames
 #' @importFrom SummarizedExperiment assay assays colData rowData rowRanges

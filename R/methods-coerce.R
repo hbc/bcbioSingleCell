@@ -51,7 +51,7 @@ setAs(
         rownames(from) <- make.names(rownames(from), unique = TRUE)
 
         # Create the seurat object
-        to <- Seurat::CreateSeuratObject(
+        to <- CreateSeuratObject(
             raw.data = counts(from),
             project = "bcbioSingleCell",
             # Already applied filtering cutoffs for cells and genes
@@ -99,6 +99,6 @@ setAs(
     to = "SingleCellExperiment",
     function(from) {
         validObject(from)
-        Seurat::Convert(from = from, to = "sce")
+        Convert(from = from, to = "sce")
     }
 )
