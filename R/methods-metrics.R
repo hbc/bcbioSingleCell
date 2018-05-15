@@ -165,30 +165,43 @@ setMethod(
     function(object, interestingGroups) {
         validObject(object)
         colData <- colData(object)
+
+        # Early return NULL if there's no cell-level data
+        if (!length(colData)) {
+            warning("`colData()` is empty")
+            return(NULL)
+        }
+
+        priorityCols <- colnames(colData)
+
+        # Get the sample-level metadata
         sampleData <- sampleData(
             object = object,
             interestingGroups = interestingGroups,
             clean = FALSE
         )
-        # Merge missing columns, if necessary
-        mergeCols <- setdiff(colnames(sampleData), colnames(colData))
-        if (length(mergeCols)) {
-            cell2sample <- cell2sample(object)
-            assert_are_identical(names(cell2sample), rownames(colData))
-            colData[["cellID"]] <- rownames(colData)
-            colData[["sampleID"]] <- cell2sample
-            sampleData[["sampleID"]] <- rownames(sampleData)
-            data <- merge(
-                x = colData,
-                y = sampleData,
-                by = "sampleID",
-                all.x = TRUE
-            )
-            rownames(data) <- data[["cellID"]]
-            data[["cellID"]] <- NULL
-        } else {
-            data <- colData
-        }
+        stopifnot(is(sampleData, "DataFrame"))
+        sampleData[["sampleID"]] <- rownames(sampleData)
+
+        # Keep only columns unique to colData
+        setdiff <- setdiff(colnames(colData), colnames(sampleData))
+        assert_is_non_empty(setdiff)
+        colData <- colData[, setdiff]
+        colData[["sampleID"]] <- cell2sample(object)
+        colData[["cellID"]] <- rownames(colData)
+
+        # Merge by `sampleID`
+        data <- merge(
+            x = colData,
+            y = sampleData,
+            by = "sampleID",
+            all.x = TRUE
+        )
+        rownames(data) <- data[["cellID"]]
+        data[["cellID"]] <- NULL
+
+        # Ensure original `colData` columns are presented first
+        data <- data[, unique(c(priorityCols, colnames(data)))]
         as.data.frame(data)
     }
 )
