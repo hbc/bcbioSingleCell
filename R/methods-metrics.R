@@ -164,13 +164,30 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
         validObject(object)
-        data <- colData(object)
-        # Include `interestingGroups` column, if not NULL
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
-        if (length(interestingGroups)) {
-            data <- uniteInterestingGroups(data, interestingGroups)
+        colData <- colData(object)
+        sampleData <- sampleData(
+            object = object,
+            interestingGroups = interestingGroups,
+            clean = FALSE
+        )
+        # Merge missing columns, if necessary
+        mergeCols <- setdiff(colnames(sampleData), colnames(colData))
+        if (length(mergeCols)) {
+            cell2sample <- cell2sample(object)
+            assert_are_identical(names(cell2sample), rownames(colData))
+            colData[["cellID"]] <- rownames(colData)
+            colData[["sampleID"]] <- cell2sample
+            sampleData[["sampleID"]] <- rownames(sampleData)
+            data <- merge(
+                x = colData,
+                y = sampleData,
+                by = "sampleID",
+                all.x = TRUE
+            )
+            rownames(data) <- data[["cellID"]]
+            data[["cellID"]] <- NULL
+        } else {
+            data <- colData
         }
         as.data.frame(data)
     }
