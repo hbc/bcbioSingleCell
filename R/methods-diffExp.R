@@ -72,20 +72,12 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' m <- metrics(cellranger_small)
-#' numerator <- rownames(m)[which(m[["sampleName"]] == "proximal")]
-#' denominator <- rownames(m)[which(m[["sampleName"]] == "distal")]
-#'
-#' # zinbwave-DESeq2
-#' x <- diffExp(
-#'     object = cellranger_small,
-#'     numerator = numerator,
-#'     denominator = denominator,
-#'     zeroWeights = "zinbwave",
-#'     caller = "DESeq2"
-#' )
-#' class(x)
-#' head(x)
+#' sce <- cellranger_small
+#' # Use S4 methods to get cells (colnames) of object
+#' numerator <- colnames(sce)[which(sce[["sampleName"]] == "proximal")]
+#' glimpse(numerator)
+#' denominator <- colnames(sce)[which(sce[["sampleName"]] == "distal")]
+#' glimpse(denominator)
 #'
 #' # zinbwave-edgeR
 #' x <- diffExp(
@@ -97,6 +89,17 @@
 #' )
 #' class(x)
 #' head(x[["table"]])
+#'
+#' # zinbwave-DESeq2
+#' x <- diffExp(
+#'     object = cellranger_small,
+#'     numerator = numerator,
+#'     denominator = denominator,
+#'     zeroWeights = "zinbwave",
+#'     caller = "DESeq2"
+#' )
+#' class(x)
+#' head(x)
 #'
 #' # seurat ====
 #' # Expression in cluster 3 relative to cluster 2
