@@ -154,7 +154,7 @@ setMethod(
             rowRanges <- rowRanges(sce),
             colData <- colData,
             metadata = metadata,
-            isSpike <- rownames(sce)[isSpike(sce)]
+            spikeNames = rownames(sce)[isSpike(sce)]
         )
     }
 )
