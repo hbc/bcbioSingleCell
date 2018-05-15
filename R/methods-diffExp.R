@@ -1,7 +1,3 @@
-# TODO Improve working example using colnames and colData instead
-
-
-
 #' Differential Expression
 #'
 #' We now generally recommend the ZINB-WaVE method over zingeR, since it is
@@ -30,11 +26,15 @@
 #' use the independent filtering strategy that was originally implemented in
 #' DESeq2. By default, the average fitted values are used as a filter criterion.
 #'
+#' @section DESeq2:
+#' We're providing preliminary support for DESeq2 as the differential expression
+#' caller. It is currently considerably slower for large datasets than edgeR.
+#'
 #' @seealso Consult the following sources for more information:
 #' - [Observation weights unlock bulk RNA-seq tools for zero inflation and single-cell applications](https://doi.org/10.1186/s13059-018-1406-4).
 #' - [zingeR vignette](https://goo.gl/4rTK1w).
 #' - [zinbwave vignette](https://bit.ly/2wtDdpS).
-#' - [zimbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
+#' - [zinbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
 #'
 #' @name diffExp
 #' @family Differential Expression Functions
@@ -79,7 +79,7 @@
 #' denominator <- colnames(sce)[which(sce[["sampleName"]] == "distal")]
 #' glimpse(denominator)
 #'
-#' # zinbwave-edgeR
+#' # zinbwave-edgeR (fast, recommended)
 #' x <- diffExp(
 #'     object = cellranger_small,
 #'     numerator = numerator,
@@ -90,7 +90,8 @@
 #' class(x)
 #' head(x[["table"]])
 #'
-#' # zinbwave-DESeq2
+#' # zinbwave-DESeq2 (slower)
+#' \dontrun{
 #' x <- diffExp(
 #'     object = cellranger_small,
 #'     numerator = numerator,
@@ -100,9 +101,11 @@
 #' )
 #' class(x)
 #' head(x)
+#' }
 #'
 #' # seurat ====
 #' # Expression in cluster 3 relative to cluster 2
+#' \dontrun{
 #' numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
 #' denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
 #' x <- diffExp(
@@ -115,6 +118,7 @@
 #' )
 #' class(x)
 #' head(x[["table"]])
+#' }
 NULL
 
 
@@ -128,15 +132,17 @@ maxit <- 1000L
 
 
 .zinbwave <- function(object, group) {
+    requireNamespace("BiocParallel")
     sce <- as(object, "SingleCellExperiment")
     # zinbFit doesn't support dgCMatrix, so coerce counts to matrix
     assays(sce) <- list("counts" = as.matrix(counts(sce)))
     sce[["group"]] <- group
+    # BPPARAM = BiocParallel::SerialParam()  # nolint
     print(system.time({
         zinb <- zinbwave::zinbwave(
             Y = sce,
             K = 0L,
-            BPPARAM = SerialParam(),
+            BPPARAM = BiocParallel::bpparam(),
             epsilon = 1e12
         )
     }))
