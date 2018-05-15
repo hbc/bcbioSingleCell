@@ -56,10 +56,7 @@ metrics(Seurat::pbmc_small) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{cell2sample}}, \code{\link{counts}},
-  \code{\link{fetchGeneData}}, \code{\link{fetchPCAData}},
-  \code{\link{fetchTSNEData}},
-  \code{\link{fetchTSNEExpressionData}},
+  \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
   \code{\link{filterCells}},
   \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}},
