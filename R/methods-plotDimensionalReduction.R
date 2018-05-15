@@ -4,10 +4,6 @@
 #' - PCA: **P**rincipal **C**omponent **A**nalysis.
 #' - UMAP: **U**niform **M**anifold **A**pproximation and **P**rojection.
 #'
-#' @note [plotUMAP()] requires the Python dependency `umap-learn`. We recommend
-#' installing this with conda: `conda install -c conda-forge umap-learn`.
-#' plotUMAP(seurat_small)
-#'
 #' @name plotDimensionalReduction
 #' @family Clustering Functions
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -15,6 +11,9 @@
 #' @importFrom BiocGenerics plotPCA
 #'
 #' @inheritParams general
+#'
+#' @note [plotUMAP()] requires the Python dependency `umap-learn`. We recommend
+#' installing this with conda: `conda install -c conda-forge umap-learn`.
 #'
 #' @seealso
 #' - [Seurat::DimPlot()].
