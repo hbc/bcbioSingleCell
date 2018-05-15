@@ -1,5 +1,10 @@
-.Rproj.user
-.Rhistory
-.RData
 ..Rcheck
 .httr-oauth
+.RData
+.Rhistory
+.Rproj.user
+docs/reference/_footer.Rmd
+docs/reference/_header.Rmd
+docs/reference/_output.yaml
+docs/reference/_setup.R
+docs/reference/bibliography.bib
