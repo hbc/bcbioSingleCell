@@ -84,9 +84,8 @@ setMethod(
             assert_is_a_string(minUMIs)
             assert_is_subset(minUMIs, c("inflection", "knee"))
         }
-        # FIXME Improve the parameter assert check here
         params <- list(
-            # minUMIs = minUMIs,
+            minUMIs = minUMIs,
             maxUMIs = maxUMIs,
             minGenes = minGenes,
             maxGenes = maxGenes,
@@ -94,13 +93,6 @@ setMethod(
             maxMitoRatio = maxMitoRatio,
             minCellsPerGene = minCellsPerGene
         )
-        invisible(lapply(
-            X = params,
-            FUN = function(param) {
-                assert_is_numeric(param)
-                assert_all_are_non_negative(param)
-            }
-        ))
 
         # Filter low quality cells =============================================
         summaryCells <- character()
