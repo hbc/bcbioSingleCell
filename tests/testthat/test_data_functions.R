@@ -58,10 +58,10 @@ test_that("fetchPCAData", {
         lapply(x, class),
         list(
             "nGene" = "integer",
-            "nUMI" = "integer",
+            "nUMI" = "numeric",  # integer
             "origIdent" = "factor",
-            "res0x8" = "factor",
-            "res1" = "factor",
+            "res0x8" = "character",  # factor
+            "res1" = "character",  # factor
             "sampleID" = "factor",
             "sampleName" = "factor",
             "interestingGroups" = "factor",
@@ -83,8 +83,8 @@ test_that("fetchPCAData", {
         "nGene" = 47L,
         "nUMI" = 70L,
         "origIdent" = factor("SeuratProject"),
-        "res0x8" = factor("0", levels = "0"),
-        "res1" = factor("0", levels = c("0", "1", "2", "3")),
+        "res0x8" = "0",
+        "res1" = "0",
         "sampleID" = factor("SeuratProject"),
         "sampleName" = factor("SeuratProject"),
         "interestingGroups" = factor("SeuratProject"),
@@ -94,7 +94,7 @@ test_that("fetchPCAData", {
         "centerX" = -1.176,
         "centerY" = -1.683,
         row.names = "ATGCCAGAACGACT",
-        stringsAsFactors = TRUE
+        stringsAsFactors = FALSE
     )
     # Use `glimpse()` to compare the rounded numbers
     expect_equal(subset, target)
@@ -110,10 +110,10 @@ test_that("fetchTSNEData", {
         lapply(x, class),
         list(
             "nGene" = "integer",
-            "nUMI" = "integer",
+            "nUMI" = "numeric",
             "origIdent" = "factor",
-            "res0x8" = "factor",
-            "res1" = "factor",
+            "res0x8" = "character",
+            "res1" = "character",
             "sampleID" = "factor",
             "sampleName" = "factor",
             "interestingGroups" = "factor",
@@ -135,8 +135,8 @@ test_that("fetchTSNEData", {
         "nGene" = 47L,
         "nUMI" = 70L,
         "origIdent" = factor("SeuratProject"),
-        "res0x8" = factor("0"),
-        "res1" = factor("0", levels = c("0", "1", "2", "3")),
+        "res0x8" = "0",
+        "res1" = "0",
         "sampleID" = factor("SeuratProject"),
         "sampleName" = factor("SeuratProject"),
         "interestingGroups" = factor("SeuratProject"),
@@ -146,7 +146,7 @@ test_that("fetchTSNEData", {
         "centerX" = -0.332,
         "centerY" = 18.76,
         row.names = "ATGCCAGAACGACT",
-        stringsAsFactors = TRUE
+        stringsAsFactors = FALSE
     )
     expect_equal(subset, target)
 })
@@ -164,10 +164,10 @@ test_that("fetchTSNEExpressionData", {
         lapply(x, class),
         list(
             "nGene" = "integer",
-            "nUMI" = "integer",
+            "nUMI" = "numeric",
             "origIdent" = "factor",
-            "res0x8" = "factor",
-            "res1" = "factor",
+            "res0x8" = "character",
+            "res1" = "character",
             "sampleID" = "factor",
             "sampleName" = "factor",
             "interestingGroups" = "factor",
@@ -191,8 +191,8 @@ test_that("fetchTSNEExpressionData", {
         "nGene" = 47L,
         "nUMI" = 70L,
         "origIdent" = factor("SeuratProject"),
-        "res0x8" = factor("0"),
-        "res1" = factor("0", levels = c("0", "1", "2", "3")),
+        "res0x8" = "0",
+        "res1" = "0",
         "sampleID" = factor("SeuratProject"),
         "sampleName" = factor("SeuratProject"),
         "interestingGroups" = factor("SeuratProject"),
@@ -205,7 +205,7 @@ test_that("fetchTSNEExpressionData", {
         "median" = 0L,
         "sum" = 2L,
         row.names = "ATGCCAGAACGACT",
-        stringsAsFactors = TRUE
+        stringsAsFactors = FALSE
     )
     expect_equal(subset, target)
 })
@@ -263,7 +263,10 @@ test_that("filterCells : Per sample cutoffs", {
     # Get the count of sample1 (run1_AGAGGATA)
     # We're applying no filtering to that sample
     sampleNames <- sampleNames(indrops_small)
-    expect_identical(sampleNames, "rep_1")
+    expect_identical(
+        sampleNames,
+        c(multiplexed_AAAAAAAA = "rep_1")
+    )
     invisible(capture.output(
         x <- filterCells(
             object = indrops_small,
@@ -304,7 +307,6 @@ test_that("metrics : bcbioSingleCell", {
             "nMito" = "integer",
             "log10GenesPerUMI" = "numeric",
             "mitoRatio" = "numeric",
-            "sampleID" = "factor",
             "sampleName" = "factor",
             "fileName" = "factor",
             "description" = "factor",

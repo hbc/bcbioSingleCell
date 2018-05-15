@@ -172,6 +172,7 @@ setMethod(
             return(NULL)
         }
 
+        colData[["sampleID"]] <- NULL
         priorityCols <- colnames(colData)
 
         # Get the sample-level metadata
@@ -198,6 +199,8 @@ setMethod(
             all.x = TRUE
         )
         rownames(data) <- data[["cellID"]]
+
+        data[["sampleID"]] <- NULL
         data[["cellID"]] <- NULL
 
         # Ensure original `colData` columns are presented first
