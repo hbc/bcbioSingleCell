@@ -295,6 +295,17 @@ setGeneric(
 
 
 
+#' @rdname plotUMAP
+#' @export
+setGeneric(
+    "plotUMAP",
+    function(object, ...) {
+        standardGeneric("plotUMAP")
+    }
+)
+
+
+
 #' @rdname plotUMIsPerCell
 #' @export
 setGeneric(
