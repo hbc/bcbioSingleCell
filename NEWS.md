@@ -1,3 +1,113 @@
+# bcbioSingleCell 0.1.6 (2018-05-09)
+
+## Minor changes
+
+- Updated default QC R Markdown template.
+- Added trendline option to QC scatterplot functions.
+- Simplified internal handling of interestingGroups in `plotQC()`.
+- Using `readYAMLSampleData()` internally instead of defunct `sampleYAMLMetadata()`.
+- Added `sampleNames()` method support for seurat.
+- Now importing rmarkdown, sessioninfo, tidyverse for R Markdown reports, rather than suggesting. Similar update applied to bcbioRNASeq.
+- Suggesting scater and scran.
+
+
+
+# bcbioSingleCell 0.1.5 (2018-05-04)
+
+## Major changes
+
+- Overhauled inflection and knee point labeling support in `plotUMIsPerCell()`. Now uses the `point` argument and always labels per sample. Currently requires the `geom = "ecdf"` argument for labeling.
+- Updated default quality control template.
+- Added `plotBarcodeRanks()`.
+
+## Minor changes
+
+- Added barcode rank support for `seurat` class objects.
+- QC plots now have titles by default, matching the conventions used in bcbioRNASeq.
+- Fixed y-axis scale for histogram geom in QC plots.
+- Prefiltering of very low quality barcodes with no UMIs or genes is now always applied. This helps avoid unwanted downstream errors with zero count barcodes.
+- Added boxplot geom support for `plotReadsPerCell().
+- `plotQC()` geom argument is now more consistent across the paneled plots.
+- Fixed facet wrapping for aggregate samples in the QC plots.
+- Added `interestingGroups` support to `plotZerosVsDepth()`, matching the other QC functions.
+
+
+
+# bcbioSingleCell 0.1.4 (2018-04-30)
+
+- Updated `sampleData()` S4 methods to match update in bcbioBase. Now supports
+  `clean` argument, which returns non-blacklisted factor columns only. See
+  `bcbioBase::metadataBlacklist` for the blacklist.
+- Improved axis scale appearance on dimensionality reduction plots using
+  `scales::pretty_breaks()` internally.
+- Added `grid` argument to plots, where applicable.
+- Renamed example dataset from `bcb_small` to `indrops_small`.
+- Removed unnecessary method support for `interestingGroups()` and `metadata()`.
+  These extend from `SummarizedExperiment` correctly now.
+- Fixed x-axis label centering for `plotCellCounts()` and `plotReadsPerCell()`.
+- Simplified seurat method support for `SingleCellExperiment`-like methods,
+  where applicable. This includes `rowData`, `gene2symbol()`, and
+  `interestingGroups()`.
+- Improved dark mode color support for `plotDot()`, `plotFeatureTSNE()`,
+  `plotMarker()`.
+- Updated sample metadata example in README.
+
+
+
+# bcbioSingleCell 0.1.3 (2018-04-25)
+
+## Minor changes
+
+- Improved summary statistics output during `filterCells()` call.
+- Miscellaneous documentation improvements, most notably to `bcbioSingleCell()`
+  constructor function.
+- `plotViolin()` now uses a color border by default.
+- Improved `cell2sample` mapping internally for `readCellRanger()`.
+- Improved [Bioconductor][] 3.7 installation instructions.
+
+
+
+# bcbioSingleCell 0.1.2 (2018-04-24)
+
+## Major changes
+
+- Now using `bcbioSingleCell()` instead of `loadSingleCell()` as the main
+  constructor function to create a `bcbioSingleCell` object. `loadSingleCell()`
+  is deprecated and still works, but will warn the user.
+- Renamed `loadCellRanger()` to `readCellRanger()` for better name consistency.
+- Quality control function color palettes now default to [ggplot2][] colors
+  instead of using [viridis][] palettes. This is defined using
+  `scale_color_hue()` instead of `scale_color_viridis()` for example. The
+  [viridis][] color palette is still used by default for marker expression
+  plots.
+- Use "`aggregate`" instead of "`sampleNameAggregate`" to define
+  aggregate/grouped samples in metadata.
+
+## Minor changes
+
+- Reexporting relevant [ggplot2][] and [viridis][] color palettes.
+- Renamed references to "inDrops" from "inDrop", where applicable.
+- Consistently using `sym()` in place of `.data` internally for tidy code.
+- Updated `seurat` blacklist for `sampleData()` generic.
+- `plotCellTypesPerCluster()` and `plotMarkerTSNE()` now use an automatic color
+  palette by default, which enables for dynamic color palette support when
+  `dark = TRUE`. Internally this is handled with the `theme_midnight()` and
+  `theme_paperwhite()` [ggplot2][] themes.
+- Updated installation instructions to support [Bioconductor][] 3.7.
+
+## Internal changes
+
+- `metrics()` method support now defaults to `matrix` and works similarly
+  for `dgCMatrix` sparse matrices. This is used in place of `calculateMetrics()`
+  to generate the per cell quality control metrics.
+- Reworked and improved `aggregateReplicates()` internal code.
+- Fixed facet wrapping when `aggregate` is defined in metadata for quality
+  control plots.
+- Improved internal code for `sanitizeMarkers()` to use map the gene annotations
+  from `rowRanges()` better.
+
+
+
 # bcbioSingleCell 0.1.1 (2018-04-16)
 
 ## Major changes
