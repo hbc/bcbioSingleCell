@@ -63,7 +63,7 @@ the samples." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
       </span>
     </div>
 
@@ -77,6 +77,9 @@ the samples." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -114,11 +117,11 @@ the samples.</p>
     </div>
 
     <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"kable"</span>))
+<span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>interestingGroups</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"kable"</span>))
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+<span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>interestingGroups</span>,
   <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"kable"</span>))
 
 <span class='co'># S4 method for SingleCellExperiment,DataFrame</span>
@@ -135,13 +138,13 @@ the samples.</p>
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>interestingGroups</th>
-      <td><p><code>character</code> vector defining the groups of interest.</p></td>
-    </tr>
-    <tr>
       <th>clean</th>
       <td><p><em>Recommended.</em> Only return <code>factor</code> columns not defined in
 metadataBlacklist.</p></td>
+    </tr>
+    <tr>
+      <th>interestingGroups</th>
+      <td><p><code>character</code> vector defining the groups of interest.</p></td>
     </tr>
     <tr>
       <th>return</th>
@@ -160,49 +163,75 @@ the first item in the vector by default.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>metadataBlacklist.</p></div>
+    <div class='dont-index'><p>metadataBlacklist.</p>
+<p>Other Metadata Functions: <code>sampleNames</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>indrops_small</span>
-<span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
-#&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
-#&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 2
-#&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>cellranger_small</span>
+<span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ rownames       : chr [1:2] "aggregation_2" "aggregation_1"
+#&gt;   ..@ nrows          : int 2
+#&gt;   ..@ listData       :List of 1
+#&gt;   .. ..$ sampleName: Factor w/ 2 levels "distal","proximal": 1 2
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
-#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
+#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ rownames       : chr [1:2] "aggregation_2" "aggregation_1"
+#&gt;   ..@ nrows          : int 2
+#&gt;   ..@ listData       :List of 5
+#&gt;   .. ..$ sampleName       : Factor w/ 2 levels "distal","proximal": 1 2
+#&gt;   .. ..$ fileName         : Factor w/ 1 level "aggregation.fastq.gz": 1 1
+#&gt;   .. ..$ description      : Factor w/ 2 levels "aggregation-1",..: 2 1
+#&gt;   .. ..$ index            : Factor w/ 2 levels "1","2": 2 1
+#&gt;   .. ..$ interestingGroups: Factor w/ 2 levels "distal","proximal": 1 2
+#&gt;   ..@ elementType    : chr "ANY"
+#&gt;   ..@ elementMetadata: NULL
+#&gt;   ..@ metadata       : list()</div><div class='input'>
+<span class='co'># Assignment support</span>
+<span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
-#&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
-#&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 3
-#&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ batch            : Factor w/ 1 level "1": 1
+#&gt;   ..@ rownames       : chr [1:2] "aggregation_2" "aggregation_1"
+#&gt;   ..@ nrows          : int 2
+#&gt;   ..@ listData       :List of 2
+#&gt;   .. ..$ sampleName: Factor w/ 2 levels "distal","proximal": 1 2
+#&gt;   .. ..$ batch     : Factor w/ 1 level "1": 1 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
 #&gt;   ..@ metadata       : list()</div><div class='input'>
 <span class='co'># seurat ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
+<span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
+#&gt;   ..@ nrows          : int 1
+#&gt;   ..@ listData       :List of 1
+#&gt;   .. ..$ sampleName: Factor w/ 1 level "rep_1": 1
+#&gt;   ..@ elementType    : chr "ANY"
+#&gt;   ..@ elementMetadata: NULL
+#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
+#&gt;   ..@ nrows          : int 1
+#&gt;   ..@ listData       :List of 8
+#&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
+#&gt;   .. ..$ fileName         : Factor w/ 1 level "multiplexed.fastq.gz": 1
+#&gt;   .. ..$ description      : Factor w/ 1 level "multiplexed-AAAAAAAA": 1
+#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
+#&gt;   .. ..$ sequence         : Factor w/ 1 level "TTTTTTTT": 1
+#&gt;   .. ..$ aggregate        : Factor w/ 1 level "sample": 1
+#&gt;   .. ..$ revcomp          : Factor w/ 1 level "AAAAAAAA": 1
+#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
+#&gt;   ..@ elementType    : chr "ANY"
+#&gt;   ..@ elementMetadata: NULL
+#&gt;   ..@ metadata       : list()</div><div class='input'>
+<span class='co'># Assignment support</span>
+<span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
 #&gt;   ..@ listData       :List of 2
-#&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
-#&gt;   ..@ elementType    : chr "ANY"
-#&gt;   ..@ elementMetadata: NULL
-#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
-<span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
-#&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
-#&gt;   ..@ nrows          : int 1
-#&gt;   ..@ listData       :List of 3
-#&gt;   .. ..$ sampleName       : Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "rep_1": 1
-#&gt;   .. ..$ batch            : Factor w/ 1 level "1": 1
+#&gt;   .. ..$ sampleName: Factor w/ 1 level "rep_1": 1
+#&gt;   .. ..$ batch     : Factor w/ 1 level "1": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
 #&gt;   ..@ metadata       : list()</div></pre>

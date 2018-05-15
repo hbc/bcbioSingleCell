@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
       </span>
     </div>
 
@@ -74,6 +74,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -153,29 +156,25 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='fu'>topBarcodes</span>(<span class='no'>indrops_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
-#&gt; Variables: 10
-#&gt; $ nCount            &lt;int&gt; 90582, 128690, 111183, 126962, 111111, 124799, 11...
-#&gt; $ nUMI              &lt;int&gt; 9323, 6978, 6933, 6467, 6387, 6137, 6102, 6008, 5...
+#&gt; Variables: 16
+#&gt; $ sampleID          &lt;fct&gt; multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, multiplexed_AAA...
+#&gt; $ nUMI              &lt;int&gt; 9323, 6978, 6933, 6467, 6387, 6137, 6102, 6008, 5982, 5924
 #&gt; $ nGene             &lt;int&gt; 184, 451, 442, 440, 445, 448, 448, 455, 431, 433
-#&gt; $ nCoding           &lt;int&gt; 789, 5617, 6261, 4634, 5808, 5388, 5115, 5422, 55...
+#&gt; $ nCoding           &lt;int&gt; 789, 5617, 6261, 4634, 5808, 5388, 5115, 5422, 5584, 5417
 #&gt; $ nMito             &lt;int&gt; 6578, 781, 324, 1251, 239, 338, 476, 213, 137, 190
-#&gt; $ log10GenesPerUMI  &lt;dbl&gt; 0.5705469, 0.6905209, 0.6887468, 0.6936916, 0.695...
-#&gt; $ mitoRatio         &lt;dbl&gt; 0.70556688, 0.11192319, 0.04673302, 0.19344364, 0...
-#&gt; $ sampleID          &lt;fct&gt; multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, multi...
-#&gt; $ sampleName        &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...
-#&gt; $ interestingGroups &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...</div><div class='input'>
+#&gt; $ log10GenesPerUMI  &lt;dbl&gt; 0.5705469, 0.6905209, 0.6887468, 0.6936916, 0.6959667, 0.6999231, 0.7003824, 0.70...
+#&gt; $ mitoRatio         &lt;dbl&gt; 0.70556688, 0.11192319, 0.04673302, 0.19344364, 0.03741976, 0.05507577, 0.0780072...
+#&gt; $ sampleName        &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1
+#&gt; $ fileName          &lt;fct&gt; multiplexed.fastq.gz, multiplexed.fastq.gz, multiplexed.fastq.gz, multiplexed.fas...
+#&gt; $ description       &lt;fct&gt; multiplexed-AAAAAAAA, multiplexed-AAAAAAAA, multiplexed-AAAAAAAA, multiplexed-AAA...
+#&gt; $ index             &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+#&gt; $ sequence          &lt;fct&gt; TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT, T...
+#&gt; $ aggregate         &lt;fct&gt; sample, sample, sample, sample, sample, sample, sample, sample, sample, sample
+#&gt; $ revcomp           &lt;fct&gt; AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, A...
+#&gt; $ nCount            &lt;int&gt; 90582, 128690, 111183, 126962, 111111, 124799, 118717, 101690, 99905, 125515
+#&gt; $ interestingGroups &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1</div><div class='input'>
 <span class='co'># seurat ====</span>
-<span class='fu'>topBarcodes</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 10
-#&gt; Variables: 9
-#&gt; $ nGene             &lt;int&gt; 96, 88, 83, 84, 94, 69, 47, 81, 77, 86
-#&gt; $ nUMI              &lt;int&gt; 872, 787, 754, 745, 709, 612, 527, 502, 463, 462
-#&gt; $ origIdent         &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
-#&gt; $ res0x8            &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-#&gt; $ res1              &lt;fct&gt; 1, 1, 1, 1, 1, 0, 3, 2, 1, 1
-#&gt; $ sampleID          &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
-#&gt; $ sampleName        &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
-#&gt; $ interestingGroups &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
-#&gt; $ ident             &lt;fct&gt; 1, 1, 1, 1, 1, 0, 3, 2, 1, 1</div></pre>
+<span class='fu'>topBarcodes</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in .local(object, ...): is_subset : The element 'sampleName' in interestingGroups is not in colnames(object).</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

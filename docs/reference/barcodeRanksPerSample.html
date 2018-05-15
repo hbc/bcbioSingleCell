@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
       </span>
     </div>
 
@@ -74,6 +74,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -179,8 +182,7 @@ Note that only points with total counts above <code>lower</code> will be conside
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>indrops_small</span>)
-<span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: DropletUtils</span></div><div class='input'><span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div><div class='input'>
 <span class='co'># SingleCellExperiment ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>cellranger_small</span>)
 <span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "aggregation_1" "aggregation_2"</div><div class='input'>

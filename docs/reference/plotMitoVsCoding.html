@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
       </span>
     </div>
 
@@ -74,6 +74,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -111,11 +114,13 @@
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotMitoVsCoding</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mito vs. coding"</span>)
+  <span class='kw'>trendline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mito vs. coding"</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMitoVsCoding</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mito vs. coding"</span>)</pre>
+  <span class='kw'>trendline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mito vs. coding"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,6 +137,10 @@
       <th>interestingGroups</th>
       <td><p>Character vector of interesting groups. Must be
 formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+    </tr>
+    <tr>
+      <th>trendline</th>
+      <td><p>Include trendline on plot.</p></td>
     </tr>
     <tr>
       <th>color</th>
