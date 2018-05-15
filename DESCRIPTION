@@ -106,7 +106,7 @@ Suggests:
     scater,
     scran,
     testthat,
-    zinbwave (>= 1.2),
+    zinbwave (>= 1.0),
     zingeR (>= 0.1)
 Remotes:
     hbc/bcbioBase,

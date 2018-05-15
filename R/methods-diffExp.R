@@ -299,7 +299,7 @@ setMethod(
                 package = "zinbwave",
                 versionCheck = list(
                     op = ">=",
-                    version = package_version("1.2")
+                    version = package_version("1.0")
                 )
             )
         } else if (zeroWeights == "zingeR") {
