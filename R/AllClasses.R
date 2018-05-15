@@ -396,7 +396,7 @@ bcbioSingleCell <- function(
 
     # Bind the `nCount` column into the colData
     nCount <- cbData[rownames(colData), "nCount", drop = FALSE]
-    colData <- cbind(colData, nCount)
+    colData <- cbind(nCount, colData)
 
     # Subset the counts to match the prefiltered metrics
     counts <- counts[, rownames(colData), drop = FALSE]
