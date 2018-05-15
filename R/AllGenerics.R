@@ -295,7 +295,7 @@ setGeneric(
 
 
 
-#' @rdname plotTSNE
+#' @rdname plotDimensionalReduction
 #' @export
 setGeneric(
     "plotTSNE",
@@ -306,7 +306,7 @@ setGeneric(
 
 
 
-#' @rdname plotUMAP
+#' @rdname plotDimensionalReduction
 #' @export
 setGeneric(
     "plotUMAP",
