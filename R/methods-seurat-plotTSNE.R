@@ -38,7 +38,7 @@ setMethod(
         title = NULL
     ) {
         tsne <- fetchTSNEData(object)
-        .plotDR(
+        .plotDimensionalReduction(
             tsne,
             axes = c(x = "tSNE1", y = "tSNE2"),
             interestingGroups = interestingGroups,

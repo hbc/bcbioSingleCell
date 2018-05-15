@@ -1,4 +1,4 @@
-#' Plot Dimensionality Reduction
+#' Plot Dimensional Reduction
 #'
 #' Internal constructor supporting tSNE and PCA plots.
 #'
@@ -9,7 +9,7 @@
 #' @param object `data.frame` returned by [fetchTSNEExpressionData()].
 #'
 #' @return `ggplot`.
-.plotDR <- function(
+.plotDimensionalReduction <- function(
     object,
     axes,
     interestingGroups = "ident",
