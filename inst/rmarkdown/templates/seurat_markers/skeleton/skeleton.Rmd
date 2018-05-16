@@ -8,7 +8,7 @@ params:
     cell_type_markers_file: NULL
     organism: NULL
     data_dir: !r file.path("data", Sys.Date())
-    data_dir: !r file.path("results", Sys.Date(), "markers")
+    results_dir: !r file.path("results", Sys.Date(), "markers")
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
