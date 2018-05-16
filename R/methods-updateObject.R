@@ -1,7 +1,3 @@
-# TODO Inform user about colData change, and provide update method here
-
-
-
 #' Update Object
 #'
 #' Update old objects created by the bcbioSingleCell package. The session
