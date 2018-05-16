@@ -22,18 +22,24 @@ NULL
 #' @export
 setMethod(
     "cell2sample",
+    signature("bcbioSingleCell"),
+    function(object) {
+        validObject(object)
+        metadata(object)[["cell2sample"]]
+    }
+)
+
+
+#' @rdname cell2sample
+#' @export
+setMethod(
+    "cell2sample",
     signature("SingleCellExperiment"),
     function(object) {
         validObject(object)
-        cell2sample <- metadata(object)[["cell2sample"]]
-        if (!is.factor(cell2sample)) {
-            cells <- colnames(object)
-            samples <- rownames(sampleData(object))
-            cell2sample <- mapCellsToSamples(cells = cells, samples = samples)
-        }
-        cell2sample %>%
-            .[colnames(object)] %>%
-            droplevels()
+        cells <- colnames(object)
+        samples <- rownames(sampleData(object))
+        mapCellsToSamples(cells = cells, samples = samples)
     }
 )
 
