@@ -284,7 +284,7 @@ setGeneric(
 
 
 
-#' @rdname plotTopMarkers
+#' @rdname plotMarker
 #' @export
 setGeneric(
     "plotTopMarkers",
