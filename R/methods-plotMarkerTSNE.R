@@ -41,13 +41,14 @@ setMethod(
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        dark = FALSE,
+        dark = TRUE,
         grid = TRUE,
         legend = FALSE,
         aspectRatio = 1L,
         title = TRUE
     ) {
         assert_is_character(genes)
+        genes <- make.names(genes)
         expression <- match.arg(expression)
         assert_is_a_bool(pointsAsNumbers)
         assert_is_a_number(pointSize)
