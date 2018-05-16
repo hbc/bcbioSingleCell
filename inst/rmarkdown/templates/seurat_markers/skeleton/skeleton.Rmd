@@ -27,7 +27,7 @@ stopifnot(is(seurat, "seurat"))
 invisible(validObject(seurat))
 
 # Load presaved Seurat markers
-if (!is.null(all_markers_file)) {
+if (!is.null(params$all_markers_file)) {
     # Load presaved `Seurat::FindAllMarkers()` return.
     # Use the original, unsanitized data.frame.
     all_markers_name <- load(params$all_markers_file)
@@ -103,9 +103,8 @@ Seurat has multiple tests for differential expression which can be set with the 
 # We recommend running this step outside of R Markdown and then loading the
 # presaved R data file instead.
 
-if (!exists(all_markers, inherits = FALSE)) {
+if (!exists("all_markers", inherits = FALSE)) {
     all_markers <- FindAllMarkers(seurat)
-    
     # Save the original, unmodified data.frame as a backup
     assignAndSaveData(
         name = paste(seurat_name, "markers", "original", sep = "_"),
@@ -159,7 +158,7 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 # doesn't appear to be working in Seurat v2.1 (updated 2017-11-25).
 DoHeatmap(
     object = seurat,
-    genes.use = top_markers$symbol,
+    genes.use = top_markers$rowname,
     col.low = viridis(3)[[1]],
     col.mid = viridis(3)[[2]],
     col.high = viridis(3)[[3]],
