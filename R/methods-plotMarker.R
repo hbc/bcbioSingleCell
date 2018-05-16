@@ -63,11 +63,12 @@ setMethod(
     function(
         object,
         gene,
-        dark = FALSE,
+        dark = TRUE,
         return = c("grid", "list"),
         ...
     ) {
         assert_is_a_string(gene)
+        gene <- make.names(gene)
         assert_is_a_bool(dark)
         return <- match.arg(return)
 
@@ -153,6 +154,7 @@ setMethod(
         ...
     ) {
         assert_is_character(genes)
+        genes <- make.names(genes)
         assert_is_subset(genes, rownames(object))
         assertIsAHeaderLevel(headerLevel)
 
@@ -218,6 +220,66 @@ setMethod(
                 asis = TRUE
             )
             subheaderLevel <- headerLevel + 1L
+            plotMarkers(
+                object = object,
+                genes = genes,
+                headerLevel = subheaderLevel,
+                ...
+            )
+        })
+
+        invisible(list)
+    }
+)
+
+
+
+#' @rdname plotMarker
+#' @param markers `grouped_df` of known marker genes.
+#' @export
+#' @examples
+#' # Let's plot the first known marker, as a quick example
+#' plotKnownMarkersDetected(
+#'     object = seurat_small,
+#'     markers = known_markers_small[1L, , drop = FALSE]
+#' )
+setMethod(
+    "plotKnownMarkersDetected",
+    signature("seurat"),
+    function(
+        object,
+        markers,
+        headerLevel = 2L,
+        ...
+    ) {
+        assert_has_rows(markers)
+        assertIsAHeaderLevel(headerLevel)
+        stopifnot(is(markers, "grouped_df"))
+        assert_has_rows(markers)
+        assert_is_subset("cellType", colnames(markers))
+
+        cellTypes <- markers %>%
+            pull("cellType") %>%
+            na.omit() %>%
+            unique()
+        assert_is_non_empty(cellTypes)
+
+        list <- pblapply(cellTypes, function(cellType) {
+            genes <- markers %>%
+                .[.[["cellType"]] == cellType, , drop = FALSE] %>%
+                pull("geneName") %>%
+                na.omit() %>%
+                unique()
+            assert_is_non_empty(genes)
+
+            markdownHeader(
+                object = cellType,
+                level = headerLevel,
+                tabset = TRUE,
+                asis = TRUE
+            )
+            subheaderLevel <- headerLevel + 1L
+
             plotMarkers(
                 object = object,
                 genes = genes,
