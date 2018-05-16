@@ -100,7 +100,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Known Markers Detected</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-knownMarkersDetected.R'><code>R/methods-seurat-knownMarkersDetected.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-knownMarkersDetected.R'><code>R/methods-knownMarkersDetected.R</code></a></small>
     <div class="hidden name"><code>knownMarkersDetected.Rd</code></div>
     </div>
 
@@ -130,7 +130,7 @@
     <tr>
       <th>known</th>
       <td><p>Known markers <code>data.frame</code> imported by
-<code><a href='readCellTypeMarkers.html'>readCellTypeMarkers()</a></code> or pulled from internal <a href='cellCycleMarkers.html'>cellCycleMarkers</a> data.</p></td>
+<code>readCellTypeMarkers()</code> or pulled from internal cellCycleMarkers data.</p></td>
     </tr>
     <tr>
       <th>alpha</th>
@@ -166,8 +166,8 @@ easily.</p>
   <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
   <code>plotMarkerTSNE</code>, <code>plotMarker</code>,
-  <code><a href='plotPCA.html'>plotPCA</a></code>, <code>plotPCElbow</code>,
-  <code>plotTSNE</code>, <code>plotTopMarkers</code>,
+  <code>plotPCElbow</code>, <code>plotTSNE</code>,
+  <code>plotTopMarkers</code>,
   <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
     
 
@@ -177,7 +177,7 @@ easily.</p>
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>all_markers_small</span>,
     <span class='kw'>known</span> <span class='kw'>=</span> <span class='no'>cellTypeMarkers</span><span class='kw'>[[</span><span class='st'>"homoSapiens"</span>]]
 ) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1
+    <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 1
 #&gt; Variables: 19
 #&gt; $ cellType       &lt;chr&gt; "Natural Killer Cell"
 #&gt; $ cluster        &lt;fct&gt; 1
@@ -195,7 +195,7 @@ easily.</p>
 #&gt; $ width          &lt;int&gt; 317190
 #&gt; $ strand         &lt;fct&gt; +
 #&gt; $ geneBiotype    &lt;fct&gt; protein_coding
-#&gt; $ description    &lt;chr&gt; "neural cell adhesion molecule 1 [Source:HGNC Symbol;Acc:HGNC:7656]"
+#&gt; $ description    &lt;chr&gt; "neural cell adhesion molecule 1 [Source:HGNC Symbol...
 #&gt; $ seqCoordSystem &lt;fct&gt; chromosome
 #&gt; $ broadClass     &lt;fct&gt; coding</div></pre>
   </div>

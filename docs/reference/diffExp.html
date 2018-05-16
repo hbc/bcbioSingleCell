@@ -208,13 +208,19 @@ can be performed on the obtained p-values (<code>independentFiltering = TRUE</co
 use the independent filtering strategy that was originally implemented in
 DESeq2. By default, the average fitted values are used as a filter criterion.</p>
     
+    <h2 class="hasAnchor" id="deseq-"><a class="anchor" href="#deseq-"></a>DESeq2</h2>
+
+    
+    <p>We're providing preliminary support for DESeq2 as the differential expression
+caller. It is currently considerably slower for large datasets than edgeR.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Consult the following sources for more information:</p><ul>
 <li><p><a href='https://doi.org/10.1186/s13059-018-1406-4'>Observation weights unlock bulk RNA-seq tools for zero inflation and single-cell applications</a>.</p></li>
 <li><p><a href='https://goo.gl/4rTK1w'>zingeR vignette</a>.</p></li>
 <li><p><a href='https://bit.ly/2wtDdpS'>zinbwave vignette</a>.</p></li>
-<li><p><a href='https://github.com/mikelove/zinbwave-deseq2'>zimbwave-DESeq2 workflow</a>.</p></li>
+<li><p><a href='https://github.com/mikelove/zinbwave-deseq2'>zinbwave-DESeq2 workflow</a>.</p></li>
 </ul></div>
     <div class='dont-index'><ul>
 <li><p>DESeq2: We're trying to follow the conventions used in DESeq2 for
@@ -229,78 +235,24 @@ for additional information.</p></li>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics.html'>metrics</a></span>(<span class='no'>cellranger_small</span>)
-<span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>m</span>)[<span class='fu'>which</span>(<span class='no'>m</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"proximal"</span>)]
-<span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>m</span>)[<span class='fu'>which</span>(<span class='no'>m</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"distal"</span>)]
-
-<span class='co'># zinbwave-DESeq2</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>cellranger_small</span>,
-    <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
-    <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
-    <span class='kw'>zeroWeights</span> <span class='kw'>=</span> <span class='st'>"zinbwave"</span>,
-    <span class='kw'>caller</span> <span class='kw'>=</span> <span class='st'>"DESeq2"</span>
-)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: zinbwave</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: DESeq2</span></div><div class='output co'>#&gt; <span class='message'>Performing differential expression with zinbwave-DESeq2</span></div><div class='output co'>#&gt; <span class='message'>Applying low gene count filter</span>
-#&gt; <span class='message'>Requiring at least 25 cells with counts of 5 or more</span></div><div class='output co'>#&gt; genes
-#&gt; TRUE 
-#&gt;  500 
-#&gt;    user  system elapsed 
-#&gt; 102.367   2.503  35.256 </div><div class='output co'>#&gt; <span class='message'>converting counts to integer mode</span></div><div class='output co'>#&gt; <span class='message'>estimating size factors</span></div><div class='output co'>#&gt; <span class='message'>estimating dispersions</span></div><div class='output co'>#&gt; <span class='message'>gene-wise dispersion estimates</span></div><div class='output co'>#&gt; <span class='message'>mean-dispersion relationship</span></div><div class='output co'>#&gt; <span class='message'>final dispersion estimates</span></div><div class='output co'>#&gt; <span class='message'>fitting model and testing</span></div><div class='output co'>#&gt;    user  system elapsed 
-#&gt; 176.828   2.868 182.050 </div><div class='img'><img src='diffExp-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; $rect
-#&gt; $rect$w
-#&gt; [1] 1.188434
-#&gt; 
-#&gt; $rect$h
-#&gt; [1] 0.35884
-#&gt; 
-#&gt; $rect$left
-#&gt; [1] 1.909997
-#&gt; 
-#&gt; $rect$top
-#&gt; [1] -1.358794
-#&gt; 
-#&gt; 
-#&gt; $text
-#&gt; $text$x
-#&gt; [1] 2.258307 2.258307 2.258307
-#&gt; 
-#&gt; $text$y
-#&gt; [1] -1.448504 -1.538214 -1.627924
-#&gt; 
-#&gt; </div><div class='input'><span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "DESeqResults"
-#&gt; attr(,"package")
-#&gt; [1] "DESeq2"</div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; log2 fold change (MLE): group numerator vs denominator 
-#&gt; LRT p-value: '~ group' vs '~ 1' 
-#&gt; DataFrame with 6 rows and 6 columns
-#&gt;                         baseMean     log2FoldChange              lfcSE             stat               pvalue
-#&gt;                        &lt;numeric&gt;          &lt;numeric&gt;          &lt;numeric&gt;        &lt;numeric&gt;            &lt;numeric&gt;
-#&gt; ENSG00000005022 40.6946883919453 0.0969614143415067 0.0583898490050989 2.74885559613085   0.0973240650417439
-#&gt; ENSG00000008018 14.8932881299383  0.592146719221284 0.0635287124600374 86.8346534696238 1.17984003724583e-20
-#&gt; ENSG00000008394 39.5480029505622   1.18187261290727 0.0911514348619983 152.376927876437 5.24138622879893e-35
-#&gt; ENSG00000008988 217.581034338649 -0.635753413462794 0.0360206306430627 325.539996396201 8.99915778524178e-73
-#&gt; ENSG00000026025 18.0728087783362  -0.68221630287468  0.242477684485772 7.98031541354476  0.00472887021635307
-#&gt; ENSG00000029993 13.9244947453213   -1.2302100247238  0.145219274973856 78.0883321336796  9.8534261071521e-19
-#&gt;                                 padj
-#&gt;                            &lt;numeric&gt;
-#&gt; ENSG00000005022    0.108190905285977
-#&gt; ENSG00000008018 2.77905449531364e-20
-#&gt; ENSG00000008394 1.91541834978902e-34
-#&gt; ENSG00000008988 1.27788040550433e-71
-#&gt; ENSG00000026025  0.00577456633299134
-#&gt; ENSG00000029993  2.1765123445576e-18</div><div class='input'>
-<span class='co'># zinbwave-edgeR</span>
+<span class='no'>sce</span> <span class='kw'>&lt;-</span> <span class='no'>cellranger_small</span>
+<span class='co'># Use S4 methods to get cells (colnames) of object</span>
+<span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>sce</span>)[<span class='fu'>which</span>(<span class='no'>sce</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"proximal"</span>)]
+<span class='fu'>glimpse</span>(<span class='no'>numerator</span>)</div><div class='output co'>#&gt;  chr [1:351] "aggregation_AAACCTGGTTTACTCT_1" ...</div><div class='input'><span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>sce</span>)[<span class='fu'>which</span>(<span class='no'>sce</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"distal"</span>)]
+<span class='fu'>glimpse</span>(<span class='no'>denominator</span>)</div><div class='output co'>#&gt;  chr [1:149] "aggregation_AACTCAGAGCGCTCCA_2" ...</div><div class='input'>
+<span class='co'># zinbwave-edgeR (fast, recommended)</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>cellranger_small</span>,
     <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
     <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
     <span class='kw'>zeroWeights</span> <span class='kw'>=</span> <span class='st'>"zinbwave"</span>,
     <span class='kw'>caller</span> <span class='kw'>=</span> <span class='st'>"edgeR"</span>
-)</div><div class='output co'>#&gt; <span class='message'>Performing differential expression with zinbwave-edgeR</span></div><div class='output co'>#&gt; <span class='message'>Applying low gene count filter</span>
+)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: zinbwave</span></div><div class='output co'>#&gt; <span class='message'>Performing differential expression with zinbwave-edgeR</span></div><div class='output co'>#&gt; <span class='message'>Applying low gene count filter</span>
 #&gt; <span class='message'>Requiring at least 25 cells with counts of 5 or more</span></div><div class='output co'>#&gt; genes
 #&gt; TRUE 
 #&gt;  500 
 #&gt;    user  system elapsed 
-#&gt;  30.777   0.946  32.260 </div><div class='input'><span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "DGELRT"
+#&gt; 125.464  20.072  40.707 </div><div class='input'><span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "DGELRT"
 #&gt; attr(,"package")
 #&gt; [1] "edgeR"</div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt;                      logFC    logCPM         LR       PValue
 #&gt; ENSG00000005022  0.1774111 10.050237   9.141339 2.626271e-03
@@ -309,8 +261,21 @@ for additional information.</p></li>
 #&gt; ENSG00000008988 -0.5308476 12.389327 308.188318 3.441931e-54
 #&gt; ENSG00000026025 -0.5718466  9.516885   5.725923 1.729285e-02
 #&gt; ENSG00000029993 -1.1655945  8.681385  69.050417 9.760156e-16</div><div class='input'>
-<span class='co'># seurat ====</span>
-<span class='co'># Expression in cluster 3 relative to cluster 2</span>
+# zinbwave-DESeq2 (slower)
+</div><span class='co'># NOT RUN {</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>cellranger_small</span>,
+    <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
+    <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
+    <span class='kw'>zeroWeights</span> <span class='kw'>=</span> <span class='st'>"zinbwave"</span>,
+    <span class='kw'>caller</span> <span class='kw'>=</span> <span class='st'>"DESeq2"</span>
+)
+<span class='fu'>class</span>(<span class='no'>x</span>)
+<span class='fu'>head</span>(<span class='no'>x</span>)
+<span class='co'># }</span><div class='input'>
+# seurat ====
+# Expression in cluster 3 relative to cluster 2
+</div><span class='co'># NOT RUN {</span>
 <span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>3L</span>)
 <span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
@@ -320,20 +285,10 @@ for additional information.</p></li>
     <span class='kw'>caller</span> <span class='kw'>=</span> <span class='st'>"edgeR"</span>,
     <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>5L</span>,
     <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>
-)</div><div class='output co'>#&gt; <span class='message'>Performing differential expression with zinbwave-edgeR</span></div><div class='output co'>#&gt; <span class='message'>Applying low gene count filter</span>
-#&gt; <span class='message'>Requiring at least 5 cells with counts of 5 or more</span></div><div class='output co'>#&gt; genes
-#&gt; FALSE  TRUE 
-#&gt;   213    17 
-#&gt;    user  system elapsed 
-#&gt;   0.929   0.015   0.947 </div><div class='input'><span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "DGELRT"
-#&gt; attr(,"package")
-#&gt; [1] "edgeR"</div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt;             logFC   logCPM           LR      PValue
-#&gt; NKG7   -8.0978765 17.95711 4.001607e-05 0.995039029
-#&gt; CCL5    0.3327462 16.86562 1.538144e+00 0.228265805
-#&gt; TYROBP  3.6536228 16.70005 1.240148e+01 0.003558917
-#&gt; LGALS1  1.8190557 16.37732 1.723488e+00 0.207087609
-#&gt; FCER1G  0.1598044 15.97882 1.737223e-02 0.896824369
-#&gt; PPBP    9.3502205 19.18038 1.125326e-08 0.999917035</div></pre>
+)
+<span class='fu'>class</span>(<span class='no'>x</span>)
+<span class='fu'>head</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='st'>"table"</span>]])
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -347,6 +302,8 @@ for additional information.</p></li>
       <li><a href="#zinger">zingeR</a></li>
 
       <li><a href="#edger">edgeR</a></li>
+
+      <li><a href="#deseq-">DESeq2</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

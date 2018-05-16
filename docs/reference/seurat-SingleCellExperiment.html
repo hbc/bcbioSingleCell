@@ -115,7 +115,7 @@
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotCellCounts</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_fill_hue</a></span>(), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"cell counts"</span>)
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>scale_fill_hue</span>(), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"cell counts"</span>)
 
 <span class='co'># S4 method for seurat,ANY</span>
 <span class='fu'>assay</span>(<span class='no'>x</span>)
@@ -125,6 +125,9 @@
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>colnames</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>counts</span>(<span class='no'>object</span>, <span class='kw'>normalized</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>metadata</span>(<span class='no'>x</span>)
@@ -163,7 +166,7 @@
     <tr>
       <th>interestingGroups</th>
       <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+formatted in camel case and intersect with <code>sampleData()</code> colnames.</p></td>
     </tr>
     <tr>
       <th>fill</th>
@@ -178,6 +181,10 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
     <tr>
       <th>x</th>
       <td><p>Primary object.</p></td>
+    </tr>
+    <tr>
+      <th>normalized</th>
+      <td><p>Normalized (<code>TRUE</code>) or raw (<code>FALSE</code>) counts.</p></td>
     </tr>
     <tr>
       <th>value</th>

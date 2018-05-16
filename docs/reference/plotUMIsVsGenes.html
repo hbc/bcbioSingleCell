@@ -114,12 +114,12 @@
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>trendline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>,
+  <span class='kw'>trendline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>scale_color_hue</span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"UMIs vs. genes"</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>trendline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>,
+  <span class='kw'>trendline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>scale_color_hue</span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"UMIs vs. genes"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -136,7 +136,7 @@
     <tr>
       <th>interestingGroups</th>
       <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+formatted in camel case and intersect with <code>sampleData()</code> colnames.</p></td>
     </tr>
     <tr>
       <th>trendline</th>
@@ -169,7 +169,7 @@ color definitions are desired, we recommend using
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
 <span class='fu'>plotUMIsVsGenes</span>(<span class='no'>cellranger_small</span>)</div><div class='img'><img src='plotUMIsVsGenes-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># seurat ====</span>
-<span class='fu'>plotUMIsVsGenes</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>)</div><div class='output co'>#&gt; <span class='error'>Error in .local(object, ...): is_subset : The element 'sampleName' in interestingGroups is not in colnames(object).</span></div></pre>
+<span class='fu'>plotUMIsVsGenes</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>)</div><div class='img'><img src='plotUMIsVsGenes-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -170,14 +170,14 @@ the first item in the vector by default.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>cellranger_small</span>
-<span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+<span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr [1:2] "aggregation_2" "aggregation_1"
 #&gt;   ..@ nrows          : int 2
 #&gt;   ..@ listData       :List of 1
 #&gt;   .. ..$ sampleName: Factor w/ 2 levels "distal","proximal": 1 2
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
-#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr [1:2] "aggregation_2" "aggregation_1"
 #&gt;   ..@ nrows          : int 2
 #&gt;   ..@ listData       :List of 5
@@ -191,7 +191,7 @@ the first item in the vector by default.</p></td>
 #&gt;   ..@ metadata       : list()</div><div class='input'>
 <span class='co'># Assignment support</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
-<span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+<span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr [1:2] "aggregation_2" "aggregation_1"
 #&gt;   ..@ nrows          : int 2
 #&gt;   ..@ listData       :List of 2
@@ -202,14 +202,14 @@ the first item in the vector by default.</p></td>
 #&gt;   ..@ metadata       : list()</div><div class='input'>
 <span class='co'># seurat ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
-<span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+<span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
 #&gt;   ..@ listData       :List of 1
 #&gt;   .. ..$ sampleName: Factor w/ 1 level "rep_1": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
-#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
 #&gt;   ..@ listData       :List of 8
@@ -226,7 +226,7 @@ the first item in the vector by default.</p></td>
 #&gt;   ..@ metadata       : list()</div><div class='input'>
 <span class='co'># Assignment support</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
-<span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+<span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "multiplexed_AAAAAAAA"
 #&gt;   ..@ nrows          : int 1
 #&gt;   ..@ listData       :List of 2

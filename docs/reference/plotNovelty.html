@@ -115,13 +115,13 @@
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotNovelty</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ecdf"</span>,
   <span class='st'>"ridgeline"</span>, <span class='st'>"violin"</span>, <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_fill_hue</a></span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>scale_fill_hue</span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"genes per UMI (novelty)"</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotNovelty</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ecdf"</span>, <span class='st'>"ridgeline"</span>, <span class='st'>"violin"</span>,
   <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_fill_hue</a></span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>scale_fill_hue</span>(), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"genes per UMI (novelty)"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -143,7 +143,7 @@ first argument in the vector.</p></td>
     <tr>
       <th>interestingGroups</th>
       <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+formatted in camel case and intersect with <code>sampleData()</code> colnames.</p></td>
     </tr>
     <tr>
       <th>min</th>
@@ -176,7 +176,7 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
   <code>plotCellCounts</code>,
   <code>plotGenesPerCell</code>,
   <code>plotMitoRatio</code>,
-  <code>plotMitoVsCoding</code>, <code><a href='plotQC.html'>plotQC</a></code>,
+  <code>plotMitoVsCoding</code>, <code>plotQC</code>,
   <code>plotReadsPerCell</code>,
   <code>plotUMIsPerCell</code>,
   <code>plotZerosVsDepth</code></p></div>

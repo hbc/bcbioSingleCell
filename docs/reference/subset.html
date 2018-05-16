@@ -181,19 +181,23 @@
 
     <div class='dont-index'><ul>
 <li><p><code>help("[", "base")</code>.</p></li>
-<li><p><code><a href='selectSamples.html'>selectSamples()</a></code> for subsetting based on sample metadata.</p></li>
+<li><p><code>selectSamples()</code> for subsetting based on sample metadata.</p></li>
 </ul></div>
-    <div class='dont-index'><p>Other S4 Class Definition: <code><a href='bcbioSingleCell.html'>bcbioSingleCell</a></code>,
-  <code><a href='coerce.html'>coerce</a></code>, <code><a href='show.html'>show</a></code></p></div>
+    <div class='dont-index'><p>Other S4 Class Definition: <code>bcbioSingleCell</code>,
+  <code>coerce</code>, <code>show</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>colnames</span>(<span class='no'>indrops_small</span>), <span class='fl'>100L</span>)
-<span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG" "multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA"
-#&gt; [3] "multiplexed_AAAAAAAA_AAACACTA_CTTCGATT" "multiplexed_AAAAAAAA_AAACCGCC_GAGTTTCG"
-#&gt; [5] "multiplexed_AAAAAAAA_AAACCGCC_TAGCCTCG" "multiplexed_AAAAAAAA_AAACGATC_TTTACCCT"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>indrops_small</span>), <span class='fl'>100L</span>)
-<span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457" "ENSG00000002586" "ENSG00000004939" "ENSG00000005022" "ENSG00000005100" "ENSG00000008988"</div><div class='input'>
+<span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG"
+#&gt; [2] "multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA"
+#&gt; [3] "multiplexed_AAAAAAAA_AAACACTA_CTTCGATT"
+#&gt; [4] "multiplexed_AAAAAAAA_AAACCGCC_GAGTTTCG"
+#&gt; [5] "multiplexed_AAAAAAAA_AAACCGCC_TAGCCTCG"
+#&gt; [6] "multiplexed_AAAAAAAA_AAACGATC_TTTACCCT"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>indrops_small</span>), <span class='fl'>100L</span>)
+<span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457" "ENSG00000002586" "ENSG00000004939" "ENSG00000005022"
+#&gt; [5] "ENSG00000005100" "ENSG00000008988"</div><div class='input'>
 <span class='co'># Subset by cell identifiers</span>
 <span class='no'>indrops_small</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.7
 #&gt; Samples: 1
