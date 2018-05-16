@@ -158,7 +158,7 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 # doesn't appear to be working in Seurat v2.1 (updated 2017-11-25).
 DoHeatmap(
     object = seurat,
-    genes.use = top_markers$symbol,
+    genes.use = top_markers$rowname,
     col.low = viridis(3)[[1]],
     col.mid = viridis(3)[[2]],
     col.high = viridis(3)[[3]],
