@@ -38,7 +38,7 @@ setMethod(
         object,
         cellTypesPerCluster,
         color = "auto",
-        dark = TRUE,
+        dark = FALSE,
         grid = TRUE,
         headerLevel = 2L
     ) {

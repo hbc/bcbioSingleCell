@@ -41,7 +41,7 @@ setMethod(
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        dark = TRUE,
+        dark = FALSE,
         grid = TRUE,
         legend = FALSE,
         aspectRatio = 1L,

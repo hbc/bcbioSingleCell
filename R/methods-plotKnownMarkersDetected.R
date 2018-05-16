@@ -33,7 +33,6 @@ setMethod(
         headerLevel = 2L,
         ...
     ) {
-        # Passthrough: tsneColor, violinFill, dotColor, dark, pointsAsNumbers
         assert_has_rows(markers)
         assertIsAHeaderLevel(headerLevel)
         stopifnot(is(markers, "grouped_df"))
