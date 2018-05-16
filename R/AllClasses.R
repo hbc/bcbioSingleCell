@@ -373,17 +373,17 @@ bcbioSingleCell <- function(
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
     metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
+    colData <- as(metrics, "DataFrame")
 
     # Cell to sample mappings
     cell2sample <- mapCellsToSamples(
-        cells = rownames(metrics),
+        cells = rownames(colData),
         samples = rownames(sampleData)
     )
 
-    sampleData[["sampleID"]] <- rownames(sampleData)
-    colData <- as(metrics, "DataFrame")
     colData[["cellID"]] <- rownames(colData)
     colData[["sampleID"]] <- cell2sample
+    sampleData[["sampleID"]] <- rownames(sampleData)
     colData <- merge(
         x = colData,
         y = sampleData,
@@ -467,10 +467,11 @@ setValidity(
         assert_is_all_of(rowData(object), "DataFrame")
 
         # Column data ==========================================================
-        assert_is_subset(
-            x = colnames(metadata(object)[["sampleData"]]),
-            y = colnames(colData(object))
-        )
+        # TODO Inform the user about `colData` structure change made in v0.1.7
+        # assert_is_subset(
+        #     x = colnames(metadata(object)[["sampleData"]]),
+        #     y = colnames(colData(object))
+        # )
 
         # Metadata =============================================================
         metadata <- metadata(object)
