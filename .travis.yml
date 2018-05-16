@@ -17,7 +17,7 @@ branches:
 #   - sudo apt-get update
 
 # External dependencies
-dependency for gsl>copula>zinbwave
+# dependency for gsl>copula>zinbwave
 addons:
   apt:
     update: true
