@@ -86,7 +86,14 @@ The `min.pct` argument requires a gene to be detected at a minimum percentage in
 Seurat has four tests for differential expression which can be set with the `test.use` parameter: LRT test based on zero-inflated data (`bimod`, default), ROC test (`roc`), t-test (`t`), LRT test based on tobit-censoring models (`tobit`) The ROC test returns the 'classification power' for any individual marker (ranging from 0 - random, to 1 - perfect).
 
 ```{r find_all_markers, results="hide"}
-seurat_all_markers <- FindAllMarkers(seurat)
+# MAST and DESeq2 are recommended over Wilcoxon rank sum test
+seurat_all_markers <- FindAllMarkers(
+    object = seurat,
+    test.use = "MAST",
+    logfc.threshold = 0.25,
+    return.thresh = 0.01,
+    only.pos = FALSE
+)
 # Save the original, unmodified data.frame as a backup, since this step is
 # CPU-intensive for large datasets
 assignAndSaveData(
@@ -114,7 +121,7 @@ write_csv(
 # Top markers per cluster {.tabset}
 
 ```{r top_markers}
-top_markers <- topMarkers(seurat_all_markers, n = 10, coding = TRUE)
+top_markers <- topMarkers(seurat_all_markers, n = 10, coding = FALSE)
 top_markers
 ```
 
