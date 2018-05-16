@@ -37,7 +37,7 @@ setMethod(
         object,
         n = 10L,
         direction = c("positive", "negative", "both"),
-        coding = TRUE
+        coding = FALSE
     ) {
         stopifnot(.isSanitizedMarkers(object))
         assert_is_subset(c("avgLogFC", "padj"), colnames(object))
@@ -46,6 +46,7 @@ setMethod(
         assert_is_a_bool(coding)
 
         if (isTRUE(coding)) {
+            assert_is_subset("geneBiotype", colnames(object))
             object <- object %>%
                 .[.[["geneBiotype"]] == "protein_coding", , drop = FALSE] %>%
                 # Remove genes annotated as "predicted"
