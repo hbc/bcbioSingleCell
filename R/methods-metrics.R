@@ -172,9 +172,6 @@ setMethod(
             return(NULL)
         }
 
-        colData[["sampleID"]] <- NULL
-        priorityCols <- colnames(colData)
-
         # Get the sample-level metadata
         sampleData <- sampleData(
             object = object,
@@ -191,21 +188,15 @@ setMethod(
         colData[["sampleID"]] <- cell2sample(object)
         colData[["cellID"]] <- rownames(colData)
 
-        # Merge by `sampleID`
-        data <- merge(
+        merge(
             x = colData,
             y = sampleData,
             by = "sampleID",
             all.x = TRUE
-        )
-        rownames(data) <- data[["cellID"]]
-
-        data[["sampleID"]] <- NULL
-        data[["cellID"]] <- NULL
-
-        # Ensure original `colData` columns are presented first
-        data <- data[, unique(c(priorityCols, colnames(data)))]
-        as.data.frame(data)
+        ) %>%
+            as.data.frame() %>%
+            camel() %>%
+            column_to_rownames("cellID")
     }
 )
 
