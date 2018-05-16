@@ -276,6 +276,7 @@ Regarding the value of the `resolution` argument, use a value < 1 if you want to
 seurat <- FindClusters(
     object = seurat,
     dims.use = dims_use,
+    k.param = 30,
     force.recalc = TRUE,
     print.output = TRUE,
     resolution = params$resolution,
@@ -306,65 +307,28 @@ seurat <- RunTSNE(
 ```
 
 
-## FIt-SNE
-
-Advanced, recommended for large datasets. See the [Seurat Mouse Cell Atlas vignette](https://satijalab.org/seurat/mca.html) for more details.
-
-```{bash install_fitsne, eval=FALSE}
-# http://fftw.org
-brew install fftw
-
-mkdir -p ~/R/software
-cd ~/R/software
-
-# https://github.com/KlugerLab/FIt-SNE
-git clone git@github.com:KlugerLab/FIt-SNE.git
-cd FIt-SNE
-g++ -std=c++11 -O3  src/sptree.cpp src/tsne.cpp src/nbodyfft.cpp  -o bin/fast_tsne -pthread -lfftw3 -lm
-```
-
-```{r run_fitsne, eval=FALSE}
-RunTSNE(
-    object = mca,
-    reduction.use = "pca",
-    dims.use = 1:75,
-    tsne.method = "FIt-SNE", 
-    nthreads = 4,
-    reduction.name = "FItSNE",
-    reduction.key = "FItSNE_",
-    fast_tsne_path = "~/R/software/FIt-SNE/bin/fast_tsne", 
-    max_iter = 2000
-)
-```
-
-
 ## UMAP
 
-```{bash conda_install, eval=FALSE}
-conda create --name=umap umap-learn
-```
+[Uniform Manifold Approximation and Projection][umap] is a dimension reduction technique that can be used for visualisation similarly to t-SNE, but also for general non-linear dimension reduction. The algorithm is founded on three assumptions about the data
 
-```{bash conda_umap}
+The data is uniformly distributed on Riemannian manifold;
+The Riemannian metric is locally constant (or can be approximated as such);
+The manifold is locally connected.
+
+```{bash conda_umap, eval=FALSE}
+# Requires umap-learn
+# https://github.com/lmcinnes/umap
+
+# conda create --name=umap umap-learn
 conda activate umap
 ```
 
-```{r run_umap}
-# Requires umap-learn
-# https://github.com/lmcinnes/umap
+```{r run_umap, eval=FALSE}
 # Adjusting `min_dist` and/or `n_neighbors` may help with larger datasets
 seurat <- RunUMAP(
     object = seurat,
-    reduction.use = "pca",
     dims.use = dims_use,
     min_dist = 0.75
-)
-```
-
-```{r save}
-assignAndSaveData(
-    name = params$seurat_name,
-    object = seurat,
-    dir = params$data_dir
 )
 ```
 
@@ -425,6 +389,16 @@ plotFeatureTSNE(
     features = paste0("PC", dims_use),
     pointSize = 0.8,
     labelSize = 4
+)
+```
+
+
+
+```{r save}
+assignAndSaveData(
+    name = params$seurat_name,
+    object = seurat,
+    dir = params$data_dir
 )
 ```
 
