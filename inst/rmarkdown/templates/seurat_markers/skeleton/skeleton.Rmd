@@ -27,7 +27,7 @@ stopifnot(is(seurat, "seurat"))
 invisible(validObject(seurat))
 
 # Load presaved Seurat markers
-if (!is.null(all_markers_file)) {
+if (!is.null(params$all_markers_file)) {
     # Load presaved `Seurat::FindAllMarkers()` return.
     # Use the original, unsanitized data.frame.
     all_markers_name <- load(params$all_markers_file)
