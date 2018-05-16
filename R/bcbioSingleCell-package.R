@@ -17,8 +17,8 @@
 #' @importFrom Seurat Convert CreateSeuratObject FetchData GetDimReduction
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
 #'   spikeNames
-#' @importFrom SummarizedExperiment assay assays assays<- colData rowData
-#'   rowRanges
+#' @importFrom SummarizedExperiment assay assayNames assays assays<- colData
+#'   rowData rowRanges
 #' @importFrom basejump assignAndSaveData camel convertGenesToSymbols
 #'   convertUCSCBuildToEnsembl detectOrganism dynamicPlotlist emptyRanges
 #'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
