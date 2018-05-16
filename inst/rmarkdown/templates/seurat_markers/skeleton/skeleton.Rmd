@@ -132,11 +132,12 @@ top_markers <- topMarkers(seurat_all_markers, n = 10, coding = FALSE)
 top_markers
 ```
 
-```{r plot_top_markers, fig.height=14.5, fig.width=10, results="asis"}
+```{r plot_top_markers, results="asis"}
 plotTopMarkers(
     object = seurat,
     topMarkers = top_markers,
-    headerLevel = 2
+    headerLevel = 2,
+    dark = TRUE
 )
 ```
 
@@ -165,7 +166,7 @@ DoHeatmap(
 
 # Known cell type markers {.tabset}
 
-```{r known_markers_detected, fig.height=14.5, fig.width=10, results="asis"}
+```{r known_markers_detected, results="asis"}
 known_markers_detected <- knownMarkersDetected(
     all = seurat_all_markers,
     known = cell_type_markers
@@ -178,11 +179,12 @@ assignAndSaveData(
 )
 ```
 
-```{r plot_known_markers_detected, fig.height=14.5, fig.width=10, results="asis"}
+```{r plot_known_markers_detected, results="asis"}
 plotKnownMarkersDetected(
     object = seurat,
     knownMarkers = known_markers_detected,
-    headerLevel = 2
+    headerLevel = 2,
+    dark = TRUE
 )
 ```
 
@@ -204,7 +206,8 @@ assignAndSaveData(
 plotCellTypesPerCluster(
     object = seurat,
     cellTypesPerCluster = cell_types_per_cluster,
-    headerLevel = 2
+    headerLevel = 2,
+    dark = TRUE
 )
 ```
 
