@@ -1,3 +1,13 @@
+# bcbioSingleCell 0.1.8 (2018-05-16)
+
+## Minor changes
+
+- Initial `updateObject()` method support for `bcbioSingleCell` class.
+- Relaxed `validObject()` validity check to not require sample-level metadata in
+  `colData()` yet.
+
+
+
 # bcbioSingleCell 0.1.7 (2018-05-15)
 
 ## New functions

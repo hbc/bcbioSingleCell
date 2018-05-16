@@ -95,7 +95,8 @@ validObject(x)
 }
 
 Other S4 Class Definition: \code{\link{coerce}},
-  \code{\link{show}}, \code{\link{subset}}
+  \code{\link{show}}, \code{\link{subset}},
+  \code{\link{updateObject}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

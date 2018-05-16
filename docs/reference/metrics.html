@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.8</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@
     <tr>
       <th>interestingGroups</th>
       <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code>sampleData()</code> colnames.</p></td>
+formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -157,18 +157,18 @@ formatted in camel case and intersect with <code>sampleData()</code> colnames.</
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Data Functions: <code>aggregateReplicates</code>,
-  <code>cell2sample</code>, <code>fetchGeneData</code>,
+    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>cell2sample</code>, <code><a href='fetchData.html'>fetchGeneData</a></code>,
   <code>filterCells</code>,
-  <code>mapCellsToSamples</code>,
+  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
   <code>metricsPerSample</code>,
-  <code>selectSamples</code>,
+  <code><a href='selectSamples.html'>selectSamples</a></code>,
   <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>metrics</span>(<span class='no'>indrops_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 500
+<span class='fu'>metrics</span>(<span class='no'>indrops_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 16
 #&gt; $ sampleID          &lt;fct&gt; multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, multi...
 #&gt; $ nCount            &lt;int&gt; 25114, 55337, 71802, 34607, 34005, 44760, 76590, ...
@@ -187,7 +187,7 @@ formatted in camel case and intersect with <code>sampleData()</code> colnames.</
 #&gt; $ revcomp           &lt;fct&gt; AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA,...
 #&gt; $ interestingGroups &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...</div><div class='input'>
 <span class='co'># SingleCellExperiment ====</span>
-<span class='fu'>metrics</span>(<span class='no'>cellranger_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 500
+<span class='fu'>metrics</span>(<span class='no'>cellranger_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 12
 #&gt; $ sampleID          &lt;fct&gt; aggregation_1, aggregation_1, aggregation_1, aggr...
 #&gt; $ nUMI              &lt;int&gt; 31609, 36078, 72677, 32049, 28812, 59565, 32026, ...
@@ -205,7 +205,7 @@ formatted in camel case and intersect with <code>sampleData()</code> colnames.</
 <span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'>counts</span>(<span class='no'>indrops_small</span>)
 <span class='fu'>class</span>(<span class='no'>counts</span>)</div><div class='output co'>#&gt; [1] "dgCMatrix"
 #&gt; attr(,"package")
-#&gt; [1] "Matrix"</div><div class='input'><span class='fu'>metrics</span>(<span class='no'>counts</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; Observations: 500
+#&gt; [1] "Matrix"</div><div class='input'><span class='fu'>metrics</span>(<span class='no'>counts</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 6
 #&gt; $ nUMI             &lt;int&gt; 1199, 2766, 4399, 1485, 1771, 2208, 4095, 1406, 15...
 #&gt; $ nGene            &lt;int&gt; 289, 405, 423, 337, 350, 378, 442, 217, 332, 405, ...
@@ -214,7 +214,7 @@ formatted in camel case and intersect with <code>sampleData()</code> colnames.</
 #&gt; $ log10GenesPerUMI &lt;dbl&gt; 0.7992992, 0.7575732, 0.7208579, 0.7969256, 0.7832...
 #&gt; $ mitoRatio        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...</div><div class='input'>
 <span class='co'># seurat ====</span>
-<span class='fu'>metrics</span>(<span class='no'>seurat_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 500
+<span class='fu'>metrics</span>(<span class='no'>seurat_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 19
 #&gt; $ sampleID          &lt;fct&gt; multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, multi...
 #&gt; $ nGene             &lt;int&gt; 289, 405, 423, 337, 350, 378, 442, 217, 332, 405,...
@@ -234,7 +234,7 @@ formatted in camel case and intersect with <code>sampleData()</code> colnames.</
 #&gt; $ aggregate         &lt;fct&gt; sample, sample, sample, sample, sample, sample, s...
 #&gt; $ revcomp           &lt;fct&gt; AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA,...
 #&gt; $ interestingGroups &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...
-#&gt; $ ident             &lt;fct&gt; 4, 0, 1, 1, 4, 2, 1, 1, 4, 0, 1, 3, 3, 3, 1, 2, 0...</div><div class='input'><span class='fu'>metrics</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Observations: 80
+#&gt; $ ident             &lt;fct&gt; 4, 0, 1, 1, 4, 2, 1, 1, 4, 0, 1, 3, 3, 3, 1, 2, 0...</div><div class='input'><span class='fu'>metrics</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 80
 #&gt; Variables: 9
 #&gt; $ sampleID          &lt;fct&gt; SeuratProject, SeuratProject, SeuratProject, Seur...
 #&gt; $ nGene             &lt;int&gt; 47, 52, 50, 56, 53, 48, 36, 45, 36, 41, 31, 61, 4...

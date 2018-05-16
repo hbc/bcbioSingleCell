@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.8</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
 <h2 class="hasAnchor">
 <a href="#load-bcbio-run" class="anchor"></a>Load <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> run</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bcbioSingleCell)
-bcb &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bcbioSingleCell/topics/bcbioSingleCell">bcbioSingleCell</a></span>(
+bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/bcbioSingleCell.html">bcbioSingleCell</a></span>(
     <span class="dt">uploadDir =</span> <span class="st">"bcbio_indrop/final"</span>,
     <span class="dt">interestingGroups =</span> <span class="kw">c</span>(<span class="st">"genotype"</span>, <span class="st">"treatment"</span>),
     <span class="dt">sampleMetadataFile =</span> <span class="st">"sample_metadata.csv"</span>,
@@ -110,7 +110,7 @@ flatFiles &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
 <li>
 <code>uploadDir</code>: Path to the <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> final upload directory.</li>
 <li>
-<code>interestingGroups</code>: Character vector of the column names of interest in the sample metadata, which is stored in the <code><a href="http://www.rdocumentation.org/packages/bcbioSingleCell/topics/sampleData">sampleData()</a></code> accessor slot of the <code>bcbioSingleCell</code> object. These values should be formatted in camelCase, and can be reassigned in the object after creation (e.g. <code>interestingGroups(bcb) &lt;- c("batch", "age")</code>). They are used for data visualization in the quality control utility functions.</li>
+<code>interestingGroups</code>: Character vector of the column names of interest in the sample metadata, which is stored in the <code><a href="reference/sampleData.html">sampleData()</a></code> accessor slot of the <code>bcbioSingleCell</code> object. These values should be formatted in camelCase, and can be reassigned in the object after creation (e.g. <code>interestingGroups(bcb) &lt;- c("batch", "age")</code>). They are used for data visualization in the quality control utility functions.</li>
 <li>
 <code>organism</code>: Organism name. Use the full latin name (e.g. “Homo sapiens”).</li>
 </ul>
@@ -124,7 +124,7 @@ flatFiles &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
 <a href="#fastq-files-with-samples-multiplexed-by-index-barcode" class="anchor"></a>FASTQ files with samples multiplexed by index barcode</h3>
 <p>This is our current recommended method for analyzing an <a href="https://github.com/indrops/indrops">inDrops</a> dataset. The sample index barcodes are multiplexed per FASTQ set. For Illumina sequencing data, the raw binary base call (BCL) data must be converted into FASTQs (split into <code>R1</code>-<code>R4</code> files) using <a href="https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html">bcl2fastq</a>.</p>
 <p>The <a href="https://github.com/indrops/indrops">inDrops</a> library version is automatically detected by <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a>, but ensure that the sample index sequences provided match the library version when attempting to create a <code>bcbioSingleCell</code> object. A current list of <a href="https://github.com/seqcloud/seqcloud/blob/master/workflows/bcbio/scrnaseq/harvard_indrop_v3/index_barcodes.csv">inDrops v3 index barcodes</a> is available from <a href="http://seq.cloud">seqcloud</a>.</p>
-<p>Consult the <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> documentation for more information on how to configure an <a href="https://github.com/indrops/indrops">inDrops</a> run prior to loading into <a href="https://www.r-project.org">R</a> with the <code><a href="http://www.rdocumentation.org/packages/bcbioSingleCell/topics/bcbioSingleCell">bcbioSingleCell()</a></code> function.</p>
+<p>Consult the <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> documentation for more information on how to configure an <a href="https://github.com/indrops/indrops">inDrops</a> run prior to loading into <a href="https://www.r-project.org">R</a> with the <code><a href="reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> function.</p>
 <table class="table">
 <thead><tr class="header">
 <th>description</th>
@@ -181,7 +181,7 @@ flatFiles &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
 <div id="fastq-files-demultiplexed-per-sample" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fastq-files-demultiplexed-per-sample" class="anchor"></a>FASTQ files demultiplexed per sample</h3>
-<p>This is our current method for handling <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">10X Genomics Cell Ranger</a> output (using <code><a href="http://www.rdocumentation.org/packages/bcbioSingleCell/topics/readCellRanger">readCellRanger()</a></code>) and <a href="https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html">Illumina SureCell</a> sample data.</p>
+<p>This is our current method for handling <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">10X Genomics Cell Ranger</a> output (using <code><a href="reference/readCellRanger.html">readCellRanger()</a></code>) and <a href="https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html">Illumina SureCell</a> sample data.</p>
 <table class="table">
 <thead><tr class="header">
 <th>description</th>

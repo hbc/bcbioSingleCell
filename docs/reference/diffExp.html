@@ -62,7 +62,7 @@ datasets." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.8</span>
       </span>
     </div>
 
@@ -238,8 +238,8 @@ for additional information.</p></li>
 <span class='no'>sce</span> <span class='kw'>&lt;-</span> <span class='no'>cellranger_small</span>
 <span class='co'># Use S4 methods to get cells (colnames) of object</span>
 <span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>sce</span>)[<span class='fu'>which</span>(<span class='no'>sce</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"proximal"</span>)]
-<span class='fu'>glimpse</span>(<span class='no'>numerator</span>)</div><div class='output co'>#&gt;  chr [1:351] "aggregation_AAACCTGGTTTACTCT_1" ...</div><div class='input'><span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>sce</span>)[<span class='fu'>which</span>(<span class='no'>sce</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"distal"</span>)]
-<span class='fu'>glimpse</span>(<span class='no'>denominator</span>)</div><div class='output co'>#&gt;  chr [1:149] "aggregation_AACTCAGAGCGCTCCA_2" ...</div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>numerator</span>)</div><div class='output co'>#&gt;  chr [1:351] "aggregation_AAACCTGGTTTACTCT_1" ...</div><div class='input'><span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>sce</span>)[<span class='fu'>which</span>(<span class='no'>sce</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"distal"</span>)]
+<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>denominator</span>)</div><div class='output co'>#&gt;  chr [1:149] "aggregation_AACTCAGAGCGCTCCA_2" ...</div><div class='input'>
 <span class='co'># zinbwave-edgeR (fast, recommended)</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>cellranger_small</span>,
@@ -252,7 +252,7 @@ for additional information.</p></li>
 #&gt; TRUE 
 #&gt;  500 
 #&gt;    user  system elapsed 
-#&gt; 125.464  20.072  40.707 </div><div class='input'><span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "DGELRT"
+#&gt; 134.397  31.779  46.477 </div><div class='input'><span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "DGELRT"
 #&gt; attr(,"package")
 #&gt; [1] "edgeR"</div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt;                      logFC    logCPM         LR       PValue
 #&gt; ENSG00000005022  0.1774111 10.050237   9.141339 2.626271e-03

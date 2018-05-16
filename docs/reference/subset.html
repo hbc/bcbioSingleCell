@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.8</span>
       </span>
     </div>
 
@@ -181,10 +181,11 @@
 
     <div class='dont-index'><ul>
 <li><p><code>help("[", "base")</code>.</p></li>
-<li><p><code>selectSamples()</code> for subsetting based on sample metadata.</p></li>
+<li><p><code><a href='selectSamples.html'>selectSamples()</a></code> for subsetting based on sample metadata.</p></li>
 </ul></div>
-    <div class='dont-index'><p>Other S4 Class Definition: <code>bcbioSingleCell</code>,
-  <code>coerce</code>, <code>show</code></p></div>
+    <div class='dont-index'><p>Other S4 Class Definition: <code><a href='bcbioSingleCell.html'>bcbioSingleCell</a></code>,
+  <code><a href='coerce.html'>coerce</a></code>, <code><a href='show.html'>show</a></code>,
+  <code><a href='updateObject.html'>updateObject</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -199,7 +200,7 @@
 <span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457" "ENSG00000002586" "ENSG00000004939" "ENSG00000005022"
 #&gt; [5] "ENSG00000005100" "ENSG00000008988"</div><div class='input'>
 <span class='co'># Subset by cell identifiers</span>
-<span class='no'>indrops_small</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.7
+<span class='no'>indrops_small</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.8
 #&gt; Samples: 1
 #&gt; Cells: 100
 #&gt; Genes: 500
@@ -209,9 +210,9 @@
 #&gt; Genome Build: GRCh38
 #&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-05-15</div><div class='input'>
+#&gt; R Load Date: 2018-05-16</div><div class='input'>
 <span class='co'># Subset by genes</span>
-<span class='no'>indrops_small</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.7
+<span class='no'>indrops_small</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.8
 #&gt; Samples: 1
 #&gt; Cells: 500
 #&gt; Genes: 100
@@ -221,9 +222,9 @@
 #&gt; Genome Build: GRCh38
 #&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-05-15</div><div class='input'>
+#&gt; R Load Date: 2018-05-16</div><div class='input'>
 <span class='co'># Subset by both genes and cells</span>
-<span class='no'>indrops_small</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.7
+<span class='no'>indrops_small</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.8
 #&gt; Samples: 1
 #&gt; Cells: 100
 #&gt; Genes: 100
@@ -233,7 +234,7 @@
 #&gt; Genome Build: GRCh38
 #&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-05-15</div></pre>
+#&gt; R Load Date: 2018-05-16</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

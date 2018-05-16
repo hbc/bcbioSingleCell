@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.8</span>
       </span>
     </div>
 
@@ -144,18 +144,18 @@ and Ensembl gene identifiers for rows.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>sampleData()</code>.</p>
-<p>Other Data Functions: <code>aggregateReplicates</code>,
-  <code>cell2sample</code>, <code>fetchGeneData</code>,
+    <div class='dont-index'><p><code><a href='sampleData.html'>sampleData()</a></code>.</p>
+<p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
+  <code>cell2sample</code>, <code><a href='fetchData.html'>fetchGeneData</a></code>,
   <code>filterCells</code>,
-  <code>mapCellsToSamples</code>,
-  <code>metricsPerSample</code>, <code>metrics</code>,
+  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
+  <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
   <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>colnames</span>(<span class='fu'>sampleData</span>(<span class='no'>indrops_small</span>))</div><div class='output co'>#&gt; [1] "sampleName"</div><div class='input'><span class='no'>sampleName</span> <span class='kw'>&lt;-</span> <span class='fu'>sampleData</span>(<span class='no'>indrops_small</span>)[<span class='fl'>1L</span>, <span class='st'>"sampleName"</span>]
+<span class='fu'>colnames</span>(<span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>indrops_small</span>))</div><div class='output co'>#&gt; [1] "sampleName"</div><div class='input'><span class='no'>sampleName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sampleData.html'>sampleData</a></span>(<span class='no'>indrops_small</span>)[<span class='fl'>1L</span>, <span class='st'>"sampleName"</span>]
 <span class='fu'>print</span>(<span class='no'>sampleName</span>)</div><div class='output co'>#&gt; [1] rep_1
 #&gt; Levels: rep_1</div><div class='input'><span class='fu'>selectSamples</span>(<span class='no'>indrops_small</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='no'>sampleName</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.7
 #&gt; Samples: 1

@@ -15,10 +15,12 @@ authors:
 reference:
   - title: S4 Class Definition
     contents:
-    - bcbioSingleCell-class
+    - starts_with("bcbio")
     - coerce
     - sampleData
     - show
+    - subset
+    - ends_with("Object")
   - title: Read Functions
     contents:
     - starts_with("load")
@@ -26,9 +28,7 @@ reference:
   - title: Data Functions
     contents:
     - starts_with("aggregate")
-    - bcbio
     - cell2sample
-    - counts
     - starts_with("fetch")
     - starts_with("filter")
     - matches("2")
