@@ -36,7 +36,8 @@ show(indrops_small)
 }
 \seealso{
 Other S4 Class Definition: \code{\link{bcbioSingleCell}},
-  \code{\link{coerce}}, \code{\link{subset}}
+  \code{\link{coerce}}, \code{\link{subset}},
+  \code{\link{updateObject}}
 }
 \author{
 Michael Steinbuagh

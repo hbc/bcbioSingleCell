@@ -96,7 +96,8 @@ indrops_small[genes, cells]
 }
 
 Other S4 Class Definition: \code{\link{bcbioSingleCell}},
-  \code{\link{coerce}}, \code{\link{show}}
+  \code{\link{coerce}}, \code{\link{show}},
+  \code{\link{updateObject}}
 }
 \author{
 Michael Steinbaugh
