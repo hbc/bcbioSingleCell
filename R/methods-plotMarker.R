@@ -63,7 +63,7 @@ setMethod(
     function(
         object,
         gene,
-        dark = TRUE,
+        dark = FALSE,
         return = c("grid", "list"),
         ...
     ) {
@@ -165,6 +165,65 @@ setMethod(
             )
             show(p)
             invisible(p)
+        })
+
+        invisible(list)
+    }
+)
+
+
+
+#' @rdname plotMarker
+#' @note The number of markers to plot is determined by the output of the
+#' [topMarkers()] function. If you want to reduce the number of genes to plot,
+#' simply reassign first using that function. If necessary, we can add support
+#' for the number of genes to plot here in a future update.
+#' @param topMarkers `grouped_df` grouped by "`cluster`", returned by
+#'   [topMarkers()].
+#' @export
+#' @examples
+#' plotTopMarkers(
+#'     object = seurat_small,
+#'     topMarkers = topMarkers(all_markers_small, n = 1L)
+#' )
+setMethod(
+    "plotTopMarkers",
+    signature("seurat"),
+    function(
+        object,
+        topMarkers,
+        headerLevel = 2L,
+        ...
+    ) {
+        validObject(object)
+        stopifnot(is(topMarkers, "grouped_df"))
+        stopifnot(.isSanitizedMarkers(topMarkers))
+        assertIsAHeaderLevel(headerLevel)
+
+        clusters <- levels(topMarkers[["cluster"]])
+        list <- pblapply(clusters, function(cluster) {
+            genes <- topMarkers %>%
+                .[.[["cluster"]] == cluster, , drop = FALSE] %>%
+                pull("rowname")
+            if (!length(genes)) {
+                return(invisible())
+            }
+            if (length(genes) > 10L) {
+                warning("Maximum of 10 genes per cluster is recommended")
+            }
+            markdownHeader(
+                paste("Cluster", cluster),
+                level = headerLevel,
+                tabset = TRUE,
+                asis = TRUE
+            )
+            subheaderLevel <- headerLevel + 1L
+            plotMarkers(
+                object = object,
+                genes = genes,
+                headerLevel = subheaderLevel,
+                ...
+            )
         })
 
         invisible(list)
