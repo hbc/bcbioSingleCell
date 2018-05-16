@@ -383,6 +383,6 @@ setMethod(
         metadata(object)[["filterParams"]] <- params
         metadata(object)[["filterSummary"]] <- summary
 
-        .applyFilterCutoffs(object)
+        object[genes, cells]
     }
 )
