@@ -302,33 +302,8 @@ PrintFindClustersParams(seurat)
 seurat <- RunTSNE(
     object = seurat,
     dims.use = dims_use,
-    tsne.method = "Rtsne"
-)
-```
-
-
-## UMAP
-
-[Uniform Manifold Approximation and Projection][umap] is a dimension reduction technique that can be used for visualisation similarly to t-SNE, but also for general non-linear dimension reduction. The algorithm is founded on three assumptions about the data
-
-The data is uniformly distributed on Riemannian manifold;
-The Riemannian metric is locally constant (or can be approximated as such);
-The manifold is locally connected.
-
-```{bash conda_umap, eval=FALSE}
-# Requires umap-learn
-# https://github.com/lmcinnes/umap
-
-# conda create --name=umap umap-learn
-conda activate umap
-```
-
-```{r run_umap, eval=FALSE}
-# Adjusting `min_dist` and/or `n_neighbors` may help with larger datasets
-seurat <- RunUMAP(
-    object = seurat,
-    dims.use = dims_use,
-    min_dist = 0.75
+    tsne.method = "Rtsne",
+    do.fast = TRUE
 )
 ```
 
