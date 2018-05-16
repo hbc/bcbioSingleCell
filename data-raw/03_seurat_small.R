@@ -1,8 +1,8 @@
 # seurat_small
-# 2018-04-30
+# 2018-05-14
 library(devtools)
-library(Seurat)
 load_all()
+library(Seurat)
 
 # seurat_small =================================================================
 dims_use <- seq_len(20L)
@@ -13,10 +13,21 @@ seurat_small <- indrops_small %>%
     ScaleData() %>%
     RunPCA(do.print = FALSE) %>%
     FindClusters(dims.use = dims_use) %>%
-    RunTSNE(dims.use = dims_use, do.fast = TRUE)
+    RunTSNE(
+        reduction.use = "pca",
+        dims.use = dims_use,
+        tsne.method = "Rtsne"
+    ) %>%
+    # Requires `umap-learn` python package
+    RunUMAP(
+        reduction.use = "pca",
+        dims.use = dims_use,
+        min_dist = 0.75
+    )
 
 # all_markers_small ============================================================
-all_markers_small <- FindAllMarkers(seurat_small)
+# MAST, zinbwave/DESeq2 are recommended and more conservative
+all_markers_small <- FindAllMarkers(seurat_small, test.use = "wilcox")
 all_markers_small <- sanitizeMarkers(
     object = seurat_small,
     markers = all_markers_small

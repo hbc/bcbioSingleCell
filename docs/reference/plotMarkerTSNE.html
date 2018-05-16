@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
       </span>
     </div>
 
@@ -74,6 +74,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -97,7 +100,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Marker t-SNE</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-plotMarkerTSNE.R'><code>R/methods-seurat-plotMarkerTSNE.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotMarkerTSNE.R'><code>R/methods-plotMarkerTSNE.R</code></a></small>
     <div class="hidden name"><code>plotMarkerTSNE.Rd</code></div>
     </div>
 
@@ -197,9 +200,8 @@ the dataset, and some cells can be masked.</p></td>
   <code>plotCellTypesPerCluster</code>,
   <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
-  <code>plotMarker</code>, <code><a href='plotPCA.html'>plotPCA</a></code>,
-  <code>plotPCElbow</code>, <code>plotTSNE</code>,
-  <code>plotTopMarkers</code>,
+  <code>plotMarker</code>, <code>plotPCElbow</code>,
+  <code>plotTSNE</code>, <code>plotTopMarkers</code>,
   <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
     
 
@@ -208,7 +210,7 @@ the dataset, and some cells can be masked.</p></td>
 <span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='st'>"COL1A1"</span>)</div><div class='img'><img src='plotMarkerTSNE-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='st'>"COL1A1"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotMarkerTSNE-2.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='co'># Mitochondrial genes</span>
-<span class='no'>mito</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT\\."</span>, <span class='fu'>rownames</span>(<span class='fu'><a href='counts.html'>counts</a></span>(<span class='no'>seurat_small</span>)), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>mito</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT\\."</span>, <span class='fu'>rownames</span>(<span class='fu'>counts</span>(<span class='no'>seurat_small</span>)), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>print</span>(<span class='fu'>sort</span>(<span class='no'>mito</span>))</div><div class='output co'>#&gt;  [1] "MT.ATP6" "MT.ATP8" "MT.CO1"  "MT.CO2"  "MT.CO3"  "MT.CYB"  "MT.ND1" 
 #&gt;  [8] "MT.ND2"  "MT.ND3"  "MT.ND4"  "MT.ND4L" "MT.ND5"  "MT.ND6" </div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mitochondrial"</span>)</div><div class='img'><img src='plotMarkerTSNE-3.png' alt='' width='700' height='433' /></div></pre>
   </div>

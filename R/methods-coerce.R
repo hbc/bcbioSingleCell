@@ -10,12 +10,6 @@
 #' @seealso
 #' - [methods::as()].
 #' - [methods::coerce()].
-#'
-#' @examples
-#' # SingleCellExperiment to seurat ====
-#' x <- as(indrops_small, "seurat")
-#' class(x)
-#' print(x)
 NULL
 
 
@@ -23,11 +17,18 @@ NULL
 # Methods ======================================================================
 #' @rdname coerce
 #' @name coerce-SingleCellExperiment-seurat
+#'
 #' @section SingleCellExperiment to seurat:
 #' Interally [Seurat::CreateSeuratObject()] is called without applying any
 #' additional filtering cutoffs, since we have already defined them during our
 #' quality control analysis. Here we are passing the raw gene-level counts of
 #' the filtered cells into a new `seurat` class object.
+#'
+#' @examples
+#' # SingleCellExperiment to seurat ====
+#' x <- as(indrops_small, "seurat")
+#' class(x)
+#' print(x)
 setAs(
     from = "SingleCellExperiment",
     to = "seurat",
@@ -50,7 +51,7 @@ setAs(
         rownames(from) <- make.names(rownames(from), unique = TRUE)
 
         # Create the seurat object
-        to <- Seurat::CreateSeuratObject(
+        to <- CreateSeuratObject(
             raw.data = counts(from),
             project = "bcbioSingleCell",
             # Already applied filtering cutoffs for cells and genes
@@ -58,7 +59,7 @@ setAs(
             min.genes = 0L,
             # Default for UMI datasets
             is.expr = 0L,
-            meta.data = metrics(from)
+            meta.data = as.data.frame(metrics(from))
         )
 
         # Check that the dimensions match exactly
@@ -76,5 +77,28 @@ setAs(
         slot(to, "misc")[["bcbio"]] <- bcbio
 
         to
+    }
+)
+
+
+
+#' @rdname coerce
+#' @name coerce-seurat-SingleCellExperiment
+#'
+#' @section seurat to SingleCellExperiment:
+#' Super basic S4 coercion support for taking the raw counts matrix from
+#' a `seurat` class object and coercing to a `SingleCellExperiment`.
+#'
+#' @examples
+#' # seurat to SingleCellExperiment ====
+#' x <- as(Seurat::pbmc_small, "SingleCellExperiment")
+#' class(x)
+#' print(x)
+setAs(
+    from = "seurat",
+    to = "SingleCellExperiment",
+    function(from) {
+        validObject(from)
+        Convert(from = from, to = "sce")
     }
 )

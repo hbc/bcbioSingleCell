@@ -8,11 +8,11 @@ params:
     cell_type_markers_file: NULL
     organism: NULL
     data_dir: !r file.path("data", Sys.Date())
-    results_dir: "results/markers"
+    data_dir: !r file.path("results", Sys.Date(), "markers")
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-08
+# Last modified 2018-05-11
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 

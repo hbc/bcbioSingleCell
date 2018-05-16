@@ -11,10 +11,12 @@
 diffExp(object, ...)
 
 \S4method{diffExp}{SingleCellExperiment}(object, numerator, denominator,
-  minCells = 10L, maxit = 1000L)
+  zeroWeights = c("zinbwave", "zingeR"), caller = c("edgeR", "DESeq2"),
+  minCellsPerGene = 25L, minCountsPerCell = 5L)
 
-\S4method{diffExp}{seurat}(object, numerator, denominator, minCells = 10L,
-  maxit = 1000L)
+\S4method{diffExp}{seurat}(object, numerator, denominator,
+  zeroWeights = c("zinbwave", "zingeR"), caller = c("edgeR", "DESeq2"),
+  minCellsPerGene = 25L, minCountsPerCell = 5L)
 }
 \arguments{
 \item{object}{Object.}
@@ -27,30 +29,50 @@ diffExp(object, ...)
 \item{denominator}{Group of cells to use in the denominator of the contrast
 (e.g. control).}
 
-\item{minCells}{Minimum number of cells required per group.}
+\item{zeroWeights}{Package to use for zero weight calculations. Defaults to
+zinbwave but zingeR is also supported.}
 
-\item{maxit}{The number of iterations for the EM-algorithm. 200 by default, but larger may be useful for large datasets (many samples). Convergence of the posterior probabilities can be checked by following the distribution of posterior probabilities over iterations with \code{plotW}. The EM-algorithm will automatically stop if convergence is achieved before the maximum number of iterations.}
+\item{caller}{Package to use for differential expression calling. Defaults to
+edgeR (faster for large datasets) but DESeq2 is also supported.}
+
+\item{minCellsPerGene}{The minimum number of cells where a gene is expressed,
+to pass low expression filtering. Set to \code{0} to disable (not recommended).}
+
+\item{minCountsPerCell}{Minimum number of counts per cell for a gene to pass
+low expression filtering. The number of cells is defined by
+\code{minCellsPerGene}. Set to \code{0} to disable (not recommended).}
 }
 \value{
-\code{DEGLRT}.
+\itemize{
+\item \code{caller = "edgeR"}: \code{DEGLRT}.
+\item \code{caller = "DESeq2"}: Unshrunken \code{DESeqResults}. Use \code{lfcShrink()} if
+shrunken results are desired.
+}
 }
 \description{
-Differential Expression
+We now generally recommend the ZINB-WaVE method over zingeR, since it is
+faster, and has been show to be more sensitive for most single-cell RNA-seq
+datasets.
 }
-\section{zingeR-edgeR}{
+\section{zinbwave}{
+
+We are currently using an epsilon setting of 1e12, as recommended by the
+ZINB-WaVE integration paper.
+}
+
+\section{zingeR}{
 
 We first perform a differential expression analysis using zingeR posterior
-probabilities and focussing on the count component of the ZINB model. We use
-edgeR to model the count component.
+probabilities and focussing on the count component of the ZINB model. The
+weights are estimated with the core function of zingeR, \code{zeroWeightsLS()}. It
+is important to be consistent with the normalization procedure, i.e. if you
+use TMM normalization for the analysis, you should also use it for estimating
+the zingeR posterior probabilities.
+}
 
-The weights are estimated with the core function of zingeR,
-\code{zeroWeightsLS()}. It is important to be consistent with the normalization
-procedure, i.e. if you use TMM normalization for the analysis, you should
-also use it for estimating the zingeR posterior probabilities. The weights
-can then be provided in the DGEList object which will be used for dispersion
-estimation in the native edgeR \code{estimateDisp()} function.
+\section{edgeR}{
 
-After estimation of the dispersions and zingeR posterior probabilities, the
+After estimation of the dispersions and posterior probabilities, the
 \code{glmWeightedF()} function is used for statistical inference. This is an
 adapted function from the \code{glmLRT()} function of edgeR. It uses an F-test for
 which the denominator degrees of freedom are by default adjusted according to
@@ -58,37 +80,73 @@ the downweighting of excess zeros (\code{ZI = TRUE}). Also, independent filterin
 can be performed on the obtained p-values (\code{independentFiltering = TRUE}). We
 use the independent filtering strategy that was originally implemented in
 DESeq2. By default, the average fitted values are used as a filter criterion.
+}
 
-Consult the \href{https://goo.gl/4rTK1w}{zingeR vignette v2} for additional
-information.
+\section{DESeq2}{
+
+We're providing preliminary support for DESeq2 as the differential expression
+caller. It is currently considerably slower for large datasets than edgeR.
 }
 
 \examples{
 # SingleCellExperiment ====
-x <- metrics(cellranger_small)
-numerator <- rownames(x)[which(x[["sampleName"]] == "proximal")]
-denominator <- rownames(x)[which(x[["sampleName"]] == "distal")]
-lrt <- diffExp(
+sce <- cellranger_small
+# Use S4 methods to get cells (colnames) of object
+numerator <- colnames(sce)[which(sce[["sampleName"]] == "proximal")]
+glimpse(numerator)
+denominator <- colnames(sce)[which(sce[["sampleName"]] == "distal")]
+glimpse(denominator)
+
+# zinbwave-edgeR (fast, recommended)
+x <- diffExp(
     object = cellranger_small,
     numerator = numerator,
     denominator = denominator,
-    maxit = 100L
+    zeroWeights = "zinbwave",
+    caller = "edgeR"
 )
-glimpse(lrt[["table"]])
+class(x)
+head(x[["table"]])
+
+# zinbwave-DESeq2 (slower)
+\dontrun{
+x <- diffExp(
+    object = cellranger_small,
+    numerator = numerator,
+    denominator = denominator,
+    zeroWeights = "zinbwave",
+    caller = "DESeq2"
+)
+class(x)
+head(x)
+}
 
 # seurat ====
 # Expression in cluster 3 relative to cluster 2
+\dontrun{
 numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
 denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
-lrt <- diffExp(
+x <- diffExp(
     object = Seurat::pbmc_small,
     numerator = numerator,
     denominator = denominator,
-    maxit = 100L
+    caller = "edgeR",
+    minCellsPerGene = 5L,
+    minCountsPerCell = 5L
 )
-glimpse(lrt[["table"]])
+class(x)
+head(x[["table"]])
+}
 }
 \seealso{
+Consult the following sources for more information:
+\itemize{
+\item \href{https://doi.org/10.1186/s13059-018-1406-4}{Observation weights unlock bulk RNA-seq tools for zero inflation and single-cell applications}.
+\item \href{https://goo.gl/4rTK1w}{zingeR vignette}.
+\item \href{https://bit.ly/2wtDdpS}{zinbwave vignette}.
+\item \href{https://github.com/mikelove/zinbwave-deseq2}{zinbwave-DESeq2 workflow}.
+}
+
 \itemize{
 \item DESeq2: We're trying to follow the conventions used in DESeq2 for
 contrasts, defining the name of the factor in the design formula,

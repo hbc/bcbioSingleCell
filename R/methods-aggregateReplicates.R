@@ -26,6 +26,16 @@ setMethod(
     signature("bcbioSingleCell"),
     function(object) {
         validObject(object)
+
+        # Require that the dataset is filtered
+        if (!length(metadata(object)[["filterCells"]])) {
+            stop(paste(
+                "`aggregateReplicates()` is only supported for filtered",
+                "bcbioSingleCell objects.",
+                "Run `filterCells()` prior to replicate aggregation."
+            ))
+        }
+
         metadata <- metadata(object)
         sampleData <- sampleData(object, clean = FALSE, return = "data.frame")
         if ("sampleNameAggregate" %in% colnames(sampleData)) {
@@ -81,7 +91,27 @@ setMethod(
 
         # Column data ==========================================================
         # Always prefilter, removing cells with no UMIs or genes
-        colData <- metrics(counts, rowData = rowData, prefilter = TRUE)
+        metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
+
+        # Cell to sample mappings
+        cell2sample <- mapCellsToSamples(
+            cells = rownames(metrics),
+            samples = rownames(sampleData)
+        )
+
+        sampleData[["sampleID"]] <- rownames(sampleData)
+        colData <- as(metrics, "DataFrame")
+        colData[["cellID"]] <- rownames(colData)
+        colData[["sampleID"]] <- cell2sample
+        colData <- merge(
+            x = colData,
+            y = sampleData,
+            by = "sampleID",
+            all.x = TRUE
+        )
+        rownames(colData) <- colData[["cellID"]]
+        colData[["cellID"]] <- NULL
+        sampleData[["sampleID"]] <- NULL
 
         # Subset the counts to match the prefiltered metrics
         counts <- counts[, rownames(colData), drop = FALSE]
@@ -108,55 +138,13 @@ setMethod(
             samples = newIDs
         )
 
+        # filterCells
+        filterCells <- metadata[["filterCells"]]
+        assert_is_character(filterCells)
+        metadata[["filterCells"]] <- groupings[filterCells]
+
         # aggregateReplicates
         metadata[["aggregateReplicates"]] <- groupings
-
-        # cellularBarcodes, if set
-        cb <- metadata[["cellularBarcodes"]]
-        if (is.list(cb)) {
-            # Aggregate and split back out as a list?
-            colnames <- c("sampleID", colnames(cb[[1L]]))
-            cb <- .bindCellularBarcodes(cb)
-            cb <- cb[, colnames, drop = FALSE]
-            # Now let's remap the barcode reads for the aggregated samples
-            cbAggregateData <- cb %>%
-                # Now we need to map the new sampleIDs
-                left_join(
-                    map[, c("sampleID", "sampleIDAggregate")],
-                    by = "sampleID"
-                ) %>%
-                ungroup() %>%
-                mutate(
-                    sampleID = !!sym("sampleIDAggregate"),
-                    sampleIDAggregate = NULL
-                ) %>%
-                # Here we're grouping per cellular barcode
-                group_by(!!!syms(c("sampleID", "cellularBarcode"))) %>%
-                # Now sum the counts for each unique barcode.
-                # This step is CPU intensive when there's many samples and we
-                # may want to add a progress bar here in a future update.
-                summarize(nCount = sum(!!sym("nCount"))) %>%
-                ungroup() %>%
-                group_by(!!sym("sampleID")) %>%
-                arrange(desc(!!sym("nCount")), .by_group = TRUE)
-            # Group and sum the counts
-            # Now split this back out into a list to match the original data
-            # structure
-            cbAggregateList <- lapply(seq_along(newIDs), function(a) {
-                cbAggregateData %>%
-                    ungroup() %>%
-                    .[.[["sampleID"]] == newIDs[[a]], , drop = FALSE] %>%
-                    mutate(sampleID = NULL)
-            })
-            names(cbAggregateList) <- as.character(newIDs)
-            metadata[["cellularBarcodes"]] <- cbAggregateList
-        }
-
-        # filterCells, if set
-        filterCells <- metadata[["filterCells"]]
-        if (!is.null(filterCells)) {
-            metadata[["filterCells"]] <- groupings[filterCells]
-        }
 
         # Return ===============================================================
         .new.bcbioSingleCell(

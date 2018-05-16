@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Principal Component Analysis (PCA) — plotPCA • bcbioSingleCell</title>
+<title>Plot Dimensional Reduction — plotTSNE • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,13 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Plot Principal Component Analysis (PCA) — plotPCA" />
+<meta property="og:title" content="Plot Dimensional Reduction — plotTSNE" />
 
-<meta property="og:description" content="Plot Principal Component Analysis (PCA)" />
+<meta property="og:description" content="
+t-SNE: t-distributed Stochastic Neighbor Embedding.
+PCA: Principal Component Analysis.
+UMAP: Uniform Manifold Approximation and Projection.
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -60,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
       </span>
     </div>
 
@@ -74,6 +78,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -96,20 +103,40 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Principal Component Analysis (PCA)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-plotPCA.R'><code>R/methods-seurat-plotPCA.R</code></a></small>
-    <div class="hidden name"><code>plotPCA.Rd</code></div>
+    <h1>Plot Dimensional Reduction</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotDimensionalReduction.R'><code>R/methods-plotDimensionalReduction.R</code></a></small>
+    <div class="hidden name"><code>plotDimensionalReduction.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Plot Principal Component Analysis (PCA)</p>
+    <ul>
+<li><p>t-SNE: <strong>t</strong>-distributed <strong>S</strong>tochastic <strong>N</strong>eighbor <strong>E</strong>mbedding.</p></li>
+<li><p>PCA: <strong>P</strong>rincipal <strong>C</strong>omponent <strong>A</strong>nalysis.</p></li>
+<li><p>UMAP: <strong>U</strong>niform <strong>M</strong>anifold <strong>A</strong>pproximation and <strong>P</strong>rojection.</p></li>
+</ul>
     
     </div>
 
-    <pre class="usage"><span class='co'># S4 method for seurat</span>
+    <pre class="usage"><span class='fu'>plotTSNE</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='fu'>plotUMAP</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotTSNE</span>(<span class='no'>object</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"ident"</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>scale_color_hue</span>(), <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S4 method for seurat</span>
 <span class='fu'>plotPCA</span>(<span class='no'>object</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"ident"</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_hue</a></span>(), <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>scale_color_hue</span>(), <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>plotUMAP</span>(<span class='no'>object</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"ident"</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>scale_color_hue</span>(), <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
   <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
@@ -121,9 +148,13 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
+    </tr>
+    <tr>
       <th>interestingGroups</th>
       <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+formatted in camel case and intersect with <code>sampleData()</code> colnames.</p></td>
     </tr>
     <tr>
       <th>color</th>
@@ -176,22 +207,36 @@ the dataset, and some cells can be masked.</p></td>
 
     <p><code>ggplot</code>.</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p><code>plotUMAP()</code> requires the Python dependency <code>umap-learn</code>. We recommend
+installing this with conda: <code>conda install -c conda-forge umap-learn</code>.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><ul>
+<li><p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/DimPlot'>Seurat::DimPlot()</a></code>.</p></li>
+<li><p><a href='https://github.com/lmcinnes/umap'>UMAP GitHub repo</a>.</p></li>
+<li><p><a href='https://satijalab.org/seurat/mca.html'>Satija Lab Mouse Cell Atlas clustering</a>.</p></li>
+</ul></div>
     <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
   <code>knownMarkersDetected</code>,
   <code>plotCellTypesPerCluster</code>,
   <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
   <code>plotMarkerTSNE</code>, <code>plotMarker</code>,
-  <code>plotPCElbow</code>, <code>plotTSNE</code>,
-  <code>plotTopMarkers</code>,
+  <code>plotPCElbow</code>, <code>plotTopMarkers</code>,
   <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='fu'>plotPCA</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>)</div><div class='img'><img src='plotPCA-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'># t-SNE</span>
+<span class='fu'>plotTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plotDimensionalReduction-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotDimensionalReduction-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># PCA</span>
+<span class='fu'>plotPCA</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotDimensionalReduction-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># UMAP</span>
+<span class='fu'>plotUMAP</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotDimensionalReduction-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -200,6 +245,8 @@ the dataset, and some cells can be masked.</p></td>
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#note">Note</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
@@ -207,7 +254,7 @@ the dataset, and some cells can be masked.</p></td>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Michael Steinbaugh, Rory Kirchner
 
   </div>
 </div>

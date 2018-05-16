@@ -1,9 +1,9 @@
 # indrops_small (harvard-indrop-v3)
-# 2018-04-30
+# 2018-05-15
 library(devtools)
-library(Matrix)
-library(readr)
 load_all()
+library(tidyverse)
+library(Matrix)
 
 # Include the top 500 genes (rows) and cells (columns)
 uploadDir <- "inst/extdata/indrops"
@@ -76,8 +76,9 @@ indrops_small <- filterCells(
     object = indrops_small,
     minUMIs = 0,
     minGenes = 0,
+    minNovelty = 0,
     maxMitoRatio = Inf,
-    minNovelty = 0
+    minCellsPerGene = 0
 )
 
 use_data(indrops_small, compress = "xz", overwrite = TRUE)

@@ -371,22 +371,35 @@ bcbioSingleCell <- function(
     rownames(rowData) <- names(rowRanges)
 
     # Column data ==============================================================
-    # Always prefilter, removing cells with no UMIs or genes
-    colData <- metrics(counts, rowData = rowData, prefilter = TRUE)
-    # TODO Include sample-level columns here
+    # Always prefilter, removing very low quality cells with no UMIs or genes
+    metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
 
-    # Subset the counts to match the prefiltered metrics
-    counts <- counts[, rownames(colData), drop = FALSE]
+    # Cell to sample mappings
+    cell2sample <- mapCellsToSamples(
+        cells = rownames(metrics),
+        samples = rownames(sampleData)
+    )
+
+    sampleData[["sampleID"]] <- rownames(sampleData)
+    colData <- as(metrics, "DataFrame")
+    colData[["cellID"]] <- rownames(colData)
+    colData[["sampleID"]] <- cell2sample
+    colData <- merge(
+        x = colData,
+        y = sampleData,
+        by = "sampleID",
+        all.x = TRUE
+    )
+    rownames(colData) <- colData[["cellID"]]
+    colData[["cellID"]] <- NULL
+    sampleData[["sampleID"]] <- NULL
 
     # Bind the `nCount` column into the colData
     nCount <- cbData[rownames(colData), "nCount", drop = FALSE]
     colData <- cbind(nCount, colData)
 
-    # Cell to sample mappings ==================================================
-    cell2sample <- mapCellsToSamples(
-        cells = rownames(colData),
-        samples = rownames(sampleData)
-    )
+    # Subset the counts to match the prefiltered metrics
+    counts <- counts[, rownames(colData), drop = FALSE]
 
     # Metadata =================================================================
     metadata <- list(
@@ -444,7 +457,6 @@ setValidity(
     "bcbioSingleCell",
     function(object) {
         stopifnot(metadata(object)[["version"]] >= 0.1)
-        assert_is_all_of(object, "SingleCellExperiment")
         stopifnot(!.hasSlot(object, "bcbio"))
 
         # Assays ===============================================================
@@ -453,6 +465,12 @@ setValidity(
         # Row data =============================================================
         assert_is_all_of(rowRanges(object), "GRanges")
         assert_is_all_of(rowData(object), "DataFrame")
+
+        # Column data ==========================================================
+        assert_is_subset(
+            x = colnames(metadata(object)[["sampleData"]]),
+            y = colnames(colData(object))
+        )
 
         # Metadata =============================================================
         metadata <- metadata(object)
@@ -527,9 +545,6 @@ setValidity(
             x = metadata[["level"]],
             y = c("genes", "transcripts")
         )
-
-        # sampleData
-        invisible(lapply(metadata[["sampleData"]], assert_is_factor))
 
         TRUE
     }

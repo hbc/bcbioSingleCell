@@ -163,35 +163,40 @@ setMethod(
     "metrics",
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
+        validObject(object)
+        colData <- colData(object)
+
+        # Early return NULL if there's no cell-level data
+        if (!length(colData)) {
+            warning("`colData()` is empty")
+            return(NULL)
+        }
+
+        # Get the sample-level metadata
         sampleData <- sampleData(
             object = object,
-            clean = FALSE,
-            interestingGroups = interestingGroups
+            interestingGroups = interestingGroups,
+            clean = FALSE
         )
+        stopifnot(is(sampleData, "DataFrame"))
         sampleData[["sampleID"]] <- rownames(sampleData)
 
-        colData <- colData(object)
-        # Drop any duplicate metadata columns from colData, if necessary.
-        # This step was added so we can slot rich metadata in seurat objects
-        # inside `object@meta.data`, otherwise this line can be removed.
-        colData <- colData[setdiff(colnames(colData), colnames(sampleData))]
+        # Keep only columns unique to colData
+        setdiff <- setdiff(colnames(colData), colnames(sampleData))
+        assert_is_non_empty(setdiff)
+        colData <- colData[, setdiff]
+        colData[["sampleID"]] <- cell2sample(object)
+        colData[["cellID"]] <- rownames(colData)
 
-        cell2sample <- cell2sample(object)
-        colData[["sampleID"]] <- cell2sample
-        # Stash the rownames, which will get dropped during merge
-        colData[["rowname"]] <- rownames(colData)
-
-        data <- merge(
+        merge(
             x = colData,
             y = sampleData,
             by = "sampleID",
             all.x = TRUE
-        )
-
-        # Ensure the numeric metrics columns appear first
-        data <- data[, unique(c(colnames(colData), colnames(data)))]
-
-        .tidyMetrics(data)
+        ) %>%
+            as.data.frame() %>%
+            camel() %>%
+            column_to_rownames("cellID")
     }
 )
 

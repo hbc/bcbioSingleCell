@@ -151,14 +151,11 @@ readCellRanger <- function(
     counts <- do.call(cbind, sparseCountsList)
 
     # Column data ==============================================================
-    # Always prefilter, removing cells with no UMIs or genes
-    colData <- metrics(counts, rowData = rowData)
-    # TODO Include sample-level columns here
+    # Always prefilter, removing very low quality cells with no UMIs or genes
+    metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
+    # FIXME Include sample-level columns here
 
-    # Subset the counts to match the prefiltered metrics
-    counts <- counts[, rownames(colData), drop = FALSE]
-
-    # Cell to sample mappings ==================================================
+    # Cell to sample mappings
     # Check for multiplexed samples. CellRanger outputs these with a trailing
     # number (e.g. `-2$`, which we're sanitizing to `_2$`).
     if (any(grepl(x = colnames(counts), pattern = "_\\d+$"))) {
@@ -195,6 +192,23 @@ readCellRanger <- function(
             samples = rownames(sampleData)
         )
     }
+
+    sampleData[["sampleID"]] <- rownames(sampleData)
+    colData <- as(metrics, "DataFrame")
+    colData[["cellID"]] <- rownames(colData)
+    colData[["sampleID"]] <- cell2sample
+    colData <- merge(
+        x = colData,
+        y = sampleData,
+        by = "sampleID",
+        all.x = TRUE
+    )
+    rownames(colData) <- colData[["cellID"]]
+    colData[["cellID"]] <- NULL
+    sampleData[["sampleID"]] <- NULL
+
+    # Subset the counts to match the prefiltered metrics
+    counts <- counts[, rownames(colData), drop = FALSE]
 
     # Metadata =================================================================
     metadata <- list(

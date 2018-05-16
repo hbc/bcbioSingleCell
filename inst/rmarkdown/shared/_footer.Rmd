@@ -15,7 +15,7 @@ markdownHeader("`sessioninfo::session_info()`", level = 2)
 sessioninfo::session_info()
 
 markdownHeader("`utils::sessionInfo()`", level = 2)
-sessionInfo()
+utils::sessionInfo()
 ```
 
 
@@ -36,6 +36,7 @@ sessionInfo()
 [scran]: https://doi.org/doi:10.18129/B9.bioc.scran
 [scRNA-seq]: http://bcbio-nextgen.readthedocs.io/en/latest/contents/configuration.html#single-cell-rna-sequencing
 [Seurat]: http://satijalab.org/seurat
+[UMAP]: https://github.com/lmcinnes/umap
 [umis]: https://github.com/vals/umis
 [zinbwave]: https://doi.org/doi:10.18129/B9.bioc.zinbwave
 [zingeR]: https://github.com/statOmics/zingeR

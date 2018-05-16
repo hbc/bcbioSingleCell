@@ -50,8 +50,8 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarker}},
-  \code{\link{plotPCA}}, \code{\link{plotPCElbow}},
-  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
+  \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
+  \code{\link{plotTopMarkers}},
   \code{\link{sanitizeMarkers}}
 }
 \author{

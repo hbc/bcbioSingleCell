@@ -6,25 +6,25 @@
 #'
 #' @importFrom bcbioBase prepareTemplate
 #'
-#' @inheritParams general
+#' @inherit bcbioBase::prepareTemplate
 #'
-#' @return No value.
 #' @export
 #'
 #' @examples
-#' files <- c(
+#' x <- prepareSingleCellTemplate()
+#' x
+#'
+#' # Clean up
+#' unlink(c(
 #'     "_footer.Rmd",
 #'     "_header.Rmd",
 #'     "_output.yaml",
 #'     "_setup.R",
 #'     "bibliography.bib"
-#' )
-#' prepareSingleCellTemplate()
-#' all(file.exists(files))
-#' unlink(files)
-prepareSingleCellTemplate <- function() {
+#' ))
+prepareSingleCellTemplate <- function(overwrite = FALSE) {
     prepareTemplate(
-        c(
+        file = c(
             "_footer.Rmd",
             "_header.Rmd",
             "_output.yaml",
@@ -34,6 +34,7 @@ prepareSingleCellTemplate <- function() {
         sourceDir = system.file(
             "rmarkdown/shared",
             package = "bcbioSingleCell"
-        )
+        ),
+        overwrite = overwrite
     )
 }

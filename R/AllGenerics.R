@@ -42,7 +42,7 @@ setGeneric(
 
 
 
-#' @rdname fetchGeneData
+#' @rdname fetchData
 #' @export
 setGeneric(
     "fetchGeneData",
@@ -53,7 +53,7 @@ setGeneric(
 
 
 
-#' @rdname fetchPCAData
+#' @rdname fetchData
 #' @export
 setGeneric(
     "fetchPCAData",
@@ -64,7 +64,7 @@ setGeneric(
 
 
 
-#' @rdname fetchTSNEData
+#' @rdname fetchData
 #' @export
 setGeneric(
     "fetchTSNEData",
@@ -75,12 +75,23 @@ setGeneric(
 
 
 
-#' @rdname fetchTSNEExpressionData
+#' @rdname fetchData
 #' @export
 setGeneric(
     "fetchTSNEExpressionData",
     function(object, ...) {
         standardGeneric("fetchTSNEExpressionData")
+    }
+)
+
+
+
+#' @rdname fetchData
+#' @export
+setGeneric(
+    "fetchUMAPData",
+    function(object, ...) {
+        standardGeneric("fetchUMAPData")
     }
 )
 
@@ -284,12 +295,23 @@ setGeneric(
 
 
 
-#' @rdname plotTSNE
+#' @rdname plotDimensionalReduction
 #' @export
 setGeneric(
     "plotTSNE",
     function(object, ...) {
         standardGeneric("plotTSNE")
+    }
+)
+
+
+
+#' @rdname plotDimensionalReduction
+#' @export
+setGeneric(
+    "plotUMAP",
+    function(object, ...) {
+        standardGeneric("plotUMAP")
     }
 )
 

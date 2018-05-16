@@ -61,7 +61,7 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
       </span>
     </div>
 
@@ -75,6 +75,9 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -139,7 +142,7 @@ inDrop).</p></td>
     <tr>
       <th>interestingGroups</th>
       <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+formatted in camel case and intersect with <code>sampleData()</code> colnames.</p></td>
     </tr>
     <tr>
       <th>transgeneNames</th>
@@ -159,19 +162,19 @@ spike-in sequences (e.g. ERCCs).</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is a variant of the main <code><a href='bcbioSingleCell.html'>bcbioSingleCell()</a></code>
+    <p>This function is a variant of the main <code>bcbioSingleCell()</code>
 constructor, but optimized for handling Cell Ranger output.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Unlike the <code><a href='bcbioSingleCell.html'>bcbioSingleCell()</a></code> function, here the <code>organism</code>,
+    <p>Unlike the <code>bcbioSingleCell()</code> function, here the <code>organism</code>,
 <code>ensemblRelease</code>, and <code>genomeBuild</code> are always detected automatically,
 based on the 10X <code>refdataDir</code> YAML metadata. Therefore, these parameters
 cannot be set by the user.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Read Functions: <code><a href='readCellTypeMarkers.html'>readCellTypeMarkers</a></code></p></div>
+    <div class='dont-index'><p>Other Read Functions: <code>readCellTypeMarkers</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -193,7 +196,7 @@ cannot be set by the user.</p>
 #&gt; <span class='message'>organism: "Homo sapiens"</span>
 #&gt; <span class='message'>build: "GRCh37"</span>
 #&gt; <span class='message'>release: "75"</span>
-#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Using geneName instead of symbol</span></div><div class='output co'>#&gt; <span class='message'>Setting geneBiotype as factor</span></div><div class='output co'>#&gt; <span class='message'>Setting seqCoordSystem as factor</span></div><div class='output co'>#&gt; <span class='message'>Defining broadClass using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>484 coding genes detected</span></div><div class='output co'>#&gt; <span class='message'>11 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Using geneName instead of symbol</span></div><div class='output co'>#&gt; <span class='message'>Setting geneBiotype as factor</span></div><div class='output co'>#&gt; <span class='message'>Setting seqCoordSystem as factor</span></div><div class='output co'>#&gt; <span class='message'>Defining broadClass using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>484 coding genes detected</span></div><div class='output co'>#&gt; <span class='message'>11 mitochondrial genes detected</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'>show</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
 #&gt; metadata(22): version pipeline ... utilsSessionInfo devtoolsSessionInfo
 #&gt; assays(1): counts
@@ -203,7 +206,7 @@ cannot be set by the user.</p>
 #&gt; colnames(500): aggregation_AAACCTGGTTTACTCT_1
 #&gt;   aggregation_AAACGGGGTATCTGCA_1 ... aggregation_TTTGTCACACAACGTT_2
 #&gt;   aggregation_TTTGTCACACTCGACG_2
-#&gt; colData names(6): nUMI nGene ... log10GenesPerUMI mitoRatio
+#&gt; colData names(11): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div></pre>
   </div>

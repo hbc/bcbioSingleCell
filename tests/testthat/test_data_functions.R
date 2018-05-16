@@ -25,9 +25,9 @@ test_that("bcbio : seurat_small", {
     expect_identical(
         lapply(x, class),
         list(
-            "rownames" = "character",
-            "rowRanges" = structure("GRanges", package = "GenomicRanges"),
-            "metadata" = "list"
+            rownames = "character",
+            rowRanges = structure("GRanges", package = "GenomicRanges"),
+            metadata = "list"
         )
     )
 })
@@ -57,19 +57,19 @@ test_that("fetchPCAData", {
     expect_identical(
         lapply(x, class),
         list(
-            "nGene" = "integer",
-            "nUMI" = "integer",
-            "origIdent" = "factor",
-            "res0x8" = "factor",
-            "res1" = "factor",
-            "sampleID" = "factor",
-            "sampleName" = "factor",
-            "interestingGroups" = "factor",
-            "ident" = "factor",
-            "pc1" = "numeric",
-            "pc2" = "numeric",
-            "centerX" = "numeric",
-            "centerY" = "numeric"
+            sampleID = "factor",
+            nGene = "integer",
+            nUMI = "numeric",  # integer
+            origIdent = "factor",
+            res0x8 = "character",  # factor
+            res1 = "character",  # factor
+            sampleName = "factor",
+            interestingGroups = "factor",
+            ident = "factor",
+            pc1 = "numeric",
+            pc2 = "numeric",
+            centerX = "numeric",
+            centerY = "numeric"
         )
     )
     subset <- head(x, 1L) %>%
@@ -80,21 +80,21 @@ test_that("fetchPCAData", {
         ) %>%
         tibble::column_to_rownames(.)
     target <- data.frame(
-        "nGene" = 47L,
-        "nUMI" = 70L,
-        "origIdent" = factor("SeuratProject"),
-        "res0x8" = factor("0", levels = "0"),
-        "res1" = factor("0", levels = c("0", "1", "2", "3")),
-        "sampleID" = factor("SeuratProject"),
-        "sampleName" = factor("SeuratProject"),
-        "interestingGroups" = factor("SeuratProject"),
-        "ident" = factor("0", levels = c("0", "1", "2", "3")),
-        "pc1" = 0.443,
-        "pc2" = -1.575,
-        "centerX" = -1.176,
-        "centerY" = -1.683,
+        sampleID = factor("SeuratProject"),
+        nGene = 47L,
+        nUMI = 70L,
+        origIdent = factor("SeuratProject"),
+        res0x8 = "0",
+        res1 = "0",
+        sampleName = factor("SeuratProject"),
+        interestingGroups = factor("SeuratProject"),
+        ident = factor("0", levels = c("0", "1", "2", "3")),
+        pc1 = 0.443,
+        pc2 = -1.575,
+        centerX = -1.176,
+        centerY = -1.683,
         row.names = "ATGCCAGAACGACT",
-        stringsAsFactors = TRUE
+        stringsAsFactors = FALSE
     )
     # Use `glimpse()` to compare the rounded numbers
     expect_equal(subset, target)
@@ -109,19 +109,19 @@ test_that("fetchTSNEData", {
     expect_identical(
         lapply(x, class),
         list(
-            "nGene" = "integer",
-            "nUMI" = "integer",
-            "origIdent" = "factor",
-            "res0x8" = "factor",
-            "res1" = "factor",
-            "sampleID" = "factor",
-            "sampleName" = "factor",
-            "interestingGroups" = "factor",
-            "ident" = "factor",
-            "tSNE1" = "numeric",
-            "tSNE2" = "numeric",
-            "centerX" = "numeric",
-            "centerY" = "numeric"
+            sampleID = "factor",
+            nGene = "integer",
+            nUMI = "numeric",
+            origIdent = "factor",
+            res0x8 = "character",
+            res1 = "character",
+            sampleName = "factor",
+            interestingGroups = "factor",
+            ident = "factor",
+            tSNE1 = "numeric",
+            tSNE2 = "numeric",
+            centerX = "numeric",
+            centerY = "numeric"
         )
     )
     subset <- head(x, 1L) %>%
@@ -132,21 +132,21 @@ test_that("fetchTSNEData", {
         ) %>%
         tibble::column_to_rownames(.)
     target <- data.frame(
-        "nGene" = 47L,
-        "nUMI" = 70L,
-        "origIdent" = factor("SeuratProject"),
-        "res0x8" = factor("0"),
-        "res1" = factor("0", levels = c("0", "1", "2", "3")),
-        "sampleID" = factor("SeuratProject"),
-        "sampleName" = factor("SeuratProject"),
-        "interestingGroups" = factor("SeuratProject"),
-        "ident" = factor("0", levels = c("0", "1", "2", "3")),
-        "tSNE1" = 14.422,
-        "tSNE2" = 8.336,
-        "centerX" = -0.332,
-        "centerY" = 18.76,
+        sampleID = factor("SeuratProject"),
+        nGene = 47L,
+        nUMI = 70L,
+        origIdent = factor("SeuratProject"),
+        res0x8 = "0",
+        res1 = "0",
+        sampleName = factor("SeuratProject"),
+        interestingGroups = factor("SeuratProject"),
+        ident = factor("0", levels = c("0", "1", "2", "3")),
+        tSNE1 = 14.422,
+        tSNE2 = 8.336,
+        centerX = -0.332,
+        centerY = 18.76,
         row.names = "ATGCCAGAACGACT",
-        stringsAsFactors = TRUE
+        stringsAsFactors = FALSE
     )
     expect_equal(subset, target)
 })
@@ -163,22 +163,22 @@ test_that("fetchTSNEExpressionData", {
     expect_identical(
         lapply(x, class),
         list(
-            "nGene" = "integer",
-            "nUMI" = "integer",
-            "origIdent" = "factor",
-            "res0x8" = "factor",
-            "res1" = "factor",
-            "sampleID" = "factor",
-            "sampleName" = "factor",
-            "interestingGroups" = "factor",
-            "ident" = "factor",
-            "tSNE1" = "numeric",
-            "tSNE2" = "numeric",
-            "centerX" = "numeric",
-            "centerY" = "numeric",
-            "mean" = "numeric",
-            "median" = "numeric",
-            "sum" = "numeric"
+            sampleID = "factor",
+            nGene = "integer",
+            nUMI = "numeric",
+            origIdent = "factor",
+            res0x8 = "character",
+            res1 = "character",
+            sampleName = "factor",
+            interestingGroups = "factor",
+            ident = "factor",
+            tSNE1 = "numeric",
+            tSNE2 = "numeric",
+            centerX = "numeric",
+            centerY = "numeric",
+            mean = "numeric",
+            median = "numeric",
+            sum = "numeric"
         )
     )
     subset <- head(x, 1L) %>%
@@ -188,24 +188,24 @@ test_that("fetchTSNEExpressionData", {
     # The round function will coerce integers to numerics. This is the rationale
     # for the `as.numeric()` usage below.
     target <- data.frame(
-        "nGene" = 47L,
-        "nUMI" = 70L,
-        "origIdent" = factor("SeuratProject"),
-        "res0x8" = factor("0"),
-        "res1" = factor("0", levels = c("0", "1", "2", "3")),
-        "sampleID" = factor("SeuratProject"),
-        "sampleName" = factor("SeuratProject"),
-        "interestingGroups" = factor("SeuratProject"),
-        "ident" = factor("0", levels = c("0", "1", "2", "3")),
-        "tSNE1" = 14.422,
-        "tSNE2" = 8.336,
-        "centerX" = -0.332,
-        "centerY" = 18.76,
-        "mean" = 0.333,
-        "median" = 0L,
-        "sum" = 2L,
+        sampleID = factor("SeuratProject"),
+        nGene = 47L,
+        nUMI = 70L,
+        origIdent = factor("SeuratProject"),
+        res0x8 = "0",
+        res1 = "0",
+        sampleName = factor("SeuratProject"),
+        interestingGroups = factor("SeuratProject"),
+        ident = factor("0", levels = c("0", "1", "2", "3")),
+        tSNE1 = 14.422,
+        tSNE2 = 8.336,
+        centerX = -0.332,
+        centerY = 18.76,
+        mean = 0.333,
+        median = 0L,
+        sum = 2L,
         row.names = "ATGCCAGAACGACT",
-        stringsAsFactors = TRUE
+        stringsAsFactors = FALSE
     )
     expect_equal(subset, target)
 })
@@ -262,22 +262,34 @@ test_that("filterCells : Cutoff failures", {
 test_that("filterCells : Per sample cutoffs", {
     # Get the count of sample1 (run1_AGAGGATA)
     # We're applying no filtering to that sample
-    metrics <- metrics(indrops_small)
-    sample <- levels(metrics[["sampleID"]])[[1L]]
-    expect_identical(sample, "multiplexed_AAAAAAAA")
-    nCells <- length(which(metrics[["sampleID"]] == sample))
+    sampleNames <- sampleNames(indrops_small)
+    expect_identical(
+        sampleNames,
+        c(multiplexed_AAAAAAAA = "rep_1")
+    )
     invisible(capture.output(
         x <- filterCells(
             object = indrops_small,
-            minUMIs = c("multiplexed_AAAAAAAA" = 0L),
-            maxUMIs = c("multiplexed_AAAAAAAA" = Inf),
-            minGenes = c("multiplexed_AAAAAAAA" = 0L),
-            maxGenes = c("multiplexed_AAAAAAAA" = Inf),
-            maxMitoRatio = c("multiplexed_AAAAAAAA" = 0L),
-            minNovelty = c("multiplexed_AAAAAAAA" = 0L)
+            minUMIs = c(rep_1 = 0L),
+            maxUMIs = c(rep_1 = Inf),
+            minGenes = c(rep_1 = 0L),
+            maxGenes = c(rep_1 = Inf),
+            maxMitoRatio = c(rep_1 = 0L),
+            minNovelty = c(rep_1 = 0L)
         )
     ))
-    expect_identical(ncol(x), nCells)
+    expect_identical(
+        metadata(x)[["filterParams"]],
+        list(
+            minUMIs = c(rep_1 = 0L),
+            maxUMIs = c(rep_1 = Inf),
+            minGenes = c(rep_1 = 0L),
+            maxGenes = c(rep_1 = Inf),
+            minNovelty = c(rep_1 = 0L),
+            maxMitoRatio = c(rep_1 = 0L),
+            minCellsPerGene = 10L
+        )
+    )
 })
 
 
@@ -288,21 +300,21 @@ test_that("metrics : bcbioSingleCell", {
     expect_identical(
         lapply(x, class),
         list(
-            "nCount" = "integer",
-            "nUMI" = "integer",
-            "nGene" = "integer",
-            "nCoding" = "integer",
-            "nMito" = "integer",
-            "log10GenesPerUMI" = "numeric",
-            "mitoRatio" = "numeric",
-            "sampleID" = "factor",
-            "sampleName" = "factor",
-            "fileName" = "factor",
-            "description" = "factor",
-            "index" = "factor",
-            "sequence" = "factor",
-            "aggregate" = "factor",
-            "revcomp" = "factor",
+            sampleID = "factor",
+            nCount = "integer",
+            nUMI = "integer",
+            nGene = "integer",
+            nCoding = "integer",
+            nMito = "integer",
+            log10GenesPerUMI = "numeric",
+            mitoRatio = "numeric",
+            sampleName = "factor",
+            fileName = "factor",
+            description = "factor",
+            index = "factor",
+            sequence = "factor",
+            aggregate = "factor",
+            revcomp = "factor",
             "interestingGroups" = "factor"
         )
     )
@@ -313,15 +325,15 @@ test_that("metrics : seurat", {
     expect_identical(
         lapply(x, class),
         list(
-            "nGene" = "integer",
-            "nUMI" = "integer",
-            "origIdent" = "factor",
-            "res0x8" = "factor",
-            "res1" = "factor",
-            "sampleID" = "factor",
-            "sampleName" = "factor",
-            "interestingGroups" = "factor",
-            "ident" = "factor"
+            sampleID = "factor",
+            nGene = "integer",
+            nUMI = "numeric",
+            origIdent = "factor",
+            res0x8 = "character",
+            res1 = "character",
+            sampleName = "factor",
+            interestingGroups = "factor",
+            ident = "factor"
         )
     )
 })

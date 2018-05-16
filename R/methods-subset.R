@@ -152,9 +152,9 @@ setMethod(
         .new.bcbioSingleCell(
             assays = assays(sce),
             rowRanges <- rowRanges(sce),
-            colData <- colData(sce),
+            colData <- colData,
             metadata = metadata,
-            isSpike <- rownames(sce)[isSpike(sce)]
+            spikeNames = rownames(sce)[isSpike(sce)]
         )
     }
 )

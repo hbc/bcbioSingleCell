@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Import and analyze bcbio single-cell RNA-seq data.
-Version: 0.1.6
+Version: 0.1.7
 Authors@R: c(
     person(
         given = "Michael",
@@ -53,7 +53,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment,
-    bcbioBase (>= 0.2.12)
+    bcbioBase (>= 0.2.13)
 Imports:
     Biobase,
     BiocGenerics,
@@ -61,7 +61,7 @@ Imports:
     Matrix,
     Matrix.utils,
     S4Vectors,
-    Seurat (>= 2.3),
+    Seurat (>= 2.3.1),
     SummarizedExperiment,
     assertive.base,
     assertive.files,
@@ -96,6 +96,7 @@ Imports:
     utils,
     viridis
 Suggests:
+    BiocParallel,
     BiocStyle,
     DESeq2 (>= 1.20),
     DropletUtils,

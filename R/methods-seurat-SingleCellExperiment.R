@@ -55,6 +55,26 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom BiocGenerics counts
+#' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
+#' @export
+setMethod(
+    "counts",
+    signature("seurat"),
+    function(object, normalized = FALSE) {
+        assert_is_a_bool(normalized)
+        # seurat also stashes scaled counts in `scale.data`
+        if (identical(normalized, FALSE)) {
+            slot(object, "raw.data")
+        } else if (identical(normalized, TRUE)) {
+            slot(object, "data")
+        }
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
 #' @export
 setMethod(
     "metadata",

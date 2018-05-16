@@ -48,7 +48,6 @@ setMethod(
         interestingGroups,
         return = c("DataFrame", "data.frame", "kable")
     ) {
-        validObject(object)
         assert_is_a_bool(clean)
         return <- match.arg(return)
 
@@ -98,7 +97,6 @@ setMethod(
         interestingGroups,
         return = c("DataFrame", "data.frame", "kable")
     ) {
-        validObject(object)
         return <- match.arg(return)
 
         # Use stashed sampleData, if created with bcbioSingleCell
@@ -170,6 +168,7 @@ setMethod(
 
 
 # Assignment methods ===========================================================
+# TODO Ensure sample-level colData is updated here as well
 #' @rdname sampleData
 #' @export
 setMethod(

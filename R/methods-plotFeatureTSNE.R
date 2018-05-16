@@ -51,7 +51,7 @@ setMethod(
         return <- match.arg(return)
 
         tsne <- fetchTSNEData(object)
-        data <- Seurat::FetchData(object, vars.all = features)
+        data <- FetchData(object, vars.all = features)
         assert_are_identical(rownames(tsne), rownames(data))
         assert_are_disjoint_sets(colnames(tsne), colnames(data))
 

@@ -2,7 +2,6 @@
 # https://docs.travis-ci.com/user/languages/r
 
 language: r
-sudo: false
 cache: packages
 
 r:
@@ -19,16 +18,17 @@ branches:
 
 # External dependencies
 # dependency for gsl>copula>zinbwave
-# addons:
-#   apt:
-#     packages:
-#       - libgsl-dev
+addons:
+  apt:
+    update: true
+    packages:
+      - libgsl-dev
 
 env:
   global:
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
-    - _R_CHECK_FORCE_SUGGESTS_=false
+    - _R_CHECK_FORCE_SUGGESTS_=true
 
 # r_build_args: "--no-build-vignettes"
 # r_check_args: "--no-vignettes"

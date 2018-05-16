@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
       </span>
     </div>
 
@@ -74,6 +74,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -120,14 +123,20 @@ additional filtering cutoffs, since we have already defined them during our
 quality control analysis. Here we are passing the raw gene-level counts of
 the filtered cells into a new <code>seurat</code> class object.</p>
     
+    <h2 class="hasAnchor" id="seurat-to-singlecellexperiment"><a class="anchor" href="#seurat-to-singlecellexperiment"></a>seurat to SingleCellExperiment</h2>
+
+    
+    <p>Super basic S4 coercion support for taking the raw counts matrix from
+a <code>seurat</code> class object and coercing to a <code>SingleCellExperiment</code>.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><ul>
 <li><p><code><a href='http://www.rdocumentation.org/packages/methods/topics/as'>methods::as()</a></code>.</p></li>
 <li><p><code><a href='http://www.rdocumentation.org/packages/methods/topics/setAs'>methods::coerce()</a></code>.</p></li>
 </ul></div>
-    <div class='dont-index'><p>Other S4 Class Definition: <code><a href='bcbioSingleCell.html'>bcbioSingleCell</a></code>,
-  <code><a href='show.html'>show</a></code>, <code><a href='subset.html'>subset</a></code></p></div>
+    <div class='dont-index'><p>Other S4 Class Definition: <code>bcbioSingleCell</code>,
+  <code>show</code>, <code>subset</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -136,7 +145,21 @@ the filtered cells into a new <code>seurat</code> class object.</p>
 <span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "seurat"
 #&gt; attr(,"package")
 #&gt; [1] "Seurat"</div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; An object of class seurat in project bcbioSingleCell 
-#&gt;  500 genes across 500 samples.</div></pre>
+#&gt;  500 genes across 500 samples.</div><div class='input'><span class='co'># seurat to SingleCellExperiment ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='st'>"SingleCellExperiment"</span>)
+<span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "SingleCellExperiment"
+#&gt; attr(,"package")
+#&gt; [1] "SingleCellExperiment"</div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+#&gt; dim: 230 80 
+#&gt; metadata(0):
+#&gt; assays(2): counts logcounts
+#&gt; rownames(230): MS4A1 CD79B ... SPON2 S100B
+#&gt; rowData names(4): gene gene.mean gene.dispersion gene.dispersion.scaled
+#&gt; colnames(80): ATGCCAGAACGACT CATGGCCTGTGCAT ... GGAACACTTCAGAC
+#&gt;   CTTGATTGATCTTC
+#&gt; colData names(6): nGene nUMI ... res.1 ident
+#&gt; reducedDimNames(2): PCA TSNE
+#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -145,6 +168,8 @@ the filtered cells into a new <code>seurat</code> class object.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#singlecellexperiment-to-seurat">SingleCellExperiment to seurat</a></li>
+
+      <li><a href="#seurat-to-singlecellexperiment">seurat to SingleCellExperiment</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

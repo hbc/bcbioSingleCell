@@ -32,7 +32,9 @@
   
 <meta property="og:title" content="Differential Expression — diffExp" />
 
-<meta property="og:description" content="Differential Expression" />
+<meta property="og:description" content="We now generally recommend the ZINB-WaVE method over zingeR, since it is
+faster, and has been show to be more sensitive for most single-cell RNA-seq
+datasets." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -60,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
       </span>
     </div>
 
@@ -74,6 +76,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -103,7 +108,9 @@
 
     <div class="ref-description">
     
-    <p>Differential Expression</p>
+    <p>We now generally recommend the ZINB-WaVE method over zingeR, since it is
+faster, and has been show to be more sensitive for most single-cell RNA-seq
+datasets.</p>
     
     </div>
 
@@ -111,11 +118,13 @@
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>diffExp</span>(<span class='no'>object</span>, <span class='no'>numerator</span>, <span class='no'>denominator</span>,
-  <span class='kw'>minCells</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1000L</span>)
+  <span class='kw'>zeroWeights</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"zinbwave"</span>, <span class='st'>"zingeR"</span>), <span class='kw'>caller</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"edgeR"</span>, <span class='st'>"DESeq2"</span>),
+  <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>25L</span>, <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>diffExp</span>(<span class='no'>object</span>, <span class='no'>numerator</span>, <span class='no'>denominator</span>, <span class='kw'>minCells</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
-  <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1000L</span>)</pre>
+<span class='fu'>diffExp</span>(<span class='no'>object</span>, <span class='no'>numerator</span>, <span class='no'>denominator</span>,
+  <span class='kw'>zeroWeights</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"zinbwave"</span>, <span class='st'>"zingeR"</span>), <span class='kw'>caller</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"edgeR"</span>, <span class='st'>"DESeq2"</span>),
+  <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>25L</span>, <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,32 +148,58 @@
 (e.g. control).</p></td>
     </tr>
     <tr>
-      <th>minCells</th>
-      <td><p>Minimum number of cells required per group.</p></td>
+      <th>zeroWeights</th>
+      <td><p>Package to use for zero weight calculations. Defaults to
+zinbwave but zingeR is also supported.</p></td>
     </tr>
     <tr>
-      <th>maxit</th>
-      <td><p>The number of iterations for the EM-algorithm. 200 by default, but larger may be useful for large datasets (many samples). Convergence of the posterior probabilities can be checked by following the distribution of posterior probabilities over iterations with <code>plotW</code>. The EM-algorithm will automatically stop if convergence is achieved before the maximum number of iterations.</p></td>
+      <th>caller</th>
+      <td><p>Package to use for differential expression calling. Defaults to
+edgeR (faster for large datasets) but DESeq2 is also supported.</p></td>
+    </tr>
+    <tr>
+      <th>minCellsPerGene</th>
+      <td><p>The minimum number of cells where a gene is expressed,
+to pass low expression filtering. Set to <code>0</code> to disable (not recommended).</p></td>
+    </tr>
+    <tr>
+      <th>minCountsPerCell</th>
+      <td><p>Minimum number of counts per cell for a gene to pass
+low expression filtering. The number of cells is defined by
+<code>minCellsPerGene</code>. Set to <code>0</code> to disable (not recommended).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>DEGLRT</code>.</p>
     
-    <h2 class="hasAnchor" id="zinger-edger"><a class="anchor" href="#zinger-edger"></a>zingeR-edgeR</h2>
+<ul>
+<li><p><code>caller = "edgeR"</code>: <code>DEGLRT</code>.</p></li>
+<li><p><code>caller = "DESeq2"</code>: Unshrunken <code>DESeqResults</code>. Use <code>lfcShrink()</code> if
+shrunken results are desired.</p></li>
+</ul>
+
+    
+    <h2 class="hasAnchor" id="zinbwave"><a class="anchor" href="#zinbwave"></a>zinbwave</h2>
+
+    
+    <p>We are currently using an epsilon setting of 1e12, as recommended by the
+ZINB-WaVE integration paper.</p>
+    
+    <h2 class="hasAnchor" id="zinger"><a class="anchor" href="#zinger"></a>zingeR</h2>
 
     
     <p>We first perform a differential expression analysis using zingeR posterior
-probabilities and focussing on the count component of the ZINB model. We use
-edgeR to model the count component.</p>
-<p>The weights are estimated with the core function of zingeR,
-<code>zeroWeightsLS()</code>. It is important to be consistent with the normalization
-procedure, i.e. if you use TMM normalization for the analysis, you should
-also use it for estimating the zingeR posterior probabilities. The weights
-can then be provided in the DGEList object which will be used for dispersion
-estimation in the native edgeR <code>estimateDisp()</code> function.</p>
-<p>After estimation of the dispersions and zingeR posterior probabilities, the
+probabilities and focussing on the count component of the ZINB model. The
+weights are estimated with the core function of zingeR, <code>zeroWeightsLS()</code>. It
+is important to be consistent with the normalization procedure, i.e. if you
+use TMM normalization for the analysis, you should also use it for estimating
+the zingeR posterior probabilities.</p>
+    
+    <h2 class="hasAnchor" id="edger"><a class="anchor" href="#edger"></a>edgeR</h2>
+
+    
+    <p>After estimation of the dispersions and posterior probabilities, the
 <code>glmWeightedF()</code> function is used for statistical inference. This is an
 adapted function from the <code>glmLRT()</code> function of edgeR. It uses an F-test for
 which the denominator degrees of freedom are by default adjusted according to
@@ -172,11 +207,21 @@ the downweighting of excess zeros (<code>ZI = TRUE</code>). Also, independent fi
 can be performed on the obtained p-values (<code>independentFiltering = TRUE</code>). We
 use the independent filtering strategy that was originally implemented in
 DESeq2. By default, the average fitted values are used as a filter criterion.</p>
-<p>Consult the <a href='https://goo.gl/4rTK1w'>zingeR vignette v2</a> for additional
-information.</p>
+    
+    <h2 class="hasAnchor" id="deseq-"><a class="anchor" href="#deseq-"></a>DESeq2</h2>
+
+    
+    <p>We're providing preliminary support for DESeq2 as the differential expression
+caller. It is currently considerably slower for large datasets than edgeR.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p>Consult the following sources for more information:</p><ul>
+<li><p><a href='https://doi.org/10.1186/s13059-018-1406-4'>Observation weights unlock bulk RNA-seq tools for zero inflation and single-cell applications</a>.</p></li>
+<li><p><a href='https://goo.gl/4rTK1w'>zingeR vignette</a>.</p></li>
+<li><p><a href='https://bit.ly/2wtDdpS'>zinbwave vignette</a>.</p></li>
+<li><p><a href='https://github.com/mikelove/zinbwave-deseq2'>zinbwave-DESeq2 workflow</a>.</p></li>
+</ul></div>
     <div class='dont-index'><ul>
 <li><p>DESeq2: We're trying to follow the conventions used in DESeq2 for
 contrasts, defining the name of the factor in the design formula,
@@ -190,155 +235,60 @@ for additional information.</p></li>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics.html'>metrics</a></span>(<span class='no'>cellranger_small</span>)
-<span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>x</span>)[<span class='fu'>which</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"proximal"</span>)]
-<span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>x</span>)[<span class='fu'>which</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"distal"</span>)]
-<span class='no'>lrt</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
+<span class='no'>sce</span> <span class='kw'>&lt;-</span> <span class='no'>cellranger_small</span>
+<span class='co'># Use S4 methods to get cells (colnames) of object</span>
+<span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>sce</span>)[<span class='fu'>which</span>(<span class='no'>sce</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"proximal"</span>)]
+<span class='fu'>glimpse</span>(<span class='no'>numerator</span>)</div><div class='output co'>#&gt;  chr [1:351] "aggregation_AAACCTGGTTTACTCT_1" ...</div><div class='input'><span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>sce</span>)[<span class='fu'>which</span>(<span class='no'>sce</span><span class='kw'>[[</span><span class='st'>"sampleName"</span>]] <span class='kw'>==</span> <span class='st'>"distal"</span>)]
+<span class='fu'>glimpse</span>(<span class='no'>denominator</span>)</div><div class='output co'>#&gt;  chr [1:149] "aggregation_AACTCAGAGCGCTCCA_2" ...</div><div class='input'>
+<span class='co'># zinbwave-edgeR (fast, recommended)</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>cellranger_small</span>,
     <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
     <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
-    <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>
-)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: zingeR</span></div><div class='output co'>#&gt; <span class='message'>converting counts to integer mode</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: edgeR</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: limma</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'limma'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:BiocGenerics':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    plotMA</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'edgeR'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:SingleCellExperiment':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    cpm</span></div><div class='output co'>#&gt; iteration: 1. mean conv.: 0
-#&gt; iteration: 2. mean conv.: 0.16
-#&gt; iteration: 3. mean conv.: 0.958
-#&gt; iteration: 4. mean conv.: 0.986
-#&gt; iteration: 5. mean conv.: 0.994
-#&gt; iteration: 6. mean conv.: 0.998
-#&gt; iteration: 7. mean conv.: 0.998
-#&gt; iteration: 8. mean conv.: 1
-#&gt; iteration: 9. mean conv.: 0.98
-#&gt; iteration: 10. mean conv.: 1
-#&gt; converged. </div><div class='output co'>#&gt; <span class='message'>Loading required package: genefilter</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'genefilter'</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:matrixStats':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    rowSds, rowVars</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>lrt</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt; Observations: 500
-#&gt; Variables: 5
-#&gt; $ logFC      &lt;dbl&gt; 0.17740165, 0.67929074, 1.25917593, -0.53085841, -1.4541...
-#&gt; $ logCPM     &lt;dbl&gt; 10.050208, 8.730282, 10.027433, 12.389401, 8.905963, 8.6...
-#&gt; $ LR         &lt;dbl&gt; 9.1513701, 106.3974491, 168.5623434, 309.4309766, 25.178...
-#&gt; $ PValue     &lt;dbl&gt; 2.612343e-03, 9.251915e-23, 1.893677e-33, 2.417904e-54, ...
-#&gt; $ padjFilter &lt;dbl&gt; 3.178032e-03, 2.141647e-22, 6.667875e-33, 2.281041e-53, ...</div><div class='input'>
-<span class='co'># seurat ====</span>
-<span class='co'># Expression in cluster 3 relative to cluster 2</span>
+    <span class='kw'>zeroWeights</span> <span class='kw'>=</span> <span class='st'>"zinbwave"</span>,
+    <span class='kw'>caller</span> <span class='kw'>=</span> <span class='st'>"edgeR"</span>
+)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: zinbwave</span></div><div class='output co'>#&gt; <span class='message'>Performing differential expression with zinbwave-edgeR</span></div><div class='output co'>#&gt; <span class='message'>Applying low gene count filter</span>
+#&gt; <span class='message'>Requiring at least 25 cells with counts of 5 or more</span></div><div class='output co'>#&gt; genes
+#&gt; TRUE 
+#&gt;  500 
+#&gt;    user  system elapsed 
+#&gt; 125.464  20.072  40.707 </div><div class='input'><span class='fu'>class</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "DGELRT"
+#&gt; attr(,"package")
+#&gt; [1] "edgeR"</div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt;                      logFC    logCPM         LR       PValue
+#&gt; ENSG00000005022  0.1774111 10.050237   9.141339 2.626271e-03
+#&gt; ENSG00000008018  0.6793362  8.731102 106.773456 7.863967e-23
+#&gt; ENSG00000008394  1.2591768 10.027434 168.536534 1.887592e-33
+#&gt; ENSG00000008988 -0.5308476 12.389327 308.188318 3.441931e-54
+#&gt; ENSG00000026025 -0.5718466  9.516885   5.725923 1.729285e-02
+#&gt; ENSG00000029993 -1.1655945  8.681385  69.050417 9.760156e-16</div><div class='input'>
+# zinbwave-DESeq2 (slower)
+</div><span class='co'># NOT RUN {</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>cellranger_small</span>,
+    <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
+    <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
+    <span class='kw'>zeroWeights</span> <span class='kw'>=</span> <span class='st'>"zinbwave"</span>,
+    <span class='kw'>caller</span> <span class='kw'>=</span> <span class='st'>"DESeq2"</span>
+)
+<span class='fu'>class</span>(<span class='no'>x</span>)
+<span class='fu'>head</span>(<span class='no'>x</span>)
+<span class='co'># }</span><div class='input'>
+# seurat ====
+# Expression in cluster 3 relative to cluster 2
+</div><span class='co'># NOT RUN {</span>
 <span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>3L</span>)
 <span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
-<span class='no'>lrt</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>,
     <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
     <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
-    <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100L</span>
-)</div><div class='output co'>#&gt; <span class='message'>converting counts to integer mode</span></div><div class='output co'>#&gt; iteration: 1. mean conv.: 0
-#&gt; iteration: 2. mean conv.: 0.1913
-#&gt; iteration: 3. mean conv.: 0.18696
-#&gt; iteration: 4. mean conv.: 0.1913
-#&gt; iteration: 5. mean conv.: 0.21304
-#&gt; iteration: 6. mean conv.: 0.18696
-#&gt; iteration: 7. mean conv.: 0.2087
-#&gt; iteration: 8. mean conv.: 0.23043
-#&gt; iteration: 9. mean conv.: 0.23043
-#&gt; iteration: 10. mean conv.: 0.22174
-#&gt; iteration: 11. mean conv.: 0.23478
-#&gt; iteration: 12. mean conv.: 0.23913
-#&gt; iteration: 13. mean conv.: 0.21739
-#&gt; iteration: 14. mean conv.: 0.2087
-#&gt; iteration: 15. mean conv.: 0.2087
-#&gt; iteration: 16. mean conv.: 0.20435
-#&gt; iteration: 17. mean conv.: 0.2087
-#&gt; iteration: 18. mean conv.: 0.21739
-#&gt; iteration: 19. mean conv.: 0.22609
-#&gt; iteration: 20. mean conv.: 0.22609
-#&gt; iteration: 21. mean conv.: 0.26957
-#&gt; iteration: 22. mean conv.: 0.27391
-#&gt; iteration: 23. mean conv.: 0.27391
-#&gt; iteration: 24. mean conv.: 0.28261
-#&gt; iteration: 25. mean conv.: 0.29565
-#&gt; iteration: 26. mean conv.: 0.3
-#&gt; iteration: 27. mean conv.: 0.3087
-#&gt; iteration: 28. mean conv.: 0.32609
-#&gt; iteration: 29. mean conv.: 0.33913
-#&gt; iteration: 30. mean conv.: 0.33913
-#&gt; iteration: 31. mean conv.: 0.34348
-#&gt; iteration: 32. mean conv.: 0.33913
-#&gt; iteration: 33. mean conv.: 0.34348
-#&gt; iteration: 34. mean conv.: 0.34783
-#&gt; iteration: 35. mean conv.: 0.35217
-#&gt; iteration: 36. mean conv.: 0.36957
-#&gt; iteration: 37. mean conv.: 0.38696
-#&gt; iteration: 38. mean conv.: 0.39565
-#&gt; iteration: 39. mean conv.: 0.40435
-#&gt; iteration: 40. mean conv.: 0.41304
-#&gt; iteration: 41. mean conv.: 0.41739
-#&gt; iteration: 42. mean conv.: 0.42609
-#&gt; iteration: 43. mean conv.: 0.43478
-#&gt; iteration: 44. mean conv.: 0.44348
-#&gt; iteration: 45. mean conv.: 0.44783
-#&gt; iteration: 46. mean conv.: 0.46087
-#&gt; iteration: 47. mean conv.: 0.47391
-#&gt; iteration: 48. mean conv.: 0.48696
-#&gt; iteration: 49. mean conv.: 0.5
-#&gt; iteration: 50. mean conv.: 0.5
-#&gt; iteration: 51. mean conv.: 0.5087
-#&gt; iteration: 52. mean conv.: 0.52174
-#&gt; iteration: 53. mean conv.: 0.52609
-#&gt; iteration: 54. mean conv.: 0.54348
-#&gt; iteration: 55. mean conv.: 0.55652
-#&gt; iteration: 56. mean conv.: 0.57826
-#&gt; iteration: 57. mean conv.: 0.57826
-#&gt; iteration: 58. mean conv.: 0.58696
-#&gt; iteration: 59. mean conv.: 0.60435
-#&gt; iteration: 60. mean conv.: 0.6087
-#&gt; iteration: 61. mean conv.: 0.62609
-#&gt; iteration: 62. mean conv.: 0.64783
-#&gt; iteration: 63. mean conv.: 0.66957
-#&gt; iteration: 64. mean conv.: 0.69565
-#&gt; iteration: 65. mean conv.: 0.72174
-#&gt; iteration: 66. mean conv.: 0.74783
-#&gt; iteration: 67. mean conv.: 0.77391
-#&gt; iteration: 68. mean conv.: 0.77826
-#&gt; iteration: 69. mean conv.: 0.78696
-#&gt; iteration: 70. mean conv.: 0.7913
-#&gt; iteration: 71. mean conv.: 0.79565
-#&gt; iteration: 72. mean conv.: 0.80435
-#&gt; iteration: 73. mean conv.: 0.82609
-#&gt; iteration: 74. mean conv.: 0.83043
-#&gt; iteration: 75. mean conv.: 0.83913
-#&gt; iteration: 76. mean conv.: 0.85217
-#&gt; iteration: 77. mean conv.: 0.86957
-#&gt; iteration: 78. mean conv.: 0.88261
-#&gt; iteration: 79. mean conv.: 0.89565
-#&gt; iteration: 80. mean conv.: 0.91304
-#&gt; iteration: 81. mean conv.: 0.92174
-#&gt; iteration: 82. mean conv.: 0.93043
-#&gt; iteration: 83. mean conv.: 0.93478
-#&gt; iteration: 84. mean conv.: 0.93913
-#&gt; iteration: 85. mean conv.: 0.94783
-#&gt; iteration: 86. mean conv.: 0.95217
-#&gt; iteration: 87. mean conv.: 0.95217
-#&gt; iteration: 88. mean conv.: 0.95652
-#&gt; iteration: 89. mean conv.: 0.98261
-#&gt; iteration: 90. mean conv.: 0.98696
-#&gt; iteration: 91. mean conv.: 0.98696
-#&gt; iteration: 92. mean conv.: 0.9913
-#&gt; iteration: 93. mean conv.: 0.9913
-#&gt; iteration: 94. mean conv.: 0.9913
-#&gt; iteration: 95. mean conv.: 0.9913
-#&gt; iteration: 96. mean conv.: 0.9913
-#&gt; iteration: 97. mean conv.: 0.9913
-#&gt; iteration: 98. mean conv.: 0.99565
-#&gt; iteration: 99. mean conv.: 0.99565
-#&gt; iteration: 100. mean conv.: 1</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>lrt</span><span class='kw'>[[</span><span class='st'>"table"</span>]])</div><div class='output co'>#&gt; Observations: 230
-#&gt; Variables: 5
-#&gt; $ logFC      &lt;dbl&gt; 0.0000000, -1.4941343, 0.0000000, 0.8996484, 0.0000000, ...
-#&gt; $ logCPM     &lt;dbl&gt; 12.98492, 13.08969, 12.98492, 13.71783, 12.98492, 13.005...
-#&gt; $ LR         &lt;dbl&gt; 0.0000000, 2.0319785, 0.0000000, 1.0090244, 0.0000000, 1...
-#&gt; $ PValue     &lt;dbl&gt; 1.00000000, 0.15417754, 1.00000000, 0.31525937, 1.000000...
-#&gt; $ padjFilter &lt;dbl&gt; NA, 0.2459308, NA, 0.3972781, NA, NA, NA, NA, 0.3572848,...</div></pre>
+    <span class='kw'>caller</span> <span class='kw'>=</span> <span class='st'>"edgeR"</span>,
+    <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>5L</span>,
+    <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>
+)
+<span class='fu'>class</span>(<span class='no'>x</span>)
+<span class='fu'>head</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='st'>"table"</span>]])
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -347,7 +297,13 @@ for additional information.</p></li>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#zinger-edger">zingeR-edgeR</a></li>
+      <li><a href="#zinbwave">zinbwave</a></li>
+
+      <li><a href="#zinger">zingeR</a></li>
+
+      <li><a href="#edger">edgeR</a></li>
+
+      <li><a href="#deseq-">DESeq2</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
