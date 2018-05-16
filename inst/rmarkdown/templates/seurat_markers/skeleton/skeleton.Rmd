@@ -103,9 +103,8 @@ Seurat has multiple tests for differential expression which can be set with the 
 # We recommend running this step outside of R Markdown and then loading the
 # presaved R data file instead.
 
-if (!exists(all_markers, inherits = FALSE)) {
+if (!exists("all_markers", inherits = FALSE)) {
     all_markers <- FindAllMarkers(seurat)
-    
     # Save the original, unmodified data.frame as a backup
     assignAndSaveData(
         name = paste(seurat_name, "markers", "original", sep = "_"),
