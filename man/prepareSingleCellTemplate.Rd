@@ -34,6 +34,15 @@ This code is used internally by:
 \examples{
 x <- prepareSingleCellTemplate()
 x
+
+# Clean up
+unlink(c(
+    "_footer.Rmd",
+    "_header.Rmd",
+    "_output.yaml",
+    "_setup.R",
+    "bibliography.bib"
+))
 }
 \seealso{
 Other Prepare Functions: \code{\link{prepareSummarizedExperiment}}
