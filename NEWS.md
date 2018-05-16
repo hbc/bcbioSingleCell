@@ -1,3 +1,47 @@
+# bcbioSingleCell 0.1.7 (2018-05-15)
+
+## New functions
+
+- Added support for Uniform Manifold Approximation and Projection (UMAP) with
+  the `plotUMAP()` and `fetchUMAPData()` functions. These work similarly to the
+  other `plotDimensionalReduction()` and `fetchData()` functions.
+
+## Major changes
+
+- Now adding sample-level metadata into `colData()` slot, for better downstream
+  compatibility with other packages that work with `SingleCellExperiment`
+  container class. Unique per-sample rows are still saved internally in the
+  `sampleData()` slot.
+- Now recommending ECDF as the default geom for quality control plots, where
+  applicable.
+- `filterCells()` now supports `minUMIs = c("knee", "inflection")` for automatic
+  filtering based on the cellular barcode ranks. Internally this is handled
+  by `DropletUtils::barcodeRanks()`.
+  
+## Minor changes
+
+- Attempting to re-enable `libgsl-dev` installation for [zinbwave][] on
+  [Travis CI][].
+- Suggesting [BiocParallel][] for [zinbwave][] call in `diffExp()`.
+- Now importing [Seurat][] functions into NAMESPACE.
+- Consolidated `fetchData()` functions in the documentation.
+- Consolidated `plotDimensionalReduction()` functions in the documentation.
+- Updated `aggregateReplicates()` internal code. This function again only
+  supports aggregation of `bcbioSingleCell` objects that have been filtered
+  using the `filterCells()` function.
+- Now using `Seurat::Convert()` internally to coerce `seurat` class object
+  to `SingleCellExperiment`, using `as(seurat, "SingleCellExperiment")`. This
+  utility function was added to [Seurat][] v2.3.1.
+  
+# Internal changes
+
+- Tweaked `metrics()` `SingleCellExperiment` method code to always merge
+  `colData()` and `sampleData()`.
+- Updated `readCellRanger()` internal code to match `bcbioSingleCell()`
+  constructor, specifically handling sample-level metadata in `colData()`.
+
+
+
 # bcbioSingleCell 0.1.6 (2018-05-09)
 
 ## Minor changes
@@ -7,7 +51,8 @@
 - Simplified internal handling of interestingGroups in `plotQC()`.
 - Using `readYAMLSampleData()` internally instead of defunct `sampleYAMLMetadata()`.
 - Added `sampleNames()` method support for seurat.
-- Now importing rmarkdown, sessioninfo, tidyverse for R Markdown reports, rather than suggesting. Similar update applied to bcbioRNASeq.
+- Now importing rmarkdown, sessioninfo, tidyverse for R Markdown reports, rather
+  than suggesting. Similar update applied to bcbioRNASeq.
 - Suggesting scater and scran.
 
 
@@ -16,7 +61,9 @@
 
 ## Major changes
 
-- Overhauled inflection and knee point labeling support in `plotUMIsPerCell()`. Now uses the `point` argument and always labels per sample. Currently requires the `geom = "ecdf"` argument for labeling.
+- Overhauled inflection and knee point labeling support in `plotUMIsPerCell()`.
+  Now uses the `point` argument and always labels per sample. Currently requires
+  the `geom = "ecdf"` argument for labeling.
 - Updated default quality control template.
 - Added `plotBarcodeRanks()`.
 
@@ -816,6 +863,7 @@
 [bcbioBase]: http://bioinformatics.sph.harvard.edu/bcbioBase
 [bcbioRNASeq]: http://bioinformatics.sph.harvard.edu/bcbioRNASeq
 [Bioconductor]: https://bioconductor.org
+[BiocParallel]: https://doi.org/doi:10.18129/B9.bioc.BiocParallel
 [Cell Ranger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
 [inDrop]: https://1cell-bio.com
 [R Markdown]: http://rmarkdown.rstudio.com
@@ -839,4 +887,5 @@
 [testthat]: https://github.com/hadley/testthat
 [Travis CI]: https://travis-ci.org
 [viridis]: https://cran.r-project.org/web/packages/viridis/index.html
+[zinbwave]: https://doi.org/doi:10.18129/B9.bioc.zinbwave
 [zingeR]: https://github.com/statOmics/zingeR
