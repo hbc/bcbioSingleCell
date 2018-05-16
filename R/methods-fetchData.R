@@ -80,6 +80,8 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, genes) {
         counts <- counts(object)
+        assert_is_character(genes)
+        genes <- make.names(genes)
         assert_are_intersecting_sets(genes, rownames(counts))
         counts[genes, , drop = FALSE] %>%
             as.matrix() %>%
@@ -130,6 +132,7 @@ setMethod(
     signature("seurat"),
     function(object, genes) {
         assert_is_character(genes)
+        genes <- make.names(genes)
         tsne <- fetchTSNEData(object)
         data <- fetchGeneData(object, genes = genes)
         mean <- rowMeans(data)
