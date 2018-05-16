@@ -99,9 +99,10 @@ setMethod(
             toString(sampleNames)
         ))
 
-        # Use the metrics data.frame to match the cellular barcodes
-        assert_is_subset("sampleID", colnames(colData(object)))
-        cells <- colData(object) %>%
+        # Use the metrics `data.frame` to match the cellular barcodes
+        metrics <- metrics(object)
+        assert_is_subset("sampleID", colnames(metrics))
+        cells <- metrics %>%
             .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE] %>%
             rownames()
         message(paste(length(cells), "cells matched"))
