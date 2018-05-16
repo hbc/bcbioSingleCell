@@ -17,10 +17,12 @@
 #'
 #' @examples
 #' # seurat ====
-#' plotFeatureTSNE(Seurat::pbmc_small, features = "PC1")
+#' object <- Seurat::pbmc_small
+#' features <- c("nUMI", "PC1")
+#' plotFeatureTSNE(object, features = features)
 #' plotFeatureTSNE(
-#'     object = Seurat::pbmc_small,
-#'     features = "PC1",
+#'     object = object,
+#'     features = features,
 #'     dark = FALSE,
 #'     grid = FALSE
 #' )
@@ -48,13 +50,17 @@ setMethod(
         aspectRatio = 1L,
         return = c("ggplot", "list")
     ) {
+        assert_is_character(features)
         return <- match.arg(return)
 
-        tsne <- fetchTSNEData(object)
+        # Columns from `FetchData` take priority, if there is overlap
         data <- FetchData(object, vars.all = features)
+        tsne <- fetchTSNEData(object)
+        if (length(intersect(colnames(tsne), colnames(data)))) {
+            tsne <- tsne[, setdiff(colnames(tsne), colnames(data))]
+        }
         assert_are_identical(rownames(tsne), rownames(data))
         assert_are_disjoint_sets(colnames(tsne), colnames(data))
-
         data <- cbind(tsne, data)
 
         plotlist <- lapply(features, function(feature) {

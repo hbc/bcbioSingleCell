@@ -57,10 +57,12 @@ Plot Feature t-SNE
 }
 \examples{
 # seurat ====
-plotFeatureTSNE(Seurat::pbmc_small, features = "PC1")
+object <- Seurat::pbmc_small
+features <- c("nUMI", "PC1")
+plotFeatureTSNE(object, features = features)
 plotFeatureTSNE(
-    object = Seurat::pbmc_small,
-    features = "PC1",
+    object = object,
+    features = features,
     dark = FALSE,
     grid = FALSE
 )
