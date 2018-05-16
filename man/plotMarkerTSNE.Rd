@@ -12,7 +12,7 @@ plotMarkerTSNE(object, ...)
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
   "median", "sum"), color = "auto", pointsAsNumbers = FALSE,
   pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
+  dark = FALSE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
   title = TRUE)
 }
 \arguments{
@@ -75,8 +75,8 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarker}}, \code{\link{plotPCElbow}},
-  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
+  \code{\link{plotTSNE}}, \code{\link{sanitizeMarkers}},
+  \code{\link{topMarkers}}
 }
 \author{
 Rory Kirchner, Michael Steinbaugh

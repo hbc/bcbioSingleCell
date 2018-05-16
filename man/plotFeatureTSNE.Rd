@@ -11,7 +11,7 @@ plotFeatureTSNE(object, ...)
 
 \S4method{plotFeatureTSNE}{seurat}(object, features, color = "auto",
   pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
+  dark = FALSE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
   return = c("ggplot", "list"))
 }
 \arguments{
@@ -76,7 +76,6 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarker}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
-  \code{\link{plotTopMarkers}},
   \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{

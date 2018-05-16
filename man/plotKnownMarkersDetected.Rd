@@ -43,7 +43,6 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarker}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
-  \code{\link{plotTopMarkers}},
   \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{

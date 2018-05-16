@@ -4,19 +4,25 @@
 \name{plotMarker}
 \alias{plotMarker}
 \alias{plotMarkers}
+\alias{plotTopMarkers}
 \alias{plotMarker}
 \alias{plotMarker,seurat-method}
 \alias{plotMarkers,seurat-method}
+\alias{plotTopMarkers,seurat-method}
 \title{Plot Cell-Type Gene Marker(s)}
 \usage{
 plotMarker(object, ...)
 
 plotMarkers(object, ...)
 
-\S4method{plotMarker}{seurat}(object, gene, dark = TRUE, return = c("grid",
+plotTopMarkers(object, ...)
+
+\S4method{plotMarker}{seurat}(object, gene, dark = FALSE, return = c("grid",
   "list"), ...)
 
 \S4method{plotMarkers}{seurat}(object, genes, headerLevel = 2L, ...)
+
+\S4method{plotTopMarkers}{seurat}(object, topMarkers, headerLevel = 2L, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -34,6 +40,9 @@ to the first argument in the vector.}
 \item{genes}{Gene identifiers. Must match the rownames of the object.}
 
 \item{headerLevel}{R Markdown header level.}
+
+\item{topMarkers}{\code{grouped_df} grouped by "\code{cluster}", returned by
+\code{\link[=topMarkers]{topMarkers()}}.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.
@@ -47,6 +56,12 @@ Plot gene expression per cell in multiple formats:
 \item Dot plot
 }
 }
+\note{
+The number of markers to plot is determined by the output of the
+\code{\link[=topMarkers]{topMarkers()}} function. If you want to reduce the number of genes to plot,
+simply reassign first using that function. If necessary, we can add support
+for the number of genes to plot here in a future update.
+}
 \examples{
 # seurat ===
 # Individual gene
@@ -57,6 +72,10 @@ plotMarker(seurat_small, gene = "COL1A2", dark = FALSE)
 top <- topMarkers(all_markers_small, n = 1L)
 genes <- pull(top, "rowname")
 plotMarkers(seurat_small, genes = genes)
+plotTopMarkers(
+    object = seurat_small,
+    topMarkers = topMarkers(all_markers_small, n = 1L)
+)
 }
 \seealso{
 \itemize{
@@ -71,8 +90,8 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotPCElbow}},
-  \code{\link{plotTSNE}}, \code{\link{plotTopMarkers}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
+  \code{\link{plotTSNE}}, \code{\link{sanitizeMarkers}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

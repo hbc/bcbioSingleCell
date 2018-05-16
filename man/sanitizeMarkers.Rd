@@ -61,7 +61,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarker}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
-  \code{\link{plotTopMarkers}}, \code{\link{topMarkers}}
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

@@ -11,7 +11,7 @@
 plotCellTypesPerCluster(object, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
-  color = "auto", dark = TRUE, grid = TRUE, headerLevel = 2L)
+  color = "auto", dark = FALSE, grid = TRUE, headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
@@ -59,7 +59,6 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotMarkerTSNE}}, \code{\link{plotMarker}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
-  \code{\link{plotTopMarkers}},
   \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
 }
 \author{
