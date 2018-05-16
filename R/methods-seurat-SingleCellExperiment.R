@@ -41,6 +41,8 @@ setMethod(
 
 
 
+# Note that Seurat subset operations keep `raw.data` matrix unmodified by
+# default and only subset the `data` matrix
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom BiocGenerics colnames
 #' @export
@@ -48,7 +50,7 @@ setMethod(
     "colnames",
     signature("seurat"),
     function(x) {
-        colnames(counts(x))
+        colnames(slot(x, "data"))
     }
 )
 
@@ -144,7 +146,7 @@ setMethod(
     "rownames",
     signature("seurat"),
     function(x) {
-        rownames(counts(x))
+        rownames(slot(x, "data"))
     }
 )
 
