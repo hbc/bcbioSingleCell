@@ -5,8 +5,10 @@
 \alias{plotKnownMarkersDetected}
 \alias{plotMarker}
 \alias{plotMarkers}
+\alias{plotMarkerTSNE}
 \alias{plotTopMarkers}
 \alias{plotMarker}
+\alias{plotMarkerTSNE,seurat-method}
 \alias{plotMarker,seurat-method}
 \alias{plotMarkers,seurat-method}
 \alias{plotTopMarkers,seurat-method}
@@ -19,7 +21,15 @@ plotMarker(object, ...)
 
 plotMarkers(object, ...)
 
+plotMarkerTSNE(object, ...)
+
 plotTopMarkers(object, ...)
+
+\S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
+  "median", "sum"), color = "auto", pointsAsNumbers = FALSE,
+  pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
+  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
+  title = TRUE)
 
 \S4method{plotMarker}{seurat}(object, gene, dark = TRUE, return = c("grid",
   "list"), ...)
@@ -36,15 +46,41 @@ plotTopMarkers(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{gene}{Gene identifier. Must intersect with \code{\link[=rownames]{rownames()}}.}
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
+
+\item{expression}{Calculation to apply on the aggregate marker expression.}
+
+\item{color}{Desired ggplot color scale. Must supply discrete values. When
+set to \code{NULL}, the default ggplot2 color palette will be used. If manual
+color definitions are desired, we recommend using
+\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
+\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+
+\item{pointSize}{Cell point size.}
+
+\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
+the dataset, and some cells can be masked.}
+
+\item{label}{Overlay a cluster identitiy label on the plot.}
+
+\item{labelSize}{Size of the text label.}
 
 \item{dark}{Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
+\item{grid}{Show major grid lines but hide axis lines.}
+
+\item{legend}{Include plot legend.}
+
+\item{aspectRatio}{Aspect ratio.}
+
+\item{title}{Plot title.}
+
+\item{gene}{Gene identifier. Must intersect with \code{\link[=rownames]{rownames()}}.}
+
 \item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
 to the first argument in the vector.}
-
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
 
 \item{headerLevel}{R Markdown header level.}
 
@@ -59,10 +95,9 @@ Show graphical output. Invisibly return \code{ggplot} \code{list}.
 \description{
 Plot gene expression per cell in multiple formats:
 \enumerate{
-\item t-SNE plot
-\item Violin plot
-\item Ridgeline plot
-\item Dot plot
+\item \code{\link[=plotMarkerTSNE]{plotMarkerTSNE()}}: t-SNE gene expression plot.
+\item \code{\link[=plotDot]{plotDot()}}: Dot plot.
+\item \code{\link[=plotViolin]{plotViolin()}}: Violin plot.
 }
 }
 \note{
@@ -72,11 +107,16 @@ simply reassign first using that function. If necessary, we can add support
 for the number of genes to plot here in a future update.
 }
 \examples{
-# seurat ===
+plotMarkerTSNE(seurat_small, genes = "COL1A1")
+plotMarkerTSNE(seurat_small, genes = "COL1A1", dark = FALSE, grid = FALSE)
+
+# Mitochondrial genes
+mito <- grep("^MT\\\\.", rownames(counts(seurat_small)), value = TRUE)
+print(sort(mito))
+plotMarkerTSNE(seurat_small, genes = mito, title = "mitochondrial")
 # Individual gene
 plotMarker(seurat_small, gene = "COL1A2", dark = TRUE)
 plotMarker(seurat_small, gene = "COL1A2", dark = FALSE)
-
 # Multiple genes
 top <- topMarkers(all_markers_small, n = 1L)
 genes <- pull(top, "rowname")
@@ -92,20 +132,13 @@ plotKnownMarkersDetected(
 )
 }
 \seealso{
-\itemize{
-\item \code{\link[=plotMarkerTSNE]{plotMarkerTSNE()}}.
-\item \code{\link[=plotDot]{plotDot()}}.
-\item \code{\link[=plotViolin]{plotViolin()}}.
-}
-
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
-  \code{\link{plotFeatureTSNE}},
-  \code{\link{plotMarkerTSNE}}, \code{\link{plotPCElbow}},
+  \code{\link{plotFeatureTSNE}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{sanitizeMarkers}},
   \code{\link{topMarkers}}
 }
 \author{
-Michael Steinbaugh
+Michael Steinbaugh, Rory Kirchner
 }

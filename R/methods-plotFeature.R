@@ -1,6 +1,6 @@
 #' Plot Feature t-SNE
 #'
-#' @name plotFeatureTSNE
+#' @name plotFeature
 #' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
@@ -31,7 +31,7 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname plotFeatureTSNE
+#' @rdname plotFeature
 #' @export
 setMethod(
     "plotFeatureTSNE",
