@@ -65,7 +65,7 @@ Dot plot
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.7</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.8</span>
       </span>
     </div>
 
@@ -174,8 +174,8 @@ to the first argument in the vector.</p></td>
 
     <div class='dont-index'><ul>
 <li><p><code>plotMarkerTSNE()</code>.</p></li>
-<li><p><code>plotDot()</code>.</p></li>
-<li><p><code>plotViolin()</code>.</p></li>
+<li><p><code><a href='plotDot.html'>plotDot()</a></code>.</p></li>
+<li><p><code><a href='plotViolin.html'>plotViolin()</a></code>.</p></li>
 </ul></div>
     <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
   <code>knownMarkersDetected</code>,
@@ -183,7 +183,7 @@ to the first argument in the vector.</p></td>
   <code>plotFeatureTSNE</code>,
   <code>plotKnownMarkersDetected</code>,
   <code>plotMarkerTSNE</code>, <code>plotPCElbow</code>,
-  <code>plotTSNE</code>, <code>plotTopMarkers</code>,
+  <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>, <code>plotTopMarkers</code>,
   <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
     
 
@@ -193,7 +193,7 @@ to the first argument in the vector.</p></td>
 <span class='fu'>plotMarker</span>(<span class='no'>seurat_small</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='st'>"COL1A2"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plotMarker-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotMarker</span>(<span class='no'>seurat_small</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='st'>"COL1A2"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotMarker-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Multiple genes</span>
 <span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>pull</span>(<span class='no'>top</span>, <span class='st'>"rowname"</span>)
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>top</span>, <span class='st'>"rowname"</span>)
 <span class='fu'>plotMarkers</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## COL1A2
