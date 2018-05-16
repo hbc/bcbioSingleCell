@@ -1,7 +1,3 @@
-# TODO Add `fetchUMAPExpressionData()` support
-
-
-
 #' Fetch Data Functions
 #'
 #' @name fetchData
@@ -154,3 +150,7 @@ setMethod(
         .fetchDimensionalReduction.seurat(object, "umap")
     }
 )
+
+
+
+# TODO Add `fetchUMAPExpressionData()` support
