@@ -1,6 +1,6 @@
 #' Plot Feature t-SNE
 #'
-#' @name plotFeatureTSNE
+#' @name plotFeature
 #' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
@@ -17,10 +17,12 @@
 #'
 #' @examples
 #' # seurat ====
-#' plotFeatureTSNE(Seurat::pbmc_small, features = "PC1")
+#' object <- Seurat::pbmc_small
+#' features <- c("nUMI", "PC1")
+#' plotFeatureTSNE(object, features = features)
 #' plotFeatureTSNE(
-#'     object = Seurat::pbmc_small,
-#'     features = "PC1",
+#'     object = object,
+#'     features = features,
 #'     dark = FALSE,
 #'     grid = FALSE
 #' )
@@ -29,7 +31,7 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname plotFeatureTSNE
+#' @rdname plotFeature
 #' @export
 setMethod(
     "plotFeatureTSNE",
@@ -42,19 +44,23 @@ setMethod(
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        dark = TRUE,
+        dark = FALSE,
         grid = TRUE,
         legend = FALSE,
         aspectRatio = 1L,
         return = c("ggplot", "list")
     ) {
+        assert_is_character(features)
         return <- match.arg(return)
 
-        tsne <- fetchTSNEData(object)
+        # Columns from `FetchData` take priority, if there is overlap
         data <- FetchData(object, vars.all = features)
+        tsne <- fetchTSNEData(object)
+        if (length(intersect(colnames(tsne), colnames(data)))) {
+            tsne <- tsne[, setdiff(colnames(tsne), colnames(data))]
+        }
         assert_are_identical(rownames(tsne), rownames(data))
         assert_are_disjoint_sets(colnames(tsne), colnames(data))
-
         data <- cbind(tsne, data)
 
         plotlist <- lapply(features, function(feature) {

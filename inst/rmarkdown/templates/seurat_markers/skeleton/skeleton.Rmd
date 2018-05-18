@@ -5,14 +5,15 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
     seurat_file: "data/YYYY-MM-DD/seurat.rda"
+    all_markers_file: NULL
     cell_type_markers_file: NULL
     organism: NULL
     data_dir: !r file.path("data", Sys.Date())
-    data_dir: !r file.path("results", Sys.Date(), "markers")
+    results_dir: !r file.path("results", Sys.Date(), "markers")
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-11
+# Last modified 2018-05-16
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -25,7 +26,13 @@ seurat <- get(seurat_name, inherits = FALSE)
 stopifnot(is(seurat, "seurat"))
 invisible(validObject(seurat))
 
-seurat_all_markers_name <- paste(seurat_name, "markers", sep = "_")
+# Load presaved Seurat markers
+if (!is.null(params$all_markers_file)) {
+    # Load presaved `Seurat::FindAllMarkers()` return.
+    # Use the original, unsanitized data.frame.
+    all_markers_name <- load(params$all_markers_file)
+    all_markers <- get(all_markers_name, inherits = FALSE)
+}
 
 # Default to using our internal cell type markers, managed on Google Sheets.
 # File on issue on the bcbioSingleCell GitHub repo if this list needs to get
@@ -52,12 +59,14 @@ assignAndSaveData(
 # knitr arguments (for `rmarkdown::render()` looping)
 # opts_chunk$set(
 #     cache.path = paste(
-#         seurat_all_markers_name,
+#         seurat_name,
+#         "markers",
 #         "cache/",
 #         sep = "_"
 #     ),
 #     fig.path = paste(
-#         seurat_all_markers_name,
+#         seurat_name,
+#         "markers",
 #         "files/",
 #         sep = "_"
 #     )
@@ -79,32 +88,43 @@ This workflow is adapted from the following sources:
 
 
 
+# Differential expression
+
 Seurat can help you find markers that define clusters via differential expression. By default, it identifes positive and negative markers of a single cluster (specified in `ident.1`), compared to all other cells. `FindAllMarkers()` automates this process for all clusters, but you can also test groups of clusters vs. each other, or against all cells.
 
 The `min.pct` argument requires a gene to be detected at a minimum percentage in either of the two groups of cells, and the `thresh.test` argument requires a gene to be differentially expressed (on average) by some amount between the two groups. You can set both of these to 0, but with a dramatic increase in time - since this will test a large number of genes that are unlikely to be highly discriminatory. As another option to speed up these computations, `max.cells.per.ident` can be set. This will downsample each identity class to have no more cells than whatever this is set to. While there is generally going to be a loss in power, the speed increases can be significiant and the most highly differentially expressed genes will likely still rise to the top.
 
-Seurat has four tests for differential expression which can be set with the `test.use` parameter: LRT test based on zero-inflated data (`bimod`, default), ROC test (`roc`), t-test (`t`), LRT test based on tobit-censoring models (`tobit`) The ROC test returns the 'classification power' for any individual marker (ranging from 0 - random, to 1 - perfect).
+Seurat has multiple tests for differential expression which can be set with the `test.use` parameter. Currently it defaults to Wilcoxon rank sum test ("`wilcox`"), which tends to overreport significant markers. Instead we currently recommend using MAST (Finak et al, Genome Biology, 2015) or DESeq2 (Love et al, Genome Biology, 2014).
 
-```{r find_all_markers, results="hide"}
-seurat_all_markers <- FindAllMarkers(seurat)
-# Save the original, unmodified data.frame as a backup, since this step is
-# CPU-intensive for large datasets
+```{r find_all_markers, cache=FALSE, results="hide"}
+# MAST and DESeq2 are recommended over Wilcoxon rank sum test.
+
+# This step can a long time to run and shouldn't be cached.
+# We recommend running this step outside of R Markdown and then loading the
+# presaved R data file instead.
+
+if (!exists("all_markers", inherits = FALSE)) {
+    all_markers <- FindAllMarkers(seurat)
+    # Save the original, unmodified data.frame as a backup
+    assignAndSaveData(
+        name = paste(seurat_name, "markers", "original", sep = "_"),
+        object = all_markers,
+        dir = params$data_dir
+    )
+}
+
+# Sanitize the markers data.frame and include gene metadata
+all_markers <- sanitizeMarkers(seurat, markers = all_markers)
 assignAndSaveData(
-    name = paste(seurat_all_markers_name, "original", sep = "_"),
-    object = seurat_all_markers,
-    dir = params$data_dir
-)
-seurat_all_markers <- sanitizeMarkers(seurat, markers = seurat_all_markers)
-assignAndSaveData(
-    name = seurat_all_markers_name,
-    object = seurat_all_markers,
+    name = paste(seurat_name, "markers", "sanitized", sep = "_"),
+    object = all_markers,
     dir = params$data_dir
 )
 write_csv(
-    seurat_all_markers,
+    all_markers,
     path = file.path(
         params$results_dir,
-        paste0(seurat_all_markers_name, ".csv.gz")
+        paste0(seurat_name, "_markers_sanitized.csv.gz")
     )
 )
 ```
@@ -114,15 +134,16 @@ write_csv(
 # Top markers per cluster {.tabset}
 
 ```{r top_markers}
-top_markers <- topMarkers(seurat_all_markers, n = 10, coding = TRUE)
+top_markers <- topMarkers(all_markers, n = 5, coding = FALSE)
 top_markers
 ```
 
-```{r plot_top_markers, fig.height=14.5, fig.width=10, results="asis"}
+```{r plot_top_markers, results="asis"}
 plotTopMarkers(
     object = seurat,
     topMarkers = top_markers,
-    headerLevel = 2
+    headerLevel = 2,
+    dark = TRUE
 )
 ```
 
@@ -137,7 +158,7 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 # doesn't appear to be working in Seurat v2.1 (updated 2017-11-25).
 DoHeatmap(
     object = seurat,
-    genes.use = top_markers$symbol,
+    genes.use = top_markers$rowname,
     col.low = viridis(3)[[1]],
     col.mid = viridis(3)[[2]],
     col.high = viridis(3)[[3]],
@@ -151,24 +172,25 @@ DoHeatmap(
 
 # Known cell type markers {.tabset}
 
-```{r known_markers_detected, fig.height=14.5, fig.width=10, results="asis"}
+```{r known_markers_detected, results="asis"}
 known_markers_detected <- knownMarkersDetected(
-    all = seurat_all_markers,
+    object = all_markers,
     known = cell_type_markers
 )
 known_markers_detected
 assignAndSaveData(
-    name = paste(seurat_all_markers_name, "by_cell_type", sep = "_"),
+    name = paste(seurat_name, "known_markers_detected", sep = "_"),
     object = known_markers_detected,
     dir = params$data_dir
 )
 ```
 
-```{r plot_known_markers_detected, fig.height=14.5, fig.width=10, results="asis"}
+```{r plot_known_markers_detected, results="asis"}
 plotKnownMarkersDetected(
     object = seurat,
-    knownMarkers = known_markers_detected,
-    headerLevel = 2
+    markers = known_markers_detected,
+    headerLevel = 2,
+    dark = TRUE
 )
 ```
 
@@ -180,7 +202,7 @@ plotKnownMarkersDetected(
 cell_types_per_cluster <- cellTypesPerCluster(known_markers_detected)
 cell_types_per_cluster
 assignAndSaveData(
-    name = paste(seurat_all_markers_name, "cell_types_per_cluster", sep = "_"),
+    name = paste(seurat_name, "cell_types_per_cluster", sep = "_"),
     object = cell_types_per_cluster,
     dir = params$data_dir
 )
@@ -190,7 +212,8 @@ assignAndSaveData(
 plotCellTypesPerCluster(
     object = seurat,
     cellTypesPerCluster = cell_types_per_cluster,
-    headerLevel = 2
+    headerLevel = 2,
+    dark = TRUE
 )
 ```
 

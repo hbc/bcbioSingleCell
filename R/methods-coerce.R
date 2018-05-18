@@ -43,12 +43,7 @@ setAs(
         }
 
         # Convert gene identifiers to symbols
-        rownames <- rownames(from)
         from <- convertGenesToSymbols(from)
-
-        # Ensure that genes are unique valid names.
-        # Note that any "-" in gene names will be sanitized to "." here.
-        rownames(from) <- make.names(rownames(from), unique = TRUE)
 
         # Create the seurat object
         to <- CreateSeuratObject(
@@ -70,7 +65,6 @@ setAs(
 
         # Stash metadata and rowRanges into `misc` slot
         bcbio <- list(
-            "rownames" = rownames,
             "rowRanges" = rowRanges(from),
             "metadata" = metadata(from)
         )

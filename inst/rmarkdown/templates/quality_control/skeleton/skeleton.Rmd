@@ -86,10 +86,10 @@ The knee and inflection points on the curve here help distinguish the UMI thresh
 plotBarcodeRanks(bcb)
 ```
 
-Let's view these UMI cutoffs per sample on a single ECDF plot.
+Let's view the UMI knee point cutoffs per sample on a single ECDF plot.
 
 ```{r plot_umis_per_cell_ecdf}
-plotUMIsPerCell(bcb, geom = "ecdf", point = "inflection")
+plotUMIsPerCell(bcb, geom = "ecdf", point = "knee")
 ```
 
 

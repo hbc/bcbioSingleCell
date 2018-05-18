@@ -21,21 +21,27 @@
 readCellTypeMarkers <- function(file, gene2symbol) {
     assertIsGene2symbol(gene2symbol)
     data <- readFileByExtension(file) %>%
-        camel()
-
-    # Require matching by Ensembl gene ID, not symbol
-    assert_are_intersecting_sets(
-        x = c("cellType", "geneID"),
-        y = colnames(data)
-    )
-
-    data <- data[, c("cellType", "geneID")] %>%
+        camel() %>%
+        .[, c("cellType", "geneID")] %>%
         .[complete.cases(.), , drop = FALSE]
 
-    assert_is_subset(data[["geneID"]], gene2symbol[["geneID"]])
+    # Warn user about markers that aren't present in the gene2symbol.
+    # This is useful for informing about putative markers that aren't expressed.
+    setdiff <- setdiff(data[["geneID"]], gene2symbol[["geneID"]])
+    if (length(setdiff)) {
+        warning(paste(
+            "Markers missing from gene2symbol (not expressed):",
+            printString(setdiff),
+            sep = "\n"
+        ))
+    }
 
-    left_join(data, gene2symbol, by = "geneID") %>%
-        as_tibble() %>%
+    intersect <- intersect(data[["geneID"]], gene2symbol[["geneID"]])
+    assert_is_non_empty(intersect)
+
+    data %>%
+        .[.[["geneID"]] %in% intersect, , drop = FALSE] %>%
+        left_join(gene2symbol, by = "geneID") %>%
         unique() %>%
         group_by(!!sym("cellType")) %>%
         arrange(!!sym("geneName"), .by_group = TRUE)

@@ -25,7 +25,6 @@ test_that("bcbio : seurat_small", {
     expect_identical(
         lapply(x, class),
         list(
-            rownames = "character",
             rowRanges = structure("GRanges", package = "GenomicRanges"),
             metadata = "list"
         )

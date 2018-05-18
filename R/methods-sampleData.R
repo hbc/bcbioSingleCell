@@ -168,7 +168,7 @@ setMethod(
 
 
 # Assignment methods ===========================================================
-# TODO Ensure sample-level colData is updated here as well
+# FIXME Ensure sample-level colData is updated here as well
 #' @rdname sampleData
 #' @export
 setMethod(

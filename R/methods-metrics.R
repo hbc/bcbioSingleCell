@@ -196,7 +196,8 @@ setMethod(
         ) %>%
             as.data.frame() %>%
             camel() %>%
-            column_to_rownames("cellID")
+            column_to_rownames("cellID") %>%
+            .[rownames(colData), ]
     }
 )
 

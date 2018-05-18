@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Import and analyze bcbio single-cell RNA-seq data.
-Version: 0.1.8
+Version: 0.1.9
 Authors@R: c(
     person(
         given = "Michael",
@@ -101,6 +101,7 @@ Suggests:
     DESeq2 (>= 1.20),
     DropletUtils,
     EnsDb.Hsapiens.v75,
+    MAST (>= 1.4),
     edgeR (>= 3.22),
     googlesheets,
     scater,

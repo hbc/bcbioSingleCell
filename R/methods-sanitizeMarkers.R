@@ -49,7 +49,6 @@ setMethod(
     function(object, markers) {
         validObject(object)
         assert_is_data.frame(markers)
-        assert_has_rows(markers)
 
         # Early return on sanitized data
         if (.isSanitizedMarkers(markers, package = "Seurat")) {
@@ -65,6 +64,7 @@ setMethod(
             # `FindAllMarkers()` return
             all <- TRUE
             assert_is_subset("gene", colnames(data))
+            data <- remove_rownames(data)
             data[["rowname"]] <- data[["gene"]]
             data[["gene"]] <- NULL
         } else {
@@ -91,32 +91,27 @@ setMethod(
 
         # Rename P value columns to match DESeq2 conventions
         if ("pVal" %in% colnames(data)) {
-            message("Renaming `pVal` column to `pvalue` (matching DESeq2)")
             data[["pvalue"]] <- data[["pVal"]]
             data[["pVal"]] <- NULL
         }
         if ("pValAdj" %in% colnames(data)) {
-            message("Renaming `pValAdj` column to `padj` (matching DESeq2)")
             data[["padj"]] <- data[["pValAdj"]]
             data[["pValAdj"]] <- NULL
         }
 
         # Add Ensembl gene IDs
-        geneID <- bcbio(object)[["rownames"]]
-        if (!is.character(geneID)) {
-            stop("Original rownames are not stashed in bcbio slot")
-        }
-        geneName <- rownames(object)
-        assert_are_same_length(geneID, geneName)
-        gene2symbol <- tibble(
-            "geneID" = geneID,
-            "geneName" = geneName
-        )
+        gene2symbol <- gene2symbol(object)
+        gene2symbol[["rowname"]] <- make.unique(gene2symbol[["geneName"]])
+        gene2symbol[["geneName"]] <- NULL
+
         data <- left_join(
             x = data,
             y = gene2symbol,
-            by = c("rowname" = "geneName")
+            by = "rowname"
         )
+
+        # Check that all rows match a geneID
+        stopifnot(!any(is.na(data[["geneID"]])))
 
         # Add genomic ranges
         rowRanges <- rowRanges(object)
