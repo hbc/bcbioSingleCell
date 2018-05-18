@@ -11,7 +11,7 @@
 plotCellTypesPerCluster(object, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
-  color = "auto", dark = FALSE, grid = TRUE, headerLevel = 2L)
+  color = "auto", dark = TRUE, grid = TRUE, headerLevel = 2L)
 }
 \arguments{
 \item{object}{Object.}
@@ -49,7 +49,8 @@ glimpse(per_cluster)
 # Let's plot the first row, as an example
 plotCellTypesPerCluster(
     object = seurat_small,
-    cellTypesPerCluster = per_cluster[1L, , drop = FALSE]
+    cellTypesPerCluster = per_cluster[1L, , drop = FALSE],
+    dark = TRUE
 )
 }
 \seealso{
