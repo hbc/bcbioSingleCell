@@ -1,3 +1,28 @@
+# bcbioSingleCell 0.1.9 (2018-05-18)
+
+## Major changes
+
+- No longer attempting to sanitize the rownames for `seurat` objects in coercion
+  method. This helps maintain the gene symbol appearance in plotting functions
+  for genes with hyphens in the names.
+
+## Minor changes
+
+- Using `BiocParallel::SerialParam()` internally for zinbwave in `diffExp()`.
+- Simplified `cell2sample()` internal code to always use `mapCellsToSamples()`
+  instead of attempting to use a stashed `vector` inside `metadata()` for
+  `SingleCellExperiment` method.
+- Removed internal `.applyFilterCutoffs()`, which is no longer necessary since
+  this functionality is supported in the S4 subset method.
+- Simplified assert checks inside `fetchGene()` functions.
+- `plotCellTypesPerCluster()`: revert back to `dark = TRUE` by default.
+- Consolidated `plotMarker` and `plotFeature` functions in the documentation.
+- `sanitizeMarkers()`: Improved gene identifier matching.
+- `topMarkers()` now defaults to `coding = FALSE` by default, since not all
+  datasets will contain biotype information.
+
+
+
 # bcbioSingleCell 0.1.8 (2018-05-16)
 
 ## Minor changes
