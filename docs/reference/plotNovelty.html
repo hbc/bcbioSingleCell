@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.8</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
       </span>
     </div>
 
@@ -184,9 +184,9 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='fu'>plotNovelty</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"histogram"</span>)</div><div class='img'><img src='plotNovelty-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotNovelty</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ecdf"</span>)</div><div class='img'><img src='plotNovelty-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plotNovelty</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"histogram"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mapCellsToSamples(cells = cells, samples = samples): are_identical : length(cells) and length(cell2sample) are not identical.</span></div><div class='input'><span class='fu'>plotNovelty</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ecdf"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mapCellsToSamples(cells = cells, samples = samples): are_identical : length(cells) and length(cell2sample) are not identical.</span></div><div class='input'>
 <span class='co'># seurat ====</span>
-<span class='fu'>plotNovelty</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotNovelty-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plotNovelty</span>(<span class='no'>seurat_small</span>)</div><div class='img'><img src='plotNovelty-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

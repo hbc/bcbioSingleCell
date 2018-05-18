@@ -57,7 +57,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.8</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
       </span>
     </div>
 
@@ -202,7 +202,7 @@
 <li>Removed unnecessary method support for <code>interestingGroups()</code> and <code>metadata()</code>. These extend from <code>SummarizedExperiment</code> correctly now.</li>
 <li>Fixed x-axis label centering for <code>plotCellCounts()</code> and <code>plotReadsPerCell()</code>.</li>
 <li>Simplified seurat method support for <code>SingleCellExperiment</code>-like methods, where applicable. This includes <code>rowData</code>, <code>gene2symbol()</code>, and <code>interestingGroups()</code>.</li>
-<li>Improved dark mode color support for <code><a href="../reference/plotDot.html">plotDot()</a></code>, <code>plotFeatureTSNE()</code>, <code>plotMarker()</code>.</li>
+<li>Improved dark mode color support for <code><a href="../reference/plotDot.html">plotDot()</a></code>, <code><a href="../reference/plotFeature.html">plotFeatureTSNE()</a></code>, <code>plotMarker()</code>.</li>
 <li>Updated sample metadata example in README.</li>
 </ul>
 </div>
@@ -244,7 +244,7 @@
 <li>Consistently using <code>sym()</code> in place of <code>.data</code> internally for tidy code.</li>
 <li>Updated <code>seurat</code> blacklist for <code><a href="../reference/sampleData.html">sampleData()</a></code> generic.</li>
 <li>
-<code>plotCellTypesPerCluster()</code> and <code>plotMarkerTSNE()</code> now use an automatic color palette by default, which enables for dynamic color palette support when <code>dark = TRUE</code>. Internally this is handled with the <code>theme_midnight()</code> and <code>theme_paperwhite()</code> [ggplot2][] themes.</li>
+<code>plotCellTypesPerCluster()</code> and <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code> now use an automatic color palette by default, which enables for dynamic color palette support when <code>dark = TRUE</code>. Internally this is handled with the <code>theme_midnight()</code> and <code>theme_paperwhite()</code> [ggplot2][] themes.</li>
 <li>Updated installation instructions to support <a href="https://bioconductor.org">Bioconductor</a> 3.7.</li>
 </ul>
 </div>
@@ -353,10 +353,10 @@
 <li>Fixes for QC plot labeling of bcbioSingleCell object with different per sample filtering cutoffs applied.</li>
 <li>Added new <code><a href="../reference/fetchData.html">fetchGeneData()</a></code> function, that wraps the functionality of <code><a href="http://www.rdocumentation.org/packages/Seurat/topics/FetchData">Seurat::FetchData()</a></code> for specific genes.</li>
 <li>Improved internal dimensionality reduction plotting code. The main function has been renamed to <code>.plotDR()</code> internally.</li>
-<li>Simplified the code for <code><a href="../reference/fetchData.html">fetchTSNEExpressionData()</a></code> to return a standard <code>data.frame</code> with the cellular barcodes as rows, instead of the previously grouped <code>tibble</code> method. Now this function returns aggregate gene marker calculations in the <code>mean</code>, <code>median</code>, and <code>sum</code> columns. Since this method has way fewer rows than the grouped <code>tibble</code>, the [ggplot2][] code for <code>plotMarkerTSNE()</code> now runs faster.</li>
+<li>Simplified the code for <code><a href="../reference/fetchData.html">fetchTSNEExpressionData()</a></code> to return a standard <code>data.frame</code> with the cellular barcodes as rows, instead of the previously grouped <code>tibble</code> method. Now this function returns aggregate gene marker calculations in the <code>mean</code>, <code>median</code>, and <code>sum</code> columns. Since this method has way fewer rows than the grouped <code>tibble</code>, the [ggplot2][] code for <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code> now runs faster.</li>
 <li>Explicitly declare <code>viridis::</code> for color palettes, where applicable.</li>
 <li>
-<code>colorPoints</code> argument has been renamed to <code>expression</code> for <code>plotMarkerTSNE()</code>.</li>
+<code>colorPoints</code> argument has been renamed to <code>expression</code> for <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code>.</li>
 <li>Dynamic gene symbol to ensgene conversion has been removed from the plotting functions, for greater simplicity. Now the <code>genes</code> argument simply matches against the rownames in the counts matrix of the object.</li>
 <li>Decreased the default <code>minCumPct</code> argument for <code>plotPCElbow()</code> from 0.9 to 0.8. This is more conservative and will return slightly fewer principal components for dimensionality reduction, by default.</li>
 <li>
@@ -402,10 +402,10 @@
 <li>Updated <code>geomean</code> bind method in <code><a href="../reference/fetchData.html">fetchTSNEExpressionData()</a></code>.</li>
 <li>Changed <code>minNovelty</code> default from 0.8 to 0.75.</li>
 <li>Improved seurat class support for <code><a href="../reference/plotDot.html">plotDot()</a></code>.</li>
-<li>Improved parameter names for <code>plotKnownMarkersDetected()</code>. Now uses <code>tsneColor</code>, <code>violinFill</code>, and <code>dotColor</code>. Also added <code>pointsAsNumbers</code> parameter.</li>
-<li>Added <code>subtitle</code> parameter for <code>plotMarkerTSNE()</code>.</li>
+<li>Improved parameter names for <code><a href="../reference/plotMarker.html">plotKnownMarkersDetected()</a></code>. Now uses <code>tsneColor</code>, <code>violinFill</code>, and <code>dotColor</code>. Also added <code>pointsAsNumbers</code> parameter.</li>
+<li>Added <code>subtitle</code> parameter for <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code>.</li>
 <li>Added <code>tsneColor</code>, <code>violinFill</code>, <code>dotColor</code>, and <code>dark</code> parameters for <code><a href="../reference/plotMarker.html">plotMarkers()</a></code>.</li>
-<li>Improved looping method for <code>plotTopMarkers()</code> so that it renders correctly in <a href="http://rmarkdown.rstudio.com">R Markdown</a> calls.</li>
+<li>Improved looping method for <code><a href="../reference/plotMarker.html">plotTopMarkers()</a></code> so that it renders correctly in <a href="http://rmarkdown.rstudio.com">R Markdown</a> calls.</li>
 <li>Added method support for <code><a href="../reference/plotViolin.html">plotViolin()</a></code>.</li>
 <li>Improved internal <code>cell2sample</code> handling in subset method code.</li>
 </ul>
@@ -434,7 +434,7 @@
 <ul>
 <li>Prepared a minimal working example dataset.</li>
 <li>Added some initial unit tests.</li>
-<li>Renamed <code><a href="../reference/deprecated.html">plotKnownMarkers()</a></code> to <code>plotKnownMarkersDetected()</code>.</li>
+<li>Renamed <code><a href="../reference/deprecated.html">plotKnownMarkers()</a></code> to <code><a href="../reference/plotMarker.html">plotKnownMarkersDetected()</a></code>.</li>
 <li>Renamed <code><a href="../reference/deprecated.html">readMarkers()</a></code> to <code><a href="../reference/deprecated.html">readMarkersFile()</a></code>.</li>
 <li>Added <code>gene2symbol()</code> method support.</li>
 <li>Moved <code><a href="../reference/plotDot.html">plotDot()</a></code> generic to basejump package.</li>
@@ -458,8 +458,8 @@
 <li>Color palettes now default to viridis instead of inferno palette, where applicable.</li>
 <li>Added Ensembl gene identifier support for <code><a href="../reference/plotDot.html">plotDot()</a></code> function.</li>
 <li>
-<code>plotFeatureTSNE()</code> now uses a plural <code>features</code> parameter instead of <code>feature</code>, which is consistent with the syntax used in the other functions.</li>
-<li>Added Ensembl gene identifier support to <code>plotMarkerTSNE()</code>. The <code>format</code> argument still defaults to “symbol”, for consistency with previous behavior. However, in the future we recommend that users pass in stable Ensembl gene identifiers here if possible, for better reproducibility.</li>
+<code><a href="../reference/plotFeature.html">plotFeatureTSNE()</a></code> now uses a plural <code>features</code> parameter instead of <code>feature</code>, which is consistent with the syntax used in the other functions.</li>
+<li>Added Ensembl gene identifier support to <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code>. The <code>format</code> argument still defaults to “symbol”, for consistency with previous behavior. However, in the future we recommend that users pass in stable Ensembl gene identifiers here if possible, for better reproducibility.</li>
 <li>
 <code><a href="../reference/plotMarker.html">plotMarkers()</a></code> now supports Ensembl gene identifiers.</li>
 <li>
@@ -467,7 +467,7 @@
 <li>We’re now using “glm” instead of “gam” for <code>geom_smooth()</code> plotting, where applicable. See the <code><a href="../reference/plotQC.html">plotQC()</a></code> function code.</li>
 <li>Improved the defaults for <code>plotQuantileHeatmap()</code> to enable faster plotting. Now the dendrogram calculations are skipped by default, which take a long time for large datasets.</li>
 <li>Removed the draft <code>plotStressGenes()</code> function for now. Will try to add this in a future update.</li>
-<li>Fixed Markdown header handling for <code>plotTopMarkers()</code> if <code>headerLevel = NULL</code>.</li>
+<li>Fixed Markdown header handling for <code><a href="../reference/plotMarker.html">plotTopMarkers()</a></code> if <code>headerLevel = NULL</code>.</li>
 <li>Simplified <code><a href="../reference/selectSamples.html">selectSamples()</a></code> code to rely upon output of our bracket-based subsetting method. See <code>subset.R</code> file for more details.</li>
 <li>Improved metadata update in bracket-based subsetting method.</li>
 <li>
@@ -488,12 +488,12 @@
 <li>Renamed <code><a href="../reference/deprecated.html">quantileHeatmap()</a></code> to <code>plotQuantileHeatmap()</code>, for consistency with other plotting functions.</li>
 <li>Initial support for customized bracket based subsetting, which now acts upon the raw cellular barcode counts stashed in the <code>object<a href='http://github.com/bcbio'>@bcbio</a></code> slot.</li>
 <li>Moved <code><a href="../reference/deprecated.html">darkTheme()</a></code> to <a href="http://steinbaugh.com/basejump">basejump</a> package and reworked as <code>midnightTheme()</code>, with improved colors and axis appearance.</li>
-<li>Added <code>pointsAsNumbers</code> parameter to <code><a href="../reference/plotDimensionalReduction.html">plotTSNE()</a></code> and <code>plotPCA()</code> functions, to match the functionality in <code>plotMarkerTSNE()</code>.</li>
+<li>Added <code>pointsAsNumbers</code> parameter to <code><a href="../reference/plotDimensionalReduction.html">plotTSNE()</a></code> and <code>plotPCA()</code> functions, to match the functionality in <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code>.</li>
 <li>Overhauled <code><a href="../reference/readCellRanger.html">loadCellRanger()</a></code> to support multiplexed <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> matrix output. <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> adds a numeric suffix to the end of multiplexed barcodes (e.g. <code>AAACCTGGTTTACTCT-1</code> denotes cellular barcode <code>AAACCTGGTTTACTCT</code> is assigned to sample <code>1</code>).</li>
 <li>Improved <code>cell2sample</code> mapping in <code><a href="../reference/aggregateReplicates.html">aggregateReplicates()</a></code> function, which uses the <code>sampleNameAggregate</code> column in sample metadata to define the aggregate sample pairings. The <code>summarize()</code> step at line 101 is slow for datasets with many samples and should be changed in the future to speed things up.</li>
 <li>Improved internal <code>cell2sample()</code> code to handle <code>NULL</code> stashed mappings better.</li>
 <li>Updated TNSE plotting functions to use <code>midnightTheme()</code> instead of <code><a href="../reference/deprecated.html">darkTheme()</a></code>.</li>
-<li>Added user-defined point and label sizes for <code>plotMarkerTSNE()</code>.</li>
+<li>Added user-defined point and label sizes for <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code>.</li>
 <li>Fixed typo in <code>plotMitoRatio()</code> where <code>maxGenes</code> cutoff was plotted instead of <code>maxMitoRatio</code>.</li>
 <li>Added <code>legend</code> parameter argument to <code><a href="../reference/plotQC.html">plotQC()</a></code> function. Also improved handling of <code>NULL</code> return for <code>plotReadsPerCell()</code>, which can happen with <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> output.</li>
 <li>Updated facet wrapping in <code>plotZeroesVsDepth()</code> to match the behavior in the other plotting functions.</li>
@@ -519,13 +519,13 @@
 <li>
 <code>sampleMetadata()</code> return is now consistently sanitized for <code>bcbioSingleCell</code> and <code>seurat</code> objects.</li>
 <li>Minor tweaks to quality control template and setup.R files.</li>
-<li>Added <code>plotFeatureTSNE()</code> utility function. This improves on <code><a href="http://www.rdocumentation.org/packages/Seurat/topics/FeaturePlot">Seurat::FeaturePlot()</a></code> and enables the user to overlay the cluster identifiers on top of the t-SNE plot. <code><a href="../reference/deprecated.html">plotFeatures()</a></code> is now deprecated in favor of this function.</li>
+<li>Added <code><a href="../reference/plotFeature.html">plotFeatureTSNE()</a></code> utility function. This improves on <code><a href="http://www.rdocumentation.org/packages/Seurat/topics/FeaturePlot">Seurat::FeaturePlot()</a></code> and enables the user to overlay the cluster identifiers on top of the t-SNE plot. <code><a href="../reference/deprecated.html">plotFeatures()</a></code> is now deprecated in favor of this function.</li>
 <li>Improved internal handling of Seurat data in the <code>.fetchDimDataSeurat()</code> function. This now keeps the cell ID as the rowname.</li>
 <li>Allow the user to define the color palette (<code>color</code>), as well as <code>pointSize</code> and <code>labelSize</code> for <code>plotPCA()</code> and <code><a href="../reference/plotDimensionalReduction.html">plotTSNE()</a></code>.</li>
 <li>Factors are now correctly releveled in <code>cell2sample()</code> return.</li>
 <li>Improved internal code for <code><a href="../reference/fetchData.html">fetchTSNEExpressionData()</a></code>.</li>
 <li>Bug fix for <code><a href="../reference/metrics.html">metrics()</a></code> accessor not including the cell ID as rownames.</li>
-<li>Clustering template fixes. Now uses <code>plotFeatureTSNE()</code> to assess quality control metrics on t-SNE.</li>
+<li>Clustering template fixes. Now uses <code><a href="../reference/plotFeature.html">plotFeatureTSNE()</a></code> to assess quality control metrics on t-SNE.</li>
 </ul>
 </div>
     <div id="bcbiosinglecell-0-0-22-2017-11-17" class="section level1">

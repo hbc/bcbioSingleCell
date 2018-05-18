@@ -137,12 +137,11 @@ maxit <- 1000L
     # zinbFit doesn't support dgCMatrix, so coerce counts to matrix
     assays(sce) <- list("counts" = as.matrix(counts(sce)))
     sce[["group"]] <- group
-    # BPPARAM = BiocParallel::SerialParam()  # nolint
     print(system.time({
         zinb <- zinbwave::zinbwave(
             Y = sce,
             K = 0L,
-            BPPARAM = BiocParallel::bpparam(),
+            BPPARAM = BiocParallel::SerialParam(),
             epsilon = 1e12
         )
     }))
@@ -257,8 +256,9 @@ maxit <- 1000L
     assays(dds)[["weights"]] <- weights
     dds <- DESeq2::estimateSizeFactors(dds, type = "poscounts")
     dds <- DESeq2::estimateDispersions(dds)
-    # FIXME LRT is recommended over Wald for UMI counts. May want to switch to
-    # that approach here. See code in zinbwave method.
+    # LRT is recommended over Wald for UMI counts.
+    # May want to switch to that approach here.
+    # See code in zinbwave method.
     dds <- DESeq2::nbinomWaldTest(
         object = dds,
         betaPrior = TRUE,

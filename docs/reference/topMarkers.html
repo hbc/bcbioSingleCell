@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.8</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Top Markers</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-seurat-topMarkers.R'><code>R/methods-seurat-topMarkers.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-topMarkers.R'><code>R/methods-topMarkers.R</code></a></small>
     <div class="hidden name"><code>topMarkers.Rd</code></div>
     </div>
 
@@ -114,7 +114,7 @@
 
 <span class='co'># S4 method for grouped_df</span>
 <span class='fu'>topMarkers</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"positive"</span>,
-  <span class='st'>"negative"</span>, <span class='st'>"both"</span>), <span class='kw'>coding</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='st'>"negative"</span>, <span class='st'>"both"</span>), <span class='kw'>coding</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,11 +155,9 @@ directions of association per cluster.</p></td>
     <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
   <code>knownMarkersDetected</code>,
   <code>plotCellTypesPerCluster</code>,
-  <code>plotFeatureTSNE</code>,
-  <code>plotKnownMarkersDetected</code>,
-  <code>plotMarkerTSNE</code>, <code>plotMarker</code>,
+  <code><a href='plotFeature.html'>plotFeatureTSNE</a></code>,
+  <code><a href='plotMarker.html'>plotKnownMarkersDetected</a></code>,
   <code>plotPCElbow</code>, <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
-  <code>plotTopMarkers</code>,
   <code>sanitizeMarkers</code></p></div>
     
 
@@ -171,18 +169,18 @@ directions of association per cluster.</p></td>
     <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"positive"</span>
 )</div><div class='output co'>#&gt; # A tibble: 10 x 18
 #&gt; # Groups:   cluster [5]
-#&gt;    cluster rowname geneID       geneName  pct1  pct2 avgLogFC     padj   pvalue
-#&gt;    &lt;fct&gt;   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1 0       COL1A2  ENSG0000016… COL1A2   1     0.465     2.56 5.31e-58 1.06e-60
-#&gt;  2 0       COL1A1  ENSG0000010… COL1A1   1     0.596     2.79 1.98e-57 3.96e-60
-#&gt;  3 1       S100A10 ENSG0000019… S100A10  0.741 0.266     2.17 4.75e-30 9.50e-33
-#&gt;  4 1       KRT18   ENSG0000011… KRT18    0.681 0.253     1.53 9.82e-20 1.96e-22
-#&gt;  5 2       MYL4    ENSG0000019… MYL4     0.872 0.123     2.14 3.25e-55 6.50e-58
-#&gt;  6 2       PLN     ENSG0000019… PLN      0.936 0.212     2.43 5.17e-55 1.03e-57
-#&gt;  7 3       MT.ATP6 ENSG0000019… MT-ATP6  1     0.993     1.16 1.80e-31 3.59e-34
-#&gt;  8 3       MT.ND5  ENSG0000019… MT-ND5   0.966 0.908     1.33 2.36e-31 4.71e-34
-#&gt;  9 4       H3F3A   ENSG0000016… H3F3A    1     0.767     1.38 3.89e-25 7.79e-28
-#&gt; 10 4       STMN1   ENSG0000011… STMN1    0.952 0.452     1.77 2.66e-24 5.31e-27
+#&gt;    cluster rowname  geneID      geneName  pct1  pct2 avgLogFC     padj   pvalue
+#&gt;    &lt;fct&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1 0       COL1A2   ENSG000001… COL1A2   1     0.465     2.56 5.31e-58 1.06e-60
+#&gt;  2 0       COL1A1   ENSG000001… COL1A1   1     0.596     2.79 1.98e-57 3.96e-60
+#&gt;  3 1       S100A10  ENSG000001… S100A10  0.741 0.266     2.17 4.75e-30 9.50e-33
+#&gt;  4 1       KRT18    ENSG000001… KRT18    0.681 0.253     1.53 9.82e-20 1.96e-22
+#&gt;  5 2       MYL4     ENSG000001… MYL4     0.872 0.123     2.14 3.25e-55 6.50e-58
+#&gt;  6 2       PLN      ENSG000001… PLN      0.936 0.212     2.43 5.17e-55 1.03e-57
+#&gt;  7 3       MT-ATP6  ENSG000001… MT-ATP6  1     0.993     1.16 1.80e-31 3.59e-34
+#&gt;  8 3       MTATP6P1 ENSG000002… MTATP6P1 1     0.988     1.17 1.87e-31 3.74e-34
+#&gt;  9 4       H3F3A    ENSG000001… H3F3A    1     0.767     1.38 3.89e-25 7.79e-28
+#&gt; 10 4       STMN1    ENSG000001… STMN1    0.952 0.452     1.77 2.66e-24 5.31e-27
 #&gt; # ... with 9 more variables: seqnames &lt;fct&gt;, start &lt;int&gt;, end &lt;int&gt;,
 #&gt; #   width &lt;int&gt;, strand &lt;fct&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
 #&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div></pre>
