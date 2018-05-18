@@ -70,7 +70,7 @@ setMethod(
         title = TRUE
     ) {
         assert_is_character(genes)
-        genes <- make.names(genes)
+        assert_is_subset(genes, rownames(object))
         expression <- match.arg(expression)
         assert_is_a_bool(pointsAsNumbers)
         assert_is_a_number(pointSize)
@@ -325,8 +325,6 @@ setMethod(
         headerLevel = 2L,
         ...
     ) {
-        assert_is_character(genes)
-        genes <- make.names(genes)
         assert_is_subset(genes, rownames(object))
         assertIsAHeaderLevel(headerLevel)
 

@@ -22,7 +22,7 @@
 \arguments{
 \item{object}{Object.}
 
-\item{clean}{\emph{Recommended.} Only return \code{factor} columns not defined in
+\item{clean}{\code{logical}. Only return \code{factor} columns not defined in
 \link{metadataBlacklist}.}
 
 \item{interestingGroups}{\code{character} vector defining the groups of interest.}
@@ -63,7 +63,11 @@ sampleData(x) \%>\% glimpse()
 \seealso{
 \link{metadataBlacklist}.
 
-Other Metadata Functions: \code{\link{sampleNames}}
+Other Data Functions: \code{\link{convertGenesToSymbols}},
+  \code{\link{counts}}, \code{\link{flatFiles}},
+  \code{\link{gene2symbol}}, \code{\link{sampleDirs}},
+  \code{\link{sampleNames}}, \code{\link{selectSamples}},
+  \code{\link{uniteInterestingGroups}}
 }
 \author{
 Michael Steinbaugh
