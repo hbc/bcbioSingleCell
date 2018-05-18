@@ -17,7 +17,7 @@ branches:
 #   - sudo apt-get update
 
 # External dependencies
-# dependency for gsl>copula>zinbwave
+# dependency for gsl > copula > zinbwave
 addons:
   apt:
     update: true
@@ -41,8 +41,10 @@ warnings_are_errors: true
 
 notifications:
   email:
+    recipients:
+      - mike@steinbaugh.com
     on_success: change
-    on_failure: change
+    on_failure: always
 
 r_packages:
   - covr
