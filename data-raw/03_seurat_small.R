@@ -26,8 +26,7 @@ seurat_small <- indrops_small %>%
     )
 
 # all_markers_small ============================================================
-# MAST, zinbwave/DESeq2 are recommended and more conservative
-all_markers_small <- FindAllMarkers(seurat_small, test.use = "wilcox")
+all_markers_small <- FindAllMarkers(seurat_small)
 all_markers_small <- sanitizeMarkers(
     object = seurat_small,
     markers = all_markers_small
