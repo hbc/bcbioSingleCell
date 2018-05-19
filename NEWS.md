@@ -1,3 +1,16 @@
+# bcbioSingleCell 0.1.10 (2018-05-19)
+
+## Minor changes
+
+- `plotCellTypesPerCluster()` is using `dark = TRUE` by default again.
+- Fixed `cell2sample()` handling for multiplexed Cell Ranger data loaded up with
+  `readCellRanger()`. Need to use stashed `cell2sample` factor saved in
+  `metadata()`, rather than attempting to calculate on the fly with
+  `mapCellsToSamples()`.
+- Updated [Travis CI][] build checks to include bioc-release on macOS.
+
+
+
 # bcbioSingleCell 0.1.9 (2018-05-18)
 
 ## Major changes
