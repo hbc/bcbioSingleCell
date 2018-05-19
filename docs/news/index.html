@@ -57,7 +57,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
       </span>
     </div>
 
@@ -100,12 +100,54 @@
       <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="bcbiosinglecell-0-1-8-2018-05-16" class="section level1">
+    <div id="bcbiosinglecell-0-1-10-2018-05-19" class="section level1">
 <h1 class="page-header">
-<a href="#bcbiosinglecell-0-1-8-2018-05-16" class="anchor"></a>bcbioSingleCell 0.1.8 (2018-05-16)</h1>
+<a href="#bcbiosinglecell-0-1-10-2018-05-19" class="anchor"></a>bcbioSingleCell 0.1.10 (2018-05-19)</h1>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>
+<code>plotCellTypesPerCluster()</code> is using <code>dark = TRUE</code> by default again.</li>
+<li>Fixed <code>cell2sample()</code> handling for multiplexed Cell Ranger data loaded up with <code><a href="../reference/readCellRanger.html">readCellRanger()</a></code>. Need to use stashed <code>cell2sample</code> factor saved in <code>metadata()</code>, rather than attempting to calculate on the fly with <code><a href="../reference/mapCellsToSamples.html">mapCellsToSamples()</a></code>.</li>
+<li>Updated <a href="https://travis-ci.org">Travis CI</a> build checks to include bioc-release on macOS.</li>
+</ul>
+</div>
+</div>
+    <div id="bcbiosinglecell-0-1-9-2018-05-18" class="section level1">
+<h1 class="page-header">
+<a href="#bcbiosinglecell-0-1-9-2018-05-18" class="anchor"></a>bcbioSingleCell 0.1.9 (2018-05-18)</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>No longer attempting to sanitize the rownames for <code>seurat</code> objects in coercion method. This helps maintain the gene symbol appearance in plotting functions for genes with hyphens in the names.</li>
+</ul>
+</div>
+<div id="minor-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>Using <code><a href="http://www.rdocumentation.org/packages/BiocParallel/topics/SerialParam-class">BiocParallel::SerialParam()</a></code> internally for zinbwave in <code>diffExp()</code>.</li>
+<li>Simplified <code>cell2sample()</code> internal code to always use <code><a href="../reference/mapCellsToSamples.html">mapCellsToSamples()</a></code> instead of attempting to use a stashed <code>vector</code> inside <code>metadata()</code> for <code>SingleCellExperiment</code> method.</li>
+<li>Removed internal <code>.applyFilterCutoffs()</code>, which is no longer necessary since this functionality is supported in the S4 subset method.</li>
+<li>Simplified assert checks inside <code>fetchGene()</code> functions.</li>
+<li>
+<code>plotCellTypesPerCluster()</code>: revert back to <code>dark = TRUE</code> by default.</li>
+<li>Consolidated <code>plotMarker</code> and <code>plotFeature</code> functions in the documentation.</li>
+<li>
+<code>sanitizeMarkers()</code>: Improved gene identifier matching.</li>
+<li>
+<code>topMarkers()</code> now defaults to <code>coding = FALSE</code> by default, since not all datasets will contain biotype information.</li>
+</ul>
+</div>
+</div>
+    <div id="bcbiosinglecell-0-1-8-2018-05-16" class="section level1">
+<h1 class="page-header">
+<a href="#bcbiosinglecell-0-1-8-2018-05-16" class="anchor"></a>bcbioSingleCell 0.1.8 (2018-05-16)</h1>
+<div id="minor-changes-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Initial <code><a href="../reference/updateObject.html">updateObject()</a></code> method support for <code>bcbioSingleCell</code> class.</li>
 <li>Relaxed <code>validObject()</code> validity check to not require sample-level metadata in <code>colData()</code> yet.</li>
@@ -122,9 +164,9 @@
 <li>Added support for Uniform Manifold Approximation and Projection (UMAP) with the <code><a href="../reference/plotDimensionalReduction.html">plotUMAP()</a></code> and <code><a href="../reference/fetchData.html">fetchUMAPData()</a></code> functions. These work similarly to the other <code><a href="../reference/plotDimensionalReduction.html">plotDimensionalReduction()</a></code> and <code><a href="../reference/fetchData.html">fetchData()</a></code> functions.</li>
 </ul>
 </div>
-<div id="major-changes" class="section level2">
+<div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Now adding sample-level metadata into <code>colData()</code> slot, for better downstream compatibility with other packages that work with <code>SingleCellExperiment</code> container class. Unique per-sample rows are still saved internally in the <code><a href="../reference/sampleData.html">sampleData()</a></code> slot.</li>
 <li>Now recommending ECDF as the default geom for quality control plots, where applicable.</li>
@@ -132,9 +174,9 @@
 <code>filterCells()</code> now supports <code>minUMIs = c("knee", "inflection")</code> for automatic filtering based on the cellular barcode ranks. Internally this is handled by <code><a href="http://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks">DropletUtils::barcodeRanks()</a></code>.</li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Attempting to re-enable <code>libgsl-dev</code> installation for <a href="https://doi.org/doi:10.18129/B9.bioc.zinbwave">zinbwave</a> on <a href="https://travis-ci.org">Travis CI</a>.</li>
 <li>Suggesting <a href="https://doi.org/doi:10.18129/B9.bioc.BiocParallel">BiocParallel</a> for <a href="https://doi.org/doi:10.18129/B9.bioc.zinbwave">zinbwave</a> call in <code>diffExp()</code>.</li>
@@ -149,9 +191,9 @@
     <div id="bcbiosinglecell-0-1-6-2018-05-09" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-6-2018-05-09" class="anchor"></a>bcbioSingleCell 0.1.6 (2018-05-09)</h1>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Updated default QC R Markdown template.</li>
 <li>Added trendline option to QC scatterplot functions.</li>
@@ -166,18 +208,18 @@
     <div id="bcbiosinglecell-0-1-5-2018-05-04" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-5-2018-05-04" class="anchor"></a>bcbioSingleCell 0.1.5 (2018-05-04)</h1>
-<div id="major-changes-1" class="section level2">
+<div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Overhauled inflection and knee point labeling support in <code>plotUMIsPerCell()</code>. Now uses the <code>point</code> argument and always labels per sample. Currently requires the <code>geom = "ecdf"</code> argument for labeling.</li>
 <li>Updated default quality control template.</li>
 <li>Added <code>plotBarcodeRanks()</code>.</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Added barcode rank support for <code>seurat</code> class objects.</li>
 <li>QC plots now have titles by default, matching the conventions used in bcbioRNASeq.</li>
@@ -209,9 +251,9 @@
     <div id="bcbiosinglecell-0-1-3-2018-04-25" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-3-2018-04-25" class="anchor"></a>bcbioSingleCell 0.1.3 (2018-04-25)</h1>
-<div id="minor-changes-4" class="section level2">
+<div id="minor-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-6" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Improved summary statistics output during <code>filterCells()</code> call.</li>
 <li>Miscellaneous documentation improvements, most notably to <code><a href="../reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> constructor function.</li>
@@ -225,9 +267,9 @@
     <div id="bcbiosinglecell-0-1-2-2018-04-24" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-2-2018-04-24" class="anchor"></a>bcbioSingleCell 0.1.2 (2018-04-24)</h1>
-<div id="major-changes-2" class="section level2">
+<div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Now using <code><a href="../reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> instead of <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> as the main constructor function to create a <code>bcbioSingleCell</code> object. <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> is deprecated and still works, but will warn the user.</li>
 <li>Renamed <code><a href="../reference/readCellRanger.html">loadCellRanger()</a></code> to <code><a href="../reference/readCellRanger.html">readCellRanger()</a></code> for better name consistency.</li>
@@ -235,9 +277,9 @@
 <li>Use “<code>aggregate</code>” instead of “<code>sampleNameAggregate</code>” to define aggregate/grouped samples in metadata.</li>
 </ul>
 </div>
-<div id="minor-changes-5" class="section level2">
+<div id="minor-changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-7" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Reexporting relevant [ggplot2][] and <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color palettes.</li>
 <li>Renamed references to “inDrops” from “inDrop”, where applicable.</li>
@@ -263,9 +305,9 @@
     <div id="bcbiosinglecell-0-1-1-2018-04-16" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-1-2018-04-16" class="anchor"></a>bcbioSingleCell 0.1.1 (2018-04-16)</h1>
-<div id="major-changes-3" class="section level2">
+<div id="major-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Added support for calculating <code>barcodeRanks()</code> and <code>barcodeRanksPerSample()</code>.</li>
 <li>Now exporting <code>plotMarker()</code> in addition to <code><a href="../reference/plotMarker.html">plotMarkers()</a></code>.</li>
@@ -277,9 +319,9 @@
 <li>Methods now dispatch on <code>SingleCellExperiment</code> rather than <code>bcbioSingleCell</code> where applicable, providing support for <code>SingleCellExperiment</code> objects created elsewhere.</li>
 </ul>
 </div>
-<div id="minor-changes-6" class="section level2">
+<div id="minor-changes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-8" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Added support for labeling barcode ranks, such as elbow or inflection point on UMI counts per cell plots.</li>
 <li>Added support for plotting metrics using an empirical distribution function (ECDF) plot.</li>
@@ -296,18 +338,18 @@
     <div id="bcbiosinglecell-0-1-0-2018-04-04" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-0-2018-04-04" class="anchor"></a>bcbioSingleCell 0.1.0 (2018-04-04)</h1>
-<div id="major-changes-4" class="section level2">
+<div id="major-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-5" class="anchor"></a>Major changes</h2>
 <ul>
 <li>
 <code>bcbioSingleCell</code> S4 class now extends <code>SingleCellExperiment</code> instead of <code>SummarizedExperiment</code>. This requires definition of <code>rowRanges()</code> inside the object instead of <code>rowData()</code>. Similar functionality was added to the bcbioRNASeq package. Upgrade support will be provided using <code><a href="../reference/updateObject.html">updateObject()</a></code>in a future release.</li>
 <li>Added a differential expression utility function named <code>diffExp()</code>, which uses <a href="https://github.com/statOmics/zingeR">zingeR</a>/[edgeR][] internally to calculate gene expression changes across cell groups.</li>
 </ul>
 </div>
-<div id="minor-changes-7" class="section level2">
+<div id="minor-changes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-7" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-9" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Added <code><a href="../reference/deprecated.html">plotCumulativeUMIsPerCell()</a></code> utility. This may be removed in a future update in favor of adding this plot into <code>plotUMIsPerCell()</code> using an ECDF plot.</li>
 <li>Now using <code><a href="../reference/readCellTypeMarkers.html">readCellTypeMarkers()</a></code> to load marker <code>data.frames</code>, instead of <code><a href="../reference/deprecated.html">readCellTypeMarkersFile()</a></code>. This matches the conventions used in the <a href="http://bioinformatics.sph.harvard.edu/bcbioBase">bcbioBase</a> package.</li>
@@ -799,6 +841,8 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bcbiosinglecell-0-1-10-2018-05-19">0.1.10</a></li>
+        <li><a href="#bcbiosinglecell-0-1-9-2018-05-18">0.1.9</a></li>
         <li><a href="#bcbiosinglecell-0-1-8-2018-05-16">0.1.8</a></li>
         <li><a href="#bcbiosinglecell-0-1-7-2018-05-15">0.1.7</a></li>
         <li><a href="#bcbiosinglecell-0-1-6-2018-05-09">0.1.6</a></li>
