@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
       </span>
     </div>
 
@@ -150,7 +150,9 @@ barcode IDs as the names.</p>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
 <span class='fu'>cell2sample</span>(<span class='no'>indrops_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>table</span>()</div><div class='output co'>#&gt; .
 #&gt; multiplexed_AAAAAAAA 
-#&gt;                  500 </div><div class='input'><span class='fu'>cell2sample</span>(<span class='no'>cellranger_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>table</span>()</div><div class='output co'>#&gt; <span class='error'>Error in mapCellsToSamples(cells = cells, samples = samples): are_identical : length(cells) and length(cell2sample) are not identical.</span></div></pre>
+#&gt;                  500 </div><div class='input'><span class='fu'>cell2sample</span>(<span class='no'>cellranger_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>table</span>()</div><div class='output co'>#&gt; .
+#&gt; aggregation_1 aggregation_2 
+#&gt;           351           149 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -20,8 +20,7 @@ information metadata is preserved from the time when the bcbio data was
 originally loaded into R.
 }
 \examples{
-loadRemoteData("http://bcbiosinglecell.seq.cloud/v0.1.0/bcb_small.rda")
-updateObject(bcb_small)
+updateObject(indrops_small)
 }
 \seealso{
 Other S4 Class Definition: \code{\link{bcbioSingleCell}},

@@ -15,8 +15,7 @@
 #' @return `bcbioRNASeq`.
 #'
 #' @examples
-#' loadRemoteData("http://bcbiosinglecell.seq.cloud/v0.1.0/bcb_small.rda")
-#' updateObject(bcb_small)
+#' updateObject(indrops_small)
 NULL
 
 
@@ -37,30 +36,25 @@ setMethod(
 
         # Assays ===============================================================
         assays <- slot(sce, "assays")
-        if (!all(assayNames(sce) %in% requiredAssays)) {
-            # Coerce ShallowSimpleListAssays to list
-            assays <- lapply(seq_along(assays), function(a) {
-                assay <- assays[[a]]
-                if (!identical(colnames(assay), colnames(sce))) {
-                    message("Fixing assay colnames")
-                    colnames(assay) <- colnames(sce)
-                    assay
-                }
-            })
-            names(assays) <- assayNames(sce)
+        # Coerce ShallowSimpleListAssays to list
+        assays <- lapply(seq_along(assays), function(a) {
+            assay <- assays[[a]]
+            assert_are_identical(colnames(assay), colnames(sce))
+            assay
+        })
+        names(assays) <- assayNames(sce)
 
-            # raw counts
-            if ("raw" %in% names(assays)) {
-                message("Renaming `raw` assay to `counts`")
-                assays[["counts"]] <- assays[["raw"]]
-                assays[["raw"]] <- NULL
-            }
-
-            assays <- Filter(Negate(is.null), assays)
-            # Put the required assays first, in order
-            assays <- assays[unique(c(requiredAssays, names(assays)))]
-            assert_is_subset(requiredAssays, names(assays))
+        # raw counts
+        if ("raw" %in% names(assays)) {
+            message("Renaming `raw` assay to `counts`")
+            assays[["counts"]] <- assays[["raw"]]
+            assays[["raw"]] <- NULL
         }
+
+        assays <- Filter(Negate(is.null), assays)
+        # Put the required assays first, in order
+        assays <- assays[unique(c(requiredAssays, names(assays)))]
+        assert_is_subset(requiredAssays, names(assays))
 
         # Column data ==========================================================
         # Ensure that all `sampleData` columns are now slotted in `colData`

@@ -8,16 +8,27 @@ r:
   - bioc-release
   - bioc-devel
 
+os:
+  - linux
+  - osx
+
+matrix:
+  exclude:
+  - os: osx
+    r: bioc-devel
+
 # blocklist
 branches:
   except:
   - develop
 
-# before_install:
-#   - sudo apt-get update
+# safelist
+# branches:
+#   only:
+#   - master
 
 # External dependencies
-# dependency for gsl>copula>zinbwave
+# dependency for gsl > copula > zinbwave
 addons:
   apt:
     update: true
@@ -41,13 +52,16 @@ warnings_are_errors: true
 
 notifications:
   email:
+    recipients:
+      - mike@steinbaugh.com
     on_success: change
-    on_failure: change
+    on_failure: always
 
 r_packages:
   - covr
 bioc_packages:
   - BiocCheck
+  - GenomeInfoDbData
 r_github_packages:
   - jimhester/lintr
 

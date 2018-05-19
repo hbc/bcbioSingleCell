@@ -1,3 +1,41 @@
+# bcbioSingleCell 0.1.10 (2018-05-19)
+
+## Minor changes
+
+- `plotCellTypesPerCluster()` is using `dark = TRUE` by default again.
+- Fixed `cell2sample()` handling for multiplexed Cell Ranger data loaded up with
+  `readCellRanger()`. Need to use stashed `cell2sample` factor saved in
+  `metadata()`, rather than attempting to calculate on the fly with
+  `mapCellsToSamples()`.
+- Updated [Travis CI][] build checks to include bioc-release on macOS.
+
+
+
+# bcbioSingleCell 0.1.9 (2018-05-18)
+
+## Major changes
+
+- No longer attempting to sanitize the rownames for `seurat` objects in coercion
+  method. This helps maintain the gene symbol appearance in plotting functions
+  for genes with hyphens in the names.
+
+## Minor changes
+
+- Using `BiocParallel::SerialParam()` internally for zinbwave in `diffExp()`.
+- Simplified `cell2sample()` internal code to always use `mapCellsToSamples()`
+  instead of attempting to use a stashed `vector` inside `metadata()` for
+  `SingleCellExperiment` method.
+- Removed internal `.applyFilterCutoffs()`, which is no longer necessary since
+  this functionality is supported in the S4 subset method.
+- Simplified assert checks inside `fetchGene()` functions.
+- `plotCellTypesPerCluster()`: revert back to `dark = TRUE` by default.
+- Consolidated `plotMarker` and `plotFeature` functions in the documentation.
+- `sanitizeMarkers()`: Improved gene identifier matching.
+- `topMarkers()` now defaults to `coding = FALSE` by default, since not all
+  datasets will contain biotype information.
+
+
+
 # bcbioSingleCell 0.1.8 (2018-05-16)
 
 ## Minor changes

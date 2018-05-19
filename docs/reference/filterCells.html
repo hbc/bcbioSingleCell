@@ -65,7 +65,7 @@ sampleData())." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
       </span>
     </div>
 
@@ -245,17 +245,43 @@ this many cells.</p></td>
 #&gt;   aggregation_TTTGTCACACTCGACG_2
 #&gt; colData names(11): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>cellranger_small</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mapCellsToSamples(cells = cells, samples = samples): are_identical : length(cells) and length(cell2sample) are not identical.</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.7
-#&gt; Samples: 1
-#&gt; Cells: 500
-#&gt; Genes: 500
-#&gt; Organism: Homo sapiens
-#&gt; AnnotationHub: AH57757
-#&gt; Ensembl Release: 90
-#&gt; Genome Build: GRCh38
-#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
-#&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-05-15</div><div class='input'>
+#&gt; spikeNames(0):</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>cellranger_small</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Parameters:
+#&gt;   - &gt;= 0 UMIs per cell
+#&gt;   - &lt;= Inf UMIs per cell
+#&gt;   - &gt;= 0 genes per cell
+#&gt;   - &lt;= Inf genes per cell
+#&gt;   - &gt;= 0 novelty score
+#&gt;   - &lt;= 1 mitochondrial abundance
+#&gt;   - &gt;= 10 cells per gene
+#&gt; ============================================================
+#&gt; Cells:
+#&gt;      500 cells | prefilter
+#&gt;      500 cells | minUMIs &gt;= 0
+#&gt;      500 cells | maxUMIs &lt;= Inf
+#&gt;      500 cells | minGenes &gt;= 0
+#&gt;      500 cells | maxGenes &lt;= Inf
+#&gt;      500 cells | minNovelty &lt;= 0
+#&gt;      500 cells | maxMitoRatio &lt;= 1
+#&gt; ============================================================
+#&gt; Genes:
+#&gt;      500 genes | prefilter
+#&gt;      500 genes | minCellsPerGene &lt;= 10
+#&gt; ============================================================
+#&gt; Summary:
+#&gt;   - 500 of 500 cells passed filtering (100%)
+#&gt;   - 500 of 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(26): version pipeline ... filterParams filterSummary
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
+#&gt;   ENSG00000269893
+#&gt; rowData names(6): geneID geneName ... entrezID broadClass
+#&gt; colnames(500): aggregation_AAACCTGGTTTACTCT_1
+#&gt;   aggregation_AAACGGGGTATCTGCA_1 ... aggregation_TTTGTCACACAACGTT_2
+#&gt;   aggregation_TTTGTCACACTCGACG_2
+#&gt; colData names(11): sampleID nUMI ... description index
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div><div class='input'>
 <span class='co'># Per sample cutoffs</span>
 <span class='fu'>sampleNames</span>(<span class='no'>cellranger_small</span>)</div><div class='output co'>#&gt; aggregation_1 aggregation_2 
 #&gt;    "proximal"      "distal" </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
@@ -264,17 +290,45 @@ this many cells.</p></td>
         <span class='kw'>distal</span> <span class='kw'>=</span> <span class='fl'>100</span>,
         <span class='kw'>proximal</span> <span class='kw'>=</span> <span class='fl'>200</span>
     )
-)</div><div class='output co'>#&gt; <span class='error'>Error in mapCellsToSamples(cells = cells, samples = samples): are_identical : length(cells) and length(cell2sample) are not identical.</span></div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.7
-#&gt; Samples: 1
-#&gt; Cells: 500
-#&gt; Genes: 500
-#&gt; Organism: Homo sapiens
-#&gt; AnnotationHub: AH57757
-#&gt; Ensembl Release: 90
-#&gt; Genome Build: GRCh38
-#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
-#&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-05-15</div></pre>
+)</div><div class='output co'>#&gt; <span class='message'>minUMIs: per sample mode</span>
+#&gt; <span class='message'>  distal proximal </span>
+#&gt; <span class='message'>     100      200 </span></div><div class='output co'>#&gt; Parameters:
+#&gt;   - &gt;= 100 UMIs per cell
+#&gt;   - &lt;= Inf UMIs per cell
+#&gt;   - &gt;= 0 genes per cell
+#&gt;   - &lt;= Inf genes per cell
+#&gt;   - &gt;= 0 novelty score
+#&gt;   - &lt;= 1 mitochondrial abundance
+#&gt;   - &gt;= 10 cells per gene
+#&gt; ============================================================
+#&gt; Cells:
+#&gt;      500 cells | prefilter
+#&gt;      500 cells | minUMIs &gt;= 100
+#&gt;      500 cells | maxUMIs &lt;= Inf
+#&gt;      500 cells | minGenes &gt;= 0
+#&gt;      500 cells | maxGenes &lt;= Inf
+#&gt;      500 cells | minNovelty &lt;= 0
+#&gt;      500 cells | maxMitoRatio &lt;= 1
+#&gt; ============================================================
+#&gt; Genes:
+#&gt;      500 genes | prefilter
+#&gt;      500 genes | minCellsPerGene &lt;= 10
+#&gt; ============================================================
+#&gt; Summary:
+#&gt;   - 500 of 500 cells passed filtering (100%)
+#&gt;   - 500 of 500 genes passed filtering (100%)</div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(26): version pipeline ... filterParams filterSummary
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
+#&gt;   ENSG00000269893
+#&gt; rowData names(6): geneID geneName ... entrezID broadClass
+#&gt; colnames(500): aggregation_AAACCTGGTTTACTCT_1
+#&gt;   aggregation_AAACGGGGTATCTGCA_1 ... aggregation_TTTGTCACACAACGTT_2
+#&gt;   aggregation_TTTGTCACACTCGACG_2
+#&gt; colData names(11): sampleID nUMI ... description index
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

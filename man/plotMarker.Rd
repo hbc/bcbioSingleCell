@@ -111,8 +111,8 @@ plotMarkerTSNE(seurat_small, genes = "COL1A1")
 plotMarkerTSNE(seurat_small, genes = "COL1A1", dark = FALSE, grid = FALSE)
 
 # Mitochondrial genes
-mito <- grep("^MT\\\\.", rownames(counts(seurat_small)), value = TRUE)
-print(sort(mito))
+mito <- grep("^MT-", rownames(counts(seurat_small)), value = TRUE)
+print(mito)
 plotMarkerTSNE(seurat_small, genes = mito, title = "mitochondrial")
 # Individual gene
 plotMarker(seurat_small, gene = "COL1A2", dark = TRUE)
