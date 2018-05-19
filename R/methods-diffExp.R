@@ -31,10 +31,10 @@
 #' caller. It is currently considerably slower for large datasets than edgeR.
 #'
 #' @seealso Consult the following sources for more information:
-#' - [Observation weights unlock bulk RNA-seq tools for zero inflation and single-cell applications](https://doi.org/10.1186/s13059-018-1406-4).
-#' - [zingeR vignette](https://goo.gl/4rTK1w).
+#' - [zinbwave paper](https://doi.org/10.1186/s13059-018-1406-4).
 #' - [zinbwave vignette](https://bit.ly/2wtDdpS).
 #' - [zinbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
+#' - [zingeR vignette](https://goo.gl/4rTK1w).
 #'
 #' @name diffExp
 #' @family Differential Expression Functions
@@ -158,7 +158,7 @@ maxit <- 1000L
 # ratio test implemented in nbinomLRT should be used.
 #
 # DESeq2 supports `weights` in assays automatically.
-.diffExp.zinbwave.DESeq2 <- function(
+.diffExp.zinbwave.DESeq2 <- function(  # nolint
     object,
     design,
     group
@@ -184,7 +184,7 @@ maxit <- 1000L
 
 
 
-.diffExp.zinbwave.edgeR <- function(
+.diffExp.zinbwave.edgeR <- function(  # nolint
     object,
     design,
     group

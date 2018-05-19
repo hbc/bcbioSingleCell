@@ -141,10 +141,10 @@ head(x[["table"]])
 \seealso{
 Consult the following sources for more information:
 \itemize{
-\item \href{https://doi.org/10.1186/s13059-018-1406-4}{Observation weights unlock bulk RNA-seq tools for zero inflation and single-cell applications}.
-\item \href{https://goo.gl/4rTK1w}{zingeR vignette}.
+\item \href{https://doi.org/10.1186/s13059-018-1406-4}{zinbwave paper}.
 \item \href{https://bit.ly/2wtDdpS}{zinbwave vignette}.
 \item \href{https://github.com/mikelove/zinbwave-deseq2}{zinbwave-DESeq2 workflow}.
+\item \href{https://goo.gl/4rTK1w}{zingeR vignette}.
 }
 
 \itemize{
