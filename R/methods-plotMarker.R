@@ -47,8 +47,8 @@ NULL
 #' plotMarkerTSNE(seurat_small, genes = "COL1A1", dark = FALSE, grid = FALSE)
 #'
 #' # Mitochondrial genes
-#' mito <- grep("^MT\\.", rownames(counts(seurat_small)), value = TRUE)
-#' print(sort(mito))
+#' mito <- grep("^MT-", rownames(counts(seurat_small)), value = TRUE)
+#' print(mito)
 #' plotMarkerTSNE(seurat_small, genes = mito, title = "mitochondrial")
 setMethod(
     "plotMarkerTSNE",
@@ -234,8 +234,7 @@ setMethod(
         return = c("grid", "list"),
         ...
     ) {
-        assert_is_a_string(gene)
-        gene <- make.names(gene)
+        assert_is_subset(gene, rownames(object))
         assert_is_a_bool(dark)
         return <- match.arg(return)
 
