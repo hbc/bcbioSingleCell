@@ -15,26 +15,33 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' genes <- rownames(indrops_small) %>% head(2L)
-#' fetchGeneData(indrops_small, genes = genes) %>% glimpse()
+#' object <- indrops_small
+#' genes <- head(rownames(object))
+#' fetchGeneData(object, genes = genes) %>% glimpse()
 #'
 #' # seurat ====
+#' object <- seurat_small
+#' genes <- head(rownames(object))
+#'
 #' # t-SNE
-#' x <- fetchTSNEData(seurat_small)
+#' x <- fetchTSNEData(object)
 #' glimpse(x)
 #'
 #' # PCA
-#' x <- fetchPCAData(seurat_small)
+#' x <- fetchPCAData(object)
 #' glimpse(x)
 #'
 #' # UMAP
-#' x <- fetchUMAPData(seurat_small)
+#' x <- fetchUMAPData(object)
 #' glimpse(x)
 #'
-#' # Gene expression (marker) t-SNE
-#' genes <- head(rownames(seurat_small))
+#' # t-SNE gene expression
 #' x <- fetchTSNEExpressionData(seurat_small, genes = genes)
 #' glimpse(x)
+#'
+#' # UMAP gene expession
+#' genes <- head(rownames(seurat_small))
+#' x <- fetchUMAPExpressionData(seurat_small, genes = genes)
 NULL
 
 
@@ -153,4 +160,18 @@ setMethod(
 
 
 
-# TODO Add `fetchUMAPExpressionData()` support
+#' @rdname fetchData
+#' @export
+setMethod(
+    "fetchUMAPExpressionData",
+    signature("seurat"),
+    function(object, genes) {
+        assert_is_subset(genes, rownames(object))
+        umap <- fetchUMAPData(object)
+        data <- fetchGeneData(object, genes = genes)
+        mean <- rowMeans(data)
+        median <- rowMedians(data)
+        sum <- rowSums(data)
+        cbind(umap, mean, median, sum)
+    }
+)

@@ -97,6 +97,17 @@ setGeneric(
 
 
 
+#' @rdname fetchData
+#' @export
+setGeneric(
+    "fetchUMAPExpressionData",
+    function(object, ...) {
+        standardGeneric("fetchUMAPExpressionData")
+    }
+)
+
+
+
 #' @rdname filterCells
 #' @export
 setGeneric(

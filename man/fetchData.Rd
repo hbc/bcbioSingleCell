@@ -7,6 +7,7 @@
 \alias{fetchTSNEData}
 \alias{fetchTSNEExpressionData}
 \alias{fetchUMAPData}
+\alias{fetchUMAPExpressionData}
 \alias{fetchData}
 \alias{fetchGeneData,SingleCellExperiment-method}
 \alias{fetchGeneData,seurat-method}
@@ -14,6 +15,7 @@
 \alias{fetchTSNEData,seurat-method}
 \alias{fetchTSNEExpressionData,seurat-method}
 \alias{fetchUMAPData,seurat-method}
+\alias{fetchUMAPExpressionData,seurat-method}
 \title{Fetch Data Functions}
 \usage{
 fetchGeneData(object, ...)
@@ -26,6 +28,8 @@ fetchTSNEExpressionData(object, ...)
 
 fetchUMAPData(object, ...)
 
+fetchUMAPExpressionData(object, ...)
+
 \S4method{fetchGeneData}{SingleCellExperiment}(object, genes)
 
 \S4method{fetchGeneData}{seurat}(object, genes)
@@ -37,6 +41,8 @@ fetchUMAPData(object, ...)
 \S4method{fetchTSNEExpressionData}{seurat}(object, genes)
 
 \S4method{fetchUMAPData}{seurat}(object)
+
+\S4method{fetchUMAPExpressionData}{seurat}(object, genes)
 }
 \arguments{
 \item{object}{Object.}
@@ -59,26 +65,33 @@ Fetch Data Functions
 }
 \examples{
 # SingleCellExperiment ====
-genes <- rownames(indrops_small) \%>\% head(2L)
-fetchGeneData(indrops_small, genes = genes) \%>\% glimpse()
+object <- indrops_small
+genes <- head(rownames(object))
+fetchGeneData(object, genes = genes) \%>\% glimpse()
 
 # seurat ====
+object <- seurat_small
+genes <- head(rownames(object))
+
 # t-SNE
-x <- fetchTSNEData(seurat_small)
+x <- fetchTSNEData(object)
 glimpse(x)
 
 # PCA
-x <- fetchPCAData(seurat_small)
+x <- fetchPCAData(object)
 glimpse(x)
 
 # UMAP
-x <- fetchUMAPData(seurat_small)
+x <- fetchUMAPData(object)
 glimpse(x)
 
-# Gene expression (marker) t-SNE
-genes <- head(rownames(seurat_small))
+# t-SNE gene expression
 x <- fetchTSNEExpressionData(seurat_small, genes = genes)
 glimpse(x)
+
+# UMAP gene expession
+genes <- head(rownames(seurat_small))
+x <- fetchUMAPExpressionData(seurat_small, genes = genes)
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
