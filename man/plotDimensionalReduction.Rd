@@ -93,7 +93,7 @@ plotUMAP(seurat_small)
 \itemize{
 \item \code{\link[Seurat:DimPlot]{Seurat::DimPlot()}}.
 \item \href{https://github.com/lmcinnes/umap}{UMAP GitHub repo}.
-\item \href{https://satijalab.org/seurat/mca.html}{Satija Lab Mouse Cell Atlas clustering}.
+\item \href{https://satijalab.org/seurat/mca.html}{Seurat Mouse Cell Atlas vignette}.
 }
 
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},

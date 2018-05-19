@@ -18,7 +18,7 @@
 #' @seealso
 #' - [Seurat::DimPlot()].
 #' - [UMAP GitHub repo](https://github.com/lmcinnes/umap).
-#' - [Satija Lab Mouse Cell Atlas clustering](https://satijalab.org/seurat/mca.html).
+#' - [Seurat Mouse Cell Atlas vignette](https://satijalab.org/seurat/mca.html).
 #'
 #' @return `ggplot`.
 #'
