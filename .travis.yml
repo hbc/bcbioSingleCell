@@ -62,6 +62,7 @@ r_packages:
 bioc_packages:
   - BiocCheck
   - GenomeInfoDbData
+  - EnsDb.Hsapiens.v75
 r_github_packages:
   - jimhester/lintr
 
