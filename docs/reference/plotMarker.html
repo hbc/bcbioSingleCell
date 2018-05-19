@@ -265,8 +265,9 @@ for the number of genes to plot here in a future update.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='st'>"COL1A1"</span>)</div><div class='img'><img src='plotMarker-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='st'>"COL1A1"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotMarker-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Mitochondrial genes</span>
-<span class='no'>mito</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT\\."</span>, <span class='fu'>rownames</span>(<span class='fu'>counts</span>(<span class='no'>seurat_small</span>)), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>print</span>(<span class='fu'>sort</span>(<span class='no'>mito</span>))</div><div class='output co'>#&gt; character(0)</div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mitochondrial"</span>)</div><div class='img'><img src='plotMarker-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Individual gene</span>
+<span class='no'>mito</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT-"</span>, <span class='fu'>rownames</span>(<span class='fu'>counts</span>(<span class='no'>seurat_small</span>)), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>print</span>(<span class='no'>mito</span>)</div><div class='output co'>#&gt;  [1] "MT-ND6"  "MT-CO2"  "MT-CYB"  "MT-ND2"  "MT-ND5"  "MT-CO1"  "MT-ND3" 
+#&gt;  [8] "MT-ND4"  "MT-ND1"  "MT-ATP6" "MT-CO3"  "MT-ND4L" "MT-ATP8"</div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mitochondrial"</span>)</div><div class='img'><img src='plotMarker-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Individual gene</span>
 <span class='fu'>plotMarker</span>(<span class='no'>seurat_small</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='st'>"COL1A2"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plotMarker-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotMarker</span>(<span class='no'>seurat_small</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='st'>"COL1A2"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotMarker-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Multiple genes</span>
 <span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
 <span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>top</span>, <span class='st'>"rowname"</span>)
@@ -279,10 +280,13 @@ for the number of genes to plot here in a future update.</p>
 #&gt; </div><div class='img'><img src='plotMarker-7.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## MYL4
-#&gt; </div><div class='output co'>#&gt; 
+#&gt; </div><div class='img'><img src='plotMarker-8.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## MT-ATP6
-#&gt; </div><div class='output co'>#&gt; <span class='error'>Error in .local(object, ...): is_subset : The element 'MT.ATP6' in genes is not in rownames(object).</span></div><div class='img'><img src='plotMarker-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotTopMarkers</span>(
+#&gt; </div><div class='img'><img src='plotMarker-9.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; ## H3F3A
+#&gt; </div><div class='img'><img src='plotMarker-10.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotTopMarkers</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
     <span class='kw'>topMarkers</span> <span class='kw'>=</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
 )</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
@@ -292,28 +296,35 @@ for the number of genes to plot here in a future update.</p>
 #&gt; 
 #&gt; 
 #&gt; ### COL1A2
-#&gt; </div><div class='img'><img src='plotMarker-9.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~10s          
+#&gt; </div><div class='img'><img src='plotMarker-11.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~11s          
 #&gt; 
 #&gt; ## Cluster 1 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### S100A10
-#&gt; </div><div class='img'><img src='plotMarker-10.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~08s          
+#&gt; </div><div class='img'><img src='plotMarker-12.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~08s          
 #&gt; 
 #&gt; ## Cluster 2 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### MYL4
-#&gt; </div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++                    | 60% ~05s          
+#&gt; </div><div class='img'><img src='plotMarker-13.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++                    | 60% ~05s          
 #&gt; 
 #&gt; ## Cluster 3 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### MT-ATP6
-#&gt; </div><div class='output co'>#&gt; <span class='error'>Error in .local(object, ...): is_subset : The element 'MT.ATP6' in genes is not in rownames(object).</span></div><div class='img'><img src='plotMarker-11.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div><div class='input'><span class='co'># Let's plot the first known marker, as a quick example</span>
+#&gt; </div><div class='img'><img src='plotMarker-14.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++         | 80% ~02s          
+#&gt; 
+#&gt; ## Cluster 4 {.tabset}
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; ### H3F3A
+#&gt; </div><div class='img'><img src='plotMarker-15.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 12s</div><div class='input'><span class='co'># Let's plot the first known marker, as a quick example</span>
 <span class='fu'>plotKnownMarkersDetected</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
     <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>known_markers_small</span>[<span class='fl'>1L</span>, , <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>]
@@ -324,7 +335,7 @@ for the number of genes to plot here in a future update.</p>
 #&gt; 
 #&gt; 
 #&gt; ### NCAM1
-#&gt; </div><div class='img'><img src='plotMarker-12.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 03s</div></pre>
+#&gt; </div><div class='img'><img src='plotMarker-16.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 02s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
