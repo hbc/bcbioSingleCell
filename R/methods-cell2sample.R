@@ -38,9 +38,15 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object) {
         validObject(object)
-        cells <- colnames(object)
-        samples <- rownames(sampleData(object))
-        mapCellsToSamples(cells = cells, samples = samples)
+        cell2sample <- metadata(object)[["cell2sample"]]
+        if (is.factor(cell2sample)) {
+            assert_are_identical(colnames(object), names(cell2sample))
+            cell2sample
+        } else {
+            cells <- colnames(object)
+            samples <- rownames(sampleData(object))
+            mapCellsToSamples(cells = cells, samples = samples)
+        }
     }
 )
 
@@ -51,5 +57,10 @@ setMethod(
 setMethod(
     "cell2sample",
     signature("seurat"),
-    getMethod("cell2sample", "SingleCellExperiment")
+    function(object) {
+        validObject(object)
+        cells <- colnames(object)
+        samples <- rownames(sampleData(object))
+        mapCellsToSamples(cells = cells, samples = samples)
+    }
 )
