@@ -466,13 +466,6 @@ setValidity(
         assert_is_all_of(rowRanges(object), "GRanges")
         assert_is_all_of(rowData(object), "DataFrame")
 
-        # Column data ==========================================================
-        # TODO Inform the user about `colData` structure change made in v0.1.7
-        # assert_is_subset(
-        #     x = colnames(metadata(object)[["sampleData"]]),
-        #     y = colnames(colData(object))
-        # )
-
         # Metadata =============================================================
         metadata <- metadata(object)
 
