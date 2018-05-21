@@ -55,7 +55,7 @@ setMethod(
             select(-!!sym("aggregate")) %>%
             arrange(!!!syms(c("sampleID", "sampleIDAggregate"))) %>%
             mutate_all(as.factor) %>%
-            mutate_all(reorder)
+            mutate_all(droplevels)
 
         # Message the new sample IDs
         newIDs <- unique(map[["sampleIDAggregate"]])
