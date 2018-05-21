@@ -79,7 +79,7 @@ setMethod(
 
         # Assays ===============================================================
         message("Aggregating counts")
-        counts <- aggregateReplicates(assay(object), groupings = groupings)
+        counts <- aggregateReplicates(counts(object), groupings = groupings)
         # Check that the count number of counts matches
         if (!identical(sum(assay(object)), sum(counts))) {
             stop("Aggregated counts sum isn't identical to original")
