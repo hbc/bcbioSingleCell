@@ -1,3 +1,7 @@
+# TODO Add `plotMarkerUMAP()` and a dimensional reduction option to `plotMarkers()`
+
+
+
 #' Plot Cell-Type Gene Marker(s)
 #'
 #' @description
@@ -7,13 +11,52 @@
 #' 2. [plotDot()]: Dot plot.
 #' 3. [plotViolin()]: Violin plot.
 #'
+#' @section plotTopMarkers:
+#' The number of markers to plot is determined by the output of the
+#' [topMarkers()] function. If you want to reduce the number of genes to plot,
+#' simply reassign first using that function. If necessary, we can add support
+#' for the number of genes to plot here in a future update.
+#'
 #' @name plotMarker
 #' @family Clustering Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
+#' @inheritParams fetchTSNEExpressionData
+#' @inheritParams plotTSNE
 #' @inheritParams general
+#' @param expression Calculation to apply on the aggregate marker expression.
+#' @param markers `grouped_df` of marker genes.
+#'   - [plotTopMarkers()]: must be grouped by "`cluster`".
+#'   - [plotKnownMarkersDetected()]: must be grouped by "`cellType`".
 #'
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
+#'
+#' @examples
+#' object <- seurat_small
+#' genes <- "COL1A1"
+#'
+#' # plotMarkerTSNE ====
+#' plotMarkerTSNE(object, genes = genes)
+#' plotMarkerTSNE(object, genes = genes, dark = FALSE, grid = FALSE)
+#'
+#' # Mitochondrial genes
+#' mito <- grep("^MT-", rownames(object), value = TRUE)
+#' print(mito)
+#' plotMarkerTSNE(object, genes = mito, title = "mito")
+#'
+#' # plotMarkers ====
+#' plotMarkers(object, genes = genes)
+#'
+#' # plotTopMarkers ====
+#' markers <- topMarkers(all_markers_small, n = 1)
+#' markers
+#' markers <- head(markers, n = 1)
+#' plotTopMarkers(object, markers = markers)
+#'
+#' # plotKnownMarkersDetected ====
+#' markers <- head(known_markers_small, n = 1)
+#' markers
+#' plotKnownMarkersDetected(object, markers = markers)
 NULL
 
 
@@ -36,20 +79,94 @@ NULL
 
 
 
+.plotMarker <- function(
+    object,
+    dimRed = c("tsne", "umap"),
+    gene,
+    dark = TRUE,
+    ...
+) {
+    dimRed <- match.arg(dimRed)
+
+    if (isTRUE(dark)) {
+        violinFill <- "white"
+    } else {
+        violinFill <- "black"
+    }
+
+    # Dimensional reduction plot
+    if (dimRed == "tsne") {
+        dr <- plotMarkerTSNE(
+            object,
+            genes = gene,
+            expression = "sum",
+            dark = dark,
+            ...
+        )
+    } else if (dimRed == "umap") {
+        # FIXME Add UMAP support
+        stop("UMAP not supported yet")
+    }
+
+    # Dot plot
+    dot <- plotDot(
+        object,
+        genes = gene,
+        dark = dark
+    ) +
+        coord_flip() +
+        .minimalAxis()
+
+    # Violin plot
+    violin <- plotViolin(
+        object,
+        genes = gene,
+        scale = "width",
+        fill = violinFill,
+        dark = dark,
+        return = "list"
+    ) %>%
+        # Get the ggplot object from the list return
+        .[[1L]] +
+        .minimalAxis()
+
+    plotlist <- list(
+        dr = dr,
+        dot = dot,
+        violin = violin
+    )
+
+    # Return ===============================================================
+    p <- plot_grid(
+        plotlist = plotlist,
+        labels = NULL,
+        ncol = 1L,
+        nrow = 3L,
+        rel_heights = c(1L, 0.1, 0.15)
+    )
+    if (isTRUE(dark)) {
+        p <- p + theme(
+            plot.background = element_rect(
+                color = NA,
+                fill = "black"
+            )
+        )
+    } else {
+        p <- p + theme(
+            plot.background = element_rect(
+                color = NA,
+                fill = "white"
+            )
+        )
+    }
+    p
+}
+
+
+
 # Methods ======================================================================
 #' @rdname plotMarker
-#' @inheritParams fetchTSNEExpressionData
-#' @inheritParams plotTSNE
-#' @param expression Calculation to apply on the aggregate marker expression.
 #' @export
-#' @examples
-#' plotMarkerTSNE(seurat_small, genes = "COL1A1")
-#' plotMarkerTSNE(seurat_small, genes = "COL1A1", dark = FALSE, grid = FALSE)
-#'
-#' # Mitochondrial genes
-#' mito <- grep("^MT-", rownames(counts(seurat_small)), value = TRUE)
-#' print(mito)
-#' plotMarkerTSNE(seurat_small, genes = mito, title = "mitochondrial")
 setMethod(
     "plotMarkerTSNE",
     signature("seurat"),
@@ -218,126 +335,27 @@ setMethod(
 
 
 #' @rdname plotMarker
-#' @param gene Gene identifier. Must intersect with [rownames()].
 #' @export
-#' @examples
-#' # Individual gene
-#' plotMarker(seurat_small, gene = "COL1A2", dark = TRUE)
-#' plotMarker(seurat_small, gene = "COL1A2", dark = FALSE)
-setMethod(
-    "plotMarker",
-    signature("seurat"),
-    function(
-        object,
-        gene,
-        dark = TRUE,
-        return = c("grid", "list"),
-        ...
-    ) {
-        assert_is_subset(gene, rownames(object))
-        assert_is_a_bool(dark)
-        return <- match.arg(return)
-
-        # Plots ================================================================
-        if (isTRUE(dark)) {
-            violinFill <- "white"
-        } else {
-            violinFill <- "black"
-        }
-
-        tsne <- plotMarkerTSNE(
-            object,
-            genes = gene,
-            expression = "sum",
-            dark = dark,
-            ...
-        )
-
-        dot <- plotDot(
-            object,
-            genes = gene,
-            dark = dark
-        )
-
-        violin <- plotViolin(
-            object,
-            genes = gene,
-            scale = "width",
-            fill = violinFill,
-            dark = dark,
-            return = "list"
-        )
-        # Get the ggplot object from the list return
-        violin <- violin[[1L]]
-
-        # Return ===============================================================
-        if (return == "grid") {
-            violin <- violin +
-                .minimalAxis()
-            dot <- dot +
-                coord_flip() +
-                .minimalAxis()
-            p <- plot_grid(
-                tsne,
-                dot,
-                violin,
-                labels = NULL,
-                ncol = 1L,
-                nrow = 3L,
-                rel_heights = c(1L, 0.1, 0.15)
-            )
-            if (isTRUE(dark)) {
-                p <- p + theme(
-                    plot.background = element_rect(color = NA, fill = "black")
-                )
-            } else {
-                p <- p + theme(
-                    plot.background = element_rect(color = NA, fill = "white")
-                )
-            }
-            p
-        } else if (return == "list") {
-            list(
-                "tsne" = tsne,
-                "dot" = dot,
-                "violin" = violin
-            )
-        }
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-#' @examples
-#' # Multiple genes
-#' top <- topMarkers(all_markers_small, n = 1L)
-#' genes <- pull(top, "rowname")
-#' plotMarkers(seurat_small, genes = genes)
 setMethod(
     "plotMarkers",
     signature("seurat"),
     function(
         object,
         genes,
+        dark = TRUE,
         headerLevel = 2L,
         ...
     ) {
         assert_is_subset(genes, rownames(object))
+        assert_is_a_bool(dark)
         assertIsAHeaderLevel(headerLevel)
-
         list <- lapply(genes, function(gene) {
+            p <- .plotMarker(object = object, gene = gene, ...)
             markdownHeader(gene, level = headerLevel, asis = TRUE)
-            p <- plotMarker(
-                object = object,
-                gene = gene,
-                ...
-            )
             show(p)
             invisible(p)
         })
-
+        names(list) <- genes
         invisible(list)
     }
 )
@@ -345,35 +363,24 @@ setMethod(
 
 
 #' @rdname plotMarker
-#' @note The number of markers to plot is determined by the output of the
-#' [topMarkers()] function. If you want to reduce the number of genes to plot,
-#' simply reassign first using that function. If necessary, we can add support
-#' for the number of genes to plot here in a future update.
-#' @param topMarkers `grouped_df` grouped by "`cluster`", returned by
-#'   [topMarkers()].
 #' @export
-#' @examples
-#' plotTopMarkers(
-#'     object = seurat_small,
-#'     topMarkers = topMarkers(all_markers_small, n = 1L)
-#' )
 setMethod(
     "plotTopMarkers",
     signature("seurat"),
     function(
         object,
-        topMarkers,
+        markers,
         headerLevel = 2L,
         ...
     ) {
         validObject(object)
-        stopifnot(is(topMarkers, "grouped_df"))
-        stopifnot(.isSanitizedMarkers(topMarkers))
+        stopifnot(is(markers, "grouped_df"))
+        stopifnot(.isSanitizedMarkers(markers))
         assertIsAHeaderLevel(headerLevel)
 
-        clusters <- levels(topMarkers[["cluster"]])
+        clusters <- levels(markers[["cluster"]])
         list <- pblapply(clusters, function(cluster) {
-            genes <- topMarkers %>%
+            genes <- markers %>%
                 .[.[["cluster"]] == cluster, , drop = FALSE] %>%
                 pull("rowname")
             if (!length(genes)) {
@@ -404,14 +411,7 @@ setMethod(
 
 
 #' @rdname plotMarker
-#' @param markers `grouped_df` of known marker genes.
 #' @export
-#' @examples
-#' # Let's plot the first known marker, as a quick example
-#' plotKnownMarkersDetected(
-#'     object = seurat_small,
-#'     markers = known_markers_small[1L, , drop = FALSE]
-#' )
 setMethod(
     "plotKnownMarkersDetected",
     signature("seurat"),
