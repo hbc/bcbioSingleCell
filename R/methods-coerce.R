@@ -8,6 +8,8 @@
 #' @inherit bcbioBase::coerce
 #'
 #' @seealso
+#' - [Seurat::CreateSeuratObject()].
+#' - [Seurat::Convert()].
 #' - [methods::as()].
 #' - [methods::coerce()].
 NULL
