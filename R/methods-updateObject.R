@@ -15,6 +15,7 @@
 #' @return `bcbioRNASeq`.
 #'
 #' @examples
+#' # bcbioSingleCell ====
 #' updateObject(indrops_small)
 NULL
 

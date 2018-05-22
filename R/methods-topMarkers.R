@@ -18,6 +18,8 @@
 #'
 #' @examples
 #' # grouped_df ====
+#' # Currently only works on `Seurat::FindAllMarkers()` return sanitized with
+#' # our `sanitizeMarkers()` function
 #' topMarkers(
 #'     object = all_markers_small,
 #'     n = 2L,

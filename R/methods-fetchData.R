@@ -17,7 +17,10 @@
 #' # SingleCellExperiment ====
 #' object <- indrops_small
 #' genes <- head(rownames(object))
-#' fetchGeneData(object, genes = genes) %>% glimpse()
+#'
+#' # fetchGeneData
+#' x <- fetchGeneData(object, genes = genes)
+#' glimpse(x)
 #'
 #' # seurat ====
 #' object <- seurat_small

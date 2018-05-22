@@ -12,16 +12,8 @@
 #' @seealso [DropletUtils::barcodeRanks()].
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' x <- barcodeRanksPerSample(indrops_small)
-#' names(x)
-#'
 #' # SingleCellExperiment ====
 #' x <- barcodeRanksPerSample(cellranger_small)
-#' names(x)
-#'
-#' # seurat ====
-#' x <- barcodeRanksPerSample(seurat_small)
 #' names(x)
 NULL
 
@@ -34,7 +26,8 @@ setMethod(
     "barcodeRanksPerSample",
     signature("SingleCellExperiment"),
     function(object, ...) {
-        # DropletUtils requires R 3.5, which isn't on conda yet
+        # DropletUtils requires R 3.5, which isn't on conda.
+        # Don't import the package as a dependency for the time being.
         requireNamespace("DropletUtils")
         counts <- counts(object)
         cell2sample <- cell2sample(object)

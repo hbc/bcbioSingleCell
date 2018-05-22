@@ -25,9 +25,6 @@
 #' plotUMIsPerCell(cellranger_small, geom = "ridgeline")
 #' plotUMIsPerCell(cellranger_small, geom = "violin")
 #' plotUMIsPerCell(cellranger_small, geom = "boxplot")
-#'
-#' # seurat ====
-#' plotUMIsPerCell(seurat_small, geom = "ecdf", point = "inflection")
 NULL
 
 

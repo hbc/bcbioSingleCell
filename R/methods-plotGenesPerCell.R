@@ -9,14 +9,8 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotGenesPerCell(indrops_small)
-#'
 #' # SingleCellExperiment ====
 #' plotGenesPerCell(cellranger_small)
-#'
-#' # seurat ====
-#' plotGenesPerCell(Seurat::pbmc_small)
 NULL
 
 

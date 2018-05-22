@@ -17,17 +17,8 @@
 #' @examples
 #' # SingleCellExperiment ====
 #' x <- cellranger_small
-#' sampleData(x, clean = TRUE) %>% glimpse()
 #' sampleData(x, clean = FALSE) %>% glimpse()
-#'
-#' # Assignment support
-#' sampleData(x)[["batch"]] <- 1L
-#' sampleData(x) %>% glimpse()
-#'
-#' # seurat ====
-#' x <- seurat_small
 #' sampleData(x, clean = TRUE) %>% glimpse()
-#' sampleData(x, clean = FALSE) %>% glimpse()
 #'
 #' # Assignment support
 #' sampleData(x)[["batch"]] <- 1L

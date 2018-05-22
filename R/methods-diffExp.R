@@ -105,7 +105,6 @@
 #'     minCountsPerCell = 5L
 #' )
 #' class(x)
-#' head(x[["table"]])
 #' }
 NULL
 

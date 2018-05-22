@@ -9,14 +9,8 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotMitoVsCoding(indrops_small)
-#'
 #' # SingleCellExperiment ====
 #' plotMitoVsCoding(cellranger_small)
-#'
-#' # seurat ====
-#' plotMitoVsCoding(seurat_small)
 NULL
 
 

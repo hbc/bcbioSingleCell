@@ -13,9 +13,6 @@
 #' @examples
 #' # SingleCellExperiment ====
 #' plotBarcodeRanks(cellranger_small)
-#'
-#' # seurat ====
-#' plotBarcodeRanks(seurat_small)
 NULL
 
 
