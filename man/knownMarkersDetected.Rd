@@ -43,11 +43,11 @@ easily.
 }
 \examples{
 # grouped_df ====
-knownMarkersDetected(
+x <- knownMarkersDetected(
     object = all_markers_small,
     known = cellTypeMarkers[["homoSapiens"]]
-) \%>\%
-    glimpse()
+)
+glimpse(x)
 }
 \seealso{
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},

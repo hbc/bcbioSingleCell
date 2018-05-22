@@ -20,6 +20,7 @@ information metadata is preserved from the time when the bcbio data was
 originally loaded into R.
 }
 \examples{
+# bcbioSingleCell ====
 updateObject(indrops_small)
 }
 \seealso{

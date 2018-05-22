@@ -108,19 +108,6 @@ x <- diffExp(
 class(x)
 head(x[["table"]])
 
-# zinbwave-DESeq2 (slower)
-\dontrun{
-x <- diffExp(
-    object = object,
-    numerator = numerator,
-    denominator = denominator,
-    zeroWeights = "zinbwave",
-    caller = "DESeq2"
-)
-class(x)
-head(x)
-}
-
 # seurat ====
 # Expression in cluster 3 relative to cluster 2
 \dontrun{
@@ -136,7 +123,6 @@ x <- diffExp(
     minCountsPerCell = 5L
 )
 class(x)
-head(x[["table"]])
 }
 }
 \seealso{

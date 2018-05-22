@@ -16,6 +16,9 @@
 \alias{readCellTypeMarkersFile}
 \alias{inflectionPoint}
 \alias{plotCumulativeUMIsPerCell}
+\alias{loadCellRanger}
+\alias{loadSingleCell}
+\alias{plotMarker}
 \title{Deprecated Functions}
 \usage{
 plotClusters(...)
@@ -45,6 +48,12 @@ readCellTypeMarkersFile(...)
 inflectionPoint(...)
 
 plotCumulativeUMIsPerCell(...)
+
+loadCellRanger(...)
+
+loadSingleCell(...)
+
+plotMarker(object, gene, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}

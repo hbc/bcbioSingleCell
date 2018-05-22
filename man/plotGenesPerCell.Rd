@@ -50,14 +50,8 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 Plot Genes per Cell
 }
 \examples{
-# bcbioSingleCell ====
-plotGenesPerCell(indrops_small)
-
 # SingleCellExperiment ====
 plotGenesPerCell(cellranger_small)
-
-# seurat ====
-plotGenesPerCell(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

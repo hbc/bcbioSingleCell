@@ -46,26 +46,25 @@ use the \code{\link[=sampleNames]{sampleNames()}} return values (i.e. the \code{
 \code{\link[=sampleData]{sampleData()}}).
 }
 \examples{
-# bcbioSingleCell ====
-show(indrops_small)
-x <- filterCells(indrops_small, minGenes = 0L)
-show(x)
-
 # SingleCellExperiment ====
-show(cellranger_small)
-x <- filterCells(cellranger_small, minNovelty = 0L)
+object <- cellranger_small
+show(object)
+sampleNames(object)
+
+x <- filterCells(object, minNovelty = 0L)
 show(x)
+metadata(x)$filterParams
 
 # Per sample cutoffs
-sampleNames(cellranger_small)
 x <- filterCells(
-    object = cellranger_small,
+    object = object,
     minUMIs = c(
         distal = 100,
         proximal = 200
     )
 )
-x
+show(x)
+metadata(x)$filterParams
 }
 \seealso{
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.

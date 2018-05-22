@@ -4,13 +4,13 @@
 \name{topBarcodes}
 \alias{topBarcodes}
 \alias{topBarcodes}
-\alias{topBarcodes,bcbioSingleCell-method}
+\alias{topBarcodes,SingleCellExperiment-method}
 \alias{topBarcodes,seurat-method}
 \title{Top Barcodes}
 \usage{
 topBarcodes(object, ...)
 
-\S4method{topBarcodes}{bcbioSingleCell}(object, n = 10L)
+\S4method{topBarcodes}{SingleCellExperiment}(object, n = 10L)
 
 \S4method{topBarcodes}{seurat}(object, n = 10L)
 }
@@ -22,17 +22,16 @@ topBarcodes(object, ...)
 \item{n}{Number of barcodes to return per sample.}
 }
 \value{
-\code{data.frame}.
+\code{grouped_df} containing \code{\link[=metrics]{metrics()}} return. Grouped by \code{sampleID}
+and arranged by \code{nUMI} column in descending order.
 }
 \description{
 Top Barcodes
 }
 \examples{
-# bcbioSingleCell ====
-topBarcodes(indrops_small) \%>\% glimpse()
-
-# seurat ====
-topBarcodes(Seurat::pbmc_small) \%>\% glimpse()
+# SingleCellExperiment ====
+x <- topBarcodes(cellranger_small)
+glimpse(x)
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},

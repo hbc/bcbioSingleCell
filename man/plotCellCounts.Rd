@@ -33,14 +33,8 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 Plot Cell Counts
 }
 \examples{
-# bcbioSingleCell ====
-plotCellCounts(indrops_small)
-
 # SingleCellExperiment ====
 plotCellCounts(cellranger_small)
-
-# seurat ====
-plotCellCounts(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

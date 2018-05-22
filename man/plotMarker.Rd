@@ -3,21 +3,17 @@
 \docType{methods}
 \name{plotKnownMarkersDetected}
 \alias{plotKnownMarkersDetected}
-\alias{plotMarker}
 \alias{plotMarkers}
 \alias{plotMarkerTSNE}
 \alias{plotTopMarkers}
 \alias{plotMarker}
 \alias{plotMarkerTSNE,seurat-method}
-\alias{plotMarker,seurat-method}
 \alias{plotMarkers,seurat-method}
 \alias{plotTopMarkers,seurat-method}
 \alias{plotKnownMarkersDetected,seurat-method}
 \title{Plot Cell-Type Gene Marker(s)}
 \usage{
 plotKnownMarkersDetected(object, ...)
-
-plotMarker(object, ...)
 
 plotMarkers(object, ...)
 
@@ -31,12 +27,10 @@ plotTopMarkers(object, ...)
   dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
   title = TRUE)
 
-\S4method{plotMarker}{seurat}(object, gene, dark = TRUE, return = c("grid",
-  "list"), ...)
+\S4method{plotMarkers}{seurat}(object, genes, dark = TRUE, headerLevel = 2L,
+  ...)
 
-\S4method{plotMarkers}{seurat}(object, genes, headerLevel = 2L, ...)
-
-\S4method{plotTopMarkers}{seurat}(object, topMarkers, headerLevel = 2L, ...)
+\S4method{plotTopMarkers}{seurat}(object, markers, headerLevel = 2L, ...)
 
 \S4method{plotKnownMarkersDetected}{seurat}(object, markers, headerLevel = 2L,
   ...)
@@ -77,17 +71,13 @@ the dataset, and some cells can be masked.}
 
 \item{title}{Plot title.}
 
-\item{gene}{Gene identifier. Must intersect with \code{\link[=rownames]{rownames()}}.}
-
-\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
-to the first argument in the vector.}
-
 \item{headerLevel}{R Markdown header level.}
 
-\item{topMarkers}{\code{grouped_df} grouped by "\code{cluster}", returned by
-\code{\link[=topMarkers]{topMarkers()}}.}
-
-\item{markers}{\code{grouped_df} of known marker genes.}
+\item{markers}{\code{grouped_df} of marker genes.
+\itemize{
+\item \code{\link[=plotTopMarkers]{plotTopMarkers()}}: must be grouped by "\code{cluster}".
+\item \code{\link[=plotKnownMarkersDetected]{plotKnownMarkersDetected()}}: must be grouped by "\code{cellType}".
+}}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.
@@ -100,36 +90,40 @@ Plot gene expression per cell in multiple formats:
 \item \code{\link[=plotViolin]{plotViolin()}}: Violin plot.
 }
 }
-\note{
+\section{plotTopMarkers}{
+
 The number of markers to plot is determined by the output of the
 \code{\link[=topMarkers]{topMarkers()}} function. If you want to reduce the number of genes to plot,
 simply reassign first using that function. If necessary, we can add support
 for the number of genes to plot here in a future update.
 }
+
 \examples{
-plotMarkerTSNE(seurat_small, genes = "COL1A1")
-plotMarkerTSNE(seurat_small, genes = "COL1A1", dark = FALSE, grid = FALSE)
+object <- seurat_small
+genes <- "COL1A1"
+
+# plotMarkerTSNE ====
+plotMarkerTSNE(object, genes = genes)
+plotMarkerTSNE(object, genes = genes, dark = FALSE, grid = FALSE)
 
 # Mitochondrial genes
-mito <- grep("^MT-", rownames(counts(seurat_small)), value = TRUE)
+mito <- grep("^MT-", rownames(object), value = TRUE)
 print(mito)
-plotMarkerTSNE(seurat_small, genes = mito, title = "mitochondrial")
-# Individual gene
-plotMarker(seurat_small, gene = "COL1A2", dark = TRUE)
-plotMarker(seurat_small, gene = "COL1A2", dark = FALSE)
-# Multiple genes
-top <- topMarkers(all_markers_small, n = 1L)
-genes <- pull(top, "rowname")
-plotMarkers(seurat_small, genes = genes)
-plotTopMarkers(
-    object = seurat_small,
-    topMarkers = topMarkers(all_markers_small, n = 1L)
-)
-# Let's plot the first known marker, as a quick example
-plotKnownMarkersDetected(
-    object = seurat_small,
-    markers = known_markers_small[1L, , drop = FALSE]
-)
+plotMarkerTSNE(object, genes = mito, title = "mito")
+
+# plotMarkers ====
+plotMarkers(object, genes = genes)
+
+# plotTopMarkers ====
+markers <- topMarkers(all_markers_small, n = 1)
+markers
+markers <- head(markers, n = 1)
+plotTopMarkers(object, markers = markers)
+
+# plotKnownMarkersDetected ====
+markers <- head(known_markers_small, n = 1)
+markers
+plotKnownMarkersDetected(object, markers = markers)
 }
 \seealso{
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},

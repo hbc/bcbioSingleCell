@@ -39,20 +39,16 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 Sample Barcode Metrics
 }
 \examples{
-# bcbioSingleCell ====
-metrics(indrops_small) \%>\% glimpse()
-
 # SingleCellExperiment ====
 metrics(cellranger_small) \%>\% glimpse()
+
+# seurat ====
+metrics(Seurat::pbmc_small) \%>\% glimpse()
 
 # dgCMatrix ====
 counts <- counts(indrops_small)
 class(counts)
 metrics(counts) \%>\% glimpse()
-
-# seurat ====
-metrics(seurat_small) \%>\% glimpse()
-metrics(Seurat::pbmc_small) \%>\% glimpse()
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},

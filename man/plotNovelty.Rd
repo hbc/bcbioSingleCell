@@ -50,11 +50,7 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 }
 \examples{
 # SingleCellExperiment ====
-plotNovelty(cellranger_small, geom = "histogram")
-plotNovelty(cellranger_small, geom = "ecdf")
-
-# seurat ====
-plotNovelty(seurat_small)
+plotNovelty(cellranger_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

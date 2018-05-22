@@ -29,7 +29,8 @@ Cell Types per Cluster
 }
 \examples{
 # grouped_df ====
-cellTypesPerCluster(known_markers_small) \%>\% glimpse()
+x <- cellTypesPerCluster(known_markers_small)
+glimpse(x)
 }
 \seealso{
 Other Clustering Functions: \code{\link{knownMarkersDetected}},

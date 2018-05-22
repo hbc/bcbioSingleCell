@@ -47,14 +47,8 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 Plot Mitochondrial Transcript Abundance
 }
 \examples{
-# bcbioSingleCell ====
-plotMitoRatio(indrops_small)
-
 # SingleCellExperiment ====
 plotMitoRatio(cellranger_small)
-
-# seurat ====
-plotMitoRatio(seurat_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
