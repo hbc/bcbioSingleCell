@@ -90,16 +90,16 @@ caller. It is currently considerably slower for large datasets than edgeR.
 
 \examples{
 # SingleCellExperiment ====
-sce <- cellranger_small
+object <- cellranger_small
 # Use S4 methods to get cells (colnames) of object
-numerator <- colnames(sce)[which(sce[["sampleName"]] == "proximal")]
+numerator <- colnames(object)[which(object[["sampleName"]] == "proximal")]
 glimpse(numerator)
-denominator <- colnames(sce)[which(sce[["sampleName"]] == "distal")]
+denominator <- colnames(object)[which(object[["sampleName"]] == "distal")]
 glimpse(denominator)
 
 # zinbwave-edgeR (fast, recommended)
 x <- diffExp(
-    object = cellranger_small,
+    object = object,
     numerator = numerator,
     denominator = denominator,
     zeroWeights = "zinbwave",
@@ -111,7 +111,7 @@ head(x[["table"]])
 # zinbwave-DESeq2 (slower)
 \dontrun{
 x <- diffExp(
-    object = cellranger_small,
+    object = object,
     numerator = numerator,
     denominator = denominator,
     zeroWeights = "zinbwave",
@@ -124,10 +124,11 @@ head(x)
 # seurat ====
 # Expression in cluster 3 relative to cluster 2
 \dontrun{
-numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
-denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
+object <- Seurat::pbmc_small
+numerator <- Seurat::WhichCells(object, ident = 3L)
+denominator <- Seurat::WhichCells(object, ident = 2L)
 x <- diffExp(
-    object = Seurat::pbmc_small,
+    object = object,
     numerator = numerator,
     denominator = denominator,
     caller = "edgeR",

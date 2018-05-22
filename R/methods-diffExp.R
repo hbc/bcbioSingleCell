@@ -72,16 +72,16 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' sce <- cellranger_small
+#' object <- cellranger_small
 #' # Use S4 methods to get cells (colnames) of object
-#' numerator <- colnames(sce)[which(sce[["sampleName"]] == "proximal")]
+#' numerator <- colnames(object)[which(object[["sampleName"]] == "proximal")]
 #' glimpse(numerator)
-#' denominator <- colnames(sce)[which(sce[["sampleName"]] == "distal")]
+#' denominator <- colnames(object)[which(object[["sampleName"]] == "distal")]
 #' glimpse(denominator)
 #'
 #' # zinbwave-edgeR (fast, recommended)
 #' x <- diffExp(
-#'     object = cellranger_small,
+#'     object = object,
 #'     numerator = numerator,
 #'     denominator = denominator,
 #'     zeroWeights = "zinbwave",
@@ -90,26 +90,14 @@
 #' class(x)
 #' head(x[["table"]])
 #'
-#' # zinbwave-DESeq2 (slower)
-#' \dontrun{
-#' x <- diffExp(
-#'     object = cellranger_small,
-#'     numerator = numerator,
-#'     denominator = denominator,
-#'     zeroWeights = "zinbwave",
-#'     caller = "DESeq2"
-#' )
-#' class(x)
-#' head(x)
-#' }
-#'
 #' # seurat ====
 #' # Expression in cluster 3 relative to cluster 2
 #' \dontrun{
-#' numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
-#' denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
+#' object <- Seurat::pbmc_small
+#' numerator <- Seurat::WhichCells(object, ident = 3L)
+#' denominator <- Seurat::WhichCells(object, ident = 2L)
 #' x <- diffExp(
-#'     object = Seurat::pbmc_small,
+#'     object = object,
 #'     numerator = numerator,
 #'     denominator = denominator,
 #'     caller = "edgeR",
@@ -123,28 +111,28 @@ NULL
 
 
 
-# DESeq2
-designFormula <- formula("~ group")
-
-# zingeR
-maxit <- 1000L
+.designFormula <- ~group
 
 
 
-.zinbwave <- function(object, group) {
+.zinbwave <- function(object) {
+    message("Running zinbwave")
     requireNamespace("BiocParallel")
-    sce <- as(object, "SingleCellExperiment")
-    # zinbFit doesn't support dgCMatrix, so coerce counts to matrix
-    assays(sce) <- list("counts" = as.matrix(counts(sce)))
-    sce[["group"]] <- group
+    stopifnot(is(object, "SingleCellExperiment"))
+    object <- as(object, "SingleCellExperiment")
+    # zinbFit doesn't support `dgCMatrix``, so coerce counts to matrix
+    assays(object) <- list("counts" = as.matrix(counts(object)))
     print(system.time({
         zinb <- zinbwave::zinbwave(
-            Y = sce,
+            Y = object,
             K = 0L,
             BPPARAM = BiocParallel::SerialParam(),
             epsilon = 1e12
         )
     }))
+    stopifnot(is(zinb, "SingleCellExperiment"))
+    assert_is_factor(zinb[["group"]])
+    assert_is_matrix(metadata(zinb)[["design"]])
     zinb
 }
 
@@ -158,14 +146,13 @@ maxit <- 1000L
 # ratio test implemented in nbinomLRT should be used.
 #
 # DESeq2 supports `weights` in assays automatically.
-.diffExp.zinbwave.DESeq2 <- function(  # nolint
-    object,
-    design,
-    group
-) {
-    zinb <- .zinbwave(object, group = group)
-    dds <- DESeq2::DESeqDataSet(zinb, design = designFormula)
+.diffExp.zinbwave.DESeq2 <- function(object) {  # nolint
+    stopifnot(is(object, "SingleCellExperiment"))
+    zinb <- .zinbwave(object)
+    # DESeq2 ===================================================================
+    message("Running DESeq2")
     print(system.time({
+        dds <- DESeq2::DESeqDataSet(se = zinb, design = .designFormula)
         dds <- DESeq2::DESeq(
             object = dds,
             test = "LRT",
@@ -174,30 +161,39 @@ maxit <- 1000L
             minmu = 1e-6,
             minReplicatesForReplace = Inf
         )
+        # We already performed low count filtering
+        res <- DESeq2::results(dds, independentFiltering = FALSE)
     }))
-    # DESeq2 will warn if parametric trend fails to fit
-    show(DESeq2::plotDispEsts(dds))
-    # We already performed low count filtering
-    res <- DESeq2::results(dds, independentFiltering = FALSE)
     res
 }
 
 
 
-.diffExp.zinbwave.edgeR <- function(  # nolint
-    object,
-    design,
-    group
-) {
-    zinb <- .zinbwave(object, group = group)
+.diffExp.zinbwave.edgeR <- function(object) {  # nolint
+    stopifnot(is(object, "SingleCellExperiment"))
+    zinb <- .zinbwave(object)
+    # edgeR ====================================================================
+    message("Running edgeR")
+    counts <- as.matrix(counts(zinb))
     weights <- assay(zinb, "weights")
-    dge <- edgeR::DGEList(counts(zinb))
-    dge <- edgeR::calcNormFactors(dge)
-    dge[["weights"]] <- weights
-    dge <- edgeR::estimateDisp(dge, design)
-    fit <- edgeR::glmFit(dge, design)
-    # We already performed low count filtering
-    lrt <- zinbwave::glmWeightedF(fit, coef = 2L, independentFiltering = FALSE)
+    assert_is_matrix(weights)
+    design <- metadata(object)[["design"]]
+    assert_is_matrix(design)
+    group <- object[["group"]]
+    assert_is_factor(group)
+    print(system.time({
+        dge <- edgeR::DGEList(counts, group = group)
+        dge <- edgeR::calcNormFactors(dge)
+        dge[["weights"]] <- weights
+        dge <- edgeR::estimateDisp(dge, design = design)
+        fit <- edgeR::glmFit(dge, design = design)
+        # We already performed low count filtering
+        lrt <- zinbwave::glmWeightedF(
+            glmfit = fit,
+            coef = 2L,
+            independentFiltering = FALSE
+        )
+    }))
     lrt
 }
 
@@ -207,10 +203,15 @@ maxit <- 1000L
 # `calcNormFactors()` and `zeroWeightsLS()`.
 .diffExp.zingeR.edgeR <- function(  # nolint
     object,
-    design,
-    group
+    maxit = 1000L
 ) {
+    stopifnot(is(object, "SingleCellExperiment"))
     counts <- as.matrix(counts(object))
+    design <- metadata(object)[["design"]]
+    assert_is_matrix(design)
+    # zingeR ===================================================================
+    message("Running zingeR")
+    require("zingeR")  # Fix for `DESeqDataSetFromMatrix()` issue
     print(system.time({
         weights <- zingeR::zeroWeightsLS(
             counts = counts,
@@ -219,13 +220,23 @@ maxit <- 1000L
             normalization = "TMM"
         )
     }))
-    dge <- edgeR::DGEList(counts, group = group)
-    dge[["weights"]] <- weights
-    dge <- edgeR::calcNormFactors(dge, method = "TMM")
-    dge <- edgeR::estimateDisp(dge, design = design)
-    fit <- edgeR::glmFit(dge, design = design)
-    # We already performed low count filtering
-    lrt <- zingeR::glmWeightedF(fit, coef = 2L, independentFiltering = FALSE)
+    # edgeR ====================================================================
+    message("Running edgeR")
+    group <- object[["group"]]
+    assert_is_factor(group)
+    print(system.time({
+        dge <- edgeR::DGEList(counts, group = group)
+        dge[["weights"]] <- weights
+        dge <- edgeR::calcNormFactors(dge, method = "TMM")
+        dge <- edgeR::estimateDisp(dge, design = design)
+        fit <- edgeR::glmFit(dge, design = design)
+        # We already performed low count filtering
+        lrt <- zingeR::glmWeightedF(
+            glmfit = fit,
+            coef = 2L,
+            independentFiltering = FALSE
+        )
+    }))
     lrt
 }
 
@@ -233,42 +244,46 @@ maxit <- 1000L
 
 .diffExp.zingeR.DESeq2 <- function(  # nolint
     object,
-    design,
-    group
+    maxit = 1000L
 ) {
+    stopifnot(is(object, "SingleCellExperiment"))
     counts <- as.matrix(counts(object))
+    se <- as(object, "RangedSummarizedExperiment")
+    assays(se) <- list(counts = counts)
+    # zingeR ===================================================================
+    message("Running zingeR")
+    require("zingeR")  # Fix for `DESeqDataSetFromMatrix()` issue
+    design <- metadata(object)[["design"]]
+    assert_is_matrix(design)
     print(system.time({
         weights <- zingeR::zeroWeightsLS(
             counts = counts,
             design = design,
             maxit = maxit,
             normalization = "DESeq2_poscounts",
-            colData = colData,
-            designFormula = designFormula
+            colData = colData(object),
+            designFormula = .designFormula
         )
     }))
-    colData <- data.frame(group = group)
-    dds <- DESeq2::DESeqDataSetFromMatrix(
-        countData = counts,
-        colData = colData,
-        design = designFormula
-    )
-    assays(dds)[["weights"]] <- weights
-    dds <- DESeq2::estimateSizeFactors(dds, type = "poscounts")
-    dds <- DESeq2::estimateDispersions(dds)
-    # LRT is recommended over Wald for UMI counts.
-    # May want to switch to that approach here.
-    # See code in zinbwave method.
-    dds <- DESeq2::nbinomWaldTest(
-        object = dds,
-        betaPrior = TRUE,
-        useT = TRUE,
-        df = rowSums(weights) - 2L
-    )
-    # DESeq2 will warn if parametric trend fails to fit
-    show(DESeq2::plotDispEsts(dds))
-    # We already performed low count filtering
-    res <- DESeq2::results(dds, independentFiltering = FALSE)
+    # DESeq2 ===================================================================
+    message("Running DESeq2")
+    print(system.time({
+        dds <- DESeq2::DESeqDataSet(se = se, design = .designFormula)
+        assays(dds)[["weights"]] <- weights
+        dds <- DESeq2::estimateSizeFactors(dds, type = "poscounts")
+        dds <- DESeq2::estimateDispersions(dds)
+        # LRT is recommended over Wald for UMI counts.
+        # May want to switch to that approach here.
+        # See code in zinbwave method.
+        dds <- DESeq2::nbinomWaldTest(
+            object = dds,
+            betaPrior = TRUE,
+            useT = TRUE,
+            df = rowSums(weights) - 2L
+        )
+        # We already performed low count filtering
+        res <- DESeq2::results(dds, independentFiltering = FALSE)
+    }))
     res
 }
 
@@ -348,12 +363,16 @@ setMethod(
                 minCellsPerGene,
                 "cells with counts of",
                 minCountsPerCell,
-                "or more"
+                "or more per gene"
             ),
             sep = "\n"
         ))
         genes <- rowSums(counts(object) >= minCountsPerCell) >= minCellsPerGene
-        print(table(genes))
+        # Early return NULL if no genes pass
+        if (!any(genes)) {
+            warning("No genes passed the low count filter")
+            return(NULL)
+        }
         object <- object[genes, ]
 
         # Create a cell factor to define the group for `DGEList()`
@@ -361,13 +380,13 @@ setMethod(
             n = length(numerator),
             expr = "numerator"
         ) %>%
-            factor() %>%
+            as.factor() %>%
             set_names(numerator)
         denominatorFactor <- replicate(
             n = length(denominator),
             expr = "denominator"
         ) %>%
-            factor() %>%
+            as.factor() %>%
             set_names(denominator)
         group <- factor(c(
             as.character(numeratorFactor),
@@ -376,16 +395,14 @@ setMethod(
         names(group) <- c(names(numeratorFactor), names(denominatorFactor))
         # Ensure denominator is set as reference
         group <- relevel(group, ref = "denominator")
+        object[["group"]] <- group
 
         # Set up the design matrix
         design <- model.matrix(~group)
+        metadata(object)[["design"]] <- design
 
         fun <- get(paste("", "diffExp", zeroWeights, caller, sep = "."))
-        fun(
-            object = object,
-            design = design,
-            group = group
-        )
+        fun(object)
     }
 )
 
