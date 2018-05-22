@@ -385,20 +385,20 @@ test_that("subsetPerSample : bcbioSingleCell", {
 
 
 # topBarcodes ==================================================================
-test_that("topBarcodes : bcbioSingleCell", {
-    x <- topBarcodes(indrops_small)
-    expect_is(x, "data.frame")
+test_that("topBarcodes : SingleCellExperiment", {
+    x <- topBarcodes(cellranger_small)
+    expect_is(x, "grouped_df")
     expect_identical(
-        rownames(x)[[1L]],
-        "multiplexed_AAAAAAAA_CTAGCACG_AATCGGGT"
+        x[["cellID"]][[1L]],
+        "aggregation_GTACGTATCTTTCCTC_1"
     )
 })
 
 test_that("topBarcodes : seurat", {
     x <- topBarcodes(Seurat::pbmc_small)
-    expect_is(x, "data.frame")
+    expect_is(x, "grouped_df")
     expect_identical(
-        rownames(x)[[1L]],
+        x[["cellID"]][[1L]],
         "GACATTCTCCACCT"
     )
 })
