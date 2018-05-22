@@ -1,3 +1,7 @@
+# nocov start
+
+
+
 #' Deprecated Functions
 #'
 #' @name deprecated
@@ -160,3 +164,7 @@ loadSingleCell <- function(...) {
     .Deprecated("bcbioSingleCell")
     bcbioSingleCell(...)
 }
+
+
+
+# nocov end
