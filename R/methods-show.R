@@ -7,6 +7,7 @@
 #' @inherit methods::show
 #'
 #' @examples
+#' bcbioSingleCell ====
 #' show(indrops_small)
 NULL
 
