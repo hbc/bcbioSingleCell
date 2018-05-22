@@ -140,6 +140,8 @@ inflectionPoint <- function(...) {
     .Defunct("DropletUtils::barcodeRanks")
 }
 
+
+
 #' @rdname deprecated
 #' @export
 plotCumulativeUMIsPerCell <- function(...) {
@@ -149,20 +151,30 @@ plotCumulativeUMIsPerCell <- function(...) {
 
 
 # v0.1.2 =======================================================================
-#' @rdname readCellRanger
-#' @usage NULL
+#' @rdname deprecated
 #' @export
 loadCellRanger <- function(...) {
     .Deprecated("readCellRanger")
     readCellRanger(...)
 }
 
-#' @rdname bcbioSingleCell
-#' @usage NULL
+
+
+#' @rdname deprecated
 #' @export
 loadSingleCell <- function(...) {
     .Deprecated("bcbioSingleCell")
     bcbioSingleCell(...)
+}
+
+
+
+# v0.1.10 ======================================================================
+#' @rdname deprecated
+#' @export
+plotMarker <- function(object, gene, ...) {
+    .Deprecated("plotMarkers")
+    plotMarkers(object, genes = gene, ...)
 }
 
 
