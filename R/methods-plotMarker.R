@@ -304,10 +304,7 @@ NULL
                 grid = grid
             )
         if (color == "auto") {
-            color <- scale_color_viridis(
-                option = "plasma",
-                discrete = FALSE
-            )
+            color <- scale_colour_viridis(option = "plasma")
         }
     } else {
         p <- p +
@@ -316,9 +313,8 @@ NULL
                 grid = grid
             )
         if (color == "auto") {
-            color <- scale_color_gradient(
-                low = "gray90",
-                high = "black"
+            color <- scale_colour_viridis(
+                option = "plasma", begin = 1L, end = 0L
             )
         }
     }

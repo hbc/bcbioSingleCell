@@ -20,6 +20,10 @@ ggplot2::scale_color_hue
 #' @export
 ggplot2::scale_colour_gradient
 
+#' @importFrom ggplot2 scale_colour_gradientn
+#' @export
+ggplot2::scale_colour_gradientn
+
 #' @importFrom ggplot2 scale_colour_hue
 #' @export
 ggplot2::scale_colour_hue

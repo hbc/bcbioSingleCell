@@ -70,7 +70,7 @@ Plot Feature
 }
 \examples{
 # seurat ====
-object <- Seurat::pbmc_small
+object <- seurat_small
 features <- c("nUMI", "nGene", "PC1", "PC2")
 
 # Plot grid
