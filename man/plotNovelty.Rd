@@ -25,8 +25,8 @@ plotNovelty(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
-first argument in the vector.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first argument
+in the vector.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}

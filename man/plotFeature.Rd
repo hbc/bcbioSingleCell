@@ -36,6 +36,9 @@ plotFeatureUMAP(object, ...)
 \item{features}{Character vector of features (e.g. gene expression, PC
 scores, number of genes detected).}
 
+\item{dimRed}{Dimensionality reduction method to apply. Defaults to t-SNE
+("\code{tsne}") but UMAP is also supported ("\code{umap}").}
+
 \item{dark}{Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
@@ -57,8 +60,7 @@ the dataset, and some cells can be masked.}
 
 \item{labelSize}{Size of the text label.}
 
-\item{legend}{Show legends in paneled plots. Defaults to \code{FALSE} because
-typically these look too busy and the legends can get cut off.}
+\item{legend}{Include plot legend.}
 
 \item{aspectRatio}{Aspect ratio.}
 }

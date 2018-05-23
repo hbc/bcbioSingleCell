@@ -17,12 +17,7 @@
 #' @family Clustering Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams fetchTSNEExpressionData
-#' @inheritParams plotTSNE
 #' @inheritParams general
-#' @param dimRed Dimensionality reduction method to apply. Defaults to t-SNE
-#'   ("`tsne`") but UMAP is also supported ("`umap`").
-#' @param expression Calculation to apply on the aggregate marker expression.
 #' @param markers `grouped_df` of marker genes.
 #'   - [plotTopMarkers()]: must be grouped by "`cluster`".
 #'   - [plotKnownMarkersDetected()]: must be grouped by "`cellType`".

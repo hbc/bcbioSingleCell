@@ -4,12 +4,9 @@
 #' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams plotTSNE
 #' @inheritParams general
 #' @param features Character vector of features (e.g. gene expression, PC
 #'   scores, number of genes detected).
-#' @param legend Show legends in paneled plots. Defaults to `FALSE` because
-#'   typically these look too busy and the legends can get cut off.
 #'
 #' @seealso [Seurat::FeaturePlot()].
 #'

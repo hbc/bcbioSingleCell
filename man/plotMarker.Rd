@@ -63,7 +63,8 @@ plotTopMarkers(object, ...)
 
 \item{headerLevel}{R Markdown header level.}
 
-\item{expression}{Calculation to apply on the aggregate marker expression.}
+\item{expression}{Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and defaults to
+the first argument in the vector.}
 
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
