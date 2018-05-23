@@ -44,7 +44,7 @@ setMethod(
 
         data <- metadata(object)[["sampleData"]]
         if (is.null(data)) {
-            stop("`metadata()` slot does not contain `sampleData`")
+            return(NULL)
         }
         assert_is_data.frame(data)
 
