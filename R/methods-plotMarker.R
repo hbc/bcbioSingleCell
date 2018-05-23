@@ -40,10 +40,14 @@
 #' plotMarkerTSNE(object, genes = genes)
 #' plotMarkerTSNE(object, genes = genes, dark = FALSE, grid = FALSE)
 #'
+#' # plotMarkerUMAP ====
+#' plotMarkerUMAP(object, genes = genes)
+#' plotMarkerUMAP(object, genes = genes, dark = FALSE, grid = FALSE)
+#'
 #' # Mitochondrial genes
-#' mito <- grep("^MT-", rownames(object), value = TRUE)
-#' print(mito)
-#' plotMarkerTSNE(object, genes = mito, title = "mito")
+#' mito_genes <- grep("^MT-", rownames(object), value = TRUE)
+#' print(mito_genes)
+#' plotMarkerTSNE(object, genes = mito_genes, title = "mito genes")
 #'
 #' # plotTopMarkers ====
 #' markers <- topMarkers(all_markers_small, n = 1)
@@ -343,9 +347,9 @@ NULL
     # https://stackoverflow.com/questions/27926194/r-match-call-for-s4-methods
     # ... becomes ..1 for internal C code
     # https://cran.r-project.org/doc/manuals/r-release/R-ints.html#Dot_002ddot_002ddot-arguments
-    formals <- as.list(match.call())[-1L]
-    formals[["dimRed"]] <- "tsne"
-    do.call(.plotMarkerDimRed, formals)
+    args <- as.list(match.call())[-1L]
+    args[["dimRed"]] <- "tsne"
+    do.call(.plotMarkerDimRed, args)
 }
 formals(.plotMarkerTSNE) <- formals(.plotMarkerDimRed)
 formals(.plotMarkerTSNE)[["dimRed"]] <- NULL
@@ -353,9 +357,9 @@ formals(.plotMarkerTSNE)[["dimRed"]] <- NULL
 
 
 .plotMarkerUMAP <- function() {
-    formals <- as.list(match.call())[-1L]
-    formals[["dimRed"]] <- "umap"
-    do.call(.plotMarkerDimRed, formals)
+    args <- as.list(match.call())[-1L]
+    args[["dimRed"]] <- "umap"
+    do.call(.plotMarkerDimRed, args)
 }
 formals(.plotMarkerUMAP) <- formals(.plotMarkerDimRed)
 formals(.plotMarkerUMAP)[["dimRed"]] <- NULL
