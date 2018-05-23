@@ -1,4 +1,4 @@
-#' Subset
+#' Subset Object
 #'
 #' Extract genes by row and cells by column from a `bcbioSingleCell` object.
 #'
