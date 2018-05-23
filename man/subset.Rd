@@ -4,7 +4,7 @@
 \name{subset}
 \alias{subset}
 \alias{[,bcbioSingleCell,ANY,ANY,ANY-method}
-\title{Subset}
+\title{Subset Object}
 \usage{
 \S4method{[}{bcbioSingleCell,ANY,ANY,ANY}(x, i, j, ..., drop = FALSE)
 }

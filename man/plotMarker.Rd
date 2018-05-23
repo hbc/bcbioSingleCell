@@ -3,12 +3,10 @@
 \docType{methods}
 \name{plotKnownMarkersDetected}
 \alias{plotKnownMarkersDetected}
-\alias{plotMarker}
 \alias{plotMarkerTSNE}
 \alias{plotMarkerUMAP}
 \alias{plotTopMarkers}
 \alias{plotMarker}
-\alias{plotMarker,seurat-method}
 \alias{plotMarkerTSNE,seurat-method}
 \alias{plotMarkerUMAP,seurat-method}
 \alias{plotTopMarkers,seurat-method}
@@ -17,16 +15,11 @@
 \usage{
 plotKnownMarkersDetected(object, ...)
 
-plotMarker(object, ...)
-
 plotMarkerTSNE(object, ...)
 
 plotMarkerUMAP(object, ...)
 
 plotTopMarkers(object, ...)
-
-\S4method{plotMarker}{seurat}(object, genes, dimRed = c("tsne", "umap"),
-  dark = TRUE, grid = TRUE, headerLevel = 2L)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
   "median", "sum"), color = "auto", pointsAsNumbers = FALSE,
@@ -53,16 +46,6 @@ plotTopMarkers(object, ...)
 
 \item{genes}{Gene identifiers. Must match the rownames of the object.}
 
-\item{dimRed}{Dimensionality reduction method to apply. Defaults to t-SNE
-("\code{tsne}") but UMAP is also supported ("\code{umap}").}
-
-\item{dark}{Plot against a dark background using
-\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
-
-\item{grid}{Show major grid lines but hide axis lines.}
-
-\item{headerLevel}{R Markdown header level.}
-
 \item{expression}{Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and defaults to
 the first argument in the vector.}
 
@@ -82,6 +65,11 @@ the dataset, and some cells can be masked.}
 
 \item{labelSize}{Size of the text label.}
 
+\item{dark}{Plot against a dark background using
+\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
+
+\item{grid}{Show major grid lines but hide axis lines.}
+
 \item{legend}{Include plot legend.}
 
 \item{aspectRatio}{Aspect ratio.}
@@ -93,6 +81,11 @@ the dataset, and some cells can be masked.}
 \item \code{\link[=plotTopMarkers]{plotTopMarkers()}}: must be grouped by "\code{cluster}".
 \item \code{\link[=plotKnownMarkersDetected]{plotKnownMarkersDetected()}}: must be grouped by "\code{cellType}".
 }}
+
+\item{dimRed}{Dimensionality reduction method to apply. Defaults to t-SNE
+("\code{tsne}") but UMAP is also supported ("\code{umap}").}
+
+\item{headerLevel}{R Markdown header level.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.
@@ -116,9 +109,6 @@ for the number of genes to plot here in a future update.
 \examples{
 object <- seurat_small
 genes <- "COL1A1"
-
-# Markdown
-plotMarker(object, genes = genes)
 
 # t-SNE
 plotMarkerTSNE(
@@ -173,7 +163,7 @@ plotKnownMarkersDetected(object, markers = markers)
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
-  \code{\link{plotFeature}}, \code{\link{plotPCElbow}},
+  \code{\link{plotFeatureTSNE}}, \code{\link{plotPCElbow}},
   \code{\link{plotTSNE}}, \code{\link{sanitizeMarkers}},
   \code{\link{topMarkers}}
 }

@@ -50,7 +50,7 @@ head(x)
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
-  \code{\link{plotFeature}},
+  \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
   \code{\link{sanitizeMarkers}}

@@ -12,7 +12,10 @@
 \alias{readMarkers}
 \alias{readMarkersFile}
 \alias{plotFeatures}
+\alias{plotMarker}
 \alias{plotMarkers}
+\alias{plotDot}
+\alias{plotViolin}
 \title{Defunct Functions}
 \usage{
 plotClusters(...)
@@ -35,7 +38,13 @@ readMarkersFile(...)
 
 plotFeatures(...)
 
+plotMarker(...)
+
 plotMarkers(...)
+
+plotDot(...)
+
+plotViolin(...)
 }
 \arguments{
 \item{...}{Additional arguments.}

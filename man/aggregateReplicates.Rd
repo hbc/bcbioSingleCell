@@ -12,7 +12,7 @@
 \item{object}{Object.}
 }
 \value{
-\code{bcbioSingleCell}.
+\code{SingleCellExperiment}.
 }
 \description{
 Aggregate Replicates
@@ -26,6 +26,7 @@ sampleNames(object)
 glimpse(object$aggregate)
 
 x <- aggregateReplicates(object)
+show(x)
 sampleNames(x)
 }
 \seealso{
