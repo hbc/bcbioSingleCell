@@ -1,6 +1,11 @@
+# TODO Add `plotFeatures()` functionality back
+# plotFeatures <- function(object, features, ...)
+
+
+
 #' Plot Feature t-SNE
 #'
-#' @name plotFeature
+#' @name plotFeatures
 #' @family Clustering Functions
 #' @author Michael Steinbaugh
 #'
@@ -31,7 +36,7 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname plotFeature
+#' @rdname plotFeatures
 #' @export
 setMethod(
     "plotFeatureTSNE",

@@ -174,7 +174,7 @@ setGeneric(
 
 
 
-#' @rdname plotFeature
+#' @rdname plotFeatures
 #' @export
 setGeneric(
     "plotFeatureTSNE",
@@ -196,7 +196,7 @@ setGeneric(
 
 
 
-#' @rdname plotMarker
+#' @rdname plotMarkers
 #' @export
 setGeneric(
     "plotKnownMarkersDetected",
@@ -207,7 +207,7 @@ setGeneric(
 
 
 
-#' @rdname plotMarker
+#' @rdname plotMarkers
 #' @export
 setGeneric(
     "plotMarkers",
@@ -218,7 +218,7 @@ setGeneric(
 
 
 
-#' @rdname plotMarker
+#' @rdname plotMarkers
 #' @export
 setGeneric(
     "plotMarkerTSNE",
@@ -284,7 +284,7 @@ setGeneric(
 
 
 
-#' @rdname plotMarker
+#' @rdname plotMarkers
 #' @export
 setGeneric(
     "plotTopMarkers",

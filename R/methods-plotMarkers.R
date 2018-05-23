@@ -1,4 +1,4 @@
-# TODO Add `plotMarkerUMAP()` and a dimensional reduction option to `plotMarkers()`
+# TODO Add `plotMarkerUMAP()`, dimensional reduction option to `plotMarkers()`
 
 
 
@@ -17,7 +17,7 @@
 #' simply reassign first using that function. If necessary, we can add support
 #' for the number of genes to plot here in a future update.
 #'
-#' @name plotMarker
+#' @name plotMarkers
 #' @family Clustering Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
@@ -165,7 +165,7 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname plotMarker
+#' @rdname plotMarkers
 #' @export
 setMethod(
     "plotMarkerTSNE",
@@ -334,7 +334,7 @@ setMethod(
 
 
 
-#' @rdname plotMarker
+#' @rdname plotMarkers
 #' @export
 setMethod(
     "plotMarkers",
@@ -362,7 +362,7 @@ setMethod(
 
 
 
-#' @rdname plotMarker
+#' @rdname plotMarkers
 #' @export
 setMethod(
     "plotTopMarkers",
@@ -410,7 +410,7 @@ setMethod(
 
 
 
-#' @rdname plotMarker
+#' @rdname plotMarkers
 #' @export
 setMethod(
     "plotKnownMarkersDetected",
