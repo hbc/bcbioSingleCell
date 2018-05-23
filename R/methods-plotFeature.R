@@ -115,9 +115,9 @@ NULL
                     grid = grid
                 )
             if (color == "auto") {
-                color <- scale_color_gradient(
-                    low = "gray20",
-                    high = "orange"
+                color <- scale_color_viridis(
+                    option = "plasma",
+                    discrete = FALSE
                 )
             }
         } else {
@@ -128,8 +128,8 @@ NULL
                 )
             if (color == "auto") {
                 color <- scale_color_gradient(
-                    low = "gray80",
-                    high = "purple"
+                    low = "gray90",
+                    high = "black"
                 )
             }
         }
