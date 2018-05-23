@@ -69,7 +69,7 @@ NULL
     colMax = 2.5,
     dotMin = 0L,
     dotScale = 6L,
-    legend = TRUE
+    legend = FALSE
 ) {
     assert_is_character(genes)
     assert_is_a_number(colMin)
@@ -147,10 +147,9 @@ NULL
     object,
     genes,
     scale = c("count", "width", "area"),
-    fill = scale_fill_hue(),
+    fill = NULL,
     dark = FALSE,
-    headerLevel = 2L,
-    return = c("grid", "list", "markdown")
+    legend = FALSE
 ) {
     scale <- match.arg(scale)
     assert_is_any_of(fill, c("ScaleDiscrete", "character", "NULL"))
@@ -158,10 +157,13 @@ NULL
         assert_is_a_string(fill)
     }
     assert_is_a_bool(dark)
-    assertIsAHeaderLevel(headerLevel)
-    return <- match.arg(return)
 
-    # Fetch data ===========================================================
+    if (isTRUE(dark)) {
+        color <- "white"
+    } else {
+        color <- "black"
+    }
+
     ident <- slot(object, "ident")
     data <- fetchGeneData(object, genes = genes) %>%
         as.data.frame() %>%
@@ -175,68 +177,41 @@ NULL
         ) %>%
         group_by(!!sym("gene"))
 
-    # Loop across genes ====================================================
-    plotlist <- lapply(seq_along(genes), function(a) {
-        gene <- genes[[a]]
-        data <- data[data[["gene"]] == gene, , drop = FALSE]
-
-        # Dynamically provide mapped or single color support
-        if (is_a_string(fill)) {
-            fillArg <- fill
-        } else {
-            fillArg <- NULL
-        }
-
-        if (isTRUE(dark)) {
-            color <- "white"
-        } else {
-            color <- "black"
-        }
-
-        violin <- geom_violin(
-            mapping = aes_string(fill = "ident"),
-            # never include a color border
-            color = color,
-            scale = scale,
-            adjust = 1L,
-            trim = TRUE
-        )
-
-        if (is_a_string(fill)) {
-            violin[["aes_params"]][["fill"]] <- fill
-        }
-
-        p <- ggplot(
-            data,
-            mapping = aes_string(
-                x = "ident",
-                y = "expression"
-            )
-        ) +
-            violin +
-            labs(title = gene, x = NULL, y = NULL) +
-            guides(fill = FALSE)
-
-        if (is(fill, "ScaleDiscrete")) {
-            p <- p + fill
-        }
-
-        if (isTRUE(dark)) {
-            p <- p + theme_midnight()
-        } else {
-            p <- p + theme_paperwhite()
-        }
-
-        p
-    })
-    names(plotlist) <- genes
-
-    # Return ===============================================================
-    dynamicPlotlist(
-        plotlist,
-        return = return,
-        headerLevel = headerLevel
+    violin <- geom_violin(
+        mapping = aes_string(fill = "ident"),
+        # never include a color border
+        color = color,
+        scale = scale,
+        adjust = 1L,
+        show.legend = legend,
+        trim = TRUE
     )
+    if (is_a_string(fill)) {
+        violin[["aes_params"]][["fill"]] <- fill
+    }
+
+    p <- ggplot(
+        data,
+        mapping = aes_string(
+            x = "ident",
+            y = "expression"
+        )
+    ) +
+        violin +
+        # Note that `scales = free_y` will hide the x-axis for some plots
+        facet_wrap(facets = "gene", scales = "free")
+
+    if (is(fill, "ScaleDiscrete")) {
+        p <- p + fill
+    }
+
+    if (isTRUE(dark)) {
+        p <- p + theme_midnight()
+    } else {
+        p <- p + theme_paperwhite()
+    }
+
+    p
 }
 
 
@@ -250,13 +225,19 @@ setMethod(
     function(
         object,
         genes,
-        geom = c("dot", "violin")
+        geom = c("dot", "violin"),
+        legend = FALSE
     ) {
         geom <- match.arg(geom)
         if (geom == "dot") {
-            .plotDot(object, genes = genes)
+            fun <- .plotDot
         } else if (geom == "violin") {
-            .plotViolin(object, genes = genes)
+            fun <- .plotViolin
         }
+        fun(
+            object = object,
+            genes = genes,
+            legend = legend
+        )
     }
 )
