@@ -55,7 +55,7 @@ plotPCElbow(Seurat::pbmc_small)
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
-  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotFeature}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotTSNE}}, \code{\link{sanitizeMarkers}},
   \code{\link{topMarkers}}
