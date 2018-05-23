@@ -13,41 +13,55 @@ authors:
         href: http://bioinformatics.sph.harvard.edu
 
 reference:
-  - title: S4 Class Definition
+  - title: S4 Object
     contents:
     - starts_with("bcbio")
     - coerce
-    - sampleData
     - show
     - subset
     - ends_with("Object")
   - title: Read Functions
     contents:
-    - starts_with("load")
+    # - starts_with("load")
     - starts_with("read")
   - title: Data Functions
     contents:
     - starts_with("aggregate")
     - cell2sample
     - starts_with("fetch")
-    - starts_with("filter")
-    - matches("2")
     - starts_with("map")
     - starts_with("select")
+    - sampleData
     - subsetPerSample
     - topBarcodes
-  - title: Metrics Functions
-    contents:
-    - matches("[Mm]etrics")
+    - matches("2")
   - title: Quality Control Functions
     contents:
-    - starts_with("barcodeRanks")
-    - matches("QC")
+    - starts_with("metrics")
+    - filterCells
+    - plotQC
+    - plotCellCounts
+    - plotReadsPerCell
+    - plotUMIsPerCell
+    - plotGenesPerCell
+    - plotUMIsVsGenes
+    - plotNovelty
+    - matches("Mito")
+    - plotZerosVsDepth
+    - matches("Ranks")
+    - plotNovelty
   - title: Clustering Functions
     contents:
     - matches("Cluster")
+    - matches("Elbow")
     - matches("PCA")
     - matches("TSNE")
+    - matches("UMAP")
+  - title: Gene Expression Functions
+    contents:
+    - plotDot
+    - plotMarker
+    - plotViolin
   - title: Differential Expression Functions
     contents:
     - diffExp
