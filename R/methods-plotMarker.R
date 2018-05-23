@@ -1,8 +1,4 @@
-# TODO Add `plotMarkerUMAP()`, dimensional reduction option to `plotMarkers()`
-
-
-
-#' Plot Cell-Type Gene Marker(s)
+#' Plot Cell-Type-Specific Gene Markers
 #'
 #' @description
 #' Plot gene expression per cell in multiple formats:
@@ -17,13 +13,15 @@
 #' simply reassign first using that function. If necessary, we can add support
 #' for the number of genes to plot here in a future update.
 #'
-#' @name plotMarkers
+#' @name plotMarker
 #' @family Clustering Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams fetchTSNEExpressionData
 #' @inheritParams plotTSNE
 #' @inheritParams general
+#' @param dimRed Dimensionality reduction method to apply. Defaults to t-SNE
+#'   ("`tsne`") but UMAP is also supported ("`umap`").
 #' @param expression Calculation to apply on the aggregate marker expression.
 #' @param markers `grouped_df` of marker genes.
 #'   - [plotTopMarkers()]: must be grouped by "`cluster`".
@@ -35,6 +33,9 @@
 #' object <- seurat_small
 #' genes <- "COL1A1"
 #'
+#' # plotMarker ====
+#' plotMarker(object, genes = genes)
+#'
 #' # plotMarkerTSNE ====
 #' plotMarkerTSNE(object, genes = genes)
 #' plotMarkerTSNE(object, genes = genes, dark = FALSE, grid = FALSE)
@@ -43,9 +44,6 @@
 #' mito <- grep("^MT-", rownames(object), value = TRUE)
 #' print(mito)
 #' plotMarkerTSNE(object, genes = mito, title = "mito")
-#'
-#' # plotMarkers ====
-#' plotMarkers(object, genes = genes)
 #'
 #' # plotTopMarkers ====
 #' markers <- topMarkers(all_markers_small, n = 1)
@@ -81,10 +79,10 @@ NULL
 
 .plotMarker <- function(
     object,
-    dimRed = c("tsne", "umap"),
     gene,
+    dimRed = c("tsne", "umap"),
     dark = TRUE,
-    ...
+    grid = TRUE
 ) {
     dimRed <- match.arg(dimRed)
 
@@ -96,17 +94,17 @@ NULL
 
     # Dimensional reduction plot
     if (dimRed == "tsne") {
-        dr <- plotMarkerTSNE(
-            object,
-            genes = gene,
-            expression = "sum",
-            dark = dark,
-            ...
-        )
+        plotMarkerDimRed <- plotMarkerTSNE
     } else if (dimRed == "umap") {
-        # FIXME Add UMAP support
-        stop("UMAP not supported yet")
+        plotMarkerDimRed <- plotMarkerUMAP
     }
+    dr <- plotMarkerDimRed(
+        object,
+        genes = gene,
+        dark = dark,
+        grid = grid,
+        legend = FALSE
+    )
 
     # Dot plot
     dot <- plotDot(
@@ -164,193 +162,232 @@ NULL
 
 
 
+# Dimensionality reduction (t-SNE, UMAP) plot constructor
+.plotMarkerDimRed <- function(
+    object,
+    genes,
+    dimRed = c("tsne", "umap"),
+    expression = c("mean", "median", "sum"),
+    color = "auto",
+    pointsAsNumbers = FALSE,
+    pointSize = 0.5,
+    pointAlpha = 0.8,
+    label = TRUE,
+    labelSize = 6L,
+    dark = TRUE,
+    grid = TRUE,
+    legend = TRUE,
+    aspectRatio = 1L,
+    title = TRUE
+) {
+    assert_is_character(genes)
+    assert_is_subset(genes, rownames(object))
+    dimRed <- match.arg(dimRed)
+    expression <- match.arg(expression)
+    assert_is_a_bool(pointsAsNumbers)
+    assert_is_a_number(pointSize)
+    assert_is_a_number(pointAlpha)
+    assert_is_a_bool(label)
+    assert_is_a_number(labelSize)
+    assert_is_a_bool(dark)
+    assert_is_a_bool(legend)
+    assert_is_any_of(title, c("character", "logical", "NULL"))
+    if (is.character(title)) {
+        assert_is_a_string(title)
+    }
+
+    # Fetch dimensional reduction coordinates
+    if (dimRed == "tsne") {
+        fun <- fetchTSNEExpressionData
+        dimCols <- c("tSNE1", "tSNE2")
+    } else if (dimRed == "umap") {
+        fun <- fetchUMAPExpressionData
+        dimCols <- c("umap1", "umap2")
+    }
+    data <- fun(object, genes = genes)
+
+    requiredCols <- c(
+        "centerX",
+        "centerY",
+        "mean",
+        "median",
+        "ident",
+        "sum",
+        dimCols
+    )
+    assert_is_subset(requiredCols, colnames(data))
+
+    p <- ggplot(
+        data = data,
+        mapping = aes_string(
+            x = dimCols[[1L]],
+            y = dimCols[[2L]],
+            color = expression
+        )
+    )
+
+    # Titles
+    subtitle <- NULL
+    if (isTRUE(title)) {
+        if (is_a_string(genes)) {
+            title <- genes
+        } else {
+            title <- NULL
+            subtitle <- genes
+            # Limit to the first 5 markers
+            if (length(subtitle) > 5L) {
+                subtitle <- c(subtitle[1L:5L], "...")
+            }
+            subtitle <- toString(subtitle)
+        }
+    } else if (identical(title, FALSE)) {
+        title <- NULL
+    }
+    p <- p + labs(title = title, subtitle = subtitle)
+
+    # Customize legend
+    if (isTRUE(legend)) {
+        # Make the guide longer than normal, to improve appearance of values
+        # containing a decimal point
+        p <- p +
+            guides(
+                color = guide_colorbar(
+                    barwidth = 20L,
+                    barheight = 1L,
+                    direction = "horizontal"
+                )
+            )
+    } else {
+        p <- p + guides(color = "none")
+    }
+
+    if (isTRUE(pointsAsNumbers)) {
+        p <- p +
+            geom_text(
+                mapping = aes_string(
+                    x = dimCols[[1L]],
+                    y = dimCols[[2L]],
+                    label = "ident",
+                    color = expression
+                ),
+                alpha = pointAlpha,
+                size = pointSize
+            )
+    } else {
+        p <- p +
+            geom_point(
+                alpha = pointAlpha,
+                size = pointSize
+            )
+    }
+
+    if (isTRUE(label)) {
+        if (isTRUE(dark)) {
+            labelColor <- "white"
+        } else {
+            labelColor <- "black"
+        }
+        p <- p +
+            geom_text(
+                mapping = aes_string(
+                    x = "centerX",
+                    y = "centerY",
+                    label = "ident"
+                ),
+                color = labelColor,
+                size = labelSize,
+                fontface = "bold"
+            )
+    }
+
+    # Color palette
+    if (isTRUE(dark)) {
+        p <- p +
+            theme_midnight(
+                aspect_ratio = aspectRatio,
+                grid = grid
+            )
+        if (color == "auto") {
+            color <- scale_color_viridis(
+                option = "plasma",
+                discrete = FALSE
+            )
+        }
+    } else {
+        p <- p +
+            theme_paperwhite(
+                aspect_ratio = aspectRatio,
+                grid = grid
+            )
+        if (color == "auto") {
+            color <- scale_color_gradient(
+                low = "gray90",
+                high = "black"
+            )
+        }
+    }
+
+    if (is(color, "ScaleContinuous")) {
+        p <- p + color
+    }
+
+    p
+}
+
+
+
+.plotMarkerTSNE <- function() {
+    # `match.call()` will fail if a variable is passed in for genes
+    # `.local(object = object, genes = ..1)`
+    # This is a known issue for S4
+    # https://stackoverflow.com/questions/27926194/r-match-call-for-s4-methods
+    # ... becomes ..1 for internal C code
+    # https://cran.r-project.org/doc/manuals/r-release/R-ints.html#Dot_002ddot_002ddot-arguments
+    formals <- as.list(match.call())[-1L]
+    formals[["dimRed"]] <- "tsne"
+    do.call(.plotMarkerDimRed, formals)
+}
+formals(.plotMarkerTSNE) <- formals(.plotMarkerDimRed)
+formals(.plotMarkerTSNE)[["dimRed"]] <- NULL
+
+
+
+.plotMarkerUMAP <- function() {
+    formals <- as.list(match.call())[-1L]
+    formals[["dimRed"]] <- "umap"
+    do.call(.plotMarkerDimRed, formals)
+}
+formals(.plotMarkerUMAP) <- formals(.plotMarkerDimRed)
+formals(.plotMarkerUMAP)[["dimRed"]] <- NULL
+
+
+
 # Methods ======================================================================
-#' @rdname plotMarkers
+#' @rdname plotMarker
 #' @export
 setMethod(
-    "plotMarkerTSNE",
+    "plotMarker",
     signature("seurat"),
     function(
         object,
         genes,
-        expression = c("mean", "median", "sum"),
-        color = "auto",
-        pointsAsNumbers = FALSE,
-        pointSize = 0.5,
-        pointAlpha = 0.8,
-        label = TRUE,
-        labelSize = 6L,
+        dimRed = c("tsne", "umap"),
         dark = TRUE,
         grid = TRUE,
-        legend = FALSE,
-        aspectRatio = 1L,
-        title = TRUE
-    ) {
-        assert_is_character(genes)
-        assert_is_subset(genes, rownames(object))
-        expression <- match.arg(expression)
-        assert_is_a_bool(pointsAsNumbers)
-        assert_is_a_number(pointSize)
-        assert_is_a_number(pointAlpha)
-        assert_is_a_bool(label)
-        assert_is_a_number(labelSize)
-        assert_is_a_bool(dark)
-        assert_is_a_bool(legend)
-        assert_is_any_of(title, c("character", "logical", "NULL"))
-        if (is.character(title)) {
-            assert_is_a_string(title)
-        }
-
-        data <- fetchTSNEExpressionData(object, genes = genes)
-        requiredCols <- c(
-            "centerX",
-            "centerY",
-            "mean",
-            "median",
-            "ident",
-            "sum",
-            "tSNE1",
-            "tSNE2"
-        )
-        assert_is_subset(requiredCols, colnames(data))
-
-        p <- ggplot(
-            data = data,
-            mapping = aes_string(
-                x = "tSNE1",
-                y = "tSNE2",
-                color = expression
-            )
-        )
-
-        # Titles
-        subtitle <- NULL
-        if (isTRUE(title)) {
-            if (is_a_string(genes)) {
-                title <- genes
-            } else {
-                title <- NULL
-                subtitle <- genes
-                # Limit to the first 5 markers
-                if (length(subtitle) > 5L) {
-                    subtitle <- c(subtitle[1L:5L], "...")
-                }
-                subtitle <- toString(subtitle)
-            }
-        } else if (identical(title, FALSE)) {
-            title <- NULL
-        }
-        p <- p + labs(title = title, subtitle = subtitle)
-
-        # Customize legend
-        if (isTRUE(legend)) {
-            # Make the guide longer than normal, to improve appearance of values
-            # containing a decimal point
-            p <- p +
-                guides(
-                    color = guide_colorbar(
-                        barwidth = 20L,
-                        barheight = 1L,
-                        direction = "horizontal"
-                    )
-                )
-        } else {
-            p <- p + guides(color = "none")
-        }
-
-        if (isTRUE(pointsAsNumbers)) {
-            p <- p +
-                geom_text(
-                    mapping = aes_string(
-                        x = "tSNE1",
-                        y = "tSNE2",
-                        label = "ident",
-                        color = expression
-                    ),
-                    alpha = pointAlpha,
-                    size = pointSize
-                )
-        } else {
-            p <- p +
-                geom_point(
-                    alpha = pointAlpha,
-                    size = pointSize
-                )
-        }
-
-        if (isTRUE(label)) {
-            if (isTRUE(dark)) {
-                labelColor <- "white"
-            } else {
-                labelColor <- "black"
-            }
-            p <- p +
-                geom_text(
-                    mapping = aes_string(
-                        x = "centerX",
-                        y = "centerY",
-                        label = "ident"
-                    ),
-                    color = labelColor,
-                    size = labelSize,
-                    fontface = "bold"
-                )
-        }
-
-        # Color palette
-        if (isTRUE(dark)) {
-            p <- p +
-                theme_midnight(
-                    aspect_ratio = aspectRatio,
-                    grid = grid
-                )
-            if (color == "auto") {
-                color <- scale_color_viridis(
-                    option = "plasma",
-                    discrete = FALSE
-                )
-            }
-        } else {
-            p <- p +
-                theme_paperwhite(
-                    aspect_ratio = aspectRatio,
-                    grid = grid
-                )
-            if (color == "auto") {
-                color <- scale_color_gradient(
-                    low = "gray90",
-                    high = "black"
-                )
-            }
-        }
-
-        if (is(color, "ScaleContinuous")) {
-            p <- p + color
-        }
-
-        p
-    }
-)
-
-
-
-#' @rdname plotMarkers
-#' @export
-setMethod(
-    "plotMarkers",
-    signature("seurat"),
-    function(
-        object,
-        genes,
-        dark = TRUE,
-        headerLevel = 2L,
-        ...
+        headerLevel = 2L
     ) {
         assert_is_subset(genes, rownames(object))
+        dimRed <- match.arg(dimRed)
         assert_is_a_bool(dark)
         assertIsAHeaderLevel(headerLevel)
         list <- lapply(genes, function(gene) {
-            p <- .plotMarker(object = object, gene = gene, ...)
+            p <- .plotMarker(
+                object = object,
+                gene = gene,
+                dimRed = dimRed,
+                dark = dark,
+                grid = grid
+            )
             markdownHeader(gene, level = headerLevel, asis = TRUE)
             show(p)
             invisible(p)
@@ -362,7 +399,27 @@ setMethod(
 
 
 
-#' @rdname plotMarkers
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotMarkerTSNE",
+    signature("seurat"),
+    .plotMarkerTSNE
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotMarkerUMAP",
+    signature("seurat"),
+    .plotMarkerUMAP
+)
+
+
+
+#' @rdname plotMarker
 #' @export
 setMethod(
     "plotTopMarkers",
@@ -370,12 +427,14 @@ setMethod(
     function(
         object,
         markers,
+        dimRed = c("tsne", "umap"),
         headerLevel = 2L,
         ...
     ) {
         validObject(object)
         stopifnot(is(markers, "grouped_df"))
         stopifnot(.isSanitizedMarkers(markers))
+        dimRed <- match.arg(dimRed)
         assertIsAHeaderLevel(headerLevel)
 
         clusters <- levels(markers[["cluster"]])
@@ -396,9 +455,10 @@ setMethod(
                 asis = TRUE
             )
             subheaderLevel <- headerLevel + 1L
-            plotMarkers(
+            plotMarker(
                 object = object,
                 genes = genes,
+                dimRed = dimRed,
                 headerLevel = subheaderLevel,
                 ...
             )
@@ -410,7 +470,7 @@ setMethod(
 
 
 
-#' @rdname plotMarkers
+#' @rdname plotMarker
 #' @export
 setMethod(
     "plotKnownMarkersDetected",
@@ -418,14 +478,16 @@ setMethod(
     function(
         object,
         markers,
+        dimRed = c("tsne", "umap"),
         headerLevel = 2L,
         ...
     ) {
         assert_has_rows(markers)
-        assertIsAHeaderLevel(headerLevel)
         stopifnot(is(markers, "grouped_df"))
         assert_has_rows(markers)
         assert_is_subset("cellType", colnames(markers))
+        dimRed <- match.arg(dimRed)
+        assertIsAHeaderLevel(headerLevel)
 
         cellTypes <- markers %>%
             pull("cellType") %>%
@@ -449,9 +511,10 @@ setMethod(
             )
             subheaderLevel <- headerLevel + 1L
 
-            plotMarkers(
+            plotMarker(
                 object = object,
                 genes = genes,
+                dimRed = dimRed,
                 headerLevel = subheaderLevel,
                 ...
             )
