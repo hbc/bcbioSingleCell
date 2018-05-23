@@ -123,14 +123,14 @@ plotMarker(object, genes = genes)
 plotMarkerTSNE(object, genes = genes)
 plotMarkerTSNE(object, genes = genes, dark = FALSE, grid = FALSE)
 
-# plotMarkerUMAP ====
-plotMarkerUMAP(object, genes = genes)
-plotMarkerUMAP(object, genes = genes, dark = FALSE, grid = FALSE)
-
-# Mitochondrial genes
+#' # Mitochondrial genes
 mito_genes <- grep("^MT-", rownames(object), value = TRUE)
 print(mito_genes)
 plotMarkerTSNE(object, genes = mito_genes, title = "mito genes")
+
+# plotMarkerUMAP ====
+plotMarkerUMAP(object, genes = genes)
+plotMarkerUMAP(object, genes = genes, dark = FALSE, grid = FALSE)
 
 # plotTopMarkers ====
 markers <- topMarkers(all_markers_small, n = 1)
