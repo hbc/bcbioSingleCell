@@ -1,3 +1,17 @@
+# bcbioSingleCell 0.1.11 (2018-05-23)
+
+## New functions
+
+- Added support for `plotUMAP()`, `plotMarkerUMAP()` and `plotFeatureUMAP()`.
+
+## Major changes
+
+- Reworked `plotFeature()` and `plotMarker()` family of functions. Improved the
+  color palette support when `dark = FALSE`, now using a flipped viridis plasma
+  color palette.
+
+
+
 # bcbioSingleCell 0.1.10 (2018-05-19)
 
 ## Minor changes

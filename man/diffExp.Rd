@@ -97,20 +97,17 @@ glimpse(numerator)
 denominator <- colnames(object)[which(object[["sampleName"]] == "distal")]
 glimpse(denominator)
 
-# zinbwave-edgeR (fast, recommended)
 x <- diffExp(
     object = object,
     numerator = numerator,
     denominator = denominator,
-    zeroWeights = "zinbwave",
-    caller = "edgeR"
 )
 class(x)
 head(x[["table"]])
 
 # seurat ====
-# Expression in cluster 3 relative to cluster 2
 \dontrun{
+# Expression in cluster 3 relative to cluster 2
 object <- Seurat::pbmc_small
 numerator <- Seurat::WhichCells(object, ident = 3L)
 denominator <- Seurat::WhichCells(object, ident = 2L)
@@ -118,11 +115,9 @@ x <- diffExp(
     object = object,
     numerator = numerator,
     denominator = denominator,
-    caller = "edgeR",
     minCellsPerGene = 5L,
     minCountsPerCell = 5L
 )
-class(x)
 }
 }
 \seealso{
