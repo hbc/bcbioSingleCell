@@ -43,6 +43,9 @@ setMethod(
         return <- match.arg(return)
 
         data <- metadata(object)[["sampleData"]]
+        if (is.null(data)) {
+            stop("`metadata()` slot does not contain `sampleData`")
+        }
         assert_is_data.frame(data)
 
         # Only return factor columns, if desired
