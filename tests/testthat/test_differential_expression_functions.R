@@ -50,3 +50,18 @@ test_that("diffExp : zinbwave-edgeR", {
     )
     expect_s4_class(x, "DGELRT")
 })
+
+test_that("diffExp : seurat", {
+    # Expression in cluster 3 relative to cluster 2
+    object <- Seurat::pbmc_small
+    numerator <- Seurat::WhichCells(object, ident = 3L)
+    denominator <- Seurat::WhichCells(object, ident = 2L)
+    x <- diffExp(
+        object = object,
+        numerator = numerator,
+        denominator = denominator,
+        minCellsPerGene = 5L,
+        minCountsPerCell = 5L
+    )
+    expect_s4_class(x, "DGELRT")
+})

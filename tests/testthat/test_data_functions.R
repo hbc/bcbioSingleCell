@@ -18,37 +18,6 @@ test_that("aggregateReplicates", {
 
 
 
-# bcbio ========================================================================
-test_that("bcbio : seurat_small", {
-    x <- bcbio(seurat_small)
-    expect_is(x, "list")
-    expect_identical(
-        lapply(x, class),
-        list(
-            rowRanges = structure("GRanges", package = "GenomicRanges"),
-            metadata = "list"
-        )
-    )
-})
-
-test_that("bcbio : seurat_small assignment", {
-    x <- seurat_small
-    # Stash as new slot
-    bcbio(x, "stash") <- "XXX"
-    expect_identical(
-        bcbio(x, "stash"),
-        "XXX"
-    )
-    # Metadata stash
-    bcbio(x, "metadata")[["stash"]] <- "YYY"
-    expect_identical(
-        bcbio(x, "metadata")[["stash"]],
-        "YYY"
-    )
-})
-
-
-
 # fetchPCAData =================================================================
 test_that("fetchPCAData", {
     x <- fetchPCAData(Seurat::pbmc_small)
@@ -211,130 +180,115 @@ test_that("fetchTSNEExpressionData", {
 
 
 
-# filterCells ==================================================================
-test_that("filterCells", {
-    invisible(capture.output(
-        x <- filterCells(
-            object = indrops_small,
-            minUMIs = 1000L,
-            maxUMIs = Inf,
-            minGenes = 100L,
-            maxGenes = Inf,
-            maxMitoRatio = 0.1,
-            minNovelty = 0.7,
-            minCellsPerGene = 3L
-        )
-    ))
-    expect_s4_class(x, "bcbioSingleCell")
-    expect_identical(dim(x), c(500L, 205L))
-    expect_is(metadata(x)[["filterParams"]], "list")
-    expect_is(metadata(x)[["filterCells"]], "character")
-    expect_is(metadata(x)[["filterGenes"]], "character")
-    expect_identical(metadata(x)[["subset"]], TRUE)
+# gene2symbol ==================================================================
+colnames <- c("geneID", "geneName")
+
+test_that("gene2symbol : bcbioSingleCell", {
+    x <- gene2symbol(indrops_small)
+    expect_is(x, "data.frame")
+    expect_identical(colnames(x), colnames)
 })
 
-test_that("filterCells : Maximum parameters", {
-    # This should return an object with the same dimensions
-    invisible(capture.output(
-        x <- filterCells(
-            indrops_small,
-            minUMIs = 0L,
-            maxUMIs = Inf,
-            minGenes = 0L,
-            maxGenes = Inf,
-            maxMitoRatio = 1L,
-            minNovelty = 0L,
-            minCellsPerGene = 0L
-        )
-    ))
-    expect_s4_class(x, "bcbioSingleCell")
-    expect_identical(dim(x), dim(indrops_small))
+test_that("gene2symbol : seurat", {
+    x <- gene2symbol(seurat_small)
+    expect_is(x, "data.frame")
+    expect_identical(colnames(x), colnames)
 })
 
-test_that("filterCells : Cutoff failures", {
+
+
+
+# interestingGroups ============================================================
+test_that("interestingGroups : bcbioSingleCell", {
+    expect_identical(
+        interestingGroups(indrops_small),
+        "sampleName"
+    )
+})
+
+test_that("interestingGroups<- : bcbioSingleCell", {
+    error <- "The interesting groups \"XXX\" are not defined"
     expect_error(
-        filterCells(indrops_small, minUMIs = Inf),
-        "No cells passed `minUMIs` cutoff"
+        interestingGroups(indrops_small) <- "XXX",
+        error
+    )
+    expect_error(
+        interestingGroups(seurat_small) <- "XXX",
+        error
     )
 })
 
-test_that("filterCells : Per sample cutoffs", {
-    # Get the count of sample1 (run1_AGAGGATA)
-    # We're applying no filtering to that sample
-    sampleNames <- sampleNames(indrops_small)
+test_that("interestingGroups : seurat", {
     expect_identical(
-        sampleNames,
-        c(multiplexed_AAAAAAAA = "rep_1")
+        interestingGroups(seurat_small),
+        "sampleName"
     )
-    invisible(capture.output(
-        x <- filterCells(
-            object = indrops_small,
-            minUMIs = c(rep_1 = 0L),
-            maxUMIs = c(rep_1 = Inf),
-            minGenes = c(rep_1 = 0L),
-            maxGenes = c(rep_1 = Inf),
-            maxMitoRatio = c(rep_1 = 0L),
-            minNovelty = c(rep_1 = 0L)
-        )
-    ))
     expect_identical(
-        metadata(x)[["filterParams"]],
-        list(
-            minUMIs = c(rep_1 = 0L),
-            maxUMIs = c(rep_1 = Inf),
-            minGenes = c(rep_1 = 0L),
-            maxGenes = c(rep_1 = Inf),
-            minNovelty = c(rep_1 = 0L),
-            maxMitoRatio = c(rep_1 = 0L),
-            minCellsPerGene = 10L
-        )
+        interestingGroups(Seurat::pbmc_small),
+        "sampleName"
     )
+})
+
+test_that("interestingGroups<- : seurat", {
+    interestingGroups(indrops_small) <- "sampleName"
+    expect_identical(
+        interestingGroups(indrops_small),
+        "sampleName"
+    )
+    interestingGroups(seurat_small) <- "sampleName"
+    expect_identical(
+        interestingGroups(seurat_small),
+        "sampleName"
+    )
+    x <- Seurat::pbmc_small
+    expect_error(interestingGroups(x) <- "sampleName")
 })
 
 
 
-# metrics ======================================================================
-test_that("metrics : bcbioSingleCell", {
-    x <- metrics(indrops_small)
-    expect_identical(
-        lapply(x, class),
-        list(
-            sampleID = "factor",
-            nCount = "integer",
-            nUMI = "integer",
-            nGene = "integer",
-            nCoding = "integer",
-            nMito = "integer",
-            log10GenesPerUMI = "numeric",
-            mitoRatio = "numeric",
-            sampleName = "factor",
-            fileName = "factor",
-            description = "factor",
-            index = "factor",
-            sequence = "factor",
-            aggregate = "factor",
-            revcomp = "factor",
-            "interestingGroups" = "factor"
-        )
-    )
+# sampleData ===================================================================
+all <- list(
+    "sampleName"  = "factor",
+    "fileName"  = "factor",
+    "description"  = "factor",
+    "index" = "factor",
+    "sequence" = "factor",
+    "aggregate" = "factor",
+    "revcomp" = "factor",
+    "interestingGroups" = "factor"
+)
+
+clean <- DataFrame(
+    "sampleName" = factor("rep_1"),
+    row.names = factor("multiplexed_AAAAAAAA")
+)
+
+test_that("sampleData : bcbioSingleCell", {
+    # Return all columns
+    x <- sampleData(indrops_small, clean = FALSE)
+    expect_identical(lapply(x, class), all)
+
+    # Clean mode (factor columns only)
+    x <- sampleData(indrops_small, clean = TRUE)
+    expect_identical(x, clean)
 })
 
-test_that("metrics : seurat", {
-    x <- metrics(Seurat::pbmc_small)
-    expect_identical(
-        lapply(x, class),
-        list(
-            sampleID = "factor",
-            nGene = "integer",
-            nUMI = "numeric",
-            origIdent = "factor",
-            res0x8 = "character",
-            res1 = "character",
-            sampleName = "factor",
-            interestingGroups = "factor",
-            ident = "factor"
-        )
+test_that("sampleData : seurat", {
+    # Return all columns
+    x <- sampleData(seurat_small, clean = FALSE)
+    expect_identical(lapply(x, class), all)
+
+    # Clean mode (factor columns only)
+    x <- sampleData(seurat_small, clean = TRUE)
+    expect_identical(x, clean)
+
+    # Minimal data for other seurat objects
+    x <- sampleData(Seurat::pbmc_small)
+    y <- DataFrame(
+        "sampleName" = factor("SeuratProject"),
+        row.names = "SeuratProject"
     )
+    expect_identical(x, y)
 })
 
 
