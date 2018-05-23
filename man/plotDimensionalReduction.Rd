@@ -18,17 +18,17 @@ plotUMAP(object, ...)
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
   color = scale_color_hue(), pointsAsNumbers = FALSE, pointSize = 0.5,
   pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = FALSE,
-  grid = TRUE, aspectRatio = 1L, title = NULL)
+  grid = FALSE, aspectRatio = 1L, title = NULL)
 
 \S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
   color = scale_color_hue(), pointsAsNumbers = FALSE, pointSize = 0.5,
   pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = FALSE,
-  grid = TRUE, aspectRatio = 1L, title = NULL)
+  grid = FALSE, aspectRatio = 1L, title = NULL)
 
 \S4method{plotUMAP}{seurat}(object, interestingGroups = "ident",
   color = scale_color_hue(), pointsAsNumbers = FALSE, pointSize = 0.5,
   pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = FALSE,
-  grid = TRUE, aspectRatio = 1L, title = NULL)
+  grid = FALSE, aspectRatio = 1L, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -80,8 +80,8 @@ installing this with conda: \code{conda install -c conda-forge umap-learn}.
 \examples{
 # seurat ====
 # t-SNE
-plotTSNE(seurat_small, dark = FALSE)
-plotTSNE(seurat_small, dark = TRUE)
+plotTSNE(seurat_small, dark = TRUE, grid = TRUE)
+plotTSNE(seurat_small, dark = FALSE, grid = FALSE)
 
 # PCA
 plotPCA(seurat_small)

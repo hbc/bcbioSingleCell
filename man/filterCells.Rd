@@ -69,12 +69,15 @@ metadata(x)$filterParams
 \seealso{
 \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
 
-Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
-  \code{\link{mapCellsToSamples}},
-  \code{\link{metricsPerSample}}, \code{\link{metrics}},
-  \code{\link{selectSamples}},
-  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{metrics}}, \code{\link{plotCellCounts}},
+  \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
+  \code{\link{plotZerosVsDepth}}
 }
 \author{
 Michael Steinbaugh

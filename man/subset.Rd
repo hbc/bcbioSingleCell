@@ -4,7 +4,7 @@
 \name{subset}
 \alias{subset}
 \alias{[,bcbioSingleCell,ANY,ANY,ANY-method}
-\title{Bracket-Based Subsetting}
+\title{Subset}
 \usage{
 \S4method{[}{bcbioSingleCell,ANY,ANY,ANY}(x, i, j, ..., drop = FALSE)
 }
@@ -95,7 +95,7 @@ indrops_small[genes, cells]
 \item \code{selectSamples()} for subsetting based on sample metadata.
 }
 
-Other S4 Class Definition: \code{\link{bcbioSingleCell}},
+Other S4 Object: \code{\link{bcbioSingleCell}},
   \code{\link{coerce}}, \code{\link{show}},
   \code{\link{updateObject}}
 }

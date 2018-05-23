@@ -36,7 +36,7 @@ the discussion in \code{\link{setIs}} for the general concept.
 show(indrops_small)
 }
 \seealso{
-Other S4 Class Definition: \code{\link{bcbioSingleCell}},
+Other S4 Object: \code{\link{bcbioSingleCell}},
   \code{\link{coerce}}, \code{\link{subset}},
   \code{\link{updateObject}}
 }

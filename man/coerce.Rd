@@ -44,7 +44,7 @@ print(x)
 \item \code{\link[methods:coerce]{methods::coerce()}}.
 }
 
-Other S4 Class Definition: \code{\link{bcbioSingleCell}},
+Other S4 Object: \code{\link{bcbioSingleCell}},
   \code{\link{show}}, \code{\link{subset}},
   \code{\link{updateObject}}
 }

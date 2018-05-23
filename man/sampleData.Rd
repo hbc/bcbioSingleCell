@@ -52,13 +52,12 @@ sampleData(x)[["batch"]] <- 1L
 sampleData(x) \%>\% glimpse()
 }
 \seealso{
-\link{metadataBlacklist}.
-
-Other Data Functions: \code{\link{convertGenesToSymbols}},
-  \code{\link{counts}}, \code{\link{flatFiles}},
-  \code{\link{gene2symbol}}, \code{\link{sampleDirs}},
-  \code{\link{sampleNames}}, \code{\link{selectSamples}},
-  \code{\link{uniteInterestingGroups}}
+Other Data Functions: \code{\link{aggregateReplicates}},
+  \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{metricsPerSample}},
+  \code{\link{selectSamples}},
+  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh

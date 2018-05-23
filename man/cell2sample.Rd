@@ -28,13 +28,14 @@ Cell to Sample Mappings
 }
 \examples{
 # SingleCellExperiment ====
-cell2sample(cellranger_small) \%>\% table()
+x <- cell2sample(cellranger_small)
+table(x)
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{fetchGeneData}}, \code{\link{filterCells}},
+  \code{\link{fetchGeneData}},
   \code{\link{mapCellsToSamples}},
-  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }

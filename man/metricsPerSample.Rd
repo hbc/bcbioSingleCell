@@ -45,9 +45,8 @@ head(x)
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
-  \code{\link{filterCells}},
-  \code{\link{mapCellsToSamples}}, \code{\link{metrics}},
-  \code{\link{selectSamples}},
+  \code{\link{mapCellsToSamples}},
+  \code{\link{sampleData}}, \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{

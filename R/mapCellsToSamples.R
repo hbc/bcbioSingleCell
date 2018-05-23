@@ -37,6 +37,15 @@ mapCellsToSamples <- function(cells, samples) {
     assert_has_no_duplicates(cells)
     assert_is_any_of(samples, c("character", "factor"))
     samples <- unique(as.character(samples))
+
+    # Early return if `cells` don't have a separator and `samples` is a string.
+    # Shouldn't happen normally but is necessary for some Seurat datasets.
+    if (!any(grepl("[_-]", cells)) && is_a_string(samples)) {
+        cell2sample <- factor(replicate(n = length(cells), expr = samples))
+        names(cell2sample) <- cells
+        return(cell2sample)
+    }
+
     list <- mclapply(samples, function(sample) {
         pattern <- paste0("^(", sample, barcodePattern)
         match <- str_match(cells, pattern = pattern) %>%

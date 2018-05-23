@@ -70,7 +70,8 @@ names(x)
 \seealso{
 \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.
 
-Other Quality Control Functions: \code{\link{plotCellCounts}},
+Other Quality Control Functions: \code{\link{filterCells}},
+  \code{\link{metrics}}, \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},

@@ -24,7 +24,7 @@ originally loaded into R.
 updateObject(indrops_small)
 }
 \seealso{
-Other S4 Class Definition: \code{\link{bcbioSingleCell}},
+Other S4 Object: \code{\link{bcbioSingleCell}},
   \code{\link{coerce}}, \code{\link{show}},
   \code{\link{subset}}
 }

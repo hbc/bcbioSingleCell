@@ -31,13 +31,13 @@ plotTopMarkers(object, ...)
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
   "median", "sum"), color = "auto", pointsAsNumbers = FALSE,
   pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = TRUE, grid = TRUE, legend = TRUE, aspectRatio = 1L,
+  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
   title = TRUE)
 
 \S4method{plotMarkerUMAP}{seurat}(object, genes, expression = c("mean",
   "median", "sum"), color = "auto", pointsAsNumbers = FALSE,
   pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = TRUE, grid = TRUE, legend = TRUE, aspectRatio = 1L,
+  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
   title = TRUE)
 
 \S4method{plotTopMarkers}{seurat}(object, markers, dimRed = c("tsne", "umap"),
@@ -117,29 +117,54 @@ for the number of genes to plot here in a future update.
 object <- seurat_small
 genes <- "COL1A1"
 
-# plotMarker ====
+# Markdown
 plotMarker(object, genes = genes)
 
-# plotMarkerTSNE ====
-plotMarkerTSNE(object, genes = genes)
-plotMarkerTSNE(object, genes = genes, dark = FALSE, grid = FALSE)
+# t-SNE
+plotMarkerTSNE(
+    object = object,
+    genes = genes,
+    dark = TRUE,
+    grid = TRUE
+)
+plotMarkerTSNE(
+    object = object,
+    genes = genes,
+    dark = FALSE,
+    grid = FALSE
+)
 
-#' # Mitochondrial genes
+# Aggregate marker expression (e.g. mitochondrial genes)
 mito_genes <- grep("^MT-", rownames(object), value = TRUE)
 print(mito_genes)
-plotMarkerTSNE(object, genes = mito_genes, title = "mito genes")
+plotMarkerTSNE(
+    object = object,
+    genes = mito_genes,
+    expression = "mean",
+    title = "mito genes"
+)
 
-# plotMarkerUMAP ====
-plotMarkerUMAP(object, genes = genes)
-plotMarkerUMAP(object, genes = genes, dark = FALSE, grid = FALSE)
+# UMAP
+plotMarkerUMAP(
+    object = object,
+    genes = genes,
+    dark = TRUE,
+    grid = TRUE
+)
+plotMarkerUMAP(
+    object = object,
+    genes = genes,
+    dark = FALSE,
+    grid = FALSE
+)
 
-# plotTopMarkers ====
+# Top markers
 markers <- topMarkers(all_markers_small, n = 1)
 markers
 markers <- head(markers, n = 1)
 plotTopMarkers(object, markers = markers)
 
-# plotKnownMarkersDetected ====
+# Known markers detected
 markers <- head(known_markers_small, n = 1)
 markers
 plotKnownMarkersDetected(object, markers = markers)
