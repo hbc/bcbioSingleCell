@@ -8,7 +8,7 @@
 #'
 #' @inheritParams general
 #'
-#' @return `bcbioSingleCell`.
+#' @return `SingleCellExperiment`.
 #'
 #' @examples
 #' # bcbioSingleCell ====
@@ -19,6 +19,7 @@
 #' glimpse(object$aggregate)
 #'
 #' x <- aggregateReplicates(object)
+#' show(x)
 #' sampleNames(x)
 NULL
 
@@ -32,17 +33,6 @@ setMethod(
     signature("bcbioSingleCell"),
     function(object) {
         validObject(object)
-
-        # Require that the dataset is filtered
-        if (!length(metadata(object)[["filterCells"]])) {
-            stop(paste(
-                "`aggregateReplicates()` is only supported for filtered",
-                "bcbioSingleCell objects.",
-                "Run `filterCells()` prior to replicate aggregation."
-            ))
-        }
-
-        metadata <- metadata(object)
         sampleData <- sampleData(object, clean = FALSE, return = "data.frame")
         if ("sampleNameAggregate" %in% colnames(sampleData)) {
             warning("Use `aggregate` instead of `sampleNameAggregate`")
@@ -52,20 +42,28 @@ setMethod(
 
         # This step will replace the `sampleName` column with the `aggregate`
         # column metadata.
-        map <- sampleData %>%
+        remap <- sampleData %>%
             rownames_to_column("sampleID") %>%
             select(!!!syms(c("sampleID", "aggregate"))) %>%
             mutate(sampleIDAggregate = makeNames(
                 !!sym("aggregate"), unique = FALSE
             )) %>%
-            select(-!!sym("aggregate")) %>%
+            rename(sampleNameAggregate = !!sym("aggregate")) %>%
             arrange(!!!syms(c("sampleID", "sampleIDAggregate"))) %>%
             mutate_all(as.factor) %>%
             mutate_all(droplevels)
 
+        # Update sampleData to use the aggregate groupings
+        sampleData <- remap %>%
+            select(!!!syms(c("sampleIDAggregate", "sampleNameAggregate"))) %>%
+            rename(sampleName = !!sym("sampleNameAggregate")) %>%
+            column_to_rownames("sampleIDAggregate")
+
         # Message the new sample IDs
-        newIDs <- unique(map[["sampleIDAggregate"]])
-        message(paste("New sample IDs:", toString(newIDs)))
+        message(paste(
+            "New sample names:",
+            toString(unique(remap[["sampleNameAggregate"]]))
+        ))
 
         message("Remapping cellular barcodes to aggregate sample IDs")
         cell2sample <- cell2sample(object)
@@ -73,7 +71,7 @@ setMethod(
             "cellID" = names(cell2sample),
             "sampleID" = cell2sample
         ) %>%
-            left_join(map, by = "sampleID")
+            left_join(remap, by = "sampleID")
 
         groupings <- mapply(
             FUN = gsub,
@@ -121,39 +119,22 @@ setMethod(
 
         # Subset the counts to match the prefiltered metrics
         counts <- counts[, rownames(colData), drop = FALSE]
+        cell2sample <- cell2sample[colnames(counts)]
 
         # Metadata =============================================================
-        message("Updating metadata")
-
-        # sampleData
-        expected <- length(levels(sampleData[["aggregate"]]))
-        sampleData <- sampleData %>%
-            mutate(sampleName = !!sym("aggregate")) %>%
-            select(!!sym("sampleName")) %>%
-            mutate_all(as.factor) %>%
-            unique()
-        if (!identical(nrow(sampleData), expected)) {
-            stop("Failed to aggregate sample metadata uniquely")
-        }
-        rownames(sampleData) <- makeNames(sampleData[["sampleName"]])
-        metadata[["sampleData"]] <- sampleData
-
-        # cell2sample
-        metadata[["cell2sample"]] <- mapCellsToSamples(
-            cells = colnames(counts),
-            samples = newIDs
-        )
-
-        # filterCells
-        filterCells <- metadata[["filterCells"]]
-        assert_is_character(filterCells)
-        metadata[["filterCells"]] <- groupings[filterCells]
+        metadata <- list()
 
         # aggregateReplicates
         metadata[["aggregateReplicates"]] <- groupings
 
+        # cell2sample
+        metadata[["cell2sample"]] <- cell2sample
+
+        # sampleData
+        metadata[["sampleData"]] <- sampleData
+
         # Return ===============================================================
-        .new.bcbioSingleCell(
+        .new.SingleCellExperiment(
             assays = list("counts" = counts),
             rowRanges = rowRanges(object),
             colData = colData,
