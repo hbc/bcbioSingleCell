@@ -12,8 +12,14 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' x <- aggregateReplicates(indrops_small)
-#' sampleData(x)
+#' object <- indrops_small
+#' sampleNames(object)
+#'
+#' # Define groupings factor as`aggregate` column in `colData()`
+#' glimpse(object$aggregate)
+#'
+#' x <- aggregateReplicates(object)
+#' sampleNames(x)
 NULL
 
 
