@@ -210,7 +210,6 @@ NULL
     assert_is_matrix(design)
     # zingeR ===================================================================
     message("Running zingeR")
-    require("zingeR")  # Fix for `DESeqDataSetFromMatrix()` issue
     print(system.time({
         weights <- zingeR::zeroWeightsLS(
             counts = counts,
@@ -251,7 +250,9 @@ NULL
     assays(se) <- list(counts = counts)
     # zingeR ===================================================================
     message("Running zingeR")
-    require("zingeR")  # Fix for `DESeqDataSetFromMatrix()` issue
+    # Temporary fix for zingeR NAMESPACE issue (see GitHub for more info).
+    # Will error out due to `DESeqDataSetFromMatrix()` otherwise.
+    attachNamespace("DESeq2")
     design <- metadata(object)[["design"]]
     assert_is_matrix(design)
     print(system.time({
