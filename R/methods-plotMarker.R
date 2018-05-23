@@ -91,8 +91,10 @@ NULL
     dimRed <- match.arg(dimRed)
 
     if (isTRUE(dark)) {
+        fill <- "black"
         violinFill <- "white"
     } else {
+        fill <- "white"
         violinFill <- "black"
     }
 
@@ -139,29 +141,19 @@ NULL
     )
 
     # Return ===============================================================
-    p <- plot_grid(
+    plot_grid(
         plotlist = plotlist,
         labels = NULL,
         ncol = 1L,
         nrow = 3L,
         rel_heights = c(1L, 0.1, 0.15)
-    )
-    if (isTRUE(dark)) {
-        p <- p + theme(
+    ) +
+        theme(
             plot.background = element_rect(
                 color = NA,
-                fill = "black"
+                fill = fill
             )
         )
-    } else {
-        p <- p + theme(
-            plot.background = element_rect(
-                color = NA,
-                fill = "white"
-            )
-        )
-    }
-    p
 }
 
 
@@ -357,6 +349,7 @@ setMethod(
         assert_is_subset(genes, rownames(object))
         dimRed <- match.arg(dimRed)
         assert_is_a_bool(dark)
+        assert_is_a_bool(grid)
         assertIsAHeaderLevel(headerLevel)
         list <- lapply(genes, function(gene) {
             p <- .plotMarker(

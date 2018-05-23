@@ -6,7 +6,9 @@
 \alias{plotFeatureTSNE}
 \alias{plotFeatureUMAP}
 \alias{plotFeature}
+\alias{plotFeature,seurat-method}
 \alias{plotFeatureTSNE,seurat-method}
+\alias{plotFeatureUMAP,seurat-method}
 \title{Plot Feature}
 \usage{
 plotFeature(object, ...)
@@ -15,10 +17,16 @@ plotFeatureTSNE(object, ...)
 
 plotFeatureUMAP(object, ...)
 
+\S4method{plotFeature}{seurat}(object, features, dimRed = c("tsne", "umap"),
+  dark = TRUE, grid = TRUE, headerLevel = 2L)
+
 \S4method{plotFeatureTSNE}{seurat}(object, features, color = "auto",
   pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = FALSE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
-  return = c("ggplot", "list"))
+  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L)
+
+\S4method{plotFeatureUMAP}{seurat}(object, features, color = "auto",
+  pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
+  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L)
 }
 \arguments{
 \item{object}{Object.}
@@ -27,6 +35,13 @@ plotFeatureUMAP(object, ...)
 
 \item{features}{Character vector of features (e.g. gene expression, PC
 scores, number of genes detected).}
+
+\item{dark}{Plot against a dark background using
+\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
+
+\item{grid}{Show major grid lines but hide axis lines.}
+
+\item{headerLevel}{R Markdown header level.}
 
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
@@ -42,18 +57,10 @@ the dataset, and some cells can be masked.}
 
 \item{labelSize}{Size of the text label.}
 
-\item{dark}{Plot against a dark background using
-\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
-
-\item{grid}{Show major grid lines but hide axis lines.}
-
 \item{legend}{Show legends in paneled plots. Defaults to \code{FALSE} because
 typically these look too busy and the legends can get cut off.}
 
 \item{aspectRatio}{Aspect ratio.}
-
-\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
-to the first argument in the vector.}
 }
 \value{
 \code{ggplot} or \code{list}.
@@ -64,14 +71,14 @@ Plot Feature
 \examples{
 # seurat ====
 object <- Seurat::pbmc_small
-features <- c("nUMI", "PC1")
+features <- c("nUMI", "nGene", "PC1", "PC2")
+
+# Plot grid
 plotFeatureTSNE(object, features = features)
-plotFeatureTSNE(
-    object = object,
-    features = features,
-    dark = FALSE,
-    grid = FALSE
-)
+plotFeatureUMAP(object, features = features)
+
+# Markdown
+plotFeature(object, features = features, dimRed = "tsne")
 }
 \seealso{
 \code{\link[Seurat:FeaturePlot]{Seurat::FeaturePlot()}}.
