@@ -28,29 +28,54 @@
 #' object <- seurat_small
 #' genes <- "COL1A1"
 #'
-#' # plotMarker ====
+#' # Markdown
 #' plotMarker(object, genes = genes)
 #'
-#' # plotMarkerTSNE ====
-#' plotMarkerTSNE(object, genes = genes)
-#' plotMarkerTSNE(object, genes = genes, dark = FALSE, grid = FALSE)
+#' # t-SNE
+#' plotMarkerTSNE(
+#'     object = object,
+#'     genes = genes,
+#'     dark = TRUE,
+#'     grid = TRUE
+#' )
+#' plotMarkerTSNE(
+#'     object = object,
+#'     genes = genes,
+#'     dark = FALSE,
+#'     grid = FALSE
+#' )
 #'
-#' #' # Mitochondrial genes
+#' # Aggregate marker expression (e.g. mitochondrial genes)
 #' mito_genes <- grep("^MT-", rownames(object), value = TRUE)
 #' print(mito_genes)
-#' plotMarkerTSNE(object, genes = mito_genes, title = "mito genes")
+#' plotMarkerTSNE(
+#'     object = object,
+#'     genes = mito_genes,
+#'     expression = "mean",
+#'     title = "mito genes"
+#' )
 #'
-#' # plotMarkerUMAP ====
-#' plotMarkerUMAP(object, genes = genes)
-#' plotMarkerUMAP(object, genes = genes, dark = FALSE, grid = FALSE)
+#' # UMAP
+#' plotMarkerUMAP(
+#'     object = object,
+#'     genes = genes,
+#'     dark = TRUE,
+#'     grid = TRUE
+#' )
+#' plotMarkerUMAP(
+#'     object = object,
+#'     genes = genes,
+#'     dark = FALSE,
+#'     grid = FALSE
+#' )
 #'
-#' # plotTopMarkers ====
+#' # Top markers
 #' markers <- topMarkers(all_markers_small, n = 1)
 #' markers
 #' markers <- head(markers, n = 1)
 #' plotTopMarkers(object, markers = markers)
 #'
-#' # plotKnownMarkersDetected ====
+#' # Known markers detected
 #' markers <- head(known_markers_small, n = 1)
 #' markers
 #' plotKnownMarkersDetected(object, markers = markers)
@@ -167,7 +192,7 @@ NULL
     labelSize = 6L,
     dark = TRUE,
     grid = TRUE,
-    legend = TRUE,
+    legend = FALSE,
     aspectRatio = 1L,
     title = TRUE
 ) {
@@ -378,7 +403,7 @@ setMethod(
         labelSize = 6L,
         dark = TRUE,
         grid = TRUE,
-        legend = TRUE,
+        legend = FALSE,
         aspectRatio = 1L,
         title = TRUE
     ) {
@@ -421,7 +446,7 @@ setMethod(
         labelSize = 6L,
         dark = TRUE,
         grid = TRUE,
-        legend = TRUE,
+        legend = FALSE,
         aspectRatio = 1L,
         title = TRUE
     ) {

@@ -2,6 +2,7 @@
 #'
 #' @name bcbio
 #' @author Michael Steinbaugh
+#' @keywords internal
 #'
 #' @importFrom bcbioBase bcbio bcbio<-
 #'

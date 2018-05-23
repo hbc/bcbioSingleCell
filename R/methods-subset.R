@@ -1,9 +1,9 @@
-#' Bracket-Based Subsetting
+#' Subset
 #'
 #' Extract genes by row and cells by column from a `bcbioSingleCell` object.
 #'
 #' @name subset
-#' @family S4 Class Definition
+#' @family S4 Object
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams base::`[`

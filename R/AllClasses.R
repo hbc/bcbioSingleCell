@@ -32,7 +32,7 @@ bcbioSingleCell <- setClass(
 #'
 #' @rdname bcbioSingleCell
 #' @aliases bcbioSingleCell-class
-#' @family S4 Class Definition
+#' @family S4 Object
 #' @docType class
 #' @author Michael Steinbaugh, Rory Kirchner
 #'

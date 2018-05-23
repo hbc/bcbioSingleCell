@@ -11,7 +11,8 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' cell2sample(cellranger_small) %>% table()
+#' x <- cell2sample(cellranger_small)
+#' table(x)
 NULL
 
 

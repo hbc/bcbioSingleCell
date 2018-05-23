@@ -45,6 +45,7 @@
 #' # UMAP gene expession
 #' genes <- head(rownames(seurat_small))
 #' x <- fetchUMAPExpressionData(seurat_small, genes = genes)
+#' glimpse(x)
 NULL
 
 

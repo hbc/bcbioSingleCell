@@ -28,7 +28,7 @@
 #'     object = all_markers_small,
 #'     known = cellTypeMarkers[["homoSapiens"]]
 #' )
-#' glimpse(x)
+#' head(x)
 NULL
 
 

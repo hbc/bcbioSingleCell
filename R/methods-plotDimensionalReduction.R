@@ -25,8 +25,8 @@
 #' @examples
 #' # seurat ====
 #' # t-SNE
-#' plotTSNE(seurat_small, dark = FALSE)
-#' plotTSNE(seurat_small, dark = TRUE)
+#' plotTSNE(seurat_small, dark = TRUE, grid = TRUE)
+#' plotTSNE(seurat_small, dark = FALSE, grid = FALSE)
 #'
 #' # PCA
 #' plotPCA(seurat_small)
@@ -49,7 +49,7 @@ NULL
     label = TRUE,
     labelSize = 6L,
     dark = FALSE,
-    grid = TRUE,
+    grid = FALSE,
     aspectRatio = 1L,
     title = NULL
 ) {
@@ -167,7 +167,7 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         dark = FALSE,
-        grid = TRUE,
+        grid = FALSE,
         aspectRatio = 1L,
         title = NULL
     ) {
@@ -207,7 +207,7 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         dark = FALSE,
-        grid = TRUE,
+        grid = FALSE,
         aspectRatio = 1L,
         title = NULL
     ) {
@@ -247,7 +247,7 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         dark = FALSE,
-        grid = TRUE,
+        grid = FALSE,
         aspectRatio = 1L,
         title = NULL
     ) {

@@ -8,7 +8,7 @@
 #' [sampleData()]).
 #'
 #' @name filterCells
-#' @family Data Functions
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
