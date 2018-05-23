@@ -28,9 +28,6 @@
 #' object <- seurat_small
 #' genes <- "COL1A1"
 #'
-#' # Markdown
-#' plotMarker(object, genes = genes)
-#'
 #' # t-SNE
 #' plotMarkerTSNE(
 #'     object = object,
@@ -97,83 +94,6 @@ NULL
         panel.grid = element_blank(),
         title = element_blank()
     )
-}
-
-
-
-.plotMarker <- function(
-    object,
-    gene,
-    dimRed = c("tsne", "umap"),
-    dark = TRUE,
-    grid = TRUE
-) {
-    dimRed <- match.arg(dimRed)
-
-    if (isTRUE(dark)) {
-        fill <- "black"
-        violinFill <- "white"
-    } else {
-        fill <- "white"
-        violinFill <- "black"
-    }
-
-    # Dimensional reduction plot
-    if (dimRed == "tsne") {
-        plotMarkerDimRed <- plotMarkerTSNE
-    } else if (dimRed == "umap") {
-        plotMarkerDimRed <- plotMarkerUMAP
-    }
-    dr <- plotMarkerDimRed(
-        object,
-        genes = gene,
-        dark = dark,
-        grid = grid,
-        legend = FALSE
-    )
-
-    # Dot plot
-    dot <- .plotDot(
-        object,
-        genes = gene,
-        dark = dark
-    ) +
-        coord_flip() +
-        .minimalAxis()
-
-    # Violin plot
-    violin <- .plotViolin(
-        object,
-        genes = gene,
-        scale = "width",
-        fill = violinFill,
-        dark = dark,
-        return = "list"
-    ) %>%
-        # Get the ggplot object from the list return
-        .[[1L]] +
-        .minimalAxis()
-
-    plotlist <- list(
-        dr = dr,
-        dot = dot,
-        violin = violin
-    )
-
-    # Return ===============================================================
-    plot_grid(
-        plotlist = plotlist,
-        labels = NULL,
-        ncol = 1L,
-        nrow = 3L,
-        rel_heights = c(1L, 0.1, 0.15)
-    ) +
-        theme(
-            plot.background = element_rect(
-                color = NA,
-                fill = fill
-            )
-        )
 }
 
 
@@ -352,43 +272,6 @@ NULL
 #' @rdname plotMarker
 #' @export
 setMethod(
-    "plotMarker",
-    signature("seurat"),
-    function(
-        object,
-        genes,
-        dimRed = c("tsne", "umap"),
-        dark = TRUE,
-        grid = TRUE,
-        headerLevel = 2L
-    ) {
-        assert_is_subset(genes, rownames(object))
-        dimRed <- match.arg(dimRed)
-        assert_is_a_bool(dark)
-        assert_is_a_bool(grid)
-        assertIsAHeaderLevel(headerLevel)
-        list <- lapply(genes, function(gene) {
-            p <- .plotMarker(
-                object = object,
-                gene = gene,
-                dimRed = dimRed,
-                dark = dark,
-                grid = grid
-            )
-            markdownHeader(gene, level = headerLevel, asis = TRUE)
-            show(p)
-            invisible(p)
-        })
-        names(list) <- genes
-        invisible(list)
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setMethod(
     "plotMarkerTSNE",
     signature("seurat"),
     function(
@@ -493,7 +376,7 @@ setMethod(
         clusters <- levels(markers[["cluster"]])
         list <- pblapply(clusters, function(cluster) {
             genes <- markers %>%
-                .[.[["cluster"]] == cluster, , drop = FALSE] %>%
+                filter(cluster == !!cluster) %>%
                 pull("rowname")
             if (!length(genes)) {
                 return(invisible())
@@ -501,20 +384,30 @@ setMethod(
             if (length(genes) > 10L) {
                 warning("Maximum of 10 genes per cluster is recommended")
             }
+
             markdownHeader(
                 paste("Cluster", cluster),
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE
             )
-            subheaderLevel <- headerLevel + 1L
-            plotMarker(
-                object = object,
-                genes = genes,
-                dimRed = dimRed,
-                headerLevel = subheaderLevel,
-                ...
-            )
+
+            lapply(genes, function(gene) {
+                markdownHeader(
+                    object = gene,
+                    level = headerLevel + 1L,
+                    tabset = TRUE,
+                    asis = TRUE
+                )
+                p <- .plotMarkerDimRed(
+                    object = object,
+                    genes = gene,
+                    dimRed = dimRed,
+                    ...
+                )
+                show(p)
+                invisible(p)
+            })
         })
 
         invisible(list)
@@ -550,7 +443,7 @@ setMethod(
 
         list <- pblapply(cellTypes, function(cellType) {
             genes <- markers %>%
-                .[.[["cellType"]] == cellType, , drop = FALSE] %>%
+                filter(cellType == !!cellType) %>%
                 pull("geneName") %>%
                 na.omit() %>%
                 unique()
@@ -562,15 +455,23 @@ setMethod(
                 tabset = TRUE,
                 asis = TRUE
             )
-            subheaderLevel <- headerLevel + 1L
 
-            plotMarker(
-                object = object,
-                genes = genes,
-                dimRed = dimRed,
-                headerLevel = subheaderLevel,
-                ...
-            )
+            lapply(genes, function(gene) {
+                markdownHeader(
+                    object = gene,
+                    level = headerLevel + 1L,
+                    tabset = TRUE,
+                    asis = TRUE
+                )
+                p <- .plotMarkerDimRed(
+                    object = object,
+                    genes = gene,
+                    dimRed = dimRed,
+                    ...
+                )
+                show(p)
+                invisible(p)
+            })
         })
 
         invisible(list)
