@@ -133,7 +133,7 @@ NULL
     )
 
     # Dot plot
-    dot <- plotDot(
+    dot <- .plotDot(
         object,
         genes = gene,
         dark = dark
@@ -142,7 +142,7 @@ NULL
         .minimalAxis()
 
     # Violin plot
-    violin <- plotViolin(
+    violin <- .plotViolin(
         object,
         genes = gene,
         scale = "width",
