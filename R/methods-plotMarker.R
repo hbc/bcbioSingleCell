@@ -340,32 +340,6 @@ NULL
 
 
 
-.plotMarkerTSNE <- function() {
-    # `match.call()` will fail if a variable is passed in for genes
-    # `.local(object = object, genes = ..1)`
-    # This is a known issue for S4
-    # https://stackoverflow.com/questions/27926194/r-match-call-for-s4-methods
-    # ... becomes ..1 for internal C code
-    # https://cran.r-project.org/doc/manuals/r-release/R-ints.html#Dot_002ddot_002ddot-arguments
-    args <- as.list(match.call())[-1L]
-    args[["dimRed"]] <- "tsne"
-    do.call(.plotMarkerDimRed, args)
-}
-formals(.plotMarkerTSNE) <- formals(.plotMarkerDimRed)
-formals(.plotMarkerTSNE)[["dimRed"]] <- NULL
-
-
-
-.plotMarkerUMAP <- function() {
-    args <- as.list(match.call())[-1L]
-    args[["dimRed"]] <- "umap"
-    do.call(.plotMarkerDimRed, args)
-}
-formals(.plotMarkerUMAP) <- formals(.plotMarkerDimRed)
-formals(.plotMarkerUMAP)[["dimRed"]] <- NULL
-
-
-
 # Methods ======================================================================
 #' @rdname plotMarker
 #' @export
@@ -408,7 +382,40 @@ setMethod(
 setMethod(
     "plotMarkerTSNE",
     signature("seurat"),
-    .plotMarkerTSNE
+    function(
+        object,
+        genes,
+        expression = c("mean", "median", "sum"),
+        color = "auto",
+        pointsAsNumbers = FALSE,
+        pointSize = 0.5,
+        pointAlpha = 0.8,
+        label = TRUE,
+        labelSize = 6L,
+        dark = TRUE,
+        grid = TRUE,
+        legend = TRUE,
+        aspectRatio = 1L,
+        title = TRUE
+    ) {
+        .plotMarkerDimRed(
+            object = object,
+            genes = genes,
+            dimRed = "tsne",
+            expression = expression,
+            color = color,
+            pointsAsNumbers = pointsAsNumbers,
+            pointSize = pointSize,
+            pointAlpha = pointAlpha,
+            label = label,
+            labelSize = labelSize,
+            dark = dark,
+            grid = grid,
+            legend = legend,
+            aspectRatio = aspectRatio,
+            title = title
+        )
+    }
 )
 
 
@@ -418,7 +425,40 @@ setMethod(
 setMethod(
     "plotMarkerUMAP",
     signature("seurat"),
-    .plotMarkerUMAP
+    function(
+        object,
+        genes,
+        expression = c("mean", "median", "sum"),
+        color = "auto",
+        pointsAsNumbers = FALSE,
+        pointSize = 0.5,
+        pointAlpha = 0.8,
+        label = TRUE,
+        labelSize = 6L,
+        dark = TRUE,
+        grid = TRUE,
+        legend = TRUE,
+        aspectRatio = 1L,
+        title = TRUE
+    ) {
+        .plotMarkerDimRed(
+            object = object,
+            genes = genes,
+            dimRed = "umap",
+            expression = expression,
+            color = color,
+            pointsAsNumbers = pointsAsNumbers,
+            pointSize = pointSize,
+            pointAlpha = pointAlpha,
+            label = label,
+            labelSize = labelSize,
+            dark = dark,
+            grid = grid,
+            legend = legend,
+            aspectRatio = aspectRatio,
+            title = title
+        )
+    }
 )
 
 
