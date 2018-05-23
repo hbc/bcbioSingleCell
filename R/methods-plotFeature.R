@@ -17,9 +17,6 @@
 #' object <- seurat_small
 #' features <- c("nUMI", "nGene", "PC1", "PC2")
 #'
-#' # Markdown
-#' plotFeature(object, features = features[[1]], dimRed = "tsne")
-#'
 #' # t-SNE grid
 #' plotFeatureTSNE(
 #'     object = object,
@@ -175,43 +172,6 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname plotFeature
-#' @export
-setMethod(
-    "plotFeature",
-    signature("seurat"),
-    function(
-        object,
-        features,
-        dimRed = c("tsne", "umap"),
-        dark = TRUE,
-        grid = TRUE,
-        headerLevel = 2L
-    ) {
-        assert_is_character(features)
-        dimRed <- match.arg(dimRed)
-        assert_is_a_bool(dark)
-        assert_is_a_bool(grid)
-        assertIsAHeaderLevel(headerLevel)
-        list <- lapply(features, function(feature) {
-            p <- .plotFeatureDimRed(
-                object = object,
-                features = feature,
-                dimRed = dimRed,
-                dark = dark,
-                grid = grid
-            )
-            markdownHeader(feature, level = headerLevel, asis = TRUE)
-            show(p)
-            invisible(p)
-        })
-        names(list) <- features
-        invisible(list)
-    }
-)
-
-
-
 #' @rdname plotFeature
 #' @export
 setMethod(
