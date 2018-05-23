@@ -8,6 +8,7 @@
 #'
 #' @importClassesFrom Seurat seurat
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
+#'
 #' @importFrom Biobase rowMedians sampleNames
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
 #' @importFrom Matrix colSums readMM rowMeans rowSums
@@ -19,13 +20,39 @@
 #'   spikeNames
 #' @importFrom SummarizedExperiment assay assayNames assays assays<- colData
 #'   rowData rowRanges
-#' @importFrom basejump assignAndSaveData camel convertGenesToSymbols
-#'   convertUCSCBuildToEnsembl detectOrganism dynamicPlotlist emptyRanges
-#'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
-#'   makeTx2geneFromGFF markdownHeader markdownPlotlist printString
-#'   readFileByExtension readYAML theme_midnight theme_paperwhite tx2geneFromGFF
-#' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
-#'   bcbio_geom_label_average bcbio_geom_label_repel flatFiles
+#' @importFrom assertive.base assert_are_identical
+#' @importFrom assertive.files assert_all_are_dirs assert_all_are_existing_files
+#' @importFrom assertive.numbers assert_all_are_greater_than_or_equal_to
+#'   assert_all_are_in_left_open_range assert_all_are_in_range
+#'   assert_all_are_in_right_open_range assert_all_are_non_negative
+#'   assert_all_are_positive
+#' @importFrom assertive.properties assert_are_same_length assert_has_dimnames
+#'   assert_has_names assert_has_no_duplicates assert_has_rows
+#'   assert_is_non_empty assert_is_of_length has_dims has_names
+#' @importFrom assertive.sets assert_are_disjoint_sets
+#'   assert_are_intersecting_sets assert_are_set_equal assert_is_subset
+#' @importFrom assertive.strings assert_all_are_matching_regex
+#'   assert_all_are_non_missing_nor_empty_character
+#'   assert_any_are_matching_regex
+#' @importFrom assertive.types assert_is_a_bool assert_is_a_number
+#'   assert_is_a_string assert_is_all_of assert_is_an_integer assert_is_any_of
+#'   assert_is_character assert_is_data.frame assert_is_environment
+#'   assert_is_factor assert_is_function assert_is_integer assert_is_list
+#'   assert_is_matrix assert_is_numeric assert_is_tbl_df is_a_string
+#'   is_character
+#' @importFrom basejump assertHasRownames assertIsAHeaderLevel
+#'   assertIsAStringOrNULL assertIsAnImplicitInteger
+#'   assertIsAnImplicitIntegerOrNULL assertIsANumberOrNULL
+#'   assertIsCharacterOrNULL assertIsColorScaleContinuousOrNULL
+#'   assertIsColorScaleDiscreteOrNULL assertIsFillScaleDiscreteOrNULL
+#'   assertIsGene2symbol assertIsTx2gene assignAndSaveData camel
+#'   convertGenesToSymbols convertUCSCBuildToEnsembl detectOrganism
+#'   dynamicPlotlist emptyRanges hasRownames initializeDirectory
+#'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames makeTx2geneFromGFF
+#'   markdownHeader markdownPlotlist printString readFileByExtension readYAML
+#'   theme_midnight theme_paperwhite tx2geneFromGFF
+#' @importFrom bcbioBase assertFormalInterestingGroups bcbio_geom_abline
+#'   bcbio_geom_label bcbio_geom_label_average bcbio_geom_label_repel flatFiles
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
 #'   readSampleData readTx2gene readYAMLSampleData sanitizeSampleData
 #'   uniteInterestingGroups
@@ -59,63 +86,4 @@
 #'   rownames_to_column tibble
 #' @importFrom tidyr gather
 #' @importFrom utils globalVariables packageVersion
-#'
-#' @importFrom assertive.base assert_are_identical
-#' @importFrom assertive.files assert_all_are_dirs
-#' @importFrom assertive.files assert_all_are_existing_files
-#' @importFrom assertive.numbers assert_all_are_greater_than_or_equal_to
-#' @importFrom assertive.numbers assert_all_are_in_left_open_range
-#' @importFrom assertive.numbers assert_all_are_in_range
-#' @importFrom assertive.numbers assert_all_are_in_right_open_range
-#' @importFrom assertive.numbers assert_all_are_non_negative
-#' @importFrom assertive.numbers assert_all_are_positive
-#' @importFrom assertive.properties assert_are_same_length
-#' @importFrom assertive.properties assert_has_dimnames
-#' @importFrom assertive.properties assert_has_names
-#' @importFrom assertive.properties assert_has_no_duplicates
-#' @importFrom assertive.properties assert_has_rows
-#' @importFrom assertive.properties assert_is_non_empty
-#' @importFrom assertive.properties assert_is_of_length
-#' @importFrom assertive.properties has_dims
-#' @importFrom assertive.properties has_names
-#' @importFrom assertive.sets assert_are_disjoint_sets
-#' @importFrom assertive.sets assert_are_intersecting_sets
-#' @importFrom assertive.sets assert_are_set_equal
-#' @importFrom assertive.sets assert_is_subset
-#' @importFrom assertive.strings assert_all_are_matching_regex
-#' @importFrom assertive.strings assert_all_are_non_missing_nor_empty_character
-#' @importFrom assertive.strings assert_any_are_matching_regex
-#' @importFrom assertive.types assert_is_a_bool
-#' @importFrom assertive.types assert_is_a_number
-#' @importFrom assertive.types assert_is_a_string
-#' @importFrom assertive.types assert_is_all_of
-#' @importFrom assertive.types assert_is_an_integer
-#' @importFrom assertive.types assert_is_any_of
-#' @importFrom assertive.types assert_is_character
-#' @importFrom assertive.types assert_is_data.frame
-#' @importFrom assertive.types assert_is_environment
-#' @importFrom assertive.types assert_is_factor
-#' @importFrom assertive.types assert_is_function
-#' @importFrom assertive.types assert_is_integer
-#' @importFrom assertive.types assert_is_list
-#' @importFrom assertive.types assert_is_numeric
-#' @importFrom assertive.types assert_is_tbl_df
-#' @importFrom assertive.types is_a_string
-#' @importFrom assertive.types is_character
-#'
-#' @importFrom basejump assertHasRownames
-#' @importFrom basejump assertIsAHeaderLevel
-#' @importFrom basejump assertIsAStringOrNULL
-#' @importFrom basejump assertIsAnImplicitInteger
-#' @importFrom basejump assertIsAnImplicitIntegerOrNULL
-#' @importFrom basejump assertIsANumberOrNULL
-#' @importFrom basejump assertIsCharacterOrNULL
-#' @importFrom basejump assertIsColorScaleContinuousOrNULL
-#' @importFrom basejump assertIsColorScaleDiscreteOrNULL
-#' @importFrom basejump assertIsFillScaleDiscreteOrNULL
-#' @importFrom basejump assertIsGene2symbol
-#' @importFrom basejump assertIsTx2gene
-#' @importFrom basejump hasRownames
-#'
-#' @importFrom bcbioBase assertFormalInterestingGroups
 NULL
