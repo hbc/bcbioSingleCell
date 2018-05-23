@@ -161,8 +161,16 @@ loadSingleCell <- function(...) {
 # v0.1.10 ======================================================================
 #' @rdname defunct
 #' @export
-plotMarker <- function(...) {
-    .Defunct("plotMarkers")
+plotFeatures <- function(...) {
+    .Defunct("plotFeature")
+}
+
+
+
+#' @rdname defunct
+#' @export
+plotMarkers <- function(...) {
+    .Defunct("plotMarker")
 }
 
 

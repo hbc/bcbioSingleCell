@@ -174,12 +174,34 @@ setGeneric(
 
 
 
-#' @rdname plotFeatures
+#' @rdname plotFeature
+#' @export
+setGeneric(
+    "plotFeature",
+    function(object, ...) {
+        standardGeneric("plotFeature")
+    }
+)
+
+
+
+#' @rdname plotFeature
 #' @export
 setGeneric(
     "plotFeatureTSNE",
     function(object, ...) {
         standardGeneric("plotFeatureTSNE")
+    }
+)
+
+
+
+#' @rdname plotFeature
+#' @export
+setGeneric(
+    "plotFeatureUMAP",
+    function(object, ...) {
+        standardGeneric("plotFeatureUMAP")
     }
 )
 
@@ -196,7 +218,7 @@ setGeneric(
 
 
 
-#' @rdname plotMarkers
+#' @rdname plotMarker
 #' @export
 setGeneric(
     "plotKnownMarkersDetected",
@@ -207,23 +229,34 @@ setGeneric(
 
 
 
-#' @rdname plotMarkers
+#' @rdname plotMarker
 #' @export
 setGeneric(
-    "plotMarkers",
+    "plotMarker",
     function(object, ...) {
-        standardGeneric("plotMarkers")
+        standardGeneric("plotMarker")
     }
 )
 
 
 
-#' @rdname plotMarkers
+#' @rdname plotMarker
 #' @export
 setGeneric(
     "plotMarkerTSNE",
     function(object, ...) {
         standardGeneric("plotMarkerTSNE")
+    }
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setGeneric(
+    "plotMarkerUMAP",
+    function(object, ...) {
+        standardGeneric("plotMarkerUMAP")
     }
 )
 
@@ -284,7 +317,7 @@ setGeneric(
 
 
 
-#' @rdname plotMarkers
+#' @rdname plotMarker
 #' @export
 setGeneric(
     "plotTopMarkers",
