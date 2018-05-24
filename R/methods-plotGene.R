@@ -6,6 +6,7 @@
 #'
 #' @importFrom bcbioBase plotGene
 #'
+#' @inheritParams general
 #' @param geom Plot type. Uses [match.arg()] to pick the type. Currently
 #'   supports "`dot`" and "`violin`".
 #'

@@ -10,8 +10,14 @@
   legend = FALSE)
 }
 \arguments{
+\item{object}{Object.}
+
+\item{genes}{Gene identifiers. Must match the rownames of the object.}
+
 \item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} to pick the type. Currently
 supports "\code{dot}" and "\code{violin}".}
+
+\item{legend}{Include plot legend.}
 }
 \value{
 \code{ggplot}.
