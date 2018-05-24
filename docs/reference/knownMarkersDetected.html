@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
       </span>
     </div>
 
@@ -172,31 +172,18 @@ easily.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># grouped_df ====</span>
-<span class='fu'>knownMarkersDetected</span>(
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>knownMarkersDetected</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>all_markers_small</span>,
     <span class='kw'>known</span> <span class='kw'>=</span> <span class='no'>cellTypeMarkers</span><span class='kw'>[[</span><span class='st'>"homoSapiens"</span>]]
-) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Observations: 1
-#&gt; Variables: 19
-#&gt; $ cellType       &lt;chr&gt; "Natural Killer Cell"
-#&gt; $ cluster        &lt;fct&gt; 1
-#&gt; $ geneID         &lt;chr&gt; "ENSG00000149294"
-#&gt; $ geneName       &lt;chr&gt; "NCAM1"
-#&gt; $ rowname        &lt;chr&gt; "NCAM1"
-#&gt; $ pct1           &lt;dbl&gt; 0.466
-#&gt; $ pct2           &lt;dbl&gt; 0.701
-#&gt; $ avgLogFC       &lt;dbl&gt; -0.9537856
-#&gt; $ padj           &lt;dbl&gt; 2.248247e-07
-#&gt; $ pvalue         &lt;dbl&gt; 4.496495e-10
-#&gt; $ seqnames       &lt;fct&gt; 11
-#&gt; $ start          &lt;int&gt; 112961247
-#&gt; $ end            &lt;int&gt; 113278436
-#&gt; $ width          &lt;int&gt; 317190
-#&gt; $ strand         &lt;fct&gt; +
-#&gt; $ geneBiotype    &lt;fct&gt; protein_coding
-#&gt; $ description    &lt;chr&gt; "neural cell adhesion molecule 1 [Source:HGNC Symbol...
-#&gt; $ seqCoordSystem &lt;fct&gt; chromosome
-#&gt; $ broadClass     &lt;fct&gt; coding</div></pre>
+)
+<span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 19
+#&gt; # Groups:   cellType [1]
+#&gt;   cellType     cluster geneID    geneName rowname  pct1  pct2 avgLogFC     padj
+#&gt;   &lt;chr&gt;        &lt;fct&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1 Natural Kil… 1       ENSG0000… NCAM1    NCAM1   0.466 0.701   -0.954  2.25e-7
+#&gt; # ... with 10 more variables: pvalue &lt;dbl&gt;, seqnames &lt;fct&gt;, start &lt;int&gt;,
+#&gt; #   end &lt;int&gt;, width &lt;int&gt;, strand &lt;fct&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
+#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

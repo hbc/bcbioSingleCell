@@ -13,6 +13,8 @@
 \alias{reexports}
 \alias{scale_colour_gradient}
 \alias{reexports}
+\alias{scale_colour_gradientn}
+\alias{reexports}
 \alias{scale_colour_hue}
 \alias{reexports}
 \alias{scale_fill_hue}
@@ -37,7 +39,7 @@ below to see their documentation.
 \describe{
   \item{dplyr}{\code{\link[dplyr]{pull}}}
 
-  \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_gradient}}, \code{\link[ggplot2]{scale_color_hue}}, \code{\link[ggplot2]{scale_colour_gradient}}, \code{\link[ggplot2]{scale_colour_hue}}, \code{\link[ggplot2]{scale_fill_hue}}}
+  \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_gradient}}, \code{\link[ggplot2]{scale_color_hue}}, \code{\link[ggplot2]{scale_colour_gradient}}, \code{\link[ggplot2]{scale_colour_gradientn}}, \code{\link[ggplot2]{scale_colour_hue}}, \code{\link[ggplot2]{scale_fill_hue}}}
 
   \item{tibble}{\code{\link[tibble]{glimpse}}}
 

@@ -1,7 +1,7 @@
 #' Sample Barcode Metrics
 #'
 #' @name metrics
-#' @family Data Functions
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @importFrom bcbioBase metrics
@@ -13,20 +13,19 @@
 #' @return `data.frame` with cellular barcodes as rows.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' metrics(indrops_small) %>% glimpse()
-#'
 #' # SingleCellExperiment ====
-#' metrics(cellranger_small) %>% glimpse()
-#'
-#' # dgCMatrix ====
-#' counts <- counts(indrops_small)
-#' class(counts)
-#' metrics(counts) %>% glimpse()
+#' x <- metrics(cellranger_small)
+#' glimpse(x)
 #'
 #' # seurat ====
-#' metrics(seurat_small) %>% glimpse()
-#' metrics(Seurat::pbmc_small) %>% glimpse()
+#' x <- metrics(Seurat::pbmc_small)
+#' glimpse(x)
+#'
+#' # dgCMatrix ====
+#' counts <- counts(cellranger_small)
+#' class(counts)
+#' x <- metrics(counts)
+#' glimpse(x)
 NULL
 
 

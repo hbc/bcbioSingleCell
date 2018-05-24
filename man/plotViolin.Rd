@@ -7,8 +7,7 @@
 \title{Plot Violin}
 \usage{
 \S4method{plotViolin}{seurat}(object, genes, scale = c("count", "width",
-  "area"), fill = scale_fill_hue(), dark = FALSE, headerLevel = 2L,
-  return = c("grid", "list", "markdown"))
+  "area"), fill = NULL, legend = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -23,13 +22,7 @@ observations. If "width", all violins have the same maximum width.}
 to \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 
-\item{dark}{Plot against a dark background using
-\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
-
-\item{headerLevel}{R Markdown header level.}
-
-\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
-to the first argument in the vector.}
+\item{legend}{Include plot legend.}
 }
 \value{
 \code{ggplot}.
@@ -39,21 +32,15 @@ Plot Violin
 }
 \examples{
 # seurat ====
-genes <- head(rownames(Seurat::pbmc_small), 2L)
-print(genes)
-
-# grid
-plotViolin(Seurat::pbmc_small, genes = genes, return = "grid")
-
-# list
-list <- plotViolin(Seurat::pbmc_small, genes = genes, return = "list")
-names(list)
-
-# markdown
-plotViolin(Seurat::pbmc_small, genes = genes, return = "markdown")
+object <- Seurat::pbmc_small
+genes <- head(rownames(object), 4L)
+plotViolin(object, genes = genes)
 }
 \seealso{
-Other Gene Expression Functions: \code{\link{plotDot}}
+\code{\link[Seurat:VlnPlot]{Seurat::VlnPlot()}}.
+
+Other Gene Expression Functions: \code{\link{plotDot}},
+  \code{\link{plotGene}}
 }
 \author{
 Michael Steinbaugh

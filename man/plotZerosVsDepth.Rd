@@ -40,12 +40,10 @@ This function helps us visualize the dropout rate.
 \examples{
 # SingleCellExperiment ====
 plotZerosVsDepth(cellranger_small)
-
-# seurat ====
-plotZerosVsDepth(Seurat::pbmc_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{filterCells}}, \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},

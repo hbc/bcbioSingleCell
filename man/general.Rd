@@ -21,12 +21,18 @@ must contain \code{geneID} and \code{geneName}.}
 \item{dark}{Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
+\item{dimRed}{Dimensionality reduction method to apply. Defaults to t-SNE
+("\code{tsne}") but UMAP is also supported ("\code{umap}").}
+
 \item{dir}{Output directory.}
+
+\item{expression}{Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and defaults to
+the first argument in the vector.}
 
 \item{genes}{Gene identifiers. Must match the rownames of the object.}
 
-\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
-first argument in the vector.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first argument
+in the vector.}
 
 \item{grid}{Show major grid lines but hide axis lines.}
 

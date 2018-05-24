@@ -1,3 +1,7 @@
+# nocov start
+
+
+
 #' Deprecated Functions
 #'
 #' @name deprecated
@@ -5,107 +9,96 @@
 #'
 #' @inheritParams general
 #'
-#' @return [.Defunct()] or [.Deprecated()].
+#' @return [.Deprecated()].
+NULL
+
+
+
+#' Defunct Functions
+#'
+#' @name defunct
+#' @keywords internal
+#'
+#' @inheritParams general
+#'
+#' @return [.Defunct()].
 NULL
 
 
 
 # v0.0.18 ======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotClusters <- function(...) {
-    .Deprecated("plotMarkers")
-    plotMarkers(...)
+    .Defunct("plotMarkers")
 }
 
 
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotTSNEExpressionData <- function(...) {
-    .Deprecated("plotMarkerTSNE")
-    plotMarkerTSNE(...)
+    .Defunct("plotMarkerTSNE")
 }
 
 
 
 # v0.0.19 ======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 loadSingleCellRun <- function(...) {
-    .Deprecated("loadSingleCell")
-    loadSingleCell(...)
-}
-
-
-
-# v0.0.23 ======================================================================
-#' @rdname deprecated
-#' @export
-plotFeatures <- function(object, features, ...) {
-    .Deprecated("plotFeatureTSNE")
-    plotFeatureTSNE(object = object, feature = features, ...)
+    .Defunct("bcbioSingleCell")
 }
 
 
 
 # v0.0.24 ======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 darkTheme <- function(...) {
-    .Deprecated("basejump::theme_midnight")
-    basejump::theme_midnight(...)
+    .Defunct("basejump::theme_midnight")
 }
 
 
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 pcCutoff <- function(...) {
-    .Deprecated("plotPCElbow")
-    plotPCElbow(...)
+    .Defunct("plotPCElbow")
 }
 
 
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 quantileHeatmap <- function(...) {
-    .Deprecated("bcbioBase::plotQuantileHeatmap")
-    bcbioBase::plotQuantileHeatmap(...)
+    .Defunct("plotQuantileHeatmap")
 }
 
 
 
 # v0.0.25 ======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
-plotKnownMarkers <- function(object, knownMarkers, ...) {
-    .Deprecated("plotKnownMarkersDetected")
-    plotKnownMarkersDetected(
-        object,
-        knownMarkersDetected = knownMarkers,
-        ...
-    )
+plotKnownMarkers <- function(...) {
+    .Defunct("plotKnownMarkersDetected")
 }
 
 
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 readMarkers <- function(...) {
-    .Deprecated("readCellTypeMarkers")
-    readCellTypeMarkers(...)
+    .Defunct("readCellTypeMarkers")
 }
 
 
 
 # v0.0.26 ======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 readMarkersFile <- function(...) {
-    .Deprecated("readCellTypeMarkers")
-    readCellTypeMarkers(...)
+    .Defunct("readCellTypeMarkers")
 }
 
 
@@ -136,6 +129,8 @@ inflectionPoint <- function(...) {
     .Defunct("DropletUtils::barcodeRanks")
 }
 
+
+
 #' @rdname deprecated
 #' @export
 plotCumulativeUMIsPerCell <- function(...) {
@@ -145,18 +140,48 @@ plotCumulativeUMIsPerCell <- function(...) {
 
 
 # v0.1.2 =======================================================================
-#' @rdname readCellRanger
-#' @usage NULL
+#' @rdname deprecated
 #' @export
 loadCellRanger <- function(...) {
     .Deprecated("readCellRanger")
     readCellRanger(...)
 }
 
-#' @rdname bcbioSingleCell
-#' @usage NULL
+
+
+#' @rdname deprecated
 #' @export
 loadSingleCell <- function(...) {
     .Deprecated("bcbioSingleCell")
     bcbioSingleCell(...)
 }
+
+
+
+# v0.1.11 ======================================================================
+#' @rdname defunct
+#' @export
+plotFeatures <- function(...) {
+    .Defunct("plotFeatureTSNE")
+}
+
+
+
+#' @rdname plotMarker
+#' @usage NULL
+#' @export
+plotMarker <- function(...) {
+    .Defunct("plotMarkerTSNE")
+}
+
+
+
+#' @rdname defunct
+#' @export
+plotMarkers <- function(...) {
+    .Defunct("plotMarkerTSNE")
+}
+
+
+
+# nocov end

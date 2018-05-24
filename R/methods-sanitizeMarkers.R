@@ -15,24 +15,28 @@
 #'
 #' @examples
 #' # seurat ====
+#' object <- seurat_small
+#'
+#' # `FindAllMarkers` return
 #' invisible(capture.output(
-#'     all_markers <- Seurat::FindAllMarkers(seurat_small)
+#'     all_markers <- Seurat::FindAllMarkers(object)
 #' ))
 #' all_sanitized <- sanitizeMarkers(
-#'     object = seurat_small,
+#'     object = object,
 #'     markers = all_markers
 #' )
 #' glimpse(all_sanitized)
 #'
+#' # `FindMarkers()` return
 #' invisible(capture.output(
 #'     ident_3_markers <- Seurat::FindMarkers(
-#'         object = seurat_small,
+#'         object = object,
 #'         ident.1 = "3",
 #'         ident.2 = NULL
 #'     )
 #' ))
 #' ident_3_sanitized <- sanitizeMarkers(
-#'     object = seurat_small,
+#'     object = object,
 #'     markers = ident_3_markers
 #' )
 #' glimpse(ident_3_sanitized)
@@ -101,66 +105,60 @@ setMethod(
 
         # Add Ensembl gene IDs
         gene2symbol <- gene2symbol(object)
-        gene2symbol[["rowname"]] <- make.unique(gene2symbol[["geneName"]])
-        gene2symbol[["geneName"]] <- NULL
 
-        data <- left_join(
-            x = data,
-            y = gene2symbol,
-            by = "rowname"
-        )
+        # Only attempt to join rowRanges if we have gene-to-symbol mappings
+        if (!is.null(gene2symbol)) {
+            gene2symbol[["rowname"]] <- make.unique(gene2symbol[["geneName"]])
+            gene2symbol[["geneName"]] <- NULL
+            data <- left_join(
+                x = data,
+                y = gene2symbol,
+                by = "rowname"
+            )
 
-        # Check that all rows match a geneID
-        stopifnot(!any(is.na(data[["geneID"]])))
+            # Check that all rows match a geneID
+            stopifnot(!any(is.na(data[["geneID"]])))
 
-        # Add genomic ranges
-        rowRanges <- rowRanges(object)
-        if (!is(rowRanges, "GRanges")) {
-            stop("rowRanges are not stashed in bcbio slot")
+            # Add rowData
+            rowData <- rowData(object)
+            rowData <- camel(rowData)
+            # Ensure any nested list columns are dropped
+            cols <- vapply(
+                X = rowData,
+                FUN = function(x) {
+                    !is.list(x)
+                },
+                FUN.VALUE = logical(1L)
+            )
+            rowData <- rowData[, cols]
+            rowData <- as.data.frame(rowData)
+            data <- left_join(data, rowData, by = "geneID")
+
+            # Ensure that required columns are present
+            requiredCols <- c(
+                "rowname",
+                "geneID",
+                "geneName",
+                "pct1",
+                "pct2",
+                "avgLogFC",     # Seurat v2.1
+                "padj",
+                "pvalue"        # Renamed from `p_val`
+            )
+            assert_is_subset(requiredCols, colnames(data))
         }
-        rowData <- as.data.frame(rowRanges)
-        rowData <- camel(rowData)
-        # Ensure any nested list columns are dropped
-        cols <- vapply(
-            X = rowData,
-            FUN = function(x) {
-                !is.list(x)
-            },
-            FUN.VALUE = logical(1L)
-        )
-        rowData <- rowData[, cols]
-        data <- left_join(data, rowData, by = "geneID")
-
-        # Ensure that required columns are present
-        requiredCols <- c(
-            "rowname",
-            "geneID",
-            "geneName",
-            "pct1",
-            "pct2",
-            "avgLogFC",     # Seurat v2.1
-            "padj",
-            "pvalue"        # Renamed from `p_val`
-        )
-        assert_is_subset(requiredCols, colnames(data))
 
         if (isTRUE(all)) {
             # `cluster` is only present in `FindAllMarkers() return`
-            data <- group_by(data, !!sym("cluster"))
-            priorityCols <- c("cluster", requiredCols)
-            arrangeCols <- c("cluster", "padj")
+            data <- data %>%
+                select(!!sym("cluster"), everything()) %>%
+                group_by(!!sym("cluster")) %>%
+                arrange(!!sym("padj"), .by_group = TRUE)
         } else {
-            priorityCols <- requiredCols
-            arrangeCols <- "padj"
-        }
-
-        data <- data %>%
-            .[, unique(c(priorityCols, colnames(.))), drop = FALSE] %>%
-            arrange(!!!syms(arrangeCols))
-
-        if (!isTRUE(all)) {
-            data <- as.data.frame(data)
-            rownames(data) <- data[["geneID"]]
+            data <- data %>%
+                arrange(!!sym("padj")) %>%
+                as.data.frame() %>%
+                column_to_rownames()
         }
 
         data

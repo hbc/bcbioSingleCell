@@ -1,12 +1,13 @@
 #' Show an Object
 #'
 #' @name show
-#' @family S4 Class Definition
+#' @family S4 Object
 #' @author Michael Steinbuagh
 #'
 #' @inherit methods::show
 #'
 #' @examples
+#' # bcbioSingleCell ====
 #' show(indrops_small)
 NULL
 

@@ -22,8 +22,8 @@ plotReadsPerCell(object, ...)
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
-first argument in the vector.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first argument
+in the vector.}
 
 \item{color}{Desired ggplot color scale. Must supply discrete values. When
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
@@ -49,6 +49,7 @@ plotReadsPerCell(indrops_small, geom = "ecdf")
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{filterCells}}, \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},

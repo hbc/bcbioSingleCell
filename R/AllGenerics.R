@@ -97,6 +97,17 @@ setGeneric(
 
 
 
+#' @rdname fetchData
+#' @export
+setGeneric(
+    "fetchUMAPExpressionData",
+    function(object, ...) {
+        standardGeneric("fetchUMAPExpressionData")
+    }
+)
+
+
+
 #' @rdname filterCells
 #' @export
 setGeneric(
@@ -174,6 +185,17 @@ setGeneric(
 
 
 
+#' @rdname plotFeature
+#' @export
+setGeneric(
+    "plotFeatureUMAP",
+    function(object, ...) {
+        standardGeneric("plotFeatureUMAP")
+    }
+)
+
+
+
 #' @rdname plotGenesPerCell
 #' @export
 setGeneric(
@@ -199,31 +221,20 @@ setGeneric(
 #' @rdname plotMarker
 #' @export
 setGeneric(
-    "plotMarker",
-    function(object, ...) {
-        standardGeneric("plotMarker")
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setGeneric(
-    "plotMarkers",
-    function(object, ...) {
-        standardGeneric("plotMarkers")
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setGeneric(
     "plotMarkerTSNE",
     function(object, ...) {
         standardGeneric("plotMarkerTSNE")
+    }
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setGeneric(
+    "plotMarkerUMAP",
+    function(object, ...) {
+        standardGeneric("plotMarkerUMAP")
     }
 )
 

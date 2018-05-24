@@ -9,14 +9,8 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotCellCounts(indrops_small)
-#'
 #' # SingleCellExperiment ====
 #' plotCellCounts(cellranger_small)
-#'
-#' # seurat ====
-#' plotCellCounts(Seurat::pbmc_small)
 NULL
 
 

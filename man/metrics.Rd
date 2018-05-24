@@ -39,29 +39,30 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 Sample Barcode Metrics
 }
 \examples{
-# bcbioSingleCell ====
-metrics(indrops_small) \%>\% glimpse()
-
 # SingleCellExperiment ====
-metrics(cellranger_small) \%>\% glimpse()
-
-# dgCMatrix ====
-counts <- counts(indrops_small)
-class(counts)
-metrics(counts) \%>\% glimpse()
+x <- metrics(cellranger_small)
+glimpse(x)
 
 # seurat ====
-metrics(seurat_small) \%>\% glimpse()
-metrics(Seurat::pbmc_small) \%>\% glimpse()
+x <- metrics(Seurat::pbmc_small)
+glimpse(x)
+
+# dgCMatrix ====
+counts <- counts(cellranger_small)
+class(counts)
+x <- metrics(counts)
+glimpse(x)
 }
 \seealso{
-Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
-  \code{\link{filterCells}},
-  \code{\link{mapCellsToSamples}},
-  \code{\link{metricsPerSample}},
-  \code{\link{selectSamples}},
-  \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
+Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{filterCells}}, \code{\link{plotCellCounts}},
+  \code{\link{plotGenesPerCell}},
+  \code{\link{plotMitoRatio}},
+  \code{\link{plotMitoVsCoding}},
+  \code{\link{plotNovelty}}, \code{\link{plotQC}},
+  \code{\link{plotReadsPerCell}},
+  \code{\link{plotUMIsPerCell}},
+  \code{\link{plotZerosVsDepth}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

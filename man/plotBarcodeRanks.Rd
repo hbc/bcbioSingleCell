@@ -28,9 +28,6 @@ Plot Barcode Ranks
 \examples{
 # SingleCellExperiment ====
 plotBarcodeRanks(cellranger_small)
-
-# seurat ====
-plotBarcodeRanks(seurat_small)
 }
 \seealso{
 \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.

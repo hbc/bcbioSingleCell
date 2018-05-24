@@ -12,21 +12,28 @@
 \item{object}{Object.}
 }
 \value{
-\code{bcbioSingleCell}.
+\code{SingleCellExperiment}.
 }
 \description{
 Aggregate Replicates
 }
 \examples{
 # bcbioSingleCell ====
-x <- aggregateReplicates(indrops_small)
-sampleData(x)
+object <- indrops_small
+sampleNames(object)
+
+# Define groupings factor as`aggregate` column in `colData()`
+glimpse(object$aggregate)
+
+x <- aggregateReplicates(object)
+show(x)
+sampleNames(x)
 }
 \seealso{
 Other Data Functions: \code{\link{cell2sample}},
-  \code{\link{fetchGeneData}}, \code{\link{filterCells}},
+  \code{\link{fetchGeneData}},
   \code{\link{mapCellsToSamples}},
-  \code{\link{metricsPerSample}}, \code{\link{metrics}},
+  \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }

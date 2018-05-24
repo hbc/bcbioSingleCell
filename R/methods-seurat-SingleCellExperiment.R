@@ -21,7 +21,8 @@ setMethod(
     "assay",
     signature("seurat"),
     function(x) {
-        slot(x, "raw.data")
+        x <- as(x, "SingleCellExperiment")
+        assay(x)
     }
 )
 
@@ -34,8 +35,8 @@ setMethod(
     "colData",
     signature("seurat"),
     function(x) {
-        data <- slot(x, "meta.data")
-        as(data, "DataFrame")
+        x <- as(x, "SingleCellExperiment")
+        colData(x)
     }
 )
 
@@ -50,7 +51,8 @@ setMethod(
     "colnames",
     signature("seurat"),
     function(x) {
-        colnames(slot(x, "data"))
+        x <- as(x, "SingleCellExperiment")
+        colnames(x)
     }
 )
 
@@ -63,14 +65,9 @@ setMethod(
 setMethod(
     "counts",
     signature("seurat"),
-    function(object, normalized = FALSE) {
-        assert_is_a_bool(normalized)
-        # seurat also stashes scaled counts in `scale.data`
-        if (identical(normalized, FALSE)) {
-            slot(object, "raw.data")
-        } else if (identical(normalized, TRUE)) {
-            slot(object, "data")
-        }
+    function(object) {
+        object <- as(object, "SingleCellExperiment")
+        counts(object)
     }
 )
 
@@ -82,7 +79,12 @@ setMethod(
     "metadata",
     signature("seurat"),
     function(x) {
-        bcbio(x, "metadata")
+        stash <- bcbio(x, "metadata")
+        if (!is.null(stash)) {
+            return(stash)
+        }
+        x <- as(x, "SingleCellExperiment")
+        metadata(x)
     }
 )
 
@@ -117,11 +119,10 @@ setMethod(
     "rowData",
     signature("seurat"),
     function(x) {
-        rowRanges <- rowRanges(x)
-        if (is.null(rowRanges)) {
-            return(NULL)
-        }
-        as(rowRanges, "DataFrame")
+        rr <- rowRanges(x)
+        x <- as(x, "SingleCellExperiment")
+        rowRanges(x) <- rr
+        rowData(x)
     }
 )
 
@@ -133,7 +134,14 @@ setMethod(
     "rowRanges",
     signature("seurat"),
     function(x) {
-        bcbio(x, "rowRanges")
+        stash <- bcbio(x, "rowRanges")
+        x <- as(x, "SingleCellExperiment")
+        if (is(stash, "GRanges")) {
+            assert_are_identical(names(stash), rownames(x))
+            return(stash)
+        }
+        x <- as(x, "SingleCellExperiment")
+        rowRanges(x)
     }
 )
 
@@ -146,7 +154,8 @@ setMethod(
     "rownames",
     signature("seurat"),
     function(x) {
-        rownames(slot(x, "data"))
+        x <- as(x, "SingleCellExperiment")
+        rownames(x)
     }
 )
 

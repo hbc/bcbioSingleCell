@@ -6,7 +6,7 @@
 #' the samples.
 #'
 #' @name sampleData
-#' @family S4 Class Definitions
+#' @family Data Functions
 #' @author Michael Steinbaugh
 #' @inherit bcbioBase::sampleData
 #'
@@ -17,17 +17,8 @@
 #' @examples
 #' # SingleCellExperiment ====
 #' x <- cellranger_small
-#' sampleData(x, clean = TRUE) %>% glimpse()
 #' sampleData(x, clean = FALSE) %>% glimpse()
-#'
-#' # Assignment support
-#' sampleData(x)[["batch"]] <- 1L
-#' sampleData(x) %>% glimpse()
-#'
-#' # seurat ====
-#' x <- seurat_small
 #' sampleData(x, clean = TRUE) %>% glimpse()
-#' sampleData(x, clean = FALSE) %>% glimpse()
 #'
 #' # Assignment support
 #' sampleData(x)[["batch"]] <- 1L
@@ -52,6 +43,9 @@ setMethod(
         return <- match.arg(return)
 
         data <- metadata(object)[["sampleData"]]
+        if (is.null(data)) {
+            return(NULL)
+        }
         assert_is_data.frame(data)
 
         # Only return factor columns, if desired

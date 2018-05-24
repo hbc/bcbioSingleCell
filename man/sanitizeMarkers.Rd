@@ -31,24 +31,28 @@ the rownames of the returned marker \code{data.frame}.
 }
 \examples{
 # seurat ====
+object <- seurat_small
+
+# `FindAllMarkers` return
 invisible(capture.output(
-    all_markers <- Seurat::FindAllMarkers(seurat_small)
+    all_markers <- Seurat::FindAllMarkers(object)
 ))
 all_sanitized <- sanitizeMarkers(
-    object = seurat_small,
+    object = object,
     markers = all_markers
 )
 glimpse(all_sanitized)
 
+# `FindMarkers()` return
 invisible(capture.output(
     ident_3_markers <- Seurat::FindMarkers(
-        object = seurat_small,
+        object = object,
         ident.1 = "3",
         ident.2 = NULL
     )
 ))
 ident_3_sanitized <- sanitizeMarkers(
-    object = seurat_small,
+    object = object,
     markers = ident_3_markers
 )
 glimpse(ident_3_sanitized)

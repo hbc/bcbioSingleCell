@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
       </span>
     </div>
 
@@ -163,24 +163,23 @@ directions of association per cluster.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># grouped_df ====</span>
-<span class='fu'>topMarkers</span>(
+<span class='co'># Currently only works on `Seurat::FindAllMarkers()` return sanitized with</span>
+<span class='co'># our `sanitizeMarkers()` function</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>all_markers_small</span>,
     <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
     <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"positive"</span>
-)</div><div class='output co'>#&gt; # A tibble: 10 x 18
-#&gt; # Groups:   cluster [5]
-#&gt;    cluster rowname  geneID      geneName  pct1  pct2 avgLogFC     padj   pvalue
-#&gt;    &lt;fct&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1 0       COL1A2   ENSG000001… COL1A2   1     0.465     2.56 5.31e-58 1.06e-60
-#&gt;  2 0       COL1A1   ENSG000001… COL1A1   1     0.596     2.79 1.98e-57 3.96e-60
-#&gt;  3 1       S100A10  ENSG000001… S100A10  0.741 0.266     2.17 4.75e-30 9.50e-33
-#&gt;  4 1       KRT18    ENSG000001… KRT18    0.681 0.253     1.53 9.82e-20 1.96e-22
-#&gt;  5 2       MYL4     ENSG000001… MYL4     0.872 0.123     2.14 3.25e-55 6.50e-58
-#&gt;  6 2       PLN      ENSG000001… PLN      0.936 0.212     2.43 5.17e-55 1.03e-57
-#&gt;  7 3       MT-ATP6  ENSG000001… MT-ATP6  1     0.993     1.16 1.80e-31 3.59e-34
-#&gt;  8 3       MTATP6P1 ENSG000002… MTATP6P1 1     0.988     1.17 1.87e-31 3.74e-34
-#&gt;  9 4       H3F3A    ENSG000001… H3F3A    1     0.767     1.38 3.89e-25 7.79e-28
-#&gt; 10 4       STMN1    ENSG000001… STMN1    0.952 0.452     1.77 2.66e-24 5.31e-27
+)
+<span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 18
+#&gt; # Groups:   cluster [3]
+#&gt;   cluster rowname geneID        geneName  pct1  pct2 avgLogFC     padj   pvalue
+#&gt;   &lt;fct&gt;   &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1 0       COL1A2  ENSG00000164… COL1A2   1     0.465     2.56 5.31e-58 1.06e-60
+#&gt; 2 0       COL1A1  ENSG00000108… COL1A1   1     0.596     2.79 1.98e-57 3.96e-60
+#&gt; 3 1       S100A10 ENSG00000197… S100A10  0.741 0.266     2.17 4.75e-30 9.50e-33
+#&gt; 4 1       KRT18   ENSG00000111… KRT18    0.681 0.253     1.53 9.82e-20 1.96e-22
+#&gt; 5 2       MYL4    ENSG00000198… MYL4     0.872 0.123     2.14 3.25e-55 6.50e-58
+#&gt; 6 2       PLN     ENSG00000198… PLN      0.936 0.212     2.43 5.17e-55 1.03e-57
 #&gt; # ... with 9 more variables: seqnames &lt;fct&gt;, start &lt;int&gt;, end &lt;int&gt;,
 #&gt; #   width &lt;int&gt;, strand &lt;fct&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
 #&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div></pre>

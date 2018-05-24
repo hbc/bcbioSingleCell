@@ -1,4 +1,4 @@
-#' Plot Cell-Type Gene Marker(s)
+#' Plot Cell-Type-Specific Gene Markers
 #'
 #' @description
 #' Plot gene expression per cell in multiple formats:
@@ -7,13 +7,69 @@
 #' 2. [plotDot()]: Dot plot.
 #' 3. [plotViolin()]: Violin plot.
 #'
+#' @section plotTopMarkers:
+#' The number of markers to plot is determined by the output of the
+#' [topMarkers()] function. If you want to reduce the number of genes to plot,
+#' simply reassign first using that function. If necessary, we can add support
+#' for the number of genes to plot here in a future update.
+#'
 #' @name plotMarker
 #' @family Clustering Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
+#' @param markers `grouped_df` of marker genes.
+#'   - [plotTopMarkers()]: must be grouped by "`cluster`".
+#'   - [plotKnownMarkersDetected()]: must be grouped by "`cellType`".
 #'
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
+#'
+#' @examples
+#' object <- seurat_small
+#' genes <- grep("^COL\\d", rownames(object), value = TRUE)
+#' print(genes)
+#' title <- "collagen"
+#'
+#' # t-SNE
+#' plotMarkerTSNE(
+#'     object = object,
+#'     genes = genes,
+#'     title = title
+#' )
+#'
+#' # Dark mode
+#' plotMarkerTSNE(
+#'     object = object,
+#'     genes = genes,
+#'     dark = TRUE,
+#'     title = title
+#' )
+#'
+#' # Number cloud
+#' plotMarkerTSNE(
+#'     object = object,
+#'     genes = genes,
+#'     pointsAsNumbers = TRUE,
+#'     title = "collagen"
+#' )
+#'
+#' # UMAP
+#' plotMarkerUMAP(
+#'     object = object,
+#'     genes = genes,
+#'     title = title
+#' )
+#'
+#' # Top markers
+#' markers <- topMarkers(all_markers_small, n = 1)
+#' markers
+#' markers <- head(markers, n = 1)
+#' plotTopMarkers(object, markers = markers)
+#'
+#' # Known markers detected
+#' markers <- head(known_markers_small, n = 1)
+#' markers
+#' plotKnownMarkersDetected(object, markers = markers)
 NULL
 
 
@@ -36,20 +92,183 @@ NULL
 
 
 
+# Dimensionality reduction (t-SNE, UMAP) plot constructor
+.plotMarkerDimRed <- function(
+    object,
+    genes,
+    dimRed = c("tsne", "umap"),
+    expression = c("mean", "median", "sum"),
+    color = NULL,
+    pointsAsNumbers = FALSE,
+    pointSize = 0.75,
+    pointAlpha = 0.8,
+    label = TRUE,
+    labelSize = 6L,
+    dark = FALSE,
+    grid = TRUE,
+    legend = FALSE,
+    aspectRatio = 1L,
+    title = TRUE
+) {
+    assert_is_character(genes)
+    assert_is_subset(genes, rownames(object))
+    dimRed <- match.arg(dimRed)
+    expression <- match.arg(expression)
+    # Legacy support for `color = "auto"`
+    if (identical(color, "auto")) {
+        color <- NULL
+    }
+    assertIsColorScaleContinuousOrNULL(color)
+    assert_is_a_bool(pointsAsNumbers)
+    assert_is_a_number(pointSize)
+    assert_is_a_number(pointAlpha)
+    assert_is_a_bool(label)
+    assert_is_a_number(labelSize)
+    assert_is_a_bool(dark)
+    assert_is_a_bool(legend)
+    assert_is_any_of(title, c("character", "logical", "NULL"))
+    if (is.character(title)) {
+        assert_is_a_string(title)
+    }
+
+    # Fetch dimensional reduction coordinates
+    if (dimRed == "tsne") {
+        fun <- fetchTSNEExpressionData
+        dimCols <- c("tSNE1", "tSNE2")
+    } else if (dimRed == "umap") {
+        fun <- fetchUMAPExpressionData
+        dimCols <- c("umap1", "umap2")
+    }
+    data <- fun(object, genes = genes)
+
+    requiredCols <- c(
+        "centerX",
+        "centerY",
+        "mean",
+        "median",
+        "ident",
+        "sum",
+        dimCols
+    )
+    assert_is_subset(requiredCols, colnames(data))
+
+    p <- ggplot(
+        data = data,
+        mapping = aes_string(
+            x = dimCols[[1L]],
+            y = dimCols[[2L]],
+            color = expression
+        )
+    )
+
+    # Titles
+    subtitle <- NULL
+    if (isTRUE(title)) {
+        if (is_a_string(genes)) {
+            title <- genes
+        } else {
+            title <- NULL
+            subtitle <- genes
+            # Limit to the first 5 markers
+            if (length(subtitle) > 5L) {
+                subtitle <- c(subtitle[1L:5L], "...")
+            }
+            subtitle <- toString(subtitle)
+        }
+    } else if (identical(title, FALSE)) {
+        title <- NULL
+    }
+    p <- p + labs(title = title, subtitle = subtitle)
+
+    # Customize legend
+    if (isTRUE(legend)) {
+        # Make the guide longer than normal, to improve appearance of values
+        # containing a decimal point
+        p <- p +
+            guides(
+                color = guide_colorbar(
+                    barwidth = 20L,
+                    barheight = 1L,
+                    direction = "horizontal"
+                )
+            )
+    } else {
+        p <- p + guides(color = "none")
+    }
+
+    if (isTRUE(pointsAsNumbers)) {
+        if (pointSize < 4L) pointSize <- 4L
+        p <- p +
+            geom_text(
+                mapping = aes_string(
+                    x = dimCols[[1L]],
+                    y = dimCols[[2L]],
+                    label = "ident",
+                    color = expression
+                ),
+                alpha = pointAlpha,
+                size = pointSize
+            )
+    } else {
+        p <- p +
+            geom_point(
+                alpha = pointAlpha,
+                size = pointSize
+            )
+    }
+
+    if (isTRUE(label)) {
+        if (isTRUE(dark)) {
+            labelColor <- "white"
+        } else {
+            labelColor <- "black"
+        }
+        p <- p +
+            geom_text(
+                mapping = aes_string(
+                    x = "centerX",
+                    y = "centerY",
+                    label = "ident"
+                ),
+                color = labelColor,
+                size = labelSize,
+                fontface = "bold"
+            )
+    }
+
+    # Color palette
+    if (isTRUE(dark)) {
+        p <- p +
+            theme_midnight(
+                aspect_ratio = aspectRatio,
+                grid = grid
+            )
+        if (is.null(color)) {
+            color <- scale_colour_viridis(option = "plasma")
+        }
+    } else {
+        p <- p +
+            theme_paperwhite(
+                aspect_ratio = aspectRatio,
+                grid = grid
+            )
+        if (is.null(color)) {
+            color <- scale_colour_viridis(begin = 1L, end = 0L)
+        }
+    }
+
+    if (is(color, "ScaleContinuous")) {
+        p <- p + color
+    }
+
+    p
+}
+
+
+
 # Methods ======================================================================
 #' @rdname plotMarker
-#' @inheritParams fetchTSNEExpressionData
-#' @inheritParams plotTSNE
-#' @param expression Calculation to apply on the aggregate marker expression.
 #' @export
-#' @examples
-#' plotMarkerTSNE(seurat_small, genes = "COL1A1")
-#' plotMarkerTSNE(seurat_small, genes = "COL1A1", dark = FALSE, grid = FALSE)
-#'
-#' # Mitochondrial genes
-#' mito <- grep("^MT-", rownames(counts(seurat_small)), value = TRUE)
-#' print(mito)
-#' plotMarkerTSNE(seurat_small, genes = mito, title = "mitochondrial")
 setMethod(
     "plotMarkerTSNE",
     signature("seurat"),
@@ -57,252 +276,35 @@ setMethod(
         object,
         genes,
         expression = c("mean", "median", "sum"),
-        color = "auto",
+        color = NULL,
         pointsAsNumbers = FALSE,
-        pointSize = 0.5,
+        pointSize = 0.75,
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        dark = TRUE,
+        dark = FALSE,
         grid = TRUE,
         legend = FALSE,
         aspectRatio = 1L,
         title = TRUE
     ) {
-        assert_is_character(genes)
-        assert_is_subset(genes, rownames(object))
-        expression <- match.arg(expression)
-        assert_is_a_bool(pointsAsNumbers)
-        assert_is_a_number(pointSize)
-        assert_is_a_number(pointAlpha)
-        assert_is_a_bool(label)
-        assert_is_a_number(labelSize)
-        assert_is_a_bool(dark)
-        assert_is_a_bool(legend)
-        assert_is_any_of(title, c("character", "logical", "NULL"))
-        if (is.character(title)) {
-            assert_is_a_string(title)
-        }
-
-        data <- fetchTSNEExpressionData(object, genes = genes)
-        requiredCols <- c(
-            "centerX",
-            "centerY",
-            "mean",
-            "median",
-            "ident",
-            "sum",
-            "tSNE1",
-            "tSNE2"
-        )
-        assert_is_subset(requiredCols, colnames(data))
-
-        p <- ggplot(
-            data = data,
-            mapping = aes_string(
-                x = "tSNE1",
-                y = "tSNE2",
-                color = expression
-            )
-        )
-
-        # Titles
-        subtitle <- NULL
-        if (isTRUE(title)) {
-            if (is_a_string(genes)) {
-                title <- genes
-            } else {
-                title <- NULL
-                subtitle <- genes
-                # Limit to the first 5 markers
-                if (length(subtitle) > 5L) {
-                    subtitle <- c(subtitle[1L:5L], "...")
-                }
-                subtitle <- toString(subtitle)
-            }
-        } else if (identical(title, FALSE)) {
-            title <- NULL
-        }
-        p <- p + labs(title = title, subtitle = subtitle)
-
-        # Customize legend
-        if (isTRUE(legend)) {
-            # Make the guide longer than normal, to improve appearance of values
-            # containing a decimal point
-            p <- p +
-                guides(
-                    color = guide_colorbar(
-                        barwidth = 20L,
-                        barheight = 1L,
-                        direction = "horizontal"
-                    )
-                )
-        } else {
-            p <- p + guides(color = "none")
-        }
-
-        if (isTRUE(pointsAsNumbers)) {
-            p <- p +
-                geom_text(
-                    mapping = aes_string(
-                        x = "tSNE1",
-                        y = "tSNE2",
-                        label = "ident",
-                        color = expression
-                    ),
-                    alpha = pointAlpha,
-                    size = pointSize
-                )
-        } else {
-            p <- p +
-                geom_point(
-                    alpha = pointAlpha,
-                    size = pointSize
-                )
-        }
-
-        if (isTRUE(label)) {
-            if (isTRUE(dark)) {
-                labelColor <- "white"
-            } else {
-                labelColor <- "black"
-            }
-            p <- p +
-                geom_text(
-                    mapping = aes_string(
-                        x = "centerX",
-                        y = "centerY",
-                        label = "ident"
-                    ),
-                    color = labelColor,
-                    size = labelSize,
-                    fontface = "bold"
-                )
-        }
-
-        # Color palette
-        if (isTRUE(dark)) {
-            p <- p +
-                theme_midnight(
-                    aspect_ratio = aspectRatio,
-                    grid = grid
-                )
-            if (color == "auto") {
-                color <- scale_color_viridis(
-                    option = "plasma",
-                    discrete = FALSE
-                )
-            }
-        } else {
-            p <- p +
-                theme_paperwhite(
-                    aspect_ratio = aspectRatio,
-                    grid = grid
-                )
-            if (color == "auto") {
-                color <- scale_color_gradient(
-                    low = "gray90",
-                    high = "black"
-                )
-            }
-        }
-
-        if (is(color, "ScaleContinuous")) {
-            p <- p + color
-        }
-
-        p
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @param gene Gene identifier. Must intersect with [rownames()].
-#' @export
-#' @examples
-#' # Individual gene
-#' plotMarker(seurat_small, gene = "COL1A2", dark = TRUE)
-#' plotMarker(seurat_small, gene = "COL1A2", dark = FALSE)
-setMethod(
-    "plotMarker",
-    signature("seurat"),
-    function(
-        object,
-        gene,
-        dark = TRUE,
-        return = c("grid", "list"),
-        ...
-    ) {
-        assert_is_subset(gene, rownames(object))
-        assert_is_a_bool(dark)
-        return <- match.arg(return)
-
-        # Plots ================================================================
-        if (isTRUE(dark)) {
-            violinFill <- "white"
-        } else {
-            violinFill <- "black"
-        }
-
-        tsne <- plotMarkerTSNE(
-            object,
-            genes = gene,
-            expression = "sum",
+        .plotMarkerDimRed(
+            object = object,
+            genes = genes,
+            dimRed = "tsne",
+            expression = expression,
+            color = color,
+            pointsAsNumbers = pointsAsNumbers,
+            pointSize = pointSize,
+            pointAlpha = pointAlpha,
+            label = label,
+            labelSize = labelSize,
             dark = dark,
-            ...
+            grid = grid,
+            legend = legend,
+            aspectRatio = aspectRatio,
+            title = title
         )
-
-        dot <- plotDot(
-            object,
-            genes = gene,
-            dark = dark
-        )
-
-        violin <- plotViolin(
-            object,
-            genes = gene,
-            scale = "width",
-            fill = violinFill,
-            dark = dark,
-            return = "list"
-        )
-        # Get the ggplot object from the list return
-        violin <- violin[[1L]]
-
-        # Return ===============================================================
-        if (return == "grid") {
-            violin <- violin +
-                .minimalAxis()
-            dot <- dot +
-                coord_flip() +
-                .minimalAxis()
-            p <- plot_grid(
-                tsne,
-                dot,
-                violin,
-                labels = NULL,
-                ncol = 1L,
-                nrow = 3L,
-                rel_heights = c(1L, 0.1, 0.15)
-            )
-            if (isTRUE(dark)) {
-                p <- p + theme(
-                    plot.background = element_rect(color = NA, fill = "black")
-                )
-            } else {
-                p <- p + theme(
-                    plot.background = element_rect(color = NA, fill = "white")
-                )
-            }
-            p
-        } else if (return == "list") {
-            list(
-                "tsne" = tsne,
-                "dot" = dot,
-                "violin" = violin
-            )
-        }
     }
 )
 
@@ -310,71 +312,69 @@ setMethod(
 
 #' @rdname plotMarker
 #' @export
-#' @examples
-#' # Multiple genes
-#' top <- topMarkers(all_markers_small, n = 1L)
-#' genes <- pull(top, "rowname")
-#' plotMarkers(seurat_small, genes = genes)
 setMethod(
-    "plotMarkers",
+    "plotMarkerUMAP",
     signature("seurat"),
     function(
         object,
         genes,
-        headerLevel = 2L,
-        ...
+        expression = c("mean", "median", "sum"),
+        color = NULL,
+        pointsAsNumbers = FALSE,
+        pointSize = 0.75,
+        pointAlpha = 0.8,
+        label = TRUE,
+        labelSize = 6L,
+        dark = FALSE,
+        grid = TRUE,
+        legend = FALSE,
+        aspectRatio = 1L,
+        title = TRUE
     ) {
-        assert_is_subset(genes, rownames(object))
-        assertIsAHeaderLevel(headerLevel)
-
-        list <- lapply(genes, function(gene) {
-            markdownHeader(gene, level = headerLevel, asis = TRUE)
-            p <- plotMarker(
-                object = object,
-                gene = gene,
-                ...
-            )
-            show(p)
-            invisible(p)
-        })
-
-        invisible(list)
+        .plotMarkerDimRed(
+            object = object,
+            genes = genes,
+            dimRed = "umap",
+            expression = expression,
+            color = color,
+            pointsAsNumbers = pointsAsNumbers,
+            pointSize = pointSize,
+            pointAlpha = pointAlpha,
+            label = label,
+            labelSize = labelSize,
+            dark = dark,
+            grid = grid,
+            legend = legend,
+            aspectRatio = aspectRatio,
+            title = title
+        )
     }
 )
 
 
 
 #' @rdname plotMarker
-#' @note The number of markers to plot is determined by the output of the
-#' [topMarkers()] function. If you want to reduce the number of genes to plot,
-#' simply reassign first using that function. If necessary, we can add support
-#' for the number of genes to plot here in a future update.
-#' @param topMarkers `grouped_df` grouped by "`cluster`", returned by
-#'   [topMarkers()].
 #' @export
-#' @examples
-#' plotTopMarkers(
-#'     object = seurat_small,
-#'     topMarkers = topMarkers(all_markers_small, n = 1L)
-#' )
 setMethod(
     "plotTopMarkers",
     signature("seurat"),
     function(
         object,
-        topMarkers,
+        markers,
+        dimRed = c("tsne", "umap"),
         headerLevel = 2L,
         ...
     ) {
         validObject(object)
-        stopifnot(is(topMarkers, "grouped_df"))
-        stopifnot(.isSanitizedMarkers(topMarkers))
+        stopifnot(is(markers, "grouped_df"))
+        stopifnot(.isSanitizedMarkers(markers))
+        dimRed <- match.arg(dimRed)
         assertIsAHeaderLevel(headerLevel)
 
-        clusters <- levels(topMarkers[["cluster"]])
+        clusters <- levels(markers[["cluster"]])
         list <- pblapply(clusters, function(cluster) {
-            genes <- topMarkers %>%
-                .[.[["cluster"]] == cluster, , drop = FALSE] %>%
+            genes <- markers %>%
+                filter(cluster == !!cluster) %>%
                 pull("rowname")
             if (!length(genes)) {
                 return(invisible())
@@ -382,19 +382,30 @@ setMethod(
             if (length(genes) > 10L) {
                 warning("Maximum of 10 genes per cluster is recommended")
             }
+
             markdownHeader(
                 paste("Cluster", cluster),
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE
             )
-            subheaderLevel <- headerLevel + 1L
-            plotMarkers(
-                object = object,
-                genes = genes,
-                headerLevel = subheaderLevel,
-                ...
-            )
+
+            lapply(genes, function(gene) {
+                markdownHeader(
+                    object = gene,
+                    level = headerLevel + 1L,
+                    tabset = TRUE,
+                    asis = TRUE
+                )
+                p <- .plotMarkerDimRed(
+                    object = object,
+                    genes = gene,
+                    dimRed = dimRed,
+                    ...
+                )
+                show(p)
+                invisible(p)
+            })
         })
 
         invisible(list)
@@ -404,28 +415,23 @@ setMethod(
 
 
 #' @rdname plotMarker
-#' @param markers `grouped_df` of known marker genes.
 #' @export
-#' @examples
-#' # Let's plot the first known marker, as a quick example
-#' plotKnownMarkersDetected(
-#'     object = seurat_small,
-#'     markers = known_markers_small[1L, , drop = FALSE]
-#' )
 setMethod(
     "plotKnownMarkersDetected",
     signature("seurat"),
     function(
         object,
         markers,
+        dimRed = c("tsne", "umap"),
         headerLevel = 2L,
         ...
     ) {
         assert_has_rows(markers)
-        assertIsAHeaderLevel(headerLevel)
         stopifnot(is(markers, "grouped_df"))
         assert_has_rows(markers)
         assert_is_subset("cellType", colnames(markers))
+        dimRed <- match.arg(dimRed)
+        assertIsAHeaderLevel(headerLevel)
 
         cellTypes <- markers %>%
             pull("cellType") %>%
@@ -435,7 +441,7 @@ setMethod(
 
         list <- pblapply(cellTypes, function(cellType) {
             genes <- markers %>%
-                .[.[["cellType"]] == cellType, , drop = FALSE] %>%
+                filter(cellType == !!cellType) %>%
                 pull("geneName") %>%
                 na.omit() %>%
                 unique()
@@ -447,14 +453,23 @@ setMethod(
                 tabset = TRUE,
                 asis = TRUE
             )
-            subheaderLevel <- headerLevel + 1L
 
-            plotMarkers(
-                object = object,
-                genes = genes,
-                headerLevel = subheaderLevel,
-                ...
-            )
+            lapply(genes, function(gene) {
+                markdownHeader(
+                    object = gene,
+                    level = headerLevel + 1L,
+                    tabset = TRUE,
+                    asis = TRUE
+                )
+                p <- .plotMarkerDimRed(
+                    object = object,
+                    genes = gene,
+                    dimRed = dimRed,
+                    ...
+                )
+                show(p)
+                invisible(p)
+            })
         })
 
         invisible(list)

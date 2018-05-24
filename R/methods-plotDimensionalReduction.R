@@ -18,21 +18,24 @@
 #' @seealso
 #' - [Seurat::DimPlot()].
 #' - [UMAP GitHub repo](https://github.com/lmcinnes/umap).
-#' - [Satija Lab Mouse Cell Atlas clustering](https://satijalab.org/seurat/mca.html).
+#' - [Seurat Mouse Cell Atlas vignette](https://satijalab.org/seurat/mca.html).
 #'
 #' @return `ggplot`.
 #'
 #' @examples
 #' # seurat ====
-#' # t-SNE
-#' plotTSNE(seurat_small, dark = FALSE)
-#' plotTSNE(seurat_small, dark = TRUE)
+#' object <- seurat_small
 #'
-#' # PCA
-#' plotPCA(seurat_small)
+#' # t-SNE
+#' plotTSNE(object)
+#' plotTSNE(object, pointsAsNumbers = TRUE)
+#' plotTSNE(object, dark = TRUE)
 #'
 #' # UMAP
-#' plotUMAP(seurat_small)
+#' plotUMAP(object)
+#'
+#' # PCA
+#' plotPCA(object)
 NULL
 
 
@@ -42,14 +45,15 @@ NULL
     data,
     axes,
     interestingGroups = "ident",
-    color = scale_color_hue(),
+    color = NULL,
     pointsAsNumbers = FALSE,
-    pointSize = 0.5,
-    pointAlpha = 0.8,
+    pointSize = getOption("pointSize", 0.75),
+    pointAlpha = getOption("pointAlpha", 0.75),
     label = TRUE,
-    labelSize = 6L,
+    labelSize = getOption("labelSize", 6L),
     dark = FALSE,
     grid = TRUE,
+    legend = TRUE,
     aspectRatio = 1L,
     title = NULL
 ) {
@@ -65,6 +69,7 @@ NULL
     assert_is_a_bool(label)
     assert_is_a_number(labelSize)
     assert_is_a_bool(dark)
+    assert_is_a_bool(legend)
     assertIsAStringOrNULL(title)
 
     if (interestingGroups == "ident") {
@@ -99,6 +104,7 @@ NULL
     }
 
     if (isTRUE(pointsAsNumbers)) {
+        if (pointSize < 4L) pointSize <- 4L
         p <- p +
             geom_text(
                 mapping = aes_string(
@@ -108,13 +114,15 @@ NULL
                     color = colorCol
                 ),
                 alpha = pointAlpha,
-                size = pointSize
+                size = pointSize,
+                show.legend = legend
             )
     } else {
         p <- p +
             geom_point(
                 alpha = pointAlpha,
-                size = pointSize
+                size = pointSize,
+                show.legend = legend
             )
     }
 
@@ -160,14 +168,15 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = scale_color_hue(),
+        color = NULL,
         pointsAsNumbers = FALSE,
-        pointSize = 0.5,
-        pointAlpha = 0.8,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
         label = TRUE,
-        labelSize = 6L,
+        labelSize = getOption("labelSize", 6L),
         dark = FALSE,
         grid = TRUE,
+        legend = TRUE,
         aspectRatio = 1L,
         title = NULL
     ) {
@@ -184,6 +193,7 @@ setMethod(
             labelSize = labelSize,
             dark = dark,
             grid = grid,
+            legend = legend,
             aspectRatio = aspectRatio,
             title = title
         )
@@ -200,14 +210,15 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = scale_color_hue(),
+        color = NULL,
         pointsAsNumbers = FALSE,
-        pointSize = 0.5,
-        pointAlpha = 0.8,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
         label = TRUE,
-        labelSize = 6L,
+        labelSize = getOption("labelSize", 6L),
         dark = FALSE,
         grid = TRUE,
+        legend = TRUE,
         aspectRatio = 1L,
         title = NULL
     ) {
@@ -224,6 +235,7 @@ setMethod(
             labelSize = labelSize,
             dark = dark,
             grid = grid,
+            legend = legend,
             aspectRatio = aspectRatio,
             title = title
         )
@@ -240,14 +252,15 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = scale_color_hue(),
+        color = NULL,
         pointsAsNumbers = FALSE,
-        pointSize = 0.5,
-        pointAlpha = 0.8,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
         label = TRUE,
-        labelSize = 6L,
+        labelSize = getOption("labelSize", 6L),
         dark = FALSE,
         grid = TRUE,
+        legend = TRUE,
         aspectRatio = 1L,
         title = NULL
     ) {
@@ -264,6 +277,7 @@ setMethod(
             labelSize = labelSize,
             dark = dark,
             grid = grid,
+            legend = legend,
             aspectRatio = aspectRatio,
             title = title
         )

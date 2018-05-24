@@ -47,9 +47,6 @@ Plot UMI and Gene Correlation
 \examples{
 # SingleCellExperiment ====
 plotUMIsVsGenes(cellranger_small)
-
-# seurat ====
-plotUMIsVsGenes(Seurat::pbmc_small)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

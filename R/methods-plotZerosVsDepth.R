@@ -13,9 +13,6 @@
 #' @examples
 #' # SingleCellExperiment ====
 #' plotZerosVsDepth(cellranger_small)
-#'
-#' # seurat ====
-#' plotZerosVsDepth(Seurat::pbmc_small)
 NULL
 
 

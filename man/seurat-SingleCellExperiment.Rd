@@ -32,7 +32,7 @@
 
 \S4method{colnames}{seurat}(x)
 
-\S4method{counts}{seurat}(object, normalized = FALSE)
+\S4method{counts}{seurat}(object)
 
 \S4method{metadata}{seurat}(x)
 
@@ -66,9 +66,9 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 
 \item{x}{Primary object.}
 
-\item{normalized}{Normalized (\code{TRUE}) or raw (\code{FALSE}) counts.}
-
 \item{value}{Object to assign.}
+
+\item{normalized}{Normalized (\code{TRUE}) or raw (\code{FALSE}) counts.}
 }
 \value{
 Match \code{SummarizedExperiment} method return.

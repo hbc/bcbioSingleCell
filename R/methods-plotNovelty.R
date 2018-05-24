@@ -12,11 +12,7 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' plotNovelty(cellranger_small, geom = "histogram")
-#' plotNovelty(cellranger_small, geom = "ecdf")
-#'
-#' # seurat ====
-#' plotNovelty(seurat_small)
+#' plotNovelty(cellranger_small)
 NULL
 
 

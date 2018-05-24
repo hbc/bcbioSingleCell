@@ -45,17 +45,12 @@ color definitions are desired, we recommend using
 Plot Mitochondrial vs. Coding Counts
 }
 \examples{
-# bcbioSingleCell ====
-plotMitoVsCoding(indrops_small)
-
 # SingleCellExperiment ====
 plotMitoVsCoding(cellranger_small)
-
-# seurat ====
-plotMitoVsCoding(seurat_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{filterCells}}, \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},

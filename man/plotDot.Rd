@@ -6,9 +6,9 @@
 \alias{plotDot,seurat-method}
 \title{Plot Dot}
 \usage{
-\S4method{plotDot}{seurat}(object, genes, color = "auto", dark = FALSE,
-  grid = FALSE, colMin = -2.5, colMax = 2.5, dotMin = 0L,
-  dotScale = 6L)
+\S4method{plotDot}{seurat}(object, genes, color = scale_colour_viridis(begin =
+  1L, end = 0L), colMin = -2.5, colMax = 2.5, dotMin = 0L,
+  dotScale = 6L, legend = TRUE)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,11 +19,6 @@
 set to \code{NULL}, the default ggplot2 color palette will be used. If manual
 color definitions are desired, we recommend using
 \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
-
-\item{dark}{Plot against a dark background using
-\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
-
-\item{grid}{Show major grid lines but hide axis lines.}
 
 \item{colMin}{Minimum scaled average expression threshold. Everything
 smaller will be set to this.}
@@ -36,6 +31,8 @@ cell groups with less than this expressing the given gene will have no dot
 drawn.}
 
 \item{dotScale}{Scale the size of the points, similar to \code{cex}.}
+
+\item{legend}{Include plot legend.}
 }
 \value{
 \code{ggplot}.
@@ -45,13 +42,15 @@ Plot Dot
 }
 \examples{
 # seurat ====
-genes <- head(rownames(seurat_small))
-plotDot(seurat_small, genes = genes)
+object <- seurat_small
+genes <- head(rownames(object))
+plotDot(object, genes = genes)
 }
 \seealso{
 Modified version of \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}}.
 
-Other Gene Expression Functions: \code{\link{plotViolin}}
+Other Gene Expression Functions: \code{\link{plotGene}},
+  \code{\link{plotViolin}}
 }
 \author{
 Michael Steinbaugh

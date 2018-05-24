@@ -18,11 +18,14 @@
 #'
 #' @examples
 #' # grouped_df ====
-#' topMarkers(
+#' # Currently only works on `Seurat::FindAllMarkers()` return sanitized with
+#' # our `sanitizeMarkers()` function
+#' x <- topMarkers(
 #'     object = all_markers_small,
 #'     n = 2L,
 #'     direction = "positive"
 #' )
+#' head(x)
 NULL
 
 

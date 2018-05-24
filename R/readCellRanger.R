@@ -153,7 +153,6 @@ readCellRanger <- function(
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
     metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
-    # FIXME Include sample-level columns here
 
     # Cell to sample mappings
     # Check for multiplexed samples. CellRanger outputs these with a trailing

@@ -90,61 +90,43 @@ caller. It is currently considerably slower for large datasets than edgeR.
 
 \examples{
 # SingleCellExperiment ====
-sce <- cellranger_small
+object <- cellranger_small
 # Use S4 methods to get cells (colnames) of object
-numerator <- colnames(sce)[which(sce[["sampleName"]] == "proximal")]
+numerator <- colnames(object)[which(object[["sampleName"]] == "proximal")]
 glimpse(numerator)
-denominator <- colnames(sce)[which(sce[["sampleName"]] == "distal")]
+denominator <- colnames(object)[which(object[["sampleName"]] == "distal")]
 glimpse(denominator)
 
-# zinbwave-edgeR (fast, recommended)
 x <- diffExp(
-    object = cellranger_small,
+    object = object,
     numerator = numerator,
     denominator = denominator,
-    zeroWeights = "zinbwave",
-    caller = "edgeR"
 )
 class(x)
 head(x[["table"]])
 
-# zinbwave-DESeq2 (slower)
-\dontrun{
-x <- diffExp(
-    object = cellranger_small,
-    numerator = numerator,
-    denominator = denominator,
-    zeroWeights = "zinbwave",
-    caller = "DESeq2"
-)
-class(x)
-head(x)
-}
-
 # seurat ====
-# Expression in cluster 3 relative to cluster 2
 \dontrun{
-numerator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 3L)
-denominator <- Seurat::WhichCells(Seurat::pbmc_small, ident = 2L)
+# Expression in cluster 3 relative to cluster 2
+object <- Seurat::pbmc_small
+numerator <- Seurat::WhichCells(object, ident = 3L)
+denominator <- Seurat::WhichCells(object, ident = 2L)
 x <- diffExp(
-    object = Seurat::pbmc_small,
+    object = object,
     numerator = numerator,
     denominator = denominator,
-    caller = "edgeR",
     minCellsPerGene = 5L,
     minCountsPerCell = 5L
 )
-class(x)
-head(x[["table"]])
 }
 }
 \seealso{
 Consult the following sources for more information:
 \itemize{
-\item \href{https://doi.org/10.1186/s13059-018-1406-4}{Observation weights unlock bulk RNA-seq tools for zero inflation and single-cell applications}.
-\item \href{https://goo.gl/4rTK1w}{zingeR vignette}.
+\item \href{https://doi.org/10.1186/s13059-018-1406-4}{zinbwave paper}.
 \item \href{https://bit.ly/2wtDdpS}{zinbwave vignette}.
 \item \href{https://github.com/mikelove/zinbwave-deseq2}{zinbwave-DESeq2 workflow}.
+\item \href{https://goo.gl/4rTK1w}{zingeR vignette}.
 }
 
 \itemize{

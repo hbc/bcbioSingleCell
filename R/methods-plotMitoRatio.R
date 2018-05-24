@@ -9,14 +9,8 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' plotMitoRatio(indrops_small)
-#'
 #' # SingleCellExperiment ====
 #' plotMitoRatio(cellranger_small)
-#'
-#' # seurat ====
-#' plotMitoRatio(seurat_small)
 NULL
 
 

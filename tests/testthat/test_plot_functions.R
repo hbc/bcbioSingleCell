@@ -44,15 +44,45 @@ test_that("plotGenesPerCell : seurat", {
 
 
 
-# plotFeatureTSNE ==============================================================
+# plotFeature ==================================================================
 test_that("plotFeatureTSNE : seurat", {
     p <- plotFeatureTSNE(seurat_small, features = c("PC1", "PC2"))
     expect_is(p, "ggplot")
 })
 
+test_that("plotFeatureUMAP : seurat", {
+    p <- plotFeatureUMAP(seurat_small, features = c("PC1", "PC2"))
+    expect_is(p, "ggplot")
+})
 
 
-# plotKnownMarkersDetected =====================================================
+
+# plotMarker ===================================================================
+object <- seurat_small
+genes <- head(rownames(object))
+
+test_that("plotMarkerTSNE : seurat", {
+    args <- methodFormals("plotMarkerTSNE", "seurat") %>%
+        .[["expression"]] %>%
+        as.character() %>%
+        .[-1L]
+    invisible(lapply(args, function(arg) {
+        p <- plotMarkerTSNE(object, genes = genes, expression = arg)
+        expect_is(p, "ggplot")
+    }))
+})
+
+test_that("plotMarkerUMAP : seurat", {
+    args <- methodFormals("plotMarkerUMAP", "seurat") %>%
+        .[["expression"]] %>%
+        as.character() %>%
+        .[-1L]
+    invisible(lapply(args, function(arg) {
+        p <- plotMarkerUMAP(object, genes = genes, expression = arg)
+        expect_is(p, "ggplot")
+    }))
+})
+
 test_that("plotKnownMarkersDetected : seurat", {
     invisible(capture.output(
         p <- plotKnownMarkersDetected(
@@ -63,37 +93,15 @@ test_that("plotKnownMarkersDetected : seurat", {
     expect_is(p, "list")
 })
 
-
-
-# plotMarkerTSNE ===============================================================
-test_that("plotMarkerTSNE : seurat", {
-    genes <- rownames(counts(Seurat::pbmc_small))[[1L]]
-    args <- methodFormals("plotMarkerTSNE", "seurat") %>%
-        .[["expression"]] %>%
-        as.character() %>%
-        .[-1L]
-    invisible(lapply(args, function(arg) {
-        p <- plotMarkerTSNE(Seurat::pbmc_small, genes = genes, expression = arg)
-        expect_is(p, "ggplot")
-    }))
-})
-
-
-
-# plotMarkers ==================================================================
-test_that("plotMarkers : seurat", {
-    genes <- head(rownames(seurat_small), n = 2L)
+test_that("plotTopMarkers : seurat", {
     invisible(capture.output(
-        plotlist <- plotMarkers(
+        x <- plotTopMarkers(
             object = seurat_small,
-            genes = genes
+            markers = topMarkers(all_markers_small, n = 1L)
         )
     ))
-    expect_is(plotlist, "list")
-    expect_identical(length(plotlist), 2L)
-    expect_identical(names(plotlist), names(genes))
-    p <- plotlist[[1L]]
-    expect_is(p, "ggplot")
+    expect_is(x, "list")
+    expect_is(x[[1L]][[1L]], "ggplot")
 })
 
 
@@ -248,24 +256,17 @@ test_that("plotReadsPerCell : bcbioSingleCell", {
 
 
 
-# plotTopMarkers ===============================================================
-test_that("plotTopMarkers : seurat", {
-    top <- topMarkers(all_markers_small, n = 1L)
-    expect_is(top, "grouped_df")
-    expect_identical(nrow(top), 5L)
-    top <- top[seq_len(2L), ]
-    invisible(capture.output(
-        x <- plotTopMarkers(seurat_small, topMarkers = top)
-    ))
-    expect_is(x, "list")
-    expect_is(x[[1L]][[1L]], "ggplot")
+# plotTSNE =====================================================================
+test_that("plotTSNE : seurat", {
+    p <- plotTSNE(Seurat::pbmc_small)
+    expect_is(p, "ggplot")
 })
 
 
 
-# plotTSNE =====================================================================
-test_that("plotTSNE : seurat", {
-    p <- plotTSNE(Seurat::pbmc_small)
+# plotUMAP =====================================================================
+test_that("plotUMAP : seurat", {
+    p <- plotTSNE(seurat_small)
     expect_is(p, "ggplot")
 })
 

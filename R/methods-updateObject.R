@@ -5,7 +5,7 @@
 #' originally loaded into R.
 #'
 #' @name updateObject
-#' @family S4 Class Definition
+#' @family S4 Object
 #' @author Michael Steinbaugh
 #'
 #' @importFrom BiocGenerics updateObject
@@ -15,6 +15,7 @@
 #' @return `bcbioRNASeq`.
 #'
 #' @examples
+#' # bcbioSingleCell ====
 #' updateObject(indrops_small)
 NULL
 
@@ -78,12 +79,6 @@ setMethod(
 
         # Metadata =============================================================
         metadata <- metadata(sce)
-
-        # isSpike
-        # TODO Add support for updating GRanges using emptyRanges
-
-        # unannotatedRows
-        # TODO Check current conventions and update here if necessary
 
         # version
         metadata[["previousVersion"]] <- metadata[["version"]]

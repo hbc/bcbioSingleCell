@@ -31,143 +31,119 @@ NULL
 
 
 
-# Constructors =================================================================
-.plotPCElbow.seurat <- function(  # nolint
-    object,
-    minSD = 1L,
-    minPct = 0.025,
-    maxCumPct = 0.9,
-    trans = c("identity", "sqrt"),
-    plot = TRUE
-) {
-    assert_is_a_number(minSD)
-    assert_all_are_positive(minSD)
-    assert_is_a_number(minPct)
-    assert_is_a_number(maxCumPct)
-    assert_all_are_in_left_open_range(
-        x = c(minPct, maxCumPct),
-        lower = 0L,
-        upper = 1L
-    )
-    trans <- match.arg(trans)
-    assert_is_a_bool(plot)
-
-    # dr: dimensionality reduction
-    # sdev: standard deviation
-    sdev <- object@dr[["pca"]]@sdev
-    assert_is_numeric(sdev)
-    pct <- sdev ^ 2L / sum(sdev ^ 2L)
-    cumsum <- cumsum(pct)
-
-    data <- tibble(
-        "pc" = seq_along(sdev),
-        "sdev" = sdev,
-        "pct" = pct,
-        "cumsum" = cumsum
-    )
-
-    minSDCutoff <- data %>%
-        .[.[["sdev"]] >= minSD, "pc"] %>%
-        max()
-    minPctCutoff <- data %>%
-        .[.[["pct"]] >= minPct, "pc"] %>%
-        max()
-    maxCumPctCutoff <- data %>%
-        .[.[["cumsum"]] <= maxCumPct, "pc"] %>%
-        max()
-
-    # Pick the smallest value of the cutoffs
-    cutoff <- min(minSDCutoff, minPctCutoff, maxCumPctCutoff)
-
-    # Standard deviation =======================================================
-    ggelbow <- ggplot(
-        data = data,
-        mapping = aes_string(x = "pc", y = "sdev")
-    ) +
-        geom_point() +
-        geom_line() +
-        geom_hline(
-            alpha = 0.5,
-            color = "orange",
-            size = 1.5,
-            yintercept = minSD
-        ) +
-        bcbio_geom_abline(xintercept = cutoff) +
-        labs(x = "pc", y = "std dev") +
-        expand_limits(y = 0L) +
-        scale_y_continuous(trans = trans)
-
-    # Percent standard deviation ===============================================
-    ggpct <- ggplot(
-        data = data,
-        mapping = aes_string(x = "pc", y = "pct")
-    ) +
-        geom_point() +
-        geom_line() +
-        geom_hline(
-            alpha = 0.5,
-            color = "orange",
-            size = 1.5,
-            yintercept = minPct
-        ) +
-        bcbio_geom_abline(xintercept = cutoff) +
-        labs(x = "pc", y = "% std dev") +
-        expand_limits(y = 0L) +
-        scale_y_continuous(labels = percent, trans = trans)
-
-    # Cumulative percent standard deviation ====================================
-    ggcumsum <- ggplot(
-        data = data,
-        mapping = aes_string(x = "pc", y = "cumsum")
-    ) +
-        geom_point() +
-        geom_line() +
-        geom_hline(
-            alpha = 0.5,
-            color = "orange",
-            size = 1.5,
-            yintercept = maxCumPct
-        ) +
-        bcbio_geom_abline(xintercept = cutoff) +
-        labs(x = "pc", y = "cum % std dev") +
-        expand_limits(y = c(0L, 1L)) +
-        scale_y_continuous(labels = percent, trans = trans)
-
-    # Coordinates are relative to lower left corner
-    p <- ggdraw() +
-        draw_plot(
-            plot = ggelbow,
-            x = 0L,
-            y = 0.5,
-            width = 1L,
-            height = 0.5
-        ) +
-        draw_plot(
-            plot = ggpct,
-            x = 0L,
-            y = 0L,
-            width = 0.5,
-            height = 0.5
-        ) +
-        draw_plot(
-            plot = ggcumsum,
-            x = 0.5,
-            y = 0L,
-            width = 0.5,
-            height = 0.5
-        )
-    show(p)
-
-    invisible(seq_len(cutoff))
-}
-
-
-
 # Methods ======================================================================
 #' @rdname plotPCElbow
 #' @export
 setMethod(
     "plotPCElbow",
     signature("seurat"),
-    .plotPCElbow.seurat
+    function(
+        object,
+        minSD = 1L,
+        minPct = 0.025,
+        maxCumPct = 0.9,
+        trans = c("identity", "sqrt"),
+        plot = TRUE
+    ) {
+        assert_is_a_number(minSD)
+        assert_all_are_positive(minSD)
+        assert_is_a_number(minPct)
+        assert_is_a_number(maxCumPct)
+        assert_all_are_in_left_open_range(
+            x = c(minPct, maxCumPct),
+            lower = 0L,
+            upper = 1L
+        )
+        trans <- match.arg(trans)
+        assert_is_a_bool(plot)
+
+        # dr: dimensionality reduction
+        # sdev: standard deviation
+        sdev <- object@dr[["pca"]]@sdev
+        assert_is_numeric(sdev)
+        pct <- sdev ^ 2L / sum(sdev ^ 2L)
+        cumsum <- cumsum(pct)
+
+        data <- tibble(
+            "pc" = seq_along(sdev),
+            "sdev" = sdev,
+            "pct" = pct,
+            "cumsum" = cumsum
+        )
+
+        minSDCutoff <- data %>%
+            .[.[["sdev"]] >= minSD, "pc"] %>%
+            max()
+        minPctCutoff <- data %>%
+            .[.[["pct"]] >= minPct, "pc"] %>%
+            max()
+        maxCumPctCutoff <- data %>%
+            .[.[["cumsum"]] <= maxCumPct, "pc"] %>%
+            max()
+
+        # Pick the smallest value of the cutoffs
+        cutoff <- min(minSDCutoff, minPctCutoff, maxCumPctCutoff)
+
+        # Standard deviation =======================================================
+        ggsd <- ggplot(
+            data = data,
+            mapping = aes_string(x = "pc", y = "sdev")
+        ) +
+            geom_hline(
+                color = "orange",
+                size = 1L,
+                yintercept = minSD
+            ) +
+            geom_line() +
+            geom_point() +
+            bcbio_geom_abline(xintercept = cutoff) +
+            labs(x = "pc", y = "std dev") +
+            expand_limits(y = 0L) +
+            scale_y_continuous(trans = trans)
+
+        # Percent standard deviation ===============================================
+        ggpct <- ggplot(
+            data = data,
+            mapping = aes_string(x = "pc", y = "pct")
+        ) +
+            geom_hline(
+                color = "orange",
+                size = 1L,
+                yintercept = minPct
+            ) +
+            geom_line() +
+            geom_point() +
+            bcbio_geom_abline(xintercept = cutoff) +
+            labs(x = "pc", y = "% std dev") +
+            expand_limits(y = 0L) +
+            scale_y_continuous(labels = percent, trans = trans)
+
+        # Cumulative percent standard deviation ====================================
+        ggcumsum <- ggplot(
+            data = data,
+            mapping = aes_string(x = "pc", y = "cumsum")
+        ) +
+            geom_hline(
+                color = "orange",
+                size = 1L,
+                yintercept = maxCumPct
+            ) +
+            geom_line() +
+            geom_point() +
+            bcbio_geom_abline(xintercept = cutoff) +
+            labs(x = "pc", y = "cum % std dev") +
+            expand_limits(y = c(0L, 1L)) +
+            scale_y_continuous(labels = percent, trans = trans)
+
+        plotlist <- list(
+            sd = ggsd,
+            pct = ggpct,
+            cumsum = ggcumsum
+        )
+
+        p <- plot_grid(plotlist = plotlist, labels = "AUTO")
+        show(p)
+
+        invisible(seq_len(cutoff))
+    }
 )

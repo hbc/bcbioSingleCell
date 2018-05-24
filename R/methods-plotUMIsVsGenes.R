@@ -11,9 +11,6 @@
 #' @examples
 #' # SingleCellExperiment ====
 #' plotUMIsVsGenes(cellranger_small)
-#'
-#' # seurat ====
-#' plotUMIsVsGenes(Seurat::pbmc_small)
 NULL
 
 

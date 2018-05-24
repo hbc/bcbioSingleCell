@@ -1,3 +1,46 @@
+# bcbioSingleCell 0.1.11 (2018-05-23)
+
+## New functions
+
+- UMAP is now supported. This functionality is provided in: `plotUMAP()`,
+  `plotMarkerUMAP()`, and `plotFeatureUMAP()`. Corresponding fetch functions,
+  `fetchUMAPData()` and `fetchUMAPExpressionData()`, have also been added.
+- `plotGene()`: Added `seurat` method support. If advanced customization of
+  the plot is needed, use `plotDot()` or `plotViolin()` instead, or refer to the
+  [Seurat][] documentation for alternates.
+
+## Major changes
+
+- Dimensional reduction and marker plots no longer use dark mode by default.
+  The default color palette support for marker plots has been improved to
+  consistently use viridis.
+- `diffExp()`: improved internal code to work directly on
+  `SingleCellExperiment`, removing the need to pass `design` and `group`
+  parameters internally. Also added unit testing against [zinbwave][],
+  [zingeR][], and [edgeR][] support. [DESeq2][] is supported but runs slowly.
+- Reworked `plotFeature()` and `plotMarker()` family of functions. Improved the
+  color palette support when `dark = FALSE`, now using a flipped viridis plasma
+  color palette.
+- `aggregateReplicates()` function has been reworked to return a
+  `SingleCellExperiment` object instead of `bcbioSingleCell`. The v0.2.4
+  update of [bcbioRNASeq][] behaves similarly with this generic.
+
+## Minor changes
+
+- Reworked the internal handling of some `seurat` `SingleCellExperiment` method
+  support, using `as(x, "SingleCellExperiment")` internally, which uses the
+  new `Seurat::Convert()` function.
+- Made some previously deprecated functions now defunct: `plotClusters()`,
+  `plotTSNEExpressionData()`, `loadSingleCellRun()`, `darkTheme()`,
+  `pcCutoff()`, `quantileHeatmap()`, `plotKnownMarkers()`, `readMarkers()`,
+  `readMarkersFile()`.
+- Made `plotFeatures()`, `plotMarker()`, and `plotMarkers()` functions defunct.
+- `plotPCElbow()` now returns a plot grid.
+- `sanitizeMarkers()`: improved internal code for supported bcbio stashed
+  metadata, including `rowRanges`.
+
+
+
 # bcbioSingleCell 0.1.10 (2018-05-19)
 
 ## Minor changes

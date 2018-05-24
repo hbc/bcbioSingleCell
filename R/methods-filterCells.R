@@ -8,7 +8,7 @@
 #' [sampleData()]).
 #'
 #' @name filterCells
-#' @family Data Functions
+#' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
@@ -27,26 +27,25 @@
 #'   [metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' show(indrops_small)
-#' x <- filterCells(indrops_small, minGenes = 0L)
-#' show(x)
-#'
 #' # SingleCellExperiment ====
-#' show(cellranger_small)
-#' x <- filterCells(cellranger_small, minNovelty = 0L)
+#' object <- cellranger_small
+#' show(object)
+#' sampleNames(object)
+#'
+#' x <- filterCells(object, minNovelty = 0L)
 #' show(x)
+#' metadata(x)$filterParams
 #'
 #' # Per sample cutoffs
-#' sampleNames(cellranger_small)
 #' x <- filterCells(
-#'     object = cellranger_small,
+#'     object = object,
 #'     minUMIs = c(
 #'         distal = 100,
 #'         proximal = 200
 #'     )
 #' )
-#' x
+#' show(x)
+#' metadata(x)$filterParams
 NULL
 
 

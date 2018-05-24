@@ -38,11 +38,13 @@ print(x)
 }
 \seealso{
 \itemize{
+\item \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
+\item \code{\link[Seurat:Convert]{Seurat::Convert()}}.
 \item \code{\link[methods:as]{methods::as()}}.
 \item \code{\link[methods:coerce]{methods::coerce()}}.
 }
 
-Other S4 Class Definition: \code{\link{bcbioSingleCell}},
+Other S4 Object: \code{\link{bcbioSingleCell}},
   \code{\link{show}}, \code{\link{subset}},
   \code{\link{updateObject}}
 }

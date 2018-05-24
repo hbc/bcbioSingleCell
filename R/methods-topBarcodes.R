@@ -7,35 +7,14 @@
 #' @inheritParams general
 #' @param n Number of barcodes to return per sample.
 #'
-#' @return `data.frame`.
+#' @return `grouped_df` containing [metrics()] return. Grouped by `sampleID`
+#'   and arranged by `nUMI` column in descending order.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' topBarcodes(indrops_small) %>% glimpse()
-#'
-#' # seurat ====
-#' topBarcodes(Seurat::pbmc_small) %>% glimpse()
+#' # SingleCellExperiment ====
+#' x <- topBarcodes(cellranger_small)
+#' glimpse(x)
 NULL
-
-
-
-# Constructors =================================================================
-.topBarcodes <- function(object, n = 10L) {
-    col <- "nUMI"
-    metrics <- metrics(object)
-    if (!col %in% colnames(metrics)) {
-        warning(paste0("`", col, "` column missing from metrics"))
-        return(NULL)
-    }
-    metrics %>%
-        rownames_to_column() %>%
-        as_tibble() %>%
-        .[order(.[[col]], decreasing = TRUE), , drop = FALSE] %>%
-        # Take the top rows by using slice
-        dplyr::slice(1L:n) %>%
-        as.data.frame() %>%
-        column_to_rownames()
-}
 
 
 
@@ -44,8 +23,17 @@ NULL
 #' @export
 setMethod(
     "topBarcodes",
-    signature("bcbioSingleCell"),
-    .topBarcodes
+    signature("SingleCellExperiment"),
+    function(object, n = 10L) {
+        validObject(object)
+        metrics <- metrics(object)
+        assert_is_subset("nUMI", colnames(metrics))
+        metrics %>%
+            rownames_to_column("cellID") %>%
+            arrange(desc(!!sym("nUMI"))) %>%
+            group_by(!!sym("sampleID")) %>%
+            slice(seq_len(n))
+    }
 )
 
 
@@ -56,5 +44,5 @@ setMethod(
 setMethod(
     "topBarcodes",
     signature("seurat"),
-    .topBarcodes
+    getMethod("topBarcodes", "SingleCellExperiment")
 )

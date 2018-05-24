@@ -3,16 +3,27 @@
 \docType{methods}
 \name{plotFeatureTSNE}
 \alias{plotFeatureTSNE}
+\alias{plotFeatureUMAP}
 \alias{plotFeature}
 \alias{plotFeatureTSNE,seurat-method}
-\title{Plot Feature t-SNE}
+\alias{plotFeatureUMAP,seurat-method}
+\title{Plot Feature}
 \usage{
 plotFeatureTSNE(object, ...)
 
-\S4method{plotFeatureTSNE}{seurat}(object, features, color = "auto",
-  pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = FALSE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
-  return = c("ggplot", "list"))
+plotFeatureUMAP(object, ...)
+
+\S4method{plotFeatureTSNE}{seurat}(object, features, color = NULL,
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  legend = FALSE, aspectRatio = 1L)
+
+\S4method{plotFeatureUMAP}{seurat}(object, features, color = NULL,
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  legend = FALSE, aspectRatio = 1L)
 }
 \arguments{
 \item{object}{Object.}
@@ -41,31 +52,26 @@ the dataset, and some cells can be masked.}
 
 \item{grid}{Show major grid lines but hide axis lines.}
 
-\item{legend}{Show legends in paneled plots. Defaults to \code{FALSE} because
-typically these look too busy and the legends can get cut off.}
+\item{legend}{Include plot legend.}
 
 \item{aspectRatio}{Aspect ratio.}
-
-\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
-to the first argument in the vector.}
 }
 \value{
 \code{ggplot} or \code{list}.
 }
 \description{
-Plot Feature t-SNE
+Plot Feature
 }
 \examples{
 # seurat ====
-object <- Seurat::pbmc_small
-features <- c("nUMI", "PC1")
-plotFeatureTSNE(object, features = features)
-plotFeatureTSNE(
-    object = object,
-    features = features,
-    dark = FALSE,
-    grid = FALSE
-)
+object <- seurat_small
+features <- c("nUMI", "nGene", "PC1", "PC2")
+
+# t-SNE
+plotFeatureTSNE(object, features)
+
+# UMAP
+plotFeatureUMAP(object, features)
 }
 \seealso{
 \code{\link[Seurat:FeaturePlot]{Seurat::FeaturePlot()}}.

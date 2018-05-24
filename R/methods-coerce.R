@@ -2,12 +2,14 @@
 #'
 #' @name coerce
 #' @aliases as
-#' @family S4 Class Definition
+#' @family S4 Object
 #' @author Michael Steinbaugh
 #'
 #' @inherit bcbioBase::coerce
 #'
 #' @seealso
+#' - [Seurat::CreateSeuratObject()].
+#' - [Seurat::Convert()].
 #' - [methods::as()].
 #' - [methods::coerce()].
 NULL

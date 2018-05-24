@@ -24,11 +24,11 @@
 #'
 #' @examples
 #' # grouped_df ====
-#' knownMarkersDetected(
+#' x <- knownMarkersDetected(
 #'     object = all_markers_small,
 #'     known = cellTypeMarkers[["homoSapiens"]]
-#' ) %>%
-#'     glimpse()
+#' )
+#' head(x)
 NULL
 
 

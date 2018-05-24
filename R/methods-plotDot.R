@@ -22,8 +22,9 @@
 #'
 #' @examples
 #' # seurat ====
-#' genes <- head(rownames(seurat_small))
-#' plotDot(seurat_small, genes = genes)
+#' object <- seurat_small
+#' genes <- head(rownames(object))
+#' plotDot(object, genes = genes)
 NULL
 
 
@@ -59,13 +60,12 @@ setMethod(
     function(
         object,
         genes,
-        color = "auto",
-        dark = FALSE,
-        grid = FALSE,
+        color = scale_colour_viridis(begin = 1L, end = 0L),
         colMin = -2.5,
         colMax = 2.5,
         dotMin = 0L,
-        dotScale = 6L
+        dotScale = 6L,
+        legend = TRUE
     ) {
         assert_is_character(genes)
         assert_is_a_number(colMin)
@@ -107,28 +107,10 @@ setMethod(
         ) +
             geom_point(
                 mapping = aes_string(color = "avgExpScale", size = "pctExp"),
-                show.legend = FALSE
+                show.legend = legend
             ) +
             scale_radius(range = c(0L, dotScale)) +
-            labs(x = "gene", y = "ident")
-
-        if (isTRUE(dark)) {
-            p <- p + theme_midnight(grid = grid)
-            if (color == "auto") {
-                color <- scale_color_gradient(
-                    low = "gray10",
-                    high = "white"
-                )
-            }
-        } else {
-            p <- p + theme_paperwhite(grid = grid)
-            if (color == "auto") {
-                color <- scale_color_gradient(
-                    low = "gray90",
-                    high = "black"
-                )
-            }
-        }
+            labs(x = NULL, y = NULL)
 
         if (is(color, "ScaleContinuous")) {
             p <- p + color

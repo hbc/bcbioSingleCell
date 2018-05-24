@@ -16,19 +16,25 @@ plotTSNE(object, ...)
 plotUMAP(object, ...)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
-  color = scale_color_hue(), pointsAsNumbers = FALSE, pointSize = 0.5,
-  pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = FALSE,
-  grid = TRUE, aspectRatio = 1L, title = NULL)
+  color = NULL, pointsAsNumbers = FALSE,
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  legend = TRUE, aspectRatio = 1L, title = NULL)
 
 \S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
-  color = scale_color_hue(), pointsAsNumbers = FALSE, pointSize = 0.5,
-  pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = FALSE,
-  grid = TRUE, aspectRatio = 1L, title = NULL)
+  color = NULL, pointsAsNumbers = FALSE,
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  legend = TRUE, aspectRatio = 1L, title = NULL)
 
 \S4method{plotUMAP}{seurat}(object, interestingGroups = "ident",
-  color = scale_color_hue(), pointsAsNumbers = FALSE, pointSize = 0.5,
-  pointAlpha = 0.8, label = TRUE, labelSize = 6L, dark = FALSE,
-  grid = TRUE, aspectRatio = 1L, title = NULL)
+  color = NULL, pointsAsNumbers = FALSE,
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  legend = TRUE, aspectRatio = 1L, title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -59,6 +65,8 @@ the dataset, and some cells can be masked.}
 
 \item{grid}{Show major grid lines but hide axis lines.}
 
+\item{legend}{Include plot legend.}
+
 \item{aspectRatio}{Aspect ratio.}
 
 \item{title}{Plot title.}
@@ -79,21 +87,24 @@ installing this with conda: \code{conda install -c conda-forge umap-learn}.
 }
 \examples{
 # seurat ====
-# t-SNE
-plotTSNE(seurat_small, dark = FALSE)
-plotTSNE(seurat_small, dark = TRUE)
+object <- seurat_small
 
-# PCA
-plotPCA(seurat_small)
+# t-SNE
+plotTSNE(object)
+plotTSNE(object, pointsAsNumbers = TRUE)
+plotTSNE(object, dark = TRUE)
 
 # UMAP
-plotUMAP(seurat_small)
+plotUMAP(object)
+
+# PCA
+plotPCA(object)
 }
 \seealso{
 \itemize{
 \item \code{\link[Seurat:DimPlot]{Seurat::DimPlot()}}.
 \item \href{https://github.com/lmcinnes/umap}{UMAP GitHub repo}.
-\item \href{https://satijalab.org/seurat/mca.html}{Satija Lab Mouse Cell Atlas clustering}.
+\item \href{https://satijalab.org/seurat/mca.html}{Seurat Mouse Cell Atlas vignette}.
 }
 
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},

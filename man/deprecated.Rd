@@ -2,42 +2,14 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
-\alias{plotClusters}
-\alias{plotTSNEExpressionData}
-\alias{loadSingleCellRun}
-\alias{plotFeatures}
-\alias{darkTheme}
-\alias{pcCutoff}
-\alias{quantileHeatmap}
-\alias{plotKnownMarkers}
-\alias{readMarkers}
-\alias{readMarkersFile}
 \alias{calculateMetrics}
 \alias{readCellTypeMarkersFile}
 \alias{inflectionPoint}
 \alias{plotCumulativeUMIsPerCell}
+\alias{loadCellRanger}
+\alias{loadSingleCell}
 \title{Deprecated Functions}
 \usage{
-plotClusters(...)
-
-plotTSNEExpressionData(...)
-
-loadSingleCellRun(...)
-
-plotFeatures(object, features, ...)
-
-darkTheme(...)
-
-pcCutoff(...)
-
-quantileHeatmap(...)
-
-plotKnownMarkers(object, knownMarkers, ...)
-
-readMarkers(...)
-
-readMarkersFile(...)
-
 calculateMetrics(...)
 
 readCellTypeMarkersFile(...)
@@ -45,14 +17,16 @@ readCellTypeMarkersFile(...)
 inflectionPoint(...)
 
 plotCumulativeUMIsPerCell(...)
+
+loadCellRanger(...)
+
+loadSingleCell(...)
 }
 \arguments{
 \item{...}{Additional arguments.}
-
-\item{object}{Object.}
 }
 \value{
-\code{\link[=.Defunct]{.Defunct()}} or \code{\link[=.Deprecated]{.Deprecated()}}.
+\code{\link[=.Deprecated]{.Deprecated()}}.
 }
 \description{
 Deprecated Functions

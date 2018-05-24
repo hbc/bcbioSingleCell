@@ -14,7 +14,8 @@
 #'
 #' @examples
 #' # grouped_df ====
-#' cellTypesPerCluster(known_markers_small) %>% glimpse()
+#' x <- cellTypesPerCluster(known_markers_small)
+#' glimpse(x)
 NULL
 
 

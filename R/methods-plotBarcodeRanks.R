@@ -13,9 +13,6 @@
 #' @examples
 #' # SingleCellExperiment ====
 #' plotBarcodeRanks(cellranger_small)
-#'
-#' # seurat ====
-#' plotBarcodeRanks(seurat_small)
 NULL
 
 
@@ -116,7 +113,7 @@ setMethod(
         # Sort the plots by sample name
         plotlist <- plotlist[sort(names(plotlist))]
 
-        plot_grid(plotlist = plotlist)
+        plot_grid(plotlist = plotlist, labels = "AUTO")
     }
 )
 

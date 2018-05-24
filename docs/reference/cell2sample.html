@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
       </span>
     </div>
 
@@ -139,18 +139,17 @@ barcode IDs as the names.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code><a href='fetchData.html'>fetchGeneData</a></code>, <code>filterCells</code>,
+  <code><a href='fetchData.html'>fetchGeneData</a></code>,
   <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
-  <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
+  <code>metricsPerSample</code>, <code><a href='sampleData.html'>sampleData</a></code>,
   <code><a href='selectSamples.html'>selectSamples</a></code>,
   <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='fu'>cell2sample</span>(<span class='no'>indrops_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>table</span>()</div><div class='output co'>#&gt; .
-#&gt; multiplexed_AAAAAAAA 
-#&gt;                  500 </div><div class='input'><span class='fu'>cell2sample</span>(<span class='no'>cellranger_small</span>) <span class='kw'>%&gt;%</span> <span class='fu'>table</span>()</div><div class='output co'>#&gt; .
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>cell2sample</span>(<span class='no'>cellranger_small</span>)
+<span class='fu'>table</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; x
 #&gt; aggregation_1 aggregation_2 
 #&gt;           351           149 </div></pre>
   </div>

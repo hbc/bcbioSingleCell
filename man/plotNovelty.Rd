@@ -25,8 +25,8 @@ plotNovelty(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} internally and defaults to the
-first argument in the vector.}
+\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first argument
+in the vector.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
@@ -50,14 +50,11 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 }
 \examples{
 # SingleCellExperiment ====
-plotNovelty(cellranger_small, geom = "histogram")
-plotNovelty(cellranger_small, geom = "ecdf")
-
-# seurat ====
-plotNovelty(seurat_small)
+plotNovelty(cellranger_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
+  \code{\link{filterCells}}, \code{\link{metrics}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},

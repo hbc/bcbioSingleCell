@@ -20,10 +20,11 @@ information metadata is preserved from the time when the bcbio data was
 originally loaded into R.
 }
 \examples{
+# bcbioSingleCell ====
 updateObject(indrops_small)
 }
 \seealso{
-Other S4 Class Definition: \code{\link{bcbioSingleCell}},
+Other S4 Object: \code{\link{bcbioSingleCell}},
   \code{\link{coerce}}, \code{\link{show}},
   \code{\link{subset}}
 }
