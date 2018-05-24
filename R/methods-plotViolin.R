@@ -13,9 +13,6 @@
 #' # seurat ====
 #' object <- Seurat::pbmc_small
 #' genes <- head(rownames(object), 4L)
-#' print(genes)
-#'
-#' # grid
 #' plotViolin(object, genes = genes)
 NULL
 
