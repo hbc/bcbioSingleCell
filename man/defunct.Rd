@@ -12,7 +12,6 @@
 \alias{readMarkers}
 \alias{readMarkersFile}
 \alias{plotFeatures}
-\alias{plotMarker}
 \alias{plotMarkers}
 \title{Defunct Functions}
 \usage{
@@ -35,8 +34,6 @@ readMarkers(...)
 readMarkersFile(...)
 
 plotFeatures(...)
-
-plotMarker(...)
 
 plotMarkers(...)
 }

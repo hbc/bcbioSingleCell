@@ -167,7 +167,8 @@ plotFeatures <- function(...) {
 
 
 
-#' @rdname defunct
+#' @rdname plotMarker
+#' @usage NULL
 #' @export
 plotMarker <- function(...) {
     .Defunct("plotMarkerTSNE")
