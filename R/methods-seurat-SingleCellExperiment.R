@@ -79,8 +79,36 @@ setMethod(
     "metadata",
     signature("seurat"),
     function(x) {
+        stash <- bcbio(x, "metadata")
+        if (!is.null(stash)) {
+            message("Using bcbio stashed metadata")
+            return(stash)
+        }
         x <- as(x, "SingleCellExperiment")
         metadata(x)
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @seealso `getMethod("metadata<-", "Annotated")`
+#' @export
+setMethod(
+    "metadata<-",
+    signature(
+        x = "seurat",
+        value = "ANY"
+    ),
+    function(x, value) {
+        if (!is.list(value)) {
+            stop("replacement 'metadata' value must be a list")
+        }
+        if (!length(value)) {
+            names(value) <- NULL
+        }
+        bcbio(x, "metadata") <- value
+        x
     }
 )
 
@@ -92,7 +120,9 @@ setMethod(
     "rowData",
     signature("seurat"),
     function(x) {
+        rr <- rowRanges(x)
         x <- as(x, "SingleCellExperiment")
+        rowRanges(x) <- rr
         rowData(x)
     }
 )
@@ -105,6 +135,13 @@ setMethod(
     "rowRanges",
     signature("seurat"),
     function(x) {
+        stash <- bcbio(x, "rowRanges")
+        x <- as(x, "SingleCellExperiment")
+        if (is(stash, "GRanges")) {
+            assert_are_identical(names(stash), rownames(x))
+            message("Using bcbio stashed rowRanges")
+            return(stash)
+        }
         x <- as(x, "SingleCellExperiment")
         rowRanges(x)
     }

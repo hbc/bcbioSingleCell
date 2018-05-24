@@ -19,7 +19,7 @@
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
 #'   spikeNames
 #' @importFrom SummarizedExperiment assay assayNames assays assays<- colData
-#'   rowData rowRanges
+#'   rowData rowRanges rowRanges<-
 #' @importFrom assertive.base assert_are_identical
 #' @importFrom assertive.files assert_all_are_dirs assert_all_are_existing_files
 #' @importFrom assertive.numbers assert_all_are_greater_than_or_equal_to
