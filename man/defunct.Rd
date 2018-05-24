@@ -14,8 +14,6 @@
 \alias{plotFeatures}
 \alias{plotMarker}
 \alias{plotMarkers}
-\alias{plotDot}
-\alias{plotViolin}
 \title{Defunct Functions}
 \usage{
 plotClusters(...)
@@ -41,10 +39,6 @@ plotFeatures(...)
 plotMarker(...)
 
 plotMarkers(...)
-
-plotDot(...)
-
-plotViolin(...)
 }
 \arguments{
 \item{...}{Additional arguments.}
