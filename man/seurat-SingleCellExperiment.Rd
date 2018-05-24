@@ -11,6 +11,7 @@
 \alias{colnames,seurat-method}
 \alias{counts,seurat-method}
 \alias{metadata,seurat-method}
+\alias{metadata<-,seurat-method}
 \alias{rowData,seurat-method}
 \alias{rowRanges,seurat-method}
 \alias{rownames,seurat-method}
@@ -34,6 +35,8 @@
 \S4method{counts}{seurat}(object)
 
 \S4method{metadata}{seurat}(x)
+
+\S4method{metadata}{seurat}(x) <- value
 
 \S4method{rowData}{seurat}(x)
 
@@ -72,6 +75,9 @@ Match \code{SummarizedExperiment} method return.
 }
 \description{
 Provide limited \code{SingleCellExperiment}-like method support.
+}
+\seealso{
+\code{getMethod("metadata<-", "Annotated")}
 }
 \author{
 Michael Steinbaugh
