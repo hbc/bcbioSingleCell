@@ -50,7 +50,7 @@
 #'   dynamicPlotlist emptyRanges hasRownames initializeDirectory
 #'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames makeTx2geneFromGFF
 #'   markdownHeader markdownPlotlist printString readFileByExtension readYAML
-#'   theme_midnight theme_paperwhite tx2geneFromGFF
+#'   stripTranscriptVersions theme_midnight theme_paperwhite tx2geneFromGFF
 #' @importFrom bcbioBase assertFormalInterestingGroups bcbio_geom_abline
 #'   bcbio_geom_label bcbio_geom_label_average bcbio_geom_label_repel flatFiles
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
