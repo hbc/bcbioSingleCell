@@ -183,20 +183,4 @@ plotMarkers <- function(...) {
 
 
 
-#' @rdname defunct
-#' @export
-plotDot <- function(...) {
-    .Defunct("plotGene or Seurat::DotPlot")
-}
-
-
-
-#' @rdname defunct
-#' @export
-plotViolin <- function(...) {
-    .Defunct("plotGene or Seurat::ViolinPlot")
-}
-
-
-
 # nocov end
