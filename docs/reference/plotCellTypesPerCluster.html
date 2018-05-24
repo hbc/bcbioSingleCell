@@ -118,7 +118,7 @@ many (<code>max</code> cutoff) marker genes will be skipped.</p>
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotCellTypesPerCluster</span>(<span class='no'>object</span>, <span class='no'>cellTypesPerCluster</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,8 +185,7 @@ color definitions are desired, we recommend using
 <span class='co'># Let's plot the first row, as an example</span>
 <span class='fu'>plotCellTypesPerCluster</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
-    <span class='kw'>cellTypesPerCluster</span> <span class='kw'>=</span> <span class='no'>per_cluster</span>[<span class='fl'>1L</span>, , <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>],
-    <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+    <span class='kw'>cellTypesPerCluster</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='no'>per_cluster</span>, <span class='fl'>1</span>),
 )</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
 #&gt; 
 #&gt; ## Cluster 1 {.tabset}

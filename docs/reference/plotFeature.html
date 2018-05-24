@@ -207,30 +207,10 @@ the dataset, and some cells can be masked.</p></td>
 <span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
 <span class='no'>features</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"nUMI"</span>, <span class='st'>"nGene"</span>, <span class='st'>"PC1"</span>, <span class='st'>"PC2"</span>)
 
-<span class='co'># t-SNE grid</span>
-<span class='fu'>plotFeatureTSNE</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
-    <span class='kw'>features</span> <span class='kw'>=</span> <span class='no'>features</span>,
-    <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='img'><img src='plotFeature-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotFeatureTSNE</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
-    <span class='kw'>features</span> <span class='kw'>=</span> <span class='no'>features</span>,
-    <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='img'><img src='plotFeature-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># UMAP grid</span>
-<span class='fu'>plotFeatureUMAP</span>(
-    <span class='no'>object</span>,
-    <span class='kw'>features</span> <span class='kw'>=</span> <span class='no'>features</span>,
-    <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='img'><img src='plotFeature-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotFeatureUMAP</span>(
-    <span class='no'>object</span>,
-    <span class='kw'>features</span> <span class='kw'>=</span> <span class='no'>features</span>,
-    <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='img'><img src='plotFeature-4.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'># t-SNE</span>
+<span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>features</span>)</div><div class='img'><img src='plotFeature-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># UMAP</span>
+<span class='fu'>plotFeatureUMAP</span>(<span class='no'>object</span>, <span class='no'>features</span>)</div><div class='img'><img src='plotFeature-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
