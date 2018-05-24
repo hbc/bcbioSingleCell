@@ -57,7 +57,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
       </span>
     </div>
 
@@ -100,6 +100,24 @@
       <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="bcbiosinglecell-0-1-11-2018-05-23" class="section level1">
+<h1 class="page-header">
+<a href="#bcbiosinglecell-0-1-11-2018-05-23" class="anchor"></a>bcbioSingleCell 0.1.11 (2018-05-23)</h1>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>Added support for <code><a href="../reference/plotDimensionalReduction.html">plotUMAP()</a></code>, <code><a href="../reference/plotMarker.html">plotMarkerUMAP()</a></code> and <code><a href="../reference/plotFeature.html">plotFeatureUMAP()</a></code>.</li>
+</ul>
+</div>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>Reworked <code><a href="../reference/plotFeature.html">plotFeature()</a></code> and <code>plotMarker()</code> family of functions. Improved the color palette support when <code>dark = FALSE</code>, now using a flipped viridis plasma color palette.</li>
+</ul>
+</div>
+</div>
     <div id="bcbiosinglecell-0-1-10-2018-05-19" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-10-2018-05-19" class="anchor"></a>bcbioSingleCell 0.1.10 (2018-05-19)</h1>
@@ -117,9 +135,9 @@
     <div id="bcbiosinglecell-0-1-9-2018-05-18" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-9-2018-05-18" class="anchor"></a>bcbioSingleCell 0.1.9 (2018-05-18)</h1>
-<div id="major-changes" class="section level2">
+<div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
 <ul>
 <li>No longer attempting to sanitize the rownames for <code>seurat</code> objects in coercion method. This helps maintain the gene symbol appearance in plotting functions for genes with hyphens in the names.</li>
 </ul>
@@ -157,16 +175,16 @@
     <div id="bcbiosinglecell-0-1-7-2018-05-15" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-7-2018-05-15" class="anchor"></a>bcbioSingleCell 0.1.7 (2018-05-15)</h1>
-<div id="new-functions" class="section level2">
+<div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions" class="anchor"></a>New functions</h2>
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>Added support for Uniform Manifold Approximation and Projection (UMAP) with the <code><a href="../reference/plotDimensionalReduction.html">plotUMAP()</a></code> and <code><a href="../reference/fetchData.html">fetchUMAPData()</a></code> functions. These work similarly to the other <code><a href="../reference/plotDimensionalReduction.html">plotDimensionalReduction()</a></code> and <code><a href="../reference/fetchData.html">fetchData()</a></code> functions.</li>
 </ul>
 </div>
-<div id="major-changes-1" class="section level2">
+<div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Now adding sample-level metadata into <code>colData()</code> slot, for better downstream compatibility with other packages that work with <code>SingleCellExperiment</code> container class. Unique per-sample rows are still saved internally in the <code><a href="../reference/sampleData.html">sampleData()</a></code> slot.</li>
 <li>Now recommending ECDF as the default geom for quality control plots, where applicable.</li>
@@ -208,9 +226,9 @@
     <div id="bcbiosinglecell-0-1-5-2018-05-04" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-5-2018-05-04" class="anchor"></a>bcbioSingleCell 0.1.5 (2018-05-04)</h1>
-<div id="major-changes-2" class="section level2">
+<div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Overhauled inflection and knee point labeling support in <code>plotUMIsPerCell()</code>. Now uses the <code>point</code> argument and always labels per sample. Currently requires the <code>geom = "ecdf"</code> argument for labeling.</li>
 <li>Updated default quality control template.</li>
@@ -267,12 +285,12 @@
     <div id="bcbiosinglecell-0-1-2-2018-04-24" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-2-2018-04-24" class="anchor"></a>bcbioSingleCell 0.1.2 (2018-04-24)</h1>
-<div id="major-changes-3" class="section level2">
+<div id="major-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
 <ul>
-<li>Now using <code><a href="../reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> instead of <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> as the main constructor function to create a <code>bcbioSingleCell</code> object. <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> is deprecated and still works, but will warn the user.</li>
-<li>Renamed <code><a href="../reference/readCellRanger.html">loadCellRanger()</a></code> to <code><a href="../reference/readCellRanger.html">readCellRanger()</a></code> for better name consistency.</li>
+<li>Now using <code><a href="../reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> instead of <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> as the main constructor function to create a <code>bcbioSingleCell</code> object. <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> is deprecated and still works, but will warn the user.</li>
+<li>Renamed <code><a href="../reference/deprecated.html">loadCellRanger()</a></code> to <code><a href="../reference/readCellRanger.html">readCellRanger()</a></code> for better name consistency.</li>
 <li>Quality control function color palettes now default to [ggplot2][] colors instead of using <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> palettes. This is defined using <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_hue()</a></code> instead of <code><a href="http://www.rdocumentation.org/packages/viridis/topics/scale_viridis">scale_color_viridis()</a></code> for example. The <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color palette is still used by default for marker expression plots.</li>
 <li>Use “<code>aggregate</code>” instead of “<code>sampleNameAggregate</code>” to define aggregate/grouped samples in metadata.</li>
 </ul>
@@ -305,17 +323,17 @@
     <div id="bcbiosinglecell-0-1-1-2018-04-16" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-1-2018-04-16" class="anchor"></a>bcbioSingleCell 0.1.1 (2018-04-16)</h1>
-<div id="major-changes-4" class="section level2">
+<div id="major-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-5" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Added support for calculating <code>barcodeRanks()</code> and <code>barcodeRanksPerSample()</code>.</li>
-<li>Now exporting <code>plotMarker()</code> in addition to <code><a href="../reference/plotMarker.html">plotMarkers()</a></code>.</li>
+<li>Now exporting <code>plotMarker()</code> in addition to <code><a href="../reference/defunct.html">plotMarkers()</a></code>.</li>
 <li>Primary counts matrix slotted into <code>assay()</code> is named <code>counts</code> instead of <code>raw</code>, for better consistency with <code>SingleCellExperiment</code> class. The <code>counts()</code> generic requires that the primary assay slot is named <code>counts</code> to work correctly. Nothing else here has changed, just the name.</li>
 <li>
-<code><a href="../reference/readCellRanger.html">loadCellRanger()</a></code> now returns a <code>SingleCellExperiment</code> object instead of a <code>bcbioSingleCell</code> object.</li>
+<code><a href="../reference/deprecated.html">loadCellRanger()</a></code> now returns a <code>SingleCellExperiment</code> object instead of a <code>bcbioSingleCell</code> object.</li>
 <li>Added support for <code>transgeneNames</code> and <code>spikeNames</code> when loading up a dataset.</li>
-<li>Datasets from a poorly annotated genome can now be loaded up using <code>organism = NULL</code> during the <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> call.</li>
+<li>Datasets from a poorly annotated genome can now be loaded up using <code>organism = NULL</code> during the <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> call.</li>
 <li>Methods now dispatch on <code>SingleCellExperiment</code> rather than <code>bcbioSingleCell</code> where applicable, providing support for <code>SingleCellExperiment</code> objects created elsewhere.</li>
 </ul>
 </div>
@@ -338,9 +356,9 @@
     <div id="bcbiosinglecell-0-1-0-2018-04-04" class="section level1">
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-1-0-2018-04-04" class="anchor"></a>bcbioSingleCell 0.1.0 (2018-04-04)</h1>
-<div id="major-changes-5" class="section level2">
+<div id="major-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-5" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-6" class="anchor"></a>Major changes</h2>
 <ul>
 <li>
 <code>bcbioSingleCell</code> S4 class now extends <code>SingleCellExperiment</code> instead of <code>SummarizedExperiment</code>. This requires definition of <code>rowRanges()</code> inside the object instead of <code>rowData()</code>. Similar functionality was added to the bcbioRNASeq package. Upgrade support will be provided using <code><a href="../reference/updateObject.html">updateObject()</a></code>in a future release.</li>
@@ -360,7 +378,7 @@
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-0-32-2018-03-12" class="anchor"></a>bcbioSingleCell 0.0.32 (2018-03-12)</h1>
 <ul>
-<li>Fixes for object subsetting and <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> organism calls</li>
+<li>Fixes for object subsetting and <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> organism calls</li>
 </ul>
 </div>
     <div id="bcbiosinglecell-0-0-31-2018-02-21" class="section level1">
@@ -375,7 +393,7 @@
 <li>Export <code><a href="../reference/mapCellsToSamples.html">mapCellsToSamples()</a></code> instead of <code>cell2sample()</code>. <code>cell2sample()</code> now simply acts as an accessor function, returning the internally stored cell2sample mappings rather than trying to calculate. <code><a href="../reference/mapCellsToSamples.html">mapCellsToSamples()</a></code> performs the actual mapping from cellular barcodes to sample identifiers.</li>
 <li>Export <code>metricsPerSample()</code>
 </li>
-<li>Now using <code><a href="http://www.rdocumentation.org/packages/BiocParallel/topics/bpmapply">BiocParallel::bpmapply()</a></code> to loop across the sparse matrix files per sample internally in the <code>.sparseCountsList()</code> function, which is shared between <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> and <code><a href="../reference/readCellRanger.html">loadCellRanger()</a></code>.</li>
+<li>Now using <code><a href="http://www.rdocumentation.org/packages/BiocParallel/topics/bpmapply">BiocParallel::bpmapply()</a></code> to loop across the sparse matrix files per sample internally in the <code>.sparseCountsList()</code> function, which is shared between <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> and <code><a href="../reference/deprecated.html">loadCellRanger()</a></code>.</li>
 <li>Updated assert checks.</li>
 <li>Updated <code><a href="../reference/prepareSingleCellTemplate.html">prepareSingleCellTemplate()</a></code> to explicitly state which files to include for each R Markdown template, rather than inheriting from <code><a href="http://www.rdocumentation.org/packages/bcbioBase/topics/prepareTemplate">bcbioBase::prepareTemplate()</a></code>.</li>
 <li>
@@ -437,8 +455,8 @@
 <ul>
 <li>Migrated core dependency imports from <a href="http://steinbaugh.com/basejump">basejump</a> to <a href="http://bioinformatics.sph.harvard.edu/bcbioBase">bcbioBase</a>.</li>
 <li>Improved <code>colnames</code> and <code>rownames</code> handling for internal <code>.readSparseCounts()</code> function.</li>
-<li>Reworked <code><a href="../reference/readCellRanger.html">loadCellRanger()</a></code> function. <code>refDataDir</code> parameter has been renamed to <code>refdataDir</code>.</li>
-<li>Added <code>organism</code> and <code>genomeBuild</code> options to <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code>, to override the metadata set in the bcbio run, if necessary.</li>
+<li>Reworked <code><a href="../reference/deprecated.html">loadCellRanger()</a></code> function. <code>refDataDir</code> parameter has been renamed to <code>refdataDir</code>.</li>
+<li>Added <code>organism</code> and <code>genomeBuild</code> options to <code><a href="../reference/deprecated.html">loadSingleCell()</a></code>, to override the metadata set in the bcbio run, if necessary.</li>
 <li>Improved if statement data class checks, where applicable.</li>
 <li>Renamed internal <code>.sparseCountsTx2Gene()</code> to <code>.transcriptToGeneLevelCounts()</code>.</li>
 <li>Updated <code>geomean</code> bind method in <code><a href="../reference/fetchData.html">fetchTSNEExpressionData()</a></code>.</li>
@@ -446,7 +464,7 @@
 <li>Improved seurat class support for <code><a href="../reference/plotDot.html">plotDot()</a></code>.</li>
 <li>Improved parameter names for <code><a href="../reference/plotMarker.html">plotKnownMarkersDetected()</a></code>. Now uses <code>tsneColor</code>, <code>violinFill</code>, and <code>dotColor</code>. Also added <code>pointsAsNumbers</code> parameter.</li>
 <li>Added <code>subtitle</code> parameter for <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code>.</li>
-<li>Added <code>tsneColor</code>, <code>violinFill</code>, <code>dotColor</code>, and <code>dark</code> parameters for <code><a href="../reference/plotMarker.html">plotMarkers()</a></code>.</li>
+<li>Added <code>tsneColor</code>, <code>violinFill</code>, <code>dotColor</code>, and <code>dark</code> parameters for <code><a href="../reference/defunct.html">plotMarkers()</a></code>.</li>
 <li>Improved looping method for <code><a href="../reference/plotMarker.html">plotTopMarkers()</a></code> so that it renders correctly in <a href="http://rmarkdown.rstudio.com">R Markdown</a> calls.</li>
 <li>Added method support for <code><a href="../reference/plotViolin.html">plotViolin()</a></code>.</li>
 <li>Improved internal <code>cell2sample</code> handling in subset method code.</li>
@@ -456,7 +474,7 @@
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-0-26-2017-12-18" class="anchor"></a>bcbioSingleCell 0.0.26 (2017-12-18)</h1>
 <ul>
-<li>Renamed <code><a href="../reference/deprecated.html">readMarkersFile()</a></code> to <code><a href="../reference/deprecated.html">readCellTypeMarkersFile()</a></code>.</li>
+<li>Renamed <code><a href="../reference/defunct.html">readMarkersFile()</a></code> to <code><a href="../reference/deprecated.html">readCellTypeMarkersFile()</a></code>.</li>
 <li>Improved internal handling of multiplexed CellRanger samples. These are count matrices with cellular barcodes ending in <code>-2</code>, for example.</li>
 <li>Updated <code><a href="../reference/aggregateReplicates.html">aggregateReplicates()</a></code> code to work with basejump generic, which uses <code>groupings</code> instead of <code>cells</code> as the grouping parameter.</li>
 <li>Added method support for <code>detectOrganism()</code>.</li>
@@ -476,14 +494,14 @@
 <ul>
 <li>Prepared a minimal working example dataset.</li>
 <li>Added some initial unit tests.</li>
-<li>Renamed <code><a href="../reference/deprecated.html">plotKnownMarkers()</a></code> to <code><a href="../reference/plotMarker.html">plotKnownMarkersDetected()</a></code>.</li>
-<li>Renamed <code><a href="../reference/deprecated.html">readMarkers()</a></code> to <code><a href="../reference/deprecated.html">readMarkersFile()</a></code>.</li>
+<li>Renamed <code><a href="../reference/defunct.html">plotKnownMarkers()</a></code> to <code><a href="../reference/plotMarker.html">plotKnownMarkersDetected()</a></code>.</li>
+<li>Renamed <code><a href="../reference/defunct.html">readMarkers()</a></code> to <code><a href="../reference/defunct.html">readMarkersFile()</a></code>.</li>
 <li>Added <code>gene2symbol()</code> method support.</li>
 <li>Moved <code><a href="../reference/plotDot.html">plotDot()</a></code> generic to basejump package.</li>
 <li>Added internal <code>.checkFormat()</code> function, which will check for <code>ensgene</code> or <code>symbol</code> input.</li>
 <li>Added internal <code>.convertGenesToSymbols()</code> utility function, for mapping Ensembl gene identifiers to gene symbols.</li>
 <li>Use explicit calls to Seurat functions interally, for clarity.</li>
-<li>Simplified bcbioSingleCell object return in <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> function.</li>
+<li>Simplified bcbioSingleCell object return in <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> function.</li>
 <li>Added seurat class method support for <code>annotable()</code> function.</li>
 <li>Added <code>bcbio&lt;-</code> assignment method support for seurat class objects.</li>
 <li>
@@ -503,7 +521,7 @@
 <code><a href="../reference/plotFeature.html">plotFeatureTSNE()</a></code> now uses a plural <code>features</code> parameter instead of <code>feature</code>, which is consistent with the syntax used in the other functions.</li>
 <li>Added Ensembl gene identifier support to <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code>. The <code>format</code> argument still defaults to “symbol”, for consistency with previous behavior. However, in the future we recommend that users pass in stable Ensembl gene identifiers here if possible, for better reproducibility.</li>
 <li>
-<code><a href="../reference/plotMarker.html">plotMarkers()</a></code> now supports Ensembl gene identifiers.</li>
+<code><a href="../reference/defunct.html">plotMarkers()</a></code> now supports Ensembl gene identifiers.</li>
 <li>
 <code>plotPCElbow()</code> now silently returns the sequence of principal components (PCs) that we recommend to use for dimensionality reduction.</li>
 <li>We’re now using “glm” instead of “gam” for <code>geom_smooth()</code> plotting, where applicable. See the <code><a href="../reference/plotQC.html">plotQC()</a></code> function code.</li>
@@ -526,15 +544,15 @@
 <li>Raw cellular barcodes are now slotted in <code>object<a href='http://github.com/cellularBarcodes'>@cellularBarcodes</a></code> as a <code>data.frame</code> instead of a per sample <code>list</code>. This makes downstream subsetting operations on the barcodes simpler.</li>
 <li>Bug fixes for <code>cell2sample</code> mapping.</li>
 <li>Switched back to stable CRAN version of roxygen2 (6.0.1) for documentation.</li>
-<li>Renamed <code><a href="../reference/deprecated.html">pcCutoff()</a></code> to <code>plotPCElbow()</code>. The function now returns a PC sequence from 1 to the cutoff (e.g. 1:10) instead of just the final PC cutoff value. The R Markdown clustering template has been updated to reflect this change.</li>
-<li>Renamed <code><a href="../reference/deprecated.html">quantileHeatmap()</a></code> to <code>plotQuantileHeatmap()</code>, for consistency with other plotting functions.</li>
+<li>Renamed <code><a href="../reference/defunct.html">pcCutoff()</a></code> to <code>plotPCElbow()</code>. The function now returns a PC sequence from 1 to the cutoff (e.g. 1:10) instead of just the final PC cutoff value. The R Markdown clustering template has been updated to reflect this change.</li>
+<li>Renamed <code><a href="../reference/defunct.html">quantileHeatmap()</a></code> to <code>plotQuantileHeatmap()</code>, for consistency with other plotting functions.</li>
 <li>Initial support for customized bracket based subsetting, which now acts upon the raw cellular barcode counts stashed in the <code>object<a href='http://github.com/bcbio'>@bcbio</a></code> slot.</li>
-<li>Moved <code><a href="../reference/deprecated.html">darkTheme()</a></code> to <a href="http://steinbaugh.com/basejump">basejump</a> package and reworked as <code>midnightTheme()</code>, with improved colors and axis appearance.</li>
+<li>Moved <code><a href="../reference/defunct.html">darkTheme()</a></code> to <a href="http://steinbaugh.com/basejump">basejump</a> package and reworked as <code>midnightTheme()</code>, with improved colors and axis appearance.</li>
 <li>Added <code>pointsAsNumbers</code> parameter to <code><a href="../reference/plotDimensionalReduction.html">plotTSNE()</a></code> and <code>plotPCA()</code> functions, to match the functionality in <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code>.</li>
-<li>Overhauled <code><a href="../reference/readCellRanger.html">loadCellRanger()</a></code> to support multiplexed <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> matrix output. <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> adds a numeric suffix to the end of multiplexed barcodes (e.g. <code>AAACCTGGTTTACTCT-1</code> denotes cellular barcode <code>AAACCTGGTTTACTCT</code> is assigned to sample <code>1</code>).</li>
+<li>Overhauled <code><a href="../reference/deprecated.html">loadCellRanger()</a></code> to support multiplexed <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> matrix output. <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> adds a numeric suffix to the end of multiplexed barcodes (e.g. <code>AAACCTGGTTTACTCT-1</code> denotes cellular barcode <code>AAACCTGGTTTACTCT</code> is assigned to sample <code>1</code>).</li>
 <li>Improved <code>cell2sample</code> mapping in <code><a href="../reference/aggregateReplicates.html">aggregateReplicates()</a></code> function, which uses the <code>sampleNameAggregate</code> column in sample metadata to define the aggregate sample pairings. The <code>summarize()</code> step at line 101 is slow for datasets with many samples and should be changed in the future to speed things up.</li>
 <li>Improved internal <code>cell2sample()</code> code to handle <code>NULL</code> stashed mappings better.</li>
-<li>Updated TNSE plotting functions to use <code>midnightTheme()</code> instead of <code><a href="../reference/deprecated.html">darkTheme()</a></code>.</li>
+<li>Updated TNSE plotting functions to use <code>midnightTheme()</code> instead of <code><a href="../reference/defunct.html">darkTheme()</a></code>.</li>
 <li>Added user-defined point and label sizes for <code><a href="../reference/plotMarker.html">plotMarkerTSNE()</a></code>.</li>
 <li>Fixed typo in <code>plotMitoRatio()</code> where <code>maxGenes</code> cutoff was plotted instead of <code>maxMitoRatio</code>.</li>
 <li>Added <code>legend</code> parameter argument to <code><a href="../reference/plotQC.html">plotQC()</a></code> function. Also improved handling of <code>NULL</code> return for <code>plotReadsPerCell()</code>, which can happen with <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> output.</li>
@@ -561,7 +579,7 @@
 <li>
 <code>sampleMetadata()</code> return is now consistently sanitized for <code>bcbioSingleCell</code> and <code>seurat</code> objects.</li>
 <li>Minor tweaks to quality control template and setup.R files.</li>
-<li>Added <code><a href="../reference/plotFeature.html">plotFeatureTSNE()</a></code> utility function. This improves on <code><a href="http://www.rdocumentation.org/packages/Seurat/topics/FeaturePlot">Seurat::FeaturePlot()</a></code> and enables the user to overlay the cluster identifiers on top of the t-SNE plot. <code><a href="../reference/deprecated.html">plotFeatures()</a></code> is now deprecated in favor of this function.</li>
+<li>Added <code><a href="../reference/plotFeature.html">plotFeatureTSNE()</a></code> utility function. This improves on <code><a href="http://www.rdocumentation.org/packages/Seurat/topics/FeaturePlot">Seurat::FeaturePlot()</a></code> and enables the user to overlay the cluster identifiers on top of the t-SNE plot. <code><a href="../reference/defunct.html">plotFeatures()</a></code> is now deprecated in favor of this function.</li>
 <li>Improved internal handling of Seurat data in the <code>.fetchDimDataSeurat()</code> function. This now keeps the cell ID as the rowname.</li>
 <li>Allow the user to define the color palette (<code>color</code>), as well as <code>pointSize</code> and <code>labelSize</code> for <code>plotPCA()</code> and <code><a href="../reference/plotDimensionalReduction.html">plotTSNE()</a></code>.</li>
 <li>Factors are now correctly releveled in <code>cell2sample()</code> return.</li>
@@ -575,7 +593,7 @@
 <a href="#bcbiosinglecell-0-0-22-2017-11-17" class="anchor"></a>bcbioSingleCell 0.0.22 (2017-11-17)</h1>
 <ul>
 <li>Now internally stashing a <code>cell2sample</code> data.frame, which helps speed up operations on cellular barcode metrics calculations for quality control plots.</li>
-<li>Improved support for optional <code>annotable</code>, <code>ensemblVersion</code>, <code>gtfFile</code>, and <code>sampleMetadataFile</code> arguments in <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> function.</li>
+<li>Improved support for optional <code>annotable</code>, <code>ensemblVersion</code>, <code>gtfFile</code>, and <code>sampleMetadataFile</code> arguments in <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> function.</li>
 <li>Simplified some of the messages shown during sample loading, in an attempt to make them clearer and more informative. Also improved messages shown to the user during a <code>filterCells()</code> function call.</li>
 <li>The <code><a href="../reference/metrics.html">metrics()</a></code> function will now look for a stashed <code>cell2sample</code> <code>data.frame</code>, which speeds up operations for quality control plots.</li>
 <li>Improved handling of sample metadata columns as factors. In particular, levels should be correctly updated using <code>droplevels</code> in a <code><a href="../reference/selectSamples.html">selectSamples()</a></code> call. The <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package has also been updated to work in a similar fashion, where all columns in the sample metadata data.frame are now defined as factors.</li>
@@ -596,7 +614,7 @@
 <li>Made the quality control plots more modular. Now they support multiple geoms, including <code>boxplot</code>, <code>histogram</code>, <code>ridgeline</code>, and <code>violin</code> (default). Median labels are applied with the internal <code>.medianLabels()</code> function.</li>
 <li>Updated error message for <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> directory structure.</li>
 <li>Cellular barcode columns are no longer split with an underscore. Instead, they are kept as a single ACGT string. We’re now generating <code>cellID</code> to <code>sampleID</code> matching with a different method. In the future, we’ll stash a cell2sample data.frame inside the object, that makes this operation faster than the current <code>mclapply()</code> code.</li>
-<li>Updated annotable support in <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> and <code><a href="../reference/readCellRanger.html">loadCellRanger()</a></code>.</li>
+<li>Updated annotable support in <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> and <code><a href="../reference/deprecated.html">loadCellRanger()</a></code>.</li>
 <li>Added support for handling both gene- and transcript-level counts. The updated release of the bcbio single-cell pipeline now outputs at gene level.</li>
 <li>Initial quality control plot support for seurat objects.</li>
 <li>Added support for return of only filtered cells and genes with the <code>counts(filterCells = TRUE)</code> function.</li>
@@ -614,7 +632,7 @@
 <li>Upgraded to <a href="http://steinbaugh.com/basejump">basejump</a> 0.1.0 and <a href="http://satijalab.org/seurat">Seurat</a> 2.1.0 dependencies.</li>
 <li>Improved documentation of NAMESPACE imports per function.</li>
 <li>Switched to base grep functions where applicable (<code>grepl()</code>, <code>gsub()</code>).</li>
-<li>Use GTF in package documentation rather than GFF. Applies primarily to the <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code> import function.</li>
+<li>Use GTF in package documentation rather than GFF. Applies primarily to the <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> import function.</li>
 <li>Restrict class support in S4 methods to <code>bcbioSingleCell</code>. Legacy <code>bcbioSCDataSet</code> class can be upgraded to <code>bcbioSingleCell</code> class using <code><a href="../reference/coerce.html">as(bcb, "bcbioSingleCell")</a></code> coercion.</li>
 <li>Use filtered cell output for <code><a href="../reference/metrics.html">metrics()</a></code> and quality control functions by default.</li>
 <li>Updated the quality control R Markdown to include <code>filterCells = FALSE</code> where applicable.</li>
@@ -629,12 +647,12 @@
 <ul>
 <li>Renamed main object class from <code>bcbioSCDataSet</code> to <code>bcbioSingleCell</code>.</li>
 <li>Cell filtering with <code>filterCells()</code> will now slot a named logical vector into <code>metadata(object)[["filteredCells"]]</code>, which will be used to dynamically subset the slotted internal <code>SummarizedExperiment</code> data. Now that we’re using this approach, we can return a modified <code>bcbioSingleCell</code> object rather than defining a separate <code>bcbioSCFiltered</code> class.</li>
-<li>Renamed <code><a href="../reference/deprecated.html">loadSingleCellRun()</a></code> to <code><a href="../reference/bcbioSingleCell.html">loadSingleCell()</a></code>, to match <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package.</li>
+<li>Renamed <code><a href="../reference/defunct.html">loadSingleCellRun()</a></code> to <code><a href="../reference/deprecated.html">loadSingleCell()</a></code>, to match <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package.</li>
 <li>Now allowing implicit integers in our function code.</li>
 <li>Added support for plotting technical replicates. This is handled by <code>sampleNameAggregate</code> in the sample metadata.</li>
 <li>Now using ridgeline plots in place of histograms where applicable.</li>
 <li>Travis CI checks take too long when loading SummarizedExperiment. Hopefully this will be fixed in the 3.6 release later this month.</li>
-<li>New internal dark theme (<code><a href="../reference/deprecated.html">darkTheme()</a></code>), based on the Seurat theme.</li>
+<li>New internal dark theme (<code><a href="../reference/defunct.html">darkTheme()</a></code>), based on the Seurat theme.</li>
 <li>Initial commit of <code><a href="../reference/plotDot.html">plotDot()</a></code> function, based on <code><a href="http://www.rdocumentation.org/packages/Seurat/topics/DotPlot">Seurat::DotPlot()</a></code>.</li>
 <li>Added new t-SNE plots that allow for consistent cluster labeling.</li>
 <li>Providing legacy support for <code>bcbioSCDataSet</code> and <code>bcbioSCFiltered</code>, which will be deprecated in a future release.</li>
@@ -647,10 +665,10 @@
 <h1 class="page-header">
 <a href="#bcbiosinglecell-0-0-18-2017-09-17" class="anchor"></a>bcbioSingleCell 0.0.18 (2017-09-17)</h1>
 <ul>
-<li>Renamed <code><a href="../reference/deprecated.html">plotClusters()</a></code> to <code><a href="../reference/plotMarker.html">plotMarkers()</a></code>. Added soft deprecation.</li>
+<li>Renamed <code><a href="../reference/defunct.html">plotClusters()</a></code> to <code><a href="../reference/defunct.html">plotMarkers()</a></code>. Added soft deprecation.</li>
 <li>Added <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color support in t-SNE plots and heatmaps.</li>
-<li>Converted <code><a href="../reference/deprecated.html">loadSingleCellRun()</a></code> and <code><a href="../reference/readCellRanger.html">loadCellRanger()</a></code> from S4 generics back to standard functions.</li>
-<li>Added t-SNE utility functions: <code><a href="../reference/fetchData.html">fetchTSNEData()</a></code>, <code><a href="../reference/fetchData.html">fetchTSNEExpressionData()</a></code>, and <code><a href="../reference/deprecated.html">plotTSNEExpressionData()</a></code>. This enable plotting of geometric mean values of desired marker genes.</li>
+<li>Converted <code><a href="../reference/defunct.html">loadSingleCellRun()</a></code> and <code><a href="../reference/deprecated.html">loadCellRanger()</a></code> from S4 generics back to standard functions.</li>
+<li>Added t-SNE utility functions: <code><a href="../reference/fetchData.html">fetchTSNEData()</a></code>, <code><a href="../reference/fetchData.html">fetchTSNEExpressionData()</a></code>, and <code><a href="../reference/defunct.html">plotTSNEExpressionData()</a></code>. This enable plotting of geometric mean values of desired marker genes.</li>
 <li>Updated NEWS to Markdown, with hyperlinks.</li>
 <li>Offloaded generics that would otherwise conflict with bcbioRNASeq to the basejump package.</li>
 <li>Improved <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">roxygen</a> documentation. Moved as much documentation as possible to the methods files.</li>
@@ -660,7 +678,7 @@
 <li>lintr checks now allow implicit integers (e.g. <code>1</code> instead of <code>1L</code>).</li>
 <li>Added <a href="http://satijalab.org/seurat">Seurat</a> as dependency in <code>DESCRIPTION</code> file. The package now attaches <a href="http://satijalab.org/seurat">Seurat</a> automatically.</li>
 <li>Package no longer imports mononcle or suggests scater, scde, or scone. We’re planning on adding these back in a future update, but build checks on <a href="https://travis-ci.org">Travis CI</a> otherwise take too long.</li>
-<li>Added new <code><a href="../reference/deprecated.html">quantileHeatmap()</a></code> function.</li>
+<li>Added new <code><a href="../reference/defunct.html">quantileHeatmap()</a></code> function.</li>
 <li>Improved Markdown header support across functions, where applicable.</li>
 <li>Improved <code>bcbioSCFiltered</code> to <code>seurat</code> coercion to slot relevant bcbio metadata.</li>
 </ul>
@@ -712,9 +730,9 @@
 <li>Renamed functions in <code>lowerCamelCase</code> from <code>snake_case</code>.</li>
 <li>Draft support for <a href="http://cole-trapnell-lab.github.io/monocle-release/">monocle</a>, <a href="http://bioconductor.org/packages/release/bioc/html/scater.html">scater</a>, and <a href="https://bioconductor.org/packages/release/bioc/html/scone.html">scone</a>.</li>
 <li>Package now depends on <a href="https://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">SummarizedExperiment</a>.</li>
-<li>Renamed <code>loadRun()</code> to <code><a href="../reference/deprecated.html">loadSingleCellRun()</a></code> for improved compatibility with <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package. This helps avoid NAMESPACE collisions between packages.</li>
+<li>Renamed <code>loadRun()</code> to <code><a href="../reference/defunct.html">loadSingleCellRun()</a></code> for improved compatibility with <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> package. This helps avoid NAMESPACE collisions between packages.</li>
 <li>Improved support for custom GTF files.</li>
-<li>Split out <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> import into a separate utility function named <code><a href="../reference/readCellRanger.html">loadCellRanger()</a></code>.</li>
+<li>Split out <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> import into a separate utility function named <code><a href="../reference/deprecated.html">loadCellRanger()</a></code>.</li>
 <li>Added plotZerosVsDepth() by <a href='http://github.com/roryk'>@roryk</a>.</li>
 <li>Renamed <code>filteringCriteria</code> to <code>filterParams</code> in <code><a href='http://github.com/metadata'>@metadata</a></code> slot.</li>
 <li>Miscellaneous documentation fixes.</li>
@@ -841,6 +859,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bcbiosinglecell-0-1-11-2018-05-23">0.1.11</a></li>
         <li><a href="#bcbiosinglecell-0-1-10-2018-05-19">0.1.10</a></li>
         <li><a href="#bcbiosinglecell-0-1-9-2018-05-18">0.1.9</a></li>
         <li><a href="#bcbiosinglecell-0-1-8-2018-05-16">0.1.8</a></li>

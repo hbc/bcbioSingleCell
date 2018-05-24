@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read 10X Genomics Cell Ranger Data — loadCellRanger • bcbioSingleCell</title>
+<title>Read 10X Genomics Cell Ranger Data — readCellRanger • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Read 10X Genomics Cell Ranger Data — loadCellRanger" />
+<meta property="og:title" content="Read 10X Genomics Cell Ranger Data — readCellRanger" />
 
 <meta property="og:description" content="Read 10x Genomics Chromium cell
 counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
@@ -61,7 +61,7 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read 10X Genomics Cell Ranger Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/readCellRanger.R'><code>R/readCellRanger.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/readCellRanger.R'><code>R/readCellRanger.R</code></a></small>
     <div class="hidden name"><code>readCellRanger.Rd</code></div>
     </div>
 
@@ -119,10 +119,6 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments, to be stashed in the <code>metadata()</code> slot.</p></td>
-    </tr>
     <tr>
       <th>uploadDir</th>
       <td><p>Path to Cell Ranger output directory. This directory path
@@ -153,6 +149,10 @@ denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
       <th>spikeNames</th>
       <td><p><code>character</code> vector indicating which <code>assay()</code> rows denote
 spike-in sequences (e.g. ERCCs).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments, to be stashed in the <code>metadata()</code> slot.</p></td>
     </tr>
     </table>
     

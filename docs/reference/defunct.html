@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cell Ranger Example — cellranger_small • bcbioSingleCell</title>
+<title>Defunct Functions — defunct • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Cell Ranger Example — cellranger_small" />
+<meta property="og:title" content="Defunct Functions — defunct" />
 
-<meta property="og:description" content="Cell Ranger Example" />
+<meta property="og:description" content="Defunct Functions" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -99,60 +99,63 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cell Ranger Example</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
-    <div class="hidden name"><code>cellranger_small.Rd</code></div>
+    <h1>Defunct Functions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
+    <div class="hidden name"><code>defunct.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Cell Ranger Example</p>
+    <p>Defunct Functions</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>cellranger_small</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>plotClusters</span>(<span class='no'>...</span>)
 
-    <p>An object of class <code>SingleCellExperiment</code> with 500 rows and 500 columns.</p>
+<span class='fu'>plotTSNEExpressionData</span>(<span class='no'>...</span>)
+
+<span class='fu'>loadSingleCellRun</span>(<span class='no'>...</span>)
+
+<span class='fu'>darkTheme</span>(<span class='no'>...</span>)
+
+<span class='fu'>pcCutoff</span>(<span class='no'>...</span>)
+
+<span class='fu'>quantileHeatmap</span>(<span class='no'>...</span>)
+
+<span class='fu'>plotKnownMarkers</span>(<span class='no'>...</span>)
+
+<span class='fu'>readMarkers</span>(<span class='no'>...</span>)
+
+<span class='fu'>readMarkersFile</span>(<span class='no'>...</span>)
+
+<span class='fu'>plotFeatures</span>(<span class='no'>...</span>)
+
+<span class='fu'>plotMarker</span>(<span class='no'>...</span>)
+
+<span class='fu'>plotMarkers</span>(<span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>Other Minimal Example Data: <code><a href='all_markers_small.html'>all_markers_small</a></code>,
-  <code><a href='indrops_small.html'>indrops_small</a></code>,
-  <code><a href='known_markers_small.html'>known_markers_small</a></code>,
-  <code><a href='seurat_small.html'>seurat_small</a></code></p></div>
+    <p><code>.Defunct()</code>.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>cellranger_small</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
-#&gt; dim: 500 500 
-#&gt; metadata(26): version pipeline ... filterParams filterSummary
-#&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
-#&gt;   ENSG00000269893
-#&gt; rowData names(6): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): aggregation_AAACCTGGTTTACTCT_1
-#&gt;   aggregation_AAACGGGGTATCTGCA_1 ... aggregation_TTTGTCACACAACGTT_2
-#&gt;   aggregation_TTTGTCACACTCGACG_2
-#&gt; colData names(11): sampleID nUMI ... description index
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    
-Michael Steinbaugh
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>
