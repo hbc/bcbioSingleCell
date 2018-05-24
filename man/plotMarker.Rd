@@ -22,15 +22,15 @@ plotMarkerUMAP(object, ...)
 plotTopMarkers(object, ...)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = "auto", pointsAsNumbers = FALSE,
-  pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
+  "median", "sum"), color = NULL, pointsAsNumbers = FALSE,
+  pointSize = 0.75, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
+  dark = FALSE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
   title = TRUE)
 
 \S4method{plotMarkerUMAP}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = "auto", pointsAsNumbers = FALSE,
-  pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
+  "median", "sum"), color = NULL, pointsAsNumbers = FALSE,
+  pointSize = 0.75, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
+  dark = FALSE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
   title = TRUE)
 
 \S4method{plotTopMarkers}{seurat}(object, markers, dimRed = c("tsne", "umap"),
@@ -108,44 +108,48 @@ for the number of genes to plot here in a future update.
 
 \examples{
 object <- seurat_small
-genes <- "COL1A1"
+collagen_genes <- grep("^COL\\\\d", rownames(object), value = TRUE)
+print(collagen_genes)
+mito_genes <- grep("^MT-", rownames(object), value = TRUE)
+print(mito_genes)
 
 # t-SNE
 plotMarkerTSNE(
     object = object,
-    genes = genes,
+    genes = collagen_genes,
     dark = TRUE,
-    grid = TRUE
+    grid = TRUE,
+    title = "collagen"
 )
-plotMarkerTSNE(
-    object = object,
-    genes = genes,
-    dark = FALSE,
-    grid = FALSE
-)
-
-# Aggregate marker expression (e.g. mitochondrial genes)
-mito_genes <- grep("^MT-", rownames(object), value = TRUE)
-print(mito_genes)
 plotMarkerTSNE(
     object = object,
     genes = mito_genes,
-    expression = "mean",
-    title = "mito genes"
+    dark = FALSE,
+    grid = FALSE,
+    title = "mito"
+)
+
+# Number cloud
+plotMarkerTSNE(
+    object = object,
+    genes = collagen_genes,
+    pointsAsNumbers = TRUE
 )
 
 # UMAP
 plotMarkerUMAP(
     object = object,
-    genes = genes,
+    genes = collagen_genes,
     dark = TRUE,
-    grid = TRUE
+    grid = TRUE,
+    title = "collagen"
 )
 plotMarkerUMAP(
     object = object,
-    genes = genes,
+    genes = mito_genes,
     dark = FALSE,
-    grid = FALSE
+    grid = FALSE,
+    title = "mito"
 )
 
 # Top markers
