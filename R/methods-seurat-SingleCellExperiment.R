@@ -66,8 +66,8 @@ setMethod(
     "counts",
     signature("seurat"),
     function(object) {
-        x <- as(x, "SingleCellExperiment")
-        counts(x)
+        object <- as(object, "SingleCellExperiment")
+        counts(object)
     }
 )
 
