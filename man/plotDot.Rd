@@ -34,6 +34,9 @@ drawn.}
 
 \item{legend}{Include plot legend.}
 }
+\value{
+\code{ggplot}.
+}
 \description{
 Plot Dot
 }

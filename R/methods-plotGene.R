@@ -11,8 +11,10 @@
 #'
 #' @seealso
 #' - [plotDot()], [Seurat::DotPlot()].
-#' - [plotViolin()], [Seurat::ViolinPlot()].
+#' - [plotViolin()], [Seurat::VlnPlot()].
 #' - [Seurat::RidgePlot()].
+#'
+#' @return `ggplot`.
 #'
 #' @examples
 #' object <- seurat_small

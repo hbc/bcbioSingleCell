@@ -22,8 +22,7 @@
 #' # Let's plot the first row, as an example
 #' plotCellTypesPerCluster(
 #'     object = seurat_small,
-#'     cellTypesPerCluster = per_cluster[1L, , drop = FALSE],
-#'     dark = TRUE
+#'     cellTypesPerCluster = head(per_cluster, 1),
 #' )
 NULL
 
@@ -39,7 +38,7 @@ setMethod(
         object,
         cellTypesPerCluster,
         color = "auto",
-        dark = TRUE,
+        dark = FALSE,
         grid = TRUE,
         headerLevel = 2L
     ) {

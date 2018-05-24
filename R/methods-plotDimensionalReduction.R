@@ -27,17 +27,15 @@
 #' object <- seurat_small
 #'
 #' # t-SNE
-#' plotTSNE(object, dark = FALSE, grid = FALSE)
-#' plotTSNE(object, dark = TRUE, grid = TRUE)
-#'
-#' # Number cloud
+#' plotTSNE(object)
 #' plotTSNE(object, pointsAsNumbers = TRUE)
-#'
-#' # PCA
-#' plotPCA(object)
+#' plotTSNE(object, dark = TRUE)
 #'
 #' # UMAP
 #' plotUMAP(object)
+#'
+#' # PCA
+#' plotPCA(object)
 NULL
 
 

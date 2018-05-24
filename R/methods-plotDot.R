@@ -18,6 +18,8 @@
 #'
 #' @seealso Modified version of [Seurat::DotPlot()].
 #'
+#' @return `ggplot`.
+#'
 #' @examples
 #' # seurat ====
 #' object <- seurat_small

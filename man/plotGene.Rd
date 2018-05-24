@@ -13,6 +13,9 @@
 \item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} to pick the type. Currently
 supports "\code{dot}" and "\code{violin}".}
 }
+\value{
+\code{ggplot}.
+}
 \description{
 Plot Gene
 }
@@ -29,7 +32,7 @@ plotGene(object, genes = genes, geom = "violin")
 \seealso{
 \itemize{
 \item \code{\link[=plotDot]{plotDot()}}, \code{\link[Seurat:DotPlot]{Seurat::DotPlot()}}.
-\item \code{\link[=plotViolin]{plotViolin()}}, \code{\link[Seurat:ViolinPlot]{Seurat::ViolinPlot()}}.
+\item \code{\link[=plotViolin]{plotViolin()}}, \code{\link[Seurat:VlnPlot]{Seurat::VlnPlot()}}.
 \item \code{\link[Seurat:RidgePlot]{Seurat::RidgePlot()}}.
 }
 

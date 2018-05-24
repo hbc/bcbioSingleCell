@@ -9,6 +9,10 @@
 #' @inheritParams general
 #' @inheritParams ggplot2::geom_violin
 #'
+#' @seealso [Seurat::VlnPlot()].
+#'
+#' @return `ggplot`.
+#'
 #' @examples
 #' # seurat ====
 #' object <- Seurat::pbmc_small

@@ -26,48 +26,38 @@
 #'
 #' @examples
 #' object <- seurat_small
-#' collagen_genes <- grep("^COL\\d", rownames(object), value = TRUE)
-#' print(collagen_genes)
-#' mito_genes <- grep("^MT-", rownames(object), value = TRUE)
-#' print(mito_genes)
+#' genes <- grep("^COL\\d", rownames(object), value = TRUE)
+#' print(genes)
+#' title <- "collagen"
 #'
 #' # t-SNE
 #' plotMarkerTSNE(
 #'     object = object,
-#'     genes = collagen_genes,
-#'     dark = TRUE,
-#'     grid = TRUE,
-#'     title = "collagen"
+#'     genes = genes,
+#'     title = title
 #' )
+#'
+#' # Dark mode
 #' plotMarkerTSNE(
 #'     object = object,
-#'     genes = mito_genes,
-#'     dark = FALSE,
-#'     grid = FALSE,
-#'     title = "mito"
+#'     genes = genes,
+#'     dark = TRUE,
+#'     title = title
 #' )
 #'
 #' # Number cloud
 #' plotMarkerTSNE(
 #'     object = object,
-#'     genes = collagen_genes,
+#'     genes = genes,
 #'     pointsAsNumbers = TRUE
+#'     title = "collagen"
 #' )
 #'
 #' # UMAP
 #' plotMarkerUMAP(
 #'     object = object,
-#'     genes = collagen_genes,
-#'     dark = TRUE,
-#'     grid = TRUE,
-#'     title = "collagen"
-#' )
-#' plotMarkerUMAP(
-#'     object = object,
-#'     genes = mito_genes,
-#'     dark = FALSE,
-#'     grid = FALSE,
-#'     title = "mito"
+#'     genes = genes,
+#'     title = title
 #' )
 #'
 #' # Top markers

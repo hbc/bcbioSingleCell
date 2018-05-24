@@ -24,6 +24,9 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 
 \item{legend}{Include plot legend.}
 }
+\value{
+\code{ggplot}.
+}
 \description{
 Plot Violin
 }
@@ -34,6 +37,8 @@ genes <- head(rownames(object), 4L)
 plotViolin(object, genes = genes)
 }
 \seealso{
+\code{\link[Seurat:VlnPlot]{Seurat::VlnPlot()}}.
+
 Other Gene Expression Functions: \code{\link{plotDot}},
   \code{\link{plotGene}}
 }

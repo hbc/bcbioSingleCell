@@ -17,33 +17,11 @@
 #' object <- seurat_small
 #' features <- c("nUMI", "nGene", "PC1", "PC2")
 #'
-#' # t-SNE grid
-#' plotFeatureTSNE(
-#'     object = object,
-#'     features = features,
-#'     dark = TRUE,
-#'     grid = TRUE
-#' )
-#' plotFeatureTSNE(
-#'     object = object,
-#'     features = features,
-#'     dark = FALSE,
-#'     grid = FALSE
-#' )
+#' # t-SNE
+#' plotFeatureTSNE(object, features)
 #'
-#' # UMAP grid
-#' plotFeatureUMAP(
-#'     object,
-#'     features = features,
-#'     dark = TRUE,
-#'     grid = TRUE
-#' )
-#' plotFeatureUMAP(
-#'     object,
-#'     features = features,
-#'     dark = FALSE,
-#'     grid = FALSE
-#' )
+#' # UMAP
+#' plotFeatureUMAP(object, features)
 NULL
 
 
