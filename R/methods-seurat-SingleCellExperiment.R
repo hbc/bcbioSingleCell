@@ -21,7 +21,8 @@ setMethod(
     "assay",
     signature("seurat"),
     function(x) {
-        slot(x, "raw.data")
+        x <- as(x, "SingleCellExperiment")
+        assay(x)
     }
 )
 
@@ -34,8 +35,8 @@ setMethod(
     "colData",
     signature("seurat"),
     function(x) {
-        data <- slot(x, "meta.data")
-        as(data, "DataFrame")
+        x <- as(x, "SingleCellExperiment")
+        colData(x)
     }
 )
 
@@ -50,7 +51,8 @@ setMethod(
     "colnames",
     signature("seurat"),
     function(x) {
-        colnames(slot(x, "data"))
+        x <- as(x, "SingleCellExperiment")
+        colnames(x)
     }
 )
 
@@ -63,14 +65,9 @@ setMethod(
 setMethod(
     "counts",
     signature("seurat"),
-    function(object, normalized = FALSE) {
-        assert_is_a_bool(normalized)
-        # seurat also stashes scaled counts in `scale.data`
-        if (identical(normalized, FALSE)) {
-            slot(object, "raw.data")
-        } else if (identical(normalized, TRUE)) {
-            slot(object, "data")
-        }
+    function(object) {
+        x <- as(x, "SingleCellExperiment")
+        counts(x)
     }
 )
 
@@ -82,30 +79,8 @@ setMethod(
     "metadata",
     signature("seurat"),
     function(x) {
-        bcbio(x, "metadata")
-    }
-)
-
-
-
-#' @rdname seurat-SingleCellExperiment
-#' @seealso `getMethod("metadata<-", "Annotated")`
-#' @export
-setMethod(
-    "metadata<-",
-    signature(
-        x = "seurat",
-        value = "ANY"
-    ),
-    function(x, value) {
-        if (!is.list(value)) {
-            stop("replacement 'metadata' value must be a list")
-        }
-        if (!length(value)) {
-            names(value) <- NULL
-        }
-        bcbio(x, "metadata") <- value
-        x
+        x <- as(x, "SingleCellExperiment")
+        metadata(x)
     }
 )
 
@@ -117,11 +92,8 @@ setMethod(
     "rowData",
     signature("seurat"),
     function(x) {
-        rowRanges <- rowRanges(x)
-        if (is.null(rowRanges)) {
-            return(NULL)
-        }
-        as(rowRanges, "DataFrame")
+        x <- as(x, "SingleCellExperiment")
+        rowData(x)
     }
 )
 
@@ -133,7 +105,8 @@ setMethod(
     "rowRanges",
     signature("seurat"),
     function(x) {
-        bcbio(x, "rowRanges")
+        x <- as(x, "SingleCellExperiment")
+        rowRanges(x)
     }
 )
 
@@ -146,7 +119,8 @@ setMethod(
     "rownames",
     signature("seurat"),
     function(x) {
-        rownames(slot(x, "data"))
+        x <- as(x, "SingleCellExperiment")
+        rownames(x)
     }
 )
 
