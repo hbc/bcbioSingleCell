@@ -53,17 +53,22 @@ NULL
     object,
     features,
     dimRed = c("tsne", "umap"),
-    color = "auto",
-    pointSize = 0.5,
-    pointAlpha = 0.8,
+    color = NULL,
+    pointSize = getOption("pointSize", 0.75),
+    pointAlpha = getOption("pointAlpha", 0.75),
     label = TRUE,
-    labelSize = 6L,
-    dark = TRUE,
+    labelSize = getOption("labelSize", 6L),
+    dark = FALSE,
     grid = TRUE,
     legend = FALSE,
     aspectRatio = 1L
 ) {
     assert_is_character(features)
+    # Legacy support for `color = "auto"`
+    if (identical(color, "auto")) {
+        color <- NULL
+    }
+    assertIsColorScaleContinuousOrNULL(color)
     dimRed <- match.arg(dimRed)
 
     if (isTRUE(dark)) {
@@ -132,7 +137,7 @@ NULL
                     aspect_ratio = aspectRatio,
                     grid = grid
                 )
-            if (color == "auto") {
+            if (is.null(color)) {
                 color <- scale_colour_viridis(option = "plasma")
             }
         } else {
@@ -141,7 +146,7 @@ NULL
                     aspect_ratio = aspectRatio,
                     grid = grid
                 )
-            if (color == "auto") {
+            if (is.null(color)) {
                 color <- scale_colour_viridis(
                     option = "plasma", begin = 1L, end = 0L
                 )
@@ -180,12 +185,12 @@ setMethod(
     function(
         object,
         features,
-        color = "auto",
-        pointSize = 0.5,
-        pointAlpha = 0.8,
+        color = NULL,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
         label = TRUE,
-        labelSize = 6L,
-        dark = TRUE,
+        labelSize = getOption("labelSize", 6L),
+        dark = FALSE,
         grid = TRUE,
         legend = FALSE,
         aspectRatio = 1L
@@ -217,12 +222,12 @@ setMethod(
     function(
         object,
         features,
-        color = "auto",
-        pointSize = 0.5,
-        pointAlpha = 0.8,
+        color = NULL,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
         label = TRUE,
-        labelSize = 6L,
-        dark = TRUE,
+        labelSize = getOption("labelSize", 6L),
+        dark = FALSE,
         grid = TRUE,
         legend = FALSE,
         aspectRatio = 1L
