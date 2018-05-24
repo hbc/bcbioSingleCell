@@ -49,7 +49,7 @@
 #' plotMarkerTSNE(
 #'     object = object,
 #'     genes = genes,
-#'     pointsAsNumbers = TRUE
+#'     pointsAsNumbers = TRUE,
 #'     title = "collagen"
 #' )
 #'

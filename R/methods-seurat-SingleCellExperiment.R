@@ -81,7 +81,6 @@ setMethod(
     function(x) {
         stash <- bcbio(x, "metadata")
         if (!is.null(stash)) {
-            message("Using bcbio stashed metadata")
             return(stash)
         }
         x <- as(x, "SingleCellExperiment")
@@ -139,7 +138,6 @@ setMethod(
         x <- as(x, "SingleCellExperiment")
         if (is(stash, "GRanges")) {
             assert_are_identical(names(stash), rownames(x))
-            message("Using bcbio stashed rowRanges")
             return(stash)
         }
         x <- as(x, "SingleCellExperiment")

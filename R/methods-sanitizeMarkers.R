@@ -104,7 +104,7 @@ setMethod(
         }
 
         # Add Ensembl gene IDs
-        gene2symbol <- suppressMessages(gene2symbol(object))
+        gene2symbol <- gene2symbol(object)
 
         # Only attempt to join rowRanges if we have gene-to-symbol mappings
         if (!is.null(gene2symbol)) {
