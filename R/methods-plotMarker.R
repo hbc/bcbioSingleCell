@@ -26,44 +26,48 @@
 #'
 #' @examples
 #' object <- seurat_small
-#' genes <- "COL1A1"
+#' collagen_genes <- grep("^COL\\d", rownames(object), value = TRUE)
+#' print(collagen_genes)
+#' mito_genes <- grep("^MT-", rownames(object), value = TRUE)
+#' print(mito_genes)
 #'
 #' # t-SNE
 #' plotMarkerTSNE(
 #'     object = object,
-#'     genes = genes,
+#'     genes = collagen_genes,
 #'     dark = TRUE,
-#'     grid = TRUE
+#'     grid = TRUE,
+#'     title = "collagen"
 #' )
-#' plotMarkerTSNE(
-#'     object = object,
-#'     genes = genes,
-#'     dark = FALSE,
-#'     grid = FALSE
-#' )
-#'
-#' # Aggregate marker expression (e.g. mitochondrial genes)
-#' mito_genes <- grep("^MT-", rownames(object), value = TRUE)
-#' print(mito_genes)
 #' plotMarkerTSNE(
 #'     object = object,
 #'     genes = mito_genes,
-#'     expression = "mean",
-#'     title = "mito genes"
+#'     dark = FALSE,
+#'     grid = FALSE,
+#'     title = "mito"
+#' )
+#'
+#' # Number cloud
+#' plotMarkerTSNE(
+#'     object = object,
+#'     genes = collagen_genes,
+#'     pointsAsNumbers = TRUE
 #' )
 #'
 #' # UMAP
 #' plotMarkerUMAP(
 #'     object = object,
-#'     genes = genes,
+#'     genes = collagen_genes,
 #'     dark = TRUE,
-#'     grid = TRUE
+#'     grid = TRUE,
+#'     title = "collagen"
 #' )
 #' plotMarkerUMAP(
 #'     object = object,
-#'     genes = genes,
+#'     genes = mito_genes,
 #'     dark = FALSE,
-#'     grid = FALSE
+#'     grid = FALSE,
+#'     title = "mito"
 #' )
 #'
 #' # Top markers
@@ -104,13 +108,13 @@ NULL
     genes,
     dimRed = c("tsne", "umap"),
     expression = c("mean", "median", "sum"),
-    color = "auto",
+    color = NULL,
     pointsAsNumbers = FALSE,
-    pointSize = 0.5,
+    pointSize = 0.75,
     pointAlpha = 0.8,
     label = TRUE,
     labelSize = 6L,
-    dark = TRUE,
+    dark = FALSE,
     grid = TRUE,
     legend = FALSE,
     aspectRatio = 1L,
@@ -120,6 +124,11 @@ NULL
     assert_is_subset(genes, rownames(object))
     dimRed <- match.arg(dimRed)
     expression <- match.arg(expression)
+    # Legacy support for `color = "auto"`
+    if (identical(color, "auto")) {
+        color <- NULL
+    }
+    assertIsColorScaleContinuousOrNULL(color)
     assert_is_a_bool(pointsAsNumbers)
     assert_is_a_number(pointSize)
     assert_is_a_number(pointAlpha)
@@ -198,6 +207,7 @@ NULL
     }
 
     if (isTRUE(pointsAsNumbers)) {
+        if (pointSize < 4L) pointSize <- 4L
         p <- p +
             geom_text(
                 mapping = aes_string(
@@ -243,7 +253,7 @@ NULL
                 aspect_ratio = aspectRatio,
                 grid = grid
             )
-        if (color == "auto") {
+        if (is.null(color)) {
             color <- scale_colour_viridis(option = "plasma")
         }
     } else {
@@ -252,10 +262,8 @@ NULL
                 aspect_ratio = aspectRatio,
                 grid = grid
             )
-        if (color == "auto") {
-            color <- scale_colour_viridis(
-                option = "plasma", begin = 1L, end = 0L
-            )
+        if (is.null(color)) {
+            color <- scale_colour_viridis(begin = 1L, end = 0L)
         }
     }
 
@@ -278,13 +286,13 @@ setMethod(
         object,
         genes,
         expression = c("mean", "median", "sum"),
-        color = "auto",
+        color = NULL,
         pointsAsNumbers = FALSE,
-        pointSize = 0.5,
+        pointSize = 0.75,
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        dark = TRUE,
+        dark = FALSE,
         grid = TRUE,
         legend = FALSE,
         aspectRatio = 1L,
@@ -321,13 +329,13 @@ setMethod(
         object,
         genes,
         expression = c("mean", "median", "sum"),
-        color = "auto",
+        color = NULL,
         pointsAsNumbers = FALSE,
-        pointSize = 0.5,
+        pointSize = 0.75,
         pointAlpha = 0.8,
         label = TRUE,
         labelSize = 6L,
-        dark = TRUE,
+        dark = FALSE,
         grid = TRUE,
         legend = FALSE,
         aspectRatio = 1L,

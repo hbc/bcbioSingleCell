@@ -147,9 +147,7 @@ NULL
                     grid = grid
                 )
             if (is.null(color)) {
-                color <- scale_colour_viridis(
-                    option = "plasma", begin = 1L, end = 0L
-                )
+                color <- scale_colour_viridis(begin = 1L, end = 0L)
             }
         }
 

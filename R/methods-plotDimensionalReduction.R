@@ -24,15 +24,20 @@
 #'
 #' @examples
 #' # seurat ====
+#' object <- seurat_small
+#'
 #' # t-SNE
-#' plotTSNE(seurat_small, dark = TRUE, grid = TRUE)
-#' plotTSNE(seurat_small, dark = FALSE, grid = FALSE)
+#' plotTSNE(object, dark = FALSE, grid = FALSE)
+#' plotTSNE(object, dark = TRUE, grid = TRUE)
+#'
+#' # Number cloud
+#' plotTSNE(object, pointsAsNumbers = TRUE)
 #'
 #' # PCA
-#' plotPCA(seurat_small)
+#' plotPCA(object)
 #'
 #' # UMAP
-#' plotUMAP(seurat_small)
+#' plotUMAP(object)
 NULL
 
 
@@ -42,14 +47,15 @@ NULL
     data,
     axes,
     interestingGroups = "ident",
-    color = scale_color_hue(),
+    color = NULL,
     pointsAsNumbers = FALSE,
-    pointSize = 0.5,
-    pointAlpha = 0.8,
+    pointSize = getOption("pointSize", 0.75),
+    pointAlpha = getOption("pointAlpha", 0.75),
     label = TRUE,
-    labelSize = 6L,
+    labelSize = getOption("labelSize", 6L),
     dark = FALSE,
-    grid = FALSE,
+    grid = TRUE,
+    legend = TRUE,
     aspectRatio = 1L,
     title = NULL
 ) {
@@ -65,6 +71,7 @@ NULL
     assert_is_a_bool(label)
     assert_is_a_number(labelSize)
     assert_is_a_bool(dark)
+    assert_is_a_bool(legend)
     assertIsAStringOrNULL(title)
 
     if (interestingGroups == "ident") {
@@ -99,6 +106,7 @@ NULL
     }
 
     if (isTRUE(pointsAsNumbers)) {
+        if (pointSize < 4L) pointSize <- 4L
         p <- p +
             geom_text(
                 mapping = aes_string(
@@ -108,13 +116,15 @@ NULL
                     color = colorCol
                 ),
                 alpha = pointAlpha,
-                size = pointSize
+                size = pointSize,
+                show.legend = legend
             )
     } else {
         p <- p +
             geom_point(
                 alpha = pointAlpha,
-                size = pointSize
+                size = pointSize,
+                show.legend = legend
             )
     }
 
@@ -160,14 +170,15 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = scale_color_hue(),
+        color = NULL,
         pointsAsNumbers = FALSE,
-        pointSize = 0.5,
-        pointAlpha = 0.8,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
         label = TRUE,
-        labelSize = 6L,
+        labelSize = getOption("labelSize", 6L),
         dark = FALSE,
-        grid = FALSE,
+        grid = TRUE,
+        legend = TRUE,
         aspectRatio = 1L,
         title = NULL
     ) {
@@ -184,6 +195,7 @@ setMethod(
             labelSize = labelSize,
             dark = dark,
             grid = grid,
+            legend = legend,
             aspectRatio = aspectRatio,
             title = title
         )
@@ -200,14 +212,15 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = scale_color_hue(),
+        color = NULL,
         pointsAsNumbers = FALSE,
-        pointSize = 0.5,
-        pointAlpha = 0.8,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
         label = TRUE,
-        labelSize = 6L,
+        labelSize = getOption("labelSize", 6L),
         dark = FALSE,
-        grid = FALSE,
+        grid = TRUE,
+        legend = TRUE,
         aspectRatio = 1L,
         title = NULL
     ) {
@@ -224,6 +237,7 @@ setMethod(
             labelSize = labelSize,
             dark = dark,
             grid = grid,
+            legend = legend,
             aspectRatio = aspectRatio,
             title = title
         )
@@ -240,14 +254,15 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = scale_color_hue(),
+        color = NULL,
         pointsAsNumbers = FALSE,
-        pointSize = 0.5,
-        pointAlpha = 0.8,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
         label = TRUE,
-        labelSize = 6L,
+        labelSize = getOption("labelSize", 6L),
         dark = FALSE,
-        grid = FALSE,
+        grid = TRUE,
+        legend = TRUE,
         aspectRatio = 1L,
         title = NULL
     ) {
@@ -264,6 +279,7 @@ setMethod(
             labelSize = labelSize,
             dark = dark,
             grid = grid,
+            legend = legend,
             aspectRatio = aspectRatio,
             title = title
         )
