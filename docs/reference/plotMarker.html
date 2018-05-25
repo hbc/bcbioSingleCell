@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Cell-Type Gene Marker(s) — plotKnownMarkersDetected • bcbioSingleCell</title>
+<title>Plot Cell-Type-Specific Gene Markers — plotKnownMarkersDetected • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Plot Cell-Type Gene Marker(s) — plotKnownMarkersDetected" />
+<meta property="og:title" content="Plot Cell-Type-Specific Gene Markers — plotKnownMarkersDetected" />
 
 <meta property="og:description" content="Plot gene expression per cell in multiple formats:
 plotMarkerTSNE(): t-SNE gene expression plot.
@@ -64,7 +64,7 @@ plotViolin(): Violin plot.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
       </span>
     </div>
 
@@ -103,8 +103,8 @@ plotViolin(): Violin plot.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Cell-Type Gene Marker(s)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotMarker.R'><code>R/methods-plotMarker.R</code></a></small>
+    <h1>Plot Cell-Type-Specific Gene Markers</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotMarker.R'><code>R/methods-plotMarker.R</code></a></small>
     <div class="hidden name"><code>plotMarker.Rd</code></div>
     </div>
 
@@ -120,34 +120,33 @@ plotViolin(): Violin plot.
 
     <pre class="usage"><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='fu'>plotMarker</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
 <span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='fu'>plotMarkerUMAP</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
-  <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+  <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotMarker</span>(<span class='no'>object</span>, <span class='no'>gene</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>,
-  <span class='st'>"list"</span>), <span class='no'>...</span>)
+<span class='fu'>plotMarkerUMAP</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
+  <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotMarkers</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)
+<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>markers</span>, <span class='kw'>dimRed</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"tsne"</span>, <span class='st'>"umap"</span>),
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>topMarkers</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>markers</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
-  <span class='no'>...</span>)</pre>
+<span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>markers</span>,
+  <span class='kw'>dimRed</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"tsne"</span>, <span class='st'>"umap"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,7 +165,8 @@ plotViolin(): Violin plot.
     </tr>
     <tr>
       <th>expression</th>
-      <td><p>Calculation to apply on the aggregate marker expression.</p></td>
+      <td><p>Calculation to apply. Uses <code>match.arg()</code> and defaults to
+the first argument in the vector.</p></td>
     </tr>
     <tr>
       <th>color</th>
@@ -218,26 +218,20 @@ the dataset, and some cells can be masked.</p></td>
       <td><p>Plot title.</p></td>
     </tr>
     <tr>
-      <th>gene</th>
-      <td><p>Gene identifier. Must intersect with <code>rownames()</code>.</p></td>
+      <th>markers</th>
+      <td><p><code>grouped_df</code> of marker genes.</p><ul>
+<li><p><code>plotTopMarkers()</code>: must be grouped by "<code>cluster</code>".</p></li>
+<li><p><code>plotKnownMarkersDetected()</code>: must be grouped by "<code>cellType</code>".</p></li>
+</ul></td>
     </tr>
     <tr>
-      <th>return</th>
-      <td><p>Return type. Uses <code><a href='http://www.rdocumentation.org/packages/base/topics/match.arg'>base::match.arg()</a></code> internally and defaults
-to the first argument in the vector.</p></td>
+      <th>dimRed</th>
+      <td><p>Dimensionality reduction method to apply. Defaults to t-SNE
+("<code>tsne</code>") but UMAP is also supported ("<code>umap</code>").</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
       <td><p>R Markdown header level.</p></td>
-    </tr>
-    <tr>
-      <th>topMarkers</th>
-      <td><p><code>grouped_df</code> grouped by "<code>cluster</code>", returned by
-<code>topMarkers()</code>.</p></td>
-    </tr>
-    <tr>
-      <th>markers</th>
-      <td><p><code>grouped_df</code> of known marker genes.</p></td>
     </tr>
     </table>
     
@@ -245,8 +239,9 @@ to the first argument in the vector.</p></td>
 
     <p>Show graphical output. Invisibly return <code>ggplot</code> <code>list</code>.</p>
     
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+    <h2 class="hasAnchor" id="plottopmarkers"><a class="anchor" href="#plottopmarkers"></a>plotTopMarkers</h2>
 
+    
     <p>The number of markers to plot is determined by the output of the
 <code>topMarkers()</code> function. If you want to reduce the number of genes to plot,
 simply reassign first using that function. If necessary, we can add support
@@ -263,79 +258,76 @@ for the number of genes to plot here in a future update.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='st'>"COL1A1"</span>)</div><div class='img'><img src='plotMarker-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='st'>"COL1A1"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotMarker-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Mitochondrial genes</span>
-<span class='no'>mito</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT-"</span>, <span class='fu'>rownames</span>(<span class='fu'>counts</span>(<span class='no'>seurat_small</span>)), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>print</span>(<span class='no'>mito</span>)</div><div class='output co'>#&gt;  [1] "MT-ND6"  "MT-CO2"  "MT-CYB"  "MT-ND2"  "MT-ND5"  "MT-CO1"  "MT-ND3" 
-#&gt;  [8] "MT-ND4"  "MT-ND1"  "MT-ATP6" "MT-CO3"  "MT-ND4L" "MT-ATP8"</div><div class='input'><span class='fu'>plotMarkerTSNE</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>mito</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mitochondrial"</span>)</div><div class='img'><img src='plotMarker-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Individual gene</span>
-<span class='fu'>plotMarker</span>(<span class='no'>seurat_small</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='st'>"COL1A2"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plotMarker-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotMarker</span>(<span class='no'>seurat_small</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='st'>"COL1A2"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plotMarker-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Multiple genes</span>
-<span class='no'>top</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>top</span>, <span class='st'>"rowname"</span>)
-<span class='fu'>plotMarkers</span>(<span class='no'>seurat_small</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## COL1A2
-#&gt; </div><div class='img'><img src='plotMarker-6.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## S100A10
-#&gt; </div><div class='img'><img src='plotMarker-7.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## MYL4
-#&gt; </div><div class='img'><img src='plotMarker-8.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## MT-ATP6
-#&gt; </div><div class='img'><img src='plotMarker-9.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## H3F3A
-#&gt; </div><div class='img'><img src='plotMarker-10.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotTopMarkers</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
-    <span class='kw'>topMarkers</span> <span class='kw'>=</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
-)</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
+    <pre class="examples"><div class='input'><span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^COL\\d"</span>, <span class='fu'>rownames</span>(<span class='no'>object</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt;  [1] "COL1A1"  "COL5A1"  "COL4A2"  "COL6A1"  "COL6A2"  "COL6A3"  "COL1A2" 
+#&gt;  [8] "COL3A1"  "COL18A1" "COL5A2" </div><div class='input'><span class='no'>title</span> <span class='kw'>&lt;-</span> <span class='st'>"collagen"</span>
+
+<span class='co'># t-SNE</span>
+<span class='fu'>plotMarkerTSNE</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
+    <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>,
+    <span class='kw'>title</span> <span class='kw'>=</span> <span class='no'>title</span>
+)</div><div class='img'><img src='plotMarker-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Dark mode</span>
+<span class='fu'>plotMarkerTSNE</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
+    <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>,
+    <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>title</span> <span class='kw'>=</span> <span class='no'>title</span>
+)</div><div class='img'><img src='plotMarker-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Number cloud</span>
+<span class='fu'>plotMarkerTSNE</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
+    <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>,
+    <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"collagen"</span>
+)</div><div class='img'><img src='plotMarker-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># UMAP</span>
+<span class='fu'>plotMarkerUMAP</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
+    <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>,
+    <span class='kw'>title</span> <span class='kw'>=</span> <span class='no'>title</span>
+)</div><div class='img'><img src='plotMarker-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Top markers</span>
+<span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>markers</span></div><div class='output co'>#&gt; # A tibble: 5 x 18
+#&gt; # Groups:   cluster [5]
+#&gt;   cluster rowname geneID        geneName  pct1  pct2 avgLogFC     padj   pvalue
+#&gt;   &lt;fct&gt;   &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1 0       COL1A2  ENSG00000164… COL1A2   1     0.465     2.56 5.31e-58 1.06e-60
+#&gt; 2 1       S100A10 ENSG00000197… S100A10  0.741 0.266     2.17 4.75e-30 9.50e-33
+#&gt; 3 2       MYL4    ENSG00000198… MYL4     0.872 0.123     2.14 3.25e-55 6.50e-58
+#&gt; 4 3       MT-ATP6 ENSG00000198… MT-ATP6  1     0.993     1.16 1.80e-31 3.59e-34
+#&gt; 5 4       H3F3A   ENSG00000163… H3F3A    1     0.767     1.38 3.89e-25 7.79e-28
+#&gt; # ... with 9 more variables: seqnames &lt;fct&gt;, start &lt;int&gt;, end &lt;int&gt;,
+#&gt; #   width &lt;int&gt;, strand &lt;fct&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
+#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='no'>markers</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>markers</span>)</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
 #&gt; 
 #&gt; ## Cluster 0 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
-#&gt; ### COL1A2
-#&gt; </div><div class='img'><img src='plotMarker-11.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~11s          
-#&gt; 
-#&gt; ## Cluster 1 {.tabset}
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; ### S100A10
-#&gt; </div><div class='img'><img src='plotMarker-12.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++                              | 40% ~08s          
-#&gt; 
-#&gt; ## Cluster 2 {.tabset}
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; ### MYL4
-#&gt; </div><div class='img'><img src='plotMarker-13.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++                    | 60% ~05s          
-#&gt; 
-#&gt; ## Cluster 3 {.tabset}
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; ### MT-ATP6
-#&gt; </div><div class='img'><img src='plotMarker-14.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++         | 80% ~02s          
-#&gt; 
-#&gt; ## Cluster 4 {.tabset}
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; ### H3F3A
-#&gt; </div><div class='img'><img src='plotMarker-15.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 12s</div><div class='input'><span class='co'># Let's plot the first known marker, as a quick example</span>
-<span class='fu'>plotKnownMarkersDetected</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
-    <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>known_markers_small</span>[<span class='fl'>1L</span>, , <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>]
-)</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
+#&gt; ### COL1A2 {.tabset}
+#&gt; </div><div class='img'><img src='plotMarker-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++                                        | 20% ~05s             |++++++++++++++++++++                              | 40% ~02s             |++++++++++++++++++++++++++++++                    | 60% ~01s             |++++++++++++++++++++++++++++++++++++++++         | 80% ~00s             |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 01s</div><div class='input'>
+<span class='co'># Known markers detected</span>
+<span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='no'>known_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>markers</span></div><div class='output co'>#&gt; # A tibble: 1 x 19
+#&gt; # Groups:   cellType [1]
+#&gt;   cellType     cluster geneID    geneName rowname  pct1  pct2 avgLogFC     padj
+#&gt;   &lt;chr&gt;        &lt;fct&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1 Natural Kil… 1       ENSG0000… NCAM1    NCAM1   0.466 0.701   -0.954  2.25e-7
+#&gt; # ... with 10 more variables: pvalue &lt;dbl&gt;, seqnames &lt;fct&gt;, start &lt;int&gt;,
+#&gt; #   end &lt;int&gt;, width &lt;int&gt;, strand &lt;fct&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
+#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>markers</span>)</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
 #&gt; 
 #&gt; ## Natural Killer Cell {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
-#&gt; ### NCAM1
-#&gt; </div><div class='img'><img src='plotMarker-16.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 02s</div></pre>
+#&gt; ### NCAM1 {.tabset}
+#&gt; </div><div class='img'><img src='plotMarker-6.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 01s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -344,7 +336,7 @@ for the number of genes to plot here in a future update.</p>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#note">Note</a></li>
+      <li><a href="#plottopmarkers">plotTopMarkers</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

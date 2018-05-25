@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
       </span>
     </div>
 
@@ -112,8 +112,7 @@
 
     <pre class="usage"><span class='co'># S4 method for seurat</span>
 <span class='fu'>plotViolin</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"count"</span>, <span class='st'>"width"</span>,
-  <span class='st'>"area"</span>), <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_fill_hue</a></span>(), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
-  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>, <span class='st'>"list"</span>, <span class='st'>"markdown"</span>))</pre>
+  <span class='st'>"area"</span>), <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,18 +138,8 @@ to <code>NULL</code>, the default ggplot2 color palette will be used. If manual 
 definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>dark</th>
-      <td><p>Plot against a dark background using
-<code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>headerLevel</th>
-      <td><p>R Markdown header level.</p></td>
-    </tr>
-    <tr>
-      <th>return</th>
-      <td><p>Return type. Uses <code><a href='http://www.rdocumentation.org/packages/base/topics/match.arg'>base::match.arg()</a></code> internally and defaults
-to the first argument in the vector.</p></td>
+      <th>legend</th>
+      <td><p>Include plot legend.</p></td>
     </tr>
     </table>
     
@@ -160,26 +149,16 @@ to the first argument in the vector.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Gene Expression Functions: <code><a href='plotDot.html'>plotDot</a></code></p></div>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/VlnPlot'>Seurat::VlnPlot()</a></code>.</p>
+<p>Other Gene Expression Functions: <code><a href='plotDot.html'>plotDot</a></code>,
+  <code><a href='plotGene.html'>plotGene</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>), <span class='fl'>2L</span>)
-<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "MS4A1" "CD79B"</div><div class='input'>
-<span class='co'># grid</span>
-<span class='fu'>plotViolin</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)</div><div class='img'><img src='plotViolin-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># list</span>
-<span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'>plotViolin</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"list"</span>)
-<span class='fu'>names</span>(<span class='no'>list</span>)</div><div class='output co'>#&gt; [1] "MS4A1" "CD79B"</div><div class='input'>
-<span class='co'># markdown</span>
-<span class='fu'>plotViolin</span>(<span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"markdown"</span>)</div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## MS4A1
-#&gt; </div><div class='img'><img src='plotViolin-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## CD79B
-#&gt; </div><div class='img'><img src='plotViolin-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/Seurat/topics/pbmc_small'>pbmc_small</a></span>
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>object</span>), <span class='fl'>4L</span>)
+<span class='fu'>plotViolin</span>(<span class='no'>object</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='img'><img src='plotViolin-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

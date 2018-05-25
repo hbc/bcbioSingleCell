@@ -1,8 +1,3 @@
-# FIXME Add seurat coercion check
-# FIXME Add `updateObject()` test
-
-
-
 context("S4 Object : bcbioSingleCell")
 
 

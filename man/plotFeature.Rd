@@ -13,13 +13,17 @@ plotFeatureTSNE(object, ...)
 
 plotFeatureUMAP(object, ...)
 
-\S4method{plotFeatureTSNE}{seurat}(object, features, color = "auto",
-  pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L)
+\S4method{plotFeatureTSNE}{seurat}(object, features, color = NULL,
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  legend = FALSE, aspectRatio = 1L)
 
-\S4method{plotFeatureUMAP}{seurat}(object, features, color = "auto",
-  pointSize = 0.5, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = TRUE, grid = TRUE, legend = FALSE, aspectRatio = 1L)
+\S4method{plotFeatureUMAP}{seurat}(object, features, color = NULL,
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  legend = FALSE, aspectRatio = 1L)
 }
 \arguments{
 \item{object}{Object.}
@@ -63,33 +67,11 @@ Plot Feature
 object <- seurat_small
 features <- c("nUMI", "nGene", "PC1", "PC2")
 
-# t-SNE grid
-plotFeatureTSNE(
-    object = object,
-    features = features,
-    dark = TRUE,
-    grid = TRUE
-)
-plotFeatureTSNE(
-    object = object,
-    features = features,
-    dark = FALSE,
-    grid = FALSE
-)
+# t-SNE
+plotFeatureTSNE(object, features)
 
-# UMAP grid
-plotFeatureUMAP(
-    object,
-    features = features,
-    dark = TRUE,
-    grid = TRUE
-)
-plotFeatureUMAP(
-    object,
-    features = features,
-    dark = FALSE,
-    grid = FALSE
-)
+# UMAP
+plotFeatureUMAP(object, features)
 }
 \seealso{
 \code{\link[Seurat:FeaturePlot]{Seurat::FeaturePlot()}}.

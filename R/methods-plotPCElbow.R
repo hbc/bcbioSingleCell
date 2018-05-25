@@ -84,7 +84,7 @@ setMethod(
         # Pick the smallest value of the cutoffs
         cutoff <- min(minSDCutoff, minPctCutoff, maxCumPctCutoff)
 
-        # Standard deviation =======================================================
+        # Standard deviation ===================================================
         ggsd <- ggplot(
             data = data,
             mapping = aes_string(x = "pc", y = "sdev")
@@ -101,7 +101,7 @@ setMethod(
             expand_limits(y = 0L) +
             scale_y_continuous(trans = trans)
 
-        # Percent standard deviation ===============================================
+        # Percent standard deviation ===========================================
         ggpct <- ggplot(
             data = data,
             mapping = aes_string(x = "pc", y = "pct")
@@ -118,7 +118,7 @@ setMethod(
             expand_limits(y = 0L) +
             scale_y_continuous(labels = percent, trans = trans)
 
-        # Cumulative percent standard deviation ====================================
+        # Cumulative percent standard deviation ================================
         ggcumsum <- ggplot(
             data = data,
             mapping = aes_string(x = "pc", y = "cumsum")

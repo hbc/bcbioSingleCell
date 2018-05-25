@@ -167,7 +167,8 @@ plotFeatures <- function(...) {
 
 
 
-#' @rdname defunct
+#' @rdname plotMarker
+#' @usage NULL
 #' @export
 plotMarker <- function(...) {
     .Defunct("plotMarkerTSNE")
@@ -179,22 +180,6 @@ plotMarker <- function(...) {
 #' @export
 plotMarkers <- function(...) {
     .Defunct("plotMarkerTSNE")
-}
-
-
-
-#' @rdname defunct
-#' @export
-plotDot <- function(...) {
-    .Defunct("plotGene or Seurat::DotPlot")
-}
-
-
-
-#' @rdname defunct
-#' @export
-plotViolin <- function(...) {
-    .Defunct("plotGene or Seurat::ViolinPlot")
 }
 
 

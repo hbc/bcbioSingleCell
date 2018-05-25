@@ -22,7 +22,6 @@ reference:
     - ends_with("Object")
   - title: Read Functions
     contents:
-    # - starts_with("load")
     - starts_with("read")
   - title: Data Functions
     contents:
@@ -50,6 +49,7 @@ reference:
     - plotZerosVsDepth
     - matches("Ranks")
     - plotNovelty
+    - plotFeature
   - title: Clustering Functions
     contents:
     - matches("Cluster")
@@ -59,6 +59,7 @@ reference:
     - matches("UMAP")
   - title: Gene Expression Functions
     contents:
+    - plotGene
     - plotDot
     - plotMarker
     - plotViolin

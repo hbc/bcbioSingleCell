@@ -5,7 +5,7 @@ context("Data Functions")
 # aggregateReplicates ==========================================================
 test_that("aggregateReplicates", {
     x <- aggregateReplicates(indrops_small)
-    expect_s4_class(x, "bcbioSingleCell")
+    expect_s4_class(x, "SingleCellExperiment")
     expect_identical(
         dim(x),
         c(500L, 500L)
@@ -31,9 +31,9 @@ test_that("fetchPCAData", {
             origIdent = "factor",
             res0x8 = "character",  # factor
             res1 = "character",  # factor
+            ident = "factor",
             sampleName = "factor",
             interestingGroups = "factor",
-            ident = "factor",
             pc1 = "numeric",
             pc2 = "numeric",
             centerX = "numeric",
@@ -54,9 +54,9 @@ test_that("fetchPCAData", {
         origIdent = factor("SeuratProject"),
         res0x8 = "0",
         res1 = "0",
+        ident = factor("0", levels = c("0", "1", "2", "3")),
         sampleName = factor("SeuratProject"),
         interestingGroups = factor("SeuratProject"),
-        ident = factor("0", levels = c("0", "1", "2", "3")),
         pc1 = 0.443,
         pc2 = -1.575,
         centerX = -1.176,
@@ -83,9 +83,9 @@ test_that("fetchTSNEData", {
             origIdent = "factor",
             res0x8 = "character",
             res1 = "character",
+            ident = "factor",
             sampleName = "factor",
             interestingGroups = "factor",
-            ident = "factor",
             tSNE1 = "numeric",
             tSNE2 = "numeric",
             centerX = "numeric",
@@ -106,9 +106,9 @@ test_that("fetchTSNEData", {
         origIdent = factor("SeuratProject"),
         res0x8 = "0",
         res1 = "0",
+        ident = factor("0", levels = c("0", "1", "2", "3")),
         sampleName = factor("SeuratProject"),
         interestingGroups = factor("SeuratProject"),
-        ident = factor("0", levels = c("0", "1", "2", "3")),
         tSNE1 = 14.422,
         tSNE2 = 8.336,
         centerX = -0.332,
@@ -137,9 +137,9 @@ test_that("fetchTSNEExpressionData", {
             origIdent = "factor",
             res0x8 = "character",
             res1 = "character",
+            ident = "factor",
             sampleName = "factor",
             interestingGroups = "factor",
-            ident = "factor",
             tSNE1 = "numeric",
             tSNE2 = "numeric",
             centerX = "numeric",
@@ -162,9 +162,9 @@ test_that("fetchTSNEExpressionData", {
         origIdent = factor("SeuratProject"),
         res0x8 = "0",
         res1 = "0",
+        ident = factor("0", levels = c("0", "1", "2", "3")),
         sampleName = factor("SeuratProject"),
         interestingGroups = factor("SeuratProject"),
-        ident = factor("0", levels = c("0", "1", "2", "3")),
         tSNE1 = 14.422,
         tSNE2 = 8.336,
         centerX = -0.332,

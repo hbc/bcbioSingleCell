@@ -17,33 +17,11 @@
 #' object <- seurat_small
 #' features <- c("nUMI", "nGene", "PC1", "PC2")
 #'
-#' # t-SNE grid
-#' plotFeatureTSNE(
-#'     object = object,
-#'     features = features,
-#'     dark = TRUE,
-#'     grid = TRUE
-#' )
-#' plotFeatureTSNE(
-#'     object = object,
-#'     features = features,
-#'     dark = FALSE,
-#'     grid = FALSE
-#' )
+#' # t-SNE
+#' plotFeatureTSNE(object, features)
 #'
-#' # UMAP grid
-#' plotFeatureUMAP(
-#'     object,
-#'     features = features,
-#'     dark = TRUE,
-#'     grid = TRUE
-#' )
-#' plotFeatureUMAP(
-#'     object,
-#'     features = features,
-#'     dark = FALSE,
-#'     grid = FALSE
-#' )
+#' # UMAP
+#' plotFeatureUMAP(object, features)
 NULL
 
 
@@ -53,17 +31,22 @@ NULL
     object,
     features,
     dimRed = c("tsne", "umap"),
-    color = "auto",
-    pointSize = 0.5,
-    pointAlpha = 0.8,
+    color = NULL,
+    pointSize = getOption("pointSize", 0.75),
+    pointAlpha = getOption("pointAlpha", 0.75),
     label = TRUE,
-    labelSize = 6L,
-    dark = TRUE,
+    labelSize = getOption("labelSize", 6L),
+    dark = FALSE,
     grid = TRUE,
     legend = FALSE,
     aspectRatio = 1L
 ) {
     assert_is_character(features)
+    # Legacy support for `color = "auto"`
+    if (identical(color, "auto")) {
+        color <- NULL
+    }
+    assertIsColorScaleContinuousOrNULL(color)
     dimRed <- match.arg(dimRed)
 
     if (isTRUE(dark)) {
@@ -132,7 +115,7 @@ NULL
                     aspect_ratio = aspectRatio,
                     grid = grid
                 )
-            if (color == "auto") {
+            if (is.null(color)) {
                 color <- scale_colour_viridis(option = "plasma")
             }
         } else {
@@ -141,10 +124,8 @@ NULL
                     aspect_ratio = aspectRatio,
                     grid = grid
                 )
-            if (color == "auto") {
-                color <- scale_colour_viridis(
-                    option = "plasma", begin = 1L, end = 0L
-                )
+            if (is.null(color)) {
+                color <- scale_colour_viridis(begin = 1L, end = 0L)
             }
         }
 
@@ -160,13 +141,17 @@ NULL
     })
 
     # Return ===================================================================
-    plot_grid(plotlist = plotlist) +
-        theme(
-            plot.background = element_rect(
-                color = NA,
-                fill = fill
+    if (length(features) > 1L) {
+        plot_grid(plotlist = plotlist, labels = "AUTO") +
+            theme(
+                plot.background = element_rect(
+                    color = NA,
+                    fill = fill
+                )
             )
-        )
+    } else {
+        plotlist[[1L]]
+    }
 }
 
 
@@ -180,12 +165,12 @@ setMethod(
     function(
         object,
         features,
-        color = "auto",
-        pointSize = 0.5,
-        pointAlpha = 0.8,
+        color = NULL,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
         label = TRUE,
-        labelSize = 6L,
-        dark = TRUE,
+        labelSize = getOption("labelSize", 6L),
+        dark = FALSE,
         grid = TRUE,
         legend = FALSE,
         aspectRatio = 1L
@@ -217,12 +202,12 @@ setMethod(
     function(
         object,
         features,
-        color = "auto",
-        pointSize = 0.5,
-        pointAlpha = 0.8,
+        color = NULL,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
         label = TRUE,
-        labelSize = 6L,
-        dark = TRUE,
+        labelSize = getOption("labelSize", 6L),
+        dark = FALSE,
         grid = TRUE,
         legend = FALSE,
         aspectRatio = 1L

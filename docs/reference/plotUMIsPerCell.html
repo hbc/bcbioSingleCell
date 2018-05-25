@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
       </span>
     </div>
 
@@ -139,8 +139,8 @@
     </tr>
     <tr>
       <th>geom</th>
-      <td><p>Plot type. Uses <code>match.arg()</code> internally and defaults to the
-first argument in the vector.</p></td>
+      <td><p>Plot type. Uses <code>match.arg()</code> and defaults to the first argument
+in the vector.</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
@@ -187,6 +187,7 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Quality Control Functions: <code>barcodeRanksPerSample</code>,
+  <code>filterCells</code>, <code><a href='metrics.html'>metrics</a></code>,
   <code>plotCellCounts</code>,
   <code>plotGenesPerCell</code>,
   <code>plotMitoRatio</code>,
@@ -203,9 +204,7 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
 <span class='co'># Label the knee point per sample</span>
 <span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ecdf"</span>, <span class='kw'>point</span> <span class='kw'>=</span> <span class='st'>"knee"</span>)</div><div class='img'><img src='plotUMIsPerCell-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Alternate geoms</span>
-<span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"histogram"</span>)</div><div class='img'><img src='plotUMIsPerCell-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ridgeline"</span>)</div><div class='output co'>#&gt; <span class='message'>Picking joint bandwidth of 0.0383</span></div><div class='img'><img src='plotUMIsPerCell-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>)</div><div class='img'><img src='plotUMIsPerCell-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"boxplot"</span>)</div><div class='img'><img src='plotUMIsPerCell-6.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># seurat ====</span>
-<span class='fu'>plotUMIsPerCell</span>(<span class='no'>seurat_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ecdf"</span>, <span class='kw'>point</span> <span class='kw'>=</span> <span class='st'>"inflection"</span>)</div><div class='img'><img src='plotUMIsPerCell-7.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"histogram"</span>)</div><div class='img'><img src='plotUMIsPerCell-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ridgeline"</span>)</div><div class='output co'>#&gt; <span class='message'>Picking joint bandwidth of 0.0383</span></div><div class='img'><img src='plotUMIsPerCell-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>)</div><div class='img'><img src='plotUMIsPerCell-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"boxplot"</span>)</div><div class='img'><img src='plotUMIsPerCell-6.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

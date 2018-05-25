@@ -19,7 +19,7 @@
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
 #'   spikeNames
 #' @importFrom SummarizedExperiment assay assayNames assays assays<- colData
-#'   rowData rowRanges
+#'   rowData rowRanges rowRanges<-
 #' @importFrom assertive.base assert_are_identical
 #' @importFrom assertive.files assert_all_are_dirs assert_all_are_existing_files
 #' @importFrom assertive.numbers assert_all_are_greater_than_or_equal_to
@@ -46,20 +46,20 @@
 #'   assertIsCharacterOrNULL assertIsColorScaleContinuousOrNULL
 #'   assertIsColorScaleDiscreteOrNULL assertIsFillScaleDiscreteOrNULL
 #'   assertIsGene2symbol assertIsTx2gene assignAndSaveData camel
-#'   convertGenesToSymbols convertUCSCBuildToEnsembl detectOrganism
-#'   dynamicPlotlist emptyRanges hasRownames initializeDirectory
-#'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames makeTx2geneFromGFF
-#'   markdownHeader markdownPlotlist printString readFileByExtension readYAML
-#'   theme_midnight theme_paperwhite tx2geneFromGFF
+#'   convertGenesToSymbols convertUCSCBuildToEnsembl detectOrganism emptyRanges
+#'   hasRownames initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF
+#'   makeNames makeTx2geneFromGFF markdownHeader markdownPlotlist printString
+#'   readFileByExtension readYAML stripTranscriptVersions theme_midnight
+#'   theme_paperwhite tx2geneFromGFF
 #' @importFrom bcbioBase assertFormalInterestingGroups bcbio_geom_abline
 #'   bcbio_geom_label bcbio_geom_label_average bcbio_geom_label_repel flatFiles
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
 #'   readSampleData readTx2gene readYAMLSampleData sanitizeSampleData
 #'   uniteInterestingGroups
 #' @importFrom cowplot draw_plot ggdraw plot_grid
-#' @importFrom dplyr arrange bind_rows desc filter group_by group_vars left_join
-#'   matches mutate mutate_all mutate_if n select select_if slice summarize
-#'   summarize_all ungroup
+#' @importFrom dplyr arrange bind_rows desc everything filter group_by
+#'   group_vars left_join matches mutate mutate_all mutate_if n rename select
+#'   select_if slice summarize summarize_all ungroup
 #' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_line
 #'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
 #'   geom_histogram geom_hline geom_line geom_point geom_smooth

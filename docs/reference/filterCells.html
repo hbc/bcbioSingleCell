@@ -65,7 +65,7 @@ sampleData())." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.10</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
       </span>
     </div>
 
@@ -177,63 +177,21 @@ this many cells.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/CreateSeuratObject'>Seurat::CreateSeuratObject()</a></code>.</p>
-<p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code>cell2sample</code>, <code><a href='fetchData.html'>fetchGeneData</a></code>,
-  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
-  <code>metricsPerSample</code>, <code><a href='metrics.html'>metrics</a></code>,
-  <code><a href='selectSamples.html'>selectSamples</a></code>,
-  <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
+<p>Other Quality Control Functions: <code>barcodeRanksPerSample</code>,
+  <code><a href='metrics.html'>metrics</a></code>, <code>plotCellCounts</code>,
+  <code>plotGenesPerCell</code>,
+  <code>plotMitoRatio</code>,
+  <code>plotMitoVsCoding</code>,
+  <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
+  <code>plotReadsPerCell</code>,
+  <code>plotUMIsPerCell</code>,
+  <code>plotZerosVsDepth</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.7
-#&gt; Samples: 1
-#&gt; Cells: 500
-#&gt; Genes: 500
-#&gt; Organism: Homo sapiens
-#&gt; AnnotationHub: AH57757
-#&gt; Ensembl Release: 90
-#&gt; Genome Build: GRCh38
-#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
-#&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-05-15</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>indrops_small</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Parameters:
-#&gt;   - &gt;= 0 UMIs per cell
-#&gt;   - &lt;= Inf UMIs per cell
-#&gt;   - &gt;= 0 genes per cell
-#&gt;   - &lt;= Inf genes per cell
-#&gt;   - &gt;= 0 novelty score
-#&gt;   - &lt;= 1 mitochondrial abundance
-#&gt;   - &gt;= 10 cells per gene
-#&gt; ============================================================
-#&gt; Cells:
-#&gt;      500 cells | prefilter
-#&gt;      500 cells | minUMIs &gt;= 0
-#&gt;      500 cells | maxUMIs &lt;= Inf
-#&gt;      500 cells | minGenes &gt;= 0
-#&gt;      500 cells | maxGenes &lt;= Inf
-#&gt;      500 cells | minNovelty &lt;= 0
-#&gt;      500 cells | maxMitoRatio &lt;= 1
-#&gt; ============================================================
-#&gt; Genes:
-#&gt;      500 genes | prefilter
-#&gt;      500 genes | minCellsPerGene &lt;= 10
-#&gt; ============================================================
-#&gt; Summary:
-#&gt;   - 500 of 500 cells passed filtering (100%)
-#&gt;   - 500 of 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.7
-#&gt; Samples: 1
-#&gt; Cells: 500
-#&gt; Genes: 500
-#&gt; Organism: Homo sapiens
-#&gt; AnnotationHub: AH57757
-#&gt; Ensembl Release: 90
-#&gt; Genome Build: GRCh38
-#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
-#&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-05-15</div><div class='input'>
-<span class='co'># SingleCellExperiment ====</span>
-<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>cellranger_small</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
+<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>cellranger_small</span>
+<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
 #&gt; metadata(26): version pipeline ... filterParams filterSummary
 #&gt; assays(1): counts
@@ -245,7 +203,9 @@ this many cells.</p></td>
 #&gt;   aggregation_TTTGTCACACTCGACG_2
 #&gt; colData names(11): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>cellranger_small</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Parameters:
+#&gt; spikeNames(0):</div><div class='input'><span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; aggregation_1 aggregation_2 
+#&gt;    "proximal"      "distal" </div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Parameters:
 #&gt;   - &gt;= 0 UMIs per cell
 #&gt;   - &lt;= Inf UMIs per cell
 #&gt;   - &gt;= 0 genes per cell
@@ -281,11 +241,30 @@ this many cells.</p></td>
 #&gt;   aggregation_TTTGTCACACTCGACG_2
 #&gt; colData names(11): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'>
+#&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $minUMIs
+#&gt; [1] 0
+#&gt; 
+#&gt; $maxUMIs
+#&gt; [1] Inf
+#&gt; 
+#&gt; $minGenes
+#&gt; [1] 0
+#&gt; 
+#&gt; $maxGenes
+#&gt; [1] Inf
+#&gt; 
+#&gt; $minNovelty
+#&gt; [1] 0
+#&gt; 
+#&gt; $maxMitoRatio
+#&gt; [1] 1
+#&gt; 
+#&gt; $minCellsPerGene
+#&gt; [1] 10
+#&gt; </div><div class='input'>
 <span class='co'># Per sample cutoffs</span>
-<span class='fu'>sampleNames</span>(<span class='no'>cellranger_small</span>)</div><div class='output co'>#&gt; aggregation_1 aggregation_2 
-#&gt;    "proximal"      "distal" </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>cellranger_small</span>,
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
     <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fu'>c</span>(
         <span class='kw'>distal</span> <span class='kw'>=</span> <span class='fl'>100</span>,
         <span class='kw'>proximal</span> <span class='kw'>=</span> <span class='fl'>200</span>
@@ -316,7 +295,7 @@ this many cells.</p></td>
 #&gt; ============================================================
 #&gt; Summary:
 #&gt;   - 500 of 500 cells passed filtering (100%)
-#&gt;   - 500 of 500 genes passed filtering (100%)</div><div class='input'><span class='no'>x</span></div><div class='output co'>#&gt; class: SingleCellExperiment 
+#&gt;   - 500 of 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
 #&gt; metadata(26): version pipeline ... filterParams filterSummary
 #&gt; assays(1): counts
@@ -328,7 +307,28 @@ this many cells.</p></td>
 #&gt;   aggregation_TTTGTCACACTCGACG_2
 #&gt; colData names(11): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div></pre>
+#&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $minUMIs
+#&gt;   distal proximal 
+#&gt;      100      200 
+#&gt; 
+#&gt; $maxUMIs
+#&gt; [1] Inf
+#&gt; 
+#&gt; $minGenes
+#&gt; [1] 0
+#&gt; 
+#&gt; $maxGenes
+#&gt; [1] Inf
+#&gt; 
+#&gt; $minNovelty
+#&gt; [1] 0
+#&gt; 
+#&gt; $maxMitoRatio
+#&gt; [1] 1
+#&gt; 
+#&gt; $minCellsPerGene
+#&gt; [1] 10
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
