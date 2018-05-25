@@ -118,6 +118,7 @@ setMethod(
             # Coerce character vectors to factors, and drop levels
             mutate_if(is.character, as.factor) %>%
             mutate_if(is.factor, droplevels) %>%
+            as.data.frame() %>%
             column_to_rownames()
     }
 )
