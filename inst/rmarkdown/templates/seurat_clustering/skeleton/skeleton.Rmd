@@ -14,7 +14,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-14
+# Last modified 2018-05-25
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -26,7 +26,7 @@ invisible(validObject(bcb))
 
 # Vector to use for plot looping
 group_by <- unique(c(
-    "ident", "sampleName", "phase", interestingGroups(bcb)
+    "ident", "sampleName", "Phase", interestingGroups(bcb)
 ))
 
 # knitr arguments (for `rmarkdown::render()` looping)
@@ -154,7 +154,7 @@ RunPCA(
     pc.genes = c(s_genes, g2m_genes),
     do.print = FALSE
 ) %>%
-    plotPCA(interestingGroups = "phase", label = FALSE)
+    plotPCA(interestingGroups = "Phase", label = FALSE)
 ```
 
 
@@ -217,7 +217,7 @@ PCHeatmap(
 
 ## `VizPCA()`
 
-```{r viz_pca, fig.height=40, fig.width=8}
+```{r viz_pca, fig.height=40, fig.width=10}
 VizPCA(
     object = seurat,
     pcs.use = 1:params$pc_compute,
