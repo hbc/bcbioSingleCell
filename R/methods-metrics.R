@@ -30,25 +30,6 @@ NULL
 
 
 
-# Constructors =================================================================
-# Ensure all columns are sanitized, and return as data.frame
-.tidyMetrics <- function(data) {
-    data <- as.data.frame(data)
-    if (hasRownames(data)) {
-        data <- rownames_to_column(data)
-    }
-    data %>%
-        camel() %>%
-        # Enforce count columns as integers (e.g. `nUMI`)
-        mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
-        # Coerce character vectors to factors, and drop levels
-        mutate_if(is.character, as.factor) %>%
-        mutate_if(is.factor, droplevels) %>%
-        column_to_rownames()
-}
-
-
-
 # Methods ======================================================================
 #' @rdname metrics
 #' @export
@@ -130,7 +111,14 @@ setMethod(
             ))
         }
 
-        .tidyMetrics(data)
+        # Return
+        data %>%
+            # Enforce count columns as integers (e.g. `nUMI`)
+            mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
+            # Coerce character vectors to factors, and drop levels
+            mutate_if(is.character, as.factor) %>%
+            mutate_if(is.factor, droplevels) %>%
+            column_to_rownames()
     }
 )
 
@@ -194,9 +182,8 @@ setMethod(
             all.x = TRUE
         ) %>%
             as.data.frame() %>%
-            camel() %>%
             column_to_rownames("cellID") %>%
-            .[rownames(colData), ]
+            .[rownames(colData), , drop = FALSE]
     }
 )
 
