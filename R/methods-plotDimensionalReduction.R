@@ -183,7 +183,7 @@ setMethod(
         data <- fetchTSNEData(object)
         .plotDimensionalReduction(
             data = data,
-            axes = c(x = "tSNE1", y = "tSNE2"),
+            axes = c(x = "tSNE_1", y = "tSNE_2"),
             interestingGroups = interestingGroups,
             color = color,
             pointsAsNumbers = pointsAsNumbers,
@@ -225,7 +225,7 @@ setMethod(
         data <- fetchPCAData(object)
         .plotDimensionalReduction(
             data = data,
-            axes = c(x = "pc1", y = "pc2"),
+            axes = c(x = "PC1", y = "PC2"),
             interestingGroups = interestingGroups,
             color = color,
             pointsAsNumbers = pointsAsNumbers,
@@ -267,7 +267,7 @@ setMethod(
         data <- fetchUMAPData(object)
         .plotDimensionalReduction(
             data = data,
-            axes = c(x = "umap1", y = "umap2"),
+            axes = c(x = "UMAP1", y = "UMAP2"),
             interestingGroups = interestingGroups,
             color = color,
             pointsAsNumbers = pointsAsNumbers,
