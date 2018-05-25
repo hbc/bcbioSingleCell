@@ -134,10 +134,10 @@ NULL
     # Fetch dimensional reduction coordinates
     if (dimRed == "tsne") {
         fun <- fetchTSNEExpressionData
-        dimCols <- c("tSNE1", "tSNE2")
+        dimCols <- c("tSNE_1", "tSNE_2")
     } else if (dimRed == "umap") {
         fun <- fetchUMAPExpressionData
-        dimCols <- c("umap1", "umap2")
+        dimCols <- c("UMAP1", "UMAP2")
     }
     data <- fun(object, genes = genes)
 
