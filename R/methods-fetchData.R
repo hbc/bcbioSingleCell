@@ -77,8 +77,7 @@ NULL
         ) %>%
         ungroup() %>%
         as.data.frame() %>%
-        column_to_rownames() %>%
-        camel()
+        column_to_rownames()
 }
 
 
