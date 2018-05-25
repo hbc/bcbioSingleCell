@@ -10,11 +10,17 @@ params:
     dims_use: FALSE
     vars_to_regress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
     resolution: 1
+    dark: TRUE
+    umap: FALSE
     data_dir: !r file.path("data", Sys.Date())
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
 # Last modified 2018-05-25
+
+# Highly recommended to run this template on an HPC cluster
+# stopifnot(detectHPC())
+
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -24,10 +30,20 @@ bcb <- get(bcb_name, inherits = FALSE)
 stopifnot(is(bcb, "bcbioSingleCell"))
 invisible(validObject(bcb))
 
-# Vector to use for plot looping
-group_by <- unique(c(
-    "ident", "sampleName", "Phase", interestingGroups(bcb)
+# Vector to use for dimensional reduction plot looping
+dim_red_groups <- unique(c(
+    "ident", "sampleName", interestingGroups(bcb), "Phase"
 ))
+
+# Quality control features to plot
+features <- c(
+    "nUMI",
+    "nGene",
+    "log10GenesPerUMI",
+    "mitoRatio",
+    "S.Score",
+    "G2M.Score"
+)
 
 # knitr arguments (for `rmarkdown::render()` looping)
 # opts_chunk$set(
@@ -179,7 +195,7 @@ RunPCA(
     pc.genes = c(s_genes, g2m_genes),
     do.print = FALSE
 ) %>%
-    plotPCA(interestingGroups = "phase", label = FALSE)
+    plotPCA(interestingGroups = "Phase", label = FALSE)
 ```
 
 
@@ -199,31 +215,40 @@ seurat <- seurat %>%
 
 In particular, `PCHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and genes are ordered according to their PCA scores. Setting `cells.use` to a number plots the "extreme" cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated gene sets.
 
-```{r pc_heatmap, fig.height=30, fig.width=10}
-PCHeatmap(
-    object = seurat,
-    col.use = CustomPalette(
-        low = viridis(3)[[1]],
-        mid = viridis(3)[[2]],
-        high = viridis(3)[[3]]
-    ),
-    do.balanced = TRUE,
-    label.columns = FALSE,
+```{r pc_heatmap}
+invisible(mapply(
+    FUN = PCHeatmap,
     pc.use = 1:params$pc_compute,
-    remove.key = TRUE
-)
+    MoreArgs = list(
+        object = seurat,
+        col.use = CustomPalette(
+            low = viridis(3)[[1]],
+            mid = viridis(3)[[2]],
+            high = viridis(3)[[3]]
+        ),
+        do.balanced = TRUE,
+        label.columns = FALSE,
+        remove.key = TRUE
+    ),
+    SIMPLIFY = FALSE
+))
 ```
 
 
 ## `VizPCA()`
 
-```{r viz_pca, fig.height=40, fig.width=10}
-VizPCA(
-    object = seurat,
+```{r viz_pca}
+invisible(mapply(
+    FUN = VizPCA,
     pcs.use = 1:params$pc_compute,
-    do.balanced = TRUE,
-    nCol = 2
-)
+    MoreArgs = list(
+        object = seurat,
+        do.balanced = TRUE,
+        font.size = 1,
+        nCol = 1
+    ),
+    SIMPLIFY = FALSE
+))
 ```
 
 
@@ -272,7 +297,7 @@ The `FindClusters()` function implements the procedure, and contains a `resoluti
 
 Regarding the value of the `resolution` argument, use a value < 1 if you want to obtain fewer clusters.
 
-```{r find_clusters, results="hide"}
+```{r find_clusters}
 seurat <- FindClusters(
     object = seurat,
     dims.use = dims_use,
@@ -294,6 +319,8 @@ PrintFindClustersParams(seurat)
 
 # Run non-linear dimensional reduction {.tabset}
 
+## t-SNE {.tabset}
+
 [Seurat][] continues to use t-distributed stochastic neighbor embedding (t-SNE) as a powerful tool to visualize and explore these datasets. While we no longer advise clustering directly on t-SNE components, cells within the graph-based clusters determined above should co-localize on the t-SNE plot. This is because the t-SNE aims to place cells with similar local neighborhoods in high-dimensional space together in low-dimensional space. As input to the t-SNE, we suggest using the same PCs as input to the clustering analysis, although computing the t-SNE based on scaled gene expression is also supported using the `genes.use` argument.
 
 ```{r run_tsne}
@@ -309,27 +336,71 @@ seurat <- RunTSNE(
 PrintTSNEParams(seurat)
 ```
 
-```{r dim_reduction_plots, results="asis"}
-invisible(lapply(group_by, function(group) {
-    markdownHeader(group, level = 2, asis = TRUE, tabset = TRUE)
-    markdownHeader("tSNE", level = 3, asis = TRUE)
-    plotTSNE(
-        object = seurat,
-        interestingGroups = group,
-        label = TRUE
-    ) %>%
-        show()
-    markdownHeader("PCA", level = 3, asis = TRUE)
-    plotPCA(
-        object = seurat,
-        interestingGroups = group,
-        label = TRUE
-    ) %>%
-        show()
-}))
+```{r plot_tsne, results="asis"}
+invisible(lapply(
+    X = dim_red_groups,
+    FUN = function(group) {
+        markdownHeader(group, level = 3, asis = TRUE, tabset = TRUE)
+        show(plotTSNE(
+            object = seurat,
+            interestingGroups = group,
+            dark = params$dark
+        ))
+    }
+))
 ```
 
-Note that t-SNE is not PCA! The measurement of distance in a t-SNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.
+
+## UMAP {.tabset}
+
+[Uniform Manifold Approximation and Projection (UMAP)][UMAP] is a dimension reduction technique that can be used for visualisation similarly to t-SNE, but also for general non-linear dimension reduction. The algorithm is founded on three assumptions about the data:
+
+1. The data is uniformly distributed on Riemannian manifold.
+2. The Riemannian metric is locally constant (or can be approximated as such).
+3. The manifold is locally connected.
+
+[UMAP][] visualization requires the [Python][] dependency umap-learn. We recommend installing this with conda:
+
+```{bash, eval=params$umap}
+conda install -c conda-forge umap-learn
+```
+
+```{r run_umap, eval=params$umap}
+seurat <- RunUMAP(seurat)
+```
+
+```{r plot_umap, eval=params$umap, results="asis"}
+invisible(lapply(
+    X = dim_red_groups,
+    FUN = function(group) {
+        markdownHeader(group, level = 3, asis = TRUE, tabset = TRUE)
+        show(plotUMAP(
+            object = seurat,
+            interestingGroups = group,
+            dark = params$dark
+        ))
+    }
+))
+```
+
+
+## PCA {.tabset}
+
+Note that t-SNE/UMAP is not PCA! The measurement of distance in a t-SNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.
+
+```{r plot_pca, results="asis"}
+invisible(lapply(
+    X = dim_red_groups,
+    FUN = function(group) {
+        markdownHeader(group, level = 3, asis = TRUE, tabset = TRUE)
+        show(plotPCA(
+            object = seurat,
+            interestingGroups = group,
+            dark = params$dark
+        ))
+    }
+))
+```
 
 
 
@@ -337,31 +408,45 @@ Note that t-SNE is not PCA! The measurement of distance in a t-SNE plot is diffi
 
 Let's look at the variance in the number of UMI counts (`nUMI`), gene detection (`nGene`), and the percentage of mitochondrial gene expression (`mitoRatio`), to see if there are any obvious cluster artefacts. We can also assess cell cycle batch effects (`S.Score`, `G2M.Score`) and any principal component bias toward individual clusters.
 
-```{r plot_feature_metrics}
-# Alternatively can use `Seurat::FeaturePlot()`, but it doesn't currently
-# support labeling the clusters
+```{r plot_feature_tsne}
+# See also `Seurat::FeaturePlot()`
 plotFeatureTSNE(
     object = seurat,
-    features = c(
-        "nUMI",
-        "nGene",
-        "log10GenesPerUMI",
-        "mitoRatio",
-        "S.Score",
-        "G2M.Score"
-    ),
-    pointSize = 1,
-    labelSize = 4.5
+    features = features,
+    dark = params$dark
 )
 ```
 
+```{r plot_feature_umap, eval=params$umap}
+plotFeatureUMAP(
+    object = seurat,
+    features = features,
+    dark = params$dark
+)
+```
 
-```{r plot_feature_pc}
+## Principal compoments
+
+Let's plot the feature specificity of the top principal components.
+
+```{r dim_features}
+# Limit to 9 PCs
+dim_features <- paste0("PC", head(dims_use, 9))
+```
+
+```{r plot_feature_tsne_dims}
 plotFeatureTSNE(
     object = seurat,
-    features = paste0("PC", dims_use),
-    pointSize = 0.8,
-    labelSize = 4
+    features = dim_features,
+    dark = params$dark
+)
+```
+
+```{r plot_feature_umap_dims, eval=params$umap}
+plotFeatureUMAP(
+    object = seurat,
+    features = dim_features,
+    dark = params$dark
 )
 ```
 
