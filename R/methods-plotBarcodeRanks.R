@@ -113,7 +113,7 @@ setMethod(
         # Sort the plots by sample name
         plotlist <- plotlist[sort(names(plotlist))]
 
-        plot_grid(plotlist = plotlist, labels = "AUTO")
+        plot_grid(plotlist = plotlist)
     }
 )
 

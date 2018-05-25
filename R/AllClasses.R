@@ -306,10 +306,12 @@ bcbioSingleCell <- function(
     if (level == "transcripts") {
         message("Converting transcripts to genes")
 
+        # GFF file is required
         if (!is_a_string(gffFile)) {
             stop("GFF is required to convert transcripts to genes")
         }
 
+        # Note that this data.frame won't contain transcript versions
         tx2gene <- makeTx2geneFromGFF(gffFile)
 
         # Add spike-ins to tx2gene, if necessary
@@ -323,6 +325,9 @@ bcbioSingleCell <- function(
             )
             tx2gene <- rbind(spike, tx2gene)
         }
+
+        # Ensure Ensembl transcript versions are removed
+        counts <- stripTranscriptVersions(counts)
 
         # Resize the tx2gene to match the matrix rownames
         assert_is_subset(rownames(counts), rownames(tx2gene))

@@ -118,9 +118,9 @@ test_that("metrics : seurat", {
             sampleID = "factor",
             nGene = "integer",
             nUMI = "numeric",
-            origIdent = "factor",
-            res0x8 = "character",
-            res1 = "character",
+            orig.ident = "factor",
+            res.0.8 = "character",
+            res.1 = "character",
             ident = "factor",
             sampleName = "factor",
             interestingGroups = "factor"

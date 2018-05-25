@@ -7,13 +7,18 @@ params:
     seurat_file: "data/YYYY-MM-DD/seurat.rda"
     all_markers_file: NULL
     cell_type_markers_file: NULL
-    organism: NULL
+    organism: "Homo sapiens"
+    dark: TRUE
     data_dir: !r file.path("data", Sys.Date())
     results_dir: !r file.path("results", Sys.Date(), "markers")
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-16
+# Last modified 2018-05-25
+
+# Highly recommended to run this template on an HPC cluster
+# stopifnot(detectHPC())
+
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -44,10 +49,9 @@ if (!is.null(params$cell_type_markers_file)) {
         gene2symbol = gene2symbol
     )
 } else {
-    if (is.null(params$organism)) {
-        organism <- detectOrganism(seurat)
-    }
-    cell_type_markers <- bcbioSingleCell::cellTypeMarkers[[camel(organism)]]
+    stopifnot(is.null(params$organism))
+    cell_type_markers <- bcbioSingleCell::cellTypeMarkers %>%
+        .[[camel(params$organism)]]
 }
 stopifnot(is.data.frame(cell_type_markers))
 assignAndSaveData(
@@ -97,12 +101,9 @@ The `min.pct` argument requires a gene to be detected at a minimum percentage in
 Seurat has multiple tests for differential expression which can be set with the `test.use` parameter. Currently it defaults to Wilcoxon rank sum test ("`wilcox`"), which tends to overreport significant markers. Instead we currently recommend using MAST (Finak et al, Genome Biology, 2015) or DESeq2 (Love et al, Genome Biology, 2014).
 
 ```{r find_all_markers, cache=FALSE, results="hide"}
-# MAST and DESeq2 are recommended over Wilcoxon rank sum test.
-
-# This step can a long time to run and shouldn't be cached.
-# We recommend running this step outside of R Markdown and then loading the
-# presaved R data file instead.
-
+# MAST and DESeq2 are recommended over Wilcoxon rank sum test (default). This
+# step can a long time to run and shouldn't be cached. We recommend running this
+# step outside of R Markdown and then loading the presaved R data file instead.
 if (!exists("all_markers", inherits = FALSE)) {
     all_markers <- FindAllMarkers(seurat)
     # Save the original, unmodified data.frame as a backup
@@ -143,7 +144,7 @@ plotTopMarkers(
     object = seurat,
     topMarkers = top_markers,
     headerLevel = 2,
-    dark = TRUE
+    dark = params$dark
 )
 ```
 
@@ -158,10 +159,10 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 # doesn't appear to be working in Seurat v2.1 (updated 2017-11-25).
 DoHeatmap(
     object = seurat,
-    genes.use = top_markers$rowname,
-    col.low = viridis(3)[[1]],
-    col.mid = viridis(3)[[2]],
-    col.high = viridis(3)[[3]],
+    genes.use = unique(top_markers$rowname),
+    col.low = viridis(3)[[1]],   # purple
+    col.mid = viridis(3)[[2]],   # green
+    col.high = viridis(3)[[3]],  # yellow
     remove.key = FALSE,
     rotate.key = TRUE,
     slim.col.label = TRUE
@@ -190,7 +191,7 @@ plotKnownMarkersDetected(
     object = seurat,
     markers = known_markers_detected,
     headerLevel = 2,
-    dark = TRUE
+    dark = params$dark
 )
 ```
 
@@ -213,7 +214,7 @@ plotCellTypesPerCluster(
     object = seurat,
     cellTypesPerCluster = cell_types_per_cluster,
     headerLevel = 2,
-    dark = TRUE
+    dark = params$dark
 )
 ```
 

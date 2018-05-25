@@ -107,15 +107,14 @@ setMethod(
             blacklist <- paste(
                 c(
                     "^cellularBarcode$",
-                    "^origIdent$",
+                    "^orig\\.ident$",
                     "^phase$",
-                    "^res[0-9]"
+                    "^res[.0-9]+$"
                 ),
                 collapse = "|"
             )
             data <- data %>%
                 remove_rownames() %>%
-                camel() %>%
                 .[, !grepl(x = colnames(.), pattern = blacklist)] %>%
                 mutate_if(is.character, as.factor) %>%
                 select_if(is.factor) %>%

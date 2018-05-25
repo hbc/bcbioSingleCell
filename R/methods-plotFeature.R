@@ -57,10 +57,10 @@ NULL
 
     if (dimRed == "tsne") {
         fetchDimRedData <- fetchTSNEData
-        dimCols <- c("tSNE1", "tSNE2")
+        dimCols <- c("tSNE_1", "tSNE_2")
     } else if (dimRed == "umap") {
         fetchDimRedData <- fetchUMAPData
-        dimCols <- c("umap1", "umap2")
+        dimCols <- c("UMAP1", "UMAP2")
     }
     dimRedData <- fetchDimRedData(object)
 
@@ -142,7 +142,7 @@ NULL
 
     # Return ===================================================================
     if (length(features) > 1L) {
-        plot_grid(plotlist = plotlist, labels = "AUTO") +
+        plot_grid(plotlist = plotlist) +
             theme(
                 plot.background = element_rect(
                     color = NA,
