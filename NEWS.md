@@ -1,3 +1,24 @@
+# bcbioSingleCell 0.1.12 (2018-05-25)
+
+## Major changes
+
+- No longer using automatic camel case sanitization for `metrics()` or
+  `fetchData` return column names.
+- Improved R Markdown clustering and marker templates to optionally support
+  UMAP and dark mode in the YAML parameters.
+  
+## Minor changes
+
+- Using original [Seurat][] mapping names for data: tSNE_1, tSNE_2, PC1, PC2,
+  UMAP1, UMAP2.
+- Ensure transcript-level counts always have `stripTranscriptVersions()` command
+  applied, to remove the Ensembl transcript versions if present.
+- No longer using labels (e.g. A, B, C, D) on `ggplot` grid return.
+- Note that "phase" has been renamed to "Phase" in the R Markdown clustering
+  for cell-cycle regression PCA.
+
+
+
 # bcbioSingleCell 0.1.11 (2018-05-23)
 
 ## New functions
