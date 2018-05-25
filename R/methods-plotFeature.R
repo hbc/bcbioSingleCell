@@ -142,7 +142,7 @@ NULL
 
     # Return ===================================================================
     if (length(features) > 1L) {
-        plot_grid(plotlist = plotlist, labels = "AUTO") +
+        plot_grid(plotlist = plotlist) +
             theme(
                 plot.background = element_rect(
                     color = NA,

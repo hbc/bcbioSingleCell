@@ -141,7 +141,7 @@ setMethod(
             cumsum = ggcumsum
         )
 
-        p <- plot_grid(plotlist = plotlist, labels = "AUTO")
+        p <- plot_grid(plotlist = plotlist)
         show(p)
 
         invisible(seq_len(cutoff))

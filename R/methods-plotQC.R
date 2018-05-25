@@ -97,7 +97,7 @@ setMethod(
         if (return == "list") {
             plotlist
         } else if (return == "grid") {
-            plot_grid(plotlist = plotlist, labels = "AUTO")
+            plot_grid(plotlist = plotlist)
         } else if (return == "markdown") {
             markdownHeader(
                 "Filtered quality control metrics",
