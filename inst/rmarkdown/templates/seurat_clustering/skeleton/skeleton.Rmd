@@ -230,9 +230,9 @@ invisible(mapply(
     MoreArgs = list(
         object = seurat,
         col.use = CustomPalette(
-            low = viridis(3)[[1]],  # purple
+            low = viridis(3)[[3]],  # yellow
             mid = viridis(3)[[2]],  # green
-            high = viridis(3)[[3]]  # yellow
+            high = viridis(3)[[1]]  # purple
         ),
         do.balanced = TRUE,
         label.columns = FALSE,
