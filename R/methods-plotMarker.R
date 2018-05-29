@@ -106,7 +106,7 @@ NULL
     labelSize = 6L,
     dark = FALSE,
     grid = FALSE,
-    legend = FALSE,
+    legend = TRUE,
     aspectRatio = 1L,
     title = TRUE
 ) {
@@ -182,15 +182,16 @@ NULL
 
     # Customize legend
     if (isTRUE(legend)) {
+        if (is_a_string(genes)) {
+            guideTitle <- "expression"
+        } else {
+            guideTitle <- expression
+        }
         # Make the guide longer than normal, to improve appearance of values
         # containing a decimal point
         p <- p +
             guides(
-                color = guide_colorbar(
-                    barwidth = 20L,
-                    barheight = 1L,
-                    direction = "horizontal"
-                )
+                color = guide_colourbar(title = guideTitle)
             )
     } else {
         p <- p + guides(color = "none")
@@ -284,7 +285,7 @@ setMethod(
         labelSize = 6L,
         dark = FALSE,
         grid = FALSE,
-        legend = FALSE,
+        legend = TRUE,
         aspectRatio = 1L,
         title = TRUE
     ) {
@@ -327,7 +328,7 @@ setMethod(
         labelSize = 6L,
         dark = FALSE,
         grid = FALSE,
-        legend = FALSE,
+        legend = TRUE,
         aspectRatio = 1L,
         title = TRUE
     ) {
@@ -394,7 +395,6 @@ setMethod(
                 markdownHeader(
                     object = gene,
                     level = headerLevel + 1L,
-                    tabset = TRUE,
                     asis = TRUE
                 )
                 p <- .plotMarkerDimRed(
@@ -458,7 +458,6 @@ setMethod(
                 markdownHeader(
                     object = gene,
                     level = headerLevel + 1L,
-                    tabset = TRUE,
                     asis = TRUE
                 )
                 p <- .plotMarkerDimRed(

@@ -8,13 +8,13 @@ params:
     all_markers_file: NULL
     cell_type_markers_file: NULL
     organism: "Homo sapiens"
-    dark: TRUE
+    dark: FALSE
     data_dir: !r file.path("data", Sys.Date())
     results_dir: !r file.path("results", Sys.Date(), "markers")
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-25
+# Last modified 2018-05-29
 
 # Highly recommended to run this template on an HPC cluster
 # stopifnot(detectHPC())
@@ -49,7 +49,7 @@ if (!is.null(params$cell_type_markers_file)) {
         gene2symbol = gene2symbol
     )
 } else {
-    stopifnot(is.null(params$organism))
+    stopifnot(!is.null(params$organism))
     cell_type_markers <- bcbioSingleCell::cellTypeMarkers %>%
         .[[camel(params$organism)]]
 }
@@ -135,14 +135,14 @@ write_csv(
 # Top markers per cluster {.tabset}
 
 ```{r top_markers}
-top_markers <- topMarkers(all_markers, n = 5, coding = FALSE)
+top_markers <- topMarkers(all_markers)
 top_markers
 ```
 
 ```{r plot_top_markers, results="asis"}
 plotTopMarkers(
     object = seurat,
-    topMarkers = top_markers,
+    markers = top_markers,
     headerLevel = 2,
     dark = params$dark
 )
@@ -160,9 +160,9 @@ Heatmaps can also be a good way to examine heterogeneity within/between clusters
 DoHeatmap(
     object = seurat,
     genes.use = unique(top_markers$rowname),
-    col.low = viridis(3)[[1]],   # purple
+    col.low = viridis(3)[[3]],   # yellow
     col.mid = viridis(3)[[2]],   # green
-    col.high = viridis(3)[[3]],  # yellow
+    col.high = viridis(3)[[1]],  # purple
     remove.key = FALSE,
     rotate.key = TRUE,
     slim.col.label = TRUE
@@ -173,7 +173,7 @@ DoHeatmap(
 
 # Known cell type markers {.tabset}
 
-```{r known_markers_detected, results="asis"}
+```{r known_markers_detected}
 known_markers_detected <- knownMarkersDetected(
     object = all_markers,
     known = cell_type_markers

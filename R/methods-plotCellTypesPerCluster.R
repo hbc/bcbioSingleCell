@@ -11,6 +11,7 @@
 #' @inheritParams general
 #' @param cellTypesPerCluster Cell types per cluster `grouped_df`. This must be
 #'   the return from [cellTypesPerCluster()].
+#' @param ... Passthrough arguments to [plotMarkerTSNE()] or [plotMarkerUMAP()].
 #'
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
@@ -37,10 +38,9 @@ setMethod(
     function(
         object,
         cellTypesPerCluster,
-        color = "auto",
-        dark = FALSE,
-        grid = TRUE,
-        headerLevel = 2L
+        dimRed = c("tsne", "umap"),
+        headerLevel = 2L,
+        ...
     ) {
         # Passthrough: color, dark
         validObject(object)
@@ -50,6 +50,7 @@ setMethod(
             x = group_vars(cellTypesPerCluster),
             y = "cluster"
         )
+        dimRed <- match.arg(dimRed)
         assertIsAHeaderLevel(headerLevel)
 
         cellTypesPerCluster <- cellTypesPerCluster %>%
@@ -79,21 +80,15 @@ setMethod(
                 markdownHeader(
                     title,
                     level = headerLevel + 1L,
-                    tabset = TRUE,
                     asis = TRUE
                 )
                 # Modify the title by adding the cluster number (for the plot)
                 title <- paste(paste0("Cluster ", cluster, ":"), title)
-                p <- plotMarkerTSNE(
+                p <- .plotMarkerDimRed(
                     object = object,
                     genes = genes,
-                    expression = "mean",
-                    color = color,
-                    dark = dark,
-                    grid = grid,
-                    pointsAsNumbers = FALSE,
-                    label = TRUE,
-                    title = title
+                    dimRed = dimRed,
+                    ...
                 )
                 show(p)
                 invisible(p)
