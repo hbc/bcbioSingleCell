@@ -354,6 +354,13 @@ invisible(lapply(
             interestingGroups = group,
             dark = params$dark
         ))
+        show(plotTSNE(
+            object = seurat,
+            interestingGroups = group,
+            legend = FALSE,
+            dark = params$dark,
+            pointsAsNumbers = TRUE
+        ))
     }
 ))
 ```
@@ -369,7 +376,7 @@ invisible(lapply(
 
 [UMAP][] visualization requires the [Python][] dependency umap-learn. We recommend installing this with conda:
 
-```{bash, eval=params$umap}
+```{bash, eval=FALSE}
 conda install -c conda-forge umap-learn
 ```
 
@@ -386,6 +393,12 @@ invisible(lapply(
             object = seurat,
             interestingGroups = group,
             dark = params$dark
+        ))
+        show(plotUMAP(
+            object = seurat,
+            interestingGroups = group,
+            dark = params$dark,
+            pointsAsNumbers = TRUE
         ))
     }
 ))
@@ -405,6 +418,12 @@ invisible(lapply(
             object = seurat,
             interestingGroups = group,
             dark = params$dark
+        ))
+        show(plotPCA(
+            object = seurat,
+            interestingGroups = group,
+            dark = params$dark,
+            pointsAsNumbers = TRUE
         ))
     }
 ))
