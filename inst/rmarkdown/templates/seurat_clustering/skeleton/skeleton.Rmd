@@ -10,7 +10,7 @@ params:
     dims_use: FALSE
     vars_to_regress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
     resolution: 1
-    dark: TRUE
+    dark: FALSE
     umap: FALSE
     data_dir: !r file.path("data", Sys.Date())
 ---
@@ -170,7 +170,11 @@ RunPCA(
     pc.genes = c(s_genes, g2m_genes),
     do.print = FALSE
 ) %>%
-    plotPCA(interestingGroups = "Phase", label = FALSE)
+    plotPCA(
+        interestingGroups = "Phase",
+        label = FALSE,
+        dark = params$dark
+    )
 ```
 
 
@@ -195,7 +199,11 @@ RunPCA(
     pc.genes = c(s_genes, g2m_genes),
     do.print = FALSE
 ) %>%
-    plotPCA(interestingGroups = "Phase", label = FALSE)
+    plotPCA(
+        interestingGroups = "Phase",
+        label = FALSE,
+        dark = params$dark
+    )
 ```
 
 
