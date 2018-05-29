@@ -24,6 +24,7 @@ utils::sessionInfo()
 [bcbioSingleCell]: http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 [bcl2fastq]: https://support.illumina.com/downloads/bcl2fastq-conversion-software-v217.html
 [biomaRt]: https://bioconductor.org/packages/release/bioc/html/biomaRt.html
+[conda]: https://conda.io
 [DESeq2]: https://doi.org/doi:10.18129/B9.bioc.DESeq2
 [edgeR]: https://doi.org/doi:10.18129/B9.bioc.edgeR
 [Ensembl]: http://useast.ensembl.org
