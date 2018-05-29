@@ -105,7 +105,7 @@ NULL
     label = TRUE,
     labelSize = 6L,
     dark = FALSE,
-    grid = TRUE,
+    grid = FALSE,
     legend = FALSE,
     aspectRatio = 1L,
     title = TRUE
@@ -283,7 +283,7 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         dark = FALSE,
-        grid = TRUE,
+        grid = FALSE,
         legend = FALSE,
         aspectRatio = 1L,
         title = TRUE
@@ -326,7 +326,7 @@ setMethod(
         label = TRUE,
         labelSize = 6L,
         dark = FALSE,
-        grid = TRUE,
+        grid = FALSE,
         legend = FALSE,
         aspectRatio = 1L,
         title = TRUE

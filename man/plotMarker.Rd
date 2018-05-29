@@ -26,13 +26,13 @@ plotTopMarkers(object, ...)
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
   "median", "sum"), color = NULL, pointsAsNumbers = FALSE,
   pointSize = 0.75, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = FALSE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
+  dark = FALSE, grid = FALSE, legend = FALSE, aspectRatio = 1L,
   title = TRUE)
 
 \S4method{plotMarkerUMAP}{seurat}(object, genes, expression = c("mean",
   "median", "sum"), color = NULL, pointsAsNumbers = FALSE,
   pointSize = 0.75, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = FALSE, grid = TRUE, legend = FALSE, aspectRatio = 1L,
+  dark = FALSE, grid = FALSE, legend = FALSE, aspectRatio = 1L,
   title = TRUE)
 
 \S4method{plotTopMarkers}{seurat}(object, markers, dimRed = c("tsne", "umap"),
