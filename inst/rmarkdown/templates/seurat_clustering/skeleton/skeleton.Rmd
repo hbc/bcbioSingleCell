@@ -373,7 +373,7 @@ invisible(lapply(
 2. The Riemannian metric is locally constant (or can be approximated as such).
 3. The manifold is locally connected.
 
-[UMAP][] visualization requires the [Python][] dependency umap-learn. We recommend installing this with conda:
+[UMAP][] visualization requires the [Python][] dependency umap-learn. We recommend installing this with [conda][].
 
 ```{bash, eval=FALSE}
 conda install -c conda-forge umap-learn
