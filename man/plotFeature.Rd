@@ -16,13 +16,13 @@ plotFeatureUMAP(object, ...)
 \S4method{plotFeatureTSNE}{seurat}(object, features, color = NULL,
   pointSize = getOption("pointSize", 0.75),
   pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
   legend = FALSE, aspectRatio = 1L)
 
 \S4method{plotFeatureUMAP}{seurat}(object, features, color = NULL,
   pointSize = getOption("pointSize", 0.75),
   pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
   legend = FALSE, aspectRatio = 1L)
 }
 \arguments{

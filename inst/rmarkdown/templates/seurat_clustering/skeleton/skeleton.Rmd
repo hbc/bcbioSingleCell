@@ -10,13 +10,13 @@ params:
     dims_use: FALSE
     vars_to_regress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
     resolution: 1
-    dark: TRUE
+    dark: FALSE
     umap: FALSE
     data_dir: !r file.path("data", Sys.Date())
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-25
+# Last modified 2018-05-29
 
 # Highly recommended to run this template on an HPC cluster
 # stopifnot(detectHPC())
@@ -170,7 +170,11 @@ RunPCA(
     pc.genes = c(s_genes, g2m_genes),
     do.print = FALSE
 ) %>%
-    plotPCA(interestingGroups = "Phase", label = FALSE)
+    plotPCA(
+        interestingGroups = "Phase",
+        label = FALSE,
+        dark = params$dark
+    )
 ```
 
 
@@ -195,7 +199,11 @@ RunPCA(
     pc.genes = c(s_genes, g2m_genes),
     do.print = FALSE
 ) %>%
-    plotPCA(interestingGroups = "Phase", label = FALSE)
+    plotPCA(
+        interestingGroups = "Phase",
+        label = FALSE,
+        dark = params$dark
+    )
 ```
 
 
@@ -222,9 +230,9 @@ invisible(mapply(
     MoreArgs = list(
         object = seurat,
         col.use = CustomPalette(
-            low = viridis(3)[[1]],  # purple
+            low = viridis(3)[[3]],  # yellow
             mid = viridis(3)[[2]],  # green
-            high = viridis(3)[[3]]  # yellow
+            high = viridis(3)[[1]]  # purple
         ),
         do.balanced = TRUE,
         label.columns = FALSE,
@@ -346,6 +354,12 @@ invisible(lapply(
             interestingGroups = group,
             dark = params$dark
         ))
+        show(plotTSNE(
+            object = seurat,
+            interestingGroups = group,
+            dark = params$dark,
+            pointsAsNumbers = TRUE
+        ))
     }
 ))
 ```
@@ -361,7 +375,7 @@ invisible(lapply(
 
 [UMAP][] visualization requires the [Python][] dependency umap-learn. We recommend installing this with conda:
 
-```{bash, eval=params$umap}
+```{bash, eval=FALSE}
 conda install -c conda-forge umap-learn
 ```
 
@@ -378,6 +392,12 @@ invisible(lapply(
             object = seurat,
             interestingGroups = group,
             dark = params$dark
+        ))
+        show(plotUMAP(
+            object = seurat,
+            interestingGroups = group,
+            dark = params$dark,
+            pointsAsNumbers = TRUE
         ))
     }
 ))
@@ -397,6 +417,12 @@ invisible(lapply(
             object = seurat,
             interestingGroups = group,
             dark = params$dark
+        ))
+        show(plotPCA(
+            object = seurat,
+            interestingGroups = group,
+            dark = params$dark,
+            pointsAsNumbers = TRUE
         ))
     }
 ))

@@ -52,7 +52,7 @@ NULL
     label = TRUE,
     labelSize = getOption("labelSize", 6L),
     dark = FALSE,
-    grid = TRUE,
+    grid = FALSE,
     legend = TRUE,
     aspectRatio = 1L,
     title = NULL
@@ -175,7 +175,7 @@ setMethod(
         label = TRUE,
         labelSize = getOption("labelSize", 6L),
         dark = FALSE,
-        grid = TRUE,
+        grid = FALSE,
         legend = TRUE,
         aspectRatio = 1L,
         title = NULL
@@ -217,7 +217,7 @@ setMethod(
         label = TRUE,
         labelSize = getOption("labelSize", 6L),
         dark = FALSE,
-        grid = TRUE,
+        grid = FALSE,
         legend = TRUE,
         aspectRatio = 1L,
         title = NULL
@@ -259,7 +259,7 @@ setMethod(
         label = TRUE,
         labelSize = getOption("labelSize", 6L),
         dark = FALSE,
-        grid = TRUE,
+        grid = FALSE,
         legend = TRUE,
         aspectRatio = 1L,
         title = NULL

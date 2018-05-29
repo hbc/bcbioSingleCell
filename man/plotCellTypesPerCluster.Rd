@@ -11,25 +11,18 @@
 plotCellTypesPerCluster(object, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
-  color = "auto", dark = FALSE, grid = TRUE, headerLevel = 2L)
+  dimRed = c("tsne", "umap"), headerLevel = 2L, ...)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
+\item{...}{Passthrough arguments to \code{\link[=plotMarkerTSNE]{plotMarkerTSNE()}} or \code{\link[=plotMarkerUMAP]{plotMarkerUMAP()}}.}
 
 \item{cellTypesPerCluster}{Cell types per cluster \code{grouped_df}. This must be
 the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
-
-\item{dark}{Plot against a dark background using
-\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
-
-\item{grid}{Show major grid lines but hide axis lines.}
+\item{dimRed}{Dimensionality reduction method to apply. Defaults to t-SNE
+("\code{tsne}") but UMAP is also supported ("\code{umap}").}
 
 \item{headerLevel}{R Markdown header level.}
 }

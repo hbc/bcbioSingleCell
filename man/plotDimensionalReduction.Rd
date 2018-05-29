@@ -19,21 +19,21 @@ plotUMAP(object, ...)
   color = NULL, pointsAsNumbers = FALSE,
   pointSize = getOption("pointSize", 0.75),
   pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
   legend = TRUE, aspectRatio = 1L, title = NULL)
 
 \S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
   color = NULL, pointsAsNumbers = FALSE,
   pointSize = getOption("pointSize", 0.75),
   pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
   legend = TRUE, aspectRatio = 1L, title = NULL)
 
 \S4method{plotUMAP}{seurat}(object, interestingGroups = "ident",
   color = NULL, pointsAsNumbers = FALSE,
   pointSize = getOption("pointSize", 0.75),
   pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
   legend = TRUE, aspectRatio = 1L, title = NULL)
 }
 \arguments{
