@@ -182,15 +182,16 @@ NULL
 
     # Customize legend
     if (isTRUE(legend)) {
+        if (is_a_string(genes)) {
+            guideTitle <- "expression"
+        } else {
+            guideTitle <- expression
+        }
         # Make the guide longer than normal, to improve appearance of values
         # containing a decimal point
         p <- p +
             guides(
-                color = guide_colorbar(
-                    barwidth = 20L,
-                    barheight = 1L,
-                    direction = "horizontal"
-                )
+                color = guide_colourbar(title = guideTitle)
             )
     } else {
         p <- p + guides(color = "none")
