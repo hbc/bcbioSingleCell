@@ -395,7 +395,6 @@ setMethod(
                 markdownHeader(
                     object = gene,
                     level = headerLevel + 1L,
-                    tabset = TRUE,
                     asis = TRUE
                 )
                 p <- .plotMarkerDimRed(
@@ -459,7 +458,6 @@ setMethod(
                 markdownHeader(
                     object = gene,
                     level = headerLevel + 1L,
-                    tabset = TRUE,
                     asis = TRUE
                 )
                 p <- .plotMarkerDimRed(
