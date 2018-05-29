@@ -16,7 +16,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-25
+# Last modified 2018-05-29
 
 # Highly recommended to run this template on an HPC cluster
 # stopifnot(detectHPC())
@@ -357,7 +357,6 @@ invisible(lapply(
         show(plotTSNE(
             object = seurat,
             interestingGroups = group,
-            legend = FALSE,
             dark = params$dark,
             pointsAsNumbers = TRUE
         ))
