@@ -22,19 +22,6 @@ NULL
 #' @export
 setMethod(
     "cell2sample",
-    signature("bcbioSingleCell"),
-    function(object) {
-        validObject(object)
-        metadata(object)[["cell2sample"]]
-    }
-)
-
-
-
-#' @rdname cell2sample
-#' @export
-setMethod(
-    "cell2sample",
     signature("SingleCellExperiment"),
     function(object) {
         validObject(object)
@@ -57,10 +44,5 @@ setMethod(
 setMethod(
     "cell2sample",
     signature("seurat"),
-    function(object) {
-        validObject(object)
-        cells <- colnames(object)
-        samples <- rownames(sampleData(object))
-        mapCellsToSamples(cells = cells, samples = samples)
-    }
+    getMethod("cell2sample", "SingleCellExperiment")
 )
