@@ -6,7 +6,7 @@ library(Seurat)
 
 # seurat_small =================================================================
 dims_use <- seq_len(20L)
-seurat_small <- indrops_small %>%
+seurat_small <- cellranger_small %>%
     as("seurat") %>%
     NormalizeData() %>%
     FindVariableGenes(do.plot = FALSE) %>%
