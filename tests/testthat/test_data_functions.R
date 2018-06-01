@@ -246,6 +246,17 @@ test_that("interestingGroups<- : seurat", {
 
 
 
+# metrics ======================================================================
+test_that("metrics : seurat", {
+    # Check that metrics accessor data matches meta.data slot
+    x <- metrics(seurat_small)
+    y <- seurat_small@meta.data
+    x <- x[, colnames(y)]
+    assert_are_identical(x, y)
+})
+
+
+
 # sampleData ===================================================================
 all <- list(
     "sampleName"  = "factor",
