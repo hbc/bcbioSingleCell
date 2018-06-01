@@ -4,7 +4,7 @@
 \name{all_markers_small}
 \alias{all_markers_small}
 \title{Sanitized Markers Example}
-\format{An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 1380 rows and 18 columns.}
+\format{An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 875 rows and 12 columns.}
 \usage{
 all_markers_small
 }
