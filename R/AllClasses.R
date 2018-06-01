@@ -133,8 +133,8 @@ bcbioSingleCell <- function(
     assertIsAStringOrNULL(organism)
     assertIsAnImplicitIntegerOrNULL(ensemblRelease)
     assertIsAStringOrNULL(genomeBuild)
-    assertIsCharacterOrNULL(transgeneNames)
-    assertIsCharacterOrNULL(spikeNames)
+    assert_is_any_of(transgeneNames, c("character", "NULL"))
+    assert_is_any_of(spikeNames, c("character", "NULL"))
     assertIsAStringOrNULL(gffFile)
     if (is_a_string(gffFile)) {
         assert_all_are_existing_files(gffFile)

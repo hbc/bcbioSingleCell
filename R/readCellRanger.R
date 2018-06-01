@@ -48,8 +48,8 @@ readCellRanger <- function(
     refdataDir <- normalizePath(refdataDir, winslash = "/", mustWork = TRUE)
     assert_is_character(interestingGroups)
     assert_is_a_string(sampleMetadataFile)
-    assertIsCharacterOrNULL(transgeneNames)
-    assertIsCharacterOrNULL(spikeNames)
+    assert_is_any_of(transgeneNames, c("character", "NULL"))
+    assert_is_any_of(spikeNames, c("character", "NULL"))
     dots <- list(...)
     pipeline <- "cellranger"
     level <- "genes"
