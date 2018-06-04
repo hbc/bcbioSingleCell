@@ -25,14 +25,17 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object) {
         validObject(object)
-        cell2sample <- metadata(object)[["cell2sample"]]
-        if (is.factor(cell2sample)) {
-            assert_are_identical(colnames(object), names(cell2sample))
-            cell2sample
+        stash <- metadata(object)[["cell2sample"]]
+        if (
+            is.factor(stash) &&
+            identical(colnames(object), names(stash))
+        ) {
+            return(stash)
         } else {
-            cells <- colnames(object)
-            samples <- rownames(sampleData(object))
-            mapCellsToSamples(cells = cells, samples = samples)
+            mapCellsToSamples(
+                cells = colnames(object),
+                samples = rownames(sampleData(object))
+            )
         }
     }
 )
