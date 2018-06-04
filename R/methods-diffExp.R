@@ -72,7 +72,6 @@
 #'
 #' @examples
 #' # seurat ====
-#' \dontrun{
 #' # Expression in cluster 3 relative to cluster 2
 #' object <- seurat_small
 #' numerator <- Seurat::WhichCells(object, ident = 3L)
@@ -84,7 +83,6 @@
 #'     minCellsPerGene = 5L,
 #'     minCountsPerCell = 5L
 #' )
-#' }
 NULL
 
 

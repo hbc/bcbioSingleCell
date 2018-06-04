@@ -90,7 +90,6 @@ caller. It is currently considerably slower for large datasets than edgeR.
 
 \examples{
 # seurat ====
-\dontrun{
 # Expression in cluster 3 relative to cluster 2
 object <- seurat_small
 numerator <- Seurat::WhichCells(object, ident = 3L)
@@ -102,7 +101,6 @@ x <- diffExp(
     minCellsPerGene = 5L,
     minCountsPerCell = 5L
 )
-}
 }
 \seealso{
 Consult the following sources for more information:
