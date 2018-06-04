@@ -26,8 +26,9 @@
 #' }
 #'
 #' @section Sample metadata:
-#' A user-defined sample metadata file (`sampleMetadataFile`) is currently
-#' required for all datasets.
+#' A user-defined sample metadata file (`sampleMetadataFile`) is required for
+#' multiplexed datasets. Otherwise this can be left `NULL`, and minimal sample
+#' data will be used, based on the directory names.
 #'
 #' @section Reference Data:
 #' We strongly recommend supplying the corresponding reference data required for
@@ -52,11 +53,8 @@
 #' @export
 #'
 #' @examples
-#' uploadDir <-system.file("extdata/cellranger", package = "bcbioSingleCell")
-#' x <- readCellRanger(
-#'     uploadDir = uploadDir,
-#'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
-#' )
+#' uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
+#' x <- readCellRanger(uploadDir)
 #' show(x)
 readCellRanger <- function(
     uploadDir,
@@ -147,7 +145,6 @@ readCellRanger <- function(
     if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile)
     } else {
-        message("Using minimal sample data")
         sampleData <- minimalSampleData(basename(sampleDirs))
     }
 
@@ -168,8 +165,10 @@ readCellRanger <- function(
     }
 
     # Gene annotations =========================================================
+    refJSON <- NULL
     ensemblRelease <- NULL
     rowRangesMetadata <- NULL
+
     # Stop on multiple genomes (not supported in a single SCE object)
     genomeBuild <- basename(dirname(matrixFiles))
     assert_is_a_string(genomeBuild)
@@ -233,8 +232,6 @@ readCellRanger <- function(
     # Check to see if multiplexed samples are present and require metadata
     multiplexedPattern <- "^(.+)_(\\d+)_([ACGT]+)$"
     if (any(grepl(multiplexedPattern, colnames(counts)))) {
-        message("Multiplexed samples detected")
-
         # Prepare data.frame of barcode mappings
         # Example:
         # cellID: cellranger_AAACCTGGTTTACTCT_1
@@ -259,7 +256,6 @@ readCellRanger <- function(
             identical(levels(cellMap[["index"]]), "1") &&
             !"index" %in% colnames(sampleData)
         ) {
-            message("Single sample index detected. Setting in sample data.")
             sampleData[["index"]] <- factor("1")
             rownames(sampleData) <- paste0(rownames(sampleData), "_1")
         }
@@ -273,20 +269,21 @@ readCellRanger <- function(
         }
     }
 
-    cell2sample <- mapCellsToSamples(
-        cells = colnames(counts),
-        samples = rownames(sampleData)
-    )
-
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
     metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
-    assert_are_identical(colnames(counts), rownames(metrics))
 
-    sampleData[["sampleID"]] <- rownames(sampleData)
+    # Subset the counts to match the prefiltered metrics
+    counts <- counts[, rownames(metrics), drop = FALSE]
+
     colData <- as(metrics, "DataFrame")
     colData[["cellID"]] <- rownames(colData)
+    cell2sample <- mapCellsToSamples(
+        cells = rownames(colData),
+        samples = rownames(sampleData)
+    )
     colData[["sampleID"]] <- cell2sample
+    sampleData[["sampleID"]] <- rownames(sampleData)
     colData <- merge(
         x = colData,
         y = sampleData,
@@ -296,9 +293,6 @@ readCellRanger <- function(
     rownames(colData) <- colData[["cellID"]]
     colData[["cellID"]] <- NULL
     sampleData[["sampleID"]] <- NULL
-
-    # Subset the counts to match the prefiltered metrics
-    counts <- counts[, rownames(colData), drop = FALSE]
 
     # Metadata =================================================================
     metadata <- list(

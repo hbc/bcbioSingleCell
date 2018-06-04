@@ -64,8 +64,9 @@ file.path(
 
 \section{Sample metadata}{
 
-A user-defined sample metadata file (\code{sampleMetadataFile}) is currently
-required for all datasets.
+A user-defined sample metadata file (\code{sampleMetadataFile}) is required for
+multiplexed datasets. Otherwise this can be left \code{NULL}, and minimal sample
+data will be used, based on the directory names.
 }
 
 \section{Reference Data}{
@@ -81,11 +82,8 @@ match, due to deprecation in the current Ensembl release.
 }
 
 \examples{
-uploadDir <-system.file("extdata/cellranger", package = "bcbioSingleCell")
-x <- readCellRanger(
-    uploadDir = uploadDir,
-    sampleMetadataFile = file.path(uploadDir, "metadata.csv")
-)
+uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
+x <- readCellRanger(uploadDir)
 show(x)
 }
 \seealso{
