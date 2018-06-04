@@ -71,26 +71,10 @@
 #'   shrunken results are desired.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' object <- cellranger_small
-#' # Use S4 methods to get cells (colnames) of object
-#' numerator <- colnames(object)[which(object[["sampleName"]] == "proximal")]
-#' glimpse(numerator)
-#' denominator <- colnames(object)[which(object[["sampleName"]] == "distal")]
-#' glimpse(denominator)
-#'
-#' x <- diffExp(
-#'     object = object,
-#'     numerator = numerator,
-#'     denominator = denominator,
-#' )
-#' class(x)
-#' head(x[["table"]])
-#'
 #' # seurat ====
 #' \dontrun{
 #' # Expression in cluster 3 relative to cluster 2
-#' object <- Seurat::pbmc_small
+#' object <- seurat_small
 #' numerator <- Seurat::WhichCells(object, ident = 3L)
 #' denominator <- Seurat::WhichCells(object, ident = 2L)
 #' x <- diffExp(
