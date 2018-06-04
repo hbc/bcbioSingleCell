@@ -330,12 +330,13 @@ test_that("sampleData : seurat", {
     )
 
     # Minimal data for other seurat objects
-    x <- sampleData(seurat_small)
-    y <- DataFrame(
-        "sampleName" = factor("SeuratProject"),
-        row.names = "SeuratProject"
+    expect_identical(
+        sampleData(Seurat::pbmc_small),
+        DataFrame(
+            "sampleName" = factor("SeuratProject"),
+            row.names = "SeuratProject"
+        )
     )
-    expect_identical(x, y)
 })
 
 
