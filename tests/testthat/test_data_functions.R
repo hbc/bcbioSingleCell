@@ -20,7 +20,7 @@ test_that("aggregateReplicates", {
 
 # fetchPCAData =================================================================
 test_that("fetchPCAData", {
-    x <- fetchPCAData(Seurat::pbmc_small)
+    x <- fetchPCAData(seurat_small)
     expect_is(x, "data.frame")
     expect_identical(
         lapply(x, class),
@@ -72,7 +72,7 @@ test_that("fetchPCAData", {
 
 # fetchTSNEData ================================================================
 test_that("fetchTSNEData", {
-    x <- fetchTSNEData(Seurat::pbmc_small)
+    x <- fetchTSNEData(seurat_small)
     expect_is(x, "data.frame")
     expect_identical(
         lapply(x, class),
@@ -124,8 +124,8 @@ test_that("fetchTSNEData", {
 # fetchTSNEExpressionData ======================================================
 test_that("fetchTSNEExpressionData", {
     x <- fetchTSNEExpressionData(
-        object = Seurat::pbmc_small,
-        genes = head(rownames(Seurat::pbmc_small))
+        object = seurat_small,
+        genes = head(rownames(seurat_small))
     )
     expect_is(x, "data.frame")
     expect_identical(
@@ -224,7 +224,7 @@ test_that("interestingGroups : seurat", {
         "sampleName"
     )
     expect_identical(
-        interestingGroups(Seurat::pbmc_small),
+        interestingGroups(seurat_small),
         "sampleName"
     )
 })
@@ -240,7 +240,7 @@ test_that("interestingGroups<- : seurat", {
         interestingGroups(seurat_small),
         "sampleName"
     )
-    x <- Seurat::pbmc_small
+    x <- seurat_small
     expect_error(interestingGroups(x) <- "sampleName")
 })
 
@@ -306,7 +306,7 @@ test_that("sampleData : seurat", {
     )
 
     # Minimal data for other seurat objects
-    x <- sampleData(Seurat::pbmc_small)
+    x <- sampleData(seurat_small)
     y <- DataFrame(
         "sampleName" = factor("SeuratProject"),
         row.names = "SeuratProject"

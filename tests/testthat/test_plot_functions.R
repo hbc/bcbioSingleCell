@@ -17,12 +17,13 @@ test_that("plotCellCounts : seurat", {
 
 # plotCellTypesPerCluster ======================================================
 test_that("plotCellTypesPerCluster : seurat", {
-    x <- cellTypesPerCluster(known_markers_small)[1L, , drop = FALSE]
-    expect_identical(x[["geneName"]], "NCAM1")
+    cellTypesPerCluster <- cellTypesPerCluster(known_markers_small) %>%
+        # Subset for speed
+        head(2L)
     invisible(capture.output(
         p <- plotCellTypesPerCluster(
             object = seurat_small,
-            cellTypesPerCluster = x
+            cellTypesPerCluster = cellTypesPerCluster
         )
     ))
     expect_is(p, "list")
@@ -87,17 +88,20 @@ test_that("plotKnownMarkersDetected : seurat", {
     invisible(capture.output(
         p <- plotKnownMarkersDetected(
             object = seurat_small,
-            markers = known_markers_small
+            markers = head(known_markers_small, 2L)
         )
     ))
     expect_is(p, "list")
 })
 
 test_that("plotTopMarkers : seurat", {
+    markers <- topMarkers(all_markers_small, n = 1L) %>%
+        # Subset for speed
+        head(2L)
     invisible(capture.output(
         x <- plotTopMarkers(
             object = seurat_small,
-            markers = topMarkers(all_markers_small, n = 1L)
+            markers = markers
         )
     ))
     expect_is(x, "list")
@@ -158,7 +162,7 @@ test_that("plotPCElbow : seurat", {
     x <- plotPCElbow(seurat_small)
     expect_identical(x, seq_len(9L))
 
-    x <- plotPCElbow(Seurat::pbmc_small)
+    x <- plotPCElbow(seurat_small)
     expect_identical(x, seq_len(11L))
 })
 
@@ -258,7 +262,7 @@ test_that("plotReadsPerCell : bcbioSingleCell", {
 
 # plotTSNE =====================================================================
 test_that("plotTSNE : seurat", {
-    p <- plotTSNE(Seurat::pbmc_small)
+    p <- plotTSNE(seurat_small)
     expect_is(p, "ggplot")
 })
 
@@ -295,7 +299,7 @@ test_that("plotUMIsVsGenes : seurat", {
     p <- plotUMIsVsGenes(seurat_small)
     expect_is(p, "ggplot")
 
-    p <- plotUMIsVsGenes(Seurat::pbmc_small)
+    p <- plotUMIsVsGenes(seurat_small)
     expect_is(p, "ggplot")
 })
 
@@ -308,6 +312,6 @@ test_that("plotZerosVsDepth : bcbioSingleCell", {
 })
 
 test_that("plotZerosVsDepth : seurat", {
-    p <- plotZerosVsDepth(Seurat::pbmc_small)
+    p <- plotZerosVsDepth(seurat_small)
     expect_is(p, "ggplot")
 })

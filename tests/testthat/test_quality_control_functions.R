@@ -111,7 +111,7 @@ test_that("metrics : bcbioSingleCell", {
 })
 
 test_that("metrics : seurat", {
-    x <- metrics(Seurat::pbmc_small)
+    x <- metrics(seurat_small)
     expect_identical(
         lapply(x, class),
         list(

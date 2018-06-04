@@ -24,7 +24,7 @@
 #' plotQC(cellranger_small)
 #'
 #' # seurat ====
-#' plotQC(Seurat::pbmc_small)
+#' plotQC(seurat_small)
 NULL
 
 

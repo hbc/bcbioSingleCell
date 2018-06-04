@@ -18,7 +18,7 @@
 #' glimpse(x)
 #'
 #' # seurat ====
-#' x <- metrics(Seurat::pbmc_small)
+#' x <- metrics(seurat_small)
 #' glimpse(x)
 #'
 #' # dgCMatrix ====
