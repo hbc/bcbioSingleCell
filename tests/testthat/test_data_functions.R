@@ -287,11 +287,23 @@ test_that("sampleData : bcbioSingleCell", {
 test_that("sampleData : seurat", {
     # Return all columns
     x <- sampleData(seurat_small, clean = FALSE)
-    expect_identical(lapply(x, class), all)
+    expect_identical(
+        lapply(x, class),
+        list(
+            sampleName = "factor",
+            index = "factor",
+            interestingGroups = "factor"
+        )
+    )
 
     # Clean mode (factor columns only)
     x <- sampleData(seurat_small, clean = TRUE)
-    expect_identical(x, clean)
+    expect_identical(
+        lapply(x, class),
+        list(
+            sampleName = "factor"
+        )
+    )
 
     # Minimal data for other seurat objects
     x <- sampleData(Seurat::pbmc_small)
