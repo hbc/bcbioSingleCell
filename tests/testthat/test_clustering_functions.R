@@ -8,15 +8,16 @@ test_that("cellTypesPerCluster", {
     expect_is(x, "grouped_df")
     group <- dplyr::group_vars(x)
     expect_identical(group, "cluster")
-    y <- tibble::tibble(
-        "cluster" = factor("1", levels = c("0", "1", "2", "3", "4")),
-        "cellType" = "Natural Killer Cell",
-        "n" = 1L,
-        "geneID" = "ENSG00000149294",
-        "geneName" = "NCAM1"
-    ) %>%
-        dplyr::group_by(!!rlang::sym(group))
-    expect_identical(x, y)
+    expect_identical(
+        lapply(x, class),
+        list(
+            cluster = "factor",
+            cellType = "factor",
+            n = "integer",
+            geneID = "character",
+            geneName = "character"
+        )
+    )
 })
 
 
@@ -30,46 +31,25 @@ test_that("knownMarkersDetected", {
     expect_is(x, "grouped_df")
     group <- dplyr::group_vars(x)
     expect_identical(group, "cellType")
-
-    # Need better way to test P values here than using round.
-    # Check old code, I think there's a stringr method that works well.
-    # Or we can using `format()`.
-    subset <- x %>%
-        .[1L, , drop = FALSE] %>%
-        dplyr::mutate_if(
-            is.numeric,
-            dplyr::funs(round(., digits = 3L))
+    expect_identical(
+        lapply(x, class),
+        list(
+            cellType = "factor",
+            cluster = "factor",
+            geneID = "character",
+            geneName = "character",
+            avgLogFC = "numeric",
+            pct1 = "numeric",
+            pct2 = "numeric",
+            rowname = "character",
+            pvalue = "numeric",
+            padj = "numeric",
+            geneBiotype = "factor",
+            description = "character",
+            seqCoordSystem = "factor",
+            broadClass = "factor"
         )
-    seqnamesLevels <- levels(subset[["seqnames"]])
-    strandLevels <- levels(subset[["strand"]])
-    geneBiotypeLevels <- levels(subset[["geneBiotype"]])
-    seqCoordSystemLevels <- levels(subset[["seqCoordSystem"]])
-    broadClassLevels <- levels(subset[["broadClass"]])
-    target <- tibble::tibble(
-        "cellType" = "Natural Killer Cell",
-        "cluster" = factor("1", levels = c("0", "1", "2", "3", "4")),
-        "geneID" = "ENSG00000149294",
-        "geneName" = "NCAM1",
-        "pct1" = 0.466,
-        "pct2" = 0.701,
-        "avgLogFC" = -0.954,
-        "pvalue" = 0,  # nolint
-        "padj" = 0,  # nolint
-        "rowname" = "NCAM1",
-        "seqnames" = factor("11", levels = seqnamesLevels),
-        "start" = 112961247,  # nolint
-        "end" = 113278436,  # nolint
-        "width" = 317190,  # nolint
-        "strand" = factor("+", levels = strandLevels),
-        "geneBiotype" = factor("protein_coding", levels = geneBiotypeLevels),
-        "description" = paste(
-            "neural cell adhesion molecule 1",
-            "[Source:HGNC Symbol;Acc:HGNC:7656]"
-        ),
-        "seqCoordSystem" = factor("chromosome", levels = seqCoordSystemLevels),
-        "broadClass" = factor("coding", levels = broadClassLevels)
     )
-    expect_equal(subset, target)
 })
 
 
@@ -118,7 +98,21 @@ test_that("topMarkers : grouped_df", {
         "cluster"
     )
     expect_identical(
-        dim(x),
-        c(50L, 18L)
+        lapply(x, class),
+        list(
+            cluster = "factor",
+            avgLogFC = "numeric",
+            pct1 = "numeric",
+            pct2 = "numeric",
+            rowname = "character",
+            pvalue = "numeric",
+            padj = "numeric",
+            geneID = "character",
+            geneName = "character",
+            geneBiotype = "factor",
+            description = "character",
+            seqCoordSystem = "factor",
+            broadClass = "factor"
+        )
     )
 })
