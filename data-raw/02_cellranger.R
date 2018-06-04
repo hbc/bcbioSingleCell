@@ -81,13 +81,13 @@ dir.create(output_dir, recursive = TRUE)
 
 # Prepare the sparse matrix
 counts <- readMM(file.path(input_dir, "matrix.mtx"))
-counts <- counts[1:100, 1:100]
+counts <- counts[1:500, 1:500]
 writeMM(counts, file = file.path(output_dir, "matrix.mtx"))
 
 genes <- read_tsv(
     file = file.path(input_dir, "genes.tsv"),
     col_names = c("geneID", "geneName"),
-    n_max = 100
+    n_max = 500
 )
 write_tsv(
     x = genes,
@@ -97,7 +97,7 @@ write_tsv(
 
 barcodes <- read_lines(
     file = file.path(input_dir, "barcodes.tsv"),
-    n_max = 100
+    n_max = 500
 )
 write_lines(
     x = barcodes,
