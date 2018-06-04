@@ -160,9 +160,9 @@ test_that("plotPCA : seurat", {
 # plotPCElbow ==================================================================
 test_that("plotPCElbow : seurat", {
     x <- plotPCElbow(seurat_small)
-    expect_identical(x, seq_len(9L))
+    expect_identical(x, seq_len(7L))
 
-    x <- plotPCElbow(seurat_small)
+    x <- plotPCElbow(Seurat::pbmc_small)
     expect_identical(x, seq_len(11L))
 })
 
