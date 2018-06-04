@@ -252,7 +252,7 @@ test_that("metrics : seurat", {
     x <- metrics(seurat_small)
     y <- seurat_small@meta.data
     x <- x[, colnames(y)]
-    assert_are_identical(x, y)
+    expect_identical(x, y)
 })
 
 
