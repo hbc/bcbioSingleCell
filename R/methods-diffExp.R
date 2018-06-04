@@ -227,9 +227,6 @@ NULL
     assays(se) <- list(counts = counts)
     # zingeR ===================================================================
     message("Running zingeR")
-    # Temporary fix for zingeR NAMESPACE issue (see GitHub for more info).
-    # Will error out due to `DESeqDataSetFromMatrix()` otherwise.
-    attachNamespace("DESeq2")
     design <- metadata(object)[["design"]]
     assert_is_matrix(design)
     print(system.time({
