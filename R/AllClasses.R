@@ -125,9 +125,6 @@ bcbioSingleCell <- function(
     # Assert checks ============================================================
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
-    if (missing(sampleMetadataFile)) {
-        sampleMetadataFile <- NULL
-    }
     assertIsAStringOrNULL(sampleMetadataFile)
     assert_is_character(interestingGroups)
     assertIsAStringOrNULL(organism)
