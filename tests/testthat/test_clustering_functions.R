@@ -6,8 +6,7 @@ context("Clustering Functions")
 test_that("cellTypesPerCluster", {
     x <- cellTypesPerCluster(known_markers_small)
     expect_is(x, "grouped_df")
-    group <- dplyr::group_vars(x)
-    expect_identical(group, "cluster")
+    expect_identical(dplyr::group_vars(x), "cluster")
     expect_identical(
         lapply(x, class),
         list(
@@ -29,8 +28,7 @@ test_that("knownMarkersDetected", {
         known = cellTypeMarkers[["homoSapiens"]]
     )
     expect_is(x, "grouped_df")
-    group <- dplyr::group_vars(x)
-    expect_identical(group, "cellType")
+    expect_identical(dplyr::group_vars(x), "cellType")
     expect_identical(
         lapply(x, class),
         list(
@@ -93,10 +91,7 @@ test_that("sanitizeMarkers : seurat", {
 test_that("topMarkers : grouped_df", {
     x <- topMarkers(all_markers_small)
     expect_is(x, "grouped_df")
-    expect_identical(
-        dplyr::group_vars(x),
-        "cluster"
-    )
+    expect_identical(dplyr::group_vars(x), "cluster")
     expect_identical(
         lapply(x, class),
         list(

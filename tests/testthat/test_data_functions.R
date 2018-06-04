@@ -365,17 +365,46 @@ test_that("subsetPerSample : bcbioSingleCell", {
 test_that("topBarcodes : SingleCellExperiment", {
     x <- topBarcodes(cellranger_small)
     expect_is(x, "grouped_df")
+    expect_identical(dplyr::group_vars(x), "sampleID")
     expect_identical(
-        x[["cellID"]][[1L]],
-        "aggregation_GTACGTATCTTTCCTC_1"
+        lapply(x, class),
+        list(
+            cellID = "character",
+            sampleID = "factor",
+            nUMI = "integer",
+            nGene = "integer",
+            nCoding = "integer",
+            nMito = "integer",
+            log10GenesPerUMI = "numeric",
+            mitoRatio = "numeric",
+            sampleName = "factor",
+            index = "factor",
+            interestingGroups = "factor"
+        )
     )
 })
 
 test_that("topBarcodes : seurat", {
-    x <- topBarcodes(Seurat::pbmc_small)
+    x <- topBarcodes(seurat_small)
     expect_is(x, "grouped_df")
+    expect_identical(dplyr::group_vars(x), "sampleID")
     expect_identical(
-        x[["cellID"]][[1L]],
-        "GACATTCTCCACCT"
+        lapply(x, class),
+        list(
+            cellID = "character",
+            sampleID = "factor",
+            nGene = "integer",
+            nUMI = "integer",
+            nCoding = "integer",
+            nMito = "integer",
+            log10GenesPerUMI = "numeric",
+            mitoRatio = "numeric",
+            orig.ident = "factor",
+            res.0.8 = "character",
+            ident = "factor",
+            sampleName = "factor",
+            index = "factor",
+            interestingGroups = "factor"
+        )
     )
 })
