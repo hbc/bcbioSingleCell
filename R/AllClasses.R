@@ -375,15 +375,16 @@ bcbioSingleCell <- function(
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
     metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
-    colData <- as(metrics, "DataFrame")
 
-    # Cell to sample mappings
+    # Subset the counts to match the prefiltered metrics
+    counts <- counts[, rownames(metrics), drop = FALSE]
+
+    colData <- as(metrics, "DataFrame")
+    colData[["cellID"]] <- rownames(colData)
     cell2sample <- mapCellsToSamples(
         cells = rownames(colData),
         samples = rownames(sampleData)
     )
-
-    colData[["cellID"]] <- rownames(colData)
     colData[["sampleID"]] <- cell2sample
     sampleData[["sampleID"]] <- rownames(sampleData)
     colData <- merge(
@@ -399,9 +400,6 @@ bcbioSingleCell <- function(
     # Bind the `nCount` column into the colData
     nCount <- cbData[rownames(colData), "nCount", drop = FALSE]
     colData <- cbind(nCount, colData)
-
-    # Subset the counts to match the prefiltered metrics
-    counts <- counts[, rownames(colData), drop = FALSE]
 
     # Metadata =================================================================
     metadata <- list(
