@@ -6,10 +6,38 @@
 #' @details This function is a variant of the main [bcbioSingleCell()]
 #'   constructor, but optimized for handling Cell Ranger output.
 #'
-#' @note Unlike the [bcbioSingleCell()] function, here the `organism`,
-#'   `ensemblRelease`, and `genomeBuild` are always detected automatically,
-#'   based on the 10X `refdataDir` YAML metadata. Therefore, these parameters
-#'   cannot be set by the user.
+#' @section Directory Structure:
+#' Cell Ranger can vary in its output directory structure, but we're requiring a
+#' single, consistent data structure for datasets containing multiple samples.
+#' Note that Cell Ranger data may not always contain per sample subdirectories,
+#' or the "outs" subdirectory. We may make this more flexible in the future, but
+#' for now we're making this strict to ensure reproducibility.
+#'
+#' \preformatted{
+#' file.path(
+#'     "<uploadDir>",
+#'     "<sampleName>",
+#'     "outs",
+#'     "filtered_gene_bc_matrices*",
+#'     "outs",
+#'     "<genomeBuild>",
+#'     "matrix.mtx"
+#' )
+#' }
+#'
+#' @section Sample metadata:
+#' A user-defined sample metadata file (`sampleMetadataFile`) is currently
+#' required for all datasets.
+#'
+#' @section Reference Data:
+#' We strongly recommend supplying the corresponding reference data required for
+#' Cell Ranger with the `refdataDir` argument. When set, the function will
+#' detect the `organism`, `ensemblRelease`, and `genomeBuild` automatically,
+#' based on the 10X `refdataDir` YAML metadata. Additionally, it will convert
+#' the gene annotations defined in the GTF file into `GRanges`, which get
+#' slotted in [rowRanges()]. Otherwise, the function will attempt to use the
+#' most current annotations available from Ensembl, and some gene IDs may not
+#' match, due to deprecation in the current Ensembl release.
 #'
 #' @family Read Functions
 #' @author Michael Steinbaugh
@@ -24,17 +52,16 @@
 #' @export
 #'
 #' @examples
-#' uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
+#' uploadDir <-system.file("extdata/cellranger", package = "bcbioSingleCell")
 #' x <- readCellRanger(
 #'     uploadDir = uploadDir,
-#'     refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
 #'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
 #' show(x)
 readCellRanger <- function(
     uploadDir,
-    refdataDir,
-    sampleMetadataFile,
+    sampleMetadataFile = NULL,
+    refdataDir = NULL,
     interestingGroups = "sampleName",
     transgeneNames = NULL,
     spikeNames = NULL,
@@ -43,11 +70,13 @@ readCellRanger <- function(
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
-    assert_is_a_string(refdataDir)
-    assert_all_are_dirs(refdataDir)
-    refdataDir <- normalizePath(refdataDir, winslash = "/", mustWork = TRUE)
+    assertIsAStringOrNULL(sampleMetadataFile)
+    assertIsAStringOrNULL(refdataDir)
+    if (is_a_string(refdataDir)) {
+        assert_all_are_dirs(refdataDir)
+        refdataDir <- normalizePath(refdataDir, winslash = "/", mustWork = TRUE)
+    }
     assert_is_character(interestingGroups)
-    assert_is_a_string(sampleMetadataFile)
     assert_is_any_of(transgeneNames, c("character", "NULL"))
     assert_is_any_of(spikeNames, c("character", "NULL"))
     dots <- list(...)
@@ -63,10 +92,64 @@ readCellRanger <- function(
     dots <- Filter(Negate(is.null), dots)
 
     # Directory paths ==========================================================
-    sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
+    matrixFiles <- list.files(
+        path = uploadDir,
+        pattern = "matrix.mtx",
+        include.dirs = FALSE,
+        full.names = TRUE,
+        recursive = TRUE
+    )
+    # Subset to only include `filtered_gene_bc_matrices*`. Note that
+    # aggregation output is labeled `filtered_gene_bc_matrices_mex` by
+    # default.
+    matrixFiles <- matrixFiles[grepl("filtered_gene_bc_matrices", matrixFiles)]
+    assert_is_non_empty(matrixFiles)
+
+    # Combined or per sample matrix support
+    if (is_a_string(matrixFiles)) {
+        sampleDirs <- uploadDir
+    } else {
+        message(paste(length(matrixFiles), "samples detected"))
+        message(paste(
+            "Required per sample output directory structure:",
+            file.path(
+                "<uploadDir>",
+                "<sampleName>",
+                "outs",
+                "filtered_gene_bc_matrices*",
+                "<genomeBuild>",
+                "matrix.mtx"
+            ),
+            sep = "\n"
+        ))
+        assert_all_are_matching_regex(
+            x = matrixFiles,
+            pattern = file.path(
+                paste0("^", uploadDir),
+                "[^/]+", # sampleName
+                "outs",
+                "filtered_gene_bc_matrices([^/]+)?",
+                "[^/]+",
+                paste0("matrix.mtx", "$")
+            )
+        )
+        # Sample directories nest the matrix files 4 levels deep
+        sampleDirs <- matrixFiles %>%
+            dirname() %>%
+            dirname() %>%
+            dirname() %>%
+            dirname()
+    }
+
+    names(sampleDirs) <- makeNames(basename(sampleDirs), unique = TRUE)
 
     # Sample metadata ==========================================================
-    sampleData <- readSampleData(sampleMetadataFile)
+    if (is_a_string(sampleMetadataFile)) {
+        sampleData <- readSampleData(sampleMetadataFile)
+    } else {
+        message("Using minimal sample data")
+        sampleData <- minimalSampleData(basename(sampleDirs))
+    }
 
     # Interesting groups =======================================================
     # Ensure internal formatting in camelCase
@@ -84,53 +167,49 @@ readCellRanger <- function(
         allSamples <- TRUE
     }
 
-    # Reference data ===========================================================
-    # JSON data
-    refJSONFile <- file.path(refdataDir, "reference.json")
-    assert_all_are_existing_files(refJSONFile)
-    refJSON <- read_json(refJSONFile)
-    genomeBuild <- refJSON %>%
-        .[["genomes"]] %>%
-        .[[1L]] %>%
-        # CellRanger uses UCSC build names in directories (e.g. hg19)
-        convertUCSCBuildToEnsembl()
+    # Gene annotations =========================================================
+    ensemblRelease <- NULL
+    rowRangesMetadata <- NULL
+    # Stop on multiple genomes (not supported in a single SCE object)
+    genomeBuild <- basename(dirname(matrixFiles))
     assert_is_a_string(genomeBuild)
     organism <- detectOrganism(genomeBuild)
     assert_is_a_string(organism)
-    # Get the Ensembl version from the JSON reference file (via GTF)
-    ensemblRelease <- refJSON %>%
-        .[["input_gtf_files"]] %>%
-        .[[1L]] %>%
-        str_split("\\.", simplify = TRUE) %>%
-        .[1L, 3L] %>%
-        as.integer()
-    assert_is_an_integer(ensemblRelease)
-    assert_all_are_positive(ensemblRelease)
-    message(paste(
-        paste("Organism:", deparse(organism)),
-        paste("Genome build:", deparse(genomeBuild)),
-        paste("Ensembl release:", deparse(ensemblRelease)),
-        sep = "\n"
-    ))
 
-    # Gene annotations =========================================================
-    # CellRanger uses Ensembl refdata internally. Here we're fetching the
-    # annotations with AnnotationHub rather than pulling from the GTF file
-    # in the refdata directory. It will also drop genes that are now dead in the
-    # current Ensembl release. Don't warn about old Ensembl release version.
-    ah <- suppressWarnings(makeGRangesFromEnsembl(
-        organism = organism,
-        format = level,
-        genomeBuild = genomeBuild,
-        release = ensemblRelease,
-        metadata = TRUE
-    ))
-    assert_is_list(ah)
-    assert_are_identical(names(ah), c("data", "metadata"))
-    rowRanges <- ah[["data"]]
-    assert_is_all_of(rowRanges, "GRanges")
-    rowRangesMetadata <- ah[["metadata"]]
-    assert_is_data.frame(rowRangesMetadata)
+    # Prepare gene annotations as GRanges
+    if (is_a_string(refdataDir)) {
+        # JSON data
+        refJSONFile <- file.path(refdataDir, "reference.json")
+        assert_all_are_existing_files(refJSONFile)
+        refJSON <- read_json(refJSONFile)
+        # Convert the GTF file to GRanges
+        gtfFile <- refJSON[["input_gtf_files"]]
+        assert_is_a_string(gtfFile)
+        rowRanges <- makeGRangesFromGTF(gtfFile)
+        # Get the Ensembl version from the GTF file name.
+        # Example: "Homo_sapiens.GRCh37.82.filtered.gtf"
+        ensemblRelease <- gtfFile %>%
+            str_split("\\.", simplify = TRUE) %>%
+            .[1L, 3L] %>%
+            as.integer()
+    } else {
+        # CellRanger uses Ensembl refdata internally. Here we're fetching the
+        # annotations with AnnotationHub rather than pulling from the GTF file
+        # in the refdata directory. It will also drop genes that are now dead in the
+        # current Ensembl release. Don't warn about old Ensembl release version.
+        ah <- suppressWarnings(makeGRangesFromEnsembl(
+            organism = organism,
+            format = level,
+            genomeBuild = genomeBuild,
+            metadata = TRUE
+        ))
+        assert_is_list(ah)
+        assert_are_identical(names(ah), c("data", "metadata"))
+        rowRanges <- ah[["data"]]
+        assert_is_all_of(rowRanges, "GRanges")
+        rowRangesMetadata <- ah[["metadata"]]
+        assert_is_data.frame(rowRangesMetadata)
+    }
 
     # Require gene-to-symbol mappings
     assert_is_subset(
@@ -150,47 +229,59 @@ readCellRanger <- function(
     )
     counts <- do.call(cbind, sparseCountsList)
 
-    # Column data ==============================================================
-    # Always prefilter, removing very low quality cells with no UMIs or genes
-    metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
+    # Multiplexed sample check =================================================
+    # Check to see if multiplexed samples are present and require metadata
+    multiplexedPattern <- "^(.+)_(\\d+)_([ACGT]+)$"
+    if (any(grepl(multiplexedPattern, colnames(counts)))) {
+        message("Multiplexed samples detected")
 
-    # Cell to sample mappings
-    # Check for multiplexed samples. CellRanger outputs these with a trailing
-    # number (e.g. `-2$`, which we're sanitizing to `_2$`).
-    if (any(grepl(x = colnames(counts), pattern = "_\\d+$"))) {
+        # Prepare data.frame of barcode mappings
+        # Example:
+        # cellID: cellranger_AAACCTGGTTTACTCT_1
+        # description: cellranger
+        # barcode: AAACCTGGTTTACTCT
+        # index: 1
+        cellMap <- str_match(
+            string = colnames(counts),
+            pattern = "^(.+)_(\\d+)_([ACGT]+)$"
+        ) %>%
+            as.data.frame() %>%
+            set_colnames(c(
+                "cellID",
+                "description",
+                "index",
+                "barcode"
+            )) %>%
+            mutate_all(as.factor)
+
+        # Check for single sample and fix sampleData automatically if necessary
+        if (
+            identical(levels(cellMap[["index"]]), "1") &&
+            !"index" %in% colnames(sampleData)
+        ) {
+            message("Single sample index detected. Setting in sample data.")
+            sampleData[["index"]] <- factor("1")
+            rownames(sampleData) <- paste0(rownames(sampleData), "_1")
+        }
+
+        # Require user defined metadata
         if (!"index" %in% colnames(sampleData)) {
             stop(paste(
                 "`index` column must be defined using",
                 "`sampleMetadataFile` for multiplexed samples"
             ))
         }
-        sampleDataMap <- sampleData %>%
-            rownames_to_column("sampleID") %>%
-            mutate(description = gsub("-\\d$", "", !!sym("description"))) %>%
-            mutate_if(is.character, as.factor)
-        # Prepare data.frame of barcode mappings
-        map <- str_match(
-            string = colnames(counts),
-            pattern = "^(.+)_([ACGT]+)_(\\d+)$"
-        ) %>%
-            as.data.frame() %>%
-            set_colnames(c(
-                "cellID",
-                "description",
-                "barcode",
-                "index"
-            )) %>%
-            mutate_all(as.factor) %>%
-            # Note that we can't use minimal sample metadata here
-            left_join(sampleDataMap, by = c("description", "index"))
-        cell2sample <- map[["sampleID"]]
-        names(cell2sample) <- map[["cellID"]]
-    } else {
-        cell2sample <- mapCellsToSamples(
-            cells = colnames(counts),
-            samples = rownames(sampleData)
-        )
     }
+
+    cell2sample <- mapCellsToSamples(
+        cells = colnames(counts),
+        samples = rownames(sampleData)
+    )
+
+    # Column data ==============================================================
+    # Always prefilter, removing very low quality cells with no UMIs or genes
+    metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
+    assert_are_identical(colnames(counts), rownames(metrics))
 
     sampleData[["sampleID"]] <- rownames(sampleData)
     colData <- as(metrics, "DataFrame")
