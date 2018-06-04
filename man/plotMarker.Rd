@@ -110,9 +110,9 @@ for the number of genes to plot here in a future update.
 
 \examples{
 object <- seurat_small
-genes <- grep("^COL\\\\d", rownames(object), value = TRUE)
+genes <- grep("^MT-", rownames(object), value = TRUE)
 print(genes)
-title <- "collagen"
+title <- "mito genes"
 
 # t-SNE
 plotMarkerTSNE(
@@ -134,7 +134,7 @@ plotMarkerTSNE(
     object = object,
     genes = genes,
     pointsAsNumbers = TRUE,
-    title = "collagen"
+    title = title
 )
 
 # UMAP
@@ -147,7 +147,6 @@ plotMarkerUMAP(
 # Top markers
 markers <- topMarkers(all_markers_small, n = 1)
 markers
-markers <- head(markers, n = 1)
 plotTopMarkers(object, markers = markers)
 
 # Known markers detected
