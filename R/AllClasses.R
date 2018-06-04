@@ -86,7 +86,7 @@ bcbioSingleCell <- setClass(
 bcbioSingleCell <- function(
     uploadDir,
     organism,
-    sampleMetadataFile,
+    sampleMetadataFile = NULL,
     interestingGroups = "sampleName",
     ensemblRelease = NULL,
     genomeBuild = NULL,
@@ -154,7 +154,7 @@ bcbioSingleCell <- function(
     runDate <- as.Date(match[[2L]])
     template <- match[[3L]]
     projectDir <- file.path(uploadDir, projectDir)
-    sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
+    sampleDirs <- sampleDirs(uploadDir)
 
     # Sequencing lanes =========================================================
     if (any(grepl(bcbioBase::lanePattern, sampleDirs))) {
