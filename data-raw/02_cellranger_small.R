@@ -1,74 +1,51 @@
 # cellranger_small
-# 2018-05-14
+# 2018-06-04
+# 4k PBMCs from a Healthy Donor
+# https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 library(devtools)
-load_all()
 library(tidyverse)
 library(Matrix)
+load_all()
 
-# Include the top 500 genes (rows) and cells (columns)
-uploadDir <- "inst/extdata/cellranger"
-sampleDir <- file.path(
-    uploadDir,
-    "aggregation",
-    "outs",
-    "filtered_gene_bc_matrices",
-    "hg19"
+unlink("data-raw/pbmc4k", recursive = TRUE)
+download.file(
+    url = paste(
+        "http://cf.10xgenomics.com",
+        "samples",
+        "cell-exp",
+        "2.1.0",
+        "pbmc4k",
+        "pbmc4k_filtered_gene_bc_matrices.tar.gz",
+        sep = "/"
+    ),
+    destfile = "data-raw/pbmc4k.tar.gz"
+)
+untar(
+    tarfile = "data-raw/pbmc4k.tar.gz",
+    exdir = "data-raw/pbmc4k"
 )
 
-matFile <- file.path(sampleDir, "matrix.mtx")
-genesFile <- file.path(sampleDir, "genes.tsv")
-barcodesFile <- file.path(sampleDir, "barcodes.tsv")
+pbmc4k <- readCellRanger("data-raw/pbmc4k")
+# Ensembl 92, 483 unannotated genes
+# dim(pbmc4k)
+# [1] 33694  4340
+# Too large to save inside package
+saveData(pbmc4k, dir = "~")
 
-# Prepare the sparse matrix
-mat <- readMM(matFile)
-gene2symbol <- read_tsv(
-    file = genesFile,
-    col_names = c("geneID", "geneName")
-)
-rownames <- gene2symbol[["geneID"]]
-colnames <- read_lines(barcodesFile)
-stopifnot(identical(nrow(mat), length(rownames)))
-stopifnot(identical(ncol(mat), length(colnames)))
-rownames(mat) <- rownames
-colnames(mat) <- colnames
+# Subset to only include the top 500 genes (rows) and cells (columns)
+counts <- counts(pbmc4k)
 
 # Subset the matrix to include only the top genes and cells
-countsPerGene <- rowSums(mat) %>%
+top_genes <- rowSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
-genes <- sort(names(countsPerGene))
-countsPerCell <- colSums(mat) %>%
+genes <- sort(names(top_genes))
+
+top_cells <- colSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
-cells <- sort(names(countsPerCell))
-mat <- mat[genes, cells]
+cells <- sort(names(top_cells))
 
-# Update the `genes.tsv` to match
-match <- match(x = rownames(mat), table = gene2symbol[[1L]])
-stopifnot(!any(is.na(match)))
-gene2symbol <- gene2symbol[match, ]
-stopifnot(identical(rownames(mat), gene2symbol[[1L]]))
-
-# Write update files to disk
-writeMM(mat, file = matFile)
-write_tsv(gene2symbol, path = genesFile, col_names = FALSE)
-write_lines(colnames(mat), path = barcodesFile)
-
-# cellranger_small =============================================================
-cellranger_small <- readCellRanger(
-    uploadDir = uploadDir,
-    refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
-    sampleMetadataFile = file.path(uploadDir, "metadata.csv")
-)
-
-# Apply example filtering without excluding any cells
-cellranger_small <- filterCells(
-    object = cellranger_small,
-    minUMIs = 0,
-    minGenes = 0,
-    minNovelty = 0,
-    maxMitoRatio = Inf,
-    minCellsPerGene = 0
-)
+cellranger_small <- pbmc4k[genes, cells]
 
 use_data(cellranger_small, compress = "xz", overwrite = TRUE)
