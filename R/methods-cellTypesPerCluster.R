@@ -48,6 +48,7 @@ setMethod(
         data <- object %>%
             ungroup() %>%
             .[, unique(c(groupCols, colnames(.))), drop = FALSE] %>%
+            mutate_at(groupCols, as.factor) %>%
             group_by(!!!syms(groupCols)) %>%
             arrange(!!sym("padj"), .by_group = TRUE) %>%
             # Use `toString()` instead of `aggregate()` for R Markdown tables
