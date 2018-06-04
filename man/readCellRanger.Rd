@@ -4,7 +4,7 @@
 \alias{readCellRanger}
 \title{Read 10X Genomics Cell Ranger Data}
 \usage{
-readCellRanger(uploadDir, refdataDir, sampleMetadataFile,
+readCellRanger(uploadDir, sampleMetadataFile = NULL, refdataDir = NULL,
   interestingGroups = "sampleName", transgeneNames = NULL,
   spikeNames = NULL, ...)
 }
@@ -12,12 +12,12 @@ readCellRanger(uploadDir, refdataDir, sampleMetadataFile,
 \item{uploadDir}{Path to Cell Ranger output directory. This directory path
 must contain \code{filtered_gene_bc_matrices*} as a child directory.}
 
-\item{refdataDir}{Directory path to Cell Ranger reference annotation data.}
-
 \item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
 for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
 inDrop).}
+
+\item{refdataDir}{Directory path to Cell Ranger reference annotation data.}
 
 \item{interestingGroups}{Character vector of interesting groups. Must be
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
@@ -41,17 +41,49 @@ counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 This function is a variant of the main \code{\link[=bcbioSingleCell]{bcbioSingleCell()}}
 constructor, but optimized for handling Cell Ranger output.
 }
-\note{
-Unlike the \code{\link[=bcbioSingleCell]{bcbioSingleCell()}} function, here the \code{organism},
-\code{ensemblRelease}, and \code{genomeBuild} are always detected automatically,
-based on the 10X \code{refdataDir} YAML metadata. Therefore, these parameters
-cannot be set by the user.
+\section{Directory Structure}{
+
+Cell Ranger can vary in its output directory structure, but we're requiring a
+single, consistent data structure for datasets containing multiple samples.
+Note that Cell Ranger data may not always contain per sample subdirectories,
+or the "outs" subdirectory. We may make this more flexible in the future, but
+for now we're making this strict to ensure reproducibility.
+
+\preformatted{
+file.path(
+    "<uploadDir>",
+    "<sampleName>",
+    "outs",
+    "filtered_gene_bc_matrices*",
+    "outs",
+    "<genomeBuild>",
+    "matrix.mtx"
+)
 }
+}
+
+\section{Sample metadata}{
+
+A user-defined sample metadata file (\code{sampleMetadataFile}) is currently
+required for all datasets.
+}
+
+\section{Reference Data}{
+
+We strongly recommend supplying the corresponding reference data required for
+Cell Ranger with the \code{refdataDir} argument. When set, the function will
+detect the \code{organism}, \code{ensemblRelease}, and \code{genomeBuild} automatically,
+based on the 10X \code{refdataDir} YAML metadata. Additionally, it will convert
+the gene annotations defined in the GTF file into \code{GRanges}, which get
+slotted in \code{\link[=rowRanges]{rowRanges()}}. Otherwise, the function will attempt to use the
+most current annotations available from Ensembl, and some gene IDs may not
+match, due to deprecation in the current Ensembl release.
+}
+
 \examples{
-uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
+uploadDir <-system.file("extdata/cellranger", package = "bcbioSingleCell")
 x <- readCellRanger(
     uploadDir = uploadDir,
-    refdataDir = file.path(uploadDir, "refdata-cellranger-hg19-1.2.0"),
     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 )
 show(x)
