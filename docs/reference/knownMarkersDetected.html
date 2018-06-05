@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -34,6 +36,7 @@
 
 <meta property="og:description" content="Known Markers Detected" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -60,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.14</span>
       </span>
     </div>
 
@@ -176,13 +179,17 @@ easily.</p>
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>all_markers_small</span>,
     <span class='kw'>known</span> <span class='kw'>=</span> <span class='no'>cellTypeMarkers</span><span class='kw'>[[</span><span class='st'>"homoSapiens"</span>]]
 )
-<span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 19
+<span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 14
 #&gt; # Groups:   cellType [1]
-#&gt;   cellType     cluster geneID    geneName rowname  pct1  pct2 avgLogFC     padj
-#&gt;   &lt;chr&gt;        &lt;fct&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-#&gt; 1 Natural Kil… 1       ENSG0000… NCAM1    NCAM1   0.466 0.701   -0.954  2.25e-7
-#&gt; # ... with 10 more variables: pvalue &lt;dbl&gt;, seqnames &lt;fct&gt;, start &lt;int&gt;,
-#&gt; #   end &lt;int&gt;, width &lt;int&gt;, strand &lt;fct&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
+#&gt;   cellType cluster geneID        geneName avgLogFC  pct1  pct2 rowname   pvalue
+#&gt;   &lt;fct&gt;    &lt;fct&gt;   &lt;chr&gt;         &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+#&gt; 1 B Cell   4       ENSG00000211… IGHM        2.16  0.933 0.191 IGHM    1.87e-37
+#&gt; 2 B Cell   4       ENSG00000211… IGLC2       3.87  0.733 0.268 IGLC2   6.53e-16
+#&gt; 3 B Cell   4       ENSG00000211… IGKC        3.02  0.778 0.385 IGKC    1.17e-15
+#&gt; 4 B Cell   5       ENSG00000211… IGKC        0.946 1     0.393 IGKC    6.80e-14
+#&gt; 5 B Cell   4       ENSG00000211… IGLC3       3.14  0.444 0.099 IGLC3   2.46e-12
+#&gt; 6 B Cell   5       ENSG00000211… IGHM        0.762 0.864 0.23  IGHM    5.55e-12
+#&gt; # ... with 5 more variables: padj &lt;dbl&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
 #&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

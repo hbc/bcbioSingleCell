@@ -51,7 +51,7 @@ plotQC(indrops_small)
 plotQC(cellranger_small)
 
 # seurat ====
-plotQC(Seurat::pbmc_small)
+plotQC(seurat_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

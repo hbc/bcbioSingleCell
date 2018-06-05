@@ -24,7 +24,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        fill = scale_fill_hue(),
+        fill = NULL,
         title = "cell counts"
     ) {
         if (missing(interestingGroups)) {
@@ -33,18 +33,23 @@ setMethod(
         assertIsFillScaleDiscreteOrNULL(fill)
         assertIsAStringOrNULL(title)
 
-        metrics <- metrics(object, interestingGroups)
+        metrics <- metrics(object, interestingGroups = interestingGroups)
+
         sampleData <- sampleData(
             object = object,
             clean = FALSE,
             interestingGroups = interestingGroups,
             return = "data.frame"
         )
-        sampleData[["sampleID"]] <- rownames(sampleData)
+        if (is.null(sampleData)) {
+            sampleData <- unknownSampleData
+        }
+        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+
         data <- metrics %>%
             group_by(!!sym("sampleID")) %>%
             summarize(nCells = n()) %>%
-            merge(sampleData, all.x = TRUE)
+            left_join(sampleData, by = "sampleID")
 
         p <- ggplot(
             data = data,

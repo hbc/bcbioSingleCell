@@ -3,9 +3,10 @@ context("Differential Expression Functions")
 
 
 # diffExp ======================================================================
-object <- cellranger_small
-numerator <- colnames(object)[which(object[["sampleName"]] == "proximal")]
-denominator <- colnames(object)[which(object[["sampleName"]] == "distal")]
+# Expression in cluster 3 relative to cluster 2
+object <- seurat_small
+numerator <- Seurat::WhichCells(object, ident = 3L)
+denominator <- Seurat::WhichCells(object, ident = 2L)
 
 test_that("diffExp : zinbwave-edgeR", {
     x <- diffExp(
@@ -29,19 +30,21 @@ test_that("diffExp : zingeR-edgeR", {
     expect_s4_class(x, "DGELRT")
 })
 
-# DESeq2 is too slow for testing currently
+# DESeq2 is still relatively slow
+test_that("diffExp : zinbwave-DESeq2", {
+    x <- diffExp(
+        object = object,
+        numerator = numerator,
+        denominator = denominator,
+        zeroWeights = "zinbwave",
+        caller = "DESeq2"
+    )
+    expect_s4_class(x, "DESeqResults")
+})
+
 # nolint start
-# test_that("diffExp : zinbwave-DESeq2", {
-#     x <- diffExp(
-#         object = object,
-#         numerator = numerator,
-#         denominator = denominator,
-#         zeroWeights = "zinbwave",
-#         caller = "DESeq2"
-#     )
-#     expect_s4_class(x, "DESeqResults")
-# })
-#
+# zingeR isn't importing DESeqDataSetFromMatrix correctly
+# Filed an issue on GitHub, need to make a pull request
 # test_that("diffExp : zingeR-DESeq2", {
 #     x <- diffExp(
 #         object = object,
@@ -53,18 +56,3 @@ test_that("diffExp : zingeR-edgeR", {
 #     expect_s4_class(x, "DESeqResults")
 # })
 # nolint end
-
-test_that("diffExp : seurat", {
-    # Expression in cluster 3 relative to cluster 2
-    object <- Seurat::pbmc_small
-    numerator <- Seurat::WhichCells(object, ident = 3L)
-    denominator <- Seurat::WhichCells(object, ident = 2L)
-    x <- diffExp(
-        object = object,
-        numerator = numerator,
-        denominator = denominator,
-        minCellsPerGene = 5L,
-        minCountsPerCell = 5L
-    )
-    expect_s4_class(x, "DGELRT")
-})

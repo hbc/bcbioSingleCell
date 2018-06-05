@@ -49,19 +49,16 @@ use the \code{\link[=sampleNames]{sampleNames()}} return values (i.e. the \code{
 # SingleCellExperiment ====
 object <- cellranger_small
 show(object)
-sampleNames(object)
 
 x <- filterCells(object, minNovelty = 0L)
 show(x)
 metadata(x)$filterParams
 
 # Per sample cutoffs
+sampleNames(object)
 x <- filterCells(
     object = object,
-    minUMIs = c(
-        distal = 100,
-        proximal = 200
-    )
+    minUMIs = c(pbmc4k = 100)
 )
 show(x)
 metadata(x)$filterParams

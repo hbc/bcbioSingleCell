@@ -1,12 +1,12 @@
 # seurat_small
-# 2018-05-14
+# 2018-06-04
 library(devtools)
-load_all()
 library(Seurat)
+load_all()
 
 # seurat_small =================================================================
 dims_use <- seq_len(20L)
-seurat_small <- indrops_small %>%
+seurat_small <- cellranger_small %>%
     as("seurat") %>%
     NormalizeData() %>%
     FindVariableGenes(do.plot = FALSE) %>%

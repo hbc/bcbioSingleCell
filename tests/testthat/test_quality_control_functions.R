@@ -111,18 +111,22 @@ test_that("metrics : bcbioSingleCell", {
 })
 
 test_that("metrics : seurat", {
-    x <- metrics(Seurat::pbmc_small)
+    x <- metrics(seurat_small)
     expect_identical(
         lapply(x, class),
         list(
             sampleID = "factor",
             nGene = "integer",
-            nUMI = "numeric",
+            nUMI = "integer",
+            nCoding = "integer",
+            nMito = "integer",
+            log10GenesPerUMI = "numeric",
+            mitoRatio = "numeric",
             orig.ident = "factor",
             res.0.8 = "character",
-            res.1 = "character",
             ident = "factor",
             sampleName = "factor",
+            index = "factor",
             interestingGroups = "factor"
         )
     )

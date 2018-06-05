@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -34,6 +36,7 @@
 
 <meta property="og:description" content="Known Markers Example" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -60,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.14</span>
       </span>
     </div>
 
@@ -114,7 +117,7 @@
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>grouped_df</code> (inherits from <code>tbl_df</code>, <code>tbl</code>, <code>data.frame</code>) with 1 rows and 19 columns.</p>
+    <p>An object of class <code>grouped_df</code> (inherits from <code>tbl_df</code>, <code>tbl</code>, <code>data.frame</code>) with 29 rows and 14 columns.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -124,27 +127,22 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>known_markers_small</span>)</div><div class='output co'>#&gt; Observations: 1
-#&gt; Variables: 19
-#&gt; $ cellType       &lt;chr&gt; "Natural Killer Cell"
-#&gt; $ cluster        &lt;fct&gt; 1
-#&gt; $ geneID         &lt;chr&gt; "ENSG00000149294"
-#&gt; $ geneName       &lt;chr&gt; "NCAM1"
-#&gt; $ rowname        &lt;chr&gt; "NCAM1"
-#&gt; $ pct1           &lt;dbl&gt; 0.466
-#&gt; $ pct2           &lt;dbl&gt; 0.701
-#&gt; $ avgLogFC       &lt;dbl&gt; -0.9537856
-#&gt; $ padj           &lt;dbl&gt; 2.248247e-07
-#&gt; $ pvalue         &lt;dbl&gt; 4.496495e-10
-#&gt; $ seqnames       &lt;fct&gt; 11
-#&gt; $ start          &lt;int&gt; 112961247
-#&gt; $ end            &lt;int&gt; 113278436
-#&gt; $ width          &lt;int&gt; 317190
-#&gt; $ strand         &lt;fct&gt; +
-#&gt; $ geneBiotype    &lt;fct&gt; protein_coding
-#&gt; $ description    &lt;chr&gt; "neural cell adhesion molecule 1 [Source:HGNC Symbol...
-#&gt; $ seqCoordSystem &lt;fct&gt; chromosome
-#&gt; $ broadClass     &lt;fct&gt; coding</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>known_markers_small</span>)</div><div class='output co'>#&gt; Observations: 29
+#&gt; Variables: 14
+#&gt; $ cellType       &lt;chr&gt; "B Cell", "B Cell", "B Cell", "B Cell", "B Cell", "B...
+#&gt; $ cluster        &lt;fct&gt; 4, 4, 4, 5, 4, 5, 0, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3...
+#&gt; $ geneID         &lt;chr&gt; "ENSG00000211899", "ENSG00000211677", "ENSG000002115...
+#&gt; $ geneName       &lt;chr&gt; "IGHM", "IGLC2", "IGKC", "IGKC", "IGLC3", "IGHM", "I...
+#&gt; $ avgLogFC       &lt;dbl&gt; 2.1617798, 3.8661622, 3.0197161, 0.9464242, 3.140381...
+#&gt; $ pct1           &lt;dbl&gt; 0.933, 0.733, 0.778, 1.000, 0.444, 0.864, 0.155, 0.2...
+#&gt; $ pct2           &lt;dbl&gt; 0.191, 0.268, 0.385, 0.393, 0.099, 0.230, 0.304, 0.4...
+#&gt; $ rowname        &lt;chr&gt; "IGHM", "IGLC2", "IGKC", "IGKC", "IGLC3", "IGHM", "I...
+#&gt; $ pvalue         &lt;dbl&gt; 1.866840e-37, 6.525994e-16, 1.171759e-15, 6.799224e-...
+#&gt; $ padj           &lt;dbl&gt; 9.334200e-35, 3.262997e-13, 5.858793e-13, 3.399612e-...
+#&gt; $ geneBiotype    &lt;fct&gt; IG_C_gene, IG_C_gene, IG_C_gene, IG_C_gene, IG_C_gen...
+#&gt; $ description    &lt;chr&gt; "immunoglobulin heavy constant mu [Source:HGNC Symbo...
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...
+#&gt; $ broadClass     &lt;fct&gt; ig, ig, ig, ig, ig, ig, ig, ig, coding, coding, codi...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

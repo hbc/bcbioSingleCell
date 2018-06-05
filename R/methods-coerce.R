@@ -20,7 +20,7 @@ NULL
 #' @rdname coerce
 #' @name coerce-SingleCellExperiment-seurat
 #'
-#' @section SingleCellExperiment to seurat:
+#' @section `SingleCellExperiment` to `seurat`:
 #' Interally [Seurat::CreateSeuratObject()] is called without applying any
 #' additional filtering cutoffs, since we have already defined them during our
 #' quality control analysis. Here we are passing the raw gene-level counts of
@@ -81,13 +81,13 @@ setAs(
 #' @rdname coerce
 #' @name coerce-seurat-SingleCellExperiment
 #'
-#' @section seurat to SingleCellExperiment:
+#' @section `seurat` to `SingleCellExperiment`:
 #' Super basic S4 coercion support for taking the raw counts matrix from
 #' a `seurat` class object and coercing to a `SingleCellExperiment`.
 #'
 #' @examples
 #' # seurat to SingleCellExperiment ====
-#' x <- as(Seurat::pbmc_small, "SingleCellExperiment")
+#' x <- as(seurat_small, "SingleCellExperiment")
 #' class(x)
 #' print(x)
 setAs(

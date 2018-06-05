@@ -224,15 +224,16 @@ seurat <- seurat %>%
 In particular, `PCHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and genes are ordered according to their PCA scores. Setting `cells.use` to a number plots the "extreme" cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated gene sets.
 
 ```{r pc_heatmap}
+colors <- plasma(n = 3, begin = 0, end = 1)
 invisible(mapply(
     FUN = PCHeatmap,
     pc.use = 1:params$pc_compute,
     MoreArgs = list(
         object = seurat,
         col.use = CustomPalette(
-            low = viridis(3)[[3]],  # yellow
-            mid = viridis(3)[[2]],  # green
-            high = viridis(3)[[1]]  # purple
+            low = colors[[1]],
+            mid = colors[[2]],
+            high = colors[[3]]
         ),
         do.balanced = TRUE,
         label.columns = FALSE,
@@ -373,7 +374,7 @@ invisible(lapply(
 2. The Riemannian metric is locally constant (or can be approximated as such).
 3. The manifold is locally connected.
 
-[UMAP][] visualization requires the [Python][] dependency umap-learn. We recommend installing this with conda:
+[UMAP][] visualization requires the [Python][] dependency umap-learn. We recommend installing this with [conda][].
 
 ```{bash, eval=FALSE}
 conda install -c conda-forge umap-learn

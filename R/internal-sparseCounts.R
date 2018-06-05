@@ -74,6 +74,8 @@
     } else if (pipeline == "cellranger") {
         # `barcodes.tsv` is not tab delimited
         colnames <- read_lines(colFile)
+        # Move the multiplexed sample index number to the beginning
+        colnames <- sub("^([ACGT]+)-(\\d+)$", "\\2-\\1", colnames)
 
         # `genes.tsv` is tab delimited
         rownames <- read_tsv(

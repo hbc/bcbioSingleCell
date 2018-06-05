@@ -8,8 +8,8 @@
     max = Inf,
     trans = "identity",
     ratio = FALSE,
-    color = scale_color_hue(),
-    fill = scale_fill_hue(),
+    color = NULL,
+    fill = NULL,
     title = NULL
 ) {
     assert_is_a_string(metricCol)

@@ -13,12 +13,15 @@ authors:
         href: http://bioinformatics.sph.harvard.edu
 
 reference:
+  - title: Package Information
+    contents:
+    - bcbioSingleCell-package
   - title: S4 Object
     contents:
-    - starts_with("bcbio")
+    - bcbioSingleCell
     - coerce
+    - extract
     - show
-    - subset
     - ends_with("Object")
   - title: Read Functions
     contents:

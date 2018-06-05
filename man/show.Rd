@@ -37,7 +37,7 @@ show(indrops_small)
 }
 \seealso{
 Other S4 Object: \code{\link{bcbioSingleCell}},
-  \code{\link{coerce}}, \code{\link{subset}},
+  \code{\link{coerce}}, \code{\link{extract}},
   \code{\link{updateObject}}
 }
 \author{

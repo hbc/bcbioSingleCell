@@ -154,15 +154,14 @@ plotTopMarkers(
 
 Heatmaps can also be a good way to examine heterogeneity within/between clusters. The `DoHeatmap()` function will generate a heatmap for given cells and genes. In this case, we are plotting the top markers for each cluster.
 
-```{r do_heatmap}
-# `slim.col.label` should display the identity class once for each group, but
-# doesn't appear to be working in Seurat v2.1 (updated 2017-11-25).
+```{r do_heatmap, fig.width=10, fig.height=20}
+colors <- plasma(n = 3, begin = 0, end = 1)
 DoHeatmap(
     object = seurat,
     genes.use = unique(top_markers$rowname),
-    col.low = viridis(3)[[3]],   # yellow
-    col.mid = viridis(3)[[2]],   # green
-    col.high = viridis(3)[[1]],  # purple
+    col.low = colors[[1]],
+    col.mid = colors[[2]],
+    col.high = colors[[3]],
     remove.key = FALSE,
     rotate.key = TRUE,
     slim.col.label = TRUE

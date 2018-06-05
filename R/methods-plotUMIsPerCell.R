@@ -14,13 +14,7 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' # Label the inflection point per sample
-#' plotUMIsPerCell(cellranger_small, geom = "ecdf", point = "inflection")
-#'
-#' # Label the knee point per sample
-#' plotUMIsPerCell(cellranger_small, geom = "ecdf", point = "knee")
-#'
-#' # Alternate geoms
+#' plotUMIsPerCell(cellranger_small, geom = "ecdf")
 #' plotUMIsPerCell(cellranger_small, geom = "histogram")
 #' plotUMIsPerCell(cellranger_small, geom = "ridgeline")
 #' plotUMIsPerCell(cellranger_small, geom = "violin")
@@ -42,8 +36,8 @@ setMethod(
         min = 0L,
         point = c("none", "inflection", "knee"),
         trans = "log10",
-        color = scale_color_hue(),
-        fill = scale_fill_hue(),
+        color = NULL,
+        fill = NULL,
         title = "UMIs per cell"
     ) {
         geom <- match.arg(geom)

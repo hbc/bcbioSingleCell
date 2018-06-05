@@ -20,19 +20,23 @@ test_that("aggregateReplicates", {
 
 # fetchPCAData =================================================================
 test_that("fetchPCAData", {
-    x <- fetchPCAData(Seurat::pbmc_small)
+    x <- fetchPCAData(seurat_small)
     expect_is(x, "data.frame")
     expect_identical(
         lapply(x, class),
         list(
             sampleID = "factor",
             nGene = "integer",
-            nUMI = "numeric",
+            nUMI = "integer",
+            nCoding = "integer",
+            nMito = "integer",
+            log10GenesPerUMI = "numeric",
+            mitoRatio = "numeric",
             orig.ident = "factor",
             res.0.8 = "character",  # factor
-            res.1 = "character",  # factor
             ident = "factor",
             sampleName = "factor",
+            index = "factor",
             interestingGroups = "factor",
             PC1 = "numeric",
             PC2 = "numeric",
@@ -48,20 +52,24 @@ test_that("fetchPCAData", {
         ) %>%
         tibble::column_to_rownames(.)
     target <- data.frame(
-        sampleID = factor("SeuratProject"),
-        nGene = 47L,
-        nUMI = 70L,
-        orig.ident = factor("SeuratProject"),
-        res.0.8 = "0",
-        res.1 = "0",
-        ident = factor("0", levels = c("0", "1", "2", "3")),
-        sampleName = factor("SeuratProject"),
-        interestingGroups = factor("SeuratProject"),
-        PC1 = 0.443,
-        PC2 = -1.575,
-        centerX = -1.176,
-        centerY = -1.683,
-        row.names = "ATGCCAGAACGACT",
+        sampleID = factor("pbmc4k_1"),
+        nGene = 2785L,
+        nUMI = 12147L,
+        nCoding = 11413L,
+        nMito = 394L,
+        log10GenesPerUMI = 0.843,
+        mitoRatio = 0.032,
+        orig.ident = factor("pbmc4k"),
+        res.0.8 = "3",
+        ident = factor("3", levels = c("0", "1", "2", "3", "4", "5")),
+        sampleName = factor("pbmc4k"),
+        index = factor("1"),
+        interestingGroups = factor("pbmc4k"),
+        PC1 = 2.44,
+        PC2 = -2.471,
+        centerX = 3.03,
+        centerY = -2.471,
+        row.names = "pbmc4k_1_AAACCTGCAGGCGATA",
         stringsAsFactors = FALSE
     )
     # Use `glimpse()` to compare the rounded numbers
@@ -72,19 +80,23 @@ test_that("fetchPCAData", {
 
 # fetchTSNEData ================================================================
 test_that("fetchTSNEData", {
-    x <- fetchTSNEData(Seurat::pbmc_small)
+    x <- fetchTSNEData(seurat_small)
     expect_is(x, "data.frame")
     expect_identical(
         lapply(x, class),
         list(
             sampleID = "factor",
             nGene = "integer",
-            nUMI = "numeric",
+            nUMI = "integer",
+            nCoding = "integer",
+            nMito = "integer",
+            log10GenesPerUMI = "numeric",
+            mitoRatio = "numeric",
             orig.ident = "factor",
             res.0.8 = "character",
-            res.1 = "character",
             ident = "factor",
             sampleName = "factor",
+            index = "factor",
             interestingGroups = "factor",
             tSNE_1 = "numeric",
             tSNE_2 = "numeric",
@@ -100,20 +112,24 @@ test_that("fetchTSNEData", {
         ) %>%
         tibble::column_to_rownames(.)
     target <- data.frame(
-        sampleID = factor("SeuratProject"),
-        nGene = 47L,
-        nUMI = 70L,
-        orig.ident = factor("SeuratProject"),
-        res.0.8 = "0",
-        res.1 = "0",
-        ident = factor("0", levels = c("0", "1", "2", "3")),
-        sampleName = factor("SeuratProject"),
-        interestingGroups = factor("SeuratProject"),
-        tSNE_1 = 14.422,
-        tSNE_2 = 8.336,
-        centerX = -0.332,
-        centerY = 18.76,
-        row.names = "ATGCCAGAACGACT",
+        sampleID = factor("pbmc4k_1"),
+        nGene = 2785L,
+        nUMI = 12147L,
+        nCoding = 11413L,
+        nMito = 394L,
+        log10GenesPerUMI = 0.843,
+        mitoRatio = 0.032,
+        orig.ident = factor("pbmc4k"),
+        res.0.8 = "3",
+        ident = factor("3", levels = c("0", "1", "2", "3", "4", "5")),
+        sampleName = factor("pbmc4k"),
+        index = factor("1"),
+        interestingGroups = factor("pbmc4k"),
+        tSNE_1 = 4.55,
+        tSNE_2 = 2.186,
+        centerX = 4.034,
+        centerY = 1.805,
+        row.names = "pbmc4k_1_AAACCTGCAGGCGATA",
         stringsAsFactors = FALSE
     )
     expect_equal(subset, target)
@@ -124,8 +140,8 @@ test_that("fetchTSNEData", {
 # fetchTSNEExpressionData ======================================================
 test_that("fetchTSNEExpressionData", {
     x <- fetchTSNEExpressionData(
-        object = Seurat::pbmc_small,
-        genes = head(rownames(Seurat::pbmc_small))
+        object = seurat_small,
+        genes = head(rownames(seurat_small))
     )
     expect_is(x, "data.frame")
     expect_identical(
@@ -133,12 +149,16 @@ test_that("fetchTSNEExpressionData", {
         list(
             sampleID = "factor",
             nGene = "integer",
-            nUMI = "numeric",
+            nUMI = "integer",
+            nCoding = "integer",
+            nMito = "integer",
+            log10GenesPerUMI = "numeric",
+            mitoRatio = "numeric",
             orig.ident = "factor",
             res.0.8 = "character",
-            res.1 = "character",
             ident = "factor",
             sampleName = "factor",
+            index = "factor",
             interestingGroups = "factor",
             tSNE_1 = "numeric",
             tSNE_2 = "numeric",
@@ -156,23 +176,27 @@ test_that("fetchTSNEExpressionData", {
     # The round function will coerce integers to numerics. This is the rationale
     # for the `as.numeric()` usage below.
     target <- data.frame(
-        sampleID = factor("SeuratProject"),
-        nGene = 47L,
-        nUMI = 70L,
-        orig.ident = factor("SeuratProject"),
-        res.0.8 = "0",
-        res.1 = "0",
-        ident = factor("0", levels = c("0", "1", "2", "3")),
-        sampleName = factor("SeuratProject"),
-        interestingGroups = factor("SeuratProject"),
-        tSNE_1 = 14.422,
-        tSNE_2 = 8.336,
-        centerX = -0.332,
-        centerY = 18.76,
-        mean = 0.333,
-        median = 0L,
-        sum = 2L,
-        row.names = "ATGCCAGAACGACT",
+        sampleID = factor("pbmc4k_1"),
+        nGene = 2785L,
+        nUMI = 12147L,
+        nCoding = 11413L,
+        nMito = 394L,
+        log10GenesPerUMI = 0.843,
+        mitoRatio = 0.032,
+        orig.ident = factor("pbmc4k"),
+        res.0.8 = "3",
+        ident = factor("3", levels = c("0", "1", "2", "3", "4", "5")),
+        sampleName = factor("pbmc4k"),
+        index = factor("1"),
+        interestingGroups = factor("pbmc4k"),
+        tSNE_1 = 4.55,
+        tSNE_2 = 2.186,
+        centerX = 4.034,
+        centerY = 1.805,
+        mean = 7.833,
+        median = 2L,
+        sum = 47L,
+        row.names = "pbmc4k_1_AAACCTGCAGGCGATA",
         stringsAsFactors = FALSE
     )
     expect_equal(subset, target)
@@ -224,7 +248,7 @@ test_that("interestingGroups : seurat", {
         "sampleName"
     )
     expect_identical(
-        interestingGroups(Seurat::pbmc_small),
+        interestingGroups(seurat_small),
         "sampleName"
     )
 })
@@ -241,7 +265,18 @@ test_that("interestingGroups<- : seurat", {
         "sampleName"
     )
     x <- Seurat::pbmc_small
-    expect_error(interestingGroups(x) <- "sampleName")
+    expect_error(interestingGroups(Seurat::pbmc_small) <- "sampleName")
+})
+
+
+
+# metrics ======================================================================
+test_that("metrics : seurat", {
+    # Check that metrics accessor data matches meta.data slot
+    x <- metrics(seurat_small)
+    y <- seurat_small@meta.data
+    x <- x[, colnames(y)]
+    expect_identical(x, y)
 })
 
 
@@ -276,19 +311,32 @@ test_that("sampleData : bcbioSingleCell", {
 test_that("sampleData : seurat", {
     # Return all columns
     x <- sampleData(seurat_small, clean = FALSE)
-    expect_identical(lapply(x, class), all)
+    expect_identical(
+        lapply(x, class),
+        list(
+            sampleName = "factor",
+            index = "factor",
+            interestingGroups = "factor"
+        )
+    )
 
     # Clean mode (factor columns only)
     x <- sampleData(seurat_small, clean = TRUE)
-    expect_identical(x, clean)
+    expect_identical(
+        lapply(x, class),
+        list(
+            sampleName = "factor"
+        )
+    )
 
     # Minimal data for other seurat objects
-    x <- sampleData(Seurat::pbmc_small)
-    y <- DataFrame(
-        "sampleName" = factor("SeuratProject"),
-        row.names = "SeuratProject"
+    expect_identical(
+        sampleData(Seurat::pbmc_small),
+        DataFrame(
+            "sampleName" = factor("SeuratProject"),
+            row.names = "SeuratProject"
+        )
     )
-    expect_identical(x, y)
 })
 
 
@@ -342,17 +390,46 @@ test_that("subsetPerSample : bcbioSingleCell", {
 test_that("topBarcodes : SingleCellExperiment", {
     x <- topBarcodes(cellranger_small)
     expect_is(x, "grouped_df")
+    expect_identical(dplyr::group_vars(x), "sampleID")
     expect_identical(
-        x[["cellID"]][[1L]],
-        "aggregation_GTACGTATCTTTCCTC_1"
+        lapply(x, class),
+        list(
+            cellID = "character",
+            sampleID = "factor",
+            nUMI = "integer",
+            nGene = "integer",
+            nCoding = "integer",
+            nMito = "integer",
+            log10GenesPerUMI = "numeric",
+            mitoRatio = "numeric",
+            sampleName = "factor",
+            index = "factor",
+            interestingGroups = "factor"
+        )
     )
 })
 
 test_that("topBarcodes : seurat", {
-    x <- topBarcodes(Seurat::pbmc_small)
+    x <- topBarcodes(seurat_small)
     expect_is(x, "grouped_df")
+    expect_identical(dplyr::group_vars(x), "sampleID")
     expect_identical(
-        x[["cellID"]][[1L]],
-        "GACATTCTCCACCT"
+        lapply(x, class),
+        list(
+            cellID = "character",
+            sampleID = "factor",
+            nGene = "integer",
+            nUMI = "integer",
+            nCoding = "integer",
+            nMito = "integer",
+            log10GenesPerUMI = "numeric",
+            mitoRatio = "numeric",
+            orig.ident = "factor",
+            res.0.8 = "character",
+            ident = "factor",
+            sampleName = "factor",
+            index = "factor",
+            interestingGroups = "factor"
+        )
     )
 })

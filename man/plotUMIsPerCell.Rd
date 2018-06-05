@@ -12,15 +12,13 @@ plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
   "ridgeline", "violin", "histogram", "boxplot"), interestingGroups, min = 0L,
-  point = c("none", "inflection", "knee"), trans = "log10",
-  color = scale_color_hue(), fill = scale_fill_hue(),
-  title = "UMIs per cell")
+  point = c("none", "inflection", "knee"), trans = "log10", color = NULL,
+  fill = NULL, title = "UMIs per cell")
 
 \S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "ridgeline",
   "violin", "histogram", "boxplot"), interestingGroups, min = 0L,
-  point = c("none", "inflection", "knee"), trans = "log10",
-  color = scale_color_hue(), fill = scale_fill_hue(),
-  title = "UMIs per cell")
+  point = c("none", "inflection", "knee"), trans = "log10", color = NULL,
+  fill = NULL, title = "UMIs per cell")
 }
 \arguments{
 \item{object}{Object.}
@@ -60,13 +58,7 @@ Plot the universal molecular identifiers (UMIs) per cell.
 }
 \examples{
 # SingleCellExperiment ====
-# Label the inflection point per sample
-plotUMIsPerCell(cellranger_small, geom = "ecdf", point = "inflection")
-
-# Label the knee point per sample
-plotUMIsPerCell(cellranger_small, geom = "ecdf", point = "knee")
-
-# Alternate geoms
+plotUMIsPerCell(cellranger_small, geom = "ecdf")
 plotUMIsPerCell(cellranger_small, geom = "histogram")
 plotUMIsPerCell(cellranger_small, geom = "ridgeline")
 plotUMIsPerCell(cellranger_small, geom = "violin")

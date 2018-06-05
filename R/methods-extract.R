@@ -1,8 +1,8 @@
-#' Subset Object
+#' Extract or Replace Parts of an Object
 #'
 #' Extract genes by row and cells by column from a `bcbioSingleCell` object.
 #'
-#' @name subset
+#' @name extract
 #' @family S4 Object
 #' @author Michael Steinbaugh
 #'
@@ -35,7 +35,7 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname subset
+#' @rdname extract
 #' @export
 setMethod(
     "[",

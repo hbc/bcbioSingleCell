@@ -5,7 +5,7 @@
 #' datasets.
 #'
 #' @section zinbwave:
-#' We are currently using an epsilon setting of 1e12, as recommended by the
+#' We are currently using an epsilon setting of `1e12`, as recommended by the
 #' ZINB-WaVE integration paper.
 #'
 #' @section zingeR:
@@ -71,28 +71,13 @@
 #'   shrunken results are desired.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' object <- cellranger_small
-#' # Use S4 methods to get cells (colnames) of object
-#' numerator <- colnames(object)[which(object[["sampleName"]] == "proximal")]
-#' glimpse(numerator)
-#' denominator <- colnames(object)[which(object[["sampleName"]] == "distal")]
-#' glimpse(denominator)
-#'
-#' x <- diffExp(
-#'     object = object,
-#'     numerator = numerator,
-#'     denominator = denominator,
-#' )
-#' class(x)
-#' head(x[["table"]])
-#'
 #' # seurat ====
-#' \dontrun{
 #' # Expression in cluster 3 relative to cluster 2
-#' object <- Seurat::pbmc_small
+#' object <- seurat_small
 #' numerator <- Seurat::WhichCells(object, ident = 3L)
+#' glimpse(numerator)
 #' denominator <- Seurat::WhichCells(object, ident = 2L)
+#' glimpse(denominator)
 #' x <- diffExp(
 #'     object = object,
 #'     numerator = numerator,
@@ -100,7 +85,6 @@
 #'     minCellsPerGene = 5L,
 #'     minCountsPerCell = 5L
 #' )
-#' }
 NULL
 
 
@@ -245,9 +229,6 @@ NULL
     assays(se) <- list(counts = counts)
     # zingeR ===================================================================
     message("Running zingeR")
-    # Temporary fix for zingeR NAMESPACE issue (see GitHub for more info).
-    # Will error out due to `DESeqDataSetFromMatrix()` otherwise.
-    attachNamespace("DESeq2")
     design <- metadata(object)[["design"]]
     assert_is_matrix(design)
     print(system.time({

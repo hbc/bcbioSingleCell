@@ -6,7 +6,7 @@
 \alias{bcbioSingleCell-class}
 \title{\code{bcbioSingleCell} Object and Constructor}
 \usage{
-bcbioSingleCell(uploadDir, organism, sampleMetadataFile,
+bcbioSingleCell(uploadDir, organism, sampleMetadataFile = NULL,
   interestingGroups = "sampleName", ensemblRelease = NULL,
   genomeBuild = NULL, transgeneNames = NULL, spikeNames = NULL,
   gffFile = NULL, ...)
@@ -93,8 +93,9 @@ validObject(x)
 \item \code{.S4methods(class = "bcbioSingleCell")}.
 }
 
-Other S4 Object: \code{\link{coerce}}, \code{\link{show}},
-  \code{\link{subset}}, \code{\link{updateObject}}
+Other S4 Object: \code{\link{coerce}},
+  \code{\link{extract}}, \code{\link{show}},
+  \code{\link{updateObject}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner
