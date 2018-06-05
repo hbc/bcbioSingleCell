@@ -31,12 +31,14 @@ setMethod(
             identical(colnames(object), names(stash))
         ) {
             return(stash)
-        } else {
-            mapCellsToSamples(
-                cells = colnames(object),
-                samples = rownames(sampleData(object))
-            )
         }
+        cells <- colnames(object)
+        samples <- rownames(sampleData(object))
+        if (is.null(samples)) {
+            warning("Sample metadata is empty", call. = FALSE)
+            samples <- "unknown"
+        }
+        mapCellsToSamples(cells = cells, samples = samples)
     }
 )
 

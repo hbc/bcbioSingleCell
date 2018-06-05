@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -39,6 +41,7 @@ defined using a named numeric vector. When matching per sample, be sure to
 use the sampleNames() return values (i.e. the sampleName column in
 sampleData())." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -65,7 +68,7 @@ sampleData())." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.14</span>
       </span>
     </div>
 
@@ -193,18 +196,16 @@ this many cells.</p></td>
 <span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>cellranger_small</span>
 <span class='fu'><a href='show.html'>show</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
-#&gt; metadata(26): version pipeline ... filterParams filterSummary
+#&gt; metadata(20): version pipeline ... utilsSessionInfo devtoolsSessionInfo
 #&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
-#&gt;   ENSG00000269893
-#&gt; rowData names(6): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): aggregation_AAACCTGGTTTACTCT_1
-#&gt;   aggregation_AAACGGGGTATCTGCA_1 ... aggregation_TTTGTCACACAACGTT_2
-#&gt;   aggregation_TTTGTCACACTCGACG_2
-#&gt; colData names(11): sampleID nUMI ... description index
+#&gt; rownames(500): ENSG00000002586 ENSG00000005022 ... ENSG00000277734
+#&gt;   ENSG00000279483
+#&gt; rowData names(7): geneID geneName ... entrezID broadClass
+#&gt; colnames(500): pbmc4k_1_AAACCTGCAGGCGATA pbmc4k_1_AAACCTGCATGAAGTA ...
+#&gt;   pbmc4k_1_TTTGGTTTCGCTAGCG pbmc4k_1_TTTGTCACAGGTCCAC
+#&gt; colData names(9): sampleID nUMI ... sampleName index
 #&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'><span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; aggregation_1 aggregation_2 
-#&gt;    "proximal"      "distal" </div><div class='input'>
+#&gt; spikeNames(0):</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Parameters:
 #&gt;   - &gt;= 0 UMIs per cell
 #&gt;   - &lt;= Inf UMIs per cell
@@ -231,15 +232,14 @@ this many cells.</p></td>
 #&gt;   - 500 of 500 cells passed filtering (100%)
 #&gt;   - 500 of 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
-#&gt; metadata(26): version pipeline ... filterParams filterSummary
+#&gt; metadata(24): version pipeline ... filterParams filterSummary
 #&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
-#&gt;   ENSG00000269893
-#&gt; rowData names(6): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): aggregation_AAACCTGGTTTACTCT_1
-#&gt;   aggregation_AAACGGGGTATCTGCA_1 ... aggregation_TTTGTCACACAACGTT_2
-#&gt;   aggregation_TTTGTCACACTCGACG_2
-#&gt; colData names(11): sampleID nUMI ... description index
+#&gt; rownames(500): ENSG00000002586 ENSG00000005022 ... ENSG00000277734
+#&gt;   ENSG00000279483
+#&gt; rowData names(7): geneID geneName ... entrezID broadClass
+#&gt; colnames(500): pbmc4k_1_AAACCTGCAGGCGATA pbmc4k_1_AAACCTGCATGAAGTA ...
+#&gt;   pbmc4k_1_TTTGGTTTCGCTAGCG pbmc4k_1_TTTGTCACAGGTCCAC
+#&gt; colData names(9): sampleID nUMI ... sampleName index
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $minUMIs
 #&gt; [1] 0
@@ -263,15 +263,13 @@ this many cells.</p></td>
 #&gt; [1] 10
 #&gt; </div><div class='input'>
 <span class='co'># Per sample cutoffs</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
+<span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; pbmc4k_1 
+#&gt; "pbmc4k" </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
-    <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fu'>c</span>(
-        <span class='kw'>distal</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-        <span class='kw'>proximal</span> <span class='kw'>=</span> <span class='fl'>200</span>
-    )
+    <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>pbmc4k</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 )</div><div class='output co'>#&gt; <span class='message'>minUMIs: per sample mode</span>
-#&gt; <span class='message'>  distal proximal </span>
-#&gt; <span class='message'>     100      200 </span></div><div class='output co'>#&gt; Parameters:
+#&gt; <span class='message'>pbmc4k </span>
+#&gt; <span class='message'>   100 </span></div><div class='output co'>#&gt; Parameters:
 #&gt;   - &gt;= 100 UMIs per cell
 #&gt;   - &lt;= Inf UMIs per cell
 #&gt;   - &gt;= 0 genes per cell
@@ -297,19 +295,18 @@ this many cells.</p></td>
 #&gt;   - 500 of 500 cells passed filtering (100%)
 #&gt;   - 500 of 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
-#&gt; metadata(26): version pipeline ... filterParams filterSummary
+#&gt; metadata(24): version pipeline ... filterParams filterSummary
 #&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000005022 ENSG00000008018 ... ENSG00000265681
-#&gt;   ENSG00000269893
-#&gt; rowData names(6): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): aggregation_AAACCTGGTTTACTCT_1
-#&gt;   aggregation_AAACGGGGTATCTGCA_1 ... aggregation_TTTGTCACACAACGTT_2
-#&gt;   aggregation_TTTGTCACACTCGACG_2
-#&gt; colData names(11): sampleID nUMI ... description index
+#&gt; rownames(500): ENSG00000002586 ENSG00000005022 ... ENSG00000277734
+#&gt;   ENSG00000279483
+#&gt; rowData names(7): geneID geneName ... entrezID broadClass
+#&gt; colnames(500): pbmc4k_1_AAACCTGCAGGCGATA pbmc4k_1_AAACCTGCATGAAGTA ...
+#&gt;   pbmc4k_1_TTTGGTTTCGCTAGCG pbmc4k_1_TTTGTCACAGGTCCAC
+#&gt; colData names(9): sampleID nUMI ... sampleName index
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $minUMIs
-#&gt;   distal proximal 
-#&gt;      100      200 
+#&gt; pbmc4k 
+#&gt;    100 
 #&gt; 
 #&gt; $maxUMIs
 #&gt; [1] Inf

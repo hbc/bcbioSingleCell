@@ -1,3 +1,52 @@
+# bcbioSingleCell 0.1.14 (2018-06-05)
+
+## Major changes
+
+- Multiplexed [Cell Ranger][] barcodes are now reformatted to be more readable
+  and compatible with the `mapCellsToSamples()` utility function. This change
+  helps simplify the internal code for `cell2sample()`. For example in the
+  pbmc4k dataset, the barcode IDs are sanitized from `TTTGGTTTCGCTAGCG-1` to
+  "`pbmc4k_1_TTTGGTTTCGCTAGCG`". The "`1`" here denotes 1 sample in the matrix,
+  which is how [Cell Ranger][] denotes multiplexed samples in a single counts
+  matrix. Note that the "`-`" character is illegal in names, so we consistently
+  sanitize barcodes to contain "`_`" instead. See `help("make.names")` for
+  more information on syntactically valid names in [R][].
+- `readCellRanger()` no longer requires reference data defined by `refdataDir`,
+  although this is still recommended.
+
+## Minor changes
+
+- Resaved example datasets.
+- Switched the example `cellranger_small` and `seurat_small` datasets to the
+  publicly available pbmc4k dataset from 10X Genomics. Here we've subset the
+  top 500 cells and genes by abundance. We'll use either the pbmc4k or pbmc8k
+  dataset for the vignette in a future update.
+- `bcbioSingleCell()` and `readCellRanger()` functions now consistently default
+  to not requiring `sampleMetadataFile`, which is now `NULL` by default. For
+  `bcbioSingleCell()`, if a custom sample metadata file is not provided, the
+  function reads from the bcbio YAML metadata. For `readCellRanger()`, the
+  function uses `minimalSampleData()` internally to return minimal metadata,
+  containing `sampleName` and `description` columns.
+- Broke out internal `.sampleDirs()` function to `bcbioSingleCell()` and
+  `readCellRanger()` functions.
+- Improved `plotMarker` documentation examples to use mitochondrial genes.
+- Using `seurat_small` in place of `Seurat::pbmc_small` in working examples.
+  
+## Internal code changes
+
+- Now consistently using [dplyr][] for piped `data.frame` as much as possible,
+  where applicable. Code is being updated to use [tidyeval][].
+
+
+
+# bcbioSingleCell 0.1.13 (2018-05-29)
+
+## Minor changes
+
+- t-SNE and UMAP plot improvements.
+
+
+
 # bcbioSingleCell 0.1.12 (2018-05-25)
 
 ## Major changes
@@ -977,6 +1026,7 @@
 [Bioconductor]: https://bioconductor.org
 [BiocParallel]: https://doi.org/doi:10.18129/B9.bioc.BiocParallel
 [Cell Ranger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
+[dplyr]: https://dplyr.tidyverse.org
 [inDrop]: https://1cell-bio.com
 [R Markdown]: http://rmarkdown.rstudio.com
 [tidyverse]: http://www.tidyverse.org
@@ -988,6 +1038,7 @@
 [lintr]: https://github.com/jimhester/lintr
 [monocle]: http://cole-trapnell-lab.github.io/monocle-release/
 [pkgdown]: https://github.com/hadley/pkgdown
+[R]: https://www.r-project.org
 [rlang]: http://rlang.r-lib.org
 [roxygen]: https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html
 [scater]: http://bioconductor.org/packages/release/bioc/html/scater.html
@@ -997,6 +1048,7 @@
 [SummarizedExperiment]: https://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html
 [SureCell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
 [testthat]: https://github.com/hadley/testthat
+[tidyeval]: https://dplyr.tidyverse.org/articles/programming.html
 [Travis CI]: https://travis-ci.org
 [viridis]: https://cran.r-project.org/web/packages/viridis/index.html
 [zinbwave]: https://doi.org/doi:10.18129/B9.bioc.zinbwave

@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -37,6 +39,7 @@ rownames. Similar to colData(), which for bcbioSingleCell and
 SingleCellExperiment objects describes cells in the columns, rather than
 the samples." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -63,7 +66,7 @@ the samples." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.14</span>
       </span>
     </div>
 
@@ -175,32 +178,30 @@ the first item in the vector by default.</p></td>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>cellranger_small</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
-#&gt;   ..@ rownames       : chr [1:2] "aggregation_2" "aggregation_1"
-#&gt;   ..@ nrows          : int 2
-#&gt;   ..@ listData       :List of 5
-#&gt;   .. ..$ sampleName       : Factor w/ 2 levels "distal","proximal": 1 2
-#&gt;   .. ..$ fileName         : Factor w/ 1 level "aggregation.fastq.gz": 1 1
-#&gt;   .. ..$ description      : Factor w/ 2 levels "aggregation-1",..: 2 1
-#&gt;   .. ..$ index            : Factor w/ 2 levels "1","2": 2 1
-#&gt;   .. ..$ interestingGroups: Factor w/ 2 levels "distal","proximal": 1 2
+#&gt;   ..@ rownames       : chr "pbmc4k_1"
+#&gt;   ..@ nrows          : int 1
+#&gt;   ..@ listData       :List of 3
+#&gt;   .. ..$ sampleName       : Factor w/ 1 level "pbmc4k": 1
+#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
+#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "pbmc4k": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
 #&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
-#&gt;   ..@ rownames       : chr [1:2] "aggregation_2" "aggregation_1"
-#&gt;   ..@ nrows          : int 2
+#&gt;   ..@ rownames       : chr "pbmc4k_1"
+#&gt;   ..@ nrows          : int 1
 #&gt;   ..@ listData       :List of 1
-#&gt;   .. ..$ sampleName: Factor w/ 2 levels "distal","proximal": 1 2
+#&gt;   .. ..$ sampleName: Factor w/ 1 level "pbmc4k": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
 #&gt;   ..@ metadata       : list()</div><div class='input'>
 <span class='co'># Assignment support</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
-#&gt;   ..@ rownames       : chr [1:2] "aggregation_2" "aggregation_1"
-#&gt;   ..@ nrows          : int 2
+#&gt;   ..@ rownames       : chr "pbmc4k_1"
+#&gt;   ..@ nrows          : int 1
 #&gt;   ..@ listData       :List of 2
-#&gt;   .. ..$ sampleName: Factor w/ 2 levels "distal","proximal": 1 2
-#&gt;   .. ..$ batch     : Factor w/ 1 level "1": 1 1
+#&gt;   .. ..$ sampleName: Factor w/ 1 level "pbmc4k": 1
+#&gt;   .. ..$ batch     : Factor w/ 1 level "1": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
 #&gt;   ..@ metadata       : list()</div></pre>
