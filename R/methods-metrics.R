@@ -35,7 +35,7 @@ setMethod(
     function(
         object,
         rowData = NULL,
-        prefilter = TRUE
+        prefilter = FALSE
     ) {
         assert_has_rows(object)
         assert_is_a_bool(prefilter)
@@ -47,68 +47,67 @@ setMethod(
         mitoGenes <- character()
 
         if (length(rowData)) {
-            # Subset rowData to match counts matrix, if the rownames are
-            # defined. Note that `rowData()` return doesn't include them.
+            # Here we're allowing the user to pass in mismatched rowData, as
+            # long as contains all rows in the object. Note that `rowData()`
+            # return doesn't include them.
             if (hasRownames(rowData)) {
                 rowData <- rowData[rownames(object), , drop = FALSE]
             }
             assert_are_identical(nrow(object), nrow(rowData))
             rownames(rowData) <- rownames(object)
+            rowTbl <- rowData %>%
+                as.data.frame() %>%
+                as_tibble(rownames = "rowname")
 
-            if (!"broadClass" %in% colnames(rowData)) {
-                warning("`broadClass` is not defined in rowData")
+            if (!"broadClass" %in% colnames(rowTbl)) {
+                message("Broad class biotype is not defined in rowData")
+            } else {
+                # Drop rows with NA broad class
+                rowTbl <- filter(rowTbl, !is.na(!!sym("broadClass")))
+                # Coding genes
+                codingGenes <- rowTbl %>%
+                    filter(!!sym("broadClass") == "coding") %>%
+                    pull("rowname")
+                message(paste(length(codingGenes), "coding genes"))
+                # Mitochondrial genes
+                mitoGenes <- rowTbl %>%
+                    filter(!!sym("broadClass") == "mito") %>%
+                    pull("rowname")
+                message(paste(length(mitoGenes), "mitochondrial genes"))
             }
-
-            # Drop rows with NA broad class
-            rowData <- rowData[!is.na(rowData[["broadClass"]]), , drop = FALSE]
-
-            # Coding genes
-            codingGenes <- rowData %>%
-                .[.[["broadClass"]] == "coding", , drop = FALSE] %>%
-                rownames() %>%
-                na.omit()
-            message(paste(length(codingGenes), "coding genes detected"))
-
-            # Mitochondrial genes
-            mitoGenes <- rowData %>%
-                .[.[["broadClass"]] == "mito", , drop = FALSE] %>%
-                rownames() %>%
-                na.omit()
-            message(paste(length(mitoGenes), "mitochondrial genes detected"))
         }
 
-        data <- tibble(
-            "rowname" = colnames(object),
-            # Follow the Seurat `seurat@data.info` conventions
-            "nUMI" = colSums(object),
-            "nGene" = colSums(object > 0L),
-            "nCoding" = colSums(object[codingGenes, , drop = FALSE]),
-            "nMito" = colSums(object[mitoGenes, , drop = FALSE])
+        # Following the Seurat `seurat@meta.data` conventions here
+        tbl <- tibble(
+            rowname = colnames(object),
+            nUMI = colSums(object),
+            nGene = colSums(object > 0L),
+            nCoding = colSums(object[codingGenes, , drop = FALSE]),
+            nMito = colSums(object[mitoGenes, , drop = FALSE])
         ) %>%
             mutate(
                 log10GenesPerUMI = log10(!!sym("nGene")) / log10(!!sym("nUMI")),
                 mitoRatio = !!sym("nMito") / !!sym("nUMI")
             ) %>%
-            # Ensure count columns are integer.
-            # `colSums()` outputs as numeric.
+            # Ensure `n`-prefixed count columns are integer.
             mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer)
 
         # Apply low stringency cellular barcode pre-filtering.
         # This keeps only cellular barcodes with non-zero genes.
         if (isTRUE(prefilter)) {
-            data <- data %>%
+            tbl <- tbl %>%
                 filter(!is.na(UQ(sym("log10GenesPerUMI")))) %>%
                 filter(!!sym("nUMI") > 0L) %>%
                 filter(!!sym("nGene") > 0L)
             message(paste(
-                nrow(data), "/", ncol(object),
+                nrow(tbl), "/", ncol(object),
                 "cellular barcodes passed pre-filtering",
-                paste0("(", percent(nrow(data) / ncol(object)), ")")
+                paste0("(", percent(nrow(tbl) / ncol(object)), ")")
             ))
         }
 
         # Return
-        data %>%
+        tbl %>%
             # Enforce count columns as integers (e.g. `nUMI`)
             mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
             # Coerce character vectors to factors, and drop levels
@@ -150,37 +149,52 @@ setMethod(
         validObject(object)
         colData <- colData(object)
 
-        # Early return NULL if there's no cell-level data
-        if (!length(colData)) {
-            warning("`colData()` is empty")
-            return(NULL)
+        if (!"nUMI" %in% colnames(colData)) {
+            # Calculate on the fly if not stashed
+            metrics <- metrics(
+                object = counts(object),
+                rowData = rowData(object),
+                prefilter = FALSE
+            )
+            # Keep only columns unique to colData
+            setdiff <- setdiff(colnames(colData), colnames(metrics))
+            colData <- colData[, setdiff]
+            data <- cbind(colData, metrics)
+        } else {
+            data <- colData
         }
 
-        # Get the sample-level metadata
+        # Merge sample-level metadata, if stashed
         sampleData <- sampleData(
             object = object,
             interestingGroups = interestingGroups,
             clean = FALSE
         )
-        stopifnot(is(sampleData, "DataFrame"))
-        sampleData[["sampleID"]] <- rownames(sampleData)
+        if (!length(sampleData)) {
+            message("Sample metadata is empty")
+            data[["sampleID"]] <- "unknown"
+            data[["sampleName"]] <- "unknown"
+        } else {
+            stopifnot(is(sampleData, "DataFrame"))
+            sampleData[["sampleID"]] <- rownames(sampleData)
+            # Keep only columns unique to colData
+            setdiff <- setdiff(colnames(colData), colnames(sampleData))
+            assert_is_non_empty(setdiff)
+            colData <- colData[, setdiff]
+            colData[["sampleID"]] <- cell2sample(object)
+            colData[["cellID"]] <- rownames(colData)
+            data <- merge(
+                x = colData,
+                y = sampleData,
+                by = "sampleID",
+                all.x = TRUE
+            ) %>%
+                as.data.frame() %>%
+                column_to_rownames("cellID") %>%
+                .[rownames(colData), , drop = FALSE]
+        }
 
-        # Keep only columns unique to colData
-        setdiff <- setdiff(colnames(colData), colnames(sampleData))
-        assert_is_non_empty(setdiff)
-        colData <- colData[, setdiff]
-        colData[["sampleID"]] <- cell2sample(object)
-        colData[["cellID"]] <- rownames(colData)
-
-        merge(
-            x = colData,
-            y = sampleData,
-            by = "sampleID",
-            all.x = TRUE
-        ) %>%
-            as.data.frame() %>%
-            column_to_rownames("cellID") %>%
-            .[rownames(colData), , drop = FALSE]
+        data
     }
 )
 
