@@ -59,9 +59,7 @@ setMethod(
                 as.data.frame() %>%
                 as_tibble(rownames = "rowname")
 
-            if (!"broadClass" %in% colnames(rowTbl)) {
-                message("Broad class biotype is not defined in rowData")
-            } else {
+            if ("broadClass" %in% colnames(rowTbl)) {
                 # Drop rows with NA broad class
                 rowTbl <- filter(rowTbl, !is.na(!!sym("broadClass")))
                 # Coding genes
@@ -174,6 +172,7 @@ setMethod(
             message("Sample metadata is empty")
             data[["sampleID"]] <- factor("unknown")
             data[["sampleName"]] <- factor("unknown")
+            data[["interestingGroups"]] <- factor("unknown")
         } else {
             stopifnot(is(sampleData, "DataFrame"))
             sampleData[["sampleID"]] <- rownames(sampleData)
@@ -194,7 +193,7 @@ setMethod(
                 .[rownames(colData), , drop = FALSE]
         }
 
-        data
+        as.data.frame(data)
     }
 )
 
