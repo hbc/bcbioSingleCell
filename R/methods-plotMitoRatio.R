@@ -26,7 +26,7 @@ setMethod(
         geom = c("ecdf", "ridgeline", "violin", "histogram", "boxplot"),
         interestingGroups,
         max = 1L,
-        fill = scale_fill_hue(),
+        fill = NULL,
         trans = "sqrt",
         title = "mito ratio"
     ) {

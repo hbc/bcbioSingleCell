@@ -28,7 +28,7 @@ setMethod(
         geom = c("ecdf", "ridgeline", "violin", "histogram", "boxplot"),
         interestingGroups,
         min = 0L,
-        fill = scale_fill_hue(),
+        fill = NULL,
         trans = "identity",
         title = "genes per UMI (novelty)"
     ) {
