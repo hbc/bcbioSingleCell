@@ -17,10 +17,6 @@
 #' x <- metrics(cellranger_small)
 #' glimpse(x)
 #'
-#' # seurat ====
-#' x <- metrics(seurat_small)
-#' glimpse(x)
-#'
 #' # dgCMatrix ====
 #' counts <- counts(cellranger_small)
 #' class(counts)
