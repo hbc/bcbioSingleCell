@@ -5,7 +5,7 @@
 #' datasets.
 #'
 #' @section zinbwave:
-#' We are currently using an epsilon setting of 1e12, as recommended by the
+#' We are currently using an epsilon setting of `1e12`, as recommended by the
 #' ZINB-WaVE integration paper.
 #'
 #' @section zingeR:
@@ -75,7 +75,9 @@
 #' # Expression in cluster 3 relative to cluster 2
 #' object <- seurat_small
 #' numerator <- Seurat::WhichCells(object, ident = 3L)
+#' glimpse(numerator)
 #' denominator <- Seurat::WhichCells(object, ident = 2L)
+#' glimpse(denominator)
 #' x <- diffExp(
 #'     object = object,
 #'     numerator = numerator,
