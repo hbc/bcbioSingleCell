@@ -14,13 +14,7 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' # Label the inflection point per sample
-#' plotUMIsPerCell(cellranger_small, geom = "ecdf", point = "inflection")
-#'
-#' # Label the knee point per sample
-#' plotUMIsPerCell(cellranger_small, geom = "ecdf", point = "knee")
-#'
-#' # Alternate geoms
+#' plotUMIsPerCell(cellranger_small, geom = "ecdf")
 #' plotUMIsPerCell(cellranger_small, geom = "histogram")
 #' plotUMIsPerCell(cellranger_small, geom = "ridgeline")
 #' plotUMIsPerCell(cellranger_small, geom = "violin")

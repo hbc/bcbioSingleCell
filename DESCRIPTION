@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Import and analyze bcbio single-cell RNA-seq data.
-Version: 0.1.13
+Version: 0.1.14
 Authors@R: c(
     person(
         given = "Michael",
@@ -53,16 +53,8 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment,
-    bcbioBase (>= 0.2.13)
+    bcbioBase (>= 0.2.15)
 Imports:
-    Biobase,
-    BiocGenerics,
-    GenomicFeatures,
-    Matrix,
-    Matrix.utils,
-    S4Vectors,
-    Seurat (>= 2.3.1),
-    SummarizedExperiment,
     assertive.base,
     assertive.files,
     assertive.numbers,
@@ -70,9 +62,12 @@ Imports:
     assertive.sets,
     assertive.strings,
     assertive.types,
-    basejump,
+    basejump (>= 0.5.8),
+    Biobase,
+    BiocGenerics,
     cowplot,
     dplyr (>= 0.7),
+    GenomicFeatures,
     ggplot2 (>= 2.2.1),
     ggridges,
     graphics,
@@ -80,16 +75,21 @@ Imports:
     jsonlite,
     knitr,
     magrittr,
+    Matrix,
+    Matrix.utils,
     methods,
     parallel,
     pbapply,
     readr,
     rlang,
     rmarkdown,
+    S4Vectors,
     scales,
     sessioninfo,
+    Seurat (>= 2.3.1),
     stats,
     stringr,
+    SummarizedExperiment,
     tibble,
     tidyr,
     tidyverse (>= 1.2),
@@ -100,12 +100,13 @@ Suggests:
     BiocStyle,
     DESeq2 (>= 1.20),
     DropletUtils,
-    EnsDb.Hsapiens.v75,
-    MAST (>= 1.4),
     edgeR (>= 3.22),
+    EnsDb.Hsapiens.v75,
     googlesheets,
+    MAST (>= 1.4),
     scater,
     scran,
+    splatter,
     testthat,
     zinbwave (>= 1.0),
     zingeR (>= 0.1)

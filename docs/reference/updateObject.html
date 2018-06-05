@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Update Object — updateObject • bcbioSingleCell</title>
+<title>Update an Object to Its Current Class Definition — updateObject • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -21,21 +21,22 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Update Object — updateObject" />
+<meta property="og:title" content="Update an Object to Its Current Class Definition — updateObject" />
 
-<meta property="og:description" content="Update old objects created by the bcbioSingleCell package. The session
-information metadata is preserved from the time when the bcbio data was
-originally loaded into R." />
+<meta property="og:description" content="Update an Object to Its Current Class Definition" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -62,7 +63,7 @@ originally loaded into R." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.14</span>
       </span>
     </div>
 
@@ -101,16 +102,14 @@ originally loaded into R." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Update Object</h1>
+    <h1>Update an Object to Its Current Class Definition</h1>
     <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-updateObject.R'><code>R/methods-updateObject.R</code></a></small>
     <div class="hidden name"><code>updateObject.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Update old objects created by the bcbioSingleCell package. The session
-information metadata is preserved from the time when the bcbio data was
-originally loaded into R.</p>
+    <p>Update an Object to Its Current Class Definition</p>
     
     </div>
 
@@ -122,7 +121,10 @@ originally loaded into R.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>Object.</p></td>
+      <td><p>Object to be updated for <code>updateObject</code> and
+    <code>updateObjectFromSlots</code>.</p>
+<p>Object for slot information to be extracted from for
+    <code>getObjectSlots</code>.</p></td>
     </tr>
     </table>
     
@@ -130,16 +132,59 @@ originally loaded into R.</p>
 
     <p><code>bcbioRNASeq</code>.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Updating objects is primarily useful when an object has been
+  serialized (e.g., stored to disk) for some time (e.g., months), and the
+  class definition has in the mean time changed. Because of the changed
+  class definition, the serialized instance is no longer valid.</p>
+<p><code>updateObject</code> requires that the class of the returned object be
+  the same as the class of the argument <code>object</code>, and that the
+  object is valid (see <code><a href='http://www.rdocumentation.org/packages/methods/topics/validObject'>validObject</a></code>). By default,
+  <code>updateObject</code> has the following behaviors:</p><dl class='dl-horizontal'>
+    <dt><code>updateObject(ANY, &#8230;, verbose=FALSE)</code></dt><dd><p>By default, <code>updateObject</code> uses heuristic methods to determine
+      whether the object should be the `new' S4 type (introduced in R 2.4.0),
+      but is not. If the heuristics indicate an update is required,
+      the <code>updateObjectFromSlots</code> function tries to update the
+      object. The default method returns the original S4 object or the
+      successfully updated object, or issues an error if an update is
+      required but not possible.
+      The optional named argument <code>verbose</code> causes a message to be
+      printed describing the action.
+      Arguments <code>&#8230;</code> are passed to <code>updateObjectFromSlots</code>.</p></dd>
+    <dt><code>updateObject(list, &#8230;, verbose=FALSE)</code></dt><dd><p>Visit each element in <code>list</code>, applying
+      <code>updateObject(list[[elt]], &#8230;, verbose=verbose)</code>.</p></dd>
+    <dt><code>updateObject(environment, &#8230;, verbose=FALSE)</code></dt><dd><p>Visit each element in <code>environment</code>, applying
+      <code>updateObject(environment[[elt]], &#8230;, verbose=verbose)</code></p></dd>
+    <dt><code>updateObject(formula, &#8230;, verbose=FALSE)</code></dt><dd><p>Do nothing; the environment of the formula may be too general
+      (e.g., <code>R_GlobalEnv</code>) to attempt an update.</p></dd>
+    <dt><code>updateObject(envRefClass, &#8230;, verbose=FALSE)</code></dt><dd><p>Attempt to update objects from fields using a strategy like
+      <code>updateObjectFromSlots</code> Method 1.</p></dd>
+  </dl>
+    <p><code>updateObjectFromSlots(object, objclass=class(object), &#8230;,
+  verbose=FALSE)</code> is a utility function that identifies the intersection
+  of slots defined in the <code>object</code> instance and <code>objclass</code>
+  definition. Under Method 1, the corresponding elements in
+  <code>object</code> are then updated (with <code>updateObject(elt, &#8230;,
+  verbose=verbose)</code>) and used as arguments to a call to <code>new(class,
+  &#8230;)</code>, with <code>&#8230;</code> replaced by slots from the original
+  object. If this fails, then Method 2 tries <code>new(class)</code> and
+  assigns slots of <code>object</code> to the newly created instance.</p>
+<p><code>getObjectSlots(object)</code> extracts the slot names and contents from
+  <code>object</code>. This is useful when <code>object</code> was created by a class
+  definition that is no longer current, and hence the contents of
+  <code>object</code> cannot be determined by accessing known slots.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other S4 Object: <code><a href='bcbioSingleCell.html'>bcbioSingleCell</a></code>,
-  <code><a href='coerce.html'>coerce</a></code>, <code><a href='show.html'>show</a></code>,
-  <code><a href='subset.html'>subset</a></code></p></div>
+  <code><a href='coerce.html'>coerce</a></code>, <code><a href='extract.html'>extract</a></code>,
+  <code><a href='show.html'>show</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>updateObject</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; <span class='message'>Upgrading from 0.1.7 to 0.1.11</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.11
+<span class='fu'>updateObject</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; <span class='message'>Upgrading from 0.1.14 to 0.1.14</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.14
 #&gt; Samples: 1
 #&gt; Cells: 500
 #&gt; Genes: 500
@@ -149,7 +194,7 @@ originally loaded into R.</p>
 #&gt; Genome Build: GRCh38
 #&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-05-24</div></pre>
+#&gt; R Load Date: 2018-06-05</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -157,6 +202,8 @@ originally loaded into R.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

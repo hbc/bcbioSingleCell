@@ -86,7 +86,7 @@ bcbioSingleCell <- setClass(
 bcbioSingleCell <- function(
     uploadDir,
     organism,
-    sampleMetadataFile,
+    sampleMetadataFile = NULL,
     interestingGroups = "sampleName",
     ensemblRelease = NULL,
     genomeBuild = NULL,
@@ -125,16 +125,13 @@ bcbioSingleCell <- function(
     # Assert checks ============================================================
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
-    if (missing(sampleMetadataFile)) {
-        sampleMetadataFile <- NULL
-    }
     assertIsAStringOrNULL(sampleMetadataFile)
     assert_is_character(interestingGroups)
     assertIsAStringOrNULL(organism)
     assertIsAnImplicitIntegerOrNULL(ensemblRelease)
     assertIsAStringOrNULL(genomeBuild)
-    assertIsCharacterOrNULL(transgeneNames)
-    assertIsCharacterOrNULL(spikeNames)
+    assert_is_any_of(transgeneNames, c("character", "NULL"))
+    assert_is_any_of(spikeNames, c("character", "NULL"))
     assertIsAStringOrNULL(gffFile)
     if (is_a_string(gffFile)) {
         assert_all_are_existing_files(gffFile)
@@ -154,7 +151,7 @@ bcbioSingleCell <- function(
     runDate <- as.Date(match[[2L]])
     template <- match[[3L]]
     projectDir <- file.path(uploadDir, projectDir)
-    sampleDirs <- .sampleDirs(uploadDir, pipeline = pipeline)
+    sampleDirs <- sampleDirs(uploadDir)
 
     # Sequencing lanes =========================================================
     if (any(grepl(bcbioBase::lanePattern, sampleDirs))) {
@@ -378,15 +375,16 @@ bcbioSingleCell <- function(
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
     metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
-    colData <- as(metrics, "DataFrame")
 
-    # Cell to sample mappings
+    # Subset the counts to match the prefiltered metrics
+    counts <- counts[, rownames(metrics), drop = FALSE]
+
+    colData <- as(metrics, "DataFrame")
+    colData[["cellID"]] <- rownames(colData)
     cell2sample <- mapCellsToSamples(
         cells = rownames(colData),
         samples = rownames(sampleData)
     )
-
-    colData[["cellID"]] <- rownames(colData)
     colData[["sampleID"]] <- cell2sample
     sampleData[["sampleID"]] <- rownames(sampleData)
     colData <- merge(
@@ -402,9 +400,6 @@ bcbioSingleCell <- function(
     # Bind the `nCount` column into the colData
     nCount <- cbData[rownames(colData), "nCount", drop = FALSE]
     colData <- cbind(nCount, colData)
-
-    # Subset the counts to match the prefiltered metrics
-    counts <- counts[, rownames(colData), drop = FALSE]
 
     # Metadata =================================================================
     metadata <- list(

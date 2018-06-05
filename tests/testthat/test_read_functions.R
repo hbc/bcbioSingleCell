@@ -4,52 +4,49 @@ context("Read Functions")
 
 # readCellRanger ===============================================================
 test_that("readCellRanger", {
-    extdataDir <- system.file("extdata", package = "bcbioSingleCell")
-    uploadDir <- file.path(extdataDir, "cellranger")
-    refdataDir <- file.path(uploadDir, "refdata-cellranger-hg19-1.2.0")
-    sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
-    x <- readCellRanger(
-        uploadDir = uploadDir,
-        refdataDir = refdataDir,
-        sampleMetadataFile = sampleMetadataFile
-    )
+    x <- suppressWarnings(readCellRanger(
+        uploadDir = system.file(
+            "extdata/cellranger",
+            package = "bcbioSingleCell"
+        )
+    ))
     expect_is(x, "SingleCellExperiment")
     expect_identical(dim(x), c(500L, 500L))
     expect_identical(
-        colnames(x)[1L:2L],
-        c("aggregation_AAACCTGGTTTACTCT_1",
-          "aggregation_AAACGGGGTATCTGCA_1")
+        sampleNames(x),
+        c(cellranger_1 = "cellranger")
     )
     expect_identical(
-        rownames(x)[1L:2L],
-        c("ENSG00000005022",
-          "ENSG00000008018")
+        colnames(x)[[1L]],
+        "cellranger_1_AAACCTGAGAAGGCCT"
+    )
+    expect_identical(
+        rownames(x)[[1L]],
+        "ENSG00000243485"
     )
     expect_identical(
         lapply(metadata(x), class),
         list(
-            "version" = c("package_version", "numeric_version"),
-            "pipeline" = "character",
-            "level" = "character",
-            "uploadDir" = "character",
-            "sampleDirs" = "character",
-            "sampleMetadataFile" = "character",
-            "sampleData" = "data.frame",
-            "interestingGroups" = "character",
-            "cell2sample" = "factor",
-            "organism" = "character",
-            "genomeBuild" = "character",
-            "ensemblRelease" = "integer",
-            "rowRangesMetadata" = c("tbl_df", "tbl", "data.frame"),
-            "umiType" = "character",
-            "allSamples" = "logical",
-            "refdataDir" = "character",
-            "refJSON" = "list",
-            "call" = "call",
-            "date" = "Date",
-            "wd" = "character",
-            "utilsSessionInfo" = "sessionInfo",
-            "devtoolsSessionInfo" = "session_info"
+            version = c("package_version", "numeric_version"),
+            pipeline = "character",
+            level = "character",
+            uploadDir = "character",
+            sampleDirs = "character",
+            sampleMetadataFile = "character",
+            sampleData = "data.frame",
+            interestingGroups = "character",
+            cell2sample = "factor",
+            organism = "character",
+            genomeBuild = "character",
+            ensemblRelease = "integer",
+            rowRangesMetadata = c("tbl_df", "tbl", "data.frame"),
+            umiType = "character",
+            allSamples = "logical",
+            call = "call",
+            date = "Date",
+            wd = "character",
+            utilsSessionInfo = "sessionInfo",
+            devtoolsSessionInfo = "session_info"
         )
     )
 })

@@ -47,7 +47,8 @@ setMethod(
 
         data <- object %>%
             ungroup() %>%
-            .[, unique(c(groupCols, colnames(.))), drop = FALSE] %>%
+            select(!!!syms(groupCols), everything()) %>%
+            mutate_at(groupCols, as.factor) %>%
             group_by(!!!syms(groupCols)) %>%
             arrange(!!sym("padj"), .by_group = TRUE) %>%
             # Use `toString()` instead of `aggregate()` for R Markdown tables
@@ -62,10 +63,10 @@ setMethod(
 
         # Apply minimum and maximum gene cutoffs
         if (is.numeric(min) && min > 1L) {
-            data <- data[data[["n"]] >= min, , drop = FALSE]
+            data <- filter(data, !!sym("n") >= !!min)
         }
         if (is.numeric(max) && max > 1L) {
-            data <- data[data[["n"]] <= max, , drop = FALSE]
+            data <- filter(data, !!sym("n") <= !!max)
         }
         assert_has_rows(data)
 

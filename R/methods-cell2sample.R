@@ -22,31 +22,23 @@ NULL
 #' @export
 setMethod(
     "cell2sample",
-    signature("bcbioSingleCell"),
-    function(object) {
-        validObject(object)
-        metadata(object)[["cell2sample"]]
-    }
-)
-
-
-
-#' @rdname cell2sample
-#' @export
-setMethod(
-    "cell2sample",
     signature("SingleCellExperiment"),
     function(object) {
         validObject(object)
-        cell2sample <- metadata(object)[["cell2sample"]]
-        if (is.factor(cell2sample)) {
-            assert_are_identical(colnames(object), names(cell2sample))
-            cell2sample
-        } else {
-            cells <- colnames(object)
-            samples <- rownames(sampleData(object))
-            mapCellsToSamples(cells = cells, samples = samples)
+        stash <- metadata(object)[["cell2sample"]]
+        if (
+            is.factor(stash) &&
+            identical(colnames(object), names(stash))
+        ) {
+            return(stash)
         }
+        cells <- colnames(object)
+        samples <- rownames(sampleData(object))
+        if (is.null(samples)) {
+            message("Sample metadata is empty")
+            samples <- "unknown"
+        }
+        mapCellsToSamples(cells = cells, samples = samples)
     }
 )
 
@@ -57,10 +49,5 @@ setMethod(
 setMethod(
     "cell2sample",
     signature("seurat"),
-    function(object) {
-        validObject(object)
-        cells <- colnames(object)
-        samples <- rownames(sampleData(object))
-        mapCellsToSamples(cells = cells, samples = samples)
-    }
+    getMethod("cell2sample", "SingleCellExperiment")
 )

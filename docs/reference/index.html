@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -31,6 +33,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 <meta property="og:title" content="Function reference" />
+
 
 
 <!-- mathjax -->
@@ -57,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.14</span>
       </span>
     </div>
 
@@ -102,6 +105,7 @@
     <table class="ref-index">
 
     <colgroup>
+      
       <col class="alias" />
       <col class="title" />
     </colgroup>
@@ -109,46 +113,54 @@
     <tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-package-information" class="hasAnchor"><a href="#section-package-information" class="anchor"></a>Package Information</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="bcbioSingleCell-package.html">bcbioSingleCell-package</a></code> </p>
+        </td>
+        <td><p>bcbioSingleCell</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-s-object" class="hasAnchor"><a href="#section-s-object" class="anchor"></a>S4 Object</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
-        <!--  -->
-        <td>
-          <p><code><a href="bcbioSingleCell-package.html">bcbioSingleCell-package</a></code> </p>
-        </td>
-        <td><p>bcbioSingleCell</p></td>
-      </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="bcbioSingleCell.html">bcbioSingleCell()</a></code> </p>
         </td>
         <td><p><code>bcbioSingleCell</code> Object and Constructor</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="coerce.html">coerce</a></code> </p>
         </td>
         <td><p>Methods for Coercing an Object to a Class</p></td>
       </tr><tr>
-        <!--  -->
+        
+        <td>
+          <p><code><a href="extract.html">`[`(<i>&lt;bcbioSingleCell&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Extract or Replace Parts of an Object</p></td>
+      </tr><tr>
+        
         <td>
           <p><code><a href="show.html">show(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> </p>
         </td>
         <td><p>Show an Object</p></td>
       </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="subset.html">`[`(<i>&lt;bcbioSingleCell&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Subset Object</p></td>
-      </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="updateObject.html">updateObject(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Update Object</p></td>
+        <td><p>Update an Object to Its Current Class Definition</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -158,13 +170,13 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="readCellRanger.html">readCellRanger()</a></code> </p>
         </td>
         <td><p>Read 10X Genomics Cell Ranger Data</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="readCellTypeMarkers.html">readCellTypeMarkers()</a></code> </p>
         </td>
@@ -178,49 +190,49 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="aggregateReplicates.html">aggregateReplicates(<i>&lt;bcbioSingleCell&gt;</i>)</a></code> </p>
         </td>
         <td><p>Aggregate Replicates</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="cell2sample.html">cell2sample()</a></code> </p>
         </td>
         <td><p>Cell to Sample Mappings</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="fetchData.html">fetchGeneData()</a></code> <code><a href="fetchData.html">fetchPCAData()</a></code> <code><a href="fetchData.html">fetchTSNEData()</a></code> <code><a href="fetchData.html">fetchTSNEExpressionData()</a></code> <code><a href="fetchData.html">fetchUMAPData()</a></code> <code><a href="fetchData.html">fetchUMAPExpressionData()</a></code> </p>
         </td>
         <td><p>Fetch Data Functions</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="mapCellsToSamples.html">mapCellsToSamples()</a></code> </p>
         </td>
         <td><p>Define Cell to Sample Mappings</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="selectSamples.html">selectSamples(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> </p>
         </td>
         <td><p>Select Samples</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="sampleData.html">sampleData(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="sampleData.html">sampleData(<i>&lt;seurat&gt;</i>)</a></code> <code><a href="sampleData.html">`sampleData<-`(<i>&lt;SingleCellExperiment&gt;</i>,<i>&lt;DataFrame&gt;</i>)</a></code> <code><a href="sampleData.html">`sampleData<-`(<i>&lt;seurat&gt;</i>,<i>&lt;DataFrame&gt;</i>)</a></code> </p>
         </td>
         <td><p>Sample Data</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="subsetPerSample.html">subsetPerSample()</a></code> </p>
         </td>
         <td><p>Subset Per Sample</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="topBarcodes.html">topBarcodes()</a></code> </p>
         </td>
@@ -234,97 +246,97 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="metrics.html">metrics(<i>&lt;matrix&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;dgCMatrix&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;dgTMatrix&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="metrics.html">metrics(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Sample Barcode Metrics</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="metricsPerSample.html">metricsPerSample()</a></code> </p>
         </td>
         <td><p>Metrics per Sample</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="filterCells.html">filterCells()</a></code> </p>
         </td>
         <td><p>Filter Cells</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotQC.html">plotQC(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="plotQC.html">plotQC(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Quality Control Plots</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotCellCounts.html">plotCellCounts()</a></code> </p>
         </td>
         <td><p>Plot Cell Counts</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotReadsPerCell.html">plotReadsPerCell()</a></code> </p>
         </td>
         <td><p>Plot Read Counts per Cell</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotUMIsPerCell.html">plotUMIsPerCell()</a></code> </p>
         </td>
         <td><p>Plot UMIs per Cell</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotGenesPerCell.html">plotGenesPerCell()</a></code> </p>
         </td>
         <td><p>Plot Genes per Cell</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotUMIsVsGenes.html">plotUMIsVsGenes()</a></code> </p>
         </td>
         <td><p>Plot UMI and Gene Correlation</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotNovelty.html">plotNovelty()</a></code> </p>
         </td>
         <td><p>Plot Novelty Score</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotMitoRatio.html">plotMitoRatio()</a></code> </p>
         </td>
         <td><p>Plot Mitochondrial Transcript Abundance</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotMitoVsCoding.html">plotMitoVsCoding()</a></code> </p>
         </td>
         <td><p>Plot Mitochondrial vs. Coding Counts</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotZerosVsDepth.html">plotZerosVsDepth()</a></code> </p>
         </td>
         <td><p>Plot Percentage of Zeros vs. Library Depth</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="barcodeRanksPerSample.html">barcodeRanksPerSample()</a></code> </p>
         </td>
         <td><p>Barcode Ranks per Sample</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotBarcodeRanks.html">plotBarcodeRanks()</a></code> </p>
         </td>
         <td><p>Plot Barcode Ranks</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotFeature.html">plotFeatureTSNE()</a></code> <code><a href="plotFeature.html">plotFeatureUMAP()</a></code> </p>
         </td>
@@ -338,43 +350,43 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="cellTypesPerCluster.html">cellTypesPerCluster()</a></code> </p>
         </td>
         <td><p>Cell Types per Cluster</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotCellTypesPerCluster.html">plotCellTypesPerCluster()</a></code> </p>
         </td>
         <td><p>Plot Cell Types per Cluster</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotPCElbow.html">plotPCElbow()</a></code> </p>
         </td>
         <td><p>Plot PC Elbow</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="fetchData.html">fetchGeneData()</a></code> <code><a href="fetchData.html">fetchPCAData()</a></code> <code><a href="fetchData.html">fetchTSNEData()</a></code> <code><a href="fetchData.html">fetchTSNEExpressionData()</a></code> <code><a href="fetchData.html">fetchUMAPData()</a></code> <code><a href="fetchData.html">fetchUMAPExpressionData()</a></code> </p>
         </td>
         <td><p>Fetch Data Functions</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotDimensionalReduction.html">plotTSNE()</a></code> <code><a href="plotDimensionalReduction.html">plotUMAP()</a></code> <code><a href="plotDimensionalReduction.html">plotPCA(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot Dimensional Reduction</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotFeature.html">plotFeatureTSNE()</a></code> <code><a href="plotFeature.html">plotFeatureUMAP()</a></code> </p>
         </td>
         <td><p>Plot Feature</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotMarker.html">plotKnownMarkersDetected()</a></code> <code><a href="plotMarker.html">plotMarkerTSNE()</a></code> <code><a href="plotMarker.html">plotMarkerUMAP()</a></code> <code><a href="plotMarker.html">plotTopMarkers()</a></code> </p>
         </td>
@@ -388,25 +400,25 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotGene.html">plotGene(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot Gene</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotDot.html">plotDot(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot Dot</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotMarker.html">plotKnownMarkersDetected()</a></code> <code><a href="plotMarker.html">plotMarkerTSNE()</a></code> <code><a href="plotMarker.html">plotMarkerUMAP()</a></code> <code><a href="plotMarker.html">plotTopMarkers()</a></code> </p>
         </td>
         <td><p>Plot Cell-Type-Specific Gene Markers</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotViolin.html">plotViolin(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
@@ -420,25 +432,25 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="diffExp.html">diffExp()</a></code> </p>
         </td>
         <td><p>Differential Expression</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="knownMarkersDetected.html">knownMarkersDetected()</a></code> </p>
         </td>
         <td><p>Known Markers Detected</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="sanitizeMarkers.html">sanitizeMarkers()</a></code> </p>
         </td>
         <td><p>Sanitize Markers Output</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="topMarkers.html">topMarkers()</a></code> </p>
         </td>
@@ -452,115 +464,115 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotBarcodeRanks.html">plotBarcodeRanks()</a></code> </p>
         </td>
         <td><p>Plot Barcode Ranks</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotCellCounts.html">plotCellCounts()</a></code> </p>
         </td>
         <td><p>Plot Cell Counts</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotCellTypesPerCluster.html">plotCellTypesPerCluster()</a></code> </p>
         </td>
         <td><p>Plot Cell Types per Cluster</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotDimensionalReduction.html">plotTSNE()</a></code> <code><a href="plotDimensionalReduction.html">plotUMAP()</a></code> <code><a href="plotDimensionalReduction.html">plotPCA(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot Dimensional Reduction</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotDot.html">plotDot(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot Dot</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotFeature.html">plotFeatureTSNE()</a></code> <code><a href="plotFeature.html">plotFeatureUMAP()</a></code> </p>
         </td>
         <td><p>Plot Feature</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotGene.html">plotGene(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot Gene</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotGenesPerCell.html">plotGenesPerCell()</a></code> </p>
         </td>
         <td><p>Plot Genes per Cell</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotMarker.html">plotKnownMarkersDetected()</a></code> <code><a href="plotMarker.html">plotMarkerTSNE()</a></code> <code><a href="plotMarker.html">plotMarkerUMAP()</a></code> <code><a href="plotMarker.html">plotTopMarkers()</a></code> </p>
         </td>
         <td><p>Plot Cell-Type-Specific Gene Markers</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotMitoRatio.html">plotMitoRatio()</a></code> </p>
         </td>
         <td><p>Plot Mitochondrial Transcript Abundance</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotMitoVsCoding.html">plotMitoVsCoding()</a></code> </p>
         </td>
         <td><p>Plot Mitochondrial vs. Coding Counts</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotNovelty.html">plotNovelty()</a></code> </p>
         </td>
         <td><p>Plot Novelty Score</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotPCElbow.html">plotPCElbow()</a></code> </p>
         </td>
         <td><p>Plot PC Elbow</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotQC.html">plotQC(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> <code><a href="plotQC.html">plotQC(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Quality Control Plots</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotReadsPerCell.html">plotReadsPerCell()</a></code> </p>
         </td>
         <td><p>Plot Read Counts per Cell</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotUMIsPerCell.html">plotUMIsPerCell()</a></code> </p>
         </td>
         <td><p>Plot UMIs per Cell</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotUMIsVsGenes.html">plotUMIsVsGenes()</a></code> </p>
         </td>
         <td><p>Plot UMI and Gene Correlation</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotViolin.html">plotViolin(<i>&lt;seurat&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot Violin</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plotZerosVsDepth.html">plotZerosVsDepth()</a></code> </p>
         </td>
@@ -574,7 +586,7 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="prepareSingleCellTemplate.html">prepareSingleCellTemplate()</a></code> </p>
         </td>
@@ -588,13 +600,13 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="cellCycleMarkers.html">cellCycleMarkers</a></code> </p>
         </td>
         <td><p>Cell-Cycle Markers</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="cellTypeMarkers.html">cellTypeMarkers</a></code> </p>
         </td>
@@ -608,31 +620,31 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="all_markers_small.html">all_markers_small</a></code> </p>
         </td>
         <td><p>Sanitized Markers Example</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="cellranger_small.html">cellranger_small</a></code> </p>
         </td>
         <td><p>Cell Ranger Example</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="indrops_small.html">indrops_small</a></code> </p>
         </td>
         <td><p>inDrops Example</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="known_markers_small.html">known_markers_small</a></code> </p>
         </td>
         <td><p>Known Markers Example</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="seurat_small.html">seurat_small</a></code> </p>
         </td>
@@ -645,6 +657,7 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#section-package-information">Package Information</a></li>
       <li><a href="#section-s-object">S4 Object</a></li>
       <li><a href="#section-read-functions">Read Functions</a></li>
       <li><a href="#section-data-functions">Data Functions</a></li>

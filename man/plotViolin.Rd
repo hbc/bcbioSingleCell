@@ -32,7 +32,7 @@ Plot Violin
 }
 \examples{
 # seurat ====
-object <- Seurat::pbmc_small
+object <- seurat_small
 genes <- head(rownames(object), 4L)
 plotViolin(object, genes = genes)
 }

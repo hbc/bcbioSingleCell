@@ -100,7 +100,7 @@ Plot gene expression per cell in multiple formats:
 \item \code{\link[=plotViolin]{plotViolin()}}: Violin plot.
 }
 }
-\section{plotTopMarkers}{
+\section{Plot top markers}{
 
 The number of markers to plot is determined by the output of the
 \code{\link[=topMarkers]{topMarkers()}} function. If you want to reduce the number of genes to plot,
@@ -110,9 +110,9 @@ for the number of genes to plot here in a future update.
 
 \examples{
 object <- seurat_small
-genes <- grep("^COL\\\\d", rownames(object), value = TRUE)
+title <- "mito genes"
+genes <- grep("^MT-", rownames(object), value = TRUE)
 print(genes)
-title <- "collagen"
 
 # t-SNE
 plotMarkerTSNE(
@@ -134,7 +134,7 @@ plotMarkerTSNE(
     object = object,
     genes = genes,
     pointsAsNumbers = TRUE,
-    title = "collagen"
+    title = title
 )
 
 # UMAP
@@ -147,13 +147,12 @@ plotMarkerUMAP(
 # Top markers
 markers <- topMarkers(all_markers_small, n = 1)
 markers
-markers <- head(markers, n = 1)
-plotTopMarkers(object, markers = markers)
+plotTopMarkers(object, markers = tail(markers, 1))
 
 # Known markers detected
 markers <- head(known_markers_small, n = 1)
 markers
-plotKnownMarkersDetected(object, markers = markers)
+plotKnownMarkersDetected(object, markers = head(markers, 1))
 }
 \seealso{
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},

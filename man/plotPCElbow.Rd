@@ -44,7 +44,7 @@ Automatically return the smallest number of PCs that match the \code{minSD},
 }
 \examples{
 # seurat ====
-plotPCElbow(Seurat::pbmc_small)
+plotPCElbow(seurat_small)
 }
 \seealso{
 \itemize{

@@ -4,20 +4,80 @@
 \name{updateObject}
 \alias{updateObject}
 \alias{updateObject,bcbioSingleCell-method}
-\title{Update Object}
+\title{Update an Object to Its Current Class Definition}
 \usage{
 \S4method{updateObject}{bcbioSingleCell}(object)
 }
 \arguments{
-\item{object}{Object.}
+\item{object}{
+    Object to be updated for \code{updateObject} and
+    \code{updateObjectFromSlots}.
+
+    Object for slot information to be extracted from for
+    \code{getObjectSlots}.
+  }
 }
 \value{
 \code{bcbioRNASeq}.
 }
 \description{
-Update old objects created by the bcbioSingleCell package. The session
-information metadata is preserved from the time when the bcbio data was
-originally loaded into R.
+Update an Object to Its Current Class Definition
+}
+\details{
+Updating objects is primarily useful when an object has been
+  serialized (e.g., stored to disk) for some time (e.g., months), and the
+  class definition has in the mean time changed. Because of the changed
+  class definition, the serialized instance is no longer valid.
+
+  \code{updateObject} requires that the class of the returned object be
+  the same as the class of the argument \code{object}, and that the
+  object is valid (see \code{\link[methods]{validObject}}). By default,
+  \code{updateObject} has the following behaviors:
+  \describe{
+    \item{\code{updateObject(ANY, \dots, verbose=FALSE)}}{
+      By default, \code{updateObject} uses heuristic methods to determine
+      whether the object should be the `new' S4 type (introduced in R 2.4.0),
+      but is not. If the heuristics indicate an update is required,
+      the \code{updateObjectFromSlots} function tries to update the
+      object. The default method returns the original S4 object or the
+      successfully updated object, or issues an error if an update is
+      required but not possible.
+      The optional named argument \code{verbose} causes a message to be
+      printed describing the action.
+      Arguments \code{\dots} are passed to \code{updateObjectFromSlots}.
+    }
+    \item{\code{updateObject(list, \dots, verbose=FALSE)}}{
+      Visit each element in \code{list}, applying
+      \code{updateObject(list[[elt]], \dots, verbose=verbose)}.
+    }
+    \item{\code{updateObject(environment, \dots, verbose=FALSE)}}{
+      Visit each element in \code{environment}, applying
+      \code{updateObject(environment[[elt]], \dots, verbose=verbose)}
+    }
+    \item{\code{updateObject(formula, \dots, verbose=FALSE)}}{
+      Do nothing; the environment of the formula may be too general
+      (e.g., \code{R_GlobalEnv}) to attempt an update.
+    }
+    \item{\code{updateObject(envRefClass, \dots, verbose=FALSE)}}{
+      Attempt to update objects from fields using a strategy like
+      \code{updateObjectFromSlots} Method 1.
+    }
+  }
+
+  \code{updateObjectFromSlots(object, objclass=class(object), \dots,
+  verbose=FALSE)} is a utility function that identifies the intersection
+  of slots defined in the \code{object} instance and \code{objclass}
+  definition. Under Method 1, the corresponding elements in
+  \code{object} are then updated (with \code{updateObject(elt, \dots,
+  verbose=verbose)}) and used as arguments to a call to \code{new(class,
+  \dots)}, with \code{\dots} replaced by slots from the original
+  object. If this fails, then Method 2 tries \code{new(class)} and
+  assigns slots of \code{object} to the newly created instance.
+
+  \code{getObjectSlots(object)} extracts the slot names and contents from
+  \code{object}. This is useful when \code{object} was created by a class
+  definition that is no longer current, and hence the contents of
+  \code{object} cannot be determined by accessing known slots.
 }
 \examples{
 # bcbioSingleCell ====
@@ -25,8 +85,8 @@ updateObject(indrops_small)
 }
 \seealso{
 Other S4 Object: \code{\link{bcbioSingleCell}},
-  \code{\link{coerce}}, \code{\link{show}},
-  \code{\link{subset}}
+  \code{\link{coerce}}, \code{\link{extract}},
+  \code{\link{show}}
 }
 \author{
 Michael Steinbaugh

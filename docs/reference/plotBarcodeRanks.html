@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -34,6 +36,7 @@
 
 <meta property="og:description" content="Plot Barcode Ranks" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -60,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.14</span>
       </span>
     </div>
 
@@ -142,7 +145,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='fu'>plotBarcodeRanks</span>(<span class='no'>cellranger_small</span>)</div><div class='img'><img src='plotBarcodeRanks-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>splatter</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/splatter/topics/splatSimulate'>splatSimulate</a></span>()</div><div class='output co'>#&gt; <span class='message'>Getting parameters...</span></div><div class='output co'>#&gt; <span class='message'>Creating simulation object...</span></div><div class='output co'>#&gt; <span class='message'>Simulating library sizes...</span></div><div class='output co'>#&gt; <span class='message'>Simulating gene means...</span></div><div class='output co'>#&gt; <span class='message'>Simulating BCV...</span></div><div class='output co'>#&gt; <span class='message'>Simulating counts..</span></div><div class='output co'>#&gt; <span class='message'>Simulating dropout (if needed)...</span></div><div class='output co'>#&gt; <span class='message'>Done!</span></div><div class='input'><span class='fu'>plotBarcodeRanks</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; <span class='message'>Sample metadata is empty</span></div><div class='img'><img src='plotBarcodeRanks-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

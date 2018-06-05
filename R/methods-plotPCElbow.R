@@ -26,7 +26,7 @@
 #'
 #' @examples
 #' # seurat ====
-#' plotPCElbow(Seurat::pbmc_small)
+#' plotPCElbow(seurat_small)
 NULL
 
 

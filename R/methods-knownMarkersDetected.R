@@ -58,27 +58,31 @@ setMethod(
         assert_all_are_in_left_open_range(promiscuousCutoff, 1L)
         # Group by cell type and arrange by P value
         markers <- object %>%
+            ungroup() %>%
             # Apply alpha cutoff, before adding cell type annotations
-            .[.[["padj"]] < alpha, , drop = FALSE] %>%
+            filter(!!sym("padj") < !!alpha) %>%
             left_join(known[, c("cellType", "geneID")], by = "geneID") %>%
-            .[, unique(c(
-                "cellType", "cluster", "geneID", "geneName", colnames(.)
-            ))] %>%
-            .[!is.na(.[["cellType"]]), , drop = FALSE] %>%
+            select(
+                !!!syms(c("cellType", "cluster", "geneID", "geneName")),
+                everything()
+            ) %>%
+            mutate_at(c("cellType", "cluster"), as.factor) %>%
+            filter(!is.na(!!sym("cellType"))) %>%
             group_by(!!sym("cellType")) %>%
             arrange(!!sym("padj"), .by_group = TRUE)
         if (isTRUE(filterPromiscuous)) {
             # Filter out promiscuous markers present in multiple clusters
             promiscuous <- markers %>%
-                group_by(!!!syms(c("cell", "geneID", "geneName"))) %>%
+                ungroup() %>%
+                group_by(!!!syms(c("cellType", "geneID", "geneName"))) %>%
                 summarize(n = n()) %>%
-                .[.[["n"]] >= promiscuousCutoff, "geneID", drop = TRUE]
+                filter(!!sym("n") >= !!promiscuousCutoff) %>%
+                pull("geneID")
             if (length(promiscuous)) {
                 message(paste(
                     "Promiscuous markers:", toString(promiscuous)
                 ))
-                markers <- markers %>%
-                    .[!.[["geneID"]] %in% promiscuous, , drop = FALSE]
+                markers <- filter(markers, !!sym("geneID") %in% !!!promiscuous)
             }
         }
         markers

@@ -46,7 +46,7 @@ setMethod(
         counts <- assay(object)
         # Using a logical matrix is faster and more memory efficient
         present <- counts %>%
-            # Ensure dgTMatrix gets coereced (e.g. Seurat::pbmc_small)
+            # Ensure dgTMatrix gets coereced
             as("dgCMatrix") %>%
             as("lgCMatrix")
 

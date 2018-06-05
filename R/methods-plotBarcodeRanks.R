@@ -12,7 +12,8 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' plotBarcodeRanks(cellranger_small)
+#' object <- splatter::splatSimulate()
+#' plotBarcodeRanks(object)
 NULL
 
 
@@ -25,9 +26,15 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, ...) {
         ranksPerSample <- barcodeRanksPerSample(object, ...)
-        sampleNames <- sampleData(object) %>%
-            .[names(ranksPerSample), "sampleName", drop = TRUE] %>%
-            as.character()
+
+        sampleData <- sampleData(object)
+        if (is.null(sampleData)) {
+            sampleNames <- "unknown"
+        } else {
+            sampleNames <- sampleData(object) %>%
+                .[names(ranksPerSample), "sampleName", drop = TRUE] %>%
+                as.character()
+        }
 
         plotlist <- mapply(
             sampleName = sampleNames,
