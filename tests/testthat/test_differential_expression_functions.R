@@ -42,6 +42,7 @@ test_that("diffExp : zinbwave-DESeq2", {
     expect_s4_class(x, "DESeqResults")
 })
 
+# nolint start
 # zingeR isn't importing DESeqDataSetFromMatrix correctly
 # Filed an issue on GitHub, need to make a pull request
 # test_that("diffExp : zingeR-DESeq2", {
@@ -54,3 +55,4 @@ test_that("diffExp : zinbwave-DESeq2", {
 #     )
 #     expect_s4_class(x, "DESeqResults")
 # })
+# nolint end
