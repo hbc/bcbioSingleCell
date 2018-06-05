@@ -33,7 +33,7 @@ setMethod(
         assertIsFillScaleDiscreteOrNULL(fill)
         assertIsAStringOrNULL(title)
 
-        metrics <- metrics(object, interestingGroups)
+        metrics <- metrics(object, interestingGroups = interestingGroups)
         sampleData <- sampleData(
             object = object,
             clean = FALSE,

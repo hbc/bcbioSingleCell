@@ -185,7 +185,11 @@
     assertIsColorScaleDiscreteOrNULL(color)
     assertIsAStringOrNULL(title)
 
-    data <- metrics(object, interestingGroups = interestingGroups)
+    data <- metrics(
+        object = object,
+        interestingGroups = interestingGroups,
+        prefilter = FALSE
+    )
     if (!all(c(xCol, yCol) %in% colnames(data))) {
         warning(paste(
             deparse(substitute(object)), "must contain",
