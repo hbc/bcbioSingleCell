@@ -7,7 +7,7 @@
 #' 2. [plotDot()]: Dot plot.
 #' 3. [plotViolin()]: Violin plot.
 #'
-#' @section plotTopMarkers:
+#' @section Plot top markers:
 #' The number of markers to plot is determined by the output of the
 #' [topMarkers()] function. If you want to reduce the number of genes to plot,
 #' simply reassign first using that function. If necessary, we can add support
@@ -26,9 +26,9 @@
 #'
 #' @examples
 #' object <- seurat_small
+#' title <- "mito genes"
 #' genes <- grep("^MT-", rownames(object), value = TRUE)
 #' print(genes)
-#' title <- "mito genes"
 #'
 #' # t-SNE
 #' plotMarkerTSNE(
@@ -63,12 +63,12 @@
 #' # Top markers
 #' markers <- topMarkers(all_markers_small, n = 1)
 #' markers
-#' plotTopMarkers(object, markers = markers)
+#' plotTopMarkers(object, markers = tail(markers, 1))
 #'
 #' # Known markers detected
 #' markers <- head(known_markers_small, n = 1)
 #' markers
-#' plotKnownMarkersDetected(object, markers = markers)
+#' plotKnownMarkersDetected(object, markers = head(markers, 1))
 NULL
 
 
