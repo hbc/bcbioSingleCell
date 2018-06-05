@@ -12,7 +12,7 @@ Object of new class.
 \description{
 Methods for Coercing an Object to a Class
 }
-\section{SingleCellExperiment to seurat}{
+\section{\code{SingleCellExperiment} to \code{seurat}}{
 
 Interally \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}} is called without applying any
 additional filtering cutoffs, since we have already defined them during our
@@ -20,7 +20,7 @@ quality control analysis. Here we are passing the raw gene-level counts of
 the filtered cells into a new \code{seurat} class object.
 }
 
-\section{seurat to SingleCellExperiment}{
+\section{\code{seurat} to \code{SingleCellExperiment}}{
 
 Super basic S4 coercion support for taking the raw counts matrix from
 a \code{seurat} class object and coercing to a \code{SingleCellExperiment}.
@@ -45,7 +45,7 @@ print(x)
 }
 
 Other S4 Object: \code{\link{bcbioSingleCell}},
-  \code{\link{show}}, \code{\link{subset}},
+  \code{\link{extract}}, \code{\link{show}},
   \code{\link{updateObject}}
 }
 \author{

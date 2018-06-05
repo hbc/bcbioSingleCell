@@ -37,17 +37,13 @@ spike-in sequences (e.g. ERCCs).}
 Read \href{https://www.10xgenomics.com/software/}{10x Genomics Chromium} cell
 counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 }
-\details{
-This function is a variant of the main \code{\link[=bcbioSingleCell]{bcbioSingleCell()}}
-constructor, but optimized for handling Cell Ranger output.
-}
-\section{Directory Structure}{
+\section{Directory structure}{
 
 Cell Ranger can vary in its output directory structure, but we're requiring a
 single, consistent data structure for datasets containing multiple samples.
 Note that Cell Ranger data may not always contain per sample subdirectories,
-or the "outs" subdirectory. We may make this more flexible in the future, but
-for now we're making this strict to ensure reproducibility.
+or the "\code{outs}" subdirectory. We may make this more flexible in the future,
+but for now we're making this strict to ensure reproducibility.
 
 \preformatted{
 file.path(
@@ -64,19 +60,19 @@ file.path(
 
 \section{Sample metadata}{
 
-A user-defined sample metadata file (\code{sampleMetadataFile}) is required for
-multiplexed datasets. Otherwise this can be left \code{NULL}, and minimal sample
-data will be used, based on the directory names.
+A user-supplied sample metadata file defined by \code{sampleMetadataFile} is
+required for multiplexed datasets. Otherwise this can be left \code{NULL}, and
+minimal sample data will be used, based on the directory names.
 }
 
-\section{Reference Data}{
+\section{Reference data}{
 
 We strongly recommend supplying the corresponding reference data required for
 Cell Ranger with the \code{refdataDir} argument. When set, the function will
 detect the \code{organism}, \code{ensemblRelease}, and \code{genomeBuild} automatically,
 based on the 10X \code{refdataDir} YAML metadata. Additionally, it will convert
-the gene annotations defined in the GTF file into \code{GRanges}, which get
-slotted in \code{\link[=rowRanges]{rowRanges()}}. Otherwise, the function will attempt to use the
+the gene annotations defined in the GTF file into a \code{GRanges} object, which
+get slotted in \code{\link[=rowRanges]{rowRanges()}}. Otherwise, the function will attempt to use the
 most current annotations available from Ensembl, and some gene IDs may not
 match, due to deprecation in the current Ensembl release.
 }
