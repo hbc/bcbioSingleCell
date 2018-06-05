@@ -167,7 +167,10 @@ readCellRanger <- function(
     rowRangesMetadata <- NULL
 
     # Stop on multiple genomes (not supported in a single SCE object)
-    genomeBuild <- basename(dirname(matrixFiles))
+    genomeBuild <- matrixFiles %>%
+        dirname() %>%
+        basename() %>%
+        unique()
     assert_is_a_string(genomeBuild)
     organism <- detectOrganism(genomeBuild)
     assert_is_a_string(organism)
