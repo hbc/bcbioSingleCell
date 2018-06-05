@@ -22,7 +22,7 @@ NULL
 .plotReadsPerCellBoxplot <- function(
     data,
     min = 0L,
-    fill = scale_fill_hue()
+    fill = NULL
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -70,7 +70,7 @@ NULL
 .plotReadsPerCellECDF <- function(
     data,
     min = 0L,
-    color = scale_color_hue()
+    color = NULL
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
@@ -116,7 +116,7 @@ NULL
 .plotReadsPerCellRidgeline <- function(
     data,
     min = 0L,
-    fill = scale_fill_hue()
+    fill = NULL
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -169,7 +169,7 @@ NULL
 .plotReadsPerCellViolin <- function(
     data,
     min = 0L,
-    fill = scale_fill_hue()
+    fill = NULL
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -272,7 +272,7 @@ NULL
 .plotReadsPerCellHistogram <- function(
     data,
     min = 0L,
-    color = scale_color_hue()
+    color = NULL
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
@@ -328,8 +328,8 @@ setMethod(
         object,
         interestingGroups,
         geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
-        color = scale_color_hue(),
-        fill = scale_fill_hue(),
+        color = NULL,
+        fill = NULL,
         title = "reads per cell"
     ) {
         # Passthrough: color, fill

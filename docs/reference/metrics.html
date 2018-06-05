@@ -114,13 +114,13 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for matrix</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for dgCMatrix</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for dgTMatrix</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)
@@ -190,7 +190,7 @@ formatted in camel case and intersect with <code><a href='sampleData.html'>sampl
 <span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'>counts</span>(<span class='no'>cellranger_small</span>)
 <span class='fu'>class</span>(<span class='no'>counts</span>)</div><div class='output co'>#&gt; [1] "dgCMatrix"
 #&gt; attr(,"package")
-#&gt; [1] "Matrix"</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>counts</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
+#&gt; [1] "Matrix"</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>counts</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 6
 #&gt; $ nUMI             &lt;int&gt; 8760, 6118, 5660, 7858, 4463, 8330, 5457, 7038, 46...
 #&gt; $ nGene            &lt;int&gt; 473, 456, 415, 462, 431, 459, 416, 458, 416, 444, ...

@@ -10,7 +10,7 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{SingleCellExperiment}(object, interestingGroups,
-  fill = scale_fill_hue(), title = "cell counts")
+  fill = NULL, title = "cell counts")
 }
 \arguments{
 \item{object}{Object.}

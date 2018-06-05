@@ -11,8 +11,7 @@ plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object, interestingGroups,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
-  color = scale_color_hue(), fill = scale_fill_hue(),
-  title = "reads per cell")
+  color = NULL, fill = NULL, title = "reads per cell")
 }
 \arguments{
 \item{object}{Object.}

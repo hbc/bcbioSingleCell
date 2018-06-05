@@ -26,7 +26,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        color = scale_color_hue(),
+        color = NULL,
         title = "zeros vs. depth"
     ) {
         if (missing(interestingGroups)) {
@@ -41,19 +41,22 @@ setMethod(
             interestingGroups = interestingGroups,
             return = "data.frame"
         )
+        if (is.null(sampleData)) {
+            sampleData <- unknownSampleData
+        }
         sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
-        counts <- assay(object)
+        counts <- counts(object)
         # Using a logical matrix is faster and more memory efficient
         present <- counts %>%
-            # Ensure dgTMatrix gets coereced
+            # Ensure dgTMatrix gets coereced properly (e.g. Seurat::pbmc_small)
             as("dgCMatrix") %>%
             as("lgCMatrix")
 
         data <- tibble(
-            "sampleID" = cell2sample(object),
-            "dropout" = (nrow(present) - colSums(present)) / nrow(present),
-            "depth" = colSums(counts)
+            sampleID = cell2sample(object),
+            dropout = (nrow(present) - colSums(present)) / nrow(present),
+            depth = colSums(counts)
         ) %>%
             left_join(sampleData, by = "sampleID")
 

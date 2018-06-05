@@ -167,7 +167,10 @@ readCellRanger <- function(
     rowRangesMetadata <- NULL
 
     # Stop on multiple genomes (not supported in a single SCE object)
-    genomeBuild <- basename(dirname(matrixFiles))
+    genomeBuild <- matrixFiles %>%
+        dirname() %>%
+        basename() %>%
+        unique()
     assert_is_a_string(genomeBuild)
     organism <- detectOrganism(genomeBuild)
     assert_is_a_string(organism)
@@ -179,20 +182,21 @@ readCellRanger <- function(
         assert_all_are_existing_files(refJSONFile)
         refJSON <- read_json(refJSONFile)
         # Convert the GTF file to GRanges
-        gtfFile <- refJSON[["input_gtf_files"]]
-        assert_is_a_string(gtfFile)
-        rowRanges <- makeGRangesFromGFF(gtfFile)
+        gffFile <- file.path(refdataDir, "genes", "genes.gtf")
+        assert_is_a_string(gffFile)
+        rowRanges <- makeGRangesFromGFF(gffFile)
         # Get the Ensembl version from the GTF file name.
         # Example: "Homo_sapiens.GRCh37.82.filtered.gtf"
-        ensemblRelease <- gtfFile %>%
+        ensemblRelease <- gffFile %>%
             str_split("\\.", simplify = TRUE) %>%
             .[1L, 3L] %>%
             as.integer()
     } else {
         # CellRanger uses Ensembl refdata internally. Here we're fetching the
         # annotations with AnnotationHub rather than pulling from the GTF file
-        # in the refdata directory. It will also drop genes that are now dead in the
-        # current Ensembl release. Don't warn about old Ensembl release version.
+        # in the refdata directory. It will also drop genes that are now dead in
+        # the current Ensembl release. Don't warn about old Ensembl release
+        # version.
         ah <- suppressWarnings(makeGRangesFromEnsembl(
             organism = organism,
             format = level,

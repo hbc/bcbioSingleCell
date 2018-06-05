@@ -28,7 +28,7 @@ setMethod(
         min = 0L,
         max = Inf,
         trans = "log2",
-        fill = scale_fill_hue(),
+        fill = NULL,
         title = "genes per cell"
     ) {
         geom <- match.arg(geom)

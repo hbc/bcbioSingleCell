@@ -23,8 +23,8 @@
 \usage{
 \S4method{cell2sample}{seurat}(object)
 
-\S4method{plotCellCounts}{seurat}(object, interestingGroups,
-  fill = scale_fill_hue(), title = "cell counts")
+\S4method{plotCellCounts}{seurat}(object, interestingGroups, fill = NULL,
+  title = "cell counts")
 
 \S4method{assay}{seurat,ANY}(x)
 

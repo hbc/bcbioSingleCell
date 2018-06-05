@@ -8,8 +8,8 @@
     max = Inf,
     trans = "identity",
     ratio = FALSE,
-    color = scale_color_hue(),
-    fill = scale_fill_hue(),
+    color = NULL,
+    fill = NULL,
     title = NULL
 ) {
     assert_is_a_string(metricCol)
@@ -185,11 +185,7 @@
     assertIsColorScaleDiscreteOrNULL(color)
     assertIsAStringOrNULL(title)
 
-    data <- metrics(
-        object = object,
-        interestingGroups = interestingGroups,
-        prefilter = FALSE
-    )
+    data <- metrics(object, interestingGroups = interestingGroups)
     if (!all(c(xCol, yCol) %in% colnames(data))) {
         warning(paste(
             deparse(substitute(object)), "must contain",

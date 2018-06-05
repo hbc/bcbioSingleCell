@@ -36,8 +36,8 @@ setMethod(
         min = 0L,
         point = c("none", "inflection", "knee"),
         trans = "log10",
-        color = scale_color_hue(),
-        fill = scale_fill_hue(),
+        color = NULL,
+        fill = NULL,
         title = "UMIs per cell"
     ) {
         geom <- match.arg(geom)
