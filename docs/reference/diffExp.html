@@ -186,7 +186,7 @@ shrunken results are desired.</p></li>
     <h2 class="hasAnchor" id="zinbwave"><a class="anchor" href="#zinbwave"></a>zinbwave</h2>
 
     
-    <p>We are currently using an epsilon setting of 1e12, as recommended by the
+    <p>We are currently using an epsilon setting of <code>1e12</code>, as recommended by the
 ZINB-WaVE integration paper.</p>
     
     <h2 class="hasAnchor" id="zinger"><a class="anchor" href="#zinger"></a>zingeR</h2>
@@ -241,8 +241,8 @@ for additional information.</p></li>
 <span class='co'># Expression in cluster 3 relative to cluster 2</span>
 <span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
 <span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>object</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>3L</span>)
-<span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>object</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
+<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>numerator</span>)</div><div class='output co'>#&gt;  chr [1:69] "pbmc4k_1_AAACCTGCAGGCGATA" "pbmc4k_1_AAGGCAGCACCATCCT" ...</div><div class='input'><span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>object</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>denominator</span>)</div><div class='output co'>#&gt;  chr [1:83] "pbmc4k_1_AAAGTAGAGTCAAGGC" "pbmc4k_1_ACAGCCGGTCTTGATG" ...</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
     <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
     <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
@@ -250,8 +250,8 @@ for additional information.</p></li>
     <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>
 )</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: zinbwave</span></div><div class='output co'>#&gt; <span class='message'>Performing differential expression with zinbwave-edgeR</span></div><div class='output co'>#&gt; <span class='message'>Applying low gene count filter</span>
 #&gt; <span class='message'>Requiring at least 5 cells with counts of 5 or more per gene</span></div><div class='output co'>#&gt; <span class='message'>Running zinbwave</span></div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   9.070   0.630  11.353 </div><div class='output co'>#&gt; <span class='message'>Running edgeR</span></div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.798   0.066   0.927 </div></pre>
+#&gt;   8.656   0.546   9.654 </div><div class='output co'>#&gt; <span class='message'>Running edgeR</span></div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.727   0.053   0.791 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

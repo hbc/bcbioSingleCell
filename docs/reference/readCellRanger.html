@@ -163,19 +163,14 @@ spike-in sequences (e.g. ERCCs).</p></td>
 
     <p><code>SingleCellExperiment</code>.</p>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function is a variant of the main <code><a href='bcbioSingleCell.html'>bcbioSingleCell()</a></code>
-constructor, but optimized for handling Cell Ranger output.</p>
-    
-    <h2 class="hasAnchor" id="directory-structure"><a class="anchor" href="#directory-structure"></a>Directory Structure</h2>
+    <h2 class="hasAnchor" id="directory-structure"><a class="anchor" href="#directory-structure"></a>Directory structure</h2>
 
     
     <p>Cell Ranger can vary in its output directory structure, but we're requiring a
 single, consistent data structure for datasets containing multiple samples.
 Note that Cell Ranger data may not always contain per sample subdirectories,
-or the "outs" subdirectory. We may make this more flexible in the future, but
-for now we're making this strict to ensure reproducibility.</p>
+or the "<code>outs</code>" subdirectory. We may make this more flexible in the future,
+but for now we're making this strict to ensure reproducibility.</p>
 <pre>
 file.path(
     "&lt;uploadDir&gt;",
@@ -191,19 +186,19 @@ file.path(
     <h2 class="hasAnchor" id="sample-metadata"><a class="anchor" href="#sample-metadata"></a>Sample metadata</h2>
 
     
-    <p>A user-defined sample metadata file (<code>sampleMetadataFile</code>) is required for
-multiplexed datasets. Otherwise this can be left <code>NULL</code>, and minimal sample
-data will be used, based on the directory names.</p>
+    <p>A user-supplied sample metadata file defined by <code>sampleMetadataFile</code> is
+required for multiplexed datasets. Otherwise this can be left <code>NULL</code>, and
+minimal sample data will be used, based on the directory names.</p>
     
-    <h2 class="hasAnchor" id="reference-data"><a class="anchor" href="#reference-data"></a>Reference Data</h2>
+    <h2 class="hasAnchor" id="reference-data"><a class="anchor" href="#reference-data"></a>Reference data</h2>
 
     
     <p>We strongly recommend supplying the corresponding reference data required for
 Cell Ranger with the <code>refdataDir</code> argument. When set, the function will
 detect the <code>organism</code>, <code>ensemblRelease</code>, and <code>genomeBuild</code> automatically,
 based on the 10X <code>refdataDir</code> YAML metadata. Additionally, it will convert
-the gene annotations defined in the GTF file into <code>GRanges</code>, which get
-slotted in <code>rowRanges()</code>. Otherwise, the function will attempt to use the
+the gene annotations defined in the GTF file into a <code>GRanges</code> object, which
+get slotted in <code>rowRanges()</code>. Otherwise, the function will attempt to use the
 most current annotations available from Ensembl, and some gene IDs may not
 match, due to deprecation in the current Ensembl release.</p>
     
@@ -240,13 +235,11 @@ match, due to deprecation in the current Ensembl release.</p>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#directory-structure">Directory Structure</a></li>
+      <li><a href="#directory-structure">Directory structure</a></li>
 
       <li><a href="#sample-metadata">Sample metadata</a></li>
 
-      <li><a href="#reference-data">Reference Data</a></li>
+      <li><a href="#reference-data">Reference data</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

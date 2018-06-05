@@ -64,7 +64,7 @@ Note that only points with total counts above \code{lower} will be considered, r
 }
 \examples{
 # SingleCellExperiment ====
-x <- barcodeRanksPerSample(indrops_small)
+x <- barcodeRanksPerSample(cellranger_small)
 names(x)
 }
 \seealso{

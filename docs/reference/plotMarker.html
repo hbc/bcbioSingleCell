@@ -242,7 +242,7 @@ the dataset, and some cells can be masked.</p></td>
 
     <p>Show graphical output. Invisibly return <code>ggplot</code> <code>list</code>.</p>
     
-    <h2 class="hasAnchor" id="plottopmarkers"><a class="anchor" href="#plottopmarkers"></a>plotTopMarkers</h2>
+    <h2 class="hasAnchor" id="plot-top-markers"><a class="anchor" href="#plot-top-markers"></a>Plot top markers</h2>
 
     
     <p>The number of markers to plot is determined by the output of the
@@ -262,10 +262,10 @@ for the number of genes to plot here in a future update.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
+<span class='no'>title</span> <span class='kw'>&lt;-</span> <span class='st'>"mito genes"</span>
 <span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT-"</span>, <span class='fu'>rownames</span>(<span class='no'>object</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt;  [1] "MT-CO2"  "MT-CYB"  "MT-ND2"  "MT-ND5"  "MT-CO1"  "MT-ND3"  "MT-ND4" 
-#&gt;  [8] "MT-ND1"  "MT-ATP6" "MT-CO3"  "MT-ND4L"</div><div class='input'><span class='no'>title</span> <span class='kw'>&lt;-</span> <span class='st'>"mito genes"</span>
-
+#&gt;  [8] "MT-ND1"  "MT-ATP6" "MT-CO3"  "MT-ND4L"</div><div class='input'>
 <span class='co'># t-SNE</span>
 <span class='fu'>plotMarkerTSNE</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
@@ -305,49 +305,14 @@ for the number of genes to plot here in a future update.</p>
 #&gt; 5 4           2.46 1     0.196 CD79A    1.72e-44 8.62e-42 ENSG0000010… CD79A   
 #&gt; 6 5           1.91 1     0.881 SEC61B   2.01e-15 1.01e-12 ENSG0000010… SEC61B  
 #&gt; # ... with 4 more variables: geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
-#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>markers</span>)</div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## Cluster 0 {.tabset}
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; ### VCAN
-#&gt; </div><div class='img'><img src='plotMarker-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## Cluster 1 {.tabset}
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; ### TRAC
-#&gt; </div><div class='img'><img src='plotMarker-6.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## Cluster 2 {.tabset}
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; ### LST1
-#&gt; </div><div class='img'><img src='plotMarker-7.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## Cluster 3 {.tabset}
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; ### HLA-DPB1
-#&gt; </div><div class='img'><img src='plotMarker-8.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; ## Cluster 4 {.tabset}
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; ### CD79A
-#&gt; </div><div class='img'><img src='plotMarker-9.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>tail</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## Cluster 5 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### SEC61B
-#&gt; </div><div class='img'><img src='plotMarker-10.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; </div><div class='img'><img src='plotMarker-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Known markers detected</span>
 <span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='no'>known_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>markers</span></div><div class='output co'>#&gt; # A tibble: 1 x 14
@@ -356,14 +321,14 @@ for the number of genes to plot here in a future update.</p>
 #&gt;   &lt;chr&gt;    &lt;fct&gt;   &lt;chr&gt;         &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
 #&gt; 1 B Cell   4       ENSG00000211… IGHM         2.16 0.933 0.191 IGHM    1.87e-37
 #&gt; # ... with 5 more variables: padj &lt;dbl&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
-#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>markers</span>)</div><div class='output co'>#&gt; 
+#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## B Cell {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### IGHM
-#&gt; </div><div class='img'><img src='plotMarker-11.png' alt='' width='700' height='433' /></div></pre>
+#&gt; </div><div class='img'><img src='plotMarker-6.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -372,7 +337,7 @@ for the number of genes to plot here in a future update.</p>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#plottopmarkers">plotTopMarkers</a></li>
+      <li><a href="#plot-top-markers">Plot top markers</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

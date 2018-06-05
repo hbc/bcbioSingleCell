@@ -118,7 +118,7 @@
 
     <p>Object of new class.</p>
     
-    <h2 class="hasAnchor" id="singlecellexperiment-to-seurat"><a class="anchor" href="#singlecellexperiment-to-seurat"></a>SingleCellExperiment to seurat</h2>
+    <h2 class="hasAnchor" id="singlecellexperiment-to-seurat"><a class="anchor" href="#singlecellexperiment-to-seurat"></a><code>SingleCellExperiment</code> to <code>seurat</code></h2>
 
     
     <p>Interally <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/CreateSeuratObject'>Seurat::CreateSeuratObject()</a></code> is called without applying any
@@ -126,7 +126,7 @@ additional filtering cutoffs, since we have already defined them during our
 quality control analysis. Here we are passing the raw gene-level counts of
 the filtered cells into a new <code>seurat</code> class object.</p>
     
-    <h2 class="hasAnchor" id="seurat-to-singlecellexperiment"><a class="anchor" href="#seurat-to-singlecellexperiment"></a>seurat to SingleCellExperiment</h2>
+    <h2 class="hasAnchor" id="seurat-to-singlecellexperiment"><a class="anchor" href="#seurat-to-singlecellexperiment"></a><code>seurat</code> to <code>SingleCellExperiment</code></h2>
 
     
     <p>Super basic S4 coercion support for taking the raw counts matrix from
@@ -141,7 +141,7 @@ a <code>seurat</code> class object and coercing to a <code>SingleCellExperiment<
 <li><p><code><a href='http://www.rdocumentation.org/packages/methods/topics/setAs'>methods::coerce()</a></code>.</p></li>
 </ul></div>
     <div class='dont-index'><p>Other S4 Object: <code><a href='bcbioSingleCell.html'>bcbioSingleCell</a></code>,
-  <code><a href='show.html'>show</a></code>, <code><a href='subset.html'>subset</a></code>,
+  <code><a href='extract.html'>extract</a></code>, <code><a href='show.html'>show</a></code>,
   <code><a href='updateObject.html'>updateObject</a></code></p></div>
     
 
@@ -173,9 +173,9 @@ a <code>seurat</code> class object and coercing to a <code>SingleCellExperiment<
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#singlecellexperiment-to-seurat">SingleCellExperiment to seurat</a></li>
+      <li><a href="#singlecellexperiment-to-seurat"><code>SingleCellExperiment</code> to <code>seurat</code></a></li>
 
-      <li><a href="#seurat-to-singlecellexperiment">seurat to SingleCellExperiment</a></li>
+      <li><a href="#seurat-to-singlecellexperiment"><code>seurat</code> to <code>SingleCellExperiment</code></a></li>
 
       <li><a href="#see-also">See also</a></li>
       
