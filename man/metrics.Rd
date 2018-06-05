@@ -10,11 +10,11 @@
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{matrix}(object, rowData = NULL, prefilter = TRUE)
+\S4method{metrics}{matrix}(object, rowData = NULL, prefilter = FALSE)
 
-\S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = TRUE)
+\S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = FALSE)
 
-\S4method{metrics}{dgTMatrix}(object, rowData = NULL, prefilter = TRUE)
+\S4method{metrics}{dgTMatrix}(object, rowData = NULL, prefilter = FALSE)
 
 \S4method{metrics}{SingleCellExperiment}(object, interestingGroups)
 
