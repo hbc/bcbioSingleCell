@@ -191,8 +191,9 @@ readCellRanger <- function(
     } else {
         # CellRanger uses Ensembl refdata internally. Here we're fetching the
         # annotations with AnnotationHub rather than pulling from the GTF file
-        # in the refdata directory. It will also drop genes that are now dead in the
-        # current Ensembl release. Don't warn about old Ensembl release version.
+        # in the refdata directory. It will also drop genes that are now dead in
+        # the current Ensembl release. Don't warn about old Ensembl release
+        # version.
         ah <- suppressWarnings(makeGRangesFromEnsembl(
             organism = organism,
             format = level,
