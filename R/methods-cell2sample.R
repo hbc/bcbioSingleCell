@@ -35,7 +35,6 @@ setMethod(
         cells <- colnames(object)
         samples <- rownames(sampleData(object))
         if (is.null(samples)) {
-            message("Sample metadata is empty")
             samples <- "unknown"
         }
         mapCellsToSamples(cells = cells, samples = samples)
