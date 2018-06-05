@@ -149,17 +149,15 @@ setMethod(
 
         if (!"nUMI" %in% colnames(colData)) {
             # Calculate on the fly if not stashed
-            metrics <- metrics(
+            metrics <- suppressMessages(metrics(
                 object = counts(object),
                 rowData = rowData(object),
                 prefilter = FALSE
-            )
+            ))
             # Keep only columns unique to colData
             setdiff <- setdiff(colnames(colData), colnames(metrics))
             colData <- colData[, setdiff]
-            data <- cbind(colData, metrics)
-        } else {
-            data <- colData
+            colData <- cbind(colData, metrics)
         }
 
         # Merge sample-level metadata, if stashed
@@ -169,10 +167,9 @@ setMethod(
             clean = FALSE
         )
         if (!length(sampleData)) {
-            message("Sample metadata is empty")
-            data[["sampleID"]] <- factor("unknown")
-            data[["sampleName"]] <- factor("unknown")
-            data[["interestingGroups"]] <- factor("unknown")
+            colData[["sampleID"]] <- factor("unknown")
+            colData[["sampleName"]] <- factor("unknown")
+            colData[["interestingGroups"]] <- factor("unknown")
         } else {
             stopifnot(is(sampleData, "DataFrame"))
             sampleData[["sampleID"]] <- rownames(sampleData)
@@ -182,7 +179,7 @@ setMethod(
             colData <- colData[, setdiff]
             colData[["sampleID"]] <- cell2sample(object)
             colData[["cellID"]] <- rownames(colData)
-            data <- merge(
+            colData <- merge(
                 x = colData,
                 y = sampleData,
                 by = "sampleID",
@@ -193,7 +190,7 @@ setMethod(
                 .[rownames(colData), , drop = FALSE]
         }
 
-        as.data.frame(data)
+        as.data.frame(colData)
     }
 )
 
