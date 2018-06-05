@@ -182,10 +182,7 @@ readCellRanger <- function(
         assert_all_are_existing_files(refJSONFile)
         refJSON <- read_json(refJSONFile)
         # Convert the GTF file to GRanges
-        gffFile <- refJSON %>%
-            .[["input_gtf_files"]] %>%
-            unlist() %>%
-            unique()
+        gffFile <- file.path(refdataDir, "genes", "genes.gtf")
         assert_is_a_string(gffFile)
         rowRanges <- makeGRangesFromGFF(gffFile)
         # Get the Ensembl version from the GTF file name.
