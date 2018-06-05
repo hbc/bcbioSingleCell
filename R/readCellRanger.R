@@ -3,15 +3,12 @@
 #' Read [10x Genomics Chromium](https://www.10xgenomics.com/software/) cell
 #' counts from `barcodes.tsv`, `genes.tsv`, and `matrix.mtx` files.
 #'
-#' @details This function is a variant of the main [bcbioSingleCell()]
-#'   constructor, but optimized for handling Cell Ranger output.
-#'
-#' @section Directory Structure:
+#' @section Directory structure:
 #' Cell Ranger can vary in its output directory structure, but we're requiring a
 #' single, consistent data structure for datasets containing multiple samples.
 #' Note that Cell Ranger data may not always contain per sample subdirectories,
-#' or the "outs" subdirectory. We may make this more flexible in the future, but
-#' for now we're making this strict to ensure reproducibility.
+#' or the "`outs`" subdirectory. We may make this more flexible in the future,
+#' but for now we're making this strict to ensure reproducibility.
 #'
 #' \preformatted{
 #' file.path(
@@ -26,17 +23,17 @@
 #' }
 #'
 #' @section Sample metadata:
-#' A user-defined sample metadata file (`sampleMetadataFile`) is required for
-#' multiplexed datasets. Otherwise this can be left `NULL`, and minimal sample
-#' data will be used, based on the directory names.
+#' A user-supplied sample metadata file defined by `sampleMetadataFile` is
+#' required for multiplexed datasets. Otherwise this can be left `NULL`, and
+#' minimal sample data will be used, based on the directory names.
 #'
-#' @section Reference Data:
+#' @section Reference data:
 #' We strongly recommend supplying the corresponding reference data required for
 #' Cell Ranger with the `refdataDir` argument. When set, the function will
 #' detect the `organism`, `ensemblRelease`, and `genomeBuild` automatically,
 #' based on the 10X `refdataDir` YAML metadata. Additionally, it will convert
-#' the gene annotations defined in the GTF file into `GRanges`, which get
-#' slotted in [rowRanges()]. Otherwise, the function will attempt to use the
+#' the gene annotations defined in the GTF file into a `GRanges` object, which
+#' get slotted in [rowRanges()]. Otherwise, the function will attempt to use the
 #' most current annotations available from Ensembl, and some gene IDs may not
 #' match, due to deprecation in the current Ensembl release.
 #'
@@ -184,7 +181,7 @@ readCellRanger <- function(
         # Convert the GTF file to GRanges
         gtfFile <- refJSON[["input_gtf_files"]]
         assert_is_a_string(gtfFile)
-        rowRanges <- makeGRangesFromGTF(gtfFile)
+        rowRanges <- makeGRangesFromGFF(gtfFile)
         # Get the Ensembl version from the GTF file name.
         # Example: "Homo_sapiens.GRCh37.82.filtered.gtf"
         ensemblRelease <- gtfFile %>%
