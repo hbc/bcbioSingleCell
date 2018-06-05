@@ -172,8 +172,8 @@ setMethod(
         )
         if (!length(sampleData)) {
             message("Sample metadata is empty")
-            data[["sampleID"]] <- "unknown"
-            data[["sampleName"]] <- "unknown"
+            data[["sampleID"]] <- factor("unknown")
+            data[["sampleName"]] <- factor("unknown")
         } else {
             stopifnot(is(sampleData, "DataFrame"))
             sampleData[["sampleID"]] <- rownames(sampleData)
