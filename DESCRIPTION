@@ -106,6 +106,7 @@ Suggests:
     MAST (>= 1.4),
     scater,
     scran,
+    splatter,
     testthat,
     zinbwave (>= 1.0),
     zingeR (>= 0.1)
