@@ -1,16 +1,12 @@
-#' Update Object
-#'
-#' Update old objects created by the bcbioSingleCell package. The session
-#' information metadata is preserved from the time when the bcbio data was
-#' originally loaded into R.
+#' Update an Object to Its Current Class Definition
 #'
 #' @name updateObject
 #' @family S4 Object
 #' @author Michael Steinbaugh
 #'
-#' @importFrom BiocGenerics updateObject
+#' @inherit BiocGenerics::updateObject
 #'
-#' @inheritParams general
+#' @importFrom BiocGenerics updateObject
 #'
 #' @return `bcbioRNASeq`.
 #'
