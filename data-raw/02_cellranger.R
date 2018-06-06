@@ -48,12 +48,12 @@ saveData(pbmc4k, dir = "~")
 counts <- counts(pbmc4k)
 
 # Subset the matrix to include only the top genes and cells
-top_genes <- rowSums(counts) %>%
+top_genes <- Matrix::rowSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
 genes <- sort(names(top_genes))
 
-top_cells <- colSums(counts) %>%
+top_cells <- Matrix::colSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
 cells <- sort(names(top_cells))
