@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
-Description: Import and analyze bcbio single-cell RNA-seq data.
-Version: 0.1.14
+Description: Toolkit for bcbio single-cell analysis.
+Version: 0.1.15
 Authors@R: c(
     person(
         given = "Michael",
