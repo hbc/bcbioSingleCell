@@ -85,7 +85,7 @@ bcbioSingleCell <- setClass(
 #' validObject(x)
 bcbioSingleCell <- function(
     uploadDir,
-    organism,
+    organism = NULL,
     sampleMetadataFile = NULL,
     interestingGroups = "sampleName",
     ensemblRelease = NULL,
@@ -110,15 +110,15 @@ bcbioSingleCell <- function(
         ensemblRelease <- call[["ensemblVersion"]]
         dots[["ensemblVersion"]] <- NULL
     }
-    # organism missing
-    if (!"organism" %in% names(call)) {
-        stop("`organism` is now required")
-    }
     # gtfFile
     if ("gtfFile" %in% names(call)) {
         warning("Use `gffFile` instead of `gtfFile`")
         gffFile <- call[["gtfFile"]]
         dots[["gtfFile"]] <- NULL
+    }
+    # organism
+    if (!"organism" %in% names(call)) {
+        warning("`organism` is now recommended, to acquire gene annotations")
     }
     dots <- Filter(Negate(is.null), dots)
 

@@ -1,6 +1,7 @@
 library(bcbioSingleCell)
 library(Seurat)
 
+library(conflicted)
 library(knitr)
 library(rmarkdown)
 library(tidyverse)
