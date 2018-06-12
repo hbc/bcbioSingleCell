@@ -62,7 +62,7 @@ Imports:
     assertive.sets,
     assertive.strings,
     assertive.types,
-    basejump (>= 0.5.8),
+    basejump (>= 0.5.9),
     Biobase,
     BiocGenerics,
     cowplot,
