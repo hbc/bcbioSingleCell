@@ -44,9 +44,11 @@ addons:
 
 env:
   global:
+    - _R_CHECK_FORCE_SUGGESTS_=true
+    - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
+    - HDF5_VERSION=1.8.17
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
-    - _R_CHECK_FORCE_SUGGESTS_=true
 
 # r_build_args: "--no-build-vignettes"
 # r_check_args: "--no-vignettes"
