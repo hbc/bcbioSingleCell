@@ -98,6 +98,7 @@ Imports:
 Suggests:
     BiocParallel,
     BiocStyle,
+    conflicted,
     DESeq2 (>= 1.20),
     DropletUtils,
     edgeR (>= 3.22),
