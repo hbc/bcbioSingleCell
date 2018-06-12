@@ -6,7 +6,7 @@
 \alias{bcbioSingleCell-class}
 \title{\code{bcbioSingleCell} Object and Constructor}
 \usage{
-bcbioSingleCell(uploadDir, organism, sampleMetadataFile = NULL,
+bcbioSingleCell(uploadDir, organism = NULL, sampleMetadataFile = NULL,
   interestingGroups = "sampleName", ensemblRelease = NULL,
   genomeBuild = NULL, transgeneNames = NULL, spikeNames = NULL,
   gffFile = NULL, ...)
