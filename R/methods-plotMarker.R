@@ -384,7 +384,7 @@ setMethod(
             }
 
             markdownHeader(
-                paste("Cluster", cluster),
+                text = paste("Cluster", cluster),
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE
@@ -392,7 +392,7 @@ setMethod(
 
             lapply(genes, function(gene) {
                 markdownHeader(
-                    object = gene,
+                    text = gene,
                     level = headerLevel + 1L,
                     asis = TRUE
                 )
@@ -447,7 +447,7 @@ setMethod(
             assert_is_non_empty(genes)
 
             markdownHeader(
-                object = cellType,
+                text = cellType,
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE
@@ -455,7 +455,7 @@ setMethod(
 
             lapply(genes, function(gene) {
                 markdownHeader(
-                    object = gene,
+                    text = gene,
                     level = headerLevel + 1L,
                     asis = TRUE
                 )
