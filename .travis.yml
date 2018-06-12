@@ -27,6 +27,11 @@ branches:
 #   only:
 #   - master
 
+# Required to compile Seurat from source
+before_install:
+  - chmod +x travis_setup.sh
+  - ./travis_setup.sh
+
 # External dependencies
 # dependency for gsl > copula > zinbwave
 # dependency for hdf5r > Seurat
@@ -35,7 +40,7 @@ addons:
     update: true
     packages:
       - libgsl-dev
-      - libhdf5-dev
+      # - libhdf5-dev
 
 env:
   global:
