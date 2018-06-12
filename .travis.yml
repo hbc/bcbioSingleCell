@@ -40,14 +40,14 @@ addons:
     update: true
     packages:
       - libgsl-dev
-      # - libhdf5-dev
+      - libhdf5-dev
 
 env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_=true
     - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
     - HDF5_VERSION=1.8.17
-    - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+    # - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
 
