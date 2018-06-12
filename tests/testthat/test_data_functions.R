@@ -403,6 +403,7 @@ test_that("topBarcodes : SingleCellExperiment", {
             log10GenesPerUMI = "numeric",
             mitoRatio = "numeric",
             sampleName = "factor",
+            description = "factor",
             index = "factor",
             interestingGroups = "factor"
         )
