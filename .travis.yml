@@ -29,11 +29,13 @@ branches:
 
 # External dependencies
 # dependency for gsl > copula > zinbwave
+# dependency for hdf5r > Seurat
 addons:
   apt:
     update: true
     packages:
       - libgsl-dev
+      - libhdf5-dev
 
 env:
   global:
