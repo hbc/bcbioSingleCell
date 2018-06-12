@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.14</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.15</span>
       </span>
     </div>
 
@@ -157,7 +157,7 @@ and arranged by <code>nUMI</code> column in descending order.</p>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>cellranger_small</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 10
-#&gt; Variables: 11
+#&gt; Variables: 12
 #&gt; $ cellID            &lt;chr&gt; "pbmc4k_1_GGATTACCATAGGATA", "pbmc4k_1_CTCTGGTAGG...
 #&gt; $ sampleID          &lt;fct&gt; pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k_1,...
 #&gt; $ nUMI              &lt;int&gt; 48443, 26128, 23059, 21195, 21125, 21026, 20176, ...
@@ -167,6 +167,7 @@ and arranged by <code>nUMI</code> column in descending order.</p>
 #&gt; $ log10GenesPerUMI  &lt;dbl&gt; 0.7940360, 0.8271912, 0.8289028, 0.8261835, 0.840...
 #&gt; $ mitoRatio         &lt;dbl&gt; 0.01905332, 0.08148347, 0.02736459, 0.02297712, 0...
 #&gt; $ sampleName        &lt;fct&gt; pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, p...
+#&gt; $ description       &lt;fct&gt; pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, p...
 #&gt; $ index             &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 #&gt; $ interestingGroups &lt;fct&gt; pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, p...</div></pre>
   </div>
