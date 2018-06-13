@@ -100,7 +100,7 @@ setMethod(
             plot_grid(plotlist = plotlist)
         } else if (return == "markdown") {
             markdownHeader(
-                "Filtered quality control metrics",
+                text = "Filtered quality control metrics",
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE

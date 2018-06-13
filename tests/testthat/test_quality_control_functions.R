@@ -126,6 +126,7 @@ test_that("metrics : seurat", {
             res.0.8 = "character",
             ident = "factor",
             sampleName = "factor",
+            description = "factor",
             index = "factor",
             interestingGroups = "factor"
         )

@@ -63,7 +63,7 @@ setMethod(
 
         return <- pblapply(clusters, function(cluster) {
             markdownHeader(
-                paste("Cluster", cluster),
+                text = paste("Cluster", cluster),
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE
@@ -78,7 +78,7 @@ setMethod(
                     .[[1L]]
                 title <- pull(cellType, "cellType")
                 markdownHeader(
-                    title,
+                    text = title,
                     level = headerLevel + 1L,
                     asis = TRUE
                 )

@@ -1,3 +1,13 @@
+# bcbioSingleCell 0.1.15 (2018-06-13)
+
+## Minor changes
+
+- Updated internal code to use `text` as primary argument in `markdownHeader()` calls.
+- Updated example datasets and unit tests to match.
+- Working on using pbmc4k as example dataset for vignette.
+
+
+
 # bcbioSingleCell 0.1.14 (2018-06-05)
 
 ## Major changes

@@ -1,12 +1,13 @@
+^_pkgdown\.yml$
 ^.*\.Rproj$
+^\.httr-oauth$
 ^\.lintr$
 ^\.Rprofile$
 ^\.Rproj\.user$
 ^\.travis\.yml$
+^appveyor\.yml$
 ^CONTRIBUTING\.md$
 ^data-raw$
 ^docs$
-^_pkgdown\.yml$
 ^pkgdown$
-^\.httr-oauth$
-^appveyor\.yml$
+^travis_setup\.sh$

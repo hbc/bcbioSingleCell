@@ -1,9 +1,7 @@
 # Cell Ranger Example Data
-# 2018-06-04
+# 2018-06-13
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
-
-
 
 library(assertive)
 library(devtools)
@@ -48,12 +46,12 @@ saveData(pbmc4k, dir = "~")
 counts <- counts(pbmc4k)
 
 # Subset the matrix to include only the top genes and cells
-top_genes <- rowSums(counts) %>%
+top_genes <- Matrix::rowSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
 genes <- sort(names(top_genes))
 
-top_cells <- colSums(counts) %>%
+top_cells <- Matrix::colSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
 cells <- sort(names(top_cells))

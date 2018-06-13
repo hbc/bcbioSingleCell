@@ -6,10 +6,10 @@ cache: packages
 
 r:
   - bioc-release
-  - bioc-devel
+  # - bioc-devel
 
 os:
-  - linux
+  # - linux
   - osx
 
 matrix:
@@ -27,19 +27,29 @@ branches:
 #   only:
 #   - master
 
+# Required to compile Seurat from source
+# before_install:
+#   - chmod +x travis_setup.sh
+#   - ./travis_setup.sh
+
 # External dependencies
 # dependency for gsl > copula > zinbwave
+# dependency for hdf5r > Seurat
 addons:
   apt:
     update: true
     packages:
       - libgsl-dev
+      # - libhdf5-dev
 
 env:
   global:
+    - _R_CHECK_FORCE_SUGGESTS_=true
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
-    - _R_CHECK_FORCE_SUGGESTS_=true
+    # - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
+    # - HDF5_VERSION=1.8.17
+    # - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # r_build_args: "--no-build-vignettes"
 # r_check_args: "--no-vignettes"
@@ -62,6 +72,7 @@ r_packages:
 bioc_packages:
   - BiocCheck
   - GenomeInfoDbData
+  - S4Vectors
   - EnsDb.Hsapiens.v75
 r_github_packages:
   - jimhester/lintr

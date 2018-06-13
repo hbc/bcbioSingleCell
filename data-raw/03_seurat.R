@@ -1,5 +1,6 @@
 # seurat_small
-# 2018-06-04
+# 2018-06-13
+
 library(devtools)
 library(Seurat)
 load_all()
