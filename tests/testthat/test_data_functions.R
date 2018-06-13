@@ -33,9 +33,10 @@ test_that("fetchPCAData", {
             log10GenesPerUMI = "numeric",
             mitoRatio = "numeric",
             orig.ident = "factor",
-            res.0.8 = "character",  # factor
+            res.0.8 = "character",
             ident = "factor",
             sampleName = "factor",
+            description = "factor",
             index = "factor",
             interestingGroups = "factor",
             PC1 = "numeric",
@@ -63,6 +64,7 @@ test_that("fetchPCAData", {
         res.0.8 = "3",
         ident = factor("3", levels = c("0", "1", "2", "3", "4", "5")),
         sampleName = factor("pbmc4k"),
+        description = factor("pbmc4k"),
         index = factor("1"),
         interestingGroups = factor("pbmc4k"),
         PC1 = 2.44,
@@ -96,6 +98,7 @@ test_that("fetchTSNEData", {
             res.0.8 = "character",
             ident = "factor",
             sampleName = "factor",
+            description = "factor",
             index = "factor",
             interestingGroups = "factor",
             tSNE_1 = "numeric",
@@ -123,6 +126,7 @@ test_that("fetchTSNEData", {
         res.0.8 = "3",
         ident = factor("3", levels = c("0", "1", "2", "3", "4", "5")),
         sampleName = factor("pbmc4k"),
+        description = factor("pbmc4k"),
         index = factor("1"),
         interestingGroups = factor("pbmc4k"),
         tSNE_1 = 4.55,
@@ -158,6 +162,7 @@ test_that("fetchTSNEExpressionData", {
             res.0.8 = "character",
             ident = "factor",
             sampleName = "factor",
+            description = "factor",
             index = "factor",
             interestingGroups = "factor",
             tSNE_1 = "numeric",
@@ -187,6 +192,7 @@ test_that("fetchTSNEExpressionData", {
         res.0.8 = "3",
         ident = factor("3", levels = c("0", "1", "2", "3", "4", "5")),
         sampleName = factor("pbmc4k"),
+        description = factor("pbmc4k"),
         index = factor("1"),
         interestingGroups = factor("pbmc4k"),
         tSNE_1 = 4.55,
@@ -315,6 +321,7 @@ test_that("sampleData : seurat", {
         lapply(x, class),
         list(
             sampleName = "factor",
+            description = "factor",
             index = "factor",
             interestingGroups = "factor"
         )
@@ -429,6 +436,7 @@ test_that("topBarcodes : seurat", {
             res.0.8 = "character",
             ident = "factor",
             sampleName = "factor",
+            description = "factor",
             index = "factor",
             interestingGroups = "factor"
         )
