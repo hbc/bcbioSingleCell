@@ -1,5 +1,6 @@
 # indrops_small (harvard-indrop-v3)
-# 2018-06-04
+# 2018-06-13
+
 library(assertive)
 library(devtools)
 library(tidyverse)
@@ -88,6 +89,6 @@ indrops_small <- filterCells(
 )
 
 # Require 500 cells, 500 genes
-stopifnot(identical(dim(indrops_small), c(500L, 500L)))
+assert_are_identical(dim(indrops_small), c(500L, 500L))
 
 use_data(indrops_small, compress = "xz", overwrite = TRUE)

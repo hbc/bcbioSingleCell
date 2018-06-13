@@ -1,9 +1,7 @@
 # Cell Ranger Example Data
-# 2018-06-04
+# 2018-06-13
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
-
-
 
 library(assertive)
 library(devtools)
