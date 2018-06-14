@@ -6,10 +6,10 @@ cache: packages
 
 r:
   - bioc-release
-  # - bioc-devel
+  - bioc-devel
 
 os:
-  # - linux
+  - linux
   - osx
 
 matrix:
@@ -28,6 +28,7 @@ branches:
 #   - master
 
 # Required to compile Seurat from source
+# https://github.com/hhoeflin/hdf5r/blob/master/travis_setup.sh
 # before_install:
 #   - chmod +x travis_setup.sh
 #   - ./travis_setup.sh
