@@ -1,5 +1,5 @@
 # seurat_small
-# 2018-06-13
+# 2018-06-15
 
 library(devtools)
 library(Seurat)
@@ -13,13 +13,17 @@ seurat_small <- cellranger_small %>%
     FindVariableGenes(do.plot = FALSE) %>%
     ScaleData() %>%
     RunPCA(do.print = FALSE) %>%
-    FindClusters(dims.use = dims_use) %>%
+    FindClusters(
+        dims.use = dims_use,
+        resolution = seq(from = 0.2, to = 1, by = 0.2)
+    ) %>%
+    SetAllIdent(id = "res.0.8") %>%
     RunTSNE(
         reduction.use = "pca",
         dims.use = dims_use,
         tsne.method = "Rtsne"
     ) %>%
-    # Requires `umap-learn` python package
+    # Requires `umap-learn` Python package
     RunUMAP(
         reduction.use = "pca",
         dims.use = dims_use,
