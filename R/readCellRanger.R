@@ -210,13 +210,8 @@ readCellRanger <- function(
         rowRangesMetadata <- ah[["metadata"]]
         assert_is_data.frame(rowRangesMetadata)
     }
-
-    # Require gene-to-symbol mappings
-    assert_is_subset(
-        x = c("geneID", "geneName"),
-        y = names(mcols(rowRanges))
-    )
-
+    assert_is_subset(rownames(counts), names(rowRanges))
+    assert_is_subset(c("geneID", "geneName"), names(mcols(rowRanges)))
     rowData <- as.data.frame(rowRanges)
     rownames(rowData) <- names(rowRanges)
 
