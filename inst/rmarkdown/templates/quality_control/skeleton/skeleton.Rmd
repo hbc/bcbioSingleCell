@@ -20,10 +20,10 @@ params:
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
-# Load bcbioSingleCell object
+# Load SingleCellExperiment object
 bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
-stopifnot(is(bcb, "bcbioSingleCell"))
+stopifnot(is(bcb, "SingleCellExperiment"))
 invisible(validObject(bcb))
 
 # Temporarily set to `sampleName`
@@ -37,6 +37,7 @@ interestingGroups(bcb) <- "sampleName"
 
 
 ```{r sample_data}
+# getMethod("sampleData", "SingleCellExperiment")
 sampleData(bcb, return = "data.frame")
 ```
 

@@ -16,7 +16,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-29
+# Last modified 2018-06-15
 
 # Highly recommended to run this template on an HPC cluster
 # stopifnot(detectHPC())
@@ -24,10 +24,10 @@ params:
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
-# Load bcbioSingleCell object
+# Load SingleCellExperiment object
 bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
-stopifnot(is(bcb, "bcbioSingleCell"))
+stopifnot(is(bcb, "SingleCellExperiment"))
 invisible(validObject(bcb))
 
 # Vector to use for dimensional reduction plot looping
