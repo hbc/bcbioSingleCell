@@ -368,7 +368,7 @@ bcbioSingleCell <- function(
     } else {
         rowRanges <- emptyRanges(rownames(counts))
     }
-
+    assert_is_subset(rownames(counts), names(rowRanges))
     rowData <- as.data.frame(rowRanges)
     rownames(rowData) <- names(rowRanges)
 
