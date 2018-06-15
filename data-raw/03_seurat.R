@@ -6,7 +6,7 @@ library(Seurat)
 load_all()
 
 # seurat_small =================================================================
-dims_use <- seq_len(20L)
+dims_use <- seq_len(10L)
 seurat_small <- cellranger_small %>%
     as("seurat") %>%
     NormalizeData() %>%
@@ -17,7 +17,6 @@ seurat_small <- cellranger_small %>%
         dims.use = dims_use,
         resolution = seq(from = 0.2, to = 1, by = 0.2)
     ) %>%
-    SetAllIdent(id = "res.0.8") %>%
     RunTSNE(
         reduction.use = "pca",
         dims.use = dims_use,
@@ -28,7 +27,8 @@ seurat_small <- cellranger_small %>%
         reduction.use = "pca",
         dims.use = dims_use,
         min_dist = 0.75
-    )
+    ) %>%
+    SetAllIdent(id = "res.0.8")
 
 # all_markers_small ============================================================
 all_markers_small <- FindAllMarkers(seurat_small)
