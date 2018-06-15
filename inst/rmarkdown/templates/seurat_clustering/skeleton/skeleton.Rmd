@@ -9,7 +9,8 @@ params:
     pc_compute: 20
     dims_use: FALSE
     vars_to_regress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
-    resolution: 1
+    resolution_calc: !r seq(from = 0.4, to = 1.2, by = 0.4)
+    resolution_use: 0.8
     dark: FALSE
     umap: FALSE
     data_dir: !r file.path("data", Sys.Date())
@@ -310,15 +311,13 @@ Regarding the value of the `resolution` argument, use a value < 1 if you want to
 seurat <- FindClusters(
     object = seurat,
     dims.use = dims_use,
-    k.param = 30,
-    force.recalc = TRUE,
-    print.output = TRUE,
     resolution = params$resolution,
-    save.SNN = TRUE
+    save.SNN = TRUE,
+    force.recalc = TRUE
 )
 ```
 
-A useful feature in [Seurat][] v2.0 is the ability to recall the parameters that were used in the latest function calls for commonly used functions. For FindClusters, we provide the function PrintFindClustersParams to print a nicely formatted formatted summary of the parameters that were chosen.
+A useful feature in [Seurat][] v2.0 is the ability to recall the parameters that were used in the latest function calls for commonly used functions. For `FindClusters()`, the authors provide the function `PrintFindClustersParams()` to print a nicely formatted formatted summary of the parameters that were chosen.
 
 ```{r print_find_clusters_params}
 PrintFindClustersParams(seurat)
@@ -326,7 +325,7 @@ PrintFindClustersParams(seurat)
 
 
 
-# Run non-linear dimensional reduction {.tabset}
+# Run non-linear dimensional reduction
 
 ## t-SNE {.tabset}
 
@@ -350,17 +349,19 @@ invisible(lapply(
     X = dim_red_groups,
     FUN = function(group) {
         markdownHeader(group, level = 3, asis = TRUE, tabset = TRUE)
-        show(plotTSNE(
-            object = seurat,
-            interestingGroups = group,
-            dark = params$dark
-        ))
-        show(plotTSNE(
-            object = seurat,
-            interestingGroups = group,
-            dark = params$dark,
-            pointsAsNumbers = TRUE
-        ))
+        lapply(
+            X = params$resolution_calc,
+            FUN = function(res) {
+                res_col <- paste("res", res, sep = ".")
+                markdownHeader(res_col, level = 4, asis = TRUE, tabset = TRUE)
+                seurat <- SetAllIdent(seurat, id = res_col)
+                show(plotTSNE(
+                    object = seurat,
+                    interestingGroups = group,
+                    dark = params$dark
+                ))
+            }
+        )
     }
 ))
 ```
@@ -389,17 +390,19 @@ invisible(lapply(
     X = dim_red_groups,
     FUN = function(group) {
         markdownHeader(group, level = 3, asis = TRUE, tabset = TRUE)
-        show(plotUMAP(
-            object = seurat,
-            interestingGroups = group,
-            dark = params$dark
-        ))
-        show(plotUMAP(
-            object = seurat,
-            interestingGroups = group,
-            dark = params$dark,
-            pointsAsNumbers = TRUE
-        ))
+        lapply(
+            X = params$resolution_calc,
+            FUN = function(res) {
+                res_col <- paste("res", res, sep = ".")
+                markdownHeader(res_col, level = 4, asis = TRUE, tabset = TRUE)
+                seurat <- SetAllIdent(seurat, id = res_col)
+                show(plotUMAP(
+                    object = seurat,
+                    interestingGroups = group,
+                    dark = params$dark
+                ))
+            }
+        )
     }
 ))
 ```
@@ -407,26 +410,43 @@ invisible(lapply(
 
 ## PCA {.tabset}
 
-Note that t-SNE/UMAP is not PCA! The measurement of distance in a t-SNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's reapply PCA.
+Note that t-SNE/UMAP is not PCA! The measurement of distance in a t-SNE plot is difficult to interpret, and is most helpful for the relationships of close neighbors. To better infer separation distance between the putative clusters, let's visualizing using PCA.
 
 ```{r plot_pca, results="asis"}
 invisible(lapply(
     X = dim_red_groups,
     FUN = function(group) {
         markdownHeader(group, level = 3, asis = TRUE, tabset = TRUE)
-        show(plotPCA(
-            object = seurat,
-            interestingGroups = group,
-            dark = params$dark
-        ))
-        show(plotPCA(
-            object = seurat,
-            interestingGroups = group,
-            dark = params$dark,
-            pointsAsNumbers = TRUE
-        ))
+        lapply(
+            X = params$resolution_calc,
+            FUN = function(res) {
+                res_col <- paste("res", res, sep = ".")
+                markdownHeader(res_col, level = 4, asis = TRUE, tabset = TRUE)
+                seurat <- SetAllIdent(seurat, id = res_col)
+                show(plotPCA(
+                    object = seurat,
+                    interestingGroups = group,
+                    dark = params$dark
+                ))
+            }
+        )
     }
 ))
+```
+
+
+
+# Pick resolution to use
+
+Pick the resolution to use, if multiple are stashed.
+
+```{r resolution_use}
+if (!is.null(params$set_all_ident)) {
+    seurat <- SetAllIdent(
+        object = seurat,
+        id = paste("res", params$resolution_use, sep = ".")
+    )
+}
 ```
 
 
