@@ -311,7 +311,7 @@ Regarding the value of the `resolution` argument, use a value < 1 if you want to
 seurat <- FindClusters(
     object = seurat,
     dims.use = dims_use,
-    resolution = params$resolution,
+    resolution = params$resolution_calc,
     save.SNN = TRUE,
     force.recalc = TRUE
 )
