@@ -20,6 +20,17 @@ setGeneric(
 
 
 
+#' @rdname cellsPerCluster
+#' @export
+setGeneric(
+    "cellsPerCluster",
+    function(object, ...) {
+        standardGeneric("cellsPerCluster")
+    }
+)
+
+
+
 #' @rdname cellTypesPerCluster
 #' @export
 setGeneric(
