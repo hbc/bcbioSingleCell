@@ -146,6 +146,9 @@ setMethod(
     function(object, interestingGroups) {
         validObject(object)
         colData <- colData(object)
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
 
         if (!"nUMI" %in% colnames(colData)) {
             # Calculate on the fly if not stashed
