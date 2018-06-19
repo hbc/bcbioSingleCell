@@ -24,5 +24,6 @@ clusterCellCountsPerSample(object, ...)
 Cluster Cell Counts per Sample
 }
 \examples{
+# seurat ====
 clusterCellCountsPerSample(seurat_small)
 }

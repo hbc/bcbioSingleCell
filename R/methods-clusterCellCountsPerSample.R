@@ -7,6 +7,7 @@
 #' @return `tibble` grouped by "`sampleName" column, arranged by abundance.
 #'
 #' @examples
+#' # seurat ====
 #' clusterCellCountsPerSample(seurat_small)
 NULL
 

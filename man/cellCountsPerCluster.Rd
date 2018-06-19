@@ -27,10 +27,5 @@ Cell Counts per Cluster
 }
 \examples{
 # seurat ====
-# list
-x <- cellCountsPerCluster(seurat_small, return = "list")
-names(x)
-
-# markdown
-cellCountsPerCluster(seurat_small, return = "markdown")
+cellCountsPerCluster(seurat_small)
 }
