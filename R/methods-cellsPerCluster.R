@@ -66,9 +66,9 @@ setMethod(
                 metrics %>%
                     arrange(!!!syms(interestingGroups)) %>%
                     group_by(!!!syms(interestingGroups)) %>%
-                    summarize(count = n()) %>%
+                    summarize(n = n()) %>%
                     group_by(!!!syms(interestingGroups)) %>%
-                    mutate(pct = !!sym("count") / sum(!!sym("count")))
+                    mutate(ratio = !!sym("n") / sum(!!sym("n")))
             }
         )
         names(list) <- levels(ident)
