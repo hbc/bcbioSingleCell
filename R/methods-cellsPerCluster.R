@@ -7,9 +7,11 @@
 #'
 #' @examples
 #' # seurat ====
+#' # list
 #' x <- cellsPerCluster(seurat_small, return = "list")
 #' names(x)
 #'
+#' # markdown
 #' cellsPerCluster(seurat_small, return = "markdown")
 NULL
 
