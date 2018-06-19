@@ -67,8 +67,8 @@ setMethod(
                     arrange(!!!syms(interestingGroups)) %>%
                     group_by(!!!syms(interestingGroups)) %>%
                     summarize(n = n()) %>%
-                    group_by(!!!syms(interestingGroups)) %>%
-                    mutate(ratio = !!sym("n") / sum(!!sym("n")))
+                    mutate(ratio = !!sym("n") / sum(!!sym("n"))) %>%
+                    group_by(!!!syms(interestingGroups))
             }
         )
         names(list) <- levels(ident)
