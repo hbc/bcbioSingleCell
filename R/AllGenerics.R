@@ -20,12 +20,12 @@ setGeneric(
 
 
 
-#' @rdname cellsPerCluster
+#' @rdname cellCountsPerCluster
 #' @export
 setGeneric(
-    "cellsPerCluster",
+    "cellCountsPerCluster",
     function(object, ...) {
-        standardGeneric("cellsPerCluster")
+        standardGeneric("cellCountsPerCluster")
     }
 )
 
@@ -37,6 +37,17 @@ setGeneric(
     "cellTypesPerCluster",
     function(object, ...) {
         standardGeneric("cellTypesPerCluster")
+    }
+)
+
+
+
+#' @rdname clusterCellCountsPerSample
+#' @export
+setGeneric(
+    "clusterCellCountsPerSample",
+    function(object, ...) {
+        standardGeneric("clusterCellCountsPerSample")
     }
 )
 
