@@ -362,7 +362,8 @@ setMethod(
         # Obtain the read counts. Use the unfiltered reads stashed in the
         # metadata if available, otherwise use the metrics return.
         cbList <- metadata(object)[["cellularBarcodes"]]
-        if (is.list(cbList)) {
+        if (length(cbList)) {
+            # FIXME Note that `selectSamples()` currently drops this list
             data <- .bindCellularBarcodes(cbList)
         } else {
             data <- metrics(object)
