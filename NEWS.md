@@ -1,4 +1,4 @@
-# bcbioSingleCell (2018-06-20)
+# bcbioSingleCell 0.1.16 (2018-06-20)
 
 ## New functions
 
