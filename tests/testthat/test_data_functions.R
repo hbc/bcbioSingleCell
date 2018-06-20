@@ -302,52 +302,20 @@ test_that("subsetPerSample : bcbioSingleCell", {
 
 # topBarcodes ==================================================================
 test_that("topBarcodes : SingleCellExperiment", {
-    x <- topBarcodes(cellranger_small)
-    expect_is(x, "grouped_df")
+    # data.frame
+    x <- topBarcodes(cellranger_small, return = "data.frame")
     expect_identical(dplyr::group_vars(x), "sampleID")
     expect_identical(
         lapply(x, class),
         list(
-            cellID = "character",
             sampleID = "factor",
-            nUMI = "integer",
-            nGene = "integer",
-            nCoding = "integer",
-            nMito = "integer",
-            log10GenesPerUMI = "numeric",
-            mitoRatio = "numeric",
             sampleName = "factor",
-            description = "factor",
-            index = "factor",
-            interestingGroups = "factor"
+            nUMI = "integer",
+            cellID = "character"
         )
     )
-})
 
-test_that("topBarcodes : seurat", {
-    x <- topBarcodes(seurat_small)
-    expect_is(x, "grouped_df")
-    expect_identical(dplyr::group_vars(x), "sampleID")
-    expect_identical(
-        lapply(x, class),
-        list(
-            cellID = "character",
-            sampleID = "factor",
-            nGene = "integer",
-            nUMI = "integer",
-            nCoding = "integer",
-            nMito = "integer",
-            log10GenesPerUMI = "numeric",
-            mitoRatio = "numeric",
-            orig.ident = "factor",
-            res.0.4 = "character",
-            res.0.8 = "character",
-            res.1.2 = "character",
-            ident = "factor",
-            sampleName = "factor",
-            description = "factor",
-            index = "factor",
-            interestingGroups = "factor"
-        )
-    )
+    # list
+    x <- topBarcodes(cellranger_small, return = "list")
+    expect_is(x, "list")
 })

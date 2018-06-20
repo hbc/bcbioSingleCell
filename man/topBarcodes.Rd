@@ -11,10 +11,10 @@
 topBarcodes(object, ...)
 
 \S4method{topBarcodes}{SingleCellExperiment}(object, n = 1000L,
-  return = c("list", "tibble"))
+  return = c("data.frame", "list"))
 
-\S4method{topBarcodes}{seurat}(object, n = 1000L, return = c("list",
-  "tibble"))
+\S4method{topBarcodes}{seurat}(object, n = 1000L, return = c("data.frame",
+  "list"))
 }
 \arguments{
 \item{object}{Object.}
@@ -30,8 +30,8 @@ to the first argument in the vector.}
 \itemize{
 \item "\code{list}": \code{list} containing top barcodes as a \code{character} vector, split by
 \code{sampleID}.
-\item "\code{tibble}": \code{tibble} grouped by \code{sampleID} and arranged by \code{nUMI} column in
-descending order. Cellular barcodes are in the \code{cellID} column.
+\item "\code{data.frame}": \code{tibble} grouped by \code{sampleID} and arranged by \code{nUMI}
+column in descending order. Cellular barcodes are in the \code{cellID} column.
 }
 }
 \description{
@@ -39,10 +39,12 @@ Obtain the top cellular barcodes based on UMI counts.
 }
 \examples{
 # SingleCellExperiment ====
+# list
 x <- topBarcodes(cellranger_small, return = "list")
 lapply(x, class)
 
-x <- topBarcodes(cellranger_small, return = "tibble")
+# data.frame
+x <- topBarcodes(cellranger_small, return = "data.frame")
 glimpse(x)
 }
 \seealso{

@@ -12,15 +12,17 @@
 #' @return
 #' - "`list`": `list` containing top barcodes as a `character` vector, split by
 #'   `sampleID`.
-#' - "`tibble`": `tibble` grouped by `sampleID` and arranged by `nUMI` column in
-#'   descending order. Cellular barcodes are in the `cellID` column.
+#' - "`data.frame`": `tibble` grouped by `sampleID` and arranged by `nUMI`
+#'   column in descending order. Cellular barcodes are in the `cellID` column.
 #'
 #' @examples
 #' # SingleCellExperiment ====
+#' # list
 #' x <- topBarcodes(cellranger_small, return = "list")
 #' lapply(x, class)
 #'
-#' x <- topBarcodes(cellranger_small, return = "tibble")
+#' # data.frame
+#' x <- topBarcodes(cellranger_small, return = "data.frame")
 #' glimpse(x)
 NULL
 
@@ -35,7 +37,7 @@ setMethod(
     function(
         object,
         n = 1000L,
-        return = c("list", "tibble")
+        return = c("data.frame", "list")
     ) {
         validObject(object)
         assertIsAnImplicitInteger(n)
@@ -44,7 +46,7 @@ setMethod(
         metrics <- metrics(object)
         cols <- c("sampleID", "sampleName", "nUMI")
         assert_is_subset(cols, colnames(metrics))
-        tbl <- metrics %>%
+        data <- metrics %>%
             as.data.frame() %>%
             rownames_to_column("cellID") %>%
             select(!!!syms(c(cols, "cellID"))) %>%
@@ -52,12 +54,12 @@ setMethod(
             arrange(desc(!!sym("nUMI")), .by_group = TRUE) %>%
             slice(seq_len(n))
 
-        if (return == "list") {
-            tbl %>%
+        if (return == "data.frame") {
+            data
+        } else if (return == "list") {
+            data %>%
                 split(.[["sampleID"]]) %>%
                 map("cellID")
-        } else if (return == "tibble") {
-            tbl
         }
     }
 )
