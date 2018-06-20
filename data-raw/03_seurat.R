@@ -1,5 +1,5 @@
 # seurat_small
-# 2018-06-15
+# 2018-06-20
 
 library(devtools)
 library(Seurat)
@@ -15,7 +15,7 @@ seurat_small <- cellranger_small %>%
     RunPCA(do.print = FALSE) %>%
     FindClusters(
         dims.use = dims_use,
-        resolution = seq(from = 0.2, to = 1, by = 0.2)
+        resolution = seq(from = 0.4, to = 1.2, by = 0.4)
     ) %>%
     RunTSNE(
         reduction.use = "pca",
