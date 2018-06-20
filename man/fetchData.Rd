@@ -11,10 +11,15 @@
 \alias{fetchData}
 \alias{fetchGeneData,SingleCellExperiment-method}
 \alias{fetchGeneData,seurat-method}
+\alias{fetchPCAData,SingleCellExperiment-method}
 \alias{fetchPCAData,seurat-method}
+\alias{fetchTSNEData,SingleCellExperiment-method}
 \alias{fetchTSNEData,seurat-method}
-\alias{fetchTSNEExpressionData,seurat-method}
+\alias{fetchTSNEExpressionData,SingleCellExperiment-method}
+\alias{fetchTSNEData,seurat-method}
+\alias{fetchUMAPData,SingleCellExperiment-method}
 \alias{fetchUMAPData,seurat-method}
+\alias{fetchUMAPExpressionData,SingleCellExperiment-method}
 \alias{fetchUMAPExpressionData,seurat-method}
 \title{Fetch Data Functions}
 \usage{
@@ -34,13 +39,23 @@ fetchUMAPExpressionData(object, ...)
 
 \S4method{fetchGeneData}{seurat}(object, genes)
 
-\S4method{fetchPCAData}{seurat}(object)
+\S4method{fetchPCAData}{SingleCellExperiment}(object, minimal = FALSE)
 
-\S4method{fetchTSNEData}{seurat}(object)
+\S4method{fetchPCAData}{seurat}(object, minimal = FALSE)
 
-\S4method{fetchTSNEExpressionData}{seurat}(object, genes)
+\S4method{fetchTSNEData}{SingleCellExperiment}(object, minimal = FALSE)
 
-\S4method{fetchUMAPData}{seurat}(object)
+\S4method{fetchTSNEData}{seurat}(object, genes)
+
+\S4method{fetchTSNEExpressionData}{SingleCellExperiment}(object, genes)
+
+\S4method{fetchTSNEData}{seurat}(object, genes)
+
+\S4method{fetchUMAPData}{SingleCellExperiment}(object, minimal = FALSE)
+
+\S4method{fetchUMAPData}{seurat}(object, minimal = FALSE)
+
+\S4method{fetchUMAPExpressionData}{SingleCellExperiment}(object, genes)
 
 \S4method{fetchUMAPExpressionData}{seurat}(object, genes)
 }
@@ -50,6 +65,8 @@ fetchUMAPExpressionData(object, ...)
 \item{...}{Additional arguments.}
 
 \item{genes}{Gene identifiers. Must match the rownames of the object.}
+
+\item{minimal}{}
 }
 \value{
 \itemize{
