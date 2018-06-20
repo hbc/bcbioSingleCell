@@ -27,7 +27,7 @@ NULL
 #' @export
 setMethod(
     "plotViolin",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(
         object,
         genes,
@@ -84,4 +84,14 @@ setMethod(
 
         p
     }
+)
+
+
+
+#' @rdname plotViolin
+#' @export
+setMethod(
+    "plotViolin",
+    signature("seurat"),
+    getMethod("plotViolin", "SingleCellExperiment")
 )
