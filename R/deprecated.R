@@ -184,15 +184,4 @@ plotMarkers <- function(...) {
 
 
 
-# v0.1.16 ======================================================================
-#' @rdname differentialExpression
-#' @usage NULL
-#' @export
-diffExp <- function(...) {
-    .Deprecated("differentialExpression")
-    differentialExpression(...)
-}
-
-
-
 # nocov end

@@ -36,7 +36,7 @@
 #' - [zinbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
 #' - [zingeR vignette](https://goo.gl/4rTK1w).
 #'
-#' @name differentialExpression
+#' @name diffExp
 #' @family Differential Expression Functions
 #' @author Michael Steinbaugh
 #'
@@ -78,7 +78,7 @@
 #' glimpse(numerator)
 #' denominator <- Seurat::WhichCells(object, ident = 2L)
 #' glimpse(denominator)
-#' x <- differentialExpression(
+#' x <- diffExp(
 #'     object = object,
 #'     numerator = numerator,
 #'     denominator = denominator,
@@ -266,10 +266,10 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname differentialExpression
+#' @rdname diffExp
 #' @export
 setMethod(
-    "differentialExpression",
+    "diffExp",
     signature("SingleCellExperiment"),
     function(
         object,
@@ -384,10 +384,10 @@ setMethod(
 
 
 
-#' @rdname differentialExpression
+#' @rdname diffExp
 #' @export
 setMethod(
-    "differentialExpression",
+    "diffExp",
     signature("seurat"),
-    getMethod("differentialExpression", "SingleCellExperiment")
+    getMethod("diffExp", "SingleCellExperiment")
 )

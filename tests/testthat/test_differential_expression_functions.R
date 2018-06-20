@@ -2,14 +2,14 @@ context("Differential Expression Functions")
 
 
 
-# differentialExpression =======================================================
+# diffExp ======================================================================
 # Expression in cluster 3 relative to cluster 2
 object <- seurat_small
 numerator <- Seurat::WhichCells(object, ident = 3L)
 denominator <- Seurat::WhichCells(object, ident = 2L)
 
-test_that("differentialExpression : zinbwave-edgeR", {
-    x <- differentialExpression(
+test_that("diffExp : zinbwave-edgeR", {
+    x <- diffExp(
         object = object,
         numerator = numerator,
         denominator = denominator,
@@ -19,8 +19,8 @@ test_that("differentialExpression : zinbwave-edgeR", {
     expect_s4_class(x, "DGELRT")
 })
 
-test_that("differentialExpression : zingeR-edgeR", {
-    x <- differentialExpression(
+test_that("diffExp : zingeR-edgeR", {
+    x <- diffExp(
         object = object,
         numerator = numerator,
         denominator = denominator,
@@ -31,8 +31,8 @@ test_that("differentialExpression : zingeR-edgeR", {
 })
 
 # DESeq2 is still relatively slow
-test_that("differentialExpression : zinbwave-DESeq2", {
-    x <- differentialExpression(
+test_that("diffExp : zinbwave-DESeq2", {
+    x <- diffExp(
         object = object,
         numerator = numerator,
         denominator = denominator,
@@ -45,8 +45,8 @@ test_that("differentialExpression : zinbwave-DESeq2", {
 # nolint start
 # zingeR isn't importing DESeqDataSetFromMatrix correctly
 # Filed an issue on GitHub, need to make a pull request
-# test_that("differentialExpression : zingeR-DESeq2", {
-#     x <- differentialExpression(
+# test_that("diffExp : zingeR-DESeq2", {
+#     x <- diffExp(
 #         object = object,
 #         numerator = numerator,
 #         denominator = denominator,
