@@ -145,13 +145,13 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
         validObject(object)
-        colData <- colData(object)
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
         }
 
+        colData <- colData(object)
+        # Calculate metrics on the fly, if not stashed in colData
         if (!"nUMI" %in% colnames(colData)) {
-            # Calculate on the fly if not stashed
             metrics <- suppressMessages(metrics(
                 object = counts(object),
                 rowData = rowData(object),
@@ -205,7 +205,8 @@ setMethod(
     "metrics",
     signature("seurat"),
     function(object, ...) {
-        sce <- as(object, "SingleCellExperiment")
-        metrics(sce)
+        object %>%
+            as("SingleCellExperiment") %>%
+            metrics()
     }
 )
