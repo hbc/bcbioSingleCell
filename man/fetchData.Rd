@@ -16,7 +16,7 @@
 \alias{fetchTSNEData,SingleCellExperiment-method}
 \alias{fetchTSNEData,seurat-method}
 \alias{fetchTSNEExpressionData,SingleCellExperiment-method}
-\alias{fetchTSNEData,seurat-method}
+\alias{fetchTSNEExpressionData,seurat-method}
 \alias{fetchUMAPData,SingleCellExperiment-method}
 \alias{fetchUMAPData,seurat-method}
 \alias{fetchUMAPExpressionData,SingleCellExperiment-method}
@@ -45,11 +45,11 @@ fetchUMAPExpressionData(object, ...)
 
 \S4method{fetchTSNEData}{SingleCellExperiment}(object, minimal = FALSE)
 
-\S4method{fetchTSNEData}{seurat}(object, genes)
+\S4method{fetchTSNEData}{seurat}(object, minimal = FALSE)
 
 \S4method{fetchTSNEExpressionData}{SingleCellExperiment}(object, genes)
 
-\S4method{fetchTSNEData}{seurat}(object, genes)
+\S4method{fetchTSNEExpressionData}{seurat}(object, genes)
 
 \S4method{fetchUMAPData}{SingleCellExperiment}(object, minimal = FALSE)
 

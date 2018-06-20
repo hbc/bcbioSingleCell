@@ -63,7 +63,10 @@ NULL
 
     data <- slot(object, "reducedDims")[[reduction]]
     if (!is.matrix(data)) {
-        stop(paste(reduction, "dimensional reduction has not been calculated"))
+        stop(
+            paste(reduction, "dimensional reduction has not been calculated"),
+            call. = FALSE
+        )
     }
     if (isTRUE(minimal)) {
         return(data)
