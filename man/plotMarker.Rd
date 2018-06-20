@@ -106,6 +106,9 @@ the dataset, and some cells can be masked.}
 \item \code{\link[=plotKnownMarkersDetected]{plotKnownMarkersDetected()}}: must be grouped by "\code{cellType}".
 }}
 
+\item{reduction}{Dimensional reduction method to apply. Defaults to t-SNE
+("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
+
 \item{headerLevel}{R Markdown header level.}
 }
 \value{
