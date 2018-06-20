@@ -249,14 +249,8 @@ test_that("sampleData : seurat", {
         )
     )
 
-    # Minimal data for other seurat objects
-    expect_identical(
-        sampleData(Seurat::pbmc_small),
-        DataFrame(
-            "sampleName" = factor("SeuratProject"),
-            row.names = "SeuratProject"
-        )
-    )
+    # Return NULL for other seurat objects
+    expect_identical(sampleData(Seurat::pbmc_small), NULL)
 })
 
 
@@ -346,7 +340,9 @@ test_that("topBarcodes : seurat", {
             log10GenesPerUMI = "numeric",
             mitoRatio = "numeric",
             orig.ident = "factor",
+            res.0.4 = "character",
             res.0.8 = "character",
+            res.1.2 = "character",
             ident = "factor",
             sampleName = "factor",
             description = "factor",
