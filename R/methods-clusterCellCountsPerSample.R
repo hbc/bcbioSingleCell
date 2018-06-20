@@ -27,8 +27,9 @@ setMethod(
             arrange(!!!syms(cols)) %>%
             group_by(!!!syms(cols)) %>%
             summarize(n = n()) %>%
+            ungroup() %>%
+            arrange(!!!syms(cols)) %>%
             group_by(!!sym("sampleName")) %>%
-            arrange(desc(!!sym("n")), .by_group = TRUE) %>%
             mutate(ratio = !!sym("n") / sum(!!sym("n")))
     }
 )
