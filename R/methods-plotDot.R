@@ -56,7 +56,7 @@ NULL
 #' @export
 setMethod(
     "plotDot",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(
         object,
         genes,
@@ -121,4 +121,14 @@ setMethod(
 
         p
     }
+)
+
+
+
+#' @rdname plotDot
+#' @export
+setMethod(
+    "plotDot",
+    signature("seurat"),
+    getMethod("plotDot", "SingleCellExperiment")
 )
