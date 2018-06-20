@@ -205,10 +205,7 @@ setMethod(
     "metrics",
     signature("seurat"),
     function(object, ...) {
-        fun <- getMethod("metrics", "SingleCellExperiment")
-        data <- fun(object, ...)
-        # Add ident column
-        data[["ident"]] <- slot(object, "ident")
-        data
+        sce <- as(object, "SingleCellExperiment")
+        metrics(sce)
     }
 )
