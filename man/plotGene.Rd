@@ -3,9 +3,13 @@
 \docType{methods}
 \name{plotGene}
 \alias{plotGene}
+\alias{plotGene,SingleCellExperiment-method}
 \alias{plotGene,seurat-method}
 \title{Plot Gene}
 \usage{
+\S4method{plotGene}{SingleCellExperiment}(object, genes, geom = c("dot",
+  "violin"), legend = FALSE)
+
 \S4method{plotGene}{seurat}(object, genes, geom = c("dot", "violin"),
   legend = FALSE)
 }

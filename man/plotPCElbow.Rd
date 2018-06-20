@@ -49,7 +49,6 @@ plotPCElbow(seurat_small)
 \seealso{
 \itemize{
 \item \code{\link[Seurat:PCElbowPlot]{Seurat::PCElbowPlot()}}.
-\item \code{\link[ggplot2:scale_y_continuous]{ggplot2::scale_y_continuous()}}.
 }
 
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},

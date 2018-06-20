@@ -5,10 +5,13 @@
 \name{clusterCellCountsPerSample}
 \alias{clusterCellCountsPerSample}
 \alias{clusterCellCountsPerSample}
+\alias{clusterCellCountsPerSample,SingleCellExperiment-method}
 \alias{clusterCellCountsPerSample,seurat-method}
 \title{Cluster Cell Counts per Sample}
 \usage{
 clusterCellCountsPerSample(object, ...)
+
+\S4method{clusterCellCountsPerSample}{SingleCellExperiment}(object)
 
 \S4method{clusterCellCountsPerSample}{seurat}(object)
 }

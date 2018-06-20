@@ -3,9 +3,13 @@
 \docType{methods}
 \name{plotViolin}
 \alias{plotViolin}
+\alias{plotViolin,SingleCellExperiment-method}
 \alias{plotViolin,seurat-method}
 \title{Plot Violin}
 \usage{
+\S4method{plotViolin}{SingleCellExperiment}(object, genes, scale = c("count",
+  "width", "area"), fill = NULL, legend = FALSE)
+
 \S4method{plotViolin}{seurat}(object, genes, scale = c("count", "width",
   "area"), fill = NULL, legend = FALSE)
 }

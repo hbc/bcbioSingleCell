@@ -9,10 +9,10 @@
 \alias{sampleData<-,seurat,DataFrame-method}
 \title{Sample Data}
 \usage{
-\S4method{sampleData}{SingleCellExperiment}(object, clean = TRUE,
-  interestingGroups, return = c("DataFrame", "data.frame", "kable"))
+\S4method{sampleData}{SingleCellExperiment}(object, interestingGroups,
+  clean = TRUE, return = c("DataFrame", "data.frame", "kable"))
 
-\S4method{sampleData}{seurat}(object, clean = TRUE, interestingGroups,
+\S4method{sampleData}{seurat}(object, interestingGroups, clean = TRUE,
   return = c("DataFrame", "data.frame", "kable"))
 
 \S4method{sampleData}{SingleCellExperiment,DataFrame}(object) <- value
@@ -22,10 +22,10 @@
 \arguments{
 \item{object}{Object.}
 
+\item{interestingGroups}{\code{character}. Groups of interest.}
+
 \item{clean}{\code{logical}. Only return \code{factor} columns not defined in
 \link{metadataBlacklist}.}
-
-\item{interestingGroups}{\code{character}. Groups of interest.}
 
 \item{return}{Object class to return. Uses \code{\link[=match.arg]{match.arg()}} internally and picks
 the first item in the vector by default.}
