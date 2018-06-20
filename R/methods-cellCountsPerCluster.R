@@ -18,7 +18,7 @@ NULL
 #' @export
 setMethod(
     "cellCountsPerCluster",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(object, interestingGroups) {
         if (missing(interestingGroups)) {
             interestingGroups <- bcbioBase::interestingGroups(object)
@@ -30,7 +30,18 @@ setMethod(
             arrange(!!!syms(cols)) %>%
             group_by(!!!syms(cols)) %>%
             summarize(n = n()) %>%
+            group_by(!!sym("ident")) %>%
             arrange(desc(!!sym("n")), .by_group = TRUE) %>%
             mutate(ratio = !!sym("n") / sum(!!sym("n")))
     }
+)
+
+
+
+#' @rdname cellCountsPerCluster
+#' @export
+setMethod(
+    "cellCountsPerCluster",
+    signature("seurat"),
+    getMethod("cellCountsPerCluster", "SingleCellExperiment")
 )

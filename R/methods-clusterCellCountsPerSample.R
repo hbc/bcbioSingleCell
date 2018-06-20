@@ -18,7 +18,7 @@ NULL
 #' @export
 setMethod(
     "clusterCellCountsPerSample",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(object) {
         metrics <- metrics(object)
         cols <- c("sampleName", "ident")
@@ -31,4 +31,14 @@ setMethod(
             arrange(desc(!!sym("n")), .by_group = TRUE) %>%
             mutate(ratio = !!sym("n") / sum(!!sym("n")))
     }
+)
+
+
+
+#' @rdname clusterCellCountsPerSample
+#' @export
+setMethod(
+    "clusterCellCountsPerSample",
+    signature("seurat"),
+    getMethod("clusterCellCountsPerSample", "SingleCellExperiment")
 )
