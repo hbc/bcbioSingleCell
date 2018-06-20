@@ -181,15 +181,7 @@ setMethod(
 setMethod(
     "interestingGroups",
     signature("seurat"),
-    function(object) {
-        validObject(object)
-        value <- metadata(object)[["interestingGroups"]]
-        if (is.null(value)) {
-            value <- "sampleName"
-        }
-        assertFormalInterestingGroups(object, value)
-        value
-    }
+    getMethod("interestingGroups", "SummarizedExperiment")
 )
 
 
