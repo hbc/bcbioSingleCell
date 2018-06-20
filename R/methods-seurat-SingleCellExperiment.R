@@ -81,10 +81,12 @@ setMethod(
     function(x) {
         stash <- bcbio(x, "metadata")
         if (!is.null(stash)) {
-            return(stash)
+            stash
+        } else {
+            x %>%
+                as.SingleCellExperiment() %>%
+                metadata()
         }
-        x <- as(x, "SingleCellExperiment")
-        metadata(x)
     }
 )
 
