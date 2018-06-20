@@ -36,7 +36,7 @@
 #' - [zinbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
 #' - [zingeR vignette](https://goo.gl/4rTK1w).
 #'
-#' @name diffExp
+#' @name differentialExpression
 #' @family Differential Expression Functions
 #' @author Michael Steinbaugh
 #'
@@ -78,7 +78,7 @@
 #' glimpse(numerator)
 #' denominator <- Seurat::WhichCells(object, ident = 2L)
 #' glimpse(denominator)
-#' x <- diffExp(
+#' x <- differentialExpression(
 #'     object = object,
 #'     numerator = numerator,
 #'     denominator = denominator,
@@ -124,7 +124,7 @@ NULL
 # ratio test implemented in nbinomLRT should be used.
 #
 # DESeq2 supports `weights` in assays automatically.
-.diffExp.zinbwave.DESeq2 <- function(object) {  # nolint
+.zinbwave.DESeq2 <- function(object) {  # nolint
     stopifnot(is(object, "SingleCellExperiment"))
     zinb <- .zinbwave(object)
     # DESeq2 ===================================================================
@@ -147,7 +147,7 @@ NULL
 
 
 
-.diffExp.zinbwave.edgeR <- function(object) {  # nolint
+.zinbwave.edgeR <- function(object) {  # nolint
     stopifnot(is(object, "SingleCellExperiment"))
     zinb <- .zinbwave(object)
     # edgeR ====================================================================
@@ -179,7 +179,7 @@ NULL
 
 # Note that TMM needs to be consistently applied for both
 # `calcNormFactors()` and `zeroWeightsLS()`.
-.diffExp.zingeR.edgeR <- function(  # nolint
+.zingeR.edgeR <- function(  # nolint
     object,
     maxit = 1000L
 ) {
@@ -219,7 +219,7 @@ NULL
 
 
 
-.diffExp.zingeR.DESeq2 <- function(  # nolint
+.zingeR.DESeq2 <- function(  # nolint
     object,
     maxit = 1000L
 ) {
@@ -266,10 +266,10 @@ NULL
 
 
 # Methods ======================================================================
-#' @rdname diffExp
+#' @rdname differentialExpression
 #' @export
 setMethod(
-    "diffExp",
+    "differentialExpression",
     signature("SingleCellExperiment"),
     function(
         object,
@@ -377,17 +377,17 @@ setMethod(
         design <- model.matrix(~group)
         metadata(object)[["design"]] <- design
 
-        fun <- get(paste("", "diffExp", zeroWeights, caller, sep = "."))
+        fun <- get(paste("", zeroWeights, caller, sep = "."))
         fun(object)
     }
 )
 
 
 
-#' @rdname diffExp
+#' @rdname differentialExpression
 #' @export
 setMethod(
-    "diffExp",
+    "differentialExpression",
     signature("seurat"),
-    getMethod("diffExp", "SingleCellExperiment")
+    getMethod("differentialExpression", "SingleCellExperiment")
 )

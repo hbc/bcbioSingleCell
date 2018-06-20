@@ -53,12 +53,12 @@ setGeneric(
 
 
 
-#' @rdname diffExp
+#' @rdname differentialExpression
 #' @export
 setGeneric(
-    "diffExp",
+    "differentialExpression",
     function(object, ...) {
-        standardGeneric("diffExp")
+        standardGeneric("differentialExpression")
     }
 )
 
