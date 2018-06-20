@@ -95,6 +95,8 @@ setAs(
     to = "SingleCellExperiment",
     function(from) {
         validObject(from)
-        as.SingleCellExperiment(from)
+        to <- as.SingleCellExperiment(from)
+        metadata(to) <- metadata(from)
+        to
     }
 )
