@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Known Markers Example — known_markers_small • bcbioSingleCell</title>
+<title>Cell Counts per Cluster — cellCountsPerCluster • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Known Markers Example — known_markers_small" />
+<meta property="og:title" content="Cell Counts per Cluster — cellCountsPerCluster" />
 
-<meta property="og:description" content="Known Markers Example" />
+<meta property="og:description" content="Cell Counts per Cluster" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,62 +102,70 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Known Markers Example</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
-    <div class="hidden name"><code>known_markers_small.Rd</code></div>
+    <h1>Cell Counts per Cluster</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-cellCountsPerCluster.R'><code>R/methods-cellCountsPerCluster.R</code></a></small>
+    <div class="hidden name"><code>cellCountsPerCluster.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Known Markers Example</p>
+    <p>Cell Counts per Cluster</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>known_markers_small</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>cellCountsPerCluster</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-    <p>An object of class <code>grouped_df</code> (inherits from <code>tbl_df</code>, <code>tbl</code>, <code>data.frame</code>) with 28 rows and 14 columns.</p>
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>cellCountsPerCluster</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>cellCountsPerCluster</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)</pre>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
+    </tr>
+    <tr>
+      <th>interestingGroups</th>
+      <td><p>Character vector of interesting groups. Must be
+formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>Other Minimal Example Data: <code><a href='all_markers_small.html'>all_markers_small</a></code>,
-  <code><a href='cellranger_small.html'>cellranger_small</a></code>,
-  <code><a href='indrops_small.html'>indrops_small</a></code>, <code><a href='seurat_small.html'>seurat_small</a></code></p></div>
+    <p><code>tibble</code> grouped by "<code>ident</code>" column, arranged by abundance.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>known_markers_small</span>)</div><div class='output co'>#&gt; Observations: 28
-#&gt; Variables: 14
-#&gt; $ cellType       &lt;fct&gt; B Cell, B Cell, B Cell, B Cell, B Cell, B Cell, B Ce...
-#&gt; $ cluster        &lt;fct&gt; 4, 4, 4, 5, 5, 4, 3, 1, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2...
-#&gt; $ geneID         &lt;chr&gt; "ENSG00000211899", "ENSG00000211677", "ENSG000002115...
-#&gt; $ geneName       &lt;chr&gt; "IGHM", "IGLC2", "IGKC", "IGKC", "IGHM", "IGLC3", "I...
-#&gt; $ avgLogFC       &lt;dbl&gt; 2.1617798, 3.8661622, 3.0197161, 0.9084954, 0.738585...
-#&gt; $ pct1           &lt;dbl&gt; 0.933, 0.733, 0.778, 1.000, 0.870, 0.444, 0.086, 0.2...
-#&gt; $ pct2           &lt;dbl&gt; 0.191, 0.268, 0.385, 0.392, 0.229, 0.099, 0.291, 0.4...
-#&gt; $ rowname        &lt;chr&gt; "IGHM", "IGLC2", "IGKC", "IGKC", "IGHM", "IGLC3", "I...
-#&gt; $ pvalue         &lt;dbl&gt; 1.866840e-37, 6.525994e-16, 1.171759e-15, 2.528129e-...
-#&gt; $ padj           &lt;dbl&gt; 9.334200e-35, 3.262997e-13, 5.858793e-13, 1.264064e-...
-#&gt; $ geneBiotype    &lt;fct&gt; IG_C_gene, IG_C_gene, IG_C_gene, IG_C_gene, IG_C_gen...
-#&gt; $ description    &lt;chr&gt; "immunoglobulin heavy constant mu [Source:HGNC Symbo...
-#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...
-#&gt; $ broadClass     &lt;fct&gt; ig, ig, ig, ig, ig, ig, ig, ig, coding, coding, codi...</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
+<span class='fu'>cellCountsPerCluster</span>(<span class='no'>seurat_small</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 4
+#&gt; # Groups:   ident [6]
+#&gt;   ident sampleName     n ratio
+#&gt;   &lt;fct&gt; &lt;fct&gt;      &lt;int&gt; &lt;dbl&gt;
+#&gt; 1 0     pbmc4k       133     1
+#&gt; 2 1     pbmc4k       126     1
+#&gt; 3 2     pbmc4k        92     1
+#&gt; 4 3     pbmc4k        81     1
+#&gt; 5 4     pbmc4k        45     1
+#&gt; 6 5     pbmc4k        23     1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#value">Value</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
-
-    <h2>Author</h2>
-    
-Michael Steinbaugh
 
   </div>
 </div>

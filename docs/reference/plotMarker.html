@@ -67,7 +67,7 @@ plotViolin(): Violin plot.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.15</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
       </span>
     </div>
 
@@ -129,12 +129,26 @@ plotViolin(): Violin plot.
 
 <span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
+  <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
   <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
   <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>plotMarkerUMAP</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
+  <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMarkerUMAP</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
@@ -143,13 +157,21 @@ plotViolin(): Violin plot.
   <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>markers</span>,
+  <span class='kw'>reduction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"TSNE"</span>, <span class='st'>"UMAP"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)
+
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>markers</span>, <span class='kw'>dimRed</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"tsne"</span>, <span class='st'>"umap"</span>),
-  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)
+<span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>markers</span>, <span class='kw'>reduction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"TSNE"</span>,
+  <span class='st'>"UMAP"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>markers</span>,
+  <span class='kw'>reduction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"TSNE"</span>, <span class='st'>"UMAP"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='no'>markers</span>,
-  <span class='kw'>dimRed</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"tsne"</span>, <span class='st'>"umap"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>reduction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"TSNE"</span>, <span class='st'>"UMAP"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -228,9 +250,9 @@ the dataset, and some cells can be masked.</p></td>
 </ul></td>
     </tr>
     <tr>
-      <th>dimRed</th>
-      <td><p>Dimensionality reduction method to apply. Defaults to t-SNE
-("<code>tsne</code>") but UMAP is also supported ("<code>umap</code>").</p></td>
+      <th>reduction</th>
+      <td><p>Dimensional reduction method to apply. Defaults to t-SNE
+("<code>TSNE</code>") but UMAP is also supported ("<code>UMAP</code>").</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
@@ -298,12 +320,12 @@ for the number of genes to plot here in a future update.</p>
 #&gt; # Groups:   cluster [6]
 #&gt;   cluster avgLogFC  pct1  pct2 rowname    pvalue     padj geneID       geneName
 #&gt;   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;   
-#&gt; 1 0           1.96 0.923 0.157 VCAN     1.01e-71 5.06e-69 ENSG0000003… VCAN    
+#&gt; 1 0           2.33 0.917 0.215 S100A12  1.03e-63 5.14e-61 ENSG0000016… S100A12 
 #&gt; 2 1           1.96 0.952 0.353 TRAC     1.65e-56 8.23e-54 ENSG0000027… TRAC    
-#&gt; 3 2           1.67 1     0.727 LST1     1.70e-44 8.48e-42 ENSG0000020… LST1    
-#&gt; 4 3           1.53 1     0.852 HLA-DPB1 2.00e-36 9.98e-34 ENSG0000022… HLA-DPB1
+#&gt; 3 2           1.72 1     0.691 HLA-DQA1 2.02e-47 1.01e-44 ENSG0000019… HLA-DQA1
+#&gt; 4 3           1.66 1     0.728 LST1     1.05e-43 5.24e-41 ENSG0000020… LST1    
 #&gt; 5 4           2.46 1     0.196 CD79A    1.72e-44 8.62e-42 ENSG0000010… CD79A   
-#&gt; 6 5           1.91 1     0.881 SEC61B   2.01e-15 1.01e-12 ENSG0000010… SEC61B  
+#&gt; 6 5           1.57 1     0.843 SPCS1    1.57e-15 7.83e-13 ENSG0000011… SPCS1   
 #&gt; # ... with 4 more variables: geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
 #&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>tail</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
 #&gt; 
@@ -311,14 +333,14 @@ for the number of genes to plot here in a future update.</p>
 #&gt; 
 #&gt; 
 #&gt; 
-#&gt; ### SEC61B
+#&gt; ### SPCS1
 #&gt; </div><div class='img'><img src='plotMarker-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Known markers detected</span>
 <span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='no'>known_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>markers</span></div><div class='output co'>#&gt; # A tibble: 1 x 14
 #&gt; # Groups:   cellType [1]
 #&gt;   cellType cluster geneID        geneName avgLogFC  pct1  pct2 rowname   pvalue
-#&gt;   &lt;chr&gt;    &lt;fct&gt;   &lt;chr&gt;         &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+#&gt;   &lt;fct&gt;    &lt;fct&gt;   &lt;chr&gt;         &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
 #&gt; 1 B Cell   4       ENSG00000211… IGHM         2.16 0.933 0.191 IGHM    1.87e-37
 #&gt; # ... with 5 more variables: padj &lt;dbl&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
 #&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 

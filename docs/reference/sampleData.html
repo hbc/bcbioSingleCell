@@ -66,7 +66,7 @@ the samples." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.15</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
       </span>
     </div>
 
@@ -120,11 +120,11 @@ the samples.</p>
     </div>
 
     <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>interestingGroups</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"kable"</span>))
+<span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
+  <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"kable"</span>))
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>interestingGroups</span>,
+<span class='fu'>sampleData</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DataFrame"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"kable"</span>))
 
 <span class='co'># S4 method for SingleCellExperiment,DataFrame</span>
@@ -141,13 +141,13 @@ the samples.</p>
       <td><p>Object.</p></td>
     </tr>
     <tr>
+      <th>interestingGroups</th>
+      <td><p><code>character</code>. Groups of interest.</p></td>
+    </tr>
+    <tr>
       <th>clean</th>
       <td><p><code>logical</code>. Only return <code>factor</code> columns not defined in
 metadataBlacklist.</p></td>
-    </tr>
-    <tr>
-      <th>interestingGroups</th>
-      <td><p><code>character</code>. Groups of interest.</p></td>
     </tr>
     <tr>
       <th>return</th>

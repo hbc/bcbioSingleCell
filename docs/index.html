@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.15</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
       </span>
     </div>
 
@@ -101,8 +101,8 @@ bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/bcbioSingl
     <span class="dt">ensemblVersion =</span> 90L
 )
 <span class="co"># Back up all data inside bcbioSingleCell object</span>
-flatFiles &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
-<span class="kw">saveData</span>(bcb, flatFiles)</code></pre></div>
+flat &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
+<span class="kw">saveData</span>(bcb, flat)</code></pre></div>
 <p>This will return a <code>bcbioSingleCell</code> object, which is an extension of the <a href="https://bioconductor.org">Bioconductor</a> <a href="https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment">SingleCellExperiment</a> container class.</p>
 <p>Parameters:</p>
 <ul>
