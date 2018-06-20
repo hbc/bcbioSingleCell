@@ -34,6 +34,7 @@ setMethod(
         geom = c("ecdf", "ridgeline", "violin", "histogram", "boxplot"),
         interestingGroups,
         min = 0L,
+        max = Inf,
         point = c("none", "inflection", "knee"),
         trans = "log10",
         color = NULL,
@@ -55,6 +56,7 @@ setMethod(
             geom = geom,
             interestingGroups = interestingGroups,
             min = min,
+            max = max,
             trans = trans,
             color = color,
             fill = fill
