@@ -38,7 +38,7 @@ setMethod(
     function(
         object,
         cellTypesPerCluster,
-        dimRed = c("tsne", "umap"),
+        reduction = c("TSNE", "UMAP"),
         headerLevel = 2L,
         ...
     ) {
@@ -50,7 +50,7 @@ setMethod(
             x = group_vars(cellTypesPerCluster),
             y = "cluster"
         )
-        dimRed <- match.arg(dimRed)
+        reduction <- match.arg(reduction)
         assertIsAHeaderLevel(headerLevel)
 
         cellTypesPerCluster <- cellTypesPerCluster %>%
@@ -84,10 +84,10 @@ setMethod(
                 )
                 # Modify the title by adding the cluster number (for the plot)
                 title <- paste(paste0("Cluster ", cluster, ":"), title)
-                p <- .plotMarkerDimRed(
+                p <- .plotMarkerReduction(
                     object = object,
                     genes = genes,
-                    dimRed = dimRed,
+                    reduction = reduction,
                     ...
                 )
                 show(p)
