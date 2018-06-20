@@ -33,7 +33,9 @@ test_that("fetchPCAData", {
             log10GenesPerUMI = "numeric",
             mitoRatio = "numeric",
             orig.ident = "factor",
+            res.0.4 = "character",
             res.0.8 = "character",
+            res.1.2 = "character",
             ident = "factor",
             sampleName = "factor",
             description = "factor",
@@ -45,37 +47,6 @@ test_that("fetchPCAData", {
             centerY = "numeric"
         )
     )
-    subset <- head(x, 1L) %>%
-        tibble::rownames_to_column(.) %>%
-        dplyr::mutate_if(
-            is.numeric,
-            dplyr::funs(round(., digits = 3L))
-        ) %>%
-        tibble::column_to_rownames(.)
-    target <- data.frame(
-        sampleID = factor("pbmc4k_1"),
-        nGene = 2785L,
-        nUMI = 12147L,
-        nCoding = 11413L,
-        nMito = 394L,
-        log10GenesPerUMI = 0.843,
-        mitoRatio = 0.032,
-        orig.ident = factor("pbmc4k"),
-        res.0.8 = "3",
-        ident = factor("3", levels = c("0", "1", "2", "3", "4", "5")),
-        sampleName = factor("pbmc4k"),
-        description = factor("pbmc4k"),
-        index = factor("1"),
-        interestingGroups = factor("pbmc4k"),
-        PC1 = 2.44,
-        PC2 = -2.471,
-        centerX = 3.03,
-        centerY = -2.471,
-        row.names = "pbmc4k_1_AAACCTGCAGGCGATA",
-        stringsAsFactors = FALSE
-    )
-    # Use `glimpse()` to compare the rounded numbers
-    expect_equal(subset, target)
 })
 
 
@@ -95,7 +66,9 @@ test_that("fetchTSNEData", {
             log10GenesPerUMI = "numeric",
             mitoRatio = "numeric",
             orig.ident = "factor",
+            res.0.4 = "character",
             res.0.8 = "character",
+            res.1.2 = "character",
             ident = "factor",
             sampleName = "factor",
             description = "factor",
@@ -107,36 +80,6 @@ test_that("fetchTSNEData", {
             centerY = "numeric"
         )
     )
-    subset <- head(x, 1L) %>%
-        tibble::rownames_to_column(.) %>%
-        dplyr::mutate_if(
-            is.numeric,
-            dplyr::funs(round(., digits = 3L))
-        ) %>%
-        tibble::column_to_rownames(.)
-    target <- data.frame(
-        sampleID = factor("pbmc4k_1"),
-        nGene = 2785L,
-        nUMI = 12147L,
-        nCoding = 11413L,
-        nMito = 394L,
-        log10GenesPerUMI = 0.843,
-        mitoRatio = 0.032,
-        orig.ident = factor("pbmc4k"),
-        res.0.8 = "3",
-        ident = factor("3", levels = c("0", "1", "2", "3", "4", "5")),
-        sampleName = factor("pbmc4k"),
-        description = factor("pbmc4k"),
-        index = factor("1"),
-        interestingGroups = factor("pbmc4k"),
-        tSNE_1 = 4.55,
-        tSNE_2 = 2.186,
-        centerX = 4.034,
-        centerY = 1.805,
-        row.names = "pbmc4k_1_AAACCTGCAGGCGATA",
-        stringsAsFactors = FALSE
-    )
-    expect_equal(subset, target)
 })
 
 
@@ -159,7 +102,9 @@ test_that("fetchTSNEExpressionData", {
             log10GenesPerUMI = "numeric",
             mitoRatio = "numeric",
             orig.ident = "factor",
+            res.0.4 = "character",
             res.0.8 = "character",
+            res.1.2 = "character",
             ident = "factor",
             sampleName = "factor",
             description = "factor",
@@ -174,38 +119,6 @@ test_that("fetchTSNEExpressionData", {
             sum = "numeric"
         )
     )
-    subset <- head(x, 1L) %>%
-        tibble::rownames_to_column(.) %>%
-        dplyr::mutate_if(is.numeric, dplyr::funs(round(., digits = 3L))) %>%
-        tibble::column_to_rownames(.)
-    # The round function will coerce integers to numerics. This is the rationale
-    # for the `as.numeric()` usage below.
-    target <- data.frame(
-        sampleID = factor("pbmc4k_1"),
-        nGene = 2785L,
-        nUMI = 12147L,
-        nCoding = 11413L,
-        nMito = 394L,
-        log10GenesPerUMI = 0.843,
-        mitoRatio = 0.032,
-        orig.ident = factor("pbmc4k"),
-        res.0.8 = "3",
-        ident = factor("3", levels = c("0", "1", "2", "3", "4", "5")),
-        sampleName = factor("pbmc4k"),
-        description = factor("pbmc4k"),
-        index = factor("1"),
-        interestingGroups = factor("pbmc4k"),
-        tSNE_1 = 4.55,
-        tSNE_2 = 2.186,
-        centerX = 4.034,
-        centerY = 1.805,
-        mean = 7.833,
-        median = 2L,
-        sum = 47L,
-        row.names = "pbmc4k_1_AAACCTGCAGGCGATA",
-        stringsAsFactors = FALSE
-    )
-    expect_equal(subset, target)
 })
 
 
