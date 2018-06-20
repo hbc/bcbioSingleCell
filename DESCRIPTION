@@ -80,6 +80,7 @@ Imports:
     methods,
     parallel,
     pbapply,
+    purrr (>= 0.2.5),
     readr,
     rlang,
     rmarkdown,

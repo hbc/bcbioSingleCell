@@ -48,7 +48,7 @@
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows desc everything filter group_by
 #'   group_vars left_join matches mutate mutate_all mutate_at mutate_if n rename
-#'   select select_if slice summarize summarize_all ungroup
+#'   select select_if slice summarize summarize_all top_n ungroup
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
 #' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_line
 #'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
@@ -68,6 +68,7 @@
 #'   validObject
 #' @importFrom parallel mclapply mcmapply
 #' @importFrom pbapply pblapply
+#' @importFrom purrr map
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! !!! sym syms UQ
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
