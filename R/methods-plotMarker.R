@@ -92,10 +92,10 @@ NULL
 
 
 # Dimensionality reduction (t-SNE, UMAP) plot constructor
-.plotMarkerDimRed <- function(
+.plotMarkerReduction <- function(
     object,
     genes,
-    dimRed = c("tsne", "umap"),
+    reduction = c("TSNE", "UMAP"),
     expression = c("mean", "median", "sum"),
     color = NULL,
     pointsAsNumbers = FALSE,
@@ -111,7 +111,7 @@ NULL
 ) {
     assert_is_character(genes)
     assert_is_subset(genes, rownames(object))
-    dimRed <- match.arg(dimRed)
+    reduction <- match.arg(reduction)
     expression <- match.arg(expression)
     # Legacy support for `color = "auto"`
     if (identical(color, "auto")) {
@@ -131,10 +131,10 @@ NULL
     }
 
     # Fetch dimensional reduction coordinates
-    if (dimRed == "tsne") {
+    if (reduction == "TSNE") {
         fun <- fetchTSNEExpressionData
         dimCols <- c("tSNE_1", "tSNE_2")
-    } else if (dimRed == "umap") {
+    } else if (reduction == "UMAP") {
         fun <- fetchUMAPExpressionData
         dimCols <- c("UMAP1", "UMAP2")
     }
@@ -271,7 +271,7 @@ NULL
 #' @export
 setMethod(
     "plotMarkerTSNE",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(
         object,
         genes,
@@ -288,10 +288,63 @@ setMethod(
         aspectRatio = 1L,
         title = TRUE
     ) {
-        .plotMarkerDimRed(
+        .plotMarkerReduction(
             object = object,
             genes = genes,
-            dimRed = "tsne",
+            reduction = "TSNE",
+            expression = expression,
+            color = color,
+            pointsAsNumbers = pointsAsNumbers,
+            pointSize = pointSize,
+            pointAlpha = pointAlpha,
+            label = label,
+            labelSize = labelSize,
+            dark = dark,
+            grid = grid,
+            legend = legend,
+            aspectRatio = aspectRatio,
+            title = title
+        )
+    }
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotMarkerTSNE",
+    signature("seurat"),
+    getMethod("plotMarkerTSNE", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotMarkerUMAP",
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        genes,
+        expression = c("mean", "median", "sum"),
+        color = NULL,
+        pointsAsNumbers = FALSE,
+        pointSize = 0.75,
+        pointAlpha = 0.8,
+        label = TRUE,
+        labelSize = 6L,
+        dark = FALSE,
+        grid = FALSE,
+        legend = TRUE,
+        aspectRatio = 1L,
+        title = TRUE
+    ) {
+        .plotMarkerReduction(
+            object = object,
+            genes = genes,
+            reduction = "UMAP",
             expression = expression,
             color = color,
             pointsAsNumbers = pointsAsNumbers,
@@ -315,40 +368,7 @@ setMethod(
 setMethod(
     "plotMarkerUMAP",
     signature("seurat"),
-    function(
-        object,
-        genes,
-        expression = c("mean", "median", "sum"),
-        color = NULL,
-        pointsAsNumbers = FALSE,
-        pointSize = 0.75,
-        pointAlpha = 0.8,
-        label = TRUE,
-        labelSize = 6L,
-        dark = FALSE,
-        grid = FALSE,
-        legend = TRUE,
-        aspectRatio = 1L,
-        title = TRUE
-    ) {
-        .plotMarkerDimRed(
-            object = object,
-            genes = genes,
-            dimRed = "umap",
-            expression = expression,
-            color = color,
-            pointsAsNumbers = pointsAsNumbers,
-            pointSize = pointSize,
-            pointAlpha = pointAlpha,
-            label = label,
-            labelSize = labelSize,
-            dark = dark,
-            grid = grid,
-            legend = legend,
-            aspectRatio = aspectRatio,
-            title = title
-        )
-    }
+    getMethod("plotMarkerUMAP", "SingleCellExperiment")
 )
 
 
@@ -357,18 +377,18 @@ setMethod(
 #' @export
 setMethod(
     "plotTopMarkers",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(
         object,
         markers,
-        dimRed = c("tsne", "umap"),
+        reduction = c("TSNE", "UMAP"),
         headerLevel = 2L,
         ...
     ) {
         validObject(object)
         stopifnot(is(markers, "grouped_df"))
         stopifnot(.isSanitizedMarkers(markers))
-        dimRed <- match.arg(dimRed)
+        reduction <- match.arg(reduction)
         assertIsAHeaderLevel(headerLevel)
 
         clusters <- levels(markers[["cluster"]])
@@ -396,10 +416,10 @@ setMethod(
                     level = headerLevel + 1L,
                     asis = TRUE
                 )
-                p <- .plotMarkerDimRed(
+                p <- .plotMarkerReduction(
                     object = object,
                     genes = gene,
-                    dimRed = dimRed,
+                    reduction = reduction,
                     ...
                 )
                 show(p)
@@ -416,12 +436,22 @@ setMethod(
 #' @rdname plotMarker
 #' @export
 setMethod(
-    "plotKnownMarkersDetected",
+    "plotTopMarkers",
     signature("seurat"),
+    getMethod("plotTopMarkers", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotKnownMarkersDetected",
+    signature("SingleCellExperiment"),
     function(
         object,
         markers,
-        dimRed = c("tsne", "umap"),
+        reduction = c("TSNE", "UMAP"),
         headerLevel = 2L,
         ...
     ) {
@@ -429,7 +459,7 @@ setMethod(
         stopifnot(is(markers, "grouped_df"))
         assert_has_rows(markers)
         assert_is_subset("cellType", colnames(markers))
-        dimRed <- match.arg(dimRed)
+        reduction <- match.arg(reduction)
         assertIsAHeaderLevel(headerLevel)
 
         cellTypes <- markers %>%
@@ -459,10 +489,10 @@ setMethod(
                     level = headerLevel + 1L,
                     asis = TRUE
                 )
-                p <- .plotMarkerDimRed(
+                p <- .plotMarkerReduction(
                     object = object,
                     genes = gene,
-                    dimRed = dimRed,
+                    reduction = reduction,
                     ...
                 )
                 show(p)
@@ -472,4 +502,14 @@ setMethod(
 
         invisible(list)
     }
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotKnownMarkersDetected",
+    signature("seurat"),
+    getMethod("plotKnownMarkersDetected", "SingleCellExperiment")
 )

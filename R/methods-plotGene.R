@@ -35,7 +35,7 @@ NULL
 #' @export
 setMethod(
     "plotGene",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(
         object,
         genes,
@@ -54,4 +54,14 @@ setMethod(
             legend = legend
         )
     }
+)
+
+
+
+#' @rdname plotGene
+#' @export
+setMethod(
+    "plotGene",
+    signature("seurat"),
+    getMethod("plotGene", "SingleCellExperiment")
 )

@@ -1,3 +1,7 @@
+# FIXME Rework this to use facet wrapping
+
+
+
 #' Plot Feature
 #'
 #' @name plotFeature
@@ -27,10 +31,10 @@ NULL
 
 
 # Constructors =================================================================
-.plotFeatureDimRed <- function(
+.plotFeatureReduction <- function(
     object,
     features,
-    dimRed = c("tsne", "umap"),
+    reduction = c("TSNE", "UMAP"),
     color = NULL,
     pointSize = getOption("pointSize", 0.75),
     pointAlpha = getOption("pointAlpha", 0.75),
@@ -47,7 +51,7 @@ NULL
         color <- NULL
     }
     assertIsColorScaleContinuousOrNULL(color)
-    dimRed <- match.arg(dimRed)
+    reduction <- match.arg(reduction)
 
     if (isTRUE(dark)) {
         fill <- "black"
@@ -55,25 +59,25 @@ NULL
         fill <- "white"
     }
 
-    if (dimRed == "tsne") {
-        fetchDimRedData <- fetchTSNEData
+    if (reduction == "TSNE") {
+        fxn <- fetchTSNEData
         dimCols <- c("tSNE_1", "tSNE_2")
-    } else if (dimRed == "umap") {
-        fetchDimRedData <- fetchUMAPData
+    } else if (reduction == "UMAP") {
+        fxn <- fetchUMAPData
         dimCols <- c("UMAP1", "UMAP2")
     }
-    dimRedData <- fetchDimRedData(object)
+    reducedDims <- fxn(object)
 
     featureData <- FetchData(object, vars.all = features)
 
     # Columns from `FetchData` take priority, if there is overlap
-    if (length(intersect(colnames(dimRedData), colnames(featureData)))) {
-        dimRedData <- dimRedData %>%
+    if (length(intersect(colnames(reducedDims), colnames(featureData)))) {
+        reducedDims <- reducedDims %>%
             .[, setdiff(colnames(.), colnames(featureData))]
     }
-    assert_are_identical(rownames(dimRedData), rownames(featureData))
-    assert_are_disjoint_sets(colnames(dimRedData), colnames(featureData))
-    data <- cbind(dimRedData, featureData)
+    assert_are_identical(rownames(reducedDims), rownames(featureData))
+    assert_are_disjoint_sets(colnames(reducedDims), colnames(featureData))
+    data <- cbind(reducedDims, featureData)
 
     plotlist <- lapply(features, function(feature) {
         p <- ggplot(
@@ -161,7 +165,7 @@ NULL
 #' @export
 setMethod(
     "plotFeatureTSNE",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(
         object,
         features,
@@ -175,10 +179,57 @@ setMethod(
         legend = FALSE,
         aspectRatio = 1L
     ) {
-        .plotFeatureDimRed(
+        .plotFeatureReduction(
             object = object,
             features = features,
-            dimRed = "tsne",
+            reduction = "TSNE",
+            color = color,
+            pointSize = pointSize,
+            pointAlpha = pointAlpha,
+            label = label,
+            labelSize = labelSize,
+            dark = dark,
+            grid = grid,
+            legend = legend,
+            aspectRatio = aspectRatio
+        )
+    }
+)
+
+
+
+#' @rdname plotFeature
+#' @export
+setMethod(
+    "plotFeatureTSNE",
+    signature("seurat"),
+    getMethod("plotFeatureTSNE", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotFeature
+#' @export
+setMethod(
+    "plotFeatureUMAP",
+    signature("SingleCellExperiment"),
+    function(
+        object,
+        features,
+        color = NULL,
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.75),
+        label = TRUE,
+        labelSize = getOption("labelSize", 6L),
+        dark = FALSE,
+        grid = FALSE,
+        legend = FALSE,
+        aspectRatio = 1L
+    ) {
+        .plotFeatureReduction(
+            object = object,
+            features = features,
+            reduction = "UMAP",
             color = color,
             pointSize = pointSize,
             pointAlpha = pointAlpha,
@@ -199,32 +250,5 @@ setMethod(
 setMethod(
     "plotFeatureUMAP",
     signature("seurat"),
-    function(
-        object,
-        features,
-        color = NULL,
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
-        label = TRUE,
-        labelSize = getOption("labelSize", 6L),
-        dark = FALSE,
-        grid = FALSE,
-        legend = FALSE,
-        aspectRatio = 1L
-    ) {
-        .plotFeatureDimRed(
-            object = object,
-            features = features,
-            dimRed = "umap",
-            color = color,
-            pointSize = pointSize,
-            pointAlpha = pointAlpha,
-            label = label,
-            labelSize = labelSize,
-            dark = dark,
-            grid = grid,
-            legend = legend,
-            aspectRatio = aspectRatio
-        )
-    }
+    getMethod("plotFeatureUMAP", "SingleCellExperiment")
 )
