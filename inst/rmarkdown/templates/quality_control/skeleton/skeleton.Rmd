@@ -9,8 +9,8 @@ params:
     max_umis: !r Inf
     min_genes: 500
     max_genes: !r Inf
-    max_mito_ratio: 0.1
     min_novelty: 0.85
+    max_mito_ratio: 0.1
     min_cells_per_gene: 10
     data_dir: !r file.path("data", Sys.Date())
 ---
