@@ -95,6 +95,6 @@ setAs(
     to = "SingleCellExperiment",
     function(from) {
         validObject(from)
-        Convert(from = from, to = "sce")
+        as.SingleCellExperiment(from)
     }
 )
