@@ -5,6 +5,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
+#' @param minimal
 #'
 #' @return
 #' - `fetchGeneData()`: `matrix`.
@@ -51,19 +52,26 @@ NULL
 
 
 # Constructors =================================================================
-.fetchDimensionalReduction.seurat <- function(  # nolint
+.reducedDims <- function(  # nolint
     object,
-    reductionType = c("tsne", "umap", "pca")
+    reduction = c("PCA", "TSNE", "UMAP"),
+    minimal = FALSE
 ) {
-    reductionType <- match.arg(reductionType)
-    data <- GetDimReduction(
-        object = object,
-        reduction.type = reductionType,
-        slot = "cell.embeddings"
-    )
-    # Limit to the first two columns.
-    # PCA returns multiple columns, for example.
-    data <- data[, seq_len(2L)]
+    object <- as(object, "SingleCellExperiment")
+    reduction <- match.arg(reduction)
+    assert_is_a_bool(medtrics)
+
+    data <- slot(sce, "reducedDims")[[reduction]]
+    assert_is_matrix(data)
+
+    if (isTRUE(minimal)) {
+        return(data)
+    }
+
+    # Limit to the first two columns. PCA returns multiple columns.
+    data <- data %>%
+        as.data.frame() %>%
+        .[, seq_len(2L)]
     dimCols <- colnames(data)
     metrics <- metrics(object)
     assert_are_identical(rownames(data), rownames(metrics))
@@ -115,7 +123,7 @@ setMethod(
     "fetchPCAData",
     signature("seurat"),
     function(object) {
-        .fetchDimensionalReduction.seurat(object, "pca")
+        .reducedDims(object, reduction = "PCA")
     }
 )
 
@@ -127,7 +135,7 @@ setMethod(
     "fetchTSNEData",
     signature("seurat"),
     function(object) {
-        .fetchDimensionalReduction.seurat(object, "tsne")
+        .reducedDims(object, reduction = "TSNE")
     }
 )
 
@@ -157,7 +165,7 @@ setMethod(
     "fetchUMAPData",
     signature("seurat"),
     function(object) {
-        .fetchDimensionalReduction.seurat(object, "umap")
+        .reducedDims(object, reduction = "UMAP")
     }
 )
 

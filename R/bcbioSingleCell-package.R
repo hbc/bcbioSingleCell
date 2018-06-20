@@ -74,7 +74,6 @@
 #'   complete.cases mcols metadata metadata<- na.omit
 #' @importFrom scales percent pretty_breaks
 #' @importFrom Seurat as.SingleCellExperiment CreateSeuratObject FetchData
-#'   GetDimReduction
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
 #'   spikeNames
 #' @importFrom stats ecdf fitted median model.matrix predict relevel reorder
