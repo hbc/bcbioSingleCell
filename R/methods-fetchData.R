@@ -62,7 +62,9 @@ NULL
     assert_is_a_bool(minimal)
 
     data <- slot(object, "reducedDims")[[reduction]]
-    assert_is_matrix(data)
+    if (!is.matrix(data)) {
+        stop(paste(reduction, "dimensional reduction has not been calculated"))
+    }
     if (isTRUE(minimal)) {
         return(data)
     }
@@ -187,7 +189,7 @@ setMethod(
 #' @rdname fetchData
 #' @export
 setMethod(
-    "fetchTSNEData",
+    "fetchTSNEExpressionData",
     signature("seurat"),
     getMethod("fetchTSNEExpressionData", "SingleCellExperiment")
 )
