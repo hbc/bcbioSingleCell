@@ -21,9 +21,6 @@ must contain \code{geneID} and \code{geneName}.}
 \item{dark}{Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
-\item{dimRed}{Dimensionality reduction method to apply. Defaults to t-SNE
-("\code{tsne}") but UMAP is also supported ("\code{umap}").}
-
 \item{dir}{Output directory.}
 
 \item{expression}{Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and defaults to
@@ -61,6 +58,9 @@ the dataset, and some cells can be masked.}
 \item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
 
 \item{pointSize}{Cell point size.}
+
+\item{reduction}{Dimensional reduction method to apply. Defaults to t-SNE
+("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
 
 \item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
 to the first argument in the vector.}

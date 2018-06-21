@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.15</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
       </span>
     </div>
 
@@ -145,11 +145,6 @@ must contain <code>geneID</code> and <code>geneName</code>.</p></td>
 <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>dimRed</th>
-      <td><p>Dimensionality reduction method to apply. Defaults to t-SNE
-("<code>tsne</code>") but UMAP is also supported ("<code>umap</code>").</p></td>
-    </tr>
-    <tr>
       <th>dir</th>
       <td><p>Output directory.</p></td>
     </tr>
@@ -220,6 +215,11 @@ the dataset, and some cells can be masked.</p></td>
     <tr>
       <th>pointSize</th>
       <td><p>Cell point size.</p></td>
+    </tr>
+    <tr>
+      <th>reduction</th>
+      <td><p>Dimensional reduction method to apply. Defaults to t-SNE
+("<code>TSNE</code>") but UMAP is also supported ("<code>UMAP</code>").</p></td>
     </tr>
     <tr>
       <th>return</th>

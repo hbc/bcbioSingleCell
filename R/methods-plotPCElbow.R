@@ -22,7 +22,6 @@
 #'
 #' @seealso
 #' - [Seurat::PCElbowPlot()].
-#' - [ggplot2::scale_y_continuous()].
 #'
 #' @examples
 #' # seurat ====
@@ -57,7 +56,7 @@ setMethod(
         trans <- match.arg(trans)
         assert_is_a_bool(plot)
 
-        # dr: dimensionality reduction
+        # dr: dimensional reduction
         # sdev: standard deviation
         sdev <- object@dr[["pca"]]@sdev
         assert_is_numeric(sdev)

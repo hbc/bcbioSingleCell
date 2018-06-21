@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.15</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
       </span>
     </div>
 
@@ -157,13 +157,13 @@ significant known makers per cell type.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># grouped_df ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>cellTypesPerCluster</span>(<span class='no'>known_markers_small</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 13
+<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 12
 #&gt; Variables: 5
-#&gt; $ cluster  &lt;fct&gt; 0, 0, 0, 0, 1, 1, 1, 2, 3, 3, 3, 4, 5
-#&gt; $ cellType &lt;fct&gt; T Cell, B Cell, Dendritic Cell, Mesenchymal Stem Cell, Den...
-#&gt; $ n        &lt;int&gt; 2, 1, 1, 1, 5, 2, 1, 2, 5, 2, 1, 4, 2
-#&gt; $ geneID   &lt;chr&gt; "ENSG00000167286, ENSG00000198851", "ENSG00000211899", "EN...
-#&gt; $ geneName &lt;chr&gt; "CD3D, CD3E", "IGHM", "HLA-DMA", "CD44", "HLA-DRA, HLA-DRB...</div></pre>
+#&gt; $ cluster  &lt;fct&gt; 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 5
+#&gt; $ cellType &lt;fct&gt; T Cell, Mesenchymal Stem Cell, Dendritic Cell, T Cell, B C...
+#&gt; $ n        &lt;int&gt; 2, 1, 5, 2, 1, 5, 2, 1, 2, 1, 4, 2
+#&gt; $ geneID   &lt;chr&gt; "ENSG00000167286, ENSG00000198851", "ENSG00000026508", "EN...
+#&gt; $ geneName &lt;chr&gt; "CD3D, CD3E", "CD44", "HLA-DRA, HLA-DRB1, HLA-DQB1, HLA-DQ...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

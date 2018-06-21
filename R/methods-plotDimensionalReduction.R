@@ -41,7 +41,7 @@ NULL
 
 
 # Constructors =================================================================
-.plotDimensionalReduction <- function(
+.plotReducedDims <- function(
     data,
     axes,
     interestingGroups = "ident",
@@ -164,7 +164,7 @@ NULL
 #' @export
 setMethod(
     "plotTSNE",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(
         object,
         interestingGroups = "ident",
@@ -180,9 +180,8 @@ setMethod(
         aspectRatio = 1L,
         title = NULL
     ) {
-        data <- fetchTSNEData(object)
-        .plotDimensionalReduction(
-            data = data,
+        .plotReducedDims(
+            data = fetchTSNEData(object),
             axes = c(x = "tSNE_1", y = "tSNE_2"),
             interestingGroups = interestingGroups,
             color = color,
@@ -205,8 +204,18 @@ setMethod(
 #' @rdname plotDimensionalReduction
 #' @export
 setMethod(
-    "plotPCA",
+    "plotTSNE",
     signature("seurat"),
+    getMethod("plotTSNE", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotDimensionalReduction
+#' @export
+setMethod(
+    "plotUMAP",
+    signature("SingleCellExperiment"),
     function(
         object,
         interestingGroups = "ident",
@@ -222,10 +231,9 @@ setMethod(
         aspectRatio = 1L,
         title = NULL
     ) {
-        data <- fetchPCAData(object)
-        .plotDimensionalReduction(
-            data = data,
-            axes = c(x = "PC1", y = "PC2"),
+        .plotReducedDims(
+            data = fetchUMAPData(object),
+            axes = c(x = "UMAP1", y = "UMAP2"),
             interestingGroups = interestingGroups,
             color = color,
             pointsAsNumbers = pointsAsNumbers,
@@ -249,6 +257,16 @@ setMethod(
 setMethod(
     "plotUMAP",
     signature("seurat"),
+    getMethod("plotUMAP", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotDimensionalReduction
+#' @export
+setMethod(
+    "plotPCA",
+    signature("SingleCellExperiment"),
     function(
         object,
         interestingGroups = "ident",
@@ -264,10 +282,9 @@ setMethod(
         aspectRatio = 1L,
         title = NULL
     ) {
-        data <- fetchUMAPData(object)
-        .plotDimensionalReduction(
-            data = data,
-            axes = c(x = "UMAP1", y = "UMAP2"),
+        .plotReducedDims(
+            data = fetchPCAData(object),
+            axes = c(x = "PC1", y = "PC2"),
             interestingGroups = interestingGroups,
             color = color,
             pointsAsNumbers = pointsAsNumbers,
@@ -282,4 +299,14 @@ setMethod(
             title = title
         )
     }
+)
+
+
+
+#' @rdname plotDimensionalReduction
+#' @export
+setMethod(
+    "plotPCA",
+    signature("seurat"),
+    getMethod("plotPCA", "SingleCellExperiment")
 )

@@ -31,10 +31,10 @@ and Ensembl gene identifiers for rows.
 }
 \examples{
 # bcbioSingleCell ====
-colnames(sampleData(indrops_small))
-sampleName <- sampleData(indrops_small)[1L, "sampleName"]
-print(sampleName)
-selectSamples(indrops_small, sampleName = sampleName)
+object <- indrops_small
+sample <- sampleNames(object) \%>\% head(1L)
+print(sample)
+selectSamples(object, sampleName = sample)
 }
 \seealso{
 \code{\link[=sampleData]{sampleData()}}.

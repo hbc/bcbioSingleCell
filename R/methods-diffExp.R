@@ -124,7 +124,7 @@ NULL
 # ratio test implemented in nbinomLRT should be used.
 #
 # DESeq2 supports `weights` in assays automatically.
-.diffExp.zinbwave.DESeq2 <- function(object) {  # nolint
+.zinbwave.DESeq2 <- function(object) {  # nolint
     stopifnot(is(object, "SingleCellExperiment"))
     zinb <- .zinbwave(object)
     # DESeq2 ===================================================================
@@ -147,7 +147,7 @@ NULL
 
 
 
-.diffExp.zinbwave.edgeR <- function(object) {  # nolint
+.zinbwave.edgeR <- function(object) {  # nolint
     stopifnot(is(object, "SingleCellExperiment"))
     zinb <- .zinbwave(object)
     # edgeR ====================================================================
@@ -179,7 +179,7 @@ NULL
 
 # Note that TMM needs to be consistently applied for both
 # `calcNormFactors()` and `zeroWeightsLS()`.
-.diffExp.zingeR.edgeR <- function(  # nolint
+.zingeR.edgeR <- function(  # nolint
     object,
     maxit = 1000L
 ) {
@@ -219,7 +219,7 @@ NULL
 
 
 
-.diffExp.zingeR.DESeq2 <- function(  # nolint
+.zingeR.DESeq2 <- function(  # nolint
     object,
     maxit = 1000L
 ) {
@@ -377,7 +377,7 @@ setMethod(
         design <- model.matrix(~group)
         metadata(object)[["design"]] <- design
 
-        fun <- get(paste("", "diffExp", zeroWeights, caller, sep = "."))
+        fun <- get(paste("", zeroWeights, caller, sep = "."))
         fun(object)
     }
 )

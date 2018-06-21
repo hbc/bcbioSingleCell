@@ -36,8 +36,8 @@ bcb <- bcbioSingleCell(
     ensemblVersion = 90L
 )
 # Back up all data inside bcbioSingleCell object
-flatFiles <- flatFiles(bcb)
-saveData(bcb, flatFiles)
+flat <- flatFiles(bcb)
+saveData(bcb, flat)
 ```
 
 This will return a `bcbioSingleCell` object, which is an extension of the [Bioconductor][] [SingleCellExperiment][SCE] container class.

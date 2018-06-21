@@ -87,17 +87,18 @@ readCellRanger <- function(
     dots <- Filter(Negate(is.null), dots)
 
     # Directory paths ==========================================================
+    # This step can be slow when running over sshfs
     matrixFiles <- list.files(
         path = uploadDir,
         pattern = "matrix.mtx",
         include.dirs = FALSE,
         full.names = TRUE,
         recursive = TRUE
-    )
-    # Subset to only include `filtered_gene_bc_matrices*`. Note that
-    # aggregation output is labeled `filtered_gene_bc_matrices_mex` by
-    # default.
-    matrixFiles <- matrixFiles[grepl("filtered_gene_bc_matrices", matrixFiles)]
+    ) %>%
+        # Subset to only include `filtered_gene_bc_matrices*`. Note that
+        # aggregation output is labeled `filtered_gene_bc_matrices_mex` by
+        # default.
+        .[grepl("filtered_gene_bc_matrices", .)]
     assert_is_non_empty(matrixFiles)
 
     # Combined or per sample matrix support
@@ -210,18 +211,14 @@ readCellRanger <- function(
         rowRangesMetadata <- ah[["metadata"]]
         assert_is_data.frame(rowRangesMetadata)
     }
-
-    # Require gene-to-symbol mappings
-    assert_is_subset(
-        x = c("geneID", "geneName"),
-        y = names(mcols(rowRanges))
-    )
-
+    assert_is_subset(rownames(counts), names(rowRanges))
+    assert_is_subset(c("geneID", "geneName"), names(mcols(rowRanges)))
     rowData <- as.data.frame(rowRanges)
     rownames(rowData) <- names(rowRanges)
 
     # Counts ===================================================================
     message("Reading counts at gene level")
+    # This step can be slow over sshfs, recommend running on an HPC
     sparseCountsList <- .sparseCountsList(
         sampleDirs = sampleDirs,
         pipeline = pipeline,

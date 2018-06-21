@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.15</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
       </span>
     </div>
 
@@ -117,9 +117,23 @@
 
 <span class='fu'>plotFeatureUMAP</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>features</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointSize"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointAlpha"</span>, <span class='fl'>0.75</span>), <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"labelSize"</span>, <span class='fl'>6L</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
+
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>features</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointSize"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointAlpha"</span>, <span class='fl'>0.75</span>), <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"labelSize"</span>, <span class='fl'>6L</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
+
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>plotFeatureUMAP</span>(<span class='no'>object</span>, <span class='no'>features</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointSize"</span>, <span class='fl'>0.75</span>),
   <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointAlpha"</span>, <span class='fl'>0.75</span>), <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"labelSize"</span>, <span class='fl'>6L</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>)

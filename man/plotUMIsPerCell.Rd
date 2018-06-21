@@ -12,11 +12,11 @@ plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
   "ridgeline", "violin", "histogram", "boxplot"), interestingGroups, min = 0L,
-  point = c("none", "inflection", "knee"), trans = "log10", color = NULL,
-  fill = NULL, title = "UMIs per cell")
+  max = Inf, point = c("none", "inflection", "knee"), trans = "log10",
+  color = NULL, fill = NULL, title = "UMIs per cell")
 
 \S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "ridgeline",
-  "violin", "histogram", "boxplot"), interestingGroups, min = 0L,
+  "violin", "histogram", "boxplot"), interestingGroups, min = 0L, max = Inf,
   point = c("none", "inflection", "knee"), trans = "log10", color = NULL,
   fill = NULL, title = "UMIs per cell")
 }
@@ -32,6 +32,8 @@ in the vector.}
 formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{min}{Recommended minimum value cutoff.}
+
+\item{max}{Recommended maximum value cutoff.}
 
 \item{point}{Label either the "\code{knee}" or "\code{inflection}" points per sample.
 To disable, use "\code{none}". Requires \code{geom = "ecdf"}.}

@@ -81,10 +81,12 @@ setMethod(
     function(x) {
         stash <- bcbio(x, "metadata")
         if (!is.null(stash)) {
-            return(stash)
+            stash
+        } else {
+            x %>%
+                as.SingleCellExperiment() %>%
+                metadata()
         }
-        x <- as(x, "SingleCellExperiment")
-        metadata(x)
     }
 )
 
@@ -179,15 +181,7 @@ setMethod(
 setMethod(
     "interestingGroups",
     signature("seurat"),
-    function(object) {
-        validObject(object)
-        value <- metadata(object)[["interestingGroups"]]
-        if (is.null(value)) {
-            value <- "sampleName"
-        }
-        assertFormalInterestingGroups(object, value)
-        value
-    }
+    getMethod("interestingGroups", "SummarizedExperiment")
 )
 
 

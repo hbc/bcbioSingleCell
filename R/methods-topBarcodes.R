@@ -1,5 +1,7 @@
 #' Top Barcodes
 #'
+#' Obtain the top cellular barcodes based on UMI counts.
+#'
 #' @name topBarcodes
 #' @family Data Functions
 #' @author Michael Steinbaugh
@@ -7,12 +9,20 @@
 #' @inheritParams general
 #' @param n Number of barcodes to return per sample.
 #'
-#' @return `grouped_df` containing [metrics()] return. Grouped by `sampleID`
-#'   and arranged by `nUMI` column in descending order.
+#' @return
+#' - "`list`": `list` containing top barcodes as a `character` vector, split by
+#'   `sampleID`.
+#' - "`data.frame`": `tibble` grouped by `sampleID` and arranged by `nUMI`
+#'   column in descending order. Cellular barcodes are in the `cellID` column.
 #'
 #' @examples
 #' # SingleCellExperiment ====
-#' x <- topBarcodes(cellranger_small)
+#' # list
+#' x <- topBarcodes(cellranger_small, return = "list")
+#' lapply(x, class)
+#'
+#' # data.frame
+#' x <- topBarcodes(cellranger_small, return = "data.frame")
 #' glimpse(x)
 NULL
 
@@ -24,18 +34,35 @@ NULL
 setMethod(
     "topBarcodes",
     signature("SingleCellExperiment"),
-    function(object, n = 10L) {
+    function(
+        object,
+        n = 1000L,
+        return = c("data.frame", "list")
+    ) {
         validObject(object)
+        assertIsAnImplicitInteger(n)
+        return <- match.arg(return)
+
         metrics <- metrics(object)
-        assert_is_subset("nUMI", colnames(metrics))
-        metrics %>%
+        cols <- c("sampleID", "sampleName", "nUMI")
+        assert_is_subset(cols, colnames(metrics))
+        data <- metrics %>%
+            as.data.frame() %>%
             rownames_to_column("cellID") %>%
-            arrange(desc(!!sym("nUMI"))) %>%
+            select(!!!syms(c(cols, "cellID"))) %>%
             group_by(!!sym("sampleID")) %>%
+            arrange(desc(!!sym("nUMI")), .by_group = TRUE) %>%
             slice(seq_len(n))
+
+        if (return == "data.frame") {
+            data
+        } else if (return == "list") {
+            data %>%
+                split(.[["sampleID"]]) %>%
+                map("cellID")
+        }
     }
 )
-
 
 
 

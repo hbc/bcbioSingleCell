@@ -1,3 +1,37 @@
+# bcbioSingleCell 0.1.16 (2018-06-20)
+
+## New functions
+
+- `cellCountsPerCluster()` and `clusterCellCountsPerSample()`.
+
+## R Markdown templates
+
+- Now recommending 1000 UMIs by default, and a maximum of 10% mitochondrial
+  transcripts.
+- Seurat clustering now calculates multiple resolutions, suggesting 0.4, 0.8,
+  and 1.2 by default. Dimensional reduction plots have been updated to support
+  looping of these multiple resolutions.
+
+## Minor changes
+
+- `as(object, "SingleCellExperiment") coercion now slots stashed metadata
+  into SingleCellExperiment, if defined.
+- Simplified the internal code for `sampleData()`. `seurat` objects now share
+  the same code as `SingleCellExperiment`, and return `NULL` if the sample
+  data is not defined. The `metrics()` function continues to slot empty
+  metadata in `sampleID`, `sampleName`, and `interestingGroups()` if not
+  defined.
+- `SingleCellExperiment` is used as default method over `seurat` where
+  applicable: `fetchData` family, `plotDimensionalReduction` family,
+  `plotMarker` family, `plotFeature` family, `plotGene` family,
+  and `plotCellTypesPerCluster()`. The internal code hasn't changed, it just
+  is defined primarily for `SingleCellExperiment`.
+- `dimRed` argument has been renamed to `reduction`, where applicable.
+- `topBarcodes()` can now return either a `data.frame` or `list`, containing
+  the top barcodes grouped by sample.
+
+
+
 # bcbioSingleCell 0.1.15 (2018-06-13)
 
 ## Minor changes

@@ -9,9 +9,13 @@
 \alias{plotTopMarkers}
 \alias{plotMarker}
 \alias{plotMarker}
+\alias{plotMarkerTSNE,SingleCellExperiment-method}
 \alias{plotMarkerTSNE,seurat-method}
+\alias{plotMarkerUMAP,SingleCellExperiment-method}
 \alias{plotMarkerUMAP,seurat-method}
+\alias{plotTopMarkers,SingleCellExperiment-method}
 \alias{plotTopMarkers,seurat-method}
+\alias{plotKnownMarkersDetected,SingleCellExperiment-method}
 \alias{plotKnownMarkersDetected,seurat-method}
 \title{Plot Cell-Type-Specific Gene Markers}
 \usage{
@@ -23,11 +27,23 @@ plotMarkerUMAP(object, ...)
 
 plotTopMarkers(object, ...)
 
+\S4method{plotMarkerTSNE}{SingleCellExperiment}(object, genes,
+  expression = c("mean", "median", "sum"), color = NULL,
+  pointsAsNumbers = FALSE, pointSize = 0.75, pointAlpha = 0.8,
+  label = TRUE, labelSize = 6L, dark = FALSE, grid = FALSE,
+  legend = TRUE, aspectRatio = 1L, title = TRUE)
+
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
   "median", "sum"), color = NULL, pointsAsNumbers = FALSE,
   pointSize = 0.75, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
   dark = FALSE, grid = FALSE, legend = TRUE, aspectRatio = 1L,
   title = TRUE)
+
+\S4method{plotMarkerUMAP}{SingleCellExperiment}(object, genes,
+  expression = c("mean", "median", "sum"), color = NULL,
+  pointsAsNumbers = FALSE, pointSize = 0.75, pointAlpha = 0.8,
+  label = TRUE, labelSize = 6L, dark = FALSE, grid = FALSE,
+  legend = TRUE, aspectRatio = 1L, title = TRUE)
 
 \S4method{plotMarkerUMAP}{seurat}(object, genes, expression = c("mean",
   "median", "sum"), color = NULL, pointsAsNumbers = FALSE,
@@ -35,11 +51,17 @@ plotTopMarkers(object, ...)
   dark = FALSE, grid = FALSE, legend = TRUE, aspectRatio = 1L,
   title = TRUE)
 
-\S4method{plotTopMarkers}{seurat}(object, markers, dimRed = c("tsne", "umap"),
-  headerLevel = 2L, ...)
+\S4method{plotTopMarkers}{SingleCellExperiment}(object, markers,
+  reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
+
+\S4method{plotTopMarkers}{seurat}(object, markers, reduction = c("TSNE",
+  "UMAP"), headerLevel = 2L, ...)
+
+\S4method{plotKnownMarkersDetected}{SingleCellExperiment}(object, markers,
+  reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
 
 \S4method{plotKnownMarkersDetected}{seurat}(object, markers,
-  dimRed = c("tsne", "umap"), headerLevel = 2L, ...)
+  reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -84,8 +106,8 @@ the dataset, and some cells can be masked.}
 \item \code{\link[=plotKnownMarkersDetected]{plotKnownMarkersDetected()}}: must be grouped by "\code{cellType}".
 }}
 
-\item{dimRed}{Dimensionality reduction method to apply. Defaults to t-SNE
-("\code{tsne}") but UMAP is also supported ("\code{umap}").}
+\item{reduction}{Dimensional reduction method to apply. Defaults to t-SNE
+("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
 
 \item{headerLevel}{R Markdown header level.}
 }

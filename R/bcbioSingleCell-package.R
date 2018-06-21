@@ -68,12 +68,13 @@
 #'   validObject
 #' @importFrom parallel mclapply mcmapply
 #' @importFrom pbapply pblapply
+#' @importFrom purrr map
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! !!! sym syms UQ
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
 #'   complete.cases mcols metadata metadata<- na.omit
 #' @importFrom scales percent pretty_breaks
-#' @importFrom Seurat Convert CreateSeuratObject FetchData GetDimReduction
+#' @importFrom Seurat as.SingleCellExperiment CreateSeuratObject FetchData
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
 #'   spikeNames
 #' @importFrom stats ecdf fitted median model.matrix predict relevel reorder

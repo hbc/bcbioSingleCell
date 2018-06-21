@@ -6,14 +6,24 @@
 \alias{plotTSNE}
 \alias{plotUMAP}
 \alias{plotDimensionalReduction}
+\alias{plotTSNE,SingleCellExperiment-method}
 \alias{plotTSNE,seurat-method}
-\alias{plotPCA,seurat-method}
+\alias{plotUMAP,SingleCellExperiment-method}
 \alias{plotUMAP,seurat-method}
+\alias{plotPCA,SingleCellExperiment-method}
+\alias{plotPCA,seurat-method}
 \title{Plot Dimensional Reduction}
 \usage{
 plotTSNE(object, ...)
 
 plotUMAP(object, ...)
+
+\S4method{plotTSNE}{SingleCellExperiment}(object, interestingGroups = "ident",
+  color = NULL, pointsAsNumbers = FALSE,
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
+  legend = TRUE, aspectRatio = 1L, title = NULL)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
   color = NULL, pointsAsNumbers = FALSE,
@@ -22,7 +32,7 @@ plotUMAP(object, ...)
   labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
   legend = TRUE, aspectRatio = 1L, title = NULL)
 
-\S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
+\S4method{plotUMAP}{SingleCellExperiment}(object, interestingGroups = "ident",
   color = NULL, pointsAsNumbers = FALSE,
   pointSize = getOption("pointSize", 0.75),
   pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
@@ -30,6 +40,20 @@ plotUMAP(object, ...)
   legend = TRUE, aspectRatio = 1L, title = NULL)
 
 \S4method{plotUMAP}{seurat}(object, interestingGroups = "ident",
+  color = NULL, pointsAsNumbers = FALSE,
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
+  legend = TRUE, aspectRatio = 1L, title = NULL)
+
+\S4method{plotPCA}{SingleCellExperiment}(object, interestingGroups = "ident",
+  color = NULL, pointsAsNumbers = FALSE,
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
+  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
+  legend = TRUE, aspectRatio = 1L, title = NULL)
+
+\S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
   color = NULL, pointsAsNumbers = FALSE,
   pointSize = getOption("pointSize", 0.75),
   pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,

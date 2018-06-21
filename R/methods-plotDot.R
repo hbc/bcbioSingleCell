@@ -56,11 +56,11 @@ NULL
 #' @export
 setMethod(
     "plotDot",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(
         object,
         genes,
-        color = scale_colour_viridis(begin = 1L, end = 0L),
+        color = NULL,
         colMin = -2.5,
         colMax = 2.5,
         dotMin = 0L,
@@ -90,6 +90,7 @@ setMethod(
                 pctExp = .percentAbove(!!sym("expression"), threshold = 0L)
             ) %>%
             ungroup() %>%
+            mutate(gene = factor(!!sym("gene"), levels = genes)) %>%
             group_by(!!sym("gene")) %>%
             mutate(
                 avgExpScale = scale(!!sym("avgExp")),
@@ -114,8 +115,20 @@ setMethod(
 
         if (is(color, "ScaleContinuous")) {
             p <- p + color
+        } else {
+            p <- p + scale_colour_viridis(begin = 1L, end = 0L)
         }
 
         p
     }
+)
+
+
+
+#' @rdname plotDot
+#' @export
+setMethod(
+    "plotDot",
+    signature("seurat"),
+    getMethod("plotDot", "SingleCellExperiment")
 )

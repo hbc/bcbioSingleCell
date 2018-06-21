@@ -95,6 +95,8 @@ setAs(
     to = "SingleCellExperiment",
     function(from) {
         validObject(from)
-        Convert(from = from, to = "sce")
+        to <- as.SingleCellExperiment(from)
+        metadata(to) <- metadata(from)
+        to
     }
 )

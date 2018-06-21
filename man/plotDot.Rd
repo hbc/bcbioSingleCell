@@ -3,12 +3,16 @@
 \docType{methods}
 \name{plotDot}
 \alias{plotDot}
+\alias{plotDot,SingleCellExperiment-method}
 \alias{plotDot,seurat-method}
 \title{Plot Dot}
 \usage{
-\S4method{plotDot}{seurat}(object, genes, color = scale_colour_viridis(begin =
-  1L, end = 0L), colMin = -2.5, colMax = 2.5, dotMin = 0L,
-  dotScale = 6L, legend = TRUE)
+\S4method{plotDot}{SingleCellExperiment}(object, genes, color = NULL,
+  colMin = -2.5, colMax = 2.5, dotMin = 0L, dotScale = 6L,
+  legend = TRUE)
+
+\S4method{plotDot}{seurat}(object, genes, color = NULL, colMin = -2.5,
+  colMax = 2.5, dotMin = 0L, dotScale = 6L, legend = TRUE)
 }
 \arguments{
 \item{object}{Object.}

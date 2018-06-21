@@ -11,7 +11,7 @@
 plotCellTypesPerCluster(object, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
-  dimRed = c("tsne", "umap"), headerLevel = 2L, ...)
+  reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -21,8 +21,8 @@ plotCellTypesPerCluster(object, ...)
 \item{cellTypesPerCluster}{Cell types per cluster \code{grouped_df}. This must be
 the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
-\item{dimRed}{Dimensionality reduction method to apply. Defaults to t-SNE
-("\code{tsne}") but UMAP is also supported ("\code{umap}").}
+\item{reduction}{Dimensional reduction method to apply. Defaults to t-SNE
+("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
 
 \item{headerLevel}{R Markdown header level.}
 }

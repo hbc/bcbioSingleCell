@@ -34,7 +34,7 @@
   
 <meta property="og:title" content="Top Barcodes — topBarcodes" />
 
-<meta property="og:description" content="Top Barcodes" />
+<meta property="og:description" content="Obtain the top cellular barcodes based on UMI counts." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.15</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
       </span>
     </div>
 
@@ -109,17 +109,19 @@
 
     <div class="ref-description">
     
-    <p>Top Barcodes</p>
+    <p>Obtain the top cellular barcodes based on UMI counts.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10L</span>)
+<span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000L</span>,
+  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"list"</span>))
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10L</span>)</pre>
+<span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000L</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>,
+  <span class='st'>"list"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,12 +138,23 @@
       <th>n</th>
       <td><p>Number of barcodes to return per sample.</p></td>
     </tr>
+    <tr>
+      <th>return</th>
+      <td><p>Return type. Uses <code><a href='http://www.rdocumentation.org/packages/base/topics/match.arg'>base::match.arg()</a></code> internally and defaults
+to the first argument in the vector.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>grouped_df</code> containing <code><a href='metrics.html'>metrics()</a></code> return. Grouped by <code>sampleID</code>
-and arranged by <code>nUMI</code> column in descending order.</p>
+    
+<ul>
+<li><p>"<code>list</code>": <code>list</code> containing top barcodes as a <code>character</code> vector, split by
+<code>sampleID</code>.</p></li>
+<li><p>"<code>data.frame</code>": <code>tibble</code> grouped by <code>sampleID</code> and arranged by <code>nUMI</code>
+column in descending order. Cellular barcodes are in the <code>cellID</code> column.</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -155,21 +168,19 @@ and arranged by <code>nUMI</code> column in descending order.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>cellranger_small</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 10
-#&gt; Variables: 12
-#&gt; $ cellID            &lt;chr&gt; "pbmc4k_1_GGATTACCATAGGATA", "pbmc4k_1_CTCTGGTAGG...
-#&gt; $ sampleID          &lt;fct&gt; pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k_1,...
-#&gt; $ nUMI              &lt;int&gt; 48443, 26128, 23059, 21195, 21125, 21026, 20176, ...
-#&gt; $ nGene             &lt;int&gt; 5251, 4506, 4134, 3752, 4336, 4038, 3703, 3852, 3...
-#&gt; $ nCoding           &lt;int&gt; 33512, 23086, 21291, 20082, 20487, 19663, 18974, ...
-#&gt; $ nMito             &lt;int&gt; 923, 2129, 631, 487, 316, 858, 563, 560, 549, 600
-#&gt; $ log10GenesPerUMI  &lt;dbl&gt; 0.7940360, 0.8271912, 0.8289028, 0.8261835, 0.840...
-#&gt; $ mitoRatio         &lt;dbl&gt; 0.01905332, 0.08148347, 0.02736459, 0.02297712, 0...
-#&gt; $ sampleName        &lt;fct&gt; pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, p...
-#&gt; $ description       &lt;fct&gt; pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, p...
-#&gt; $ index             &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-#&gt; $ interestingGroups &lt;fct&gt; pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, p...</div></pre>
+<span class='co'># list</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>cellranger_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"list"</span>)
+<span class='fu'>lapply</span>(<span class='no'>x</span>, <span class='no'>class</span>)</div><div class='output co'>#&gt; $pbmc4k_1
+#&gt; [1] "character"
+#&gt; </div><div class='input'>
+<span class='co'># data.frame</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>cellranger_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"data.frame"</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
+#&gt; Variables: 4
+#&gt; $ sampleID   &lt;fct&gt; pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k...
+#&gt; $ sampleName &lt;fct&gt; pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, ...
+#&gt; $ nUMI       &lt;int&gt; 48443, 26128, 23059, 21195, 21125, 21026, 20176, 19996, ...
+#&gt; $ cellID     &lt;chr&gt; "pbmc4k_1_GGATTACCATAGGATA", "pbmc4k_1_CTCTGGTAGGAGTAGA"...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

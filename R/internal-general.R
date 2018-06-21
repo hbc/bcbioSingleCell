@@ -15,8 +15,6 @@
 #'   must contain `geneID` and `geneName`.
 #' @param dark Plot against a dark background using
 #'   [basejump::theme_midnight()].
-#' @param dimRed Dimensionality reduction method to apply. Defaults to t-SNE
-#'   ("`tsne`") but UMAP is also supported ("`umap`").
 #' @param dir Output directory.
 #' @param expression Calculation to apply. Uses [match.arg()] and defaults to
 #'   the first argument in the vector.
@@ -38,6 +36,8 @@
 #'   the dataset, and some cells can be masked.
 #' @param pointsAsNumbers Plot the points as numbers (`TRUE`) or dots (`FALSE`).
 #' @param pointSize Cell point size.
+#' @param reduction Dimensional reduction method to apply. Defaults to t-SNE
+#'   ("`TSNE`") but UMAP is also supported ("`UMAP`").
 #' @param return Return type. Uses [base::match.arg()] internally and defaults
 #'   to the first argument in the vector.
 #' @param title Plot title.

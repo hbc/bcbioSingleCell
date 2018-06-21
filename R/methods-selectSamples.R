@@ -23,10 +23,10 @@
 #'
 #' @examples
 #' # bcbioSingleCell ====
-#' colnames(sampleData(indrops_small))
-#' sampleName <- sampleData(indrops_small)[1L, "sampleName"]
-#' print(sampleName)
-#' selectSamples(indrops_small, sampleName = sampleName)
+#' object <- indrops_small
+#' sample <- sampleNames(object) %>% head(1L)
+#' print(sample)
+#' selectSamples(object, sampleName = sample)
 NULL
 
 
@@ -103,10 +103,12 @@ setMethod(
         metrics <- metrics(object)
         assert_is_subset("sampleID", colnames(metrics))
         cells <- metrics %>%
-            .[.[["sampleID"]] %in% sampleIDs, , drop = FALSE] %>%
-            rownames()
+            rownames_to_column("cellID") %>%
+            filter(!!sym("sampleID") %in% !!sampleIDs) %>%
+            pull("cellID")
         message(paste(length(cells), "cells matched"))
 
+        # Note that this step will drop the raw cellular barcodes list
         object[, cells]
     }
 )
