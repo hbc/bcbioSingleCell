@@ -82,6 +82,7 @@ Imports:
     pbapply,
     purrr (>= 0.2.5),
     readr,
+    rhdf5,
     rlang,
     rmarkdown,
     S4Vectors,
