@@ -3,8 +3,8 @@
 
 language: r
 cache: packages
-sudo: required 
-dist: trusty
+# sudo: required
+# dist: trusty
 
 r:
   - bioc-release
