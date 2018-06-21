@@ -3,21 +3,12 @@
 
 language: r
 cache: packages
-# sudo: required
-# dist: trusty
 
 r:
   - bioc-release
-  # - bioc-devel
 
 os:
-  # - linux
   - osx
-
-matrix:
-  exclude:
-  - os: osx
-    r: bioc-devel
 
 # blocklist
 branches:
@@ -29,37 +20,12 @@ branches:
 #   only:
 #   - master
 
-# External dependencies
-# dependency for gsl > copula > zinbwave
-# dependency for hdf5r > Seurat
-addons:
-  apt:
-    # update: true
-    packages:
-      # gsl > copula > zinbwave
-      - libgsl-dev
-      # hdf5r > Seurat
-      # - libhdf5-dev  (too old)
-      - subversion
-      - autoconf
-      - build-essential
-      - libtool
-      - libmagick++-dev
-
 env:
   global:
-    - _R_CHECK_FORCE_SUGGESTS_=true
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
-    # hdf5r > Seurat
-    - ASAN="-fsanitize=address -fno-omit-frame-pointer"
-    - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
-    - HDF5_VERSION=1.10.1
-    - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # Required to compile hdf5r > Seurat
-# https://github.com/hhoeflin/hdf5r/blob/master/.travis.yml
-# https://github.com/hhoeflin/hdf5r/blob/master/travis_setup.sh
 before_install:
   - chmod +x travis_setup.sh
   - ./travis_setup.sh
