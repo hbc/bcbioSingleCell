@@ -3,13 +3,15 @@
 
 language: r
 cache: packages
+sudo: required 
+dist: trusty
 
 r:
   - bioc-release
-  # - bioc-devel
+  - bioc-devel
 
 os:
-  # - linux
+  - linux
   - osx
 
 matrix:
@@ -32,7 +34,7 @@ branches:
 # dependency for hdf5r > Seurat
 addons:
   apt:
-    update: true
+    # update: true
     packages:
       # gsl > copula > zinbwave
       - libgsl-dev
@@ -50,11 +52,10 @@ env:
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
     # hdf5r > Seurat
-    # -_R_CHECK_CRAN_INCOMING_=false
+    - ASAN="-fsanitize=address -fno-omit-frame-pointer"
     - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
     - HDF5_VERSION=1.10.1
     - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-    # - PKG_CFLAGS="-pedantic"
 
 # Required to compile hdf5r > Seurat
 # https://github.com/hhoeflin/hdf5r/blob/master/.travis.yml
@@ -72,13 +73,6 @@ warnings_are_errors: true
 # Temporarily enable to cache packages
 # script: true
 
-notifications:
-  email:
-    recipients:
-      - mike@steinbaugh.com
-    on_success: change
-    on_failure: always
-
 r_packages:
   - covr
 bioc_packages:
@@ -93,3 +87,10 @@ after_success:
   - Rscript -e 'lintr::lint_package()'
   - Rscript -e 'covr::codecov()'
   - R CMD BiocCheck .
+
+notifications:
+  email:
+    recipients:
+      - mike@steinbaugh.com
+    on_success: change
+    on_failure: always
