@@ -6,16 +6,9 @@ cache: packages
 
 r:
   - bioc-release
-  - bioc-devel
 
 os:
-  - linux
   - osx
-
-matrix:
-  exclude:
-  - os: osx
-    r: bioc-devel
 
 # blocklist
 branches:
@@ -27,30 +20,10 @@ branches:
 #   only:
 #   - master
 
-# Required to compile Seurat from source
-# https://github.com/hhoeflin/hdf5r/blob/master/travis_setup.sh
-# before_install:
-#   - chmod +x travis_setup.sh
-#   - ./travis_setup.sh
-
-# External dependencies
-# dependency for gsl > copula > zinbwave
-# dependency for hdf5r > Seurat
-addons:
-  apt:
-    update: true
-    packages:
-      - libgsl-dev
-      # - libhdf5-dev
-
 env:
   global:
-    - _R_CHECK_FORCE_SUGGESTS_=true
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
-    # - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
-    # - HDF5_VERSION=1.8.17
-    # - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # r_build_args: "--no-build-vignettes"
 # r_check_args: "--no-vignettes"
@@ -60,13 +33,6 @@ warnings_are_errors: true
 
 # Temporarily enable to cache packages
 # script: true
-
-notifications:
-  email:
-    recipients:
-      - mike@steinbaugh.com
-    on_success: change
-    on_failure: always
 
 r_packages:
   - covr
@@ -79,6 +45,12 @@ r_github_packages:
   - jimhester/lintr
 
 after_success:
-  - Rscript -e 'lintr::lint_package()'
-  - Rscript -e 'covr::codecov()'
-  - R CMD BiocCheck .
+  - chmod +x travis_success.sh
+  - ./travis_success.sh
+
+notifications:
+  email:
+    recipients:
+      - mike@steinbaugh.com
+    on_success: change
+    on_failure: always

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
+if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     wd=$PWD
     cd ..
     wget "$HDF5_RELEASE_URL/hdf5-${HDF5_VERSION%.*}/hdf5-$HDF5_VERSION/src/hdf5-$HDF5_VERSION.tar.gz"
