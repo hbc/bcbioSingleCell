@@ -25,11 +25,6 @@ env:
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
 
-# Required to compile hdf5r > Seurat
-before_install:
-  - chmod +x travis_setup.sh
-  - ./travis_setup.sh
-
 # r_build_args: "--no-build-vignettes"
 # r_check_args: "--no-vignettes"
 
