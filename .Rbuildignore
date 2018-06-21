@@ -1,5 +1,6 @@
 ^_pkgdown\.yml$
 ^.*\.Rproj$
+^.*\.sh$
 ^\.httr-oauth$
 ^\.lintr$
 ^\.Rprofile$
@@ -10,4 +11,3 @@
 ^data-raw$
 ^docs$
 ^pkgdown$
-^travis_setup\.sh$
