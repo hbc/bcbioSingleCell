@@ -363,7 +363,6 @@ setMethod(
         # metadata if available, otherwise use the metrics return.
         cbList <- metadata(object)[["cellularBarcodes"]]
         if (length(cbList)) {
-            # FIXME Note that `selectSamples()` currently drops this list
             data <- .bindCellularBarcodes(cbList)
         } else {
             data <- metrics(object)
