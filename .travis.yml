@@ -8,7 +8,7 @@ dist: trusty
 
 r:
   - bioc-release
-  - bioc-devel
+  # - bioc-devel
 
 os:
   - linux
