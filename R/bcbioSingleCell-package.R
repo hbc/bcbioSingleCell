@@ -70,6 +70,7 @@
 #' @importFrom pbapply pblapply
 #' @importFrom purrr map
 #' @importFrom readr read_lines read_tsv
+#' @importFrom rhdf5 h5read
 #' @importFrom rlang !! !!! sym syms UQ
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
 #'   complete.cases mcols metadata metadata<- na.omit
