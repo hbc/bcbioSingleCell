@@ -4,13 +4,20 @@
 \alias{readCellRanger}
 \title{Read 10X Genomics Cell Ranger Data}
 \usage{
-readCellRanger(uploadDir, sampleMetadataFile = NULL, refdataDir = NULL,
+readCellRanger(uploadDir, format = c("mtx", "hdf5"), filtered = TRUE,
+  sampleMetadataFile = NULL, refdataDir = NULL,
   interestingGroups = "sampleName", transgeneNames = NULL,
   spikeNames = NULL, ...)
 }
 \arguments{
 \item{uploadDir}{Path to Cell Ranger output directory. This directory path
 must contain \code{filtered_gene_bc_matrices*} as a child directory.}
+
+\item{format}{Output format, either MatrixMarket ("\code{mtx}") or HDF5
+("\code{hdf5}").}
+
+\item{filtered}{Use filtered (recommended) or raw counts. Note that raw
+counts still contain only whitelisted cellular barcodes.}
 
 \item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required

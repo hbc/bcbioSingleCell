@@ -44,6 +44,10 @@
 #' @inheritParams general
 #' @param uploadDir Path to Cell Ranger output directory. This directory path
 #'   must contain `filtered_gene_bc_matrices*` as a child directory.
+#' @param filtered Use filtered (recommended) or raw counts. Note that raw
+#'   counts still contain only whitelisted cellular barcodes.
+#' @param format Output format, either MatrixMarket ("`mtx`") or HDF5
+#'   ("`hdf5`").
 #' @param refdataDir Directory path to Cell Ranger reference annotation data.
 #'
 #' @return `SingleCellExperiment`.
@@ -55,6 +59,8 @@
 #' show(x)
 readCellRanger <- function(
     uploadDir,
+    format = c("mtx", "hdf5"),
+    filtered = TRUE,
     sampleMetadataFile = NULL,
     refdataDir = NULL,
     interestingGroups = "sampleName",
@@ -65,6 +71,8 @@ readCellRanger <- function(
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
+    format <- match.arg(format)
+    assert_is_a_bool(filtered)
     assertIsAStringOrNULL(sampleMetadataFile)
     assertIsAStringOrNULL(refdataDir)
     if (is_a_string(refdataDir)) {
@@ -86,20 +94,39 @@ readCellRanger <- function(
     }
     dots <- Filter(Negate(is.null), dots)
 
-    # Directory paths ==========================================================
-    # This step can be slow when running over sshfs
-    matrixFiles <- list.files(
+    # File paths ===============================================================
+    if (isTRUE(filtered)) {
+        prefix <- "filtered"
+    } else {
+        prefix <- "raw"
+    }
+    if (format == "hdf5") {
+        pattern <- paste0(prefix, "_gene_bc_matrices_h5.h5")
+    } else if (format == "mtx") {
+        pattern <- "matrix.mtx"
+    }
+
+    # Check for single sample or not
+    subdirs <- list.dirs(uploadDir, recursive = FALSE)
+    if (length(subdirs)) {
+        multi <- TRUE
+    } else {
+        multi <- FALSE
+    }
+
+    files <- list.files(
         path = uploadDir,
-        pattern = "matrix.mtx",
+        pattern = pattern,
         include.dirs = FALSE,
         full.names = TRUE,
         recursive = TRUE
-    ) %>%
-        # Subset to only include `filtered_gene_bc_matrices*`. Note that
-        # aggregation output is labeled `filtered_gene_bc_matrices_mex` by
-        # default.
-        .[grepl("filtered_gene_bc_matrices", .)]
-    assert_is_non_empty(matrixFiles)
+    )
+    if (format == "mtx") {
+        pattern <- paste0(prefix, "_gene_bc_matrices")
+        files <- files[grepl(pattern, files)]
+    }
+    assert_is_non_empty(files)
+    message(printString(files))
 
     # Combined or per sample matrix support
     if (is_a_string(matrixFiles)) {
