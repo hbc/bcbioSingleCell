@@ -1,7 +1,3 @@
-# FIXME Rework this to use facet wrapping
-
-
-
 #' Plot Feature
 #'
 #' @name plotFeature
