@@ -3,6 +3,8 @@
 
 language: r
 cache: packages
+sudo: true
+dist: trusty
 
 r:
   - bioc-release
@@ -27,12 +29,6 @@ branches:
 #   only:
 #   - master
 
-# Required to compile Seurat from source
-# https://github.com/hhoeflin/hdf5r/blob/master/travis_setup.sh
-# before_install:
-#   - chmod +x travis_setup.sh
-#   - ./travis_setup.sh
-
 # External dependencies
 # dependency for gsl > copula > zinbwave
 # dependency for hdf5r > Seurat
@@ -48,9 +44,29 @@ env:
     - _R_CHECK_FORCE_SUGGESTS_=true
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
-    # - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
-    # - HDF5_VERSION=1.8.17
-    # - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+    # hdf5r > Seurat
+    - _R_CHECK_CRAN_INCOMING_=false
+    - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
+    - HDF5_VERSION=1.10.1
+    - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+    - PKG_CFLAGS="-pedantic"
+
+# Required to compile hdf5r > Seurat
+# https://github.com/hhoeflin/hdf5r/blob/master/.travis.yml
+# https://github.com/hhoeflin/hdf5r/blob/master/travis_setup.sh
+before_install:
+  - chmod +x travis_setup.sh
+  - ./travis_setup.sh
+
+# hdf5r > Seurat
+addons:
+  apt:
+    packages:
+      - subversion
+      - autoconf
+      - build-essential
+      - libtool
+      - libmagick++-dev
 
 # r_build_args: "--no-build-vignettes"
 # r_check_args: "--no-vignettes"
