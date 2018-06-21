@@ -50,11 +50,11 @@ env:
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
     # hdf5r > Seurat
-    - _R_CHECK_CRAN_INCOMING_=false
+    # -_R_CHECK_CRAN_INCOMING_=false
     - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
     - HDF5_VERSION=1.10.1
     - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-    - PKG_CFLAGS="-pedantic"
+    # - PKG_CFLAGS="-pedantic"
 
 # Required to compile hdf5r > Seurat
 # https://github.com/hhoeflin/hdf5r/blob/master/.travis.yml
