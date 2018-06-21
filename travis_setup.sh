@@ -2,7 +2,7 @@
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     # homebrew bottle
-    brew update
+    # brew update
     brew install hdf5
 else
     # build from source
