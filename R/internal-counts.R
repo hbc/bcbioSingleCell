@@ -1,4 +1,28 @@
-#' Read Sparse Counts
+# Read HDF5 Counts per Sample
+# Returns HDF5Array
+.readHDF5Counts <- function(
+    sampleDirs,
+    filtered = TRUE
+) {
+    stop("Not ready yet")
+}
+
+
+
+# Read All HDF5 Counts per Upload
+# Returns list
+.readAllHDF5Counts <- function(
+    sampleDirs,
+    filtered = TRUE
+) {
+    stop("Not ready yet")
+    list <- Filter(Negate(is.null), counts)
+    do.call(cbind, list)
+}
+
+
+
+#' Read Sparse Counts per Sample
 #'
 #' Read single-cell RNA-seq counts saved as a
 #' [MatrixMarket](https://people.sc.fsu.edu/~jburkardt/data/mm/mm.html) file
@@ -20,7 +44,6 @@
 #'   sample metadata `data.frame`.
 #' @param sampleDir Named character vector of sample directory containing the
 #'   MatrixMart file.
-#' @param umiType UMI type.
 #'
 #' @seealso `help("dgCMatrix-class")`
 #'
@@ -29,14 +52,14 @@
     sampleID,
     sampleDir,
     pipeline = c("bcbio", "cellranger"),
-    umiType
+    filtered = TRUE
 ) {
     assert_is_a_string(sampleID)
     assert_is_a_string(sampleDir)
     assert_all_are_dirs(sampleDir)
     assert_is_a_string(pipeline)
     pipeline <- match.arg(pipeline)
-    assert_is_a_string(umiType)
+    assert_is_a_bool(filtered)
 
     if (pipeline == "bcbio") {
         sampleStem <- basename(sampleDir)
@@ -44,20 +67,30 @@
         colFile <- paste0(matrixFile, ".colnames")  # barcodes
         rowFile <- paste0(matrixFile, ".rownames")  # transcripts
     } else if (pipeline == "cellranger") {
-        matrixFile <- list.files(
-            sampleDir,
-            pattern = "matrix.mtx",
-            full.names = TRUE,
-            recursive = TRUE
-        )
-        # Ensure we're using the filtered matrix
-        matrixFile <- matrixFile[grepl(
-            x = matrixFile,
-            pattern = "filtered_gene_bc_matrices"
-        )]
-        if (length(matrixFile) != 1L) {
-            stop("Failed to detect filtered matrix file")
+        # sample/outs/filtered_gene_bc_matrices/GRCh38/matrix.mtx
+        if (isTRUE(filtered)) {
+            prefix <- "filtered"
+        } else {
+            prefix <- "raw"
         }
+        countsDir <- file.path(
+            sampleDir,
+            "outs",
+            paste0(prefix, "_gene_bc_matrices")
+        )
+        message(countsDir)
+        assert_all_are_dirs(countsDir)
+        genomeBuild <- list.dirs(
+            path = countsDir,
+            full.names = FALSE,
+            recursive = FALSE
+        )
+        assert_is_a_string(genomeBuild)
+        matrixFile <- file.path(
+            countsDir,
+            genomeBuild,
+            "matrix.mtx"
+        )
         colFile <- file.path(dirname(matrixFile), "barcodes.tsv")
         rowFile <- file.path(dirname(matrixFile), "genes.tsv")
     }
@@ -119,20 +152,36 @@
 
 
 
-.sparseCountsList <- function(sampleDirs, pipeline, umiType) {
-    mcmapply(
+# Read All Sparse Counts per Upload
+# Returns list
+.readAllSparseCounts <- function(
+    sampleDirs,
+    pipeline,
+    filtered = TRUE
+) {
+    list <- mcmapply(
         sampleID = names(sampleDirs),
         sampleDir = sampleDirs,
-        MoreArgs = list(pipeline = pipeline, umiType = umiType),
-        FUN = function(sampleID, sampleDir, pipeline, umiType) {
+        MoreArgs = list(
+            pipeline = pipeline,
+            filtered = filtered
+        ),
+        FUN = function(
+            sampleID,
+            sampleDir,
+            pipeline,
+            filtered
+        ) {
             .readSparseCounts(
                 sampleID = sampleID,
                 sampleDir = sampleDir,
                 pipeline = pipeline,
-                umiType = umiType
+                filtered = filtered
             )
         },
         SIMPLIFY = FALSE,
         USE.NAMES = TRUE
     )
+    list <- Filter(Negate(is.null), list)
+    do.call(cbind, list)
 }
