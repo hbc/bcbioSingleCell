@@ -59,11 +59,10 @@
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom graphics hist
 #' @importFrom grid arrow unit
-#' @importFrom HDF5Array HDF5Array
 #' @importFrom jsonlite read_json
 #' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_names set_rownames
-#' @importFrom Matrix colSums readMM rowMeans rowSums
+#' @importFrom Matrix colSums readMM rowMeans rowSums sparseMatrix
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom methods .hasSlot as as<- getMethod is new show slot slot<-
 #'   validObject
@@ -71,7 +70,7 @@
 #' @importFrom pbapply pblapply
 #' @importFrom purrr map
 #' @importFrom readr read_lines read_tsv
-#' @importFrom rhdf5 h5read
+#' @importFrom rhdf5 h5dump h5read
 #' @importFrom rlang !! !!! sym syms UQ
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
 #'   complete.cases mcols metadata metadata<- na.omit
