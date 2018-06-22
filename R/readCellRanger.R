@@ -101,9 +101,10 @@ readCellRanger <- function(
         },
         FUN.VALUE = logical(1L)
     )
-    sampleDirs <- subdirs[hasOuts]
+    sampleDirs <- dirs[hasOuts]
     assert_is_non_empty(sampleDirs)
     names(sampleDirs) <- makeNames(basename(sampleDirs), unique = TRUE)
+    message(paste(length(sampleDirs), "sample(s) detected"))
 
     # Sample metadata ==========================================================
     if (is_a_string(sampleMetadataFile)) {
@@ -121,8 +122,7 @@ readCellRanger <- function(
     if (nrow(sampleData) < length(sampleDirs)) {
         message("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
-        sampleDirs <- sampleDirs %>%
-            .[names(sampleDirs) %in% rownames(sampleData)]
+        sampleDirs <- sampleDirs[rownames(sampleData)]
         message(paste(length(sampleDirs), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
@@ -131,18 +131,12 @@ readCellRanger <- function(
     # Counts ===================================================================
     # This step can be slow over sshfs, recommend running on an HPC
     message("Reading counts at gene level")
-    if (format == "hdf5") {
-        counts <- .readAllHDF5Counts(
-            sampleDirs = sampleDirs,
-            filtered = filtered
-        )
-    } else if (format == "mtx") {
-        counts <- .readAllSparseCounts(
-            sampleDirs = sampleDirs,
-            pipeline = pipeline,
-            filtered = filtered
-        )
-    }
+    counts <- .readCounts(
+        sampleDirs = sampleDirs,
+        pipeline = pipeline,
+        format = format,
+        filtered = filtered
+    )
 
     # Multiplexed sample check =================================================
     # Check to see if multiplexed samples are present and require metadata

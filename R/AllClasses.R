@@ -290,9 +290,10 @@ bcbioSingleCell <- function(
 
     # Assays ===================================================================
     message(paste("Reading counts as", level))
-    counts <- .readAllSparseCounts(
+    counts <- .readCounts(
         sampleDirs = sampleDirs,
-        pipeline = pipeline
+        pipeline = pipeline,
+        format = "mtx"
     )
 
     # Require transcript to gene conversion (legacy) ===========================
