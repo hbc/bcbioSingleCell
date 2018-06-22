@@ -52,6 +52,7 @@
         paste0(prefix, "_gene_bc_matrices_h5.h5")
     )
     assert_all_are_existing_files(file)
+    message(file)
 
     genomeBuild <- names(h5dump(file, load = FALSE))
     assert_is_a_string(genomeBuild)
@@ -150,6 +151,7 @@
     format <- match.arg(format)
     assert_is_a_bool(filtered)
 
+    message(paste("Reading counts in", format, "format"))
     list <- mcmapply(
         sampleDir = sampleDirs,
         sampleID = names(sampleDirs),
