@@ -181,6 +181,7 @@ readCellRanger <- function(
 
     # Row data =================================================================
     refJSON <- NULL
+    genomeBuild <- NULL
     ensemblRelease <- NULL
     rowRangesMetadata <- NULL
 
@@ -190,6 +191,9 @@ readCellRanger <- function(
         refJSONFile <- file.path(refdataDir, "reference.json")
         assert_all_are_existing_files(refJSONFile)
         refJSON <- read_json(refJSONFile)
+        # Get the genome build from JSON metadata
+        genomeBuild <- unlist(refJSON[["genomes"]])
+        assert_is_a_string(genomeBuild)
         # Convert the GTF file to GRanges
         gffFile <- file.path(refdataDir, "genes", "genes.gtf")
         assert_is_a_string(gffFile)
