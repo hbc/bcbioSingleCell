@@ -5,10 +5,8 @@
 #'
 #' @section Directory structure:
 #' Cell Ranger can vary in its output directory structure, but we're requiring a
-#' single, consistent data structure for datasets containing multiple samples.
-#' Note that Cell Ranger data may not always contain per sample subdirectories,
-#' or the "`outs`" subdirectory. We may make this more flexible in the future,
-#' but for now we're making this strict to ensure reproducibility.
+#' single, consistent directory structure for all datasets, even those that only
+#' contain a single sample:
 #'
 #' \preformatted{
 #' file.path(
@@ -29,11 +27,9 @@
 #'
 #' @section Reference data:
 #' We strongly recommend supplying the corresponding reference data required for
-#' Cell Ranger with the `refdataDir` argument. When set, the function will
-#' detect the `organism`, `ensemblRelease`, and `genomeBuild` automatically,
-#' based on the 10X `refdataDir` YAML metadata. Additionally, it will convert
-#' the gene annotations defined in the GTF file into a `GRanges` object, which
-#' get slotted in [rowRanges()]. Otherwise, the function will attempt to use the
+#' Cell Ranger with the `refdataDir` argument. It will convert the gene
+#' annotations defined in the GTF file into a `GRanges` object, which get
+#' slotted in [rowRanges()]. Otherwise, the function will attempt to use the
 #' most current annotations available from Ensembl, and some gene IDs may not
 #' match, due to deprecation in the current Ensembl release.
 #'
@@ -61,6 +57,7 @@ readCellRanger <- function(
     uploadDir,
     format = c("mtx", "hdf5"),
     filtered = TRUE,
+    organism = NULL,
     sampleMetadataFile = NULL,
     refdataDir = NULL,
     interestingGroups = "sampleName",
@@ -73,6 +70,7 @@ readCellRanger <- function(
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
     format <- match.arg(format)
     assert_is_a_bool(filtered)
+    assertIsAStringOrNULL(organism)
     assertIsAStringOrNULL(sampleMetadataFile)
     assertIsAStringOrNULL(refdataDir)
     if (is_a_string(refdataDir)) {
@@ -89,81 +87,22 @@ readCellRanger <- function(
 
     # Legacy arguments =========================================================
     # annotable
-    if ("annotable" %in% names(call)) {
-        stop("`annotable` argument is defunct")
-    }
+    stopifnot(!"annotable" %in% names(call))
     dots <- Filter(Negate(is.null), dots)
 
-    # File paths ===============================================================
-    if (isTRUE(filtered)) {
-        prefix <- "filtered"
-    } else {
-        prefix <- "raw"
-    }
-    if (format == "hdf5") {
-        pattern <- paste0(prefix, "_gene_bc_matrices_h5.h5")
-    } else if (format == "mtx") {
-        pattern <- "matrix.mtx"
-    }
-
-    # Check for single sample or not
-    subdirs <- list.dirs(uploadDir, recursive = FALSE)
-    if (length(subdirs)) {
-        multi <- TRUE
-    } else {
-        multi <- FALSE
-    }
-
-    files <- list.files(
-        path = uploadDir,
-        pattern = pattern,
-        include.dirs = FALSE,
-        full.names = TRUE,
-        recursive = TRUE
+    # Sample directories =======================================================
+    dirs <- list.dirs(uploadDir, recursive = FALSE)
+    assert_is_non_empty(dirs)
+    # Sample subdirectories must contain `outs/` directory
+    hasOuts <- vapply(
+        X = dirs,
+        FUN = function(dir) {
+            dir.exists(file.path(dir, "outs"))
+        },
+        FUN.VALUE = logical(1L)
     )
-    if (format == "mtx") {
-        pattern <- paste0(prefix, "_gene_bc_matrices")
-        files <- files[grepl(pattern, files)]
-    }
-    assert_is_non_empty(files)
-    message(printString(files))
-
-    # Combined or per sample matrix support
-    if (is_a_string(matrixFiles)) {
-        sampleDirs <- uploadDir
-    } else {
-        message(paste(length(matrixFiles), "samples detected"))
-        message(paste(
-            "Required per sample output directory structure:",
-            file.path(
-                "<uploadDir>",
-                "<sampleName>",
-                "outs",
-                "filtered_gene_bc_matrices*",
-                "<genomeBuild>",
-                "matrix.mtx"
-            ),
-            sep = "\n"
-        ))
-        assert_all_are_matching_regex(
-            x = matrixFiles,
-            pattern = file.path(
-                paste0("^", uploadDir),
-                "[^/]+", # sampleName
-                "outs",
-                "filtered_gene_bc_matrices([^/]+)?",
-                "[^/]+",
-                paste0("matrix.mtx", "$")
-            )
-        )
-        # Sample directories nest the matrix files 4 levels deep
-        sampleDirs <- matrixFiles %>%
-            dirname() %>%
-            dirname() %>%
-            dirname() %>%
-            dirname()
-    }
-
+    sampleDirs <- subdirs[hasOuts]
+    assert_is_non_empty(sampleDirs)
     names(sampleDirs) <- makeNames(basename(sampleDirs), unique = TRUE)
 
     # Sample metadata ==========================================================
@@ -189,69 +128,21 @@ readCellRanger <- function(
         allSamples <- TRUE
     }
 
-    # Gene annotations =========================================================
-    refJSON <- NULL
-    ensemblRelease <- NULL
-    rowRangesMetadata <- NULL
-
-    # Stop on multiple genomes (not supported in a single SCE object)
-    genomeBuild <- matrixFiles %>%
-        dirname() %>%
-        basename() %>%
-        unique()
-    assert_is_a_string(genomeBuild)
-    organism <- detectOrganism(genomeBuild)
-    assert_is_a_string(organism)
-
-    # Prepare gene annotations as GRanges
-    if (is_a_string(refdataDir)) {
-        # JSON data
-        refJSONFile <- file.path(refdataDir, "reference.json")
-        assert_all_are_existing_files(refJSONFile)
-        refJSON <- read_json(refJSONFile)
-        # Convert the GTF file to GRanges
-        gffFile <- file.path(refdataDir, "genes", "genes.gtf")
-        assert_is_a_string(gffFile)
-        rowRanges <- makeGRangesFromGFF(gffFile)
-        # Get the Ensembl version from the GTF file name.
-        # Example: "Homo_sapiens.GRCh37.82.filtered.gtf"
-        ensemblRelease <- gffFile %>%
-            str_split("\\.", simplify = TRUE) %>%
-            .[1L, 3L] %>%
-            as.integer()
-    } else {
-        # CellRanger uses Ensembl refdata internally. Here we're fetching the
-        # annotations with AnnotationHub rather than pulling from the GTF file
-        # in the refdata directory. It will also drop genes that are now dead in
-        # the current Ensembl release. Don't warn about old Ensembl release
-        # version.
-        ah <- suppressWarnings(makeGRangesFromEnsembl(
-            organism = organism,
-            format = level,
-            genomeBuild = genomeBuild,
-            metadata = TRUE
-        ))
-        assert_is_list(ah)
-        assert_are_identical(names(ah), c("data", "metadata"))
-        rowRanges <- ah[["data"]]
-        assert_is_all_of(rowRanges, "GRanges")
-        rowRangesMetadata <- ah[["metadata"]]
-        assert_is_data.frame(rowRangesMetadata)
-    }
-    assert_is_subset(rownames(counts), names(rowRanges))
-    assert_is_subset(c("geneID", "geneName"), names(mcols(rowRanges)))
-    rowData <- as.data.frame(rowRanges)
-    rownames(rowData) <- names(rowRanges)
-
     # Counts ===================================================================
-    message("Reading counts at gene level")
     # This step can be slow over sshfs, recommend running on an HPC
-    sparseCountsList <- .sparseCountsList(
-        sampleDirs = sampleDirs,
-        pipeline = pipeline,
-        umiType = umiType
-    )
-    counts <- do.call(cbind, sparseCountsList)
+    message("Reading counts at gene level")
+    if (format == "hdf5") {
+        counts <- .readAllHDF5Counts(
+            sampleDirs = sampleDirs,
+            filtered = filtered
+        )
+    } else if (format == "mtx") {
+        counts <- .readAllSparseCounts(
+            sampleDirs = sampleDirs,
+            pipeline = pipeline,
+            filtered = filtered
+        )
+    }
 
     # Multiplexed sample check =================================================
     # Check to see if multiplexed samples are present and require metadata
@@ -294,6 +185,51 @@ readCellRanger <- function(
         }
     }
 
+    # Row data =================================================================
+    refJSON <- NULL
+    ensemblRelease <- NULL
+    rowRangesMetadata <- NULL
+
+    # Prepare gene annotations as GRanges
+    if (is_a_string(refdataDir)) {
+        # JSON data
+        refJSONFile <- file.path(refdataDir, "reference.json")
+        assert_all_are_existing_files(refJSONFile)
+        refJSON <- read_json(refJSONFile)
+        # Convert the GTF file to GRanges
+        gffFile <- file.path(refdataDir, "genes", "genes.gtf")
+        assert_is_a_string(gffFile)
+        rowRanges <- makeGRangesFromGFF(gffFile)
+        # Get the Ensembl version from the GTF file name.
+        # Example: "Homo_sapiens.GRCh37.82.filtered.gtf"
+        ensemblRelease <- gffFile %>%
+            str_split("\\.", simplify = TRUE) %>%
+            .[1L, 3L] %>%
+            as.integer()
+    } else if (is_a_string(organism)) {
+        # CellRanger uses Ensembl refdata internally. Here we're fetching the
+        # annotations with AnnotationHub rather than pulling from the GTF file
+        # in the refdata directory. It will also drop genes that are now dead in
+        # the current Ensembl release. Don't warn about old Ensembl release
+        # version.
+        ah <- suppressWarnings(makeGRangesFromEnsembl(
+            organism = organism,
+            format = level,
+            genomeBuild = genomeBuild,
+            metadata = TRUE
+        ))
+        assert_is_list(ah)
+        assert_are_identical(names(ah), c("data", "metadata"))
+        rowRanges <- ah[["data"]]
+        assert_is_all_of(rowRanges, "GRanges")
+        rowRangesMetadata <- ah[["metadata"]]
+        assert_is_data.frame(rowRangesMetadata)
+    } else {
+        rowRanges <- emptyRanges(rownames(counts))
+    }
+    rowData <- as.data.frame(rowRanges)
+    rownames(rowData) <- names(rowRanges)
+
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
     metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
@@ -321,25 +257,25 @@ readCellRanger <- function(
 
     # Metadata =================================================================
     metadata <- list(
-        "version" = packageVersion,
-        "pipeline" = pipeline,
-        "level" = level,
-        "uploadDir" = uploadDir,
-        "sampleDirs" = sampleDirs,
-        "sampleMetadataFile" = as.character(sampleMetadataFile),
-        "sampleData" = sampleData,
-        "interestingGroups" = interestingGroups,
-        "cell2sample" = as.factor(cell2sample),
-        "organism" = organism,
-        "genomeBuild" = as.character(genomeBuild),
-        "ensemblRelease" = as.integer(ensemblRelease),
-        "rowRangesMetadata" = rowRangesMetadata,
-        "umiType" = umiType,
-        "allSamples" = allSamples,
+        version = packageVersion,
+        pipeline = pipeline,
+        level = level,
+        uploadDir = uploadDir,
+        sampleDirs = sampleDirs,
+        sampleMetadataFile = as.character(sampleMetadataFile),
+        sampleData = sampleData,
+        interestingGroups = interestingGroups,
+        cell2sample = as.factor(cell2sample),
+        organism = organism,
+        genomeBuild = as.character(genomeBuild),
+        ensemblRelease = as.integer(ensemblRelease),
+        rowRangesMetadata = rowRangesMetadata,
+        umiType = umiType,
+        allSamples = allSamples,
         # cellranger pipeline-specific -----------------------------------------
-        "refdataDir" = refdataDir,
-        "refJSON" = refJSON,
-        "call" = match.call()
+        refdataDir = refdataDir,
+        refJSON = refJSON,
+        call = match.call()
     )
     # Add user-defined custom metadata, if specified
     if (length(dots)) {
@@ -349,7 +285,7 @@ readCellRanger <- function(
 
     # Return ===================================================================
     .new.SingleCellExperiment(
-        assays = list("counts" = counts),
+        assays = list(counts = counts),
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
