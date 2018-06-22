@@ -71,6 +71,8 @@ output_dir <- file.path(
     "inst",
     "extdata",
     "cellranger",
+    "pbmc",
+    "outs",
     "filtered_gene_bc_matrices",
     "GRCh38"
 )
