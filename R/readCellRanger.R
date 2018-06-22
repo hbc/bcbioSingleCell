@@ -142,6 +142,7 @@ readCellRanger <- function(
     # Check to see if multiplexed samples are present and require metadata
     multiplexedPattern <- "^(.+)_(\\d+)_([ACGT]+)$"
     if (any(grepl(multiplexedPattern, colnames(counts)))) {
+        message("Multiplexed (aggregated) samples detected")
         # Prepare data.frame of barcode mappings
         # Example:
         # cellID: cellranger_AAACCTGGTTTACTCT_1
