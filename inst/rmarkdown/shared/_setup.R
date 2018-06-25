@@ -11,6 +11,7 @@ opts_chunk[["set"]](
     audodep = TRUE,
     cache = TRUE,
     cache.lazy = FALSE,
+    dev = c("png", "pdf"),
     error = TRUE,
     fig.height = 10L,
     fig.retina = 2L,
