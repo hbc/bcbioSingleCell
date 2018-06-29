@@ -1,5 +1,6 @@
 #' Cell-Cycle Markers
 #'
+#' @aliases cellCycleMarkers
 #' @family Marker Data
 #' @author Michael Steinbaugh
 #'
@@ -11,6 +12,7 @@
 
 #' Cell-Type Markers
 #'
+#' @aliases cellTypeMarkers
 #' @family Marker Data
 #' @author Michael Steinbaugh
 #'
