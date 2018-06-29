@@ -81,6 +81,7 @@ Imports:
     parallel,
     pbapply,
     purrr (>= 0.2.5),
+    R.utils,
     readr,
     rhdf5 (>= 2.2),
     rlang,

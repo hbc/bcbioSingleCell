@@ -34,6 +34,12 @@ ggplot2::scale_fill_hue
 
 
 
+#' @importFrom R.utils gzip
+#' @export
+R.utils::gzip
+
+
+
 #' @importFrom tibble glimpse
 #' @export
 tibble::glimpse

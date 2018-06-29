@@ -19,6 +19,8 @@
 \alias{reexports}
 \alias{scale_fill_hue}
 \alias{reexports}
+\alias{gzip}
+\alias{reexports}
 \alias{glimpse}
 \alias{reexports}
 \alias{inferno}
@@ -40,6 +42,8 @@ below to see their documentation.
   \item{dplyr}{\code{\link[dplyr]{pull}}}
 
   \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_gradient}}, \code{\link[ggplot2]{scale_color_hue}}, \code{\link[ggplot2]{scale_colour_gradient}}, \code{\link[ggplot2]{scale_colour_gradientn}}, \code{\link[ggplot2]{scale_colour_hue}}, \code{\link[ggplot2]{scale_fill_hue}}}
+
+  \item{R.utils}{\code{\link[R.utils]{gzip}}}
 
   \item{tibble}{\code{\link[tibble]{glimpse}}}
 
