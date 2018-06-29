@@ -4,8 +4,10 @@
 #' @author Michael Steinbaugh
 #'
 #' @examples
-#' names(cellCycleMarkers)
-"cellCycleMarkers"
+#' names(cell_cycle_markers)
+"cell_cycle_markers"
+
+cellCycleMarkers <- cell_cycle_markers
 
 
 
@@ -15,8 +17,10 @@
 #' @author Michael Steinbaugh
 #'
 #' @examples
-#' names(cellTypeMarkers)
-"cellTypeMarkers"
+#' names(cell_type_markers)
+"cell_type_markers"
+
+cellTypeMarkers <- cell_type_markers
 
 
 
