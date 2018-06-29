@@ -48,7 +48,10 @@ interestingGroups(bcb) <- "sampleName"
 ```{r sample_data}
 # getMethod("sampleData", "SingleCellExperiment")
 sample_data <- sampleData(bcb, return = "data.frame")
-write.csv(sample_data, file = file.path(params$results_dir, "sample_data.csv"))
+write.csv(
+    x = sample_data,
+    file = file.path(params$results_dir, "sample_data.csv")
+)
 sample_data
 ```
 
@@ -355,7 +358,7 @@ assignAndSaveData(
 
 ## Counts matrix
 
-```{r write_counts}
+```{r counts}
 counts <- counts(bcb)
 saveData(counts, dir = params$data_dir)
 
@@ -375,9 +378,9 @@ gzip(
 ```
 
 
-## Cell quality metrics
+## Quality metrics
 
-```{r write_metrics}
+```{r metrics}
 metrics <- metrics(bcb)
 write.csv(
     x = metrics,
@@ -388,7 +391,7 @@ write.csv(
 
 ## Gene annotations
 
-```{r write_gene_annotations}
+```{r gene_annotations}
 gene_annotations <- rowRanges(bcb) %>% as.data.frame()
 write.csv(
     x = gene_annotations,
