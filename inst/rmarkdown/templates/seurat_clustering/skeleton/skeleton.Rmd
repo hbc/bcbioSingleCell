@@ -131,7 +131,8 @@ First, we assign each cell a score, based on its expression of G2/M and S phase 
 
 ```{r cell_cycle_markers}
 organism <- metadata(bcb)$organism
-cell_cycle_markers <- bcbioSingleCell::cellCycleMarkers[[camel(organism)]]
+cell_cycle_markers <- bcbioSingleCell::cell_cycle_markers %>%
+    .[[camel(organism)]]
 stopifnot(is.data.frame(cell_cycle_markers))
 
 markdownHeader("S phase markers", level = 3)
