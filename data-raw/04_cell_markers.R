@@ -1,18 +1,16 @@
 # Cell Markers
-#
-# Last updated: 2018-03-11
-# Gene annotations: Ensembl Genes 90
-#
+# 2018-06-29
 # This code is derived from:
-#   - Tirosh et al, 2015
-#   - http://satijalab.org/seurat/cell_cycle_vignette.html
+# - Tirosh et al, 2015
+# - http://satijalab.org/seurat/cell_cycle_vignette.html
+
 library(devtools)
 library(googlesheets)
 library(tidyverse)
 load_all()
 
 # Ensembl release version
-release <- 90L
+release <- 92L
 
 # Here we're matching the stored Ensembl identifiers (`geneID`) using
 # ensembldb to obtain the latest symbol names from Ensembl.
@@ -28,7 +26,7 @@ gs <- gs_key("1qA5ktYeimNGpZF1UPSQZATbpzEqgyxN6daoMOjv6YYw")
 ws <- gs_ws_ls(gs)
 print(ws)
 
-cellCycleMarkers <- lapply(ws, function(ws) {
+cell_cycle_markers <- lapply(ws, function(ws) {
     gs %>%
         gs_read(ws = ws) %>%
         select(phase, geneID) %>%
@@ -39,9 +37,9 @@ cellCycleMarkers <- lapply(ws, function(ws) {
                 release = release)
         ) %>%
         group_by(phase) %>%
-        arrange(geneName, .by_group = TRUE)
+        arrange(geneID, .by_group = TRUE)
 })
-names(cellCycleMarkers) <- camel(ws)
+names(cell_cycle_markers) <- camel(ws)
 
 # Cell type markers ============================================================
 # Download the Google sheet (gs)
@@ -53,7 +51,7 @@ ws <- gs_ws_ls(gs) %>%
     .[!str_detect(., "^_")]
 print(ws)
 
-cellTypeMarkers <- lapply(ws, function(ws) {
+cell_type_markers <- lapply(ws, function(ws) {
     gs %>%
         gs_read(ws = ws) %>%
         select(cellType, geneID) %>%
@@ -65,14 +63,14 @@ cellTypeMarkers <- lapply(ws, function(ws) {
             )
         ) %>%
         group_by(cellType) %>%
-        arrange(geneName, .by_group = TRUE)
+        arrange(geneID, .by_group = TRUE)
 })
-names(cellTypeMarkers) <- camel(ws)
+names(cell_type_markers) <- camel(ws)
 
 # Save R data ==================================================================
 use_data(
-    cellCycleMarkers,
-    cellTypeMarkers,
+    cell_cycle_markers,
+    cell_type_markers,
     compress = "xz",
     overwrite = TRUE
 )
