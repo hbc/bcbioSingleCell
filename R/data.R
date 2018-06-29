@@ -1,6 +1,5 @@
 #' Cell-Cycle Markers
 #'
-#' @aliases cellCycleMarkers
 #' @family Marker Data
 #' @author Michael Steinbaugh
 #'
@@ -8,21 +7,16 @@
 #' names(cell_cycle_markers)
 "cell_cycle_markers"
 
-cellCycleMarkers <- bcbioSingleCell::cell_cycle_markers
-
 
 
 #' Cell-Type Markers
 #'
-#' @aliases cellTypeMarkers
 #' @family Marker Data
 #' @author Michael Steinbaugh
 #'
 #' @examples
 #' names(cell_type_markers)
 "cell_type_markers"
-
-cellTypeMarkers <- bcbioSingleCell::cell_type_markers
 
 
 

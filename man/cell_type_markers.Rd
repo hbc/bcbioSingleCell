@@ -3,7 +3,6 @@
 \docType{data}
 \name{cell_type_markers}
 \alias{cell_type_markers}
-\alias{cellTypeMarkers}
 \title{Cell-Type Markers}
 \format{An object of class \code{list} of length 3.}
 \usage{
