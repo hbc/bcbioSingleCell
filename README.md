@@ -33,7 +33,7 @@ bcb <- bcbioSingleCell(
     interestingGroups = c("genotype", "treatment"),
     sampleMetadataFile = "sample_metadata.csv",
     organism = "Homo sapiens",
-    ensemblVersion = 90L
+    ensemblRelease = 90L
 )
 # Back up all data inside bcbioSingleCell object
 flat <- flatFiles(bcb)
