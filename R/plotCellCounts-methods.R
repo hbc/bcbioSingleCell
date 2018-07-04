@@ -53,10 +53,10 @@ setMethod(
 
         p <- ggplot(
             data = data,
-            mapping = aes_string(
-                x = "sampleName",
-                y = "nCells",
-                fill = "interestingGroups"
+            mapping = aes(
+                x = !!sym("sampleName"),
+                y = !!sym("nCells"),
+                fill = !!sym("interestingGroups")
             )
         ) +
             geom_bar(
@@ -78,7 +78,7 @@ setMethod(
         if (nrow(data) <= 16L) {
             p <- p + bcbio_geom_label(
                 data = data,
-                mapping = aes_string(label = "nCells"),
+                mapping = aes(label = !!sym("nCells")),
                 # Align the label just under the top of the bar
                 vjust = 1.25
             )

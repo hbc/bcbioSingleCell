@@ -55,7 +55,7 @@ setMethod(
             group_by(!!sym("gene"))
 
         violin <- geom_violin(
-            mapping = aes_string(fill = "ident"),
+            mapping = aes(fill = !!sym("ident")),
             # never include a color border
             color = "black",
             scale = scale,
@@ -69,9 +69,9 @@ setMethod(
 
         p <- ggplot(
             data,
-            mapping = aes_string(
-                x = "ident",
-                y = "expression"
+            mapping = aes(
+                x = !!sym("ident"),
+                y = !!sym("expression")
             )
         ) +
             violin +

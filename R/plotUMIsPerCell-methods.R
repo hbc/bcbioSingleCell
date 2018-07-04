@@ -113,21 +113,21 @@ setMethod(
                 p <- p +
                     geom_point(
                         data = pointData,
-                        mapping = aes_string(
-                            x = "x",
-                            y = "y",
-                            color = "sampleName"
+                        mapping = aes(
+                            x = !!sym("x"),
+                            y = !!sym("y"),
+                            color = !!sym("sampleName")
                         ),
                         size = 5L,
                         show.legend = FALSE
                     ) +
                     bcbio_geom_label_repel(
                         data = pointData,
-                        mapping = aes_string(
-                            x = "x",
-                            y = "y",
-                            label = "label",
-                            color = "sampleName"
+                        mapping = aes(
+                            x = !!sym("x"),
+                            y = !!sym("y"),
+                            label = !!sym("label"),
+                            color = !!sym("sampleName")
                         )
                     )
             }

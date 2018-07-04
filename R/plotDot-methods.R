@@ -104,10 +104,16 @@ setMethod(
 
         p <- ggplot(
             data = data,
-            mapping = aes_string(x = "gene", y = "ident")
+            mapping = aes(
+                x = !!sym("gene"),
+                y = !!sym("ident")
+            )
         ) +
             geom_point(
-                mapping = aes_string(color = "avgExpScale", size = "pctExp"),
+                mapping = aes(
+                    color = !!sym("avgExpScale"),
+                    size = !!sym("pctExp")
+                ),
                 show.legend = legend
             ) +
             scale_radius(range = c(0L, dotScale)) +

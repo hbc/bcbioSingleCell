@@ -79,39 +79,34 @@ NULL
         colorCol <- interestingGroups
     }
 
+    if (isTRUE(dark)) {
+        theme <- theme_midnight
+    } else {
+        theme <- theme_paperwhite
+    }
+
     p <- ggplot(
         data = data,
-        mapping = aes_string(
-            x = axes[["x"]],
-            y = axes[["y"]],
-            color = colorCol
+        mapping = aes(
+            x = !!sym(axes[["x"]]),
+            y = !!sym(axes[["y"]]),
+            color = !!sym(colorCol)
         )
-    )
-
-    # Put the dark theme call before the other ggplot aesthetics
-    if (isTRUE(dark)) {
-        p <- p +
-            theme_midnight(
-                aspect_ratio = aspectRatio,
-                grid = grid
-            )
-    } else {
-        p <- p +
-            theme_paperwhite(
-                aspect_ratio = aspectRatio,
-                grid = grid
-            )
-    }
+    ) +
+        theme(
+            aspect_ratio = aspectRatio,
+            grid = grid
+        )
 
     if (isTRUE(pointsAsNumbers)) {
         if (pointSize < 4L) pointSize <- 4L
         p <- p +
             geom_text(
-                mapping = aes_string(
-                    x = axes[["x"]],
-                    y = axes[["y"]],
-                    label = "ident",
-                    color = colorCol
+                mapping = aes(
+                    x = !!sym(axes[["x"]]),
+                    y = !!sym(axes[["y"]]),
+                    label = !!sym("ident"),
+                    color = !!sym(colorCol)
                 ),
                 alpha = pointAlpha,
                 size = pointSize,
@@ -134,10 +129,10 @@ NULL
         }
         p <- p +
             geom_text(
-                mapping = aes_string(
-                    x = "centerX",
-                    y = "centerY",
-                    label = "ident"
+                mapping = aes(
+                    x = !!sym("centerX"),
+                    y = !!sym("centerY"),
+                    label = !!sym("ident")
                 ),
                 color = labelColor,
                 size = labelSize,

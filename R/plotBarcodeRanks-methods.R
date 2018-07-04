@@ -41,17 +41,17 @@ setMethod(
             ranks = ranksPerSample,
             FUN = function(sampleName, ranks) {
                 data <- cbind(
-                    "rank" = ranks[["rank"]],
-                    "total" = ranks[["total"]],  # nUMI
-                    "fitted" = ranks[["fitted"]]
+                    rank = ranks[["rank"]],
+                    total = ranks[["total"]],  # nUMI
+                    fitted = ranks[["fitted"]]
                 ) %>%
                     as("tbl_df")
 
                 p <- ggplot(data = data) +
                     geom_point(
-                        mapping = aes_string(
-                            x = "rank",
-                            y = "total"
+                        mapping = aes(
+                            x = !!sym("rank"),
+                            y = !!sym("total")
                         )
                     ) +
                     scale_x_continuous(trans = "log10") +
@@ -64,9 +64,9 @@ setMethod(
                 # Include the fit line (smooth.spline)
                 p <- p + geom_line(
                     data = filter(data, !is.na(!!sym("fitted"))),
-                    mapping = aes_string(
-                        x = "rank",
-                        y = "fitted"
+                    mapping = aes(
+                        x = !!sym("rank"),
+                        y = !!sym("fitted")
                     ),
                     color = "red",
                     size = 1L
@@ -86,18 +86,14 @@ setMethod(
                         yintercept = ranks[["inflection"]]
                     )
 
-
                 # Label the knee and inflection points more clearly
-                labelData <- rbind(
-                    data[
-                        which.min(abs(data[["total"]] - ranks[["knee"]]))
-                        ,
-                    ],
-                    data[
-                        which.min(abs(data[["total"]] - ranks[["inflection"]]))
-                        ,
-                    ]
-                )
+                knee <- which.min(abs(
+                    data[["total"]] - ranks[["knee"]]
+                ))
+                inflection <- which.min(abs(
+                    data[["total"]] - ranks[["inflection"]]
+                ))
+                labelData <- data[c(knee, inflection), ]
                 labelData[["label"]] <- c(
                     paste("knee", "=", ranks[["knee"]]),
                     paste("inflection", "=", ranks[["inflection"]])
@@ -105,10 +101,10 @@ setMethod(
                 p +
                     bcbio_geom_label_repel(
                         data = labelData,
-                        mapping = aes_string(
-                            x = "rank",
-                            y = "total",
-                            label = "label"
+                        mapping = aes(
+                            x = !!sym("rank"),
+                            y = !!sym("total"),
+                            label = !!sym("label")
                         ),
                         color = colors
                     )

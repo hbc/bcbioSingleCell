@@ -35,9 +35,9 @@
         return(invisible())
     }
 
-    mapping <- aes_string(
-        color = "interestingGroups",
-        fill = "interestingGroups"
+    mapping <- string(
+        color = !!sym("interestingGroups"),
+        fill = !!sym("interestingGroups")
     )
 
     if (geom %in% c("boxplot", "violin")) {
@@ -197,10 +197,10 @@
 
     p <- ggplot(
         data = data,
-        mapping = aes_string(
-            x = xCol,
-            y = yCol,
-            color = "interestingGroups"
+        mapping = aes(
+            x = !!sym(xCol),
+            y = !!sym(yCol),
+            color = !!sym("interestingGroups")
         )
     ) +
         geom_point(alpha = 0.5, size = 1L) +

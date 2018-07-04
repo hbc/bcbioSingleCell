@@ -62,10 +62,10 @@ setMethod(
 
         p <- ggplot(
             data = data,
-            mapping = aes_string(
-                x = "depth",
-                y = "dropout",
-                color = "interestingGroups"
+            mapping = aes(
+                x = !!sym("depth"),
+                y = !!sym("dropout"),
+                color = !!sym("interestingGroups")
             )
         ) +
             geom_point(size = 0.8, alpha = 0.8) +

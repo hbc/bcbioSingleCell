@@ -50,7 +50,7 @@
 #'   group_vars left_join matches mutate mutate_all mutate_at mutate_if n rename
 #'   select select_if slice summarize summarize_all ungroup
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
-#' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_line
+#' @importFrom ggplot2 aes coord_flip element_blank element_line
 #'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
 #'   geom_histogram geom_hline geom_line geom_point geom_smooth
 #'   geom_step geom_text geom_violin geom_vline ggtitle guide_colourbar

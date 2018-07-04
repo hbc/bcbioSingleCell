@@ -78,10 +78,10 @@ NULL
     plotlist <- lapply(features, function(feature) {
         p <- ggplot(
             data = data,
-            mapping = aes_string(
-                x = dimCols[[1L]],
-                y = dimCols[[2L]],
-                color = feature
+            mapping = aes(
+                x = !!sym(dimCols[[1L]]),
+                y = !!sym(dimCols[[2L]]),
+                color = !!sym(feature)
             )
         ) +
             geom_point(
@@ -98,10 +98,10 @@ NULL
             }
             p <- p +
                 geom_text(
-                    mapping = aes_string(
-                        x = "centerX",
-                        y = "centerY",
-                        label = "ident"
+                    mapping = aes(
+                        x = !!sym("centerX"),
+                        y = !!sym("centerY"),
+                        label = !!sym("ident")
                     ),
                     color = labelColor,
                     size = labelSize,
@@ -110,24 +110,22 @@ NULL
         }
 
         if (isTRUE(dark)) {
-            p <- p +
-                theme_midnight(
-                    aspect_ratio = aspectRatio,
-                    grid = grid
-                )
+            theme <- theme_midnight
             if (is.null(color)) {
                 color <- scale_colour_viridis(option = "plasma")
             }
         } else {
-            p <- p +
-                theme_paperwhite(
-                    aspect_ratio = aspectRatio,
-                    grid = grid
-                )
+            theme <- theme_paperwhite
+            # FIXME Just use gray/red here by default?
             if (is.null(color)) {
                 color <- scale_colour_viridis(begin = 1L, end = 0L)
             }
         }
+        p <- p +
+            theme(
+                aspect_ratio = aspectRatio,
+                grid = grid
+            )
 
         if (is(color, "ScaleContinuous")) {
             p <- p + color

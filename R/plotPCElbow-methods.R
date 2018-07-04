@@ -86,7 +86,10 @@ setMethod(
         # Standard deviation ===================================================
         ggsd <- ggplot(
             data = data,
-            mapping = aes_string(x = "pc", y = "sdev")
+            mapping = aes(
+                x = !!sym("pc"),
+                y = !!sym("sdev")
+            )
         ) +
             geom_hline(
                 color = "orange",
@@ -96,14 +99,20 @@ setMethod(
             geom_line() +
             geom_point() +
             bcbio_geom_abline(xintercept = cutoff) +
-            labs(x = "pc", y = "std dev") +
+            labs(
+                x = "pc",
+                y = "std dev"
+            ) +
             expand_limits(y = 0L) +
             scale_y_continuous(trans = trans)
 
         # Percent standard deviation ===========================================
         ggpct <- ggplot(
             data = data,
-            mapping = aes_string(x = "pc", y = "pct")
+            mapping = aes(
+                x = !!sym("pc"),
+                y = !!sym("pct")
+            )
         ) +
             geom_hline(
                 color = "orange",
@@ -113,14 +122,20 @@ setMethod(
             geom_line() +
             geom_point() +
             bcbio_geom_abline(xintercept = cutoff) +
-            labs(x = "pc", y = "% std dev") +
+            labs(
+                x = "pc",
+                y = "% std dev"
+            ) +
             expand_limits(y = 0L) +
             scale_y_continuous(labels = percent, trans = trans)
 
         # Cumulative percent standard deviation ================================
         ggcumsum <- ggplot(
             data = data,
-            mapping = aes_string(x = "pc", y = "cumsum")
+            mapping = aes(
+                x = !!sym("pc"),
+                y = !!sym("cumsum")
+            )
         ) +
             geom_hline(
                 color = "orange",
@@ -130,7 +145,10 @@ setMethod(
             geom_line() +
             geom_point() +
             bcbio_geom_abline(xintercept = cutoff) +
-            labs(x = "pc", y = "cum % std dev") +
+            labs(
+                x = "pc",
+                y = "cum % std dev"
+            ) +
             expand_limits(y = c(0L, 1L)) +
             scale_y_continuous(labels = percent, trans = trans)
 

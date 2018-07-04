@@ -153,10 +153,10 @@ NULL
 
     p <- ggplot(
         data = data,
-        mapping = aes_string(
-            x = dimCols[[1L]],
-            y = dimCols[[2L]],
-            color = expression
+        mapping = aes(
+            x = !!sym(dimCols[[1L]]),
+            y = !!sym(dimCols[[2L]]),
+            color = !!sym(expression)
         )
     )
 
@@ -200,11 +200,11 @@ NULL
         if (pointSize < 4L) pointSize <- 4L
         p <- p +
             geom_text(
-                mapping = aes_string(
-                    x = dimCols[[1L]],
-                    y = dimCols[[2L]],
-                    label = "ident",
-                    color = expression
+                mapping = aes(
+                    x = !!sym(dimCols[[1L]]),
+                    y = !!sym(dimCols[[2L]]),
+                    label = !!sym("ident"),
+                    color = !!sym(expression)
                 ),
                 alpha = pointAlpha,
                 size = pointSize
@@ -225,10 +225,10 @@ NULL
         }
         p <- p +
             geom_text(
-                mapping = aes_string(
-                    x = "centerX",
-                    y = "centerY",
-                    label = "ident"
+                mapping = aes(
+                    x = !!sym("centerX"),
+                    y = !!sym("centerY"),
+                    label = !!sym("ident")
                 ),
                 color = labelColor,
                 size = labelSize,
@@ -238,24 +238,21 @@ NULL
 
     # Color palette
     if (isTRUE(dark)) {
-        p <- p +
-            theme_midnight(
-                aspect_ratio = aspectRatio,
-                grid = grid
-            )
+        theme <- theme_midnight
         if (is.null(color)) {
             color <- scale_colour_viridis(option = "plasma")
         }
     } else {
-        p <- p +
-            theme_paperwhite(
-                aspect_ratio = aspectRatio,
-                grid = grid
-            )
+        theme <- theme_paperwhite
         if (is.null(color)) {
             color <- scale_colour_viridis(begin = 1L, end = 0L)
         }
     }
+    p <- p +
+        theme(
+            aspect_ratio = aspectRatio,
+            grid = grid
+        )
 
     if (is(color, "ScaleContinuous")) {
         p <- p + color

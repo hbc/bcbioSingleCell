@@ -29,10 +29,10 @@ NULL
 
     p <- ggplot(
         data = data,
-        mapping = aes_string(
-            x = "sampleName",
-            y = "nCount",
-            fill = "interestingGroups"
+        mapping = aes(
+            x = !!sym("sampleName"),
+            y = !!sym("nCount"),
+            fill = !!sym("interestingGroups")
         )
     ) +
         geom_boxplot(color = "black", outlier.shape = NA) +
@@ -77,9 +77,9 @@ NULL
 
     p <- ggplot(
         data = data,
-        mapping = aes_string(
-            x = "nCount",
-            color = "interestingGroups"
+        mapping = aes(
+            x = !!sym("nCount"),
+            color = !!sym("interestingGroups")
         )
     ) +
         stat_ecdf(geom = "step", size = 1L) +
@@ -123,10 +123,10 @@ NULL
 
     p <- ggplot(
         data = data,
-        mapping = aes_string(
-            x = "nCount",
-            y = "sampleName",
-            fill = "interestingGroups"
+        mapping = aes(
+            x = !!sym("nCount"),
+            y = !!sym("sampleName"),
+            fill = !!sym("interestingGroups")
         )
     ) +
         geom_density_ridges(
@@ -176,10 +176,10 @@ NULL
 
     p <- ggplot(
         data = data,
-        mapping = aes_string(
-            x = "sampleName",
-            y = "nCount",
-            fill = "interestingGroups"
+        mapping = aes(
+            x = !!sym("sampleName"),
+            y = !!sym("nCount"),
+            fill = !!sym("interestingGroups")
         )
     ) +
         geom_violin(
@@ -279,10 +279,10 @@ NULL
 
     p <- ggplot(
         data = data,
-        mapping = aes_string(
-            x = "log10Count",
-            y = "proportion",
-            color = "interestingGroups"
+        mapping = aes(
+            x = !!sym("log10Count"),
+            y = !!sym("proportion"),
+            color = !!sym("interestingGroups")
         )
     ) +
         geom_step(
