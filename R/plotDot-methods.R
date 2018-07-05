@@ -68,6 +68,7 @@ setMethod(
         legend = TRUE
     ) {
         assert_is_character(genes)
+        assertIsColorScaleContinuousOrNULL(color)
         assert_is_a_number(colMin)
         assert_is_a_number(colMax)
         assert_is_a_number(dotMin)
