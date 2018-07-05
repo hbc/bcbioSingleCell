@@ -112,13 +112,12 @@ NULL
         if (isTRUE(dark)) {
             theme <- theme_midnight
             if (is.null(color)) {
-                color <- scale_colour_viridis(option = "plasma")
+                color <- darkMarkerColors
             }
         } else {
             theme <- theme_paperwhite
-            # FIXME Just use gray/red here by default?
             if (is.null(color)) {
-                color <- scale_colour_viridis(begin = 1L, end = 0L)
+                color <- lightMarkerColors
             }
         }
         p <- p +

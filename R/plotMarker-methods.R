@@ -186,8 +186,8 @@ NULL
         } else {
             guideTitle <- expression
         }
-        # Make the guide longer than normal, to improve appearance of values
-        # containing a decimal point
+        # FIXME Consider Making the guide longer than normal,
+        # to improve appearance of values containing a decimal point
         p <- p +
             guides(
                 color = guide_colourbar(title = guideTitle)
@@ -240,12 +240,12 @@ NULL
     if (isTRUE(dark)) {
         theme <- theme_midnight
         if (is.null(color)) {
-            color <- scale_colour_viridis(option = "plasma")
+            color <- darkMarkerColors
         }
     } else {
         theme <- theme_paperwhite
         if (is.null(color)) {
-            color <- scale_colour_viridis(begin = 1L, end = 0L)
+            color <- lightMarkerColors
         }
     }
     p <- p +
