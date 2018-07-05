@@ -10,13 +10,13 @@
 \usage{
 plotUMIsPerCell(object, ...)
 
-\S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
-  "ridgeline", "violin", "histogram", "boxplot"), interestingGroups, min = 0L,
+\S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("violin",
+  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L,
   max = Inf, point = c("none", "inflection", "knee"), trans = "log10",
   color = NULL, fill = NULL, title = "UMIs per cell")
 
-\S4method{plotUMIsPerCell}{seurat}(object, geom = c("ecdf", "ridgeline",
-  "violin", "histogram", "boxplot"), interestingGroups, min = 0L, max = Inf,
+\S4method{plotUMIsPerCell}{seurat}(object, geom = c("violin", "ridgeline",
+  "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L, max = Inf,
   point = c("none", "inflection", "knee"), trans = "log10", color = NULL,
   fill = NULL, title = "UMIs per cell")
 }

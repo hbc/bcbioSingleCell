@@ -10,12 +10,12 @@
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{SingleCellExperiment}(object, geom = c("ecdf",
-  "ridgeline", "violin", "histogram", "boxplot"), interestingGroups, min = 0L,
+\S4method{plotGenesPerCell}{SingleCellExperiment}(object, geom = c("violin",
+  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L,
   max = Inf, trans = "log2", fill = NULL, title = "genes per cell")
 
-\S4method{plotGenesPerCell}{seurat}(object, geom = c("ecdf", "ridgeline",
-  "violin", "histogram", "boxplot"), interestingGroups, min = 0L, max = Inf,
+\S4method{plotGenesPerCell}{seurat}(object, geom = c("violin", "ridgeline",
+  "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L, max = Inf,
   trans = "log2", fill = NULL, title = "genes per cell")
 }
 \arguments{

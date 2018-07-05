@@ -2,7 +2,7 @@
 .plotQCMetric <- function(
     object,
     metricCol,
-    geom = c("ecdf", "ridgeline", "violin", "histogram", "boxplot"),
+    geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
     interestingGroups,
     min = 0L,
     max = Inf,

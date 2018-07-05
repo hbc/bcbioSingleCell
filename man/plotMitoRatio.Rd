@@ -10,13 +10,13 @@
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("ecdf",
-  "ridgeline", "violin", "histogram", "boxplot"), interestingGroups, max = 1L,
+\S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("violin",
+  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups, max = 1L,
   fill = NULL, trans = "sqrt", title = "mito ratio")
 
-\S4method{plotMitoRatio}{seurat}(object, geom = c("ecdf", "ridgeline",
-  "violin", "histogram", "boxplot"), interestingGroups, max = 1L,
-  fill = NULL, trans = "sqrt", title = "mito ratio")
+\S4method{plotMitoRatio}{seurat}(object, geom = c("violin", "ridgeline",
+  "ecdf", "histogram", "boxplot"), interestingGroups, max = 1L, fill = NULL,
+  trans = "sqrt", title = "mito ratio")
 }
 \arguments{
 \item{object}{Object.}

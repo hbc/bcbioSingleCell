@@ -23,7 +23,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        geom = c("ecdf", "ridgeline", "violin", "histogram", "boxplot"),
+        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
         interestingGroups,
         max = 1L,
         fill = NULL,
