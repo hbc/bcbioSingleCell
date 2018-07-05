@@ -76,7 +76,7 @@ setMethod(
         ) +
             violin +
             # Note that `scales = free_y` will hide the x-axis for some plots
-            facet_wrap(facets = "gene", scales = "free_y")
+            facet_wrap(facets = sym("gene"), scales = "free_y")
 
         if (is(fill, "ScaleDiscrete")) {
             p <- p + fill
