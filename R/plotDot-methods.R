@@ -122,7 +122,7 @@ setMethod(
         if (is(color, "ScaleContinuous")) {
             p <- p + color
         } else {
-            p <- p + scale_colour_viridis(begin = 1L, end = 0L)
+            p <- p + scale_colour_gradient(low = "gray90", high = "black")
         }
 
         p
