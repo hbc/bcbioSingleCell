@@ -18,4 +18,4 @@ unknownSampleData <- data.frame(
 
 # DR marker default color palettes
 darkMarkerColors <- scale_colour_viridis_c(option = "plasma")
-lightMarkerColors <- scale_colour_gradient(low = "gray90", high = "purple")
+lightMarkerColors <- scale_colour_gradient(low = "gray90", high = "red")

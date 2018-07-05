@@ -112,7 +112,7 @@ setMethod(
         ) +
             geom_point(
                 mapping = aes(
-                    color = !!sym("avgExpScale"),
+                    colour = !!sym("avgExpScale"),
                     size = !!sym("pctExp")
                 ),
                 show.legend = legend
@@ -123,7 +123,7 @@ setMethod(
         if (is(color, "ScaleContinuous")) {
             p <- p + color
         } else {
-            p <- p + scale_colour_gradient(low = "gray90", high = "black")
+            p <- p + lightMarkerColors
         }
 
         p
