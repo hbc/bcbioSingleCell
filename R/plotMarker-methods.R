@@ -186,12 +186,7 @@ NULL
         } else {
             guideTitle <- expression
         }
-        # FIXME Consider Making the guide longer than normal,
-        # to improve appearance of values containing a decimal point
-        p <- p +
-            guides(
-                color = guide_colourbar(title = guideTitle)
-            )
+        p <- p + guides(color = guide_colourbar(title = guideTitle))
     } else {
         p <- p + guides(color = "none")
     }
