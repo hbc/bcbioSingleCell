@@ -9,7 +9,13 @@
 \alias{reexports}
 \alias{scale_color_gradient}
 \alias{reexports}
+\alias{scale_color_gradientn}
+\alias{reexports}
 \alias{scale_color_hue}
+\alias{reexports}
+\alias{scale_color_viridis_c}
+\alias{reexports}
+\alias{scale_color_viridis_d}
 \alias{reexports}
 \alias{scale_colour_gradient}
 \alias{reexports}
@@ -17,21 +23,19 @@
 \alias{reexports}
 \alias{scale_colour_hue}
 \alias{reexports}
+\alias{scale_colour_viridis_c}
+\alias{reexports}
+\alias{scale_colour_viridis_d}
+\alias{reexports}
 \alias{scale_fill_hue}
+\alias{reexports}
+\alias{scale_fill_viridis_c}
+\alias{reexports}
+\alias{scale_fill_viridis_d}
 \alias{reexports}
 \alias{gzip}
 \alias{reexports}
 \alias{glimpse}
-\alias{reexports}
-\alias{inferno}
-\alias{reexports}
-\alias{scale_color_viridis}
-\alias{reexports}
-\alias{scale_colour_viridis}
-\alias{reexports}
-\alias{scale_fill_viridis}
-\alias{reexports}
-\alias{viridis}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -41,12 +45,10 @@ below to see their documentation.
 \describe{
   \item{dplyr}{\code{\link[dplyr]{pull}}}
 
-  \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_gradient}}, \code{\link[ggplot2]{scale_color_hue}}, \code{\link[ggplot2]{scale_colour_gradient}}, \code{\link[ggplot2]{scale_colour_gradientn}}, \code{\link[ggplot2]{scale_colour_hue}}, \code{\link[ggplot2]{scale_fill_hue}}}
+  \item{ggplot2}{\code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{scale_color_gradient}}, \code{\link[ggplot2]{scale_color_gradientn}}, \code{\link[ggplot2]{scale_color_hue}}, \code{\link[ggplot2]{scale_color_viridis_c}}, \code{\link[ggplot2]{scale_color_viridis_d}}, \code{\link[ggplot2]{scale_colour_gradient}}, \code{\link[ggplot2]{scale_colour_gradientn}}, \code{\link[ggplot2]{scale_colour_hue}}, \code{\link[ggplot2]{scale_colour_viridis_c}}, \code{\link[ggplot2]{scale_colour_viridis_d}}, \code{\link[ggplot2]{scale_fill_hue}}, \code{\link[ggplot2]{scale_fill_viridis_c}}, \code{\link[ggplot2]{scale_fill_viridis_d}}}
 
   \item{R.utils}{\code{\link[R.utils]{gzip}}}
 
   \item{tibble}{\code{\link[tibble]{glimpse}}}
-
-  \item{viridis}{\code{\link[viridis]{inferno}}, \code{\link[viridis]{scale_color_viridis}}, \code{\link[viridis]{scale_colour_viridis}}, \code{\link[viridis]{scale_fill_viridis}}, \code{\link[viridis]{viridis}}}
 }}
 

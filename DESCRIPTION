@@ -96,8 +96,7 @@ Imports:
     tibble (>= 1.4),
     tidyr (>= 0.8),
     tidyverse (>= 1.2),
-    utils,
-    viridis (>= 0.5)
+    utils
 Suggests:
     BiocParallel (>= 1.14),
     BiocStyle,
