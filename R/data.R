@@ -10,6 +10,13 @@
 
 
 
+#' @rdname cell_cycle_markers
+#' @usage NULL
+#' @export
+cellCycleMarkers <- bcbioSingleCell::cell_cycle_markers
+
+
+
 #' Cell-Type Markers
 #'
 #' @aliases cellTypeMarkers
@@ -19,6 +26,13 @@
 #' @examples
 #' names(cell_type_markers)
 "cell_type_markers"
+
+
+
+#' @rdname cell_type_markers
+#' @usage NULL
+#' @export
+cellTypeMarkers <- bcbioSingleCell::cell_type_markers
 
 
 
