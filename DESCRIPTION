@@ -64,6 +64,7 @@ Imports:
     assertive.types,
     basejump (>= 0.5.10),
     Biobase,
+    BiocGenerics,
     BiocParallel,
     cowplot (>= 0.9),
     dplyr (>= 0.7),
