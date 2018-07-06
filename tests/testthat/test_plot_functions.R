@@ -181,14 +181,14 @@ test_that("plotQC : list", {
     expect_identical(
         names(p),
         c(
-            "plotCellCounts",
-            "plotReadsPerCell",
-            "plotUMIsPerCell",
-            "plotGenesPerCell",
-            "plotUMIsVsGenes",
-            "plotNovelty",
-            "plotMitoRatio",
-            "plotZerosVsDepth"
+            "Cell Counts",
+            "Reads per Cell",
+            "UMIs per Cell",
+            "Genes per Cell",
+            "UMIs vs. Genes",
+            "Novelty",
+            "Mito Ratio",
+            "Zeros vs. Depth"
         )
     )
 })
