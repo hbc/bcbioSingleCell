@@ -1,3 +1,7 @@
+# FIXME Use BiocParallel instead of parallel
+
+
+
 #' bcbioSingleCell
 #'
 #' Import and analyze [bcbio](http://bcbio-nextgen.readthedocs.io) single-cell
@@ -45,6 +49,7 @@
 #'   readProgramVersions readSampleData readTx2gene readYAMLSampleData
 #'   sanitizeSampleData sampleDirs uniteInterestingGroups
 #' @importFrom Biobase rowMedians sampleNames
+#' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows desc everything filter group_by
 #'   group_vars left_join matches mutate mutate_all mutate_at mutate_if n rename

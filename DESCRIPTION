@@ -64,7 +64,7 @@ Imports:
     assertive.types,
     basejump (>= 0.5.10),
     Biobase,
-    BiocGenerics,
+    BiocParallel,
     cowplot (>= 0.9),
     dplyr (>= 0.7),
     GenomicFeatures,
@@ -78,7 +78,6 @@ Imports:
     Matrix (>= 1.2),
     Matrix.utils (>= 0.9),
     methods,
-    parallel,
     pbapply (>= 1.3),
     purrr (>= 0.2.5),
     R.utils,
@@ -96,9 +95,9 @@ Imports:
     tibble (>= 1.4),
     tidyr (>= 0.8),
     tidyverse (>= 1.2),
-    utils
+    utils,
+    zinbwave (>= 1.2)
 Suggests:
-    BiocParallel (>= 1.14),
     BiocStyle,
     DESeq2 (>= 1.20),
     DropletUtils (>= 1.0),
@@ -106,15 +105,10 @@ Suggests:
     EnsDb.Hsapiens.v75,
     googlesheets (>= 0.3),
     MAST (>= 1.6),
-    scater (>= 1.8),
-    scran (>= 1.8),
     splatter (>= 1.4),
-    testthat (>= 2.0),
-    zinbwave (>= 1.2),
-    zingeR (>= 0.1)
+    testthat (>= 2.0)
 Remotes:
     hbc/bcbioBase,
-    statOmics/zingeR,
     steinbaugh/basejump
 biocViews:
     DataImport,

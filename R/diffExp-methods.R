@@ -1,3 +1,7 @@
+# FIXME Removing zingeR support because it's not on Bioconductor yet
+
+
+
 #' Differential Expression
 #'
 #' We now generally recommend the ZINB-WaVE method over zingeR, since it is
@@ -95,7 +99,6 @@ NULL
 
 .zinbwave <- function(object) {
     message("Running zinbwave")
-    requireNamespace("BiocParallel")
     stopifnot(is(object, "SingleCellExperiment"))
     object <- as(object, "SingleCellExperiment")
     # zinbFit doesn't support `dgCMatrix``, so coerce counts to matrix
@@ -104,7 +107,7 @@ NULL
         zinb <- zinbwave::zinbwave(
             Y = object,
             K = 0L,
-            BPPARAM = BiocParallel::SerialParam(),
+            BPPARAM = SerialParam(),
             epsilon = 1e12
         )
     }))
