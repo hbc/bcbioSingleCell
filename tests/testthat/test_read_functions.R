@@ -8,17 +8,18 @@ test_that("readCellRanger", {
         uploadDir = system.file(
             "extdata/cellranger",
             package = "bcbioSingleCell"
-        )
+        ),
+        organism = "Homo sapiens"
     ))
     expect_is(x, "SingleCellExperiment")
     expect_identical(dim(x), c(500L, 500L))
     expect_identical(
         sampleNames(x),
-        c(cellranger_1 = "cellranger")
+        c(pbmc_1 = "pbmc")
     )
     expect_identical(
         colnames(x)[[1L]],
-        "cellranger_1_AAACCTGAGAAGGCCT"
+        "pbmc_1_AAACCTGAGAAGGCCT"
     )
     expect_identical(
         rownames(x)[[1L]],
