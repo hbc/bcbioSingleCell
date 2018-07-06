@@ -35,7 +35,7 @@
         return(invisible())
     }
 
-    mapping <- string(
+    mapping <- aes(
         color = !!sym("interestingGroups"),
         fill = !!sym("interestingGroups")
     )
