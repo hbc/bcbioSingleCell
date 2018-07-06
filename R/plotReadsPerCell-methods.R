@@ -239,7 +239,7 @@ NULL
     assert_is_integer(data[["nCount"]])
     assert_is_factor(data[["sampleID"]])
     assert_is_an_integer(breaks)
-    mclapply(
+    bplapply(
         X = levels(data[["sampleID"]]),
         FUN = function(sampleID) {
             subset <- data[data[["sampleID"]] == sampleID, , drop = FALSE]
