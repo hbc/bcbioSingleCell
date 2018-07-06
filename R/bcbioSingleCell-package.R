@@ -1,7 +1,3 @@
-# FIXME Use BiocParallel instead of parallel
-
-
-
 #' bcbioSingleCell
 #'
 #' Import and analyze [bcbio](http://bcbio-nextgen.readthedocs.io) single-cell
