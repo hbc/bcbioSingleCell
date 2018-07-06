@@ -13,7 +13,6 @@ test_that("diffExp : zinbwave-edgeR", {
         object = object,
         numerator = numerator,
         denominator = denominator,
-        zeroWeights = "zinbwave",
         caller = "edgeR"
     )
     expect_s4_class(x, "DGELRT")
@@ -25,7 +24,6 @@ test_that("diffExp : zinbwave-DESeq2", {
         object = object,
         numerator = numerator,
         denominator = denominator,
-        zeroWeights = "zinbwave",
         caller = "DESeq2"
     )
     expect_s4_class(x, "DESeqResults")
