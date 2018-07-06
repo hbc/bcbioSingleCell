@@ -70,14 +70,14 @@ setMethod(
         }
 
         plotlist <- list(
-            "plotCellCounts" = plotCellCounts,
-            "plotReadsPerCell" = plotReadsPerCell,
-            "plotUMIsPerCell" = plotUMIsPerCell,
-            "plotGenesPerCell" = plotGenesPerCell,
-            "plotUMIsVsGenes" = plotUMIsVsGenes,
-            "plotNovelty" = plotNovelty,
-            "plotMitoRatio" = plotMitoRatio,
-            "plotZerosVsDepth" = plotZerosVsDepth
+            "Cell Counts" = plotCellCounts,
+            "Reads per Cell" = plotReadsPerCell,
+            "UMIs per Cell" = plotUMIsPerCell,
+            "Genes per Cell" = plotGenesPerCell,
+            "UMIs vs. Genes" = plotUMIsVsGenes,
+            "Novelty" = plotNovelty,
+            "Mito Ratio" = plotMitoRatio,
+            "Zeros vs. Depth" = plotZerosVsDepth
         )
 
         # Remove any `NULL` plots. This is useful for nuking the
