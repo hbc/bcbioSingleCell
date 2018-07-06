@@ -4,7 +4,6 @@
 \name{cell_cycle_markers}
 \alias{cell_cycle_markers}
 \alias{cellCycleMarkers}
-\alias{cellCycleMarkers}
 \title{Cell-Cycle Markers}
 \format{An object of class \code{list} of length 3.}
 \usage{
