@@ -51,6 +51,7 @@
 #'   group_vars left_join matches mutate mutate_all mutate_at mutate_if n rename
 #'   select select_if slice summarize summarize_all ungroup
 #' @importFrom DESeq2 DESeqDataSet DESeq results
+#' @importFrom edgeR calcNormFactors DGEList estimateDisp glmFit
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
 #' @importFrom ggplot2 aes coord_flip element_blank element_line
 #'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot

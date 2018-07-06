@@ -188,9 +188,12 @@ setMethod(
         assertIsAnImplicitInteger(minCountsPerCell)
         assertIsAnImplicitInteger(minCellsPerGene)
 
+        # Consider adding zingeR support back once it's on Bioconductor
+        zeroWeights <- "zinbwave"
+
         message(paste(
             "Performing differential expression with",
-            paste("zinbwave", caller, sep = "-")
+            paste(zeroWeights, caller, sep = "-")
         ))
 
         # Subset the SCE object to contain the desired cells
