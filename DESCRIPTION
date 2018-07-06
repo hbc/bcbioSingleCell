@@ -67,7 +67,9 @@ Imports:
     BiocGenerics,
     BiocParallel,
     cowplot (>= 0.9),
+    DESeq2,
     dplyr (>= 0.7),
+    edgeR,
     GenomicFeatures,
     ggplot2 (>= 3.0),
     ggridges (>= 0.5),
@@ -97,16 +99,14 @@ Imports:
     tidyr (>= 0.8),
     tidyverse (>= 1.2),
     utils,
-    zinbwave (>= 1.2)
+    zinbwave
 Suggests:
     BiocStyle,
-    DESeq2 (>= 1.20),
-    DropletUtils (>= 1.0),
-    edgeR (>= 3.22),
+    DropletUtils,
     EnsDb.Hsapiens.v75,
-    googlesheets (>= 0.3),
-    MAST (>= 1.6),
-    splatter (>= 1.4),
+    googlesheets,
+    MAST,
+    splatter,
     testthat (>= 2.0)
 Remotes:
     hbc/bcbioBase,

@@ -1,7 +1,3 @@
-# FIXME Removing zingeR support because it's not on Bioconductor yet
-
-
-
 #' Differential Expression
 #'
 #' We now generally recommend the ZINB-WaVE method over zingeR, since it is
@@ -11,14 +7,6 @@
 #' @section zinbwave:
 #' We are currently using an epsilon setting of `1e12`, as recommended by the
 #' ZINB-WaVE integration paper.
-#'
-#' @section zingeR:
-#' We first perform a differential expression analysis using zingeR posterior
-#' probabilities and focussing on the count component of the ZINB model. The
-#' weights are estimated with the core function of zingeR, `zeroWeightsLS()`. It
-#' is important to be consistent with the normalization procedure, i.e. if you
-#' use TMM normalization for the analysis, you should also use it for estimating
-#' the zingeR posterior probabilities.
 #'
 #' @section edgeR:
 #' After estimation of the dispersions and posterior probabilities, the
@@ -38,20 +26,16 @@
 #' - [zinbwave paper](https://doi.org/10.1186/s13059-018-1406-4).
 #' - [zinbwave vignette](https://bit.ly/2wtDdpS).
 #' - [zinbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
-#' - [zingeR vignette](https://goo.gl/4rTK1w).
 #'
 #' @name diffExp
 #' @family Differential Expression Functions
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams zingeR::zeroWeightsLS
 #' @inheritParams general
 #' @param numerator Group of cells to use in the numerator of the contrast
 #'   (e.g. treatment).
 #' @param denominator Group of cells to use in the denominator of the contrast
 #'   (e.g. control).
-#' @param zeroWeights Package to use for zero weight calculations. Defaults to
-#'   zinbwave but zingeR is also supported.
 #' @param caller Package to use for differential expression calling. Defaults to
 #'   edgeR (faster for large datasets) but DESeq2 is also supported.
 #' @param minCellsPerGene The minimum number of cells where a gene is expressed,
@@ -104,7 +88,7 @@ NULL
     # zinbFit doesn't support `dgCMatrix``, so coerce counts to matrix
     assays(object) <- list("counts" = as.matrix(counts(object)))
     print(system.time({
-        zinb <- zinbwave::zinbwave(
+        zinb <- zinbwave(
             Y = object,
             K = 0L,
             BPPARAM = SerialParam(),
@@ -128,13 +112,14 @@ NULL
 #
 # DESeq2 supports `weights` in assays automatically.
 .zinbwave.DESeq2 <- function(object) {  # nolint
+    stopifnot(packageVersion("DESeq2") >= 1.2)
     stopifnot(is(object, "SingleCellExperiment"))
     zinb <- .zinbwave(object)
     # DESeq2 ===================================================================
     message("Running DESeq2")
     print(system.time({
-        dds <- DESeq2::DESeqDataSet(se = zinb, design = .designFormula)
-        dds <- DESeq2::DESeq(
+        dds <- DESeqDataSet(se = zinb, design = .designFormula)
+        dds <- DESeq(
             object = dds,
             test = "LRT",
             reduced = ~ 1L,
@@ -143,7 +128,7 @@ NULL
             minReplicatesForReplace = Inf
         )
         # We already performed low count filtering
-        res <- DESeq2::results(dds, independentFiltering = FALSE)
+        res <- results(dds, independentFiltering = FALSE)
     }))
     res
 }
@@ -151,6 +136,7 @@ NULL
 
 
 .zinbwave.edgeR <- function(object) {  # nolint
+    stopifnot(packageVersion("edgeR") >= 3.22)
     stopifnot(is(object, "SingleCellExperiment"))
     zinb <- .zinbwave(object)
     # edgeR ====================================================================
@@ -163,107 +149,19 @@ NULL
     group <- object[["group"]]
     assert_is_factor(group)
     print(system.time({
-        dge <- edgeR::DGEList(counts, group = group)
-        dge <- edgeR::calcNormFactors(dge)
+        dge <- DGEList(counts, group = group)
+        dge <- calcNormFactors(dge)
         dge[["weights"]] <- weights
-        dge <- edgeR::estimateDisp(dge, design = design)
-        fit <- edgeR::glmFit(dge, design = design)
+        dge <- estimateDisp(dge, design = design)
+        fit <- glmFit(dge, design = design)
         # We already performed low count filtering
-        lrt <- zinbwave::glmWeightedF(
+        lrt <- glmWeightedF(
             glmfit = fit,
             coef = 2L,
             independentFiltering = FALSE
         )
     }))
     lrt
-}
-
-
-
-# Note that TMM needs to be consistently applied for both
-# `calcNormFactors()` and `zeroWeightsLS()`.
-.zingeR.edgeR <- function(  # nolint
-    object,
-    maxit = 1000L
-) {
-    stopifnot(is(object, "SingleCellExperiment"))
-    counts <- as.matrix(counts(object))
-    design <- metadata(object)[["design"]]
-    assert_is_matrix(design)
-    # zingeR ===================================================================
-    message("Running zingeR")
-    print(system.time({
-        weights <- zingeR::zeroWeightsLS(
-            counts = counts,
-            design = design,
-            maxit = maxit,
-            normalization = "TMM"
-        )
-    }))
-    # edgeR ====================================================================
-    message("Running edgeR")
-    group <- object[["group"]]
-    assert_is_factor(group)
-    print(system.time({
-        dge <- edgeR::DGEList(counts, group = group)
-        dge[["weights"]] <- weights
-        dge <- edgeR::calcNormFactors(dge, method = "TMM")
-        dge <- edgeR::estimateDisp(dge, design = design)
-        fit <- edgeR::glmFit(dge, design = design)
-        # We already performed low count filtering
-        lrt <- zingeR::glmWeightedF(
-            glmfit = fit,
-            coef = 2L,
-            independentFiltering = FALSE
-        )
-    }))
-    lrt
-}
-
-
-
-.zingeR.DESeq2 <- function(  # nolint
-    object,
-    maxit = 1000L
-) {
-    stopifnot(is(object, "SingleCellExperiment"))
-    counts <- as.matrix(counts(object))
-    se <- as(object, "RangedSummarizedExperiment")
-    assays(se) <- list(counts = counts)
-    # zingeR ===================================================================
-    message("Running zingeR")
-    design <- metadata(object)[["design"]]
-    assert_is_matrix(design)
-    print(system.time({
-        weights <- zingeR::zeroWeightsLS(
-            counts = counts,
-            design = design,
-            maxit = maxit,
-            normalization = "DESeq2_poscounts",
-            colData = colData(object),
-            designFormula = .designFormula
-        )
-    }))
-    # DESeq2 ===================================================================
-    message("Running DESeq2")
-    print(system.time({
-        dds <- DESeq2::DESeqDataSet(se = se, design = .designFormula)
-        assays(dds)[["weights"]] <- weights
-        dds <- DESeq2::estimateSizeFactors(dds, type = "poscounts")
-        dds <- DESeq2::estimateDispersions(dds)
-        # LRT is recommended over Wald for UMI counts.
-        # May want to switch to that approach here.
-        # See code in zinbwave method.
-        dds <- DESeq2::nbinomWaldTest(
-            object = dds,
-            betaPrior = TRUE,
-            useT = TRUE,
-            df = rowSums(weights) - 2L
-        )
-        # We already performed low count filtering
-        res <- DESeq2::results(dds, independentFiltering = FALSE)
-    }))
-    res
 }
 
 
@@ -278,7 +176,6 @@ setMethod(
         object,
         numerator,
         denominator,
-        zeroWeights = c("zinbwave", "zingeR"),
         caller = c("edgeR", "DESeq2"),
         minCellsPerGene = 25L,
         minCountsPerCell = 5L
@@ -287,48 +184,13 @@ setMethod(
         assert_is_character(numerator)
         assert_is_character(denominator)
         assert_are_disjoint_sets(numerator, denominator)
-        zeroWeights <- match.arg(zeroWeights)
-        if (zeroWeights == "zinbwave") {
-            requireNamespace(
-                package = "zinbwave",
-                versionCheck = list(
-                    op = ">=",
-                    version = package_version("1.0")
-                )
-            )
-        } else if (zeroWeights == "zingeR") {
-            requireNamespace(
-                package = "zingeR",
-                versionCheck = list(
-                    op = ">=",
-                    version = package_version("0.1")
-                )
-            )
-        }
         caller <- match.arg(caller)
-        if (caller == "DESeq2") {
-            requireNamespace(
-                package = "DESeq2",
-                versionCheck = list(
-                    op = ">=",
-                    version = package_version("1.20")
-                )
-            )
-        } else if (zeroWeights == "edgeR") {
-            requireNamespace(
-                package = "edgeR",
-                versionCheck = list(
-                    op = ">=",
-                    version = package_version("3.22")
-                )
-            )
-        }
         assertIsAnImplicitInteger(minCountsPerCell)
         assertIsAnImplicitInteger(minCellsPerGene)
 
         message(paste(
             "Performing differential expression with",
-            paste(zeroWeights, caller, sep = "-")
+            paste("zinbwave", caller, sep = "-")
         ))
 
         # Subset the SCE object to contain the desired cells
