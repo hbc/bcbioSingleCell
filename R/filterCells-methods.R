@@ -346,7 +346,8 @@ setMethod(
             metrics <- metrics %>%
                 group_by("sampleID") %>%
                 arrange(desc(!!sym("nUMI")), .by_group = TRUE) %>%
-                slice(seq_len(nCells))
+                slice(seq_len(nCells)) %>%
+                ungroup()
         }
         if (!nrow(metrics)) {
             stop("No cells passed `nCells` cutoff")
