@@ -162,7 +162,7 @@
     assert_is_a_bool(filtered)
     message(paste("Reading counts in", format, "format"))
 
-    list <- bpmapply(
+    list <- mapply(
         sampleDir = sampleDirs,
         sampleID = names(sampleDirs),
         MoreArgs = list(
