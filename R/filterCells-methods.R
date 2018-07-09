@@ -343,11 +343,17 @@ setMethod(
 
         # Expected nCells per sample (filtered by top nUMI) --------------------
         if (nCells < Inf) {
+            message(paste(
+                "Using a hard cell count limit of", nCells, "per sample,",
+                "after applying other filtering cutoffs"
+            ))
             metrics <- metrics %>%
-                group_by("sampleID") %>%
+                rownames_to_column() %>%
+                group_by(!!sym("sampleID")) %>%
                 arrange(desc(!!sym("nUMI")), .by_group = TRUE) %>%
                 slice(seq_len(nCells)) %>%
-                ungroup()
+                as.data.frame() %>%
+                column_to_rownames()
         }
         if (!nrow(metrics)) {
             stop("No cells passed `nCells` cutoff")
@@ -395,9 +401,7 @@ setMethod(
             paste("==", nCells, "cells per sample"),
             paste(">=", min(minCellsPerGene), "cells per gene")
         )
-        # FIXME Don't use cat call to print to screen here
-        # Bioconductor recommends only using message
-        cat(c(
+        message(paste(c(
             "Parameters:",
             paste("  -", printParams),
             bcbioBase::separatorBar,
@@ -418,7 +422,7 @@ setMethod(
                 length(genes), "of", nrow(object), "genes passed filtering",
                 paste0("(", percent(length(genes) / nrow(object)), ")")
             )
-        ), sep = "\n")
+        ), collapse = "\n"))
 
         summary <- list(
             "cells" = summaryCells,
