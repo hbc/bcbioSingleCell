@@ -64,7 +64,7 @@ matching." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@ factor levels.</p>
 <span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>indrops_small</span>
 
 <span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>object</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt;  chr [1:500] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG" ...</div><div class='input'>
+<span class='fu'>glimpse</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt;  chr [1:500] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG" ...</div><div class='input'>
 <span class='co'># Use the sample ID for the mappings, which must be present in the cell ID</span>
 <span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; multiplexed_AAAAAAAA 
 #&gt;              "rep_1" </div><div class='input'><span class='no'>samples</span> <span class='kw'>&lt;-</span> <span class='fu'>names</span>(<span class='fu'>sampleNames</span>(<span class='no'>object</span>))
@@ -159,7 +159,7 @@ factor levels.</p>
 <span class='fu'>stopifnot</span>(<span class='fu'>all</span>(<span class='fu'>grepl</span>(<span class='fu'>paste0</span>(<span class='st'>"^"</span>, <span class='no'>samples</span><span class='kw'>[[</span><span class='fl'>1</span>]]), <span class='no'>cells</span>)))
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>mapCellsToSamples</span>(<span class='kw'>cells</span> <span class='kw'>=</span> <span class='no'>cells</span>, <span class='kw'>samples</span> <span class='kw'>=</span> <span class='no'>samples</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;  Factor w/ 1 level "multiplexed_AAAAAAAA": 1 1 1 1 1 1 1 1 1 1 ...
+<span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;  Factor w/ 1 level "multiplexed_AAAAAAAA": 1 1 1 1 1 1 1 1 1 1 ...
 #&gt;  - attr(*, "names")= chr [1:500] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG" "multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA" "multiplexed_AAAAAAAA_AAACACTA_CTTCGATT" "multiplexed_AAAAAAAA_AAACCGCC_GAGTTTCG" ...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

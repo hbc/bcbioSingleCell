@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Top Barcodes</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-topBarcodes.R'><code>R/methods-topBarcodes.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/topBarcodes-methods.R'><code>R/topBarcodes-methods.R</code></a></small>
     <div class="hidden name"><code>topBarcodes.Rd</code></div>
     </div>
 
@@ -175,7 +175,7 @@ column in descending order. Cellular barcodes are in the <code>cellID</code> col
 #&gt; </div><div class='input'>
 <span class='co'># data.frame</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>cellranger_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"data.frame"</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
+<span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 4
 #&gt; $ sampleID   &lt;fct&gt; pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k...
 #&gt; $ sampleName &lt;fct&gt; pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, ...

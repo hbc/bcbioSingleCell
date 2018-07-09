@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -98,11 +98,11 @@ bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/bcbioSingl
     <span class="dt">interestingGroups =</span> <span class="kw">c</span>(<span class="st">"genotype"</span>, <span class="st">"treatment"</span>),
     <span class="dt">sampleMetadataFile =</span> <span class="st">"sample_metadata.csv"</span>,
     <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,
-    <span class="dt">ensemblVersion =</span> 90L
+    <span class="dt">ensemblRelease =</span> 90L
 )
 <span class="co"># Back up all data inside bcbioSingleCell object</span>
 flat &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
-<span class="kw">saveData</span>(bcb, flat)</code></pre></div>
+<span class="kw">saveData</span>(bcb, flat, <span class="dt">dir =</span> <span class="st">"data"</span>)</code></pre></div>
 <p>This will return a <code>bcbioSingleCell</code> object, which is an extension of the <a href="https://bioconductor.org">Bioconductor</a> <a href="https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment">SingleCellExperiment</a> container class.</p>
 <p>Parameters:</p>
 <ul>
@@ -111,7 +111,11 @@ flat &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
 <li>
 <code>interestingGroups</code>: Character vector of the column names of interest in the sample metadata, which is stored in the <code><a href="reference/sampleData.html">sampleData()</a></code> accessor slot of the <code>bcbioSingleCell</code> object. These values should be formatted in camelCase, and can be reassigned in the object after creation (e.g. <code>interestingGroups(bcb) &lt;- c("batch", "age")</code>). They are used for data visualization in the quality control utility functions.</li>
 <li>
-<code>organism</code>: Organism name. Use the full latin name (e.g. “Homo sapiens”).</li>
+<code>organism</code>: Organism name. Use the full latin name (e.g. “Homo sapiens”). If set <code>NULL</code>, no gene annotations will be downloaded and stashed into the <code>rowRanges</code> slot of the object.</li>
+<li>
+<code>genomeBuild</code>: <em>Optional.</em> The Ensembl release version to use.</li>
+<li>
+<code>gffFile</code>: <em>Optional.</em> If your transcriptome does not entirely match up to an Ensembl release, you can pass the GFF/GTF file of the transcriptome you used to load the annotations instead.</li>
 </ul>
 <p>Consult <code>help("bcbioSingleCell", "bcbioSingleCell")</code> for additional documentation.</p>
 </div>

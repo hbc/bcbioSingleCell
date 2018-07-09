@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Known Markers Detected</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-knownMarkersDetected.R'><code>R/methods-knownMarkersDetected.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/knownMarkersDetected-methods.R'><code>R/knownMarkersDetected-methods.R</code></a></small>
     <div class="hidden name"><code>knownMarkersDetected.Rd</code></div>
     </div>
 
@@ -134,7 +134,7 @@ return and sanitized with <code>sanitizeMarkers()</code>.</p></td>
     <tr>
       <th>known</th>
       <td><p>Known markers <code>data.frame</code> imported by
-<code><a href='readCellTypeMarkers.html'>readCellTypeMarkers()</a></code> or pulled from internal <a href='cellCycleMarkers.html'>cellCycleMarkers</a> data.</p></td>
+<code><a href='readCellTypeMarkers.html'>readCellTypeMarkers()</a></code> or pulled from internal <a href='cell_cycle_markers.html'>cell_cycle_markers</a> data.</p></td>
     </tr>
     <tr>
       <th>alpha</th>
@@ -177,7 +177,7 @@ easily.</p>
     <pre class="examples"><div class='input'><span class='co'># grouped_df ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>knownMarkersDetected</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>all_markers_small</span>,
-    <span class='kw'>known</span> <span class='kw'>=</span> <span class='no'>cellTypeMarkers</span><span class='kw'>[[</span><span class='st'>"homoSapiens"</span>]]
+    <span class='kw'>known</span> <span class='kw'>=</span> <span class='no'>cell_type_markers</span><span class='kw'>[[</span><span class='st'>"homoSapiens"</span>]]
 )
 <span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 14
 #&gt; # Groups:   cellType [1]

@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -427,7 +427,7 @@
 <ul>
 <li>Now using <code><a href="../reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> instead of <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> as the main constructor function to create a <code>bcbioSingleCell</code> object. <code><a href="../reference/deprecated.html">loadSingleCell()</a></code> is deprecated and still works, but will warn the user.</li>
 <li>Renamed <code><a href="../reference/deprecated.html">loadCellRanger()</a></code> to <code><a href="../reference/readCellRanger.html">readCellRanger()</a></code> for better name consistency.</li>
-<li>Quality control function color palettes now default to [ggplot2][] colors instead of using <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> palettes. This is defined using <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_hue()</a></code> instead of <code><a href="http://www.rdocumentation.org/packages/viridis/topics/scale_viridis">scale_color_viridis()</a></code> for example. The <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color palette is still used by default for marker expression plots.</li>
+<li>Quality control function color palettes now default to [ggplot2][] colors instead of using <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> palettes. This is defined using <code>scale_color_hue()</code> instead of <code>scale_color_viridis()</code> for example. The <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> color palette is still used by default for marker expression plots.</li>
 <li>Use “<code>aggregate</code>” instead of “<code>sampleNameAggregate</code>” to define aggregate/grouped samples in metadata.</li>
 </ul>
 </div>
