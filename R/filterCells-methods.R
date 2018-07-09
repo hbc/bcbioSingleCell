@@ -20,6 +20,7 @@
 #' @param maxMitoRatio Maximum relative mitochondrial abundance (`0-1` scale).
 #' @param minCellsPerGene Include genes with non-zero expression in at least
 #'   this many cells.
+#' @param expected Expected number of cells per sample.
 #'
 #' @seealso [Seurat::CreateSeuratObject()].
 #'
@@ -62,6 +63,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
+        expected = Inf,
         minUMIs = 0L,
         maxUMIs = Inf,
         minGenes = 0L,
@@ -75,12 +77,43 @@ setMethod(
         metrics <- metrics(object)
 
         # Parameter integrity checks ===========================================
+        # expected nCells per sample
+        assert_is_a_number(expected)
+        assert_all_are_positive(expected)
+
+        # minUMIs
         assert_is_any_of(minUMIs, c("numeric", "character"))
         if (is.character(minUMIs)) {
             assert_is_a_string(minUMIs)
             assert_is_subset(minUMIs, c("inflection", "knee"))
         }
+
+        # maxUMIs
+        assert_is_numeric(maxUMIs)
+        assert_all_are_positive(maxUMIs)
+
+        # minGenes
+        assert_is_numeric(minGenes)
+        assert_all_are_non_negative(minGenes)
+
+        # maxGenes
+        assert_is_numeric(maxGenes)
+        assert_all_are_non_negative(maxGenes)
+
+        # minNovelty
+        assert_is_numeric(minNovelty)
+        assert_all_are_in_range(minNovelty, lower = 0L, upper = 1L)
+
+        # maxMitoRatio
+        assert_is_numeric(maxMitoRatio)
+        assert_all_are_in_range(maxMitoRatio, lower = 0L, upper = 1L)
+
+        # minCellsPerGene
+        assert_is_numeric(minCellsPerGene)
+        assert_all_are_non_negative(minCellsPerGene)
+
         params <- list(
+            expected = expected,
             minUMIs = minUMIs,
             maxUMIs = maxUMIs,
             minGenes = minGenes,
@@ -308,6 +341,22 @@ setMethod(
             sep = " | "
         )
 
+        # Expected nCells per sample (filtered by top nUMI) --------------------
+        if (expected < Inf) {
+            metrics <- metrics %>%
+                group_by("sampleID") %>%
+                arrange(desc(!!sym("nUMI")), .by_group = TRUE) %>%
+                slice(seq_len(expected))
+        }
+        if (!nrow(metrics)) {
+            stop("No cells passed `expected` cutoff")
+        }
+        summaryCells[["expected"]] <- paste(
+            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste("expected", "==", expected),
+            sep = " | "
+        )
+
         cells <- sort(rownames(metrics))
         assert_is_subset(cells, colnames(object))
 
@@ -342,6 +391,7 @@ setMethod(
             paste("<=", max(maxGenes), "genes per cell"),
             paste(">=", min(minNovelty), "novelty score"),
             paste("<=", max(maxMitoRatio), "mitochondrial abundance"),
+            paste("==", expected, "cells per sample"),
             paste(">=", min(minCellsPerGene), "cells per gene")
         )
         cat(c(
