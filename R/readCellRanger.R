@@ -188,6 +188,8 @@ readCellRanger <- function(
 
     # Prepare gene annotations as GRanges
     if (is_a_string(refdataDir)) {
+        message("Using 10X Genomics reference data for gene annotations")
+        message(paste("refdataDir:", refdataDir))
         # JSON data
         refJSONFile <- file.path(refdataDir, "reference.json")
         assert_all_are_existing_files(refJSONFile)
