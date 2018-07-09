@@ -1,3 +1,45 @@
+# bcbioSingleCell 0.1.17 (2018-07-09)
+
+## Major changes
+
+- `readCellRanger()` now supports HDF5 data (.h5 files) or MatrixMarket Exchange
+  Format explicitly, using the `format` argument. The function also now supports
+  user-requested import of raw whitelisted cellular barcodes, using the
+  `filtered` argument. By default, filtered counts from Cell Ranger are
+  imported.
+- Removed support for zingeR in `diffExp()`. We will consider adding this
+  functionality back in a future update, once the package is available on
+  Bioconductor. For now, we're recommending usage of zinbwave.
+- `filterCells` nCells
+- Internal data has been renamed to snake_case format, for improved consistency.
+  Note that `cell_cycle_markers` is used in place of `cellCycleMarkers`, and
+  `cell_type_markers` in place of `cellTypeMarkers`. There's no easy way to
+  link these files as aliases, so this is a necessary breaking change.
+
+
+## Minor changes
+
+- Improved R Markdown template defaults for quality control and clustering.
+- Now importing functions related to differential expression into the package
+  NAMESPACE, including DESeq2, edgeR, and zinbwave.
+- Parallelization is no longer used to load samples, improving handling in an
+  HPC cluster environment. We will consider using BiocParallel in a future
+  update.
+- Now requiring [ggplot2][] v3.0. Switched to using `aes()` instead of
+  `aes_string()` internally, using new tidyeval syntax.
+- Removed additional single-cell toolkit packages in Suggests, including
+  scater and scran. This helps speed up build checks on Travis CI.
+- Reexported functions have been moved to the bcbioBase package.
+- Improved internal consistency between the `bcbioSingleCell()` and
+  `readCellRanger()` data import functions.
+
+## Additional notes
+
+- Package still works with Bioconductor 3.6 / R 3.4, but we will be migrating
+  to Bioconductor 3.7 / R 3.5 when conda r-base is updated to 3.5.1.
+
+
+
 # bcbioSingleCell 0.1.16 (2018-06-20)
 
 ## New functions
