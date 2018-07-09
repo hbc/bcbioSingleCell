@@ -9,7 +9,7 @@
 \usage{
 filterCells(object, ...)
 
-\S4method{filterCells}{SingleCellExperiment}(object, expected = Inf,
+\S4method{filterCells}{SingleCellExperiment}(object, nCells = Inf,
   minUMIs = 0L, maxUMIs = Inf, minGenes = 0L, maxGenes = Inf,
   minNovelty = 0L, maxMitoRatio = 1L, minCellsPerGene = 10L)
 }
@@ -18,7 +18,7 @@ filterCells(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{expected}{Expected number of cells per sample.}
+\item{nCells}{Expected number of cells per sample.}
 
 \item{minUMIs}{Minimum number of UMI disambiguated counts per cell.}
 

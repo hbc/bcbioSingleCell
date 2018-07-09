@@ -12,6 +12,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
+#' @param nCells Expected number of cells per sample.
 #' @param minUMIs Minimum number of UMI disambiguated counts per cell.
 #' @param maxUMIs Maximum number of UMI disambiguated counts per cell.
 #' @param minGenes Minimum number of genes detected.
@@ -20,7 +21,6 @@
 #' @param maxMitoRatio Maximum relative mitochondrial abundance (`0-1` scale).
 #' @param minCellsPerGene Include genes with non-zero expression in at least
 #'   this many cells.
-#' @param expected Expected number of cells per sample.
 #'
 #' @seealso [Seurat::CreateSeuratObject()].
 #'
@@ -63,7 +63,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        expected = Inf,
+        nCells = Inf,
         minUMIs = 0L,
         maxUMIs = Inf,
         minGenes = 0L,
@@ -77,9 +77,9 @@ setMethod(
         metrics <- metrics(object)
 
         # Parameter integrity checks ===========================================
-        # expected nCells per sample
-        assert_is_a_number(expected)
-        assert_all_are_positive(expected)
+        # Expected nCells per sample
+        assert_is_a_number(nCells)
+        assert_all_are_positive(nCells)
 
         # minUMIs
         assert_is_any_of(minUMIs, c("numeric", "character"))
@@ -113,7 +113,7 @@ setMethod(
         assert_all_are_non_negative(minCellsPerGene)
 
         params <- list(
-            expected = expected,
+            nCells = nCells,
             minUMIs = minUMIs,
             maxUMIs = maxUMIs,
             minGenes = minGenes,
@@ -342,18 +342,18 @@ setMethod(
         )
 
         # Expected nCells per sample (filtered by top nUMI) --------------------
-        if (expected < Inf) {
+        if (nCells < Inf) {
             metrics <- metrics %>%
                 group_by("sampleID") %>%
                 arrange(desc(!!sym("nUMI")), .by_group = TRUE) %>%
-                slice(seq_len(expected))
+                slice(seq_len(nCells))
         }
         if (!nrow(metrics)) {
-            stop("No cells passed `expected` cutoff")
+            stop("No cells passed `nCells` cutoff")
         }
-        summaryCells[["expected"]] <- paste(
+        summaryCells[["nCells"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            paste("expected", "==", expected),
+            paste("nCells", "==", nCells),
             sep = " | "
         )
 
@@ -391,7 +391,7 @@ setMethod(
             paste("<=", max(maxGenes), "genes per cell"),
             paste(">=", min(minNovelty), "novelty score"),
             paste("<=", max(maxMitoRatio), "mitochondrial abundance"),
-            paste("==", expected, "cells per sample"),
+            paste("==", nCells, "cells per sample"),
             paste(">=", min(minCellsPerGene), "cells per gene")
         )
         cat(c(
