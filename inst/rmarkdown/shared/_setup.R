@@ -9,16 +9,13 @@ set.seed(1454944673L)
 
 opts_chunk[["set"]](
     audodep = TRUE,
-    cache = FALSE,
+    cache = TRUE,
     cache.lazy = FALSE,
     dev = c("png", "pdf"),
-    error = TRUE,
     fig.height = 10L,
     fig.retina = 2L,
     fig.width = 10L,
-    message = TRUE,
-    tidy = FALSE,
-    warning = TRUE
+    tidy = FALSE
 )
 
 theme_set(
