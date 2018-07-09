@@ -9,7 +9,7 @@
 \usage{
 plotPCElbow(object, ...)
 
-\S4method{plotPCElbow}{seurat}(object, minSD = 1L, minPct = 0.025,
+\S4method{plotPCElbow}{seurat}(object, minSD = 1L, minPct = 0.01,
   maxCumPct = 0.9, trans = c("identity", "sqrt"), plot = TRUE)
 }
 \arguments{
