@@ -395,6 +395,8 @@ setMethod(
             paste("==", nCells, "cells per sample"),
             paste(">=", min(minCellsPerGene), "cells per gene")
         )
+        # FIXME Don't use cat call to print to screen here
+        # Bioconductor recommends only using message
         cat(c(
             "Parameters:",
             paste("  -", printParams),
