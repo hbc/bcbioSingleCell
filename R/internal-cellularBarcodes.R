@@ -9,7 +9,7 @@
 #' @return `data.frame`.
 .bindCellularBarcodes <- function(list) {
     assert_is_list(list)
-    mcmapply(
+    bpmapply(
         sampleID = names(list),
         x = list,
         FUN = function(x, sampleID) {
@@ -55,7 +55,7 @@
     names(files) <- names(sampleDirs)
     assert_all_are_existing_files(files)
     message("Reading cellular barcode distributions")
-    list <- mclapply(files, function(file) {
+    list <- bplapply(files, function(file) {
         read_tsv(
             file = file,
             col_names = c("cellularBarcode", "nCount"),

@@ -160,7 +160,7 @@ test_that("plotPCA : seurat", {
 # plotPCElbow ==================================================================
 test_that("plotPCElbow : seurat", {
     x <- plotPCElbow(seurat_small)
-    expect_identical(x, seq_len(7L))
+    expect_identical(x, seq_len(10L))
 
     x <- plotPCElbow(Seurat::pbmc_small)
     expect_identical(x, seq_len(11L))
@@ -181,14 +181,14 @@ test_that("plotQC : list", {
     expect_identical(
         names(p),
         c(
-            "plotCellCounts",
-            "plotReadsPerCell",
-            "plotUMIsPerCell",
-            "plotGenesPerCell",
-            "plotUMIsVsGenes",
-            "plotNovelty",
-            "plotMitoRatio",
-            "plotZerosVsDepth"
+            "Cell Counts",
+            "Reads per Cell",
+            "UMIs per Cell",
+            "Genes per Cell",
+            "UMIs vs. Genes",
+            "Novelty",
+            "Mito Ratio",
+            "Zeros vs. Depth"
         )
     )
 })

@@ -17,7 +17,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-06-15
+# Last modified 2018-07-09
 
 # Highly recommended to run this template on an HPC cluster
 # stopifnot(detectHPC())
@@ -45,6 +45,9 @@ features <- c(
     "S.Score",
     "G2M.Score"
 )
+
+organism <- metadata(bcb)$organism
+stopifnot(is.character(organism))
 
 # knitr arguments (for `rmarkdown::render()` looping)
 # opts_chunk$set(
@@ -130,8 +133,7 @@ Your single-cell dataset likely contains "uninteresting" sources of variation. T
 First, we assign each cell a score, based on its expression of G2/M and S phase markers. These marker sets should be anticorrelated in their expression levels, and cells expressing neither are likely not cycling and in G1 phase. We assign scores in the `CellCycleScoring()` function, which stores S and G2/M scores in `seurat@meta.data`, along with the predicted classification of each cell in either G2M, S or G1 phase.
 
 ```{r cell_cycle_markers}
-organism <- metadata(bcb)$organism
-cell_cycle_markers <- bcbioSingleCell::cellCycleMarkers[[camel(organism)]]
+cell_cycle_markers <- bcbioSingleCell::cell_cycle_markers[[camel(organism)]]
 stopifnot(is.data.frame(cell_cycle_markers))
 
 markdownHeader("S phase markers", level = 3)

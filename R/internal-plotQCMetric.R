@@ -2,7 +2,7 @@
 .plotQCMetric <- function(
     object,
     metricCol,
-    geom = c("ecdf", "ridgeline", "violin", "histogram", "boxplot"),
+    geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
     interestingGroups,
     min = 0L,
     max = Inf,
@@ -15,7 +15,7 @@
     assert_is_a_string(metricCol)
     geom <- match.arg(geom)
     if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
+        interestingGroups <- basejump::interestingGroups(object)
     } else {
         interestingGroups(object) <- interestingGroups
     }
@@ -35,9 +35,9 @@
         return(invisible())
     }
 
-    mapping <- aes_string(
-        color = "interestingGroups",
-        fill = "interestingGroups"
+    mapping <- aes(
+        color = !!sym("interestingGroups"),
+        fill = !!sym("interestingGroups")
     )
 
     if (geom %in% c("boxplot", "violin")) {
@@ -153,7 +153,7 @@
         facets <- "aggregate"
     }
     if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free")
+        p <- p + facet_wrap(facets = syms(facets), scales = "free")
     }
 
     p
@@ -178,7 +178,7 @@
     assert_is_a_string(xTrans)
     assert_is_a_string(yTrans)
     if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
+        interestingGroups <- basejump::interestingGroups(object)
     } else {
         interestingGroups(object) <- interestingGroups
     }
@@ -197,10 +197,10 @@
 
     p <- ggplot(
         data = data,
-        mapping = aes_string(
-            x = xCol,
-            y = yCol,
-            color = "interestingGroups"
+        mapping = aes(
+            x = !!sym(xCol),
+            y = !!sym(yCol),
+            color = !!sym("interestingGroups")
         )
     ) +
         geom_point(alpha = 0.5, size = 1L) +
@@ -230,7 +230,7 @@
         facets <- c(facets, "aggregate")
     }
     if (is.character(facets)) {
-        p <- p + facet_wrap(facets = facets, scales = "free")
+        p <- p + facet_wrap(facets = syms(facets), scales = "free")
     }
 
     p

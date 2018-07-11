@@ -40,7 +40,7 @@ all_markers_small <- sanitizeMarkers(
 # known_markers_small ==========================================================
 known_markers_small <- knownMarkersDetected(
     object = all_markers_small,
-    known = cellTypeMarkers[["homoSapiens"]]
+    known = cell_type_markers[["homoSapiens"]]
 )
 
 # save =========================================================================

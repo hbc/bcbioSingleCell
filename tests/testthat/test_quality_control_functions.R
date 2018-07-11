@@ -71,6 +71,7 @@ test_that("filterCells : Per sample cutoffs", {
     expect_identical(
         metadata(x)[["filterParams"]],
         list(
+            nCells = Inf,
             minUMIs = c(rep_1 = 0L),
             maxUMIs = c(rep_1 = Inf),
             minGenes = c(rep_1 = 0L),

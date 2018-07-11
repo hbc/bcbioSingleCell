@@ -64,7 +64,7 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -115,7 +115,8 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
     
     </div>
 
-    <pre class="usage"><span class='fu'>readCellRanger</span>(<span class='no'>uploadDir</span>, <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refdataDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>readCellRanger</span>(<span class='no'>uploadDir</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mtx"</span>, <span class='st'>"hdf5"</span>), <span class='kw'>filtered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>organism</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refdataDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
@@ -126,6 +127,22 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
       <th>uploadDir</th>
       <td><p>Path to Cell Ranger output directory. This directory path
 must contain <code>filtered_gene_bc_matrices*</code> as a child directory.</p></td>
+    </tr>
+    <tr>
+      <th>format</th>
+      <td><p>Output format, either MatrixMarket ("<code>mtx</code>") or HDF5
+("<code>hdf5</code>").</p></td>
+    </tr>
+    <tr>
+      <th>filtered</th>
+      <td><p>Use filtered (recommended) or raw counts. Note that raw
+counts still contain only whitelisted cellular barcodes.</p></td>
+    </tr>
+    <tr>
+      <th>organism</th>
+      <td><p>Organism name. Use the full latin name (e.g.
+"Homo sapiens"), since this will be input downstream to
+AnnotationHub and ensembldb, unless <code>gffFile</code> is set.</p></td>
     </tr>
     <tr>
       <th>sampleMetadataFile</th>
@@ -167,10 +184,8 @@ spike-in sequences (e.g. ERCCs).</p></td>
 
     
     <p>Cell Ranger can vary in its output directory structure, but we're requiring a
-single, consistent data structure for datasets containing multiple samples.
-Note that Cell Ranger data may not always contain per sample subdirectories,
-or the "<code>outs</code>" subdirectory. We may make this more flexible in the future,
-but for now we're making this strict to ensure reproducibility.</p>
+single, consistent directory structure for all datasets, even those that only
+contain a single sample:</p>
 <pre>
 file.path(
     "&lt;uploadDir&gt;",
@@ -194,11 +209,9 @@ minimal sample data will be used, based on the directory names.</p>
 
     
     <p>We strongly recommend supplying the corresponding reference data required for
-Cell Ranger with the <code>refdataDir</code> argument. When set, the function will
-detect the <code>organism</code>, <code>ensemblRelease</code>, and <code>genomeBuild</code> automatically,
-based on the 10X <code>refdataDir</code> YAML metadata. Additionally, it will convert
-the gene annotations defined in the GTF file into a <code>GRanges</code> object, which
-get slotted in <code>rowRanges()</code>. Otherwise, the function will attempt to use the
+Cell Ranger with the <code>refdataDir</code> argument. It will convert the gene
+annotations defined in the GTF file into a <code>GRanges</code> object, which get
+slotted in <code>rowRanges()</code>. Otherwise, the function will attempt to use the
 most current annotations available from Ensembl, and some gene IDs may not
 match, due to deprecation in the current Ensembl release.</p>
     
@@ -209,21 +222,15 @@ match, due to deprecation in the current Ensembl release.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>uploadDir</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/cellranger"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>readCellRanger</span>(<span class='no'>uploadDir</span>)</div><div class='output co'>#&gt; <span class='message'>Making GRanges from Ensembl with AnnotationHub 2.12.0 (2018-04-30)</span></div><div class='output co'>#&gt; <span class='message'>id: "AH60977"</span>
-#&gt; <span class='message'>organism: "Homo sapiens"</span>
-#&gt; <span class='message'>build: "GRCh38"</span>
-#&gt; <span class='message'>release: "92"</span>
-#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Using geneName instead of symbol</span></div><div class='output co'>#&gt; <span class='message'>Setting geneBiotype as factor</span></div><div class='output co'>#&gt; <span class='message'>Setting seqCoordSystem as factor</span></div><div class='output co'>#&gt; <span class='message'>Defining broadClass using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>312 coding genes</span></div><div class='output co'>#&gt; <span class='message'>0 mitochondrial genes</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Unannotated rows detected (9):</span>
-#&gt; <span class='warning'>ENSG00000236743, ENSG00000278566, ENSG00000273547, ENSG00000279244, ENSG00000...</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>readCellRanger</span>(<span class='no'>uploadDir</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) detected</span></div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt; <span class='message'>Reading counts in mtx format</span></div><div class='output co'>#&gt; <span class='message'>/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/cellranger/pbmc/outs/filtered_gene_bc_matrices</span></div><div class='output co'>#&gt; <span class='message'>Multiplexed (aggregated) samples detected</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
-#&gt; metadata(20): version pipeline ... utilsSessionInfo devtoolsSessionInfo
+#&gt; metadata(18): version pipeline ... utilsSessionInfo devtoolsSessionInfo
 #&gt; assays(1): counts
 #&gt; rownames(500): ENSG00000243485 ENSG00000237613 ... ENSG00000230703
 #&gt;   ENSG00000142677
-#&gt; rowData names(7): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): cellranger_1_AAACCTGAGAAGGCCT
-#&gt;   cellranger_1_AAACCTGAGACAGACC ... cellranger_1_ACTTACTCACTGCCAG
-#&gt;   cellranger_1_ACTTACTCAGTACACT
+#&gt; rowData names(0):
+#&gt; colnames(500): pbmc_1_AAACCTGAGAAGGCCT pbmc_1_AAACCTGAGACAGACC ...
+#&gt;   pbmc_1_ACTTACTCACTGCCAG pbmc_1_ACTTACTCAGTACACT
 #&gt; colData names(10): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div></pre>
