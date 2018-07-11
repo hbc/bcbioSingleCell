@@ -22,7 +22,7 @@ setMethod(
     function(object) {
         validObject(object)
 
-        cat(
+        return <- c(
             paste(class(object), metadata(object)[["version"]]),
             paste("Samples:", nrow(sampleData(object))),
             paste("Cells:", ncol(object)),
@@ -36,14 +36,14 @@ setMethod(
                 ": ",
                 nrow(object)
             ),
-            paste("Organism:", metadata(object)[["organism"]]),
-            sep = "\n"
+            paste("Organism:", metadata(object)[["organism"]])
         )
 
         # rowRanges
         m <- metadata(object)[["rowRangesMetadata"]]
         if (is.data.frame(m)) {
-            cat(
+            return <- c(
+                return,
                 paste(
                     "AnnotationHub:",
                     m[m[["name"]] == "id", "value", drop = TRUE]
@@ -55,16 +55,25 @@ setMethod(
                 paste(
                     "Genome Build:",
                     m[m[["name"]] == "genome_build", "value", drop = TRUE]
-                ),
-                sep = "\n"
+                )
             )
         }
 
-        cat(
+        # Report if counts are filtered
+        if (!is.null(metadata(object)[["filterParams"]])) {
+            filtered <- TRUE
+        } else {
+            filtered <- FALSE
+        }
+
+        return <- c(
+            return,
+            paste("Filtered:", filtered),
             paste("Upload Dir:", metadata(object)[["uploadDir"]]),
             paste("Upload Date:", metadata(object)[["runDate"]]),
-            paste("R Load Date:", metadata(object)[["date"]]),
-            sep = "\n"
+            paste("R Load Date:", metadata(object)[["date"]])
         )
+
+        cat(return, sep = "\n")
     }
 )
