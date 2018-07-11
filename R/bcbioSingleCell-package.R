@@ -29,8 +29,8 @@
 #'   assert_is_factor assert_is_function assert_is_integer assert_is_list
 #'   assert_is_matrix assert_is_numeric assert_is_tbl_df is_a_string
 #'   is_character
-#' @importFrom basejump assertHasRownames assertIsAHeaderLevel
-#'   assertIsAStringOrNULL assertIsAnImplicitInteger
+#' @importFrom basejump assertFormalInterestingGroups assertHasRownames
+#'   assertIsAHeaderLevel assertIsAStringOrNULL assertIsAnImplicitInteger
 #'   assertIsAnImplicitIntegerOrNULL assertIsANumberOrNULL
 #'   assertIsColorScaleContinuousOrNULL assertIsColorScaleDiscreteOrNULL
 #'   assertIsFillScaleDiscreteOrNULL assertIsGene2symbol assertIsTx2gene
@@ -38,12 +38,12 @@
 #'   detectOrganism emptyRanges hasRownames initializeDirectory
 #'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames makeTx2geneFromGFF
 #'   markdownHeader markdownPlotlist printString readFileByExtension readYAML
-#'   stripTranscriptVersions theme_midnight theme_paperwhite tx2geneFromGFF
-#' @importFrom bcbioBase assertFormalInterestingGroups bcbio_geom_abline
-#'   bcbio_geom_label bcbio_geom_label_average bcbio_geom_label_repel flatFiles
-#'   minimalSampleData prepareSummarizedExperiment readDataVersions readLog
-#'   readProgramVersions readSampleData readTx2gene readYAMLSampleData
-#'   sanitizeSampleData sampleDirs uniteInterestingGroups
+#'   sanitizeSampleData stripTranscriptVersions theme_midnight theme_paperwhite
+#'   tx2geneFromGFF uniteInterestingGroups
+#' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
+#'   bcbio_geom_label_average bcbio_geom_label_repel flatFiles minimalSampleData
+#'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
+#'   readSampleData readTx2gene readYAMLSampleData sampleDirs
 #' @importFrom Biobase rowMedians sampleNames
 #' @importFrom BiocParallel bplapply bpmapply SerialParam
 #' @importFrom cowplot draw_plot ggdraw plot_grid

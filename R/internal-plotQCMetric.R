@@ -15,7 +15,7 @@
     assert_is_a_string(metricCol)
     geom <- match.arg(geom)
     if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
+        interestingGroups <- basejump::interestingGroups(object)
     } else {
         interestingGroups(object) <- interestingGroups
     }
@@ -178,7 +178,7 @@
     assert_is_a_string(xTrans)
     assert_is_a_string(yTrans)
     if (missing(interestingGroups)) {
-        interestingGroups <- bcbioBase::interestingGroups(object)
+        interestingGroups <- basejump::interestingGroups(object)
     } else {
         interestingGroups(object) <- interestingGroups
     }

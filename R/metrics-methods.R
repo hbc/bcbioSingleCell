@@ -146,7 +146,7 @@ setMethod(
     function(object, interestingGroups) {
         validObject(object)
         if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
+            interestingGroups <- basejump::interestingGroups(object)
         }
 
         colData <- colData(object)

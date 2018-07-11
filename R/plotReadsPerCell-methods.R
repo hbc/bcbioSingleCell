@@ -335,7 +335,7 @@ setMethod(
         # Passthrough: color, fill
         validObject(object)
         if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
+            interestingGroups <- basejump::interestingGroups(object)
         }
         geom <- match.arg(geom)
         assertIsAStringOrNULL(title)

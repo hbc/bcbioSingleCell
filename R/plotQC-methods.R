@@ -44,7 +44,7 @@ setMethod(
         return = c("grid", "list", "markdown")
     ) {
         if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
+            interestingGroups <- basejump::interestingGroups(object)
         } else {
             interestingGroups(object) <- interestingGroups
         }

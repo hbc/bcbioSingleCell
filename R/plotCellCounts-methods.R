@@ -28,7 +28,7 @@ setMethod(
         title = "cell counts"
     ) {
         if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
+            interestingGroups <- basejump::interestingGroups(object)
         }
         assertIsFillScaleDiscreteOrNULL(fill)
         assertIsAStringOrNULL(title)

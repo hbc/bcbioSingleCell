@@ -22,18 +22,18 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{\code{character}. Groups of interest.}
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{clean}{\code{logical}. Only return \code{factor} columns not defined in
-\link{metadataBlacklist}.}
+\item{clean}{Only return factor columns.}
 
-\item{return}{Object class to return. Uses \code{\link[=match.arg]{match.arg()}} internally and picks
-the first item in the vector by default.}
+\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
+to the first argument in the vector.}
 
-\item{value}{Value to assign.}
+\item{value}{Object to assign.}
 }
 \value{
-Data describing the samples.
+Return either a DataFrame, data.frame, or kable.
 }
 \description{
 Metadata in columns describing the samples, which are defined in the

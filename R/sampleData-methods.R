@@ -8,11 +8,12 @@
 #' @name sampleData
 #' @family Data Functions
 #' @author Michael Steinbaugh
-#' @inherit bcbioBase::sampleData
 #'
-#' @importFrom bcbioBase sampleData sampleData<-
+#' @importFrom basejump sampleData sampleData<-
 #'
 #' @inheritParams general
+#' @param clean Only return factor columns.
+#' @return Return either a DataFrame, data.frame, or kable.
 #'
 #' @examples
 #' # SingleCellExperiment ====
@@ -41,7 +42,7 @@ setMethod(
     ) {
         object <- as(object, "SingleCellExperiment")
         if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
+            interestingGroups <- basejump::interestingGroups(object)
         }
         assert_is_a_bool(clean)
         return <- match.arg(return)

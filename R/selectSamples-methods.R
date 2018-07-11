@@ -11,7 +11,7 @@
 #' @family Data Functions
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase selectSamples
+#' @importFrom basejump selectSamples
 #'
 #' @inheritParams general
 #' @param ... Columns to use for grep pattern matching. Supply a named character

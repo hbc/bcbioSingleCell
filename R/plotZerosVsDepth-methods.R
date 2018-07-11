@@ -30,7 +30,7 @@ setMethod(
         title = "zeros vs. depth"
     ) {
         if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
+            interestingGroups <- basejump::interestingGroups(object)
         }
         assertIsColorScaleDiscreteOrNULL(color)
         assertIsAStringOrNULL(title)

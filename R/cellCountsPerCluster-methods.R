@@ -21,7 +21,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
         if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
+            interestingGroups <- basejump::interestingGroups(object)
         }
         metrics <- metrics(object, interestingGroups = interestingGroups)
         cols <- unique(c("ident", interestingGroups))

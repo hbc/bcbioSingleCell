@@ -165,7 +165,7 @@ setMethod(
 
 # bcbioBase Methods ============================================================
 #' @rdname seurat-SingleCellExperiment
-#' @importFrom bcbioBase gene2symbol
+#' @importFrom basejump gene2symbol
 #' @export
 setMethod(
     "gene2symbol",
@@ -176,7 +176,7 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
-#' @importFrom bcbioBase interestingGroups
+#' @importFrom basejump interestingGroups
 #' @export
 setMethod(
     "interestingGroups",
@@ -187,7 +187,7 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
-#' @importFrom bcbioBase interestingGroups<-
+#' @importFrom basejump interestingGroups<-
 #' @export
 setMethod(
     "interestingGroups<-",
@@ -207,7 +207,7 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
-#' @importFrom bcbioBase sampleNames
+#' @importFrom basejump sampleNames
 #' @export
 setMethod(
     "sampleNames",
