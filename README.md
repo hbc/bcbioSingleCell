@@ -84,6 +84,11 @@ This is our current method for handling [10X Genomics Cell Ranger][cellranger] o
 | sample3     | wildtype |
 | sample4     | knockout |
 
+### Forbidden metadata fields
+The following fields are forbidden as user-supplied metadata, as they are used
+internally:
+
+`nCells`
 
 ## Troubleshooting
 
