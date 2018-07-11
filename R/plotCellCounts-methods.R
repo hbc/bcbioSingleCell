@@ -46,6 +46,10 @@ setMethod(
         }
         sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
+        # Remove user-defined `nCells` column, if present
+        metrics[["nCells"]] <- NULL
+        sampleData[["nCells"]] <- NULL
+
         data <- metrics %>%
             group_by(!!sym("sampleID")) %>%
             summarize(nCells = n()) %>%
