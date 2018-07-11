@@ -372,7 +372,7 @@ write.csv(
     x = as.matrix(counts),
     file = file.path(params$results_dir, "counts.csv")
 )
-gzip(
+R.utils::gzip(
     filename = file.path(params$results_dir, "counts.csv"),
     overwrite = TRUE,
     remove = TRUE
