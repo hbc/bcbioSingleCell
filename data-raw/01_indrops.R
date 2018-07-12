@@ -1,5 +1,5 @@
 # indrops_small (harvard-indrop-v3)
-# 2018-06-13
+# 2018-07-12
 
 library(assertive)
 library(devtools)
@@ -84,7 +84,7 @@ indrops_small <- filterCells(
     minUMIs = 0,
     minGenes = 0,
     minNovelty = 0,
-    maxMitoRatio = Inf,
+    maxMitoRatio = 1,
     minCellsPerGene = 0
 )
 

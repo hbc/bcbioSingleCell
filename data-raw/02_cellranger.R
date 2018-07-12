@@ -1,5 +1,5 @@
 # Cell Ranger Example Data
-# 2018-06-13
+# 2018-07-12
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
@@ -12,9 +12,18 @@ load_all()
 
 
 # Complete dataset =============================================================
-tar_file <- "data-raw/pbmc4k.tar.gz"
-upload_dir <- "data-raw/pbmc4k"
+# Directory structure:
+# - pbmc
+# - outs
+# - filtered_gene_bc_matrices
+# - GRCh38
+upload_dir <- "data-raw/cellranger"
 unlink(upload_dir, recursive = TRUE)
+dir.create(upload_dir, recursive = TRUE)
+# Example dataset contains a single sample ("pbmc4k")
+outs_dir <- file.path(upload_dir, "pbmc", "outs")
+dir.create(outs_dir, recursive = TRUE, showWarnings = FALSE)
+tar_file <- file.path(upload_dir, "pbmc.tar.gz")
 download.file(
     url = paste(
         "http://cf.10xgenomics.com",
@@ -29,21 +38,25 @@ download.file(
 )
 untar(
     tarfile = tar_file,
-    exdir = upload_dir
+    exdir = outs_dir
 )
+stopifnot(identical(dir(outs_dir), "filtered_gene_bc_matrices"))
 
-pbmc4k <- readCellRanger(uploadDir = upload_dir)
-# Ensembl 92, 483 unannotated genes
-# dim(pbmc4k)
+pbmc <- readCellRanger(
+    uploadDir = upload_dir,
+    organism = "Homo sapiens"
+)
+# Ensembl 92, expect 483 unannotated genes
+# dim(pbmc)
 # [1] 33694  4340
 # Too large to save inside package
-saveData(pbmc4k, dir = "~")
+saveData(pbmc, dir = "~")
 
 
 
 # cellranger_small =============================================================
 # Subset to only include the top 500 genes (rows) and cells (columns)
-counts <- counts(pbmc4k)
+counts <- counts(pbmc)
 
 # Subset the matrix to include only the top genes and cells
 top_genes <- Matrix::rowSums(counts) %>%
@@ -56,7 +69,7 @@ top_cells <- Matrix::colSums(counts) %>%
     head(n = 500L)
 cells <- sort(names(top_cells))
 
-cellranger_small <- pbmc4k[genes, cells]
+cellranger_small <- pbmc[genes, cells]
 use_data(cellranger_small, compress = "xz", overwrite = TRUE)
 
 
@@ -64,9 +77,12 @@ use_data(cellranger_small, compress = "xz", overwrite = TRUE)
 # readCellRanger extdata example ===============================================
 input_dir <- file.path(
     upload_dir,
+    "pbmc",
+    "outs",
     "filtered_gene_bc_matrices",
     "GRCh38"
 )
+stopifnot(dir.exists(input_dir))
 output_dir <- file.path(
     "inst",
     "extdata",
