@@ -36,6 +36,7 @@ setMethod(
                 ": ",
                 nrow(object)
             ),
+            paste("Assays:", toString(names(assays(object)))),
             paste("Organism:", metadata(object)[["organism"]])
         )
 
