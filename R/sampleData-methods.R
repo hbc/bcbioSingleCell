@@ -37,7 +37,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        clean = TRUE,
+        clean = FALSE,
         return = c("DataFrame", "data.frame", "kable")
     ) {
         object <- as(object, "SingleCellExperiment")
@@ -51,7 +51,7 @@ setMethod(
         if (is.null(data)) {
             return(NULL)
         }
-        assert_is_data.frame(data)
+        data <- as(data, "DataFrame")
 
         # Only return factor columns, if desired
         if (isTRUE(clean)) {

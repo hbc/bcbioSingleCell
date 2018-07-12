@@ -10,9 +10,9 @@
 \title{Sample Data}
 \usage{
 \S4method{sampleData}{SingleCellExperiment}(object, interestingGroups,
-  clean = TRUE, return = c("DataFrame", "data.frame", "kable"))
+  clean = FALSE, return = c("DataFrame", "data.frame", "kable"))
 
-\S4method{sampleData}{seurat}(object, interestingGroups, clean = TRUE,
+\S4method{sampleData}{seurat}(object, interestingGroups, clean = FALSE,
   return = c("DataFrame", "data.frame", "kable"))
 
 \S4method{sampleData}{SingleCellExperiment,DataFrame}(object) <- value
