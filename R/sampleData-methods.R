@@ -102,8 +102,7 @@ setMethod(
         value = "DataFrame"
     ),
     function(object, value) {
-        value <- sanitizeSampleData(value)
-        metadata(object)[["sampleData"]] <- as.data.frame(value)
+        metadata(object)[["sampleData"]] <- value
         object
     }
 )
@@ -115,7 +114,7 @@ setMethod(
 setMethod(
     "sampleData<-",
     signature(
-        object = "seurat",
+        object = "SingleCellExperiment",
         value = "DataFrame"
     ),
     getMethod(

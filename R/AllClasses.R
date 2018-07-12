@@ -1,3 +1,8 @@
+# FIXME Add assert checks to compare colData metadata against cellular barcodes
+# e.g. check that the sampleID matches
+
+# FIXME Store `sampleData` internally as DataFrame
+
 setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 
@@ -419,7 +424,7 @@ bcbioSingleCell <- function(
         genomeBuild = as.character(genomeBuild),
         ensemblRelease = as.integer(ensemblRelease),
         rowRangesMetadata = rowRangesMetadata,
-        sampleData = sampleData,
+        sampleData = as(sampleData, "DataFrame"),
         cell2sample = as.factor(cell2sample),
         umiType = umiType,
         allSamples = allSamples,
@@ -506,7 +511,7 @@ setValidity(
             level = "character",
             organism = "character",
             pipeline = "character",
-            sampleData = "data.frame",
+            sampleData = "DataFrame",  # FIXME previously data.frame
             sampleDirs = "character",
             sampleMetadataFile = "character",
             umiType = "character",
