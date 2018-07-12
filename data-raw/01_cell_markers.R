@@ -1,5 +1,5 @@
 # Cell Markers
-# 2018-06-29
+# 2018-07-12
 # This code is derived from:
 # - Tirosh et al, 2015
 # - http://satijalab.org/seurat/cell_cycle_vignette.html
@@ -34,7 +34,8 @@ cell_cycle_markers <- lapply(ws, function(ws) {
             geneName = convertGenesToSymbols(
                 geneID,
                 organism = ws,
-                release = release)
+                release = release
+            )
         ) %>%
         group_by(phase) %>%
         arrange(geneID, .by_group = TRUE)

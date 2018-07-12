@@ -1,5 +1,5 @@
 # seurat_small
-# 2018-06-20
+# 2018-07-12
 
 library(devtools)
 library(Seurat)
@@ -32,6 +32,7 @@ seurat_small <- cellranger_small %>%
 
 # all_markers_small ============================================================
 all_markers_small <- FindAllMarkers(seurat_small)
+# Sanitize, including more robust gene annotation information
 all_markers_small <- sanitizeMarkers(
     object = seurat_small,
     markers = all_markers_small
@@ -39,7 +40,7 @@ all_markers_small <- sanitizeMarkers(
 
 # known_markers_small ==========================================================
 known_markers_small <- knownMarkersDetected(
-    object = all_markers_small,
+    all_markers_small,
     known = cell_type_markers[["homoSapiens"]]
 )
 
