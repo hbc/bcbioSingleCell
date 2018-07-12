@@ -48,7 +48,7 @@ interestingGroups(bcb) <- "sampleName"
 
 ```{r sample_data}
 # getMethod("sampleData", "SingleCellExperiment")
-sample_data <- sampleData(bcb, return = "data.frame")
+sample_data <- sampleData(bcb) %>% as.data.frame()
 write.csv(
     x = sample_data,
     file = file.path(params$results_dir, "sample_data.csv")
