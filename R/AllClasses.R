@@ -1,8 +1,6 @@
 # FIXME Add assert checks to compare colData metadata against cellular barcodes
 # e.g. check that the sampleID matches
 
-# FIXME Store `sampleData` internally as DataFrame
-
 setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 
@@ -511,7 +509,7 @@ setValidity(
             level = "character",
             organism = "character",
             pipeline = "character",
-            sampleData = "DataFrame",  # FIXME previously data.frame
+            sampleData = "DataFrame",
             sampleDirs = "character",
             sampleMetadataFile = "character",
             umiType = "character",
