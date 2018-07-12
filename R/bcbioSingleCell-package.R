@@ -63,7 +63,6 @@
 #' @importFrom graphics hist
 #' @importFrom grid arrow unit
 #' @importFrom jsonlite read_json
-#' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_names set_rownames
 #' @importFrom Matrix colSums readMM rowMeans rowSums sparseMatrix
 #' @importFrom Matrix.utils aggregate.Matrix
