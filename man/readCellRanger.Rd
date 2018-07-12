@@ -86,7 +86,10 @@ match, due to deprecation in the current Ensembl release.
 
 \examples{
 uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
-x <- readCellRanger(uploadDir)
+x <- readCellRanger(
+    uploadDir = uploadDir,
+    organism = "Homo sapiens"
+)
 show(x)
 }
 \seealso{
