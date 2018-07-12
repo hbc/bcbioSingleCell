@@ -56,10 +56,6 @@
 #' c <- combine(x, y)
 NULL
 
-
-
-# reexport because dplyr masks combine
-#' @importFrom BiocGenerics combine
 #' @export
 BiocGenerics::combine
 
