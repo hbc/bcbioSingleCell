@@ -51,7 +51,10 @@
 #'
 #' @examples
 #' uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
-#' x <- readCellRanger(uploadDir)
+#' x <- readCellRanger(
+#'     uploadDir = uploadDir,
+#'     organism = "Homo sapiens"
+#' )
 #' show(x)
 readCellRanger <- function(
     uploadDir,
@@ -225,6 +228,10 @@ readCellRanger <- function(
         assert_is_all_of(rowRanges, "GRanges")
         rowRangesMetadata <- ah[["metadata"]]
         assert_is_data.frame(rowRangesMetadata)
+        genomeBuild <- rowRangesMetadata %>%
+            filter(!!sym("name") == "genome_build") %>%
+            pull("value")
+        assert_is_a_string(genomeBuild)
     } else {
         rowRanges <- emptyRanges(rownames(counts))
     }
