@@ -21,9 +21,17 @@
 \description{
 Combine Multiple \code{SingleCellExperiment} Objects
 }
+\note{
+We're attempting to make this as strict as possible, requiring:
+\itemize{
+\item Rows (genes) across objects must be identical.
+\item Organism and genome build must be identical.
+\item rowRanges metadata must be identical.
+\item colData (cellular barcode metrics) must contain the same columns.
+\item sampleData must contain the same columns.
+}
+}
 \examples{
-# Rows (genes) must be identical
-# Organism and genome build must be identical
 # For this simple working example, let's duplicate our minimal dataset,
 # modify the cell barcodes, and combine
 
@@ -57,7 +65,7 @@ sampleData(y)
 sampleNames(y)
 
 # Combine two SingleCellExperiment objects
-combine(x, y)
+c <- combine(x, y)
 }
 \seealso{
 \code{help("merge.Matrix", "Matrix.utils")}.

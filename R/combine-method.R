@@ -1,5 +1,13 @@
 #' Combine Multiple `SingleCellExperiment ` Objects
 #'
+#' @note We're attempting to make this as strict as possible, requiring:
+#'
+#' - Rows (genes) across objects must be identical.
+#' - Organism and genome build must be identical.
+#' - rowRanges metadata must be identical.
+#' - colData (cellular barcode metrics) must contain the same columns.
+#' - sampleData must contain the same columns.
+#'
 #' @name combine
 #' @author Michael Steinbaugh
 #'
@@ -12,8 +20,6 @@
 #' @return `SingleCellExperiment`.
 #'
 #' @examples
-#' # Rows (genes) must be identical
-#' # Organism and genome build must be identical
 #' # For this simple working example, let's duplicate our minimal dataset,
 #' # modify the cell barcodes, and combine
 #'
@@ -47,8 +53,15 @@
 #' sampleNames(y)
 #'
 #' # Combine two SingleCellExperiment objects
-#' combine(x, y)
+#' c <- combine(x, y)
 NULL
+
+
+
+# reexport because dplyr masks combine
+#' @importFrom BiocGenerics combine
+#' @export
+BiocGenerics::combine
 
 
 
@@ -100,14 +113,25 @@ setMethod(
         xSampleData <- metadata(x)[["sampleData"]]
         ySampleData <- metadata(y)[["sampleData"]]
         assert_are_identical(colnames(xSampleData), colnames(ySampleData))
-        sampleData <- rbind(xSampleData, xSampleData)
+        sampleData <- rbind(xSampleData, ySampleData)
+
+        # cell2sample ==========================================================
+        cell2sample <- mapCellsToSamples(
+            cells = colnames(counts),
+            samples = rownames(sampleData)
+        )
 
         # Metadata (minimal) ===================================================
         m <- metadata(x)
         metadata <- list(
             interestingGroups = m[["interestingGroups"]],
             organism = m[["organism"]],
-            sampleData = sampleData
+            genomeBuild = m[["genomeBuild"]],
+            ensemblRelease = m[["ensemblRelease"]],
+            rowRangesMetadata = m[["rowRangesMetadata"]],
+            sampleData = sampleData,
+            cell2sample = cell2sample,
+            umiType = m[["umiType"]]
         )
 
         # Return SingleCellExperiment ==========================================
