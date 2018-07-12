@@ -9,11 +9,9 @@
 \alias{sampleData<-,SingleCellExperiment,DataFrame-method}
 \title{Sample Data}
 \usage{
-\S4method{sampleData}{SingleCellExperiment}(object, interestingGroups,
-  clean = FALSE, return = c("DataFrame", "data.frame", "kable"))
+\S4method{sampleData}{SingleCellExperiment}(object)
 
-\S4method{sampleData}{seurat}(object, interestingGroups, clean = FALSE,
-  return = c("DataFrame", "data.frame", "kable"))
+\S4method{sampleData}{seurat}(object)
 
 \S4method{sampleData}{SingleCellExperiment,DataFrame}(object) <- value
 
@@ -22,18 +20,10 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
-
-\item{clean}{Only return factor columns.}
-
-\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
-to the first argument in the vector.}
-
 \item{value}{Object to assign.}
 }
 \value{
-Return either a DataFrame, data.frame, or kable.
+\code{DataFrame}.
 }
 \description{
 Metadata in columns describing the samples, which are defined in the

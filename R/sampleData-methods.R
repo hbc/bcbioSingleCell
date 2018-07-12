@@ -12,8 +12,8 @@
 #' @importFrom basejump sampleData sampleData<-
 #'
 #' @inheritParams general
-#' @param clean Only return factor columns.
-#' @return Return either a DataFrame, data.frame, or kable.
+#'
+#' @return `DataFrame`.
 #'
 #' @examples
 #' # SingleCellExperiment ====
@@ -34,49 +34,12 @@ NULL
 setMethod(
     "sampleData",
     signature("SingleCellExperiment"),
-    function(
-        object,
-        interestingGroups,
-        clean = FALSE,
-        return = c("DataFrame", "data.frame", "kable")
-    ) {
-        object <- as(object, "SingleCellExperiment")
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
-        }
-        assert_is_a_bool(clean)
-        return <- match.arg(return)
-
+    function(object) {
         data <- metadata(object)[["sampleData"]]
         if (is.null(data)) {
             return(NULL)
         }
-        data <- as(data, "DataFrame")
-
-        # Only return factor columns, if desired
-        if (isTRUE(clean)) {
-            data <- data[, vapply(data, is.factor, logical(1L)), drop = FALSE]
-            # Drop remaining blacklisted columns
-            setdiff <- setdiff(colnames(data), bcbioBase::metadataBlacklist)
-            data <- data[, setdiff, drop = FALSE]
-        } else {
-            # Include `interestingGroups` column, if not NULL
-            if (length(interestingGroups)) {
-                data <- uniteInterestingGroups(data, interestingGroups)
-            }
-        }
-
-        # Arrange rows by `sampleName` column, if defined
-        if ("sampleName" %in% colnames(data)) {
-            data <- data[order(data[["sampleName"]]), , drop = FALSE]
-        }
-
-        # Return
-        if (return == "kable") {
-            kable(as.data.frame(data), row.names = FALSE)
-        } else {
-            as(data, return)
-        }
+        as(data, "DataFrame")
     }
 )
 
