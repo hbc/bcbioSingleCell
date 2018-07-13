@@ -43,10 +43,19 @@ NULL
 setMethod(
     "sampleData",
     signature("SingleCellExperiment"),
-    function(object) {
+    function(
+        object,
+        interestingGroups
+    ) {
         data <- metadata(object)[["sampleData"]]
         if (is.null(data)) {
             return(NULL)
+        }
+        if (missing(interestingGroups)) {
+            interestingGroups <- bcbioBase::interestingGroups(object)
+        }
+        if (length(interestingGroups)) {
+            data <- uniteInterestingGroups(data, interestingGroups)
         }
         as(data, "DataFrame")
     }
@@ -74,6 +83,7 @@ setMethod(
         value = "DataFrame"
     ),
     function(object, value) {
+        value[["interestingGroups"]] <- NULL
         metadata(object)[["sampleData"]] <- value
         object
     }

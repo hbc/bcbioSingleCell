@@ -10,9 +10,9 @@
 \alias{sampleData<-,SingleCellExperiment,DataFrame-method}
 \title{Sample Data}
 \usage{
-\S4method{sampleData}{SingleCellExperiment}(object)
+\S4method{sampleData}{SingleCellExperiment}(object, interestingGroups)
 
-\S4method{sampleData}{seurat}(object)
+\S4method{sampleData}{seurat}(object, interestingGroups)
 
 \S4method{sampleData}{SingleCellExperiment,DataFrame}(object) <- value
 
@@ -20,6 +20,9 @@
 }
 \arguments{
 \item{object}{Object.}
+
+\item{interestingGroups}{Character vector of interesting groups. Must be
+formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{value}{Object to assign.}
 }
