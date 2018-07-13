@@ -37,13 +37,12 @@ setMethod(
 
         sampleData <- sampleData(
             object = object,
-            clean = FALSE,
-            interestingGroups = interestingGroups,
-            return = "data.frame"
+            interestingGroups = interestingGroups
         )
         if (is.null(sampleData)) {
             sampleData <- unknownSampleData
         }
+        sampleData <- as.data.frame(sampleData)
         sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
         counts <- counts(object)

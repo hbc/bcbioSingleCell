@@ -79,7 +79,7 @@ setMethod(
     "metadata",
     signature("seurat"),
     function(x) {
-        stash <- slot(x, "misc")[["bcbio"]]
+        stash <- slot(x, "misc")[["bcbio"]][["metadata"]]
         if (!is.null(stash)) {
             stash
         } else {
@@ -108,7 +108,7 @@ setMethod(
         if (!length(value)) {
             names(value) <- NULL
         }
-        slot(x, "misc")[["bcbio"]] <- value
+        slot(x, "misc")[["bcbio"]][["metadata"]] <- value
         x
     }
 )

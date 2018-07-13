@@ -353,10 +353,9 @@ setMethod(
         # Obtain the sample metadata
         sampleData <- sampleData(
             object = object,
-            clean = FALSE,
-            interestingGroups = interestingGroups,
-            return = "data.frame"
-        )
+            interestingGroups = interestingGroups
+        ) %>%
+            as.data.frame()
         sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
         # Obtain the read counts. Use the unfiltered reads stashed in the
@@ -397,10 +396,9 @@ setMethod(
         } else if (geom == "histogram") {
             sampleData <- sampleData(
                 object = object,
-                clean = FALSE,
-                interestingGroups = interestingGroups,
-                return = "data.frame"
-            )
+                interestingGroups = interestingGroups
+            ) %>%
+                as.data.frame()
             sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
             data <- .proportionalReadsPerCell(
                 data = data,

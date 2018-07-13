@@ -202,34 +202,24 @@ test_that("metrics : seurat", {
 
 # sampleData ===================================================================
 all <- list(
-    "sampleName"  = "factor",
-    "fileName"  = "factor",
-    "description"  = "factor",
-    "index" = "factor",
-    "sequence" = "factor",
-    "aggregate" = "factor",
-    "revcomp" = "factor",
-    "interestingGroups" = "factor"
-)
-
-clean <- DataFrame(
-    "sampleName" = factor("rep_1"),
-    row.names = factor("multiplexed_AAAAAAAA")
+    sampleName  = "factor",
+    fileName  = "factor",
+    description  = "factor",
+    index = "factor",
+    sequence = "factor",
+    aggregate = "factor",
+    revcomp = "factor",
+    interestingGroups = "factor"
 )
 
 test_that("sampleData : bcbioSingleCell", {
-    # Return all columns
-    x <- sampleData(indrops_small, clean = FALSE)
+    x <- sampleData(indrops_small)
     expect_identical(lapply(x, class), all)
-
-    # Clean mode (factor columns only)
-    x <- sampleData(indrops_small, clean = TRUE)
-    expect_identical(x, clean)
 })
 
 test_that("sampleData : seurat", {
     # Return all columns
-    x <- sampleData(seurat_small, clean = FALSE)
+    x <- sampleData(seurat_small)
     expect_identical(
         lapply(x, class),
         list(

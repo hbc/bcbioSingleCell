@@ -33,7 +33,7 @@ setMethod(
     signature("bcbioSingleCell"),
     function(object) {
         validObject(object)
-        sampleData <- sampleData(object, clean = FALSE, return = "data.frame")
+        sampleData <- as.data.frame(sampleData(object))
         if ("sampleNameAggregate" %in% colnames(sampleData)) {
             warning("Use `aggregate` instead of `sampleNameAggregate`")
             sampleData[["aggregate"]] <- sampleData[["sampleNameAggregate"]]

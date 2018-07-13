@@ -38,8 +38,7 @@ the samples.
 \examples{
 # SingleCellExperiment ====
 x <- cellranger_small
-sampleData(x, clean = FALSE) \%>\% glimpse()
-sampleData(x, clean = TRUE) \%>\% glimpse()
+sampleData(x) \%>\% glimpse()
 
 # Assignment support
 sampleData(x)[["batch"]] <- 1L

@@ -167,8 +167,7 @@ setMethod(
         # Merge sample-level metadata, if stashed
         sampleData <- sampleData(
             object = object,
-            interestingGroups = interestingGroups,
-            clean = FALSE
+            interestingGroups = interestingGroups
         )
         if (!length(sampleData)) {
             colData[["sampleID"]] <- factor("unknown")
