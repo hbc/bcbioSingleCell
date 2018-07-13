@@ -9,6 +9,9 @@
 #' @family Data Functions
 #' @author Michael Steinbaugh
 #'
+#' @importFrom basejump sampleData
+#' @export
+#'
 #' @inheritParams general
 #'
 #' @return `DataFrame`.
@@ -26,13 +29,11 @@ NULL
 
 
 
-#' @importFrom basejump sampleData
-#' @export
-basejump::sampleData
-
+#' @rdname sampleData
+#' @name sampleData<-
 #' @importFrom basejump sampleData<-
 #' @export
-basejump::`sampleData<-`
+NULL
 
 
 

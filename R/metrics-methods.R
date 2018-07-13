@@ -4,6 +4,9 @@
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
+#' @importFrom bcbioBase metrics
+#' @export
+#'
 #' @inheritParams general
 #' @param rowData Data describing the rows of the object.
 #' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
@@ -21,12 +24,6 @@
 #' x <- metrics(counts)
 #' glimpse(x)
 NULL
-
-
-
-#' @importFrom bcbioBase metrics
-#' @export
-bcbioBase::metrics
 
 
 

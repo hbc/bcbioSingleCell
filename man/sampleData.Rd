@@ -3,6 +3,7 @@
 \docType{methods}
 \name{sampleData}
 \alias{sampleData}
+\alias{sampleData<-}
 \alias{sampleData,SingleCellExperiment-method}
 \alias{sampleData,seurat-method}
 \alias{sampleData<-,SingleCellExperiment,DataFrame-method}

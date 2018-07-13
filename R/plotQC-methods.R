@@ -7,6 +7,9 @@
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
+#' @importFrom bcbioBase plotQC
+#' @export
+#'
 #' @inheritParams general
 #'
 #' @return
@@ -24,12 +27,6 @@
 #' # seurat ====
 #' plotQC(seurat_small)
 NULL
-
-
-
-#' @importFrom bcbioBase plotQC
-#' @export
-bcbioBase::plotQC
 
 
 

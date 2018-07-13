@@ -4,6 +4,9 @@
 #' @family S4 Object
 #' @author Michael Steinbaugh
 #'
+#' @importFrom BiocGenerics updateObject
+#' @export
+#'
 #' @inherit BiocGenerics::updateObject
 #'
 #' @return `bcbioRNASeq`.
@@ -12,12 +15,6 @@
 #' # bcbioSingleCell ====
 #' updateObject(indrops_small)
 NULL
-
-
-
-#' @importFrom BiocGenerics updateObject
-#' @export
-BiocGenerics::updateObject
 
 
 
