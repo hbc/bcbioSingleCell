@@ -230,15 +230,6 @@ test_that("sampleData : seurat", {
         )
     )
 
-    # Clean mode (factor columns only)
-    x <- sampleData(seurat_small, clean = TRUE)
-    expect_identical(
-        lapply(x, class),
-        list(
-            sampleName = "factor"
-        )
-    )
-
     # Return NULL for other seurat objects
     expect_identical(sampleData(Seurat::pbmc_small), NULL)
 })
