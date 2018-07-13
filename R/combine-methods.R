@@ -55,6 +55,8 @@
 #'
 #' # Combine two SingleCellExperiment objects
 #' c <- combine(x, y)
+#' print(c)
+#' sampleNames(c)
 NULL
 
 

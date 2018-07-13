@@ -66,6 +66,8 @@ sampleNames(y)
 
 # Combine two SingleCellExperiment objects
 c <- combine(x, y)
+print(c)
+sampleNames(c)
 }
 \seealso{
 \code{help("merge.Matrix", "Matrix.utils")}.
