@@ -4,8 +4,6 @@
 #' @family Gene Expression Functions
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase plotGene
-#'
 #' @inheritParams general
 #' @param geom Plot type. Uses [match.arg()] to pick the type. Currently
 #'   supports "`dot`" and "`violin`".
@@ -27,6 +25,12 @@
 #' # Violin
 #' plotGene(object, genes = genes, geom = "violin")
 NULL
+
+
+
+#' @importFrom bcbioBase plotGene
+#' @export
+bcbioBase::plotGene
 
 
 

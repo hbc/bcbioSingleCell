@@ -11,8 +11,6 @@
 #' @name combine
 #' @author Michael Steinbaugh
 #'
-#' @importFrom BiocGenerics combine
-#'
 #' @inheritParams BiocGenerics::combine
 #'
 #' @seealso `help("merge.Matrix", "Matrix.utils")`.
@@ -56,6 +54,9 @@
 #' c <- combine(x, y)
 NULL
 
+
+
+#' @importFrom BiocGenerics combine
 #' @export
 BiocGenerics::combine
 

@@ -11,8 +11,6 @@
 #' @family Data Functions
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump selectSamples
-#'
 #' @inheritParams general
 #' @param ... Columns to use for grep pattern matching. Supply a named character
 #'   vector containing the column name and the grep pattern.
@@ -28,6 +26,12 @@
 #' print(sample)
 #' selectSamples(object, sampleName = sample)
 NULL
+
+
+
+#' @importFrom basejump selectSamples
+#' @export
+basejump::selectSamples
 
 
 

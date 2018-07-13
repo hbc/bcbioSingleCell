@@ -9,8 +9,6 @@
 #' @family Data Functions
 #' @author Michael Steinbaugh
 #'
-#' @importFrom basejump sampleData sampleData<-
-#'
 #' @inheritParams general
 #'
 #' @return `DataFrame`.
@@ -25,6 +23,16 @@
 #' sampleData(x)[["batch"]] <- 1L
 #' sampleData(x) %>% glimpse()
 NULL
+
+
+
+#' @importFrom basejump sampleData
+#' @export
+basejump::sampleData
+
+#' @importFrom basejump sampleData<-
+#' @export
+basejump::`sampleData<-`
 
 
 

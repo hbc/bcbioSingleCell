@@ -6,14 +6,18 @@
 #'
 #' @inherit BiocGenerics::updateObject
 #'
-#' @importFrom BiocGenerics updateObject
-#'
 #' @return `bcbioRNASeq`.
 #'
 #' @examples
 #' # bcbioSingleCell ====
 #' updateObject(indrops_small)
 NULL
+
+
+
+#' @importFrom BiocGenerics updateObject
+#' @export
+BiocGenerics::updateObject
 
 
 

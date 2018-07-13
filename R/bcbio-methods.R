@@ -4,8 +4,6 @@
 #' @author Michael Steinbaugh
 #' @keywords internal
 #'
-#' @importFrom bcbioBase bcbio bcbio<-
-#'
 #' @inheritParams general
 #' @param slot Slot name of data inside accessor.
 #'
@@ -19,6 +17,16 @@
 #' bcbio(seurat_small, "metadata")[["stash"]] <- "XXX"
 #' bcbio(seurat_small, "metadata")[["stash"]]
 NULL
+
+
+
+#' @importFrom bcbioBase bcbio
+#' @export
+bcbioBase::bcbio
+
+#' @importFrom bcbioBase bcbio<-
+#' @export
+bcbioBase::`bcbio<-`
 
 
 
@@ -43,7 +51,6 @@ setMethod(
 
 
 
-# Assignment methods ===========================================================
 #' @rdname bcbio
 #' @export
 setMethod(
