@@ -79,7 +79,7 @@ setMethod(
     "metadata",
     signature("seurat"),
     function(x) {
-        stash <- bcbio(x, "metadata")
+        stash <- slot(x, "misc")[["bcbio"]]
         if (!is.null(stash)) {
             stash
         } else {
@@ -108,7 +108,7 @@ setMethod(
         if (!length(value)) {
             names(value) <- NULL
         }
-        bcbio(x, "metadata") <- value
+        slot(x, "misc")[["bcbio"]] <- value
         x
     }
 )
@@ -136,7 +136,7 @@ setMethod(
     "rowRanges",
     signature("seurat"),
     function(x) {
-        stash <- bcbio(x, "rowRanges")
+        stash <- slot(x, "misc")[["bcbio"]][["rowRanges"]]
         x <- as(x, "SingleCellExperiment")
         if (is(stash, "GRanges")) {
             assert_are_identical(names(stash), rownames(x))
