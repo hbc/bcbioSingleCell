@@ -106,7 +106,7 @@ test_that("metrics : bcbioSingleCell", {
             sequence = "factor",
             aggregate = "factor",
             revcomp = "factor",
-            "interestingGroups" = "factor"
+            interestingGroups = "factor"
         )
     )
 })

@@ -67,8 +67,8 @@ setAs(
 
         # Stash metadata and rowRanges into `misc` slot
         bcbio <- list(
-            "rowRanges" = rowRanges(from),
-            "metadata" = metadata(from)
+            rowRanges = rowRanges(from),
+            metadata = metadata(from)
         )
         slot(to, "misc")[["bcbio"]] <- bcbio
 

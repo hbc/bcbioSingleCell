@@ -425,8 +425,8 @@ setMethod(
         ), collapse = "\n"))
 
         summary <- list(
-            "cells" = summaryCells,
-            "genes" = summaryGenes
+            cells = summaryCells,
+            genes = summaryGenes
         )
 
         # Metadata =============================================================

@@ -105,10 +105,10 @@ setMethod(
                     USE.NAMES = TRUE
                 )
                 pointData <- data.frame(
-                    "x" = points,
-                    "y" = freq,
-                    "label" = paste0(sampleNames, " (", points, ")"),
-                    "sampleName" = sampleNames
+                    x = points,
+                    y = freq,
+                    label = paste0(sampleNames, " (", points, ")"),
+                    sampleName = sampleNames
                 )
                 p <- p +
                     geom_point(

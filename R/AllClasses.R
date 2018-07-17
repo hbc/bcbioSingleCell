@@ -312,7 +312,7 @@ bcbioSingleCell <- function(
         if (is.character(isSpike)) {
             assert_are_disjoint_sets(rownames(tx2gene), isSpike)
             spike <- data.frame(
-                txID = isSpike,
+                transcriptID = isSpike,
                 geneID = isSpike,
                 row.names = isSpike,
                 stringsAsFactors = FALSE

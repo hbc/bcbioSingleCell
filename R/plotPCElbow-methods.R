@@ -64,10 +64,10 @@ setMethod(
         cumsum <- cumsum(pct)
 
         data <- tibble(
-            "pc" = seq_along(sdev),
-            "sdev" = sdev,
-            "pct" = pct,
-            "cumsum" = cumsum
+            pc = seq_along(sdev),
+            sdev = sdev,
+            pct = pct,
+            cumsum = cumsum
         )
 
         minSDCutoff <- data %>%

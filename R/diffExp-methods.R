@@ -86,7 +86,7 @@ NULL
     stopifnot(is(object, "SingleCellExperiment"))
     object <- as(object, "SingleCellExperiment")
     # zinbFit doesn't support `dgCMatrix``, so coerce counts to matrix
-    assays(object) <- list("counts" = as.matrix(counts(object)))
+    assays(object) <- list(counts = as.matrix(counts(object)))
     print(system.time({
         zinb <- zinbwave(
             Y = object,

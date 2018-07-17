@@ -68,8 +68,8 @@ setMethod(
         message("Remapping cellular barcodes to aggregate sample IDs")
         cell2sample <- cell2sample(object)
         remap <- tibble(
-            "cellID" = names(cell2sample),
-            "sampleID" = cell2sample
+            cellID = names(cell2sample),
+            sampleID = cell2sample
         ) %>%
             left_join(remap, by = "sampleID")
 
@@ -135,7 +135,7 @@ setMethod(
 
         # Return ===============================================================
         .new.SingleCellExperiment(
-            assays = list("counts" = counts),
+            assays = list(counts = counts),
             rowRanges = rowRanges(object),
             colData = colData,
             metadata = metadata,

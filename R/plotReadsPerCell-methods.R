@@ -255,9 +255,9 @@ NULL
             proportion <- h[["counts"]] * (10L ^ h[["mids"]]) /
                 sum(h[["counts"]] * (10L ^ h[["mids"]]))
             tibble(
-                "sampleID" = sampleID,
+                sampleID = sampleID,
                 "log10Count" = h[["mids"]],
-                "proportion" = proportion
+                proportion = proportion
             )
         }
     ) %>%
