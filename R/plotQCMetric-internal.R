@@ -170,7 +170,7 @@
     yTrans = "identity",
     interestingGroups,
     trendline = FALSE,
-    color = scale_color_hue(),
+    color = NULL,
     title = NULL
 ) {
     assert_is_a_string(xCol)

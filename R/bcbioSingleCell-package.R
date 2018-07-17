@@ -48,17 +48,17 @@
 #' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows desc everything filter group_by
-#'   group_vars left_join matches mutate mutate_all mutate_at mutate_if n rename
-#'   select select_if slice summarize summarize_all ungroup
+#'   group_vars left_join matches mutate mutate_all mutate_at mutate_if n pull
+#'   rename select select_if slice summarize summarize_all ungroup
 #' @importFrom DESeq2 DESeqDataSet DESeq results
 #' @importFrom edgeR calcNormFactors DGEList estimateDisp glmFit
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
-#' @importFrom ggplot2 aes coord_flip element_blank element_line
-#'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
-#'   geom_histogram geom_hline geom_line geom_point geom_smooth
-#'   geom_step geom_text geom_violin geom_vline ggtitle guide_colourbar
-#'   guide_legend guides labs qplot scale_radius scale_x_continuous
-#'   scale_y_continuous stat_ecdf theme xlab xlim ylab
+#' @importFrom ggplot2 aes coord_flip element_blank element_line element_rect
+#'   element_text expand_limits facet_wrap geom_bar geom_boxplot geom_histogram
+#'   geom_hline geom_line geom_point geom_smooth geom_step geom_text geom_violin
+#'   geom_vline ggplot ggtitle guide_colourbar guide_legend guides labs qplot
+#'   scale_radius scale_x_continuous scale_y_continuous stat_ecdf theme xlab
+#'   xlim ylab
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom graphics hist
 #' @importFrom grid arrow unit
