@@ -45,7 +45,7 @@
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
 #'   readSampleData readTx2gene readYAMLSampleData sampleDirs
 #' @importFrom Biobase rowMedians sampleNames
-#' @importFrom BiocParallel bplapply bpmapply SerialParam
+#' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows desc everything filter group_by
 #'   group_vars left_join matches mutate mutate_all mutate_at mutate_if n rename

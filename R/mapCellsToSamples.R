@@ -46,7 +46,7 @@ mapCellsToSamples <- function(cells, samples) {
         return(cell2sample)
     }
 
-    list <- bplapply(samples, function(sample) {
+    list <- lapply(samples, function(sample) {
         pattern <- paste0("^(", sample, barcodePattern)
         match <- str_match(cells, pattern = pattern) %>%
             as.data.frame() %>%

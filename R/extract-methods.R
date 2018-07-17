@@ -138,7 +138,7 @@ setMethod(
         if (!is.null(cb)) {
             assert_is_list(cb)
             df <- .bindCellularBarcodes(cb)[cells, , drop = FALSE]
-            cb <- bplapply(seq_along(sampleIDs), function(a) {
+            cb <- lapply(seq_along(sampleIDs), function(a) {
                 df %>%
                     ungroup() %>%
                     .[.[["sampleID"]] == sampleIDs[[a]], , drop = FALSE] %>%
