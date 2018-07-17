@@ -40,7 +40,7 @@
 #' sampleNames(object)
 #' x <- filterCells(
 #'     object = object,
-#'     minUMIs = c(pbmc4k = 100)
+#'     minUMIs = c(pbmc = 100)
 #' )
 #' show(x)
 #' metadata(x)$filterParams
