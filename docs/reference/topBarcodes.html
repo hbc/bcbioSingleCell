@@ -78,9 +78,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -170,17 +167,17 @@ column in descending order. Cellular barcodes are in the <code>cellID</code> col
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
 <span class='co'># list</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>cellranger_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"list"</span>)
-<span class='fu'>lapply</span>(<span class='no'>x</span>, <span class='no'>class</span>)</div><div class='output co'>#&gt; $pbmc4k_1
+<span class='fu'>lapply</span>(<span class='no'>x</span>, <span class='no'>class</span>)</div><div class='output co'>#&gt; $pbmc_1
 #&gt; [1] "character"
 #&gt; </div><div class='input'>
 <span class='co'># data.frame</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>cellranger_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"data.frame"</span>)
 <span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 4
-#&gt; $ sampleID   &lt;fct&gt; pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k_1, pbmc4k...
-#&gt; $ sampleName &lt;fct&gt; pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, pbmc4k, ...
+#&gt; $ sampleID   &lt;fct&gt; pbmc_1, pbmc_1, pbmc_1, pbmc_1, pbmc_1, pbmc_1, pbmc_1, ...
+#&gt; $ sampleName &lt;fct&gt; pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pb...
 #&gt; $ nUMI       &lt;int&gt; 48443, 26128, 23059, 21195, 21125, 21026, 20176, 19996, ...
-#&gt; $ cellID     &lt;chr&gt; "pbmc4k_1_GGATTACCATAGGATA", "pbmc4k_1_CTCTGGTAGGAGTAGA"...</div></pre>
+#&gt; $ cellID     &lt;chr&gt; "pbmc_1_GGATTACCATAGGATA", "pbmc_1_CTCTGGTAGGAGTAGA", "p...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

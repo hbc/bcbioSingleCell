@@ -205,8 +205,8 @@ this many cells.</p></td>
 #&gt; rownames(500): ENSG00000002586 ENSG00000005022 ... ENSG00000277734
 #&gt;   ENSG00000279483
 #&gt; rowData names(7): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): pbmc4k_1_AAACCTGCAGGCGATA pbmc4k_1_AAACCTGCATGAAGTA ...
-#&gt;   pbmc4k_1_TTTGGTTTCGCTAGCG pbmc4k_1_TTTGTCACAGGTCCAC
+#&gt; colnames(500): pbmc_1_AAACCTGCAGGCGATA pbmc_1_AAACCTGCATGAAGTA ...
+#&gt;   pbmc_1_TTTGGTTTCGCTAGCG pbmc_1_TTTGTCACAGGTCCAC
 #&gt; colData names(10): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'>
@@ -243,8 +243,8 @@ this many cells.</p></td>
 #&gt; rownames(500): ENSG00000002586 ENSG00000005022 ... ENSG00000277734
 #&gt;   ENSG00000279483
 #&gt; rowData names(7): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): pbmc4k_1_AAACCTGCAGGCGATA pbmc4k_1_AAACCTGCATGAAGTA ...
-#&gt;   pbmc4k_1_TTTGGTTTCGCTAGCG pbmc4k_1_TTTGTCACAGGTCCAC
+#&gt; colnames(500): pbmc_1_AAACCTGCAGGCGATA pbmc_1_AAACCTGCATGAAGTA ...
+#&gt;   pbmc_1_TTTGGTTTCGCTAGCG pbmc_1_TTTGTCACAGGTCCAC
 #&gt; colData names(10): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
@@ -272,13 +272,13 @@ this many cells.</p></td>
 #&gt; [1] 10
 #&gt; </div><div class='input'>
 <span class='co'># Per sample cutoffs</span>
-<span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; pbmc4k_1 
-#&gt; "pbmc4k" </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
+<span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; pbmc_1 
+#&gt; "pbmc" </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
-    <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>pbmc4k</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+    <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>pbmc</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 )</div><div class='output co'>#&gt; <span class='message'>minUMIs: per sample mode</span>
-#&gt; <span class='message'>pbmc4k </span>
-#&gt; <span class='message'>   100 </span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
+#&gt; <span class='message'>pbmc </span>
+#&gt; <span class='message'> 100 </span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
 #&gt; <span class='message'>  - &gt;= 100 UMIs per cell</span>
 #&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
 #&gt; <span class='message'>  - &gt;= 0 genes per cell</span>
@@ -311,16 +311,16 @@ this many cells.</p></td>
 #&gt; rownames(500): ENSG00000002586 ENSG00000005022 ... ENSG00000277734
 #&gt;   ENSG00000279483
 #&gt; rowData names(7): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): pbmc4k_1_AAACCTGCAGGCGATA pbmc4k_1_AAACCTGCATGAAGTA ...
-#&gt;   pbmc4k_1_TTTGGTTTCGCTAGCG pbmc4k_1_TTTGTCACAGGTCCAC
+#&gt; colnames(500): pbmc_1_AAACCTGCAGGCGATA pbmc_1_AAACCTGCATGAAGTA ...
+#&gt;   pbmc_1_TTTGGTTTCGCTAGCG pbmc_1_TTTGTCACAGGTCCAC
 #&gt; colData names(10): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
 #&gt; [1] Inf
 #&gt; 
 #&gt; $minUMIs
-#&gt; pbmc4k 
-#&gt;    100 
+#&gt; pbmc 
+#&gt;  100 
 #&gt; 
 #&gt; $maxUMIs
 #&gt; [1] Inf

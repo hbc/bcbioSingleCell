@@ -78,7 +78,8 @@
 
 ## Minor changes
 
-- Updated internal code to use `text` as primary argument in `markdownHeader()` calls.
+- Updated internal code to use `text` as primary argument in `markdownHeader()`
+  calls.
 - Updated example datasets and unit tests to match.
 - Working on using pbmc4k as example dataset for vignette.
 
@@ -117,7 +118,7 @@
   `readCellRanger()` functions.
 - Improved `plotMarker` documentation examples to use mitochondrial genes.
 - Using `seurat_small` in place of `Seurat::pbmc_small` in working examples.
-  
+
 ## Internal code changes
 
 - Now consistently using [dplyr][] for piped `data.frame` as much as possible,
@@ -141,7 +142,7 @@
   `fetchData` return column names.
 - Improved R Markdown clustering and marker templates to optionally support
   UMAP and dark mode in the YAML parameters.
-  
+
 ## Minor changes
 
 - Using original [Seurat][] mapping names for data: tSNE_1, tSNE_2, PC1, PC2,
@@ -264,7 +265,7 @@
 - `filterCells()` now supports `minUMIs = c("knee", "inflection")` for automatic
   filtering based on the cellular barcode ranks. Internally this is handled
   by `DropletUtils::barcodeRanks()`.
-  
+
 ## Minor changes
 
 - Attempting to re-enable `libgsl-dev` installation for [zinbwave][] on
@@ -279,7 +280,7 @@
 - Now using `Seurat::Convert()` internally to coerce `seurat` class object
   to `SingleCellExperiment`, using `as(seurat, "SingleCellExperiment")`. This
   utility function was added to [Seurat][] v2.3.1.
-  
+
 # Internal changes
 
 - Tweaked `metrics()` `SingleCellExperiment` method code to always merge
@@ -296,7 +297,8 @@
 - Updated default QC R Markdown template.
 - Added trendline option to QC scatterplot functions.
 - Simplified internal handling of interestingGroups in `plotQC()`.
-- Using `readYAMLSampleData()` internally instead of defunct `sampleYAMLMetadata()`.
+- Using `readYAMLSampleData()` internally instead of defunct
+  `sampleYAMLMetadata()`.
 - Added `sampleNames()` method support for seurat.
 - Now importing rmarkdown, sessioninfo, tidyverse for R Markdown reports, rather
   than suggesting. Similar update applied to bcbioRNASeq.
@@ -317,13 +319,16 @@
 ## Minor changes
 
 - Added barcode rank support for `seurat` class objects.
-- QC plots now have titles by default, matching the conventions used in bcbioRNASeq.
+- QC plots now have titles by default, matching the conventions used in
+  bcbioRNASeq.
 - Fixed y-axis scale for histogram geom in QC plots.
-- Prefiltering of very low quality barcodes with no UMIs or genes is now always applied. This helps avoid unwanted downstream errors with zero count barcodes.
+- Prefiltering of very low quality barcodes with no UMIs or genes is now always
+  applied. This helps avoid unwanted downstream errors with zero count barcodes.
 - Added boxplot geom support for `plotReadsPerCell().
 - `plotQC()` geom argument is now more consistent across the paneled plots.
 - Fixed facet wrapping for aggregate samples in the QC plots.
-- Added `interestingGroups` support to `plotZerosVsDepth()`, matching the other QC functions.
+- Added `interestingGroups` support to `plotZerosVsDepth()`, matching the other
+  QC functions.
 
 
 
