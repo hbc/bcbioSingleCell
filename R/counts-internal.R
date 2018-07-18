@@ -33,8 +33,6 @@
 
 
 # Read Cell Ranger HDF5 Counts
-# filtered: sample/outs/filtered_gene_bc_matrices_h5.h5
-#      raw: sample/outs/raw_gene_bc_matrices_h5.h5
 # @seealso `cellrangerRkit::get_matrix_from_h5()`
 .readCellRangerHDF5Counts <- function(sampleDir, filtered = TRUE) {
     assert_all_are_dirs(sampleDir)
@@ -86,8 +84,6 @@
 
 # Read Cell Ranger Sparse Counts
 # Matrix Market Exchange (MEX/MTX) format
-# filtered: sample/outs/filtered_gene_bc_matrices/GRCh38/matrix.mtx
-#      raw: sample/outs/raw_gene_bc_matrices/GRCh38/matrix.mtx
 .readCellRangerSparseCounts <- function(sampleDir, filtered = TRUE) {
     assert_is_a_string(sampleDir)
     assert_all_are_dirs(sampleDir)
