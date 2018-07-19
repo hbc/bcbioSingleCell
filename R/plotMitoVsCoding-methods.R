@@ -25,7 +25,7 @@ setMethod(
         object,
         interestingGroups,
         trendline = FALSE,
-        color = scale_color_hue(),
+        color = NULL,
         trans = "log2",
         title = "mito vs. coding"
     ) {
@@ -35,6 +35,7 @@ setMethod(
             trendline = trendline,
             xCol = "nCoding",
             yCol = "nMito",
+            color = color,
             xTrans = trans,
             yTrans = trans,
             title = title

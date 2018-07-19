@@ -31,9 +31,14 @@ setMethod(
 
         # Coerce to SingleCellExperiment
         sce <- as(object, "SingleCellExperiment")
+        validObject(sce)
+
+        assays <- slot(sce, "assays")
+        rowRanges <- rowRanges(sce)
+        colData <- colData(sce)
+        metadata <- metadata(sce)
 
         # Assays ===============================================================
-        assays <- slot(sce, "assays")
         # Coerce ShallowSimpleListAssays to list
         assays <- lapply(seq_along(assays), function(a) {
             assay <- assays[[a]]
@@ -56,9 +61,15 @@ setMethod(
 
         # Column data ==========================================================
         # Ensure that all `sampleData` columns are now slotted in `colData`
-        colData <- colData(sce)
-        sampleData <- metadata(sce)[["sampleData"]]
-        assert_is_data.frame(sampleData)
+        sampleData <- metadata[["sampleData"]]
+        stopifnot(!is.null(sampleData))
+        # Starting using `DataFrame` in place of `data.frame` in v0.1.7
+        sampleData <- as(sampleData, "DataFrame")
+        colData <- colData[
+            ,
+            setdiff(colnames(colData), colnames(sampleData)),
+            drop = FALSE
+        ]
         cell2sample <- cell2sample(sce)
         assert_is_factor(cell2sample)
         colData[["cellID"]] <- rownames(colData)
@@ -71,13 +82,13 @@ setMethod(
             all.x = TRUE
         )
         rownames(colData) <- colData[["cellID"]]
+        # Ensure rows are reordered to match the original object
+        colData <- colData[colnames(sce), ]
         colData[["cellID"]] <- NULL
         sampleData[["sampleID"]] <- NULL
 
         # Metadata =============================================================
-        metadata <- metadata(sce)
-
-        # version
+        metadata[["sampleData"]] <- sampleData
         metadata[["previousVersion"]] <- metadata[["version"]]
         metadata[["version"]] <- packageVersion
 
