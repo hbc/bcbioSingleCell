@@ -222,7 +222,7 @@ bcbioSingleCell <- function(
     }
 
     # Molecular barcode (UMI) type =============================================
-    umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
+    umiPattern <- "fastqtransform.*/(.*)\\.json"
     assert_any_are_matching_regex(bcbioCommandsLog, umiPattern)
     umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
         .[, 2L] %>%
