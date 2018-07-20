@@ -97,8 +97,9 @@ setMethod(
 
         # sampleData
         sampleData <- metadata[["sampleData"]]
-        assert_is_data.frame(sampleData)
+        assert_is_non_empty(sampleData)
         sampleData <- sampleData %>%
+            as.data.frame() %>%
             .[levels(cell2sample), , drop = FALSE] %>%
             rownames_to_column() %>%
             mutate_all(as.factor) %>%
