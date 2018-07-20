@@ -63,15 +63,15 @@ The [inDrops][] library version is automatically detected by [bcbio][], but ensu
 
 Consult the [bcbio][] documentation for more information on how to configure an [inDrops][] run prior to loading into [R][] with the `bcbioSingleCell()` function.
 
-| description | index | sequence | sampleName |
-|-------------|-------|----------|------------|
-| indrops1    | 17    | GGAGGTAA | sample1    |
-| indrops1    | 18    | CATAACTG | sample2    |
-| indrops2    | 12    | GCGTAAGA | sample3    |
-| indrops2    | 13    | CTATTAAG | sample4    |
-| indrops2    | 14    | AAGGCTAT | sample5    |
-| indrops2    | 15    | GAGCCTTA | sample6    |
-| indrops2    | 16    | TTATGCGA | sample7    |
+| description | index | sequence | sampleName | aggregate |
+|-------------|-------|----------|------------|-----------|
+| indrops1    | 17    | GGAGGTAA | sample1    | indrops   |
+| indrops1    | 18    | CATAACTG | sample2    | indrops   |
+| indrops2    | 12    | GCGTAAGA | sample3    | indrops   |
+| indrops2    | 13    | CTATTAAG | sample4    | indrops   |
+| indrops2    | 14    | AAGGCTAT | sample5    | indrops   |
+| indrops2    | 15    | GAGCCTTA | sample6    | indrops   |
+| indrops2    | 16    | TTATGCGA | sample7    | indrops   |
 
 ### FASTQ files demultiplexed per sample
 
