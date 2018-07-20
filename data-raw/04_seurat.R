@@ -1,5 +1,5 @@
 # seurat_small
-# 2018-07-12
+# 2018-07-20
 
 library(devtools)
 library(Seurat)

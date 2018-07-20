@@ -1,8 +1,11 @@
 # Cell Markers
-# 2018-07-12
+# 2018-07-20
 # This code is derived from:
 # - Tirosh et al, 2015
 # - http://satijalab.org/seurat/cell_cycle_vignette.html
+
+# Must be interactive, requiring Google Sheets authentication
+stopifnot(interactive())
 
 library(devtools)
 library(googlesheets)

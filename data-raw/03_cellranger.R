@@ -1,5 +1,5 @@
 # Cell Ranger Example Data
-# 2018-07-12
+# 2018-07-20
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
@@ -36,16 +36,10 @@ download.file(
     ),
     destfile = tar_file
 )
-untar(
-    tarfile = tar_file,
-    exdir = outs_dir
-)
+untar(tarfile = tar_file, exdir = outs_dir)
 stopifnot(identical(dir(outs_dir), "filtered_gene_bc_matrices"))
 
-pbmc <- readCellRanger(
-    uploadDir = upload_dir,
-    organism = "Homo sapiens"
-)
+pbmc <- readCellRanger(uploadDir = upload_dir, organism = "Homo sapiens")
 # Ensembl 92, expect 483 unannotated genes
 # dim(pbmc)
 # [1] 33694  4340
