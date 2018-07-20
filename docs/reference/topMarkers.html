@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -77,9 +77,6 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -103,7 +100,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Top Markers</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-topMarkers.R'><code>R/methods-topMarkers.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/topMarkers-methods.R'><code>R/topMarkers-methods.R</code></a></small>
     <div class="hidden name"><code>topMarkers.Rd</code></div>
     </div>
 
@@ -175,14 +172,14 @@ directions of association per cluster.</p></td>
 )
 <span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 13
 #&gt; # Groups:   cluster [3]
-#&gt;   cluster avgLogFC  pct1  pct2 rowname    pvalue     padj geneID       geneName
-#&gt;   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;   
-#&gt; 1 0           2.33 0.917 0.215 S100A12  1.03e-63 5.14e-61 ENSG0000016… S100A12 
-#&gt; 2 0           2.87 1     0.823 S100A8   3.50e-62 1.75e-59 ENSG0000014… S100A8  
-#&gt; 3 1           1.96 0.952 0.353 TRAC     1.65e-56 8.23e-54 ENSG0000027… TRAC    
-#&gt; 4 1           1.58 0.937 0.313 CD3D     7.85e-54 3.93e-51 ENSG0000016… CD3D    
-#&gt; 5 2           1.72 1     0.691 HLA-DQA1 2.02e-47 1.01e-44 ENSG0000019… HLA-DQA1
-#&gt; 6 2           1.56 1     0.843 HLA-DPB1 3.06e-47 1.53e-44 ENSG0000022… HLA-DPB1
+#&gt;   cluster avgLogFC  pct1  pct2 rowname   pvalue     padj geneID geneName
+#&gt;   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
+#&gt; 1 0           2.33 0.917 0.215 S100A12 1.03e-63 5.14e-61 ENSG0… S100A12 
+#&gt; 2 0           2.87 1     0.823 S100A8  3.50e-62 1.75e-59 ENSG0… S100A8  
+#&gt; 3 1           1.96 0.952 0.353 TRAC    1.65e-56 8.23e-54 ENSG0… TRAC    
+#&gt; 4 1           1.58 0.937 0.313 CD3D    7.85e-54 3.93e-51 ENSG0… CD3D    
+#&gt; 5 2           1.72 1     0.691 HLA-DQ… 2.02e-47 1.01e-44 ENSG0… HLA-DQA1
+#&gt; 6 2           1.56 1     0.843 HLA-DP… 3.06e-47 1.53e-44 ENSG0… HLA-DPB1
 #&gt; # ... with 4 more variables: geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
 #&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div></pre>
   </div>

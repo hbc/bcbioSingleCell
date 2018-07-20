@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -77,9 +77,6 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -103,7 +100,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Mitochondrial Transcript Abundance</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotMitoRatio.R'><code>R/methods-plotMitoRatio.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/plotMitoRatio-methods.R'><code>R/plotMitoRatio-methods.R</code></a></small>
     <div class="hidden name"><code>plotMitoRatio.Rd</code></div>
     </div>
 
@@ -116,14 +113,14 @@
     <pre class="usage"><span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ecdf"</span>,
-  <span class='st'>"ridgeline"</span>, <span class='st'>"violin"</span>, <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+<span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>,
+  <span class='st'>"ridgeline"</span>, <span class='st'>"ecdf"</span>, <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"sqrt"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mito ratio"</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ecdf"</span>, <span class='st'>"ridgeline"</span>,
-  <span class='st'>"violin"</span>, <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"sqrt"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mito ratio"</span>)</pre>
+<span class='fu'>plotMitoRatio</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>, <span class='st'>"ridgeline"</span>,
+  <span class='st'>"ecdf"</span>, <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>), <span class='no'>interestingGroups</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"sqrt"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mito ratio"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

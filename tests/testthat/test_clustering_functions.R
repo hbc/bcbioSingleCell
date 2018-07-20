@@ -25,7 +25,7 @@ test_that("cellTypesPerCluster", {
 test_that("knownMarkersDetected", {
     x <- knownMarkersDetected(
         object = all_markers_small,
-        known = cellTypeMarkers[["homoSapiens"]]
+        known = cell_type_markers[["homoSapiens"]]
     )
     expect_is(x, "grouped_df")
     expect_identical(dplyr::group_vars(x), "cellType")

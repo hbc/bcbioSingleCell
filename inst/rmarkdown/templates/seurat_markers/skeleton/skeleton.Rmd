@@ -4,13 +4,13 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    seurat_file: "data/YYYY-MM-DD/seurat.rda"
-    all_markers_file: NULL
-    cell_type_markers_file: NULL
-    organism: "Homo sapiens"
-    dark: FALSE
-    data_dir: !r file.path("data", Sys.Date())
-    results_dir: !r file.path("results", Sys.Date(), "markers")
+  seurat_file: "data/YYYY-MM-DD/seurat.rda"
+  all_markers_file: NULL
+  cell_type_markers_file: NULL
+  organism: "Homo sapiens"
+  dark: FALSE
+  data_dir: !r file.path("data", Sys.Date())
+  results_dir: !r file.path("results", Sys.Date(), "markers")
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
@@ -50,7 +50,7 @@ if (!is.null(params$cell_type_markers_file)) {
     )
 } else {
     stopifnot(!is.null(params$organism))
-    cell_type_markers <- bcbioSingleCell::cellTypeMarkers %>%
+    cell_type_markers <- bcbioSingleCell::cell_type_markers %>%
         .[[camel(params$organism)]]
 }
 stopifnot(is.data.frame(cell_type_markers))

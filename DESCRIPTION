@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
-Version: 0.1.16
+Version: 0.1.17
 Authors@R: c(
     person(
         given = "Michael",
@@ -53,7 +53,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment,
-    bcbioBase (>= 0.2.15)
+    bcbioBase (>= 0.3)
 Imports:
     assertive.base,
     assertive.files,
@@ -62,58 +62,54 @@ Imports:
     assertive.sets,
     assertive.strings,
     assertive.types,
-    basejump (>= 0.5.9),
+    basejump (>= 0.6),
     Biobase,
     BiocGenerics,
-    cowplot,
+    BiocParallel,
+    cowplot (>= 0.9),
+    DESeq2,
     dplyr (>= 0.7),
+    edgeR,
     GenomicFeatures,
-    ggplot2 (>= 2.2.1),
-    ggridges,
+    ggplot2 (>= 3.0),
+    ggridges (>= 0.5),
     graphics,
     grid,
-    jsonlite,
-    knitr,
-    magrittr,
-    Matrix,
-    Matrix.utils,
+    jsonlite (>= 1.5),
+    knitr (>= 1.20),
+    magrittr (>= 1.5),
+    Matrix (>= 1.2),
+    Matrix.utils (>= 0.9),
     methods,
-    parallel,
-    pbapply,
+    pbapply (>= 1.3),
     purrr (>= 0.2.5),
-    readr,
-    rlang,
-    rmarkdown,
+    R.utils,
+    readr (>= 1.1),
+    rhdf5 (>= 2.2),
+    rlang (>= 0.2),
+    rmarkdown (>= 1.10),
     S4Vectors,
     scales,
-    sessioninfo,
-    Seurat (>= 2.3.1),
+    sessioninfo (>= 1.0),
+    Seurat (>= 2.3),
     stats,
-    stringr,
+    stringr (>= 1.3),
     SummarizedExperiment,
-    tibble,
-    tidyr,
+    tibble (>= 1.4),
+    tidyr (>= 0.8),
     tidyverse (>= 1.2),
     utils,
-    viridis
+    zinbwave
 Suggests:
-    BiocParallel,
     BiocStyle,
-    DESeq2 (>= 1.20),
     DropletUtils,
-    edgeR (>= 3.22),
     EnsDb.Hsapiens.v75,
     googlesheets,
-    MAST (>= 1.4),
-    scater,
-    scran,
+    MAST,
     splatter,
-    testthat,
-    zinbwave (>= 1.0),
-    zingeR (>= 0.1)
+    testthat (>= 2.0)
 Remotes:
     hbc/bcbioBase,
-    statOmics/zingeR,
     steinbaugh/basejump
 biocViews:
     DataImport,

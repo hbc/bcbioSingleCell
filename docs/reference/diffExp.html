@@ -65,7 +65,7 @@ datasets." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -79,9 +79,6 @@ datasets." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -105,7 +102,7 @@ datasets." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Differential Expression</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-diffExp.R'><code>R/methods-diffExp.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/diffExp-methods.R'><code>R/diffExp-methods.R</code></a></small>
     <div class="hidden name"><code>diffExp.Rd</code></div>
     </div>
 
@@ -121,13 +118,12 @@ datasets.</p>
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>diffExp</span>(<span class='no'>object</span>, <span class='no'>numerator</span>, <span class='no'>denominator</span>,
-  <span class='kw'>zeroWeights</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"zinbwave"</span>, <span class='st'>"zingeR"</span>), <span class='kw'>caller</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"edgeR"</span>, <span class='st'>"DESeq2"</span>),
-  <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>25L</span>, <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>)
+  <span class='kw'>caller</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"edgeR"</span>, <span class='st'>"DESeq2"</span>), <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>25L</span>,
+  <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>diffExp</span>(<span class='no'>object</span>, <span class='no'>numerator</span>, <span class='no'>denominator</span>,
-  <span class='kw'>zeroWeights</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"zinbwave"</span>, <span class='st'>"zingeR"</span>), <span class='kw'>caller</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"edgeR"</span>, <span class='st'>"DESeq2"</span>),
-  <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>25L</span>, <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</pre>
+<span class='fu'>diffExp</span>(<span class='no'>object</span>, <span class='no'>numerator</span>, <span class='no'>denominator</span>, <span class='kw'>caller</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"edgeR"</span>,
+  <span class='st'>"DESeq2"</span>), <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>25L</span>, <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,11 +145,6 @@ datasets.</p>
       <th>denominator</th>
       <td><p>Group of cells to use in the denominator of the contrast
 (e.g. control).</p></td>
-    </tr>
-    <tr>
-      <th>zeroWeights</th>
-      <td><p>Package to use for zero weight calculations. Defaults to
-zinbwave but zingeR is also supported.</p></td>
     </tr>
     <tr>
       <th>caller</th>
@@ -189,16 +180,6 @@ shrunken results are desired.</p></li>
     <p>We are currently using an epsilon setting of <code>1e12</code>, as recommended by the
 ZINB-WaVE integration paper.</p>
     
-    <h2 class="hasAnchor" id="zinger"><a class="anchor" href="#zinger"></a>zingeR</h2>
-
-    
-    <p>We first perform a differential expression analysis using zingeR posterior
-probabilities and focussing on the count component of the ZINB model. The
-weights are estimated with the core function of zingeR, <code>zeroWeightsLS()</code>. It
-is important to be consistent with the normalization procedure, i.e. if you
-use TMM normalization for the analysis, you should also use it for estimating
-the zingeR posterior probabilities.</p>
-    
     <h2 class="hasAnchor" id="edger"><a class="anchor" href="#edger"></a>edgeR</h2>
 
     
@@ -223,7 +204,6 @@ caller. It is currently considerably slower for large datasets than edgeR.</p>
 <li><p><a href='https://doi.org/10.1186/s13059-018-1406-4'>zinbwave paper</a>.</p></li>
 <li><p><a href='https://bit.ly/2wtDdpS'>zinbwave vignette</a>.</p></li>
 <li><p><a href='https://github.com/mikelove/zinbwave-deseq2'>zinbwave-DESeq2 workflow</a>.</p></li>
-<li><p><a href='https://goo.gl/4rTK1w'>zingeR vignette</a>.</p></li>
 </ul></div>
     <div class='dont-index'><ul>
 <li><p>DESeq2: We're trying to follow the conventions used in DESeq2 for
@@ -241,17 +221,17 @@ for additional information.</p></li>
 <span class='co'># Expression in cluster 3 relative to cluster 2</span>
 <span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
 <span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>object</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>3L</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>numerator</span>)</div><div class='output co'>#&gt;  chr [1:81] "pbmc4k_1_AAAGTAGAGTCAAGGC" "pbmc4k_1_ACAGCCGGTCTTGATG" ...</div><div class='input'><span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>object</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>denominator</span>)</div><div class='output co'>#&gt;  chr [1:92] "pbmc4k_1_AAACCTGCAGGCGATA" "pbmc4k_1_AAACGGGAGCGGCTTC" ...</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
+<span class='fu'>glimpse</span>(<span class='no'>numerator</span>)</div><div class='output co'>#&gt;  chr [1:81] "pbmc_1_AAAGTAGAGTCAAGGC" "pbmc_1_ACAGCCGGTCTTGATG" ...</div><div class='input'><span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>object</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
+<span class='fu'>glimpse</span>(<span class='no'>denominator</span>)</div><div class='output co'>#&gt;  chr [1:92] "pbmc_1_AAACCTGCAGGCGATA" "pbmc_1_AAACGGGAGCGGCTTC" ...</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
     <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
     <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
     <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>5L</span>,
     <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>
-)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: zinbwave</span></div><div class='output co'>#&gt; <span class='message'>Performing differential expression with zinbwave-edgeR</span></div><div class='output co'>#&gt; <span class='message'>Applying low gene count filter</span>
+)</div><div class='output co'>#&gt; <span class='message'>Performing differential expression with zinbwave-edgeR</span></div><div class='output co'>#&gt; <span class='message'>Applying low gene count filter</span>
 #&gt; <span class='message'>Requiring at least 5 cells with counts of 5 or more per gene</span></div><div class='output co'>#&gt; <span class='message'>Running zinbwave</span></div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   9.633   0.675  11.710 </div><div class='output co'>#&gt; <span class='message'>Running edgeR</span></div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.834   0.061   0.924 </div></pre>
+#&gt;  13.241   1.012  15.706 </div><div class='output co'>#&gt; <span class='message'>Running edgeR</span></div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   1.113   0.104   1.301 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -261,8 +241,6 @@ for additional information.</p></li>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#zinbwave">zinbwave</a></li>
-
-      <li><a href="#zinger">zingeR</a></li>
 
       <li><a href="#edger">edgeR</a></li>
 
