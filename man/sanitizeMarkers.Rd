@@ -33,7 +33,7 @@ the rownames of the returned marker \code{data.frame}.
 # seurat ====
 object <- seurat_small
 
-# `FindAllMarkers` return
+# `FindAllMarkers()` return
 invisible(capture.output(
     all_markers <- Seurat::FindAllMarkers(object)
 ))
