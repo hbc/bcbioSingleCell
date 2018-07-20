@@ -17,7 +17,7 @@
 #' # seurat ====
 #' object <- seurat_small
 #'
-#' # `FindAllMarkers` return
+#' # `FindAllMarkers()` return
 #' invisible(capture.output(
 #'     all_markers <- Seurat::FindAllMarkers(object)
 #' ))
@@ -108,7 +108,9 @@ setMethod(
 
         # Only attempt to join rowRanges if we have gene-to-symbol mappings
         if (!is.null(gene2symbol)) {
-            gene2symbol[["rowname"]] <- make.unique(gene2symbol[["geneName"]])
+            gene2symbol[["rowname"]] <- gene2symbol[["geneName"]] %>%
+                as.character() %>%
+                make.unique()
             gene2symbol[["geneName"]] <- NULL
             data <- left_join(
                 x = data,
