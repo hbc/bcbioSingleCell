@@ -9,7 +9,7 @@ params:
   pc_compute: 20
   dims_use: FALSE
   vars_to_regress: !r c("nUMI", "mitoRatio", "S.Score", "G2M.Score")
-  resolution_calc: !r seq(from = 0.4, to = 1.2, by = 0.4)
+  resolution_calc: !r seq(from = 0.2, to = 1.2, by = 0.2)
   resolution_use: 0.8
   dark: FALSE
   umap: FALSE
