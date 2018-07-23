@@ -444,6 +444,7 @@ Pick the resolution to use, if multiple are stashed.
 
 ```{r resolution_use}
 if (!is.null(params$resolution_use)) {
+    print(params$resolution_use)
     seurat <- SetAllIdent(
         object = seurat,
         id = paste("res", params$resolution_use, sep = ".")
@@ -474,7 +475,7 @@ plotFeatureUMAP(
 )
 ```
 
-## Principal compoments
+## Principal components
 
 Let's plot the feature specificity of the top principal components.
 
