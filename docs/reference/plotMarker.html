@@ -67,7 +67,7 @@ plotViolin(): Violin plot.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -81,9 +81,6 @@ plotViolin(): Violin plot.
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -107,7 +104,7 @@ plotViolin(): Violin plot.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Cell-Type-Specific Gene Markers</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-plotMarker.R'><code>R/methods-plotMarker.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/plotMarker-methods.R'><code>R/plotMarker-methods.R</code></a></small>
     <div class="hidden name"><code>plotMarker.Rd</code></div>
     </div>
 
@@ -318,14 +315,14 @@ for the number of genes to plot here in a future update.</p>
 <span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>markers</span></div><div class='output co'>#&gt; # A tibble: 6 x 13
 #&gt; # Groups:   cluster [6]
-#&gt;   cluster avgLogFC  pct1  pct2 rowname    pvalue     padj geneID       geneName
-#&gt;   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;   
-#&gt; 1 0           2.33 0.917 0.215 S100A12  1.03e-63 5.14e-61 ENSG0000016… S100A12 
-#&gt; 2 1           1.96 0.952 0.353 TRAC     1.65e-56 8.23e-54 ENSG0000027… TRAC    
-#&gt; 3 2           1.72 1     0.691 HLA-DQA1 2.02e-47 1.01e-44 ENSG0000019… HLA-DQA1
-#&gt; 4 3           1.66 1     0.728 LST1     1.05e-43 5.24e-41 ENSG0000020… LST1    
-#&gt; 5 4           2.46 1     0.196 CD79A    1.72e-44 8.62e-42 ENSG0000010… CD79A   
-#&gt; 6 5           1.57 1     0.843 SPCS1    1.57e-15 7.83e-13 ENSG0000011… SPCS1   
+#&gt;   cluster avgLogFC  pct1  pct2 rowname   pvalue     padj geneID geneName
+#&gt;   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
+#&gt; 1 0           2.33 0.917 0.215 S100A12 1.03e-63 5.14e-61 ENSG0… S100A12 
+#&gt; 2 1           1.96 0.952 0.353 TRAC    1.65e-56 8.23e-54 ENSG0… TRAC    
+#&gt; 3 2           1.72 1     0.691 HLA-DQ… 2.02e-47 1.01e-44 ENSG0… HLA-DQA1
+#&gt; 4 3           1.66 1     0.728 LST1    1.05e-43 5.24e-41 ENSG0… LST1    
+#&gt; 5 4           2.46 1     0.196 CD79A   1.72e-44 8.62e-42 ENSG0… CD79A   
+#&gt; 6 5           1.57 1     0.843 SPCS1   1.57e-15 7.83e-13 ENSG0… SPCS1   
 #&gt; # ... with 4 more variables: geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
 #&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>tail</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
 #&gt; 
@@ -339,9 +336,9 @@ for the number of genes to plot here in a future update.</p>
 <span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='no'>known_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>markers</span></div><div class='output co'>#&gt; # A tibble: 1 x 14
 #&gt; # Groups:   cellType [1]
-#&gt;   cellType cluster geneID        geneName avgLogFC  pct1  pct2 rowname   pvalue
-#&gt;   &lt;fct&gt;    &lt;fct&gt;   &lt;chr&gt;         &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
-#&gt; 1 B Cell   4       ENSG00000211… IGHM         2.16 0.933 0.191 IGHM    1.87e-37
+#&gt;   cellType cluster geneID geneName avgLogFC  pct1  pct2 rowname   pvalue
+#&gt;   &lt;fct&gt;    &lt;fct&gt;   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+#&gt; 1 B Cell   4       ENSG0… IGHM         2.16 0.933 0.191 IGHM    1.87e-37
 #&gt; # ... with 5 more variables: padj &lt;dbl&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
 #&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
 #&gt; 

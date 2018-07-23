@@ -4,29 +4,39 @@ author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
-    bcb_file: "data/YYYY-MM-DD/bcb.rda"
-    min_umis: 1000
-    max_umis: !r Inf
-    min_genes: 500
-    max_genes: !r Inf
-    min_novelty: 0.85
-    max_mito_ratio: 0.1
-    min_cells_per_gene: 10
-    data_dir: !r file.path("data", Sys.Date())
+  bcb_file: "data/YYYY-MM-DD/bcb.rda"
+  n_cells: !r Inf
+  min_umis: 1000
+  max_umis: !r Inf
+  min_genes: 500
+  max_genes: !r Inf
+  min_novelty: 0.85
+  max_mito_ratio: 0.1
+  min_cells_per_gene: 10
+  data_dir: !r file.path("data", Sys.Date())
+  results_dir: !r file.path("results", Sys.Date(), "quality_control")
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-06-05
+# Last modified 2018-06-28
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
-# Load SingleCellExperiment object
+# Directory paths ==============================================================
+invisible(mapply(
+    FUN = dir.create,
+    path = c(params$data_dir, params$results_dir),
+    MoreArgs = list(showWarnings = FALSE, recursive = TRUE)
+))
+
+# Load object ==================================================================
 bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
 stopifnot(is(bcb, "SingleCellExperiment"))
 invisible(validObject(bcb))
+bcb_original <- bcb
 
-# Temporarily set to `sampleName`
+# Temporarily set interesting groups to `sampleName`
 interesting_groups <- interestingGroups(bcb)
 interestingGroups(bcb) <- "sampleName"
 ```
@@ -38,7 +48,12 @@ interestingGroups(bcb) <- "sampleName"
 
 ```{r sample_data}
 # getMethod("sampleData", "SingleCellExperiment")
-sampleData(bcb, return = "data.frame")
+sample_data <- sampleData(bcb) %>% as.data.frame()
+write.csv(
+    x = sample_data,
+    file = file.path(params$results_dir, "sample_data.csv")
+)
+sample_data
 ```
 
 [bcbio][] run data was imported from **`r metadata(bcb)$uploadDir`**.
@@ -48,16 +63,6 @@ sampleData(bcb, return = "data.frame")
 # Reads per cell {.tabset}
 
 These are counts of how many reads are assigned to a given cellular barcode. It is normal for single cell RNA-seq data to contain a large number of low complexity barcodes. The bcbio pipeline filters out most of these barcodes, and here we have applied a threshold cutoff of a minimum of `r metadata(bcb)$cellularBarcodeCutoff` reads per cell. The unfiltered read count distributions are shown here.
-
-
-## ECDF
-
-An empirical distribution function (ECDF) plot will show the frequency distribution of the reads per cell. You can see that the vast majority of low complexity barcodes plateau at a read depth below 1000 reads per cell.
-
-```{r plot_reads_per_cell_ecdf}
-# getMethod("plotReadsPerCell", "bcbioSingleCell")
-plotReadsPerCell(bcb, geom = "ecdf")
-```
 
 
 ## Histogram
@@ -72,30 +77,55 @@ plotReadsPerCell(bcb, geom = "histogram")
 ```
 
 
+## ECDF
+
+An empirical distribution function (ECDF) plot will show the frequency distribution of the reads per cell. You can see that the vast majority of low complexity barcodes plateau at a read depth below 1000 reads per cell.
+
+```{r plot_reads_per_cell_ecdf}
+# getMethod("plotReadsPerCell", "bcbioSingleCell")
+plotReadsPerCell(bcb, geom = "ecdf")
+```
+
+
 
 # UMI counts per cell {.tabset}
 
-Now let's assess the distribution of unique molecular identifier (UMI)-deconvoluted counts per cell. In general, the distributions should be relatively uniform per sample.
+Now let's assess the distribution of unique molecular identifier (UMI)-deconvoluted counts per cell. In general, the distributions should be relatively uniform per sample. Here we are also including violin and ridgeline plots, with the average number of genes per cell labeled.
 
-```{r plot_umis_per_cell_histogram}
-# getMethod("plotReadsPerCell", "bcbioSingleCell")
-plotUMIsPerCell(bcb, geom = "histogram")
-```
+```{r plot_umis_per_cell_prefilter}
+# getMethod("plotUMIsPerCell", "bcbioSingleCell")
 
-Now let's rank cellular barcodes based on their UMI count per cell. Note that the scale here is log10. Refer to the `DropletUtils::barcodeRanks()` documentation or the [DropletUtils vignette](https://www.bioconductor.org/packages/3.7/bioc/vignettes/DropletUtils/inst/doc/DropletUtils.html) for more information (see "Computing barcode ranks" section).
+markdownHeader("Violin", level = 2)
+plotUMIsPerCell(
+    object = bcb,
+    geom = "violin",
+    min = params$min_umis,
+    max = params$max_umis
+)
 
-The knee and inflection points on the curve here help distinguish the UMI threshold between empty droplets with little RNA and cell-containing droplets with much more RNA. The knee point is more sensitive to noise, and we generally recommend starting with the inflection point for filtering because it is more conservative. 
+markdownHeader("Ridgeline", level = 2)
+plotUMIsPerCell(
+    bcb,
+    geom = "ridgeline",
+    min = params$min_umis,
+    max = params$max_umis
+)
 
-```{r plot_barcode_ranks}
-# getMethod("plotBarcodeRanks", "SingleCellExperiment")
-plotBarcodeRanks(bcb)
-```
+markdownHeader("Histogram", level = 2)
+plotUMIsPerCell(
+    object = bcb,
+    geom = "histogram",
+    min = params$min_umis,
+    max = params$max_umis
+)
 
-Let's view the UMI knee point cutoffs per sample on a single ECDF plot.
-
-```{r plot_umis_per_cell_ecdf}
-# getMethod("plotUMIsPerCell", "SingleCellExperiment")
-plotUMIsPerCell(bcb, geom = "ecdf", point = "knee")
+markdownHeader("ECDF", level = 2)
+plotUMIsPerCell(
+    object = bcb,
+    geom = "ecdf",
+    min = params$min_umis,
+    max = params$max_umis
+)
 ```
 
 
@@ -106,15 +136,49 @@ Let's apply this step first and then proceed to evaluating gene detection, mitoc
 
 ```{r filter_cells_by_umi}
 # getMethod("filterCells", "SingleCellExperiment")
-bcb <- filterCells(bcb, minUMIs = params$min_umis)
+bcb <- filterCells(
+    object = bcb,
+    minUMIs = params$min_umis,
+    maxUMIs = params$max_umis
+)
 ```
 
 Let's take a look at the UMI per cell distributions after this filtering step. Note that we haven't applied very strict filtering here — we're going to cut off the "low quality" cells based on the gene detection rate, novelty score, and mitochondrial abundance.
 
 ```{r plot_umis_per_cell_postfilter}
 # getMethod("plotUMIsPerCell", "SingleCellExperiment")
-plotUMIsPerCell(bcb, geom = "ecdf")
-plotUMIsPerCell(bcb, geom = "histogram")
+
+markdownHeader("Violin", level = 2)
+plotUMIsPerCell(
+    object = bcb,
+    geom = "violin",
+    min = params$min_umis,
+    max = params$max_umis
+)
+
+markdownHeader("Ridgeline", level = 2)
+plotUMIsPerCell(
+    object = bcb,
+    geom = "ridgeline",
+    min = params$min_umis,
+    max = params$max_umis
+)
+
+markdownHeader("Histogram", level = 2)
+plotUMIsPerCell(
+    object = bcb,
+    geom = "histogram",
+    min = params$min_umis,
+    max = params$max_umis
+)
+
+markdownHeader("ECDF", level = 2)
+plotUMIsPerCell(
+    object = bcb,
+    geom = "ecdf",
+    min = params$min_umis,
+    max = params$max_umis
+)
 ```
 
 
@@ -126,10 +190,19 @@ Here by "detected", we mean genes with a non-zero count measurement per cell. Se
 ```{r plot_genes_per_cell}
 # getMethod("plotGenesPerCell", "SingleCellExperiment")
 
-markdownHeader("ECDF", level = 2)
+markdownHeader("Violin", level = 2)
 plotGenesPerCell(
     object = bcb,
-    geom = "ecdf",
+    geom = "violin",
+    min = min(params$min_genes),
+    max = max(params$max_genes)
+)
+
+
+markdownHeader("Ridgeline", level = 2)
+plotGenesPerCell(
+    object = bcb,
+    geom = "ridgeline",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
@@ -142,10 +215,10 @@ plotGenesPerCell(
     max = max(params$max_genes)
 )
 
-markdownHeader("Violin", level = 2)
+markdownHeader("ECDF", level = 2)
 plotGenesPerCell(
     object = bcb,
-    geom = "violin",
+    geom = "ecdf",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
@@ -171,20 +244,6 @@ Another way to QC the data is to look for less novelty, that is cells that have 
 ```{r plot_novelty}
 # getMethod("plotNovelty", "SingleCellExperiment")
 
-markdownHeader("ECDF", level = 2)
-plotNovelty(
-    object = bcb,
-    geom = "ecdf",
-    min = min(params$min_novelty)
-)
-
-markdownHeader("Histogram", level = 2)
-plotNovelty(
-    object = bcb,
-    geom = "histogram",
-    min = min(params$min_novelty)
-)
-
 markdownHeader("Violin", level = 2)
 plotNovelty(
     object = bcb,
@@ -196,6 +255,20 @@ markdownHeader("Ridgeline", level = 2)
 plotNovelty(
     object = bcb,
     geom = "ridgeline",
+    min = min(params$min_novelty)
+)
+
+markdownHeader("Histogram", level = 2)
+plotNovelty(
+    object = bcb,
+    geom = "histogram",
+    min = min(params$min_novelty)
+)
+
+markdownHeader("ECDF", level = 2)
+plotNovelty(
+    object = bcb,
+    geom = "ecdf",
     min = min(params$min_novelty)
 )
 ```
@@ -209,20 +282,6 @@ We evaluate overall mitochondrial gene expression as a biomarker of cellular str
 ```{r plot_mito_ratio}
 # getMethod("plotMitoRatio", "SingleCellExperiment")
 
-markdownHeader("ECDF", level = 2)
-plotMitoRatio(
-    object = bcb,
-    geom = "ecdf",
-    max = max(params$max_mito_ratio)
-)
-
-markdownHeader("Histogram", level = 2)
-plotMitoRatio(
-    object = bcb,
-    geom = "histogram",
-    max = max(params$max_mito_ratio)
-)
-
 markdownHeader("Violin", level = 2)
 plotMitoRatio(
     object = bcb,
@@ -236,6 +295,20 @@ plotMitoRatio(
     geom = "ridgeline",
     max = max(params$max_mito_ratio)
 )
+
+markdownHeader("Histogram", level = 2)
+plotMitoRatio(
+    object = bcb,
+    geom = "histogram",
+    max = max(params$max_mito_ratio)
+)
+
+markdownHeader("ECDF", level = 2)
+plotMitoRatio(
+    object = bcb,
+    geom = "ecdf",
+    max = max(params$max_mito_ratio)
+)
 ```
 
 
@@ -246,6 +319,9 @@ plotMitoRatio(
 # getMethod("filterCells", "SingleCellExperiment")
 bcb <- filterCells(
     object = bcb,
+    nCells = params$n_cells,
+    minUMIs = params$min_umis,
+    maxUMIs = params$max_umis,
     minGenes = params$min_genes,
     maxGenes = params$max_genes,
     maxMitoRatio = params$max_mito_ratio,
@@ -260,6 +336,7 @@ bcb <- filterCells(
 # getMethod("plotQC", "SingleCellExperiment")
 plotQC(
     object = bcb,
+    geom = "violin",
     return = "markdown",
     headerLevel = 2
 )
@@ -267,12 +344,60 @@ plotQC(
 
 
 
+# Save filtered data
+
+## S4 object
+
 ```{r save}
 interestingGroups(bcb) <- interesting_groups
 assignAndSaveData(
     name = paste(bcb_name, "filtered", sep = "_"),
     object = bcb,
     dir = params$data_dir
+)
+```
+
+
+## Counts matrix
+
+```{r counts}
+counts <- counts(bcb)
+saveData(counts, dir = params$data_dir)
+
+# MatrixMarket Exchange format (.mtx)
+writeCounts(counts, dir = params$results_dir)
+
+# Comma separated values (.csv)
+write.csv(
+    x = as.matrix(counts),
+    file = file.path(params$results_dir, "counts.csv")
+)
+R.utils::gzip(
+    filename = file.path(params$results_dir, "counts.csv"),
+    overwrite = TRUE,
+    remove = TRUE
+)
+```
+
+
+## Quality metrics
+
+```{r metrics}
+metrics <- metrics(bcb)
+write.csv(
+    x = metrics,
+    file = file.path(params$results_dir, "metrics.csv")
+)
+```
+
+
+## Gene annotations
+
+```{r gene_annotations}
+gene_annotations <- rowRanges(bcb) %>% as.data.frame()
+write.csv(
+    x = gene_annotations,
+    file = file.path(params$results_dir, "gene_annotations.csv")
 )
 ```
 

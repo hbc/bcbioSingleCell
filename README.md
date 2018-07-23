@@ -37,7 +37,7 @@ bcb <- bcbioSingleCell(
 )
 # Back up all data inside bcbioSingleCell object
 flat <- flatFiles(bcb)
-saveData(bcb, flat, dir="data")
+saveData(bcb, flat, dir = "data")
 ```
 
 This will return a `bcbioSingleCell` object, which is an extension of the [Bioconductor][] [SingleCellExperiment][SCE] container class.
@@ -46,9 +46,9 @@ Parameters:
 
 - `uploadDir`: Path to the [bcbio][] final upload directory.
 - `interestingGroups`: Character vector of the column names of interest in the sample metadata, which is stored in the `sampleData()` accessor slot of the `bcbioSingleCell` object. These values should be formatted in camelCase, and can be reassigned in the object after creation (e.g. `interestingGroups(bcb) <- c("batch", "age")`). They are used for data visualization in the quality control utility functions.
-- `organism`: Organism name. Use the full latin name (e.g. "Homo sapiens").
-- `genomeBuild`: Optional, the Ensembl release version to use.
-- `gffFile`: Optional. If your transcriptome does not entirely match up to an Ensembl release, you can pass the GTF file of the transcriptome you used to load the annotations instead.
+- `organism`: Organism name. Use the full latin name (e.g. "Homo sapiens"). If set `NULL`, no gene annotations will be downloaded and stashed into the `rowRanges` slot of the object.
+- `genomeBuild`: *Optional.* The Ensembl release version to use.
+- `gffFile`: *Optional.* If your transcriptome does not entirely match up to an Ensembl release, you can pass the GFF/GTF file of the transcriptome you used to load the annotations instead.
 
 Consult `help("bcbioSingleCell", "bcbioSingleCell")` for additional documentation.
 
@@ -63,15 +63,15 @@ The [inDrops][] library version is automatically detected by [bcbio][], but ensu
 
 Consult the [bcbio][] documentation for more information on how to configure an [inDrops][] run prior to loading into [R][] with the `bcbioSingleCell()` function.
 
-| description | index | sequence | sampleName |
-|-------------|-------|----------|------------|
-| indrops1    | 17    | GGAGGTAA | sample1    |
-| indrops1    | 18    | CATAACTG | sample2    |
-| indrops2    | 12    | GCGTAAGA | sample3    |
-| indrops2    | 13    | CTATTAAG | sample4    |
-| indrops2    | 14    | AAGGCTAT | sample5    |
-| indrops2    | 15    | GAGCCTTA | sample6    |
-| indrops2    | 16    | TTATGCGA | sample7    |
+| description | index | sequence | sampleName | aggregate |
+|-------------|-------|----------|------------|-----------|
+| indrops1    | 17    | GGAGGTAA | sample1    | indrops   |
+| indrops1    | 18    | CATAACTG | sample2    | indrops   |
+| indrops2    | 12    | GCGTAAGA | sample3    | indrops   |
+| indrops2    | 13    | CTATTAAG | sample4    | indrops   |
+| indrops2    | 14    | AAGGCTAT | sample5    | indrops   |
+| indrops2    | 15    | GAGCCTTA | sample6    | indrops   |
+| indrops2    | 16    | TTATGCGA | sample7    | indrops   |
 
 ### FASTQ files demultiplexed per sample
 
@@ -84,6 +84,11 @@ This is our current method for handling [10X Genomics Cell Ranger][cellranger] o
 | sample3     | wildtype |
 | sample4     | knockout |
 
+### Forbidden metadata fields
+The following fields are forbidden as user-supplied metadata, as they are used
+internally:
+
+`nCells`
 
 ## Troubleshooting
 

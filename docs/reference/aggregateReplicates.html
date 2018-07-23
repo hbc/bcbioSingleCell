@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -77,9 +77,6 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -103,7 +100,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Aggregate Replicates</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-aggregateReplicates.R'><code>R/methods-aggregateReplicates.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/aggregateReplicates-methods.R'><code>R/aggregateReplicates-methods.R</code></a></small>
     <div class="hidden name"><code>aggregateReplicates.Rd</code></div>
     </div>
 
@@ -145,7 +142,7 @@
 <span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; multiplexed_AAAAAAAA 
 #&gt;              "rep_1" </div><div class='input'>
 <span class='co'># Define groupings factor as`aggregate` column in `colData()`</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>object</span>$<span class='no'>aggregate</span>)</div><div class='output co'>#&gt;  Factor w/ 1 level "sample": 1 1 1 1 1 1 1 1 1 1 ...</div><div class='input'>
+<span class='fu'>glimpse</span>(<span class='no'>object</span>$<span class='no'>aggregate</span>)</div><div class='output co'>#&gt;  Factor w/ 1 level "sample": 1 1 1 1 1 1 1 1 1 1 ...</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregateReplicates</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; <span class='message'>New sample names: sample</span></div><div class='output co'>#&gt; <span class='message'>Remapping cellular barcodes to aggregate sample IDs</span></div><div class='output co'>#&gt; <span class='message'>Aggregating counts</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>449 coding genes</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
 #&gt; metadata(7): aggregateReplicates cell2sample ... utilsSessionInfo
@@ -153,7 +150,7 @@
 #&gt; assays(1): counts
 #&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
 #&gt;   ENSG00000283391
-#&gt; rowData names(7): geneID geneName ... entrezID broadClass
+#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
 #&gt; colnames(500): sample_AAACACTA_ATCCCACG sample_AAACACTA_CTTAGGTA ...
 #&gt;   sample_TGTTATCA_ACGCAGAG sample_TGTTATCA_CAAGTCAT
 #&gt; colData names(8): sampleID nUMI ... mitoRatio sampleName

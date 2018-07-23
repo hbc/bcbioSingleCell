@@ -1,3 +1,3 @@
 cellularBarcodeCutoff: --cb_cutoff 1000
 level: --genemap Homo_sapiens.GRCh38.90.chr_patch_hapl_scaff-tx2gene.tsv
-umiType: /umis/harvard-indrop-v3-transform.json
+umiType: umis fastqtransform --separate_cb /XXX/umis/surecell-transform.json

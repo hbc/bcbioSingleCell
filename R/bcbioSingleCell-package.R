@@ -29,8 +29,8 @@
 #'   assert_is_factor assert_is_function assert_is_integer assert_is_list
 #'   assert_is_matrix assert_is_numeric assert_is_tbl_df is_a_string
 #'   is_character
-#' @importFrom basejump assertHasRownames assertIsAHeaderLevel
-#'   assertIsAStringOrNULL assertIsAnImplicitInteger
+#' @importFrom basejump assertFormalInterestingGroups assertHasRownames
+#'   assertIsAHeaderLevel assertIsAStringOrNULL assertIsAnImplicitInteger
 #'   assertIsAnImplicitIntegerOrNULL assertIsANumberOrNULL
 #'   assertIsColorScaleContinuousOrNULL assertIsColorScaleDiscreteOrNULL
 #'   assertIsFillScaleDiscreteOrNULL assertIsGene2symbol assertIsTx2gene
@@ -38,31 +38,33 @@
 #'   detectOrganism emptyRanges hasRownames initializeDirectory
 #'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames makeTx2geneFromGFF
 #'   markdownHeader markdownPlotlist printString readFileByExtension readYAML
-#'   stripTranscriptVersions theme_midnight theme_paperwhite tx2geneFromGFF
-#' @importFrom bcbioBase assertFormalInterestingGroups bcbio_geom_abline
-#'   bcbio_geom_label bcbio_geom_label_average bcbio_geom_label_repel flatFiles
-#'   minimalSampleData prepareSummarizedExperiment readDataVersions readLog
-#'   readProgramVersions readSampleData readTx2gene readYAMLSampleData
-#'   sanitizeSampleData sampleDirs uniteInterestingGroups
+#'   sanitizeSampleData stripTranscriptVersions theme_midnight theme_paperwhite
+#'   tx2geneFromGFF uniteInterestingGroups
+#' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
+#'   bcbio_geom_label_average bcbio_geom_label_repel flatFiles minimalSampleData
+#'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
+#'   readSampleData readTx2gene readYAMLSampleData sampleDirs
 #' @importFrom Biobase rowMedians sampleNames
+#' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows desc everything filter group_by
-#'   group_vars left_join matches mutate mutate_all mutate_at mutate_if n rename
-#'   select select_if slice summarize summarize_all ungroup
+#'   group_vars left_join matches mutate mutate_all mutate_at mutate_if n pull
+#'   rename select select_if slice summarize summarize_all ungroup
+#' @importFrom DESeq2 DESeqDataSet DESeq results
+#' @importFrom edgeR calcNormFactors DGEList estimateDisp glmFit
 #' @importFrom GenomicFeatures genes makeTxDbFromGFF transcripts
-#' @importFrom ggplot2 aes_ aes_string coord_flip element_blank element_line
-#'   element_rect element_text expand_limits facet_wrap geom_bar geom_boxplot
-#'   geom_histogram geom_hline geom_line geom_point geom_smooth
-#'   geom_step geom_text geom_violin geom_vline ggtitle guide_colourbar
-#'   guide_legend guides labs qplot scale_radius scale_x_continuous
-#'   scale_y_continuous stat_ecdf theme xlab xlim ylab
+#' @importFrom ggplot2 aes coord_flip element_blank element_line element_rect
+#'   element_text expand_limits facet_wrap geom_bar geom_boxplot geom_histogram
+#'   geom_hline geom_line geom_point geom_smooth geom_step geom_text geom_violin
+#'   geom_vline ggplot ggtitle guide_colourbar guide_legend guides labs qplot
+#'   scale_radius scale_x_continuous scale_y_continuous stat_ecdf theme xlab
+#'   xlim ylab
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom graphics hist
 #' @importFrom grid arrow unit
 #' @importFrom jsonlite read_json
-#' @importFrom knitr kable
 #' @importFrom magrittr %>% set_colnames set_names set_rownames
-#' @importFrom Matrix colSums readMM rowMeans rowSums
+#' @importFrom Matrix colSums readMM rowMeans rowSums sparseMatrix
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom methods .hasSlot as as<- getMethod is new show slot slot<-
 #'   validObject
@@ -70,6 +72,7 @@
 #' @importFrom pbapply pblapply
 #' @importFrom purrr map
 #' @importFrom readr read_lines read_tsv
+#' @importFrom rhdf5 h5dump h5read
 #' @importFrom rlang !! !!! sym syms UQ
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
 #'   complete.cases mcols metadata metadata<- na.omit
@@ -86,4 +89,5 @@
 #'   rownames_to_column tibble
 #' @importFrom tidyr gather
 #' @importFrom utils globalVariables packageVersion
+#' @importFrom zinbwave glmWeightedF zinbwave
 NULL

@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -77,9 +77,6 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -103,7 +100,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sanitize Markers Output</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-sanitizeMarkers.R'><code>R/methods-sanitizeMarkers.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/sanitizeMarkers-methods.R'><code>R/sanitizeMarkers-methods.R</code></a></small>
     <div class="hidden name"><code>sanitizeMarkers.Rd</code></div>
     </div>
 
@@ -160,7 +157,7 @@ the rownames of the returned marker <code>data.frame</code>.</p>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
 <span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
 
-<span class='co'># `FindAllMarkers` return</span>
+<span class='co'># `FindAllMarkers()` return</span>
 <span class='fu'>invisible</span>(<span class='fu'>capture.output</span>(
     <span class='no'>all_markers</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/FindAllMarkers'>FindAllMarkers</a></span>(<span class='no'>object</span>)
 ))
@@ -168,7 +165,7 @@ the rownames of the returned marker <code>data.frame</code>.</p>
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
     <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>all_markers</span>
 )
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>all_sanitized</span>)</div><div class='output co'>#&gt; Observations: 1,215
+<span class='fu'>glimpse</span>(<span class='no'>all_sanitized</span>)</div><div class='output co'>#&gt; Observations: 1,215
 #&gt; Variables: 13
 #&gt; $ cluster        &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
 #&gt; $ avgLogFC       &lt;dbl&gt; 2.3278016, 2.8655976, 2.6441318, 1.8779831, 1.622767...
@@ -195,7 +192,7 @@ the rownames of the returned marker <code>data.frame</code>.</p>
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
     <span class='kw'>markers</span> <span class='kw'>=</span> <span class='no'>ident_3_markers</span>
 )
-<span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/glimpse'>glimpse</a></span>(<span class='no'>ident_3_sanitized</span>)</div><div class='output co'>#&gt; Observations: 273
+<span class='fu'>glimpse</span>(<span class='no'>ident_3_sanitized</span>)</div><div class='output co'>#&gt; Observations: 273
 #&gt; Variables: 11
 #&gt; $ avgLogFC       &lt;dbl&gt; 1.6645500, 1.5023792, 1.3624811, 1.0638911, 1.488073...
 #&gt; $ pct1           &lt;dbl&gt; 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.0...

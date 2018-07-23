@@ -4,13 +4,24 @@
 \alias{readCellRanger}
 \title{Read 10X Genomics Cell Ranger Data}
 \usage{
-readCellRanger(uploadDir, sampleMetadataFile = NULL, refdataDir = NULL,
+readCellRanger(uploadDir, format = c("mtx", "hdf5"), filtered = TRUE,
+  organism = NULL, sampleMetadataFile = NULL, refdataDir = NULL,
   interestingGroups = "sampleName", transgeneNames = NULL,
   spikeNames = NULL, ...)
 }
 \arguments{
 \item{uploadDir}{Path to Cell Ranger output directory. This directory path
 must contain \code{filtered_gene_bc_matrices*} as a child directory.}
+
+\item{format}{Output format, either MatrixMarket ("\code{mtx}") or HDF5
+("\code{hdf5}").}
+
+\item{filtered}{Use filtered (recommended) or raw counts. Note that raw
+counts still contain only whitelisted cellular barcodes.}
+
+\item{organism}{Organism name. Use the full latin name (e.g.
+"Homo sapiens"), since this will be input downstream to
+AnnotationHub and ensembldb, unless \code{gffFile} is set.}
 
 \item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
 with demultiplixed index barcodes (e.g. SureCell), but otherwise required
@@ -40,10 +51,8 @@ counts from \code{barcodes.tsv}, \code{genes.tsv}, and \code{matrix.mtx} files.
 \section{Directory structure}{
 
 Cell Ranger can vary in its output directory structure, but we're requiring a
-single, consistent data structure for datasets containing multiple samples.
-Note that Cell Ranger data may not always contain per sample subdirectories,
-or the "\code{outs}" subdirectory. We may make this more flexible in the future,
-but for now we're making this strict to ensure reproducibility.
+single, consistent directory structure for all datasets, even those that only
+contain a single sample:
 
 \preformatted{
 file.path(
@@ -68,18 +77,19 @@ minimal sample data will be used, based on the directory names.
 \section{Reference data}{
 
 We strongly recommend supplying the corresponding reference data required for
-Cell Ranger with the \code{refdataDir} argument. When set, the function will
-detect the \code{organism}, \code{ensemblRelease}, and \code{genomeBuild} automatically,
-based on the 10X \code{refdataDir} YAML metadata. Additionally, it will convert
-the gene annotations defined in the GTF file into a \code{GRanges} object, which
-get slotted in \code{\link[=rowRanges]{rowRanges()}}. Otherwise, the function will attempt to use the
+Cell Ranger with the \code{refdataDir} argument. It will convert the gene
+annotations defined in the GTF file into a \code{GRanges} object, which get
+slotted in \code{\link[=rowRanges]{rowRanges()}}. Otherwise, the function will attempt to use the
 most current annotations available from Ensembl, and some gene IDs may not
 match, due to deprecation in the current Ensembl release.
 }
 
 \examples{
 uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
-x <- readCellRanger(uploadDir)
+x <- readCellRanger(
+    uploadDir = uploadDir,
+    organism = "Homo sapiens"
+)
 show(x)
 }
 \seealso{

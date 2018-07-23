@@ -1,16 +1,16 @@
 authors:
-    Michael Steinbaugh:
-        href: https://steinbaugh.com
-    Rory Kirchner:
-        href: https://github.com/roryk
-    Mary Piper:
-        href: https://github.com/marypiper
-    Victor Barrera:
-        href: https://github.com/vbarrera
-    Shannan Ho Sui:
-        href: https://github.com/sjhosui
-    Harvard Chan Bioinformatics Core:
-        href: http://bioinformatics.sph.harvard.edu
+  Michael Steinbaugh:
+    href: https://steinbaugh.com
+  Rory Kirchner:
+    href: https://github.com/roryk
+  Mary Piper:
+    href: https://github.com/marypiper
+  Victor Barrera:
+    href: https://github.com/vbarrera
+  Shannan Ho Sui:
+    href: https://github.com/sjhosui
+  Harvard Chan Bioinformatics Core:
+    href: http://bioinformatics.sph.harvard.edu
 
 reference:
   - title: Package Information

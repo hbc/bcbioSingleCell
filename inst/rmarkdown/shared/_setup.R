@@ -11,18 +11,16 @@ opts_chunk[["set"]](
     audodep = TRUE,
     cache = TRUE,
     cache.lazy = FALSE,
-    error = TRUE,
+    dev = c("png", "pdf"),
     fig.height = 10L,
     fig.retina = 2L,
     fig.width = 10L,
-    message = TRUE,
-    tidy = FALSE,
-    warning = TRUE
+    tidy = FALSE
 )
 
 theme_set(
     theme_paperwhite(
         base_size = 14L,
-        legend_position = "bottom"
+        legend_position = "right"
     )
 )

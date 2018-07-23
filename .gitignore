@@ -3,4 +3,4 @@
 .RData
 .Rhistory
 .Rproj.user
-data-raw/pbmc4k
+data-raw/*/

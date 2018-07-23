@@ -68,7 +68,7 @@ sampleData())." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
       </span>
     </div>
 
@@ -82,9 +82,6 @@ sampleData())." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -108,7 +105,7 @@ sampleData())." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Filter Cells</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/methods-filterCells.R'><code>R/methods-filterCells.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/filterCells-methods.R'><code>R/filterCells-methods.R</code></a></small>
     <div class="hidden name"><code>filterCells.Rd</code></div>
     </div>
 
@@ -126,9 +123,9 @@ use the <code>sampleNames()</code> return values (i.e. the <code>sampleName</cod
     <pre class="usage"><span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>maxUMIs</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>10L</span>)</pre>
+<span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>nCells</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
+  <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxUMIs</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
+  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>10L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,6 +137,10 @@ use the <code>sampleNames()</code> return values (i.e. the <code>sampleName</cod
     <tr>
       <th>...</th>
       <td><p>Additional arguments.</p></td>
+    </tr>
+    <tr>
+      <th>nCells</th>
+      <td><p>Expected number of cells per sample.</p></td>
     </tr>
     <tr>
       <th>minUMIs</th>
@@ -200,48 +201,53 @@ this many cells.</p></td>
 #&gt; assays(1): counts
 #&gt; rownames(500): ENSG00000002586 ENSG00000005022 ... ENSG00000277734
 #&gt;   ENSG00000279483
-#&gt; rowData names(7): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): pbmc4k_1_AAACCTGCAGGCGATA pbmc4k_1_AAACCTGCATGAAGTA ...
-#&gt;   pbmc4k_1_TTTGGTTTCGCTAGCG pbmc4k_1_TTTGTCACAGGTCCAC
+#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
+#&gt; colnames(500): pbmc_1_AAACCTGCAGGCGATA pbmc_1_AAACCTGCATGAAGTA ...
+#&gt;   pbmc_1_TTTGGTTTCGCTAGCG pbmc_1_TTTGTCACAGGTCCAC
 #&gt; colData names(10): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; Parameters:
-#&gt;   - &gt;= 0 UMIs per cell
-#&gt;   - &lt;= Inf UMIs per cell
-#&gt;   - &gt;= 0 genes per cell
-#&gt;   - &lt;= Inf genes per cell
-#&gt;   - &gt;= 0 novelty score
-#&gt;   - &lt;= 1 mitochondrial abundance
-#&gt;   - &gt;= 10 cells per gene
-#&gt; ============================================================
-#&gt; Cells:
-#&gt;      500 cells | prefilter
-#&gt;      500 cells | minUMIs &gt;= 0
-#&gt;      500 cells | maxUMIs &lt;= Inf
-#&gt;      500 cells | minGenes &gt;= 0
-#&gt;      500 cells | maxGenes &lt;= Inf
-#&gt;      500 cells | minNovelty &lt;= 0
-#&gt;      500 cells | maxMitoRatio &lt;= 1
-#&gt; ============================================================
-#&gt; Genes:
-#&gt;      500 genes | prefilter
-#&gt;      500 genes | minCellsPerGene &lt;= 10
-#&gt; ============================================================
-#&gt; Summary:
-#&gt;   - 500 of 500 cells passed filtering (100%)
-#&gt;   - 500 of 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
+#&gt; <span class='message'>  - &gt;= 0 UMIs per cell</span>
+#&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
+#&gt; <span class='message'>  - &gt;= 0 genes per cell</span>
+#&gt; <span class='message'>  - &lt;= Inf genes per cell</span>
+#&gt; <span class='message'>  - &gt;= 0 novelty score</span>
+#&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
+#&gt; <span class='message'>  - == Inf cells per sample</span>
+#&gt; <span class='message'>  - &gt;= 10 cells per gene</span>
+#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>Cells:</span>
+#&gt; <span class='message'>     500 cells | prefilter</span>
+#&gt; <span class='message'>     500 cells | minUMIs &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxUMIs &lt;= Inf</span>
+#&gt; <span class='message'>     500 cells | minGenes &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxGenes &lt;= Inf</span>
+#&gt; <span class='message'>     500 cells | minNovelty &lt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxMitoRatio &lt;= 1</span>
+#&gt; <span class='message'>     500 cells | nCells == Inf</span>
+#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>Genes:</span>
+#&gt; <span class='message'>     500 genes | prefilter</span>
+#&gt; <span class='message'>     500 genes | minCellsPerGene &lt;= 10</span>
+#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>Summary:</span>
+#&gt; <span class='message'>  - 500 of 500 cells passed filtering (100%)</span>
+#&gt; <span class='message'>  - 500 of 500 genes passed filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
 #&gt; metadata(24): version pipeline ... filterParams filterSummary
 #&gt; assays(1): counts
 #&gt; rownames(500): ENSG00000002586 ENSG00000005022 ... ENSG00000277734
 #&gt;   ENSG00000279483
-#&gt; rowData names(7): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): pbmc4k_1_AAACCTGCAGGCGATA pbmc4k_1_AAACCTGCATGAAGTA ...
-#&gt;   pbmc4k_1_TTTGGTTTCGCTAGCG pbmc4k_1_TTTGTCACAGGTCCAC
+#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
+#&gt; colnames(500): pbmc_1_AAACCTGCAGGCGATA pbmc_1_AAACCTGCATGAAGTA ...
+#&gt;   pbmc_1_TTTGGTTTCGCTAGCG pbmc_1_TTTGTCACAGGTCCAC
 #&gt; colData names(10): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $minUMIs
+#&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
+#&gt; [1] Inf
+#&gt; 
+#&gt; $minUMIs
 #&gt; [1] 0
 #&gt; 
 #&gt; $maxUMIs
@@ -263,50 +269,55 @@ this many cells.</p></td>
 #&gt; [1] 10
 #&gt; </div><div class='input'>
 <span class='co'># Per sample cutoffs</span>
-<span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; pbmc4k_1 
-#&gt; "pbmc4k" </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
+<span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; pbmc_1 
+#&gt; "pbmc" </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
-    <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>pbmc4k</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+    <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>pbmc</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 )</div><div class='output co'>#&gt; <span class='message'>minUMIs: per sample mode</span>
-#&gt; <span class='message'>pbmc4k </span>
-#&gt; <span class='message'>   100 </span></div><div class='output co'>#&gt; Parameters:
-#&gt;   - &gt;= 100 UMIs per cell
-#&gt;   - &lt;= Inf UMIs per cell
-#&gt;   - &gt;= 0 genes per cell
-#&gt;   - &lt;= Inf genes per cell
-#&gt;   - &gt;= 0 novelty score
-#&gt;   - &lt;= 1 mitochondrial abundance
-#&gt;   - &gt;= 10 cells per gene
-#&gt; ============================================================
-#&gt; Cells:
-#&gt;      500 cells | prefilter
-#&gt;      500 cells | minUMIs &gt;= 100
-#&gt;      500 cells | maxUMIs &lt;= Inf
-#&gt;      500 cells | minGenes &gt;= 0
-#&gt;      500 cells | maxGenes &lt;= Inf
-#&gt;      500 cells | minNovelty &lt;= 0
-#&gt;      500 cells | maxMitoRatio &lt;= 1
-#&gt; ============================================================
-#&gt; Genes:
-#&gt;      500 genes | prefilter
-#&gt;      500 genes | minCellsPerGene &lt;= 10
-#&gt; ============================================================
-#&gt; Summary:
-#&gt;   - 500 of 500 cells passed filtering (100%)
-#&gt;   - 500 of 500 genes passed filtering (100%)</div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+#&gt; <span class='message'>pbmc </span>
+#&gt; <span class='message'> 100 </span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
+#&gt; <span class='message'>  - &gt;= 100 UMIs per cell</span>
+#&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
+#&gt; <span class='message'>  - &gt;= 0 genes per cell</span>
+#&gt; <span class='message'>  - &lt;= Inf genes per cell</span>
+#&gt; <span class='message'>  - &gt;= 0 novelty score</span>
+#&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
+#&gt; <span class='message'>  - == Inf cells per sample</span>
+#&gt; <span class='message'>  - &gt;= 10 cells per gene</span>
+#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>Cells:</span>
+#&gt; <span class='message'>     500 cells | prefilter</span>
+#&gt; <span class='message'>     500 cells | minUMIs &gt;= 100</span>
+#&gt; <span class='message'>     500 cells | maxUMIs &lt;= Inf</span>
+#&gt; <span class='message'>     500 cells | minGenes &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxGenes &lt;= Inf</span>
+#&gt; <span class='message'>     500 cells | minNovelty &lt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxMitoRatio &lt;= 1</span>
+#&gt; <span class='message'>     500 cells | nCells == Inf</span>
+#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>Genes:</span>
+#&gt; <span class='message'>     500 genes | prefilter</span>
+#&gt; <span class='message'>     500 genes | minCellsPerGene &lt;= 10</span>
+#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>Summary:</span>
+#&gt; <span class='message'>  - 500 of 500 cells passed filtering (100%)</span>
+#&gt; <span class='message'>  - 500 of 500 genes passed filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
 #&gt; metadata(24): version pipeline ... filterParams filterSummary
 #&gt; assays(1): counts
 #&gt; rownames(500): ENSG00000002586 ENSG00000005022 ... ENSG00000277734
 #&gt;   ENSG00000279483
-#&gt; rowData names(7): geneID geneName ... entrezID broadClass
-#&gt; colnames(500): pbmc4k_1_AAACCTGCAGGCGATA pbmc4k_1_AAACCTGCATGAAGTA ...
-#&gt;   pbmc4k_1_TTTGGTTTCGCTAGCG pbmc4k_1_TTTGTCACAGGTCCAC
+#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
+#&gt; colnames(500): pbmc_1_AAACCTGCAGGCGATA pbmc_1_AAACCTGCATGAAGTA ...
+#&gt;   pbmc_1_TTTGGTTTCGCTAGCG pbmc_1_TTTGTCACAGGTCCAC
 #&gt; colData names(10): sampleID nUMI ... description index
 #&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $minUMIs
-#&gt; pbmc4k 
-#&gt;    100 
+#&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
+#&gt; [1] Inf
+#&gt; 
+#&gt; $minUMIs
+#&gt; pbmc 
+#&gt;  100 
 #&gt; 
 #&gt; $maxUMIs
 #&gt; [1] Inf

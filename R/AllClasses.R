@@ -222,7 +222,7 @@ bcbioSingleCell <- function(
     }
 
     # Molecular barcode (UMI) type =============================================
-    umiPattern <- "/umis/([a-z0-9\\-]+)\\.json"
+    umiPattern <- "fastqtransform.*/(.*)\\.json"
     assert_any_are_matching_regex(bcbioCommandsLog, umiPattern)
     umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
         .[, 2L] %>%
@@ -290,14 +290,11 @@ bcbioSingleCell <- function(
 
     # Assays ===================================================================
     message(paste("Reading counts as", level))
-    countsList <- .sparseCountsList(
+    counts <- .readCounts(
         sampleDirs = sampleDirs,
         pipeline = pipeline,
-        umiType = umiType
+        format = "mtx"
     )
-    # Ensure samples with empty matrices (`NULL`) are filtered
-    countsList <- Filter(Negate(is.null), countsList)
-    counts <- do.call(cbind, countsList)
 
     # Require transcript to gene conversion (legacy) ===========================
     if (level == "transcripts") {
@@ -315,8 +312,8 @@ bcbioSingleCell <- function(
         if (is.character(isSpike)) {
             assert_are_disjoint_sets(rownames(tx2gene), isSpike)
             spike <- data.frame(
-                "txID" = isSpike,
-                "geneID" = isSpike,
+                transcriptID = isSpike,
+                geneID = isSpike,
                 row.names = isSpike,
                 stringsAsFactors = FALSE
             )
@@ -365,6 +362,10 @@ bcbioSingleCell <- function(
         assert_is_all_of(rowRanges, "GRanges")
         rowRangesMetadata <- ah[["metadata"]]
         assert_is_data.frame(rowRangesMetadata)
+        genomeBuild <- rowRangesMetadata %>%
+            filter(!!sym("name") == "genome_build") %>%
+            pull("value")
+        assert_is_a_string(genomeBuild)
     } else {
         rowRanges <- emptyRanges(rownames(counts))
     }
@@ -407,35 +408,35 @@ bcbioSingleCell <- function(
 
     # Metadata =================================================================
     metadata <- list(
-        "version" = packageVersion,
-        "pipeline" = pipeline,
-        "level" = level,
-        "uploadDir" = uploadDir,
-        "sampleDirs" = sampleDirs,
-        "sampleMetadataFile" = as.character(sampleMetadataFile),
-        "interestingGroups" = interestingGroups,
-        "organism" = as.character(organism),
-        "genomeBuild" = as.character(genomeBuild),
-        "ensemblRelease" = as.integer(ensemblRelease),
-        "rowRangesMetadata" = rowRangesMetadata,
-        "sampleData" = sampleData,
-        "cell2sample" = as.factor(cell2sample),
-        "umiType" = umiType,
-        "allSamples" = allSamples,
+        version = packageVersion,
+        pipeline = pipeline,
+        level = level,
+        uploadDir = uploadDir,
+        sampleDirs = sampleDirs,
+        sampleMetadataFile = as.character(sampleMetadataFile),
+        interestingGroups = interestingGroups,
+        organism = as.character(organism),
+        genomeBuild = as.character(genomeBuild),
+        ensemblRelease = as.integer(ensemblRelease),
+        rowRangesMetadata = rowRangesMetadata,
+        sampleData = as(sampleData, "DataFrame"),
+        cell2sample = as.factor(cell2sample),
+        umiType = umiType,
+        allSamples = allSamples,
         # bcbio pipeline-specific ----------------------------------------------
-        "projectDir" = projectDir,
-        "template" = template,
-        "runDate" = runDate,
-        "yaml" = yaml,
-        "gffFile" = as.character(gffFile),
-        "tx2gene" = tx2gene,
-        "dataVersions" = dataVersions,
-        "programVersions" = programVersions,
-        "bcbioLog" = bcbioLog,
-        "bcbioCommandsLog" = bcbioCommandsLog,
-        "cellularBarcodes" = cbList,
-        "cellularBarcodeCutoff" = cellularBarcodeCutoff,
-        "call" = match.call()
+        projectDir = projectDir,
+        template = template,
+        runDate = runDate,
+        yaml = yaml,
+        gffFile = as.character(gffFile),
+        tx2gene = tx2gene,
+        dataVersions = dataVersions,
+        programVersions = programVersions,
+        bcbioLog = bcbioLog,
+        bcbioCommandsLog = bcbioCommandsLog,
+        cellularBarcodes = cbList,
+        cellularBarcodeCutoff = cellularBarcodeCutoff,
+        call = match.call()
     )
     # Add user-defined custom metadata, if specified
     if (length(dots)) {
@@ -445,7 +446,7 @@ bcbioSingleCell <- function(
 
     # Return ===================================================================
     .new.bcbioSingleCell(
-        assays = list("counts" = counts),
+        assays = list(counts = counts),
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
@@ -495,24 +496,25 @@ setValidity(
 
         # Class checks
         requiredMetadata <- list(
-            "allSamples" = "logical",
-            "cell2sample" = "factor",
-            "date" = "Date",
-            "devtoolsSessionInfo" = "session_info",
-            "ensemblRelease" = "integer",
-            "genomeBuild" = "character",
-            "interestingGroups" = "character",
-            "level" = "character",
-            "organism" = "character",
-            "pipeline" = "character",
-            "sampleData" = "data.frame",
-            "sampleDirs" = "character",
-            "sampleMetadataFile" = "character",
-            "umiType" = "character",
-            "uploadDir" = "character",
-            "utilsSessionInfo" = "sessionInfo",
-            "version" = "package_version",
-            "wd" = "character"
+            allSamples = "logical",
+            cell2sample = "factor",
+            date = "Date",
+            devtoolsSessionInfo = "session_info",
+            ensemblRelease = "integer",
+            genomeBuild = "character",
+            interestingGroups = "character",
+            level = "character",
+            organism = "character",
+            pipeline = "character",
+            # Switched to DataFrame in v0.1.17
+            sampleData = c("DataFrame", "data.frame"),
+            sampleDirs = "character",
+            sampleMetadataFile = "character",
+            umiType = "character",
+            uploadDir = "character",
+            utilsSessionInfo = "sessionInfo",
+            version = "package_version",
+            wd = "character"
         )
         classChecks <- invisible(mapply(
             name <- names(requiredMetadata),
