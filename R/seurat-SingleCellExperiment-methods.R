@@ -42,6 +42,24 @@ setMethod(
 
 
 
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom SummarizedExperiment colData<-
+#' @export
+setMethod(
+    "colData<-",
+    signature(
+        x = "seurat",
+        value = "DataFrame"
+    ),
+    function(x, value) {
+        slot(x, "meta.data") <- as.data.frame(value)
+        validObject(x)
+        x
+    }
+)
+
+
+
 # Note that Seurat subset operations keep `raw.data` matrix unmodified by
 # default and only subset the `data` matrix
 #' @rdname seurat-SingleCellExperiment

@@ -8,6 +8,7 @@
 \alias{seurat-SingleCellExperiment}
 \alias{assay,seurat,ANY-method}
 \alias{colData,seurat-method}
+\alias{colData<-,seurat,DataFrame-method}
 \alias{colnames,seurat-method}
 \alias{counts,seurat-method}
 \alias{metadata,seurat-method}
@@ -29,6 +30,8 @@
 \S4method{assay}{seurat,ANY}(x)
 
 \S4method{colData}{seurat}(x)
+
+\S4method{colData}{seurat,DataFrame}(x) <- value
 
 \S4method{colnames}{seurat}(x)
 
