@@ -8,8 +8,8 @@
 #' @export
 #'
 #' @inheritParams general
-#' @param geom Plot type. Uses [match.arg()] to pick the type. Currently
-#'   supports "`dot`" and "`violin`".
+#' @param geom `string`. Plot type. Uses [match.arg()] to pick the type.
+#'   Currently supports "`dot`" and "`violin`".
 #'
 #' @seealso
 #' - [plotDot()], [Seurat::DotPlot()].

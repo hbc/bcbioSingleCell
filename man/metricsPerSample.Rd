@@ -20,7 +20,8 @@ metricsPerSample(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{f}{Mathematical function to apply. Defaults to "\code{sum}".}
+\item{f}{\code{string}. Mathematical function name to apply. Defaults to "\code{sum}"
+but "\code{mean}" and "\code{median}" are also supported.}
 }
 \value{
 \code{data.frame}.

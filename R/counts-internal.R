@@ -1,3 +1,7 @@
+# TODO Simplify the bcbio method, using the combined MatrixMarket file
+
+
+
 # Read bcbio Sparse Counts
 # Matrix Market Exchange (MEX/MTX) format
 .readBcbioSparseCounts <- function(sampleDir) {

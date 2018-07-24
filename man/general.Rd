@@ -4,73 +4,77 @@
 \alias{general}
 \title{General Arguments}
 \arguments{
-\item{aspectRatio}{Aspect ratio.}
+\item{aspectRatio}{\code{scalar integer}. Aspect ratio.}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
-to \code{NULL}, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot fill scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 
-\item{gene2symbol}{\code{data.frame} containing gene-to-symbol mappings. Columns
-must contain \code{geneID} and \code{geneName}.}
+\item{gene2symbol}{\code{data.frame}. Gene-to-symbol mappings. Columns must
+contain \code{geneID} and \code{geneName}.}
 
-\item{dark}{Plot against a dark background using
+\item{dark}{\code{boolean}. Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
-\item{dir}{Output directory.}
+\item{dir}{\code{string}. Output directory path.}
 
-\item{expression}{Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and defaults to
-the first argument in the vector.}
+\item{expression}{\code{string}. Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and
+defaults to the first argument in the \code{character} vector.}
 
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
+\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
+object.}
 
-\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first argument
-in the vector.}
+\item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first
+argument in the \code{character} vector.}
 
-\item{grid}{Show major grid lines but hide axis lines.}
+\item{grid}{\code{boolean}. Show major grid lines but hide axis lines.}
 
-\item{headerLevel}{R Markdown header level.}
+\item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{label}{Overlay a cluster identitiy label on the plot.}
+\item{label}{\code{boolean}. Overlay a cluster identitiy label on the plot.}
 
-\item{labelSize}{Size of the text label.}
+\item{labelSize}{\code{scalar integer}. Size of the text label.}
 
-\item{legend}{Include plot legend.}
+\item{legend}{\code{boolean}. Include plot legend.}
 
-\item{min}{Recommended minimum value cutoff.}
+\item{min}{\code{scalar numeric}. Recommended minimum value cutoff.}
 
-\item{max}{Recommended maximum value cutoff.}
+\item{max}{\code{scalar numeric}. Recommended maximum value cutoff.}
 
 \item{object}{Object.}
 
-\item{pipeline}{Pipeline used to generate the samples.}
+\item{pipeline}{\code{string}. Pipeline used to generate the samples.}
 
-\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.}
+\item{pointAlpha}{\code{scalar numeric} (\code{0}-\code{1}). Alpha transparency level.
+Useful when there many cells in the dataset, and some cells can be masked.}
 
-\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+\item{pointsAsNumbers}{\code{boolean}. Plot the points as numbers (\code{TRUE}) or
+dots (\code{FALSE}).}
 
-\item{pointSize}{Cell point size.}
+\item{pointSize}{\code{scalar numeric}. Cell point size.}
 
-\item{reduction}{Dimensional reduction method to apply. Defaults to t-SNE
-("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
+\item{reduction}{\code{string}. Dimensional reduction method to apply. Defaults to
+t-SNE ("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
 
-\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
-to the first argument in the vector.}
+\item{return}{\code{string}. Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and
+defaults to the first argument in the \code{character} vector.}
 
-\item{title}{Plot title.}
+\item{title}{\code{string} or \code{NULL}. Plot title.}
 
-\item{trans}{Name of the axis scale transformation to apply. See
+\item{trans}{\code{string}. Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
 
-\item{trendline}{Include trendline on plot.}
+\item{trendline}{\code{boolean}. Include trendline on plot.}
 
 \item{value}{Object to assign.}
 

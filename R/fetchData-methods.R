@@ -5,7 +5,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
-#' @param minimal Return minimal data without metrics.
+#' @param minimal `boolean`. Return minimal data without metrics.
 #'
 #' @return
 #' - `fetchGeneData()`: `matrix`.

@@ -10,10 +10,11 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param minSD Minimum standard deviation.
-#' @param minPct Minimum percent standard deviation.
-#' @param maxCumPct Maximum cumulative percent standard deviation.
-#' @param plot Include plot.
+#' @param minSD `scalar numeric`. Minimum standard deviation.
+#' @param minPct `scalar numeric` (`0`-`1`). Minimum percent standard deviation.
+#' @param maxCumPct `scalar numeric` (`0`-`1`).Maximum cumulative percent
+#'   standard deviation.
+#' @param plot `boolean`. Include plot.
 #'
 #' @return
 #' - Show graphical output of elbow plots.

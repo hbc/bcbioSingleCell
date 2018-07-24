@@ -5,7 +5,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param file Gene markers file (CSV or Excel).
+#' @param file `string`. Gene markers file path (CSV or Excel).
 #'
 #' @return `grouped_df`, grouped by "`cellType`" column.
 #' @export

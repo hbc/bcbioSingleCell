@@ -10,28 +10,31 @@ readCellRanger(uploadDir, format = c("mtx", "hdf5"), filtered = TRUE,
   spikeNames = NULL, ...)
 }
 \arguments{
-\item{uploadDir}{Path to Cell Ranger output directory. This directory path
-must contain \code{filtered_gene_bc_matrices*} as a child directory.}
+\item{uploadDir}{\code{string}. Path to Cell Ranger output directory. This
+directory path must contain \code{filtered_gene_bc_matrices*} as a child
+directory.}
 
-\item{format}{Output format, either MatrixMarket ("\code{mtx}") or HDF5
+\item{format}{\code{string}. Output format, either MatrixMarket ("\code{mtx}") or HDF5
 ("\code{hdf5}").}
 
-\item{filtered}{Use filtered (recommended) or raw counts. Note that raw
-counts still contain only whitelisted cellular barcodes.}
+\item{filtered}{\code{boolean}. Use filtered (recommended) or raw counts. Note
+that raw counts still contain only whitelisted cellular barcodes.}
 
-\item{organism}{Organism name. Use the full latin name (e.g.
+\item{organism}{\code{string}. Organism name. Use the full latin name (e.g.
 "Homo sapiens"), since this will be input downstream to
 AnnotationHub and ensembldb, unless \code{gffFile} is set.}
 
-\item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
-with demultiplixed index barcodes (e.g. SureCell), but otherwise required
-for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-inDrop).}
+\item{sampleMetadataFile}{\code{string}. Sample barcode metadata file. Optional
+for runs with demultiplixed index barcodes (e.g. SureCell), but otherwise
+required for runs with multipliexed FASTQs containing multiple index
+barcodes (e.g. inDrop).}
 
-\item{refdataDir}{Directory path to Cell Ranger reference annotation data.}
+\item{refdataDir}{\code{string} or \code{NULL}. Directory path to Cell Ranger reference
+annotation data.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{transgeneNames}{\code{character} or \code{NULL}. Vector indicating which
 \code{\link[=assay]{assay()}} rows denote transgenes (e.g. EGFP, TDTOMATO).}

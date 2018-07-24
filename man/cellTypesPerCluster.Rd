@@ -16,9 +16,9 @@ cellTypesPerCluster(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{min}{Minimum number of marker genes per cluster.}
+\item{min}{\code{scalar integer}. Minimum number of marker genes per cluster.}
 
-\item{max}{Maximum number of marker genes per cluster.}
+\item{max}{\code{scalar integer}. Maximum number of marker genes per cluster.}
 }
 \value{
 \code{grouped_df} grouped by "\code{cluster}", containing the count (\code{n}) of

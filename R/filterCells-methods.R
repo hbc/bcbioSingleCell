@@ -12,15 +12,17 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param nCells Expected number of cells per sample.
-#' @param minUMIs Minimum number of UMI disambiguated counts per cell.
-#' @param maxUMIs Maximum number of UMI disambiguated counts per cell.
-#' @param minGenes Minimum number of genes detected.
-#' @param maxGenes Maximum number of genes detected.
-#' @param minNovelty Minimum novelty score (log10 genes per UMI).
-#' @param maxMitoRatio Maximum relative mitochondrial abundance (`0-1` scale).
-#' @param minCellsPerGene Include genes with non-zero expression in at least
-#'   this many cells.
+#' @param nCells `scalar integer`. Expected number of cells per sample.
+#' @param minUMIs `scalar integer`. Minimum number of UMI disambiguated counts per cell.
+#' @param maxUMIs `scalar integer`. Maximum number of UMI disambiguated counts per cell.
+#' @param minGenes `scalar integer`. Minimum number of genes detected.
+#' @param maxGenes `scalar integer`. Maximum number of genes detected.
+#' @param minNovelty `scalar integer` (`0`-`1`). Minimum novelty score (log10
+#'   genes per UMI).
+#' @param maxMitoRatio `scalar integer` (`0`-`1`). Maximum relative
+#'   mitochondrial abundance.
+#' @param minCellsPerGene `scalar integer`. Include genes with non-zero
+#'   expression in at least this many cells.
 #'
 #' @seealso [Seurat::CreateSeuratObject()].
 #'

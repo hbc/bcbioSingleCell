@@ -6,8 +6,8 @@
 #'
 #' @inheritParams general
 #'
-#' @param min Minimum number of marker genes per cluster.
-#' @param max Maximum number of marker genes per cluster.
+#' @param min `scalar integer`. Minimum number of marker genes per cluster.
+#' @param max `scalar integer`. Maximum number of marker genes per cluster.
 #'
 #' @return `grouped_df` grouped by "`cluster`", containing the count (`n`) of
 #'   significant known makers per cell type.

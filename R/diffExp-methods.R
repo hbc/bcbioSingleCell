@@ -32,17 +32,19 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param numerator Group of cells to use in the numerator of the contrast
+#' @param numerator `character`. Cells to use in the numerator of the contrast
 #'   (e.g. treatment).
-#' @param denominator Group of cells to use in the denominator of the contrast
-#'   (e.g. control).
-#' @param caller Package to use for differential expression calling. Defaults to
-#'   edgeR (faster for large datasets) but DESeq2 is also supported.
-#' @param minCellsPerGene The minimum number of cells where a gene is expressed,
-#' to pass low expression filtering. Set to `0` to disable (not recommended).
-#' @param minCountsPerCell Minimum number of counts per cell for a gene to pass
-#'   low expression filtering. The number of cells is defined by
-#'   `minCellsPerGene`. Set to `0` to disable (not recommended).
+#' @param denominator `character`. Cells to use in the denominator of the
+#'   contrast (e.g. control).
+#' @param caller `string`. Package to use for differential expression calling.
+#'   Defaults to "`edgeR`" (faster for large datasets) but "`DESeq2"` is also
+#'   supported.
+#' @param minCellsPerGene `scalar integer`. The minimum number of cells where a
+#'   gene is expressed, to pass low expression filtering. Set to `0` to disable
+#'   (*not recommended*).
+#' @param minCountsPerCell `scalar integer`. Minimum number of counts per cell
+#'   for a gene to pass low expression filtering. The number of cells is defined
+#'   by `minCellsPerGene`. Set to `0` to disable (*not recommended*).
 #'
 #' @seealso
 #' - DESeq2: We're trying to follow the conventions used in DESeq2 for

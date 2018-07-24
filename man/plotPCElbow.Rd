@@ -17,16 +17,17 @@ plotPCElbow(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{minSD}{Minimum standard deviation.}
+\item{minSD}{\code{scalar numeric}. Minimum standard deviation.}
 
-\item{minPct}{Minimum percent standard deviation.}
+\item{minPct}{\code{scalar numeric} (\code{0}-\code{1}). Minimum percent standard deviation.}
 
-\item{maxCumPct}{Maximum cumulative percent standard deviation.}
+\item{maxCumPct}{\code{scalar numeric} (\code{0}-\code{1}).Maximum cumulative percent
+standard deviation.}
 
-\item{trans}{Name of the axis scale transformation to apply. See
+\item{trans}{\code{string}. Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
 
-\item{plot}{Include plot.}
+\item{plot}{\code{boolean}. Include plot.}
 }
 \value{
 \itemize{

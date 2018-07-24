@@ -18,22 +18,24 @@ filterCells(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{nCells}{Expected number of cells per sample.}
+\item{nCells}{\code{scalar integer}. Expected number of cells per sample.}
 
-\item{minUMIs}{Minimum number of UMI disambiguated counts per cell.}
+\item{minUMIs}{\code{scalar integer}. Minimum number of UMI disambiguated counts per cell.}
 
-\item{maxUMIs}{Maximum number of UMI disambiguated counts per cell.}
+\item{maxUMIs}{\code{scalar integer}. Maximum number of UMI disambiguated counts per cell.}
 
-\item{minGenes}{Minimum number of genes detected.}
+\item{minGenes}{\code{scalar integer}. Minimum number of genes detected.}
 
-\item{maxGenes}{Maximum number of genes detected.}
+\item{maxGenes}{\code{scalar integer}. Maximum number of genes detected.}
 
-\item{minNovelty}{Minimum novelty score (log10 genes per UMI).}
+\item{minNovelty}{\code{scalar integer} (\code{0}-\code{1}). Minimum novelty score (log10
+genes per UMI).}
 
-\item{maxMitoRatio}{Maximum relative mitochondrial abundance (\code{0-1} scale).}
+\item{maxMitoRatio}{\code{scalar integer} (\code{0}-\code{1}). Maximum relative
+mitochondrial abundance.}
 
-\item{minCellsPerGene}{Include genes with non-zero expression in at least
-this many cells.}
+\item{minCellsPerGene}{\code{scalar integer}. Include genes with non-zero
+expression in at least this many cells.}
 }
 \value{
 \code{bcbioSingleCell}, with filtering information slotted into

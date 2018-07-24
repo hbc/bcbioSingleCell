@@ -11,18 +11,6 @@
 
 
 
-#' Check for Sanitized Markers Data
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @param object Input should be a sanitized markers `data.frame`, returned from
-#'   [sanitizeMarkers()].
-#' @param package Name of package used to generate the markers.
-#' @param stop Stop on failure, instead of returning `FALSE`.
-#'
-#' @return `TRUE` if sanitized, `FALSE` if not.
 .isSanitizedMarkers <- function(
     object,
     package = "Seurat"

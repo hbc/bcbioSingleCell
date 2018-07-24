@@ -18,7 +18,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
-#' @param markers `grouped_df` of marker genes.
+#' @param markers `grouped_df`. Marker genes data.
 #'   - [plotTopMarkers()]: must be grouped by "`cluster`".
 #'   - [plotKnownMarkersDetected()]: must be grouped by "`cellType`".
 #'

@@ -19,8 +19,9 @@ cellCountsPerCluster(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \code{tibble} grouped by "\code{ident}" column, arranged by abundance.

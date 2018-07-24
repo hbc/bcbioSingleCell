@@ -44,31 +44,31 @@ plotFeatureUMAP(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{features}{Character vector of features (e.g. gene expression, PC
+\item{features}{\code{character}. Features to plot (e.g. gene expression, PC
 scores, number of genes detected).}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{pointSize}{Cell point size.}
+\item{pointSize}{\code{scalar numeric}. Cell point size.}
 
-\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.}
+\item{pointAlpha}{\code{scalar numeric} (\code{0}-\code{1}). Alpha transparency level.
+Useful when there many cells in the dataset, and some cells can be masked.}
 
-\item{label}{Overlay a cluster identitiy label on the plot.}
+\item{label}{\code{boolean}. Overlay a cluster identitiy label on the plot.}
 
-\item{labelSize}{Size of the text label.}
+\item{labelSize}{\code{scalar integer}. Size of the text label.}
 
-\item{dark}{Plot against a dark background using
+\item{dark}{\code{boolean}. Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
-\item{grid}{Show major grid lines but hide axis lines.}
+\item{grid}{\code{boolean}. Show major grid lines but hide axis lines.}
 
-\item{legend}{Include plot legend.}
+\item{legend}{\code{boolean}. Include plot legend.}
 
-\item{aspectRatio}{Aspect ratio.}
+\item{aspectRatio}{\code{scalar integer}. Aspect ratio.}
 }
 \value{
 \code{ggplot} or \code{list}.

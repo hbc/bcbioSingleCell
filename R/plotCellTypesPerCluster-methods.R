@@ -9,8 +9,8 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param cellTypesPerCluster Cell types per cluster `grouped_df`. This must be
-#'   the return from [cellTypesPerCluster()].
+#' @param cellTypesPerCluster `grouped_df`. Cell types per cluster data. This
+#'   must be the return from [cellTypesPerCluster()].
 #' @param ... Passthrough arguments to [plotMarkerTSNE()] or [plotMarkerUMAP()].
 #'
 #' @return Show graphical output. Invisibly return `ggplot` `list`.

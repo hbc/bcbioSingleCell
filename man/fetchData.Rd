@@ -64,9 +64,10 @@ fetchUMAPExpressionData(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
+\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
+object.}
 
-\item{minimal}{Return minimal data without metrics.}
+\item{minimal}{\code{boolean}. Return minimal data without metrics.}
 }
 \value{
 \itemize{

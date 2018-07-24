@@ -18,13 +18,13 @@ plotCellTypesPerCluster(object, ...)
 
 \item{...}{Passthrough arguments to \code{\link[=plotMarkerTSNE]{plotMarkerTSNE()}} or \code{\link[=plotMarkerUMAP]{plotMarkerUMAP()}}.}
 
-\item{cellTypesPerCluster}{Cell types per cluster \code{grouped_df}. This must be
-the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
+\item{cellTypesPerCluster}{\code{grouped_df}. Cell types per cluster data. This
+must be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
-\item{reduction}{Dimensional reduction method to apply. Defaults to t-SNE
-("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
+\item{reduction}{\code{string}. Dimensional reduction method to apply. Defaults to
+t-SNE ("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
 
-\item{headerLevel}{R Markdown header level.}
+\item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.

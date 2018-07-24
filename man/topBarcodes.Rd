@@ -21,10 +21,10 @@ topBarcodes(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{n}{Number of barcodes to return per sample.}
+\item{n}{\code{scalar integer}. Number of barcodes to return per sample.}
 
-\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
-to the first argument in the vector.}
+\item{return}{\code{string}. Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and
+defaults to the first argument in the \code{character} vector.}
 }
 \value{
 \itemize{

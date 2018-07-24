@@ -18,7 +18,7 @@
   }
 }
 \value{
-\code{bcbioRNASeq}.
+Valid object.
 }
 \description{
 Update an Object to Its Current Class Definition

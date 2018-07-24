@@ -68,48 +68,50 @@ plotTopMarkers(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
+\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
+object.}
 
-\item{expression}{Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and defaults to
-the first argument in the vector.}
+\item{expression}{\code{string}. Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and
+defaults to the first argument in the \code{character} vector.}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+\item{pointsAsNumbers}{\code{boolean}. Plot the points as numbers (\code{TRUE}) or
+dots (\code{FALSE}).}
 
-\item{pointSize}{Cell point size.}
+\item{pointSize}{\code{scalar numeric}. Cell point size.}
 
-\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.}
+\item{pointAlpha}{\code{scalar numeric} (\code{0}-\code{1}). Alpha transparency level.
+Useful when there many cells in the dataset, and some cells can be masked.}
 
-\item{label}{Overlay a cluster identitiy label on the plot.}
+\item{label}{\code{boolean}. Overlay a cluster identitiy label on the plot.}
 
-\item{labelSize}{Size of the text label.}
+\item{labelSize}{\code{scalar integer}. Size of the text label.}
 
-\item{dark}{Plot against a dark background using
+\item{dark}{\code{boolean}. Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
-\item{grid}{Show major grid lines but hide axis lines.}
+\item{grid}{\code{boolean}. Show major grid lines but hide axis lines.}
 
-\item{legend}{Include plot legend.}
+\item{legend}{\code{boolean}. Include plot legend.}
 
-\item{aspectRatio}{Aspect ratio.}
+\item{aspectRatio}{\code{scalar integer}. Aspect ratio.}
 
-\item{title}{Plot title.}
+\item{title}{\code{string} or \code{NULL}. Plot title.}
 
-\item{markers}{\code{grouped_df} of marker genes.
+\item{markers}{\code{grouped_df}. Marker genes data.
 \itemize{
 \item \code{\link[=plotTopMarkers]{plotTopMarkers()}}: must be grouped by "\code{cluster}".
 \item \code{\link[=plotKnownMarkersDetected]{plotKnownMarkersDetected()}}: must be grouped by "\code{cellType}".
 }}
 
-\item{reduction}{Dimensional reduction method to apply. Defaults to t-SNE
-("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
+\item{reduction}{\code{string}. Dimensional reduction method to apply. Defaults to
+t-SNE ("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
 
-\item{headerLevel}{R Markdown header level.}
+\item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.

@@ -10,11 +10,11 @@
 \alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{matrix}(object, rowData = NULL, prefilter = FALSE)
+\S4method{metrics}{matrix}(object, rowRanges = NULL, prefilter = FALSE)
 
-\S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = FALSE)
+\S4method{metrics}{dgCMatrix}(object, rowRanges = NULL, prefilter = FALSE)
 
-\S4method{metrics}{dgTMatrix}(object, rowData = NULL, prefilter = FALSE)
+\S4method{metrics}{dgTMatrix}(object, rowRanges = NULL, prefilter = FALSE)
 
 \S4method{metrics}{SingleCellExperiment}(object, interestingGroups)
 
@@ -23,12 +23,14 @@
 \arguments{
 \item{object}{Object.}
 
-\item{rowData}{Data describing the rows of the object.}
+\item{rowRanges}{\code{GRanges}. Data describing the rows of the object.}
 
-\item{prefilter}{Whether to apply pre-filtering to the cellular barcodes.}
+\item{prefilter}{\code{boolean}. Apply pre-filtering to the cellular barcodes
+(\emph{recommended}).}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{...}{Additional arguments.}
 }

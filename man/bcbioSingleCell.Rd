@@ -12,29 +12,30 @@ bcbioSingleCell(uploadDir, organism = NULL, sampleMetadataFile = NULL,
   gffFile = NULL, ...)
 }
 \arguments{
-\item{uploadDir}{Path to final upload directory. This path is set when
-running "\code{bcbio_nextgen -w template}".}
+\item{uploadDir}{\code{string}. Path to final upload directory. This path is set
+when running "\code{bcbio_nextgen -w template}".}
 
-\item{organism}{Organism name. Use the full latin name (e.g.
+\item{organism}{\code{string}. Organism name. Use the full latin name (e.g.
 "Homo sapiens"), since this will be input downstream to
 AnnotationHub and ensembldb, unless \code{gffFile} is set.}
 
-\item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
-with demultiplixed index barcodes (e.g. SureCell), but otherwise required
-for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-inDrop).}
+\item{sampleMetadataFile}{\code{string}. Sample barcode metadata file. Optional
+for runs with demultiplixed index barcodes (e.g. SureCell), but otherwise
+required for runs with multipliexed FASTQs containing multiple index
+barcodes (e.g. inDrop).}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{ensemblRelease}{\emph{Optional.} Ensembl release version. If \code{NULL},
-defaults to current release, and does not typically need to be
+\item{ensemblRelease}{\code{scalar integer} or \code{NULL}. Ensembl release version. If
+\code{NULL}, defaults to current release, and does not typically need to be
 user-defined. Passed to AnnotationHub for \code{EnsDb} annotation matching,
 unless \code{gffFile} is set.}
 
-\item{genomeBuild}{\emph{Optional.} Ensembl genome build name (e.g. "GRCh38").
-This will be passed to AnnotationHub for \code{EnsDb} annotation matching,
-unless \code{gffFile} is set.}
+\item{genomeBuild}{\code{string} or \code{NULL}. Ensembl genome build name (e.g.
+"GRCh38"). This will be passed to AnnotationHub for \code{EnsDb} annotation
+matching, unless \code{gffFile} is set.}
 
 \item{transgeneNames}{\code{character} or \code{NULL}. Vector indicating which
 \code{\link[=assay]{assay()}} rows denote transgenes (e.g. EGFP, TDTOMATO).}
@@ -42,16 +43,17 @@ unless \code{gffFile} is set.}
 \item{spikeNames}{\code{character} or \code{NULL}. Vector indicating which \code{\link[=assay]{assay()}}
 rows denote spike-in sequences (e.g. ERCCs).}
 
-\item{gffFile}{\emph{Optional, not recommended.} By default, we recommend leaving
-this \code{NULL} for genomes that are supported on Ensembl. In this case, the
-row annotations (\code{\link[=rowRanges]{rowRanges()}}) will be obtained automatically from Ensembl
-by passing the \code{organism}, \code{genomeBuild}, and \code{ensemblRelease} arguments to
-AnnotationHub and ensembldb. For a genome that is not supported on Ensembl
-and/or AnnotationHub, a GFF/GTF (General Feature Format) file is required.
-Generally, we recommend using a GTF (GFFv2) file here over a GFF3 file if
-possible, although all GFF formats are supported. The function will
-internally generate a \code{TxDb} containing transcript-to-gene mappings and
-construct a \code{GRanges} object containing the genomic ranges (\code{\link[=rowRanges]{rowRanges()}}).}
+\item{gffFile}{\code{string} or \code{NULL}. \emph{Advanced use only; not recommended.} By
+default, we recommend leaving this \code{NULL} for genomes that are supported on
+Ensembl. In this case, the row annotations (\code{\link[=rowRanges]{rowRanges()}}) will be obtained
+automatically from Ensembl by passing the \code{organism}, \code{genomeBuild}, and
+\code{ensemblRelease} arguments to AnnotationHub and ensembldb. For a genome
+that is not supported on Ensembl and/or AnnotationHub, a GFF/GTF (General
+Feature Format) file is required. Generally, we recommend using a GTF
+(GFFv2) file here over a GFF3 file if possible, although all GFF formats
+are supported. The function will internally generate transcript-to-gene
+mappings and construct a \code{GRanges} object containing the genomic ranges
+(\code{\link[=rowRanges]{rowRanges()}}).}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }

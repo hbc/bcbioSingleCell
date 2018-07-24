@@ -5,11 +5,13 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param minCells Minimum number of cells required per sample.
-#' @param assignAndSave Assign and save the individual datasets.
-#' @param envir Environment where to assign the subsets. Only applicable when
+#' @param minCells `scalar integer`. Minimum number of cells required per
+#'   sample.
+#' @param assignAndSave `boolean`. Assign and save the individual datasets.
+#' @param envir `environment`. Where to assign the subsets. Only applicable when
 #'   `assignAndSave = TRUE`.
-#' @param dir Output directory. Only applicable when `assignAndSave = TRUE`.
+#' @param dir `string`. Output directory. Only applicable when
+#'   `assignAndSave = TRUE`.
 #'
 #' @return
 #' - `assignAndSave = FALSE`: Per sample objects in a `list`.

@@ -22,21 +22,23 @@ diffExp(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{numerator}{Group of cells to use in the numerator of the contrast
+\item{numerator}{\code{character}. Cells to use in the numerator of the contrast
 (e.g. treatment).}
 
-\item{denominator}{Group of cells to use in the denominator of the contrast
-(e.g. control).}
+\item{denominator}{\code{character}. Cells to use in the denominator of the
+contrast (e.g. control).}
 
-\item{caller}{Package to use for differential expression calling. Defaults to
-edgeR (faster for large datasets) but DESeq2 is also supported.}
+\item{caller}{\code{string}. Package to use for differential expression calling.
+Defaults to "\code{edgeR}" (faster for large datasets) but "\code{DESeq2"} is also
+supported.}
 
-\item{minCellsPerGene}{The minimum number of cells where a gene is expressed,
-to pass low expression filtering. Set to \code{0} to disable (not recommended).}
+\item{minCellsPerGene}{\code{scalar integer}. The minimum number of cells where a
+gene is expressed, to pass low expression filtering. Set to \code{0} to disable
+(\emph{not recommended}).}
 
-\item{minCountsPerCell}{Minimum number of counts per cell for a gene to pass
-low expression filtering. The number of cells is defined by
-\code{minCellsPerGene}. Set to \code{0} to disable (not recommended).}
+\item{minCountsPerCell}{\code{scalar integer}. Minimum number of counts per cell
+for a gene to pass low expression filtering. The number of cells is defined
+by \code{minCellsPerGene}. Set to \code{0} to disable (\emph{not recommended}).}
 }
 \value{
 \itemize{

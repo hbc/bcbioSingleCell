@@ -17,26 +17,28 @@
 \arguments{
 \item{object}{Object.}
 
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
+\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
+object.}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{colMin}{Minimum scaled average expression threshold. Everything
-smaller will be set to this.}
+\item{colMin}{\code{scalar numeric}. Minimum scaled average expression threshold.
+Everything smaller will be set to this.}
 
-\item{colMax}{Maximum scaled average expression threshold. Everything larger
-will be set to this.}
+\item{colMax}{\code{scalar numeric}.Maximum scaled average expression threshold.
+Everything larger will be set to this.}
 
-\item{dotMin}{The fraction of cells at which to draw the smallest dot. All
-cell groups with less than this expressing the given gene will have no dot
-drawn.}
+\item{dotMin}{\code{scalar numeric}.The fraction of cells at which to draw the
+smallest dot. All cell groups with less than this expressing the given gene
+will have no dot drawn.}
 
-\item{dotScale}{Scale the size of the points, similar to \code{cex}.}
+\item{dotScale}{\code{scalar numeric}.Scale the size of the points, similar to
+\code{cex}.}
 
-\item{legend}{Include plot legend.}
+\item{legend}{\code{boolean}. Include plot legend.}
 }
 \value{
 \code{ggplot}.

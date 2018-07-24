@@ -5,7 +5,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param features Character vector of features (e.g. gene expression, PC
+#' @param features `character`. Features to plot (e.g. gene expression, PC
 #'   scores, number of genes detected).
 #'
 #' @seealso [Seurat::FeaturePlot()].

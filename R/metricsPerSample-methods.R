@@ -7,7 +7,8 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param f Mathematical function to apply. Defaults to "`sum`".
+#' @param f `string`. Mathematical function name to apply. Defaults to "`sum`"
+#'   but "`mean`" and "`median`" are also supported.
 #'
 #' @return `data.frame`.
 #'

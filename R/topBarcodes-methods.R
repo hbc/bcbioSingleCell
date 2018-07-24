@@ -7,7 +7,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param n Number of barcodes to return per sample.
+#' @param n `scalar integer`. Number of barcodes to return per sample.
 #'
 #' @return
 #' - "`list`": `list` containing top barcodes as a `character` vector, split by
