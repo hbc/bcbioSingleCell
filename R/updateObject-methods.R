@@ -1,3 +1,10 @@
+# TODO Provide support for adding sample-level metadata in long format back
+# into colData. This is currently used internally in the `sampleData()` and
+# `metrics()` functions, so we should try to consolidate this code as much
+# as possible for consistency.
+
+
+
 #' Update an Object to Its Current Class Definition
 #'
 #' @name updateObject
