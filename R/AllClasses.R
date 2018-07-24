@@ -386,7 +386,7 @@ bcbioSingleCell <- function(
 
     colData <- as(metrics, "DataFrame")
     colData[["cellID"]] <- rownames(colData)
-    cell2sample <- mapCellsToSamples(
+    cell2sample <- .mapCellsToSamples(
         cells = rownames(colData),
         samples = rownames(sampleData)
     )

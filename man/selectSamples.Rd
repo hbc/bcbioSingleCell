@@ -41,7 +41,6 @@ selectSamples(object, sampleName = sample)
 
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
-  \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }

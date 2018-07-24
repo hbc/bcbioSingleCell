@@ -117,7 +117,6 @@ glimpse(x)
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{cell2sample}},
-  \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}

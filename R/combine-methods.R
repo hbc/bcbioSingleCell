@@ -112,7 +112,7 @@ setMethod(
         sampleData <- rbind(xSampleData, ySampleData)
 
         # cell2sample ==========================================================
-        cell2sample <- mapCellsToSamples(
+        cell2sample <- .mapCellsToSamples(
             cells = colnames(counts),
             samples = rownames(sampleData)
         )

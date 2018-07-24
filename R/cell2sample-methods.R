@@ -37,7 +37,7 @@ setMethod(
         if (is.null(samples)) {
             samples <- "unknown"
         }
-        mapCellsToSamples(cells = cells, samples = samples)
+        .mapCellsToSamples(cells = cells, samples = samples)
     }
 )
 

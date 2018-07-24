@@ -98,7 +98,7 @@ setMethod(
         metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
 
         # Cell to sample mappings
-        cell2sample <- mapCellsToSamples(
+        cell2sample <- .mapCellsToSamples(
             cells = rownames(metrics),
             samples = rownames(sampleData)
         )
