@@ -141,17 +141,6 @@ setGeneric(
 
 
 
-#' @rdname knownMarkersDetected
-#' @export
-setGeneric(
-    "knownMarkersDetected",
-    function(object, ...) {
-        standardGeneric("knownMarkersDetected")
-    }
-)
-
-
-
 #' @rdname metricsPerSample
 #' @export
 setGeneric(
