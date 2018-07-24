@@ -1,4 +1,5 @@
 # TODO Ensure `colData` slot gets updated upon assignment. Can we do this?
+# FIXME This approach may not work for seurat class...check
 
 
 
@@ -24,10 +25,16 @@
 #' # SingleCellExperiment ====
 #' x <- cellranger_small
 #' sampleData(x) %>% glimpse()
-#'
-#' # Assignment support
 #' sampleData(x)[["batch"]] <- 1L
 #' sampleData(x) %>% glimpse()
+#' "batch" %in% colnames(colData(x))
+#'
+#' # seurat ====
+#' x <- seurat_small
+#' sampleData(x) %>% glimpse()
+#' sampleData(x)[["batch"]] <- 1L
+#' sampleData(x) %>% glimpse()
+#' "batch" %in% colnames(colData(x))
 NULL
 
 

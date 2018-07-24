@@ -39,8 +39,12 @@ the samples.
 # SingleCellExperiment ====
 x <- cellranger_small
 sampleData(x) \%>\% glimpse()
+sampleData(x)[["batch"]] <- 1L
+sampleData(x) \%>\% glimpse()
 
-# Assignment support
+# seurat ====
+x <- seurat_small
+sampleData(x) \%>\% small()
 sampleData(x)[["batch"]] <- 1L
 sampleData(x) \%>\% glimpse()
 }
