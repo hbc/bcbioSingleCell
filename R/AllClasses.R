@@ -38,32 +38,33 @@ bcbioSingleCell <- setClass(
 #'
 #' @inheritParams bcbioBase::prepareSummarizedExperiment
 #' @inheritParams general
-#' @param uploadDir Path to final upload directory. This path is set when
-#'   running "`bcbio_nextgen -w template`".
-#' @param organism Organism name. Use the full latin name (e.g.
+#' @param uploadDir `string`. Path to final upload directory. This path is set
+#'   when running "`bcbio_nextgen -w template`".
+#' @param organism `string`. Organism name. Use the full latin name (e.g.
 #'   "Homo sapiens"), since this will be input downstream to
 #'   AnnotationHub and ensembldb, unless `gffFile` is set.
-#' @param sampleMetadataFile Sample barcode metadata file. Optional for runs
-#'   with demultiplixed index barcodes (e.g. SureCell), but otherwise required
-#'   for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-#'   inDrop).
-#' @param ensemblRelease *Optional.* Ensembl release version. If `NULL`,
-#'   defaults to current release, and does not typically need to be
+#' @param sampleMetadataFile `string`. Sample barcode metadata file. Optional
+#'   for runs with demultiplixed index barcodes (e.g. SureCell), but otherwise
+#'   required for runs with multipliexed FASTQs containing multiple index
+#'   barcodes (e.g. inDrop).
+#' @param ensemblRelease `scalar integer` or `NULL`. Ensembl release version. If
+#'   `NULL`, defaults to current release, and does not typically need to be
 #'   user-defined. Passed to AnnotationHub for `EnsDb` annotation matching,
 #'   unless `gffFile` is set.
-#' @param genomeBuild *Optional.* Ensembl genome build name (e.g. "GRCh38").
-#'   This will be passed to AnnotationHub for `EnsDb` annotation matching,
-#'   unless `gffFile` is set.
-#' @param gffFile *Optional, not recommended.* By default, we recommend leaving
-#'   this `NULL` for genomes that are supported on Ensembl. In this case, the
-#'   row annotations ([rowRanges()]) will be obtained automatically from Ensembl
-#'   by passing the `organism`, `genomeBuild`, and `ensemblRelease` arguments to
-#'   AnnotationHub and ensembldb. For a genome that is not supported on Ensembl
-#'   and/or AnnotationHub, a GFF/GTF (General Feature Format) file is required.
-#'   Generally, we recommend using a GTF (GFFv2) file here over a GFF3 file if
-#'   possible, although all GFF formats are supported. The function will
-#'   internally generate a `TxDb` containing transcript-to-gene mappings and
-#'   construct a `GRanges` object containing the genomic ranges ([rowRanges()]).
+#' @param genomeBuild `string` or `NULL`. Ensembl genome build name (e.g.
+#'   "GRCh38"). This will be passed to AnnotationHub for `EnsDb` annotation
+#'   matching, unless `gffFile` is set.
+#' @param gffFile `string` or `NULL`. *Advanced use only; not recommended.* By
+#'   default, we recommend leaving this `NULL` for genomes that are supported on
+#'   Ensembl. In this case, the row annotations ([rowRanges()]) will be obtained
+#'   automatically from Ensembl by passing the `organism`, `genomeBuild`, and
+#'   `ensemblRelease` arguments to AnnotationHub and ensembldb. For a genome
+#'   that is not supported on Ensembl and/or AnnotationHub, a GFF/GTF (General
+#'   Feature Format) file is required. Generally, we recommend using a GTF
+#'   (GFFv2) file here over a GFF3 file if possible, although all GFF formats
+#'   are supported. The function will internally generate transcript-to-gene
+#'   mappings and construct a `GRanges` object containing the genomic ranges
+#'   ([rowRanges()]).
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return `bcbioSingleCell`.
@@ -370,14 +371,12 @@ bcbioSingleCell <- function(
         rowRanges <- emptyRanges(rownames(counts))
     }
     assert_is_subset(rownames(counts), names(rowRanges))
-    rowData <- as.data.frame(rowRanges)
-    rownames(rowData) <- names(rowRanges)
 
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
     metrics <- metrics(
         object = counts,
-        rowData = rowData,
+        rowRanges = rowRanges,
         prefilter = TRUE
     )
 

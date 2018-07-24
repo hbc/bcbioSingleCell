@@ -235,12 +235,14 @@ readCellRanger <- function(
     } else {
         rowRanges <- emptyRanges(rownames(counts))
     }
-    rowData <- as.data.frame(rowRanges)
-    rownames(rowData) <- names(rowRanges)
 
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
-    metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
+    metrics <- metrics(
+        object = counts,
+        rowRanges = rowRanges,
+        prefilter = TRUE
+    )
 
     # Subset the counts to match the prefiltered metrics
     counts <- counts[, rownames(metrics), drop = FALSE]

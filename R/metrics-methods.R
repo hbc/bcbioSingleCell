@@ -8,8 +8,9 @@
 #' @export
 #'
 #' @inheritParams general
-#' @param rowData Data describing the rows of the object.
-#' @param prefilter Whether to apply pre-filtering to the cellular barcodes.
+#' @param rowRanges `GRanges`. Data describing the rows of the object.
+#' @param prefilter `boolean`. Apply pre-filtering to the cellular barcodes
+#'   (*recommended*).
 #'
 #' @return `data.frame` with cellular barcodes as rows.
 #'
@@ -35,7 +36,7 @@ setMethod(
     signature("matrix"),
     function(
         object,
-        rowData = NULL,
+        rowRanges = NULL,
         prefilter = FALSE
     ) {
         assert_has_rows(object)
@@ -47,37 +48,36 @@ setMethod(
         codingGenes <- character()
         mitoGenes <- character()
 
-        if (length(rowData)) {
-            # Here we're allowing the user to pass in mismatched rowData, as
-            # long as contains all rows in the object. Note that `rowData()`
-            # return doesn't include them.
-            if (hasRownames(rowData)) {
-                rowData <- rowData[rownames(object), , drop = FALSE]
-            }
-            assert_are_identical(nrow(object), nrow(rowData))
-            rownames(rowData) <- rownames(object)
-            rowTbl <- rowData %>%
-                as.data.frame() %>%
-                as_tibble(rownames = "rowname")
-
-            if ("broadClass" %in% colnames(rowTbl)) {
+        if (length(rowRanges)) {
+            assert_is_all_of(rowRanges, "GRanges")
+            rowData <- as.data.frame(rowRanges)
+            assertHasRownames(rowData)
+            rowData <- rowData[rownames(object), , drop = FALSE]
+            rowData <- as_tibble(rowData, rownames = "rowname")
+            if ("broadClass" %in% colnames(rowData)) {
                 # Drop rows with NA broad class
-                rowTbl <- filter(rowTbl, !is.na(!!sym("broadClass")))
+                rowData <- filter(rowData, !is.na(!!sym("broadClass")))
                 # Coding genes
-                codingGenes <- rowTbl %>%
+                codingGenes <- rowData %>%
                     filter(!!sym("broadClass") == "coding") %>%
                     pull("rowname")
                 message(paste(length(codingGenes), "coding genes"))
                 # Mitochondrial genes
-                mitoGenes <- rowTbl %>%
+                mitoGenes <- rowData %>%
                     filter(!!sym("broadClass") == "mito") %>%
                     pull("rowname")
                 message(paste(length(mitoGenes), "mitochondrial genes"))
             }
+        } else {
+            warning(paste(
+                "Calculating metrics without gene annotations.\n",
+                "`rowRanges` is required to determine:",
+                "`nCoding`, `nMito`, `mitoRatio`."
+            ), call. = FALSE)
         }
 
         # Following the Seurat `seurat@meta.data` conventions here
-        tbl <- tibble(
+        data <- tibble(
             rowname = colnames(object),
             nUMI = colSums(object),
             nGene = colSums(object > 0L),
@@ -94,19 +94,19 @@ setMethod(
         # Apply low stringency cellular barcode pre-filtering.
         # This keeps only cellular barcodes with non-zero genes.
         if (isTRUE(prefilter)) {
-            tbl <- tbl %>%
+            data <- data %>%
                 filter(!is.na(UQ(sym("log10GenesPerUMI")))) %>%
                 filter(!!sym("nUMI") > 0L) %>%
                 filter(!!sym("nGene") > 0L)
             message(paste(
-                nrow(tbl), "/", ncol(object),
+                nrow(data), "/", ncol(object),
                 "cellular barcodes passed pre-filtering",
-                paste0("(", percent(nrow(tbl) / ncol(object)), ")")
+                paste0("(", percent(nrow(data) / ncol(object)), ")")
             ))
         }
 
         # Return
-        tbl %>%
+        data %>%
             # Enforce count columns as integers (e.g. `nUMI`)
             mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
             # Coerce character vectors to factors, and drop levels
@@ -156,7 +156,7 @@ setMethod(
             warning("Metrics are not stashed in `colData()`")
             metrics <- metrics(
                 object = counts(object),
-                rowData = rowData(object),
+                rowRanges = rowRanges(object),
                 prefilter = FALSE
             )
             # Keep only columns unique to colData

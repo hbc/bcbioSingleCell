@@ -89,13 +89,13 @@ setMethod(
             stop("Aggregated counts sum isn't identical to original")
         }
 
-        # Row data =============================================================
-        rowData <- rowData(object)
-        rownames(rowData) <- rownames(object)
-
         # Column data ==========================================================
         # Always prefilter, removing cells with no UMIs or genes
-        metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
+        metrics <- metrics(
+            object = counts,
+            rowRanges = rowRanges(object),
+            prefilter = TRUE
+        )
 
         # Cell to sample mappings
         cell2sample <- .mapCellsToSamples(
