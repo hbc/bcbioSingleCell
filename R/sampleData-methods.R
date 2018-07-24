@@ -1,8 +1,3 @@
-# TODO Ensure `colData` slot gets updated upon assignment. Can we do this?
-# FIXME This approach may not work for seurat class...check
-
-
-
 #' Sample Data
 #'
 #' Metadata in columns describing the samples, which are defined in the
