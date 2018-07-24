@@ -41,12 +41,14 @@ x <- cellranger_small
 sampleData(x) \%>\% glimpse()
 sampleData(x)[["batch"]] <- 1L
 sampleData(x) \%>\% glimpse()
+"batch" \%in\% colnames(colData(x))
 
 # seurat ====
 x <- seurat_small
-sampleData(x) \%>\% small()
+sampleData(x) \%>\% glimpse()
 sampleData(x)[["batch"]] <- 1L
 sampleData(x) \%>\% glimpse()
+"batch" \%in\% colnames(colData(x))
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
