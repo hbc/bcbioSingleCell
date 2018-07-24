@@ -84,11 +84,11 @@ This is our current method for handling [10X Genomics Cell Ranger][cellranger] o
 | sample3     | wildtype |
 | sample4     | knockout |
 
-### Forbidden metadata fields
-The following fields are forbidden as user-supplied metadata, as they are used
-internally:
 
-`nCells`
+## Markers
+
+Shared [cell-cycle markers][] and [cell-type markers][] are available on [Google Sheets][]. Contact [Michael Steinbaugh][] if you'd like to contribute to this list, and he'll enable write access.
+
 
 ## Troubleshooting
 
@@ -116,10 +116,14 @@ The papers and software cited in our workflows are available as a [shared librar
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
 [Bioconductor]: https://bioconductor.org
+[Cell-cycle markers]: https://docs.google.com/spreadsheets/d/1qA5ktYeimNGpZF1UPSQZATbpzEqgyxN6daoMOjv6YYw
+[Cell-type markers]: https://docs.google.com/spreadsheets/d/1vGNU2CCxpaoTCLvzOxK1hf5gjULrf2-CpgCp9bOfGJ0
 [CellRanger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
 [conda]: https://conda.io
 [devtools]: https://cran.r-project.org/package=devtools
+[Google Sheets]: https://www.google.com/sheets
 [inDrops]: https://github.com/indrops/indrops
+[Michael Steinbaugh]: https://mike.steinbaugh.com
 [Paperpile]: https://paperpile.com
 [R]: https://www.r-project.org
 [SCE]: https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment
