@@ -1,3 +1,5 @@
+# FIXME Check for colData, sampleData mismatch
+
 setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 

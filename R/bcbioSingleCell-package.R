@@ -75,7 +75,7 @@
 #' @importFrom rhdf5 h5dump h5read
 #' @importFrom rlang !! !!! sym syms UQ
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
-#'   complete.cases mcols metadata metadata<- na.omit
+#'   complete.cases mcols merge metadata metadata<- na.omit
 #' @importFrom scales percent pretty_breaks
 #' @importFrom Seurat as.SingleCellExperiment CreateSeuratObject FetchData
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
