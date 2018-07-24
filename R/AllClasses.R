@@ -1,5 +1,3 @@
-# FIXME Check for colData, sampleData mismatch
-
 setOldClass(Classes = c("grouped_df", "tbl_df", "tibble"))
 
 
@@ -473,6 +471,14 @@ setValidity(
         assert_is_all_of(rowRanges(object), "GRanges")
         assert_is_all_of(rowData(object), "DataFrame")
 
+        # Column data ==========================================================
+        # Ensure that sample-level metadata is also defined at cell-level.
+        # We're doing this in long format in the colData slot.
+        assert_is_subset(
+            x = colnames(sampleData(object, interestingGroups = NULL)),
+            y = colnames(colData(object))
+        )
+
         # Metadata =============================================================
         metadata <- metadata(object)
 
@@ -547,6 +553,9 @@ setValidity(
             x = metadata[["level"]],
             y = c("genes", "transcripts")
         )
+
+        # Ensure that sampleID isn't defined in `sampleData`
+        stopifnot(!"sampleID" %in% colnames(sampleData(object)))
 
         TRUE
     }
