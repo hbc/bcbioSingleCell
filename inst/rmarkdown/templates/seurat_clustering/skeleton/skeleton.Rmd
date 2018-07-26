@@ -17,7 +17,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-07-09
+# Last modified 2018-07-26
 
 # Highly recommended to run this template on an HPC cluster
 # stopifnot(detectHPC())
@@ -99,6 +99,7 @@ First, let's create a `seurat` object using the raw counts from the cells that h
 # handles gene to symbol conversion and stashes metadata in the `@misc` slot.
 # getMethod("coerce", signature(from = "bcbioSingleCell", to = "seurat"))
 seurat <- as(bcb, "seurat") %>%
+    convertGenesToSymbols() %>%
     NormalizeData(
         normalization.method = "LogNormalize",
         scale.factor = 10000
