@@ -41,7 +41,7 @@ setAs(
         ))
         message(paste0(
             "Use `convertGenesToSymbols()` to convert ",
-            "gene IDs (`geneID`) to gene names (`geneName`).\n",
+            "gene IDs to names (symbols).\n",
             "This step is no longer automatic, as of v0.1.18."
         ))
 
