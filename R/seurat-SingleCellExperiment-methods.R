@@ -13,7 +13,15 @@ NULL
 
 
 
-# SingleCellExperiment =========================================================
+# Assert check to see if we're modifying a freshly created seurat object
+.isNewSeurat <- function(object) {
+    assert_are_identical(x@raw.data, x@data)
+    stopifnot(is.null(x@scale.data))
+    stopifnot(!length(x@var.genes))
+}
+
+
+
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom SummarizedExperiment assay
 #' @export
@@ -77,6 +85,33 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom BiocGenerics colnames<-
+#' @export
+setMethod(
+    "colnames<-",
+    signature("seurat"),
+    function(x, value) {
+        .isNewSeurat(x)
+        colnames(x@raw.data) <- value
+        x@data <- x@raw.data
+        x
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom basejump convertGenesToSymbols
+#' @export
+setMethod(
+    "convertGenesToSymbols",
+    signature("seurat"),
+    getMethod("convertGenesToSymbols", "SummarizedExperiment")
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom BiocGenerics counts
 #' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
 #' @export
@@ -87,6 +122,48 @@ setMethod(
         object <- as(object, "SingleCellExperiment")
         counts(object)
     }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom basejump gene2symbol
+#' @export
+setMethod(
+    "gene2symbol",
+    signature("seurat"),
+    getMethod("gene2symbol", "SummarizedExperiment")
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom basejump interestingGroups
+#' @export
+setMethod(
+    "interestingGroups",
+    signature("seurat"),
+    getMethod("interestingGroups", "SummarizedExperiment")
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom basejump interestingGroups<-
+#' @export
+setMethod(
+    "interestingGroups<-",
+    signature(
+        object = "seurat",
+        value = "character"
+    ),
+    getMethod(
+        "interestingGroups<-",
+        signature(
+            object = "SummarizedExperiment",
+            value = "character"
+        )
+    )
 )
 
 
@@ -181,45 +258,18 @@ setMethod(
 
 
 
-# bcbioBase Methods ============================================================
 #' @rdname seurat-SingleCellExperiment
-#' @importFrom basejump gene2symbol
+#' @importFrom BiocGenerics rownames<-
 #' @export
 setMethod(
-    "gene2symbol",
+    "rownames<-",
     signature("seurat"),
-    getMethod("gene2symbol", "SummarizedExperiment")
-)
-
-
-
-#' @rdname seurat-SingleCellExperiment
-#' @importFrom basejump interestingGroups
-#' @export
-setMethod(
-    "interestingGroups",
-    signature("seurat"),
-    getMethod("interestingGroups", "SummarizedExperiment")
-)
-
-
-
-#' @rdname seurat-SingleCellExperiment
-#' @importFrom basejump interestingGroups<-
-#' @export
-setMethod(
-    "interestingGroups<-",
-    signature(
-        object = "seurat",
-        value = "character"
-    ),
-    getMethod(
-        "interestingGroups<-",
-        signature(
-            object = "SummarizedExperiment",
-            value = "character"
-        )
-    )
+    function(x, value) {
+        .isNewSeurat(x)
+        rownames(x@raw.data) <- value
+        x@data <- x@raw.data
+        x
+    }
 )
 
 
