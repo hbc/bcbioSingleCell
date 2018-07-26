@@ -3,11 +3,12 @@
 # 2018-07-26
 
 library(devtools)
-load_all()
+library(tidyverse)
 library(Seurat)
 library(Matrix)
-library(tidyverse)
+load_all()
 
+# Minimal example bcbio upload directory =======================================
 # Include the top 500 genes (rows) and cells (columns)
 upload_dir <- "inst/extdata/indrops"
 sample <- "multiplexed-AAAAAAAA"
@@ -47,12 +48,12 @@ rownames(counts) <- rownames
 colnames(counts) <- colnames
 
 # Subset the matrix to include only the top genes and cells
-top_genes <- rowSums(counts) %>%
+top_genes <- Matrix::rowSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
 genes <- sort(names(top_genes))
 
-top_cells <- colSums(counts) %>%
+top_cells <- Matrix::colSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
 cells <- sort(names(top_cells))
@@ -98,7 +99,6 @@ stopifnot(identical(dim(indrops_small), c(500L, 500L)))
 # seurat =======================================================================
 # Let's handoff to seurat to perform dimensionality reduction and clustering,
 # then slot the DR data in our bcbioRNASeq object
-
 seurat <- as(bcb, "seurat") %>%
     NormalizeData() %>%
     FindVariableGenes(do.plot = FALSE) %>%
@@ -121,8 +121,10 @@ stopifnot(identical(
 ))
 stopifnot(identical(dimnames(bcb), dimnames(seurat_sce)))
 
+
+
+# Save =========================================================================
 # Slot the reduced dimensions into our bcbioSingleCell object
 reducedDims(bcb) <- reducedDims(seurat_sce)
-
 indrops_small <- bcb
 use_data(indrops_small, compress = "xz", overwrite = TRUE)

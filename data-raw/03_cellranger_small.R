@@ -1,15 +1,13 @@
 # Cell Ranger Example Data
-# 2018-07-20
+# 2018-07-26
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
-library(assertive)
 library(devtools)
 library(tidyverse)
+library(Seurat)
 library(Matrix)
 load_all()
-
-
 
 # Complete dataset =============================================================
 # Directory structure:
@@ -24,33 +22,35 @@ dir.create(upload_dir, recursive = TRUE)
 outs_dir <- file.path(upload_dir, "pbmc", "outs")
 dir.create(outs_dir, recursive = TRUE, showWarnings = FALSE)
 tar_file <- file.path(upload_dir, "pbmc.tar.gz")
-download.file(
-    url = paste(
-        "http://cf.10xgenomics.com",
-        "samples",
-        "cell-exp",
-        "2.1.0",
-        "pbmc4k",
-        "pbmc4k_filtered_gene_bc_matrices.tar.gz",
-        sep = "/"
-    ),
-    destfile = tar_file
-)
+if (!file.exists(tar_file)) {
+    download.file(
+        url = paste(
+            "http://cf.10xgenomics.com",
+            "samples",
+            "cell-exp",
+            "2.1.0",
+            "pbmc4k",
+            "pbmc4k_filtered_gene_bc_matrices.tar.gz",
+            sep = "/"
+        ),
+        destfile = tar_file
+    )
+}
 untar(tarfile = tar_file, exdir = outs_dir)
 stopifnot(identical(dir(outs_dir), "filtered_gene_bc_matrices"))
 
-pbmc <- readCellRanger(uploadDir = upload_dir, organism = "Homo sapiens")
-# Ensembl 92, expect 483 unannotated genes
-# dim(pbmc)
+sce <- readCellRanger(uploadDir = upload_dir, organism = "Homo sapiens")
+# Ensembl 92, expect 483 unannotated genes as warning
+# dim(sce)
 # [1] 33694  4340
 # Too large to save inside package
-saveData(pbmc, dir = "~")
+saveData(sce, dir = "~")
 
 
 
 # cellranger_small =============================================================
 # Subset to only include the top 500 genes (rows) and cells (columns)
-counts <- counts(pbmc)
+counts <- counts(sce)
 
 # Subset the matrix to include only the top genes and cells
 top_genes <- Matrix::rowSums(counts) %>%
@@ -63,12 +63,12 @@ top_cells <- Matrix::colSums(counts) %>%
     head(n = 500L)
 cells <- sort(names(top_cells))
 
-cellranger_small <- pbmc[genes, cells]
-use_data(cellranger_small, compress = "xz", overwrite = TRUE)
+# Subset the full PBMC dataset to be minimal
+sce <- sce[genes, cells]
 
 
 
-# readCellRanger extdata example ===============================================
+# Minimal example cellranger directory =========================================
 input_dir <- file.path(
     upload_dir,
     "pbmc",
@@ -112,4 +112,44 @@ barcodes <- read_lines(
 write_lines(
     x = barcodes,
     path = file.path(output_dir, "barcodes.tsv")
+)
+
+
+
+# seurat =======================================================================
+# Let's handoff to seurat to perform dimensionality reduction and clustering,
+# then slot the DR data in our bcbioRNASeq object
+seurat <- as(sce, "seurat") %>%
+    NormalizeData() %>%
+    FindVariableGenes(do.plot = FALSE) %>%
+    ScaleData() %>%
+    RunPCA(do.print = FALSE) %>%
+    FindClusters(
+        resolution = seq(from = 0.4, to = 1.2, by = 0.4)
+    ) %>%
+    RunTSNE() %>%
+    # Requires `umap-learn` Python package.
+    # Install with conda or pip.
+    RunUMAP() %>%
+    SetAllIdent(id = "res.0.4")
+
+# Coerce seurat to SingleCellExperiment, which contains `reducedDims` slot
+seurat_sce <- as(seurat, "SingleCellExperiment")
+stopifnot(identical(
+    names(reducedDims(seurat_sce)),
+    c("PCA", "TSNE", "UMAP")
+))
+stopifnot(identical(dimnames(sce), dimnames(seurat_sce)))
+
+
+
+# Save =========================================================================
+# Slot the reduced dimensions into our bcbioSingleCell object
+reducedDims(sce) <- reducedDims(seurat_sce)
+cellranger_small <- sce
+seurat_small <- seurat
+use_data(
+    cellranger_small, seurat_small,
+    compress = "xz",
+    overwrite = TRUE
 )
