@@ -35,17 +35,15 @@ setAs(
     from = "SingleCellExperiment",
     to = "seurat",
     function(from) {
-        # Require that technical replicates are aggregated
-        if ("aggregate" %in% colnames(sampleData(from))) {
-            message(paste(
-                "`aggregate` metadata column detected.",
-                "Use `aggregateReplicates()` to combine technical replicates.",
-                sep = "\n"
-            ))
-        }
-
-        # Convert gene identifiers to symbols
-        from <- convertGenesToSymbols(from)
+        # Inform the user that gene-to-symbol conversion is no longer automatic
+        if (all(
+            c("geneID", "geneName") %in% colnames(mcols(rowRanges(from)))
+        ))
+        message(paste0(
+            "Use `convertGenesToSymbols()` to convert ",
+            "gene IDs (`geneID`) to gene names (`geneName`).\n",
+            "This step is no longer automatic, as of v0.1.18."
+        ))
 
         # Create the seurat object
         to <- CreateSeuratObject(
