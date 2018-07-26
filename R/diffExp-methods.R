@@ -1,12 +1,17 @@
 #' Differential Expression
 #'
-#' We now generally recommend the ZINB-WaVE method over zingeR, since it is
+#' We are currently recommending the ZINB-WaVE method over zingeR, since it is
 #' faster, and has been show to be more sensitive for most single-cell RNA-seq
 #' datasets.
 #'
 #' @section zinbwave:
 #' We are currently using an epsilon setting of `1e12`, as recommended by the
-#' ZINB-WaVE integration paper.
+#' ZINB-WaVE integration paper. For more information on the zinbwave package,
+#' refer to these materials:
+#'
+#' - [zinbwave paper](https://doi.org/10.1186/s13059-018-1406-4).
+#' - [zinbwave vignette](https://bit.ly/2wtDdpS).
+#' - [zinbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
 #'
 #' @section edgeR:
 #' After estimation of the dispersions and posterior probabilities, the
@@ -22,10 +27,15 @@
 #' We're providing preliminary support for DESeq2 as the differential expression
 #' caller. It is currently considerably slower for large datasets than edgeR.
 #'
-#' @seealso Consult the following sources for more information:
-#' - [zinbwave paper](https://doi.org/10.1186/s13059-018-1406-4).
-#' - [zinbwave vignette](https://bit.ly/2wtDdpS).
-#' - [zinbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
+#' We're trying to follow the conventions used in DESeq2 for contrasts, defining
+#' the name of the factor in the design formula, numerator, and denominator
+#' level for the fold change calculations. See [DESeq2::results()] for more
+#' information.
+#'
+#' @section Seurat conventions:
+#' Note that Seurat currently uses the convention `cells.1` for the numerator
+#' and `cells.2` for the denominator. See [Seurat::DiffExpTest()] for
+#' additional information.
 #'
 #' @name diffExp
 #' @family Differential Expression Functions
@@ -37,7 +47,7 @@
 #' @param denominator `character`. Cells to use in the denominator of the
 #'   contrast (e.g. control).
 #' @param caller `string`. Package to use for differential expression calling.
-#'   Defaults to "`edgeR`" (faster for large datasets) but "`DESeq2"` is also
+#'   Defaults to `"edgeR"` (faster for large datasets) but `"DESeq2"` is also
 #'   supported.
 #' @param minCellsPerGene `scalar integer`. The minimum number of cells where a
 #'   gene is expressed, to pass low expression filtering. Set to `0` to disable
@@ -46,16 +56,7 @@
 #'   for a gene to pass low expression filtering. The number of cells is defined
 #'   by `minCellsPerGene`. Set to `0` to disable (*not recommended*).
 #'
-#' @seealso
-#' - DESeq2: We're trying to follow the conventions used in DESeq2 for
-#'   contrasts, defining the name of the factor in the design formula,
-#'   numerator, and denominator level for the fold change calculations. See
-#'   [DESeq2::results()] for more information.
-#' - Seurat: Note that Seurat currently uses the convention `cells.1` for the
-#'   numerator and `cells.2` for the denominator. See [Seurat::DiffExpTest()]
-#'   for additional information.
-#'
-#' @return
+#' @return Varies depending on the `caller` argument:
 #' - `caller = "edgeR"`: `DEGLRT`.
 #' - `caller = "DESeq2"`: Unshrunken `DESeqResults`. Use `lfcShrink()` if
 #'   shrunken results are desired.
