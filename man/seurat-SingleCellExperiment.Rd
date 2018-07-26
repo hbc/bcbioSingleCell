@@ -10,9 +10,9 @@
 \alias{colData,seurat-method}
 \alias{colData<-,seurat,DataFrame-method}
 \alias{colnames,seurat-method}
-\alias{colnames<-,seurat-method}
 \alias{convertGenesToSymbols,seurat-method}
 \alias{counts,seurat-method}
+\alias{colnames,seurat-method}
 \alias{gene2symbol,seurat-method}
 \alias{interestingGroups,seurat-method}
 \alias{interestingGroups<-,seurat,character-method}
@@ -21,7 +21,6 @@
 \alias{rowData,seurat-method}
 \alias{rowRanges,seurat-method}
 \alias{rownames,seurat-method}
-\alias{rownames<-,seurat-method}
 \alias{sampleNames,seurat-method}
 \title{Extend S4 Methods for \code{seurat} Class}
 \usage{
@@ -38,11 +37,11 @@
 
 \S4method{colnames}{seurat}(x)
 
-\S4method{colnames}{seurat}(x) <- value
-
 \S4method{convertGenesToSymbols}{seurat}(object)
 
 \S4method{counts}{seurat}(object)
+
+\S4method{colnames}{seurat}(x)
 
 \S4method{gene2symbol}{seurat}(object)
 
@@ -59,8 +58,6 @@
 \S4method{rowRanges}{seurat}(x)
 
 \S4method{rownames}{seurat}(x)
-
-\S4method{rownames}{seurat}(x) <- value
 
 \S4method{sampleNames}{seurat}(object)
 }
@@ -89,6 +86,9 @@ Match \code{SummarizedExperiment} method return.
 }
 \description{
 Provide limited \code{SingleCellExperiment}-like method support.
+
+Can't inherit SummarizedExperiment because seurat doesn't support dim, so
+therefore we can't assign rownames
 }
 \seealso{
 \code{getMethod("metadata<-", "Annotated")}
