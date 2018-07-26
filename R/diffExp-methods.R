@@ -1,3 +1,9 @@
+# TODO Rethink this approach...we want to run zinbwave once on the whole
+# dataset, for better power. We can slot this information in the object perhaps.
+# It can take a while for large datasets but it's worth it.
+
+
+
 #' Differential Expression
 #'
 #' We are currently recommending the ZINB-WaVE method over zingeR, since it is
