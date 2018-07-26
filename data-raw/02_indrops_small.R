@@ -1,11 +1,12 @@
-# indrops_small (harvard-indrop-v3)
-# 2018-07-12
+# inDrops example dataset (indrops_small)
+# Using harvard-indrop-v3 barcodes
+# 2018-07-26
 
-library(assertive)
 library(devtools)
-library(tidyverse)
-library(Matrix)
 load_all()
+library(Seurat)
+library(Matrix)
+library(tidyverse)
 
 # Include the top 500 genes (rows) and cells (columns)
 upload_dir <- "inst/extdata/indrops"
@@ -31,9 +32,10 @@ barcodes_file <- file.path(
     sample,
     paste0(sample, "-barcodes.tsv")
 )
-assert_all_are_existing_files(
+
+stopifnot(all(file.exists(
     c(counts_file, rownames_file, colnames_file, barcodes_file)
-)
+)))
 
 # Prepare the sparse matrix
 counts <- readMM(counts_file)
@@ -70,8 +72,8 @@ write_lines(rownames(counts), path = rownames_file)
 write_lines(colnames(counts), path = colnames_file)
 write_tsv(barcodes, path = barcodes_file, col_names = FALSE)
 
-# indrops_small ================================================================
-indrops_small <- bcbioSingleCell(
+# bcbioRNASeq object ===========================================================
+bcb <- bcbioSingleCell(
     uploadDir = upload_dir,
     sampleMetadataFile = file.path(upload_dir, "metadata.csv"),
     organism = "Homo sapiens",
@@ -79,16 +81,48 @@ indrops_small <- bcbioSingleCell(
 )
 
 # Apply example filtering without excluding any cells
-indrops_small <- filterCells(
-    object = indrops_small,
+bcb <- filterCells(
+    object = bcb,
     minUMIs = 0,
+    maxUMIs = Inf,
     minGenes = 0,
+    maxGenes = Inf,
     minNovelty = 0,
     maxMitoRatio = 1,
     minCellsPerGene = 0
 )
 
 # Require 500 cells, 500 genes
-assert_are_identical(dim(indrops_small), c(500L, 500L))
+stopifnot(identical(dim(indrops_small), c(500L, 500L)))
 
+# seurat =======================================================================
+# Let's handoff to seurat to perform dimensionality reduction and clustering,
+# then slot the DR data in our bcbioRNASeq object
+
+seurat <- as(bcb, "seurat") %>%
+    NormalizeData() %>%
+    FindVariableGenes(do.plot = FALSE) %>%
+    ScaleData() %>%
+    RunPCA(do.print = FALSE) %>%
+    FindClusters(
+        resolution = seq(from = 0.4, to = 1.2, by = 0.4)
+    ) %>%
+    RunTSNE() %>%
+    # Requires `umap-learn` Python package.
+    # Install with conda or pip.
+    RunUMAP() %>%
+    SetAllIdent(id = "res.0.4")
+
+# Coerce seurat to SingleCellExperiment, which contains `reducedDims` slot
+seurat_sce <- as(seurat, "SingleCellExperiment")
+stopifnot(identical(
+    names(reducedDims(seurat_sce)),
+    c("PCA", "TSNE", "UMAP")
+))
+stopifnot(identical(dimnames(bcb), dimnames(seurat_sce)))
+
+# Slot the reduced dimensions into our bcbioSingleCell object
+reducedDims(bcb) <- reducedDims(seurat_sce)
+
+indrops_small <- bcb
 use_data(indrops_small, compress = "xz", overwrite = TRUE)
