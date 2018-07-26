@@ -68,8 +68,6 @@ setMethod(
 
 
 
-# Note that Seurat subset operations keep `raw.data` matrix unmodified by
-# default and only subset the `data` matrix
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom BiocGenerics colnames
 #' @export
@@ -84,29 +82,30 @@ setMethod(
 
 
 
-#' @rdname seurat-SingleCellExperiment
-#' @importFrom BiocGenerics colnames<-
-#' @export
-setMethod(
-    "colnames<-",
-    signature("seurat"),
-    function(x, value) {
-        .isNewSeurat(x)
-        colnames(x@raw.data) <- value
-        x@data <- x@raw.data
-        x
-    }
-)
-
-
-
+#' Can't inherit SummarizedExperiment because seurat doesn't support dim, so
+#' therefore we can't assign rownames
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom basejump convertGenesToSymbols
 #' @export
 setMethod(
     "convertGenesToSymbols",
     signature("seurat"),
-    getMethod("convertGenesToSymbols", "SummarizedExperiment")
+    function(object) {
+        validObject(object)
+        .isNewSeurat(object)
+        gene2symbol <- gene2symbol(object)
+        if (is.null(gene2symbol)) {
+            warning("Object doesn't contain gene-to-symbol mappings")
+            return(object)
+        }
+        symbols <- gene2symbol %>%
+            .[, "geneName", drop = TRUE] %>%
+            as.character() %>%
+            make.unique()
+        rownames(object@raw.data) <- symbols
+        object@data <- object@raw.data
+        object
+    }
 )
 
 
@@ -121,6 +120,20 @@ setMethod(
     function(object) {
         object <- as(object, "SingleCellExperiment")
         counts(object)
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom BiocGenerics dim
+#' @export
+setMethod(
+    "colnames",
+    signature("seurat"),
+    function(x) {
+        x <- as(x, "SingleCellExperiment")
+        colnames(x)
     }
 )
 
@@ -253,22 +266,6 @@ setMethod(
     function(x) {
         x <- as(x, "SingleCellExperiment")
         rownames(x)
-    }
-)
-
-
-
-#' @rdname seurat-SingleCellExperiment
-#' @importFrom BiocGenerics rownames<-
-#' @export
-setMethod(
-    "rownames<-",
-    signature("seurat"),
-    function(x, value) {
-        .isNewSeurat(x)
-        rownames(x@raw.data) <- value
-        x@data <- x@raw.data
-        x
     }
 )
 
