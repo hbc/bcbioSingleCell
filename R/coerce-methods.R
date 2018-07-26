@@ -1,5 +1,8 @@
 #' Methods for Coercing an Object to a Class
 #'
+#' @note Use [convertGenesToSymbols()] to convert gene IDs to names (symbols).
+#'   This step is no longer automatic, as of v0.1.18.
+#'
 #' @name coerce
 #' @aliases as
 #' @family S4 Object
@@ -35,16 +38,6 @@ setAs(
     from = "SingleCellExperiment",
     to = "seurat",
     function(from) {
-        # Inform the user that gene-to-symbol conversion is no longer automatic
-        if (all(
-            c("geneID", "geneName") %in% colnames(mcols(rowRanges(from)))
-        ))
-        message(paste0(
-            "Use `convertGenesToSymbols()` to convert ",
-            "gene IDs to names (symbols).\n",
-            "This step is no longer automatic, as of v0.1.18."
-        ))
-
         # Create the seurat object
         to <- CreateSeuratObject(
             raw.data = counts(from),
