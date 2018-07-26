@@ -14,10 +14,10 @@ NULL
 
 
 # Assert check to see if we're modifying a freshly created seurat object
-.isNewSeurat <- function(object) {
-    assert_are_identical(x@raw.data, x@data)
-    stopifnot(is.null(x@scale.data))
-    stopifnot(!length(x@var.genes))
+.assertIsNewSeurat <- function(object) {
+    assert_are_identical(object@raw.data, object@data)
+    stopifnot(is.null(object@scale.data))
+    stopifnot(!length(object@var.genes))
 }
 
 
@@ -92,7 +92,7 @@ setMethod(
     signature("seurat"),
     function(object) {
         validObject(object)
-        .isNewSeurat(object)
+        .assertIsNewSeurat(object)
         gene2symbol <- gene2symbol(object)
         if (is.null(gene2symbol)) {
             warning("Object doesn't contain gene-to-symbol mappings")
@@ -126,7 +126,7 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
-#' @importFrom BiocGenerics dim
+#' @importFrom BiocGenerics colnames
 #' @export
 setMethod(
     "colnames",
