@@ -456,6 +456,7 @@ setMethod(
 
         cellTypes <- markers %>%
             pull("cellType") %>%
+            as.character() %>%
             na.omit() %>%
             unique()
         assert_is_non_empty(cellTypes)
@@ -464,6 +465,7 @@ setMethod(
             genes <- markers %>%
                 filter(cellType == !!cellType) %>%
                 pull("geneName") %>%
+                as.character() %>%
                 na.omit() %>%
                 unique()
             assert_is_non_empty(genes)

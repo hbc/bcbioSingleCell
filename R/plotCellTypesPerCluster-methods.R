@@ -74,9 +74,10 @@ setMethod(
             lapply(seq_len(nrow(subset)), function(x) {
                 cellType <- subset[x, , drop = FALSE]
                 genes <- pull(cellType, "geneName") %>%
+                    as.character() %>%
                     strsplit(", ") %>%
                     .[[1L]]
-                title <- pull(cellType, "cellType")
+                title <- as.character(pull(cellType, "cellType"))
                 markdownHeader(
                     text = title,
                     level = headerLevel + 1L,
