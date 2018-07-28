@@ -7,6 +7,7 @@
 \alias{plotCellCounts,seurat-method}
 \alias{seurat-SingleCellExperiment}
 \alias{assay,seurat,ANY-method}
+\alias{assays,seurat-method}
 \alias{colData,seurat-method}
 \alias{colData<-,seurat,DataFrame-method}
 \alias{colnames,seurat-method}
@@ -17,6 +18,7 @@
 \alias{interestingGroups<-,seurat,character-method}
 \alias{metadata,seurat-method}
 \alias{metadata<-,seurat-method}
+\alias{reducedDims,seurat-method}
 \alias{rowData,seurat-method}
 \alias{rowRanges,seurat-method}
 \alias{rownames,seurat-method}
@@ -29,6 +31,8 @@
   title = "cell counts")
 
 \S4method{assay}{seurat,ANY}(x)
+
+\S4method{assays}{seurat}(x)
 
 \S4method{colData}{seurat}(x)
 
@@ -51,6 +55,8 @@
 \S4method{metadata}{seurat}(x)
 
 \S4method{metadata}{seurat}(x) <- value
+
+\S4method{reducedDims}{seurat}(x)
 
 \S4method{rowData}{seurat}(x)
 
