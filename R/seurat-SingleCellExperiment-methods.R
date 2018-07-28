@@ -267,9 +267,15 @@ setMethod(
         stash <- slot(x, "misc")[["bcbio"]][["rowRanges"]]
         if (is(stash, "GRanges")) {
             assert_is_subset(c("geneID", "geneName"), colnames(mcols(stash)))
-            names(stash) <- mcols(stash)[["geneName"]] %>%
-                as.character() %>%
-                make.unique()
+            # Check to see if we're using IDs or symbols
+            if (any(names(gr) %in% mcols(stash)[["geneID"]])) {
+                col <- "geneID"
+            } else if (any(names(gr) %in% mcols(stash)[["geneName"]])) {
+                col <- "geneName"
+            } else {
+                stop("Failed to match identifiers to rownames")
+            }
+            names(stash) <- make.unique(as.character(mcols(stash)[[col]]))
             assert_is_subset(names(gr), names(stash))
             stash <- stash[names(gr)]
             assert_are_disjoint_sets(
