@@ -247,7 +247,7 @@ setMethod(
     "rowData",
     signature("seurat"),
     function(x, ...) {
-        rowData(as.SingleCellExperiment(x), ...)
+        rowData(as(x, "SingleCellExperiment"), ...)
     }
 )
 
@@ -259,15 +259,26 @@ setMethod(
     "rowRanges",
     signature("seurat"),
     function(x, ...) {
+        gr <- rowRanges(as.SingleCellExperiment(x), ...)
+
         # Attempt to use stashed rowRanges, if present
-        gr <- slot(x, "misc")[["bcbio"]][["rowRanges"]]
-        if (is(gr, "GRanges")) {
-            assert_is_subset(c("geneID", "geneName"), colnames(mcols(gr)))
-            names(gr) <- make.unique(as.character(mcols(gr)[["geneName"]]))
-            assert_is_subset(rownames(x), names(gr))
-            return(gr[rownames(x)])
+        stash <- slot(x, "misc")[["bcbio"]][["rowRanges"]]
+        if (is(stash, "GRanges")) {
+            assert_is_subset(c("geneID", "geneName"), colnames(mcols(stash)))
+            names(stash) <- mcols(stash)[["geneName"]] %>%
+                as.character() %>%
+                make.unique()
+            assert_is_subset(names(gr), names(stash))
+            stash <- stash[names(gr)]
+            assert_are_disjoint_sets(
+                x = colnames(mcols(gr)),
+                y = colnames(mcols(stash))
+            )
+            mcols(stash) <- cbind(mcols(stash), mcols(gr))
+            gr <- stash
         }
-        rowRanges(as.SingleCellExperiment(x), ...)
+
+        gr
     }
 )
 
