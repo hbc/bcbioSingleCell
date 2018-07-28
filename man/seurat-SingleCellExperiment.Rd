@@ -30,11 +30,11 @@
 \S4method{plotCellCounts}{seurat}(object, interestingGroups, fill = NULL,
   title = "cell counts")
 
-\S4method{assay}{seurat,ANY}(x)
+\S4method{assay}{seurat,ANY}(x, i, ...)
 
-\S4method{assays}{seurat}(x)
+\S4method{assays}{seurat}(x, ..., withDimnames = TRUE)
 
-\S4method{colData}{seurat}(x)
+\S4method{colData}{seurat}(x, ...)
 
 \S4method{colData}{seurat,DataFrame}(x) <- value
 
@@ -42,7 +42,7 @@
 
 \S4method{convertGenesToSymbols}{seurat}(object)
 
-\S4method{counts}{seurat}(object)
+\S4method{counts}{seurat}(object, ...)
 
 \S4method{colnames}{seurat}(x)
 
@@ -52,15 +52,15 @@
 
 \S4method{interestingGroups}{seurat,character}(object) <- value
 
-\S4method{metadata}{seurat}(x)
+\S4method{metadata}{seurat}(x, ...)
 
 \S4method{metadata}{seurat}(x) <- value
 
 \S4method{reducedDims}{seurat}(x)
 
-\S4method{rowData}{seurat}(x)
+\S4method{rowData}{seurat}(x, ...)
 
-\S4method{rowRanges}{seurat}(x)
+\S4method{rowRanges}{seurat}(x, ...)
 
 \S4method{rownames}{seurat}(x)
 
@@ -81,6 +81,8 @@ using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 \item{title}{\code{string} or \code{NULL}. Plot title.}
 
 \item{x}{Primary object.}
+
+\item{...}{Additional arguments.}
 
 \item{value}{Object to assign.}
 

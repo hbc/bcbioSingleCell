@@ -28,8 +28,8 @@ NULL
 setMethod(
     "assay",
     signature("seurat"),
-    function(x) {
-        assay(as.SingleCellExperiment(x))
+    function(x, ...) {
+        assay(as.SingleCellExperiment(x), ...)
     }
 )
 
@@ -41,8 +41,8 @@ setMethod(
 setMethod(
     "assays",
     signature("seurat"),
-    function(x) {
-        assays(as.SingleCellExperiment(x))
+    function(x, ...) {
+        assays(as.SingleCellExperiment(x), ...)
     }
 )
 
@@ -54,8 +54,8 @@ setMethod(
 setMethod(
     "colData",
     signature("seurat"),
-    function(x) {
-        colData(as.SingleCellExperiment(x))
+    function(x, ...) {
+        colData(as.SingleCellExperiment(x), ...)
     }
 )
 
@@ -127,8 +127,8 @@ setMethod(
 setMethod(
     "counts",
     signature("seurat"),
-    function(object) {
-        counts(as.SingleCellExperiment(x))
+    function(object, ...) {
+        counts(as.SingleCellExperiment(object), ...)
     }
 )
 
@@ -194,15 +194,12 @@ setMethod(
 setMethod(
     "metadata",
     signature("seurat"),
-    function(x) {
+    function(x, ...) {
         stash <- slot(x, "misc")[["bcbio"]][["metadata"]]
         if (!is.null(stash)) {
-            stash
-        } else {
-            x %>%
-                as.SingleCellExperiment() %>%
-                metadata()
+            return(stash)
         }
+        metadata(as.SingleCellExperiment(x), ...)
     }
 )
 
@@ -249,8 +246,8 @@ setMethod(
 setMethod(
     "rowData",
     signature("seurat"),
-    function(x) {
-        rowData(as.SingleCellExperiment(x))
+    function(x, ...) {
+        rowData(as.SingleCellExperiment(x), ...)
     }
 )
 
@@ -261,7 +258,7 @@ setMethod(
 setMethod(
     "rowRanges",
     signature("seurat"),
-    function(x) {
+    function(x, ...) {
         # Attempt to use stashed rowRanges, if present
         gr <- slot(x, "misc")[["bcbio"]][["rowRanges"]]
         if (is(gr, "GRanges")) {
@@ -270,7 +267,7 @@ setMethod(
             assert_is_subset(rownames(x), names(gr))
             return(gr[rownames(x)])
         }
-        rowRanges(as.SingleCellExperiment(x))
+        rowRanges(as.SingleCellExperiment(x), ...)
     }
 )
 
