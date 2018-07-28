@@ -86,7 +86,7 @@ setAs(
     function(from) {
         validObject(from)
         to <- as.SingleCellExperiment(from)
-        rowRanges(to) <- rowRanges(to)
+        rowRanges(to) <- rowRanges(from)
         metadata(to) <- metadata(from)
         to
     }
