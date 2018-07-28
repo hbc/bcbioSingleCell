@@ -86,16 +86,7 @@ setAs(
     function(from) {
         validObject(from)
         to <- as.SingleCellExperiment(from)
-        assert_are_disjoint_sets(
-            x = colnames(mcols(rowRanges(from))),
-            y = colnames(mcols(rowRanges(to)))
-        )
-        rowRanges <- rowRanges(from)
-        mcols(rowRanges) <- cbind(
-            mcols(rowRanges),
-            mcols(rowRanges(to))
-        )
-        rowRanges(to) <- rowRanges
+        rowRanges(to) <- rowRanges(from)
         metadata(to) <- metadata(from)
         to
     }
