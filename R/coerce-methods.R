@@ -79,7 +79,6 @@ setAs(
 #' @examples
 #' # seurat to SingleCellExperiment ====
 #' x <- as(seurat_small, "SingleCellExperiment")
-#' class(x)
 #' print(x)
 setAs(
     from = "seurat",
@@ -87,6 +86,24 @@ setAs(
     function(from) {
         validObject(from)
         to <- as.SingleCellExperiment(from)
+        # Attempt to use stashed rowRanges to convert back to gene IDs.
+        # These will only be defined when using our `as()` coercion method.
+        gr <- slot(from, "misc")[["bcbio"]][["rowRanges"]]
+        if (is(gr, "GRanges")) {
+            message(paste(
+                "Gene-to-symbol mappings detected",
+                "Converting gene names (symbols) back to IDs",
+                sep = "\n"
+            ))
+            assert_is_subset(c("geneID", "geneName"), colnames(mcols(gr)))
+            seuratRowname <- make.unique(as.character(mcols(gr)[["geneName"]]))
+            assert_is_subset(rownames(to), seuratRowname)
+            mcols(gr)[["seuratRowname"]] <- seuratRowname
+            names(gr) <- seuratRowname
+            gr <- gr[seuratRowname]
+            rowRanges(to) <- gr
+            to <- convertSymbolsToGenes(to)
+        }
         metadata(to) <- metadata(from)
         to
     }
