@@ -34,7 +34,8 @@
   
 <meta property="og:title" content="Update an Object to Its Current Class Definition — updateObject" />
 
-<meta property="og:description" content="Update an Object to Its Current Class Definition" />
+<meta property="og:description" content="updateObject is a generic function that returns an instance
+  of object updated to its current class definition." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -106,7 +107,8 @@
 
     <div class="ref-description">
     
-    <p>Update an Object to Its Current Class Definition</p>
+    <p><code>updateObject</code> is a generic function that returns an instance
+  of <code>object</code> updated to its current class definition.</p>
     
     </div>
 
@@ -127,7 +129,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>bcbioRNASeq</code>.</p>
+    <p>Valid object.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -181,19 +183,32 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>updateObject</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; <span class='message'>Upgrading from 0.1.17 to 0.1.17</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.17
-#&gt; Samples: 1
-#&gt; Cells: 500
-#&gt; Genes: 500
-#&gt; Assays: counts
-#&gt; Organism: Homo sapiens
-#&gt; AnnotationHub: AH57757
-#&gt; Ensembl Release: 90
-#&gt; Genome Build: GRCh38
-#&gt; Filtered: TRUE
-#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
+<span class='fu'>updateObject</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; <span class='message'>Upgrading from 0.1.18 to 0.1.18</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.18
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(35): version pipeline ... filterSummary previousVersion
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
+#&gt;   ENSG00000283391
+#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
+#&gt; colnames(500): multiplexed_AAAAAAAA_AAACACTA_ATCCCACG
+#&gt;   multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA ...
+#&gt;   multiplexed_AAAAAAAA_TGTTATCA_ACGCAGAG
+#&gt;   multiplexed_AAAAAAAA_TGTTATCA_CAAGTCAT
+#&gt; colData names(15): sampleID nCount ... aggregate revcomp
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):
+#&gt; ============================================================
+#&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-07-21</div></pre>
+#&gt; R Load Date: 2018-07-28
+#&gt; Level: "genes"
+#&gt; Organism: "Homo sapiens"
+#&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
+#&gt; AnnotationHub: "AH57757"
+#&gt; Ensembl Release: "90"
+#&gt; Genome Build: "GRCh38"
+#&gt; Filtered: TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -135,28 +135,29 @@
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
       <th>trendline</th>
-      <td><p>Include trendline on plot.</p></td>
+      <td><p><code>boolean</code>. Include trendline on plot.</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Desired ggplot color scale. Must supply discrete values. When
-set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-<code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot color scale.
+Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
     </tr>
     <tr>
       <th>trans</th>
-      <td><p>Name of the axis scale transformation to apply. See
+      <td><p><code>string</code>. Name of the axis scale transformation to apply. See
 <code>help("scale_x_continuous", "ggplot2")</code> for more information.</p></td>
     </tr>
     <tr>
       <th>title</th>
-      <td><p>Plot title.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Plot title.</p></td>
     </tr>
     </table>
     

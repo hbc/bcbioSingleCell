@@ -68,7 +68,7 @@ sampleData())." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -140,36 +140,38 @@ use the <code>sampleNames()</code> return values (i.e. the <code>sampleName</cod
     </tr>
     <tr>
       <th>nCells</th>
-      <td><p>Expected number of cells per sample.</p></td>
+      <td><p><code>scalar integer</code>. Expected number of cells per sample.</p></td>
     </tr>
     <tr>
       <th>minUMIs</th>
-      <td><p>Minimum number of UMI disambiguated counts per cell.</p></td>
+      <td><p><code>scalar integer</code>. Minimum number of UMI disambiguated counts per cell.</p></td>
     </tr>
     <tr>
       <th>maxUMIs</th>
-      <td><p>Maximum number of UMI disambiguated counts per cell.</p></td>
+      <td><p><code>scalar integer</code>. Maximum number of UMI disambiguated counts per cell.</p></td>
     </tr>
     <tr>
       <th>minGenes</th>
-      <td><p>Minimum number of genes detected.</p></td>
+      <td><p><code>scalar integer</code>. Minimum number of genes detected.</p></td>
     </tr>
     <tr>
       <th>maxGenes</th>
-      <td><p>Maximum number of genes detected.</p></td>
+      <td><p><code>scalar integer</code>. Maximum number of genes detected.</p></td>
     </tr>
     <tr>
       <th>minNovelty</th>
-      <td><p>Minimum novelty score (log10 genes per UMI).</p></td>
+      <td><p><code>scalar integer</code> (<code>0</code>-<code>1</code>). Minimum novelty score (log10
+genes per UMI).</p></td>
     </tr>
     <tr>
       <th>maxMitoRatio</th>
-      <td><p>Maximum relative mitochondrial abundance (<code>0-1</code> scale).</p></td>
+      <td><p><code>scalar integer</code> (<code>0</code>-<code>1</code>). Maximum relative
+mitochondrial abundance.</p></td>
     </tr>
     <tr>
       <th>minCellsPerGene</th>
-      <td><p>Include genes with non-zero expression in at least
-this many cells.</p></td>
+      <td><p><code>scalar integer</code>. Include genes with non-zero
+expression in at least this many cells.</p></td>
     </tr>
     </table>
     
@@ -181,15 +183,15 @@ this many cells.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/CreateSeuratObject'>Seurat::CreateSeuratObject()</a></code>.</p>
-<p>Other Quality Control Functions: <code>barcodeRanksPerSample</code>,
-  <code><a href='metrics.html'>metrics</a></code>, <code>plotCellCounts</code>,
-  <code>plotGenesPerCell</code>,
-  <code>plotMitoRatio</code>,
-  <code>plotMitoVsCoding</code>,
-  <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
-  <code>plotReadsPerCell</code>,
-  <code>plotUMIsPerCell</code>,
-  <code>plotZerosVsDepth</code></p></div>
+<p>Other Quality Control Functions: <code><a href='barcodeRanksPerSample.html'>barcodeRanksPerSample</a></code>,
+  <code><a href='metrics.html'>metrics</a></code>, <code><a href='plotCellCounts.html'>plotCellCounts</a></code>,
+  <code><a href='plotGenesPerCell.html'>plotGenesPerCell</a></code>,
+  <code><a href='plotMitoRatio.html'>plotMitoRatio</a></code>,
+  <code><a href='plotMitoVsCoding.html'>plotMitoVsCoding</a></code>,
+  <code><a href='plotNovelty.html'>plotNovelty</a></code>, <code><a href='plotQC.html'>plotQC</a></code>,
+  <code><a href='plotReadsPerCell.html'>plotReadsPerCell</a></code>,
+  <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code>,
+  <code><a href='plotZerosVsDepth.html'>plotZerosVsDepth</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -205,7 +207,7 @@ this many cells.</p></td>
 #&gt; colnames(500): pbmc_1_AAACCTGCAGGCGATA pbmc_1_AAACCTGCATGAAGTA ...
 #&gt;   pbmc_1_TTTGGTTTCGCTAGCG pbmc_1_TTTGTCACAGGTCCAC
 #&gt; colData names(10): sampleID nUMI ... description index
-#&gt; reducedDimNames(0):
+#&gt; reducedDimNames(3): PCA TSNE UMAP
 #&gt; spikeNames(0):</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
 #&gt; <span class='message'>  - &gt;= 0 UMIs per cell</span>
@@ -243,7 +245,7 @@ this many cells.</p></td>
 #&gt; colnames(500): pbmc_1_AAACCTGCAGGCGATA pbmc_1_AAACCTGCATGAAGTA ...
 #&gt;   pbmc_1_TTTGGTTTCGCTAGCG pbmc_1_TTTGTCACAGGTCCAC
 #&gt; colData names(10): sampleID nUMI ... description index
-#&gt; reducedDimNames(0):
+#&gt; reducedDimNames(3): PCA TSNE UMAP
 #&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
 #&gt; [1] Inf
 #&gt; 
@@ -311,7 +313,7 @@ this many cells.</p></td>
 #&gt; colnames(500): pbmc_1_AAACCTGCAGGCGATA pbmc_1_AAACCTGCATGAAGTA ...
 #&gt;   pbmc_1_TTTGGTTTCGCTAGCG pbmc_1_TTTGTCACAGGTCCAC
 #&gt; colData names(10): sampleID nUMI ... description index
-#&gt; reducedDimNames(0):
+#&gt; reducedDimNames(3): PCA TSNE UMAP
 #&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
 #&gt; [1] Inf
 #&gt; 

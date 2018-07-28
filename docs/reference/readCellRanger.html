@@ -64,7 +64,7 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -122,40 +122,43 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>uploadDir</th>
-      <td><p>Path to Cell Ranger output directory. This directory path
-must contain <code>filtered_gene_bc_matrices*</code> as a child directory.</p></td>
+      <td><p><code>string</code>. Path to Cell Ranger output directory. This
+directory path must contain <code>filtered_gene_bc_matrices*</code> as a child
+directory.</p></td>
     </tr>
     <tr>
       <th>format</th>
-      <td><p>Output format, either MatrixMarket ("<code>mtx</code>") or HDF5
+      <td><p><code>string</code>. Output format, either MatrixMarket ("<code>mtx</code>") or HDF5
 ("<code>hdf5</code>").</p></td>
     </tr>
     <tr>
       <th>filtered</th>
-      <td><p>Use filtered (recommended) or raw counts. Note that raw
-counts still contain only whitelisted cellular barcodes.</p></td>
+      <td><p><code>boolean</code>. Use filtered (recommended) or raw counts. Note
+that raw counts still contain only whitelisted cellular barcodes.</p></td>
     </tr>
     <tr>
       <th>organism</th>
-      <td><p>Organism name. Use the full latin name (e.g.
+      <td><p><code>string</code>. Organism name. Use the full latin name (e.g.
 "Homo sapiens"), since this will be input downstream to
 AnnotationHub and ensembldb, unless <code>gffFile</code> is set.</p></td>
     </tr>
     <tr>
       <th>sampleMetadataFile</th>
-      <td><p>Sample barcode metadata file. Optional for runs
-with demultiplixed index barcodes (e.g. SureCell), but otherwise required
-for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-inDrop).</p></td>
+      <td><p><code>string</code>. Sample barcode metadata file. Optional
+for runs with demultiplixed index barcodes (e.g. SureCell), but otherwise
+required for runs with multipliexed FASTQs containing multiple index
+barcodes (e.g. inDrop).</p></td>
     </tr>
     <tr>
       <th>refdataDir</th>
-      <td><p>Directory path to Cell Ranger reference annotation data.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Directory path to Cell Ranger reference
+annotation data.</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
       <th>transgeneNames</th>

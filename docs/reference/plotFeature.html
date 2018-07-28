@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -155,49 +155,49 @@
     </tr>
     <tr>
       <th>features</th>
-      <td><p>Character vector of features (e.g. gene expression, PC
+      <td><p><code>character</code>. Features to plot (e.g. gene expression, PC
 scores, number of genes detected).</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Desired ggplot color scale. Must supply discrete values. When
-set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-<code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot color scale.
+Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
     </tr>
     <tr>
       <th>pointSize</th>
-      <td><p>Cell point size.</p></td>
+      <td><p><code>scalar numeric</code>. Cell point size.</p></td>
     </tr>
     <tr>
       <th>pointAlpha</th>
-      <td><p>Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.</p></td>
+      <td><p><code>scalar numeric</code> (<code>0</code>-<code>1</code>). Alpha transparency level.
+Useful when there many cells in the dataset, and some cells can be masked.</p></td>
     </tr>
     <tr>
       <th>label</th>
-      <td><p>Overlay a cluster identitiy label on the plot.</p></td>
+      <td><p><code>boolean</code>. Overlay a cluster identitiy label on the plot.</p></td>
     </tr>
     <tr>
       <th>labelSize</th>
-      <td><p>Size of the text label.</p></td>
+      <td><p><code>scalar integer</code>. Size of the text label.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot against a dark background using
+      <td><p><code>boolean</code>. Plot against a dark background using
 <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
     </tr>
     <tr>
       <th>grid</th>
-      <td><p>Show major grid lines but hide axis lines.</p></td>
+      <td><p><code>boolean</code>. Show major grid lines but hide axis lines.</p></td>
     </tr>
     <tr>
       <th>legend</th>
-      <td><p>Include plot legend.</p></td>
+      <td><p><code>boolean</code>. Include plot legend.</p></td>
     </tr>
     <tr>
       <th>aspectRatio</th>
-      <td><p>Aspect ratio.</p></td>
+      <td><p><code>scalar integer</code>. Aspect ratio.</p></td>
     </tr>
     </table>
     
@@ -208,12 +208,12 @@ the dataset, and some cells can be masked.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/Seurat/topics/FeaturePlot'>Seurat::FeaturePlot()</a></code>.</p>
-<p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
-  <code>knownMarkersDetected</code>,
-  <code>plotCellTypesPerCluster</code>,
+<p>Other Clustering Functions: <code><a href='cellTypesPerCluster.html'>cellTypesPerCluster</a></code>,
+  <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
+  <code><a href='plotCellTypesPerCluster.html'>plotCellTypesPerCluster</a></code>,
   <code><a href='plotMarker.html'>plotKnownMarkersDetected</a></code>,
-  <code>plotPCElbow</code>, <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
-  <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
+  <code><a href='plotPCElbow.html'>plotPCElbow</a></code>, <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
+  <code><a href='sanitizeMarkers.html'>sanitizeMarkers</a></code>, <code><a href='topMarkers.html'>topMarkers</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

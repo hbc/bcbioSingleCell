@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -128,38 +128,40 @@
     </tr>
     <tr>
       <th>genes</th>
-      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
+      <td><p><code>character</code>. Gene identifiers. Must match the rownames of the
+object.</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Desired ggplot color scale. Must supply discrete values. When
-set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-<code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot color scale.
+Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
     </tr>
     <tr>
       <th>colMin</th>
-      <td><p>Minimum scaled average expression threshold. Everything
-smaller will be set to this.</p></td>
+      <td><p><code>scalar numeric</code>. Minimum scaled average expression threshold.
+Everything smaller will be set to this.</p></td>
     </tr>
     <tr>
       <th>colMax</th>
-      <td><p>Maximum scaled average expression threshold. Everything larger
-will be set to this.</p></td>
+      <td><p><code>scalar numeric</code>.Maximum scaled average expression threshold.
+Everything larger will be set to this.</p></td>
     </tr>
     <tr>
       <th>dotMin</th>
-      <td><p>The fraction of cells at which to draw the smallest dot. All
-cell groups with less than this expressing the given gene will have no dot
-drawn.</p></td>
+      <td><p><code>scalar numeric</code>.The fraction of cells at which to draw the
+smallest dot. All cell groups with less than this expressing the given gene
+will have no dot drawn.</p></td>
     </tr>
     <tr>
       <th>dotScale</th>
-      <td><p>Scale the size of the points, similar to <code>cex</code>.</p></td>
+      <td><p><code>scalar numeric</code>.Scale the size of the points, similar to
+<code>cex</code>.</p></td>
     </tr>
     <tr>
       <th>legend</th>
-      <td><p>Include plot legend.</p></td>
+      <td><p><code>boolean</code>. Include plot legend.</p></td>
     </tr>
     </table>
     

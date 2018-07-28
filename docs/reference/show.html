@@ -34,7 +34,11 @@
   
 <meta property="og:title" content="Show an Object — show" />
 
-<meta property="og:description" content="Show an Object" />
+<meta property="og:description" content="Display the object, by printing, plotting or whatever suits its
+  class.  This function exists to be specialized by methods.  The
+  default method calls showDefault.
+Formal methods for show will
+  usually be invoked for automatic printing (see the details)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -106,7 +110,11 @@
 
     <div class="ref-description">
     
-    <p>Show an Object</p>
+    <p>Display the object, by printing, plotting or whatever suits its
+  class.  This function exists to be specialized by methods.  The
+  default method calls <code>showDefault</code>.</p>
+<p>Formal methods for <code>show</code> will
+  usually be invoked for automatic printing (see the details).</p>
     
     </div>
 
@@ -149,19 +157,32 @@ the discussion in <code>setIs</code> for the general concept.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='fu'>show</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.17
-#&gt; Samples: 1
-#&gt; Cells: 500
-#&gt; Genes: 500
-#&gt; Assays: counts
-#&gt; Organism: Homo sapiens
-#&gt; AnnotationHub: AH57757
-#&gt; Ensembl Release: 90
-#&gt; Genome Build: GRCh38
-#&gt; Filtered: TRUE
-#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
+<span class='fu'>show</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.18
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(34): version pipeline ... filterParams filterSummary
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
+#&gt;   ENSG00000283391
+#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
+#&gt; colnames(500): multiplexed_AAAAAAAA_AAACACTA_ATCCCACG
+#&gt;   multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA ...
+#&gt;   multiplexed_AAAAAAAA_TGTTATCA_ACGCAGAG
+#&gt;   multiplexed_AAAAAAAA_TGTTATCA_CAAGTCAT
+#&gt; colData names(15): nCount sampleID ... aggregate revcomp
+#&gt; reducedDimNames(3): PCA TSNE UMAP
+#&gt; spikeNames(0):
+#&gt; ============================================================
+#&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-07-20</div></pre>
+#&gt; R Load Date: 2018-07-26
+#&gt; Level: "genes"
+#&gt; Organism: "Homo sapiens"
+#&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
+#&gt; AnnotationHub: "AH57757"
+#&gt; Ensembl Release: "90"
+#&gt; Genome Build: "GRCh38"
+#&gt; Filtered: TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

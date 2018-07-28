@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -116,81 +116,84 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>aspectRatio</th>
-      <td><p>Aspect ratio.</p></td>
+      <td><p><code>scalar integer</code>. Aspect ratio.</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Desired ggplot color scale. Must supply discrete values. When
-set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-<code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot color scale.
+Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>Desired ggplot fill scale. Must supply discrete values. When set
-to <code>NULL</code>, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot fill scale.
+Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
     </tr>
     <tr>
       <th>gene2symbol</th>
-      <td><p><code>data.frame</code> containing gene-to-symbol mappings. Columns
-must contain <code>geneID</code> and <code>geneName</code>.</p></td>
+      <td><p><code>data.frame</code>. Gene-to-symbol mappings. Columns must
+contain <code>geneID</code> and <code>geneName</code>.</p></td>
     </tr>
     <tr>
       <th>dark</th>
-      <td><p>Plot against a dark background using
+      <td><p><code>boolean</code>. Plot against a dark background using
 <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
     </tr>
     <tr>
       <th>dir</th>
-      <td><p>Output directory.</p></td>
+      <td><p><code>string</code>. Output directory path.</p></td>
     </tr>
     <tr>
       <th>expression</th>
-      <td><p>Calculation to apply. Uses <code>match.arg()</code> and defaults to
-the first argument in the vector.</p></td>
+      <td><p><code>string</code>. Calculation to apply. Uses <code>match.arg()</code> and
+defaults to the first argument in the <code>character</code> vector.</p></td>
     </tr>
     <tr>
       <th>genes</th>
-      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
+      <td><p><code>character</code>. Gene identifiers. Must match the rownames of the
+object.</p></td>
     </tr>
     <tr>
       <th>geom</th>
-      <td><p>Plot type. Uses <code>match.arg()</code> and defaults to the first argument
-in the vector.</p></td>
+      <td><p><code>string</code>. Plot type. Uses <code>match.arg()</code> and defaults to the first
+argument in the <code>character</code> vector.</p></td>
     </tr>
     <tr>
       <th>grid</th>
-      <td><p>Show major grid lines but hide axis lines.</p></td>
+      <td><p><code>boolean</code>. Show major grid lines but hide axis lines.</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
-      <td><p>R Markdown header level.</p></td>
+      <td><p><code>scalar integer</code> (<code>1</code>-<code>7</code>). R Markdown header level.</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
       <th>label</th>
-      <td><p>Overlay a cluster identitiy label on the plot.</p></td>
+      <td><p><code>boolean</code>. Overlay a cluster identitiy label on the plot.</p></td>
     </tr>
     <tr>
       <th>labelSize</th>
-      <td><p>Size of the text label.</p></td>
+      <td><p><code>scalar integer</code>. Size of the text label.</p></td>
     </tr>
     <tr>
       <th>legend</th>
-      <td><p>Include plot legend.</p></td>
+      <td><p><code>boolean</code>. Include plot legend.</p></td>
     </tr>
     <tr>
       <th>min</th>
-      <td><p>Recommended minimum value cutoff.</p></td>
+      <td><p><code>scalar numeric</code>. Recommended minimum value cutoff.</p></td>
     </tr>
     <tr>
       <th>max</th>
-      <td><p>Recommended maximum value cutoff.</p></td>
+      <td><p><code>scalar numeric</code>. Recommended maximum value cutoff.</p></td>
     </tr>
     <tr>
       <th>object</th>
@@ -198,43 +201,44 @@ formatted in camel case and intersect with <code><a href='sampleData.html'>sampl
     </tr>
     <tr>
       <th>pipeline</th>
-      <td><p>Pipeline used to generate the samples.</p></td>
+      <td><p><code>string</code>. Pipeline used to generate the samples.</p></td>
     </tr>
     <tr>
       <th>pointAlpha</th>
-      <td><p>Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.</p></td>
+      <td><p><code>scalar numeric</code> (<code>0</code>-<code>1</code>). Alpha transparency level.
+Useful when there many cells in the dataset, and some cells can be masked.</p></td>
     </tr>
     <tr>
       <th>pointsAsNumbers</th>
-      <td><p>Plot the points as numbers (<code>TRUE</code>) or dots (<code>FALSE</code>).</p></td>
+      <td><p><code>boolean</code>. Plot the points as numbers (<code>TRUE</code>) or
+dots (<code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>pointSize</th>
-      <td><p>Cell point size.</p></td>
+      <td><p><code>scalar numeric</code>. Cell point size.</p></td>
     </tr>
     <tr>
       <th>reduction</th>
-      <td><p>Dimensional reduction method to apply. Defaults to t-SNE
-("<code>TSNE</code>") but UMAP is also supported ("<code>UMAP</code>").</p></td>
+      <td><p><code>string</code>. Dimensional reduction method to apply. Defaults to
+t-SNE ("<code>TSNE</code>") but UMAP is also supported ("<code>UMAP</code>").</p></td>
     </tr>
     <tr>
       <th>return</th>
-      <td><p>Return type. Uses <code><a href='http://www.rdocumentation.org/packages/base/topics/match.arg'>base::match.arg()</a></code> internally and defaults
-to the first argument in the vector.</p></td>
+      <td><p><code>string</code>. Return type. Uses <code><a href='http://www.rdocumentation.org/packages/base/topics/match.arg'>base::match.arg()</a></code> internally and
+defaults to the first argument in the <code>character</code> vector.</p></td>
     </tr>
     <tr>
       <th>title</th>
-      <td><p>Plot title.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Plot title.</p></td>
     </tr>
     <tr>
       <th>trans</th>
-      <td><p>Name of the axis scale transformation to apply. See
+      <td><p><code>string</code>. Name of the axis scale transformation to apply. See
 <code>help("scale_x_continuous", "ggplot2")</code> for more information.</p></td>
     </tr>
     <tr>
       <th>trendline</th>
-      <td><p>Include trendline on plot.</p></td>
+      <td><p><code>boolean</code>. Include trendline on plot.</p></td>
     </tr>
     <tr>
       <th>value</th>

@@ -66,7 +66,7 @@ the samples." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -125,7 +125,7 @@ the samples.</p>
 <span class='co'># S4 method for SingleCellExperiment,DataFrame</span>
 <span class='fu'>sampleData</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
 
-<span class='co'># S4 method for SingleCellExperiment,DataFrame</span>
+<span class='co'># S4 method for seurat,DataFrame</span>
 <span class='fu'>sampleData</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -137,8 +137,9 @@ the samples.</p>
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code>sampleData()</code> colnames.</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code>sampleData()</code> colnames.</p></td>
     </tr>
     <tr>
       <th>value</th>
@@ -153,11 +154,10 @@ formatted in camel case and intersect with <code>sampleData()</code> colnames.</
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code>cell2sample</code>, <code><a href='fetchData.html'>fetchGeneData</a></code>,
-  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
-  <code>metricsPerSample</code>,
+  <code><a href='cell2sample.html'>cell2sample</a></code>, <code><a href='fetchData.html'>fetchGeneData</a></code>,
+  <code><a href='metricsPerSample.html'>metricsPerSample</a></code>,
   <code><a href='selectSamples.html'>selectSamples</a></code>,
-  <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
+  <code><a href='subsetPerSample.html'>subsetPerSample</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -173,9 +173,7 @@ formatted in camel case and intersect with <code>sampleData()</code> colnames.</
 #&gt;   .. ..$ interestingGroups: Factor w/ 1 level "pbmc": 1
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
-#&gt;   ..@ metadata       : list()</div><div class='input'>
-<span class='co'># Assignment support</span>
-<span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
+#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
 <span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
 #&gt;   ..@ rownames       : chr "pbmc_1"
 #&gt;   ..@ nrows          : int 1
@@ -188,7 +186,33 @@ formatted in camel case and intersect with <code>sampleData()</code> colnames.</
 #&gt;   .. .. ..- attr(*, "names")= chr "pbmc_1"
 #&gt;   ..@ elementType    : chr "ANY"
 #&gt;   ..@ elementMetadata: NULL
-#&gt;   ..@ metadata       : list()</div></pre>
+#&gt;   ..@ metadata       : list()</div><div class='input'><span class='st'>"batch"</span> <span class='kw'>%in%</span> <span class='fu'>colnames</span>(<span class='fu'>colData</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># seurat ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
+<span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ rownames       : chr "pbmc_1"
+#&gt;   ..@ nrows          : int 1
+#&gt;   ..@ listData       :List of 4
+#&gt;   .. ..$ sampleName       : Factor w/ 1 level "pbmc": 1
+#&gt;   .. ..$ description      : Factor w/ 1 level "pbmc": 1
+#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
+#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "pbmc": 1
+#&gt;   ..@ elementType    : chr "ANY"
+#&gt;   ..@ elementMetadata: NULL
+#&gt;   ..@ metadata       : list()</div><div class='input'><span class='fu'>sampleData</span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"batch"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
+<span class='fu'>sampleData</span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span> <span class='fu'>glimpse</span>()</div><div class='output co'>#&gt; Formal class 'DataFrame' [package "S4Vectors"] with 6 slots
+#&gt;   ..@ rownames       : chr "pbmc_1"
+#&gt;   ..@ nrows          : int 1
+#&gt;   ..@ listData       :List of 5
+#&gt;   .. ..$ sampleName       : Factor w/ 1 level "pbmc": 1
+#&gt;   .. ..$ description      : Factor w/ 1 level "pbmc": 1
+#&gt;   .. ..$ index            : Factor w/ 1 level "1": 1
+#&gt;   .. ..$ batch            : int 1
+#&gt;   .. ..$ interestingGroups: Factor w/ 1 level "pbmc": 1
+#&gt;   .. .. ..- attr(*, "names")= chr "pbmc_1"
+#&gt;   ..@ elementType    : chr "ANY"
+#&gt;   ..@ elementMetadata: NULL
+#&gt;   ..@ metadata       : list()</div><div class='input'><span class='st'>"batch"</span> <span class='kw'>%in%</span> <span class='fu'>colnames</span>(<span class='fu'>colData</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

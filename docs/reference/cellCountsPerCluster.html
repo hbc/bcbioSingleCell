@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -113,7 +113,8 @@
     <pre class="usage"><span class='fu'>cellCountsPerCluster</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>cellCountsPerCluster</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)
+<span class='fu'>cellCountsPerCluster</span>(<span class='no'>object</span>,
+  <span class='no'>interestingGroups</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>cellCountsPerCluster</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)</pre>
@@ -131,8 +132,9 @@
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     </table>
     
@@ -143,16 +145,15 @@ formatted in camel case and intersect with <code><a href='sampleData.html'>sampl
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='fu'>cellCountsPerCluster</span>(<span class='no'>seurat_small</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 4
-#&gt; # Groups:   ident [6]
+<span class='fu'>cellCountsPerCluster</span>(<span class='no'>seurat_small</span>)</div><div class='output co'>#&gt; # A tibble: 5 x 4
+#&gt; # Groups:   ident [5]
 #&gt;   ident sampleName     n ratio
 #&gt;   &lt;fct&gt; &lt;fct&gt;      &lt;int&gt; &lt;dbl&gt;
-#&gt; 1 0     pbmc         133     1
-#&gt; 2 1     pbmc         126     1
-#&gt; 3 2     pbmc          92     1
-#&gt; 4 3     pbmc          81     1
-#&gt; 5 4     pbmc          45     1
-#&gt; 6 5     pbmc          23     1</div></pre>
+#&gt; 1 0     pbmc         164     1
+#&gt; 2 1     pbmc         124     1
+#&gt; 3 2     pbmc          80     1
+#&gt; 4 3     pbmc          70     1
+#&gt; 5 4     pbmc          62     1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
