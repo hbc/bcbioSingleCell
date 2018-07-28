@@ -1,5 +1,5 @@
 # Cell Ranger Example Data
-# 2018-07-26
+# 2018-07-28
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
@@ -39,16 +39,16 @@ if (!file.exists(tar_file)) {
 untar(tarfile = tar_file, exdir = outs_dir)
 stopifnot(identical(dir(outs_dir), "filtered_gene_bc_matrices"))
 
-sce <- readCellRanger(uploadDir = upload_dir, organism = "Homo sapiens")
 # Ensembl 92, expect 483 unannotated genes as warning
 # dim(sce)
 # [1] 33694  4340
 # Too large to save inside package
+sce <- readCellRanger(uploadDir = upload_dir, organism = "Homo sapiens")
 saveData(sce, dir = "~")
 
 
 
-# cellranger_small =============================================================
+# Minimal SingleCellExperiment =================================================
 # Subset to only include the top 500 genes (rows) and cells (columns)
 counts <- counts(sce)
 
@@ -119,7 +119,8 @@ write_lines(
 # seurat =======================================================================
 # Let's handoff to seurat to perform dimensionality reduction and clustering,
 # then slot the DR data in our bcbioRNASeq object
-seurat <- as(sce, "seurat") %>%
+seurat_small <- as(sce, "seurat") %>%
+    convertGenesToSymbols() %>%
     NormalizeData() %>%
     FindVariableGenes(do.plot = FALSE) %>%
     ScaleData() %>%
@@ -133,23 +134,26 @@ seurat <- as(sce, "seurat") %>%
     RunUMAP() %>%
     SetAllIdent(id = "res.0.4")
 
-# Coerce seurat to SingleCellExperiment, which contains `reducedDims` slot
-seurat_sce <- as(seurat, "SingleCellExperiment")
+
+
+# cellranger_small =============================================================
+# Convert seurat rows back to Ensembl IDs
+seurat_sce <- seurat_small %>%
+    # Convert rows (geneName) back to Ensembl IDs (geneID)
+    convertSymbolsToGenes() %>%
+    as("SingleCellExperiment")
+# Ensure that dimensional reduction data is slotted correctly
 stopifnot(identical(
     names(reducedDims(seurat_sce)),
     c("PCA", "TSNE", "UMAP")
 ))
 stopifnot(identical(dimnames(sce), dimnames(seurat_sce)))
 
-
-
-# Save =========================================================================
 # Slot the reduced dimensions into our bcbioSingleCell object
 reducedDims(sce) <- reducedDims(seurat_sce)
 cellranger_small <- sce
-seurat_small <- seurat
-use_data(
-    cellranger_small, seurat_small,
-    compress = "xz",
-    overwrite = TRUE
-)
+
+
+
+# Save =========================================================================
+use_data(cellranger_small, seurat_small, compress = "xz", overwrite = TRUE)
