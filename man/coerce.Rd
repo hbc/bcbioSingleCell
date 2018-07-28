@@ -37,7 +37,6 @@ class(x)
 print(x)
 # seurat to SingleCellExperiment ====
 x <- as(seurat_small, "SingleCellExperiment")
-class(x)
 print(x)
 }
 \seealso{
