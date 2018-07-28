@@ -34,12 +34,12 @@
 #'   assertIsAnImplicitIntegerOrNULL assertIsANumberOrNULL
 #'   assertIsColorScaleContinuousOrNULL assertIsColorScaleDiscreteOrNULL
 #'   assertIsFillScaleDiscreteOrNULL assertIsGene2symbol assertIsTx2gene
-#'   assignAndSaveData camel convertGenesToSymbols convertUCSCBuildToEnsembl
-#'   detectOrganism emptyRanges hasRownames initializeDirectory
-#'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames makeTx2geneFromGFF
-#'   markdownHeader markdownPlotlist printString readFileByExtension readYAML
-#'   sanitizeSampleData stripTranscriptVersions theme_midnight theme_paperwhite
-#'   tx2geneFromGFF uniteInterestingGroups
+#'   assignAndSaveData camel convertGenesToSymbols convertSymbolsToGenes
+#'   convertUCSCBuildToEnsembl detectOrganism emptyRanges hasRownames
+#'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
+#'   makeTx2geneFromGFF markdownHeader markdownPlotlist printString
+#'   readFileByExtension readYAML sanitizeSampleData stripTranscriptVersions
+#'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
 #' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
 #'   bcbio_geom_label_average bcbio_geom_label_repel flatFiles minimalSampleData
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
