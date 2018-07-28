@@ -6,14 +6,16 @@ cache: packages
 
 r:
   - bioc-release
+  # - bioc-devel
 
 os:
+  # - linux
   - osx
 
 # blocklist
-branches:
-  except:
-  - develop
+# branches:
+#   except:
+#   - develop
 
 # safelist
 # branches:
