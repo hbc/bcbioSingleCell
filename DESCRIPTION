@@ -106,6 +106,7 @@ Suggests:
     EnsDb.Hsapiens.v75,
     googlesheets,
     MAST,
+    roxygen2,
     splatter,
     testthat (>= 2.0)
 Remotes:
