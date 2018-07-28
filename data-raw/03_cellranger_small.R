@@ -137,11 +137,10 @@ seurat_small <- as(sce, "seurat") %>%
 
 
 # cellranger_small =============================================================
-# Convert seurat rows back to Ensembl IDs
+# Convert rows (geneName) back to Ensembl IDs (geneID)
 seurat_sce <- seurat_small %>%
-    # Convert rows (geneName) back to Ensembl IDs (geneID)
-    convertSymbolsToGenes() %>%
-    as("SingleCellExperiment")
+    as("SingleCellExperiment") %>%
+    convertSymbolsToGenes()
 # Ensure that dimensional reduction data is slotted correctly
 stopifnot(identical(
     names(reducedDims(seurat_sce)),
