@@ -29,8 +29,20 @@ setMethod(
     "assay",
     signature("seurat"),
     function(x) {
-        x <- as(x, "SingleCellExperiment")
-        assay(x)
+        assay(as.SingleCellExperiment(x))
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @importFrom SummarizedExperiment assays
+#' @export
+setMethod(
+    "assays",
+    signature("seurat"),
+    function(x) {
+        assays(as.SingleCellExperiment(x))
     }
 )
 
@@ -43,8 +55,7 @@ setMethod(
     "colData",
     signature("seurat"),
     function(x) {
-        x <- as(x, "SingleCellExperiment")
-        colData(x)
+        colData(as.SingleCellExperiment(x))
     }
 )
 
@@ -75,8 +86,7 @@ setMethod(
     "colnames",
     signature("seurat"),
     function(x) {
-        x <- as(x, "SingleCellExperiment")
-        colnames(x)
+        colnames(as.SingleCellExperiment(x))
     }
 )
 
@@ -118,8 +128,7 @@ setMethod(
     "counts",
     signature("seurat"),
     function(object) {
-        object <- as(object, "SingleCellExperiment")
-        counts(object)
+        counts(as.SingleCellExperiment(x))
     }
 )
 
@@ -132,8 +141,7 @@ setMethod(
     "colnames",
     signature("seurat"),
     function(x) {
-        x <- as(x, "SingleCellExperiment")
-        colnames(x)
+        colnames(as.SingleCellExperiment(x))
     }
 )
 
@@ -224,15 +232,25 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom SingleCellExperiment reducedDims
+#' @export
+setMethod(
+    "reducedDims",
+    signature("seurat"),
+    function(x) {
+        reducedDims(as.SingleCellExperiment(x))
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
 #' @export
 setMethod(
     "rowData",
     signature("seurat"),
     function(x) {
-        rr <- rowRanges(x)
-        x <- as(x, "SingleCellExperiment")
-        rowRanges(x) <- rr
-        rowData(x)
+        rowData(as.SingleCellExperiment(x))
     }
 )
 
@@ -244,14 +262,7 @@ setMethod(
     "rowRanges",
     signature("seurat"),
     function(x) {
-        stash <- slot(x, "misc")[["bcbio"]][["rowRanges"]]
-        x <- as(x, "SingleCellExperiment")
-        if (is(stash, "GRanges")) {
-            assert_are_identical(names(stash), rownames(x))
-            return(stash)
-        }
-        x <- as(x, "SingleCellExperiment")
-        rowRanges(x)
+        rowRanges(as.SingleCellExperiment(x))
     }
 )
 
@@ -264,8 +275,7 @@ setMethod(
     "rownames",
     signature("seurat"),
     function(x) {
-        x <- as(x, "SingleCellExperiment")
-        rownames(x)
+        rownames(as.SingleCellExperiment(x))
     }
 )
 
