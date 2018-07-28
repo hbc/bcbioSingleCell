@@ -92,8 +92,6 @@ setMethod(
 
 
 
-#' Can't inherit SummarizedExperiment because seurat doesn't support dim, so
-#' therefore we can't assign rownames
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom basejump convertGenesToSymbols
 #' @export
@@ -190,6 +188,7 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom S4Vectors metadata
 #' @export
 setMethod(
     "metadata",
@@ -206,6 +205,7 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom S4Vectors metadata<-
 #' @seealso `getMethod("metadata<-", "Annotated")`
 #' @export
 setMethod(
@@ -242,6 +242,7 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom SummarizedExperiment rowData
 #' @export
 setMethod(
     "rowData",
@@ -254,6 +255,7 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom SummarizedExperiment rowRanges
 #' @export
 setMethod(
     "rowRanges",
