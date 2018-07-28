@@ -24,7 +24,7 @@ test_that("cellTypesPerCluster", {
 # knownMarkersDetected =========================================================
 test_that("knownMarkersDetected", {
     x <- knownMarkersDetected(
-        object = all_markers_small,
+        all = all_markers_small,
         known = cell_type_markers[["homoSapiens"]]
     )
     expect_is(x, "grouped_df")
@@ -54,10 +54,11 @@ test_that("knownMarkersDetected", {
 
 # sanitizeMarkers ==============================================================
 test_that("sanitizeMarkers : seurat", {
+    # Early return on sanitized data
     expect_message(
         sanitizeMarkers(
-            object = seurat_small,
-            markers = all_markers_small
+            data = all_markers_small,
+            rowRanges = rowRanges(seurat_small)
         ),
         "Markers are already sanitized"
     )
@@ -66,7 +67,10 @@ test_that("sanitizeMarkers : seurat", {
     invisible(capture.output(
         all <- Seurat::FindAllMarkers(seurat_small)
     ))
-    x <- sanitizeMarkers(object = seurat_small, markers = all)
+    x <- sanitizeMarkers(
+        data = all,
+        rowRanges = rowRanges(seurat_small)
+    )
     expect_is(x, "grouped_df")
 
     # FindMarkers
@@ -78,8 +82,8 @@ test_that("sanitizeMarkers : seurat", {
         )
     ))
     x <- sanitizeMarkers(
-        object = seurat_small,
-        markers = ident3
+        data = ident3,
+        rowRanges = rowRanges(seurat_small)
     )
     expect_is(x, "data.frame")
     expect_true(tibble::has_rownames(x))
