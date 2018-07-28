@@ -262,6 +262,14 @@ setMethod(
     "rowRanges",
     signature("seurat"),
     function(x) {
+        # Attempt to use stashed rowRanges, if present
+        gr <- slot(x, "misc")[["bcbio"]][["rowRanges"]]
+        if (is(gr, "GRanges")) {
+            assert_is_subset(c("geneID", "geneName"), colnames(mcols(gr)))
+            names(gr) <- make.unique(as.character(mcols(gr)[["geneName"]]))
+            assert_is_subset(rownames(x), names(gr))
+            return(gr[rownames(x)])
+        }
         rowRanges(as.SingleCellExperiment(x))
     }
 )
