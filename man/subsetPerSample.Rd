@@ -3,7 +3,6 @@
 \docType{methods}
 \name{subsetPerSample}
 \alias{subsetPerSample}
-\alias{subsetPerSample}
 \alias{subsetPerSample,bcbioSingleCell-method}
 \title{Subset Per Sample}
 \usage{
@@ -64,3 +63,4 @@ Other Data Functions: \code{\link{aggregateReplicates}},
 \author{
 Michael Steinbaugh
 }
+\concept{Data Functions}

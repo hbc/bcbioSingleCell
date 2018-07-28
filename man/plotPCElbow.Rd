@@ -3,7 +3,6 @@
 \docType{methods}
 \name{plotPCElbow}
 \alias{plotPCElbow}
-\alias{plotPCElbow}
 \alias{plotPCElbow,seurat-method}
 \title{Plot PC Elbow}
 \usage{
@@ -63,3 +62,4 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Functions}

@@ -8,7 +8,6 @@
 \alias{plotMarkerUMAP}
 \alias{plotTopMarkers}
 \alias{plotMarker}
-\alias{plotMarker}
 \alias{plotMarkerTSNE,SingleCellExperiment-method}
 \alias{plotMarkerTSNE,seurat-method}
 \alias{plotMarkerUMAP,SingleCellExperiment-method}
@@ -189,3 +188,4 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Clustering Functions}

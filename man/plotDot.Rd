@@ -61,3 +61,4 @@ Other Gene Expression Functions: \code{\link{plotGene}},
 \author{
 Michael Steinbaugh
 }
+\concept{Gene Expression Functions}

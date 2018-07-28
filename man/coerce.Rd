@@ -55,3 +55,4 @@ Other S4 Object: \code{\link{bcbioSingleCell}},
 \author{
 Michael Steinbaugh
 }
+\concept{S4 Object}

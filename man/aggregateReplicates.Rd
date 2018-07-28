@@ -39,3 +39,4 @@ Other Data Functions: \code{\link{cell2sample}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Data Functions}

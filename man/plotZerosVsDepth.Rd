@@ -3,18 +3,17 @@
 \docType{methods}
 \name{plotZerosVsDepth}
 \alias{plotZerosVsDepth}
-\alias{plotZerosVsDepth}
 \alias{plotZerosVsDepth,SingleCellExperiment-method}
 \alias{plotZerosVsDepth,seurat-method}
 \title{Plot Percentage of Zeros vs. Library Depth}
 \usage{
 plotZerosVsDepth(object, ...)
 
-\S4method{plotZerosVsDepth}{SingleCellExperiment}(object, interestingGroups,
-  color = NULL, title = "zeros vs. depth")
+\S4method{plotZerosVsDepth}{SingleCellExperiment}(object,
+  interestingGroups, color = NULL, title = "zeros vs. depth")
 
-\S4method{plotZerosVsDepth}{seurat}(object, interestingGroups, color = NULL,
-  title = "zeros vs. depth")
+\S4method{plotZerosVsDepth}{seurat}(object, interestingGroups,
+  color = NULL, title = "zeros vs. depth")
 }
 \arguments{
 \item{object}{Object.}
@@ -56,3 +55,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
+\concept{Quality Control Functions}

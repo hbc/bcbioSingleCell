@@ -3,7 +3,6 @@
 \docType{methods}
 \name{plotNovelty}
 \alias{plotNovelty}
-\alias{plotNovelty}
 \alias{plotNovelty,SingleCellExperiment-method}
 \alias{plotNovelty,seurat-method}
 \title{Plot Novelty Score}
@@ -11,12 +10,13 @@
 plotNovelty(object, ...)
 
 \S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("violin",
-  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L,
-  fill = NULL, trans = "identity", title = "genes per UMI (novelty)")
+  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups,
+  min = 0L, fill = NULL, trans = "identity",
+  title = "genes per UMI (novelty)")
 
-\S4method{plotNovelty}{seurat}(object, geom = c("violin", "ridgeline", "ecdf",
-  "histogram", "boxplot"), interestingGroups, min = 0L, fill = NULL,
-  trans = "identity", title = "genes per UMI (novelty)")
+\S4method{plotNovelty}{seurat}(object, geom = c("violin", "ridgeline",
+  "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L,
+  fill = NULL, trans = "identity", title = "genes per UMI (novelty)")
 }
 \arguments{
 \item{object}{Object.}
@@ -66,3 +66,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh
 }
+\concept{Quality Control Functions}

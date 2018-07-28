@@ -4,7 +4,6 @@
 \docType{methods}
 \name{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster}
-\alias{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster,seurat-method}
 \title{Plot Cell Types per Cluster}
 \usage{
@@ -56,3 +55,4 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Functions}

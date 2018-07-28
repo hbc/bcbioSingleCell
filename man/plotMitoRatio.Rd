@@ -3,7 +3,6 @@
 \docType{methods}
 \name{plotMitoRatio}
 \alias{plotMitoRatio}
-\alias{plotMitoRatio}
 \alias{plotMitoRatio,SingleCellExperiment-method}
 \alias{plotMitoRatio,seurat-method}
 \title{Plot Mitochondrial Transcript Abundance}
@@ -11,12 +10,12 @@
 plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("violin",
-  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups, max = 1L,
-  fill = NULL, trans = "sqrt", title = "mito ratio")
+  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups,
+  max = 1L, fill = NULL, trans = "sqrt", title = "mito ratio")
 
 \S4method{plotMitoRatio}{seurat}(object, geom = c("violin", "ridgeline",
-  "ecdf", "histogram", "boxplot"), interestingGroups, max = 1L, fill = NULL,
-  trans = "sqrt", title = "mito ratio")
+  "ecdf", "histogram", "boxplot"), interestingGroups, max = 1L,
+  fill = NULL, trans = "sqrt", title = "mito ratio")
 }
 \arguments{
 \item{object}{Object.}
@@ -66,3 +65,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Quality Control Functions}

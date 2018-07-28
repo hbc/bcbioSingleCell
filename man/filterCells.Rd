@@ -3,7 +3,6 @@
 \docType{methods}
 \name{filterCells}
 \alias{filterCells}
-\alias{filterCells}
 \alias{filterCells,SingleCellExperiment-method}
 \title{Filter Cells}
 \usage{
@@ -83,3 +82,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh
 }
+\concept{Quality Control Functions}

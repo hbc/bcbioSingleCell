@@ -3,20 +3,21 @@
 \docType{methods}
 \name{plotGenesPerCell}
 \alias{plotGenesPerCell}
-\alias{plotGenesPerCell}
 \alias{plotGenesPerCell,SingleCellExperiment-method}
 \alias{plotGenesPerCell,seurat-method}
 \title{Plot Genes per Cell}
 \usage{
 plotGenesPerCell(object, ...)
 
-\S4method{plotGenesPerCell}{SingleCellExperiment}(object, geom = c("violin",
-  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L,
-  max = Inf, trans = "log2", fill = NULL, title = "genes per cell")
+\S4method{plotGenesPerCell}{SingleCellExperiment}(object,
+  geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+  interestingGroups, min = 0L, max = Inf, trans = "log2",
+  fill = NULL, title = "genes per cell")
 
-\S4method{plotGenesPerCell}{seurat}(object, geom = c("violin", "ridgeline",
-  "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L, max = Inf,
-  trans = "log2", fill = NULL, title = "genes per cell")
+\S4method{plotGenesPerCell}{seurat}(object, geom = c("violin",
+  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups,
+  min = 0L, max = Inf, trans = "log2", fill = NULL,
+  title = "genes per cell")
 }
 \arguments{
 \item{object}{Object.}
@@ -68,3 +69,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Quality Control Functions}

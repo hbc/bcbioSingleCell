@@ -69,3 +69,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh
 }
+\concept{Quality Control Functions}

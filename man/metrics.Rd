@@ -12,9 +12,11 @@
 \usage{
 \S4method{metrics}{matrix}(object, rowRanges = NULL, prefilter = FALSE)
 
-\S4method{metrics}{dgCMatrix}(object, rowRanges = NULL, prefilter = FALSE)
+\S4method{metrics}{dgCMatrix}(object, rowRanges = NULL,
+  prefilter = FALSE)
 
-\S4method{metrics}{dgTMatrix}(object, rowRanges = NULL, prefilter = FALSE)
+\S4method{metrics}{dgTMatrix}(object, rowRanges = NULL,
+  prefilter = FALSE)
 
 \S4method{metrics}{SingleCellExperiment}(object, interestingGroups)
 
@@ -65,3 +67,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Quality Control Functions}

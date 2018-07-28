@@ -3,7 +3,6 @@
 \docType{methods}
 \name{cell2sample}
 \alias{cell2sample}
-\alias{cell2sample}
 \alias{cell2sample,SingleCellExperiment-method}
 \title{Cell to Sample Mappings}
 \usage{
@@ -38,3 +37,4 @@ Other Data Functions: \code{\link{aggregateReplicates}},
 \author{
 Michael Steinbaugh
 }
+\concept{Data Functions}

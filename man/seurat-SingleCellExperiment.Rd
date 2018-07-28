@@ -12,7 +12,6 @@
 \alias{colnames,seurat-method}
 \alias{convertGenesToSymbols,seurat-method}
 \alias{counts,seurat-method}
-\alias{colnames,seurat-method}
 \alias{gene2symbol,seurat-method}
 \alias{interestingGroups,seurat-method}
 \alias{interestingGroups<-,seurat,character-method}
@@ -86,9 +85,6 @@ Match \code{SummarizedExperiment} method return.
 }
 \description{
 Provide limited \code{SingleCellExperiment}-like method support.
-
-Can't inherit SummarizedExperiment because seurat doesn't support dim, so
-therefore we can't assign rownames
 }
 \seealso{
 \code{getMethod("metadata<-", "Annotated")}

@@ -53,3 +53,4 @@ Other Gene Expression Functions: \code{\link{plotDot}},
 \author{
 Michael Steinbaugh
 }
+\concept{Gene Expression Functions}

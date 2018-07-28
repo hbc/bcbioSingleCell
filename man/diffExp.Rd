@@ -3,7 +3,6 @@
 \docType{methods}
 \name{diffExp}
 \alias{diffExp}
-\alias{diffExp}
 \alias{diffExp,SingleCellExperiment-method}
 \alias{diffExp,seurat-method}
 \title{Differential Expression}
@@ -14,8 +13,9 @@ diffExp(object, ...)
   caller = c("edgeR", "DESeq2"), minCellsPerGene = 25L,
   minCountsPerCell = 5L)
 
-\S4method{diffExp}{seurat}(object, numerator, denominator, caller = c("edgeR",
-  "DESeq2"), minCellsPerGene = 25L, minCountsPerCell = 5L)
+\S4method{diffExp}{seurat}(object, numerator, denominator,
+  caller = c("edgeR", "DESeq2"), minCellsPerGene = 25L,
+  minCountsPerCell = 5L)
 }
 \arguments{
 \item{object}{Object.}
@@ -114,3 +114,4 @@ x <- diffExp(
 \author{
 Michael Steinbaugh
 }
+\concept{Differential Expression Functions}

@@ -3,22 +3,23 @@
 \docType{methods}
 \name{plotUMIsPerCell}
 \alias{plotUMIsPerCell}
-\alias{plotUMIsPerCell}
 \alias{plotUMIsPerCell,SingleCellExperiment-method}
 \alias{plotUMIsPerCell,seurat-method}
 \title{Plot UMIs per Cell}
 \usage{
 plotUMIsPerCell(object, ...)
 
-\S4method{plotUMIsPerCell}{SingleCellExperiment}(object, geom = c("violin",
-  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L,
-  max = Inf, point = c("none", "inflection", "knee"), trans = "log10",
-  color = NULL, fill = NULL, title = "UMIs per cell")
+\S4method{plotUMIsPerCell}{SingleCellExperiment}(object,
+  geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+  interestingGroups, min = 0L, max = Inf, point = c("none",
+  "inflection", "knee"), trans = "log10", color = NULL, fill = NULL,
+  title = "UMIs per cell")
 
-\S4method{plotUMIsPerCell}{seurat}(object, geom = c("violin", "ridgeline",
-  "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L, max = Inf,
-  point = c("none", "inflection", "knee"), trans = "log10", color = NULL,
-  fill = NULL, title = "UMIs per cell")
+\S4method{plotUMIsPerCell}{seurat}(object, geom = c("violin",
+  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups,
+  min = 0L, max = Inf, point = c("none", "inflection", "knee"),
+  trans = "log10", color = NULL, fill = NULL,
+  title = "UMIs per cell")
 }
 \arguments{
 \item{object}{Object.}
@@ -82,3 +83,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Quality Control Functions}

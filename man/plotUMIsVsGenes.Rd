@@ -3,7 +3,6 @@
 \docType{methods}
 \name{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
-\alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes,SingleCellExperiment-method}
 \alias{plotUMIsVsGenes,seurat-method}
 \title{Plot UMI and Gene Correlation}
@@ -52,3 +51,4 @@ plotUMIsVsGenes(cellranger_small)
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Quality Control Metrics}

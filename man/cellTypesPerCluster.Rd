@@ -3,7 +3,6 @@
 \docType{methods}
 \name{cellTypesPerCluster}
 \alias{cellTypesPerCluster}
-\alias{cellTypesPerCluster}
 \alias{cellTypesPerCluster,grouped_df-method}
 \title{Cell Types per Cluster}
 \usage{
@@ -43,3 +42,4 @@ Other Clustering Functions: \code{\link{knownMarkersDetected}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Functions}

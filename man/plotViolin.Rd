@@ -7,8 +7,8 @@
 \alias{plotViolin,seurat-method}
 \title{Plot Violin}
 \usage{
-\S4method{plotViolin}{SingleCellExperiment}(object, genes, scale = c("count",
-  "width", "area"), fill = NULL, legend = FALSE)
+\S4method{plotViolin}{SingleCellExperiment}(object, genes,
+  scale = c("count", "width", "area"), fill = NULL, legend = FALSE)
 
 \S4method{plotViolin}{seurat}(object, genes, scale = c("count", "width",
   "area"), fill = NULL, legend = FALSE)
@@ -51,3 +51,4 @@ Other Gene Expression Functions: \code{\link{plotDot}},
 \author{
 Michael Steinbaugh
 }
+\concept{Gene Expression Functions}

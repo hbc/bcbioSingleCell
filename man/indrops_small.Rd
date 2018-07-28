@@ -23,4 +23,5 @@ Other Minimal Example Data: \code{\link{all_markers_small}},
 \author{
 Michael Steinbaugh
 }
+\concept{Minimal Example Data}
 \keyword{datasets}

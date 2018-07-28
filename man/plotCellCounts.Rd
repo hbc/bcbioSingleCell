@@ -3,7 +3,6 @@
 \docType{methods}
 \name{plotCellCounts}
 \alias{plotCellCounts}
-\alias{plotCellCounts}
 \alias{plotCellCounts,SingleCellExperiment-method}
 \title{Plot Cell Counts}
 \usage{
@@ -52,3 +51,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Quality Control Functions}

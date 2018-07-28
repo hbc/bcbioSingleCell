@@ -4,8 +4,8 @@
 \alias{topMarkers}
 \title{Top Markers}
 \usage{
-topMarkers(data, n = 10L, direction = c("positive", "negative", "both"),
-  coding = FALSE)
+topMarkers(data, n = 10L, direction = c("positive", "negative",
+  "both"), coding = FALSE)
 }
 \arguments{
 \item{data}{\code{grouped_df}. \code{Seurat::FindAllMarkers()} return, sanitized with #
@@ -50,3 +50,4 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Functions}

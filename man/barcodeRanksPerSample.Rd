@@ -4,7 +4,6 @@
 \docType{methods}
 \name{barcodeRanksPerSample}
 \alias{barcodeRanksPerSample}
-\alias{barcodeRanksPerSample}
 \alias{barcodeRanksPerSample,SingleCellExperiment-method}
 \alias{barcodeRanksPerSample,seurat-method}
 \title{Barcode Ranks per Sample}
@@ -33,7 +32,7 @@ This is \code{NA} for points with \code{x} outside of \code{fit.bounds}.
 }
 }
 \description{
-Barcode Ranks per Sample
+Compute barcode rank statistics and identifry the knee and inflection points on the total count curve.
 }
 \details{
 Analyses of droplet-based scRNA-seq data often show a plot of the log-total count against the log-rank of each barcode, where the highest ranks have the largest totals.
@@ -83,3 +82,4 @@ Other Quality Control Functions: \code{\link{filterCells}},
 \author{
 Michael Steinbaugh
 }
+\concept{Quality Control Functions}

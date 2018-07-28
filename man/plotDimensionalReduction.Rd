@@ -18,8 +18,8 @@ plotTSNE(object, ...)
 
 plotUMAP(object, ...)
 
-\S4method{plotTSNE}{SingleCellExperiment}(object, interestingGroups = "ident",
-  color = NULL, pointsAsNumbers = FALSE,
+\S4method{plotTSNE}{SingleCellExperiment}(object,
+  interestingGroups = "ident", color = NULL, pointsAsNumbers = FALSE,
   pointSize = getOption("pointSize", 0.75),
   pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
   labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
@@ -32,8 +32,8 @@ plotUMAP(object, ...)
   labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
   legend = TRUE, aspectRatio = 1L, title = NULL)
 
-\S4method{plotUMAP}{SingleCellExperiment}(object, interestingGroups = "ident",
-  color = NULL, pointsAsNumbers = FALSE,
+\S4method{plotUMAP}{SingleCellExperiment}(object,
+  interestingGroups = "ident", color = NULL, pointsAsNumbers = FALSE,
   pointSize = getOption("pointSize", 0.75),
   pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
   labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
@@ -46,8 +46,8 @@ plotUMAP(object, ...)
   labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
   legend = TRUE, aspectRatio = 1L, title = NULL)
 
-\S4method{plotPCA}{SingleCellExperiment}(object, interestingGroups = "ident",
-  color = NULL, pointsAsNumbers = FALSE,
+\S4method{plotPCA}{SingleCellExperiment}(object,
+  interestingGroups = "ident", color = NULL, pointsAsNumbers = FALSE,
   pointSize = getOption("pointSize", 0.75),
   pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
   labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
@@ -144,3 +144,4 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Clustering Functions}

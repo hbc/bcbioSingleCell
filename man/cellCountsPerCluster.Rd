@@ -3,14 +3,14 @@
 \docType{methods}
 \name{cellCountsPerCluster}
 \alias{cellCountsPerCluster}
-\alias{cellCountsPerCluster}
 \alias{cellCountsPerCluster,SingleCellExperiment-method}
 \alias{cellCountsPerCluster,seurat-method}
 \title{Cell Counts per Cluster}
 \usage{
 cellCountsPerCluster(object, ...)
 
-\S4method{cellCountsPerCluster}{SingleCellExperiment}(object, interestingGroups)
+\S4method{cellCountsPerCluster}{SingleCellExperiment}(object,
+  interestingGroups)
 
 \S4method{cellCountsPerCluster}{seurat}(object, interestingGroups)
 }

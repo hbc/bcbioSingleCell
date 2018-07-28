@@ -3,7 +3,6 @@
 \docType{methods}
 \name{plotReadsPerCell}
 \alias{plotReadsPerCell}
-\alias{plotReadsPerCell}
 \alias{plotReadsPerCell,bcbioSingleCell-method}
 \title{Plot Read Counts per Cell}
 \usage{
@@ -62,3 +61,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Quality Control Functions}

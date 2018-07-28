@@ -4,8 +4,8 @@
 \alias{knownMarkersDetected}
 \title{Known Markers Detected}
 \usage{
-knownMarkersDetected(all, known, alpha = 0.05, filterPromiscuous = FALSE,
-  promiscuousCutoff = 5L)
+knownMarkersDetected(all, known, alpha = 0.05,
+  filterPromiscuous = FALSE, promiscuousCutoff = 5L)
 }
 \arguments{
 \item{all}{\code{grouped_df}, grouped by \code{cluster}. All markers \code{data.frame},
@@ -58,3 +58,4 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Functions}

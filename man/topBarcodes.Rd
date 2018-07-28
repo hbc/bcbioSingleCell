@@ -3,7 +3,6 @@
 \docType{methods}
 \name{topBarcodes}
 \alias{topBarcodes}
-\alias{topBarcodes}
 \alias{topBarcodes,SingleCellExperiment-method}
 \alias{topBarcodes,seurat-method}
 \title{Top Barcodes}
@@ -13,8 +12,8 @@ topBarcodes(object, ...)
 \S4method{topBarcodes}{SingleCellExperiment}(object, n = 1000L,
   return = c("data.frame", "list"))
 
-\S4method{topBarcodes}{seurat}(object, n = 1000L, return = c("data.frame",
-  "list"))
+\S4method{topBarcodes}{seurat}(object, n = 1000L,
+  return = c("data.frame", "list"))
 }
 \arguments{
 \item{object}{Object.}
@@ -57,3 +56,4 @@ Other Data Functions: \code{\link{aggregateReplicates}},
 \author{
 Michael Steinbaugh
 }
+\concept{Data Functions}

@@ -125,3 +125,4 @@ Other Data Functions: \code{\link{aggregateReplicates}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Data Functions}

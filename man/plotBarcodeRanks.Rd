@@ -3,7 +3,6 @@
 \docType{methods}
 \name{plotBarcodeRanks}
 \alias{plotBarcodeRanks}
-\alias{plotBarcodeRanks}
 \alias{plotBarcodeRanks,SingleCellExperiment-method}
 \alias{plotBarcodeRanks,seurat-method}
 \title{Plot Barcode Ranks}

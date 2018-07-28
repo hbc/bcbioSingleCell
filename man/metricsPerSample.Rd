@@ -3,7 +3,6 @@
 \docType{methods}
 \name{metricsPerSample}
 \alias{metricsPerSample}
-\alias{metricsPerSample}
 \alias{metricsPerSample,SingleCellExperiment-method}
 \alias{metricsPerSample,seurat-method}
 \title{Metrics per Sample}
@@ -13,7 +12,8 @@ metricsPerSample(object, ...)
 \S4method{metricsPerSample}{SingleCellExperiment}(object, f = c("mean",
   "median", "sum"))
 
-\S4method{metricsPerSample}{seurat}(object, f = c("mean", "median", "sum"))
+\S4method{metricsPerSample}{seurat}(object, f = c("mean", "median",
+  "sum"))
 }
 \arguments{
 \item{object}{Object.}
@@ -52,3 +52,4 @@ Other Data Functions: \code{\link{aggregateReplicates}},
 \author{
 Michael Steinbaugh
 }
+\concept{Data Functions}

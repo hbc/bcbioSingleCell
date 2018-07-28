@@ -100,3 +100,4 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Functions}

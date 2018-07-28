@@ -3,15 +3,14 @@
 \docType{methods}
 \name{plotMitoVsCoding}
 \alias{plotMitoVsCoding}
-\alias{plotMitoVsCoding}
 \alias{plotMitoVsCoding,SingleCellExperiment-method}
 \alias{plotMitoVsCoding,seurat-method}
 \title{Plot Mitochondrial vs. Coding Counts}
 \usage{
 plotMitoVsCoding(object, ...)
 
-\S4method{plotMitoVsCoding}{SingleCellExperiment}(object, interestingGroups,
-  trendline = FALSE, color = NULL, trans = "log2",
+\S4method{plotMitoVsCoding}{SingleCellExperiment}(object,
+  interestingGroups, trendline = FALSE, color = NULL, trans = "log2",
   title = "mito vs. coding")
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
@@ -62,3 +61,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Quality Control Functions}
