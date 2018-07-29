@@ -44,8 +44,6 @@ interestingGroups(bcb) <- "sampleName"
 ```{r header, child="_header.Rmd"}
 ```
 
-
-
 ```{r sample_data}
 # getMethod("sampleData", "SingleCellExperiment")
 sample_data <- sampleData(bcb) %>% as.data.frame()
@@ -58,12 +56,9 @@ sample_data
 
 [bcbio][] run data was imported from **`r metadata(bcb)$uploadDir`**.
 
-
-
 # Reads per cell {.tabset}
 
 These are counts of how many reads are assigned to a given cellular barcode. It is normal for single cell RNA-seq data to contain a large number of low complexity barcodes. The bcbio pipeline filters out most of these barcodes, and here we have applied a threshold cutoff of a minimum of `r metadata(bcb)$cellularBarcodeCutoff` reads per cell. The unfiltered read count distributions are shown here.
-
 
 ## Histogram
 
@@ -76,7 +71,6 @@ It looks like there a lot of low complexity barcodes that need to be filtered ou
 plotReadsPerCell(bcb, geom = "histogram")
 ```
 
-
 ## ECDF
 
 An empirical distribution function (ECDF) plot will show the frequency distribution of the reads per cell. You can see that the vast majority of low complexity barcodes plateau at a read depth below 1000 reads per cell.
@@ -85,8 +79,6 @@ An empirical distribution function (ECDF) plot will show the frequency distribut
 # getMethod("plotReadsPerCell", "bcbioSingleCell")
 plotReadsPerCell(bcb, geom = "ecdf")
 ```
-
-
 
 # UMI counts per cell {.tabset}
 
@@ -127,8 +119,6 @@ plotUMIsPerCell(
     max = params$max_umis
 )
 ```
-
-
 
 # Filter cells by UMI count
 
@@ -181,8 +171,6 @@ plotUMIsPerCell(
 )
 ```
 
-
-
 # Genes detected per cell {.tabset}
 
 Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for most single-cell experiments.
@@ -197,7 +185,6 @@ plotGenesPerCell(
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
-
 
 markdownHeader("Ridgeline", level = 2)
 plotGenesPerCell(
@@ -224,8 +211,6 @@ plotGenesPerCell(
 )
 ```
 
-
-
 # UMIs vs. genes detected
 
 If we graph out the total number of UMI counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
@@ -234,8 +219,6 @@ If we graph out the total number of UMI counts per cell vs. the genes detected p
 # getMethod("plotUMIsVsGenes", "SingleCellExperiment")
 plotUMIsVsGenes(bcb)
 ```
-
-
 
 # Novelty score {.tabset}
 
@@ -273,8 +256,6 @@ plotNovelty(
 )
 ```
 
-
-
 # Mitochondrial abundance {.tabset}
 
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
@@ -311,8 +292,6 @@ plotMitoRatio(
 )
 ```
 
-
-
 # Filter cells
 
 ```{r filter_cells}
@@ -330,8 +309,6 @@ bcb <- filterCells(
 )
 ```
 
-
-
 ```{r plot_filtered_qc, results="asis"}
 # getMethod("plotQC", "SingleCellExperiment")
 plotQC(
@@ -341,8 +318,6 @@ plotQC(
     headerLevel = 2
 )
 ```
-
-
 
 # Save filtered data
 
@@ -356,7 +331,6 @@ assignAndSaveData(
     dir = params$data_dir
 )
 ```
-
 
 ## Counts matrix
 
@@ -379,7 +353,6 @@ R.utils::gzip(
 )
 ```
 
-
 ## Quality metrics
 
 ```{r metrics}
@@ -390,7 +363,6 @@ write.csv(
 )
 ```
 
-
 ## Gene annotations
 
 ```{r gene_annotations}
@@ -400,8 +372,6 @@ write.csv(
     file = file.path(params$results_dir, "gene_annotations.csv")
 )
 ```
-
-
 
 ```{r footer, child="_footer.Rmd"}
 ```

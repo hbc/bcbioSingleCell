@@ -80,17 +80,11 @@ assignAndSaveData(
 ```{r header, child="_header.Rmd"}
 ```
 
-
-
 This workflow is adapted from the following sources:
 
 - Satija Lab: [Seurat v2 Guided Clustering Tutorial](http://satijalab.org/seurat/pbmc3k_tutorial.html)
 
-
-
 * * *
-
-
 
 # Differential expression
 
@@ -130,8 +124,6 @@ write_csv(
 )
 ```
 
-
-
 # Top markers per cluster {.tabset}
 
 ```{r top_markers}
@@ -147,8 +139,6 @@ plotTopMarkers(
     dark = params$dark
 )
 ```
-
-
 
 # Cluster heterogeneity
 
@@ -167,8 +157,6 @@ DoHeatmap(
     slim.col.label = TRUE
 )
 ```
-
-
 
 # Known cell type markers {.tabset}
 
@@ -194,8 +182,6 @@ plotKnownMarkersDetected(
 )
 ```
 
-
-
 # Cell types per cluster {.tabset}
 
 ```{r cell_types_per_cluster}
@@ -216,8 +202,6 @@ plotCellTypesPerCluster(
     dark = params$dark
 )
 ```
-
-
 
 ```{r footer, child="_footer.Rmd"}
 ```
