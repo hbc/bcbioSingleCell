@@ -6,23 +6,37 @@
 
 [R][] package for [bcbio][] single-cell RNA-seq analysis.
 
-
 ## Installation
 
-### [Bioconductor][] method
+This is an [R][] package.
+
+### [Bioconductor][]
+
+We recommend installing the package with [BiocManager][].
 
 ```r
-## try http:// if https:// URLs are not supported
-source("https://bioconductor.org/biocLite.R")
-biocLite("devtools")
-biocLite("remotes")
-biocLite("GenomeInfoDbData")
-biocLite(
-    "hbc/bcbioSingleCell",
+if (!require("BiocManager")) {
+    install.packages("BiocManager")
+}
+BiocManager::install(
+    pkgs = c(
+        "devtools",
+        "remotes",
+        "GenomeInfoDbData"
+    )
+)
+BiocManager::install(
+    pkgs = "hbc/bcbioSingleCell",
     dependencies = c("Depends", "Imports", "Suggests")
 )
 ```
 
+For [R][] < 3.5, [BiocManager][] is not supported. Use `BiocInstaller::biocLite()` instead of `BiocManager::install()`. This requires sourcing the legacy [Bioconductor][] `biocLite.R` script.
+
+```r
+# try http:// if https:// URLs are not supported
+source("https://bioconductor.org/biocLite.R")
+```
 
 ## Load [bcbio][] run
 
@@ -51,7 +65,6 @@ Parameters:
 - `gffFile`: *Optional.* If your transcriptome does not entirely match up to an Ensembl release, you can pass the GFF/GTF file of the transcriptome you used to load the annotations instead.
 
 Consult `help("bcbioSingleCell", "bcbioSingleCell")` for additional documentation.
-
 
 ## Sample metadata examples
 
@@ -84,11 +97,9 @@ This is our current method for handling [10X Genomics Cell Ranger][cellranger] o
 | sample3     | wildtype |
 | sample4     | knockout |
 
-
 ## Markers
 
 Shared [cell-cycle markers][] and [cell-type markers][] are available on [Google Sheets][]. Contact [Michael Steinbaugh][] if you'd like to contribute to this list, and he'll enable write access.
-
 
 ## Troubleshooting
 
@@ -107,11 +118,9 @@ R_MAX_NUM_DLLS=150
 
 For more information on this issue, consult `help("dyn.load")` in the [R][] documentation. The number of loaded DLLs in an [R][] session can be obtained with `getLoadedDLLs()`.
 
-
 ## References
 
 The papers and software cited in our workflows are available as a [shared library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
-
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
