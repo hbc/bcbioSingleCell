@@ -345,10 +345,6 @@ setMethod(
 
         # Expected nCells per sample (filtered by top nUMI) --------------------
         if (nCells < Inf) {
-            message(paste(
-                "Using a hard cell count limit of", nCells, "per sample,",
-                "after applying other filtering cutoffs"
-            ))
             metrics <- metrics %>%
                 rownames_to_column() %>%
                 group_by(!!sym("sampleID")) %>%
@@ -357,6 +353,7 @@ setMethod(
                 as.data.frame() %>%
                 column_to_rownames()
         }
+
         if (!nrow(metrics)) {
             stop("No cells passed `nCells` cutoff")
         }
@@ -409,6 +406,7 @@ setMethod(
             bcbioBase::separatorBar,
             "Cells:",
             as.character(summaryCells),
+            printString(table(metrics[["sampleName"]])),
             bcbioBase::separatorBar,
             "Genes:",
             as.character(summaryGenes),
@@ -438,6 +436,8 @@ setMethod(
         metadata(object)[["filterParams"]] <- params
         metadata(object)[["filterSummary"]] <- summary
 
-        object[genes, cells]
+        return <- object[genes, cells]
+        assert_are_identical(colnames(return), cells)
+        return
     }
 )
