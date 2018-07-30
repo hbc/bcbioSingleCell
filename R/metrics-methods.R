@@ -149,53 +149,13 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
-        colData <- colData(object)
-
-        # Calculate metrics on the fly, if not stashed in colData
-        if (!"nUMI" %in% colnames(colData)) {
-            warning("Metrics are not stashed in `colData()`")
-            metrics <- metrics(
-                object = counts(object),
-                rowRanges = rowRanges(object),
-                prefilter = FALSE
-            )
-            # Keep only columns unique to colData
-            setdiff <- setdiff(colnames(colData), colnames(metrics))
-            colData <- colData[, setdiff, drop = FALSE]
-            colData <- cbind(colData, metrics)
-        }
-
-        # Merge sample-level metadata, if stashed
-        sampleData <- sampleData(
-            object = object,
+        data <- colData(object)
+        # Generate the `interestingGroups` column
+        data <- uniteInterestingGroups(
+            object = data,
             interestingGroups = interestingGroups
         )
-        if (!length(sampleData)) {
-            # Consider using `minimalSampleData()` here
-            warning("`sampleData()` is empty")
-            colData[["sampleID"]] <- factor("unknown")
-            colData[["sampleName"]] <- factor("unknown")
-            colData[["interestingGroups"]] <- factor("unknown")
-        } else {
-            stopifnot(is(sampleData, "DataFrame"))
-            sampleData[["sampleID"]] <- rownames(sampleData)
-            # Keep only columns unique to colData
-            setdiff <- setdiff(colnames(colData), colnames(sampleData))
-            assert_is_non_empty(setdiff)
-            colData <- colData[, setdiff, drop = FALSE]
-            colData[["sampleID"]] <- cell2sample(object)
-            colData[["cellID"]] <- rownames(colData)
-            colData <- merge(
-                x = colData,
-                y = sampleData,
-                by = "sampleID",
-                all.x = TRUE
-            )
-            rownames(colData) <- colData[["cellID"]]
-            colData[["cellID"]] <- NULL
-            colData <- colData[colnames(object), , drop = FALSE]
-        }
-        as.data.frame(colData)
+        as.data.frame(data)
     }
 )
 
@@ -207,8 +167,6 @@ setMethod(
     "metrics",
     signature("seurat"),
     function(object, ...) {
-        object %>%
-            as("SingleCellExperiment") %>%
-            metrics()
+        metrics(as(object, "SingleCellExperiment"))
     }
 )
