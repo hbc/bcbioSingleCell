@@ -19,6 +19,7 @@
     } else {
         interestingGroups(object) <- interestingGroups
     }
+    assert_is_character(interestingGroups)
     assert_all_are_non_negative(c(min, max))
     # Support for per sample filtering cutoffs
     min <- min(min)
@@ -182,6 +183,7 @@
     } else {
         interestingGroups(object) <- interestingGroups
     }
+    assert_is_character(interestingGroups)
     assertIsColorScaleDiscreteOrNULL(color)
     assertIsAStringOrNULL(title)
 

@@ -49,6 +49,7 @@ setMethod(
         } else {
             interestingGroups(object) <- interestingGroups
         }
+        assert_is_character(interestingGroups)
         geom <- match.arg(geom)
         return <- match.arg(return)
 

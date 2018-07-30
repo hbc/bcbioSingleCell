@@ -337,6 +337,7 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
+        assert_is_character(interestingGroups)
         geom <- match.arg(geom)
         assertIsAStringOrNULL(title)
 

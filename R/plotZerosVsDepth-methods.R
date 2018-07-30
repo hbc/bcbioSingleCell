@@ -32,6 +32,7 @@ setMethod(
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }
+        assert_is_character(interestingGroups)
         assertIsColorScaleDiscreteOrNULL(color)
         assertIsAStringOrNULL(title)
 
