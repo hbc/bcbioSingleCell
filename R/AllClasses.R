@@ -471,12 +471,39 @@ setValidity(
         assert_is_all_of(rowData(object), "DataFrame")
 
         # Column data ==========================================================
+        # Require that metrics columns are defined
+        assert_is_subset(metricsCols, colnames(colData(object)))
+
         # Ensure that sample-level metadata is also defined at cell-level.
         # We're doing this in long format in the colData slot.
         assert_is_subset(
             x = colnames(sampleData(object, interestingGroups = NULL)),
             y = colnames(colData(object))
         )
+
+        # Ensure that `interestingGroups` isn't slotted in colData
+        stopifnot(!"interestingGroups" %in% colnames(colData(object)))
+
+        # Don't allow the user to manually define `sampleID` column
+        stopifnot(!"sampleID" %in% colnames(sampleData(object)))
+
+        # Check that the levels set in `sampleData()` match `colData()`
+        sampleDataLevels <- lapply(
+            X = sampleData(object, interestingGroups = NULL),
+            FUN = function(x) {
+                if (is.factor(x)) {
+                    levels(x)
+                } else {
+                    NULL
+                }
+            }
+        )
+        sampleDataLevels <- Filter(Negate(is.null), sampleDataLevels)
+        colDataLevels <- lapply(
+            X = colData(object)[, names(sampleDataLevels)],
+            FUN = levels
+        )
+        assert_are_identical(sampleDataLevels, colDataLevels)
 
         # Metadata =============================================================
         metadata <- metadata(object)
@@ -552,9 +579,6 @@ setValidity(
             x = metadata[["level"]],
             y = c("genes", "transcripts")
         )
-
-        # Ensure that sampleID isn't defined in `sampleData`
-        stopifnot(!"sampleID" %in% colnames(sampleData(object)))
 
         TRUE
     }
