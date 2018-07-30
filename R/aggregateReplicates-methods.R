@@ -124,16 +124,12 @@ setMethod(
         cell2sample <- cell2sample[colnames(counts)]
 
         # Metadata =============================================================
-        metadata <- list()
-
-        # aggregateReplicates
-        metadata[["aggregateReplicates"]] <- groupings
-
-        # cell2sample
-        metadata[["cell2sample"]] <- cell2sample
-
-        # sampleData
-        metadata[["sampleData"]] <- sampleData
+        metadata <- list(
+            aggregateReplicates = groupings,
+            cell2sample = cell2sample,
+            interestingGroups = "sampleName",
+            sampleData = sampleData
+        )
 
         # Return ===============================================================
         .new.SingleCellExperiment(
