@@ -18,7 +18,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-06-28
+# Last modified 2018-07-30
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -67,6 +67,13 @@ For high quality data, the proportional histogram should contain a single large 
 ```{r plot_reads_per_cell_histogram}
 # getMethod("plotReadsPerCell", "bcbioSingleCell")
 plotReadsPerCell(bcb, geom = "histogram")
+plotReadsPerCell(
+    object = bcb,
+    geom = "histogram",
+    interestingGroups = "sampleName"
+) +
+    facet_wrap(vars(sampleName)) +
+    theme(legend.position = "none")
 ```
 
 ## ECDF
