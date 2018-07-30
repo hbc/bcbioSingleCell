@@ -37,6 +37,7 @@ setMethod(
         if ("sampleNameAggregate" %in% colnames(sampleData)) {
             warning("Use `aggregate` instead of `sampleNameAggregate`")
             sampleData[["aggregate"]] <- sampleData[["sampleNameAggregate"]]
+            sampleData[["sampleNameAggregate"]] <- NULL
         }
         assert_is_subset("aggregate", colnames(sampleData))
 
@@ -57,6 +58,7 @@ setMethod(
         sampleData <- remap %>%
             select(!!!syms(c("sampleIDAggregate", "sampleNameAggregate"))) %>%
             rename(sampleName = !!sym("sampleNameAggregate")) %>%
+            distinct() %>%
             column_to_rownames("sampleIDAggregate")
 
         # Message the new sample IDs
