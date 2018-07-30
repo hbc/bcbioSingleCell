@@ -41,7 +41,9 @@ setMethod(
         }
         assert_is_subset("aggregate", colnames(sampleData))
 
-        interestingGroups <- interestingGroups(object) %>%
+        # Consider adding an assert check here to check that interesting
+        # groups map to aggregate-level sample columns
+        interestingGroupsAggregate <- interestingGroups(object) %>%
             as.character() %>%
             setdiff("sampleName")
 
@@ -49,8 +51,9 @@ setMethod(
         # column metadata.
         remap <- sampleData %>%
             rownames_to_column("sampleID") %>%
+            as_tibble() %>%
             select(!!!syms(unique(c(
-                "sampleID", "aggregate", interestingGroups
+                "sampleID", "aggregate", interestingGroupsAggregate
             )))) %>%
             mutate(sampleIDAggregate = makeNames(
                 !!sym("aggregate"), unique = FALSE
@@ -65,11 +68,13 @@ setMethod(
             select(!!!syms(unique(c(
                 "sampleIDAggregate",
                 "sampleNameAggregate",
-                interestingGroups
+                interestingGroupsAggregate
             )))) %>%
             rename(sampleName = !!sym("sampleNameAggregate")) %>%
-            distinct() %>%
-            column_to_rownames("sampleIDAggregate")
+            unique() %>%
+            as.data.frame() %>%
+            column_to_rownames("sampleIDAggregate") %>%
+            as("DataFrame")
 
         # Message the new sample IDs
         message(paste(
@@ -137,7 +142,7 @@ setMethod(
         metadata <- list(
             aggregateReplicates = groupings,
             cell2sample = cell2sample,
-            interestingGroups = "sampleName",
+            interestingGroups = interestingGroups(object),
             sampleData = sampleData
         )
 
