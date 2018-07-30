@@ -35,10 +35,7 @@ bcb <- get(bcb_name, inherits = FALSE)
 stopifnot(is(bcb, "SingleCellExperiment"))
 invisible(validObject(bcb))
 bcb_original <- bcb
-
-# Temporarily set interesting groups to `sampleName`
-interesting_groups <- interestingGroups(bcb)
-interestingGroups(bcb) <- "sampleName"
+print(bcb)
 ```
 
 ```{r header, child="_header.Rmd"}
@@ -66,7 +63,11 @@ For high quality data, the proportional histogram should contain a single large 
 
 ```{r plot_reads_per_cell_histogram}
 # getMethod("plotReadsPerCell", "bcbioSingleCell")
-plotReadsPerCell(bcb, geom = "histogram")
+plotReadsPerCell(
+    object = bcb,
+    geom = "histogram",
+    interestingGroups = "sampleName"
+)
 plotReadsPerCell(
     object = bcb,
     geom = "histogram",
@@ -82,7 +83,11 @@ An empirical distribution function (ECDF) plot will show the frequency distribut
 
 ```{r plot_reads_per_cell_ecdf}
 # getMethod("plotReadsPerCell", "bcbioSingleCell")
-plotReadsPerCell(bcb, geom = "ecdf")
+plotReadsPerCell(
+    object = bcb,
+    geom = "ecdf",
+    interestingGroups = "sampleName"
+)
 ```
 
 # UMI counts per cell {.tabset}
@@ -96,6 +101,7 @@ markdownHeader("Violin", level = 2)
 plotUMIsPerCell(
     object = bcb,
     geom = "violin",
+    interestingGroups = "sampleName",
     min = params$min_umis,
     max = params$max_umis
 )
@@ -104,6 +110,7 @@ markdownHeader("Ridgeline", level = 2)
 plotUMIsPerCell(
     bcb,
     geom = "ridgeline",
+    interestingGroups = "sampleName",
     min = params$min_umis,
     max = params$max_umis
 )
@@ -112,6 +119,7 @@ markdownHeader("Histogram", level = 2)
 plotUMIsPerCell(
     object = bcb,
     geom = "histogram",
+    interestingGroups = "sampleName",
     min = params$min_umis,
     max = params$max_umis
 )
@@ -120,6 +128,7 @@ markdownHeader("ECDF", level = 2)
 plotUMIsPerCell(
     object = bcb,
     geom = "ecdf",
+    interestingGroups = "sampleName",
     min = params$min_umis,
     max = params$max_umis
 )
@@ -142,35 +151,10 @@ Let's take a look at the UMI per cell distributions after this filtering step. N
 
 ```{r plot_umis_per_cell_postfilter}
 # getMethod("plotUMIsPerCell", "SingleCellExperiment")
-
-markdownHeader("Violin", level = 2)
-plotUMIsPerCell(
-    object = bcb,
-    geom = "violin",
-    min = params$min_umis,
-    max = params$max_umis
-)
-
-markdownHeader("Ridgeline", level = 2)
-plotUMIsPerCell(
-    object = bcb,
-    geom = "ridgeline",
-    min = params$min_umis,
-    max = params$max_umis
-)
-
-markdownHeader("Histogram", level = 2)
 plotUMIsPerCell(
     object = bcb,
     geom = "histogram",
-    min = params$min_umis,
-    max = params$max_umis
-)
-
-markdownHeader("ECDF", level = 2)
-plotUMIsPerCell(
-    object = bcb,
-    geom = "ecdf",
+    interestingGroups = "sampleName",
     min = params$min_umis,
     max = params$max_umis
 )
@@ -187,6 +171,7 @@ markdownHeader("Violin", level = 2)
 plotGenesPerCell(
     object = bcb,
     geom = "violin",
+    interestingGroups = "sampleName",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
@@ -195,6 +180,7 @@ markdownHeader("Ridgeline", level = 2)
 plotGenesPerCell(
     object = bcb,
     geom = "ridgeline",
+    interestingGroups = "sampleName",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
@@ -203,6 +189,7 @@ markdownHeader("Histogram", level = 2)
 plotGenesPerCell(
     object = bcb,
     geom = "histogram",
+    interestingGroups = "sampleName",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
@@ -211,6 +198,7 @@ markdownHeader("ECDF", level = 2)
 plotGenesPerCell(
     object = bcb,
     geom = "ecdf",
+    interestingGroups = "sampleName",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
@@ -222,7 +210,10 @@ If we graph out the total number of UMI counts per cell vs. the genes detected p
 
 ```{r plot_umis_vs_genes}
 # getMethod("plotUMIsVsGenes", "SingleCellExperiment")
-plotUMIsVsGenes(bcb)
+plotUMIsVsGenes(
+    object = bcb,
+    interestingGroups = "sampleName"
+)
 ```
 
 # Novelty score {.tabset}
@@ -236,6 +227,7 @@ markdownHeader("Violin", level = 2)
 plotNovelty(
     object = bcb,
     geom = "violin",
+    interestingGroups = "sampleName",
     min = min(params$min_novelty)
 )
 
@@ -243,6 +235,7 @@ markdownHeader("Ridgeline", level = 2)
 plotNovelty(
     object = bcb,
     geom = "ridgeline",
+    interestingGroups = "sampleName",
     min = min(params$min_novelty)
 )
 
@@ -250,6 +243,7 @@ markdownHeader("Histogram", level = 2)
 plotNovelty(
     object = bcb,
     geom = "histogram",
+    interestingGroups = "sampleName",
     min = min(params$min_novelty)
 )
 
@@ -257,6 +251,7 @@ markdownHeader("ECDF", level = 2)
 plotNovelty(
     object = bcb,
     geom = "ecdf",
+    interestingGroups = "sampleName",
     min = min(params$min_novelty)
 )
 ```
@@ -272,6 +267,7 @@ markdownHeader("Violin", level = 2)
 plotMitoRatio(
     object = bcb,
     geom = "violin",
+    interestingGroups = "sampleName",
     max = max(params$max_mito_ratio)
 )
 
@@ -279,6 +275,7 @@ markdownHeader("Ridgeline", level = 2)
 plotMitoRatio(
     object = bcb,
     geom = "ridgeline",
+    interestingGroups = "sampleName",
     max = max(params$max_mito_ratio)
 )
 
@@ -286,6 +283,7 @@ markdownHeader("Histogram", level = 2)
 plotMitoRatio(
     object = bcb,
     geom = "histogram",
+    interestingGroups = "sampleName",
     max = max(params$max_mito_ratio)
 )
 
@@ -293,6 +291,7 @@ markdownHeader("ECDF", level = 2)
 plotMitoRatio(
     object = bcb,
     geom = "ecdf",
+    interestingGroups = "sampleName",
     max = max(params$max_mito_ratio)
 )
 ```
@@ -319,6 +318,7 @@ bcb <- filterCells(
 plotQC(
     object = bcb,
     geom = "violin",
+    interestingGroups = "sampleName",
     return = "markdown",
     headerLevel = 2
 )
@@ -329,7 +329,6 @@ plotQC(
 ## S4 object
 
 ```{r save}
-interestingGroups(bcb) <- interesting_groups
 assignAndSaveData(
     name = paste(bcb_name, "filtered", sep = "_"),
     object = bcb,
