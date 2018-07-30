@@ -41,11 +41,17 @@ setMethod(
         }
         assert_is_subset("aggregate", colnames(sampleData))
 
+        interestingGroups <- interestingGroups(object) %>%
+            as.character() %>%
+            setdiff("sampleName")
+
         # This step will replace the `sampleName` column with the `aggregate`
         # column metadata.
         remap <- sampleData %>%
             rownames_to_column("sampleID") %>%
-            select(!!!syms(c("sampleID", "aggregate"))) %>%
+            select(!!!syms(unique(c(
+                "sampleID", "aggregate", interestingGroups
+            )))) %>%
             mutate(sampleIDAggregate = makeNames(
                 !!sym("aggregate"), unique = FALSE
             )) %>%
@@ -56,7 +62,11 @@ setMethod(
 
         # Update sampleData to use the aggregate groupings
         sampleData <- remap %>%
-            select(!!!syms(c("sampleIDAggregate", "sampleNameAggregate"))) %>%
+            select(!!!syms(unique(c(
+                "sampleIDAggregate",
+                "sampleNameAggregate",
+                interestingGroups
+            )))) %>%
             rename(sampleName = !!sym("sampleNameAggregate")) %>%
             distinct() %>%
             column_to_rownames("sampleIDAggregate")
