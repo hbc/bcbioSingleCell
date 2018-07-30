@@ -44,7 +44,10 @@ setMethod(
             sampleData <- unknownSampleData
         }
         sampleData <- as.data.frame(sampleData)
-        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+        sampleData[["sampleID"]] <- factor(
+            x = rownames(sampleData),
+            levels = levels(metrics[["sampleID"]])
+        )
 
         # Remove user-defined `nCells` column, if present
         metrics[["nCells"]] <- NULL

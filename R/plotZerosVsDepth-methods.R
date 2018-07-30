@@ -56,7 +56,10 @@ setMethod(
             sampleData <- unknownSampleData
         }
         sampleData <- as.data.frame(sampleData)
-        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+        sampleData[["sampleID"]] <- factor(
+            x = rownames(sampleData),
+            levels = levels(data[["sampleID"]])
+        )
 
         data <- left_join(data, sampleData, by = "sampleID")
 
