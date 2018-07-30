@@ -36,11 +36,11 @@ annotation data.}
 interesting groups. Must be formatted in camel case and intersect with
 \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{transgeneNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows
-denote transgenes (e.g. EGFP, TDTOMATO).}
+\item{transgeneNames}{\code{character} or \code{NULL}. Vector indicating which
+\code{\link[=assay]{assay()}} rows denote transgenes (e.g. EGFP, TDTOMATO).}
 
-\item{spikeNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows denote
-spike-in sequences (e.g. ERCCs).}
+\item{spikeNames}{\code{character} or \code{NULL}. Vector indicating which \code{\link[=assay]{assay()}}
+rows denote spike-in sequences (e.g. ERCCs).}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }

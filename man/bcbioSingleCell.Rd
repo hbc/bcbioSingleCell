@@ -37,11 +37,11 @@ unless \code{gffFile} is set.}
 "GRCh38"). This will be passed to AnnotationHub for \code{EnsDb} annotation
 matching, unless \code{gffFile} is set.}
 
-\item{transgeneNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows
-denote transgenes (e.g. EGFP, TDTOMATO).}
+\item{transgeneNames}{\code{character} or \code{NULL}. Vector indicating which
+\code{\link[=assay]{assay()}} rows denote transgenes (e.g. EGFP, TDTOMATO).}
 
-\item{spikeNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows denote
-spike-in sequences (e.g. ERCCs).}
+\item{spikeNames}{\code{character} or \code{NULL}. Vector indicating which \code{\link[=assay]{assay()}}
+rows denote spike-in sequences (e.g. ERCCs).}
 
 \item{gffFile}{\code{string} or \code{NULL}. \emph{Advanced use only; not recommended.} By
 default, we recommend leaving this \code{NULL} for genomes that are supported on
