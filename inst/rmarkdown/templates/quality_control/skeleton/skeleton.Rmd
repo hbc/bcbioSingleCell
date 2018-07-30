@@ -64,8 +64,6 @@ These are counts of how many reads are assigned to a given cellular barcode. It 
 
 For high quality data, the proportional histogram should contain a single large peak that represents cells that were encapsulated. If we see a strong shoulder, or a bimodal distribution of the cells, that can indicate a couple problems. It might be that there is free floating RNA, which happens when cells are dying. It could also be that there are a set of cells that failed for some reason. Finally, it could also be that there are biologically different types of cells, and one type is much smaller than the other. If this is the case we would expect to see less RNA being sequenced from the smaller cells.
 
-It looks like there a lot of low complexity barcodes that need to be filtered out, but we can see cells with a usable read depth of at least 10,000 (10^4) reads per cell.
-
 ```{r plot_reads_per_cell_histogram}
 # getMethod("plotReadsPerCell", "bcbioSingleCell")
 plotReadsPerCell(bcb, geom = "histogram")
