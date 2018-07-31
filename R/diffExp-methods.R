@@ -75,6 +75,7 @@
 #' )
 #'
 #' # seurat ====
+#' # We recommend using SingleCellExperiment instead of seurat for DE
 #' # Expression in cluster 3 relative to cluster 2
 #' object <- seurat_small
 #' numerator <- Seurat::WhichCells(object, ident = 3L)
