@@ -29,17 +29,6 @@ NULL
 
 
 
-# Constructors =================================================================
-# Figure out which ID column to use (geneID or geneName)
-# Return TRUE if we're working with symbols (not recommended but used by Seurat)
-.useGeneName <- function(object) {
-    geneName <- as.character(gene2symbol(object)[["geneName"]])
-    assert_is_non_empty(geneName)
-    any(geneName %in% rownames(object))
-}
-
-
-
 # Methods ======================================================================
 #' @rdname plotCellTypesPerCluster
 #' @export
@@ -65,7 +54,7 @@ setMethod(
         assertIsAHeaderLevel(headerLevel)
 
         # Determine whether we need to use `geneID` or `geneName`
-        if (isTRUE(.useGeneName)) {
+        if (isTRUE(.useGeneName(object))) {
             idCol <- "geneName"
         } else {
             idCol <- "geneID"
