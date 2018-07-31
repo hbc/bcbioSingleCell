@@ -22,6 +22,7 @@
 #' # SingleCellExperiment ====
 #' object <- indrops_small
 #' genes <- head(rownames(object))
+#' glimpse(genes)
 #'
 #' # Genes
 #' x <- fetchGeneData(object, genes = genes)
@@ -105,12 +106,24 @@ NULL
 setMethod(
     "fetchGeneData",
     signature("SingleCellExperiment"),
-    function(object, genes) {
+    function(
+        object,
+        genes,
+        gene2symbol = FALSE
+    ) {
+        counts <- counts(object)
         assert_is_subset(genes, rownames(object))
-        counts(object) %>%
-            .[genes, , drop = FALSE] %>%
-            as.matrix() %>%
-            t()
+        counts <- counts[genes, , drop = FALSE]
+
+        # Convert gene IDs to gene names (symbols)
+        if (isTRUE(gene2symbol) && !isTRUE(.useGeneName(object))) {
+            gene2symbol <- gene2symbol(object) %>%
+                .[match(genes, .[["geneID"]]), , drop = FALSE]
+            assert_are_identical(rownames(counts), gene2symbol[["geneID"]])
+            rownames(counts) <- make.unique(gene2symbol[["geneName"]])
+        }
+
+        t(as.matrix(counts))
     }
 )
 
