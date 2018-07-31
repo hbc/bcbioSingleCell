@@ -436,8 +436,6 @@ setMethod(
         metadata(object)[["filterParams"]] <- params
         metadata(object)[["filterSummary"]] <- summary
 
-        return <- object[genes, cells]
-        assert_are_identical(colnames(return), cells)
-        return
+        object[genes, cells]
     }
 )
