@@ -9,7 +9,7 @@
 plotPCElbow(object, ...)
 
 \S4method{plotPCElbow}{seurat}(object, minSD = 1L, minPct = 0.01,
-  maxCumPct = 0.9, trans = c("identity", "sqrt"), plot = TRUE)
+  maxCumPct = 0.9, trans = c("identity", "sqrt"))
 }
 \arguments{
 \item{object}{Object.}
@@ -25,8 +25,6 @@ standard deviation.}
 
 \item{trans}{\code{string}. Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
-
-\item{plot}{\code{boolean}. Include plot.}
 }
 \value{
 \itemize{

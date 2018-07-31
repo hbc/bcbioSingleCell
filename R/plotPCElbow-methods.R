@@ -14,7 +14,6 @@
 #' @param minPct `scalar numeric` (`0`-`1`). Minimum percent standard deviation.
 #' @param maxCumPct `scalar numeric` (`0`-`1`).Maximum cumulative percent
 #'   standard deviation.
-#' @param plot `boolean`. Include plot.
 #'
 #' @return
 #' - Show graphical output of elbow plots.
@@ -42,8 +41,7 @@ setMethod(
         minSD = 1L,
         minPct = 0.01,
         maxCumPct = 0.9,
-        trans = c("identity", "sqrt"),
-        plot = TRUE
+        trans = c("identity", "sqrt")
     ) {
         assert_is_a_number(minSD)
         assert_all_are_positive(minSD)
@@ -55,7 +53,6 @@ setMethod(
             upper = 1L
         )
         trans <- match.arg(trans)
-        assert_is_a_bool(plot)
 
         # dr: dimensional reduction
         # sdev: standard deviation
