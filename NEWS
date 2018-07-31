@@ -3,7 +3,7 @@
 ## Major changes
 
 - Now recommending [BiocManager][] instead of [BiocInstaller][] to install.
-- `bcbioSingleCell` constructor now supports `zinbwave = TRUE` for automatic
+- `filterCells()` now supports `zinbwave = TRUE` for automatic
   zero-inflation weights calculation, using the [zinbwave][] package.
 - Now requiring in `bcbioSingleCell` object validity checks that all
   `sampleData()` columns are defined in `colData()`, and that the factor levels
