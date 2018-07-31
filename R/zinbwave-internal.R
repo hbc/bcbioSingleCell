@@ -22,7 +22,7 @@
     }))
     stopifnot(is(zinb, "SingleCellExperiment"))
     assert_are_identical(
-        names(assays(zinb)),
+        assayNames(zinb),
         c("counts", "normalizedValues", "weights")
     )
     zinb
