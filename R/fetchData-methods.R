@@ -119,8 +119,7 @@ setMethod(
         if (isTRUE(gene2symbol) && !isTRUE(.useGeneName(object))) {
             g2s <- gene2symbol(object)
             assertIsGene2symbol(g2s)
-            g2s <- g2s %>%
-                .[match(genes, .[["geneID"]]), , drop = FALSE]
+            g2s <- g2s[genes, , drop = FALSE]
             assert_are_identical(rownames(counts), g2s[["geneID"]])
             rownames(counts) <- make.unique(g2s[["geneName"]])
         }
