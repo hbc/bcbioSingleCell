@@ -48,6 +48,10 @@ setMethod(
             paste(
                 "Organism:",
                 deparse(metadata(object)[["organism"]])
+            ),
+            paste(
+                "Interesting Groups:",
+                deparse(metadata(object)[["interestingGroups"]])
             )
         )
 
