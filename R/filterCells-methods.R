@@ -446,7 +446,7 @@ setMethod(
 
         # zinbwave weights =====================================================
         if (isTRUE(zinbwave)) {
-            object <- .zinbwaveIntoAssays(object)
+            object <- .slotZinbwaveIntoAssays(object)
         }
 
         object
