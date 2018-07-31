@@ -1,6 +1,6 @@
 # zinbwave will calculate normalizedValues and weights matrices
 # @seealso [zinbwave::zinbwave()].
-.zinbwave <- function(
+.runZinbwave <- function(
     Y,
     BPPARAM = BiocParallel::SerialParam(),
     epsilon = 1e12,
@@ -31,10 +31,10 @@
 
 
 # Stash zinbwave calculations into assays slot
-.zinbwaveIntoAssays <- function(object, ...) {
+.slotZinbwaveIntoAssays <- function(object, ...) {
     stopifnot(is(object, "SingleCellExperiment"))
     stopifnot(.isFiltered(object))
-    zinb <- .zinbwave(object, ...)
+    zinb <- .runZinbwave(object, ...)
     assays(object)[["normalizedValues"]] <-
         assays(zinb)[["normalizedValues"]]
     assays(object)[["weights"]] <-
@@ -44,7 +44,29 @@
 
 
 
+# Check assays for zinbwave weights
 .hasZinbwave <- function(object) {
     stopifnot(is(object, "SingleCellExperiment"))
     all(c("normalizedValues", "weights") %in% assayNames(object))
+}
+
+
+
+# Attempt to return stashed zinbwave calcs, or recalculate
+.zinbwave <- function(object, ...) {
+    if (.hasZinbwave(object)) {
+        counts <- counts(object)
+        if (is.matrix(counts)) {
+            message(paste(
+                "Coercing counts from",
+                class(counts)[[1L]],
+                "to matrix"
+            ))
+            counts <- as.matrix(counts)
+            counts(object) <- counts
+            object
+        }
+    } else {
+        .runZinbwave(object, ...)
+    }
 }
