@@ -6,12 +6,12 @@
     epsilon = 1e12,
     ...
 ) {
-    message("Running zinbwave")
+    message("Running zinbwave...")
     stopifnot(is(Y, "SingleCellExperiment"))
     Y <- as(Y, "SingleCellExperiment")
     # zinbFit doesn't support `dgCMatrix``, so coerce counts to matrix
     assays(Y) <- list(counts = as.matrix(counts(Y)))
-    print(system.time({
+    message(printString(system.time({
         zinb <- zinbwave(
             Y = Y,
             K = 0L,
@@ -19,7 +19,7 @@
             epsilon = epsilon,
             ...
         )
-    }))
+    })))
     stopifnot(is(zinb, "SingleCellExperiment"))
     assert_are_identical(
         assayNames(zinb),
@@ -55,6 +55,7 @@
 # Attempt to return stashed zinbwave calcs, or recalculate
 .zinbwave <- function(object, ...) {
     if (.hasZinbwave(object)) {
+        message("Stashed zinbwave weights detected in assays")
         counts <- counts(object)
         if (is.matrix(counts)) {
             message(paste(
