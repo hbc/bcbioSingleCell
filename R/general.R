@@ -19,6 +19,8 @@
 #' @param dir `string`. Output directory path.
 #' @param expression `string`. Calculation to apply. Uses [match.arg()] and
 #'   defaults to the first argument in the `character` vector.
+#' @param gene2symbol `boolean`. Automatically interconvert gene identifiers
+#'   and gene names in plots. Useful for marker plots.
 #' @param genes `character`. Gene identifiers. Must match the rownames of the
 #'   object.
 #' @param geom `string`. Plot type. Uses [match.arg()] and defaults to the first
