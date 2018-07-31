@@ -9,11 +9,13 @@
 \usage{
 \S4method{plotDot}{SingleCellExperiment}(object, genes, colMin = -2.5,
   colMax = 2.5, dotMin = 0L, dotScale = 6L, gene2symbol = TRUE,
-  color = getOption("color", NULL), legend = getOption("legend", TRUE))
+  color = getOption("bcbio.color", NULL),
+  legend = getOption("bcbio.legend", TRUE))
 
 \S4method{plotDot}{seurat}(object, genes, colMin = -2.5, colMax = 2.5,
   dotMin = 0L, dotScale = 6L, gene2symbol = TRUE,
-  color = getOption("color", NULL), legend = getOption("legend", TRUE))
+  color = getOption("bcbio.color", NULL),
+  legend = getOption("bcbio.legend", TRUE))
 }
 \arguments{
 \item{object}{Object.}

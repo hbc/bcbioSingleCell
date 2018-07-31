@@ -27,40 +27,46 @@ plotMarkerUMAP(object, ...)
 plotTopMarkers(object, ...)
 
 \S4method{plotMarkerTSNE}{SingleCellExperiment}(object, genes,
-  expression = c("mean", "median", "sum"), color = getOption("color",
-  NULL), pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.8), pointsAsNumbers = FALSE,
-  label = getOption("label", TRUE), labelSize = getOption("labelSize",
-  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
-  FALSE), legend = getOption("legend", TRUE),
-  aspectRatio = getOption("aspectRatio", 1L), title = TRUE)
+  expression = c("mean", "median", "sum"),
+  color = getOption("bcbio.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.8),
+  pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", TRUE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = getOption("color", NULL),
-  pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.8), pointsAsNumbers = FALSE,
-  label = getOption("label", TRUE), labelSize = getOption("labelSize",
-  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
-  FALSE), legend = getOption("legend", TRUE),
-  aspectRatio = getOption("aspectRatio", 1L), title = TRUE)
+  "median", "sum"), color = getOption("bcbio.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.8),
+  pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", TRUE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerUMAP}{SingleCellExperiment}(object, genes,
-  expression = c("mean", "median", "sum"), color = getOption("color",
-  NULL), pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.8), pointsAsNumbers = FALSE,
-  label = getOption("label", TRUE), labelSize = getOption("labelSize",
-  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
-  FALSE), legend = getOption("legend", TRUE),
-  aspectRatio = getOption("aspectRatio", 1L), title = TRUE)
+  expression = c("mean", "median", "sum"),
+  color = getOption("bcbio.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.8),
+  pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", TRUE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerUMAP}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = getOption("color", NULL),
-  pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.8), pointsAsNumbers = FALSE,
-  label = getOption("label", TRUE), labelSize = getOption("labelSize",
-  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
-  FALSE), legend = getOption("legend", TRUE),
-  aspectRatio = getOption("aspectRatio", 1L), title = TRUE)
+  "median", "sum"), color = getOption("bcbio.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.8),
+  pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", TRUE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
 \S4method{plotTopMarkers}{SingleCellExperiment}(object, markers,
   reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
@@ -188,7 +194,7 @@ plotTopMarkers(seurat_small, markers = tail(markers, 1))
 # Known markers detected
 markers <- head(known_markers_small, n = 1)
 glimpse(markers)
-plotKnownMarkersDetected(object, markers = head(markers, 1))
+plotKnownMarkersDetected(seurat_small, markers = head(markers, 1))
 }
 \seealso{
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},
