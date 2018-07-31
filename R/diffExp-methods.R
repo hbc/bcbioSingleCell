@@ -1,7 +1,3 @@
-# TODO Check for already calculated zinbwave weights in object
-
-
-
 #' Differential Expression
 #'
 #' We are currently recommending the ZINB-WaVE method over zingeR, since it is
@@ -88,6 +84,14 @@ NULL
 
 
 
+.assertHasDesignFormula <- function(object) {
+    stopifnot(is(object, "SingleCellExperiment"))
+    assert_is_factor(object[["group"]])
+    assert_is_matrix(metadata(object)[["design"]])
+}
+
+
+
 # Van De Berge and Perraudeau and others have shown the LRT may perform better
 # for null hypothesis testing, so we use the LRT. In order to use the Wald test,
 # it is recommended to set `useT = TRUE`.
@@ -98,14 +102,12 @@ NULL
 # DESeq2 supports `weights` in assays automatically.
 .zinbwave.DESeq2 <- function(object) {  # nolint
     stopifnot(packageVersion("DESeq2") >= 1.2)
-    stopifnot(is(object, "SingleCellExperiment"))
-    zinb <- .zinbwave(object)
-    assert_is_factor(zinb[["group"]])
-    assert_is_matrix(metadata(zinb)[["design"]])
+    stopifnot(.hasZinbwave(object))
+    .assertHasDesignFormula(object)
     # DESeq2 ===================================================================
-    message("Running DESeq2")
-    print(system.time({
-        dds <- DESeqDataSet(se = zinb, design = .designFormula)
+    message("Running DESeq2...")
+    message(printString(system.time({
+        dds <- DESeqDataSet(se = object, design = .designFormula)
         dds <- DESeq(
             object = dds,
             test = "LRT",
@@ -116,7 +118,7 @@ NULL
         )
         # We already performed low count filtering
         res <- results(dds, independentFiltering = FALSE)
-    }))
+    })))
     res
 }
 
@@ -124,20 +126,18 @@ NULL
 
 .zinbwave.edgeR <- function(object) {  # nolint
     stopifnot(packageVersion("edgeR") >= 3.22)
-    stopifnot(is(object, "SingleCellExperiment"))
-    zinb <- .zinbwave(object)
-    assert_is_factor(zinb[["group"]])
-    assert_is_matrix(metadata(zinb)[["design"]])
+    stopifnot(.hasZinbwave(object))
+    .assertHasDesignFormula(object)
     # edgeR ====================================================================
-    message("Running edgeR")
-    counts <- as.matrix(counts(zinb))
-    weights <- assay(zinb, "weights")
+    message("Running edgeR...")
+    counts <- as.matrix(counts(object))
+    weights <- assay(object, "weights")
     assert_is_matrix(weights)
     design <- metadata(object)[["design"]]
     assert_is_matrix(design)
     group <- object[["group"]]
     assert_is_factor(group)
-    print(system.time({
+    message(printString(system.time({
         dge <- DGEList(counts, group = group)
         dge <- calcNormFactors(dge)
         dge[["weights"]] <- weights
@@ -149,7 +149,7 @@ NULL
             coef = 2L,
             independentFiltering = FALSE
         )
-    }))
+    })))
     lrt
 }
 
@@ -174,11 +174,10 @@ setMethod(
         assert_is_character(denominator)
         assert_are_disjoint_sets(numerator, denominator)
         caller <- match.arg(caller)
-        assertIsAnImplicitInteger(minCountsPerCell)
-        assertIsAnImplicitInteger(minCellsPerGene)
-
         # Consider adding zingeR support back once it's on Bioconductor
         zeroWeights <- "zinbwave"
+        assertIsAnImplicitInteger(minCountsPerCell)
+        assertIsAnImplicitInteger(minCellsPerGene)
 
         message(paste(
             "Performing differential expression with",
@@ -234,8 +233,15 @@ setMethod(
         design <- model.matrix(~group)
         metadata(object)[["design"]] <- design
 
-        fun <- get(paste("", zeroWeights, caller, sep = "."))
-        fun(object)
+        # Calculate the weights (e.g. `.zinbwave`)
+        weightsFunction <- get(paste("", zeroWeights, sep = "."))
+        object <- weightsFunction(object)
+
+        # Run differential expression (e.g. `.zinbwave.edgeR`)
+        callerFunction <- get(paste("", zeroWeights, caller, sep = "."))
+        object <- callerFunction(object)
+
+        object
     }
 )
 
