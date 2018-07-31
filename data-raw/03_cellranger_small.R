@@ -1,5 +1,5 @@
 # Cell Ranger Example Data
-# 2018-07-28
+# 2018-07-31
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
@@ -149,6 +149,7 @@ stopifnot(identical(
 stopifnot(identical(dimnames(sce), dimnames(seurat_sce)))
 
 # Slot the reduced dimensions into our bcbioSingleCell object
+colData(sce) <- colData(seurat_sce)
 reducedDims(sce) <- reducedDims(seurat_sce)
 cellranger_small <- sce
 

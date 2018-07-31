@@ -1,6 +1,6 @@
 # inDrops example dataset (indrops_small)
 # Using harvard-indrop-v3 barcodes
-# 2018-07-26
+# 2018-07-31
 
 library(devtools)
 library(tidyverse)
@@ -132,6 +132,8 @@ stopifnot(identical(dimnames(bcb), dimnames(seurat_sce)))
 # Save =========================================================================
 # Slot the Seurat calculated logcounts into assays
 assays(bcb)[["logcounts"]] <- assays(seurat_sce)[["logcounts"]]
+# Slot the colData from seurat, which contains "ident"
+colData(bcb) <- colData(seurat_sce)
 # Slot the reduced dimensions into our bcbioSingleCell object
 reducedDims(bcb) <- reducedDims(seurat_sce)
 indrops_small <- bcb
