@@ -113,7 +113,8 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
+  \code{\link{sanitizeSeuratMarkers}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh

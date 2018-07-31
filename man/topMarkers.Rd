@@ -45,7 +45,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
-  \code{\link{sanitizeMarkers}}
+  \code{\link{sanitizeSeuratMarkers}}
 }
 \author{
 Michael Steinbaugh

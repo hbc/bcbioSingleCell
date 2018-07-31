@@ -56,7 +56,8 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotTSNE}}, \code{\link{sanitizeMarkers}},
+  \code{\link{plotTSNE}},
+  \code{\link{sanitizeSeuratMarkers}},
   \code{\link{topMarkers}}
 }
 \author{

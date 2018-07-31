@@ -147,7 +147,8 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotPCElbow}}, \code{\link{sanitizeMarkers}},
+  \code{\link{plotPCElbow}},
+  \code{\link{sanitizeSeuratMarkers}},
   \code{\link{topMarkers}}
 }
 \author{
