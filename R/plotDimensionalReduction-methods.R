@@ -46,16 +46,16 @@ NULL
     fun,  # e.g. fetchTSNEData
     axes,
     interestingGroups = "ident",
-    color = getOption("color", NULL),
-    pointSize = getOption("pointSize", 0.75),
-    pointAlpha = getOption("pointAlpha", 0.75),
+    color = getOption("bcbio.color", NULL),
+    pointSize = getOption("bcbio.pointSize", 0.75),
+    pointAlpha = getOption("bcbio.pointAlpha", 0.75),
     pointsAsNumbers = FALSE,
-    label = getOption("label", TRUE),
-    labelSize = getOption("labelSize", 6L),
-    dark = getOption("dark", FALSE),
-    grid = getOption("grid", FALSE),
-    legend = getOption("legend", TRUE),
-    aspectRatio = getOption("aspectRatio", 1L),
+    label = getOption("bcbio.label", TRUE),
+    labelSize = getOption("bcbio.labelSize", 6L),
+    dark = getOption("bcbio.dark", FALSE),
+    grid = getOption("bcbio.grid", FALSE),
+    legend = getOption("bcbio.legend", TRUE),
+    aspectRatio = getOption("bcbio.aspectRatio", 1L),
     title = NULL
 ) {
     .assertHasIdent(object)
@@ -167,16 +167,16 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = getOption("color", NULL),
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
+        color = getOption("bcbio.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         pointsAsNumbers = FALSE,
-        label = getOption("label", TRUE),
-        labelSize = getOption("labelSize", 6L),
-        dark = getOption("dark", FALSE),
-        grid = getOption("grid", FALSE),
-        legend = getOption("legend", TRUE),
-        aspectRatio = getOption("aspectRatio", 1L),
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", TRUE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L),
         title = NULL
     ) {
         .plotReducedDims(
@@ -219,16 +219,16 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = getOption("color", NULL),
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
+        color = getOption("bcbio.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         pointsAsNumbers = FALSE,
-        label = getOption("label", TRUE),
-        labelSize = getOption("labelSize", 6L),
-        dark = getOption("dark", FALSE),
-        grid = getOption("grid", FALSE),
-        legend = getOption("legend", TRUE),
-        aspectRatio = getOption("aspectRatio", 1L),
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", TRUE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L),
         title = NULL
     ) {
         .plotReducedDims(
@@ -271,16 +271,16 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = getOption("color", NULL),
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
+        color = getOption("bcbio.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         pointsAsNumbers = FALSE,
-        label = getOption("label", TRUE),
-        labelSize = getOption("labelSize", 6L),
-        dark = getOption("dark", FALSE),
-        grid = getOption("grid", FALSE),
-        legend = getOption("legend", TRUE),
-        aspectRatio = getOption("aspectRatio", 1L),
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", TRUE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L),
         title = NULL
     ) {
         .plotReducedDims(

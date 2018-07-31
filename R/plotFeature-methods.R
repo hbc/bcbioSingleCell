@@ -31,15 +31,15 @@ NULL
     object,
     features,
     reduction = c("TSNE", "UMAP"),
-    color = getOption("color", NULL),
-    pointSize = getOption("pointSize", 0.75),
-    pointAlpha = getOption("pointAlpha", 0.75),
-    label = getOption("label", TRUE),
-    labelSize = getOption("labelSize", 6L),
-    dark = getOption("dark", FALSE),
-    grid = getOption("grid", FALSE),
-    legend = getOption("legend", FALSE),
-    aspectRatio = getOption("aspectRatio", 1L)
+    color = getOption("bcbio.color", NULL),
+    pointSize = getOption("bcbio.pointSize", 0.75),
+    pointAlpha = getOption("bcbio.pointAlpha", 0.75),
+    label = getOption("bcbio.label", TRUE),
+    labelSize = getOption("bcbio.labelSize", 6L),
+    dark = getOption("bcbio.dark", FALSE),
+    grid = getOption("bcbio.grid", FALSE),
+    legend = getOption("bcbio.legend", FALSE),
+    aspectRatio = getOption("bcbio.aspectRatio", 1L)
 ) {
     assert_is_character(features)
     # Legacy support for `color = "auto"`
@@ -167,15 +167,15 @@ setMethod(
     function(
         object,
         features,
-        color = getOption("color", NULL),
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
-        label = getOption("label", TRUE),
-        labelSize = getOption("labelSize", 6L),
-        dark = getOption("dark", FALSE),
-        grid = getOption("grid", FALSE),
-        legend = getOption("legend", FALSE),
-        aspectRatio = getOption("aspectRatio", 1L)
+        color = getOption("bcbio.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.75),
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", FALSE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L)
     ) {
         .plotFeatureReduction(
             object = object,
@@ -214,15 +214,15 @@ setMethod(
     function(
         object,
         features,
-        color = getOption("color", NULL),
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
-        label = getOption("label", TRUE),
-        labelSize = getOption("labelSize", 6L),
-        dark = getOption("dark", FALSE),
-        grid = getOption("grid", FALSE),
-        legend = getOption("legend", FALSE),
-        aspectRatio = getOption("aspectRatio", 1L)
+        color = getOption("bcbio.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.75),
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", FALSE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L)
     ) {
         .plotFeatureReduction(
             object = object,

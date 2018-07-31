@@ -67,8 +67,8 @@ setMethod(
         dotMin = 0L,
         dotScale = 6L,
         gene2symbol = TRUE,
-        color = getOption("color", NULL),
-        legend = getOption("legend", TRUE)
+        color = getOption("bcbio.color", NULL),
+        legend = getOption("bcbio.legend", TRUE)
     ) {
         .assertHasIdent(object)
         assert_is_character(genes)
