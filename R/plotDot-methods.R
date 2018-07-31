@@ -23,8 +23,9 @@
 #'
 #' @examples
 #' # seurat ====
-#' object <- seurat_small
+#' object <- indrops_small
 #' genes <- head(rownames(object))
+#' glimpse(genes)
 #' plotDot(object, genes = genes)
 NULL
 
@@ -61,26 +62,46 @@ setMethod(
     function(
         object,
         genes,
-        color = NULL,
         colMin = -2.5,
         colMax = 2.5,
         dotMin = 0L,
         dotScale = 6L,
-        legend = TRUE
+        gene2symbol = TRUE,
+        color = getOption("color", NULL),
+        legend = getOption("legend", TRUE)
     ) {
+        .assertHasIdent(object)
         assert_is_character(genes)
-        assertIsColorScaleContinuousOrNULL(color)
         assert_is_a_number(colMin)
         assert_is_a_number(colMax)
         assert_is_a_number(dotMin)
         assert_is_a_number(dotScale)
+        assert_is_a_bool(gene2symbol)
+        assertIsColorScaleContinuousOrNULL(color)
+        assert_is_a_bool(legend)
 
-        ident <- slot(object, "ident")
-        data <- fetchGeneData(object, genes = genes) %>%
+        ident <- colData(object)[["ident"]]
+        assert_is_non_empty(ident)
+
+        data <- fetchGeneData(
+            object = object,
+            genes = genes,
+            gene2symbol = gene2symbol
+        ) %>%
             as.data.frame() %>%
             cbind(ident) %>%
             rownames_to_column("cell") %>%
-            as_tibble() %>%
+            as_tibble()
+
+        if (isTRUE(gene2symbol) && !isTRUE(.useGeneName(object))) {
+            g2s <- gene2symbol(object)
+            assertIsGene2symbol(g2s)
+            g2s <- g2s[genes, , drop = FALSE]
+            genes <- make.unique(g2s[["geneName"]])
+            stopifnot(all(genes %in% colnames(data)))
+        }
+
+        data <- data %>%
             gather(
                 key = "gene",
                 value = "expression",
