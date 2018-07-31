@@ -95,53 +95,19 @@ test_that("filterCells: zinbwave mode", {
 
 # metrics ======================================================================
 test_that("metrics : bcbioSingleCell", {
-    x <- metrics(indrops_small)
-    expect_identical(
-        lapply(x, class) %>%
-            .[sort(names(.))],
-        list(
-            aggregate = "factor",
-            description = "factor",
-            fileName = "factor",
-            index = "factor",
-            interestingGroups = "factor",
-            log10GenesPerUMI = "numeric",
-            mitoRatio = "numeric",
-            nCoding = "integer",
-            nCount = "integer",
-            nGene = "integer",
-            nMito = "integer",
-            nUMI = "integer",
-            revcomp = "factor",
-            sampleID = "factor",
-            sampleName = "factor",
-            sequence = "factor"
-        )
-    )
+    object <- indrops_small
+    x <- metrics(object)
+    expect_true(all(
+        colnames(colData(object)) %in% colnames(x)
+    ))
+    expect_true("interestingGroups" %in% colnames(x))
 })
 
 test_that("metrics : seurat", {
-    x <- metrics(seurat_small)
-    expect_identical(
-        lapply(x, class) %>%
-            .[sort(names(.))],
-        list(
-            description = "factor",
-            ident = "factor",
-            index = "factor",
-            interestingGroups = "factor",
-            log10GenesPerUMI = "numeric",
-            mitoRatio = "numeric",
-            nCoding = "integer",
-            nGene = "integer",
-            nMito = "integer",
-            nUMI = "integer",
-            orig.ident = "factor",
-            res.0.4 = "character",
-            res.0.8 = "character",
-            res.1.2 = "character",
-            sampleID = "factor",
-            sampleName = "factor"
-        )
-    )
+    object <- seurat_small
+    x <- metrics(object)
+    expect_true(all(
+        colnames(colData(object)) %in% colnames(x)
+    ))
+    expect_true("interestingGroups" %in% colnames(x))
 })
