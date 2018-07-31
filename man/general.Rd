@@ -27,6 +27,9 @@ contain \code{geneID} and \code{geneName}.}
 \item{expression}{\code{string}. Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and
 defaults to the first argument in the \code{character} vector.}
 
+\item{gene2symbol}{\code{boolean}. Automatically interconvert gene identifiers
+and gene names in plots. Useful for marker plots.}
+
 \item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
 object.}
 

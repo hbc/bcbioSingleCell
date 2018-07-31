@@ -38,8 +38,9 @@ Plot Violin
 }
 \examples{
 # seurat ====
-object <- seurat_small
-genes <- head(rownames(object), 4L)
+object <- cellranger_small
+genes <- head(rownames(object), n = 4L)
+glimpse(genes)
 plotViolin(object, genes = genes)
 }
 \seealso{

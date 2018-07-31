@@ -30,6 +30,6 @@ interesting groups. Must be formatted in camel case and intersect with
 Cell Counts per Cluster
 }
 \examples{
-# seurat ====
-cellCountsPerCluster(seurat_small)
+# SingleCellExperiment ====
+cellCountsPerCluster(indrops_small)
 }

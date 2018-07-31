@@ -7,23 +7,19 @@
 \alias{plotDot,seurat-method}
 \title{Plot Dot}
 \usage{
-\S4method{plotDot}{SingleCellExperiment}(object, genes, color = NULL,
-  colMin = -2.5, colMax = 2.5, dotMin = 0L, dotScale = 6L,
-  legend = TRUE)
+\S4method{plotDot}{SingleCellExperiment}(object, genes, colMin = -2.5,
+  colMax = 2.5, dotMin = 0L, dotScale = 6L, gene2symbol = TRUE,
+  color = getOption("color", NULL), legend = getOption("legend", TRUE))
 
-\S4method{plotDot}{seurat}(object, genes, color = NULL, colMin = -2.5,
-  colMax = 2.5, dotMin = 0L, dotScale = 6L, legend = TRUE)
+\S4method{plotDot}{seurat}(object, genes, colMin = -2.5, colMax = 2.5,
+  dotMin = 0L, dotScale = 6L, gene2symbol = TRUE,
+  color = getOption("color", NULL), legend = getOption("legend", TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
 object.}
-
-\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
-Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
 \item{colMin}{\code{scalar numeric}. Minimum scaled average expression threshold.
 Everything smaller will be set to this.}
@@ -38,6 +34,14 @@ will have no dot drawn.}
 \item{dotScale}{\code{scalar numeric}.Scale the size of the points, similar to
 \code{cex}.}
 
+\item{gene2symbol}{\code{data.frame}. Gene-to-symbol mappings. Columns must
+contain \code{geneID} and \code{geneName}.}
+
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+
 \item{legend}{\code{boolean}. Include plot legend.}
 }
 \value{
@@ -48,8 +52,9 @@ Plot Dot
 }
 \examples{
 # seurat ====
-object <- seurat_small
+object <- indrops_small
 genes <- head(rownames(object))
+glimpse(genes)
 plotDot(object, genes = genes)
 }
 \seealso{

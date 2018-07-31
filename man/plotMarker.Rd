@@ -132,9 +132,10 @@ for the number of genes to plot here in a future update.
 }
 
 \examples{
-object <- seurat_small
+# SingleCellExperiment ====
+object <- cellranger_small
 title <- "mito genes"
-genes <- grep("^MT-", rownames(object), value = TRUE)
+genes <- rownames(object)[which(rowData(object)$broadClass == "mito")]
 print(genes)
 
 # t-SNE
@@ -169,12 +170,12 @@ plotMarkerUMAP(
 
 # Top markers
 markers <- topMarkers(all_markers_small, n = 1)
-markers
-plotTopMarkers(object, markers = tail(markers, 1))
+glimpse(markers)
+plotTopMarkers(seurat_small, markers = tail(markers, 1))
 
 # Known markers detected
 markers <- head(known_markers_small, n = 1)
-markers
+glimpse(markers)
 plotKnownMarkersDetected(object, markers = head(markers, 1))
 }
 \seealso{

@@ -19,46 +19,55 @@ plotTSNE(object, ...)
 plotUMAP(object, ...)
 
 \S4method{plotTSNE}{SingleCellExperiment}(object,
-  interestingGroups = "ident", color = NULL, pointsAsNumbers = FALSE,
+  interestingGroups = "ident", color = getOption("color", NULL),
   pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
-  legend = TRUE, aspectRatio = 1L, title = NULL)
+  pointAlpha = getOption("pointAlpha", 0.75), pointsAsNumbers = FALSE,
+  label = getOption("label", TRUE), labelSize = getOption("labelSize",
+  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
+  FALSE), legend = getOption("legend", TRUE),
+  aspectRatio = getOption("aspectRatio", 1L), title = NULL)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
-  color = NULL, pointsAsNumbers = FALSE,
-  pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
-  legend = TRUE, aspectRatio = 1L, title = NULL)
+  color = getOption("color", NULL), pointSize = getOption("pointSize",
+  0.75), pointAlpha = getOption("pointAlpha", 0.75),
+  pointsAsNumbers = FALSE, label = getOption("label", TRUE),
+  labelSize = getOption("labelSize", 6L), dark = getOption("dark",
+  FALSE), grid = getOption("grid", FALSE), legend = getOption("legend",
+  TRUE), aspectRatio = getOption("aspectRatio", 1L), title = NULL)
 
 \S4method{plotUMAP}{SingleCellExperiment}(object,
-  interestingGroups = "ident", color = NULL, pointsAsNumbers = FALSE,
+  interestingGroups = "ident", color = getOption("color", NULL),
   pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
-  legend = TRUE, aspectRatio = 1L, title = NULL)
+  pointAlpha = getOption("pointAlpha", 0.75), pointsAsNumbers = FALSE,
+  label = getOption("label", TRUE), labelSize = getOption("labelSize",
+  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
+  FALSE), legend = getOption("legend", TRUE),
+  aspectRatio = getOption("aspectRatio", 1L), title = NULL)
 
 \S4method{plotUMAP}{seurat}(object, interestingGroups = "ident",
-  color = NULL, pointsAsNumbers = FALSE,
-  pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
-  legend = TRUE, aspectRatio = 1L, title = NULL)
+  color = getOption("color", NULL), pointSize = getOption("pointSize",
+  0.75), pointAlpha = getOption("pointAlpha", 0.75),
+  pointsAsNumbers = FALSE, label = getOption("label", TRUE),
+  labelSize = getOption("labelSize", 6L), dark = getOption("dark",
+  FALSE), grid = getOption("grid", FALSE), legend = getOption("legend",
+  TRUE), aspectRatio = getOption("aspectRatio", 1L), title = NULL)
 
 \S4method{plotPCA}{SingleCellExperiment}(object,
-  interestingGroups = "ident", color = NULL, pointsAsNumbers = FALSE,
+  interestingGroups = "ident", color = getOption("color", NULL),
   pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
-  legend = TRUE, aspectRatio = 1L, title = NULL)
+  pointAlpha = getOption("pointAlpha", 0.75), pointsAsNumbers = FALSE,
+  label = getOption("label", TRUE), labelSize = getOption("labelSize",
+  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
+  FALSE), legend = getOption("legend", TRUE),
+  aspectRatio = getOption("aspectRatio", 1L), title = NULL)
 
 \S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
-  color = NULL, pointsAsNumbers = FALSE,
-  pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
-  legend = TRUE, aspectRatio = 1L, title = NULL)
+  color = getOption("color", NULL), pointSize = getOption("pointSize",
+  0.75), pointAlpha = getOption("pointAlpha", 0.75),
+  pointsAsNumbers = FALSE, label = getOption("label", TRUE),
+  labelSize = getOption("labelSize", 6L), dark = getOption("dark",
+  FALSE), grid = getOption("grid", FALSE), legend = getOption("legend",
+  TRUE), aspectRatio = getOption("aspectRatio", 1L), title = NULL)
 }
 \arguments{
 \item{object}{Object.}
@@ -74,13 +83,13 @@ Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
 palette will be used. If manual color definitions are desired, we recommend
 using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{pointsAsNumbers}{\code{boolean}. Plot the points as numbers (\code{TRUE}) or
-dots (\code{FALSE}).}
-
 \item{pointSize}{\code{scalar numeric}. Cell point size.}
 
 \item{pointAlpha}{\code{scalar numeric} (\code{0}-\code{1}). Alpha transparency level.
 Useful when there many cells in the dataset, and some cells can be masked.}
+
+\item{pointsAsNumbers}{\code{boolean}. Plot the points as numbers (\code{TRUE}) or
+dots (\code{FALSE}).}
 
 \item{label}{\code{boolean}. Overlay a cluster identitiy label on the plot.}
 
@@ -112,8 +121,8 @@ Useful when there many cells in the dataset, and some cells can be masked.}
 installing this with conda: \code{conda install -c conda-forge umap-learn}.
 }
 \examples{
-# seurat ====
-object <- seurat_small
+# SingleCellExperiment ====
+object <- cellranger_small
 
 # t-SNE
 plotTSNE(object)
