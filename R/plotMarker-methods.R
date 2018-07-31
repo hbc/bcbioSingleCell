@@ -66,15 +66,18 @@
 #'     title = title
 #' )
 #'
+#' # seurat ====
+#' object <- seurat_small
+#'
 #' # Top markers
 #' markers <- topMarkers(all_markers_small, n = 1)
 #' glimpse(markers)
-#' plotTopMarkers(seurat_small, markers = tail(markers, 1))
+#' plotTopMarkers(object, markers = tail(markers, 1))
 #'
 #' # Known markers detected
 #' markers <- head(known_markers_small, n = 1)
 #' glimpse(markers)
-#' plotKnownMarkersDetected(seurat_small, markers = head(markers, 1))
+#' plotKnownMarkersDetected(object, markers = head(markers, 1))
 NULL
 
 

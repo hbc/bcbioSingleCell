@@ -14,10 +14,10 @@
 #'
 #' @examples
 #' # SingleCellExperiment ====
+#' plotUMIsPerCell(cellranger_small, geom = "violin")
+#' plotUMIsPerCell(cellranger_small, geom = "ridgeline")
 #' plotUMIsPerCell(cellranger_small, geom = "ecdf")
 #' plotUMIsPerCell(cellranger_small, geom = "histogram")
-#' plotUMIsPerCell(cellranger_small, geom = "ridgeline")
-#' plotUMIsPerCell(cellranger_small, geom = "violin")
 #' plotUMIsPerCell(cellranger_small, geom = "boxplot")
 NULL
 
@@ -37,8 +37,8 @@ setMethod(
         max = Inf,
         point = c("none", "inflection", "knee"),
         trans = "log10",
-        color = NULL,
-        fill = NULL,
+        color = getOption("bcbio.color", NULL),
+        fill = getOption("bcbio.fill", NULL),
         title = "UMIs per cell"
     ) {
         geom <- match.arg(geom)

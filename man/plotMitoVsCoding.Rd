@@ -10,12 +10,13 @@
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{SingleCellExperiment}(object,
-  interestingGroups, trendline = FALSE, color = NULL, trans = "log2",
+  interestingGroups, trendline = FALSE,
+  color = getOption("bcbio.color", NULL), trans = "log2",
   title = "mito vs. coding")
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
-  trendline = FALSE, color = NULL, trans = "log2",
-  title = "mito vs. coding")
+  trendline = FALSE, color = getOption("bcbio.color", NULL),
+  trans = "log2", title = "mito vs. coding")
 }
 \arguments{
 \item{object}{Object.}

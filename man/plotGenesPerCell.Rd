@@ -12,12 +12,12 @@ plotGenesPerCell(object, ...)
 \S4method{plotGenesPerCell}{SingleCellExperiment}(object,
   geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
   interestingGroups, min = 0L, max = Inf, trans = "log2",
-  fill = NULL, title = "genes per cell")
+  fill = getOption("bcbio.fill", NULL), title = "genes per cell")
 
 \S4method{plotGenesPerCell}{seurat}(object, geom = c("violin",
   "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups,
-  min = 0L, max = Inf, trans = "log2", fill = NULL,
-  title = "genes per cell")
+  min = 0L, max = Inf, trans = "log2",
+  fill = getOption("bcbio.fill", NULL), title = "genes per cell")
 }
 \arguments{
 \item{object}{Object.}

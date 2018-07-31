@@ -10,10 +10,11 @@
 plotZerosVsDepth(object, ...)
 
 \S4method{plotZerosVsDepth}{SingleCellExperiment}(object,
-  interestingGroups, color = NULL, title = "zeros vs. depth")
+  interestingGroups, color = getOption("bcbio.color", NULL),
+  title = "zeros vs. depth")
 
 \S4method{plotZerosVsDepth}{seurat}(object, interestingGroups,
-  color = NULL, title = "zeros vs. depth")
+  color = getOption("bcbio.color", NULL), title = "zeros vs. depth")
 }
 \arguments{
 \item{object}{Object.}
