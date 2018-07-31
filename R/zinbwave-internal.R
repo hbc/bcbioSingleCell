@@ -41,3 +41,10 @@
         assays(zinb)[["weights"]]
     object
 }
+
+
+
+.hasZinbwave <- function(object) {
+    stopifnot(is(object, "SingleCellExperiment"))
+    all(c("normalizedValues", "weights") %in% assayNames(object))
+}

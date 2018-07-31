@@ -90,12 +90,11 @@ setMethod(
             )
         }
 
-        # Report if counts are filtered
-
-
+        # Filtered counts, with optional zinbwave weights
         return <- c(
             return,
-            paste("Filtered:", .isFiltered(object))
+            paste("Filtered:", .isFiltered(object)),
+            paste("zinbwave:", .hasZinbwave(object))
         )
 
         cat(return, sep = "\n")
