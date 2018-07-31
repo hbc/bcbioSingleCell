@@ -82,6 +82,7 @@ bcb <- bcbioSingleCell(
 )
 
 # Apply example filtering without excluding any cells
+# Note that we're enabling zinbwave mode here to test the `diffExp()` handling
 bcb <- filterCells(
     object = bcb,
     minUMIs = 0,
@@ -90,7 +91,8 @@ bcb <- filterCells(
     maxGenes = Inf,
     minNovelty = 0,
     maxMitoRatio = 1,
-    minCellsPerGene = 0
+    minCellsPerGene = 0,
+    zinbwave = TRUE
 )
 
 # Require 500 cells, 500 genes
@@ -116,6 +118,10 @@ seurat <- as(bcb, "seurat") %>%
 # Coerce seurat to SingleCellExperiment, which contains `reducedDims` slot
 seurat_sce <- as(seurat, "SingleCellExperiment")
 stopifnot(identical(
+    assayNames(seurat_sce),
+    c("counts", "logcounts")
+))
+stopifnot(identical(
     names(reducedDims(seurat_sce)),
     c("PCA", "TSNE", "UMAP")
 ))
@@ -124,6 +130,8 @@ stopifnot(identical(dimnames(bcb), dimnames(seurat_sce)))
 
 
 # Save =========================================================================
+# Slot the Seurat calculated logcounts into assays
+assays(bcb)[["logcounts"]] <- assays(seurat_sce)[["logcounts"]]
 # Slot the reduced dimensions into our bcbioSingleCell object
 reducedDims(bcb) <- reducedDims(seurat_sce)
 indrops_small <- bcb
