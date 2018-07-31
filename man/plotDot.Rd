@@ -8,13 +8,12 @@
 \title{Plot Dot}
 \usage{
 \S4method{plotDot}{SingleCellExperiment}(object, genes, colMin = -2.5,
-  colMax = 2.5, dotMin = 0L, dotScale = 6L, gene2symbol = TRUE,
+  colMax = 2.5, dotMin = 0L, dotScale = 6L,
   color = getOption("bcbio.color", NULL),
   legend = getOption("bcbio.legend", TRUE))
 
 \S4method{plotDot}{seurat}(object, genes, colMin = -2.5, colMax = 2.5,
-  dotMin = 0L, dotScale = 6L, gene2symbol = TRUE,
-  color = getOption("bcbio.color", NULL),
+  dotMin = 0L, dotScale = 6L, color = getOption("bcbio.color", NULL),
   legend = getOption("bcbio.legend", TRUE))
 }
 \arguments{
@@ -35,9 +34,6 @@ will have no dot drawn.}
 
 \item{dotScale}{\code{scalar numeric}.Scale the size of the points, similar to
 \code{cex}.}
-
-\item{gene2symbol}{\code{data.frame}. Gene-to-symbol mappings. Columns must
-contain \code{geneID} and \code{geneName}.}
 
 \item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
 Must supply discrete values. When set to \code{NULL}, the default ggplot2 color

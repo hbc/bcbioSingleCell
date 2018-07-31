@@ -66,7 +66,6 @@ setMethod(
         colMax = 2.5,
         dotMin = 0L,
         dotScale = 6L,
-        gene2symbol = TRUE,
         color = getOption("bcbio.color", NULL),
         legend = getOption("bcbio.legend", TRUE)
     ) {
@@ -76,7 +75,6 @@ setMethod(
         assert_is_a_number(colMax)
         assert_is_a_number(dotMin)
         assert_is_a_number(dotScale)
-        assert_is_a_bool(gene2symbol)
         assertIsColorScaleContinuousOrNULL(color)
         assert_is_a_bool(legend)
 
@@ -86,19 +84,20 @@ setMethod(
         data <- fetchGeneData(
             object = object,
             genes = genes,
-            gene2symbol = gene2symbol
+            gene2symbol = TRUE
         ) %>%
             as.data.frame() %>%
             cbind(ident) %>%
             rownames_to_column("cell") %>%
             as_tibble()
 
-        if (isTRUE(gene2symbol) && !isTRUE(.useGeneName(object))) {
+        if (!isTRUE(.useGeneName(object))) {
             g2s <- gene2symbol(object)
-            assertIsGene2symbol(g2s)
-            g2s <- g2s[genes, , drop = FALSE]
-            genes <- make.unique(g2s[["geneName"]])
-            stopifnot(all(genes %in% colnames(data)))
+            if (length(g2s)) {
+                g2s <- g2s[genes, , drop = FALSE]
+                genes <- make.unique(g2s[["geneName"]])
+                stopifnot(all(genes %in% colnames(data)))
+            }
         }
 
         data <- data %>%
