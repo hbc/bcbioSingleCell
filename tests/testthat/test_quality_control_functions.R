@@ -86,9 +86,8 @@ test_that("filterCells : Per sample cutoffs", {
 test_that("filterCells: zinbwave mode", {
     x <- filterCells(indrops_small, zinbwave = TRUE)
     expect_s4_class(x, "bcbioSingleCell")
-    expect_identical(
-        assayNames(x),
-        c("counts", "normalizedValues", "weights")
+    expect_true(
+        all(c("counts", "normalizedValues", "weights") %in% assayNames(x))
     )
 })
 
