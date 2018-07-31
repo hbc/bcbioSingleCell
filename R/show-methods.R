@@ -91,15 +91,11 @@ setMethod(
         }
 
         # Report if counts are filtered
-        if (!is.null(metadata(object)[["filterParams"]])) {
-            filtered <- TRUE
-        } else {
-            filtered <- FALSE
-        }
+
 
         return <- c(
             return,
-            paste("Filtered:", filtered)
+            paste("Filtered:", .isFiltered(object))
         )
 
         cat(return, sep = "\n")
