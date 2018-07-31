@@ -12,7 +12,6 @@ params:
   resolution_calc: !r seq(from = 0.2, to = 1.2, by = 0.1)
   resolution_use: 0.6
   dark: FALSE
-  umap: FALSE
   data_dir: !r file.path("data", Sys.Date())
 ---
 
@@ -30,6 +29,8 @@ bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
 stopifnot(is(bcb, "SingleCellExperiment"))
 invisible(validObject(bcb))
+
+has_umap <- reticulate::py_module_available(module = "umap")
 
 # Vector to use for dimensional reduction plot looping
 dim_red_groups <- unique(c(
@@ -360,11 +361,11 @@ invisible(lapply(
 conda install -c conda-forge umap-learn
 ```
 
-```{r run_umap, eval=params$umap}
+```{r run_umap, include=has_umap, eval=has_umap}
 seurat <- RunUMAP(seurat)
 ```
 
-```{r plot_umap, eval=params$umap, results="asis"}
+```{r plot_umap, include=has_umap, eval=has_umap, results="asis"}
 invisible(lapply(
     X = dim_red_groups,
     FUN = function(group) {
