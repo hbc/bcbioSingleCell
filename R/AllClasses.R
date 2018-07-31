@@ -68,6 +68,11 @@ bcbioSingleCell <- setClass(
 #'   are supported. The function will internally generate transcript-to-gene
 #'   mappings and construct a `GRanges` object containing the genomic ranges
 #'   ([rowRanges()]).
+#' @param zinbwave `boolean`. Run [zinbwave::zinbwave()] to automatically apply
+#'   a ZINB regression model to calculate `normalizedValues` and `weights`
+#'   matrices to by used for differential expression with DESeq2 or edgeR.
+#'   For large datasets this can take a long time and use a lot of memory, so
+#'   this calculation is disabled by default.
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return `bcbioSingleCell`.
@@ -97,6 +102,7 @@ bcbioSingleCell <- function(
     transgeneNames = NULL,
     spikeNames = NULL,
     gffFile = NULL,
+    zinbwave = FALSE,
     ...
 ) {
     dots <- list(...)
@@ -140,6 +146,7 @@ bcbioSingleCell <- function(
     if (is_a_string(gffFile)) {
         assert_all_are_existing_files(gffFile)
     }
+    assert_is_a_bool(zinbwave)
 
     # Directory paths ==========================================================
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
@@ -446,8 +453,8 @@ bcbioSingleCell <- function(
         metadata <- c(metadata, dots)
     }
 
-    # Return ===================================================================
-    .new.bcbioSingleCell(
+    # Make bcbioSingleCell object ==============================================
+    object <- .new.bcbioSingleCell(
         assays = list(counts = counts),
         rowRanges = rowRanges,
         colData = colData,
@@ -455,6 +462,19 @@ bcbioSingleCell <- function(
         transgeneNames = transgeneNames,
         spikeNames = spikeNames
     )
+
+    # zinbwave zero-weights ====================================================
+    # The `zinbwave()` function currently supports SummarizedExperiment, so
+    # we're passing in our newly created object, which extends SE
+    if (isTRUE(zinbwave)) {
+        zinb <- .zinbwave(object)
+        assays(object)[["normalizedValues"]] <-
+            assays(zinb)[["normalizedValues"]]
+        assays(object)[["weights"]] <-
+            assays(zinb)[["weights"]]
+    }
+
+    object
 }
 
 

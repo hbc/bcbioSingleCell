@@ -9,7 +9,7 @@
 bcbioSingleCell(uploadDir, organism = NULL, sampleMetadataFile = NULL,
   interestingGroups = "sampleName", ensemblRelease = NULL,
   genomeBuild = NULL, transgeneNames = NULL, spikeNames = NULL,
-  gffFile = NULL, ...)
+  gffFile = NULL, zinbwave = FALSE, ...)
 }
 \arguments{
 \item{uploadDir}{\code{string}. Path to final upload directory. This path is set
@@ -57,6 +57,12 @@ Feature Format) file is required. Generally, we recommend using a GTF
 are supported. The function will internally generate transcript-to-gene
 mappings and construct a \code{GRanges} object containing the genomic ranges
 (\code{\link[=rowRanges]{rowRanges()}}).}
+
+\item{zinbwave}{\code{boolean}. Run \code{\link[zinbwave:zinbwave]{zinbwave::zinbwave()}} to automatically apply
+a ZINB regression model to calculate \code{normalizedValues} and \code{weights}
+matrices to by used for differential expression with DESeq2 or edgeR.
+For large datasets this can take a long time and use a lot of memory, so
+this calculation is disabled by default.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
