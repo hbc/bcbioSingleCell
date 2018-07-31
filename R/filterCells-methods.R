@@ -13,8 +13,10 @@
 #'
 #' @inheritParams general
 #' @param nCells `scalar integer`. Expected number of cells per sample.
-#' @param minUMIs `scalar integer`. Minimum number of UMI disambiguated counts per cell.
-#' @param maxUMIs `scalar integer`. Maximum number of UMI disambiguated counts per cell.
+#' @param minUMIs `scalar integer`. Minimum number of UMI disambiguated counts
+#'   per cell.
+#' @param maxUMIs `scalar integer`. Maximum number of UMI disambiguated counts
+#'   per cell.
 #' @param minGenes `scalar integer`. Minimum number of genes detected.
 #' @param maxGenes `scalar integer`. Maximum number of genes detected.
 #' @param minNovelty `scalar integer` (`0`-`1`). Minimum novelty score (log10
@@ -72,9 +74,12 @@ setMethod(
         maxGenes = Inf,
         minNovelty = 0L,
         maxMitoRatio = 1L,
-        minCellsPerGene = 10L
+        minCellsPerGene = 10L,
+        zinbwave = FALSE
     ) {
         validObject(object)
+        assert_is_a_bool(zinbwave)
+
         sampleNames <- sampleNames(object)
         metrics <- metrics(object)
 
@@ -436,6 +441,24 @@ setMethod(
         metadata(object)[["filterParams"]] <- params
         metadata(object)[["filterSummary"]] <- summary
 
-        object[genes, cells]
+        # Subset ===============================================================
+        object <- object[genes, cells]
+
+        # zinbwave weights =====================================================
+        if (isTRUE(zinbwave)) {
+            object <- .zinbwaveIntoAssays(object)
+        }
+
+        object
     }
 )
+
+
+
+.isFiltered <- function(object) {
+    if (!is.null(metadata(object)[["filterParams"]])) {
+        TRUE
+    } else {
+        FALSE
+    }
+}
