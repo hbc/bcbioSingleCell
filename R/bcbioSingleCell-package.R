@@ -78,8 +78,8 @@
 #'   complete.cases mcols mcols<- merge metadata metadata<- na.omit
 #' @importFrom scales percent pretty_breaks
 #' @importFrom Seurat as.SingleCellExperiment CreateSeuratObject FetchData
-#' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
-#'   spikeNames
+#' @importFrom SingleCellExperiment SingleCellExperiment counts counts<-
+#'   isSpike isSpike<- spikeNames
 #' @importFrom stats ecdf fitted median model.matrix predict relevel reorder
 #'   smooth.spline
 #' @importFrom stringr str_extract str_match str_pad str_split
