@@ -1,4 +1,4 @@
-#' Sanitize Markers Output
+#' Sanitize Seurat Markers
 #'
 #' Currently only Seurat markers are supported.
 #'
@@ -27,7 +27,7 @@
 #' invisible(capture.output(
 #'     all_markers <- Seurat::FindAllMarkers(object)
 #' ))
-#' all_sanitized <- sanitizeMarkers(
+#' all_sanitized <- sanitizeSeuratMarkers(
 #'     data = all_markers,
 #'     rowRanges = rowRanges(object)
 #' )
@@ -41,12 +41,12 @@
 #'         ident.2 = NULL
 #'     )
 #' ))
-#' ident_3_sanitized <- sanitizeMarkers(
+#' ident_3_sanitized <- sanitizeSeuratMarkers(
 #'     data = ident_3_markers,
 #'     rowRanges = rowRanges(object)
 #' )
 #' glimpse(ident_3_sanitized)
-sanitizeMarkers <- function(data, rowRanges) {
+sanitizeSeuratMarkers <- function(data, rowRanges) {
     assert_is_data.frame(data)
     # Early return on sanitized data
     if (.isSanitizedMarkers(data, package = "Seurat")) {
@@ -104,6 +104,10 @@ sanitizeMarkers <- function(data, rowRanges) {
         data[["padj"]] <- data[["pValAdj"]]
         data[["pValAdj"]] <- NULL
     }
+
+    # Strip out unwanted seurat columns from rowRanges
+    mcols(rowRanges) <- mcols(rowRanges) %>%
+        .[!grepl("^gene($|\\.)", colnames(.))]
 
     # Row data from GRanges
     rowData <- as.data.frame(rowRanges)
