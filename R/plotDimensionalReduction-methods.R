@@ -36,20 +36,6 @@
 #'
 #' # PCA
 #' plotPCA(object)
-#'
-#' # seurat ====
-#' object <- seurat_small
-#'
-#' # t-SNE
-#' plotTSNE(object)
-#' plotTSNE(object, pointsAsNumbers = TRUE)
-#' plotTSNE(object, dark = TRUE)
-#'
-#' # UMAP
-#' plotUMAP(object)
-#'
-#' # PCA
-#' plotPCA(object)
 NULL
 
 
