@@ -45,6 +45,7 @@
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
 #'   readSampleData readTx2gene readYAMLSampleData sampleDirs
 #' @importFrom Biobase rowMedians sampleNames
+#' @importFrom BiocGenerics counts counts<-
 #' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows desc everything filter group_by
@@ -77,9 +78,9 @@
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
 #'   complete.cases mcols mcols<- merge metadata metadata<- na.omit
 #' @importFrom scales percent pretty_breaks
-#' @importFrom Seurat as.SingleCellExperiment CreateSeuratObject FetchData
-#' @importFrom SingleCellExperiment SingleCellExperiment counts counts<-
-#'   isSpike isSpike<- spikeNames
+#' @importFrom Seurat as.SingleCellExperiment CreateSeuratObject
+#' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
+#'   spikeNames
 #' @importFrom stats ecdf fitted median model.matrix predict relevel reorder
 #'   smooth.spline
 #' @importFrom stringr str_extract str_match str_pad str_split
