@@ -9,12 +9,13 @@
 \usage{
 \S4method{plotQC}{SingleCellExperiment}(object, interestingGroups,
   geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-  headerLevel = 2L, legend = FALSE, return = c("grid", "list",
-  "markdown"))
+  headerLevel = 2L, legend = getOption("bcbio.legend", FALSE),
+  return = c("grid", "list", "markdown"))
 
 \S4method{plotQC}{seurat}(object, interestingGroups, geom = c("violin",
   "ridgeline", "ecdf", "histogram", "boxplot"), headerLevel = 2L,
-  legend = FALSE, return = c("grid", "list", "markdown"))
+  legend = getOption("bcbio.legend", FALSE), return = c("grid", "list",
+  "markdown"))
 }
 \arguments{
 \item{object}{Object.}
