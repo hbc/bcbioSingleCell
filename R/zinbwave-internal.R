@@ -58,11 +58,6 @@
         message("Using stashed zinbwave weights in assays")
         counts <- counts(object)
         if (!is.matrix(counts)) {
-            message(paste(
-                "Coercing counts from",
-                class(counts)[[1L]],
-                "to matrix"
-            ))
             counts <- as.matrix(counts)
             counts(object) <- counts
         }
