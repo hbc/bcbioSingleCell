@@ -85,6 +85,7 @@ Imports:
     purrr (>= 0.2.5),
     R.utils,
     readr (>= 1.1),
+    reticulate,
     rhdf5 (>= 2.2),
     rlang (>= 0.2),
     rmarkdown (>= 1.10),

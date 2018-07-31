@@ -35,9 +35,9 @@
 #'   assertIsColorScaleContinuousOrNULL assertIsColorScaleDiscreteOrNULL
 #'   assertIsFillScaleDiscreteOrNULL assertIsGene2symbol assertIsTx2gene
 #'   assignAndSaveData camel convertGenesToSymbols convertSymbolsToGenes
-#'   convertUCSCBuildToEnsembl detectOrganism emptyRanges hasRownames
-#'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
-#'   makeTx2geneFromGFF markdownHeader markdownPlotlist printString
+#'   convertUCSCBuildToEnsembl detectOrganism emptyRanges gene2symbol
+#'   hasRownames initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF
+#'   makeNames makeTx2geneFromGFF markdownHeader markdownPlotlist printString
 #'   readFileByExtension readYAML sanitizeSampleData stripTranscriptVersions
 #'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
 #' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
@@ -45,7 +45,7 @@
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
 #'   readSampleData readTx2gene readYAMLSampleData sampleDirs
 #' @importFrom Biobase rowMedians sampleNames
-#' @importFrom BiocGenerics counts counts<-
+#' @importFrom BiocGenerics cbind counts counts<- do.call rbind
 #' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows desc everything filter group_by
@@ -73,6 +73,7 @@
 #' @importFrom pbapply pblapply
 #' @importFrom purrr map
 #' @importFrom readr read_lines read_tsv
+#' @importFrom reticulate py_module_available
 #' @importFrom rhdf5 h5dump h5read
 #' @importFrom rlang !! !!! sym syms UQ
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
