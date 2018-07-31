@@ -15,14 +15,17 @@ bcbioSingleCell(uploadDir, organism = NULL, sampleMetadataFile = NULL,
 \item{uploadDir}{\code{string}. Path to final upload directory. This path is set
 when running "\code{bcbio_nextgen -w template}".}
 
-\item{organism}{\code{string}. Organism name. Use the full latin name (e.g.
-"Homo sapiens"), since this will be input downstream to
-AnnotationHub and ensembldb, unless \code{gffFile} is set.}
+\item{organism}{\code{string} or \code{NULL}. Organism name. Use the full Latin name
+(e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
+and ensembldb, unless \code{gffFile} is set. If left \code{NULL} (\emph{not recommended}),
+the function call will skip loading gene-level annotations into
+\code{\link[=rowRanges]{rowRanges()}}. This can be useful for poorly annotation genomes or
+experiments involving multiple genomes.}
 
-\item{sampleMetadataFile}{\code{string}. Sample barcode metadata file. Optional
-for runs with demultiplixed index barcodes (e.g. SureCell), but otherwise
-required for runs with multipliexed FASTQs containing multiple index
-barcodes (e.g. inDrop).}
+\item{sampleMetadataFile}{\code{string} or \code{NULL}. Sample barcode metadata file.
+Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+be left \code{NULL}, but otherwise required for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrop).}
 
 \item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
 interesting groups. Must be formatted in camel case and intersect with

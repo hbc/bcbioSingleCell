@@ -40,13 +40,16 @@ bcbioSingleCell <- setClass(
 #' @inheritParams general
 #' @param uploadDir `string`. Path to final upload directory. This path is set
 #'   when running "`bcbio_nextgen -w template`".
-#' @param organism `string`. Organism name. Use the full latin name (e.g.
-#'   "Homo sapiens"), since this will be input downstream to
-#'   AnnotationHub and ensembldb, unless `gffFile` is set.
-#' @param sampleMetadataFile `string`. Sample barcode metadata file. Optional
-#'   for runs with demultiplixed index barcodes (e.g. SureCell), but otherwise
-#'   required for runs with multipliexed FASTQs containing multiple index
-#'   barcodes (e.g. inDrop).
+#' @param organism `string` or `NULL`. Organism name. Use the full Latin name
+#'   (e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
+#'   and ensembldb, unless `gffFile` is set. If left `NULL` (*not recommended*),
+#'   the function call will skip loading gene-level annotations into
+#'   [rowRanges()]. This can be useful for poorly annotation genomes or
+#'   experiments involving multiple genomes.
+#' @param sampleMetadataFile `string` or `NULL`. Sample barcode metadata file.
+#'   Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+#'   be left `NULL`, but otherwise required for runs with multipliexed FASTQs
+#'   containing multiple index barcodes (e.g. inDrop).
 #' @param ensemblRelease `scalar integer` or `NULL`. Ensembl release version. If
 #'   `NULL`, defaults to current release, and does not typically need to be
 #'   user-defined. Passed to AnnotationHub for `EnsDb` annotation matching,

@@ -20,14 +20,17 @@ directory.}
 \item{filtered}{\code{boolean}. Use filtered (recommended) or raw counts. Note
 that raw counts still contain only whitelisted cellular barcodes.}
 
-\item{organism}{\code{string}. Organism name. Use the full latin name (e.g.
-"Homo sapiens"), since this will be input downstream to
-AnnotationHub and ensembldb, unless \code{gffFile} is set.}
+\item{organism}{\code{string} or \code{NULL}. Organism name. Use the full Latin name
+(e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
+and ensembldb, unless \code{gffFile} is set. If left \code{NULL} (\emph{not recommended}),
+the function call will skip loading gene-level annotations into
+\code{\link[=rowRanges]{rowRanges()}}. This can be useful for poorly annotation genomes or
+experiments involving multiple genomes.}
 
-\item{sampleMetadataFile}{\code{string}. Sample barcode metadata file. Optional
-for runs with demultiplixed index barcodes (e.g. SureCell), but otherwise
-required for runs with multipliexed FASTQs containing multiple index
-barcodes (e.g. inDrop).}
+\item{sampleMetadataFile}{\code{string} or \code{NULL}. Sample barcode metadata file.
+Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+be left \code{NULL}, but otherwise required for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrop).}
 
 \item{refdataDir}{\code{string} or \code{NULL}. Directory path to Cell Ranger reference
 annotation data.}
