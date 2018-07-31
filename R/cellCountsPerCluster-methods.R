@@ -7,8 +7,8 @@
 #' @return `tibble` grouped by "`ident`" column, arranged by abundance.
 #'
 #' @examples
-#' # seurat ====
-#' cellCountsPerCluster(seurat_small)
+#' # SingleCellExperiment ====
+#' cellCountsPerCluster(indrops_small)
 NULL
 
 
@@ -20,6 +20,7 @@ setMethod(
     "cellCountsPerCluster",
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
+        .assertHasIdent(object)
         if (missing(interestingGroups)) {
             interestingGroups <- basejump::interestingGroups(object)
         }

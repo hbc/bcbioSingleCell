@@ -16,16 +16,27 @@
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
-#' # seurat ====
+#' # SingleCellExperiment ====
 #' per_cluster <- cellTypesPerCluster(known_markers_small)
 #' glimpse(per_cluster)
 #'
 #' # Let's plot the first row, as an example
 #' plotCellTypesPerCluster(
-#'     object = seurat_small,
-#'     cellTypesPerCluster = head(per_cluster, 1),
+#'     object = cellranger_small,
+#'     cellTypesPerCluster = head(per_cluster, n = 2L)
 #' )
 NULL
+
+
+
+# Constructors =================================================================
+# Figure out which ID column to use (geneID or geneName)
+# Return TRUE if we're working with symbols (not recommended but used by Seurat)
+.useGeneName <- function(object) {
+    geneName <- as.character(gene2symbol(object)[["geneName"]])
+    assert_is_non_empty(geneName)
+    any(geneName %in% rownames(object))
+}
 
 
 
@@ -34,7 +45,7 @@ NULL
 #' @export
 setMethod(
     "plotCellTypesPerCluster",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(
         object,
         cellTypesPerCluster,
@@ -52,6 +63,13 @@ setMethod(
         )
         reduction <- match.arg(reduction)
         assertIsAHeaderLevel(headerLevel)
+
+        # Determine whether we need to use `geneID` or `geneName`
+        if (isTRUE(.useGeneName)) {
+            idCol <- "geneName"
+        } else {
+            idCol <- "geneID"
+        }
 
         cellTypesPerCluster <- cellTypesPerCluster %>%
             ungroup() %>%
@@ -73,7 +91,7 @@ setMethod(
             assert_has_rows(subset)
             lapply(seq_len(nrow(subset)), function(x) {
                 cellType <- subset[x, , drop = FALSE]
-                genes <- pull(cellType, "geneName") %>%
+                genes <- pull(cellType, idCol) %>%
                     as.character() %>%
                     strsplit(", ") %>%
                     .[[1L]]
@@ -97,4 +115,14 @@ setMethod(
         })
         invisible(return)
     }
+)
+
+
+
+#' @rdname plotFeature
+#' @export
+setMethod(
+    "plotCellTypesPerCluster",
+    signature("seurat"),
+    getMethod("plotCellTypesPerCluster", "SingleCellExperiment")
 )
