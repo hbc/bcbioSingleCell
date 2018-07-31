@@ -1,5 +1,7 @@
 #' Plot Gene
 #'
+#' Visualize genes on a dot or violin plot.
+#'
 #' @name plotGene
 #' @family Gene Expression Functions
 #' @author Michael Steinbaugh
@@ -19,8 +21,9 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' object <- seurat_small
+#' object <- indrops_small
 #' genes <- head(rownames(object))
+#' glimpse(genes)
 #'
 #' # Dot
 #' plotGene(object, genes = genes, geom = "dot")
@@ -41,7 +44,7 @@ setMethod(
         object,
         genes,
         geom = c("dot", "violin"),
-        legend = FALSE
+        legend = getOption("bcbio.legend", TRUE)
     ) {
         geom <- match.arg(geom)
         if (geom == "dot") {

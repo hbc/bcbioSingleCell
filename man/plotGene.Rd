@@ -8,10 +8,10 @@
 \title{Plot Gene}
 \usage{
 \S4method{plotGene}{SingleCellExperiment}(object, genes, geom = c("dot",
-  "violin"), legend = FALSE)
+  "violin"), legend = getOption("bcbio.legend", TRUE))
 
 \S4method{plotGene}{seurat}(object, genes, geom = c("dot", "violin"),
-  legend = FALSE)
+  legend = getOption("bcbio.legend", TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -28,11 +28,12 @@ Currently supports "\code{dot}" and "\code{violin}".}
 \code{ggplot}.
 }
 \description{
-Plot Gene
+Visualize genes on a dot or violin plot.
 }
 \examples{
-object <- seurat_small
+object <- indrops_small
 genes <- head(rownames(object))
+glimpse(genes)
 
 # Dot
 plotGene(object, genes = genes, geom = "dot")
