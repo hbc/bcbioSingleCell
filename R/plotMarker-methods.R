@@ -1,3 +1,8 @@
+# TODO Add gene2symbol support here
+# FIXME Add assert check that the marker input ident matches the object
+
+
+
 #' Plot Cell-Type-Specific Gene Markers
 #'
 #' @description
@@ -25,9 +30,10 @@
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
-#' object <- seurat_small
+#' # SingleCellExperiment ====
+#' object <- cellranger_small
 #' title <- "mito genes"
-#' genes <- grep("^MT-", rownames(object), value = TRUE)
+#' genes <- rownames(object)[which(rowData(object)$broadClass == "mito")]
 #' print(genes)
 #'
 #' # t-SNE
@@ -62,12 +68,12 @@
 #'
 #' # Top markers
 #' markers <- topMarkers(all_markers_small, n = 1)
-#' markers
-#' plotTopMarkers(object, markers = tail(markers, 1))
+#' glimpse(markers)
+#' plotTopMarkers(seurat_small, markers = tail(markers, 1))
 #'
 #' # Known markers detected
 #' markers <- head(known_markers_small, n = 1)
-#' markers
+#' glimpse(markers)
 #' plotKnownMarkersDetected(object, markers = head(markers, 1))
 NULL
 

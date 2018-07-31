@@ -1,3 +1,7 @@
+# TODO Add gene2symbol support here
+
+
+
 #' Plot Violin
 #'
 #' @name plotViolin
@@ -15,8 +19,9 @@
 #'
 #' @examples
 #' # seurat ====
-#' object <- seurat_small
-#' genes <- head(rownames(object), 4L)
+#' object <- cellranger_small
+#' genes <- head(rownames(object), n = 4L)
+#' glimpse(genes)
 #' plotViolin(object, genes = genes)
 NULL
 
@@ -41,7 +46,9 @@ setMethod(
             assert_is_a_string(fill)
         }
 
-        ident <- slot(object, "ident")
+        ident <- colData(object)[["ident"]]
+        assert_is_non_empty(ident)
+
         data <- fetchGeneData(object, genes = genes) %>%
             as.data.frame() %>%
             cbind(ident) %>%
