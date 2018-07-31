@@ -467,7 +467,7 @@ setValidity(
         stopifnot(!.hasSlot(object, "bcbio"))
 
         # Assays ===============================================================
-        assert_are_identical("counts", names(assays(object)))
+        assert_is_subset("counts", names(assays(object)))
 
         # Row data =============================================================
         assert_is_all_of(rowRanges(object), "GRanges")
