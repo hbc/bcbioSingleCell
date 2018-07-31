@@ -327,7 +327,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        geom = c("histogram", "violin", "ridgeline", "ecdf", "boxplot"),
+        geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
         color = getOption("bcbio.color", NULL),
         fill = getOption("bcbio.fill", NULL),
         title = "reads per cell"
