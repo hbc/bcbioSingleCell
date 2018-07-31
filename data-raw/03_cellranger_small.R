@@ -147,8 +147,6 @@ stopifnot(identical(
     c("PCA", "TSNE", "UMAP")
 ))
 stopifnot(identical(dimnames(sce), dimnames(seurat_sce)))
-
-# Slot the reduced dimensions into our bcbioSingleCell object
 colData(sce) <- colData(seurat_sce)
 reducedDims(sce) <- reducedDims(seurat_sce)
 cellranger_small <- sce
