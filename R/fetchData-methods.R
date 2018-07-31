@@ -1,5 +1,9 @@
 #' Fetch Data Functions
 #'
+#' @note Some of these functions require "`ident`" to be defined in [colData()].
+#'   For t-SNE, UMAP, and PCA, the reduced dimensions must be defined in the
+#'   [reducedDims()] slot.
+#'
 #' @name fetchData
 #' @family Data Functions
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -19,13 +23,9 @@
 #' object <- indrops_small
 #' genes <- head(rownames(object))
 #'
-#' # fetchGeneData
+#' # Genes
 #' x <- fetchGeneData(object, genes = genes)
 #' glimpse(x)
-#'
-#' # seurat ====
-#' object <- seurat_small
-#' genes <- head(rownames(object))
 #'
 #' # t-SNE
 #' x <- fetchTSNEData(object)
@@ -40,18 +40,24 @@
 #' glimpse(x)
 #'
 #' # t-SNE gene expression
-#' x <- fetchTSNEExpressionData(seurat_small, genes = genes)
+#' x <- fetchTSNEExpressionData(object, genes = genes)
 #' glimpse(x)
 #'
 #' # UMAP gene expession
-#' genes <- head(rownames(seurat_small))
-#' x <- fetchUMAPExpressionData(seurat_small, genes = genes)
+#' x <- fetchUMAPExpressionData(object, genes = genes)
 #' glimpse(x)
 NULL
 
 
 
 # Constructors =================================================================
+.assertHasIdent <- function(object) {
+    stopifnot(is(object, "SingleCellExperiment"))
+    assert_is_subset("ident", colnames(colData(object)))
+}
+
+
+
 .reducedDims <- function(
     object,
     reduction = c("PCA", "TSNE", "UMAP"),
@@ -60,6 +66,7 @@ NULL
     object <- as(object, "SingleCellExperiment")
     reduction <- match.arg(reduction)
     assert_is_a_bool(minimal)
+    .assertHasIdent(object)
 
     data <- slot(object, "reducedDims")[[reduction]]
     if (!is.matrix(data)) {
@@ -75,6 +82,7 @@ NULL
     # Limit to the first two columns. PCA returns multiple columns.
     data <- as.data.frame(data)[, seq_len(2L)]
     dimCols <- colnames(data)
+    # FIXME Need to return `ident` column here if it's defined
     metrics <- metrics(object)
     assert_are_identical(rownames(data), rownames(metrics))
     cbind(metrics, data) %>%
