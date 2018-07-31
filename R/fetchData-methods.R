@@ -52,13 +52,6 @@ NULL
 
 
 # Constructors =================================================================
-.assertHasIdent <- function(object) {
-    stopifnot(is(object, "SingleCellExperiment"))
-    assert_is_subset("ident", colnames(colData(object)))
-}
-
-
-
 .reducedDimsData <- function(
     object,
     reduction = c("PCA", "TSNE", "UMAP"),
