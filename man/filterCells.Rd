@@ -10,7 +10,8 @@ filterCells(object, ...)
 
 \S4method{filterCells}{SingleCellExperiment}(object, nCells = Inf,
   minUMIs = 0L, maxUMIs = Inf, minGenes = 0L, maxGenes = Inf,
-  minNovelty = 0L, maxMitoRatio = 1L, minCellsPerGene = 10L)
+  minNovelty = 0L, maxMitoRatio = 1L, minCellsPerGene = 10L,
+  zinbwave = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -19,9 +20,11 @@ filterCells(object, ...)
 
 \item{nCells}{\code{scalar integer}. Expected number of cells per sample.}
 
-\item{minUMIs}{\code{scalar integer}. Minimum number of UMI disambiguated counts per cell.}
+\item{minUMIs}{\code{scalar integer}. Minimum number of UMI disambiguated counts
+per cell.}
 
-\item{maxUMIs}{\code{scalar integer}. Maximum number of UMI disambiguated counts per cell.}
+\item{maxUMIs}{\code{scalar integer}. Maximum number of UMI disambiguated counts
+per cell.}
 
 \item{minGenes}{\code{scalar integer}. Minimum number of genes detected.}
 
@@ -35,6 +38,13 @@ mitochondrial abundance.}
 
 \item{minCellsPerGene}{\code{scalar integer}. Include genes with non-zero
 expression in at least this many cells.}
+
+\item{zinbwave}{\code{boolean}. Run \code{\link[zinbwave:zinbwave]{zinbwave::zinbwave()}} to automatically apply
+a ZINB regression model to calculate \code{normalizedValues} and \code{weights}
+matrices to by used for differential expression with DESeq2 or edgeR.
+Note that this calculation should only be performed on \strong{filtered data}.
+For large datasets this can take a long time and use a lot of memory, so
+this calculation is disabled by default.}
 }
 \value{
 \code{bcbioSingleCell}, with filtering information slotted into
