@@ -138,16 +138,19 @@ that raw counts still contain only whitelisted cellular barcodes.</p></td>
     </tr>
     <tr>
       <th>organism</th>
-      <td><p><code>string</code>. Organism name. Use the full latin name (e.g.
-"Homo sapiens"), since this will be input downstream to
-AnnotationHub and ensembldb, unless <code>gffFile</code> is set.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Organism name. Use the full Latin name
+(e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
+and ensembldb, unless <code>gffFile</code> is set. If left <code>NULL</code> (<em>not recommended</em>),
+the function call will skip loading gene-level annotations into
+<code>rowRanges()</code>. This can be useful for poorly annotation genomes or
+experiments involving multiple genomes.</p></td>
     </tr>
     <tr>
       <th>sampleMetadataFile</th>
-      <td><p><code>string</code>. Sample barcode metadata file. Optional
-for runs with demultiplixed index barcodes (e.g. SureCell), but otherwise
-required for runs with multipliexed FASTQs containing multiple index
-barcodes (e.g. inDrop).</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Sample barcode metadata file.
+Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+be left <code>NULL</code>, but otherwise required for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrop).</p></td>
     </tr>
     <tr>
       <th>refdataDir</th>
@@ -162,13 +165,13 @@ interesting groups. Must be formatted in camel case and intersect with
     </tr>
     <tr>
       <th>transgeneNames</th>
-      <td><p><code>character</code> vector indicating which <code>assay()</code> rows
-denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which
+<code>assay()</code> rows denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
     </tr>
     <tr>
       <th>spikeNames</th>
-      <td><p><code>character</code> vector indicating which <code>assay()</code> rows denote
-spike-in sequences (e.g. ERCCs).</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which <code>assay()</code>
+rows denote spike-in sequences (e.g. ERCCs).</p></td>
     </tr>
     <tr>
       <th>...</th>

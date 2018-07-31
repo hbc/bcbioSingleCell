@@ -72,18 +72,29 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div id="bioconductor-method" class="section level3">
+<p>This is an <a href="https://www.r-project.org">R</a> package.</p>
+<div id="bioconductor" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bioconductor-method" class="anchor"></a><a href="https://bioconductor.org">Bioconductor</a> method</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## try http:// if https:// URLs are not supported
-<span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)
-<span class="kw">biocLite</span>(<span class="st">"devtools"</span>)
-<span class="kw">biocLite</span>(<span class="st">"remotes"</span>)
-<span class="kw">biocLite</span>(<span class="st">"GenomeInfoDbData"</span>)
-<span class="kw">biocLite</span>(
-    <span class="st">"hbc/bcbioSingleCell"</span>,
+<a href="#bioconductor" class="anchor"></a><a href="https://bioconductor.org">Bioconductor</a>
+</h3>
+<p>We recommend installing the package with <a href="https://cran.r-project.org/package=BiocManager">BiocManager</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"BiocManager"</span>)) {
+    <span class="kw">install.packages</span>(<span class="st">"BiocManager"</span>)
+}
+BiocManager<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(
+    <span class="dt">pkgs =</span> <span class="kw">c</span>(
+        <span class="st">"devtools"</span>,
+        <span class="st">"remotes"</span>,
+        <span class="st">"GenomeInfoDbData"</span>
+    )
+)
+BiocManager<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(
+    <span class="dt">pkgs =</span> <span class="st">"hbc/bcbioSingleCell"</span>,
     <span class="dt">dependencies =</span> <span class="kw">c</span>(<span class="st">"Depends"</span>, <span class="st">"Imports"</span>, <span class="st">"Suggests"</span>)
 )</code></pre></div>
+<p>For <a href="https://www.r-project.org">R</a> &lt; 3.5, <a href="https://cran.r-project.org/package=BiocManager">BiocManager</a> is not supported. Use <code><a href="http://www.rdocumentation.org/packages/BiocInstaller/topics/biocLite">BiocInstaller::biocLite()</a></code> instead of <code><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">BiocManager::install()</a></code>. This requires sourcing the legacy <a href="https://bioconductor.org">Bioconductor</a> <code>biocLite.R</code> script.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># try http:// if https:// URLs are not supported</span>
+<span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)</code></pre></div>
 </div>
 </div>
 <div id="load-bcbio-run" class="section level2">
@@ -91,7 +102,7 @@
 <a href="#load-bcbio-run" class="anchor"></a>Load <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> run</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bcbioSingleCell)
 bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/bcbioSingleCell.html">bcbioSingleCell</a></span>(
-    <span class="dt">uploadDir =</span> <span class="st">"bcbio_indrop/final"</span>,
+    <span class="dt">uploadDir =</span> <span class="st">"indrops/final"</span>,
     <span class="dt">interestingGroups =</span> <span class="kw">c</span>(<span class="st">"genotype"</span>, <span class="st">"treatment"</span>),
     <span class="dt">sampleMetadataFile =</span> <span class="st">"sample_metadata.csv"</span>,
     <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,
@@ -100,21 +111,8 @@ bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/bcbioSingl
 <span class="co"># Back up all data inside bcbioSingleCell object</span>
 flat &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
 <span class="kw">saveData</span>(bcb, flat, <span class="dt">dir =</span> <span class="st">"data"</span>)</code></pre></div>
-<p>This will return a <code>bcbioSingleCell</code> object, which is an extension of the <a href="https://bioconductor.org">Bioconductor</a> <a href="https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment">SingleCellExperiment</a> container class.</p>
-<p>Parameters:</p>
-<ul>
-<li>
-<code>uploadDir</code>: Path to the <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> final upload directory.</li>
-<li>
-<code>interestingGroups</code>: Character vector of the column names of interest in the sample metadata, which is stored in the <code><a href="reference/sampleData.html">sampleData()</a></code> accessor slot of the <code>bcbioSingleCell</code> object. These values should be formatted in camelCase, and can be reassigned in the object after creation (e.g. <code>interestingGroups(bcb) &lt;- c("batch", "age")</code>). They are used for data visualization in the quality control utility functions.</li>
-<li>
-<code>organism</code>: Organism name. Use the full latin name (e.g. “Homo sapiens”). If set <code>NULL</code>, no gene annotations will be downloaded and stashed into the <code>rowRanges</code> slot of the object.</li>
-<li>
-<code>genomeBuild</code>: <em>Optional.</em> The Ensembl release version to use.</li>
-<li>
-<code>gffFile</code>: <em>Optional.</em> If your transcriptome does not entirely match up to an Ensembl release, you can pass the GFF/GTF file of the transcriptome you used to load the annotations instead.</li>
-</ul>
-<p>Consult <code>help("bcbioSingleCell", "bcbioSingleCell")</code> for additional documentation.</p>
+<p>This will return a <code>bcbioSingleCell</code> object, which is an extension of the <a href="https://bioconductor.org">Bioconductor</a> <a href="https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment">SingleCellExperiment</a> container class. Consult the <code><a href="reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> constructor function documentation for detailed information on the supported parameters:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">help</span>(<span class="dt">topic =</span> <span class="st">"bcbioSingleCell"</span>, <span class="dt">package =</span> <span class="st">"bcbioSingleCell"</span>)</code></pre></div>
 </div>
 <div id="sample-metadata-examples" class="section level2">
 <h2 class="hasAnchor">

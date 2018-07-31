@@ -125,7 +125,8 @@ use the <code>sampleNames()</code> return values (i.e. the <code>sampleName</cod
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>nCells</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
   <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxUMIs</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>10L</span>)</pre>
+  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
+  <span class='kw'>zinbwave</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,11 +145,13 @@ use the <code>sampleNames()</code> return values (i.e. the <code>sampleName</cod
     </tr>
     <tr>
       <th>minUMIs</th>
-      <td><p><code>scalar integer</code>. Minimum number of UMI disambiguated counts per cell.</p></td>
+      <td><p><code>scalar integer</code>. Minimum number of UMI disambiguated counts
+per cell.</p></td>
     </tr>
     <tr>
       <th>maxUMIs</th>
-      <td><p><code>scalar integer</code>. Maximum number of UMI disambiguated counts per cell.</p></td>
+      <td><p><code>scalar integer</code>. Maximum number of UMI disambiguated counts
+per cell.</p></td>
     </tr>
     <tr>
       <th>minGenes</th>
@@ -172,6 +175,15 @@ mitochondrial abundance.</p></td>
       <th>minCellsPerGene</th>
       <td><p><code>scalar integer</code>. Include genes with non-zero
 expression in at least this many cells.</p></td>
+    </tr>
+    <tr>
+      <th>zinbwave</th>
+      <td><p><code>boolean</code>. Run <code><a href='http://www.rdocumentation.org/packages/zinbwave/topics/zinbwave'>zinbwave::zinbwave()</a></code> to automatically apply
+a ZINB regression model to calculate <code>normalizedValues</code> and <code>weights</code>
+matrices to by used for differential expression with DESeq2 or edgeR.
+Note that this calculation should only be performed on <strong>filtered data</strong>.
+For large datasets this can take a long time and use a lot of memory, so
+this calculation is disabled by default.</p></td>
     </tr>
     </table>
     
@@ -228,6 +240,9 @@ expression in at least this many cells.</p></td>
 #&gt; <span class='message'>     500 cells | minNovelty &lt;= 0</span>
 #&gt; <span class='message'>     500 cells | maxMitoRatio &lt;= 1</span>
 #&gt; <span class='message'>     500 cells | nCells == Inf</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>pbmc </span>
+#&gt; <span class='message'> 500 </span>
 #&gt; <span class='message'>============================================================</span>
 #&gt; <span class='message'>Genes:</span>
 #&gt; <span class='message'>     500 genes | prefilter</span>
@@ -296,6 +311,9 @@ expression in at least this many cells.</p></td>
 #&gt; <span class='message'>     500 cells | minNovelty &lt;= 0</span>
 #&gt; <span class='message'>     500 cells | maxMitoRatio &lt;= 1</span>
 #&gt; <span class='message'>     500 cells | nCells == Inf</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>pbmc </span>
+#&gt; <span class='message'> 500 </span>
 #&gt; <span class='message'>============================================================</span>
 #&gt; <span class='message'>Genes:</span>
 #&gt; <span class='message'>     500 genes | prefilter</span>

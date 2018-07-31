@@ -20,6 +20,7 @@ reference:
     contents:
     - bcbioSingleCell
     - coerce
+    - combine
     - extract
     - show
     - ends_with("Object")
@@ -55,6 +56,7 @@ reference:
     - plotFeature
   - title: Clustering Functions
     contents:
+    - starts_with("cluster")
     - matches("Cluster")
     - matches("Elbow")
     - matches("PCA")

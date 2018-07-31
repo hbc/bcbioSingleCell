@@ -253,6 +253,15 @@ defaults to the first argument in the <code>character</code> vector.</p></td>
       <td><p>Secondary object.</p></td>
     </tr>
     <tr>
+      <th>zinbwave</th>
+      <td><p><code>boolean</code>. Run <code><a href='http://www.rdocumentation.org/packages/zinbwave/topics/zinbwave'>zinbwave::zinbwave()</a></code> to automatically apply
+a ZINB regression model to calculate <code>normalizedValues</code> and <code>weights</code>
+matrices to by used for differential expression with DESeq2 or edgeR.
+Note that this calculation should only be performed on <strong>filtered data</strong>.
+For large datasets this can take a long time and use a lot of memory, so
+this calculation is disabled by default.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Additional arguments.</p></td>
     </tr>

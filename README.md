@@ -119,6 +119,7 @@ The papers and software cited in our workflows are available as a [shared librar
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
 [Bioconductor]: https://bioconductor.org
+[BiocManager]: https://cran.r-project.org/package=BiocManager
 [Cell-cycle markers]: https://docs.google.com/spreadsheets/d/1qA5ktYeimNGpZF1UPSQZATbpzEqgyxN6daoMOjv6YYw
 [Cell-type markers]: https://docs.google.com/spreadsheets/d/1vGNU2CCxpaoTCLvzOxK1hf5gjULrf2-CpgCp9bOfGJ0
 [CellRanger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger

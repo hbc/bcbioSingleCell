@@ -131,16 +131,19 @@ when running "<code>bcbio_nextgen -w template</code>".</p></td>
     </tr>
     <tr>
       <th>organism</th>
-      <td><p><code>string</code>. Organism name. Use the full latin name (e.g.
-"Homo sapiens"), since this will be input downstream to
-AnnotationHub and ensembldb, unless <code>gffFile</code> is set.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Organism name. Use the full Latin name
+(e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
+and ensembldb, unless <code>gffFile</code> is set. If left <code>NULL</code> (<em>not recommended</em>),
+the function call will skip loading gene-level annotations into
+<code>rowRanges()</code>. This can be useful for poorly annotation genomes or
+experiments involving multiple genomes.</p></td>
     </tr>
     <tr>
       <th>sampleMetadataFile</th>
-      <td><p><code>string</code>. Sample barcode metadata file. Optional
-for runs with demultiplixed index barcodes (e.g. SureCell), but otherwise
-required for runs with multipliexed FASTQs containing multiple index
-barcodes (e.g. inDrop).</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Sample barcode metadata file.
+Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+be left <code>NULL</code>, but otherwise required for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrop).</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
@@ -163,13 +166,13 @@ matching, unless <code>gffFile</code> is set.</p></td>
     </tr>
     <tr>
       <th>transgeneNames</th>
-      <td><p><code>character</code> vector indicating which <code>assay()</code> rows
-denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which
+<code>assay()</code> rows denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
     </tr>
     <tr>
       <th>spikeNames</th>
-      <td><p><code>character</code> vector indicating which <code>assay()</code> rows denote
-spike-in sequences (e.g. ERCCs).</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which <code>assay()</code>
+rows denote spike-in sequences (e.g. ERCCs).</p></td>
     </tr>
     <tr>
       <th>gffFile</th>
@@ -248,14 +251,16 @@ run directory as a remote connection over
 #&gt; ============================================================
 #&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-07-28
+#&gt; R Load Date: 2018-07-31
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
+#&gt; Interesting Groups: "sampleName"
 #&gt; Metadata File: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops/metadata.csv"
 #&gt; AnnotationHub: "AH53211"
 #&gt; Ensembl Release: "87"
 #&gt; Genome Build: "GRCh38"
-#&gt; Filtered: FALSE</div><div class='input'><span class='fu'>validObject</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+#&gt; Filtered: FALSE
+#&gt; zinbwave: FALSE</div><div class='input'><span class='fu'>validObject</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
