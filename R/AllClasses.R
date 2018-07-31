@@ -447,7 +447,7 @@ bcbioSingleCell <- function(
     }
 
     # Return ===================================================================
-    new.bcbioSingleCell(
+    .new.bcbioSingleCell(
         assays = list(counts = counts),
         rowRanges = rowRanges,
         colData = colData,
