@@ -30,22 +30,28 @@ test_that("knownMarkersDetected", {
     expect_is(x, "grouped_df")
     expect_identical(dplyr::group_vars(x), "cellType")
     expect_identical(
-        lapply(x, class),
+        lapply(x, class) %>%
+            .[sort(names(.))],
         list(
+            avgLogFC = "numeric",
+            broadClass = "factor",
             cellType = "factor",
             cluster = "factor",
+            description = "factor",
+            end = "integer",
+            geneBiotype = "factor",
             geneID = "character",
-            geneName = "character",
-            avgLogFC = "numeric",
+            geneName = "factor",
+            padj = "numeric",
             pct1 = "numeric",
             pct2 = "numeric",
-            rowname = "character",
             pvalue = "numeric",
-            padj = "numeric",
-            geneBiotype = "factor",
-            description = "character",
+            rowname = "character",
             seqCoordSystem = "factor",
-            broadClass = "factor"
+            seqnames = "factor",
+            start = "integer",
+            strand = "factor",
+            width = "integer"
         )
     )
 })
@@ -56,7 +62,7 @@ test_that("knownMarkersDetected", {
 test_that("sanitizeMarkers : seurat", {
     # Early return on sanitized data
     expect_message(
-        sanitizeMarkers(
+        sanitizeSeuratMarkers(
             data = all_markers_small,
             rowRanges = rowRanges(seurat_small)
         ),
@@ -67,7 +73,7 @@ test_that("sanitizeMarkers : seurat", {
     invisible(capture.output(
         all <- Seurat::FindAllMarkers(seurat_small)
     ))
-    x <- sanitizeMarkers(
+    x <- sanitizeSeuratMarkers(
         data = all,
         rowRanges = rowRanges(seurat_small)
     )
@@ -81,7 +87,7 @@ test_that("sanitizeMarkers : seurat", {
             ident.2 = NULL
         )
     ))
-    x <- sanitizeMarkers(
+    x <- sanitizeSeuratMarkers(
         data = ident3,
         rowRanges = rowRanges(seurat_small)
     )
@@ -97,21 +103,27 @@ test_that("topMarkers : grouped_df", {
     expect_is(x, "grouped_df")
     expect_identical(dplyr::group_vars(x), "cluster")
     expect_identical(
-        lapply(x, class),
+        lapply(x, class) %>%
+            .[sort(names(.))],
         list(
-            cluster = "factor",
             avgLogFC = "numeric",
+            broadClass = "factor",
+            cluster = "factor",
+            description = "factor",
+            end = "integer",
+            geneBiotype = "factor",
+            geneID = "character",
+            geneName = "factor",
+            padj = "numeric",
             pct1 = "numeric",
             pct2 = "numeric",
-            rowname = "character",
             pvalue = "numeric",
-            padj = "numeric",
-            geneID = "character",
-            geneName = "character",
-            geneBiotype = "factor",
-            description = "character",
+            rowname = "character",
             seqCoordSystem = "factor",
-            broadClass = "factor"
+            seqnames = "factor",
+            start = "integer",
+            strand = "factor",
+            width = "integer"
         )
     )
 })
