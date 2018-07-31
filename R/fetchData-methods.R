@@ -58,15 +58,15 @@ NULL
 
 
 
-.reducedDims <- function(
+.reducedDimsData <- function(
     object,
     reduction = c("PCA", "TSNE", "UMAP"),
     minimal = FALSE
 ) {
     object <- as(object, "SingleCellExperiment")
+    .assertHasIdent(object)
     reduction <- match.arg(reduction)
     assert_is_a_bool(minimal)
-    .assertHasIdent(object)
 
     data <- slot(object, "reducedDims")[[reduction]]
     if (!is.matrix(data)) {
@@ -82,10 +82,9 @@ NULL
     # Limit to the first two columns. PCA returns multiple columns.
     data <- as.data.frame(data)[, seq_len(2L)]
     dimCols <- colnames(data)
-    # FIXME Need to return `ident` column here if it's defined
-    metrics <- metrics(object)
-    assert_are_identical(rownames(data), rownames(metrics))
-    cbind(metrics, data) %>%
+    colData <- as.data.frame(colData(object))
+    assert_are_identical(rownames(data), rownames(colData))
+    cbind(colData, data) %>%
         rownames_to_column() %>%
         # Group by ident here for center calculations
         group_by(!!sym("ident")) %>%
@@ -133,7 +132,7 @@ setMethod(
     "fetchPCAData",
     signature("SingleCellExperiment"),
     function(object, minimal = FALSE) {
-        .reducedDims(
+        .reducedDimsData(
             object = object,
             reduction = "PCA",
             minimal = minimal
@@ -159,7 +158,7 @@ setMethod(
     "fetchTSNEData",
     signature("SingleCellExperiment"),
     function(object, minimal = FALSE) {
-        .reducedDims(
+        .reducedDimsData(
             object = object,
             reduction = "TSNE",
             minimal = minimal
@@ -213,7 +212,7 @@ setMethod(
     "fetchUMAPData",
     signature("SingleCellExperiment"),
     function(object, minimal = FALSE) {
-        .reducedDims(
+        .reducedDimsData(
             object,
             reduction = "UMAP",
             minimal = minimal
