@@ -139,12 +139,10 @@ seurat_small <- as(sce, "seurat") %>%
 
 
 # all_markers_small ============================================================
-all_markers_small <- FindAllMarkers(seurat_small)
-# Sanitize, including more robust gene annotation information
-all_markers_small <- sanitizeMarkers(
-    data = all_markers_small,
-    rowRanges = rowRanges(seurat_small)
-)
+all_markers_small <- seurat_small %>%
+    FindAllMarkers() %>%
+    # Sanitize, including more robust gene annotation information
+    sanitizeSeuratMarkers(rowRanges = rowRanges(seurat_small))
 
 
 
