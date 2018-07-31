@@ -20,8 +20,7 @@
     # General checks ===========================================================
     if (!is(object, "grouped_df")) {
         return(FALSE)
-    }
-    else if (
+    } else if (
         is.null(attr(object, "vars")) ||
         attr(object, "vars") != "cluster"
     ) {
@@ -38,7 +37,6 @@
         seuratBlacklist <- c(
             "avg_diff",   # Legacy, now "avg_logFC"
             "avg_logFC",  # Renamed in v2.1
-            "gene",       # Gene symbol, we'll rename to "geneName"
             "p_val",      # We'll rename to pvalue, matching DESeq2
             "p_val_adj",  # New in v2.1, we'll rename to padj, matching DESeq2
             "pct.1",
