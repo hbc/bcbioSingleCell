@@ -47,7 +47,7 @@ setAs(
             min.genes = 0L,
             # Default for UMI datasets
             is.expr = 0L,
-            meta.data = as.data.frame(metrics(from))
+            meta.data = as.data.frame(colData(from))
         )
 
         # Check that the dimensions match exactly
