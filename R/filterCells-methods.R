@@ -53,6 +53,16 @@ NULL
 
 
 # Constructors =================================================================
+.isFiltered <- function(object) {
+    if (!is.null(metadata(object)[["filterParams"]])) {
+        TRUE
+    } else {
+        FALSE
+    }
+}
+
+
+
 .paddedCount <- function(x, width = 8L) {
     str_pad(x, width = width, pad = " ")
 }
@@ -452,13 +462,3 @@ setMethod(
         object
     }
 )
-
-
-
-.isFiltered <- function(object) {
-    if (!is.null(metadata(object)[["filterParams"]])) {
-        TRUE
-    } else {
-        FALSE
-    }
-}
