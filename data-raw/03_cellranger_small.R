@@ -43,7 +43,9 @@ stopifnot(identical(dir(outs_dir), "filtered_gene_bc_matrices"))
 # dim(sce)
 # [1] 33694  4340
 # Too large to save inside package
-sce <- readCellRanger(uploadDir = upload_dir, organism = "Homo sapiens")
+sce <- suppressWarnings(
+    readCellRanger(uploadDir = upload_dir, organism = "Homo sapiens")
+)
 saveData(sce, dir = "~")
 
 
@@ -116,7 +118,7 @@ write_lines(
 
 
 
-# seurat =======================================================================
+# seurat_small =================================================================
 # Let's handoff to seurat to perform dimensionality reduction and clustering,
 # then slot the DR data in our bcbioRNASeq object
 seurat_small <- as(sce, "seurat") %>%
@@ -133,6 +135,24 @@ seurat_small <- as(sce, "seurat") %>%
     # Install with conda or pip.
     RunUMAP() %>%
     SetAllIdent(id = "res.0.4")
+
+
+
+# all_markers_small ============================================================
+all_markers_small <- FindAllMarkers(seurat_small)
+# Sanitize, including more robust gene annotation information
+all_markers_small <- sanitizeMarkers(
+    data = all_markers_small,
+    rowRanges = rowRanges(seurat_small)
+)
+
+
+
+# known_markers_small ==========================================================
+known_markers_small <- knownMarkersDetected(
+    all = all_markers_small,
+    known = cell_type_markers[["homoSapiens"]]
+)
 
 
 
@@ -154,4 +174,11 @@ cellranger_small <- sce
 
 
 # Save =========================================================================
-use_data(cellranger_small, seurat_small, compress = "xz", overwrite = TRUE)
+use_data(
+    cellranger_small,
+    seurat_small,
+    all_markers_small,
+    known_markers_small,
+    compress = "xz",
+    overwrite = TRUE
+)
