@@ -1,6 +1,4 @@
-# TODO Rethink this approach...we want to run zinbwave once on the whole
-# dataset, for better power. We can slot this information in the object perhaps.
-# It can take a while for large datasets but it's worth it.
+# TODO Check for already calculated zinbwave weights in object
 
 
 
@@ -90,28 +88,6 @@ NULL
 
 
 
-.zinbwave <- function(object) {
-    message("Running zinbwave")
-    stopifnot(is(object, "SingleCellExperiment"))
-    object <- as(object, "SingleCellExperiment")
-    # zinbFit doesn't support `dgCMatrix``, so coerce counts to matrix
-    assays(object) <- list(counts = as.matrix(counts(object)))
-    print(system.time({
-        zinb <- zinbwave(
-            Y = object,
-            K = 0L,
-            BPPARAM = SerialParam(),
-            epsilon = 1e12
-        )
-    }))
-    stopifnot(is(zinb, "SingleCellExperiment"))
-    assert_is_factor(zinb[["group"]])
-    assert_is_matrix(metadata(zinb)[["design"]])
-    zinb
-}
-
-
-
 # Van De Berge and Perraudeau and others have shown the LRT may perform better
 # for null hypothesis testing, so we use the LRT. In order to use the Wald test,
 # it is recommended to set `useT = TRUE`.
@@ -124,6 +100,8 @@ NULL
     stopifnot(packageVersion("DESeq2") >= 1.2)
     stopifnot(is(object, "SingleCellExperiment"))
     zinb <- .zinbwave(object)
+    assert_is_factor(zinb[["group"]])
+    assert_is_matrix(metadata(zinb)[["design"]])
     # DESeq2 ===================================================================
     message("Running DESeq2")
     print(system.time({
@@ -148,6 +126,8 @@ NULL
     stopifnot(packageVersion("edgeR") >= 3.22)
     stopifnot(is(object, "SingleCellExperiment"))
     zinb <- .zinbwave(object)
+    assert_is_factor(zinb[["group"]])
+    assert_is_matrix(metadata(zinb)[["design"]])
     # edgeR ====================================================================
     message("Running edgeR")
     counts <- as.matrix(counts(zinb))
