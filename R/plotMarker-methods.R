@@ -1,5 +1,5 @@
 # TODO Add gene2symbol support here
-# FIXME Add assert check that the marker input ident matches the object
+# TODO Add assert check that the marker input ident matches the object
 
 
 
@@ -74,7 +74,7 @@
 #' # Known markers detected
 #' markers <- head(known_markers_small, n = 1)
 #' glimpse(markers)
-#' plotKnownMarkersDetected(object, markers = head(markers, 1))
+#' plotKnownMarkersDetected(seurat_small, markers = head(markers, 1))
 NULL
 
 
@@ -103,16 +103,16 @@ NULL
     genes,
     reduction = c("TSNE", "UMAP"),
     expression = c("mean", "median", "sum"),
-    color = NULL,
+    color = getOption("color", NULL),
+    pointSize = getOption("pointSize", 0.75),
+    pointAlpha = getOption("pointAlpha", 0.8),
     pointsAsNumbers = FALSE,
-    pointSize = 0.75,
-    pointAlpha = 0.8,
-    label = TRUE,
-    labelSize = 6L,
-    dark = FALSE,
-    grid = FALSE,
-    legend = TRUE,
-    aspectRatio = 1L,
+    label = getOption("label", TRUE),
+    labelSize = getOption("labelSize", 6L),
+    dark = getOption("dark", FALSE),
+    grid = getOption("grid", FALSE),
+    legend = getOption("legend", TRUE),
+    aspectRatio = getOption("aspectRatio", 1L),
     title = TRUE
 ) {
     assert_is_character(genes)
@@ -124,9 +124,9 @@ NULL
         color <- NULL
     }
     assertIsColorScaleContinuousOrNULL(color)
-    assert_is_a_bool(pointsAsNumbers)
     assert_is_a_number(pointSize)
     assert_is_a_number(pointAlpha)
+    assert_is_a_bool(pointsAsNumbers)
     assert_is_a_bool(label)
     assert_is_a_number(labelSize)
     assert_is_a_bool(dark)
@@ -274,16 +274,16 @@ setMethod(
         object,
         genes,
         expression = c("mean", "median", "sum"),
-        color = NULL,
+        color = getOption("color", NULL),
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.8),
         pointsAsNumbers = FALSE,
-        pointSize = 0.75,
-        pointAlpha = 0.8,
-        label = TRUE,
-        labelSize = 6L,
-        dark = FALSE,
-        grid = FALSE,
-        legend = TRUE,
-        aspectRatio = 1L,
+        label = getOption("label", TRUE),
+        labelSize = getOption("labelSize", 6L),
+        dark = getOption("dark", FALSE),
+        grid = getOption("grid", FALSE),
+        legend = getOption("legend", TRUE),
+        aspectRatio = getOption("aspectRatio", 1L),
         title = TRUE
     ) {
         .plotMarkerReduction(
@@ -292,9 +292,9 @@ setMethod(
             reduction = "TSNE",
             expression = expression,
             color = color,
-            pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             pointAlpha = pointAlpha,
+            pointsAsNumbers = pointsAsNumbers,
             label = label,
             labelSize = labelSize,
             dark = dark,
@@ -327,16 +327,16 @@ setMethod(
         object,
         genes,
         expression = c("mean", "median", "sum"),
-        color = NULL,
+        color = getOption("color", NULL),
+        pointSize = getOption("pointSize", 0.75),
+        pointAlpha = getOption("pointAlpha", 0.8),
         pointsAsNumbers = FALSE,
-        pointSize = 0.75,
-        pointAlpha = 0.8,
-        label = TRUE,
-        labelSize = 6L,
-        dark = FALSE,
-        grid = FALSE,
-        legend = TRUE,
-        aspectRatio = 1L,
+        label = getOption("label", TRUE),
+        labelSize = getOption("labelSize", 6L),
+        dark = getOption("dark", FALSE),
+        grid = getOption("grid", FALSE),
+        legend = getOption("legend", TRUE),
+        aspectRatio = getOption("aspectRatio", 1L),
         title = TRUE
     ) {
         .plotMarkerReduction(
@@ -345,9 +345,9 @@ setMethod(
             reduction = "UMAP",
             expression = expression,
             color = color,
-            pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             pointAlpha = pointAlpha,
+            pointsAsNumbers = pointsAsNumbers,
             label = label,
             labelSize = labelSize,
             dark = dark,

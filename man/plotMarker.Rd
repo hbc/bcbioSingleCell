@@ -27,28 +27,40 @@ plotMarkerUMAP(object, ...)
 plotTopMarkers(object, ...)
 
 \S4method{plotMarkerTSNE}{SingleCellExperiment}(object, genes,
-  expression = c("mean", "median", "sum"), color = NULL,
-  pointsAsNumbers = FALSE, pointSize = 0.75, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, dark = FALSE, grid = FALSE,
-  legend = TRUE, aspectRatio = 1L, title = TRUE)
+  expression = c("mean", "median", "sum"), color = getOption("color",
+  NULL), pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.8), pointsAsNumbers = FALSE,
+  label = getOption("label", TRUE), labelSize = getOption("labelSize",
+  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
+  FALSE), legend = getOption("legend", TRUE),
+  aspectRatio = getOption("aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = NULL, pointsAsNumbers = FALSE,
-  pointSize = 0.75, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = FALSE, grid = FALSE, legend = TRUE, aspectRatio = 1L,
-  title = TRUE)
+  "median", "sum"), color = getOption("color", NULL),
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.8), pointsAsNumbers = FALSE,
+  label = getOption("label", TRUE), labelSize = getOption("labelSize",
+  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
+  FALSE), legend = getOption("legend", TRUE),
+  aspectRatio = getOption("aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerUMAP}{SingleCellExperiment}(object, genes,
-  expression = c("mean", "median", "sum"), color = NULL,
-  pointsAsNumbers = FALSE, pointSize = 0.75, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, dark = FALSE, grid = FALSE,
-  legend = TRUE, aspectRatio = 1L, title = TRUE)
+  expression = c("mean", "median", "sum"), color = getOption("color",
+  NULL), pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.8), pointsAsNumbers = FALSE,
+  label = getOption("label", TRUE), labelSize = getOption("labelSize",
+  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
+  FALSE), legend = getOption("legend", TRUE),
+  aspectRatio = getOption("aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerUMAP}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = NULL, pointsAsNumbers = FALSE,
-  pointSize = 0.75, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = FALSE, grid = FALSE, legend = TRUE, aspectRatio = 1L,
-  title = TRUE)
+  "median", "sum"), color = getOption("color", NULL),
+  pointSize = getOption("pointSize", 0.75),
+  pointAlpha = getOption("pointAlpha", 0.8), pointsAsNumbers = FALSE,
+  label = getOption("label", TRUE), labelSize = getOption("labelSize",
+  6L), dark = getOption("dark", FALSE), grid = getOption("grid",
+  FALSE), legend = getOption("legend", TRUE),
+  aspectRatio = getOption("aspectRatio", 1L), title = TRUE)
 
 \S4method{plotTopMarkers}{SingleCellExperiment}(object, markers,
   reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
@@ -78,13 +90,13 @@ Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
 palette will be used. If manual color definitions are desired, we recommend
 using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
 
-\item{pointsAsNumbers}{\code{boolean}. Plot the points as numbers (\code{TRUE}) or
-dots (\code{FALSE}).}
-
 \item{pointSize}{\code{scalar numeric}. Cell point size.}
 
 \item{pointAlpha}{\code{scalar numeric} (\code{0}-\code{1}). Alpha transparency level.
 Useful when there many cells in the dataset, and some cells can be masked.}
+
+\item{pointsAsNumbers}{\code{boolean}. Plot the points as numbers (\code{TRUE}) or
+dots (\code{FALSE}).}
 
 \item{label}{\code{boolean}. Overlay a cluster identitiy label on the plot.}
 
