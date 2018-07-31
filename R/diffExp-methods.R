@@ -62,6 +62,18 @@
 #'   shrunken results are desired.
 #'
 #' @examples
+#' # SingleCellExperiment ====
+#' object <- indrops_small
+#' numerator <- head(colnames(object), n = 100L)
+#' glimpse(numerator)
+#' denominator <- tail(colnames(object), n = 100L)
+#' glimpse(denominator)
+#' x <- diffExp(
+#'     object = object,
+#'     numerator = numerator,
+#'     denominator = denominator
+#' )
+#'
 #' # seurat ====
 #' # Expression in cluster 3 relative to cluster 2
 #' object <- seurat_small
@@ -73,8 +85,8 @@
 #'     object = object,
 #'     numerator = numerator,
 #'     denominator = denominator,
-#'     minCellsPerGene = 5L,
-#'     minCountsPerCell = 5L
+#'     minCellsPerGene = 1L,
+#'     minCountsPerCell = 1L
 #' )
 NULL
 
@@ -178,6 +190,7 @@ setMethod(
         zeroWeights <- "zinbwave"
         assertIsAnImplicitInteger(minCountsPerCell)
         assertIsAnImplicitInteger(minCellsPerGene)
+        assert_all_are_positive(c(minCountsPerCell, minCellsPerGene))
 
         message(paste(
             "Performing differential expression with",
