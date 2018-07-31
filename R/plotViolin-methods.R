@@ -1,7 +1,3 @@
-# TODO Add gene2symbol support here
-
-
-
 #' Plot Violin
 #'
 #' @name plotViolin
@@ -18,7 +14,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # seurat ====
+#' # SingleCellExperiment ====
 #' object <- cellranger_small
 #' genes <- head(rownames(object), n = 4L)
 #' glimpse(genes)
@@ -37,8 +33,8 @@ setMethod(
         object,
         genes,
         scale = c("count", "width", "area"),
-        fill = NULL,
-        legend = FALSE
+        fill = getOption("bcbio.fill", NULL),
+        legend = getOption("bcbio.legend", TRUE)
     ) {
         scale <- match.arg(scale)
         assert_is_any_of(fill, c("ScaleDiscrete", "character", "NULL"))
@@ -49,11 +45,26 @@ setMethod(
         ident <- colData(object)[["ident"]]
         assert_is_non_empty(ident)
 
-        data <- fetchGeneData(object, genes = genes) %>%
+        data <- fetchGeneData(
+            object = object,
+            genes = genes,
+            gene2symbol = TRUE
+        ) %>%
             as.data.frame() %>%
             cbind(ident) %>%
             rownames_to_column("cell") %>%
-            as_tibble() %>%
+            as_tibble()
+
+        if (!isTRUE(.useGeneName(object))) {
+            g2s <- gene2symbol(object)
+            if (length(g2s)) {
+                g2s <- g2s[genes, , drop = FALSE]
+                genes <- make.unique(g2s[["geneName"]])
+                stopifnot(all(genes %in% colnames(data)))
+            }
+        }
+
+        data <- data %>%
             gather(
                 key = "gene",
                 value = "expression",

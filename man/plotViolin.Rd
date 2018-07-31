@@ -8,10 +8,12 @@
 \title{Plot Violin}
 \usage{
 \S4method{plotViolin}{SingleCellExperiment}(object, genes,
-  scale = c("count", "width", "area"), fill = NULL, legend = FALSE)
+  scale = c("count", "width", "area"), fill = getOption("bcbio.fill",
+  NULL), legend = getOption("bcbio.legend", TRUE))
 
 \S4method{plotViolin}{seurat}(object, genes, scale = c("count", "width",
-  "area"), fill = NULL, legend = FALSE)
+  "area"), fill = getOption("bcbio.fill", NULL),
+  legend = getOption("bcbio.legend", TRUE))
 }
 \arguments{
 \item{object}{Object.}
@@ -37,7 +39,7 @@ using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
 Plot Violin
 }
 \examples{
-# seurat ====
+# SingleCellExperiment ====
 object <- cellranger_small
 genes <- head(rownames(object), n = 4L)
 glimpse(genes)
