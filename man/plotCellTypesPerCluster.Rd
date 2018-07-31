@@ -5,6 +5,7 @@
 \name{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster,SingleCellExperiment-method}
+\alias{plotCellTypesPerCluster,seurat-method}
 \title{Plot Cell Types per Cluster}
 \usage{
 plotCellTypesPerCluster(object, ...)
@@ -12,6 +13,9 @@ plotCellTypesPerCluster(object, ...)
 \S4method{plotCellTypesPerCluster}{SingleCellExperiment}(object,
   cellTypesPerCluster, reduction = c("TSNE", "UMAP"), headerLevel = 2L,
   ...)
+
+\S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
+  reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
 }
 \arguments{
 \item{object}{Object.}

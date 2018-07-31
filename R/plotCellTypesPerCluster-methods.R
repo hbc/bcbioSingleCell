@@ -108,7 +108,7 @@ setMethod(
 
 
 
-#' @rdname plotFeature
+#' @rdname plotCellTypesPerCluster
 #' @export
 setMethod(
     "plotCellTypesPerCluster",
