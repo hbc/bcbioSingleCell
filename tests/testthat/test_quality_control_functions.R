@@ -89,24 +89,25 @@ test_that("filterCells : Per sample cutoffs", {
 test_that("metrics : bcbioSingleCell", {
     x <- metrics(indrops_small)
     expect_identical(
-        lapply(x, class),
+        lapply(x, class) %>%
+            .[sort(names(.))],
         list(
-            sampleID = "factor",
-            nCount = "integer",
-            nUMI = "integer",
-            nGene = "integer",
-            nCoding = "integer",
-            nMito = "integer",
+            aggregate = "factor",
+            description = "factor",
+            fileName = "factor",
+            index = "factor",
+            interestingGroups = "factor",
             log10GenesPerUMI = "numeric",
             mitoRatio = "numeric",
-            sampleName = "factor",
-            fileName = "factor",
-            description = "factor",
-            index = "factor",
-            sequence = "factor",
-            aggregate = "factor",
+            nCoding = "integer",
+            nCount = "integer",
+            nGene = "integer",
+            nMito = "integer",
+            nUMI = "integer",
             revcomp = "factor",
-            interestingGroups = "factor"
+            sampleID = "factor",
+            sampleName = "factor",
+            sequence = "factor"
         )
     )
 })
@@ -114,24 +115,25 @@ test_that("metrics : bcbioSingleCell", {
 test_that("metrics : seurat", {
     x <- metrics(seurat_small)
     expect_identical(
-        lapply(x, class),
+        lapply(x, class) %>%
+            .[sort(names(.))],
         list(
-            sampleID = "factor",
-            nGene = "integer",
-            nUMI = "integer",
-            nCoding = "integer",
-            nMito = "integer",
+            description = "factor",
+            ident = "factor",
+            index = "factor",
+            interestingGroups = "factor",
             log10GenesPerUMI = "numeric",
             mitoRatio = "numeric",
+            nCoding = "integer",
+            nGene = "integer",
+            nMito = "integer",
+            nUMI = "integer",
             orig.ident = "factor",
             res.0.4 = "character",
             res.0.8 = "character",
             res.1.2 = "character",
-            ident = "factor",
-            sampleName = "factor",
-            description = "factor",
-            index = "factor",
-            interestingGroups = "factor"
+            sampleID = "factor",
+            sampleName = "factor"
         )
     )
 })
