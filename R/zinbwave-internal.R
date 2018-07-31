@@ -3,7 +3,8 @@
 .zinbwave <- function(
     Y,
     BPPARAM = BiocParallel::SerialParam(),
-    epsilon = 1e12
+    epsilon = 1e12,
+    ...
 ) {
     message("Running zinbwave")
     stopifnot(is(Y, "SingleCellExperiment"))
@@ -15,7 +16,8 @@
             Y = Y,
             K = 0L,
             BPPARAM = BPPARAM,
-            epsilon = epsilon
+            epsilon = epsilon,
+            ...
         )
     }))
     stopifnot(is(zinb, "SingleCellExperiment"))
@@ -24,4 +26,18 @@
         c("counts", "normalizedValues", "weights")
     )
     zinb
+}
+
+
+
+# Stash zinbwave calculations into assays slot
+.zinbwaveIntoAssays <- function(object, ...) {
+    stopifnot(is(object, "SingleCellExperiment"))
+    stopifnot(.isFiltered(object))
+    zinb <- .zinbwave(object, ...)
+    assays(object)[["normalizedValues"]] <-
+        assays(zinb)[["normalizedValues"]]
+    assays(object)[["weights"]] <-
+        assays(zinb)[["weights"]]
+    object
 }
