@@ -55,9 +55,9 @@
 # Attempt to return stashed zinbwave calcs, or recalculate
 .zinbwave <- function(object, ...) {
     if (.hasZinbwave(object)) {
-        message("Stashed zinbwave weights detected in assays")
+        message("Using stashed zinbwave weights in assays")
         counts <- counts(object)
-        if (is.matrix(counts)) {
+        if (!is.matrix(counts)) {
             message(paste(
                 "Coercing counts from",
                 class(counts)[[1L]],
@@ -65,8 +65,8 @@
             ))
             counts <- as.matrix(counts)
             counts(object) <- counts
-            object
         }
+        object
     } else {
         .runZinbwave(object, ...)
     }
