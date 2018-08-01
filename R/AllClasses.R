@@ -523,6 +523,7 @@ setValidity(
         # bcbio-specific:
         # - bcbioCommandsLog: character
         # - bcbioLog: character
+        # - cellularBarcodes: list
         # - dataVersions: tbl_df
         # - gffFile: character
         # - programVersions: tbl_df
