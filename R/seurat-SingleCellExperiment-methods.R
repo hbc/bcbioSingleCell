@@ -29,7 +29,7 @@ setMethod(
     "assay",
     signature("seurat"),
     function(x, ...) {
-        assay(as.SingleCellExperiment(x), ...)
+        assay(.as.SingleCellExperiment.seurat(x), ...)
     }
 )
 
@@ -42,7 +42,7 @@ setMethod(
     "assays",
     signature("seurat"),
     function(x, ...) {
-        assays(as.SingleCellExperiment(x), ...)
+        assays(.as.SingleCellExperiment.seurat(x), ...)
     }
 )
 
@@ -55,7 +55,7 @@ setMethod(
     "colData",
     signature("seurat"),
     function(x, ...) {
-        colData(as.SingleCellExperiment(x), ...)
+        colData(.as.SingleCellExperiment.seurat(x), ...)
     }
 )
 
@@ -86,7 +86,7 @@ setMethod(
     "colnames",
     signature("seurat"),
     function(x) {
-        colnames(as.SingleCellExperiment(x))
+        colnames(.as.SingleCellExperiment.seurat(x))
     }
 )
 
@@ -126,7 +126,7 @@ setMethod(
     "counts",
     signature("seurat"),
     function(object, ...) {
-        counts(as.SingleCellExperiment(object), ...)
+        counts(.as.SingleCellExperiment.seurat(object), ...)
     }
 )
 
@@ -139,7 +139,7 @@ setMethod(
     "colnames",
     signature("seurat"),
     function(x) {
-        colnames(as.SingleCellExperiment(x))
+        colnames(.as.SingleCellExperiment.seurat(x))
     }
 )
 
@@ -198,7 +198,7 @@ setMethod(
         if (!is.null(stash)) {
             return(stash)
         }
-        metadata(as.SingleCellExperiment(x), ...)
+        metadata(.as.SingleCellExperiment.seurat(x), ...)
     }
 )
 
@@ -235,7 +235,7 @@ setMethod(
     "reducedDims",
     signature("seurat"),
     function(x) {
-        reducedDims(as.SingleCellExperiment(x))
+        reducedDims(.as.SingleCellExperiment.seurat(x))
     }
 )
 
@@ -261,7 +261,7 @@ setMethod(
     "rowRanges",
     signature("seurat"),
     function(x, ...) {
-        gr <- rowRanges(as.SingleCellExperiment(x), ...)
+        gr <- rowRanges(.as.SingleCellExperiment.seurat(x), ...)
 
         # Attempt to use stashed rowRanges, if present
         stash <- slot(x, "misc")[["bcbio"]][["rowRanges"]]
@@ -299,7 +299,7 @@ setMethod(
     "rownames",
     signature("seurat"),
     function(x) {
-        rownames(as.SingleCellExperiment(x))
+        rownames(.as.SingleCellExperiment.seurat(x))
     }
 )
 

@@ -19,6 +19,17 @@ NULL
 
 
 
+# Constructors =================================================================
+.as.SingleCellExperiment.seurat <- function(object) {
+    validObject(object)
+    # Sanitize legacy seurat objects that contain Ensembl IDs in names
+    names(rownames(object@raw.data)) <- NULL
+    names(rownames(object@data)) <- NULL
+    as.SingleCellExperiment(object)
+}
+
+
+
 # Methods ======================================================================
 #' @rdname coerce
 #' @name coerce-SingleCellExperiment-seurat
@@ -85,7 +96,7 @@ setAs(
     to = "SingleCellExperiment",
     function(from) {
         validObject(from)
-        to <- as.SingleCellExperiment(from)
+        to <- .as.SingleCellExperiment.seurat(from)
         rowRanges(to) <- rowRanges(from)
         metadata(to) <- metadata(from)
         to
