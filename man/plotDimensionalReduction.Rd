@@ -19,7 +19,8 @@ plotTSNE(object, ...)
 plotUMAP(object, ...)
 
 \S4method{plotTSNE}{SingleCellExperiment}(object,
-  interestingGroups = "ident", color = getOption("bcbio.color", NULL),
+  interestingGroups = "ident",
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.75),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -29,7 +30,7 @@ plotUMAP(object, ...)
   aspectRatio = getOption("bcbio.aspectRatio", 1L), title = NULL)
 
 \S4method{plotTSNE}{seurat}(object, interestingGroups = "ident",
-  color = getOption("bcbio.color", NULL),
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.75),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -39,7 +40,8 @@ plotUMAP(object, ...)
   aspectRatio = getOption("bcbio.aspectRatio", 1L), title = NULL)
 
 \S4method{plotUMAP}{SingleCellExperiment}(object,
-  interestingGroups = "ident", color = getOption("bcbio.color", NULL),
+  interestingGroups = "ident",
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.75),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -49,7 +51,7 @@ plotUMAP(object, ...)
   aspectRatio = getOption("bcbio.aspectRatio", 1L), title = NULL)
 
 \S4method{plotUMAP}{seurat}(object, interestingGroups = "ident",
-  color = getOption("bcbio.color", NULL),
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.75),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -59,7 +61,8 @@ plotUMAP(object, ...)
   aspectRatio = getOption("bcbio.aspectRatio", 1L), title = NULL)
 
 \S4method{plotPCA}{SingleCellExperiment}(object,
-  interestingGroups = "ident", color = getOption("bcbio.color", NULL),
+  interestingGroups = "ident",
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.75),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -69,7 +72,7 @@ plotUMAP(object, ...)
   aspectRatio = getOption("bcbio.aspectRatio", 1L), title = NULL)
 
 \S4method{plotPCA}{seurat}(object, interestingGroups = "ident",
-  color = getOption("bcbio.color", NULL),
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.75),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -87,10 +90,12 @@ plotUMAP(object, ...)
 interesting groups. Must be formatted in camel case and intersect with
 \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
-Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
 \item{pointSize}{\code{scalar numeric}. Cell point size.}
 

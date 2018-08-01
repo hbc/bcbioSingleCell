@@ -11,11 +11,11 @@ plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{SingleCellExperiment}(object,
   interestingGroups, trendline = FALSE,
-  color = getOption("bcbio.color", NULL), trans = "log2",
+  color = getOption("bcbio.discrete.color", NULL), trans = "log2",
   title = "mito vs. coding")
 
 \S4method{plotMitoVsCoding}{seurat}(object, interestingGroups,
-  trendline = FALSE, color = getOption("bcbio.color", NULL),
+  trendline = FALSE, color = getOption("bcbio.discrete.color", NULL),
   trans = "log2", title = "mito vs. coding")
 }
 \arguments{
@@ -29,10 +29,12 @@ interesting groups. Must be formatted in camel case and intersect with
 
 \item{trendline}{\code{boolean}. Include trendline on plot.}
 
-\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
-Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
 \item{trans}{\code{string}. Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}

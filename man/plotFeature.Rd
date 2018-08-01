@@ -16,7 +16,7 @@ plotFeatureTSNE(object, ...)
 plotFeatureUMAP(object, ...)
 
 \S4method{plotFeatureTSNE}{SingleCellExperiment}(object, features,
-  color = getOption("bcbio.color", NULL),
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.75),
   label = getOption("bcbio.label", TRUE),
@@ -26,7 +26,7 @@ plotFeatureUMAP(object, ...)
   aspectRatio = getOption("bcbio.aspectRatio", 1L))
 
 \S4method{plotFeatureTSNE}{seurat}(object, features,
-  color = getOption("bcbio.color", NULL),
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.75),
   label = getOption("bcbio.label", TRUE),
@@ -36,7 +36,7 @@ plotFeatureUMAP(object, ...)
   aspectRatio = getOption("bcbio.aspectRatio", 1L))
 
 \S4method{plotFeatureUMAP}{SingleCellExperiment}(object, features,
-  color = getOption("bcbio.color", NULL),
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.75),
   label = getOption("bcbio.label", TRUE),
@@ -46,7 +46,7 @@ plotFeatureUMAP(object, ...)
   aspectRatio = getOption("bcbio.aspectRatio", 1L))
 
 \S4method{plotFeatureUMAP}{seurat}(object, features,
-  color = getOption("bcbio.color", NULL),
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.75),
   label = getOption("bcbio.label", TRUE),
@@ -63,10 +63,12 @@ plotFeatureUMAP(object, ...)
 \item{features}{\code{character}. Features to plot (e.g. gene expression, PC
 scores, number of genes detected).}
 
-\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
-Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
 \item{pointSize}{\code{scalar numeric}. Cell point size.}
 

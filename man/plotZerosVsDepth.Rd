@@ -10,11 +10,12 @@
 plotZerosVsDepth(object, ...)
 
 \S4method{plotZerosVsDepth}{SingleCellExperiment}(object,
-  interestingGroups, color = getOption("bcbio.color", NULL),
+  interestingGroups, color = getOption("bcbio.discrete.color", NULL),
   title = "zeros vs. depth")
 
 \S4method{plotZerosVsDepth}{seurat}(object, interestingGroups,
-  color = getOption("bcbio.color", NULL), title = "zeros vs. depth")
+  color = getOption("bcbio.discrete.color", NULL),
+  title = "zeros vs. depth")
 }
 \arguments{
 \item{object}{Object.}
@@ -25,10 +26,12 @@ plotZerosVsDepth(object, ...)
 interesting groups. Must be formatted in camel case and intersect with
 \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
-Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
 \item{title}{\code{string} or \code{NULL}. Plot title.}
 }

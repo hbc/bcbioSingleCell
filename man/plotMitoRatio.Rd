@@ -11,11 +11,13 @@ plotMitoRatio(object, ...)
 
 \S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("violin",
   "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups,
-  max = 1L, fill = NULL, trans = "sqrt", title = "mito ratio")
+  max = 1L, fill = getOption("bcbio.discrete.fill", NULL),
+  trans = "sqrt", title = "mito ratio")
 
 \S4method{plotMitoRatio}{seurat}(object, geom = c("violin", "ridgeline",
   "ecdf", "histogram", "boxplot"), interestingGroups, max = 1L,
-  fill = NULL, trans = "sqrt", title = "mito ratio")
+  fill = getOption("bcbio.discrete.fill", NULL), trans = "sqrt",
+  title = "mito ratio")
 }
 \arguments{
 \item{object}{Object.}
@@ -31,10 +33,12 @@ interesting groups. Must be formatted in camel case and intersect with
 
 \item{max}{\code{scalar numeric}. Recommended maximum value cutoff.}
 
-\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot fill scale.
+\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 fill scale.
 Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
 palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
+To set the discrete fill palette globally, use
+\code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 
 \item{trans}{\code{string}. Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}

@@ -9,11 +9,12 @@
 \usage{
 \S4method{plotDot}{SingleCellExperiment}(object, genes, colMin = -2.5,
   colMax = 2.5, dotMin = 0L, dotScale = 6L,
-  color = getOption("bcbio.color", NULL),
+  color = getOption("bcbio.discrete.color", NULL),
   legend = getOption("bcbio.legend", TRUE))
 
 \S4method{plotDot}{seurat}(object, genes, colMin = -2.5, colMax = 2.5,
-  dotMin = 0L, dotScale = 6L, color = getOption("bcbio.color", NULL),
+  dotMin = 0L, dotScale = 6L,
+  color = getOption("bcbio.discrete.color", NULL),
   legend = getOption("bcbio.legend", TRUE))
 }
 \arguments{
@@ -35,10 +36,12 @@ will have no dot drawn.}
 \item{dotScale}{\code{scalar numeric}.Scale the size of the points, similar to
 \code{cex}.}
 
-\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
-Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
 \item{legend}{\code{boolean}. Include plot legend.}
 }

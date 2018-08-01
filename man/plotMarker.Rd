@@ -28,7 +28,7 @@ plotTopMarkers(object, ...)
 
 \S4method{plotMarkerTSNE}{SingleCellExperiment}(object, genes,
   expression = c("mean", "median", "sum"),
-  color = getOption("bcbio.color", NULL),
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.8),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -38,7 +38,7 @@ plotTopMarkers(object, ...)
   aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = getOption("bcbio.color", NULL),
+  "median", "sum"), color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.8),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -49,7 +49,7 @@ plotTopMarkers(object, ...)
 
 \S4method{plotMarkerUMAP}{SingleCellExperiment}(object, genes,
   expression = c("mean", "median", "sum"),
-  color = getOption("bcbio.color", NULL),
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.8),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -59,7 +59,7 @@ plotTopMarkers(object, ...)
   aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerUMAP}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = getOption("bcbio.color", NULL),
+  "median", "sum"), color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.8),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -91,10 +91,12 @@ object.}
 \item{expression}{\code{string}. Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and
 defaults to the first argument in the \code{character} vector.}
 
-\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot color scale.
-Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
 \item{pointSize}{\code{scalar numeric}. Cell point size.}
 

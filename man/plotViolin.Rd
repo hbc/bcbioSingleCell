@@ -8,11 +8,12 @@
 \title{Plot Violin}
 \usage{
 \S4method{plotViolin}{SingleCellExperiment}(object, genes,
-  scale = c("count", "width", "area"), fill = getOption("bcbio.fill",
-  NULL), legend = getOption("bcbio.legend", TRUE))
+  scale = c("count", "width", "area"),
+  fill = getOption("bcbio.discrete.fill", NULL),
+  legend = getOption("bcbio.legend", TRUE))
 
 \S4method{plotViolin}{seurat}(object, genes, scale = c("count", "width",
-  "area"), fill = getOption("bcbio.fill", NULL),
+  "area"), fill = getOption("bcbio.discrete.fill", NULL),
   legend = getOption("bcbio.legend", TRUE))
 }
 \arguments{
@@ -25,10 +26,12 @@ object.}
 the tails). If "count", areas are scaled proportionally to the number of
 observations. If "width", all violins have the same maximum width.}
 
-\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot fill scale.
+\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 fill scale.
 Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
 palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
+To set the discrete fill palette globally, use
+\code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 
 \item{legend}{\code{boolean}. Include plot legend.}
 }

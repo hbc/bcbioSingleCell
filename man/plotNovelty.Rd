@@ -11,12 +11,13 @@ plotNovelty(object, ...)
 
 \S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("violin",
   "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups,
-  min = 0L, fill = NULL, trans = "identity",
-  title = "genes per UMI (novelty)")
+  min = 0L, fill = getOption("bcbio.discrete.fill", NULL),
+  trans = "identity", title = "genes per UMI (novelty)")
 
 \S4method{plotNovelty}{seurat}(object, geom = c("violin", "ridgeline",
   "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L,
-  fill = NULL, trans = "identity", title = "genes per UMI (novelty)")
+  fill = getOption("bcbio.discrete.fill", NULL), trans = "identity",
+  title = "genes per UMI (novelty)")
 }
 \arguments{
 \item{object}{Object.}
@@ -32,10 +33,12 @@ interesting groups. Must be formatted in camel case and intersect with
 
 \item{min}{\code{scalar numeric}. Recommended minimum value cutoff.}
 
-\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot fill scale.
+\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 fill scale.
 Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
 palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
+To set the discrete fill palette globally, use
+\code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 
 \item{trans}{\code{string}. Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
