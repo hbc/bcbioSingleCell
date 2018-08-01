@@ -4,8 +4,8 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param data `grouped_df`. `Seurat::FindAllMarkers()` return, sanitized with #
-#'   our `sanitizeMarkers()` function.
+#' @param data `grouped_df`. `Seurat::FindAllMarkers()` return, sanitized with
+#'   our `sanitizeSeuratMarkers()` function.
 #' @param n `scalar integer`. Number of genes per cluster.
 #' @param direction `string`. Whether to include "`positive`", "`negative`", or
 #'   "`both`" directions of association per cluster.
