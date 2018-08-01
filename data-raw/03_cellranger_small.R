@@ -1,5 +1,5 @@
 # Cell Ranger Example Data
-# 2018-07-31
+# 2018-08-01
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
@@ -127,12 +127,9 @@ seurat_small <- as(sce, "seurat") %>%
     FindVariableGenes(do.plot = FALSE) %>%
     ScaleData() %>%
     RunPCA(do.print = FALSE) %>%
-    FindClusters(
-        resolution = seq(from = 0.4, to = 1.2, by = 0.4)
-    ) %>%
+    FindClusters(resolution = seq(from = 0.4, to = 1.2, by = 0.4)) %>%
     RunTSNE() %>%
-    # Requires `umap-learn` Python package.
-    # Install with conda or pip.
+    # Requires Python `umap-learn` package
     RunUMAP() %>%
     SetAllIdent(id = "res.0.4")
 

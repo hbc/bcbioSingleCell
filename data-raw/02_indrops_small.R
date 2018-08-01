@@ -1,6 +1,6 @@
 # inDrops example dataset (indrops_small)
 # Using harvard-indrop-v3 barcodes
-# 2018-07-31
+# 2018-08-01
 
 library(devtools)
 library(tidyverse)
@@ -83,17 +83,7 @@ bcb <- bcbioSingleCell(
 
 # Apply example filtering without excluding any cells
 # Note that we're enabling zinbwave mode here to test the `diffExp()` handling
-bcb <- filterCells(
-    object = bcb,
-    minUMIs = 0,
-    maxUMIs = Inf,
-    minGenes = 0,
-    maxGenes = Inf,
-    minNovelty = 0,
-    maxMitoRatio = 1,
-    minCellsPerGene = 0,
-    zinbwave = TRUE
-)
+bcb <- filterCells(bcb, zinbwave = TRUE)
 
 # Require 500 cells, 500 genes
 stopifnot(identical(dim(indrops_small), c(500L, 500L)))
@@ -106,12 +96,9 @@ seurat <- as(bcb, "seurat") %>%
     FindVariableGenes(do.plot = FALSE) %>%
     ScaleData() %>%
     RunPCA(do.print = FALSE) %>%
-    FindClusters(
-        resolution = seq(from = 0.4, to = 1.2, by = 0.4)
-    ) %>%
+    FindClusters(resolution = seq(from = 0.4, to = 1.2, by = 0.4)) %>%
     RunTSNE() %>%
-    # Requires `umap-learn` Python package.
-    # Install with conda or pip.
+    # Requires Python `umap-learn` package
     RunUMAP() %>%
     SetAllIdent(id = "res.0.4")
 
