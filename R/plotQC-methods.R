@@ -47,12 +47,10 @@ NULL
 ) {
     assert_is_a_string(metricCol)
     geom <- match.arg(geom)
-    if (missing(interestingGroups)) {
-        interestingGroups <- basejump::interestingGroups(object)
-    } else {
-        interestingGroups(object) <- interestingGroups
-    }
-    assert_is_character(interestingGroups)
+    interestingGroups <- .prepareInterestingGroups(
+        object = object,
+        interestingGroups = interestingGroups
+    )
     assert_all_are_non_negative(c(min, max))
     # Support for per sample filtering cutoffs
     min <- min(min)
@@ -211,12 +209,10 @@ NULL
     assert_is_a_string(yCol)
     assert_is_a_string(xTrans)
     assert_is_a_string(yTrans)
-    if (missing(interestingGroups)) {
-        interestingGroups <- basejump::interestingGroups(object)
-    } else {
-        interestingGroups(object) <- interestingGroups
-    }
-    assert_is_character(interestingGroups)
+    interestingGroups <- .prepareInterestingGroups(
+        object = object,
+        interestingGroups = interestingGroups
+    )
     assertIsColorScaleDiscreteOrNULL(color)
     assertIsAStringOrNULL(title)
 
@@ -287,12 +283,11 @@ setMethod(
         legend = getOption("bcbio.legend", FALSE),
         return = c("grid", "list", "markdown")
     ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
-        } else {
-            interestingGroups(object) <- interestingGroups
-        }
-        assert_is_character(interestingGroups)
+        validObject(object)
+        interestingGroups <- .prepareInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         geom <- match.arg(geom)
         return <- match.arg(return)
 

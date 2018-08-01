@@ -146,16 +146,26 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
         validObject(object)
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
+        interestingGroups <- .prepareInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
+
+        data <- as.data.frame(colData(object))
+        if (!"sampleName" %in% colnames(data)) {
+            data[["sampleID"]] <- factor("unknown")
+            data[["sampleName"]] <- factor("unknown")
         }
-        data <- colData(object)
-        # Generate the `interestingGroups` column
         data <- uniteInterestingGroups(
             object = data,
             interestingGroups = interestingGroups
         )
-        as.data.frame(data)
+        assert_is_subset(
+            x = c("sampleName", "interestingGroups"),
+            y = colnames(data)
+        )
+
+        data
     }
 )
 

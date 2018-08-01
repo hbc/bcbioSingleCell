@@ -334,10 +334,10 @@ setMethod(
     ) {
         # Passthrough: color, fill
         validObject(object)
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
-        }
-        assert_is_character(interestingGroups)
+        interestingGroups <- .prepareInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         geom <- match.arg(geom)
         assertIsAStringOrNULL(title)
 
@@ -355,8 +355,9 @@ setMethod(
         sampleData <- sampleData(
             object = object,
             interestingGroups = interestingGroups
-        ) %>%
-            as.data.frame()
+        )
+        assert_is_non_empty(sampleData)
+        sampleData <- as.data.frame(sampleData)
         sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
         # Obtain the read counts. Use the unfiltered reads stashed in the
