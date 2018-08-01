@@ -125,7 +125,7 @@ use the <code>sampleNames()</code> return values (i.e. the <code>sampleName</cod
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>nCells</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
   <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxUMIs</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>10L</span>,
+  <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
   <span class='kw'>zinbwave</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -221,7 +221,7 @@ this calculation is disabled by default.</p></td>
 #&gt; colData names(15): nGene nUMI ... res.1.2 ident
 #&gt; reducedDimNames(3): PCA TSNE UMAP
 #&gt; spikeNames(0):</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
 #&gt; <span class='message'>  - &gt;= 0 UMIs per cell</span>
 #&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
 #&gt; <span class='message'>  - &gt;= 0 genes per cell</span>
@@ -229,8 +229,8 @@ this calculation is disabled by default.</p></td>
 #&gt; <span class='message'>  - &gt;= 0 novelty score</span>
 #&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
 #&gt; <span class='message'>  - == Inf cells per sample</span>
-#&gt; <span class='message'>  - &gt;= 10 cells per gene</span>
-#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>  - &gt;= 1 cells per gene</span>
+#&gt; <span class='message'>================================================================================</span>
 #&gt; <span class='message'>Cells:</span>
 #&gt; <span class='message'>     500 cells | prefilter</span>
 #&gt; <span class='message'>     500 cells | minUMIs &gt;= 0</span>
@@ -243,11 +243,11 @@ this calculation is disabled by default.</p></td>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>pbmc </span>
 #&gt; <span class='message'> 500 </span>
-#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>================================================================================</span>
 #&gt; <span class='message'>Genes:</span>
 #&gt; <span class='message'>     500 genes | prefilter</span>
-#&gt; <span class='message'>     500 genes | minCellsPerGene &lt;= 10</span>
-#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>     500 genes | minCellsPerGene &lt;= 1</span>
+#&gt; <span class='message'>================================================================================</span>
 #&gt; <span class='message'>Summary:</span>
 #&gt; <span class='message'>  - 500 of 500 cells passed filtering (100%)</span>
 #&gt; <span class='message'>  - 500 of 500 genes passed filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
@@ -283,7 +283,7 @@ this calculation is disabled by default.</p></td>
 #&gt; [1] 1
 #&gt; 
 #&gt; $minCellsPerGene
-#&gt; [1] 10
+#&gt; [1] 1
 #&gt; </div><div class='input'>
 <span class='co'># Per sample cutoffs</span>
 <span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; pbmc_1 
@@ -300,8 +300,8 @@ this calculation is disabled by default.</p></td>
 #&gt; <span class='message'>  - &gt;= 0 novelty score</span>
 #&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
 #&gt; <span class='message'>  - == Inf cells per sample</span>
-#&gt; <span class='message'>  - &gt;= 10 cells per gene</span>
-#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>  - &gt;= 1 cells per gene</span>
+#&gt; <span class='message'>================================================================================</span>
 #&gt; <span class='message'>Cells:</span>
 #&gt; <span class='message'>     500 cells | prefilter</span>
 #&gt; <span class='message'>     500 cells | minUMIs &gt;= 100</span>
@@ -314,11 +314,11 @@ this calculation is disabled by default.</p></td>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>pbmc </span>
 #&gt; <span class='message'> 500 </span>
-#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>================================================================================</span>
 #&gt; <span class='message'>Genes:</span>
 #&gt; <span class='message'>     500 genes | prefilter</span>
-#&gt; <span class='message'>     500 genes | minCellsPerGene &lt;= 10</span>
-#&gt; <span class='message'>============================================================</span>
+#&gt; <span class='message'>     500 genes | minCellsPerGene &lt;= 1</span>
+#&gt; <span class='message'>================================================================================</span>
 #&gt; <span class='message'>Summary:</span>
 #&gt; <span class='message'>  - 500 of 500 cells passed filtering (100%)</span>
 #&gt; <span class='message'>  - 500 of 500 genes passed filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
@@ -355,7 +355,7 @@ this calculation is disabled by default.</p></td>
 #&gt; [1] 1
 #&gt; 
 #&gt; $minCellsPerGene
-#&gt; [1] 10
+#&gt; [1] 1
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

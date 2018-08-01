@@ -63,7 +63,7 @@ use the \code{\link[=sampleNames]{sampleNames()}} return values (i.e. the \code{
 object <- cellranger_small
 show(object)
 
-x <- filterCells(object, minNovelty = 0L)
+x <- filterCells(object)
 show(x)
 metadata(x)$filterParams
 
