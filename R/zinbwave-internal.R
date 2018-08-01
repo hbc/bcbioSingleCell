@@ -1,14 +1,14 @@
 # zinbwave will calculate normalizedValues and weights matrices
 # @seealso [zinbwave::zinbwave()].
 .runZinbwave <- function(
-    Y,
-    BPPARAM = BiocParallel::SerialParam(),
+    Y,  # nolint
+    BPPARAM = BiocParallel::SerialParam(),  # nolint
     epsilon = 1e12,
     ...
 ) {
     message("Running zinbwave...")
     stopifnot(is(Y, "SingleCellExperiment"))
-    Y <- as(Y, "SingleCellExperiment")
+    Y <- as(Y, "SingleCellExperiment")  # nolint
     # zinbFit doesn't support `dgCMatrix``, so coerce counts to matrix
     assays(Y) <- list(counts = as.matrix(counts(Y)))
     message(printString(system.time({
