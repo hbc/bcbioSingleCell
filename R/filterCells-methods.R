@@ -390,9 +390,8 @@ setMethod(
             sep = " | "
         )
         if (minCellsPerGene > 0L) {
-            counts <- counts(object)
-            nonzeroGenes <- Matrix::rowSums(counts > 0L)
-            keep <- which(nonzeroGenes >= minCellsPerGene)
+            nonzeroGenes <- rowSums(counts(object) > 0L)
+            keep <- nonzeroGenes[which(nonzeroGenes >= minCellsPerGene)]
             genes <- names(keep)
         } else {
             genes <- rownames(object)
