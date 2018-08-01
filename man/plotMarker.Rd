@@ -154,37 +154,36 @@ for the number of genes to plot here in a future update.
 \examples{
 # SingleCellExperiment ====
 object <- cellranger_small
-title <- "mito genes"
-genes <- rownames(object)[which(rowData(object)$broadClass == "mito")]
+
+# MHC class II genes
+title <- "MHC class II"
+genes <- rownames(object)[which(grepl(
+    pattern = "^major histocompatibility complex, class II",
+    x = rowData(object)$description
+))]
 print(genes)
 
 # t-SNE
+plotMarkerTSNE(object, genes)
 plotMarkerTSNE(
     object = object,
     genes = genes,
-    title = title
-)
-
-# Dark mode
-plotMarkerTSNE(
-    object = object,
-    genes = genes,
-    dark = TRUE,
-    title = title
-)
-
-# Number cloud
-plotMarkerTSNE(
-    object = object,
-    genes = genes,
+    expression = "sum",
     pointsAsNumbers = TRUE,
+    dark = TRUE,
+    label = FALSE,
     title = title
 )
 
 # UMAP
-plotMarkerUMAP(
+plotMarkerUMAP(object, genes)
+plotMarkerTSNE(
     object = object,
     genes = genes,
+    expression = "mean",
+    pointsAsNumbers = TRUE,
+    dark = TRUE,
+    label = FALSE,
     title = title
 )
 
