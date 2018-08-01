@@ -305,35 +305,33 @@ for the number of genes to plot here in a future update.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
 <span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>cellranger_small</span>
-<span class='no'>title</span> <span class='kw'>&lt;-</span> <span class='st'>"mito genes"</span>
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>object</span>)[<span class='fu'>which</span>(<span class='fu'>rowData</span>(<span class='no'>object</span>)$<span class='no'>broadClass</span> <span class='kw'>==</span> <span class='st'>"mito"</span>)]
-<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt;  [1] "ENSG00000198712" "ENSG00000198727" "ENSG00000198763" "ENSG00000198786"
-#&gt;  [5] "ENSG00000198804" "ENSG00000198840" "ENSG00000198886" "ENSG00000198888"
-#&gt;  [9] "ENSG00000198899" "ENSG00000198938" "ENSG00000212907"</div><div class='input'>
+
+<span class='co'># MHC class II genes</span>
+<span class='no'>title</span> <span class='kw'>&lt;-</span> <span class='st'>"MHC class II"</span>
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>object</span>)[<span class='fu'>which</span>(<span class='fu'>grepl</span>(
+    <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"^major histocompatibility complex, class II"</span>,
+    <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>rowData</span>(<span class='no'>object</span>)$<span class='no'>description</span>
+))]
+<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000179344" "ENSG00000196126" "ENSG00000196735" "ENSG00000204257"
+#&gt; [5] "ENSG00000204287" "ENSG00000223865" "ENSG00000231389"</div><div class='input'>
 <span class='co'># t-SNE</span>
-<span class='fu'>plotMarkerTSNE</span>(
+<span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>)</div><div class='img'><img src='plotMarker-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotMarkerTSNE</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
     <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>,
-    <span class='kw'>title</span> <span class='kw'>=</span> <span class='no'>title</span>
-)</div><div class='img'><img src='plotMarker-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Dark mode</span>
-<span class='fu'>plotMarkerTSNE</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
-    <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>,
+    <span class='kw'>expression</span> <span class='kw'>=</span> <span class='st'>"sum"</span>,
+    <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
     <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
     <span class='kw'>title</span> <span class='kw'>=</span> <span class='no'>title</span>
 )</div><div class='img'><img src='plotMarker-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Number cloud</span>
-<span class='fu'>plotMarkerTSNE</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
-    <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>,
-    <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>title</span> <span class='kw'>=</span> <span class='no'>title</span>
-)</div><div class='img'><img src='plotMarker-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># UMAP</span>
-<span class='fu'>plotMarkerUMAP</span>(
+<span class='fu'>plotMarkerUMAP</span>(<span class='no'>object</span>, <span class='no'>genes</span>)</div><div class='img'><img src='plotMarker-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotMarkerTSNE</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
     <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>,
+    <span class='kw'>expression</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+    <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
     <span class='kw'>title</span> <span class='kw'>=</span> <span class='no'>title</span>
 )</div><div class='img'><img src='plotMarker-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># seurat ====</span>
@@ -360,14 +358,14 @@ for the number of genes to plot here in a future update.</p>
 #&gt; $ geneBiotype    &lt;fct&gt; protein_coding, TR_C_gene, protein_coding, IG_C_gene...
 #&gt; $ geneID         &lt;chr&gt; "ENSG00000038427", "ENSG00000277734", "ENSG000002044...
 #&gt; $ geneName       &lt;fct&gt; VCAN, TRAC, LST1, IGHM, HLA-DQA1
-#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...</div><div class='input'><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>tail</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...</div><div class='input'><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>tail</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating     |++++++++++                                        | 20% ~00s             |++++++++++++++++++++                              | 40% ~00s             |++++++++++++++++++++++++++++++                    | 60% ~00s             |++++++++++++++++++++++++++++++++++++++++         | 80% ~00s          
 #&gt; 
 #&gt; ## Cluster 4 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### HLA-DQA1
-#&gt; </div><div class='img'><img src='plotMarker-5.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; </div><div class='img'><img src='plotMarker-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 02s</div><div class='input'>
 <span class='co'># Known markers detected</span>
 <span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='no'>known_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'>glimpse</span>(<span class='no'>markers</span>)</div><div class='output co'>#&gt; Observations: 1
@@ -390,14 +388,14 @@ for the number of genes to plot here in a future update.</p>
 #&gt; $ broadClass     &lt;fct&gt; ig
 #&gt; $ description    &lt;fct&gt; immunoglobulin heavy constant mu [Source:HGNC Symbol...
 #&gt; $ geneBiotype    &lt;fct&gt; IG_C_gene
-#&gt; $ seqCoordSystem &lt;fct&gt; chromosome</div><div class='input'><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome</div><div class='input'><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt;    |                                                  | 0 % ~calculating  
 #&gt; 
 #&gt; ## B Cell {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; ### IGHM
-#&gt; </div><div class='img'><img src='plotMarker-6.png' alt='' width='700' height='433' /></div></pre>
+#&gt; </div><div class='img'><img src='plotMarker-6.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed = 01s</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
