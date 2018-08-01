@@ -104,6 +104,10 @@ setMethod(
         genes,
         gene2symbol = FALSE
     ) {
+        assert_is_character(genes)
+        assert_has_no_duplicates(genes)
+        assert_is_a_bool(gene2symbol)
+
         counts <- counts(object)
         assert_is_subset(genes, rownames(object))
         counts <- counts[genes, , drop = FALSE]
@@ -193,7 +197,7 @@ setMethod(
     function(object, genes) {
         assert_is_subset(genes, rownames(object))
         tsne <- fetchTSNEData(object)
-        data <- fetchGeneData(object, genes = genes)
+        data <- fetchGeneData(object = object, genes = genes)
         mean <- rowMeans(data)
         median <- rowMedians(data)
         sum <- rowSums(data)
@@ -247,7 +251,7 @@ setMethod(
     function(object, genes) {
         assert_is_subset(genes, rownames(object))
         umap <- fetchUMAPData(object)
-        data <- fetchGeneData(object, genes = genes)
+        data <- fetchGeneData(object = object, genes = genes)
         mean <- rowMeans(data)
         median <- rowMedians(data)
         sum <- rowSums(data)
