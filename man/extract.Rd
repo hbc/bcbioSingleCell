@@ -73,6 +73,11 @@
 \description{
 Extract genes by row and cells by column from a \code{bcbioSingleCell} object.
 }
+\note{
+Unfiltered cellular barcode distributions for the entire dataset,
+including cells not kept in the matrix will be dropped in favor of the
+\code{nCount} column of \code{colData()}.
+}
 \examples{
 # bcbioSingleCell ====
 cells <- head(colnames(indrops_small), 100L)
