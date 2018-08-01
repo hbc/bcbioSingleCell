@@ -392,9 +392,9 @@ setMethod(
             sep = " | "
         )
         if (minCellsPerGene > 0L) {
-            nonzeroGenes <- rowSums(counts(object) > 0L)
-            keep <- nonzeroGenes[which(nonzeroGenes >= minCellsPerGene)]
-            genes <- names(keep)
+            nonzero <- counts(object) > 0L
+            keep <- rowSums(nonzero) >= minCellsPerGene
+            genes <- names(keep)[keep]
         } else {
             genes <- rownames(object)
         }
