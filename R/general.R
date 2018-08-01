@@ -4,14 +4,18 @@
 #' @keywords internal
 #'
 #' @param aspectRatio `scalar integer`. Aspect ratio.
-#' @param color `ggproto`/`ScaleDiscrete` or `NULL`. Desired ggplot color scale.
-#'   Must supply discrete values. When set to `NULL`, the default ggplot2 color
-#'   palette will be used. If manual color definitions are desired, we recommend
-#'   using [ggplot2::scale_color_manual()].
-#' @param fill `ggproto`/`ScaleDiscrete` or `NULL`. Desired ggplot fill scale.
+#' @param color `ggproto`/`ScaleDiscrete` or `NULL`. Desired ggplot2 color
+#'   scale. Must supply discrete values. When set to `NULL`, the default ggplot2
+#'   color palette will be used. If manual color definitions are desired, we
+#'   recommend using [ggplot2::scale_color_manual()].
+#'   To set the discrete color palette globally, use
+#'   `options(bcbio.discrete.color = scale_color_viridis_d())`.
+#' @param fill `ggproto`/`ScaleDiscrete` or `NULL`. Desired ggplot2 fill scale.
 #'   Must supply discrete values. When set to `NULL`, the default ggplot2 color
 #'   palette will be used. If manual color definitions are desired, we recommend
 #'   using [ggplot2::scale_fill_manual()].
+#'   To set the discrete fill palette globally, use
+#'   `options(bcbio.discrete.fill = scale_fill_viridis_d())`.
 #' @param gene2symbol `data.frame`. Gene-to-symbol mappings. Columns must
 #'   contain `geneID` and `geneName`.
 #' @param dark `boolean`. Plot against a dark background using
