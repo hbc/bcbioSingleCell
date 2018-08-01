@@ -291,7 +291,7 @@ NULL
         ) +
         labs(
             x = "log10 reads per cell",
-            y = "proportion of cells"
+            y = "proportion of reads"
         )
 
     # Cutoff line
