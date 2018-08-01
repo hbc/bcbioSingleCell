@@ -177,6 +177,12 @@
 
     <p><code>bcbioSingleCell</code>.</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Unfiltered cellular barcode distributions for the entire dataset,
+including cells not kept in the matrix will be dropped in favor of the
+<code>nCount</code> column of <code>colData()</code>.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><ul>
@@ -215,10 +221,10 @@
 #&gt; colData names(20): nGene nUMI ... res.1.2 ident
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):
-#&gt; ============================================================
+#&gt; ================================================================================
 #&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-07-31
+#&gt; R Load Date: 2018-08-01
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
@@ -244,10 +250,10 @@
 #&gt; colData names(20): nGene nUMI ... res.1.2 ident
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):
-#&gt; ============================================================
+#&gt; ================================================================================
 #&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-07-31
+#&gt; R Load Date: 2018-08-01
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
@@ -273,10 +279,10 @@
 #&gt; colData names(20): nGene nUMI ... res.1.2 ident
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):
-#&gt; ============================================================
+#&gt; ================================================================================
 #&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-07-31
+#&gt; R Load Date: 2018-08-01
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
@@ -293,6 +299,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

@@ -114,7 +114,8 @@
 
 <span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>subsetPerSample</span>(<span class='no'>object</span>, <span class='kw'>minCells</span> <span class='kw'>=</span> <span class='fl'>200L</span>,
-  <span class='kw'>assignAndSave</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>(), <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>)</pre>
+  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>assignAndSave</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>(),
+  <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,6 +132,10 @@
       <th>minCells</th>
       <td><p><code>scalar integer</code>. Minimum number of cells required per
 sample.</p></td>
+    </tr>
+    <tr>
+      <th>prefilter</th>
+      <td><p><code>boolean</code>. Apply prefiltering to remove zero count genes.</p></td>
     </tr>
     <tr>
       <th>assignAndSave</th>
@@ -168,14 +173,72 @@ sample.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
 <span class='co'># List mode (default)</span>
-<span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'>subsetPerSample</span>(<span class='no'>indrops_small</span>, <span class='kw'>assignAndSave</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='input'><span class='fu'>names</span>(<span class='no'>list</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div><div class='input'>
+<span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'>subsetPerSample</span>(<span class='no'>indrops_small</span>, <span class='kw'>assignAndSave</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
+#&gt; <span class='message'>  - &gt;= 0 UMIs per cell</span>
+#&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
+#&gt; <span class='message'>  - &gt;= 0 genes per cell</span>
+#&gt; <span class='message'>  - &lt;= Inf genes per cell</span>
+#&gt; <span class='message'>  - &gt;= 0 novelty score</span>
+#&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
+#&gt; <span class='message'>  - == Inf cells per sample</span>
+#&gt; <span class='message'>  - &gt;= 1 cells per gene</span>
+#&gt; <span class='message'>================================================================================</span>
+#&gt; <span class='message'>Cells:</span>
+#&gt; <span class='message'>     500 cells | prefilter</span>
+#&gt; <span class='message'>     500 cells | minUMIs &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxUMIs &lt;= Inf</span>
+#&gt; <span class='message'>     500 cells | minGenes &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxGenes &lt;= Inf</span>
+#&gt; <span class='message'>     500 cells | minNovelty &lt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxMitoRatio &lt;= 1</span>
+#&gt; <span class='message'>     500 cells | nCells == Inf</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>rep_1 </span>
+#&gt; <span class='message'>  500 </span>
+#&gt; <span class='message'>================================================================================</span>
+#&gt; <span class='message'>Genes:</span>
+#&gt; <span class='message'>     500 genes | prefilter</span>
+#&gt; <span class='message'>     500 genes | minCellsPerGene &gt;= 1</span>
+#&gt; <span class='message'>================================================================================</span>
+#&gt; <span class='message'>Summary:</span>
+#&gt; <span class='message'>  - 500 of 500 cells passed filtering (100%)</span>
+#&gt; <span class='message'>  - 500 of 500 genes passed filtering (100%)</span></div><div class='input'><span class='fu'>names</span>(<span class='no'>list</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div><div class='input'>
 <span class='co'># Assign and save mode (useful for large datasets)</span>
 <span class='fu'>subsetPerSample</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>indrops_small</span>,
     <span class='kw'>assignAndSave</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
     <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>(),
     <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"subsetPerSample"</span>
-)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; <span class='message'>Saving multiplexed_AAAAAAAA to /Users/mike/GitHub/hbc/bcbioSingleCell/docs/reference/subsetPerSample</span></div><div class='input'><span class='fu'>list.files</span>(<span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA.rda"</div><div class='input'>
+)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
+#&gt; <span class='message'>  - &gt;= 0 UMIs per cell</span>
+#&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
+#&gt; <span class='message'>  - &gt;= 0 genes per cell</span>
+#&gt; <span class='message'>  - &lt;= Inf genes per cell</span>
+#&gt; <span class='message'>  - &gt;= 0 novelty score</span>
+#&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
+#&gt; <span class='message'>  - == Inf cells per sample</span>
+#&gt; <span class='message'>  - &gt;= 1 cells per gene</span>
+#&gt; <span class='message'>================================================================================</span>
+#&gt; <span class='message'>Cells:</span>
+#&gt; <span class='message'>     500 cells | prefilter</span>
+#&gt; <span class='message'>     500 cells | minUMIs &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxUMIs &lt;= Inf</span>
+#&gt; <span class='message'>     500 cells | minGenes &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxGenes &lt;= Inf</span>
+#&gt; <span class='message'>     500 cells | minNovelty &lt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxMitoRatio &lt;= 1</span>
+#&gt; <span class='message'>     500 cells | nCells == Inf</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>rep_1 </span>
+#&gt; <span class='message'>  500 </span>
+#&gt; <span class='message'>================================================================================</span>
+#&gt; <span class='message'>Genes:</span>
+#&gt; <span class='message'>     500 genes | prefilter</span>
+#&gt; <span class='message'>     500 genes | minCellsPerGene &gt;= 1</span>
+#&gt; <span class='message'>================================================================================</span>
+#&gt; <span class='message'>Summary:</span>
+#&gt; <span class='message'>  - 500 of 500 cells passed filtering (100%)</span>
+#&gt; <span class='message'>  - 500 of 500 genes passed filtering (100%)</span></div><div class='output co'>#&gt; <span class='message'>Saving multiplexed_AAAAAAAA to /Users/mike/GitHub/hbc/bcbioSingleCell/docs/reference/subsetPerSample</span></div><div class='input'><span class='fu'>list.files</span>(<span class='st'>"subsetPerSample"</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA.rda"</div><div class='input'>
 <span class='co'># Clean up</span>
 <span class='fu'>unlink</span>(<span class='st'>"subsetPerSample"</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
