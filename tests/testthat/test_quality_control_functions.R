@@ -27,16 +27,7 @@ test_that("filterCells", {
 test_that("filterCells : Maximum parameters", {
     # This should return an object with the same dimensions
     invisible(capture.output(
-        x <- filterCells(
-            indrops_small,
-            minUMIs = 0L,
-            maxUMIs = Inf,
-            minGenes = 0L,
-            maxGenes = Inf,
-            maxMitoRatio = 1L,
-            minNovelty = 0L,
-            minCellsPerGene = 0L
-        )
+        x <- filterCells(indrops_small)
     ))
     expect_s4_class(x, "bcbioSingleCell")
     expect_identical(dim(x), dim(indrops_small))
@@ -78,7 +69,7 @@ test_that("filterCells : Per sample cutoffs", {
             maxGenes = c(rep_1 = Inf),
             minNovelty = c(rep_1 = 0L),
             maxMitoRatio = c(rep_1 = 0L),
-            minCellsPerGene = 10L
+            minCellsPerGene = 1L
         )
     )
 })
