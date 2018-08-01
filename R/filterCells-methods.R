@@ -403,7 +403,7 @@ setMethod(
         }
         summaryGenes[["minCellsPerGene"]] <- paste(
             paste(.paddedCount(length(genes)), "genes"),
-            paste("minCellsPerGene", "<=", as.character(minCellsPerGene)),
+            paste("minCellsPerGene", ">=", as.character(minCellsPerGene)),
             sep = " | "
         )
         genes <- sort(genes)
