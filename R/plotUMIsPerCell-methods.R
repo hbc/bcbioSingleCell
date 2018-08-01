@@ -37,8 +37,8 @@ setMethod(
         max = Inf,
         point = c("none", "inflection", "knee"),
         trans = "log10",
-        color = getOption("bcbio.color", NULL),
-        fill = getOption("bcbio.fill", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
+        fill = getOption("bcbio.discrete.fill", NULL),
         title = "UMIs per cell"
     ) {
         geom <- match.arg(geom)

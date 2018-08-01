@@ -26,7 +26,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        color = getOption("bcbio.color", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
         title = "zeros vs. depth"
     ) {
         if (missing(interestingGroups)) {

@@ -24,7 +24,7 @@ setMethod(
     function(
         object,
         interestingGroups,
-        fill = getOption("bcbio.fill", NULL),
+        fill = getOption("bcbio.discrete.fill", NULL),
         title = "cell counts"
     ) {
         if (missing(interestingGroups)) {

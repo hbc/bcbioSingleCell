@@ -25,7 +25,7 @@ setMethod(
         object,
         interestingGroups,
         trendline = FALSE,
-        color = getOption("bcbio.color", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
         trans = "log2",
         title = "mito vs. coding"
     ) {

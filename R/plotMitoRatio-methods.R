@@ -26,7 +26,7 @@ setMethod(
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
         interestingGroups,
         max = 1L,
-        fill = NULL,
+        fill = getOption("bcbio.discrete.fill", NULL),
         trans = "sqrt",
         title = "mito ratio"
     ) {

@@ -41,8 +41,8 @@ NULL
     max = Inf,
     trans = "identity",
     ratio = FALSE,
-    color = getOption("bcbio.color", NULL),
-    fill = getOption("bcbio.fill", NULL),
+    color = getOption("bcbio.discrete.color", NULL),
+    fill = getOption("bcbio.discrete.fill", NULL),
     title = NULL
 ) {
     assert_is_a_string(metricCol)
@@ -204,7 +204,7 @@ NULL
     yTrans = "identity",
     interestingGroups,
     trendline = FALSE,
-    color = getOption("bcbio.color", NULL),
+    color = getOption("bcbio.discrete.color", NULL),
     title = NULL
 ) {
     assert_is_a_string(xCol)

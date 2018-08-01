@@ -46,7 +46,7 @@ NULL
     fun,  # e.g. fetchTSNEData
     axes,
     interestingGroups = "ident",
-    color = getOption("bcbio.color", NULL),
+    color = getOption("bcbio.discrete.color", NULL),
     pointSize = getOption("bcbio.pointSize", 0.75),
     pointAlpha = getOption("bcbio.pointAlpha", 0.75),
     pointsAsNumbers = FALSE,
@@ -167,7 +167,7 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = getOption("bcbio.color", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
         pointSize = getOption("bcbio.pointSize", 0.75),
         pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         pointsAsNumbers = FALSE,
@@ -219,7 +219,7 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = getOption("bcbio.color", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
         pointSize = getOption("bcbio.pointSize", 0.75),
         pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         pointsAsNumbers = FALSE,
@@ -271,7 +271,7 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = getOption("bcbio.color", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
         pointSize = getOption("bcbio.pointSize", 0.75),
         pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         pointsAsNumbers = FALSE,

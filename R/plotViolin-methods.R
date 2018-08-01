@@ -33,7 +33,7 @@ setMethod(
         object,
         genes,
         scale = c("count", "width", "area"),
-        fill = getOption("bcbio.fill", NULL),
+        fill = getOption("bcbio.discrete.fill", NULL),
         legend = getOption("bcbio.legend", TRUE)
     ) {
         scale <- match.arg(scale)

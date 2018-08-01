@@ -106,7 +106,7 @@ NULL
     genes,
     reduction = c("TSNE", "UMAP"),
     expression = c("mean", "median", "sum"),
-    color = getOption("bcbio.color", NULL),
+    color = getOption("bcbio.discrete.color", NULL),
     pointSize = getOption("bcbio.pointSize", 0.75),
     pointAlpha = getOption("bcbio.pointAlpha", 0.8),
     pointsAsNumbers = FALSE,
@@ -195,7 +195,7 @@ NULL
         } else {
             guideTitle <- expression
         }
-        p <- p + guides(color = guide_colourbar(title = guideTitle))
+        p <- p + guides(color = guide_colorbar(title = guideTitle))
     } else {
         p <- p + guides(color = "none")
     }
@@ -277,7 +277,7 @@ setMethod(
         object,
         genes,
         expression = c("mean", "median", "sum"),
-        color = getOption("bcbio.color", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
         pointSize = getOption("bcbio.pointSize", 0.75),
         pointAlpha = getOption("bcbio.pointAlpha", 0.8),
         pointsAsNumbers = FALSE,
@@ -330,7 +330,7 @@ setMethod(
         object,
         genes,
         expression = c("mean", "median", "sum"),
-        color = getOption("bcbio.color", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
         pointSize = getOption("bcbio.pointSize", 0.75),
         pointAlpha = getOption("bcbio.pointAlpha", 0.8),
         pointsAsNumbers = FALSE,

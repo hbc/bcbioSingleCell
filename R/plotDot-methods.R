@@ -66,7 +66,7 @@ setMethod(
         colMax = 2.5,
         dotMin = 0L,
         dotScale = 6L,
-        color = getOption("bcbio.color", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
         legend = getOption("bcbio.legend", TRUE)
     ) {
         .assertHasIdent(object)
@@ -133,7 +133,7 @@ setMethod(
         ) +
             geom_point(
                 mapping = aes(
-                    colour = !!sym("avgExpScale"),
+                    color = !!sym("avgExpScale"),
                     size = !!sym("pctExp")
                 ),
                 show.legend = legend

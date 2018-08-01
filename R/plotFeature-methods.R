@@ -31,7 +31,7 @@ NULL
     object,
     features,
     reduction = c("TSNE", "UMAP"),
-    color = getOption("bcbio.color", NULL),
+    color = getOption("bcbio.discrete.color", NULL),
     pointSize = getOption("bcbio.pointSize", 0.75),
     pointAlpha = getOption("bcbio.pointAlpha", 0.75),
     label = getOption("bcbio.label", TRUE),
@@ -167,7 +167,7 @@ setMethod(
     function(
         object,
         features,
-        color = getOption("bcbio.color", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
         pointSize = getOption("bcbio.pointSize", 0.75),
         pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         label = getOption("bcbio.label", TRUE),
@@ -214,7 +214,7 @@ setMethod(
     function(
         object,
         features,
-        color = getOption("bcbio.color", NULL),
+        color = getOption("bcbio.discrete.color", NULL),
         pointSize = getOption("bcbio.pointSize", 0.75),
         pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         label = getOption("bcbio.label", TRUE),
