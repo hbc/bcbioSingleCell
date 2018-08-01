@@ -116,14 +116,17 @@
 <span class='fu'>plotUMIsPerCell</span>(<span class='no'>object</span>,
   <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>, <span class='st'>"ridgeline"</span>, <span class='st'>"ecdf"</span>, <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>),
   <span class='no'>interestingGroups</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>point</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>,
-  <span class='st'>"inflection"</span>, <span class='st'>"knee"</span>), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log10"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='st'>"inflection"</span>, <span class='st'>"knee"</span>), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log10"</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.fill"</span>, <span class='kw'>NULL</span>),
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"UMIs per cell"</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotUMIsPerCell</span>(<span class='no'>object</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>,
   <span class='st'>"ridgeline"</span>, <span class='st'>"ecdf"</span>, <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>), <span class='no'>interestingGroups</span>,
   <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>point</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"inflection"</span>, <span class='st'>"knee"</span>),
-  <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log10"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log10"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.fill"</span>, <span class='kw'>NULL</span>),
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"UMIs per cell"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -168,17 +171,21 @@ sample. To disable, use "<code>none</code>". Requires <code>geom = "ecdf"</code>
     </tr>
     <tr>
       <th>color</th>
-      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot color scale.
-Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot2 color
+scale. Must supply discrete values. When set to <code>NULL</code>, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.
+To set the discrete color palette globally, use
+<code>options(bcbio.discrete.color = scale_color_viridis_d())</code>.</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot fill scale.
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot2 fill scale.
 Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
 palette will be used. If manual color definitions are desired, we recommend
-using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
+using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.
+To set the discrete fill palette globally, use
+<code>options(bcbio.discrete.fill = scale_fill_viridis_d())</code>.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -205,7 +212,7 @@ using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ecdf"</span>)</div><div class='img'><img src='plotUMIsPerCell-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"histogram"</span>)</div><div class='img'><img src='plotUMIsPerCell-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ridgeline"</span>)</div><div class='output co'>#&gt; <span class='message'>Picking joint bandwidth of 0.0328</span></div><div class='img'><img src='plotUMIsPerCell-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>)</div><div class='img'><img src='plotUMIsPerCell-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"boxplot"</span>)</div><div class='img'><img src='plotUMIsPerCell-5.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"violin"</span>)</div><div class='img'><img src='plotUMIsPerCell-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ridgeline"</span>)</div><div class='output co'>#&gt; <span class='message'>Picking joint bandwidth of 0.0328</span></div><div class='img'><img src='plotUMIsPerCell-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ecdf"</span>)</div><div class='img'><img src='plotUMIsPerCell-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"histogram"</span>)</div><div class='img'><img src='plotUMIsPerCell-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotUMIsPerCell</span>(<span class='no'>cellranger_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"boxplot"</span>)</div><div class='img'><img src='plotUMIsPerCell-5.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

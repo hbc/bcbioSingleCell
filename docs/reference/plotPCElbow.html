@@ -114,7 +114,7 @@
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotPCElbow</span>(<span class='no'>object</span>, <span class='kw'>minSD</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>minPct</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
-  <span class='kw'>maxCumPct</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"identity"</span>, <span class='st'>"sqrt"</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>maxCumPct</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"identity"</span>, <span class='st'>"sqrt"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,10 +145,6 @@ standard deviation.</p></td>
       <td><p><code>string</code>. Name of the axis scale transformation to apply. See
 <code>help("scale_x_continuous", "ggplot2")</code> for more information.</p></td>
     </tr>
-    <tr>
-      <th>plot</th>
-      <td><p><code>boolean</code>. Include plot.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -176,7 +172,8 @@ dimensionality reduction analysis.</p></li>
   <code><a href='plotCellTypesPerCluster.html'>plotCellTypesPerCluster</a></code>,
   <code><a href='plotFeature.html'>plotFeatureTSNE</a></code>,
   <code><a href='plotMarker.html'>plotKnownMarkersDetected</a></code>,
-  <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>, <code><a href='sanitizeMarkers.html'>sanitizeMarkers</a></code>,
+  <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
+  <code><a href='sanitizeSeuratMarkers.html'>sanitizeSeuratMarkers</a></code>,
   <code><a href='topMarkers.html'>topMarkers</a></code></p></div>
     
 

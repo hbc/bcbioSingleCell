@@ -116,31 +116,47 @@
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>features</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointSize"</span>, <span class='fl'>0.75</span>),
-  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointAlpha"</span>, <span class='fl'>0.75</span>), <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"labelSize"</span>, <span class='fl'>6L</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointSize"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointAlpha"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.label"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.labelSize"</span>, <span class='fl'>6L</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.dark"</span>, <span class='fl'>FALSE</span>), <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.grid"</span>,
+  <span class='fl'>FALSE</span>), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>FALSE</span>),
+  <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.aspectRatio"</span>, <span class='fl'>1L</span>))
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>features</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointSize"</span>, <span class='fl'>0.75</span>),
-  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointAlpha"</span>, <span class='fl'>0.75</span>), <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"labelSize"</span>, <span class='fl'>6L</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
+<span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>features</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointSize"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointAlpha"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.label"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.labelSize"</span>, <span class='fl'>6L</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.dark"</span>, <span class='fl'>FALSE</span>), <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.grid"</span>,
+  <span class='fl'>FALSE</span>), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>FALSE</span>),
+  <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.aspectRatio"</span>, <span class='fl'>1L</span>))
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotFeatureUMAP</span>(<span class='no'>object</span>, <span class='no'>features</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointSize"</span>, <span class='fl'>0.75</span>),
-  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointAlpha"</span>, <span class='fl'>0.75</span>), <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"labelSize"</span>, <span class='fl'>6L</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointSize"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointAlpha"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.label"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.labelSize"</span>, <span class='fl'>6L</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.dark"</span>, <span class='fl'>FALSE</span>), <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.grid"</span>,
+  <span class='fl'>FALSE</span>), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>FALSE</span>),
+  <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.aspectRatio"</span>, <span class='fl'>1L</span>))
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotFeatureUMAP</span>(<span class='no'>object</span>, <span class='no'>features</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointSize"</span>, <span class='fl'>0.75</span>),
-  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"pointAlpha"</span>, <span class='fl'>0.75</span>), <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"labelSize"</span>, <span class='fl'>6L</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
+<span class='fu'>plotFeatureUMAP</span>(<span class='no'>object</span>, <span class='no'>features</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointSize"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointAlpha"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.label"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.labelSize"</span>, <span class='fl'>6L</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.dark"</span>, <span class='fl'>FALSE</span>), <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.grid"</span>,
+  <span class='fl'>FALSE</span>), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>FALSE</span>),
+  <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.aspectRatio"</span>, <span class='fl'>1L</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,10 +176,12 @@ scores, number of genes detected).</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot color scale.
-Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot2 color
+scale. Must supply discrete values. When set to <code>NULL</code>, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.
+To set the discrete color palette globally, use
+<code>options(bcbio.discrete.color = scale_color_viridis_d())</code>.</p></td>
     </tr>
     <tr>
       <th>pointSize</th>
@@ -213,13 +231,14 @@ Useful when there many cells in the dataset, and some cells can be masked.</p></
   <code><a href='plotCellTypesPerCluster.html'>plotCellTypesPerCluster</a></code>,
   <code><a href='plotMarker.html'>plotKnownMarkersDetected</a></code>,
   <code><a href='plotPCElbow.html'>plotPCElbow</a></code>, <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
-  <code><a href='sanitizeMarkers.html'>sanitizeMarkers</a></code>, <code><a href='topMarkers.html'>topMarkers</a></code></p></div>
+  <code><a href='sanitizeSeuratMarkers.html'>sanitizeSeuratMarkers</a></code>,
+  <code><a href='topMarkers.html'>topMarkers</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
-<span class='no'>features</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"nUMI"</span>, <span class='st'>"nGene"</span>, <span class='st'>"PC1"</span>, <span class='st'>"PC2"</span>)
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
+<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>indrops_small</span>
+<span class='no'>features</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"nUMI"</span>, <span class='st'>"nGene"</span>, <span class='st'>"mitoRatio"</span>)
 
 <span class='co'># t-SNE</span>
 <span class='fu'>plotFeatureTSNE</span>(<span class='no'>object</span>, <span class='no'>features</span>)</div><div class='img'><img src='plotFeature-1.png' alt='' width='700' height='433' /></div><div class='input'>

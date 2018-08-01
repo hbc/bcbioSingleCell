@@ -114,8 +114,8 @@
 <span class='fu'><a href='cell2sample.html'>cell2sample</a></span>(<span class='no'>object</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'><a href='plotCellCounts.html'>plotCellCounts</a></span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"cell counts"</span>)
+<span class='fu'><a href='plotCellCounts.html'>plotCellCounts</a></span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.fill"</span>, <span class='kw'>NULL</span>), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"cell counts"</span>)
 
 <span class='co'># S4 method for seurat,ANY</span>
 <span class='fu'>assay</span>(<span class='no'>x</span>, <span class='no'>i</span>, <span class='no'>...</span>)
@@ -186,10 +186,12 @@ interesting groups. Must be formatted in camel case and intersect with
     </tr>
     <tr>
       <th>fill</th>
-      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot fill scale.
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot2 fill scale.
 Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
 palette will be used. If manual color definitions are desired, we recommend
-using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
+using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.
+To set the discrete fill palette globally, use
+<code>options(bcbio.discrete.fill = scale_fill_viridis_d())</code>.</p></td>
     </tr>
     <tr>
       <th>title</th>

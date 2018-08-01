@@ -128,31 +128,49 @@ plotViolin(): Violin plot.
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
-  <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"median"</span>, <span class='st'>"sum"</span>),
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointSize"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointAlpha"</span>, <span class='fl'>0.8</span>),
+  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.label"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.labelSize"</span>, <span class='fl'>6L</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.dark"</span>, <span class='fl'>FALSE</span>), <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.grid"</span>,
+  <span class='fl'>FALSE</span>), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.aspectRatio"</span>, <span class='fl'>1L</span>), <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMarkerTSNE</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
-  <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointSize"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointAlpha"</span>, <span class='fl'>0.8</span>),
+  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.label"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.labelSize"</span>, <span class='fl'>6L</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.dark"</span>, <span class='fl'>FALSE</span>), <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.grid"</span>,
+  <span class='fl'>FALSE</span>), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.aspectRatio"</span>, <span class='fl'>1L</span>), <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotMarkerUMAP</span>(<span class='no'>object</span>, <span class='no'>genes</span>,
-  <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"median"</span>, <span class='st'>"sum"</span>),
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointSize"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointAlpha"</span>, <span class='fl'>0.8</span>),
+  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.label"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.labelSize"</span>, <span class='fl'>6L</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.dark"</span>, <span class='fl'>FALSE</span>), <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.grid"</span>,
+  <span class='fl'>FALSE</span>), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.aspectRatio"</span>, <span class='fl'>1L</span>), <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotMarkerUMAP</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
-  <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.75</span>, <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
-  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='st'>"median"</span>, <span class='st'>"sum"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointSize"</span>, <span class='fl'>0.75</span>),
+  <span class='kw'>pointAlpha</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.pointAlpha"</span>, <span class='fl'>0.8</span>),
+  <span class='kw'>pointsAsNumbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.label"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>labelSize</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.labelSize"</span>, <span class='fl'>6L</span>),
+  <span class='kw'>dark</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.dark"</span>, <span class='fl'>FALSE</span>), <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.grid"</span>,
+  <span class='fl'>FALSE</span>), <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>aspectRatio</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.aspectRatio"</span>, <span class='fl'>1L</span>), <span class='kw'>title</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='no'>markers</span>,
@@ -193,15 +211,12 @@ defaults to the first argument in the <code>character</code> vector.</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot color scale.
-Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>pointsAsNumbers</th>
-      <td><p><code>boolean</code>. Plot the points as numbers (<code>TRUE</code>) or
-dots (<code>FALSE</code>).</p></td>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot2 color
+scale. Must supply discrete values. When set to <code>NULL</code>, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.
+To set the discrete color palette globally, use
+<code>options(bcbio.discrete.color = scale_color_viridis_d())</code>.</p></td>
     </tr>
     <tr>
       <th>pointSize</th>
@@ -211,6 +226,11 @@ dots (<code>FALSE</code>).</p></td>
       <th>pointAlpha</th>
       <td><p><code>scalar numeric</code> (<code>0</code>-<code>1</code>). Alpha transparency level.
 Useful when there many cells in the dataset, and some cells can be masked.</p></td>
+    </tr>
+    <tr>
+      <th>pointsAsNumbers</th>
+      <td><p><code>boolean</code>. Plot the points as numbers (<code>TRUE</code>) or
+dots (<code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -277,16 +297,19 @@ for the number of genes to plot here in a future update.</p>
   <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
   <code><a href='plotCellTypesPerCluster.html'>plotCellTypesPerCluster</a></code>,
   <code><a href='plotFeature.html'>plotFeatureTSNE</a></code>, <code><a href='plotPCElbow.html'>plotPCElbow</a></code>,
-  <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>, <code><a href='sanitizeMarkers.html'>sanitizeMarkers</a></code>,
+  <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
+  <code><a href='sanitizeSeuratMarkers.html'>sanitizeSeuratMarkers</a></code>,
   <code><a href='topMarkers.html'>topMarkers</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
+<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>cellranger_small</span>
 <span class='no'>title</span> <span class='kw'>&lt;-</span> <span class='st'>"mito genes"</span>
-<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>grep</span>(<span class='st'>"^MT-"</span>, <span class='fu'>rownames</span>(<span class='no'>object</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt;  [1] "MT-CO2"  "MT-CYB"  "MT-ND2"  "MT-ND5"  "MT-CO1"  "MT-ND3"  "MT-ND4" 
-#&gt;  [8] "MT-ND1"  "MT-ATP6" "MT-CO3"  "MT-ND4L"</div><div class='input'>
+<span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>rownames</span>(<span class='no'>object</span>)[<span class='fu'>which</span>(<span class='fu'>rowData</span>(<span class='no'>object</span>)$<span class='no'>broadClass</span> <span class='kw'>==</span> <span class='st'>"mito"</span>)]
+<span class='fu'>print</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt;  [1] "ENSG00000198712" "ENSG00000198727" "ENSG00000198763" "ENSG00000198786"
+#&gt;  [5] "ENSG00000198804" "ENSG00000198840" "ENSG00000198886" "ENSG00000198888"
+#&gt;  [9] "ENSG00000198899" "ENSG00000198938" "ENSG00000212907"</div><div class='input'>
 <span class='co'># t-SNE</span>
 <span class='fu'>plotMarkerTSNE</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
@@ -313,36 +336,61 @@ for the number of genes to plot here in a future update.</p>
     <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>,
     <span class='kw'>title</span> <span class='kw'>=</span> <span class='no'>title</span>
 )</div><div class='img'><img src='plotMarker-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># seurat ====</span>
+<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
+
 <span class='co'># Top markers</span>
 <span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='topMarkers.html'>topMarkers</a></span>(<span class='no'>all_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>markers</span></div><div class='output co'>#&gt; # A tibble: 6 x 13
-#&gt; # Groups:   cluster [6]
-#&gt;   cluster avgLogFC  pct1  pct2 rowname   pvalue     padj geneID geneName
-#&gt;   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
-#&gt; 1 0           2.33 0.917 0.215 S100A12 1.03e-63 5.14e-61 ENSG0… S100A12 
-#&gt; 2 1           1.96 0.952 0.353 TRAC    1.65e-56 8.23e-54 ENSG0… TRAC    
-#&gt; 3 2           1.72 1     0.691 HLA-DQ… 2.02e-47 1.01e-44 ENSG0… HLA-DQA1
-#&gt; 4 3           1.66 1     0.728 LST1    1.05e-43 5.24e-41 ENSG0… LST1    
-#&gt; 5 4           2.46 1     0.196 CD79A   1.72e-44 8.62e-42 ENSG0… CD79A   
-#&gt; 6 5           1.57 1     0.843 SPCS1   1.57e-15 7.83e-13 ENSG0… SPCS1   
-#&gt; # ... with 4 more variables: geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
-#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>tail</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>glimpse</span>(<span class='no'>markers</span>)</div><div class='output co'>#&gt; Observations: 5
+#&gt; Variables: 18
+#&gt; $ cluster        &lt;fct&gt; 0, 1, 2, 3, 4
+#&gt; $ avgLogFC       &lt;dbl&gt; 1.982960, 1.969612, 1.660185, 2.053501, 1.675368
+#&gt; $ pct1           &lt;dbl&gt; 0.921, 0.952, 1.000, 0.900, 1.000
+#&gt; $ pct2           &lt;dbl&gt; 0.137, 0.356, 0.729, 0.153, 0.712
+#&gt; $ rowname        &lt;chr&gt; "VCAN", "TRAC", "LST1", "IGHM", "HLA-DQA1"
+#&gt; $ pvalue         &lt;dbl&gt; 1.369269e-74, 1.796991e-56, 2.737005e-43, 1.534176e-...
+#&gt; $ padj           &lt;dbl&gt; 6.846344e-72, 8.984953e-54, 1.368502e-40, 7.670879e-...
+#&gt; $ seqnames       &lt;fct&gt; 5, 14, 6, 14, 6
+#&gt; $ start          &lt;int&gt; 83471465, 22547506, 31586124, 105851708, 32628179
+#&gt; $ end            &lt;int&gt; 83582303, 22552154, 31588909, 105856218, 32647062
+#&gt; $ width          &lt;int&gt; 110839, 4649, 2786, 4511, 18884
+#&gt; $ strand         &lt;fct&gt; +, +, +, -, +
+#&gt; $ broadClass     &lt;fct&gt; coding, tcr, coding, ig, coding
+#&gt; $ description    &lt;fct&gt; versican [Source:HGNC Symbol;Acc:HGNC:2464], T cell ...
+#&gt; $ geneBiotype    &lt;fct&gt; protein_coding, TR_C_gene, protein_coding, IG_C_gene...
+#&gt; $ geneID         &lt;chr&gt; "ENSG00000038427", "ENSG00000277734", "ENSG000002044...
+#&gt; $ geneName       &lt;fct&gt; VCAN, TRAC, LST1, IGHM, HLA-DQA1
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome, chromosome, chromosome, chromosome, chro...</div><div class='input'><span class='fu'>plotTopMarkers</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>tail</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
 #&gt; 
-#&gt; ## Cluster 5 {.tabset}
+#&gt; ## Cluster 4 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
-#&gt; ### SPCS1
+#&gt; ### HLA-DQA1
 #&gt; </div><div class='img'><img src='plotMarker-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Known markers detected</span>
 <span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='no'>known_markers_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>markers</span></div><div class='output co'>#&gt; # A tibble: 1 x 14
-#&gt; # Groups:   cellType [1]
-#&gt;   cellType cluster geneID geneName avgLogFC  pct1  pct2 rowname   pvalue
-#&gt;   &lt;fct&gt;    &lt;fct&gt;   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
-#&gt; 1 B Cell   4       ENSG0… IGHM         2.16 0.933 0.191 IGHM    1.87e-37
-#&gt; # ... with 5 more variables: padj &lt;dbl&gt;, geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
-#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div><div class='input'><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>glimpse</span>(<span class='no'>markers</span>)</div><div class='output co'>#&gt; Observations: 1
+#&gt; Variables: 19
+#&gt; $ cellType       &lt;fct&gt; B Cell
+#&gt; $ cluster        &lt;fct&gt; 3
+#&gt; $ geneID         &lt;chr&gt; "ENSG00000211899"
+#&gt; $ geneName       &lt;fct&gt; IGHM
+#&gt; $ avgLogFC       &lt;dbl&gt; 2.053501
+#&gt; $ pct1           &lt;dbl&gt; 0.9
+#&gt; $ pct2           &lt;dbl&gt; 0.153
+#&gt; $ rowname        &lt;chr&gt; "IGHM"
+#&gt; $ pvalue         &lt;dbl&gt; 1.534176e-50
+#&gt; $ padj           &lt;dbl&gt; 7.670879e-48
+#&gt; $ seqnames       &lt;fct&gt; 14
+#&gt; $ start          &lt;int&gt; 105851708
+#&gt; $ end            &lt;int&gt; 105856218
+#&gt; $ width          &lt;int&gt; 4511
+#&gt; $ strand         &lt;fct&gt; -
+#&gt; $ broadClass     &lt;fct&gt; ig
+#&gt; $ description    &lt;fct&gt; immunoglobulin heavy constant mu [Source:HGNC Symbol...
+#&gt; $ geneBiotype    &lt;fct&gt; IG_C_gene
+#&gt; $ seqCoordSystem &lt;fct&gt; chromosome</div><div class='input'><span class='fu'>plotKnownMarkersDetected</span>(<span class='no'>object</span>, <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='no'>markers</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## B Cell {.tabset}
 #&gt; 
