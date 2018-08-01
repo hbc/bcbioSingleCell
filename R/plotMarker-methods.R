@@ -1,8 +1,3 @@
-# TODO Add gene2symbol support here
-# TODO Add assert check that the marker input ident matches the object
-
-
-
 #' Plot Cell-Type-Specific Gene Markers
 #'
 #' @description
@@ -119,6 +114,7 @@ NULL
     title = TRUE
 ) {
     assert_is_character(genes)
+    assert_has_no_duplicates(genes)
     assert_is_subset(genes, rownames(object))
     reduction <- match.arg(reduction)
     expression <- match.arg(expression)
@@ -147,7 +143,16 @@ NULL
         fun <- fetchUMAPExpressionData
         dimCols <- c("UMAP1", "UMAP2")
     }
-    data <- fun(object, genes = genes)
+    data <- fun(object = object, genes = genes)
+
+    if (!isTRUE(.useGeneName(object))) {
+        g2s <- gene2symbol(object)
+        if (length(g2s)) {
+            g2s <- g2s[genes, , drop = FALSE]
+            genes <- make.unique(g2s[["geneName"]])
+        }
+    }
+    genes <- sort(unique(genes))
 
     requiredCols <- c(
         "centerX",
