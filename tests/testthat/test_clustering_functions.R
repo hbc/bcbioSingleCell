@@ -58,8 +58,8 @@ test_that("knownMarkersDetected", {
 
 
 
-# sanitizeMarkers ==============================================================
-test_that("sanitizeMarkers : seurat", {
+# sanitizeSeuratMarkers ========================================================
+test_that("sanitizeSeuratMarkers", {
     # Early return on sanitized data
     expect_message(
         sanitizeSeuratMarkers(
