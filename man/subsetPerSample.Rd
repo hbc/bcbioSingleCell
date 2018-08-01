@@ -9,7 +9,8 @@
 subsetPerSample(object, ...)
 
 \S4method{subsetPerSample}{bcbioSingleCell}(object, minCells = 200L,
-  assignAndSave = FALSE, envir = parent.frame(), dir = ".")
+  prefilter = TRUE, assignAndSave = FALSE, envir = parent.frame(),
+  dir = ".")
 }
 \arguments{
 \item{object}{Object.}
@@ -18,6 +19,8 @@ subsetPerSample(object, ...)
 
 \item{minCells}{\code{scalar integer}. Minimum number of cells required per
 sample.}
+
+\item{prefilter}{\code{boolean}. Apply prefiltering to remove zero count genes.}
 
 \item{assignAndSave}{\code{boolean}. Assign and save the individual datasets.}
 

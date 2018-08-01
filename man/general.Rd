@@ -60,6 +60,8 @@ interesting groups. Must be formatted in camel case and intersect with
 
 \item{object}{Object.}
 
+\item{prefilter}{\code{boolean}. Apply prefiltering to remove zero count genes.}
+
 \item{pipeline}{\code{string}. Pipeline used to generate the samples.}
 
 \item{pointAlpha}{\code{scalar numeric} (\code{0}-\code{1}). Alpha transparency level.

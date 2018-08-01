@@ -6,13 +6,16 @@
 \alias{selectSamples,SingleCellExperiment-method}
 \title{Select Samples}
 \usage{
-\S4method{selectSamples}{SingleCellExperiment}(object, ...)
+\S4method{selectSamples}{SingleCellExperiment}(object, ...,
+  prefilter = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Columns to use for grep pattern matching. Supply a named character
 vector containing the column name and the grep pattern.}
+
+\item{prefilter}{\code{boolean}. Apply prefiltering to remove zero count genes.}
 }
 \value{
 \code{bcbioSingleCell}.
