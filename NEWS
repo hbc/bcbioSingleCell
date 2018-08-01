@@ -26,6 +26,8 @@
 - `sampleData<-()` assignment method now dynamically updates the sample metadata
   in `colData()` to match.
 - Simplified `SingleCellExperiment` method extension for `seurat` objects.
+- Added support for global ggplot2 discrete color palettes using
+  `bcbio.discrete.color` and `bcbio.discrete.fill` with `options()`.
 
 ## Minor changes
 
