@@ -8,8 +8,8 @@ topMarkers(data, n = 10L, direction = c("positive", "negative",
   "both"), coding = FALSE)
 }
 \arguments{
-\item{data}{\code{grouped_df}. \code{Seurat::FindAllMarkers()} return, sanitized with #
-our \code{sanitizeMarkers()} function.}
+\item{data}{\code{grouped_df}. \code{Seurat::FindAllMarkers()} return, sanitized with
+our \code{sanitizeSeuratMarkers()} function.}
 
 \item{n}{\code{scalar integer}. Number of genes per cluster.}
 

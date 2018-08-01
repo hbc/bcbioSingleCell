@@ -7,6 +7,7 @@
 \alias{plotCellCounts,seurat-method}
 \alias{seurat-SingleCellExperiment}
 \alias{assay,seurat,ANY-method}
+\alias{assayNames,seurat-method}
 \alias{assays,seurat-method}
 \alias{colData,seurat-method}
 \alias{colData<-,seurat,DataFrame-method}
@@ -32,6 +33,8 @@
 
 \S4method{assay}{seurat,ANY}(x, i, ...)
 
+\S4method{assayNames}{seurat}(x, ...)
+
 \S4method{assays}{seurat}(x, ..., withDimnames = TRUE)
 
 \S4method{colData}{seurat}(x, ...)
@@ -42,9 +45,9 @@
 
 \S4method{convertGenesToSymbols}{seurat}(object)
 
-\S4method{counts}{seurat}(object, ...)
-
 \S4method{colnames}{seurat}(x)
+
+\S4method{counts}{seurat}(object, ...)
 
 \S4method{gene2symbol}{seurat}(object)
 
