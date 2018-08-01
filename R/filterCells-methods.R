@@ -84,7 +84,7 @@ setMethod(
         maxGenes = Inf,
         minNovelty = 0L,
         maxMitoRatio = 1L,
-        minCellsPerGene = 10L,
+        minCellsPerGene = 1L,
         zinbwave = FALSE
     ) {
         validObject(object)
@@ -126,8 +126,9 @@ setMethod(
         assert_all_are_in_range(maxMitoRatio, lower = 0L, upper = 1L)
 
         # minCellsPerGene
+        # Don't allow genes with all zero counts, so require at least 1 here
         assert_is_numeric(minCellsPerGene)
-        assert_all_are_non_negative(minCellsPerGene)
+        assert_all_are_positive(minCellsPerGene)
 
         params <- list(
             nCells = nCells,
@@ -389,12 +390,14 @@ setMethod(
             sep = " | "
         )
         if (minCellsPerGene > 0L) {
-            counts <- assay(object)
-            numCells <- rowSums(counts > 0L)
-            genes <- names(numCells[which(numCells >= minCellsPerGene)])
+            counts <- counts(object)
+            nonzeroGenes <- Matrix::rowSums(counts > 0L)
+            keep <- which(nonzeroGenes >= minCellsPerGene)
+            genes <- names(keep)
         } else {
-            genes <- sort(rownames(object))
+            genes <- rownames(object)
         }
+        genes <- sort(genes)
         if (!length(genes)) {
             stop("No genes passed `minCellsPerGene` cutoff")
         }
@@ -439,10 +442,7 @@ setMethod(
             )
         ), collapse = "\n"))
 
-        summary <- list(
-            cells = summaryCells,
-            genes = summaryGenes
-        )
+        summary <- list(cells = summaryCells, genes = summaryGenes)
 
         # Metadata =============================================================
         metadata(object)[["cellularBarcodes"]] <- NULL
