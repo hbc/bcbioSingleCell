@@ -55,7 +55,7 @@ setMethod(
             rownames_to_column("cell") %>%
             as_tibble()
 
-        if (!isTRUE(.useGeneName(object))) {
+        if (!isTRUE(.useGene2symbol(object))) {
             g2s <- gene2symbol(object)
             if (length(g2s)) {
                 g2s <- g2s[genes, , drop = FALSE]
