@@ -90,6 +90,7 @@ setMethod(
         validObject(object)
         assert_is_a_bool(zinbwave)
 
+        originalDim <- dim(object)
         sampleNames <- sampleNames(object)
         metrics <- metrics(object)
 
@@ -381,6 +382,7 @@ setMethod(
 
         cells <- sort(rownames(metrics))
         assert_is_subset(cells, colnames(object))
+        object <- object[, cells]
 
         # Filter low quality genes =============================================
         summaryGenes <- character()
@@ -396,7 +398,6 @@ setMethod(
         } else {
             genes <- rownames(object)
         }
-        genes <- sort(genes)
         if (!length(genes)) {
             stop("No genes passed `minCellsPerGene` cutoff")
         }
@@ -405,6 +406,9 @@ setMethod(
             paste("minCellsPerGene", "<=", as.character(minCellsPerGene)),
             sep = " | "
         )
+        genes <- sort(genes)
+        assert_is_subset(genes, rownames(object))
+        object <- object[genes, ]
 
         # Summary ==============================================================
         printParams <- c(
@@ -431,13 +435,19 @@ setMethod(
             "Summary:",
             paste(
                 "  -",
-                length(cells), "of", ncol(object), "cells passed filtering",
-                paste0("(", percent(length(cells) / ncol(object)), ")")
+                dim(object)[[2L]], "of", originalDim[[2L]],
+                "cells passed filtering",
+                paste0(
+                    "(", percent(dim(object)[[2L]] / originalDim[[2L]]), ")"
+                )
             ),
             paste(
                 "  -",
-                length(genes), "of", nrow(object), "genes passed filtering",
-                paste0("(", percent(length(genes) / nrow(object)), ")")
+                dim(object)[[1L]], "of", originalDim[[1L]],
+                "genes passed filtering",
+                paste0(
+                    "(", percent(dim(object)[[1L]] / originalDim[[1L]]), ")"
+                )
             )
         ), collapse = "\n"))
 
@@ -449,9 +459,6 @@ setMethod(
         metadata(object)[["filterGenes"]] <- genes
         metadata(object)[["filterParams"]] <- params
         metadata(object)[["filterSummary"]] <- summary
-
-        # Subset ===============================================================
-        object <- object[genes, cells]
 
         # zinbwave weights =====================================================
         if (isTRUE(zinbwave)) {
