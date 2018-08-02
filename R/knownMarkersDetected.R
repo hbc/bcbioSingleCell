@@ -39,8 +39,16 @@ knownMarkersDetected <- function(
     known,
     alpha = 0.05,
     filterPromiscuous = FALSE,
-    promiscuousCutoff = 5L
+    promiscuousCutoff = 5L,
+    ...
 ) {
+    # Legacy arguments =========================================================
+    call <- match.call()
+    if ("object" %in% names(call)) {
+        stop("Use `all` instead of `object` for all markers data.frame")
+    }
+
+    # Assert checks ============================================================
     stopifnot(.isSanitizedMarkers(all))
     assert_is_tbl_df(all)
     assert_is_tbl_df(known)

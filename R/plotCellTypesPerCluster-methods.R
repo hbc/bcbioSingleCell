@@ -9,8 +9,8 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param cellTypesPerCluster `grouped_df`. Cell types per cluster data. This
-#'   must be the return from [cellTypesPerCluster()].
+#' @param markers `grouped_df`. Cell types per cluster data. This must be the
+#'   return from [cellTypesPerCluster()].
 #' @param ... Passthrough arguments to [plotMarkerTSNE()] or [plotMarkerUMAP()].
 #'
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
@@ -23,7 +23,7 @@
 #' # Let's plot the first row, as an example
 #' plotCellTypesPerCluster(
 #'     object = cellranger_small,
-#'     cellTypesPerCluster = head(per_cluster, n = 2L)
+#'     markers = head(per_cluster, n = 2L)
 #' )
 NULL
 
@@ -37,19 +37,27 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        cellTypesPerCluster,
+        markers,
         reduction = c("TSNE", "UMAP"),
         headerLevel = 2L,
         ...
     ) {
+        # Legacy arguments =====================================================
+        call <- match.call()
+        if ("cellTypesPerCluster" %in% names(call)) {
+            stop("Use `markers` instead of `cellTypesPerCluster`")
+        }
+
+        # Assert checks ========================================================
         # Passthrough: color, dark
         validObject(object)
-        stopifnot(is(cellTypesPerCluster, "grouped_df"))
-        assert_has_rows(cellTypesPerCluster)
+        stopifnot(is(markers, "grouped_df"))
+        assert_has_rows(markers)
         assert_are_identical(
-            x = group_vars(cellTypesPerCluster),
+            x = group_vars(markers),
             y = "cluster"
         )
+        assert_is_subset("cellType", colnames(markers))
         reduction <- match.arg(reduction)
         assertIsAHeaderLevel(headerLevel)
 
@@ -60,12 +68,12 @@ setMethod(
             idCol <- "geneID"
         }
 
-        cellTypesPerCluster <- cellTypesPerCluster %>%
+        markers <- markers %>%
             ungroup() %>%
             mutate_if(is.factor, droplevels)
 
         # Output Markdown headers per cluster
-        clusters <- levels(cellTypesPerCluster[["cluster"]])
+        clusters <- levels(markers[["cluster"]])
         assert_is_non_empty(clusters)
 
         return <- pblapply(clusters, function(cluster) {
@@ -75,7 +83,7 @@ setMethod(
                 tabset = TRUE,
                 asis = TRUE
             )
-            subset <- cellTypesPerCluster %>%
+            subset <- markers %>%
                 .[.[["cluster"]] == cluster, , drop = FALSE]
             assert_has_rows(subset)
             lapply(seq_len(nrow(subset)), function(x) {
@@ -102,6 +110,7 @@ setMethod(
                 invisible(p)
             })
         })
+
         invisible(return)
     }
 )
