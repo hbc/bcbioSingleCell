@@ -306,6 +306,17 @@ setGeneric(
 
 
 
+#' @rdname plotReducedDim
+#' @export
+setGeneric(
+    "plotReducedDim",
+    function(object, ...) {
+        standardGeneric("plotReducedDim")
+    }
+)
+
+
+
 #' @rdname plotMarker
 #' @export
 setGeneric(
@@ -317,7 +328,7 @@ setGeneric(
 
 
 
-#' @rdname plotDimensionalReduction
+#' @rdname plotReducedDim
 #' @export
 setGeneric(
     "plotTSNE",
@@ -328,7 +339,7 @@ setGeneric(
 
 
 
-#' @rdname plotDimensionalReduction
+#' @rdname plotReducedDim
 #' @export
 setGeneric(
     "plotUMAP",
