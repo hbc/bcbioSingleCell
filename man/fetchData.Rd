@@ -20,6 +20,7 @@
 \alias{fetchUMAPExpressionData,SingleCellExperiment-method}
 \alias{fetchGeneData,seurat-method}
 \alias{fetchPCAData,seurat-method}
+\alias{fetchReducedDimData,seurat-method}
 \alias{fetchTSNEData,seurat-method}
 \alias{fetchTSNEExpressionData,seurat-method}
 \alias{fetchUMAPData,seurat-method}
@@ -59,6 +60,9 @@ fetchUMAPExpressionData(object, ...)
 \S4method{fetchGeneData}{seurat}(object, genes, gene2symbol = FALSE)
 
 \S4method{fetchPCAData}{seurat}(object, ...)
+
+\S4method{fetchReducedDimData}{seurat}(object, reducedDim,
+  dimsUse = c(1L, 2L), interestingGroups)
 
 \S4method{fetchTSNEData}{seurat}(object, ...)
 
