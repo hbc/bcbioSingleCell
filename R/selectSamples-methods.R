@@ -23,7 +23,7 @@
 #' @seealso [sampleData()].
 #'
 #' @examples
-#' # bcbioSingleCell ====
+#' # SingleCellExperiment ====
 #' object <- indrops_small
 #' sample <- sampleNames(object) %>% head(1L)
 #' print(sample)

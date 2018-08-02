@@ -19,7 +19,7 @@
 #' x <- metrics(cellranger_small)
 #' glimpse(x)
 #'
-#' # dgCMatrix ====
+#' # matrix ====
 #' counts <- counts(cellranger_small)
 #' class(counts)
 #' x <- metrics(counts)
@@ -156,17 +156,5 @@ setMethod(
             interestingGroups = interestingGroups
         )
         as.data.frame(data)
-    }
-)
-
-
-
-#' @rdname metrics
-#' @export
-setMethod(
-    "metrics",
-    signature("seurat"),
-    function(object, ...) {
-        metrics(as(object, "SingleCellExperiment"))
     }
 )

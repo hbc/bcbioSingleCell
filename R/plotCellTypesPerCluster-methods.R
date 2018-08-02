@@ -117,13 +117,3 @@ setMethod(
         invisible(return)
     }
 )
-
-
-
-#' @rdname plotCellTypesPerCluster
-#' @export
-setMethod(
-    "plotCellTypesPerCluster",
-    signature("seurat"),
-    getMethod("plotCellTypesPerCluster", "SingleCellExperiment")
-)

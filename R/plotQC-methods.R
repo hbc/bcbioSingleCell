@@ -23,9 +23,6 @@
 #'
 #' # SingleCellExperiment ====
 #' plotQC(cellranger_small)
-#'
-#' # seurat ====
-#' plotQC(seurat_small)
 NULL
 
 
@@ -356,14 +353,4 @@ setMethod(
             )
         }
     }
-)
-
-
-
-#' @rdname plotQC
-#' @export
-setMethod(
-    "plotQC",
-    signature("seurat"),
-    getMethod("plotQC", "SingleCellExperiment")
 )

@@ -22,7 +22,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # seurat ====
+#' # SingleCellExperiment ====
 #' object <- indrops_small
 #' genes <- head(rownames(object))
 #' glimpse(genes)
@@ -149,14 +149,4 @@ setMethod(
 
         p
     }
-)
-
-
-
-#' @rdname plotDot
-#' @export
-setMethod(
-    "plotDot",
-    signature("seurat"),
-    getMethod("plotDot", "SingleCellExperiment")
 )

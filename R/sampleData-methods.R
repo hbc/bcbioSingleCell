@@ -23,13 +23,6 @@
 #' sampleData(x)[["batch"]] <- 1L
 #' sampleData(x) %>% glimpse()
 #' "batch" %in% colnames(colData(x))
-#'
-#' # seurat ====
-#' x <- seurat_small
-#' sampleData(x) %>% glimpse()
-#' sampleData(x)[["batch"]] <- 1L
-#' sampleData(x) %>% glimpse()
-#' "batch" %in% colnames(colData(x))
 NULL
 
 
@@ -68,17 +61,6 @@ setMethod(
 
 
 
-#' @rdname sampleData
-#' @export
-setMethod(
-    "sampleData",
-    signature("seurat"),
-    getMethod("sampleData", "SingleCellExperiment")
-)
-
-
-
-# Assignment methods ===========================================================
 #' @rdname sampleData
 #' @export
 setMethod(
@@ -123,23 +105,4 @@ setMethod(
 
         object
     }
-)
-
-
-
-#' @rdname sampleData
-#' @export
-setMethod(
-    "sampleData<-",
-    signature(
-        object = "seurat",
-        value = "DataFrame"
-    ),
-    getMethod(
-        "sampleData<-",
-        signature(
-            object = "SingleCellExperiment",
-            value = "DataFrame"
-        )
-    )
 )

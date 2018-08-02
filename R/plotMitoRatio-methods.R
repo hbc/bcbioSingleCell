@@ -45,13 +45,3 @@ setMethod(
         )
     }
 )
-
-
-
-#' @rdname plotMitoRatio
-#' @export
-setMethod(
-    "plotMitoRatio",
-    signature("seurat"),
-    getMethod("plotMitoRatio", "SingleCellExperiment")
-)

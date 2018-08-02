@@ -42,13 +42,3 @@ setMethod(
         )
     }
 )
-
-
-
-#' @rdname plotMitoVsCoding
-#' @export
-setMethod(
-    "plotMitoVsCoding",
-    signature("seurat"),
-    getMethod("plotMitoVsCoding", "SingleCellExperiment")
-)

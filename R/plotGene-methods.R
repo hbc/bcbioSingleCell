@@ -59,13 +59,3 @@ setMethod(
         )
     }
 )
-
-
-
-#' @rdname plotGene
-#' @export
-setMethod(
-    "plotGene",
-    signature("seurat"),
-    getMethod("plotGene", "SingleCellExperiment")
-)

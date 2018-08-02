@@ -43,13 +43,3 @@ setMethod(
         ranks
     }
 )
-
-
-
-#' @rdname barcodeRanksPerSample
-#' @export
-setMethod(
-    "barcodeRanksPerSample",
-    signature("seurat"),
-    getMethod("barcodeRanksPerSample", "SingleCellExperiment")
-)

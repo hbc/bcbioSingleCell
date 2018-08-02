@@ -48,6 +48,16 @@ setMethod(
 
 
 
+#' @rdname barcodeRanksPerSample
+#' @export
+setMethod(
+    "barcodeRanksPerSample",
+    signature("seurat"),
+    getMethod("barcodeRanksPerSample", "SingleCellExperiment")
+)
+
+
+
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom SummarizedExperiment colData
 #' @export
@@ -119,6 +129,19 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom BiocGenerics colnames
+#' @export
+setMethod(
+    "colnames",
+    signature("seurat"),
+    function(x) {
+        colnames(.as.SingleCellExperiment.seurat(x))
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom BiocGenerics counts
 #' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
 #' @export
@@ -132,15 +155,62 @@ setMethod(
 
 
 
-#' @rdname seurat-SingleCellExperiment
-#' @importFrom BiocGenerics colnames
+#' @rdname fetchData
 #' @export
 setMethod(
-    "colnames",
+    "fetchGeneData",
     signature("seurat"),
-    function(x) {
-        colnames(.as.SingleCellExperiment.seurat(x))
-    }
+    getMethod("fetchGeneData", "SingleCellExperiment")
+)
+
+
+
+#' @rdname fetchData
+#' @export
+setMethod(
+    "fetchPCAData",
+    signature("seurat"),
+    getMethod("fetchPCAData", "SingleCellExperiment")
+)
+
+
+
+#' @rdname fetchData
+#' @export
+setMethod(
+    "fetchTSNEData",
+    signature("seurat"),
+    getMethod("fetchTSNEData", "SingleCellExperiment")
+)
+
+
+
+#' @rdname fetchData
+#' @export
+setMethod(
+    "fetchTSNEExpressionData",
+    signature("seurat"),
+    getMethod("fetchTSNEExpressionData", "SingleCellExperiment")
+)
+
+
+
+#' @rdname fetchData
+#' @export
+setMethod(
+    "fetchUMAPData",
+    signature("seurat"),
+    getMethod("fetchUMAPData", "SingleCellExperiment")
+)
+
+
+
+#' @rdname fetchData
+#' @export
+setMethod(
+    "fetchUMAPExpressionData",
+    signature("seurat"),
+    getMethod("fetchUMAPExpressionData", "SingleCellExperiment")
 )
 
 
@@ -228,6 +298,178 @@ setMethod(
 
 
 
+#' @rdname metrics
+#' @export
+setMethod(
+    "metrics",
+    signature("seurat"),
+    function(object, ...) {
+        metrics(as(object, "SingleCellExperiment"))
+    }
+)
+
+
+
+#' @rdname metricsPerSample
+#' @export
+setMethod(
+    "metricsPerSample",
+    signature("seurat"),
+    getMethod("metricsPerSample", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotBarcodeRanks
+#' @export
+setMethod(
+    "plotBarcodeRanks",
+    signature("seurat"),
+    getMethod("plotBarcodeRanks", "SingleCellExperiment")
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
+#' @export
+setMethod(
+    "plotCellCounts",
+    signature("seurat"),
+    getMethod("plotCellCounts", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotCellTypesPerCluster
+#' @export
+setMethod(
+    "plotCellTypesPerCluster",
+    signature("seurat"),
+    getMethod("plotCellTypesPerCluster", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotDot
+#' @export
+setMethod(
+    "plotDot",
+    signature("seurat"),
+    getMethod("plotDot", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotGene
+#' @export
+setMethod(
+    "plotGene",
+    signature("seurat"),
+    getMethod("plotGene", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotGenesPerCell
+#' @export
+setMethod(
+    "plotGenesPerCell",
+    signature("seurat"),
+    getMethod("plotGenesPerCell", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMitoRatio
+#' @export
+setMethod(
+    "plotMitoRatio",
+    signature("seurat"),
+    getMethod("plotMitoRatio", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMitoVsCoding
+#' @export
+setMethod(
+    "plotMitoVsCoding",
+    signature("seurat"),
+    getMethod("plotMitoVsCoding", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotNovelty
+#' @export
+setMethod(
+    "plotNovelty",
+    signature("seurat"),
+    getMethod("plotNovelty", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotReducedDim
+#' @export
+setMethod(
+    "plotPCA",
+    signature("seurat"),
+    getMethod("plotPCA", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotQC
+#' @export
+setMethod(
+    "plotQC",
+    signature("seurat"),
+    getMethod("plotQC", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotReducedDim
+#' @export
+setMethod(
+    "plotReducedDim",
+    signature("seurat"),
+    getMethod("plotReducedDim", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotReducedDim
+#' @export
+setMethod(
+    "plotTSNE",
+    signature("seurat"),
+    getMethod("plotTSNE", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotReducedDim
+#' @export
+setMethod(
+    "plotUMAP",
+    signature("seurat"),
+    getMethod("plotUMAP", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotZerosVsDepth
+#' @export
+setMethod(
+    "plotZerosVsDepth",
+    signature("seurat"),
+    getMethod("plotZerosVsDepth", "SingleCellExperiment")
+)
+
+
+
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom SingleCellExperiment reducedDims
 #' @export
@@ -305,6 +547,36 @@ setMethod(
 
 
 
+#' @rdname sampleData
+#' @export
+setMethod(
+    "sampleData",
+    signature("seurat"),
+    getMethod("sampleData", "SingleCellExperiment")
+)
+
+
+
+#' @rdname sampleData
+#' @export
+setMethod(
+    "sampleData<-",
+    signature(
+        object = "seurat",
+        value = "DataFrame"
+    ),
+    getMethod(
+        "sampleData<-",
+        signature(
+            object = "SingleCellExperiment",
+            value = "DataFrame"
+        )
+    )
+)
+
+
+
+
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom basejump sampleNames
 #' @export
@@ -312,4 +584,14 @@ setMethod(
     "sampleNames",
     signature("seurat"),
     getMethod("sampleNames", "SummarizedExperiment")
+)
+
+
+
+#' @rdname topBarcodes
+#' @export
+setMethod(
+    "topBarcodes",
+    signature("seurat"),
+    getMethod("topBarcodes", "SingleCellExperiment")
 )

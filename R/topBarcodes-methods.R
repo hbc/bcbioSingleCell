@@ -63,13 +63,3 @@ setMethod(
         }
     }
 )
-
-
-
-#' @rdname topBarcodes
-#' @export
-setMethod(
-    "topBarcodes",
-    signature("seurat"),
-    getMethod("topBarcodes", "SingleCellExperiment")
-)
