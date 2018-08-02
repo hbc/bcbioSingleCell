@@ -8,11 +8,13 @@
 \alias{plotMarkerTSNE}
 \alias{plotMarkerUMAP}
 \alias{plotTopMarkers}
+\alias{plotMarker,SingleCellExperiment-method}
 \alias{plotMarkerTSNE,SingleCellExperiment-method}
 \alias{plotMarkerUMAP,SingleCellExperiment-method}
 \alias{plotTopMarkers,SingleCellExperiment-method}
 \alias{plotKnownMarkersDetected,SingleCellExperiment-method}
 \alias{plotKnownMarkersDetected,seurat-method}
+\alias{plotMarker,seurat-method}
 \alias{plotMarkerTSNE,seurat-method}
 \alias{plotMarkerUMAP,seurat-method}
 \alias{plotTopMarkers,seurat-method}
@@ -28,9 +30,9 @@ plotMarkerUMAP(object, ...)
 
 plotTopMarkers(object, ...)
 
-\S4method{plotMarkerTSNE}{SingleCellExperiment}(object, genes,
-  expression = c("mean", "median", "sum"),
-  color = getOption("bcbio.discrete.color", NULL),
+\S4method{plotMarker}{SingleCellExperiment}(object, genes,
+  reducedDim = c("TSNE", "UMAP"), expression = c("mean", "median",
+  "sum"), color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.8),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -39,16 +41,9 @@ plotTopMarkers(object, ...)
   FALSE), legend = getOption("bcbio.legend", TRUE),
   aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
-\S4method{plotMarkerUMAP}{SingleCellExperiment}(object, genes,
-  expression = c("mean", "median", "sum"),
-  color = getOption("bcbio.discrete.color", NULL),
-  pointSize = getOption("bcbio.pointSize", 0.75),
-  pointAlpha = getOption("bcbio.pointAlpha", 0.8),
-  pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
-  labelSize = getOption("bcbio.labelSize", 6L),
-  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
-  FALSE), legend = getOption("bcbio.legend", TRUE),
-  aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
+\S4method{plotMarkerTSNE}{SingleCellExperiment}(object, ...)
+
+\S4method{plotMarkerUMAP}{SingleCellExperiment}(object, ...)
 
 \S4method{plotTopMarkers}{SingleCellExperiment}(object, markers, n = 10L,
   direction = c("positive", "negative", "both"), coding = FALSE,
@@ -60,8 +55,9 @@ plotTopMarkers(object, ...)
 \S4method{plotKnownMarkersDetected}{seurat}(object, markers,
   reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
 
-\S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = getOption("bcbio.discrete.color", NULL),
+\S4method{plotMarker}{seurat}(object, genes, reducedDim = c("TSNE",
+  "UMAP"), expression = c("mean", "median", "sum"),
+  color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
   pointAlpha = getOption("bcbio.pointAlpha", 0.8),
   pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
@@ -70,15 +66,9 @@ plotTopMarkers(object, ...)
   FALSE), legend = getOption("bcbio.legend", TRUE),
   aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
-\S4method{plotMarkerUMAP}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = getOption("bcbio.discrete.color", NULL),
-  pointSize = getOption("bcbio.pointSize", 0.75),
-  pointAlpha = getOption("bcbio.pointAlpha", 0.8),
-  pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
-  labelSize = getOption("bcbio.labelSize", 6L),
-  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
-  FALSE), legend = getOption("bcbio.legend", TRUE),
-  aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
+\S4method{plotMarkerTSNE}{seurat}(object, ...)
+
+\S4method{plotMarkerUMAP}{seurat}(object, ...)
 
 \S4method{plotTopMarkers}{seurat}(object, markers, n = 10L,
   direction = c("positive", "negative", "both"), coding = FALSE,
@@ -91,6 +81,9 @@ plotTopMarkers(object, ...)
 
 \item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
 object.}
+
+\item{reducedDim}{\code{string}. Name of reduced dimension matrix slotted in
+\code{\link[=reducedDims]{reducedDims()}}. Includes TNSE, UMAP, PCA, for example.}
 
 \item{expression}{\code{string}. Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and
 defaults to the first argument in the \code{character} vector.}
