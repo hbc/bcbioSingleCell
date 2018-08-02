@@ -141,81 +141,29 @@ setMethod(
 #' @rdname fetchData
 #' @export
 setMethod(
-    "fetchPCAData",
+    "fetchReducedDimExpressionData",
     signature("SingleCellExperiment"),
-    function(object, ...) {
-        fetchReducedDimData(
-            object = object,
-            reducedDim = "PCA",
-            ...
-        )
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchTSNEData",
-    signature("SingleCellExperiment"),
-    function(object, ...) {
-        fetchReducedDimData(
-            object = object,
-            reducedDim = "TSNE",
-            ...
-        )
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchTSNEExpressionData",
-    signature("SingleCellExperiment"),
-    function(object, genes) {
+    function(
+        object,
+        genes,
+        reducedDim
+    ) {
         assert_is_subset(genes, rownames(object))
-        data <- fetchGeneData(object = object, genes = genes)
-        mean <- rowMeans(data)
-        median <- rowMedians(data)
-        sum <- rowSums(data)
-        tsne <- fetchTSNEData(object)
-        cbind(tsne, mean, median, sum)
-    }
-)
 
+        # Gene data
+        geneData <- fetchGeneData(object = object, genes = genes)
 
+        # Expression columns
+        mean <- rowMeans(geneData)
+        median <- rowMedians(geneData)
+        sum <- rowSums(geneData)
 
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchUMAPData",
-    signature("SingleCellExperiment"),
-    function(object, ...) {
-        fetchReducedDimData(
+        # Reduced dim data
+        reducedDimData <- fetchReducedDimData(
             object = object,
-            reducedDim = "UMAP",
-            ...
+            reducedDim = reducedDim
         )
-    }
-)
 
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchUMAPExpressionData",
-    signature("SingleCellExperiment"),
-    function(object, genes) {
-        assert_is_subset(genes, rownames(object))
-        data <- fetchGeneData(object = object, genes = genes)
-        mean <- rowMeans(data)
-        median <- rowMedians(data)
-        sum <- rowSums(data)
-        umap <- fetchUMAPData(object)
-        cbind(umap, mean, median, sum)
+        cbind(reducedDimData, mean, median, sum)
     }
 )

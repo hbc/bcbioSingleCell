@@ -207,59 +207,9 @@ setMethod(
 #' @rdname fetchData
 #' @export
 setMethod(
-    "fetchPCAData",
-    signature("seurat"),
-    getMethod("fetchPCAData", "SingleCellExperiment")
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
     "fetchReducedDimData",
     signature("seurat"),
     getMethod("fetchReducedDimData", "SingleCellExperiment")
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchTSNEData",
-    signature("seurat"),
-    getMethod("fetchTSNEData", "SingleCellExperiment")
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchTSNEExpressionData",
-    signature("seurat"),
-    getMethod("fetchTSNEExpressionData", "SingleCellExperiment")
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchUMAPData",
-    signature("seurat"),
-    getMethod("fetchUMAPData", "SingleCellExperiment")
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchUMAPExpressionData",
-    signature("seurat"),
-    getMethod("fetchUMAPExpressionData", "SingleCellExperiment")
 )
 
 
@@ -455,26 +405,6 @@ setMethod(
     "plotMarker",
     signature("seurat"),
     getMethod("plotMarker", "SingleCellExperiment")
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setMethod(
-    "plotMarkerTSNE",
-    signature("seurat"),
-    getMethod("plotMarkerTSNE", "SingleCellExperiment")
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setMethod(
-    "plotMarkerUMAP",
-    signature("seurat"),
-    getMethod("plotMarkerUMAP", "SingleCellExperiment")
 )
 
 

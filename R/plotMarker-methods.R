@@ -139,13 +139,12 @@ setMethod(
             assert_is_a_string(title)
         }
 
-        # FIXME Make this a general reduced dim function
-        stop("Make a general reduced function here")
-
         # Fetch reduced dimension data
-        fun <- get(paste0("fetch", reducedDim, "ExpressionData"))
-        assert_is_function(fun)
-        data <- fun(object = object, genes = genes)
+        data <- fetchReducedDimExpressionData(
+            object = object,
+            genes = genes,
+            reducedDim = reducedDim
+        )
         axes <- colnames(data)[seq_len(2L)]
 
         if (!isTRUE(.useGene2symbol(object))) {
@@ -279,38 +278,6 @@ setMethod(
         }
 
         p
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setMethod(
-    "plotMarkerTSNE",
-    signature("SingleCellExperiment"),
-    function(object, ...) {
-        plotMarker(
-            object = object,
-            reducedDim = "TSNE",
-            ...
-        )
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setMethod(
-    "plotMarkerUMAP",
-    signature("SingleCellExperiment"),
-    function(object, ...) {
-        plotMarker(
-            object = object,
-            reducedDim = "UMAP",
-            ...
-        )
     }
 )
 

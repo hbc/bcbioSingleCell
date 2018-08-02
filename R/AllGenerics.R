@@ -78,17 +78,6 @@ setGeneric(
 #' @rdname fetchData
 #' @export
 setGeneric(
-    "fetchPCAData",
-    function(object, ...) {
-        standardGeneric("fetchPCAData")
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setGeneric(
     "fetchReducedDimData",
     function(object, ...) {
         standardGeneric("fetchReducedDimData")
@@ -100,42 +89,9 @@ setGeneric(
 #' @rdname fetchData
 #' @export
 setGeneric(
-    "fetchTSNEData",
+    "fetchReducedDimExpressionData",
     function(object, ...) {
-        standardGeneric("fetchTSNEData")
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setGeneric(
-    "fetchTSNEExpressionData",
-    function(object, ...) {
-        standardGeneric("fetchTSNEExpressionData")
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setGeneric(
-    "fetchUMAPData",
-    function(object, ...) {
-        standardGeneric("fetchUMAPData")
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setGeneric(
-    "fetchUMAPExpressionData",
-    function(object, ...) {
-        standardGeneric("fetchUMAPExpressionData")
+        standardGeneric("fetchReducedDimExpressionData")
     }
 )
 
@@ -207,28 +163,6 @@ setGeneric(
 
 
 
-#' @rdname plotFeature
-#' @export
-setGeneric(
-    "plotFeatureTSNE",
-    function(object, ...) {
-        standardGeneric("plotFeatureTSNE")
-    }
-)
-
-
-
-#' @rdname plotFeature
-#' @export
-setGeneric(
-    "plotFeatureUMAP",
-    function(object, ...) {
-        standardGeneric("plotFeatureUMAP")
-    }
-)
-
-
-
 #' @rdname plotGenesPerCell
 #' @export
 setGeneric(
@@ -257,28 +191,6 @@ setGeneric(
     "plotMarker",
     function(object, ...) {
         standardGeneric("plotMarker")
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setGeneric(
-    "plotMarkerTSNE",
-    function(object, ...) {
-        standardGeneric("plotMarkerTSNE")
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setGeneric(
-    "plotMarkerUMAP",
-    function(object, ...) {
-        standardGeneric("plotMarkerUMAP")
     }
 )
 

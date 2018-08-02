@@ -185,4 +185,122 @@ sanitizeMarkers <- function(...) {
 
 
 
+# v0.3.0 =======================================================================
+#' @rdname deprecated
+#' @export
+fetchPCAData <- function(object, ...) {
+    .Deprecated("fetchReducedDimData")
+    fetchReducedDimData(
+        object = object,
+        reducedDim = "PCA",
+        ...
+    )
+}
+
+
+
+#' @rdname deprecated
+#' @export
+fetchTSNEData <- function(object, ...) {
+    .Deprecated("fetchReducedDimData")
+    fetchReducedDimData(
+        object = object,
+        reducedDim = "TSNE",
+        ...
+    )
+}
+
+
+
+#' @rdname deprecated
+#' @export
+fetchTSNEExpressionData <- function(object, ...) {
+    .Deprecated("fetchReducedDimExpressionData")
+    fetchReducedDimExpressionData(
+        object = object,
+        reducedDim = "TSNE",
+        ...
+    )
+}
+
+
+
+#' @rdname deprecated
+#' @export
+fetchUMAPData <- function(object, ...) {
+    .Deprecated("fetchReducedDimData")
+    fetchReducedDimData(
+        object = object,
+        reducedDim = "UMAP",
+        ...
+    )
+}
+
+
+
+#' @rdname deprecated
+#' @export
+fetchUMAPExpressionData <- function(object, ...) {
+    .Deprecated("fetchReducedDimExpressionData")
+    fetchReducedDimExpressionData(
+        object = object,
+        reducedDim = "UMAP",
+        ...
+    )
+}
+
+
+
+#' @rdname deprecated
+#' @export
+plotFeatureTSNE <- function(object, ...) {
+    .Deprecated("plotFeature")
+    plotFeature(
+        object = object,
+        reducedDim = "TSNE",
+        ...
+    )
+}
+
+
+
+#' @rdname deprecated
+#' @export
+plotFeatureUMAP <- function(object, ...) {
+    .Deprecated("plotFeature")
+    plotFeature(
+        object = object,
+        reducedDim = "UMAP",
+        ...
+    )
+}
+
+
+
+#' @rdname deprecated
+#' @export
+plotMarkerTSNE <- function(object, ...) {
+    .Deprecated("plotMarker")
+    plotMarker(
+        object = object,
+        reducedDim = "TSNE",
+        ...
+    )
+}
+
+
+
+#' @rdname plotMarker
+#' @export
+plotMarkerUMAP <- function(object, ...) {
+    .Deprecated("plotMarker")
+    plotMarker(
+        object = object,
+        reducedDim = "UMAP",
+        ...
+    )
+}
+
+
+
 # nocov end
