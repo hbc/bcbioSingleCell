@@ -4,38 +4,10 @@
 \docType{methods}
 \name{plotFeature}
 \alias{plotFeature}
-\alias{plotFeatureTSNE}
-\alias{plotFeatureUMAP}
-\alias{plotFeatureTSNE,SingleCellExperiment-method}
-\alias{plotFeatureUMAP,SingleCellExperiment-method}
 \alias{plotFeature,seurat-method}
-\alias{plotFeatureTSNE,seurat-method}
-\alias{plotFeatureUMAP,seurat-method}
 \title{Plot Feature}
 \usage{
 plotFeature(object, ...)
-
-plotFeatureTSNE(object, ...)
-
-plotFeatureUMAP(object, ...)
-
-\S4method{plotFeatureTSNE}{SingleCellExperiment}(object, ...)
-
-\S4method{plotFeatureUMAP}{SingleCellExperiment}(object, ...)
-
-\S4method{plotFeature}{seurat}(object, features, reducedDim = c("TSNE",
-  "UMAP"), color = getOption("bcbio.discrete.color", NULL),
-  pointSize = getOption("bcbio.pointSize", 0.75),
-  pointAlpha = getOption("bcbio.pointAlpha", 0.75),
-  label = getOption("bcbio.label", TRUE),
-  labelSize = getOption("bcbio.labelSize", 6L),
-  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
-  FALSE), legend = getOption("bcbio.legend", FALSE),
-  aspectRatio = getOption("bcbio.aspectRatio", 1L))
-
-\S4method{plotFeatureTSNE}{seurat}(object, ...)
-
-\S4method{plotFeatureUMAP}{seurat}(object, ...)
 
 \S4method{plotFeature}{seurat}(object, features, reducedDim = c("TSNE",
   "UMAP"), color = getOption("bcbio.discrete.color", NULL),

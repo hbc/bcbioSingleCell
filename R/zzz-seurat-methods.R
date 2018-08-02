@@ -214,6 +214,16 @@ setMethod(
 
 
 
+#' @rdname fetchData
+#' @export
+setMethod(
+    "fetchReducedDimExpressionData",
+    signature("seurat"),
+    getMethod("fetchReducedDimExpressionData", "SingleCellExperiment")
+)
+
+
+
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom basejump gene2symbol
 #' @export

@@ -4,42 +4,22 @@
 \docType{methods}
 \name{fetchGeneData}
 \alias{fetchGeneData}
-\alias{fetchPCAData}
 \alias{fetchReducedDimData}
-\alias{fetchTSNEData}
-\alias{fetchTSNEExpressionData}
-\alias{fetchUMAPData}
-\alias{fetchUMAPExpressionData}
+\alias{fetchReducedDimExpressionData}
 \alias{fetchData}
 \alias{fetchGeneData,SingleCellExperiment-method}
 \alias{fetchReducedDimData,SingleCellExperiment-method}
-\alias{fetchPCAData,SingleCellExperiment-method}
-\alias{fetchTSNEData,SingleCellExperiment-method}
-\alias{fetchTSNEExpressionData,SingleCellExperiment-method}
-\alias{fetchUMAPData,SingleCellExperiment-method}
-\alias{fetchUMAPExpressionData,SingleCellExperiment-method}
+\alias{fetchReducedDimExpressionData,SingleCellExperiment-method}
 \alias{fetchGeneData,seurat-method}
-\alias{fetchPCAData,seurat-method}
 \alias{fetchReducedDimData,seurat-method}
-\alias{fetchTSNEData,seurat-method}
-\alias{fetchTSNEExpressionData,seurat-method}
-\alias{fetchUMAPData,seurat-method}
-\alias{fetchUMAPExpressionData,seurat-method}
+\alias{fetchReducedDimExpressionData,seurat-method}
 \title{Fetch Data Functions}
 \usage{
 fetchGeneData(object, ...)
 
-fetchPCAData(object, ...)
-
 fetchReducedDimData(object, ...)
 
-fetchTSNEData(object, ...)
-
-fetchTSNEExpressionData(object, ...)
-
-fetchUMAPData(object, ...)
-
-fetchUMAPExpressionData(object, ...)
+fetchReducedDimExpressionData(object, ...)
 
 \S4method{fetchGeneData}{SingleCellExperiment}(object, genes,
   gene2symbol = FALSE)
@@ -47,30 +27,15 @@ fetchUMAPExpressionData(object, ...)
 \S4method{fetchReducedDimData}{SingleCellExperiment}(object, reducedDim,
   dimsUse = c(1L, 2L), interestingGroups)
 
-\S4method{fetchPCAData}{SingleCellExperiment}(object, ...)
-
-\S4method{fetchTSNEData}{SingleCellExperiment}(object, ...)
-
-\S4method{fetchTSNEExpressionData}{SingleCellExperiment}(object, genes)
-
-\S4method{fetchUMAPData}{SingleCellExperiment}(object, ...)
-
-\S4method{fetchUMAPExpressionData}{SingleCellExperiment}(object, genes)
+\S4method{fetchReducedDimExpressionData}{SingleCellExperiment}(object,
+  genes, reducedDim)
 
 \S4method{fetchGeneData}{seurat}(object, genes, gene2symbol = FALSE)
-
-\S4method{fetchPCAData}{seurat}(object, ...)
 
 \S4method{fetchReducedDimData}{seurat}(object, reducedDim,
   dimsUse = c(1L, 2L), interestingGroups)
 
-\S4method{fetchTSNEData}{seurat}(object, ...)
-
-\S4method{fetchTSNEExpressionData}{seurat}(object, genes)
-
-\S4method{fetchUMAPData}{seurat}(object, ...)
-
-\S4method{fetchUMAPExpressionData}{seurat}(object, genes)
+\S4method{fetchReducedDimExpressionData}{seurat}(object, genes, reducedDim)
 }
 \arguments{
 \item{object}{Object.}
