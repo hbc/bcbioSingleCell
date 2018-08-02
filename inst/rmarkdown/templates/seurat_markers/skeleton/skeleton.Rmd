@@ -22,6 +22,9 @@ params:
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
+library(pointillism)
+library(Seurat)
+
 # Directory paths
 dir.create(params$results_dir, recursive = TRUE, showWarnings = FALSE)
 

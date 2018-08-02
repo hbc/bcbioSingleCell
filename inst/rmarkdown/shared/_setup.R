@@ -1,5 +1,4 @@
 library(bcbioSingleCell)
-library(Seurat)
 library(knitr)
 library(rmarkdown)
 library(tidyverse)

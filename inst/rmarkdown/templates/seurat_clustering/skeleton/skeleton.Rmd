@@ -16,13 +16,16 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-08-01
+# Last modified 2018-08-02
 
 # Highly recommended to run this template on an HPC cluster
 # stopifnot(detectHPC())
 
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
+
+library(pointillism)
+library(Seurat)
 
 # Load SingleCellExperiment object
 bcb_name <- load(params$bcb_file)
