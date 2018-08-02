@@ -9,6 +9,14 @@
 \alias{loadCellRanger}
 \alias{loadSingleCell}
 \alias{sanitizeMarkers}
+\alias{fetchPCAData}
+\alias{fetchTSNEData}
+\alias{fetchTSNEExpressionData}
+\alias{fetchUMAPData}
+\alias{fetchUMAPExpressionData}
+\alias{plotFeatureTSNE}
+\alias{plotFeatureUMAP}
+\alias{plotMarkerTSNE}
 \title{Deprecated Functions}
 \usage{
 calculateMetrics(...)
@@ -24,9 +32,27 @@ loadCellRanger(...)
 loadSingleCell(...)
 
 sanitizeMarkers(...)
+
+fetchPCAData(object, ...)
+
+fetchTSNEData(object, ...)
+
+fetchTSNEExpressionData(object, ...)
+
+fetchUMAPData(object, ...)
+
+fetchUMAPExpressionData(object, ...)
+
+plotFeatureTSNE(object, ...)
+
+plotFeatureUMAP(object, ...)
+
+plotMarkerTSNE(object, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
+
+\item{object}{Object.}
 }
 \value{
 \code{\link[=.Deprecated]{.Deprecated()}}.
