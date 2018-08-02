@@ -11,10 +11,12 @@
 plotCellTypesPerCluster(object, ...)
 
 \S4method{plotCellTypesPerCluster}{SingleCellExperiment}(object, markers,
-  reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
+  reduction = c("TSNE", "UMAP"), expression = c("mean", "median",
+  "sum"), headerLevel = 2L, ...)
 
 \S4method{plotCellTypesPerCluster}{seurat}(object, markers,
-  reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
+  reduction = c("TSNE", "UMAP"), expression = c("mean", "median",
+  "sum"), headerLevel = 2L, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -27,10 +29,13 @@ return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 \item{reduction}{\code{string}. Dimensional reduction method to apply. Defaults to
 t-SNE ("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
 
+\item{expression}{\code{string}. Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and
+defaults to the first argument in the \code{character} vector.}
+
 \item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 }
 \value{
-Show graphical output. Invisibly return \code{ggplot} \code{list}.
+Show graphical output. Invisibly return \code{list}.
 }
 \description{
 Plot the geometric mean of the significant marker genes for every known cell

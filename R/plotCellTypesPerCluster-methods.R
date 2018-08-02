@@ -13,7 +13,7 @@
 #'   return from [cellTypesPerCluster()].
 #' @param ... Passthrough arguments to [plotMarkerTSNE()] or [plotMarkerUMAP()].
 #'
-#' @return Show graphical output. Invisibly return `ggplot` `list`.
+#' @return Show graphical output. Invisibly return `list`.
 #'
 #' @examples
 #' # SingleCellExperiment ====
@@ -39,6 +39,7 @@ setMethod(
         object,
         markers,
         reduction = c("TSNE", "UMAP"),
+        expression = c("mean", "median", "sum"),
         headerLevel = 2L,
         ...
     ) {
@@ -59,6 +60,7 @@ setMethod(
         )
         assert_is_subset("cellType", colnames(markers))
         reduction <- match.arg(reduction)
+        expression <- match.arg(expression)
         assertIsAHeaderLevel(headerLevel)
 
         # Determine whether we need to use `geneID` or `geneName`
@@ -104,6 +106,7 @@ setMethod(
                     object = object,
                     genes = genes,
                     reduction = reduction,
+                    expression,
                     ...
                 )
                 show(p)
