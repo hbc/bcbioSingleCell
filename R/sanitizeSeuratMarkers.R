@@ -158,5 +158,6 @@ sanitizeSeuratMarkers <- function(data, rowRanges) {
             column_to_rownames()
     }
 
+    message("Sanitized to contain `geneID` and `geneName` columns from GRanges")
     data
 }
