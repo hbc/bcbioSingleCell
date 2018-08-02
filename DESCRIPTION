@@ -104,6 +104,7 @@ Imports:
     zinbwave
 Suggests:
     BiocStyle,
+    DropletUtils,
     EnsDb.Hsapiens.v75,
     roxygen2,
     testthat (>= 2.0)
