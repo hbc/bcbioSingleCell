@@ -1,6 +1,6 @@
 # inDrops example dataset (indrops_small)
 # Using harvard-indrop-v3 barcodes
-# 2018-08-01
+# 2018-08-02
 
 library(devtools)
 library(tidyverse)
