@@ -48,7 +48,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        reducedDimName,
+        reducedDim,
         dimsUse = c(1L, 2L),
         interestingGroups = "ident",
         color = getOption("bcbio.discrete.color", NULL),
@@ -64,7 +64,7 @@ setMethod(
         title = NULL
     ) {
         .assertHasIdent(object)
-        assert_is_a_string(reducedDimName)
+        assert_is_a_string(reducedDim)
         assertIsImplicitInteger(dimsUse)
         assert_is_of_length(dimsUse, 2L)
         assert_is_a_string(interestingGroups)
@@ -81,7 +81,7 @@ setMethod(
 
         data <- fetchReducedDimData(
             object = object,
-            reducedDimName = reducedDimName,
+            reducedDim = reducedDim,
             dimsUse = dimsUse,
             interestingGroups = interestingGroups
         )
@@ -92,7 +92,7 @@ setMethod(
         )
 
         # Get the x- and y-axis labels (e.g. tSNE_1, tSNE_2)
-        dimCols <- colnames(reducedDims(object)[[reducedDimName]])[dimsUse]
+        dimCols <- colnames(reducedDims(object)[[reducedDim]])[dimsUse]
         assert_is_character(dimCols)
         assert_is_subset(dimCols, colnames(data))
 
@@ -185,7 +185,7 @@ setMethod(
     function(object, ...) {
         plotReducedDim(
             object = object,
-            reducedDimName = "PCA",
+            reducedDim = "PCA",
             ...
         )
     }
@@ -201,7 +201,7 @@ setMethod(
     function(object, ...) {
         plotReducedDim(
             object = object,
-            reducedDimName = "TSNE",
+            reducedDim = "TSNE",
             ...
         )
     }
@@ -217,7 +217,7 @@ setMethod(
     function(object, ...) {
         plotReducedDim(
             object = object,
-            reducedDimName = "UMAP",
+            reducedDim = "UMAP",
             ...
         )
     }
