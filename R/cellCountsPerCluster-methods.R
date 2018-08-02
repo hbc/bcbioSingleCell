@@ -39,13 +39,3 @@ setMethod(
             mutate(ratio = !!sym("n") / sum(!!sym("n")))
     }
 )
-
-
-
-#' @rdname cellCountsPerCluster
-#' @export
-setMethod(
-    "cellCountsPerCluster",
-    signature("seurat"),
-    getMethod("cellCountsPerCluster", "SingleCellExperiment")
-)

@@ -82,7 +82,8 @@ setMethod(
         data <- fetchReducedDimData(
             object = object,
             reducedDimName = reducedDimName,
-            dimsUse = dimsUse
+            dimsUse = dimsUse,
+            interestingGroups = interestingGroups
         )
         assert_is_data.frame(data)
         assert_is_subset(
@@ -95,13 +96,6 @@ setMethod(
         assert_is_character(dimCols)
         assert_is_subset(dimCols, colnames(data))
 
-        if (interestingGroups == "ident") {
-            # Seurat stores the ident from `FetchData()` as `object.ident`
-            colorCol <- "ident"
-        } else {
-            colorCol <- interestingGroups
-        }
-
         if (isTRUE(dark)) {
             theme <- theme_midnight
         } else {
@@ -113,12 +107,13 @@ setMethod(
             mapping = aes(
                 x = !!sym("x"),
                 y = !!sym("y"),
-                color = !!sym(colorCol)
+                color = !!sym("interestingGroups")
             )
         ) +
             labs(
                 x = dimCols[[1L]],
-                y = dimCols[[2L]]
+                y = dimCols[[2L]],
+                color = paste(interestingGroups, collapse = ":\n")
             ) +
             theme(
                 aspect_ratio = aspectRatio,
@@ -133,7 +128,7 @@ setMethod(
                         x = !!sym("x"),
                         y = !!sym("y"),
                         label = !!sym("ident"),
-                        color = !!sym(colorCol)
+                        color = !!sym("interestingGroups")
                     ),
                     alpha = pointAlpha,
                     size = pointSize,

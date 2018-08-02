@@ -81,6 +81,26 @@ setMethod(
 
 
 
+#' @rdname cellCountsPerCluster
+#' @export
+setMethod(
+    "cellCountsPerCluster",
+    signature("seurat"),
+    getMethod("cellCountsPerCluster", "SingleCellExperiment")
+)
+
+
+
+#' @rdname clusterCellCountsPerSample
+#' @export
+setMethod(
+    "clusterCellCountsPerSample",
+    signature("seurat"),
+    getMethod("clusterCellCountsPerSample", "SingleCellExperiment")
+)
+
+
+
 #' @rdname seurat-SingleCellExperiment
 #' @importFrom SummarizedExperiment colData
 #' @export
@@ -160,6 +180,16 @@ setMethod(
     function(object, ...) {
         counts(.as.SingleCellExperiment.seurat(object), ...)
     }
+)
+
+
+
+#' @rdname diffExp
+#' @export
+setMethod(
+    "diffExp",
+    signature("seurat"),
+    getMethod("diffExp", "SingleCellExperiment")
 )
 
 
@@ -389,6 +419,36 @@ setMethod(
 
 
 
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotKnownMarkersDetected",
+    signature("seurat"),
+    getMethod("plotKnownMarkersDetected", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotMarkerTSNE",
+    signature("seurat"),
+    getMethod("plotMarkerTSNE", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotMarkerUMAP",
+    signature("seurat"),
+    getMethod("plotMarkerUMAP", "SingleCellExperiment")
+)
+
+
+
 #' @rdname plotMitoRatio
 #' @export
 setMethod(
@@ -445,6 +505,16 @@ setMethod(
     "plotReducedDim",
     signature("seurat"),
     getMethod("plotReducedDim", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotTopMarkers",
+    signature("seurat"),
+    getMethod("plotTopMarkers", "SingleCellExperiment")
 )
 
 

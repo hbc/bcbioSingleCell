@@ -44,7 +44,7 @@ fetchUMAPExpressionData(object, ...)
   gene2symbol = FALSE)
 
 \S4method{fetchReducedDimData}{SingleCellExperiment}(object,
-  reducedDimName, dimsUse = c(1L, 2L))
+  reducedDimName, dimsUse = c(1L, 2L), interestingGroups)
 
 \S4method{fetchPCAData}{SingleCellExperiment}(object, ...)
 
@@ -85,6 +85,10 @@ in \code{\link[=reducedDims]{reducedDims()}}. Includes TNSE, UMAP, PCA, for exam
 \item{dimsUse}{\code{integer}. Vector of length 2 that denotes the columns from
 the reduced dimension matrix to use for \code{centerX} and \code{centerY} column
 calculations. Defaults the first and second dimensions.}
+
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \itemize{

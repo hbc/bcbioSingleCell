@@ -258,13 +258,3 @@ setMethod(
         object
     }
 )
-
-
-
-#' @rdname diffExp
-#' @export
-setMethod(
-    "diffExp",
-    signature("seurat"),
-    getMethod("diffExp", "SingleCellExperiment")
-)

@@ -318,16 +318,6 @@ setMethod(
 #' @rdname plotMarker
 #' @export
 setMethod(
-    "plotMarkerTSNE",
-    signature("seurat"),
-    getMethod("plotMarkerTSNE", "SingleCellExperiment")
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setMethod(
     "plotMarkerUMAP",
     signature("SingleCellExperiment"),
     function(
@@ -364,16 +354,6 @@ setMethod(
             title = title
         )
     }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setMethod(
-    "plotMarkerUMAP",
-    signature("seurat"),
-    getMethod("plotMarkerUMAP", "SingleCellExperiment")
 )
 
 
@@ -453,16 +433,6 @@ setMethod(
 #' @rdname plotMarker
 #' @export
 setMethod(
-    "plotTopMarkers",
-    signature("seurat"),
-    getMethod("plotTopMarkers", "SingleCellExperiment")
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setMethod(
     "plotKnownMarkersDetected",
     signature("SingleCellExperiment"),
     function(
@@ -521,14 +491,4 @@ setMethod(
 
         invisible(list)
     }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setMethod(
-    "plotKnownMarkersDetected",
-    signature("seurat"),
-    getMethod("plotKnownMarkersDetected", "SingleCellExperiment")
 )
