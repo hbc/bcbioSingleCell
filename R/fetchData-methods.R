@@ -92,13 +92,18 @@ setMethod(
     function(
         object,
         reducedDimName,
-        dimsUse = c(1L, 2L)
+        dimsUse = c(1L, 2L),
+        interestingGroups
     ) {
         object <- as(object, "SingleCellExperiment")
         .assertHasIdent(object)
         assert_is_a_string(reducedDimName)
         assertIsImplicitInteger(dimsUse)
         assert_is_of_length(dimsUse, 2L)
+        interestingGroups <- .prepareInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
 
         data <- slot(object, "reducedDims")[[reducedDimName]]
         if (!is.matrix(data)) {
@@ -109,13 +114,13 @@ setMethod(
         }
         data <- as.data.frame(data)
 
-        colData <- as.data.frame(colData(object))
-        assert_are_identical(rownames(data), rownames(colData))
+        metrics <- metrics(object, interestingGroups = interestingGroups)
+        assert_are_identical(rownames(data), rownames(metrics))
 
         dimCols <- colnames(data)[dimsUse]
         assert_is_character(dimCols)
 
-        cbind(colData, data) %>%
+        cbind(data, metrics) %>%
             rownames_to_column() %>%
             # Group by ident here for center calculations
             group_by(!!sym("ident")) %>%
