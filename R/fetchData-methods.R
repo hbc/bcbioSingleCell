@@ -91,13 +91,13 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        reducedDimName,
+        reducedDim,
         dimsUse = c(1L, 2L),
         interestingGroups
     ) {
         object <- as(object, "SingleCellExperiment")
         .assertHasIdent(object)
-        assert_is_a_string(reducedDimName)
+        assert_is_a_string(reducedDim)
         assertIsImplicitInteger(dimsUse)
         assert_is_of_length(dimsUse, 2L)
         interestingGroups <- .prepareInterestingGroups(
@@ -105,10 +105,10 @@ setMethod(
             interestingGroups = interestingGroups
         )
 
-        data <- slot(object, "reducedDims")[[reducedDimName]]
+        data <- slot(object, "reducedDims")[[reducedDim]]
         if (!is.matrix(data)) {
             stop(
-                paste(reducedDimName, "reduced dimension not calculated"),
+                paste(reducedDim, "reduced dimension not calculated"),
                 call. = FALSE
             )
         }
@@ -146,7 +146,7 @@ setMethod(
     function(object, ...) {
         fetchReducedDimData(
             object = object,
-            reducedDimName = "PCA",
+            reducedDim = "PCA",
             ...
         )
     }
@@ -162,7 +162,7 @@ setMethod(
     function(object, ...) {
         fetchReducedDimData(
             object = object,
-            reducedDimName = "TSNE",
+            reducedDim = "TSNE",
             ...
         )
     }
@@ -196,7 +196,7 @@ setMethod(
     function(object, ...) {
         fetchReducedDimData(
             object = object,
-            reducedDimName = "UMAP",
+            reducedDim = "UMAP",
             ...
         )
     }
